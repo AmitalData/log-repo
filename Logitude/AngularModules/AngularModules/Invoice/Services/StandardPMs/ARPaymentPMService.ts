@@ -24,10 +24,10 @@ import {PerformanceLogger} from '../../../Infrastructure/Utilities/PerformanceLo
 import {ARPaymentPM} from '../../EntityPMs/ARPaymentPM';
 
 import {ARPaymentInvoicePM} from '../../EntityPMs/ARPaymentInvoicePM';
+import { LedgerTransactionPM } from 'Accounting/EntityPMs/LedgerTransactionPM';
 import {ARPaymentChequeReplicaPM} from '../../EntityPMs/ARPaymentChequeReplicaPM';
 import {ARPaymentPMInitService} from '../../EntityPMInitServices/ARPaymentPMInitService';
 import {ARPaymentValidator} from '../../Validators/ARPaymentValidator';
-import { LedgerTransactionPM } from 'Accounting/EntityPMs/LedgerTransactionPM';
 
 @Injectable()
 
@@ -174,6 +174,7 @@ export class ARPaymentPMService {
         if (!entityPM) {
             
             entityPM = new ARPaymentPM();
+			entityPM.DisableMarkAsDirty = true;
         }
 
 		var customFields: Array<string> = [];
@@ -244,6 +245,8 @@ export class ARPaymentPMService {
             entityPM.OldEntityPM = null;
         }
 		entityPM.IsDirty = false;
+	    entityPM.DisableMarkAsDirty = false;
+
         return entityPM;
     }
 
@@ -269,7 +272,8 @@ export class ARPaymentPMService {
             {
                 newARPaymentInvoicePM = new ARPaymentInvoicePM(null);
             }
-                
+ 			newARPaymentInvoicePM.DisableMarkAsDirty = true;
+               
             var pmKeysArray = Object.keys(jItem);
             for (var pmKey in pmKeysArray) {
                 if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
@@ -303,7 +307,7 @@ export class ARPaymentPMService {
                 newARPaymentInvoicePM.OldEntityPM = null;
                 newARPaymentInvoicePM.EntityParentPM = null;
             }
-			
+			 newARPaymentInvoicePM.DisableMarkAsDirty = false;
 			 newARPaymentInvoicePM.IsDirty = false;
             entityPM.PaymentInvoices.push(newARPaymentInvoicePM);
         }
@@ -317,6 +321,7 @@ export class ARPaymentPMService {
                         //entityPM.PaymentInvoices.push(oldPaymentInvoices[itemKey]);
 						var oldItemJson = oldPaymentInvoices[itemKey];
                         var deletedPM: ARPaymentInvoicePM = new ARPaymentInvoicePM(null);
+						deletedPM.DisableMarkAsDirty = true;
                         var pmKeys = Object.keys(oldItemJson);
                         for (var key in pmKeys) {
 
@@ -328,7 +333,7 @@ export class ARPaymentPMService {
                             deletedPM[property] = oldItemJson[property];
                         }
 
-                      
+					    deletedPM.DisableMarkAsDirty = false;
                         deletedPM.IsDirty = false;
                         deletedPM.ChangeSetOp = "Delete";
                         
@@ -352,7 +357,7 @@ export class ARPaymentPMService {
             }
             var newLedgerTransactionPM: LedgerTransactionPM;
             newLedgerTransactionPM = new LedgerTransactionPM();
-				                
+		    newLedgerTransactionPM.DisableMarkAsDirty = true;                
             var pmKeysArray = Object.keys(jItem);
             for (var pmKey in pmKeysArray) {
 			
@@ -362,6 +367,7 @@ export class ARPaymentPMService {
                 var pmProperty = pmKeysArray[pmKey];
                 newLedgerTransactionPM[pmProperty] = jItem[pmProperty];
             }
+			newLedgerTransactionPM.DisableMarkAsDirty = false;
             newLedgerTransactionPM.IsDirty = false;
             entityPM.InvoicesLedgerTransactions.push(newLedgerTransactionPM);
         }
@@ -388,7 +394,8 @@ export class ARPaymentPMService {
             {
                 newARPaymentChequeReplicaPM = new ARPaymentChequeReplicaPM(null);
             }
-                
+ 			newARPaymentChequeReplicaPM.DisableMarkAsDirty = true;
+               
             var pmKeysArray = Object.keys(jItem);
             for (var pmKey in pmKeysArray) {
                 if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
@@ -420,7 +427,7 @@ export class ARPaymentPMService {
                 newARPaymentChequeReplicaPM.OldEntityPM = null;
                 newARPaymentChequeReplicaPM.EntityParentPM = null;
             }
-			
+			 newARPaymentChequeReplicaPM.DisableMarkAsDirty = false;
 			 newARPaymentChequeReplicaPM.IsDirty = false;
             entityPM.ARPaymentChequeReplicas.push(newARPaymentChequeReplicaPM);
         }
@@ -434,6 +441,7 @@ export class ARPaymentPMService {
                         //entityPM.ARPaymentChequeReplicas.push(oldARPaymentChequeReplicas[itemKey]);
 						var oldItemJson = oldARPaymentChequeReplicas[itemKey];
                         var deletedPM: ARPaymentChequeReplicaPM = new ARPaymentChequeReplicaPM(null);
+						deletedPM.DisableMarkAsDirty = true;
                         var pmKeys = Object.keys(oldItemJson);
                         for (var key in pmKeys) {
 
@@ -445,7 +453,7 @@ export class ARPaymentPMService {
                             deletedPM[property] = oldItemJson[property];
                         }
 
-                      
+					    deletedPM.DisableMarkAsDirty = false;
                         deletedPM.IsDirty = false;
                         deletedPM.ChangeSetOp = "Delete";
                         

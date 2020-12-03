@@ -16,7 +16,11 @@ namespace Logitude.Customs.Data.Repsitories
 {
    public partial class CustomsDocumentPointerRepository:IRepository<CustomsDocumentPointer>
    {
-        
+
+        public CustomsDocumentPointerRepository()
+        {
+            (context as System.Data.Entity.Infrastructure.IObjectContextAdapter).ObjectContext.ContextOptions.UseCSharpNullComparisonBehavior = false; //Pasted from <http://stackoverflow.com/questions/682429/how-can-i-query-for-null-values-in-entity-framework?lq=1> 
+        }
 		public List<CustomsDocumentPointer> GetMulti(EntityKeyFields entityKeys)
         {
             
@@ -46,6 +50,8 @@ namespace Logitude.Customs.Data.Repsitories
 
         public IQueryable<CustomsDocumentPointer> GetQParentDocumentPointer(string parentEntityId, string parentEntityCode, int tenant)
         {
+           
+
             return (from a in context.CustomsDocumentPointers
                     where (a.ParentEntityId == parentEntityId && a.ParentEntityCode == parentEntityCode)
                     && a.Tenant == tenant
@@ -184,6 +190,15 @@ namespace Logitude.Customs.Data.Repsitories
             q = q.Where(a => ((a.Child1EntityCode ?? "_IsNull") == (parameters.Child1EntityCode ?? "_IsNull")) && ((a.Child1EntityId ?? "_IsNull") == (parameters.Child1EntityId ?? "_IsNull")));
             q = q.Where(a => ((a.Child2EntityCode ?? "_IsNull") == (parameters.Child2EntityCode ?? "_IsNull")) && ((a.Child2EntityId ?? "_IsNull") == (parameters.Child2EntityId ?? "_IsNull")));
             q = q.Where(a => ((a.Child3EntityCode ?? "_IsNull") == (parameters.Child3EntityCode ?? "_IsNull")) && ((a.Child3EntityId ?? "_IsNull") == (parameters.Child3EntityId ?? "_IsNull")));
+            q = q.Distinct();
+
+            return q;
+        }
+
+        public IQueryable<CustomsDocumentPointer> GetCustomsDocumentPointerListParentOnly(GetTicketsParams parameters, int tenant)
+        {
+            var q = GetAll(tenant);
+            q = q.Where(a => a.ParentEntityCode == parameters.ParentEntityCode && a.ParentEntityId == parameters.ParentEntityId);
             q = q.Distinct();
 
             return q;

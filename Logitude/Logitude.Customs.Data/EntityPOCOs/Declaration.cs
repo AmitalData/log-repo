@@ -305,13 +305,6 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public string CasualImporterTel { get; set; }
         [Column("CasualImporterContact")]
 	    public string CasualImporterContact { get; set; }
-        [ForeignKey("MamanStatus")]
-        [Column("MamanStatusCode")]
-	    public string MamanStatusCode { get; set; }
-	      
-        public virtual MamanStatus MamanStatus { get; set; }
-        [Column("MamanErrorXml")]
-	    public string MamanErrorXml { get; set; }
         [Column("ItemsProcessTypesList")]
 	    public string ItemsProcessTypesList { get; set; }
         [Column("IsClose")]
@@ -323,6 +316,104 @@ namespace Logitude.Customs.Data.EntityPOCOs
         public virtual DeclarationStatusType CourierSuspention { get; set; }
         [Column("DepositionStatusCode")]
 	    public string DepositionStatusCode { get; set; }
+        [Column("IsPaymentProtested")]
+	    public bool IsPaymentProtested { get; set; }
+        [Column("AmendmentRequestNumber")]
+	    public string AmendmentRequestNumber { get; set; }
+        [ForeignKey("AmendmentStatusFK")]
+        [Column("AmendmentStatus")]
+	    public string AmendmentStatus { get; set; }
+	      
+        public virtual AmendmentStatus AmendmentStatusFK { get; set; }
+        [Column("AmendmentissueDate")]
+	    public DateTime? AmendmentissueDate { get; set; }
+        [Column("AmendmentRemarks")]
+	    public string AmendmentRemarks { get; set; }
+        [Column("AmendmentDeficitInitiated")]
+	    public bool? AmendmentDeficitInitiated { get; set; }
+        [Column("AmendDeficitInitiatedReasTo")]
+	    public string AmendDeficitInitiatedReasTo { get; set; }
+        [ForeignKey("AmendmentCorrectedByUser")]
+        [Column("AmendmentCorrectedByUserId")]
+	    public string AmendmentCorrectedByUserId { get; set; }
+	      
+        public virtual User AmendmentCorrectedByUser { get; set; }
+        [Column("AmendmentRejectionReason")]
+	    public string AmendmentRejectionReason { get; set; }
+        [Column("IsAmendment")]
+	    public bool? IsAmendment { get; set; }
+        [Column("AmendmentOriginalDeclartation")]
+	    public string AmendmentOriginalDeclartation { get; set; }
+        [Column("IsDiamondDeclaration")]
+	    public bool IsDiamondDeclaration { get; set; }
+        [Column("AmendmentDontDisplayInList")]
+	    public bool AmendmentDontDisplayInList { get; set; }
+        [Column("IsMissMandatoryDiamond")]
+	    public bool IsMissMandatoryDiamond { get; set; }
+        [Column("IsValidTicketsDiamond")]
+	    public bool IsValidTicketsDiamond { get; set; }
+        [Column("AvailabilityDate")]
+	    public DateTime? AvailabilityDate { get; set; }
+        [Column("LoadingDateTime")]
+	    public DateTime? LoadingDateTime { get; set; }
+        [ForeignKey("CustomsShip")]
+        [Column("ShipCode")]
+	    public string ShipCode { get; set; }
+	      
+        public virtual CustomsShip CustomsShip { get; set; }
+        [Column("IsExporterConfirmation")]
+	    public bool IsExporterConfirmation { get; set; }
+        [Column("Direction")]
+	    public string Direction { get; set; }
+        [Column("AgentRoleCode")]
+	    public string AgentRoleCode { get; set; }
+        [Column("ExportFile")]
+	    public string ExportFile { get; set; }
+        [ForeignKey("CustomsCountry")]
+        [Column("DestinationCountryCode")]
+	    public string DestinationCountryCode { get; set; }
+	      
+        public virtual CustomsCountry CustomsCountry { get; set; }
+        [ForeignKey("ExportAutonomyRegionType")]
+        [Column("ExportAutonomyRegionTypeCode")]
+	    public string ExportAutonomyRegionTypeCode { get; set; }
+	      
+        public virtual AutonomyRegionType ExportAutonomyRegionType { get; set; }
+        [ForeignKey("DeclarationType")]
+        [Column("DeclarationTypeCode")]
+	    public string DeclarationTypeCode { get; set; }
+	      
+        public virtual LeadDocumentType DeclarationType { get; set; }
+        [ForeignKey("CancelRequestReason")]
+        [Column("CancelRequestReasonCode")]
+	    public string CancelRequestReasonCode { get; set; }
+	      
+        public virtual CancellationReasonRequestType CancelRequestReason { get; set; }
+        [Column("CancelRequestReasonExplanation")]
+	    public string CancelRequestReasonExplanation { get; set; }
+        [Column("CancelRequestNumber")]
+	    public int? CancelRequestNumber { get; set; }
+        [Column("CustomCancelRequestRemarks")]
+	    public string CustomCancelRequestRemarks { get; set; }
+        [ForeignKey("CancelRequestStatus")]
+        [Column("CancelRequestStatusCode")]
+	    public string CancelRequestStatusCode { get; set; }
+	      
+        public virtual CancellationRequestStatus CancelRequestStatus { get; set; }
+        [Column("CancelRequestRejectionReason")]
+	    public string CancelRequestRejectionReason { get; set; }
+        [Column("CancelRequestApproveDate")]
+	    public DateTime? CancelRequestApproveDate { get; set; }
+        [Column("IsClaimable")]
+	    public bool? IsClaimable { get; set; }
+        [Column("ReplacingRepairRequest")]
+	    public string ReplacingRepairRequest { get; set; }
+        [Column("AmendmentErrorXml")]
+	    public string AmendmentErrorXml { get; set; }
+        [Column("FOBValueNIS")]
+	    public decimal? FOBValueNIS { get; set; }
+        [Column("FOBValueDollar")]
+	    public decimal? FOBValueDollar { get; set; }
     }
 }
 	 

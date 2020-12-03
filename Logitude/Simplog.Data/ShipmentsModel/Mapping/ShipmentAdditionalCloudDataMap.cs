@@ -31,12 +31,16 @@ namespace Simplog.Data.ShipmentsModel.Mapping
                .HasMaxLength(200)
                .IsUnicode(true);
 
+            this.Property(t => t.DocumentsApprovedByUserName)
+               .HasMaxLength(200)
+               .IsUnicode(true);
+
             this.Property(t => t.VersionApproved).HasMaxLength(10)
               .IsUnicode(true);
 
             this.Property(t => t.DeclarationXmlData).IsMaxLength();
-            this.Property(t => t.DenyReason).HasColumnType("nvarchar").HasMaxLength(1024);
-            this.Property(t => t.ShipmentAddtionalDataXML).HasColumnType("nvarchar");
+            this.Property(t => t.DenyReason).HasMaxLength(1024);
+            this.Property(t => t.ShipmentAddtionalDataXML);
 
             this.Property(t => t.PaymentRequestXML).IsMaxLength().IsUnicode(true);
             this.Property(t => t.IsPaymentRequired).IsRequired();
@@ -50,6 +54,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.Tenant).HasColumnName("Tenant");
             this.Property(t => t.ApproveDateTime).HasColumnName("ApproveDateTime");
             this.Property(t => t.ApprovedByUserName).HasColumnName("ApprovedByUserName");
+            this.Property(t => t.DocumentsApprovedByUserName).HasColumnName("DocumentsApprovedByUserName");
             this.Property(t => t.DeclarationXmlData).HasColumnName("DeclarationXmlData");
             this.Property(t => t.DeclarationWCOXml).HasColumnName("DeclarationWCOXml");
             this.Property(t => t.IsImporterApprovalRequried).HasColumnName("IsImporterApprovalRequried");

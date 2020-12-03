@@ -15,6 +15,7 @@ export class CustomsCountryList {
 	SearchFields: string;
 	Inactive: boolean;
 	MalamId: string;
+	TarriffName: string;
 	
 }
  

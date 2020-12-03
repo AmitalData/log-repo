@@ -155,6 +155,7 @@ export class AgentSharedManifestPMService {
         if (!entityPM) {
             
             entityPM = new AgentSharedManifestPM();
+			entityPM.DisableMarkAsDirty = true;
         }
 
 		var customFields: Array<string> = [];
@@ -205,6 +206,8 @@ export class AgentSharedManifestPMService {
             entityPM.OldEntityPM = null;
         }
 		entityPM.IsDirty = false;
+	    entityPM.DisableMarkAsDirty = false;
+
         return entityPM;
     }
 
@@ -219,7 +222,7 @@ export class AgentSharedManifestPMService {
             }
             var newSharedManifestTranslationPM: SharedManifestTranslationPM;
             newSharedManifestTranslationPM = new SharedManifestTranslationPM();
-				                
+		    newSharedManifestTranslationPM.DisableMarkAsDirty = true;                
             var pmKeysArray = Object.keys(jItem);
             for (var pmKey in pmKeysArray) {
 			
@@ -229,6 +232,7 @@ export class AgentSharedManifestPMService {
                 var pmProperty = pmKeysArray[pmKey];
                 newSharedManifestTranslationPM[pmProperty] = jItem[pmProperty];
             }
+			newSharedManifestTranslationPM.DisableMarkAsDirty = false;
             newSharedManifestTranslationPM.IsDirty = false;
             entityPM.SharedManifestTranslations.push(newSharedManifestTranslationPM);
         }

@@ -84,7 +84,7 @@
                                                                                     <td>
                                                                                         <div class="CheckBox">
                                                                                             <input [(ngModel)]="ShowTitlePricing" class="LeftCenter" style="text-align:center" [attr.id]="ShowTitlePricingKey" type="checkbox" />
-                                                                                            <label style="color:black;margin-top:-3px" class="LeftCenter" [attr.for]="ShowTitlePricingKey">{{'QuoteTemplate.S.ShowTitle' | TextCodeTranslationPipe}} </label>
+                                                                                            <label id="{{'ShowTitle' | IdGeneratorPipe}}" style="color:black;margin-top:-3px" class="LeftCenter" [attr.for]="ShowTitlePricingKey">{{'QuoteTemplate.S.ShowTitle' | TextCodeTranslationPipe}} </label>
                                                                                         </div>
                                                                                     </td>
 
@@ -261,6 +261,17 @@
                                                                                                                 <div class="CheckBox">
                                                                                                                     <input [disabled]="!ShowPricesTable" [(ngModel)]="ShowIncludedCharges" class="LeftCenter" style="text-align:center" [attr.id]="ShowIncludedChargesKey" type="checkbox" />
                                                                                                                     <label style="color:black" class="LeftCenter" [attr.for]="ShowIncludedChargesKey">{{'QuoteTemplate.S.ShowIncludedCharges' | TextCodeTranslationPipe}} </label>
+                                                                                                                </div>
+                                                                                                            </td>
+
+                                                                                                        </tr>
+
+                                                                                                        <tr style="height:22px" *ngIf="DisplayRegoinalTax">
+                                                                                                            <td style="width:8px"></td>
+                                                                                                            <td>
+                                                                                                                <div class="CheckBox">
+                                                                                                                    <input [disabled]="!ShowPricesTable" [(ngModel)]="ShowRegionalTAX" class="LeftCenter" style="text-align:center" [attr.id]="ShowRegionalTAXKey" type="checkbox" />
+                                                                                                                    <label style="color:black" class="LeftCenter" [attr.for]="ShowRegionalTAXKey">{{'QuoteTemplate.S.ShowRegionalTax' | TextCodeTranslationPipe}} </label>
                                                                                                                 </div>
                                                                                                             </td>
 
@@ -841,7 +852,7 @@
                     </td>
 
                     <td style="width: 57px;">
-                        <button class="RedButton" (click)="SaveButtonClicked()">{{'QuoteTemplate.B.Save' | TextCodeTranslationPipe}} </button>
+                        <button  id="{{'SaveButton' | IdGeneratorPipe}}" class="RedButton" (click)="SaveButtonClicked()">{{'QuoteTemplate.B.Save' | TextCodeTranslationPipe}} </button>
                     </td>
                 </tr>
             </table>

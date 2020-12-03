@@ -98,6 +98,12 @@ namespace Logitude.Accounting.Data
 	
             modelBuilder.Configurations.Add(new BankPageEntryTypeMap());
 	
+            modelBuilder.Configurations.Add(new CalculatedChartsLineTypeMap());
+	
+            modelBuilder.Configurations.Add(new CalculatedChartsOfAccountMap());
+	
+            modelBuilder.Configurations.Add(new CalculatedChartsOfAccountsLineMap());
+	
             modelBuilder.Configurations.Add(new CashBookMap());
 	
             modelBuilder.Configurations.Add(new CashBookLineMap());
@@ -236,6 +242,8 @@ namespace Logitude.Accounting.Data
 	
             modelBuilder.Configurations.Add(new TestEntityMap());
 	
+            modelBuilder.Configurations.Add(new UserDefinedReportMap());
+	
             modelBuilder.Configurations.Add(new VatReportStatusMap());
 	
             modelBuilder.Configurations.Add(new WithholdingTaxDeductionTypeMap());
@@ -260,6 +268,8 @@ namespace Logitude.Accounting.Data
 			modelBuilder.Entity<FullAccountingSetting>().Property(x => x.DefaultTaxWithholdPercentage).HasPrecision(16, 2);
 				
 			modelBuilder.Entity<GLAccount>().Property(x => x.InterestCreditLimit).HasPrecision(18, 2);
+				
+			modelBuilder.Entity<GLAccount>().Property(x => x.CreditAllotmentPercentage).HasPrecision(4, 2);
 				
 			modelBuilder.Entity<GLAccountInterestPeriod>().Property(x => x.StandardAddInterestPercent).HasPrecision(4, 2);
 				
@@ -294,6 +304,10 @@ namespace Logitude.Accounting.Data
 			modelBuilder.Entity<InterestReport>().Property(x => x.InvoiceAmount).HasPrecision(18, 2);
 				
 			modelBuilder.Entity<InterestReport>().Property(x => x.GLAccountInterestCreditLimit).HasPrecision(18, 2);
+				
+			modelBuilder.Entity<InterestReport>().Property(x => x.CreditAllotmentPercentage).HasPrecision(4, 2);
+				
+			modelBuilder.Entity<InterestReport>().Property(x => x.CalCreditAllotmentCommission).HasPrecision(18, 2);
 				
 			modelBuilder.Entity<InterestReportLinesByDate>().Property(x => x.TotalAmount).HasPrecision(18, 2);
 				
@@ -753,6 +767,24 @@ namespace Logitude.Accounting.Data
 	 
 	 }
 	
+	 public IDbSet<CalculatedChartsLineType> CalculatedChartsLineTypes 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<CalculatedChartsOfAccount> CalculatedChartsOfAccounts 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<CalculatedChartsOfAccountsLine> CalculatedChartsOfAccountLines 
+	 {
+	      get; set;
+	 
+	 }
+	
 	 public IDbSet<CashBook> CashBooks 
 	 {
 	      get; set;
@@ -1162,6 +1194,12 @@ namespace Logitude.Accounting.Data
 	 }
 	
 	 public IDbSet<TestEntity> TestEntities 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<UserDefinedReport> UserDefinedReports 
 	 {
 	      get; set;
 	 

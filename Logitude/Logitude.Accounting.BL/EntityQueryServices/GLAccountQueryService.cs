@@ -112,7 +112,11 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             //return pms;
         }
 
- 
+        public List<GLAccount> GetAllGLAccountIdsByChartsofAccountId(int tenant,string chartsofAccountId)
+        {
+            List<GLAccount> GLAccounts = this.repository.GetAll(tenant).Where(s => s.Inactive == false && s.ChartOfAccountsId == chartsofAccountId).ToList();
+            return GLAccounts;
+        }
 
         public IQueryable<CardGLAccountDataView> GetQAllVendorGLAccountCardsHavingDeduction(int tenant)
         {
@@ -613,9 +617,9 @@ namespace Logitude.Accounting.BL.EntityQueryServices
         }
         public List<string> GetSplittedByCurrencyGLAccountIds(string accountId, int tenant)
         {
-
-            return (from a in context.GLAccounts
-                                                join
+            IQueryable<GLAccount> glaccounts = repository.GetAll(tenant);
+            return (from a in glaccounts
+                    join
                    c in context.GLAccountCurrencies on a.Id equals c.GLAccountId
                                                 where c.MainGLAccountId == accountId && a.Tenant == tenant && a.ActiveForInterest ==true
                                                 select a.Id).ToList();

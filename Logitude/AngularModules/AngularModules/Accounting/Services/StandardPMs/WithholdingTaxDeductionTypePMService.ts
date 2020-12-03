@@ -153,6 +153,7 @@ export class WithholdingTaxDeductionTypePMService {
         if (!entityPM) {
             
             entityPM = new WithholdingTaxDeductionTypePM();
+			entityPM.DisableMarkAsDirty = true;
         }
 
 		var customFields: Array<string> = [];
@@ -193,6 +194,8 @@ export class WithholdingTaxDeductionTypePMService {
             entityPM.OldEntityPM = null;
         }
 		entityPM.IsDirty = false;
+	    entityPM.DisableMarkAsDirty = false;
+
         return entityPM;
     }
 

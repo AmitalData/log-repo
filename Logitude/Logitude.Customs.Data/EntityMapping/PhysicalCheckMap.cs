@@ -35,7 +35,7 @@ namespace Logitude.Customs.Data.EntityMapping
 
             this.Property(t => t.QueueTypeCode).HasColumnName("QueueTypeCode").HasMaxLength(4).IsUnicode(false);
 
-            this.Property(t => t.OperationCode).HasColumnName("OperationCode").HasMaxLength(2).IsUnicode(false);
+            this.Property(t => t.OperationCode).HasColumnName("OperationCode").HasMaxLength(4).IsUnicode(false);
 
             this.Property(t => t.CheckId).HasColumnName("CheckId").IsRequired().HasMaxLength(9).IsUnicode(false);
 
@@ -59,7 +59,7 @@ namespace Logitude.Customs.Data.EntityMapping
 
             this.Property(t => t.SearchFields).HasColumnName("SearchFields").HasMaxLength(1000).IsUnicode(true);
 
-            this.Property(t => t.StatusMessageCode).HasColumnName("StatusMessageCode").HasMaxLength(2).IsUnicode(false);
+            this.Property(t => t.StatusMessageCode).HasColumnName("StatusMessageCode").HasMaxLength(4).IsUnicode(false);
 
             this.Property(t => t.CargoTypeCode).HasColumnName("CargoTypeCode").HasMaxLength(4).IsUnicode(false);
 
@@ -78,6 +78,8 @@ namespace Logitude.Customs.Data.EntityMapping
             this.Property(t => t.CustomerId).HasColumnName("CustomerId").HasMaxLength(15).IsUnicode(false);
 
             this.Property(t => t.NoEscortRequired).HasColumnName("NoEscortRequired");
+
+            this.Property(t => t.VehicleChassisNumber).HasColumnName("VehicleChassisNumber").HasMaxLength(20).IsUnicode(false);
         }
     }
 }

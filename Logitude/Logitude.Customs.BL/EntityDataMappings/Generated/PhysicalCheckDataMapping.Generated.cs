@@ -49,7 +49,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         IsComprehensiveCheck, 
 	         CheckTypeCode, 
 	         CustomerId, 
-	         NoEscortRequired,
+	         NoEscortRequired, 
+	         VehicleChassisNumber,
 	      }
 
 
@@ -97,7 +98,9 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         CheckTypeCode, 
 	         CheckTypeName, 
 	         CustomerId, 
-	         NoEscortRequired,
+	         NoEscortRequired, 
+	         VehicleChassisNumber, 
+	         EndDate,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -239,6 +242,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.NoEscortRequired))
             {
 				entityPOCO.NoEscortRequired = entityPM.NoEscortRequired;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.VehicleChassisNumber))
+            {
+				entityPOCO.VehicleChassisNumber = entityPM.VehicleChassisNumber;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -387,6 +395,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.NoEscortRequired = entityPOCO.NoEscortRequired;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.VehicleChassisNumber))
+            {
+					entityPM.VehicleChassisNumber = entityPOCO.VehicleChassisNumber;
+            }
+
 		}
 
 		public void PMToOldPM(PhysicalCheckPM entityPM, PhysicalCheckPM oldEntityPM)
@@ -526,6 +539,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.NoEscortRequired))
             {
                 oldEntityPM.NoEscortRequired = entityPM.NoEscortRequired;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.VehicleChassisNumber))
+            {
+                oldEntityPM.VehicleChassisNumber = entityPM.VehicleChassisNumber;
             }
 			
 		}

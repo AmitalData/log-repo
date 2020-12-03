@@ -523,6 +523,33 @@
                                                             </td>
                                                         </tr>
 
+                                                          <!-- INTTRA Harmonize -->
+                                                        <tr class="FormFieldRow">
+                                                            <td>
+                                                                <table>
+                                                                    <tr>
+                                                                        <td style="width: 110px;">
+                                                                            <LogLabel [ObjectFieldName]="'MainHarmonize'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                                        </td>
+
+                                                                        <td>
+                                                                            <LogTextBox [ObjectFieldName]="'MainHarmonize'" [Text]="MainHarmonize" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
+                                                                        </td>
+                                                                        <td style="width: 3px;">
+                                                                            <div></div>
+                                                                        </td>
+                                                                        <td style="width: 14px;">
+                                                                            <div>
+                                                                                <span class="hyperlink" [class.HyperlinkDisabled]="!IsEditingEnabled" (click)="ChooseHarmonizeClicked()">
+                                                                                    <img style="vertical-align: middle; width: 14px; height: 14px; cursor: pointer;" src="./Images/LOVSearch.png" />
+                                                                                </span>
+                                                                            </div>
+                                                                        </td>
+                                                                    </tr>
+                                                                </table>
+                                                            </td>
+                                                        </tr>
+
                                                         <tr class="FormFieldRow">
                                                             <td style="width: 180px;">
                                                                 <LogLabel [ObjectFieldName]="'BookingConfirmationNotes'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>

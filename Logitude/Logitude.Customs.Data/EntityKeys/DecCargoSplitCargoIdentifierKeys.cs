@@ -24,7 +24,8 @@ namespace Logitude.Customs.Data.EntityKeys
 	 
 	  public override string GetFullKey()
       {
-          return DeclarationCargoSplitId+'_'+LineNumber;
+                 return DeclarationCargoSplitId+'_'+LineNumber ;
+                 
       }
 
       public override string GetEntityPMName()

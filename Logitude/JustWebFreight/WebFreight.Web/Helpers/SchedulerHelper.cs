@@ -41,15 +41,28 @@ namespace WebFreight.Web.Helpers
                         //}
                         var tenantDateNow = TenantServerConfigration.GetCurrentDateTime(task.Tenant);
                         var nowDateUTC = DateTime.UtcNow;
-                        TodayDate = new DateTime(tenantDateNow.Year, tenantDateNow.Month, tenantDateNow.Day, task.NextRunTime.Value.Hour, task.NextRunTime.Value.Minute, task.NextRunTime.Value.Second);
-                        var TodayUtcDate = new DateTime(nowDateUTC.Year, nowDateUTC.Month, nowDateUTC.Day, task.NextRunTimeUTC.Value.Hour, task.NextRunTimeUTC.Value.Minute, task.NextRunTimeUTC.Value.Second);
+
+                        //TodayDate = new DateTime(tenantDateNow.Year, tenantDateNow.Month, tenantDateNow.Day, task.NextRunTime.Value.Hour, task.NextRunTime.Value.Minute, task.NextRunTime.Value.Second);
+                        //var TodayUtcDate = new DateTime(nowDateUTC.Year, nowDateUTC.Month, nowDateUTC.Day, task.NextRunTimeUTC.Value.Hour, task.NextRunTimeUTC.Value.Minute, task.NextRunTimeUTC.Value.Second);
+
+                        //potential fix
+                        TodayDate = new DateTime(tenantDateNow.Year, tenantDateNow.Month, tenantDateNow.Day, tenantDateNow.Hour, tenantDateNow.Minute, tenantDateNow.Second);
+                        var TodayUtcDate = new DateTime(nowDateUTC.Year, nowDateUTC.Month, nowDateUTC.Day, nowDateUTC.Hour, nowDateUTC.Minute, nowDateUTC.Second);
+
 
                         DateTime NewNextRunTime = TodayDate;
                         DateTime NewNextRunTimeUTC = TodayUtcDate;
                         if (task.RepeatInMinutes != null && task.RepeatInMinutes > 0)
                         {
-                            NewNextRunTime = NewNextRunTime.AddMinutes(((int)task.RepeatInMinutes) + 0.0);
-                            NewNextRunTimeUTC = NewNextRunTimeUTC.AddMinutes(((int)task.RepeatInMinutes) + 0.0);
+                            double repeatMinutes = ((int)task.RepeatInMinutes) + 0.0;
+                            NewNextRunTime = NewNextRunTime.AddMinutes(repeatMinutes);
+                            NewNextRunTimeUTC = NewNextRunTimeUTC.AddMinutes(repeatMinutes);
+                            if(NewNextRunTime < tenantDateNow) // if it is a past time
+                            {
+                                var diff = (tenantDateNow - NewNextRunTime).TotalMinutes;
+                                NewNextRunTime = NewNextRunTime.AddMinutes(diff).AddMinutes(repeatMinutes);
+                                NewNextRunTimeUTC = NewNextRunTimeUTC.AddMinutes(diff).AddMinutes(repeatMinutes);
+                            }
                         }
                         else
                         {
@@ -141,7 +154,7 @@ namespace WebFreight.Web.Helpers
             if (task.TriggerType.ToUpper() != "O")
             {
                 queueservice.InitializeQueue("SchedularQueue", 0);
-                queueservice.Send(new Dictionary<string, string>() { { "TaskId", task.Id }, { "Tenant", task.Tenant.ToString() }, { "Version", task.Version.ToString() } }, task.Tenant, null, null, null, task.NextRunTime);
+                queueservice.Send(new Dictionary<string, string>() { { "TaskId", task.Id }, { "Tenant", task.Tenant.ToString() }, { "Version", task.Version.ToString() } }, task.Tenant, null, null, null, task.NextRunTimeUTC);
 
             }
 

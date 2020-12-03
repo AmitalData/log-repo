@@ -10,6 +10,7 @@ namespace Logitude.Customs.BL.CloseTables
 {
     public struct TradeLevyExamptTypeValues
     {   
+       public const string 'כללהצמצוםחלעלסחורהזו' = "1";  
     }
 }
 

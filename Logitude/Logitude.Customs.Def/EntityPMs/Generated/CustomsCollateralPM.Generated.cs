@@ -780,6 +780,29 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private bool isAnswer ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsAnswer  
+	   {
+	    
+	     get
+		{
+		   return isAnswer;
+		 }
+		 set
+		 {
+		   if(isAnswer != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsAnswer",OldValue=isAnswer,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   isAnswer=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

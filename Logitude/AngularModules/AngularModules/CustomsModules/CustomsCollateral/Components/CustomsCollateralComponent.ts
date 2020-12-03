@@ -453,6 +453,8 @@ export class CustomsCollateralComponent extends BaseComponent {
        
         this.CurrentSession.CloseCurrentWindow();
     }
+ 
+
 
     ViewDocumentsComponent() {
         var windowArgs: any = {};

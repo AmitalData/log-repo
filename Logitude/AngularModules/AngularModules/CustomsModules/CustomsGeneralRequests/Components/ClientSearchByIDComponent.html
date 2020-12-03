@@ -112,53 +112,63 @@
                                         <log-column [width]="'120'" [Alignment]="'right'"
                                                     [header]="'סוג פעילות'"
                                                     [binding]="'CustomerActivityTypeName'" [Editable]="false">
-                                            <log-cell-template template="let item" #logcelltemplate>
+                                            <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                                 <div class="RightCenter">
                                                     <span>{{item.CustomerActivityTypeName}}</span>
                                                 </div>
                                             </log-cell-template>
+</ng-template>
                                         </log-column>
 
                                         <!-- LogisticIdentification -->
                                         <log-column [width]="'110'" [Alignment]="'right'"
                                                     [header]="'קוד/רישוי'"
                                                     [binding]="'LogisticIdentification'" [Editable]="false">
-                                            <log-cell-template template="let item" #logcelltemplate>
+                                            <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                                 <div class="RightCenter">
                                                     <span>{{item.LogisticIdentification}}</span>
                                                 </div>
                                             </log-cell-template>
+</ng-template>
                                         </log-column>
 
                                         <!-- IsActive -->
                                         <log-column [width]="'100'" [Alignment]="'right'"
                                                     [header]="'פעיל'"
                                                     [binding]="'IsActive'" [Editable]="false">
-                                            <log-cell-template template="let item" #logcelltemplate>
+                                            <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                                 <div class="RightCenter">
                                                     <!--<span>{{item.IsActive}}</span>-->
                                                     <img *ngIf="item.IsActive == true" src="./Images/CheckBoxIcon.png" />
                                                 </div>
                                             </log-cell-template>
+</ng-template>
                                         </log-column>
 
                                         <!-- StartDate -->
                                         <log-column [width]="'120'" [Alignment]="'right'"
                                                     [header]="'תאריך תחילת פעילות'"
                                                     [binding]="'StartDate'" [Editable]="false">
-                                            <log-cell-template template="let item" #logcelltemplate>
+                                            <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                                 <div class="RightCenter">
                                                     <span>{{item.StartDate}}</span>
                                                 </div>
                                             </log-cell-template>
+</ng-template>
                                         </log-column>
 
                                         <!-- Customer Indication Button-->
                                         <log-column [width]="'50'" [Alignment]="'right'">
-                                            <log-cell-template template="let item" [TabIndex]="-1" [IgnoreMods]="true">
+                                            <ng-template let-item>
+<log-cell-template  [TabIndex]="-1" [IgnoreMods]="true">
                                                 <IconButton [Name]="'Edit'" [IsSmall]="true" (click)="EditCustomerIndicationCommand(item)"
                                                             style="display: block; float: right; margin-right:3px; margin-top:2px;"></IconButton>
                                             </log-cell-template>
+</ng-template>
                                         </log-column>
 
 
@@ -182,77 +192,91 @@
                                         <log-column [width]="'100'" [Alignment]="'right'"
                                                     [header]="'Customs.ClientSearchByIDQuery.O.PoaID' | TextCodeTranslationPipe"
                                                     [binding]="'PoaID'" [Editable]="false">
-                                            <log-cell-template template="let item" #logcelltemplate>
+                                            <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                                 <div class="RightCenter">
                                                     <span>{{item.PoaID}}</span>
                                                 </div>
                                             </log-cell-template>
+</ng-template>
                                         </log-column>
 
                                         <!-- AuthorizedName -->
                                         <log-column [width]="'150'" [Alignment]="'right'"
                                                     [header]="'Customs.ClientSearchByIDQuery.O.AuthorizedName' | TextCodeTranslationPipe"
                                                     [binding]="'AuthorizedName'" [Editable]="false">
-                                            <log-cell-template template="let item" #logcelltemplate>
+                                            <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                                 <div class="RightCenter">
                                                     <span>{{item.AuthorizedName}}</span>
                                                 </div>
                                             </log-cell-template>
+</ng-template>
                                         </log-column>
 
                                         <!-- CustomerActivityType -->
                                         <log-column [width]="'110'" [Alignment]="'right'"
                                                     [header]="'Customs.ClientSearchByIDQuery.O.CustomerActivityTypeName' | TextCodeTranslationPipe"
                                                     [binding]="'CustomerActivityTypeName'" [Editable]="false">
-                                            <log-cell-template template="let item" #logcelltemplate>
+                                            <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                                 <div class="RightCenter">
                                                     <span>{{item.CustomerActivityTypeName}}</span>
                                                 </div>
                                             </log-cell-template>
+</ng-template>
                                         </log-column>
 
                                         <!-- PoaStatusName -->
                                         <log-column [width]="'90'" [Alignment]="'right'"
                                                     [header]="'Customs.ClientSearchByIDQuery.O.PoaStatusName' | TextCodeTranslationPipe"
                                                     [binding]="'PoaStatusName'" [Editable]="false">
-                                            <log-cell-template template="let item" #logcelltemplate>
+                                            <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                                 <div class="RightCenter">
                                                     <span>{{item.PoaStatusName}}</span>
                                                 </div>
                                             </log-cell-template>
+</ng-template>
                                         </log-column>
 
                                         <!-- PoaAuthorizationTypeName -->
                                         <log-column [width]="'120'" [Alignment]="'right'"
                                                     [header]="'Customs.ClientSearchByIDQuery.O.PoaAuthorizationTypeName' | TextCodeTranslationPipe"
                                                     [binding]="'PoaAuthorizationTypeName'" [Editable]="false">
-                                            <log-cell-template template="let item" #logcelltemplate>
+                                            <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                                 <div class="RightCenter">
                                                     <span>{{item.PoaAuthorizationTypeName}}</span>
                                                 </div>
                                             </log-cell-template>
+</ng-template>
                                         </log-column>
 
                                         <!-- StartDate -->
                                         <log-column [width]="'100'" [Alignment]="'right'"
                                                     [header]="'Customs.ClientSearchByIDQuery.O.StartDate' | TextCodeTranslationPipe"
                                                     [binding]="'StartDate'" [Editable]="false">
-                                            <log-cell-template template="let item" #logcelltemplate>
+                                            <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                                 <div class="RightCenter">
                                                     <span>{{item.StartDate}}</span>
                                                 </div>
                                             </log-cell-template>
+</ng-template>
                                         </log-column>
 
                                         <!-- EndDate -->
                                         <log-column [width]="'100'" [Alignment]="'right'"
                                                     [header]="'Customs.ClientSearchByIDQuery.O.EndDate' | TextCodeTranslationPipe"
                                                     [binding]="'EndDate'" [Editable]="false">
-                                            <log-cell-template template="let item" #logcelltemplate>
+                                            <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                                 <div class="RightCenter">
                                                     <span>{{item.EndDate}}</span>
                                                 </div>
                                             </log-cell-template>
+</ng-template>
                                         </log-column>
 
                                     </logitude-edit-grid>
@@ -275,77 +299,91 @@
                                         <log-column [width]="'110'" [Alignment]="'right'"
                                                     [header]="'Customs.ClientSearchByIDQuery.O.PoaID' | TextCodeTranslationPipe"
                                                     [binding]="'PoaID'" [Editable]="false">
-                                            <log-cell-template template="let item" #logcelltemplate>
+                                            <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                                 <div class="RightCenter">
                                                     <span>{{item.PoaID}}</span>
                                                 </div>
                                             </log-cell-template>
+</ng-template>
                                         </log-column>
 
                                         <!-- AuthorizedName -->
                                         <log-column [width]="'110'" [Alignment]="'right'"
                                                     [header]="'Customs.ClientSearchByIDQuery.O.AuthorizedName' | TextCodeTranslationPipe"
                                                     [binding]="'AuthorizedName'" [Editable]="false">
-                                            <log-cell-template template="let item" #logcelltemplate>
+                                            <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                                 <div class="RightCenter">
                                                     <span>{{item.AuthorizedName}}</span>
                                                 </div>
                                             </log-cell-template>
+</ng-template>
                                         </log-column>
 
                                         <!-- CustomerActivityType -->
                                         <log-column [width]="'110'" [Alignment]="'right'"
                                                     [header]="'Customs.ClientSearchByIDQuery.O.CustomerActivityTypeName' | TextCodeTranslationPipe"
                                                     [binding]="'CustomerActivityTypeName'" [Editable]="false">
-                                            <log-cell-template template="let item" #logcelltemplate>
+                                            <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                                 <div class="RightCenter">
                                                     <span>{{item.CustomerActivityTypeName}}</span>
                                                 </div>
                                             </log-cell-template>
+</ng-template>
                                         </log-column>
 
                                         <!-- PoaStatusName -->
                                         <log-column [width]="'110'" [Alignment]="'right'"
                                                     [header]="'Customs.ClientSearchByIDQuery.O.PoaStatusName' | TextCodeTranslationPipe"
                                                     [binding]="'PoaStatusName'" [Editable]="false">
-                                            <log-cell-template template="let item" #logcelltemplate>
+                                            <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                                 <div class="RightCenter">
                                                     <span>{{item.PoaStatusName}}</span>
                                                 </div>
                                             </log-cell-template>
+</ng-template>
                                         </log-column>
 
                                         <!-- PoaAuthorizationTypeName -->
                                         <log-column [width]="'110'" [Alignment]="'right'"
                                                     [header]="'Customs.ClientSearchByIDQuery.O.PoaAuthorizationTypeName' | TextCodeTranslationPipe"
                                                     [binding]="'PoaAuthorizationTypeName'" [Editable]="false">
-                                            <log-cell-template template="let item" #logcelltemplate>
+                                            <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                                 <div class="RightCenter">
                                                     <span>{{item.PoaAuthorizationTypeName}}</span>
                                                 </div>
                                             </log-cell-template>
+</ng-template>
                                         </log-column>
 
                                         <!-- StartDate -->
                                         <log-column [width]="'110'" [Alignment]="'right'"
                                                     [header]="'Customs.ClientSearchByIDQuery.O.StartDate' | TextCodeTranslationPipe"
                                                     [binding]="'StartDate'" [Editable]="false">
-                                            <log-cell-template template="let item" #logcelltemplate>
+                                            <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                                 <div class="RightCenter">
                                                     <span>{{item.StartDate}}</span>
                                                 </div>
                                             </log-cell-template>
+</ng-template>
                                         </log-column>
 
                                         <!-- EndDate -->
                                         <log-column [width]="'110'" [Alignment]="'right'"
                                                     [header]="'Customs.ClientSearchByIDQuery.O.EndDate' | TextCodeTranslationPipe"
                                                     [binding]="'EndDate'" [Editable]="false">
-                                            <log-cell-template template="let item" #logcelltemplate>
+                                            <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                                 <div class="RightCenter">
                                                     <span>{{item.EndDate}}</span>
                                                 </div>
                                             </log-cell-template>
+</ng-template>
                                         </log-column>
 
                                     </logitude-edit-grid>
@@ -368,55 +406,65 @@
                                         <log-column [width]="'110'" [Alignment]="'right'"
                                                     [header]="'Customs.ClientSearchByIDQuery.O.IndicationPerClassificationTypeName' | TextCodeTranslationPipe"
                                                     [binding]="'IndicationPerClassificationTypeName'" [Editable]="false">
-                                            <log-cell-template template="let item" #logcelltemplate>
+                                            <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                                 <div class="RightCenter">
                                                     <span>{{item.IndicationPerClassificationTypeName}}</span>
                                                 </div>
                                             </log-cell-template>
+</ng-template>
                                         </log-column>
 
                                         <!-- ClassificationID -->
                                         <log-column [width]="'110'" [Alignment]="'right'"
                                                     [header]="'Customs.ClientSearchByIDQuery.O.ClassificationID' | TextCodeTranslationPipe"
                                                     [binding]="'ClassificationID'" [Editable]="false">
-                                            <log-cell-template template="let item" #logcelltemplate>
+                                            <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                                 <div class="RightCenter">
                                                     <span>{{item.ClassificationID}}</span>
                                                 </div>
                                             </log-cell-template>
+</ng-template>
                                         </log-column>
 
                                         <!-- GoodsItemDescription -->
                                         <log-column [width]="'110'" [Alignment]="'right'"
                                                     [header]="'Customs.ClientSearchByIDQuery.O.GoodsItemDescription' | TextCodeTranslationPipe"
                                                     [binding]="'GoodsItemDescription'" [Editable]="false">
-                                            <log-cell-template template="let item" #logcelltemplate>
+                                            <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                                 <div class="RightCenter">
                                                     <span>{{item.GoodsItemDescription}}</span>
                                                 </div>
                                             </log-cell-template>
+</ng-template>
                                         </log-column>
 
                                         <!-- StartDate -->
                                         <log-column [width]="'110'" [Alignment]="'right'"
                                                     [header]="'Customs.ClientSearchByIDQuery.O.StartDate' | TextCodeTranslationPipe"
                                                     [binding]="'StartDate'" [Editable]="false">
-                                            <log-cell-template template="let item" #logcelltemplate>
+                                            <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                                 <div class="RightCenter">
                                                     <span>{{item.StartDate}}</span>
                                                 </div>
                                             </log-cell-template>
+</ng-template>
                                         </log-column>
 
                                         <!-- EndDate -->
                                         <log-column [width]="'110'" [Alignment]="'right'"
                                                     [header]="'Customs.ClientSearchByIDQuery.O.EndDate' | TextCodeTranslationPipe"
                                                     [binding]="'EndDate'" [Editable]="false">
-                                            <log-cell-template template="let item" #logcelltemplate>
+                                            <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                                 <div class="RightCenter">
                                                     <span>{{item.EndDate}}</span>
                                                 </div>
                                             </log-cell-template>
+</ng-template>
                                         </log-column>
 
                                     </logitude-edit-grid>
@@ -439,77 +487,91 @@
                                         <log-column [width]="'110'" [Alignment]="'right'"
                                                     [header]="'Customs.ClientSearchByIDQuery.O.RequestID' | TextCodeTranslationPipe"
                                                     [binding]="'RequestID'" [Editable]="false">
-                                            <log-cell-template template="let item" #logcelltemplate>
+                                            <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                                 <div class="RightCenter">
                                                     <span>{{item.RequestID}}</span>
                                                 </div>
                                             </log-cell-template>
+</ng-template>
                                         </log-column>
 
                                         <!-- RequestTypeName -->
                                         <log-column [width]="'110'" [Alignment]="'right'"
                                                     [header]="'Customs.ClientSearchByIDQuery.O.RequestTypeName' | TextCodeTranslationPipe"
                                                     [binding]="'RequestTypeName'" [Editable]="false">
-                                            <log-cell-template template="let item" #logcelltemplate>
+                                            <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                                 <div class="RightCenter">
                                                     <span>{{item.RequestTypeName}}</span>
                                                 </div>
                                             </log-cell-template>
+</ng-template>
                                         </log-column>
 
                                         <!-- CreateDate -->
                                         <log-column [width]="'110'" [Alignment]="'right'"
                                                     [header]="'Customs.ClientSearchByIDQuery.O.CreateDate' | TextCodeTranslationPipe"
                                                     [binding]="'CreateDate'" [Editable]="false">
-                                            <log-cell-template template="let item" #logcelltemplate>
+                                            <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                                 <div class="RightCenter">
                                                     <span>{{item.CreateDate}}</span>
                                                 </div>
                                             </log-cell-template>
+</ng-template>
                                         </log-column>
 
                                         <!-- StationName -->
                                         <log-column [width]="'110'" [Alignment]="'right'"
                                                     [header]="'Customs.ClientSearchByIDQuery.O.StationName' | TextCodeTranslationPipe"
                                                     [binding]="'StationName'" [Editable]="false">
-                                            <log-cell-template template="let item" #logcelltemplate>
+                                            <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                                 <div class="RightCenter">
                                                     <span>{{item.StationName}}</span>
                                                 </div>
                                             </log-cell-template>
+</ng-template>
                                         </log-column>
 
                                         <!-- CustomerRequestStatusName -->
                                         <log-column [width]="'110'" [Alignment]="'right'"
                                                     [header]="'Customs.ClientSearchByIDQuery.O.PoaStatusName' | TextCodeTranslationPipe"
                                                     [binding]="'CustomerRequestStatusName'" [Editable]="false">
-                                            <log-cell-template template="let item" #logcelltemplate>
+                                            <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                                 <div class="RightCenter">
                                                     <span>{{item.CustomerRequestStatusName}}</span>
                                                 </div>
                                             </log-cell-template>
+</ng-template>
                                         </log-column>
 
                                         <!-- ApprovementStartDate -->
                                         <log-column [width]="'110'" [Alignment]="'right'"
                                                     [header]="'Customs.ClientSearchByIDQuery.O.ApprovementStartDate' | TextCodeTranslationPipe"
                                                     [binding]="'ApprovementStartDate'" [Editable]="false">
-                                            <log-cell-template template="let item" #logcelltemplate>
+                                            <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                                 <div class="RightCenter">
                                                     <span>{{item.ApprovementStartDate}}</span>
                                                 </div>
                                             </log-cell-template>
+</ng-template>
                                         </log-column>
 
                                         <!-- ApprovementEndDate -->
                                         <log-column [width]="'110'" [Alignment]="'right'"
                                                     [header]="'Customs.ClientSearchByIDQuery.O.ApprovementEndDate' | TextCodeTranslationPipe"
                                                     [binding]="'ApprovementEndDate'" [Editable]="false">
-                                            <log-cell-template template="let item" #logcelltemplate>
+                                            <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                                 <div class="RightCenter">
                                                     <span>{{item.ApprovementEndDate}}</span>
                                                 </div>
                                             </log-cell-template>
+</ng-template>
                                         </log-column>
 
                                     </logitude-edit-grid>

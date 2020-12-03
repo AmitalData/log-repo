@@ -89,7 +89,10 @@ export class QuoteClosingReasonPM {
     public OldEntityPM: QuoteClosingReasonPM;
 		
     public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
+       if(!this.DisableMarkAsDirty)
+       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -97,6 +100,7 @@ export class QuoteClosingReasonPM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "QuoteClosingReason");
            
         }
+	 }
     }
     private MyClone: QuoteClosingReasonPM;
 

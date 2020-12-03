@@ -16,7 +16,7 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
 
         }
 
-        public List<MainCarriageLeg> MainCarriageLegDataMapping(List<TransshipmentLeg> MyEntityPMs, int Tenant)
+        public List<MainCarriageLeg> MainCarriageLegDataMapping(List<TransshipmentLeg> MyEntityPMs, int Tenant, string ComputingPartnerName = "")
         {
             try
             {

@@ -124,6 +124,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             entityPOCO.RecipientType = entityPM.RecipientType;
             entityPOCO.RecipientValue = entityPM.RecipientValue;
             entityPOCO.PartnerObjectFieldCode = entityPM.PartnerObjectFieldCode;
+            entityPOCO.IsNotifyBack = entityPM.IsNotifyBack;
         }
 
         private void SaveAutomationHistory()

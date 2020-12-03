@@ -49,6 +49,21 @@ export class CustomsRequiredFieldPM {
     public set ObjectFieldName(newValue: string) { if (this.objectFieldName != newValue) { this.objectFieldName = newValue; this.MarkAsDirty("ObjectFieldName"); } }
        
 	 
+    private objectfieldCode: string;
+    public get ObjectfieldCode() { return this.objectfieldCode; }
+    public set ObjectfieldCode(newValue: string) { if (this.objectfieldCode != newValue) { this.objectfieldCode = newValue; this.MarkAsDirty("ObjectfieldCode"); } }
+       
+	 
+    private isImport: boolean;
+    public get IsImport() { return this.isImport; }
+    public set IsImport(newValue: boolean) { if (this.isImport != newValue) { this.isImport = newValue; this.MarkAsDirty("IsImport"); } }
+       
+	 
+    private isExport: boolean;
+    public get IsExport() { return this.isExport; }
+    public set IsExport(newValue: boolean) { if (this.isExport != newValue) { this.isExport = newValue; this.MarkAsDirty("IsExport"); } }
+       
+	 
 
     public OldEntityPM: CustomsRequiredFieldPM;
 		

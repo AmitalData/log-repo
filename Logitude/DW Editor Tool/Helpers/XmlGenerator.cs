@@ -12,6 +12,8 @@ namespace DW_Editor_Tool.Helpers
 {
     public class XmlGenerator
     {
+
+     public static XmlNode indexesXmlNode = null;
         public static bool GenerateXmlToFile(DWObjectTableViewModel tableViewModel)
         {
             try
@@ -42,15 +44,31 @@ namespace DW_Editor_Tool.Helpers
                 SetAttribute("AdditionalFactCode", GetStringValue(tableViewModel.AdditionalFactCode), entityElement);
                 SetAttribute("AdditionalFactForeignKey", GetStringValue(tableViewModel.AdditionalFactForeignKey), entityElement);
 
+                SetAttribute("ParentFactCode", GetStringValue(tableViewModel.ParentFactCode), entityElement);
+                SetAttribute("RecordType", GetStringValue(tableViewModel.RecordType), entityElement);
+                SetAttribute("DisplayName", GetStringValue(tableViewModel.DisplayName), entityElement);
+
 
                 XmlElement fieldsTagElement = doc.CreateElement("fields");
                 entityElement.AppendChild(fieldsTagElement);
                 BuildFieldTags(tableViewModel, doc, fieldsTagElement);
 
+                entityElement.AppendChild(fieldsTagElement);
+
+                XmlNode newBook = doc.ImportNode(indexesXmlNode, true);
+                entityElement.AppendChild(newBook);
+
+
+
+
+                ////entityElement.AppendChild();
+
+
+
                 if (!string.IsNullOrEmpty(App.CurrentFilePath))
                 {
                     doc.Save(App.CurrentFilePath);
-                   
+
                     return true;
                 }
                 else
@@ -147,6 +165,10 @@ namespace DW_Editor_Tool.Helpers
                         tableViewModel.AdditionalFactCode = GetAttributeStringValue(entity.Attributes["AdditionalFactCode"]);
                         tableViewModel.AdditionalFactForeignKey = GetAttributeStringValue(entity.Attributes["AdditionalFactForeignKey"]);
 
+                        tableViewModel.ParentFactCode = GetAttributeStringValue(entity.Attributes["ParentFactCode"]);
+                        tableViewModel.RecordType = GetAttributeStringValue(entity.Attributes["RecordType"]);
+                        tableViewModel.DisplayName = GetAttributeStringValue(entity.Attributes["DisplayName"]);
+
 
 
                         List<DWObjectFieldViewModel> fieldsList = new List<DWObjectFieldViewModel>();
@@ -162,6 +184,11 @@ namespace DW_Editor_Tool.Helpers
                                     }
                                 }
                             }
+
+                            if (childNode.Name == "Indexes") indexesXmlNode = childNode;
+
+                            
+
                         }
                 
                         tableViewModel.BuildObsList(fieldsList);

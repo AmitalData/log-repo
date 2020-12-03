@@ -74,7 +74,10 @@ export class IATACodePM {
     public OldEntityPM: IATACodePM;
 		
     public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
+       if(!this.DisableMarkAsDirty)
+       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -82,6 +85,7 @@ export class IATACodePM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "IATACode");
            
         }
+	 }
     }
     private MyClone: IATACodePM;
 

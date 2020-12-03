@@ -39,7 +39,7 @@ export class PaymentMessagesService {
             return this._http.post(
                 this._apiUrl + '/PostPaymentOrderQueryRequest/',
                 JSON.stringify(entity),
-                { headers: authHeader }).map((res) => {
+                ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
 
                     serviceResponse.Result = res;
 
@@ -65,7 +65,7 @@ export class PaymentMessagesService {
             return this._http.post(
                 this._apiUrl + '/PostMasavPaymentsToAgentRequest/',
                 JSON.stringify(entity),
-                { headers: authHeader }).map((res) => {
+                ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
 
                     serviceResponse.Result = res;
 
@@ -91,7 +91,7 @@ export class PaymentMessagesService {
             return this._http.post(
                 this._apiUrl + '/PostNewPaymentRequest/',
                 JSON.stringify(entity),
-                { headers: authHeader }).map((res) => {
+                ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
 
                     serviceResponse.Result = res;
 

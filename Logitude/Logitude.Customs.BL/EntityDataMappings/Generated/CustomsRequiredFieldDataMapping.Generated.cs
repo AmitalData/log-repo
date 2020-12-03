@@ -25,7 +25,10 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         Id, 
 	         Tenant, 
 	         ObjectTableId, 
-	         ObjectfieldId,
+	         ObjectfieldId, 
+	         ObjectfieldCode, 
+	         IsImport, 
+	         IsExport,
 	      }
 
 
@@ -36,7 +39,10 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         Tenant, 
 	         ObjectTableId, 
 	         ObjectfieldId, 
-	         ObjectFieldName,
+	         ObjectFieldName, 
+	         ObjectfieldCode, 
+	         IsImport, 
+	         IsExport,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -58,6 +64,21 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ObjectfieldId))
             {
 				entityPOCO.ObjectfieldId = entityPM.ObjectfieldId;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ObjectfieldCode))
+            {
+				entityPOCO.ObjectfieldCode = entityPM.ObjectfieldCode;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsImport))
+            {
+				entityPOCO.IsImport = entityPM.IsImport;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsExport))
+            {
+				entityPOCO.IsExport = entityPM.IsExport;
 			}
 			}
 
@@ -84,6 +105,21 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.ObjectfieldId = entityPOCO.ObjectfieldId;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ObjectfieldCode))
+            {
+					entityPM.ObjectfieldCode = entityPOCO.ObjectfieldCode;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsImport))
+            {
+					entityPM.IsImport = entityPOCO.IsImport;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsExport))
+            {
+					entityPM.IsExport = entityPOCO.IsExport;
+            }
+
 		}
 
 		public void PMToOldPM(CustomsRequiredFieldPM entityPM, CustomsRequiredFieldPM oldEntityPM)
@@ -103,6 +139,21 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ObjectfieldId))
             {
                 oldEntityPM.ObjectfieldId = entityPM.ObjectfieldId;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ObjectfieldCode))
+            {
+                oldEntityPM.ObjectfieldCode = entityPM.ObjectfieldCode;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsImport))
+            {
+                oldEntityPM.IsImport = entityPM.IsImport;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsExport))
+            {
+                oldEntityPM.IsExport = entityPM.IsExport;
             }
 			
 		}

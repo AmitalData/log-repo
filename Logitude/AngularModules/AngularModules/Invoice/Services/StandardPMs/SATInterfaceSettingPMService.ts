@@ -153,6 +153,7 @@ export class SATInterfaceSettingPMService {
         if (!entityPM) {
             
             entityPM = new SATInterfaceSettingPM();
+			entityPM.DisableMarkAsDirty = true;
         }
 
 		var customFields: Array<string> = [];
@@ -193,6 +194,8 @@ export class SATInterfaceSettingPMService {
             entityPM.OldEntityPM = null;
         }
 		entityPM.IsDirty = false;
+	    entityPM.DisableMarkAsDirty = false;
+
         return entityPM;
     }
 

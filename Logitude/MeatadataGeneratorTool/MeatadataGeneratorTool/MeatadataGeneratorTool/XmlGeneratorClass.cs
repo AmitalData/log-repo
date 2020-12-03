@@ -1729,22 +1729,27 @@ namespace MeatadataGeneratorTool
                     foreach (var item in f._data)
                     {
                         int n = 0;
-                        if (item.Value.ToString() == "true" || item.Value.ToString() == "false" || int.TryParse(item.Value.ToString(), out n))
+                        if (item.Value != null)
                         {
-                            SetAttribute(item.Key, item.Value.ToString(), RecordElement, null);
-                        }
-                        else
-                        {
-                            if (item.Value.ToString().StartsWith("\""))
+                            if (item.Value.ToString() == "true" || item.Value.ToString() == "false" || int.TryParse(item.Value.ToString(), out n))
                             {
                                 SetAttribute(item.Key, item.Value.ToString(), RecordElement, null);
                             }
                             else
                             {
-                                SetAttribute(item.Key, GetStringValue(item.Value.ToString()), RecordElement, null);
-                            }
+                                if (item.Value.ToString().StartsWith("\""))
+                                {
+                                    SetAttribute(item.Key, item.Value.ToString(), RecordElement, null);
+                                }
+                                else
+                                {
+                                    SetAttribute(item.Key, GetStringValue(item.Value.ToString()), RecordElement, null);
+                                }
 
+                            }
                         }
+                        else
+                            SetAttribute(item.Key, null, RecordElement, null);
 
                     }
                 }
@@ -1794,6 +1799,14 @@ namespace MeatadataGeneratorTool
                     {
                         SetAttribute("FeatureDefaultText", GetStringValue(f.FeatureDefaultText), MenuButtonElement, null);
                     }
+                    if (!string.IsNullOrEmpty(f.HtmlComponentPath))
+                    {
+                        SetAttribute("HtmlComponentPath", GetStringValue(f.HtmlComponentPath), MenuButtonElement, null);
+                    }
+                    if (f.Width != 0)
+                    {
+                        SetAttribute("Width", f.Width.ToString(), MenuButtonElement, null);
+                    }
                     if (f.MenuButtonItems != null)
                     {
                         foreach (var item in f.MenuButtonItems)
@@ -1828,6 +1841,14 @@ namespace MeatadataGeneratorTool
                             if (!string.IsNullOrEmpty(item.FeatureDefaultText))
                             {
                                 SetAttribute("FeatureDefaultText", GetStringValue(item.FeatureDefaultText), MenuItemElement, null);
+                            }
+                            if (!string.IsNullOrEmpty(item.HtmlComponentPath))
+                            {
+                                SetAttribute("HtmlComponentPath", GetStringValue(item.HtmlComponentPath), MenuItemElement, null);
+                            }
+                            if (item.Width != 0)
+                            {
+                                SetAttribute("Width", item.Width.ToString(), MenuItemElement, null);
                             }
                         }
                     }
@@ -2003,7 +2024,9 @@ namespace MeatadataGeneratorTool
                     XmlDocument doc = new XmlDocument();
                     XmlElement tableElement = (XmlElement)doc.AppendChild(doc.CreateElement("Table"));
 
-                    tableElement.SetAttribute("Name", table.DBTableName);
+                    string tableName = table.DBTableName.ToLower().StartsWith("customs.") ? table.DBTableName.Split('.')[1] : table.DBTableName;
+
+                    tableElement.SetAttribute("Name", tableName);
 
                     if (!string.IsNullOrEmpty(table.DBTableShortName))
                     {
@@ -2014,15 +2037,17 @@ namespace MeatadataGeneratorTool
 
                     if (!string.IsNullOrEmpty(table.DBTableOldNames))
                     {
-                        if (table.DBTableOldNames.Contains(","))
-                        {
-                            var oldNamesExceptName = table.DBTableOldNames.Split(',').Where(x => x != table.DBTableName);
+                        string tableOldNames = string.Join(",", table.DBTableOldNames.Split(',').Select(n => n.ToLower().StartsWith("customs.") ? n.Split('.')[1] : n).ToArray());
 
-                            dbTableOldNames = oldNamesExceptName.Count() == 1 ? oldNamesExceptName.First() : string.Join(",", oldNamesExceptName.ToArray());
+                        if (tableOldNames.Contains(","))
+                        {
+                            var oldNamesExceptName = tableOldNames.Split(',').Where(x => x.ToLower() != tableName.ToLower() && x.ToLower() != table.DBTableShortName.ToLower());
+
+                            dbTableOldNames = oldNamesExceptName.Count() == 1 ? oldNamesExceptName.First() : string.Join(",", oldNamesExceptName.Reverse().Distinct(StringComparer.OrdinalIgnoreCase).ToArray());
                         }
                         else
                         {
-                            dbTableOldNames = table.DBTableName == table.DBTableOldNames ? null : table.DBTableOldNames;
+                            dbTableOldNames = tableName.ToLower() == tableOldNames.ToLower() ? null : tableOldNames;
                         }
                     }
 
@@ -2086,13 +2111,13 @@ namespace MeatadataGeneratorTool
                         {
                             if (fieldOldNames.Contains(","))
                             {
-                                var oldNamesExceptName = fieldOldNames.Split(',').Where(x => x != fieldName && x != fieldShortName);
+                                var oldNamesExceptName = fieldOldNames.Split(',').Where(x => x.ToLower() != fieldName.ToLower() && x.ToLower() != fieldShortName.ToLower());
 
-                                oldNames = oldNamesExceptName.Count() == 1 ? oldNamesExceptName.First() : string.Join(",", oldNamesExceptName.ToArray());
+                                oldNames = oldNamesExceptName.Count() == 1 ? oldNamesExceptName.First() : string.Join(",", oldNamesExceptName.Reverse().Distinct(StringComparer.OrdinalIgnoreCase).ToArray());
                             }
                             else
                             {
-                                oldNames = (fieldName == fieldOldNames) ? null : fieldOldNames;
+                                oldNames = (fieldName.ToLower() == fieldOldNames.ToLower()) ? null : fieldOldNames;
                             }
                         }
 
@@ -2463,7 +2488,7 @@ namespace MeatadataGeneratorTool
 
                 return new ForeignEntityData
                 {
-                    ReferencedTable = referencedTable.Contains("Customs.") ? referencedTable.Split('.')[1] : referencedTable,
+                    ReferencedTable = referencedTable.ToLower().StartsWith("customs.") ? referencedTable.Split('.')[1] : referencedTable,
                     ReferencedTableSchema = referencedTableSchema,
                     ReferencedColumn = referencedColumn
                 };
@@ -2506,7 +2531,7 @@ namespace MeatadataGeneratorTool
 
                 return new ForeignEntityData
                 {
-                    ReferencedTable = referencedTable.Contains("Customs.") ? referencedTable.Split('.')[1] : referencedTable,
+                    ReferencedTable = referencedTable.ToLower().StartsWith("customs.") ? referencedTable.Split('.')[1] : referencedTable,
                     ReferencedTableSchema = referencedTableSchema,
                     ReferencedColumn = referencedColumn
                 };

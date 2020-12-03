@@ -38,6 +38,10 @@ using Unifreight.BL.EntityUpdateServices;
 using Logitude.Server.Tools.Models;
 using Logitude.AmitalMessaging.Infrastructure.Transmission;
 using Logitude.Customs.Def.Messaging.Customs;
+using System.Globalization;
+using Logitude.Customs.BL.Messaging.L2U.CustomFile;
+using Logitude.CustomsMessaging.MessagingServices;
+using Logitude.Customs.BL.Messaging.Customs;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {
@@ -141,7 +145,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         if (customsRequestsSheetPMList.Count > 0)
                         {
                             var RequestInProgressInterfaceTypeName = customsRequestsSheetPMList.First().InterfaceTypeName;
-                            text = TranslateTextsClass.Translate("Customs.General.RequestInProgress", _MyDeclarationPM.Tenant,true);
+                            text = TranslateTextsClass.Translate("Customs.General.RequestInProgress", _MyDeclarationPM.Tenant, true);
                             text = String.Format(text, RequestInProgressInterfaceTypeName);
                         }
                     }
@@ -178,10 +182,10 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             text = text + " (המכולות בתיק העמילות עודכנו)";
                             this.MyResponseData.UserMessage = text;
                         }
-                        if (requestParams.IsAngularClient != true)requestParams.AutoSend = true; // temp - AutoSend implemented only in angular
+                        if (requestParams.IsAngularClient != true) requestParams.AutoSend = true; // temp - AutoSend implemented only in angular
                         string _status = null;
                         DateTime? _statusDate = DateTime.Now;
-                        if (customResponse.Cargo != null && 
+                        if (customResponse.Cargo != null &&
                             customResponse.Cargo.CargoAdditionalData != null && customResponse.Cargo.CargoAdditionalData.Count() > 0)
                         {
                             if (customResponse.Cargo.totalNumberOfPackeges == customResponse.Cargo.CargoAdditionalData[0].totalRecordNumberOfPackeges && customResponse.Cargo.CargoAdditionalData[0].StorageDate != null)
@@ -205,65 +209,111 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             CargoData = "",
                             StatusDate = _statusDate,
                             FileAdditionalData = _FileAdditionalData
-                    };
+                        };
                         _MyDeclarationPM.CurrentContextTag = _cargoContext;
 
                         OpenUnifreighTask();
+                        bool  IsAvailabilityDate2 = false;
                         myDeclarationUpdateService.SuppressNewConcurrencyGUID = true;
+                        if (_status == "SST" || _status == "SMG")
+                            if (_MyDeclarationPM.AvailabilityDate == null)
+                            {
+                                _MyDeclarationPM.AvailabilityDate = DateTime.Now;
+                                IsAvailabilityDate2 = true;
+                            }
                         myDeclarationUpdateService.Update(_MyDeclarationPM, true);
+
+                        if (_status == "SST" || _status == "SMG")
+                            SendPayment(_MyDeclarationPM, context, requestParams, IsAvailabilityDate2);
+
                         //Yuval Chalup 13.03.2016 TASK-20524 --->
 
                         return;
                     }
-                    
+
                     LogMessagingUtil.Instance.AppendLine("Analyze Manifest response " + requestParams.DeclarationNumber);
                     customResponse.Cargo = customResponse.Cargo ?? new MN_NG_8241_Cargo_MessageCargo();
                     customResponse.Cargo.CargoAdditionalData = customResponse.Cargo.CargoAdditionalData ?? new MN_NG_8241_Cargo_MessageCargoCargoAdditionalData[] { new MN_NG_8241_Cargo_MessageCargoCargoAdditionalData() };
 
-
+                    Boolean _IsRunOver = false;
+                    Boolean _IsChanged = false;
                     if (_MyDeclarationPM.Consignments != null && _MyDeclarationPM.Consignments.Count() > 0)
                     {
-                        if (String.IsNullOrWhiteSpace(_MyDeclarationPM.Consignments[0].UnloadPortCode))
+                        string defValue = GetDefault("ISRAEL", "CGG_MAN_RUNOVR", "NON", "NON", _MyDeclarationPM.Tenant);
+                        if (defValue == "Y")
+                        {
+                            _IsRunOver = true;
+                        }
+                        if ((String.IsNullOrWhiteSpace(_MyDeclarationPM.Consignments[0].UnloadPortCode) || _IsRunOver) && _MyDeclarationPM.Consignments[0].UnloadPortCode != customResponse.Cargo.CargoAdditionalData.First().unloadingLocationID)
                         {
                             _MyDeclarationPM.Consignments[0].UnloadPortCode = customResponse.Cargo.CargoAdditionalData.First().unloadingLocationID;
-                            _MyDeclarationPM.Consignments[0].ChangeSetOp = ChangeSetOperation.Update; 
+                            _MyDeclarationPM.Consignments[0].ChangeSetOp = ChangeSetOperation.Update;
+                            if (!_IsChanged) _IsChanged = true;
                         }
-                        if (String.IsNullOrWhiteSpace(_MyDeclarationPM.Consignments[0].StorageSiteCode))
+                        if ((String.IsNullOrWhiteSpace(_MyDeclarationPM.Consignments[0].StorageSiteCode) || _IsRunOver) && _MyDeclarationPM.Consignments[0].StorageSiteCode != customResponse.Cargo.CargoAdditionalData.First().acceptedArrivalSiteID)
                         {
                             _MyDeclarationPM.Consignments[0].StorageSiteCode = customResponse.Cargo.CargoAdditionalData.First().acceptedArrivalSiteID;
-                            _MyDeclarationPM.Consignments[0].ChangeSetOp = ChangeSetOperation.Update; 
-                        }
-                        if (String.IsNullOrWhiteSpace(_MyDeclarationPM.Consignments[0].LoadingPortCode) && !String.IsNullOrWhiteSpace(customResponse.Cargo.CargoAdditionalData.First().LoadingSite))
-                        {
-                            _MyDeclarationPM.Consignments[0].LoadingPortCode = customResponse.Cargo.CargoAdditionalData.First().LoadingSite.Substring(0,5);
                             _MyDeclarationPM.Consignments[0].ChangeSetOp = ChangeSetOperation.Update;
+                            if (!_IsChanged) _IsChanged = true;
                         }
-                        //If there are NO packages OR If there is one DUMMY package (without wight, quantity and pack type)
-                        if (_MyDeclarationPM.Consignments[0].ConsignmentPackages == null || _MyDeclarationPM.Consignments[0].ConsignmentPackages.Count() == 0 ||
-                            (_MyDeclarationPM.Consignments[0].ConsignmentPackages.Count() == 1 &&
-                            //(_MyDeclarationPM.Consignments[0].ConsignmentPackages.First().PackageTypeCode == null || _MyDeclarationPM.Consignments[0].ConsignmentPackages.First().PackageTypeCode == "") &&
-                            (_MyDeclarationPM.Consignments[0].ConsignmentPackages.First().PackageQuantity == null || _MyDeclarationPM.Consignments[0].ConsignmentPackages.First().PackageQuantity == 0) &&
-                            (_MyDeclarationPM.Consignments[0].ConsignmentPackages.First().GrossMassMeasure == null || _MyDeclarationPM.Consignments[0].ConsignmentPackages.First().GrossMassMeasure == 0)))
+                        if ((String.IsNullOrWhiteSpace(_MyDeclarationPM.Consignments[0].LoadingPortCode) || _IsRunOver) && (!String.IsNullOrWhiteSpace(customResponse.Cargo.CargoAdditionalData.First().LoadingSite) && _MyDeclarationPM.Consignments[0].LoadingPortCode != customResponse.Cargo.CargoAdditionalData.First().LoadingSite.Substring(0, 5)))
                         {
-                            //If there is one DUMMY package (without wight, quantity and pack type) - Set first package as Update
-                            if (_MyDeclarationPM.Consignments[0].ConsignmentPackages.Count() == 1 &&
-                            //(_MyDeclarationPM.Consignments[0].ConsignmentPackages.First().PackageTypeCode == null || _MyDeclarationPM.Consignments[0].ConsignmentPackages.First().PackageTypeCode == "") &&
-                            (_MyDeclarationPM.Consignments[0].ConsignmentPackages.First().PackageQuantity == null || _MyDeclarationPM.Consignments[0].ConsignmentPackages.First().PackageQuantity == 0) &&
-                            (_MyDeclarationPM.Consignments[0].ConsignmentPackages.First().GrossMassMeasure == null || _MyDeclarationPM.Consignments[0].ConsignmentPackages.First().GrossMassMeasure == 0))
-                            {
-                                _MyDeclarationPM.Consignments[0].ConsignmentPackages[0].ChangeSetOp = ChangeSetOperation.Delete; 
-                            }
-                            //_MyDeclarationPM.Consignments[0].ConsignmentPackages = GetDeclarationConsignmentsPackagesPM(customResponse, _MyDeclarationPM.Consignments[0]);
-                            foreach (var consignmentPackageDelete in _MyDeclarationPM.Consignments[0].ConsignmentPackages)
-                            {
-                                consignmentPackageDelete.ChangeSetOp = ChangeSetOperation.Delete; 
-                            }
-                            foreach (var consignmentPackageInsert in GetDeclarationConsignmentsPackagesPM(customResponse, _MyDeclarationPM.Consignments[0]))
-                            {
-                                _MyDeclarationPM.Consignments[0].ConsignmentPackages.Add(consignmentPackageInsert); 
-                            }
-                            _MyDeclarationPM.Consignments[0].ChangeSetOp = ChangeSetOperation.Update; 
+                            _MyDeclarationPM.Consignments[0].LoadingPortCode = customResponse.Cargo.CargoAdditionalData.First().LoadingSite.Substring(0, 5);
+                            _MyDeclarationPM.Consignments[0].ChangeSetOp = ChangeSetOperation.Update;
+                            if (!_IsChanged) _IsChanged = true;
                         }
+                        if ((String.IsNullOrWhiteSpace(_MyDeclarationPM.Consignments[0].OriginCountryCode) || _IsRunOver) && (!String.IsNullOrWhiteSpace(customResponse.Cargo.CargoAdditionalData.First().LoadingSite) && _MyDeclarationPM.Consignments[0].OriginCountryCode != customResponse.Cargo.CargoAdditionalData.First().LoadingSite.Substring(0, 2)))
+                        {
+                            _MyDeclarationPM.Consignments[0].OriginCountryCode = customResponse.Cargo.CargoAdditionalData.First().LoadingSite.Substring(0, 2);
+                            _MyDeclarationPM.Consignments[0].ChangeSetOp = ChangeSetOperation.Update;
+                            if (!_IsChanged) _IsChanged = true;
+                        }
+
+                        //if (_MyDeclarationPM.Consignments[0].ConsignmentInternalTransitions != null
+                        //    && _MyDeclarationPM.Consignments[0].ConsignmentInternalTransitions.Count > 0
+                        //    && _MyDeclarationPM.Consignments[0].ConsignmentInternalTransitions[0].SiteCode != null
+                        //    && customResponse.CargoItem != null)
+                        //{
+                        //    LogMessagingUtil.Instance.AppendLine("Analyze Manifest response GetDeclarationConsignmentsPackagesPMForInternalTransitions (MN_NG_8241_CargoResponseService)");
+                        //    _MyDeclarationPM.Consignments[0].ConsignmentPackages = GetDeclarationConsignmentsPackagesPMForInternalTransitions(customResponse, _MyDeclarationPM.Consignments[0]);
+                        //    _MyDeclarationPM.Consignments[0].ChangeSetOp = ChangeSetOperation.Update;
+                        //    if (!_IsChanged) _IsChanged = true;
+                        //}
+                        //else
+                        //{
+                            GetDeclarationConsignmentsPackagesPM(customResponse);
+                            ////If there are NO packages OR If there is one DUMMY package (without wight, quantity and pack type)
+                            //if (_MyDeclarationPM.Consignments[0].ConsignmentPackages == null || _MyDeclarationPM.Consignments[0].ConsignmentPackages.Count() == 0 ||
+                            //    (_MyDeclarationPM.Consignments[0].ConsignmentPackages.Count() == 1 &&
+                            //    //(_MyDeclarationPM.Consignments[0].ConsignmentPackages.First().PackageTypeCode == null || _MyDeclarationPM.Consignments[0].ConsignmentPackages.First().PackageTypeCode == "") &&
+                            //    (_MyDeclarationPM.Consignments[0].ConsignmentPackages.First().PackageQuantity == null || _MyDeclarationPM.Consignments[0].ConsignmentPackages.First().PackageQuantity == 0) &&
+                            //    (_MyDeclarationPM.Consignments[0].ConsignmentPackages.First().GrossMassMeasure == null || _MyDeclarationPM.Consignments[0].ConsignmentPackages.First().GrossMassMeasure == 0)))
+                            //{
+                            //    //If there is one DUMMY package (without wight, quantity and pack type) - Set first package as Update
+                            //    if (_MyDeclarationPM.Consignments[0].ConsignmentPackages.Count() == 1 &&
+                            //    //(_MyDeclarationPM.Consignments[0].ConsignmentPackages.First().PackageTypeCode == null || _MyDeclarationPM.Consignments[0].ConsignmentPackages.First().PackageTypeCode == "") &&
+                            //    (_MyDeclarationPM.Consignments[0].ConsignmentPackages.First().PackageQuantity == null || _MyDeclarationPM.Consignments[0].ConsignmentPackages.First().PackageQuantity == 0) &&
+                            //    (_MyDeclarationPM.Consignments[0].ConsignmentPackages.First().GrossMassMeasure == null || _MyDeclarationPM.Consignments[0].ConsignmentPackages.First().GrossMassMeasure == 0))
+                            //    {
+                            //        _MyDeclarationPM.Consignments[0].ConsignmentPackages[0].ChangeSetOp = ChangeSetOperation.Delete;
+                            //    }
+                            //    //_MyDeclarationPM.Consignments[0].ConsignmentPackages = GetDeclarationConsignmentsPackagesPM(customResponse, _MyDeclarationPM.Consignments[0]);
+                            //    LogMessagingUtil.Instance.AppendLine("Analyze Manifest response GetDeclarationConsignmentsPackagesPM");
+                            //    foreach (var consignmentPackageDelete in _MyDeclarationPM.Consignments[0].ConsignmentPackages)
+                            //    {
+                            //        consignmentPackageDelete.ChangeSetOp = ChangeSetOperation.Delete;
+                            //    }
+                            //    foreach (var consignmentPackageInsert in GetDeclarationConsignmentsPackagesPM(customResponse, _MyDeclarationPM.Consignments[0]))
+                            //    {
+                            //        _MyDeclarationPM.Consignments[0].ConsignmentPackages.Add(consignmentPackageInsert);
+                            //    }
+                            //    _MyDeclarationPM.Consignments[0].ChangeSetOp = ChangeSetOperation.Update;
+                            //    if (!_IsChanged) _IsChanged = true;
+                            //}
+
+                        if(_MyDeclarationPM.Consignments[0].ChangeSetOp == ChangeSetOperation.Update)
+                                if (!_IsChanged) _IsChanged = true;
+             //           }
                     }
                     if (_MyDeclarationPM.Consignments[0].ChangeSetOp == ChangeSetOperation.None)
                     {
@@ -274,13 +324,14 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         myDeclarationUpdateService.SuppressNewConcurrencyGUID = false;
                     }
                     _MyDeclarationPM.ChangeSetOp = ChangeSetOperation.Update;
+                    if (_IsChanged) this._MyDeclarationPM.MarkAsChanged = true;
                     //_MyDeclarationPM.CurrentContextTag = GetCFIPACKSXML(customResponse);
                     var myCFIPACKS = GetCFIPACKSXML(customResponse);
                     var myFileAdditionalData = GetFileAdditionalDataXML(customResponse);
                     if (requestParams.IsAngularClient != true) requestParams.AutoSend = true; // temp - AutoSend implemented only in angular
                     string status = null;
                     DateTime? statusDate = DateTime.Now;
-                    if (customResponse.Cargo != null && customResponse.Cargo.CargoAdditionalData != null && customResponse.Cargo.CargoAdditionalData.Count() > 0 && customResponse.Cargo.totalNumberOfPackeges == customResponse.Cargo.CargoAdditionalData[0].totalRecordNumberOfPackeges && customResponse.Cargo.CargoAdditionalData[0].StorageDate != null) 
+                    if (customResponse.Cargo != null && customResponse.Cargo.CargoAdditionalData != null && customResponse.Cargo.CargoAdditionalData.Count() > 0 && customResponse.Cargo.totalNumberOfPackeges == customResponse.Cargo.CargoAdditionalData[0].totalRecordNumberOfPackeges && customResponse.Cargo.CargoAdditionalData[0].StorageDate != null)
                     {
                         if (_MyDeclarationPM.TransportModeId == "A")
                         {
@@ -301,8 +352,21 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         StatusDate = statusDate,
                         FileAdditionalData = myFileAdditionalData
                     };
+
+                    bool IsAvailabilityDate = false;
+
                     _MyDeclarationPM.CurrentContextTag = cargoContext;
+                    if (status == "SST" || status == "SMG")
+                        if (_MyDeclarationPM.AvailabilityDate == null)
+                        {
+                            IsAvailabilityDate = true;
+                            _MyDeclarationPM.AvailabilityDate = DateTime.Now;
+                        }
                     myDeclarationUpdateService.Update(_MyDeclarationPM, true);
+
+                    if (status=="SST" || status=="SMG")
+                        SendPayment(_MyDeclarationPM, context, requestParams, IsAvailabilityDate);
+
                 }
             }
 
@@ -314,6 +378,244 @@ namespace Logitude.CustomsMessaging.ResponseServices
             MyResponseData.ApplicationID = requestParams.DeclarationId;
             MyResponseData.UserMessage = "שליחת מסר מצהר בוצעה בהצלחה. " + MyResponseData.UserMessage; //Yuval Chalup 12.09.2016 CA-271500 (Concat)
         }
+
+         private string GetDefault(string DISTRID, string DEFID, string BRANCHID, string CARDID, int tenant)
+        {
+            AmitalContext amitalContext = AmitalContext.GetContext(tenant);
+            var myGDFDATAQueryService = new GDFDATAQueryService(amitalContext);
+
+            if (DISTRID == null || DEFID == null || BRANCHID == null || CARDID == null)
+            {
+                return ("");
+            }
+
+            GDFDATAPM myGDFDATAPM = myGDFDATAQueryService.GetSingle(DISTRID, DEFID, BRANCHID, CARDID, false, true);
+            if (myGDFDATAPM == null)
+            {
+                return ("");
+            }
+            return (myGDFDATAPM.DEFDATA);
+        }
+
+
+        private void SendPayment(DeclarationPM declarationPM, ICustomContext dbContext, CargoQueryRequestParams requestParams,bool IsAvailabilityDate)
+        {
+            if (!IsAvailabilityDate) return;
+
+            var myDeclarationPaymentQueryService = new DeclarationPaymentQueryService(dbContext);
+            var declarationPaymentPM = myDeclarationPaymentQueryService.GetSingle(declarationPM.Id, true, false);
+            var myDeclarationPaymentUpdateService = new DeclarationPaymentUpdateService(dbContext, new Dictionary<string, IContext>(), requestParams.Tenant); ;
+
+            //var myDeclarationQueryService = new DeclarationQueryService(dbContext);
+            //var myDeclarationUpdateService = new DeclarationUpdateService(dbContext, new Dictionary<string, IContext>(), requestParams.Tenant);
+            //myDeclarationQueryService.GetSingle(requestParams.DeclarationId, true, false);
+            //_MyDeclarationPM.AvailabilityDate = DateTime.Now;
+            //_MyDeclarationPM.ChangeSetOp = ChangeSetOperation.Update;
+            //using (var scopeNewCRS = TransactionFactory.GetNewTransaction())
+            //{
+            //    myDeclarationUpdateService.Update(_MyDeclarationPM, true);
+
+            //    scopeNewCRS.Complete();
+            //}
+            if (declarationPaymentPM != null)
+            {
+                if (declarationPaymentPM.AutomaticPayment == 1)
+                {
+                    if (!CheckFileCredit(declarationPM, declarationPaymentPM, requestParams.LoggingUserId))
+                    {
+
+                        var MyUnifreightEventParam = new UnifreightEventParam()
+                        {
+                            Code = "APAYF",
+                            Mode = UnifreightEventMode.@new,
+                            EventDateTime = DateTime.Now,
+                            Entname = "CFIFILEM",
+                            PrimaryNum = declarationPM.CustomFileNo,
+                            EventRemarks = "לא אושר בבקרת אשראי",
+                        };
+                        LogMessagingUtil.Instance.AppendLine("MyUnifreightEventParam = " + MyUnifreightEventParam ?? "NULL");
+                        var myOpenUnifreighTask = new UnifreightEventTaskService();
+                        myOpenUnifreighTask.UpsertEventLE2U(
+                            declarationPM.Tenant,
+                           requestParams.LoggingUserId,
+                            MyUnifreightEventParam);
+                    }
+                    else
+                    {
+                        try
+                        {
+                            DateTime requestDate = CheckIfBlockTime(declarationPM, declarationPaymentPM);
+                            declarationPaymentPM.PaymentDate = DateTime.Now;
+                            declarationPaymentPM.ChangeSetOp = ChangeSetOperation.Update;
+
+                            using (var scopeNewCRS = TransactionFactory.GetNewTransaction())
+                            {
+                                var requestParams2755 = new GenericRequestParams()
+                                {
+                                    Tenant = requestParams.Tenant,
+                                    LoggingEnabled = true,
+                                    LoggingObjectTableId = requestParams.LoggingObjectTableId,
+                                    LoggingEntityId = declarationPM.Id,
+                                    AppicationId = declarationPM.Id,
+                                    InterfaceTypeCode = "2755",
+                                    LoggingUserId = requestParams.LoggingUserId,
+                                    RequestVIA = SendRequestVIA.WebServiceBatch,
+
+                                };
+                                if (requestDate != DateTime.MinValue)
+                                {
+                                    requestDate = new DateTime(DateTime.Today.Year, DateTime.Today.Month, DateTime.Today.Day, requestDate.Hour, requestDate.Minute, requestDate.Second);
+                                    declarationPaymentPM.PaymentDate = requestDate;
+
+                                    requestParams2755.RequestVIAChangeDue = string.Concat("נרשמה בקשה מתוזמנת לתאריך ", requestDate.ToShortDateString(), " שעה ", requestDate.ToShortTimeString());// "הבקשה תשלח בעתיד";
+                                    requestParams2755.FutureSendDateTime = requestDate;
+                                     SBQMessageService.CreateSheetSBQMessage<GenericRequestParams>(requestParams2755, false, requestDate);
+
+                                }
+                                else
+                                {
+
+                                     SBQMessageService.CreateSheetSBQMessage<GenericRequestParams>(requestParams2755, false);
+                                }
+                           
+
+                                scopeNewCRS.Complete();
+                            }
+                            //using (var scopeNewCRS = TransactionFactory.GetNewTransaction())
+                            //{=
+                            //    myDeclarationPaymentUpdateService.Update(declarationPaymentPM, true);
+                            //    scopeNewCRS.Complete();
+
+                            //}
+                            myDeclarationPaymentUpdateService.Update(declarationPaymentPM, true);
+                        }
+                        catch (System.Exception)
+                        {
+                            var MyUnifreightEventParam = new UnifreightEventParam()
+                            {
+                                Code = "APAYF",
+                                Mode = UnifreightEventMode.@new,
+                                EventDateTime = DateTime.Now,
+                                Entname = "CFIFILEM",
+                                PrimaryNum = declarationPM.CustomFileNo,
+                                EventRemarks = "כשלון בשליחת הגשת תשלום",
+                            };
+                            LogMessagingUtil.Instance.AppendLine("MyUnifreightEventParam = " + MyUnifreightEventParam ?? "NULL");
+                            var myOpenUnifreighTask = new UnifreightEventTaskService();
+                            myOpenUnifreighTask.UpsertEventLE2U(
+                                declarationPM.Tenant,
+                               requestParams.LoggingUserId,
+                                MyUnifreightEventParam);
+                            throw;
+                        }
+                    }
+                }
+            }
+
+        }
+
+
+        private DateTime CheckIfBlockTime(DeclarationPM declarationPM, DeclarationPaymentPM declarationPaymentPM)
+        {
+            var declarationQS = new DeclarationQueryService(declarationPaymentPM.Tenant);
+            string timesCompany = declarationQS.GetDefault("ISRAEL", "CGG_PAY_BLK_RNG", "NON", "NON", declarationPaymentPM.Tenant);
+            TimeSpan toTimeCurrent = new TimeSpan();
+            TimeSpan toTime2Current = new TimeSpan();
+            TimeSpan toTime = new TimeSpan();
+            if (timesCompany != null && timesCompany != "")
+            {
+                List<string> times = GetTimesFromDefault(timesCompany);
+
+                TimeSpan fromTime = DateTime.ParseExact(times[0], "HH:mm",
+                                        CultureInfo.InvariantCulture).TimeOfDay;
+
+
+                toTime = DateTime.ParseExact(times[1], "HH:mm",
+                                  CultureInfo.InvariantCulture).TimeOfDay;
+
+                if (DateTime.Now.TimeOfDay > fromTime && DateTime.Now.TimeOfDay < toTime)
+                {
+                    toTimeCurrent = toTime;
+                    //    return new DateTime(toTime.Ticks).AddMinutes(5);
+                }
+
+            }
+            string timesCustomer = declarationQS.GetDefault("ISRAEL", "CIM_PAY_BLK_RNG", "NON", declarationPM.CustomerCode, declarationPaymentPM.Tenant);
+
+            if (timesCustomer != null && timesCustomer != "")
+            {
+                List<string> times = GetTimesFromDefault(timesCustomer);
+
+                TimeSpan fromTime = DateTime.ParseExact(times[0], "HH:mm",
+                                        CultureInfo.InvariantCulture).TimeOfDay;
+
+
+                toTime = DateTime.ParseExact(times[1], "HH:mm",
+                                  CultureInfo.InvariantCulture).TimeOfDay;
+
+                if (DateTime.Now.TimeOfDay > fromTime && DateTime.Now.TimeOfDay < toTime)
+                {
+                    toTime2Current = toTime;
+                    // return new DateTime(toTime.Ticks).AddMinutes(5);
+                }
+
+            }
+
+            if (toTimeCurrent > toTime2Current)
+            {
+                return new DateTime(toTimeCurrent.Ticks).AddMinutes(5);
+            }
+            else if (toTime2Current > toTimeCurrent)
+            {
+                return new DateTime(toTime2Current.Ticks).AddMinutes(5);
+
+            }
+            //else if(toTime!= new TimeSpan())
+            //{
+            //    return new DateTime(toTime.Ticks).AddMinutes(5);
+
+            //}
+
+            return DateTime.MinValue;
+
+        }
+
+        private List<string> GetTimesFromDefault(string times)
+        {
+            var arr = times.Split('-');
+            return new List<string>()
+            {
+                 arr[0].TrimEnd() ,  arr[1].TrimStart()
+            };
+        }
+
+        private bool CheckFileCredit(DeclarationPM declarationPM, DeclarationPaymentPM declarationPaymentPM, string user)
+        {
+            CustomFileCreditRequestParams requestParamsCredit = new CustomFileCreditRequestParams()
+            {
+                Tenant = declarationPM.Tenant,
+                AppicationId = declarationPaymentPM.DeclarationId,
+                LoggingEnabled = true,
+                LoggingEntityId = declarationPM.Id,
+                InterfaceTypeCode = "2755",
+                LoggingObjectTableId = ObjectTableRepository.GetObjectTableByName("Customs.Declaration"),
+                LoggingEntityReference = declarationPM.DeclarationNumber,
+                LoggingUserId = user,
+                RequestName = "Send to check credit request",
+                ResponseName = "Get check credit Response",
+                Mode = "Check",
+                RequestVIA = SendRequestVIA.WebServiceBatch,
+            };
+            var myCustomFileCreditService = new CustomFileCreditService(requestParamsCredit);
+            CUSTOMCREDIT_UL creditResponseData = myCustomFileCreditService.CheckFileCredit();
+            if (!string.IsNullOrEmpty(creditResponseData.CustomFileCredit[0].ErrorMessage))
+            {
+                return false;
+            }
+
+            return true;
+        }
+
 
         private void GetResponseDetails(MN_NG_8241_Cargo_Message customResponse)
         {
@@ -345,6 +647,11 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 MyResponseData.CargoResultList.TotalWeight = customResponse.Cargo.totalWeight.ToString("N2");
                 MyResponseData.CargoResultList.MasterBolNumber = customResponse.Cargo.MasterBolNumber;
                 MyResponseData.CargoResultList.BillOfLadingNumber = customResponse.Cargo.BillOfLadingNumber;
+                if(string.IsNullOrWhiteSpace(customResponse.Cargo.MasterBolNumber) && !string.IsNullOrWhiteSpace(customResponse.Cargo.BillOfLadingNumber))
+                {
+                    MyResponseData.CargoResultList.MasterBolNumber = customResponse.Cargo.BillOfLadingNumber;
+                    MyResponseData.CargoResultList.BillOfLadingNumber = null;
+                }
                 //Yuval Chalup 19.09.2016 T-23023 (Add the IF only - to avoid CargoAdditionalData.FirstOrDefault() NULL)
                 if (customResponse.Cargo.CargoAdditionalData != null)
                 {
@@ -746,12 +1053,12 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
         private FileAdditionalData GetFileAdditionalDataXML(MN_NG_8241_Cargo_Message customResponse)
         {
-           
+
             if (!_MyDeclarationPM.IsConnectedToUnifreight)
             {
                 return null;
             }
-            
+
             if (customResponse.Cargo == null)
             {
                 return null;
@@ -771,15 +1078,19 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         {
                             if (!String.IsNullOrWhiteSpace(customResponse.Cargo.MasterBolNumber) || !String.IsNullOrWhiteSpace(customResponse.Cargo.BillOfLadingNumber))
                             {
-
-
                                 FileAdditionalData myFileAdditionalData = new FileAdditionalData();
                                 myFileAdditionalData.HAWB = customResponse.Cargo.BillOfLadingNumber;
                                 myFileAdditionalData.MAWB = customResponse.Cargo.MasterBolNumber;
+
+                                if (string.IsNullOrWhiteSpace(customResponse.Cargo.MasterBolNumber) && !string.IsNullOrWhiteSpace(customResponse.Cargo.BillOfLadingNumber))
+                                {
+                                    myFileAdditionalData.MAWB = customResponse.Cargo.BillOfLadingNumber;
+                                    myFileAdditionalData.HAWB = null;
+                                }
                                 return myFileAdditionalData;
                             }
                         }
-                        
+
                         return null;
                     }
 
@@ -830,7 +1141,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             return this.MyResponseData;
         }
 
-        private List<ConsignmentPackagePM> GetDeclarationConsignmentsPackagesPM(MN_NG_8241_Cargo_Message customResponse, ConsignmentPM Consignment)
+        private List<ConsignmentPackagePM> GetDeclarationConsignmentsPackagesPM(MN_NG_8241_Cargo_Message customResponse)
         {
             var declarationConsignmentsPackagesPMList = new List<ConsignmentPackagePM>();
 
@@ -839,39 +1150,236 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 return declarationConsignmentsPackagesPMList;
             }
 
+            int count = 1;
+            customResponse.CargoItem.OrderBy(ci => ci.PackingType);
+            //Array.Sort(customResponse.CargoItem);
+
+            var cargoItems = customResponse.CargoItem.GroupBy(x => x.PackingType).Select(x=> new { packingType=x.First().PackingType 
+                , sumGrossMassMeasureWeight = x.Sum(c=>c.grossMassMeasureWeight), sumQuantity = x.Sum(c=> c.Quantity) });
+
+ 
+            foreach (var package in cargoItems)
+            {
+                if (_MyDeclarationPM.Consignments[0].ConsignmentPackages!= null && _MyDeclarationPM.Consignments[0].ConsignmentPackages.Count()>0)
+                {
+                    count = _MyDeclarationPM.Consignments[0].ConsignmentPackages.Count();
+                    //|| string.IsNullOrEmpty(p.PackageTypeCode)
+                    var packages = _MyDeclarationPM.Consignments[0].ConsignmentPackages.Where(p => p.PackageMeasureQualifierCode == "2" && (p.PackageTypeCode == package.packingType || string.IsNullOrEmpty(p.PackageTypeCode)));
+                    if(packages != null && packages.Count()>0)
+                    {
+                        foreach (var packagePM in packages)
+                        {
+
+
+
+                            if((packagePM.PackageQuantity== null || packagePM.PackageQuantity==0) && (packagePM.GrossMassMeasure == null || packagePM.GrossMassMeasure == 0))
+                            {
+                                packagePM.PackageTypeCode = package.packingType;
+                                packagePM.PackageQuantity = package.sumQuantity;
+                                packagePM.GrossMassMeasure = package.sumGrossMassMeasureWeight;
+                                packagePM.ChangeSetOp = ChangeSetOperation.Update;
+                                _MyDeclarationPM.Consignments[0].ChangeSetOp=ChangeSetOperation.Update;
+                                
+                            }
+
+                            else
+                            {
+                                continue;
+                            }
+                            
+                        }
+                    }
+
+                    else
+                    {
+                        var declarationConsignmentPackage = new ConsignmentPackagePM()
+                        {
+                            SequenceNumeric = count,
+                            ChangeSetOp = ChangeSetOperation.Insert,
+                            ConsignmentNumber = _MyDeclarationPM.Consignments[0].ConsignmentNumber,
+                            DeclarationId = _MyDeclarationPM.Consignments[0].DeclarationId,
+                            LineNumber = count,
+                            Tenant = _MyDeclarationPM.Consignments[0].Tenant,
+                            PackageMeasureQualifierCode = "2",
+                            PackageTypeCode = package.packingType,
+                            GrossMassMeasure = package.sumGrossMassMeasureWeight,
+                            PackageQuantity = package.sumQuantity
+
+                        };
+                        _MyDeclarationPM.Consignments[0].ConsignmentPackages.Add(declarationConsignmentPackage);
+                        _MyDeclarationPM.Consignments[0].ChangeSetOp = ChangeSetOperation.Update;
+
+                        count++;
+                    }
+
+                }
+
+                else
+                {
+                    var declarationConsignmentPackage = new ConsignmentPackagePM()
+                    {
+                        SequenceNumeric = count,
+                        ChangeSetOp = ChangeSetOperation.Insert,
+                        ConsignmentNumber = _MyDeclarationPM.Consignments[0].ConsignmentNumber,
+                        DeclarationId = _MyDeclarationPM.Consignments[0].DeclarationId,
+                        LineNumber = count,
+                        Tenant = _MyDeclarationPM.Consignments[0].Tenant,
+                        PackageMeasureQualifierCode = "2",
+                        PackageTypeCode = package.packingType,
+                        GrossMassMeasure = package.sumGrossMassMeasureWeight,
+                        PackageQuantity = package.sumQuantity
+
+                };
+                    _MyDeclarationPM.Consignments[0].ConsignmentPackages.Add(declarationConsignmentPackage);
+                    _MyDeclarationPM.Consignments[0].ChangeSetOp = ChangeSetOperation.Update;
+
+                    count++;
+                }
+
+               
+              
+
+            }
+
+            // foreach (var package in customResponse.CargoItem)
+            //{
+            //    if (package.PackingType != packtype && packtype != null)
+            //    {
+            //        count++;
+            //        var declarationConsignmentPackage = new ConsignmentPackagePM();
+            //        declarationConsignmentPackage.SequenceNumeric = count;
+            //        declarationConsignmentPackage.ChangeSetOp = ChangeSetOperation.Insert;
+            //        declarationConsignmentPackage.ConsignmentNumber = Consignment.ConsignmentNumber;
+            //        declarationConsignmentPackage.DeclarationId = Consignment.DeclarationId;
+            //        declarationConsignmentPackage.LineNumber = count;
+            //        declarationConsignmentPackage.Tenant = Consignment.Tenant;
+            //        if (Consignment.ConsignmentInternalTransitions != null && Consignment.ConsignmentInternalTransitions.Count > 0)
+            //        {
+            //            declarationConsignmentPackage.PackageMeasureQualifierCode = "3";
+            //        }
+            //        else
+            //        {
+            //            declarationConsignmentPackage.PackageMeasureQualifierCode = "2";
+            //        }
+            //        declarationConsignmentPackage.PackageTypeCode = package.PackingType;
+            //        if (quntity > 0)
+            //        {
+            //            declarationConsignmentPackage.PackageQuantity = quntity;
+            //        }
+
+            //        if (weight > 0)
+            //        {
+            //            declarationConsignmentPackage.GrossMassMeasure = weight;
+            //        }
+            //        weight = 0;
+            //        quntity = 0;
+            //        declarationConsignmentsPackagesPMList.Add(declarationConsignmentPackage);
+            //    }
+            //    else
+            //    {
+            //        if (package.grossMassMeasureWeight.HasValue)
+            //        {
+            //            weight = weight + package.grossMassMeasureWeight.Value;
+            //        }
+            //        quntity = quntity + package.Quantity;
+            //    }
+            //    packtype = package.PackingType;
+            //}
+            //var lastPackage = customResponse.CargoItem.Last();
+            //if (weight > 0 || quntity > 0)
+            //{
+            //    count++;
+            //    var declarationConsignmentPackage = new ConsignmentPackagePM();
+            //    declarationConsignmentPackage.SequenceNumeric = count;
+            //    declarationConsignmentPackage.ChangeSetOp = ChangeSetOperation.Insert;
+            //    declarationConsignmentPackage.ConsignmentNumber = Consignment.ConsignmentNumber;
+            //    declarationConsignmentPackage.DeclarationId = Consignment.DeclarationId;
+            //    declarationConsignmentPackage.LineNumber = count;
+            //    declarationConsignmentPackage.Tenant = Consignment.Tenant;
+            //    if (Consignment.ConsignmentInternalTransitions != null && Consignment.ConsignmentInternalTransitions.Count > 0)
+            //    {
+            //        declarationConsignmentPackage.PackageMeasureQualifierCode = "3";
+            //    }
+            //    else
+            //    {
+            //        declarationConsignmentPackage.PackageMeasureQualifierCode = "2";
+            //    }
+            //    declarationConsignmentPackage.PackageTypeCode = lastPackage.PackingType;
+            //    if (quntity > 0)
+            //    {
+            //        declarationConsignmentPackage.PackageQuantity = quntity;
+            //    }
+
+            //    if (weight > 0)
+            //    {
+            //        declarationConsignmentPackage.GrossMassMeasure = weight;
+            //    }
+
+            //    declarationConsignmentsPackagesPMList.Add(declarationConsignmentPackage);
+            //}
+
+            return declarationConsignmentsPackagesPMList;
+        }
+
+        private List<ConsignmentPackagePM> GetDeclarationConsignmentsPackagesPMForInternalTransitions(MN_NG_8241_Cargo_Message customResponse, ConsignmentPM Consignment)
+        {
+            if (customResponse.CargoItem == null)
+            {
+                return new List<ConsignmentPackagePM>();
+            }
+
             int count = 0;
             string packtype = null;
             decimal weight = 0;
             int quntity = 0;
+            ConsignmentPackagePM internalConsignmentPackagePM = null;
+            foreach (var consignmentPackageItem in Consignment.ConsignmentPackages)
+            {
+                count++;
+                if (consignmentPackageItem.PackageMeasureQualifierCode == "3")
+                {
+                    internalConsignmentPackagePM = consignmentPackageItem;
+                }
+            }
+
             customResponse.CargoItem.OrderBy(ci => ci.PackingType);
             //Array.Sort(customResponse.CargoItem);
             foreach (var package in customResponse.CargoItem)
             {
                 if (package.PackingType != packtype && packtype != null)
                 {
-                    count++;
-                    var declarationConsignmentPackage = new ConsignmentPackagePM();
-                    declarationConsignmentPackage.SequenceNumeric = count;
-                    declarationConsignmentPackage.ChangeSetOp = ChangeSetOperation.Insert;
-                    declarationConsignmentPackage.ConsignmentNumber = Consignment.ConsignmentNumber;
-                    declarationConsignmentPackage.DeclarationId = Consignment.DeclarationId;
-                    declarationConsignmentPackage.LineNumber = count;
-                    declarationConsignmentPackage.Tenant = Consignment.Tenant;
-
-                    declarationConsignmentPackage.PackageMeasureQualifierCode = "2";
-                    declarationConsignmentPackage.PackageTypeCode = package.PackingType;
-                    if (quntity > 0)
+                    if (internalConsignmentPackagePM == null)
                     {
-                        declarationConsignmentPackage.PackageQuantity = quntity;
-                    }
+                        count++;
+                        var declarationConsignmentPackage = new ConsignmentPackagePM();
+                        declarationConsignmentPackage.SequenceNumeric = count;
+                        declarationConsignmentPackage.ChangeSetOp = ChangeSetOperation.Insert;
+                        declarationConsignmentPackage.ConsignmentNumber = Consignment.ConsignmentNumber;
+                        declarationConsignmentPackage.DeclarationId = Consignment.DeclarationId;
+                        declarationConsignmentPackage.LineNumber = count;
+                        declarationConsignmentPackage.Tenant = Consignment.Tenant;
+                        declarationConsignmentPackage.PackageMeasureQualifierCode = "3";
+                        declarationConsignmentPackage.PackageTypeCode = package.PackingType;
+                        if (quntity > 0)
+                        {
+                            declarationConsignmentPackage.PackageQuantity = quntity;
+                        }
 
-                    if (weight > 0)
-                    {
-                        declarationConsignmentPackage.GrossMassMeasure = weight;
+                        if (weight > 0)
+                        {
+                            declarationConsignmentPackage.GrossMassMeasure = weight;
+                        }
+                        weight = 0;
+                        quntity = 0;
+                        Consignment.ConsignmentPackages.Add(declarationConsignmentPackage);
                     }
-                    weight = 0;
-                    quntity = 0;
-                    declarationConsignmentsPackagesPMList.Add(declarationConsignmentPackage);
+                    else
+                    {
+                        internalConsignmentPackagePM.ChangeSetOp = ChangeSetOperation.Update;
+                        internalConsignmentPackagePM.PackageQuantity = quntity;
+                        internalConsignmentPackagePM.GrossMassMeasure = weight;
+                        Consignment.ConsignmentPackages.Add(internalConsignmentPackagePM);
+                    }
                 }
                 else
                 {
@@ -886,31 +1394,38 @@ namespace Logitude.CustomsMessaging.ResponseServices
             var lastPackage = customResponse.CargoItem.Last();
             if (weight > 0 || quntity > 0)
             {
-                count++;
-                var declarationConsignmentPackage = new ConsignmentPackagePM();
-                declarationConsignmentPackage.SequenceNumeric = count;
-                declarationConsignmentPackage.ChangeSetOp = ChangeSetOperation.Insert;
-                declarationConsignmentPackage.ConsignmentNumber = Consignment.ConsignmentNumber;
-                declarationConsignmentPackage.DeclarationId = Consignment.DeclarationId;
-                declarationConsignmentPackage.LineNumber = count;
-                declarationConsignmentPackage.Tenant = Consignment.Tenant;
-
-                declarationConsignmentPackage.PackageMeasureQualifierCode = "2";
-                declarationConsignmentPackage.PackageTypeCode = lastPackage.PackingType;
-                if (quntity > 0)
+                if (internalConsignmentPackagePM == null)
                 {
-                    declarationConsignmentPackage.PackageQuantity = quntity;
-                }
+                    count++;
+                    var declarationConsignmentPackage = new ConsignmentPackagePM();
+                    declarationConsignmentPackage.SequenceNumeric = count;
+                    declarationConsignmentPackage.ChangeSetOp = ChangeSetOperation.Insert;
+                    declarationConsignmentPackage.ConsignmentNumber = Consignment.ConsignmentNumber;
+                    declarationConsignmentPackage.DeclarationId = Consignment.DeclarationId;
+                    declarationConsignmentPackage.LineNumber = count;
+                    declarationConsignmentPackage.Tenant = Consignment.Tenant;
+                    declarationConsignmentPackage.PackageMeasureQualifierCode = "3";
+                    declarationConsignmentPackage.PackageTypeCode = lastPackage.PackingType;
+                    if (quntity > 0)
+                    {
+                        declarationConsignmentPackage.PackageQuantity = quntity;
+                    }
 
-                if (weight > 0)
+                    if (weight > 0)
+                    {
+                        declarationConsignmentPackage.GrossMassMeasure = weight;
+                    }
+                    Consignment.ConsignmentPackages.Add(declarationConsignmentPackage);
+                }
+                else
                 {
-                    declarationConsignmentPackage.GrossMassMeasure = weight;
+                    internalConsignmentPackagePM.ChangeSetOp = ChangeSetOperation.Update;
+                    internalConsignmentPackagePM.PackageQuantity = quntity;
+                    internalConsignmentPackagePM.GrossMassMeasure = weight;
+                    Consignment.ConsignmentPackages.Add(internalConsignmentPackagePM);
                 }
-
-                declarationConsignmentsPackagesPMList.Add(declarationConsignmentPackage);
             }
-
-            return declarationConsignmentsPackagesPMList;
+            return Consignment.ConsignmentPackages;
         }
 
         public class GeneralMessage

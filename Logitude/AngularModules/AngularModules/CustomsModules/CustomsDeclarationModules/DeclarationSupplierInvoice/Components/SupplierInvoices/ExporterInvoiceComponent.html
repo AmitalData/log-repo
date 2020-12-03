@@ -1,0 +1,168 @@
+<table *ngIf="finishedLoad">
+    <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+        <td colspan="4">
+            <ValidationSummary [ItemsSource]="ValidationErrorsList" [SingleLine]="false"></ValidationSummary>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <table style="height: 80px;">
+
+                <tr style="height: 15px;">
+                    <td>
+                        <LogLabel [ObjectFieldName]="'BuyerName'" [ObjectTableName]="ObjectTableName"
+                                  [DataContext]="DataContext"></LogLabel>
+                    </td>
+                    <td>
+                        <LogTextBox [ObjectFieldName]="'BuyerName'" [ObjectTableName]="ObjectTableName" [Text]="BuyerName"
+                                    [HideColumns]="true" [DataContext]="DataContext"></LogTextBox>
+                    </td>
+                    <td style="width:7px"></td>
+
+                    <td>
+                        <LogLabel [ObjectFieldName]="'BuyerAddress'" [ObjectTableName]="ObjectTableName"
+                                  [DataContext]="DataContext"></LogLabel>
+                    </td>
+
+                    <td>
+                        <LogTextBox [ObjectFieldName]="'BuyerAddress'" [ObjectTableName]="ObjectTableName" [Text]="BuyerAddress"
+                                    [HideColumns]="true" [DataContext]="DataContext" [IsMultiline]="true"></LogTextBox>
+
+                    </td>
+                    <td style="width:7px"></td>
+                    <td>
+                        <LogLabel [ObjectFieldName]="'BuyerCountryCode'" [ObjectTableName]="ObjectTableName"
+                                  [DataContext]="DataContext"></LogLabel>
+                    </td>
+                    <td>
+                        <LogLov [ObjectFieldName]="'BuyerCountryCode'"
+                                [ObjectTableName]="ObjectTableName"
+                                [DataContext]="DataContext"
+                                [HideColumns]="true"
+                                [LookUpTableName]="'Customs.CustomsCountry'">
+                        </LogLov>
+                    </td>
+                </tr>
+
+                <tr style="height: 25px;">
+                    <td colspan="3">
+                    </td>
+                </tr>
+
+                <tr style="height: 15px;">
+                    <td>
+                        <LogLabel [ObjectFieldName]="'BuyerRoleCode'" [ObjectTableName]="ObjectTableName"
+                                  [DataContext]="DataContext"></LogLabel>
+                    </td>
+                    <td>
+                        <LogLov [ObjectFieldName]="'BuyerRoleCode'"
+                                [ObjectTableName]="ObjectTableName"
+                                [DataContext]="DataContext"
+                                [HideColumns]="true"
+                                [LookUpTableName]="'Customs.CustomerRoleType'">
+                        </LogLov>
+                    </td>
+                    <td style="width:7px"></td>
+                    <td>
+                        <LogLabel [ObjectFieldName]="'PartyRelationshipCode'" [ObjectTableName]="ObjectTableName"
+                                  [DataContext]="DataContext"></LogLabel>
+                    </td>
+                    <td>
+                        <LogLov [ObjectFieldName]="'PartyRelationshipCode'"
+                                [ObjectTableName]="ObjectTableName"
+                                [DataContext]="DataContext"
+                                [HideColumns]="true"
+                                [LookUpTableName]="'Customs.PartyRelationshipType'">
+                        </LogLov>
+                    </td>
+
+                </tr>
+
+                <tr style="height: 25px;">
+                    <td colspan="3">
+                    </td>
+                </tr>
+
+                <tr style="height: 15px;">
+                    <td>
+                        <LogLabel [ObjectFieldName]="'PaymentTypeCode'" [ObjectTableName]="ObjectTableNameSupplierInvoicePayment"
+                                  [DataContext]="DataContext"></LogLabel>
+                    </td>
+                    <td>
+                        <LogLov [ObjectFieldName]="'PaymentTypeCode'"
+                                [ObjectTableName]="ObjectTableNameSupplierInvoicePayment"
+                                [DataContext]="DataContext"
+                                [HideColumns]="true"
+                                [LookUpTableName]="'Customs.PaymentType'">
+                        </LogLov>
+                    </td>
+                    <td style="width:7px"></td>
+                    <td>
+                        <LogLabel [ObjectFieldName]="'PaymentAmount'" [ObjectTableName]="ObjectTableNameSupplierInvoicePayment"
+                                  [DataContext]="DataContext"></LogLabel>
+                    </td>
+                    <td>
+                        <LogTextBox [ObjectFieldName]="'PaymentAmount'" [ObjectTableName]="ObjectTableNameSupplierInvoicePayment" [Text]="PaymentAmount"
+                                    [AddCommasToNumbers]="true" [HideColumns]="true" [DataContext]="DataContext"></LogTextBox>
+
+                    </td>
+
+                </tr>
+
+                <tr style="height: 25px;">
+                    <td colspan="3">
+                    </td>
+                </tr>
+                <tr style="height: 15px;">
+                    <td>
+                        <LogLabel [ObjectFieldName]="'SupplierChargeID'" [ObjectTableName]="ObjectTableNameSupplierInvoiceUCR"
+                                  [DataContext]="DataContext"></LogLabel>
+                    </td>
+                    <td>
+                        <LogTextBox [ObjectFieldName]="'SupplierChargeID'" [ObjectTableName]="ObjectTableNameSupplierInvoiceUCR" [Text]="SupplierChargeID"
+                                    [HideColumns]="true" [DataContext]="DataContext"></LogTextBox>
+                    </td>
+                    <td style="width:7px"></td>
+                    <td>
+                        <LogLabel [ObjectFieldName]="'AgentChargeID'" [ObjectTableName]="ObjectTableNameSupplierInvoiceUCR"
+                                  [DataContext]="DataContext"></LogLabel>
+                    </td>
+                    <td>
+                        <LogTextBox [ObjectFieldName]="'AgentChargeID'" [ObjectTableName]="ObjectTableNameSupplierInvoiceUCR" [Text]="AgentChargeID"
+                                    [HideColumns]="true" [DataContext]="DataContext"></LogTextBox>
+
+                    </td>
+
+                </tr>
+
+
+
+                <!-- #region cancel and ok buttons -->
+                <tr style="height: 32px;">
+                    <td colspan="9" style="vertical-align: bottom ; left:5px;">
+                        <table style="height: 22px;">
+                            <tr>
+                                <td>
+                                    <div></div>
+                                </td>
+
+                                <td style="width: 57px;">
+                                    <button class="Button" (click)="CancelButtonClicked()">{{'General.B.Cancel' | TextCodeTranslationPipe}}</button>
+                                </td>
+
+                                <td style="width: 5px;">
+                                    <div></div>
+                                </td>
+
+                                <td style="width: 57px;">
+                                    <button class="RedButton" (click)="OkButtonClicked()" >{{'General.B.Ok' | TextCodeTranslationPipe}}</button>
+                                </td>
+                            </tr>
+                        </table>
+
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>

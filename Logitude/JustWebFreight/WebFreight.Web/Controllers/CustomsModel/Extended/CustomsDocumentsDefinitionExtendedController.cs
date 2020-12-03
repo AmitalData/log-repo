@@ -70,7 +70,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                     int tenant = authToken.Tenant;
 
                     ICustomContext MyContext = CustomContext.GetContext(tenant);
-                    var myDeclarationQueryService = new DeclarationQueryService(1);
+                    var myDeclarationQueryService = new DeclarationQueryService(tenant);
                     var myDeclaration = myDeclarationQueryService.GetSingle(declarationId, true, false);
                     if (myDeclaration != null 
                         //&& 
@@ -81,7 +81,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                             CargoTypeCode = myDeclaration.Consignments[0].CargoTypeCode;
                         }
                         var myCustomsDocumentsDefinitionQueryService = new CustomsDocumentsDefinitionQueryService(tenant);
-                        listCustomsDocumentsDefinition = myCustomsDocumentsDefinitionQueryService.GetCustomsDocumentsDefinitionsForDeclaration(CargoTypeCode, myDeclaration.ProcedureCurrentCode, myDeclaration.TransportModeId, 1);
+                        listCustomsDocumentsDefinition = myCustomsDocumentsDefinitionQueryService.GetCustomsDocumentsDefinitionsForDeclaration(CargoTypeCode, myDeclaration.ProcedureCurrentCode, myDeclaration.TransportModeId,tenant);
                     }
 
                     

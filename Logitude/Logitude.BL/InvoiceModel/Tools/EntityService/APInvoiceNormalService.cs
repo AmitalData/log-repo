@@ -43,6 +43,8 @@ using Logitude.BL.InfrastructureModel.EntityLists;
 using Simplog.Data.InfrastructureModel;
 using Logitude.BL.InvoiceModel.Tools.Initializers;
 using Simplog.Server.Infrastructure.Interfaces;
+using Logitude.BL.ExternalService;
+using Logitude.BL.InvoiceModel.Tools.Behaviours;
 
 namespace Logitude.BL.InvoiceModel.Tools.EntityService
 {
@@ -276,6 +278,9 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
             var setApproved = entityPM.SetApproved;
             var setVoided = entityPM.SetVoided;
+
+            EntityAutomationService entityAutomationService = new EntityAutomationService(new EntityAutomationArgs() { Poco = invoice, EntityPM = entityPM, OldEntityPM = new APInvoicePM(), AutomationType = "OnCreate", ObjectTableName = "APInvoice", Tenant = entityPM.Tenant, EntityId = entityPM.Id });
+            entityAutomationService.RunAutomation();
 
             APInvoiceHelper helper = new APInvoiceHelper();
             helper.APInvoiceQuickbooksValidating(entityPM, setApproved, initializer.IsNewEntity, initializer.Context, initializer.CommonContext);
@@ -558,6 +563,9 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             }
 
 
+
+            EntityAutomationService entityAutomationService = new EntityAutomationService(new EntityAutomationArgs() { Poco = invoice, EntityPM = entityPM, OldEntityPM = new APInvoicePM(), AutomationType = "OnUpdate", ObjectTableName = "APInvoice", Tenant = entityPM.Tenant, EntityId = entityPM.Id, EntityAutomationMappingPMFields = new EntityAutomationAPInvoiceMappingPMFields() });
+            entityAutomationService.RunAutomation();
 
             APInvoiceMapping.MapEntity(entityPM, invoice, initializer.IsNewEntity);
 

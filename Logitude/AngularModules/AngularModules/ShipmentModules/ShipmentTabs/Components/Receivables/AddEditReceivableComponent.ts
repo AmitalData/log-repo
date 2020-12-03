@@ -7,6 +7,7 @@ import {ShipmentReceivableItem} from './ReceivablesTabComponent';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 import {ApiQueryFilters} from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
 import {Cloner} from '../../../../Infrastructure/Utilities/Cloner';
+import { CommonTool } from '../../../../Common/Tools';
 
 @Component({
     
@@ -54,9 +55,9 @@ export class AddEditReceivableComponent {
         this.MeasurementDependencyProperty2 = myMeasurementDependencyProperty2;
     }
 
-    private BuildQueryFilters() {        
+    private BuildQueryFilters() {
         this.MeasurementsQueryFilters = new ApiQueryFilters();
-        this.MeasurementsQueryFilters.addAdditionalFilter("Code", "STFE", null, null, "NotContains", false, false, false, "string", false, true,true);
+        this.MeasurementsQueryFilters.addAdditionalFilter("Code", "STFE", null, null, "NotContains", false, false, false, "string", false, true, true);
 
         this.ChargeTypesQueryFilters = new ApiQueryFilters();
         this.ChargeTypesQueryFilters.addAdditionalFilter("InActive", false, null, null, "Equals", false, false, false, "Boolean");
@@ -78,7 +79,10 @@ export class AddEditReceivableComponent {
                 break;
             }
         }
+
+        CommonTool.FilterChargeTypesByDirection(this.ChargeTypesQueryFilters, this.DataContext.ShipmentPM.DirectionId); 
     }
+
 
     CancelButtonClicked() {
         this.RejectChanges();

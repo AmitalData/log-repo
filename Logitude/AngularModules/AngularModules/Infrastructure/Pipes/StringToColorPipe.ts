@@ -12,8 +12,7 @@ export class StringToColorPipe {
         if (!AppTool.IsNullOrEmpty(input)) {
 
             var value = input + "";
-
-            if (!AppTool.IsNullOrEmpty(Parameter)) {
+             if (!AppTool.IsNullOrEmpty(Parameter)) {
                 myResult = this.ApplyParameterPipe(value, Parameter);                
             }
 
@@ -84,11 +83,18 @@ export class StringToColorPipe {
             case "Sent":
             case "Transferred":
             case "In Progress":
+            case "Arrival_referant":
+
                 {
                     color = "#27AAE1";
                     break;
                 }
+            case "Arrival_referant":
 
+                {
+                    color = "#27AAE1";
+                    break;
+                }
             case "Printed":
             case "Pick Up":
             case "On Hand":
@@ -195,14 +201,17 @@ export class StringToColorPipe {
     }
     private ApplyParameterPipe(value: string, Parameter: string) {
         var myResult: string = "#282E30";
-
-        if (Parameter == "CustomerStatusCode") {
+         if (Parameter == "CustomerStatusCode") {
             myResult = this.ApplyCustomerStatusCodePipe(value);
+        }
+
+        if (Parameter == "ArrivalDate") {
+            myResult = this.ApplyArrivalDatePipe(value);
         }
 
         else if (Parameter == "TicketSeverityCode") {
             myResult = this.ApplyTicketSeverityCodePipe(value);
-        }
+         }
 
         else if (Parameter == "QuoteRatingCode") {
             myResult = this.ApplyQuoteRatingCodePipe(value);
@@ -238,6 +247,12 @@ export class StringToColorPipe {
         else if (Parameter == "DeclarationStatusTypeCode") {
             myResult = this.ApplyDeclarationStatusCodePipe(value);
         }
+            
+        else if (Parameter == "DeclarationAmendmentStatus")
+        {
+            myResult = this.ApplyDeclarationAmendmentStatusPipe(value);
+            
+        }
 
         else if (Parameter == "CustomsTransmissionsStatus") {
             myResult = this.ApplyCustomsTransmissionsStatusPipe(value);
@@ -263,7 +278,15 @@ export class StringToColorPipe {
 
         return myResult;
     }
-    
+
+
+    private ApplyArrivalDatePipe(value: string) {
+        var myResult: string = "Blue";
+        if (value != 'ETA')
+            myResult = "Black";
+        return myResult;
+    }
+ 
     private ApplyCustomerStatusCodePipe(value: string) {
         var myResult: string = "#282E30";
 
@@ -291,6 +314,36 @@ export class StringToColorPipe {
                     myResult = "#F40CB2";
                     break;
                 }
+        }
+
+        return myResult;
+    }
+    private ApplyDeclarationAmendmentStatusPipe(value: string) {
+        var myResult: string = "";
+
+        switch (value) {
+            case "3":
+            case "6":
+
+                {
+                    myResult = "#009161"; // green
+
+                    break;
+                }
+            case "1":
+            case "2":
+                {
+                    myResult = "#F37021"; // orange
+                    break;
+                }
+            case "4":
+            case "5":
+
+                {
+                    myResult = "#E53030"; // red
+                    break;
+                }
+
         }
 
         return myResult;
@@ -342,6 +395,9 @@ export class StringToColorPipe {
 
         return myResult;
     }
+
+
+
     private ApplyTicketSeverityCodePipe(value: string) {
         var myResult: string = "#282E30";
 

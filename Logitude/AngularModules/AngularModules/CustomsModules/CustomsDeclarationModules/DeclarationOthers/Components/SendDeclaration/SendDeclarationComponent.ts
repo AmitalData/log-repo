@@ -23,7 +23,7 @@ import {CustomsExchangeRatePM} from '../../../../../Customs/EntityPMs/CustomsExc
 import {DeclarationValidator} from '../../../../../Customs/Validators/DeclarationValidator';
 import {DeclarationPMService} from '../../../../../Customs/Services/StandardPMs/DeclarationPMService';
 import {GenericRequestParams} from '../../../../../Customs/DataContract/RequestParams/GenericRequestParams';
-import {SendRequestVIA} from '../../../../../Customs/DataContract/RequestParams/RequestParamsBase';
+import {SendRequestVIA, CustomSendOptionsArgs, TestCase} from '../../../../../Customs/DataContract/RequestParams/RequestParamsBase';
 import {CustomMessageProgressComponent, ShowProgressBarParams} from '../../../../CustomsControls/Components/CustomMessageProgressComponent';
 import { ClientSearchResponseData } from '../../../../../Customs/DataContract/ResponseData/ClientSearchResponseData';
 import {SupplierInvoicePMService} from  '../../../../../Customs/Services/StandardPMs/SupplierInvoicePMService';
@@ -36,6 +36,7 @@ import {FeatureLocator} from '../../../../../Infrastructure/Utilities/FeatureLoc
 import {CustomsDocumentPM} from '../../../../../Customs/EntityPMs/CustomsDocumentPM';
 import { AnalyzeUnifreightInsuranceService } from '../../../DeclarationSupplierInvoice/Components/SupplierInvoices/AddEditSupplierInvoiceComponent';
 import { DeclarationEditComponentController } from '../../../../../Customs/Controller/DeclarationEditComponentController';
+import { EntityPMService } from '../../../../../Infrastructure/Services/EntityPMService';
 
 @Component({
     
@@ -65,16 +66,21 @@ export class SendDeclarationComponent implements OnDestroy {
     _WorkWithService: boolean = true;
      //------------------------------------------------------//
     private CurrentSession = SessionLocator.SelectedSession;
+    
     constructor() {
 
     }
     Run(args: any) {
         this.EntityPM = args.EntityPM;
-        if (!this.EntityPM.IsCourierDeclaration) {
+         if (!this.EntityPM.IsCourierDeclaration) {
             this.ButtonText = TextCodeTranslator.Translate("Customs.Declaration.O.Send");
         }
         else {
             this.ButtonText = "שלח הצהרה"; // TextCodeTranslator.Translate("Customs.Declaration.O.SendDeclaration");
+        }
+
+        if (this.EntityPM.IsAmendment == true) {
+            this.ButtonText = TextCodeTranslator.Translate("Customs.Declaration.O.SendAmendmentDeclaration");
         }
         if (this._WorkWithService) {
             this._SendDeclarationService.Run(args);
@@ -108,7 +114,37 @@ export class SendDeclarationComponent implements OnDestroy {
     }
     reloadEvent: any;
     ButtonText: string;
-    OnCustomSendOptionsButtonClick(event) {
+    OnCustomSendOptionsButtonClick(event: CustomSendOptionsArgs) {
+        this._SendDeclarationService._TestCase = null;
+        if (event.TestCase) {
+            
+            let windowArgs = { "SincroScreen": "SincroSendDeclaration"};
+            
+            var logWindow = new LogitudeWindow();
+            logWindow.Width = 600;
+            logWindow.Height = 400;
+            logWindow.Title = "תרחשי הצהרה";
+            logWindow.ShowCloseButton = false;
+            logWindow.WindowArgs = windowArgs;
+            
+            logWindow.ComponentLoaded.subscribe(comp => {
+                logWindow.WindowClosed.subscribe(res => {
+                    if (!AppTool.IsNullOrEmpty(res) && res=="Ok") {
+                         this._SendDeclarationService._TestCase = new TestCase();
+                        this._SendDeclarationService._TestCase.Code = comp._ScenarioCode;
+                        this._SendDeclarationService._TestCase.Param1 = comp.Param1;
+                        this._SendDeclarationService._TestCase.Param2 = comp.Param2;
+                        this._SendDeclarationService.OnCustomSendOptionsButtonClick(event)
+                    }
+                });
+            });
+
+            logWindow.Show('./CustomsModules/CustomsControls/Components/TestCase/SendDeclarationTastCaseComponent');
+            ///this.StopMyBusyIndicator();///this.CurrentSession.CurrentEditComponent.StopBusyIndicator();
+
+            return;
+        }
+
         if (this._WorkWithService) {
             this._SendDeclarationService.OnCustomSendOptionsButtonClick(event);
             return;
@@ -154,6 +190,7 @@ export class SendDeclarationService implements OnDestroy {
     LoadCompletedEvent: any;
     //------------------------------------------------------//
     private CurrentSession = SessionLocator.SelectedSession;
+    _TestCase: TestCase;
     constructor() {
 
     }
@@ -171,6 +208,7 @@ export class SendDeclarationService implements OnDestroy {
         else {
             this.ButtonText = "שלח הצהרה"; // TextCodeTranslator.Translate("Customs.Declaration.O.SendDeclaration");
         }
+ 
         this.Listen();
     }
     Listen() {
@@ -235,7 +273,7 @@ export class SendDeclarationService implements OnDestroy {
                     }
 
                     else {
-                        this.EntityPM = myResponse.Result;
+                         this.EntityPM = myResponse.Result;
                         if (this.CurrentSession.CurrentEditComponent) {
                             this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
                             this.reloadEvent = this.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
@@ -291,10 +329,11 @@ export class SendDeclarationService implements OnDestroy {
     }
 
     CheckRequiredFields() {
+       
         this.DeclarationService.GetRequiredFieldsForDeclaration(this.EntityPM.Id).subscribe((response: ServiceResponse) => {
             //List < CustomsRequiredFieldsErrorItem > errorsList = requiredFieldsErrors.RequiredFields;
             var errorsList = response.Result.RequiredFields;
-            if (errorsList.length == 0) {
+            if (errorsList.length == 0 || this.EntityPM.IsAmendment) {
                 if (AppTool.IsNullOrEmpty(this.EntityPM.CustomFileNo) || true) { //|| !ScriptableGatewayUtil.AmitalBrowserInUse) { i put true temporarly--MM
                     this.InstructionSendToMehes();//this.ConfirmB4TaxationDateTimeCheck();
                     return;
@@ -379,7 +418,7 @@ export class SendDeclarationService implements OnDestroy {
             , "SendDeclarationService", "OPEN"
         );
     }
-
+    public ObjectTableName: string = "Customs.Declaration";
     UpdateReloadAndConfirmB4TaxationDateTimeCheck(supplierInvoice: SupplierInvoicePM) {
         console.log("UpdateReloadAndConfirmB4TaxationDateTimeCheck 1.update");
         //o	יש לבצע שמירה מחדש של ההצהרה (וחשבון ספק)
@@ -395,7 +434,8 @@ export class SendDeclarationService implements OnDestroy {
                 }
 
                 else {
-                    this.EntityPM = myResponse.Result;
+                    //itzik:result is supplierInvoice that set in typeof(EntityPM)== declaration
+                    //this.EntityPM = myResponse.Result;//reload fix this problem 
                     console.log("UpdateReloadAndConfirmB4TaxationDateTimeCheck 2.2.1 update Success");
                     if (this.CurrentSession.CurrentEditComponent) {
                         //o	יש לבצע רענון לנתוני client
@@ -407,6 +447,23 @@ export class SendDeclarationService implements OnDestroy {
                             this.ConfirmB4TaxationDateTimeCheck();
                         });
                         this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+
+                    } else {// courier worksheet  >>>send dec
+
+                        let entityPMService: EntityPMService = new EntityPMService();
+                        entityPMService.getSingle(this.ObjectTableName, this.EntityPM.Id).then((res: any) => {
+                            res.subscribe((myResponse: ServiceResponse) => {
+                                if (myResponse.HasError) {
+                                }
+                                else {
+                                    this.EntityPM = myResponse.Result;
+                                    console.log("UpdateReloadAndConfirmB4TaxationDateTimeCheck 2.2.3 Continue to this.ConfirmB4TaxationDateTimeCheck();");
+                                    //o	לאחר מכן להמשיך בתהליך השליחה למכס
+                                    this.ConfirmB4TaxationDateTimeCheck();
+                                }
+                            });
+                        });
+
 
                     }
                 }
@@ -443,7 +500,7 @@ export class SendDeclarationService implements OnDestroy {
             logWindow.WindowArgs = windowArgs;
             logWindow.WindowClosed.subscribe(($event: any) => this.TaxationWindowClosed($event));
 
-            logWindow.Show('./CustomsModules/CustomControls/Components/CustomsErrorsComponent');
+            logWindow.Show('./CustomsModules/CustomsControls/Components/CustomsErrorsComponent');
             this.StopMyBusyIndicator();///this.CurrentSession.CurrentEditComponent.StopBusyIndicator();
             // this.FillValidationErrors(TextCodeTranslator.Translate("Customs.General.O.TaxationDateTimeCheck"));
         }
@@ -513,7 +570,7 @@ export class SendDeclarationService implements OnDestroy {
                 logWindow.WindowArgs = windowArgs;
                 logWindow.WindowClosed.subscribe(($event: any) => this.CheckCertificateStatusClosed($event));
 
-                logWindow.Show('./CustomsModules/CustomControls/Components/CustomsErrorsComponent');
+                logWindow.Show('./CustomsModules/CustomsControls/Components/CustomsErrorsComponent');
                 this.StopMyBusyIndicator();///this.CurrentSession.CurrentEditComponent.StopBusyIndicator();
             }
             else {
@@ -573,7 +630,7 @@ export class SendDeclarationService implements OnDestroy {
                         logWindow.WindowArgs = windowArgs;
                         logWindow.WindowClosed.subscribe(($event: any) => this.DocumetsUploadedCheckClosed($event));
 
-                        logWindow.Show('./CustomsModules/CustomControls/Components/CustomsErrorsComponent');
+                        logWindow.Show('./CustomsModules/CustomsControls/Components/CustomsErrorsComponent');
                         this.StopMyBusyIndicator();///this.CurrentSession.CurrentEditComponent.StopBusyIndicator();
                     }
                 }
@@ -620,7 +677,7 @@ export class SendDeclarationService implements OnDestroy {
                     logWindow.WindowArgs = windowArgs;
                     logWindow.WindowClosed.subscribe(($event: any) => this.DocumetsTicketUploadedCheckClosed($event));
 
-                    logWindow.Show('./CustomsModules/CustomControls/Components/CustomsErrorsComponent');
+                    logWindow.Show('./CustomsModules/CustomsControls/Components/CustomsErrorsComponent');
                     this.StopMyBusyIndicator();///this.CurrentSession.CurrentEditComponent.StopBusyIndicator();
                 }
             }
@@ -630,7 +687,8 @@ export class SendDeclarationService implements OnDestroy {
     CheckFreightByIncoterm() {
         //this.StartMyBusyIndicator("");///this.CurrentSession.CurrentEditComponent.StartBusyIndicator("");//Avoid ReSend
 
-        this.DeclarationService.CheckFreightAmountsByIncoterm(this.EntityPM.Id).subscribe((myResponse: ServiceResponse) => {
+        //this.DeclarationService.CheckFreightAmountsByIncoterm(this.EntityPM.Id).subscribe((myResponse: ServiceResponse) => {
+        this.DeclarationService.CheckFreightAmountsByIncotermWithDefault(this.EntityPM.Id).subscribe((myResponse: ServiceResponse) => {
             var isFreightAmount: boolean = myResponse.Result;
             if (!isFreightAmount) {
                 this.SendDeclaration();
@@ -659,7 +717,7 @@ export class SendDeclarationService implements OnDestroy {
                     logWindow.WindowArgs = windowArgs;
                     logWindow.WindowClosed.subscribe(($event: any) => this.FreightByIncotermUploadedCheckClosed($event));
 
-                    logWindow.Show('./CustomsModules/CustomControls/Components/CustomsErrorsComponent');
+                    logWindow.Show('./CustomsModules/CustomsControls/Components/CustomsErrorsComponent');
                     this.StopMyBusyIndicator();///this.CurrentSession.CurrentEditComponent.StopBusyIndicator();
                 }
             }
@@ -726,7 +784,82 @@ export class SendDeclarationService implements OnDestroy {
         }
     }
     public OnSuccessSendMethod: (response: any) => void;
+
+    SendAmendmentDeclaration() {
+        this.StartMyBusyIndicator("");///this.CurrentSession.CurrentEditComponent.StartBusyIndicator("");//Avoid ReSend
+        var searchParams: GenericRequestParams = new GenericRequestParams();
+        searchParams.Tenant = SessionLocator.Tenant;
+        searchParams.AppicationId = this.EntityPM.Id;
+        searchParams.LoggingEnabled = true;
+        searchParams.LoggingEntityId = this.EntityPM.Id;
+        searchParams.LoggingEntityReference = this.EntityPM.DeclarationNumber;
+        searchParams.LoggingObjectTableId = this.ObjectTable.Id;
+        searchParams.LoggingUserId = SessionLocator.LoggedUserId;
+        searchParams.RequestName = "Amendment Declaration Request";
+        searchParams.ResponseName = "Amendment Declaration Response";
+        searchParams.RequestVIA = this.RequestVIA;
+        searchParams.ForcePersonalSign = this.ForcePersonalSign;
+        searchParams.TestCase = this._TestCase;
+        let myShowProgressBarParams: ShowProgressBarParams = null;
+
+        if (this.CourierWorksheetmode) {
+            myShowProgressBarParams = new ShowProgressBarParams();
+            myShowProgressBarParams.OnCloseCustomMessageProgressComponentMethod =
+                (response: any) => {
+
+                    let myResponseData = response;
+                    if (myResponseData) {
+                        if (myResponseData.HasException || !myResponseData.Succeeded) {
+                            //do not close Win !!
+
+                        } else {
+
+                            //if OK then  close Win !!
+                            this.OnSuccessSendMethod(this.ResponseData);
+                        }
+                    }
+                };
+        }
+        CustomMessageProgressComponent
+            .ShowProgressBar(searchParams.PBId,
+                "שליחת תיקון הצהרת יבוא", false
+                , myShowProgressBarParams)
+            .then((res) => {
+                this.ResponseData = res;
+                if (this.CourierWorksheetmode) {
+
+                } else {
+                    if (this.ResponseData && this.ResponseData.ContinueProcessInBackground) {
+                        this.CurrentSession.CurrentEditComponent.EditComponentController.IsInBatchRequest = true;
+                    }
+                    else if (this.Option == 'WB' || this.Option == 'D') { // work around itzik shall fix the undefined problem.
+                        this.CurrentSession.CurrentEditComponent.EditComponentController.IsInBatchRequest = true;
+                    }
+                    var myDeclarationEditComponentController = this.CurrentSession.CurrentEditComponent.EditComponentController as DeclarationEditComponentController;
+                    myDeclarationEditComponentController.CustomsAnswersShowManifest = false;
+
+                    this.CurrentSession.CurrentEditComponent.PreSelectedTabCode = "DCCA";
+                    this.CurrentSession.CurrentEditComponent.SetSelectedTab();
+                    this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                }
+            }
+            ).catch((err) => {
+                this.StopMyBusyIndicator();///this.CurrentSession.CurrentEditComponent.StopBusyIndicator();
+                this.ValidationErrors.push(err);
+                this.FillValidationErrors("Errors");
+            });
+
+        this.DeclarationService.PostSendDeclarationAmendment(searchParams).subscribe((response: ServiceResponse) => {
+            //this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+        });
+
+    }
     SendDeclaration() {
+
+        if (this.EntityPM.IsAmendment) {
+            this.SendAmendmentDeclaration();
+            return;
+        }
         this.StartMyBusyIndicator("");///this.CurrentSession.CurrentEditComponent.StartBusyIndicator("");//Avoid ReSend
         var searchParams: GenericRequestParams = new GenericRequestParams();
         searchParams.Tenant = SessionLocator.Tenant;
@@ -740,6 +873,7 @@ export class SendDeclarationService implements OnDestroy {
         searchParams.ResponseName = "Declaration Response";
         searchParams.RequestVIA = this.RequestVIA;
         searchParams.ForcePersonalSign = this.ForcePersonalSign;
+        searchParams.TestCase = this._TestCase;
 
         let myShowProgressBarParams: ShowProgressBarParams = null;
 
@@ -789,10 +923,18 @@ export class SendDeclarationService implements OnDestroy {
                 this.ValidationErrors.push(err);
                 this.FillValidationErrors("Errors");
             });
-
-        this.DeclarationService.PostSendDeclaration(searchParams).subscribe((response: ServiceResponse) => {
-            //this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
-        });
+        if (this.EntityPM.Direction == "E") {
+            this.DeclarationService.PostSendExportDeclaration(searchParams).subscribe((response: ServiceResponse) => {
+                //this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+            });
+        }
+        else {
+            this.DeclarationService.PostSendDeclaration(searchParams).subscribe((response: ServiceResponse) => {
+                //this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+            });
+        
+}
+      
     }
 
     GetRequiredErrorsList(errorsList: any[]) {
@@ -857,7 +999,7 @@ export class SendDeclarationService implements OnDestroy {
         logWindow.WindowArgs = windowArgs;
         logWindow.WindowClosed.subscribe(($event: any) => this.OnAddEditWindowClosed($event));
 
-        logWindow.Show('./CustomsModules/CustomControls/Components/CustomsErrorsComponent');
+        logWindow.Show('./CustomsModules/CustomsControls/Components/CustomsErrorsComponent');
     }
     StopMyBusyIndicator() {
         if (this.CourierWorksheetmode) {

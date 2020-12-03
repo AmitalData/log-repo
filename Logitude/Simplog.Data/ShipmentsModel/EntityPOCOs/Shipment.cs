@@ -808,5 +808,9 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public virtual Currency ChargeStorageCurrency { get; set; }
         public virtual WarehouseWeightMeasurement WeightMeasurement { get; set; }
         public virtual WarehouseWeightRounding WeightRounding { get; set; }
+
+        public bool IsAccrualsApproved { get; set; }
+        public DateTime? AccrualsApprovalDate { get; set; }
+
     }
 }

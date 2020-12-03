@@ -153,6 +153,7 @@ export class FilingInboxAttachmentLogPMService {
         if (!entityPM) {
             
             entityPM = new FilingInboxAttachmentLogPM();
+			entityPM.DisableMarkAsDirty = true;
         }
 
 		var customFields: Array<string> = [];
@@ -193,6 +194,8 @@ export class FilingInboxAttachmentLogPMService {
             entityPM.OldEntityPM = null;
         }
 		entityPM.IsDirty = false;
+	    entityPM.DisableMarkAsDirty = false;
+
         return entityPM;
     }
 

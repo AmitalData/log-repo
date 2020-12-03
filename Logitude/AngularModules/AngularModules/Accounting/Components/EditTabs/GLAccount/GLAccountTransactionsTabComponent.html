@@ -541,6 +541,14 @@
                                                     <div  [style.float]="isRTL ? 'left' : 'right'">
                                                         <IconButton [Name]="'Refresh'" (click)="RefreshButtonClicked()"></IconButton>
                                                     </div>
+                                                    <div style="width: 30px;" [style.float]="isRTL ? 'left' : 'right'">
+                                                        <!--<IconButton [Name]="'Excel'" (click)="Export2ExcelClicked()" [disabled]="true"></IconButton>-->
+                                                    </div>
+
+                                                    <div  [style.float]="isRTL ? 'left' : 'right'">
+                                                        <IconButton style="margin: 0 5px;"  [style.float]="isRTL ? 'right' : 'left'" [Name]="'excel'"  [Left]="isRTL ? 3:-3"   (click)="ExportToExcelClick()"></IconButton>
+                                                    </div>
+
                                                 </td>
                                             </tr>
 
@@ -615,11 +623,17 @@
                     <tr>
                         <td colspan="5" style="height: 100%; padding-bottom: 87px;">
                             <div class="GeneratedGridContainer">
-                                <logitude-grid GridWidth="100%" GridHeight="100%" [ObjectTable]="ObjectTableName"
-                                    [dataSource]="DataSource" [MenuHeaderchangeevent]="MenuHeaderchangeevent" [columns]="columns"
-                                    [autoLoad]="true" [QueryChangeEvent]="onQueryChangeEvent" (DataLoaded)="OnDataLoaded($event)"
-                                    [IsCustomTemplate]="true">
+                                <logitude-grid *ngIf="!UsingLogGridV2" GridWidth="100%" GridHeight="100%" [ObjectTable]="ObjectTableName"
+                                               [dataSource]="DataSource" [MenuHeaderchangeevent]="MenuHeaderchangeevent" [columns]="columns"
+                                               [autoLoad]="true" [QueryChangeEvent]="onQueryChangeEvent" (DataLoaded)="OnDataLoaded($event)"
+                                               [IsCustomTemplate]="true">
                                 </logitude-grid>
+                                <logitude-grid-v2 *ngIf="UsingLogGridV2" GridWidth="100%" GridHeight="100%" [ObjectTable]="ObjectTableName"
+                                               [dataSource]="DataSource" [MenuHeaderchangeevent]="MenuHeaderchangeevent" [columns]="columns"
+                                               [autoLoad]="true" [QueryChangeEvent]="onQueryChangeEvent" (DataLoaded)="OnDataLoaded($event)"
+                                               [IsCustomTemplate]="true">
+                                </logitude-grid-v2>
+
                             </div>
                         </td>
                     </tr>

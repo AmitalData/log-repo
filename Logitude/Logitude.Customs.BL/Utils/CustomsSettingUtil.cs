@@ -26,7 +26,14 @@ namespace Logitude.Customs.BL.Utils
                 case CustomsDeploymentStage.Production:
                     return ".PRD.xml";
                     break;
-
+                case CustomsDeploymentStage.PREPROD:
+                    /*
+    INSERT INTO "CUSTOMSENVOIRMENTTYPES" (CODE, ENGLISHNAME, LOCALNAME, SEARCHFIELDS, INACTIVE) VALUES ('5', 'PRE Production', 'קדם יצור', 'קדם יצור,PRE Production,5', '0')
+    Commit Successful
+    UPDATE "CUSTOMSSETTINGS" SET CUSTOMSENVOIRMENTTYPECODE = '5' 
+    Commit Successful
+                     */
+                    return ".PRE.xml";
                 case CustomsDeploymentStage.Test:
                     /*
     INSERT INTO "CUSTOMSENVOIRMENTTYPES" (CODE, ENGLISHNAME, LOCALNAME, SEARCHFIELDS, INACTIVE) VALUES ('4', 'Test', 'בדיקות4', 'בדיקות,TSTתTEST', '0')

@@ -76,3 +76,4 @@ ARPaymentCheques/ARPaymentCheque
 ClientDrivingLicenses/ClientDrivingLicense
 InterestReportStatuses/InterestReportStatuse
 UserLastSettings/UserLastSettings
+DecDangersContacts/DecDangersContacts

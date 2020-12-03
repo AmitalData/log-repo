@@ -2,7 +2,6 @@
 using System.Configuration;
 using System.Data.SqlClient;
 using System.IO;
-using Oracle.DataAccess.Client;
 using System.Linq;
 using System.Collections.Generic;
 using System.Security;
@@ -10,6 +9,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Reflection;
 using System.Xml;
+using Oracle.ManagedDataAccess.Client;
 
 namespace Logitude.DBMigrations.Models
 {
@@ -43,22 +43,40 @@ namespace Logitude.DBMigrations.Models
         {
             if (!ToolArguments.IsArgumentProvided(Arguments.SERVICE))
             {
-                string[] dxmlFiles = GetDXMLFilesFromRoot(Root);
-                string[] sxmlFiles = GetSXMLFilesFromRoot(Root);
+                if (!ToolArguments.IsArgumentProvided(Arguments.DEV))
+                {
+                    StartNormalMigrations();
+                    StartZeroDownTimeMigrations();
+                }
+                else
+                {
+                    ToolArguments.Arguments = ToolArguments.Arguments.Except(new string[] { Arguments.ZERODOWNTIME }).ToArray();
+                    StartNormalMigrations();
 
-                ValidateDBFiles(dxmlFiles, sxmlFiles);
-                PrepareRequiredData();
+                    Console.WriteLine("");
 
-                GeneratedScript scriptsToSave = GenerateAndExecuteDBScripts(dxmlFiles, sxmlFiles);
-                SaveScripts(scriptsToSave);
-                ExportMissingIndexesWarnings();
-
-                StartZeroDownTimeMigrations();
+                    ToolArguments.Arguments = new List<string>(ToolArguments.Arguments) { Arguments.ZERODOWNTIME }.ToArray();
+                    StartNormalMigrations();
+                    StartZeroDownTimeMigrations();
+                }
             }
             else
             {
                 StartZeroDownTimeService();
             }
+        }
+
+        protected void StartNormalMigrations()
+        {
+            string[] dxmlFiles = GetDXMLFilesFromRoot(Root);
+            string[] sxmlFiles = GetSXMLFilesFromRoot(Root);
+
+            ValidateDBFiles(dxmlFiles, sxmlFiles);
+            PrepareRequiredData();
+
+            GeneratedScript scriptsToSave = GenerateAndExecuteDBScripts(dxmlFiles, sxmlFiles);
+            SaveScripts(scriptsToSave);
+            ExportMissingIndexesWarnings();
         }
 
         protected void ValidateDBFiles(string[] dxmlFiles, string[] sxmlFiles)
@@ -74,6 +92,7 @@ namespace Logitude.DBMigrations.Models
         {
             Console.WriteLine("Preparing Required Data ...");
 
+            GetIncludedModulesFromArguments();
             GetIncludedModulesFromDB();
             GetDXMLHashesFromDB();
             GetExecutedSXMLFilesFromDB();
@@ -87,6 +106,7 @@ namespace Logitude.DBMigrations.Models
             bool isExecuteArgumentProvided = ToolArguments.IsArgumentProvided(Arguments.EXE) || (RunSettings.DebugMode && RunSettings.ExecuteScripts);
 
             List<ScriptDefinition> scriptDefinitions = GetScriptDefinitionsFromSxmlFiles(sxmlFiles);
+            ValidateNotExecutedAOTScripts(scriptDefinitions);
 
             GeneratedScript toolTablesScript = HandleDXMLFiles(toolDxmlFiles, isExecuteArgumentProvided);
             GeneratedScript preGeneralScript = HandleSXMLFiles(scriptDefinitions, isExecuteArgumentProvided, true);
@@ -268,6 +288,11 @@ namespace Logitude.DBMigrations.Models
                     string[] dbTypes = new string[] { "Global", "Main", "SystemLogs", "CargoTracking" };
                     foreach (var dbType in dbTypes)
                     {
+                        if(dbType == "CargoTracking" && !IsModuleIncluded("CargoTracking"))
+                        {
+                            continue;
+                        }
+
                         dxmlTable.TableDefinition.DBType = dbType;
                         DXMLGeneratedScript dxmlGeneratedScript = GenerateScriptsFromDXMLTable(dxmlTable);
                         dxmlsGeneratedScript = AddToDXMLGeneratedScript(dxmlsGeneratedScript, dxmlGeneratedScript);
@@ -385,10 +410,12 @@ namespace Logitude.DBMigrations.Models
         {
             Console.WriteLine("Saving The Generated Scripts ...");
 
-            string globalScript = !String.IsNullOrEmpty(generatedScript.GlobalScript) ? generatedScript.GlobalScript.Replace(ScriptSemicolonCode, ";") : "";
-            string mainScript = !String.IsNullOrEmpty(generatedScript.MainScript) ? generatedScript.MainScript.Replace(ScriptSemicolonCode, ";") : "";
-            string systemLogsScript = !String.IsNullOrEmpty(generatedScript.SystemLogsScript) ? generatedScript.SystemLogsScript.Replace(ScriptSemicolonCode, ";") : "";
-            string cargoTrackingScript = !String.IsNullOrEmpty(generatedScript.CargoTrackingScript) ? generatedScript.CargoTrackingScript.Replace(ScriptSemicolonCode, ";") : "";
+            bool isScriptsArgumentProvided = ToolArguments.IsArgumentProvided(Arguments.SCRIPTS);
+
+            string globalScript = isScriptsArgumentProvided ? (!String.IsNullOrEmpty(generatedScript.GlobalScript) ? generatedScript.GlobalScript.Replace(ScriptSemicolonCode, ";") : "") : null;
+            string mainScript = isScriptsArgumentProvided ? (!String.IsNullOrEmpty(generatedScript.MainScript) ? generatedScript.MainScript.Replace(ScriptSemicolonCode, ";") : "") : null;
+            string systemLogsScript = isScriptsArgumentProvided ? (!String.IsNullOrEmpty(generatedScript.SystemLogsScript) ? generatedScript.SystemLogsScript.Replace(ScriptSemicolonCode, ";") : "") : null;
+            string cargoTrackingScript = isScriptsArgumentProvided ? (!String.IsNullOrEmpty(generatedScript.CargoTrackingScript) ? generatedScript.CargoTrackingScript.Replace(ScriptSemicolonCode, ";") : "") : null;
 
             string projectDirectory = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
             if (ToolArguments.IsArgumentProvided(Arguments.DEPLOYMENT))
@@ -457,6 +484,21 @@ namespace Logitude.DBMigrations.Models
             if (indexOfRootArgument < ToolArguments.Arguments.Length && indexOfRootArgument >= 0)
             {
                 string root = ToolArguments.Arguments[indexOfRootArgument];
+                return root;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        protected string GetModulesFromArguments(string modulesArgument)
+        {
+            string[] arguments = Array.ConvertAll(ToolArguments.Arguments, a => a.ToLower());
+            int indexOfArgument = Array.IndexOf(arguments, modulesArgument) + 1;
+            if (indexOfArgument < ToolArguments.Arguments.Length && indexOfArgument >= 0)
+            {
+                string root = ToolArguments.Arguments[indexOfArgument];
                 return root;
             }
             else
@@ -1332,6 +1374,20 @@ namespace Logitude.DBMigrations.Models
             return scriptDefinitions;
         }
 
+        protected void ValidateNotExecutedAOTScripts(List<ScriptDefinition> scriptDefinitions)
+        {
+            if (!ToolArguments.IsArgumentProvided(Arguments.ZERODOWNTIME) && ToolArguments.IsArgumentProvided(Arguments.EXE))
+            {
+                List<ScriptDefinition> aotScripts = scriptDefinitions.Where(s => s.AOT).ToList();
+
+                if (aotScripts.Any() && !ToolArguments.IsArgumentProvided(Arguments.DEV))
+                {
+                    string scriptsSxmlNames = string.Join("\n", aotScripts.Select(s => s.SxmlFileName).ToArray());
+                    ExitTool("Error: There Is Some Not Executed Scripts That Defined As AOT And You Need To Run The Tool With -Dev Argument, The Scripts Are:\n" + scriptsSxmlNames);
+                }
+            }
+        }
+
         protected GeneratedScript GetGeneralScripts(List<ScriptDefinition> scriptDefinitions, bool preScripts)
         {
             bool isZeroDownTimeArgumentProvided = ToolArguments.IsArgumentProvided(Arguments.ZERODOWNTIME);
@@ -1413,6 +1469,10 @@ namespace Logitude.DBMigrations.Models
                     if (!IsSxmlInDBMigrationsDataScripts(scriptDefinition.SxmlFileName))
                     {
                         InsertIntoDBMigrationsDataScripts(scriptDefinition);
+                    }
+                    else
+                    {
+                        UpdateIntoDBMigrationsDataScripts(scriptDefinition);
                     }
                 }
             }
@@ -1513,6 +1573,23 @@ namespace Logitude.DBMigrations.Models
                 }
             }
             return includeScriptDefinition;
+        }
+
+        protected bool IsModuleIncluded(string moduleName)
+        {
+            bool isModuleIncluded = true;
+            if (IncludedModules != null)
+            {
+                if (IncludedModules.Include)
+                {
+                    isModuleIncluded = IncludedModules.Modules.Contains(moduleName?.ToLower()) && !String.IsNullOrEmpty(moduleName);
+                }
+                else
+                {
+                    isModuleIncluded = !IncludedModules.Modules.Contains(moduleName?.ToLower()) && !String.IsNullOrEmpty(moduleName);
+                }
+            }
+            return isModuleIncluded;
         }
 
         protected string GetOracleSaveScriptHistoryQuery(string saveAction, string sxmlFileName, ScriptDefinition scriptDefinition)
@@ -1708,89 +1785,123 @@ namespace Logitude.DBMigrations.Models
             }
         }
 
+        protected void GetIncludedModulesFromArguments()
+        {
+            bool isIncludeModulesArgumentProvided = ToolArguments.IsArgumentProvided(Arguments.INCLUDEMODULES);
+            bool isExcludeModulesArgumentProvided = ToolArguments.IsArgumentProvided(Arguments.EXCLUDEMODULES);
+
+            if (isIncludeModulesArgumentProvided || isExcludeModulesArgumentProvided)
+            {
+                string modules;
+                string mode;
+                if (isIncludeModulesArgumentProvided)
+                {
+                    modules = GetModulesFromArguments(Arguments.INCLUDEMODULES);
+                    mode = "include";
+                }
+                else
+                {
+                    modules = GetModulesFromArguments(Arguments.EXCLUDEMODULES);
+                    mode = "exclude";
+                }
+
+                if (!String.IsNullOrEmpty(modules))
+                {
+                    IncludedModules = new IncludedModules
+                    {
+                        Include = mode == "include",
+                        Modules = modules.ToLower().Split(',').ToList()
+                    };
+                }
+            }
+        }
+
         protected void GetIncludedModulesFromDB()
         {
-            string connectionString = ToolConfigurations.GetConnectionString("Main");
-
-            if (ToolConfigurations.DatabaseType.ToLower() == "oracle")
+            if(IncludedModules == null)
             {
-                string queryString = "SELECT * FROM \"DBMIGRATIONSETTINGS\"";
+                string connectionString = ToolConfigurations.GetConnectionString("Main");
 
-                OracleDataReader reader = null;
-                OracleConnection connection = new OracleConnection(connectionString);
-                OracleCommand command = new OracleCommand(queryString, connection);
-
-                IncludedModules includedModules = null;
-
-                try
+                if (ToolConfigurations.DatabaseType.ToLower() == "oracle")
                 {
-                    connection.Open();
-                    reader = command.ExecuteReader();
+                    string queryString = "SELECT * FROM \"DBMIGRATIONSETTINGS\"";
 
-                    reader.Read();
+                    OracleDataReader reader = null;
+                    OracleConnection connection = new OracleConnection(connectionString);
+                    OracleCommand command = new OracleCommand(queryString, connection);
 
-                    if (reader.HasRows)
+                    IncludedModules includedModules = null;
+
+                    try
                     {
-                        includedModules = new IncludedModules
+                        connection.Open();
+                        reader = command.ExecuteReader();
+
+                        reader.Read();
+
+                        if (reader.HasRows)
                         {
-                            Include = reader["MODE"].ToString().ToLower() == "include",
-                            Modules = reader["MODULESLIST"].ToString().ToLower().Split(',').ToList()
-                        };
-                    }
+                            includedModules = new IncludedModules
+                            {
+                                Include = reader["MODE"].ToString().ToLower() == "include",
+                                Modules = reader["MODULESLIST"].ToString().ToLower().Split(',').ToList()
+                            };
+                        }
 
-                    reader.Close();
-                    connection.Close();
-                }
-                catch (Exception)
-                {
-                    if (reader != null)
-                    {
                         reader.Close();
+                        connection.Close();
                     }
-                    connection.Close();
-                }
-
-                IncludedModules = includedModules;
-            }
-            else
-            {
-                string queryString = "SELECT * FROM [dbo].[DBMigrationSettings]";
-
-                SqlDataReader reader = null;
-                SqlConnection connection = new SqlConnection(connectionString);
-                SqlCommand command = new SqlCommand(queryString, connection);
-
-                IncludedModules includedModules = null;
-
-                try
-                {
-                    connection.Open();
-                    reader = command.ExecuteReader();
-
-                    reader.Read();
-
-                    if (reader.HasRows)
+                    catch (Exception)
                     {
-                        includedModules = new IncludedModules
+                        if (reader != null)
                         {
-                            Include = reader["Mode"].ToString().ToLower() == "include",
-                            Modules = reader["ModulesList"].ToString().ToLower().Split(',').ToList()
-                        };
+                            reader.Close();
+                        }
+                        connection.Close();
                     }
 
-                    reader.Close();
-                    connection.Close();
+                    IncludedModules = includedModules;
                 }
-                catch (Exception)
+                else
                 {
-                    if (reader != null)
-                    {
-                        reader.Close();
-                    }
-                    connection.Close();
-                }
+                    string queryString = "SELECT * FROM [dbo].[DBMigrationSettings]";
 
-                IncludedModules = includedModules;
+                    SqlDataReader reader = null;
+                    SqlConnection connection = new SqlConnection(connectionString);
+                    SqlCommand command = new SqlCommand(queryString, connection);
+
+                    IncludedModules includedModules = null;
+
+                    try
+                    {
+                        connection.Open();
+                        reader = command.ExecuteReader();
+
+                        reader.Read();
+
+                        if (reader.HasRows)
+                        {
+                            includedModules = new IncludedModules
+                            {
+                                Include = reader["Mode"].ToString().ToLower() == "include",
+                                Modules = reader["ModulesList"].ToString().ToLower().Split(',').ToList()
+                            };
+                        }
+
+                        reader.Close();
+                        connection.Close();
+                    }
+                    catch (Exception)
+                    {
+                        if (reader != null)
+                        {
+                            reader.Close();
+                        }
+                        connection.Close();
+                    }
+
+                    IncludedModules = includedModules;
+                }
             }
         }
 
@@ -1887,6 +1998,11 @@ namespace Logitude.DBMigrations.Models
             if (ToolArguments.IsArgumentProvided(Arguments.ZERODOWNTIME) && !ToolArguments.IsArgumentProvided(Arguments.EXE))
             {
                 ExitTool("Error: Cannot Use Zero Down Time Mode Without Execute Argument");
+            }
+
+            if (ToolArguments.IsArgumentProvided(Arguments.DEV) && !ToolArguments.IsArgumentProvided(Arguments.EXE))
+            {
+                ExitTool("Error: Cannot Use Dev Mode Without Execute Argument");
             }
         }
 
@@ -2140,6 +2256,41 @@ namespace Logitude.DBMigrations.Models
                     "[StartDate], [EndDate], [LastBatchElapsedTime], [ScriptVersion], [ScriptHashValue], [ScriptHistoryAction], [TargetTableName], [BatchSize]) " +
                     "VALUES('" + Guid.NewGuid().ToString() + "', '" + scriptDefinition.SxmlFileName + "', '" + scriptDefinition.DBType + "', '" + sxmlScript + "', " +
                     (scriptDefinition.Pre ? "1" : "0") + ", 'Waiting', " + scriptExecutionNumber + ", NULL, NULL, 0, " + sxmlVersion + ", '" + sxmlScriptHashValue + "', '" + scriptDefinition.ScriptHistoryAction + "', '" + scriptDefinition.TargetTableName + "', " + (scriptDefinition.BatchSize > 0 ? scriptDefinition.BatchSize.ToString() : "NULL") + ");";
+
+                SqlConnection sqlConnection = new SqlConnection(ToolConfigurations.MainConnectionString);
+
+                try
+                {
+                    sqlConnection.Open();
+                    SqlCommand sqlCommand = new SqlCommand();
+                    sqlCommand.Connection = sqlConnection;
+                    sqlCommand.CommandText = queryString;
+                    sqlCommand.ExecuteNonQuery();
+                    sqlConnection.Close();
+                }
+                catch (Exception exception)
+                {
+                    sqlConnection.Close();
+                    ExitTool(exception.Message);
+                }
+            }
+        }
+
+        protected void UpdateIntoDBMigrationsDataScripts(ScriptDefinition scriptDefinition)
+        {
+            if (ToolConfigurations.DatabaseType.ToLower() == "oracle")
+            {
+
+            }
+            else
+            {
+                string sxmlScript = GetScriptFromCDataSection(scriptDefinition.Sql.Script).Replace("'", "''").TrimEnd(new char[] { '\r', '\n' });
+                int sxmlVersion = scriptDefinition.Sql.Version;
+                string sxmlScriptHashValue = GenerateHashString(scriptDefinition.Sql.Script);
+
+                string queryString = "UPDATE [dbo].[DBMigrationsDataScripts] SET [SxmlScript] = '" + sxmlScript + "', [Status] = 'Waiting', [StartDate] = NULL, [EndDate] = NULL, " +
+                    "[LastBatchElapsedTime] = 0, [ScriptVersion] = " + sxmlVersion + ", [ScriptHashValue] = '" + sxmlScriptHashValue + "', " +
+                    "[ScriptHistoryAction] = '" + scriptDefinition.ScriptHistoryAction + "' WHERE [SxmlFileName] = '" + scriptDefinition.SxmlFileName + "'";
 
                 SqlConnection sqlConnection = new SqlConnection(ToolConfigurations.MainConnectionString);
 

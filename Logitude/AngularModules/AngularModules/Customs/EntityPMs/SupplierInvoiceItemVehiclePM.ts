@@ -157,6 +157,16 @@ export class SupplierInvoiceItemVehiclePM {
     public set ExcludeFromInterface(newValue: boolean) { if (this.excludeFromInterface != newValue) { this.excludeFromInterface = newValue; this.MarkAsDirty("ExcludeFromInterface"); } }
        
 	 
+    private identifierID: string;
+    public get IdentifierID() { return this.identifierID; }
+    public set IdentifierID(newValue: string) { if (this.identifierID != newValue) { this.identifierID = newValue; this.MarkAsDirty("IdentifierID"); } }
+       
+	 
+    private vehicleTypeName: string;
+    public get VehicleTypeName() { return this.vehicleTypeName; }
+    public set VehicleTypeName(newValue: string) { if (this.vehicleTypeName != newValue) { this.vehicleTypeName = newValue; this.MarkAsDirty("VehicleTypeName"); } }
+       
+	 
 
     public OldEntityPM: SupplierInvoiceItemVehiclePM;
 	

@@ -258,7 +258,10 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                                                   ShowVATPercentagePackages = a.ShowVATPercentagePackages, 
                                                   ShowVATTypeContainers =a.ShowVATTypeContainers,
                                                   ShowVATTypePackages =a.ShowVATTypePackages,
-
+                                                  PageNumberingTextDesignId = a.PageNumberingTextDesignId,
+                                                  HidePageNumber = a.HidePageNumber,
+                                                  ShowRegionalTAXPackages = a.ShowRegionalTAXPackages,
+                                                  ShowRegionalTAXContainers = a.ShowRegionalTAXContainers,
                                               }).FirstOrDefault();
 
             return entity;
@@ -486,6 +489,10 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                                                        ShowVATPercentagePackages = a.ShowVATPercentagePackages,
                                                        ShowVATTypeContainers = a.ShowVATTypeContainers,
                                                        ShowVATTypePackages = a.ShowVATTypePackages,
+                                                       PageNumberingTextDesignId = a.PageNumberingTextDesignId,
+                                                       HidePageNumber = a.HidePageNumber,
+                                                       ShowRegionalTAXPackages = a.ShowRegionalTAXPackages,
+                                                       ShowRegionalTAXContainers = a.ShowRegionalTAXContainers,
 
                                                                       };
             return qUoteTemplateSetting;
@@ -707,6 +714,10 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                                                     ShowVATPercentagePackages = quoteTemplateSetting.ShowVATPercentagePackages,
                                                     ShowVATTypeContainers = quoteTemplateSetting.ShowVATTypeContainers,
                                                     ShowVATTypePackages = quoteTemplateSetting.ShowVATTypePackages,
+                                                    PageNumberingTextDesignId = quoteTemplateSetting.PageNumberingTextDesignId,
+                                                    HidePageNumber = quoteTemplateSetting.HidePageNumber,
+                                                    ShowRegionalTAXPackages = quoteTemplateSetting.ShowRegionalTAXPackages,
+                                                    ShowRegionalTAXContainers = quoteTemplateSetting.ShowRegionalTAXContainers,
                                                           };
             return result;
         }

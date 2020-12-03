@@ -52,6 +52,8 @@ namespace Logitude.Customs.Data.EntityMapping
             this.Property(t => t.DcaPrefixName3).HasColumnName("DcaPrefixName3").HasMaxLength(256).IsUnicode(false);
 
             this.Property(t => t.DcaPrefixName4).HasColumnName("DcaPrefixName4").HasMaxLength(256).IsUnicode(false);
+
+            this.Property(t => t.InterfaceType).HasColumnName("InterfaceType").HasMaxLength(1).IsUnicode(false);
         }
     }
 }

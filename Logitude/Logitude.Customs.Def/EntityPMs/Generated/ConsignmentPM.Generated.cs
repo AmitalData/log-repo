@@ -644,6 +644,167 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private bool isDangerousGoods ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsDangerousGoods  
+	   {
+	    
+	     get
+		{
+		   return isDangerousGoods;
+		 }
+		 set
+		 {
+		   if(isDangerousGoods != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsDangerousGoods",OldValue=isDangerousGoods,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   isDangerousGoods=value;
+		   }
+			
+		 }
+	   }
+	  private string finalDestinationPortCode ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string FinalDestinationPortCode  
+	   {
+	    
+	     get
+		{
+		   return finalDestinationPortCode;
+		 }
+		 set
+		 {
+		   if(finalDestinationPortCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="FinalDestinationPortCode",OldValue=finalDestinationPortCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   finalDestinationPortCode=value;
+		   }
+			
+		 }
+	   }
+	  private string finalDestinationPortName ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string FinalDestinationPortName  
+	   {
+	    
+	     get
+		{
+		   return finalDestinationPortName;
+		 }
+		 set
+		 {
+		   if(finalDestinationPortName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="FinalDestinationPortName",OldValue=finalDestinationPortName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   finalDestinationPortName=value;
+		   }
+			
+		 }
+	   }
+	  private string exportRecieverWareHouseCode ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ExportRecieverWareHouseCode  
+	   {
+	    
+	     get
+		{
+		   return exportRecieverWareHouseCode;
+		 }
+		 set
+		 {
+		   if(exportRecieverWareHouseCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ExportRecieverWareHouseCode",OldValue=exportRecieverWareHouseCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   exportRecieverWareHouseCode=value;
+		   }
+			
+		 }
+	   }
+	  private string exportRecieverWareHouseName ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ExportRecieverWareHouseName  
+	   {
+	    
+	     get
+		{
+		   return exportRecieverWareHouseName;
+		 }
+		 set
+		 {
+		   if(exportRecieverWareHouseName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ExportRecieverWareHouseName",OldValue=exportRecieverWareHouseName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   exportRecieverWareHouseName=value;
+		   }
+			
+		 }
+	   }
+	  private string exportUnloadingPortCode ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ExportUnloadingPortCode  
+	   {
+	    
+	     get
+		{
+		   return exportUnloadingPortCode;
+		 }
+		 set
+		 {
+		   if(exportUnloadingPortCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ExportUnloadingPortCode",OldValue=exportUnloadingPortCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   exportUnloadingPortCode=value;
+		   }
+			
+		 }
+	   }
+	  private string exportLoadingPortCode ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ExportLoadingPortCode  
+	   {
+	    
+	     get
+		{
+		   return exportLoadingPortCode;
+		 }
+		 set
+		 {
+		   if(exportLoadingPortCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ExportLoadingPortCode",OldValue=exportLoadingPortCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   exportLoadingPortCode=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

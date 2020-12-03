@@ -24,6 +24,10 @@ import { TextCodeTranslator } from      '../../../../Infrastructure/Utilities/Te
 })
 
 export class ClientEditComponent extends BaseComponent{
+  public IsDisplayOnly: boolean = false;
+  public right: any;
+  public CustomSendOptionsButtonCanForcePersonalSign: any;
+
     public TabsItemsSource: TabItem[] = [];
     @ViewChildren(LocationDirective) public AllLocations: QueryList<LocationDirective>;
     public CurrentEntity: ClientPM;
@@ -323,7 +327,8 @@ export class ClientEditComponent extends BaseComponent{
                 currRequestParams.PassportIssueDate = this.CurrentEntity.PassportIssueDate;
                 currRequestParams.PassportLastName = this.CurrentEntity.PassportLastName;
                 currRequestParams.PassportNumber = this.CurrentEntity.PassportNumber;
-                currRequestParams.PassportTypeCode = this.CurrentEntity.PassportTypeCode;
+            currRequestParams.PassportTypeCode = this.CurrentEntity.PassportTypeCode;
+            currRequestParams.NationalIdentificationNumber = this.CurrentEntity.NationalIdentificationNumber;
 
                 currRequestParams.BirthDate = this.CurrentEntity.BirthDate;
                 currRequestParams.IsImporter = this.CurrentEntity.IsImporter;

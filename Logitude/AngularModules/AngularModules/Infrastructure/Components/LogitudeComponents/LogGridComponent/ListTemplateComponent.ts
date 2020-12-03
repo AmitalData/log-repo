@@ -1,4 +1,4 @@
-﻿import {Component, ElementRef, OnInit, ViewContainerRef,ChangeDetectorRef} from '@angular/core';
+import {Component, ElementRef, OnInit, ViewContainerRef,ChangeDetectorRef} from '@angular/core';
 import {SessionLocator} from '../../../Utilities/SessionLocator';
 import {ObjectsLocator} from '../../../Locators/ObjectsLocator';
 
@@ -6,14 +6,20 @@ import {ObjectsLocator} from '../../../Locators/ObjectsLocator';
     selector: 'list-template',
     template: `<div style="overflow: hidden; text-overflow: ellipsis;">
                 
-               <span><span style="text-overflow: ellipsis" [style.float]="RTL == true ? 'right' : 'left'" *ngIf="noComponent">{{rowData[fieldName]}}</span></span>
-            
-               </div>
+               <span>
+                 <div style="text-overflow: ellipsis" [style.float]="RTL == true ? 'right' : 'left'" *ngIf="noComponent" innerHTML="{{ rowData[fieldName] | highlight : SearchTerm}}">
+                     <!--<span style="text-overflow: ellipsis" [style.float]="RTL == true ? 'right' : 'left'" *ngIf="noComponent"> 
+                           {{rowData[fieldName]}} 
+                    </span>-->
+                </div>
+              </span>
+
+             </div>
 
 `,
-    inputs: ['htmlListComponentUrl', 'htmlListComponentName', 'fieldName', 'rowData', 'PassAdditionalData','AdditionalData']
+    inputs: ['htmlListComponentUrl', 'htmlListComponentName', 'fieldName', 'rowData', 'PassAdditionalData', 'AdditionalData', 'AdditionalDataCustom','SearchTerm']
 })
-
+ 
 export class ListTemplateComponent implements OnInit {
 
     public rowData: any;
@@ -22,6 +28,8 @@ export class ListTemplateComponent implements OnInit {
     public htmlListComponentName: string;
     public PassAdditionalData: boolean = false;
     public AdditionalData: any;
+    public AdditionalDataCustom: any;
+    public SearchTerm: string;
     public RTL: boolean = ObjectsLocator.GlobalSetting == undefined ? false : (ObjectsLocator.GlobalSetting.LayoutDirection == 'rtl' ? true : false);
 
     constructor(private _elementRef: ElementRef, private _ViewContainerRef: ViewContainerRef, private CD: ChangeDetectorRef) {
@@ -38,14 +46,14 @@ export class ListTemplateComponent implements OnInit {
                 SessionLocator.DynamicLoader.Load(this.htmlListComponentUrl, this._ViewContainerRef)
                     .then((res) => {
                         //console.log("specific response: ", res);
-                        res.instance.setVariables(this.rowData, this.fieldName, this.AdditionalData);
+                        res.instance.setVariables(this.rowData, this.fieldName, this.AdditionalData, this.AdditionalDataCustom);
                     });
             }
             else {
                 SessionLocator.DynamicLoader.Load(this.htmlListComponentUrl, this._ViewContainerRef)
                     .then((res) => {
                         //console.log("specific response: ", res);
-                        res.instance.setVariables(this.rowData, this.fieldName);
+                        res.instance.setVariables(this.rowData, this.fieldName, this.AdditionalDataCustom);
                     });
             }
             
@@ -54,6 +62,7 @@ export class ListTemplateComponent implements OnInit {
             this.noComponent = true;
         }
 
+        //this.CD.detectChanges();
     }
     
 }

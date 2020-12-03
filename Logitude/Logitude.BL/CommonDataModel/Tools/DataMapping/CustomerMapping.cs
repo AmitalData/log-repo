@@ -85,7 +85,7 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             entityPOCO.ActivationDate = entityPM.ActivationDate;
             entityPOCO.ActivationRequestDate = entityPM.ActivationRequestDate;
             entityPOCO.InactiveDate = entityPM.InactiveDate;
-
+            entityPOCO.EORInumber = entityPM.EORInumber;
             if (!entityPM.IsHybrid || isNewState) //islam: if hybrid and not a new call dont map the field
             {
                 entityPOCO.FirstShipmentDate = entityPM.FirstShipmentDate;
@@ -369,6 +369,7 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
                                     IRSNumber = a.Card.IRSNumber,
                                     IRSPlace = a.Card.IRSPlace,
                                     IsPrivateLabelCustomer = a.IsPrivateLabelCustomer,
+                                    EORInumber = a.EORInumber,
                                     Card = new CardPM()
                                     {
                                         Id = a.Id,

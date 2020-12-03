@@ -81,6 +81,21 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
 
         }
 
+        public HttpResponseMessage PostSendContinuousRequestOnClaim(ContinuousRequestOnClaimFileRequestParams requestParamsData)
+        {
+            try
+            {
+                ContinuousResponseOnClaimFileResponseData responseData;
+                var messagingService = new CLAIM_5005_ContinuousRequestOnClaimFileMessagingService();
+                responseData = messagingService.Send(requestParamsData);
+                return Request.CreateResponse(HttpStatusCode.OK, responseData);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+
+        }
 
     }
 }

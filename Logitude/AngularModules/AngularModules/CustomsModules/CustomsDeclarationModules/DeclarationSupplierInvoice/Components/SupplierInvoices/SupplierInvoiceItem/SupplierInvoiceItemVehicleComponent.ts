@@ -37,6 +37,8 @@ import {CustomsSettingExtendedListService} from '../../../../../../Customs/Servi
 
 
 export class SupplierInvoiceItemVehicleComponent extends BaseComponent {
+  public ExcludeFromInterface: any;
+
     public ObjectTableName: string = "Customs.SupplierInvoiceItemVehicle";
     public DataContext = this;
     public invoiceItemPM: SupplierInvoiceItemPM;
@@ -383,7 +385,7 @@ export class SupplierInvoiceItemVehicleComponent extends BaseComponent {
                                         }
                                     });
 
-                                    logWindow.Show('./CustomsModules/CustomControls/Components/CustomsErrorsComponent');
+                                    logWindow.Show('./CustomsModules/CustomsControls/Components/CustomsErrorsComponent');
                                     this.CurrentSession.CurrentEditComponent.StopBusyIndicator();
                                     
 
@@ -433,7 +435,7 @@ export class SupplierInvoiceItemVehicleComponent extends BaseComponent {
 
         for (let item of this.invoiceItemPM.SupplierInvoiceItemVehicles) {
             Validator.TryValidateObject(this.EntityPM, this.ObjectTableName, errors);
-            if (AppTool.IsNullOrEmpty(item.RichbitFileNumber) && AppTool.IsNullOrEmpty(item.VehicleChassisNumber)) {
+            if (AppTool.IsNullOrEmpty(item.RichbitFileNumber) && AppTool.IsNullOrEmpty(item.VehicleChassisNumber) && (AppTool.IsNullOrEmpty(item.IdentifierID))) {
                 errors.push(TextCodeTranslator.Translate("Customs.General.O.EmptyVehicle"));
             }
 
@@ -453,14 +455,17 @@ export class SupplierInvoiceItemVehicleComponent extends BaseComponent {
 
         if (errors.length == 0) {
             for (let item of this.invoiceItemPM.SupplierInvoiceItemVehicles) {
-                if (!AppTool.IsNullOrEmpty(item.VehicleId) || !AppTool.IsNullOrEmpty(item.RichbitFileNumber)) {
-                    item.VehicleTypeCode = "ZZZ";
-                }
+                if ( this.declarationPM.Direction != 'E') {
+                    if (!AppTool.IsNullOrEmpty(item.VehicleId) || !AppTool.IsNullOrEmpty(item.RichbitFileNumber)) {
+                        item.VehicleTypeCode = "ZZZ";
+                    }
 
 
-                else {
-                    item.VehicleTypeCode = "CN";
+                    else {
+                        item.VehicleTypeCode = "CN";
+                    }
                 }
+            
             }
             if (this.invoiceItemPM.SupplierInvoiceItemVehicles.length > 0) {
                 this.invoiceItemPM.VehicleStatus = true;
@@ -867,6 +872,36 @@ export class InvoiceItemVehicleLine extends BaseComponent {
             this.entityPM.ExcludeFromInterface = value;
 
         }
+    }
+
+
+    public get IdentifierID() { return this.entityPM ? this.entityPM.IdentifierID : null; }
+    public set IdentifierID(newValue: string) {
+        this.entityPM.IdentifierID = newValue;
+        this.entityPM.IsDirty = true;
+    }
+
+
+    public get VehicleTypeCode() { return this.entityPM ? this.entityPM.VehicleTypeCode : null; }
+    public set VehicleTypeCode(newValue: string) {
+        this.entityPM.VehicleTypeCode = newValue;
+        this.entityPM.IsDirty = true;
+    }
+
+
+    public get VehicleTypeName() { return this.entityPM ? this.entityPM.VehicleTypeName : null; }
+    public set VehicleTypeName(newValue: string) {
+        this.entityPM.VehicleTypeName = newValue;
+        this.entityPM.IsDirty = true;
+    }
+
+    SetLocalName(entity, fieldName) {
+        if (!AppTool.IsNullOrEmpty(entity)) {
+            this[fieldName] = entity.LocalName;
+        } else {
+            this[fieldName] = null;
+        }
+
     }
     
     //#endregion

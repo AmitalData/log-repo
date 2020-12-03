@@ -228,15 +228,17 @@
                             <div class="OverflowSpan" (click)="PreventCheckBoxSelect($event,col)" [id]="'span-row'+rowIndex+'col'+colIndex" [ngStyle]="col.Styles" style="height: 100%; text-align: left; text-indent: 10px;min-width:25px;">
                                 <CheckBox class="CenterCenter" [class.Disabled]="IsCheckBoxEnabled == false" *ngIf="col.IsCheckBox == true" style="margin-left:10px;float:right;" (click)="$event.stopPropagation();"
                                           [IsChecked]="row.rowData.IsChecked == true" (Checked)="OnCheckBoxChecked(row.rowData,$event,row.rowIndex)"></CheckBox>
-                                <ObjectFieldTemplate *ngIf="!col.IsCustomTemplate" [ObjectTable]="ObjectTable" [ObjectField]="col.ObjectField" [Entity]="row.rowData" [IsListColumnCellTemplate]="true"></ObjectFieldTemplate>
+                                <ObjectFieldTemplate *ngIf="!col.IsCustomTemplate" [ObjectTable]="ObjectTable" [ObjectField]="col.ObjectField" [Entity]="row.rowData"  [RowIndex]="row.rowIndex" [IsListColumnCellTemplate]="true"></ObjectFieldTemplate>
                                 <div [id]="LogGridId + colIndex + 'rowtemplate'+rowIndex" [style.visibility]="col.EnableHoverVisibility ? 'hidden' : 'visible'">
                                     <list-template *ngIf="col.IsCustomTemplate" style="text-indent: 10px; overflow: hidden; text-overflow: ellipsis;"
                                                    [rowData]="row.rowData"
+                                                   [SearchTerm]="searchFields"
                                                    [AdditionalData]="{rowIndex:row.rowIndex,gridId:LogGridId,RowOutEvent:RowOutEvent,RowOverEvent:RowOverEvent}"
                                                    [PassAdditionalData]="PassAdditionalDataToTemplates"
                                                    [fieldName]="col.FieldName"
                                                    [htmlListComponentName]="col.HtmlListComponentName"
-                                                   [htmlListComponentUrl]="col.HtmlListComponentUrl">
+                                                   [htmlListComponentUrl]="col.HtmlListComponentUrl"
+                                                   [AdditionalDataCustom]="col.AdditionalDataCustom">
                                     </list-template>
                                 </div>
                             </div>
@@ -250,7 +252,7 @@
                         </div>
                     </div>
                     <div *ngIf="row.ShowDetails && IsSpotLight" [id]="'DetailsDiv' + row.rowIndex" [style.height.px]="SpotLightHeight" style="position:absolute;display: flex;width:100%;" [ngStyle]="row.Detailsstyles">
-                        <ObjectFieldTemplate [ObjectTable]="ObjectTable" [Entity]="row.rowData" [IsSpotLightTemplate]="IsSpotLight" [SpotlightDataTemplate]="SpotlightDataTemplate" style="width:100%;"></ObjectFieldTemplate>
+                        <ObjectFieldTemplate [ObjectTable]="ObjectTable" [RowIndex]="row.rowIndex" [Entity]="row.rowData" [IsSpotLightTemplate]="IsSpotLight" [SpotlightDataTemplate]="SpotlightDataTemplate" style="width:100%;"></ObjectFieldTemplate>
                     </div>
 
 

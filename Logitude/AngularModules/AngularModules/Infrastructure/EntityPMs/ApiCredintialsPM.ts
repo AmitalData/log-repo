@@ -89,7 +89,10 @@ export class ApiCredintialsPM {
     public OldEntityPM: ApiCredintialsPM;
 		
     public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
+       if(!this.DisableMarkAsDirty)
+       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -97,6 +100,7 @@ export class ApiCredintialsPM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "ApiCredintials");
            
         }
+	 }
     }
     private MyClone: ApiCredintialsPM;
 

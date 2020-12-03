@@ -72,23 +72,23 @@
     <OutputPath>bin\None\</OutputPath>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Devart.Data, Version=5.0.2045.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
-      <HintPath>..\packages\DevArt.9.6.621\lib\Net40\Devart.Data.dll</HintPath>
+    <Reference Include="Devart.Data, Version=5.0.2296.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
+      <HintPath>..\packages\DevArt.9.9.872\lib\Net40\Devart.Data.dll</HintPath>
     </Reference>
     <Reference Include="Devart.Data.Linq, Version=4.8.1590.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
-      <HintPath>..\packages\DevArt.9.6.621\lib\Net40\Devart.Data.Linq.dll</HintPath>
+      <HintPath>..\packages\DevArt.9.9.872\lib\Net40\Devart.Data.Linq.dll</HintPath>
     </Reference>
-    <Reference Include="Devart.Data.Oracle, Version=9.6.621.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
-      <HintPath>..\packages\DevArt.9.6.621\lib\Net40\Devart.Data.Oracle.dll</HintPath>
+    <Reference Include="Devart.Data.Oracle, Version=9.9.872.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
+      <HintPath>..\packages\DevArt.9.9.872\lib\Net40\Devart.Data.Oracle.dll</HintPath>
     </Reference>
     <Reference Include="Devart.Data.Oracle.Entity, Version=8.2.103.6, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
-      <HintPath>..\packages\DevArt.9.6.621\lib\Net40\Devart.Data.Oracle.Entity.dll</HintPath>
+      <HintPath>..\packages\DevArt.9.9.872\lib\Net40\Devart.Data.Oracle.Entity.dll</HintPath>
     </Reference>
     <Reference Include="Devart.Data.Oracle.Linq, Version=4.8.1590.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
-      <HintPath>..\packages\DevArt.9.6.621\lib\Net40\Devart.Data.Oracle.Linq.dll</HintPath>
+      <HintPath>..\packages\DevArt.9.9.872\lib\Net40\Devart.Data.Oracle.Linq.dll</HintPath>
     </Reference>
     <Reference Include="Devart.Data.Oracle.Web, Version=9.6.621.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
-      <HintPath>..\packages\DevArt.9.6.621\lib\Net40\Devart.Data.Oracle.Web.dll</HintPath>
+      <HintPath>..\packages\DevArt.9.9.872\lib\Net40\Devart.Data.Oracle.Web.dll</HintPath>
     </Reference>
     <Reference Include="Dropbox.Api">
       <HintPath>..\packages\Dropbox.Api.4.2.4\lib\net45\Dropbox.Api.dll</HintPath>
@@ -380,11 +380,14 @@
     <Compile Include="INTTRAAnalyzerWorkerRole.cs" />
     <Compile Include="LogBoxMailgunAnalyzerWorkerRole.cs" />
     <Compile Include="LogMessagesWorkerRole.cs" />
+    <Compile Include="DocumentApprovalWorkerRole.cs" />
     <Compile Include="Services\FTPSchedulerTaskService.cs" />
     <Compile Include="ImporterApprovalReceivedWorkerRole.cs" />
     <Compile Include="Services\FTPSchedulerTaskServiceBase.cs" />
     <Compile Include="Services\ReportSchedulerTaskService.cs" />
     <Compile Include="Services\SFTPSchedulerTaskService.cs" />
+    <Compile Include="Tasks\CustomsSendManifestTask.cs" />
+    <Compile Include="Tasks\CustomsCloseCourierMasterTask.cs" />
     <Compile Include="Tasks\DeleteOldCargoTrackingData.cs" />
     <Compile Include="Tasks\DeleteOldCommunicationLogsTask.cs" />
     <Compile Include="Tasks\DeleteTaskSchedulerHistoriesTask.cs" />
@@ -410,7 +413,7 @@
     <Compile Include="CustomerTenantAccessRequestWorkerRole.cs" />
     <Compile Include="CustomerTenantAccessWorkerRole.cs" />
     <Compile Include="DataBackupWR.cs" />
-    <Compile Include="DelayAutomationWorkerRole.cs" />
+    <Compile Include="AutomationWorkerRole.cs" />
     <Compile Include="EmailingHelper.cs" />
     <Compile Include="EmailsWorkerRole.cs">
       <SubType>Code</SubType>

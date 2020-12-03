@@ -10,6 +10,9 @@ namespace Logitude.Customs.BL.CloseTables
 {
     public struct AuthorizedSignerPermitValues
     {   
+       public const string כללי = "1";  
+       public const string כספים = "2";  
+       public const string יצואןמאושר = "3";  
     }
 }
 

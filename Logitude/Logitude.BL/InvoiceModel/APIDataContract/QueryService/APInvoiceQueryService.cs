@@ -1089,7 +1089,7 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
             {
                 RatesTableQuery ratesTableQuery = new RatesTableQuery(tenant);
                 LastRate lastRate = ratesTableQuery.GetLastRecord(tenant, currencyId, tenantPM?.CurrencyId);
-                rate = (double)lastRate.Rate;
+                rate = lastRate != null? (double)lastRate.Rate: 1;
             }
 
             return rate;

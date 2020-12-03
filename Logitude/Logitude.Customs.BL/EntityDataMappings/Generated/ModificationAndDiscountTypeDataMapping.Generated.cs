@@ -26,7 +26,9 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         EnglishName, 
 	         LocalName, 
 	         SearchFields, 
-	         Inactive,
+	         Inactive, 
+	         IsRelevantGoodsItem, 
+	         IsRelevantInvoice,
 	      }
 
 
@@ -37,7 +39,9 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         EnglishName, 
 	         LocalName, 
 	         SearchFields, 
-	         Inactive,
+	         Inactive, 
+	         IsRelevantGoodsItem, 
+	         IsRelevantInvoice,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -64,6 +68,16 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Inactive))
             {
 				entityPOCO.Inactive = entityPM.Inactive;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsRelevantGoodsItem))
+            {
+				entityPOCO.IsRelevantGoodsItem = entityPM.IsRelevantGoodsItem;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsRelevantInvoice))
+            {
+				entityPOCO.IsRelevantInvoice = entityPM.IsRelevantInvoice;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -97,6 +111,16 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.Inactive = entityPOCO.Inactive;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsRelevantGoodsItem))
+            {
+					entityPM.IsRelevantGoodsItem = entityPOCO.IsRelevantGoodsItem;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsRelevantInvoice))
+            {
+					entityPM.IsRelevantInvoice = entityPOCO.IsRelevantInvoice;
+            }
+
 		}
 
 		public void PMToOldPM(ModificationAndDiscountTypePM entityPM, ModificationAndDiscountTypePM oldEntityPM)
@@ -121,6 +145,16 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Inactive))
             {
                 oldEntityPM.Inactive = entityPM.Inactive;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsRelevantGoodsItem))
+            {
+                oldEntityPM.IsRelevantGoodsItem = entityPM.IsRelevantGoodsItem;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsRelevantInvoice))
+            {
+                oldEntityPM.IsRelevantInvoice = entityPM.IsRelevantInvoice;
             }
 			
 		}

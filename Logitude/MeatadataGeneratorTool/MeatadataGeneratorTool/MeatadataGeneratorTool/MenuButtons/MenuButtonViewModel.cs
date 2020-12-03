@@ -46,8 +46,37 @@ namespace MeatadataGeneratorTool.MenuButtons
                 }
                
             }
-        } 
-        
+        }
+
+        private int width;
+        public int Width
+        {
+            get
+            {
+                return width;
+            }
+            set
+            {
+                width = value;
+                FirePropertyChanged("Width");
+            }
+        }
+
+
+        private string htmlComponentPath;
+        public string HtmlComponentPath
+        {
+            get
+            {
+                return htmlComponentPath;
+            }
+            set
+            {
+                htmlComponentPath = value;
+                FirePropertyChanged("HtmlComponentPath");
+            }
+        }
+
         private string eventCode;
         public string EventCode
         {

@@ -4235,12 +4235,12 @@
     TabName="&quot;Steps&quot;"
     ObjectTableName="&quot;CommunicationLog&quot;"
     Code="&quot;CGSP&quot;"
-    ControlPath="&quot;Simplog.Infrastructure.Views.Communications.CommunicationLogStepsControl&quot;"
+    ControlPath="&quot;Simplog.Infrastructure.Views.Communications.CommunicationStepsComponent&quot;"
     TextCode="&quot;CommunicationLog.TH.Steps&quot;"
     IsPackagable="true"
     IndexOrder="2"
-    HtmlComponentURL="&quot;./InfrastructureModules/InfrastructureCommunications/Components/CommunicationLog/CommunicationLogStepsComponent&quot;"
-    HtmlComponentName="&quot;CommunicationLogStepsComponent&quot;"
+    HtmlComponentURL="&quot;./InfrastructureModules/InfrastructureCommunications/Components/Communications/CommunicationStepsComponent&quot;"
+    HtmlComponentName="&quot;CommunicationStepsComponent&quot;"
     FeatureCode="&quot;STEPS&quot;"
     FeatureTextCodeCode="&quot;CommunicationLog.Features.Steps&quot;"
     FeatureDefaultText="&quot;Steps&quot;"
@@ -4391,6 +4391,18 @@
       DefaultText="&quot;Error&quot;"
       LocalDefaultText="&quot;שגיאה&quot;"
       TextCodeTypeCode="&quot;B&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;CommunicationLogSteps.O.Log&quot;"
+      DefaultText="&quot;Log&quot;"
+      LocalDefaultText="&quot;לוג&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;CommunicationLogSteps.O.ShowResponse&quot;"
+      DefaultText="&quot;Response&quot;"
+      LocalDefaultText="&quot;תשובה&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures />

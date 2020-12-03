@@ -1,5 +1,6 @@
-﻿import {Injectable} from '@angular/core';
-import {Http, Headers} from '@angular/http';
+import {Injectable} from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { catchError, map } from 'rxjs/operators';
 import { defer, of } from 'rxjs';
 import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
@@ -39,7 +40,7 @@ export class VendorMessagesService {
             return this._http.post(
                 this._apiUrl + '/PostAddNewVendorRequest/',
                 JSON.stringify(params),
-                { headers: authHeader }).map((res) => {
+                ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
 
                     serviceResponse.Result = res;
 
@@ -68,7 +69,7 @@ export class VendorMessagesService {
             return this._http.post(
                 this._apiUrl + '/PostAddNewVendorCommunicationRequest/',
                 JSON.stringify(params),
-                { headers: authHeader }).map((res) => {
+                ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
 
                     serviceResponse.Result = res;
 
@@ -97,7 +98,7 @@ export class VendorMessagesService {
             return this._http.post(
                 this._apiUrl + '/PostSearchVendorRequest/',
                 JSON.stringify(params),
-                { headers: authHeader }).map((res) => {
+                ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
 
                     serviceResponse.Result = res;
 
@@ -123,9 +124,7 @@ export class VendorMessagesService {
             var serviceResponse: ServiceResponse;
             serviceResponse = new ServiceResponse();
 
-            return this._http.get(this._apiUrl + "/GetVendorByNumber/?vendorNumber=" + vendorNumber, {
-                headers: authHeader
-            }).map(response => {
+            return this._http.get(this._apiUrl + "/GetVendorByNumber/?vendorNumber=" + vendorNumber, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                 var serviceResponse: ServiceResponse = new ServiceResponse();
                 //serviceResponse = response;
@@ -143,10 +142,7 @@ export class VendorMessagesService {
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
         authHeader.append('Content-Type', 'application/json');
         return defer(() => {
-            return this._http.put(this._apiUrl + '/PutRecallSuppliersFromFileRequest', JSON.stringify(fileUploadParamerter), {
-                headers: authHeader,
-
-            }).map(response => {
+            return this._http.put(this._apiUrl + '/PutRecallSuppliersFromFileRequest', JSON.stringify(fileUploadParamerter), ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var result = response;
                 var pmresponse: ServiceResponse;
                 pmresponse = new ServiceResponse();

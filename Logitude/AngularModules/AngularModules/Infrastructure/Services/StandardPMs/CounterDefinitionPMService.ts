@@ -153,6 +153,7 @@ export class CounterDefinitionPMService {
         if (!entityPM) {
             
             entityPM = new CounterDefinitionPM();
+			entityPM.DisableMarkAsDirty = true;
         }
 
 		var customFields: Array<string> = [];
@@ -193,6 +194,8 @@ export class CounterDefinitionPMService {
             entityPM.OldEntityPM = null;
         }
 		entityPM.IsDirty = false;
+	    entityPM.DisableMarkAsDirty = false;
+
         return entityPM;
     }
 

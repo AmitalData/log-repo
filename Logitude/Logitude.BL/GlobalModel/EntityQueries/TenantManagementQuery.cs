@@ -1227,5 +1227,39 @@ namespace Logitude.BL.GlobalModel.EntityQueries
 
             return tenantManagementLicensePM != null ? true : false;
         }
+
+        public string GetSystemDomain(int id)
+        {
+            string workEnvironment = Simplog.Server.Infrastructure.LogitudeSettings.WorkEnvironment;
+            string deploymentStage = Simplog.Server.Infrastructure.LogitudeSettings.DeploymentStage;
+            string fromEmail = "no-reply@" + (workEnvironment == "cloud" 
+                ? "amital.co.il" : deploymentStage != null && (deploymentStage.ToLower() == "logboxwe1" || deploymentStage.ToLower() == "test2")
+                ? GetLogboxDomain(id) : "LogitudeWorld.com");
+
+            return fromEmail;
+        }
+
+        private string GetLogboxDomain(int tenantId)
+        {
+            string privateLabelId = (from a in repository.context.GlobalTenants
+                                     where a.Id == tenantId
+                                     select a.PrivateLabelId).FirstOrDefault();
+
+
+            if (!string.IsNullOrEmpty(privateLabelId))
+            {
+                string privateLabelUrl = (from a in repository.context.TenantManagmentPrivateLabels
+                                          where a.Id == privateLabelId
+                                          select a.PrivateLabelUrl).FirstOrDefault();
+
+                if (!string.IsNullOrEmpty(privateLabelUrl))
+                {
+                    privateLabelUrl = privateLabelUrl.Replace("system.", "");
+                    return privateLabelUrl;
+                }
+
+            }
+            return "logbox.co.il";
+        }
     }
 }

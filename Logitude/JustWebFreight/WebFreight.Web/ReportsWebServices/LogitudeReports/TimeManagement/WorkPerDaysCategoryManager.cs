@@ -472,18 +472,17 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
                 itemRecord.TotalGategoryDays = this.GetDaysFormatFromMinutes(itemRecord.TotalGategoryDaysDouble);
             }
         }
-        private string GetDaysFormatFromMinutes(double minutes)
+        private double GetDaysFormatFromMinutes(double minutes)
         {
             string iResult = "";
-
+            double result = 0;
             if (minutes != 0)
             {
-                double result = Math.Round(minutes / 525, 2);
-
+                result = Math.Round(minutes / 525, 2);
                 iResult = result.ToString();
             }
 
-            return iResult;
+            return result;
         }
 
         private string GetDaysFormatFromMinutes00(double minutes)

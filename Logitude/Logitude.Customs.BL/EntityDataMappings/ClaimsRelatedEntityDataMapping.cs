@@ -41,6 +41,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
             CustomMappedPMProperties.Add(PMPropertyNames.CourtName);
             CustomMappedPMProperties.Add(PMPropertyNames.WarehouseTypeName);
             CustomMappedPMProperties.Add(PMPropertyNames.DecisionName);
+            CustomMappedPMProperties.Add(PMPropertyNames.ContinuousRequestTypeName);
 
             if (entityPOCO.ClaimEntityTypeCode != null)
             {
@@ -94,6 +95,13 @@ namespace Logitude.Customs.BL.EntityDataMappings
                 {
                     entityPM.DecisionName = decisionTypePM.LocalName;
                 }
+            }
+
+            if (entityPOCO.ContinuousRequestTypeCode != null)
+            {
+                ContinuousRequestTypeQueryService continuousRequestTypeQueryService = new ContinuousRequestTypeQueryService(entityPOCO.Tenant);
+                ContinuousRequestTypePM continuousRequestTypePM = continuousRequestTypeQueryService.GetSingle(entityPOCO.ContinuousRequestTypeCode, false, true);
+                entityPM.ContinuousRequestTypeName = continuousRequestTypePM.LocalName;
             }
         }
    }

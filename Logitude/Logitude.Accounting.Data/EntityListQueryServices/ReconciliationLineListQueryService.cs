@@ -33,12 +33,26 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                                                             IsPartial = a.IsPartial,
                                                             Tenant = a.Tenant,
                                                             ReconciliationAmount = a.ReconciliationAmount,
-
                                                             // ledger transaction fields
                                                             CreateDate = a.LedgerTransaction != null ? a.LedgerTransaction.CreateDate : DateTime.Now,
                                                             DueDate = (a.LedgerTransaction != null ? a.LedgerTransaction.DueDate : DateTime.Now),
                                                             AmountCredit = (a.LedgerTransaction != null ? a.LedgerTransaction.Account.ReconcileMethodCode=="0"? a.LedgerTransaction.LocalAmountCredit: a.LedgerTransaction.ForeignAmountCredit : 0),
                                                             AmountDebit = (a.LedgerTransaction != null ? a.LedgerTransaction.Account.ReconcileMethodCode == "0" ? a.LedgerTransaction.LocalAmountDebit : a.LedgerTransaction.ForeignAmountDebit : 0),
+                                                            IsAmountDebitNegative = (a.LedgerTransaction != null ? a.LedgerTransaction.Account.ReconcileMethodCode == "0" ? a.LedgerTransaction.LocalAmountDebit : a.LedgerTransaction.ForeignAmountDebit : 0) > 0,
+                                                            TransactionAmount = (a.LedgerTransaction != null ? a.LedgerTransaction.Account.ReconcileMethodCode == "0" ? a.LedgerTransaction.LocalAmountCredit : a.LedgerTransaction.ForeignAmountCredit : 0) == 0?
+                                                                                -1*(a.LedgerTransaction != null ? a.LedgerTransaction.Account.ReconcileMethodCode == "0" ? a.LedgerTransaction.LocalAmountDebit : a.LedgerTransaction.ForeignAmountDebit : 0) :
+                                                                                (a.LedgerTransaction != null ? a.LedgerTransaction.Account.ReconcileMethodCode == "0" ? a.LedgerTransaction.LocalAmountCredit : a.LedgerTransaction.ForeignAmountCredit : 0),
+                                                            
+                                                            ExcelTransactionAmount = (a.LedgerTransaction != null ? a.LedgerTransaction.Account.ReconcileMethodCode == "0" ? a.LedgerTransaction.LocalAmountDebit : a.LedgerTransaction.ForeignAmountDebit : 0) > 0?
+
+                                                                                (-1 * ((a.LedgerTransaction != null ? a.LedgerTransaction.Account.ReconcileMethodCode == "0" ? a.LedgerTransaction.LocalAmountCredit : a.LedgerTransaction.ForeignAmountCredit : 0) == 0 ?
+                                                                                -1 * (a.LedgerTransaction != null ? a.LedgerTransaction.Account.ReconcileMethodCode == "0" ? a.LedgerTransaction.LocalAmountDebit : a.LedgerTransaction.ForeignAmountDebit : 0) :
+                                                                                (a.LedgerTransaction != null ? a.LedgerTransaction.Account.ReconcileMethodCode == "0" ? a.LedgerTransaction.LocalAmountCredit : a.LedgerTransaction.ForeignAmountCredit : 0))):
+
+                                                                                 ((a.LedgerTransaction != null ? a.LedgerTransaction.Account.ReconcileMethodCode == "0" ? a.LedgerTransaction.LocalAmountCredit : a.LedgerTransaction.ForeignAmountCredit : 0) == 0 ?
+                                                                                -1 * (a.LedgerTransaction != null ? a.LedgerTransaction.Account.ReconcileMethodCode == "0" ? a.LedgerTransaction.LocalAmountDebit : a.LedgerTransaction.ForeignAmountDebit : 0) :
+                                                                                (a.LedgerTransaction != null ? a.LedgerTransaction.Account.ReconcileMethodCode == "0" ? a.LedgerTransaction.LocalAmountCredit : a.LedgerTransaction.ForeignAmountCredit : 0)),
+
                                                             Reference1 = (a.LedgerTransaction != null ? a.LedgerTransaction.Reference1 : null),
                                                             Reference2 = (a.LedgerTransaction != null ? a.LedgerTransaction.Reference2 : null),
                                                             Reference3 = (a.LedgerTransaction != null ? a.LedgerTransaction.Reference3 : null),
@@ -48,9 +62,10 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                                                             OpenAmountCurrencySign = (a.Currency != null ? a.Currency.Sign : null),
                                                             SearchFields = (a.LedgerTransaction != null ? a.LedgerTransaction.SearchFields : null),
                                                             CurrencySign = (a.Currency != null ? a.Currency.Sign : null),
-                                                            
+                                                            AccountingDate = a.LedgerTransaction != null ? a.LedgerTransaction.AccountingDate : DateTime.Now,
+                                                            ReconciliationAmountWithSign = a.ReconciliationAmount +" "+ (a.Currency != null ? a.Currency.Sign : null),
 
-                                                        });
+                                                        });;
             return query;
         }
 

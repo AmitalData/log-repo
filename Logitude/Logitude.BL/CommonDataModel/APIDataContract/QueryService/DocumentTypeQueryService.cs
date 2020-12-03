@@ -26,14 +26,14 @@ namespace Logitude.BL.CommonDataModel.APIDataContract.ApiV1
         }
 
 
-        public DocumentType GetDocumentTypeById(string Id, int Tenant)
+        public DocumentType GetDocumentTypeById(string Id, int Tenant, string ComputingPartnerName = "")
         {
             try
             {
 
 
                 var temp = query.GetSinglePM(Id, Tenant);
-                return DocumentTypeDataMapping(temp, Tenant);
+                return DocumentTypeDataMapping(temp, Tenant,ComputingPartnerName);
             }
             catch (Exception ex)
             {

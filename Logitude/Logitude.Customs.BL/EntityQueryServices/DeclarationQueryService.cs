@@ -49,6 +49,8 @@ namespace Logitude.Customs.BL.EntityQueryServices
             DeclarationTaxQueryService declarationTaxService = new DeclarationTaxQueryService(context);
             DeclarationConstraintQueryService declarationConstraintQueryService = new EntityQueryServices.DeclarationConstraintQueryService(context);
             DeclarationConsAcceptanceQueryService declarationConsAcceptanceQueryService = new DeclarationConsAcceptanceQueryService(context);
+            DecDangersContactQueryService decDangersContactQueryService = new DecDangersContactQueryService(context);
+
             //DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(context);
 
             entityPM.InvoiceHasFreight = supplierInvoiceService.DoesAnyInvoiceHasFreight(entityPM.Id, entityPM.Tenant);
@@ -56,15 +58,17 @@ namespace Logitude.Customs.BL.EntityQueryServices
             //******getting all compositionTables for response service purposes only *****///
             entityPM.Consignments = consignmentService.GetMulti(declarationKeys, true);
             // if (LoadSupplierInvoices)
+            var DeclarationExportRecipientQueryService = new DeclarationExportRecipientQueryService(context);
+            entityPM.DeclarationExportRecipients = DeclarationExportRecipientQueryService
+                .GetMulti(declarationKeys, false);
 
-           
             {
                 if (loadSupplierInvoicesItemsParentsOnly == true)
                 {
                     supplierInvoiceService.OnlyParentItem = true;
                 }
-                entityPM.SupplierInvoices = supplierInvoiceService.GetSupplierInvoicesForDeclaration(declarationKeys.Id, entityPM.Tenant, 
-                    
+                entityPM.SupplierInvoices = supplierInvoiceService.GetSupplierInvoicesForDeclaration(declarationKeys.Id, entityPM.Tenant,
+
                     LoadSupplierInvoicesWithItems || entityPM.IsCourierDeclaration // courier small entity - for Classification !!//Task 40622: מסך סיווג מתוך מסך עבודה - חלק מרכזי
 
                     );
@@ -72,9 +76,9 @@ namespace Logitude.Customs.BL.EntityQueryServices
             entityPM.DeclarationTaxes = declarationTaxService.GetMulti(declarationKeys, true);
             entityPM.DeclarationConstraints = declarationConstraintQueryService.GetMulti(declarationKeys, true);
             entityPM.DeclarationConsAcceptances = declarationConsAcceptanceQueryService.GetMulti(declarationKeys, true);
-            
+            entityPM.DecDangersContacts = decDangersContactQueryService.GetMulti(declarationKeys, true);
             //entityPM.DclarationCourierStatus = declarationCourierStatusQueryService.GetMulti(declarationKeys, true);
-            
+
 
             //Stopwatch stopWatch = new Stopwatch();
             //stopWatch.Start();
@@ -255,11 +259,96 @@ namespace Logitude.Customs.BL.EntityQueryServices
             //    base.GetComposition(entityKeys);
         }
 
+        public List<DeclarationPendingPM> GetDeclarationPendingListPMByDeclarationId(string declarationId, int tenant)
+        {
+            if (string.IsNullOrWhiteSpace(declarationId))
+            {
+                return null;
+            }
+
+            var myDeclarationPendingQueryService = new DeclarationPendingQueryService(context);
+            List<DeclarationPendingPM> MyDeclarationPendingPMList = myDeclarationPendingQueryService.GetDeclarationPendingsByDeclarationId(declarationId, tenant);
+            if (MyDeclarationPendingPMList == null)
+            {
+                return null;
+            }
+            return MyDeclarationPendingPMList;
+        }
+
+
+        public int GetDeclarationMaxAmendmentRequestNumber( int tenant)
+        {
+             DeclarationRepository declarationRepository = new DeclarationRepository(context);
+            return declarationRepository.GetDeclarationMaxAmendmentRequestNumber(tenant);
+        }
+
+
+        public int GetDeclarationMaxCancelRequestNumber(int tenant, string id)
+        {
+            DeclarationRepository declarationRepository = new DeclarationRepository(context);
+            return declarationRepository.GetDeclarationMaxCancelRequestNumber(tenant, id);
+        }
+
+
         public string GetIdByDeclarationNumber(string declarationNumber, int tenant)
         {
             if (String.IsNullOrWhiteSpace(declarationNumber)) return "";
             return repository.GetIdByDeclarationNumber(declarationNumber, tenant);
         }
+
+
+        public DeclarationPM GetDeclarationByfunctionalReferenceID( string functionalReferenceID,  int tenant)
+        {
+             if (String.IsNullOrWhiteSpace(functionalReferenceID)) return null;
+
+            var declaration = repository.GetDeclarationByFunctionalReferenceID(functionalReferenceID);
+            DeclarationPM declarationPM = new DeclarationPM();
+            DeclarationDataMapping mapping = new DeclarationDataMapping();
+            if (declaration == null) return null;
+
+            mapping.CustomPOCOToPM(declarationPM, declaration);
+            mapping.POCOToPM(declarationPM, declaration);
+
+
+
+            return declarationPM;
+        }
+
+
+        public DeclarationPM GetDeclarationNotAmendmentDontDisplayInList(string id, string amendmentOriginalDeclartation, int tenant)
+        {
+  
+            var declaration = repository.GetDeclarationNotAmendmentDontDisplayInList(id, amendmentOriginalDeclartation,  tenant);
+            DeclarationPM declarationPM = new DeclarationPM();
+            DeclarationDataMapping mapping = new DeclarationDataMapping();
+            if (declaration == null) return null;
+
+            mapping.CustomPOCOToPM(declarationPM, declaration);
+            mapping.POCOToPM(declarationPM, declaration);
+
+
+
+            return declarationPM;
+        }
+
+
+        public DeclarationPM GetAcceptDeclarationAmendment(string id, int tenant)
+        {
+
+            var declaration = repository.GetAcceptDeclarationAmendment(id, tenant);
+            DeclarationPM declarationPM = new DeclarationPM();
+            DeclarationDataMapping mapping = new DeclarationDataMapping();
+            if (declaration == null) return null;
+
+            mapping.CustomPOCOToPM(declarationPM, declaration);
+            mapping.POCOToPM(declarationPM, declaration);
+
+
+
+            return declarationPM;
+
+        }
+
 
         public string GetIdByCustomFileNo(string customFileNo, int tenant)
         {
@@ -274,12 +363,12 @@ namespace Logitude.Customs.BL.EntityQueryServices
         }
         public List<string> GetListByCourierHAWB(string CourierHAWB, int tenant)
         {
-            
+
             return repository.GetListByCourierHAWB(CourierHAWB, tenant);
-            
+
         }
 
-        public List<DeclarationErrorView> GetDeclarationErrors(string declarationId, int tenant, string listVersionId, string courierFilter = "Declaration")
+        public List<DeclarationErrorView> GetDeclarationErrors(string declarationId, int tenant, string listVersionId, string courierFilter = "Declaration",bool IsAmendmentErrors=false)
         {
             ICustomContext context = MainContext as CustomContext;
             Declaration declaration = Repository.GetSingle(new DeclarationKeys() { Id = declarationId });
@@ -328,7 +417,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
                                 UIMessagePM uIMessagePM = uIMessageQueryService.GetUIMessageWithAdditional(error.Code, tenant);
                                 if (uIMessagePM != null)
                                 {
-                                    if(uIMessagePM.Sort == null)
+                                    if (uIMessagePM.Sort == null)
                                     {
                                         uIMessagePM.Sort = 99999999;
                                     }
@@ -438,7 +527,173 @@ namespace Logitude.Customs.BL.EntityQueryServices
                             {
                                 errorview.EntityName = "Declaration";
                             }
-                            errorview.FieldNameTextCode = "Customs." + errorview.EntityName + ".F." + errorview.Field;
+                            if (errorview.EntityName== "SupplierInvioceItemsCertificate")
+                            {
+                                errorview.EntityName = "SupplierInvioceItemCertificat";
+                            }
+                            errorview.FieldNameTextCode = errorview.Field != null ? "Customs." + errorview.EntityName + ".F." + errorview.Field : "Customs." + errorview.EntityName;
+                            errorview.TableNameTextCode = "Customs." + errorview.EntityName;
+                            declarationErrors.Add(errorview);
+                        }
+                    }
+                }
+
+            }
+            else if (IsAmendmentErrors )
+            {
+                if (!string.IsNullOrEmpty(declaration.AmendmentErrorXml))
+                {
+                    byte[] errorsByte = Encoding.UTF8.GetBytes(declaration.AmendmentErrorXml);
+                    MemoryStream memorystream = new MemoryStream(errorsByte);
+                    XmlSerializer serializer = new XmlSerializer(typeof(DeclarationError));
+                    DeclarationError declarationError = (DeclarationError)serializer.Deserialize(memorystream);
+
+
+
+                    foreach (Entity entity in declarationError.Entitites)
+                    {
+
+                        List<error> errors = new List<error>();
+                        if (listVersionId != null)
+                        {
+                            errors = entity.EntityErrors.Where(a => a.ListVersionID == listVersionId).ToList();
+                        }
+
+                        else
+                        {
+                            errors = entity.EntityErrors;
+                        }
+
+                        foreach (error error in errors)
+                        {
+                            DeclarationErrorView errorview = new DeclarationErrorView() { Id = Guid.NewGuid().ToString() };
+                            errorview.ConstraintId = error.ConstraintID;
+                            if (!string.IsNullOrEmpty(errorview.ConstraintId))
+                            {
+                                errorview.ConstraintIndication = constraints.Where(d => d.ConstraintNumber == errorview.ConstraintId).Any();
+                            }
+                            errorview.Description = error.MessageError.Replace(',', ';');
+                            errorview.ErrorType = error.Code;
+                            if (!string.IsNullOrEmpty(error.Code))
+                            {
+                                UIMessagePM uIMessagePM = uIMessageQueryService.GetUIMessageWithAdditional(error.Code, tenant);
+                                if (uIMessagePM != null)
+                                {
+                                    if (uIMessagePM.Sort == null)
+                                    {
+                                        uIMessagePM.Sort = 99999999;
+                                    }
+                                    errorview.Sort = uIMessagePM.Sort;
+                                }
+                            }
+                            errorview.DeclarationId = declaration.Id;
+                            errorview.ListVersionId = error.ListVersionID;
+                            if (!string.IsNullOrEmpty(entity.Child3Type))
+                            {
+
+                                errorview.EntityName = entity.Child3Type;
+                                errorview.Line = int.Parse(entity.Child3Sequence);
+                                errorview.ParentEntityName = entity.Child2Type;
+                                errorview.ParentLine = int.Parse(entity.Child2Sequence);
+                                errorview.LineNumber = entity.Child1Sequence + "," + entity.Child2Sequence + "," + entity.Child3Sequence;
+                            }
+                            else if (!string.IsNullOrEmpty(entity.Child2Type))
+                            {
+                                errorview.EntityName = entity.Child2Type;
+                                errorview.Line = int.Parse(entity.Child2Sequence);
+                                errorview.ParentEntityName = entity.Child1Type;
+                                errorview.ParentLine = int.Parse(entity.Child1Sequence);
+                                errorview.LineNumber = entity.Child1Sequence + "," + entity.Child2Sequence;
+
+                            }
+                            else if (!string.IsNullOrEmpty(entity.Child1Type))
+                            {
+                                errorview.EntityName = entity.Child1Type;
+                                errorview.Line = int.Parse(entity.Child1Sequence);
+                                errorview.ParentEntityName = "Declaration";
+                                errorview.LineNumber = entity.Child1Sequence;
+
+                            }
+                            else
+                            {
+                                errorview.EntityName = "Declaration";
+                            }
+                            errorview.TableNameTextCode = "Customs." + errorview.EntityName;
+                            declarationErrors.Add(errorview);
+                        }
+
+
+                        List<field> fields = new List<field>();
+                        if (listVersionId != null)
+                        {
+                            fields = entity.FieldErrors.Where(a => a.ListVersionID == listVersionId).ToList();
+                        }
+
+                        else
+                        {
+                            fields = entity.FieldErrors;
+                        }
+
+                        foreach (field error in fields)
+                        {
+                            DeclarationErrorView errorview = new DeclarationErrorView() { Id = Guid.NewGuid().ToString() }; ;
+                            errorview.ConstraintId = error.ConstraintID;
+                            if (!string.IsNullOrEmpty(errorview.ConstraintId))
+                            {
+                                errorview.ConstraintIndication = constraints.Where(d => d.ConstraintNumber == errorview.ConstraintId).Any();
+                            }
+                            errorview.Description = error.MessageError.Replace(',', ';');
+                            errorview.ErrorType = error.Code;
+                            if (!string.IsNullOrEmpty(error.Code))
+                            {
+                                UIMessagePM uIMessagePM = uIMessageQueryService.GetUIMessageWithAdditional(error.Code, tenant);
+                                if (uIMessagePM != null)
+                                {
+                                    if (uIMessagePM.Sort == null)
+                                    {
+                                        uIMessagePM.Sort = 99999999;
+                                    }
+                                    errorview.Sort = uIMessagePM.Sort;
+                                }
+                            }
+                            errorview.Field = error.Fieldcode;
+                            errorview.DeclarationId = declaration.Id;
+                            errorview.ListVersionId = error.ListVersionID;
+                            if (!string.IsNullOrEmpty(entity.Child3Type))
+                            {
+                                errorview.EntityName = entity.Child3Type;
+                                errorview.Line = int.Parse(entity.Child3Sequence);
+                                errorview.ParentEntityName = entity.Child2Type;
+                                errorview.ParentLine = int.Parse(entity.Child2Sequence);
+                                errorview.LineNumber = entity.Child1Sequence + "," + entity.Child2Sequence + "," + entity.Child3Sequence;
+
+                            }
+                            else if (!string.IsNullOrEmpty(entity.Child2Type))
+                            {
+                                errorview.EntityName = entity.Child2Type;
+                                errorview.Line = int.Parse(entity.Child2Sequence);
+                                errorview.ParentEntityName = entity.Child1Type;
+                                errorview.ParentLine = int.Parse(entity.Child1Sequence);
+                                errorview.LineNumber = entity.Child1Sequence + "," + entity.Child2Sequence;
+
+                            }
+                            else if (!string.IsNullOrEmpty(entity.Child1Type))
+                            {
+                                errorview.EntityName = entity.Child1Type;
+                                errorview.Line = int.Parse(entity.Child1Sequence);
+                                errorview.ParentEntityName = "Declaration";
+                                errorview.LineNumber = entity.Child1Sequence;
+
+                            }
+                            else
+                            {
+                                errorview.EntityName = "Declaration";
+                            }
+                            if (errorview.EntityName == "SupplierInvioceItemsCertificate")
+                            {
+                                errorview.EntityName = "SupplierInvioceItemCertificat";
+                            }
+                            errorview.FieldNameTextCode = errorview.Field != null ? "Customs." + errorview.EntityName + ".F." + errorview.Field : "Customs." + errorview.EntityName;
                             errorview.TableNameTextCode = "Customs." + errorview.EntityName;
                             declarationErrors.Add(errorview);
                         }
@@ -718,7 +973,17 @@ namespace Logitude.Customs.BL.EntityQueryServices
                         {
                             errorview.EntityName = "Declaration";
                         }
-                        errorview.FieldNameTextCode = "Customs." + errorview.EntityName + ".F." + errorview.Field;
+                        if (errorview.EntityName == "SupplierInvioceItemsCertificate")
+                        {
+                            errorview.EntityName = "SupplierInvioceItemCertificat";
+                            if (errorview.Field== "ClassificationCode")
+                            {
+                                errorview.EntityName = "SupplierInvoiceItem";
+
+                            }
+                         }
+
+                        errorview.FieldNameTextCode = errorview.Field!=null? "Customs." + errorview.EntityName + ".F." + errorview.Field: "Customs." + errorview.EntityName;
                         errorview.TableNameTextCode = "Customs." + errorview.EntityName;
                         declarationErrors.Add(errorview);
                     }
@@ -1441,6 +1706,86 @@ namespace Logitude.Customs.BL.EntityQueryServices
         }
 
 
+        public bool IsValidTickets(DeclarationPM declarationPM)
+        {
+            CustomsDocumentsTicketQueryService myCustomsDocumentsTicketQueryService = new CustomsDocumentsTicketQueryService(declarationPM.Tenant);
+            bool ticketValidStatus = true;
+
+            List<CustomsDocumentsTicketPM> customsDocumentsTicketPMList = myCustomsDocumentsTicketQueryService.GetCustomsDocumentsTicketPMsByEntityIdAndChilds(declarationPM.Id, "", "", "", declarationPM.Tenant, "Declaration").ToList();
+            if (customsDocumentsTicketPMList != null && customsDocumentsTicketPMList.Count() > 0)
+            {
+
+                var DocumentsFilingIdList = new List<string>();
+                foreach (var customsDocumentsTicketPM in customsDocumentsTicketPMList)
+                {
+                    if (!string.IsNullOrWhiteSpace(customsDocumentsTicketPM.DocumentsFilingId))
+                    {
+                        DocumentsFilingIdList.Add(customsDocumentsTicketPM.DocumentsFilingId);
+                    }
+                }
+                var customsDocumentPMList = new List<CustomsDocumentPM>();
+                if (DocumentsFilingIdList != null)
+                {
+                    var myCustomsDocumentQueryService = new CustomsDocumentQueryService(declarationPM.Tenant);
+                    customsDocumentPMList = myCustomsDocumentQueryService.GetCustomsDocumentList(DocumentsFilingIdList, declarationPM.Tenant);
+                }
+                if (customsDocumentPMList != null && customsDocumentPMList.Count() > 0)
+
+                {
+                    foreach (var customsDocumentPM in customsDocumentPMList)
+                    {
+                        if (customsDocumentPM.DocumentStatusCode != "1")
+                        {
+                            ticketValidStatus = false;
+                            break;
+                        }
+                    }
+                }
+            }
+
+            if (IsDocumentMissing(declarationPM))
+            {
+                ticketValidStatus = false;
+
+            }
+
+
+            return ticketValidStatus;
+        }
+
+
+        public bool IsDocumentMissing(DeclarationPM myDeclarationPM)
+        {
+            var customContext = CustomContext.GetContext(myDeclarationPM.Tenant);
+            CustomsDocumentsTicketQueryService myCustomsDocumentsTicketQueryService = new CustomsDocumentsTicketQueryService(customContext);
+            CustomDocumentTypeQueryService docTypeQuery = new CustomDocumentTypeQueryService(customContext);
+
+            List<CustomDocumentTypePM> documentTypePMs = docTypeQuery.GetMandatoryCustomDocumentTypes(myDeclarationPM.Tenant);
+
+            foreach (var doc in documentTypePMs)
+            {
+                List<CustomsDocumentsTicketPM> customsDocumentsTicketPMList = myCustomsDocumentsTicketQueryService.GetCustomsDocumentsTicketPMsByEntityIdAndChilds(myDeclarationPM.Id, "", "", "", myDeclarationPM.Tenant, "Declaration").Where(r => r.DocumentTypeCode == doc.Code && r.DocumentsFilingId!=null).ToList();
+                if (customsDocumentsTicketPMList == null || customsDocumentsTicketPMList.Count() < 1)
+                    return true;
+            }
+
+            return false;
+
+        }
+
+
+        public bool IsMissingMandatoryFields(DeclarationPM declarationPM)
+        {
+            bool isMissingMandatoryFields = false;
+            CustomsRequiredFieldErrors errorsForDeclaration = CustomsRequiredFieldsValidator.GetRequiredFieldErrorsForDeclaration(declarationPM.Id, declarationPM.Tenant, declarationPM);
+            if (errorsForDeclaration != null && errorsForDeclaration.RequiredFields != null && errorsForDeclaration.RequiredFields.Count() > 0)
+            {
+                isMissingMandatoryFields = true;
+            }
+            return isMissingMandatoryFields;
+        }
+
+
         public List<CustomsDocumentsTicketPM> GetDeclarationMandatoryTicket(string declarationId, int tenant)
         {
 
@@ -1483,7 +1828,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
             var mandatoryTicketWithDocumentNotSend =
                 (from t in listDeclarationTicket.Where(t => t.IsSendMandatory)
                  join d in listDeclarationCustomDocument.Where(d => string.IsNullOrWhiteSpace(d.CustomsDocId))
-                 on t.DocumentsFilingId equals d.DocumentsFilingId 
+                 on t.DocumentsFilingId equals d.DocumentsFilingId
                  select t
                  ).ToList();
             if (mandatoryTicketWithDocumentNotSend.Count > 0)
@@ -1549,7 +1894,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
             var supplierInvoiceQueryService = new SupplierInvoiceQueryService(this.context);
 
             List<SupplierInvoicePM> supplierInvoiceList = supplierInvoiceQueryService.GetSupplierInvoicesForDeclaration(declarationId, tenant, true);
-            if(supplierInvoiceList != null)
+            if (supplierInvoiceList != null)
             {
                 foreach (SupplierInvoicePM item in supplierInvoiceList)
                 {
@@ -1562,8 +1907,74 @@ namespace Logitude.Customs.BL.EntityQueryServices
                     }
                 }
             }
-
             return isFreight;
         }
+
+        public DeclarationPM GetDeclarationAmendmentByIdAndAmendmentNo(int tenant, string id, string requestNumber)
+        {
+            DeclarationDataMapping mapping = new DeclarationDataMapping();
+
+            DeclarationPM decPm = new DeclarationPM();
+            var decs = repository.GetDeclarationAmendmentsById(tenant, id);
+
+            var dec= decs.FirstOrDefault(x => x.AmendmentRequestNumber == requestNumber);
+
+            mapping.CustomPOCOToPM(decPm, dec);
+            mapping.POCOToPM(decPm, dec);
+
+
+            return decPm;
+        }
+
+
+
+        public List<DeclarationList> GetDeclarationAmendmentsById(int tenant, string id, bool orderById = false)
+        {
+
+            List<Declaration> declarations = repository.GetDeclarationAmendmentsById(tenant, id);
+            List<AmendmentStatusPM> amendmentStatusPMs = new List<AmendmentStatusPM>();
+            AmendmentStatusRepository amendmentStatusRepository = new AmendmentStatusRepository(context);
+            List<DeclarationList> declarationLists = new List<DeclarationList>();
+            UserRepository userRepository = new UserRepository();
+            var amendmentStatuses = amendmentStatusRepository.GetAll();
+            var users = userRepository.GetAll();
+            var i = 1;
+            foreach (Declaration item in declarations)
+            {
+
+                DeclarationList declarationList = new DeclarationList()
+                {
+
+                    Id = item.Id,
+                    Tenant = item.Tenant,
+                    AmendmentRequestNumber = item.AmendmentRequestNumber,
+                    DeclarationVersionId = item.VersionId,
+                    AmendmentStatus = item.AmendmentStatus,
+                    AmendmentOriginalDeclartation = item.AmendmentOriginalDeclartation,
+                    AmendmentissueDate = item.AmendmentissueDate,
+                    IsAmendment=item.IsAmendment
+                };
+                if (item.AmendmentCorrectedByUserId != null) declarationList.AmendmentCorrectedByUserName = users.FirstOrDefault(x => x.Id == item.AmendmentCorrectedByUserId).Code;
+                if (item.AmendmentStatus != null) declarationList.AmendmentStatusName = amendmentStatuses.FirstOrDefault(x => x.Code == item.AmendmentStatus).Name;
+
+                declarationLists.Add(declarationList);
+            }
+            if (orderById)
+            {
+                declarationLists = declarationLists.OrderBy(x =>x.Id).ToList();
+                declarationLists.ForEach(x => { x.AmendmentNumber = i; i++; });
+
+                return declarationLists.ToList();
+
+
+            }
+            declarationLists = declarationLists.OrderByDescending(x => x.AmendmentissueDate).ToList();
+
+            declarationLists.ForEach(x => { x.AmendmentNumber = i; i++; }) ;
+
+            return declarationLists.ToList();
+
+        }
+
     }
 }

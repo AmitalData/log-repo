@@ -79,7 +79,7 @@ namespace CommunicationWorkerRole.Tasks
                     //TaskSchedulerHistoryRepository TaskSchedulerHistoryRepository = new TaskSchedulerHistoryRepository(Tenant);
 
 
-
+                    
                     Task.Status = null;
                     //queueservice.Complete();
                     TaskSchedulerHistoryPM LastExecutionHistory = SubmitLogsData();

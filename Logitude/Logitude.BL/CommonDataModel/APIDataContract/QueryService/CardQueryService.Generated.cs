@@ -40,7 +40,7 @@ using Simplog.Data.CommonDataModel;
         }
 
 		
-		public Card GetCardById(string Id,int Tenant)
+		public Card GetCardById(string Id,int Tenant,string ComputingPartnerName = "")
         { 
 		    try
             {
@@ -50,7 +50,7 @@ using Simplog.Data.CommonDataModel;
 				 if (temp == null)
                     throw new ApplicationException("Card with Id " + Id + " doesn't exist");
 
-				return CardDataMapping(temp,Tenant);
+				return CardDataMapping(temp,Tenant,ComputingPartnerName);
 			}
             catch (Exception ex)
             {
@@ -59,7 +59,7 @@ using Simplog.Data.CommonDataModel;
             }
         }
 		
-		public Card GetCardByCode(string Code,int Tenant)
+		public Card GetCardByCode(string Code,int Tenant,string ComputingPartnerName = "")
         { 
 		    try
             {
@@ -69,7 +69,7 @@ using Simplog.Data.CommonDataModel;
 				 if (temp == null)
                     throw new ApplicationException("Card with Code " + Code + " doesn't exist");
 
-				return CardDataMapping(temp,Tenant);
+				return CardDataMapping(temp,Tenant,ComputingPartnerName);
 			}
             catch (Exception ex)
             {
@@ -93,14 +93,16 @@ using Simplog.Data.CommonDataModel;
 				   if(MyEntityPM.MainAddressId != null)
 				   {
 					   AddressQueryService AddressService0 = new AddressQueryService(Tenant);
-					   					   temp.MainAddress = AddressService0.GetAddressById(MyEntityPM.MainAddressId,Tenant); 
+					   					   temp.MainAddress = AddressService0.GetAddressById(MyEntityPM.MainAddressId,Tenant,ComputingPartnerName); 
 			       
 					   				   }
 				   
 				   temp.VatNumber = MyEntityPM.VatNumber;
 				   ComputingPartnerTranslationHelper helper = new ComputingPartnerTranslationHelper(Tenant); 
 				   temp.PartnerCode = helper.GetComputingPartnerCodeTranslation(MyEntityPM.Code,ComputingPartnerName,"Card");  
-				   temp.IsDisconnectedFromGLAccount = MyEntityPM.IsDisconnectedFromGLAccount;					
+				   temp.IsDisconnectedFromGLAccount = MyEntityPM.IsDisconnectedFromGLAccount;
+				   temp.ReceivablesAccountingCard = MyEntityPM.ReceivablesAccountingCard;
+				   temp.PayablesAccountingCard = MyEntityPM.PayablesAccountingCard;					
 				   return temp;
 			}
             catch (Exception ex)
@@ -238,6 +240,22 @@ using Simplog.Data.CommonDataModel;
 					if(!IsUpdate)// && (MyEntity.IsDisconnectedFromGLAccount != temp.IsDisconnectedFromGLAccount))
 					{							//throw new ApplicationException("IsDisconnectedFromGLAccount Can't be update"); 
 							temp.IsDisconnectedFromGLAccount = MyEntity.IsDisconnectedFromGLAccount;
+
+										}  
+
+					
+                    
+					if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.ReceivablesAccountingCard))
+					{							//throw new ApplicationException("ReceivablesAccountingCard Can't be update"); 
+							temp.ReceivablesAccountingCard = MyEntity.ReceivablesAccountingCard;
+
+										}  
+
+					
+                    
+					if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.PayablesAccountingCard))
+					{							//throw new ApplicationException("PayablesAccountingCard Can't be update"); 
+							temp.PayablesAccountingCard = MyEntity.PayablesAccountingCard;
 
 										}  
 

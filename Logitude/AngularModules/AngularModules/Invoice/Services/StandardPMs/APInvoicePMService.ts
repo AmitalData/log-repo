@@ -178,6 +178,7 @@ export class APInvoicePMService {
         if (!entityPM) {
             
             entityPM = new APInvoicePM();
+			entityPM.DisableMarkAsDirty = true;
         }
 
 		var customFields: Array<string> = [];
@@ -278,6 +279,8 @@ export class APInvoicePMService {
             entityPM.OldEntityPM = null;
         }
 		entityPM.IsDirty = false;
+	    entityPM.DisableMarkAsDirty = false;
+
         return entityPM;
     }
 
@@ -303,7 +306,8 @@ export class APInvoicePMService {
             {
                 newAPInvoiceLinePM = new APInvoiceLinePM(null);
             }
-                
+ 			newAPInvoiceLinePM.DisableMarkAsDirty = true;
+               
             var pmKeysArray = Object.keys(jItem);
             for (var pmKey in pmKeysArray) {
                 if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
@@ -335,7 +339,7 @@ export class APInvoicePMService {
                 newAPInvoiceLinePM.OldEntityPM = null;
                 newAPInvoiceLinePM.EntityParentPM = null;
             }
-			
+			 newAPInvoiceLinePM.DisableMarkAsDirty = false;
 			 newAPInvoiceLinePM.IsDirty = false;
             entityPM.InvoiceLines.push(newAPInvoiceLinePM);
         }
@@ -349,6 +353,7 @@ export class APInvoicePMService {
                         //entityPM.InvoiceLines.push(oldInvoiceLines[itemKey]);
 						var oldItemJson = oldInvoiceLines[itemKey];
                         var deletedPM: APInvoiceLinePM = new APInvoiceLinePM(null);
+						deletedPM.DisableMarkAsDirty = true;
                         var pmKeys = Object.keys(oldItemJson);
                         for (var key in pmKeys) {
 
@@ -360,7 +365,7 @@ export class APInvoicePMService {
                             deletedPM[property] = oldItemJson[property];
                         }
 
-                      
+					    deletedPM.DisableMarkAsDirty = false;
                         deletedPM.IsDirty = false;
                         deletedPM.ChangeSetOp = "Delete";
                         
@@ -393,7 +398,8 @@ export class APInvoicePMService {
             {
                 newAPInvoiceEntityPM = new APInvoiceEntityPM(null);
             }
-                
+ 			newAPInvoiceEntityPM.DisableMarkAsDirty = true;
+               
             var pmKeysArray = Object.keys(jItem);
             for (var pmKey in pmKeysArray) {
                 if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
@@ -427,7 +433,7 @@ export class APInvoicePMService {
                 newAPInvoiceEntityPM.OldEntityPM = null;
                 newAPInvoiceEntityPM.EntityParentPM = null;
             }
-			
+			 newAPInvoiceEntityPM.DisableMarkAsDirty = false;
 			 newAPInvoiceEntityPM.IsDirty = false;
             entityPM.InvoiceEntities.push(newAPInvoiceEntityPM);
         }
@@ -441,6 +447,7 @@ export class APInvoicePMService {
                         //entityPM.InvoiceEntities.push(oldInvoiceEntities[itemKey]);
 						var oldItemJson = oldInvoiceEntities[itemKey];
                         var deletedPM: APInvoiceEntityPM = new APInvoiceEntityPM(null);
+						deletedPM.DisableMarkAsDirty = true;
                         var pmKeys = Object.keys(oldItemJson);
                         for (var key in pmKeys) {
 
@@ -452,7 +459,7 @@ export class APInvoicePMService {
                             deletedPM[property] = oldItemJson[property];
                         }
 
-                      
+					    deletedPM.DisableMarkAsDirty = false;
                         deletedPM.IsDirty = false;
                         deletedPM.ChangeSetOp = "Delete";
                         
@@ -487,7 +494,8 @@ export class APInvoicePMService {
             {
                 newAPInvoicePaymentPM = new APInvoicePaymentPM(null);
             }
-                
+ 			newAPInvoicePaymentPM.DisableMarkAsDirty = true;
+               
             var pmKeysArray = Object.keys(jItem);
             for (var pmKey in pmKeysArray) {
                 if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
@@ -519,7 +527,7 @@ export class APInvoicePMService {
                 newAPInvoicePaymentPM.OldEntityPM = null;
                 newAPInvoicePaymentPM.EntityParentPM = null;
             }
-			
+			 newAPInvoicePaymentPM.DisableMarkAsDirty = false;
 			 newAPInvoicePaymentPM.IsDirty = false;
             entityPM.InvoicePayments.push(newAPInvoicePaymentPM);
         }
@@ -533,6 +541,7 @@ export class APInvoicePMService {
                         //entityPM.InvoicePayments.push(oldInvoicePayments[itemKey]);
 						var oldItemJson = oldInvoicePayments[itemKey];
                         var deletedPM: APInvoicePaymentPM = new APInvoicePaymentPM(null);
+						deletedPM.DisableMarkAsDirty = true;
                         var pmKeys = Object.keys(oldItemJson);
                         for (var key in pmKeys) {
 
@@ -544,7 +553,7 @@ export class APInvoicePMService {
                             deletedPM[property] = oldItemJson[property];
                         }
 
-                      
+					    deletedPM.DisableMarkAsDirty = false;
                         deletedPM.IsDirty = false;
                         deletedPM.ChangeSetOp = "Delete";
                         
@@ -577,7 +586,8 @@ export class APInvoicePMService {
             {
                 newAPInvoiceMultipleShipmentPM = new APInvoiceMultipleShipmentPM(null);
             }
-                
+ 			newAPInvoiceMultipleShipmentPM.DisableMarkAsDirty = true;
+               
             var pmKeysArray = Object.keys(jItem);
             for (var pmKey in pmKeysArray) {
                 if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
@@ -611,7 +621,7 @@ export class APInvoicePMService {
                 newAPInvoiceMultipleShipmentPM.OldEntityPM = null;
                 newAPInvoiceMultipleShipmentPM.EntityParentPM = null;
             }
-			
+			 newAPInvoiceMultipleShipmentPM.DisableMarkAsDirty = false;
 			 newAPInvoiceMultipleShipmentPM.IsDirty = false;
             entityPM.InvoiceMultipleShipments.push(newAPInvoiceMultipleShipmentPM);
         }
@@ -625,6 +635,7 @@ export class APInvoicePMService {
                         //entityPM.InvoiceMultipleShipments.push(oldInvoiceMultipleShipments[itemKey]);
 						var oldItemJson = oldInvoiceMultipleShipments[itemKey];
                         var deletedPM: APInvoiceMultipleShipmentPM = new APInvoiceMultipleShipmentPM(null);
+						deletedPM.DisableMarkAsDirty = true;
                         var pmKeys = Object.keys(oldItemJson);
                         for (var key in pmKeys) {
 
@@ -636,7 +647,7 @@ export class APInvoicePMService {
                             deletedPM[property] = oldItemJson[property];
                         }
 
-                      
+					    deletedPM.DisableMarkAsDirty = false;
                         deletedPM.IsDirty = false;
                         deletedPM.ChangeSetOp = "Delete";
                         
@@ -671,7 +682,8 @@ export class APInvoicePMService {
             {
                 newAPTransferLinePM = new APTransferLinePM(null);
             }
-                
+ 			newAPTransferLinePM.DisableMarkAsDirty = true;
+               
             var pmKeysArray = Object.keys(jItem);
             for (var pmKey in pmKeysArray) {
                 if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
@@ -705,7 +717,7 @@ export class APInvoicePMService {
                 newAPTransferLinePM.OldEntityPM = null;
                 newAPTransferLinePM.EntityParentPM = null;
             }
-			
+			 newAPTransferLinePM.DisableMarkAsDirty = false;
 			 newAPTransferLinePM.IsDirty = false;
             entityPM.TransferLines.push(newAPTransferLinePM);
         }
@@ -719,6 +731,7 @@ export class APInvoicePMService {
                         //entityPM.TransferLines.push(oldTransferLines[itemKey]);
 						var oldItemJson = oldTransferLines[itemKey];
                         var deletedPM: APTransferLinePM = new APTransferLinePM(null);
+						deletedPM.DisableMarkAsDirty = true;
                         var pmKeys = Object.keys(oldItemJson);
                         for (var key in pmKeys) {
 
@@ -730,7 +743,7 @@ export class APInvoicePMService {
                             deletedPM[property] = oldItemJson[property];
                         }
 
-                      
+					    deletedPM.DisableMarkAsDirty = false;
                         deletedPM.IsDirty = false;
                         deletedPM.ChangeSetOp = "Delete";
                         
@@ -765,7 +778,8 @@ export class APInvoicePMService {
             {
                 newAPInvoiceTotalVATPM = new APInvoiceTotalVATPM(null);
             }
-                
+ 			newAPInvoiceTotalVATPM.DisableMarkAsDirty = true;
+               
             var pmKeysArray = Object.keys(jItem);
             for (var pmKey in pmKeysArray) {
                 if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
@@ -797,7 +811,7 @@ export class APInvoicePMService {
                 newAPInvoiceTotalVATPM.OldEntityPM = null;
                 newAPInvoiceTotalVATPM.EntityParentPM = null;
             }
-			
+			 newAPInvoiceTotalVATPM.DisableMarkAsDirty = false;
 			 newAPInvoiceTotalVATPM.IsDirty = false;
             entityPM.TotalVATs.push(newAPInvoiceTotalVATPM);
         }
@@ -811,6 +825,7 @@ export class APInvoicePMService {
                         //entityPM.TotalVATs.push(oldTotalVATs[itemKey]);
 						var oldItemJson = oldTotalVATs[itemKey];
                         var deletedPM: APInvoiceTotalVATPM = new APInvoiceTotalVATPM(null);
+						deletedPM.DisableMarkAsDirty = true;
                         var pmKeys = Object.keys(oldItemJson);
                         for (var key in pmKeys) {
 
@@ -822,7 +837,7 @@ export class APInvoicePMService {
                             deletedPM[property] = oldItemJson[property];
                         }
 
-                      
+					    deletedPM.DisableMarkAsDirty = false;
                         deletedPM.IsDirty = false;
                         deletedPM.ChangeSetOp = "Delete";
                         

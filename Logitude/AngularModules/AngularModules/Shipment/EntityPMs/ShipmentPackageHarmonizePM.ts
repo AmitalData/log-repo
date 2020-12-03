@@ -48,14 +48,16 @@ export class ShipmentPackageHarmonizePM {
     public set Harmonize(newValue: string) { if (this.harmonize != newValue) { this.harmonize = newValue; this.MarkAsDirty("Harmonize"); } }
        
 	 
+    private insidePackageId: string;
+    public get InsidePackageId() { return this.insidePackageId; }
+    public set InsidePackageId(newValue: string) { if (this.insidePackageId != newValue) { this.insidePackageId = newValue; this.MarkAsDirty("InsidePackageId"); } }
+       
+	 
     private changeSetOp: string;
     public get ChangeSetOp() { return this.changeSetOp; }
     public set ChangeSetOp(newValue: string) { if (this.changeSetOp != newValue) { this.changeSetOp = newValue; this.MarkAsDirty("ChangeSetOp"); } }
        
-    private insidePackageId: string;
-    public get InsidePackageId() { return this.insidePackageId; }
-    public set InsidePackageId(newValue: string) { if (this.insidePackageId != newValue) { this.insidePackageId = newValue; this.MarkAsDirty("InsidePackageId"); } }
-
+	 
 
     public OldEntityPM: ShipmentPackageHarmonizePM;
 	    
@@ -66,7 +68,10 @@ export class ShipmentPackageHarmonizePM {
     public UniqueKey: string;
 	 	
     public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
+       if(!this.DisableMarkAsDirty)
+       {
         this.IsDirty = true;
 		  if (this.EntityParentPM) {
             this.EntityParentPM.MarkAsDirty();
@@ -76,6 +81,7 @@ export class ShipmentPackageHarmonizePM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "ShipmentPackageHarmonize");
            
         }
+	 }
     }
     private MyClone: ShipmentPackageHarmonizePM;
 

@@ -1,3 +1,4 @@
+
 declare var System: any;
 declare var window: any;
 import { Component, OnInit } from '@angular/core';
@@ -19,6 +20,7 @@ import { DeclarationCargoSplitPM } from '../../../../../Customs/EntityPMs/Declar
 import { EntityResourceService } from '../../../../../Infrastructure/Services/EntityResourceService';//test4
 import { CargoSplitRequestParams } from '../../../../../Customs/DataContract/RequestParams/CargoSplitRequestParams';
 import { INF_MSG_GenericResponseData } from '../../../../../Customs/DataContract/ResponseData/INF_MSG_GenericResponseData';
+import { DeclarationEditComponentController } from '../../../../../Customs/Controller/DeclarationEditComponentController';
 
 import { EntityPMService } from '../../../../../Infrastructure/Services/EntityPMService';
 
@@ -42,7 +44,7 @@ export class DeclarationCargoSplitTabComponent extends BaseComponent implements 
     responseData: INF_MSG_GenericResponseData = new INF_MSG_GenericResponseData();
 
     IsLoaded: boolean = false;
-    private CurrentSession = SessionLocator.SelectedSession;
+
     constructor(private entityArgs: EntityArgs, private EntityResourceService: EntityResourceService) {
         super();
         this.DeclarationCargoSplitList = new ObservableCollection([]);
@@ -64,29 +66,29 @@ export class DeclarationCargoSplitTabComponent extends BaseComponent implements 
 
 
     private Listen() {
-        if (this.CurrentSession.CurrentEditComponent != null) {
+        if (SessionLocator.SelectedSession.CurrentEditComponent != null) {
 
-            this.CurrentEditComponentId = this.CurrentSession.CurrentEditComponent.ComponentId;
-            this.CurrentSession.CurrentEditComponent.SubscriptionAdd(
-                this.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
+            this.CurrentEditComponentId = SessionLocator.SelectedSession.CurrentEditComponent.ComponentId;
+            SessionLocator.SelectedSession.CurrentEditComponent.SubscriptionAdd(
+                SessionLocator.SelectedSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                     if (isSaveSuccess) {
-                        this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
+                        this.EntityPM = SessionLocator.SelectedSession.CurrentEditComponent.EntityPM;
                     }
                 })
             );
 
-            this.CurrentSession.CurrentEditComponent.SubscriptionAdd(
-                this.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
+            SessionLocator.SelectedSession.CurrentEditComponent.SubscriptionAdd(
+                SessionLocator.SelectedSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
                     if (isLoadSuccess) {
-                        this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
+                        this.EntityPM = SessionLocator.SelectedSession.CurrentEditComponent.EntityPM;
                         this.LoadDeclarationCargoSplits();
                     }
                 })
             );
 
-            this.CurrentSession.CurrentEditComponent.SubscriptionAdd(
-                this.CurrentSession.CurrentEditComponent.TabSelected.subscribe((tabCode: string) => {
-                    if (this.CurrentEditComponentId == this.CurrentSession.CurrentEditComponent.ComponentId) {
+            SessionLocator.SelectedSession.CurrentEditComponent.SubscriptionAdd(
+                SessionLocator.SelectedSession.CurrentEditComponent.TabSelected.subscribe((tabCode: string) => {
+                    if (this.CurrentEditComponentId == SessionLocator.SelectedSession.CurrentEditComponent.ComponentId) {
                         if (tabCode == "DCCS") {
                             this.LoadDeclarationCargoSplits();
                         }
@@ -101,10 +103,12 @@ export class DeclarationCargoSplitTabComponent extends BaseComponent implements 
         //this.DeclarationCargoSplitWebService.GetDeclarationCargoSplitByDeclarationIdLists(this.EntityPM.Id, this.EntityPM.Tenant)
         this._DeclarationWebService.GetDeclarationCargoSplitByDeclarationIdList(this.EntityPM.Id, this.EntityPM.Tenant)
             .subscribe((myResponse: ServiceResponse) => {
-                this.CurrentSession.StopBusyIndicator();
+                SessionLocator.SelectedSession.StopBusyIndicator();
                 this.GetDeclarationCargoSplitByDeclarationIdListsOp_Completed(myResponse, false);
+                this.CargoSplitIdEdit();
             });
     }
+
 
     private GetDeclarationCargoSplitByDeclarationIdListsOp_Completed(myResponse: ServiceResponse, sourceIsCostomFile: boolean) {
         if (myResponse.Result != null) {
@@ -115,8 +119,22 @@ export class DeclarationCargoSplitTabComponent extends BaseComponent implements 
         }
     }
 
+    CargoSplitIdEdit(): any {
+        var myDeclarationEditComponentController = SessionLocator.SelectedSession.CurrentEditComponent.EditComponentController as DeclarationEditComponentController;
+        if (!AppTool.IsNullOrEmpty(myDeclarationEditComponentController.CargoSplitId)) {
+            if (this.DeclarationCargoSplitList != null && this.DeclarationCargoSplitList.Collection != null) {
+                var item = this.DeclarationCargoSplitList.Collection.find(r => r.Id == myDeclarationEditComponentController.CargoSplitId);
+                if (item != null) {
+                    this.EditButtonClicked(item);
+                    console.log("CargoSplitId " + myDeclarationEditComponentController.CargoSplitId);
+                    myDeclarationEditComponentController.CargoSplitId = null;
+                }
+            }
+        }
+    }
+
     RefreshEntity() {
-        this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+        SessionLocator.SelectedSession.CurrentEditComponent.ReloadEntityPM();
     }
 
     EditButtonClickedOld(item: DeclarationCargoSplitPM) {
@@ -140,12 +158,12 @@ export class DeclarationCargoSplitTabComponent extends BaseComponent implements 
             }
         }
         logWindow.Show('./CustomsModules/CustomsDeclarationCargoSplit/Components/EditTabs/General/CargoSplitGeneralTabComponent');
-        this.CurrentSession.StopBusyIndicator();
+        SessionLocator.SelectedSession.StopBusyIndicator();
 
         /*if (!AppTool.IsNullOrEmpty(item)) {
-            //this.CurrentSession.StartBusyIndicator("");
-    
-            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
+            //SessionLocator.SelectedSession.StartBusyIndicator("");
+
+            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.SelectedSession.SessionLocation.viewContainerRef)
                 .then(cmpRef => {
                     //this.showAlert = false;
                     cmpRef.instance.ComponentRef = cmpRef;
@@ -154,8 +172,8 @@ export class DeclarationCargoSplitTabComponent extends BaseComponent implements 
                         this.RefreshEntity();
                     });
                 });
-            
-    
+
+
         }*/
 
     }
@@ -207,5 +225,40 @@ export class DeclarationCargoSplitTabComponent extends BaseComponent implements 
             });
 
         });
+    }
+
+    AddDeclarationCargoSplitCommand() {
+
+        var newDeclarationCargoSplitPM = new DeclarationCargoSplitPM();
+        newDeclarationCargoSplitPM.Tenant = this.EntityPM.Tenant;
+        newDeclarationCargoSplitPM.DeclarationId = this.EntityPM.Id;
+        newDeclarationCargoSplitPM.CustomFileNo = this.EntityPM.CustomFileNo;
+        //this.DeclarationCargoSplitList.Insert(newDeclarationCargoSplitPM);
+
+        this.NewDeclarationCargoSplit(newDeclarationCargoSplitPM);
+    }
+
+    NewDeclarationCargoSplit(item: DeclarationCargoSplitPM) {
+        SessionLocator.SelectedSession.StartBusyIndicator("");
+
+        var windowArgs: any = {};
+        windowArgs.CurrentEntity = item;
+        windowArgs.IsNewEntity = true;
+        windowArgs.CustomFileNo = this.EntityPM.CustomFileNo;
+
+        var logWindow = new LogitudeWindow();
+        logWindow.Width = 770;
+        logWindow.Height = 750;
+        //windowArgs.WindowTitle = TextCodeTranslator.Translate("Customs.Claim.O.NewClaimsRelatedEntity");
+        logWindow.ShowCloseButton = true;
+        logWindow.WindowArgs = windowArgs;
+        logWindow.WindowClosed.subscribe((event: any) => {
+            this.LoadDeclarationCargoSplits();
+        });
+
+        logWindow.IsHideHeader = true;
+        logWindow.Show('./CustomsModules/CustomsDeclarationCargoSplit/Components/EditTabs/General/CargoSplitGeneralTabComponent');
+        SessionLocator.SelectedSession.StopBusyIndicator();
+
     }
 }

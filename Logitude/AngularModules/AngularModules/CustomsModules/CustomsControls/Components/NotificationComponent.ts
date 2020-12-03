@@ -24,15 +24,20 @@ import { NotificationWebService } from '../../../Customs/Services/WebServices/No
 import {UserPM} from '../../../Common/EntityPMs/UserPM';
 import { CustomsCollateralPMService } from '../../../Customs/Services/StandardPMs/CustomsCollateralPMService';
 import {SelectedNotifications} from '../../../Customs/DataContract/SelectedNotifications';
-import {NotificationPM} from '../../../Customs/EntityPMs/NotificationPM';
+import { NotificationPM } from '../../../Customs/EntityPMs/NotificationPM';
+import { DeclarationEditComponentController } from '../../../Customs/Controller/DeclarationEditComponentController';
+import { EntityPMService } from '../../../Infrastructure/Services/EntityPMService';
 
 @Component({
-    selector: 'NotificationComponent',
-    
+    selector: 'NotificationComponent',    
     templateUrl: './NotificationComponent.html',
 })
 
 export class NotificationComponent extends BaseComponent implements OnInit {
+  public LayoutDirection: any;
+  public IsDisplayOnly: any;
+  public SelectedRow: any;
+
     @Output() MenuHeaderchangeevent = new EventEmitter();
     @Output() CustomBackFromEditevent = new EventEmitter();
     @Output() ShowHLineOverRow = new EventEmitter();
@@ -41,6 +46,7 @@ export class NotificationComponent extends BaseComponent implements OnInit {
     entityListService: EntityListService = new EntityListService();
     notificationWebService: NotificationWebService = new NotificationWebService();
     customsCollateralPMService: CustomsCollateralPMService = new CustomsCollateralPMService();
+    _EntityPMService: EntityPMService = new EntityPMService();
     public selectedItems: ObservableCollection;
     public connectedItems: ObservableCollection;
     ToolTipHeight: number;
@@ -56,13 +62,13 @@ export class NotificationComponent extends BaseComponent implements OnInit {
     public DeclarationPM: DeclarationPM;
     IsDeclarationTab: boolean;
     public ExcludedItems: ObservableCollection;
-    private CurrentSession = SessionLocator.SelectedSession;
+    private currentSession=SessionLocator.SelectedSession;
     constructor(entityArgs: EntityArgs, private EntityResourceService: EntityResourceService, private cd: ChangeDetectorRef) {
         super();
 
         //var t = setInterval(() => {this.timerValue++;}, 1000); // TESTING!! timer for testing detect changes
-        this.CurrentSession.SubscriptionAdd(
-            this.CurrentSession.SessionEvent.subscribe(($event: any) => {
+        SessionLocator.SelectedSession.SubscriptionAdd(
+            SessionLocator.SelectedSession.SessionEvent.subscribe(($event: any) => {
                 if ($event.Name == "ClosedByAssigneeClicked") {
                     this.ShowHLineOverRow.emit($event.rowIndex);
                     this.preventSelect = true;
@@ -73,8 +79,8 @@ export class NotificationComponent extends BaseComponent implements OnInit {
         this.ExcludedItems = new ObservableCollection([]);
         this.selectedItems = new ObservableCollection([]);
         this.connectedItems = new ObservableCollection([]);
-        this.CurrentSession.SubscriptionAdd(
-            this.CurrentSession.PseventRowSelectEvent.subscribe((res) => {
+        SessionLocator.SelectedSession.SubscriptionAdd(
+            SessionLocator.SelectedSession.PseventRowSelectEvent.subscribe((res) => {
                 if (res == "select") {
                     this.preventSelect = true;
                 }
@@ -236,7 +242,7 @@ export class NotificationComponent extends BaseComponent implements OnInit {
         this.columns.push({
             FieldName: 'AssigneToNotificationTypeCode',
             DataTypeCode: 'String',
-            Display: 'מספר חשבון',
+            Display: TextCodeTranslator.Translate('Customs.Notification.F.AssigneToNotificationTypeCode'),
             Styles: { width: '70px' },
             IsCustomTemplate: true,
             HtmlListComponentName: 'NotificationListTemplate',
@@ -368,7 +374,7 @@ export class NotificationComponent extends BaseComponent implements OnInit {
         if (filters == null) {
             filters = new ApiQueryFilters();
         }
-      //   this.CurrentSession.StartBusyIndicatorLoading();
+      //   SessionLocator.SelectedSession.StartBusyIndicatorLoading();
         filters.PageSize = take;
         filters.PageIndex = skip;
         filters.GetAll = false;
@@ -609,10 +615,13 @@ export class NotificationComponent extends BaseComponent implements OnInit {
                 //}
                // this.status = null;
 
-            //    this.CurrentSession.StopBusyIndicator();
+            //    SessionLocator.SelectedSession.StopBusyIndicator();
             });
 
-       
+        if (AppTool.IsNullOrEmpty(this.dataCount))
+        {
+            this.EnableFilters = true;
+        }
         return this.entityListService.getExtendedByFilters("Customs.Notification", filters);
 
 
@@ -992,8 +1001,33 @@ export class NotificationComponent extends BaseComponent implements OnInit {
                                 case "70N":
                                 case "70C":
                                 case "60A":
+                                case "5117C":
+                                case "5117W":
+                                case "5117D":
+                                case "5117A":
+                                case "5117P":
                                     {
-                                        var tab = window.ObjectTableTabs.find(d => d.ObjectTableId == selected.ObjectTableId && d.IndexOrder == 0);
+                                       // var tab = window.ObjectTableTabs.find(d => d.ObjectTableId == selected.ObjectTableId && d.IndexOrder == 0);
+                                        var tab;
+                                        var tabs = window.ObjectTableTabs.find(d => d.ObjectTableId == selected.ObjectTableId);
+                                        if (tabs.lenght > 0) {
+                                            tabs = tabs.sort((n1, n2) => {
+                                                if (n1.IndexOrder > n2.IndexOrder) {
+                                                    return 1;
+                                                }
+
+                                                if (n1.IndexOrder < n2.IndexOrder) {
+                                                    return -1;
+                                                }
+
+                                                return 0;
+                                            });
+
+                                            tab = tabs[0];
+                                        }
+                                        else {
+                                            tab = tabs;
+                                        }
 
                                         if (tab) {
                                             currentScreenCode = tab.Code;
@@ -1007,6 +1041,9 @@ export class NotificationComponent extends BaseComponent implements OnInit {
                                     }
 
                                 case "5101N":
+                                case "5101R":
+                                case "5101A":
+                                case "5101E":
                                     {
                                         currentScreenCode = "DCNT";
                                         break;
@@ -1033,10 +1070,63 @@ export class NotificationComponent extends BaseComponent implements OnInit {
                                 case "1812U":
                                 case "2020N":
                                 case "2000N":
+                                case "2753A":
+                                case "5110N":
+                                case "5108N":
                                     {
                                         currentScreenCode = "DCTP";
                                         break;
 
+                                    }
+                                case "8374A":
+                                case "8374J":
+                                case "8374C":
+                                case "8374D":
+                                    {
+                                        //currentScreenCode = "DCCS";
+                                        this.ShowCustomsDeclarationCargoSplit(selected.Reference2Number);
+                                        break;
+
+                                    }
+                                case "5101F":
+                                    {
+                                        this.EntityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe(response => {
+                                            this.EntityResourceService.getEntityResourceByTableName("Customs.CustomsCollateral").subscribe(response => {
+                                                this.EntityResourceService.getEntityResourceByTableName("Customs.CustomsCollateralsAnswer").subscribe(response => {
+                                                    this.customsCollateralPMService.get(selected.Reference2Number).subscribe((response: any) => {
+
+                                                        var result = response.Result;
+                                                        console.log("[response] customsCollateralPMService.get", result);
+                                                        if (!AppTool.IsNullOrEmpty(result)) {
+                                                            control = './CustomsModules/CustomsCollateral/Components/CustomsCollateralComponent';
+                                                            logitudeWindow.Title = TextCodeTranslator.Translate("Customs.Declaration.O.EditCustomsCollateral");
+                                                            logitudeWindow.WindowArgs = { CurrentEntity: result };
+                                                            logitudeWindow.Height = 730;
+                                                            logitudeWindow.Width = 660;
+                                                            //logitudeWindow.ZIndex = 5;
+                                                            this.cd.detach()
+                                                            logitudeWindow.Show(control);
+                                                            logitudeWindow.WindowClosed.subscribe(() => {
+                                                                this.cd.reattach();
+                                                                this.RefreshEntity();
+                                                            });
+
+                                                            var Ids: string[] = [];
+                                                            Ids.push(selected.Id);
+                                                            Ids.push(selected.Id);
+                                                            this.notificationWebService.SetNotificationsStatus(Ids, "Read").subscribe((res: any) => {
+                                                                this.SetStatusCompleted(selected.Id, event);
+
+                                                            });
+                                                        } else {
+                                                            console.log("No collateral found!!!!!!");
+                                                            return;
+                                                        }
+                                                    });
+                                                });
+                                            });
+                                        });
+                                        break;
                                     }
 
                                 default:
@@ -1162,6 +1252,10 @@ export class NotificationComponent extends BaseComponent implements OnInit {
                                 case "8211N":
                                 case "8211U":
                                 case "5101N":
+                                case "5101R":
+                                case "5101A":
+                                case "5101E":
+                                case "5101F":
                                     {
                                         this.EntityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe((response:any) => {
                                             this.EntityResourceService.getEntityResourceByTableName("Customs.CustomsCollateral").subscribe((response:any) => {
@@ -1246,6 +1340,11 @@ export class NotificationComponent extends BaseComponent implements OnInit {
 
                     //    }
 
+                    case "Customs.DeclarationCargoSplit":
+                        {
+                            this.ShowCustomsDeclarationCargoSplit(selected.EntityId);
+                        }
+
                     default:
                         {
                             if (!AppTool.IsNullOrEmpty(selected.Reference1Number)) {
@@ -1298,7 +1397,7 @@ export class NotificationComponent extends BaseComponent implements OnInit {
                     //logitudeWindow.ShowSaveAsButton = true;
                     logitudeWindow.Show(control);
 
-                    //this.CurrentSession.StartBusyIndicatorLoading();
+                    //SessionLocator.SelectedSession.StartBusyIndicatorLoading();
 
                     //EntityIdForCustomEditControlEvent entityIdEvent = eventAggregator.GetEvent<EntityIdForCustomEditControlEvent>();
                     //entityIdEvent.Publish(new EntityIdForCustomEditControlEventArgs() { EntityId = selected.EntityId, ObjectTableName = selected.ObjectTableName, IdentityKey = customEditIdentityKey });
@@ -1321,8 +1420,7 @@ export class NotificationComponent extends BaseComponent implements OnInit {
 
                         
                         if (selected.ObjectTableName == "Customs.Declaration") {
-
-                            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
+                            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.SelectedSession.SessionLocation.viewContainerRef)
                                 .then(cmpRef => {
                                     cmpRef.instance.ComponentRef = cmpRef;
                                     cmpRef.instance.Run({
@@ -1330,6 +1428,22 @@ export class NotificationComponent extends BaseComponent implements OnInit {
                                         EntityId: selected.EntityId,
                                         ObjectTableName: selected.ObjectTableName
                                     });
+                                    if (selected.NotificationDefinitionCode == "2753A") {
+                                        cmpRef.instance.OnFirstTimeAfterSingleDataLoaded
+                                            .subscribe(myResult => {
+                                                var myDeclarationEditComponentController = cmpRef.instance.EditComponentController as DeclarationEditComponentController;
+                                                myDeclarationEditComponentController.TapagId = selected.Reference2Number;
+                                                console.log("myDeclarationEditComponentController.TapagId = " + selected.Reference2Number);
+                                            });
+                                    }
+                                    if (selected.NotificationDefinitionCode.substring(0,4) == "8374") {
+                                        cmpRef.instance.OnFirstTimeAfterSingleDataLoaded
+                                            .subscribe(myResult => {
+                                                var myDeclarationEditComponentController = cmpRef.instance.EditComponentController as DeclarationEditComponentController;
+                                                myDeclarationEditComponentController.CargoSplitId = selected.Reference2Number;
+                                                console.log("myDeclarationEditComponentController.CargoSplitId = " + selected.Reference2Number);
+                                            });
+                                    }
                                 });
 
 
@@ -1408,6 +1522,47 @@ export class NotificationComponent extends BaseComponent implements OnInit {
         });
     }
 
+
+    ShowCustomsDeclarationCargoSplit(EntityId: string) {
+        var windowArgs: any = {};
+        this.EntityResourceService.getEntityResourceByTableName("Customs.DeclarationCargoSplit").subscribe(response => {
+            this.EntityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe(response => {
+                this._EntityPMService.getSingle("Customs.DeclarationCargoSplit", EntityId).then((res: any) => {
+                    res.subscribe((myResponse: any) => {
+
+                        if (myResponse.HasError) {
+                            console.log("Error while getting EntityPM", myResponse);
+                        }
+                        else {
+                            windowArgs.CurrentEntity = myResponse.Result;
+                            var logWindow = new LogitudeWindow();
+
+                            logWindow.Width = 770;
+                            logWindow.Height = 750;
+                            logWindow.Title = "בקשת פיצול מטען ";
+                            if (myResponse.Result != null) {
+                                if (!AppTool.IsNullOrEmpty(myResponse.Result.RequestNumber)) {
+                                    logWindow.Title = logWindow.Title + myResponse.Result.RequestNumber;
+                                }
+                                if (!AppTool.IsNullOrEmpty(myResponse.Result.ResponseStatusName)) {
+                                    logWindow.Title = logWindow.Title + " - " + myResponse.Result.ResponseStatusName;
+                                }
+                            }
+
+                            logWindow.WindowArgs = windowArgs;
+                            logWindow.ShowCloseButton = true;
+                            logWindow.Show('./CustomsModules/CustomsDeclarationCargoSplit/Components/EditTabs/General/CargoSplitGeneralTabComponent');
+                            logWindow.WindowClosed.subscribe(($event1: any) => {
+                            });
+                        }
+                    });
+
+                });
+            });
+
+        });
+    }
+
     selectedIds: string[] = [];
   
     MarkAsReadMethod() {
@@ -1441,13 +1596,13 @@ export class NotificationComponent extends BaseComponent implements OnInit {
                 this.selectedNotifications.ExcludedIds = this.ExcludedItems.Collection;
             }
 
-            this.CurrentSession.StartBusyIndicatorLoading();
+            SessionLocator.SelectedSession.StartBusyIndicatorLoading();
 
             this.notificationExtendedListService.PutNotificationStatus(this.selectedNotifications).subscribe((response:any) => {
               
                 this.LoadNotifications();
                 this.IsSelected = false;
-                this.CurrentSession.StopBusyIndicator();
+                SessionLocator.SelectedSession.StopBusyIndicator();
                 if (this.DataSource.rowCount > 1000) {
                     var msg = new MessageWindow();
 
@@ -1457,7 +1612,7 @@ export class NotificationComponent extends BaseComponent implements OnInit {
         }
         else {
 
-            this.CurrentSession.StartBusyIndicatorLoading();
+            SessionLocator.SelectedSession.StartBusyIndicatorLoading();
             this.selectedNotifications.IsAllSelected = false;
 
             this.selectedNotifications.selectedIds = [];
@@ -1499,7 +1654,7 @@ export class NotificationComponent extends BaseComponent implements OnInit {
                 this.selectedItems.Clear();
 
             });
-            this.CurrentSession.StopBusyIndicator();
+            SessionLocator.SelectedSession.StopBusyIndicator();
         }
 
     }
@@ -1533,12 +1688,12 @@ export class NotificationComponent extends BaseComponent implements OnInit {
             if (this.ExcludedItems.Length > 0) {
                 this.selectedNotifications.ExcludedIds = this.ExcludedItems.Collection;
             }
-            this.CurrentSession.StartBusyIndicatorLoading();
+            this.currentSession.StartBusyIndicatorLoading();
             this.notificationExtendedListService.PutNotificationStatus(this.selectedNotifications).subscribe((response:any) => {
                 
                 this.LoadNotifications();
                 this.IsSelected = false;
-                this.CurrentSession.StopBusyIndicator();
+                SessionLocator.SelectedSession.StopBusyIndicator();
                 if (this.DataSource.rowCount > 1000) {
                     var msg = new MessageWindow();
 
@@ -1547,7 +1702,7 @@ export class NotificationComponent extends BaseComponent implements OnInit {
             });
         }
         else {
-            this.CurrentSession.StartBusyIndicatorLoading();
+            SessionLocator.SelectedSession.StartBusyIndicatorLoading();
             this.selectedNotifications.IsAllSelected = false;
 
             this.selectedNotifications.selectedIds = [];
@@ -1580,7 +1735,7 @@ export class NotificationComponent extends BaseComponent implements OnInit {
                 this.selectedItems.Clear();
 
             });
-            this.CurrentSession.StopBusyIndicator();
+            SessionLocator.SelectedSession.StopBusyIndicator();
         }
     }
 
@@ -1614,13 +1769,13 @@ export class NotificationComponent extends BaseComponent implements OnInit {
             if (this.ExcludedItems.Length > 0) {
                 this.selectedNotifications.ExcludedIds = this.ExcludedItems.Collection;
             }
-            this.CurrentSession.StartBusyIndicatorLoading();
+            SessionLocator.SelectedSession.StartBusyIndicatorLoading();
 
             this.notificationExtendedListService.PutNotificationStatus(this.selectedNotifications).subscribe((response:any) => {
               
                 this.LoadNotifications();
                 this.IsSelected = false;
-                this.CurrentSession.StopBusyIndicator();
+                SessionLocator.SelectedSession.StopBusyIndicator();
                 if (this.DataSource.rowCount > 1000) {
                     var msg = new MessageWindow();
 
@@ -1629,7 +1784,7 @@ export class NotificationComponent extends BaseComponent implements OnInit {
             });
         }
         else {
-            this.CurrentSession.StartBusyIndicatorLoading();
+            SessionLocator.SelectedSession.StartBusyIndicatorLoading();
             this.selectedNotifications.IsAllSelected = false;
 
             this.selectedNotifications.selectedIds = [];
@@ -1661,7 +1816,7 @@ export class NotificationComponent extends BaseComponent implements OnInit {
                 });
                 this.selectedItems.Clear();
 
-                this.CurrentSession.StopBusyIndicator();
+                SessionLocator.SelectedSession.StopBusyIndicator();
                 //this.CustomBackFromEditevent.emit(this.selectedItems.Collection);
 
 
@@ -1700,13 +1855,13 @@ export class NotificationComponent extends BaseComponent implements OnInit {
                 this.selectedNotifications.ExcludedIds = this.ExcludedItems.Collection;
             }
 
-            this.CurrentSession.StartBusyIndicatorLoading();
+            SessionLocator.SelectedSession.StartBusyIndicatorLoading();
 
             this.notificationExtendedListService.PutNotificationStatus(this.selectedNotifications).subscribe((response:any) => {
               
                 this.LoadNotifications();
                 this.IsSelected = false;
-                this.CurrentSession.StopBusyIndicator();
+                SessionLocator.SelectedSession.StopBusyIndicator();
                 if (this.DataSource.rowCount > 1000) {
                     var msg = new MessageWindow();
 
@@ -1726,7 +1881,7 @@ export class NotificationComponent extends BaseComponent implements OnInit {
             });
 
             this.selectedNotifications.dataCount = this.selectedItems.Length;
-            this.CurrentSession.StartBusyIndicatorLoading();
+            this.currentSession.StartBusyIndicatorLoading();
             this.notificationExtendedListService.PutNotificationStatus(this.selectedNotifications).subscribe((response:any) => {
                 response.Result.forEach((value, key) => {
                     var temp = this.selectedItems.Collection.filter(a => a.rowData.Id == value.Id)[0];
@@ -1741,7 +1896,7 @@ export class NotificationComponent extends BaseComponent implements OnInit {
                 this.IsReopenButtonVisible = false;
                 this.selectedItems.Clear();
                 this.LoadNotifications();
-                this.CurrentSession.StopBusyIndicator();
+                SessionLocator.SelectedSession.StopBusyIndicator();
             });
         }
     }

@@ -1,4 +1,4 @@
-﻿
+
 import { ResponseDataBase } from './ResponseDataBase';
 
 export class DeclarationFilterResponseData extends ResponseDataBase {
@@ -14,29 +14,30 @@ export class DeclarationFilterResponseData extends ResponseDataBase {
 
 export class GeneralDetails {
     public customOfficeName: string;
-    public customOfficeNumber: number;
-    public declerationStatus: number;
-    public externalID?: number;
+    public customOfficeNumber: string;
+    public declerationStatus: string;
+    public externalID: string;
     public externalIDSpecified: boolean;
     public name: string;
     public statusName: string;
- 
+
 }
+
 export class Deficit {
     public agentExternalID?: Number;
     public agentExternalIDSpecified: boolean;
     public agentName: string;
-    public closeDate?: Date;
+    public closeDate: string;
     public closeDateSpecified: boolean;
     public displayFileNumber: string;
-    public estimatedBalance: number;
+    public estimatedBalance: string;
     public fileNumber: string;
-    public Numeral: number;
-    public productionDate?: Date;
+    public Numeral: string;
+    public productionDate: string;
     public productionDateSpecified: boolean;
     public status: number;
     public statusName: string;
-    public totalRefundAmount?: number;
+    public totalRefundAmount: string;
     public totalRefundAmountSpecified: boolean;
 }
 
@@ -66,20 +67,20 @@ export class Claim {
     public claimAmount?: number;
     public claimAmountSpecified: boolean;
 
-    public closeDate?: Date;
+    public closeDate: string;
     public closeDateSpecified: boolean;
 
-    public createDate: Date;
+    public createDate: string;
 
     public displayFileNumber: string;
     public fileNumber: string;
 
-    public Numeral: number;
+    public Numeral: string;
     public status: number;
 
     public statusName: string;
 
-    public totalRefundAmount?: number;
+    public totalRefundAmount: string;
 
     public totalRefundAmountSpecified: boolean;
 

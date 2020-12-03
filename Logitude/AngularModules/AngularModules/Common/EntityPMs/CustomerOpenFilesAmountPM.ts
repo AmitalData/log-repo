@@ -49,7 +49,10 @@ export class CustomerOpenFilesAmountPM {
     public OldEntityPM: CustomerOpenFilesAmountPM;
 		
     public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
+       if(!this.DisableMarkAsDirty)
+       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -57,6 +60,7 @@ export class CustomerOpenFilesAmountPM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "CustomerOpenFilesAmount");
            
         }
+	 }
     }
     private MyClone: CustomerOpenFilesAmountPM;
 

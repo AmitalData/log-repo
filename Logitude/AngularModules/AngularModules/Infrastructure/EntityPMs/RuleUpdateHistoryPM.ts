@@ -69,7 +69,10 @@ export class RuleUpdateHistoryPM {
     public OldEntityPM: RuleUpdateHistoryPM;
 		
     public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
+       if(!this.DisableMarkAsDirty)
+       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -77,6 +80,7 @@ export class RuleUpdateHistoryPM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "RuleUpdateHistory");
            
         }
+	 }
     }
     private MyClone: RuleUpdateHistoryPM;
 

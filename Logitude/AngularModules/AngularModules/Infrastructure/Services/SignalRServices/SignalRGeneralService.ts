@@ -21,7 +21,6 @@ export class SignalRGeneralService {
     private startingSubject = new Subject<any>();
 
     constructor() {
-        debugger;
         // Constructor initialization  
         this.connectionEstablished = new EventEmitter<Boolean>();
         this.messageReceived = new EventEmitter<ChannelEvent>();
@@ -74,7 +73,6 @@ export class SignalRGeneralService {
         });
     }
     private registerOnServerEvents(): void {
-        debugger;
         this.proxy.on('onEvent', (ev: ChannelEvent) => {
             console.log('received in SignalRService: ' + JSON.stringify(ev.Data));
             this.messageReceived.emit(ev);

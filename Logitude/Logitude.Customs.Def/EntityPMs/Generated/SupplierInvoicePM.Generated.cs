@@ -1093,7 +1093,307 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
-   }
+	  private string changeInSupplierInvoice ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ChangeInSupplierInvoice  
+	   {
+	    
+	     get
+		{
+		   return changeInSupplierInvoice;
+		 }
+		 set
+		 {
+		   if(changeInSupplierInvoice != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ChangeInSupplierInvoice",OldValue=changeInSupplierInvoice,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   changeInSupplierInvoice=value;
+		   }
+			
+		 }
+	   }
+	  private string invoiceCurrencyTypeName ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string InvoiceCurrencyTypeName  
+	   {
+	    
+	     get
+		{
+		   return invoiceCurrencyTypeName;
+		 }
+		 set
+		 {
+		   if(invoiceCurrencyTypeName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="InvoiceCurrencyTypeName",OldValue=invoiceCurrencyTypeName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   invoiceCurrencyTypeName=value;
+		   }
+			
+		 }
+	   }
+	  private string buyerName ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string BuyerName  
+	   {
+	    
+	     get
+		{
+		   return buyerName;
+		 }
+		 set
+		 {
+		   if(buyerName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="BuyerName",OldValue=buyerName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   buyerName=value;
+		   }
+			
+		 }
+	   }
+	  private string buyerAddress ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string BuyerAddress  
+	   {
+	    
+	     get
+		{
+		   return buyerAddress;
+		 }
+		 set
+		 {
+		   if(buyerAddress != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="BuyerAddress",OldValue=buyerAddress,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   buyerAddress=value;
+		   }
+			
+		 }
+	   }
+	  private string buyerCountryCode ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string BuyerCountryCode  
+	   {
+	    
+	     get
+		{
+		   return buyerCountryCode;
+		 }
+		 set
+		 {
+		   if(buyerCountryCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="BuyerCountryCode",OldValue=buyerCountryCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   buyerCountryCode=value;
+		   }
+			
+		 }
+	   }
+	  private string buyerRoleCode ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string BuyerRoleCode  
+	   {
+	    
+	     get
+		{
+		   return buyerRoleCode;
+		 }
+		 set
+		 {
+		   if(buyerRoleCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="BuyerRoleCode",OldValue=buyerRoleCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   buyerRoleCode=value;
+		   }
+			
+		 }
+	   }
+	  private string partyRelationshipCode ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string PartyRelationshipCode  
+	   {
+	    
+	     get
+		{
+		   return partyRelationshipCode;
+		 }
+		 set
+		 {
+		   if(partyRelationshipCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="PartyRelationshipCode",OldValue=partyRelationshipCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   partyRelationshipCode=value;
+		   }
+			
+		 }
+	   }
+	  private string partyRelationshipName ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string PartyRelationshipName  
+	   {
+	    
+	     get
+		{
+		   return partyRelationshipName;
+		 }
+		 set
+		 {
+		   if(partyRelationshipName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="PartyRelationshipName",OldValue=partyRelationshipName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   partyRelationshipName=value;
+		   }
+			
+		 }
+	   }
+	  private string buyerRoleName ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string BuyerRoleName  
+	   {
+	    
+	     get
+		{
+		   return buyerRoleName;
+		 }
+		 set
+		 {
+		   if(buyerRoleName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="BuyerRoleName",OldValue=buyerRoleName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   buyerRoleName=value;
+		   }
+			
+		 }
+	   }
+	  private string buyerCountryName ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string BuyerCountryName  
+	   {
+	    
+	     get
+		{
+		   return buyerCountryName;
+		 }
+		 set
+		 {
+		   if(buyerCountryName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="BuyerCountryName",OldValue=buyerCountryName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   buyerCountryName=value;
+		   }
+			
+		 }
+	   }
+
+	   private List<SupplierInvoicePaymentPM> supplierInvoicePayments;
+	    
+       [Composition]
+ 
+		     
+	   [Include]
+	   [Association("SupplierInvoicePayment", "DeclarationId, InvoiceCounterKey","DeclarationId, InvoiceCounterKey")]
+	   [DataMember]
+	   public virtual List<SupplierInvoicePaymentPM> SupplierInvoicePayments  
+	   {
+	        get
+             {
+                 if (supplierInvoicePayments == null)
+                 {
+                     supplierInvoicePayments = new List<SupplierInvoicePaymentPM>();
+                 }
+                 return supplierInvoicePayments;
+              }
+             set { supplierInvoicePayments = value; }
+	    }
+		   
+	   private List<SupplierInvoicePaymentPM>  deletedSupplierInvoicePayments;
+	   public virtual List<SupplierInvoicePaymentPM> DeletedSupplierInvoicePayments  
+	   {
+	        get
+             {
+                 if ( deletedSupplierInvoicePayments == null)
+                 {
+                      deletedSupplierInvoicePayments = new List<SupplierInvoicePaymentPM>();
+                 }
+                 return  deletedSupplierInvoicePayments;
+              }
+             set {  deletedSupplierInvoicePayments = value; }
+	    }
+	  
+	   private List<SupplierInvoiceUCRPM> supplierInvoiceUCRs;
+	    
+       [Composition]
+ 
+		     
+	   [Include]
+	   [Association("SupplierInvoiceUCR", "DeclarationId, InvoiceCounterKey","DeclarationId, InvoiceCounterKey")]
+	   [DataMember]
+	   public virtual List<SupplierInvoiceUCRPM> SupplierInvoiceUCRs  
+	   {
+	        get
+             {
+                 if (supplierInvoiceUCRs == null)
+                 {
+                     supplierInvoiceUCRs = new List<SupplierInvoiceUCRPM>();
+                 }
+                 return supplierInvoiceUCRs;
+              }
+             set { supplierInvoiceUCRs = value; }
+	    }
+		   
+	   private List<SupplierInvoiceUCRPM>  deletedSupplierInvoiceUCRs;
+	   public virtual List<SupplierInvoiceUCRPM> DeletedSupplierInvoiceUCRs  
+	   {
+	        get
+             {
+                 if ( deletedSupplierInvoiceUCRs == null)
+                 {
+                      deletedSupplierInvoiceUCRs = new List<SupplierInvoiceUCRPM>();
+                 }
+                 return  deletedSupplierInvoiceUCRs;
+              }
+             set {  deletedSupplierInvoiceUCRs = value; }
+	    }
+	     }
    
 }
 	 

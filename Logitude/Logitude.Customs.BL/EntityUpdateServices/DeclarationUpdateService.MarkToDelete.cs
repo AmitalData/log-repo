@@ -13,14 +13,27 @@ namespace Logitude.Customs.BL.EntityUpdateServices
     public partial class DeclarationUpdateService
     {
         //START - Mark to delete Supplier Invoice including all tables below
+        public Boolean markChangeSetOperationDeleteOnly = false;
         public void MarkToDeleteSupplierInvoice(DeclarationPM declarationPM)
         {
             foreach (var si in declarationPM.SupplierInvoices)
             {
-                MarkToDeleteSupplierInvoiceModifications(si);
-                MarkToDeleteSupplierInvoiceItems(si);
-                MarkToDeleteSupplierInvoiceFreightAmounts(si);
-                si.ChangeSetOp = ChangeSetOperation.Delete;
+                if (markChangeSetOperationDeleteOnly)
+                {
+                    if(si.ChangeSetOp == ChangeSetOperation.Delete)
+                    {
+                        MarkToDeleteSupplierInvoiceModifications(si);
+                        MarkToDeleteSupplierInvoiceItems(si);
+                        MarkToDeleteSupplierInvoiceFreightAmounts(si);
+                    }
+                }
+                else
+                {
+                    MarkToDeleteSupplierInvoiceModifications(si);
+                    MarkToDeleteSupplierInvoiceItems(si);
+                    MarkToDeleteSupplierInvoiceFreightAmounts(si);
+                    si.ChangeSetOp = ChangeSetOperation.Delete;
+                }
             }
         }
 
@@ -286,6 +299,14 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
             var mySupplierInvoiceItemUpdateService = new SupplierInvoiceItemUpdateService(dbContext, new Dictionary<string, IContext>(), declarationPM.Tenant);
             mySupplierInvoiceItemUpdateService.FastDeleteComposition(new Data.EntityKeys.DeclarationKeys() { Id = declarationPM.Id });
+
+            var mySupplierInvoiceItemsPriceUpdateService = new SupplierInvoiceItemsPriceUpdateService(dbContext, new Dictionary<string, IContext>(), declarationPM.Tenant);
+            mySupplierInvoiceItemsPriceUpdateService.FastDeleteComposition(new Data.EntityKeys.DeclarationKeys() { Id = declarationPM.Id });
+
+            var mySuppInvoiceItemsAbachStatementUpdateService = new SuppInvoiceItemsAbachStatementUpdateService(dbContext, new Dictionary<string, IContext>(), declarationPM.Tenant);
+            mySuppInvoiceItemsAbachStatementUpdateService.FastDeleteComposition(new Data.EntityKeys.DeclarationKeys() { Id = declarationPM.Id });
+
+
         }
 
 

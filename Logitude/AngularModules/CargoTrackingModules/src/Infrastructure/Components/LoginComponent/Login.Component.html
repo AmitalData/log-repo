@@ -1,0 +1,75 @@
+<div class="limiter">
+    <div class="container-login">
+        <div class="container-login-child">
+            <div class="wrap-login">
+                <div class="login-form">
+                    <div>
+                        <img alt="" class="logo-img" src="{{LogoImgSrc}}">
+                    </div>
+
+                    <div class="wrap-input">
+                        <input #input class="input" placeholder="Email" [(ngModel)]="Email" type="text" name="email">
+                    </div>
+
+                    <div class="wrap-input">
+                        <span class="btn-eye-pass">
+                            <img (click)="passEyeClicked()" alt="" title="{{PassEyeIconTitle}}" class="btn-eye-pass-img"
+                                src="{{PassEyeIcon}}">
+                        </span>
+                        <input #input class="input" placeholder="Password" [(ngModel)]="Password"
+                            type="{{PasswordType}}" name="pass">
+                    </div>
+
+                    <div *ngIf="IsShowAreaCaptcha">
+                        <img alt="" class="btn-captcha-img" src="{{CaptchaImageUrl}}">
+                    </div>
+
+                    <div *ngIf="IsShowAreaCaptcha" class="wrap-input">
+                        <input #input class="input" placeholder="type the text you see" [(ngModel)]="CaptchaTextValue"
+                            type="text" name="captchaText">
+                    </div>
+
+                    <div class="container-login-form-btn">
+                        <div class="wrap-login-form-btn">
+                            <div class="login-form-bgbtn"></div>
+                            <button (click)="LogInClicked()" class="login-form-btn">
+                                Log In
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="text-center" style="margin:20px;margin-bottom:10px;">
+                        <a class="txt1" (click)="ForgotPasswordClicked()" style="cursor: pointer;">
+                            Forgot Password?
+                        </a>
+                    </div>
+
+                    <div *ngIf="ShowbusyIndicator" class="text-center" style="margin:20px;margin-bottom:10px;">
+                        <img width="50" height="50" src="./assets/images/Gif/indicator.gif" alt='loading' />
+                    </div>
+
+                    <div class="text-center" style="margin:20px;margin-bottom:10px;">
+                        <p class="txt1" style="color: red;">
+                            {{errorMessage}}
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div style="height:10px;">
+
+            </div>
+            <!-- <div class="wrap-login-additional">
+                <div class="text-center">
+                    <span class="txt1">
+                        Don’t have an account?
+                    </span>
+
+                    <a class="txt2" href="1/search">
+                        Sign Up
+                    </a>
+                </div>
+            </div> -->
+        </div>
+    </div>
+</div>

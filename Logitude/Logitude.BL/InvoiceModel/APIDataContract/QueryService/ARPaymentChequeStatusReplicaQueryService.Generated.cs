@@ -35,7 +35,7 @@ using Simplog.Data.InvoiceModel;
         }
 
 		
-		public ARPaymentChequeStatusReplica GetARPaymentChequeStatusReplicaByCode(string Code,int Tenant)
+		public ARPaymentChequeStatusReplica GetARPaymentChequeStatusReplicaByCode(string Code,int Tenant, string ComputingPartnerName = "")
         { 
 		    try
             {

@@ -99,7 +99,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                             application = entityPM.InternalNumber.Substring(3, 1);
                         }
                     }
-                    else if (!String.IsNullOrWhiteSpace(entityPM.InternalNumber) &&  entityPM.InternalNumber.Length > 5 && entityPM.InternalNumber.Substring(0, 2) == "A-" && entityPM.InternalNumber.Substring(3, 2) == "SP")
+                    else if (!String.IsNullOrWhiteSpace(entityPM.InternalNumber) && entityPM.InternalNumber.Length > 5 && entityPM.InternalNumber.Substring(0, 2) == "A-" && entityPM.InternalNumber.Substring(3, 2) == "SP")
                     {
                         if (entityPM.InternalNumber.Substring(0, 5) == "A-ISP")
                         {
@@ -110,7 +110,6 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                             application = entityPM.InternalNumber.Substring(2, 1); //A-MSP1234
                         }
                     }
-
                 }
                 if (!String.IsNullOrWhiteSpace(application))
                 {
@@ -1202,6 +1201,22 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                         ObjectTableName = "GLAccount",
                         IsAddedManually = false,
                         EventTypeCode = "ISDT",
+                        Notes = notes,
+
+                    });
+                }
+
+                if (entityPM.InterestCreditLimit != entityPOCO.InterestCreditLimit)
+                {
+                    String notes = TranslateTextsClass.Translate("Accounting.General.O.OldValue", entityPM.Tenant, showLocals) + entityPOCO.InterestCreditLimit.ToString() + TranslateTextsClass.Translate("Accounting.General.O.NewValue", entityPM.Tenant, showLocals) + entityPM.InterestCreditLimit.ToString();
+                    EventTracer.CreateTraceEvent(new EventTracerArgs()
+                    {
+                        EntityId = entityPM.Id,
+                        Tenant = entityPM.Tenant,
+                        UserId = contact.Id,
+                        ObjectTableName = "GLAccount",
+                        IsAddedManually = false,
+                        EventTypeCode = "IRCH",
                         Notes = notes,
 
                     });

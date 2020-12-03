@@ -910,11 +910,34 @@ export class QuoteTemplateSettingPM {
     public set ShowVATPercentageContainers(newValue: boolean) { if (this.showVATPercentageContainers != newValue) { this.showVATPercentageContainers = newValue; this.MarkAsDirty("ShowVATPercentageContainers"); } }
        
 	 
+    private hidePageNumber: boolean;
+    public get HidePageNumber() { return this.hidePageNumber; }
+    public set HidePageNumber(newValue: boolean) { if (this.hidePageNumber != newValue) { this.hidePageNumber = newValue; this.MarkAsDirty("HidePageNumber"); } }
+       
+	 
+    private pageNumberingTextDesignId: string;
+    public get PageNumberingTextDesignId() { return this.pageNumberingTextDesignId; }
+    public set PageNumberingTextDesignId(newValue: string) { if (this.pageNumberingTextDesignId != newValue) { this.pageNumberingTextDesignId = newValue; this.MarkAsDirty("PageNumberingTextDesignId"); } }
+       
+	 
+    private showRegionalTAXPackages: boolean;
+    public get ShowRegionalTAXPackages() { return this.showRegionalTAXPackages; }
+    public set ShowRegionalTAXPackages(newValue: boolean) { if (this.showRegionalTAXPackages != newValue) { this.showRegionalTAXPackages = newValue; this.MarkAsDirty("ShowRegionalTAXPackages"); } }
+       
+	 
+    private showRegionalTAXContainers: boolean;
+    public get ShowRegionalTAXContainers() { return this.showRegionalTAXContainers; }
+    public set ShowRegionalTAXContainers(newValue: boolean) { if (this.showRegionalTAXContainers != newValue) { this.showRegionalTAXContainers = newValue; this.MarkAsDirty("ShowRegionalTAXContainers"); } }
+       
+	 
 
     public OldEntityPM: QuoteTemplateSettingPM;
 		
     public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
+       if(!this.DisableMarkAsDirty)
+       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -922,6 +945,7 @@ export class QuoteTemplateSettingPM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "QuoteTemplateSetting");
            
         }
+	 }
     }
     private MyClone: QuoteTemplateSettingPM;
 

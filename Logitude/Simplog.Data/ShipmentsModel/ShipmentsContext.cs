@@ -311,12 +311,16 @@ namespace Simplog.Data.ShipmentsModel
             modelBuilder.Configurations.Add(new OceanInsightsRequestsCountMap());
             modelBuilder.Configurations.Add(new OceanInsightsStatusesMap());
             modelBuilder.Configurations.Add(new LogitudeMessagesTransmissionLogMap());
+
             modelBuilder.Configurations.Add(new OtherParticipantIdMap());
             modelBuilder.Configurations.Add(new ShipmentAdditionalCloudDataMap());
+
             modelBuilder.Configurations.Add(new FBLStockMap());
+
             modelBuilder.Configurations.Add(new CustomsTransmissionsStatusMap());
             modelBuilder.Configurations.Add(new OBLTypeMap());
             modelBuilder.Configurations.Add(new ShipmentCustomsMessageTypeMap());
+
             modelBuilder.Configurations.Add(new INTTRAStatusMap());
             modelBuilder.Configurations.Add(new INTTRABookingTransStatusMap());
             modelBuilder.Configurations.Add(new INTTRABookingStatusMap());

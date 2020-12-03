@@ -8,6 +8,7 @@ using Logitude.CRM.Data.EntityPOCOs;
 using Logitude.CRM.Data.Repsitories;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.Counters;
+using Logitude.Server.Tools.EntityChanges;
 using Logitude.Server.Tools.Helpers;
 using Logitude.Server.Tools.QueueService;
 using Simplog.Data.CommonDataModel;
@@ -121,9 +122,9 @@ namespace Logitude.CRM.BL.EntityUpdateServices
                     this.CheckOwnerFeature(entityPM.Tenant, entityPM.OwnerId, entityPM.OwnerName);
                 }
 
-                EntityChangeHelper entityChangeHelper = new EntityChangeHelper();
-                entityChangeHelper.AddEntityChange(entityPM, this.OldEntityPM, "OnCreate", "", "Ticket");
-
+      
+                var mainEntityChangeService = new MainEntityChangeService(new EntityChangeArgs() { EntityPM = entityPM, ProcessType = "OnCreate", ObjectTableName = "Ticket", EntityId = entityPM.Id, Tenant = entityPM.Tenant, StartDate = DateTime.Now });
+                mainEntityChangeService.AddEntityChange();
 
                 this.SetTimeIssues(entityPM, null);
                 TicketEscalationAnalyzer ticketEscalationAnalyzer = new TicketEscalationAnalyzer(entityPM, true);
@@ -221,9 +222,9 @@ namespace Logitude.CRM.BL.EntityUpdateServices
                 bool IsChangeSLAViaAutomation = false;
                 if (!entityPM.IsUpdateByAutomation)
                 {
-                    EntityChangeHelper entityChangeHelper = new EntityChangeHelper();
-                    entityChangeHelper.AddEntityChange(entityPM, this.OldEntityPM, "OnUpdate", this.EntityChangeFieldXml, "Ticket");
-                    IsChangeSLAViaAutomation = entityChangeHelper.IsChangeSLA;
+                     var mainEntityChangeService = new MainEntityChangeService(new EntityChangeArgs() { EntityPM = entityPM, OldEntityPM = this.OldEntityPM, ProcessType = "OnUpdate", EntityChangeFieldXml = this.EntityChangeFieldXml, ObjectTableName = "Ticket", EntityId = entityPM.Id, Tenant = entityPM.Tenant });
+                     mainEntityChangeService.AddEntityChange();
+                     IsChangeSLAViaAutomation = mainEntityChangeService.IsChangeSLA;
 
                 }
 

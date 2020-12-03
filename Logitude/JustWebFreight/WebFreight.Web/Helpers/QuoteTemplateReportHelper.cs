@@ -223,10 +223,22 @@ namespace Logitude.BL.Helpers
                 pdfConverter.PdfFooterOptions.AddElement(footerHtml);
                 pdfConverter.PdfFooterOptions.FooterHeight = (heightFooter + 10);
 
-
-                TextElement footerTextElement = new TextElement(0, heightFooter, "page &p; of &P;  ", new Font(new System.Drawing.FontFamily("Times New Roman"), 7, GraphicsUnit.Point));
-                footerTextElement.TextAlign = HorizontalTextAlign.Right;
-                pdfConverter.PdfFooterOptions.AddElement(footerTextElement);
+                if (!setting.HidePageNumber)
+                {
+                    QuoteTemplateTextDesignPM quotetemplateTextDesignPMPageNumbering = quoteTemplateTextDesignsList.Where(t => t.Id == setting.PageNumberingTextDesignId).FirstOrDefault();
+                    TextElement footerTextElement = null;
+                    if (quotetemplateTextDesignPMPageNumbering != null)
+                    {
+                        footerTextElement = GetTextElementProperitiesForQuotetemplateTextDesign(quotetemplateTextDesignPMPageNumbering, heightFooter);
+                        pdfConverter.PdfFooterOptions.FooterHeight += Convert.ToSingle(quotetemplateTextDesignPMPageNumbering.FontSize) - 7;
+                    }
+                    else 
+                    {
+                        footerTextElement = new TextElement(0, heightFooter, "page &p; of &P;  ", new Font(new System.Drawing.FontFamily("Times New Roman"), 7, GraphicsUnit.Point));
+                        footerTextElement.TextAlign = HorizontalTextAlign.Right;
+                    }
+                    pdfConverter.PdfFooterOptions.AddElement(footerTextElement);
+                }
 
 
             }
@@ -276,6 +288,27 @@ namespace Logitude.BL.Helpers
             return pdfData;
         }
 
+
+        private TextElement GetTextElementProperitiesForQuotetemplateTextDesign(QuoteTemplateTextDesignPM quotetemplateTextDesignPMPageNumbering, float heightFooter)
+        {
+            FontFamily family = new FontFamily(quotetemplateTextDesignPMPageNumbering.FontFamily);
+            bool isBold = quotetemplateTextDesignPMPageNumbering.FontWeight.ToLower() == "bold";
+            bool isItalic = quotetemplateTextDesignPMPageNumbering.Italic;
+            bool isUnderline = quotetemplateTextDesignPMPageNumbering.UnDerLine;
+            Color backGroundColor = System.Drawing.ColorTranslator.FromHtml(quotetemplateTextDesignPMPageNumbering.BackgroundColor);
+            Color ForeColor = System.Drawing.ColorTranslator.FromHtml(quotetemplateTextDesignPMPageNumbering.TextColor);
+            HorizontalTextAlign textAlign = quotetemplateTextDesignPMPageNumbering.Alignment.ToLower() == "right" ? HorizontalTextAlign.Right : quotetemplateTextDesignPMPageNumbering.Alignment.ToLower() == "left" ? HorizontalTextAlign.Left : HorizontalTextAlign.Center;
+            float size = Convert.ToSingle(quotetemplateTextDesignPMPageNumbering.FontSize);
+            
+            Font font = new Font(family, size, (isBold ? FontStyle.Bold : FontStyle.Regular) | (isItalic ? FontStyle.Italic : FontStyle.Regular) | (isUnderline ? FontStyle.Underline : FontStyle.Regular), GraphicsUnit.Point);
+
+            TextElement footerTextElement = new TextElement(0, heightFooter, "page &p; of &P;  ", font);
+            footerTextElement.TextAlign = textAlign;
+            footerTextElement.BackColor = backGroundColor;
+            footerTextElement.ForeColor = ForeColor;
+
+            return footerTextElement;
+        }
         private  void SetPdfMargins(QuoteTemplateSettingPM setting, PdfDocumentOptions PdfDocumentOptions)
         {
             if (setting != null)
@@ -2654,6 +2687,11 @@ namespace Logitude.BL.Helpers
                     AppendHeaderColumn("SALEMINMAXPACKAGES", HtmlTemplate, setting, quotetemplateTextDesignPMHeader, quoteTemplateTableDesignPM, pricingSectionType, textcodes);
                 }
 
+                if (setting.ShowRegionalTAXPackages)
+                {
+                    AppendHeaderColumn("ISREGIONALTAXPACKAGES", HtmlTemplate, setting, quotetemplateTextDesignPMHeader, quoteTemplateTableDesignPM, pricingSectionType, textcodes);
+                }
+
                 if (quotePM.IsChargesByVAT)
                 {
                     if (setting.ShowVATTypePackages)
@@ -2766,6 +2804,12 @@ namespace Logitude.BL.Helpers
                 {
                     AppendHeaderColumn("SALEMINMAXCONTAINERS", HtmlTemplate, setting, quotetemplateTextDesignPMHeader, quoteTemplateTableDesignPM, pricingSectionType, textcodes);
                 }
+
+                if (setting.ShowRegionalTAXContainers)
+                {
+                    AppendHeaderColumn("ISREGIONALTAXCONTAINERS", HtmlTemplate, setting, quotetemplateTextDesignPMHeader, quoteTemplateTableDesignPM, pricingSectionType, textcodes);
+                }
+
                 if (quotePM.IsChargesByVAT)
                 {
                     if (setting.ShowVATTypeContainers)
@@ -2917,6 +2961,7 @@ namespace Logitude.BL.Helpers
                 if (setting.ShowChargeDescriptionPackages) ++TdCount;
                 if (setting.ShowChargeNotePackages) ++TdCount;
                 if (setting.ShowSaleMaxMinAmountPackages) ++TdCount;
+                if (setting.ShowRegionalTAXPackages) ++TdCount;
                 if (quotePM.IsChargesByVAT)
                 {
                     if (setting.ShowVATTypePackages) ++TdCount;
@@ -2956,6 +3001,7 @@ namespace Logitude.BL.Helpers
                 if (setting.ShowChargeDescriptionContainers) ++TdCount;
                 if (setting.ShowChargeNoteContainers) ++TdCount;
                 if (setting.ShowSaleMaxMinAmountContainers) ++TdCount;
+                if (setting.ShowRegionalTAXContainers) ++TdCount;
 
                 if (quotePM.IsChargesByVAT)
                 {
@@ -3260,6 +3306,12 @@ namespace Logitude.BL.Helpers
                         HtmlTemplate.Append(AddTableRows(new PricingTableRowDetailsArgs() { Value = text, RowDataType = "Field", QuoteTemplateSettingPM = setting, HeaderDesign = quoteTemplateTextDesignLines, TableDesign = quotetemplatetableDesignPM, PricingSectionType = pricingSectionType }));
 
                     }
+                    if (setting.ShowRegionalTAXPackages)
+                    {
+                        string isRegionalTax = chargePM.IsRegionalTax ? "Yes" : "No";
+                        HtmlTemplate.Append(AddTableRows(new PricingTableRowDetailsArgs() { Value = isRegionalTax, RowDataType = "Field", QuoteTemplateSettingPM = setting, HeaderDesign = quoteTemplateTextDesignLines, TableDesign = quotetemplatetableDesignPM, PricingSectionType = pricingSectionType }));
+
+                    }
 
                     if (quotePM.IsChargesByVAT)
                     {
@@ -3487,6 +3539,12 @@ namespace Logitude.BL.Helpers
                     {
                         string saleMaxMinAmount = included ? translateInclueLable : GetSaleMaxMinAmountValue(chargePM);
                         HtmlTemplate.Append(AddTableRows(new PricingTableRowDetailsArgs() { Value = saleMaxMinAmount, RowDataType = "Field", QuoteTemplateSettingPM = setting, HeaderDesign = quoteTemplateTextDesignLines, TableDesign = quotetemplatetableDesignPM, PricingSectionType = pricingSectionType }));
+                    }
+
+                    if (setting.ShowRegionalTAXContainers)
+                    {
+                        string isRegionalTax = chargePM.IsRegionalTax ? "Yes" : "No";
+                        HtmlTemplate.Append(AddTableRows(new PricingTableRowDetailsArgs() { Value = isRegionalTax, RowDataType = "Field", QuoteTemplateSettingPM = setting, HeaderDesign = quoteTemplateTextDesignLines, TableDesign = quotetemplatetableDesignPM, PricingSectionType = pricingSectionType }));
                     }
 
                     if (quotePM.IsChargesByVAT)

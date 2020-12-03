@@ -1002,7 +1002,99 @@ namespace Logitude.Customs.Def.EntityPMs
               }
              set {  deletedClaimsRelatedEntitiesRefunds = value; }
 	    }
-	     }
+	  	  private string continuousRequestTypeCode ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ContinuousRequestTypeCode  
+	   {
+	    
+	     get
+		{
+		   return continuousRequestTypeCode;
+		 }
+		 set
+		 {
+		   if(continuousRequestTypeCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ContinuousRequestTypeCode",OldValue=continuousRequestTypeCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   continuousRequestTypeCode=value;
+		   }
+			
+		 }
+	   }
+	  private string continuousRequestTypeName ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ContinuousRequestTypeName  
+	   {
+	    
+	     get
+		{
+		   return continuousRequestTypeName;
+		 }
+		 set
+		 {
+		   if(continuousRequestTypeName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ContinuousRequestTypeName",OldValue=continuousRequestTypeName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   continuousRequestTypeName=value;
+		   }
+			
+		 }
+	   }
+	  private string explanation ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string Explanation  
+	   {
+	    
+	     get
+		{
+		   return explanation;
+		 }
+		 set
+		 {
+		   if(explanation != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Explanation",OldValue=explanation,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   explanation=value;
+		   }
+			
+		 }
+	   }
+	  private string note ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string Note  
+	   {
+	    
+	     get
+		{
+		   return note;
+		 }
+		 set
+		 {
+		   if(note != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Note",OldValue=note,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   note=value;
+		   }
+			
+		 }
+	   }
+   }
    
 }
 	 

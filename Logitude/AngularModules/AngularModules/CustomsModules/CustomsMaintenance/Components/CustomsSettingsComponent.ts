@@ -4,7 +4,7 @@ import { BaseComponent } from       '../../../Infrastructure/Components/Logitude
 import { TextCodeTranslator } from  '../../../Infrastructure/Utilities/TextCodeTranslator';
 import { EntityResourceService } from '../../../Infrastructure/Services/EntityResourceService';
 import { FeatureLocator } from '../../../Infrastructure/Utilities/FeatureLocator';
-import { AppTool } from '../../../Infrastructure/Tools';
+import { AppTool, DateTool } from '../../../Infrastructure/Tools';
 import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator';
 import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
 import { ListComponentArgs } from '../../../Infrastructure/Args';
@@ -24,6 +24,8 @@ import { CustomsSettingList } from '../../../Customs/EntityLists/CustomsSettingL
 //C: \LW\Customs\AngularModules\AngularModules\Customs\Services\StandardPMs\CustomsSettingPMService.ts
 import { CustomsSettingPMService } from '../../../Customs/Services/StandardPMs/CustomsSettingPMService';
 import { CustomsSettingListService } from '../../../Customs/Services/StandardLists/CustomsSettingListService';
+import { CodeNameClass } from '../../../Infrastructure/DataContracts/CodeNameClass';
+import { CustomsSettingExtendedListService } from '../../../Customs/Services/ExtendedLists/CustomsSettingExtendedListService';
 
 
 @Component({
@@ -38,6 +40,7 @@ import { CustomsSettingListService } from '../../../Customs/Services/StandardLis
 export class CustomsSettingsComponent
     extends BaseComponent
     implements OnInit {
+    
 
     public DataContext: CustomsSettingsComponent = this;
     public ObjectTableName: string = "Customs.CustomsSetting";
@@ -48,19 +51,31 @@ export class CustomsSettingsComponent
     private _CustomsSettingPMService: CustomsSettingPMService = new CustomsSettingPMService();
     private _CustomsSettingListService: CustomsSettingListService = new CustomsSettingListService();
     private _entityResourceService: EntityResourceService = new EntityResourceService();
+    public customsSettingExtendedListService: CustomsSettingExtendedListService = new CustomsSettingExtendedListService();
     ///public ComponentRef: ComponentRef<CustomsSettingsComponent>;
 
     _TenantCustomsSettingList: CustomsSettingList;
     entityPM: CustomsSettingPM;
 
     ValidationErrorsList: string[] = [];
+    interval: any;
 
-    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
     }
     Loaded: boolean = false;
+    public CompanyTypeList: CodeNameClass[];
     ngOnInit() {
+        //ערכים C - דיפולטיבי (בסקריפט), או B == בלדרות - אסור ריק יאותחל עם הפצה ראשונה + DEFAULT == C
+
+        this.CompanyTypeList = [];
+        this.UIProperties.SetEnabled("LastRunningDCAWS", this.ObjectTableName, false);
+        this.UIProperties.SetEnabled("LastNumOfMessagesDCAWS", this.ObjectTableName, false);
+
+        this.CompanyTypeList.push(new CodeNameClass("C", "עמילות"));
+        this.CompanyTypeList.push(new CodeNameClass("B", "בלדרות"));
+        this._SelectedCompanyType= this.CompanyTypeList[0];
+
         this._entityResourceService.getEntityResourceByTableName(this.ObjectTableName).subscribe((response:any) => {
 
             var filters = new ApiQueryFilters(true);
@@ -74,12 +89,24 @@ export class CustomsSettingsComponent
 
                             if (!AppTool.IsNullOrEmpty(listCustomsSetting)) {
                                 this._TenantCustomsSettingList = listCustomsSetting[0];
-
+                                this.SelectedCompanyType = this.CompanyTypeList.filter(r => r.Code == this._TenantCustomsSettingList.CompanyType)[0];
                                 this._CustomsSettingPMService.get(this._TenantCustomsSettingList.Id)
                                     .subscribe((myResponse: ServiceResponse) => {
                                         this.entityPM = myResponse.Result;
+                                        if (AppTool.IsNullOrEmpty(this.entityPM.QtyFeedbackInPendingMessage)) this.entityPM.QtyFeedbackInPendingMessage = 100;
                                         this.Loaded = true;
+                                    
+                                        this.LastRunningDCAWS = this.entityPM.LastRunningDCAWS.toString();
 
+                                        this.interval = setInterval(() => {
+               
+                                            this._CustomsSettingPMService.get(this._TenantCustomsSettingList.Id).subscribe((response: ServiceResponse) => {
+
+                                                this.LastRunningDCAWS = response.Result.LastRunningDCAWS;
+                                                this.LastNumOfMessagesDCAWS = response.Result.LastNumOfMessagesDCAWS;
+
+                                            });
+                                        }, 30000);
                                         this.ValidScreen()
                                     });
 
@@ -94,6 +121,7 @@ export class CustomsSettingsComponent
         });
 
     }
+   
 
     ValidScreen() {
         if (!this.IsConnectedToUniFreight) {
@@ -109,6 +137,14 @@ export class CustomsSettingsComponent
 
     //IsUnifreightCertificateActivatedEnabled: boolean = true;
 
+    _SelectedCompanyType: CodeNameClass;
+    get SelectedCompanyType() { return this._SelectedCompanyType; }
+    set SelectedCompanyType(val) {
+        this._SelectedCompanyType = val;
+        if (this._SelectedCompanyType != null && this.entityPM !=null) {
+            this.entityPM.CompanyType = this._SelectedCompanyType.Code;
+        }
+    }
 
     get UnifreightCertificateActivated() { return this.entityPM != null ? this.entityPM.UnifreightCertificateActivated : false; }
     set UnifreightCertificateActivated(value: boolean) { this.entityPM.UnifreightCertificateActivated = value; }
@@ -121,6 +157,16 @@ export class CustomsSettingsComponent
 
     get PaymentOrderAccCard() { return this.entityPM != null ? this.entityPM.PaymentOrderAccCard : null; }
     set PaymentOrderAccCard(value: string) { this.entityPM.PaymentOrderAccCard = value; }
+
+    get QtyFeedbackInPendingMessage() { return this.entityPM != null ? this.entityPM.QtyFeedbackInPendingMessage : null; }
+    set QtyFeedbackInPendingMessage(value: number) {this.entityPM.QtyFeedbackInPendingMessage = value }
+        
+    //get TotalInvoiceAmountInUSD() { return this.entityPM != null ? this.entityPM.TotalInvoiceAmountInUSD: null; }
+    //set TotalInvoiceAmountInUSD(value: number) { this.entityPM.TotalInvoiceAmountInUSD = value }
+
+
+    get IsMessagesPending() { return this.entityPM != null ? this.entityPM.IsMessagesPending : null; }
+    set IsMessagesPending(value: boolean) { this.entityPM.IsMessagesPending = value; }
 
 
 
@@ -203,15 +249,37 @@ export class CustomsSettingsComponent
     get UnfConnectionString() { return this.entityPM != null ? this.entityPM.UnfConnectionString : null; }
     set UnfConnectionString(value) { this.entityPM.UnfConnectionString = value; }
 
+    get LastNumOfMessagesDCAWS() { return this.entityPM != null ? this.entityPM.LastNumOfMessagesDCAWS : null; }
+    set LastNumOfMessagesDCAWS(value) { this.entityPM.LastNumOfMessagesDCAWS = value; }
 
 
+    _LastRunningDCAWS: Date;
+    get LastRunningDCAWS() {
+       // if (this.entityPM != null) {
+          //  if (this.entityPM.LastRunningDCAWS != null) {
+        if (this._LastRunningDCAWS != null) {
+            var myFormats = DateTool.GetDateFormats(this._LastRunningDCAWS);
+                return myFormats.DateString + " " + myFormats.ShortTimeString;
+
+        }
+        //    }
+      //  }
+       return null;
+
+
+       //return this.entityPM != null ? this.entityPM.LastRunningDCAWS : null;
+    }
+    set LastRunningDCAWS(value: any) { this._LastRunningDCAWS =  value ; }
+
+
+    
 
     
     //#endregion
 
 
     CancelButtonClicked() {
-        this.CurrentSession.CloseCurrentWindow();
+        SessionLocator.SelectedSession.CloseCurrentWindow();
     }
     
     OkButtonClicked() {
@@ -220,6 +288,8 @@ export class CustomsSettingsComponent
             console.error("New Setting Record !!!!!?!?!?!?")
             return;
         }
+        if (AppTool.IsNullOrEmpty(this.entityPM.QtyFeedbackInPendingMessage)) this.entityPM.QtyFeedbackInPendingMessage = 100;
+
         //let msg = TextCodeTranslator.Translate("General.M.FieldIsRequired");
         //List < ValidationResult > errors = new List<ValidationResult>();
         //Validator.TryValidateObject(entityPM, new ValidationContext(entityPM, null, null), errors);

@@ -60,7 +60,7 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.RecipientType).HasColumnName("RecipientType");
             this.Property(t => t.RecipientValue).HasColumnName("RecipientValue");
             this.Property(t => t.PartnerObjectFieldCode).HasColumnName("PartnerObjectFieldCode");
-
+            this.Property(t => t.IsNotifyBack).HasColumnName("IsNotifyBack");
 
 
 

@@ -1,4 +1,4 @@
-﻿import {UIProperties, UIProperty} from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
+import {UIProperties, UIProperty} from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
 import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
 
 export class APTransferLinePM {
@@ -57,10 +57,13 @@ export class APTransferLinePM {
     public OldEntityPM: APTransferLinePM;
 
     public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty() {
-        this.IsDirty = true;
-        if (this.EntityParentPM) {
-            this.EntityParentPM.MarkAsDirty();
+        if (!this.DisableMarkAsDirty) {
+            this.IsDirty = true;
+            if (this.EntityParentPM) {
+                this.EntityParentPM.MarkAsDirty();
+            }
         }
     }
 

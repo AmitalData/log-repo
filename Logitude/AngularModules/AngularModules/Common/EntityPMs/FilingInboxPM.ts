@@ -111,7 +111,10 @@ export class FilingInboxPM {
     public OldEntityPM: FilingInboxPM;
 		
     public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
+       if(!this.DisableMarkAsDirty)
+       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -119,6 +122,7 @@ export class FilingInboxPM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "FilingInbox");
            
         }
+	 }
     }
     private MyClone: FilingInboxPM;
 

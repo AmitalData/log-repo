@@ -445,14 +445,17 @@ namespace Logitude.CustomsMessaging.RequestServices
                     claimRequest.CustomerIdentification.externalIDSpecified = true;
                 }
             }
-            claimRequest.CustomerIdentification.passportCountry = _ClaimPM.PassportCountryTypeCode;
-            claimRequest.CustomerIdentification.passportNumber = _ClaimPM.PassportNumber;
-            if (!string.IsNullOrWhiteSpace(_ClaimPM.PassportTypeCode))
+            else
             {
-                int passportType;
-                int.TryParse(_ClaimPM.PassportTypeCode, out passportType);
-                claimRequest.CustomerIdentification.passportType = passportType;
-                claimRequest.CustomerIdentification.passportTypeSpecified = true;
+                claimRequest.CustomerIdentification.passportCountry = _ClaimPM.PassportCountryTypeCode;
+                claimRequest.CustomerIdentification.passportNumber = _ClaimPM.PassportNumber;
+                if (!string.IsNullOrWhiteSpace(_ClaimPM.PassportTypeCode))
+                {
+                    int passportType;
+                    int.TryParse(_ClaimPM.PassportTypeCode, out passportType);
+                    claimRequest.CustomerIdentification.passportType = passportType;
+                    claimRequest.CustomerIdentification.passportTypeSpecified = true;
+                }
             }
 
             return claimRequest;

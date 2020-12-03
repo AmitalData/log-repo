@@ -200,11 +200,19 @@ export class DWObjectFieldPM {
     public set RecordType(newValue: string) { if (this.recordType != newValue) { this.recordType = newValue; this.MarkAsDirty("RecordType"); } }
        
 	 
+    private factTableCode: string;
+    public get FactTableCode() { return this.factTableCode; }
+    public set FactTableCode(newValue: string) { if (this.factTableCode != newValue) { this.factTableCode = newValue; this.MarkAsDirty("FactTableCode"); } }
+       
+	 
 
     public OldEntityPM: DWObjectFieldPM;
 		
     public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
+       if(!this.DisableMarkAsDirty)
+       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -212,6 +220,7 @@ export class DWObjectFieldPM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "DWObjectField");
            
         }
+	 }
     }
     private MyClone: DWObjectFieldPM;
 

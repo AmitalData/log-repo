@@ -133,8 +133,6 @@ namespace Logitude.CustomsMessaging.RequestServices
             return req;
         }
 
-
-
         private ConnectedEntity GetRelatedEntity()
         {
             var relatedEntity = new ConnectedEntity();
@@ -212,6 +210,11 @@ namespace Logitude.CustomsMessaging.RequestServices
                         relatedEntity.entityIdKey1 = myCustomsCollateralPM.CollateralRequestNumber;
                     }
                 }
+                else if (customsDocumentPointerPM.ParentEntityCode == "Vehicle")
+                {
+                    this.MyRequestSheetParam.ObjectTableId1 = ObjectTableRepository.GetObjectTableByName("Customs.Vehicle");
+                    this.MyRequestSheetParam.EntityId1 = customsDocumentPointerPM.ParentEntityId;
+                }
             }
 
             return relatedEntity;
@@ -235,6 +238,36 @@ namespace Logitude.CustomsMessaging.RequestServices
                         relatedEntity.entityIdKey1 = myCustomsCollateralPM.CollateralRequestNumber;
                     }
                 }
+                else if (customsDocumentPointerPM.ParentEntityCode == "Claim")
+                {
+                    var myClaimQueryService = new ClaimQueryService(_Context);
+                    var myClaimPM = myClaimQueryService.GetSingle(customsDocumentPointerPM.ParentEntityId, true, false);
+                    if (myClaimPM != null)
+                    {
+                        this.MyRequestSheetParam.ObjectTableId1 = ObjectTableRepository.GetObjectTableByName("Customs.Claim");
+                        this.MyRequestSheetParam.EntityId1 = myClaimPM.Id;
+                        if (customsDocumentPointerPM.Child1EntityCode == "ClaimsRelatedEntity" && customsDocumentPointerPM.Child1EntityId != null)
+                        {
+                            int child1EntityId = 0;
+                            int.TryParse(customsDocumentPointerPM.Child1EntityId, out child1EntityId);
+                            ClaimsRelatedEntityPM claimsRelatedEntityPM = myClaimPM.ClaimsRelatedEntities.FirstOrDefault(si => si.EntityCounterKey == child1EntityId);
+                            if (!string.IsNullOrEmpty(claimsRelatedEntityPM.TapagNumber))
+                            {
+                                relatedEntity.entityType = 1008;
+                                relatedEntity.entityIdKey1 = claimsRelatedEntityPM.TapagNumber;
+                                if (claimsRelatedEntityPM.Numeral != null)
+                                {
+                                    relatedEntity.entityIdKey2 = claimsRelatedEntityPM.Numeral.ToString();
+                                }
+                            }
+                        }
+                    }
+                }
+                else if (customsDocumentPointerPM.ParentEntityCode == "Vehicle")
+                {
+                    this.MyRequestSheetParam.ObjectTableId1 = ObjectTableRepository.GetObjectTableByName("Customs.Vehicle");
+                    this.MyRequestSheetParam.EntityId1 = customsDocumentPointerPM.ParentEntityId;
+                }
             }
 
             return relatedEntity;
@@ -257,7 +290,7 @@ namespace Logitude.CustomsMessaging.RequestServices
                 throw new BusinessErrorException("Unable to get Bolb Of " + _CustomsDocumentPM.DocumentsFilingId);
             }
 
-            if (!String.IsNullOrWhiteSpace(_CustomsDocumentPM.CustomsDocId) && _IsSendAnywayWithoutAttachment)
+            if (!String.IsNullOrWhiteSpace(_CustomsDocumentPM.CustomsDocId))
             {
 
                 var attachmentOnly = new Attachment();
@@ -322,6 +355,7 @@ namespace Logitude.CustomsMessaging.RequestServices
         }
         void ShrinkCustomRequest(D_NG_2715_MSG22002_AddAGlobalScannedAttachmentToEntity customRequest)
         {
+            if (customRequest.Attachment == null || customRequest.Attachment.IsAttachment == "false") return;
             var MD5Hash = MD5HashUtil.GetMD5Hash(customRequest.Attachment.content);
             customRequest.Attachment.content = System.Text.UTF8Encoding.UTF8.GetBytes(MD5Hash);
 

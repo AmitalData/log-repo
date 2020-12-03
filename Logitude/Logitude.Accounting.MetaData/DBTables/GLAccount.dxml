@@ -381,6 +381,14 @@
     <Constraints
       Nullable="false" />
   </Column>
+  <Column
+    Name="CreditAllotmentPercentage"
+    Type="decimal"
+    Precision="4"
+    Scale="2">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="AccountTypeCode"
     ReferencedTable="GLAccountTypes"

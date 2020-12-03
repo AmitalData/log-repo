@@ -33,6 +33,8 @@
         <xs:element minOccurs="0" maxOccurs="1" ref="SI_COUNTER" />
         <xs:element minOccurs="0" maxOccurs="1" ref="INCOTERM_ID" />
         <xs:element minOccurs="0" maxOccurs="unbounded" ref="INVOICEITEMS" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="ChangeInSupplierInvoice" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="QUE_TYPE" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -62,7 +64,14 @@
         <xs:element minOccurs="0" maxOccurs="1" ref="APPROV_TYPE_ID" />
         <xs:element minOccurs="0" maxOccurs="1" ref="CLASIFIEDREMARKS" />
         <xs:element minOccurs="0" maxOccurs="1" ref="UNIT_ID" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="TAXEXEMPTCODE" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="StatisticQuantity" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="StatisticQuantityType" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="OcrPageNumber" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="OcrTop" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="OcrHeight" />
         <xs:element minOccurs="0" maxOccurs="unbounded" ref="CERTIFICATES" />
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="EXPENSES" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -79,6 +88,12 @@
   <xs:element name="APPROV_TYPE_ID" type="xs:string" />
   <xs:element name="CLASIFIEDREMARKS" type="xs:string" />
   <xs:element name="UNIT_ID" type="xs:string" />
+  <xs:element name="TAXEXEMPTCODE" type="xs:string" />
+  <xs:element name="StatisticQuantity" type="xs:string" />
+  <xs:element name="StatisticQuantityType" type="xs:string" />
+  <xs:element name="OcrPageNumber" type="xs:string" />
+  <xs:element name="OcrTop" type="xs:string" />
+  <xs:element name="OcrHeight" type="xs:string" />
   <xs:element name="CERTIFICATES">
     <xs:complexType>
       <xs:sequence>
@@ -99,6 +114,20 @@
   <xs:element name="APPROV_TYPE" type="xs:string" />
   <xs:element name="ADD_REQUEST_NO" type="xs:string" />
   <xs:element name="REQUEST_NO" type="xs:string" />
+  <xs:element name="EXPENSES">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="1" ref="TypeCode" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="Amount" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="CurrencyTypeCode" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="TypeCode" type="xs:string" />
+  <xs:element name="Amount" type="xs:string" />
+  <xs:element name="CurrencyTypeCode" type="xs:string" />
+  <xs:element name="ChangeInSupplierInvoice" type="xs:string" />
+  <xs:element name="QUE_TYPE" type="xs:string" />
   <xs:element name="CustomsDocuments">
     <xs:complexType>
       <xs:sequence>
@@ -108,6 +137,7 @@
         <xs:element minOccurs="0" maxOccurs="1" ref="FromDeclartion" />
         <xs:element minOccurs="0" maxOccurs="1" ref="COM_ID" />
         <xs:element minOccurs="0" maxOccurs="1" ref="SerialNum" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="UNFINVOICEKEY" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -117,4 +147,5 @@
   <xs:element name="FromDeclartion" type="xs:string" />
   <xs:element name="COM_ID" type="xs:string" />
   <xs:element name="SerialNum" type="xs:string" />
+  <xs:element name="UNFINVOICEKEY" type="xs:string" />
 </xs:schema>

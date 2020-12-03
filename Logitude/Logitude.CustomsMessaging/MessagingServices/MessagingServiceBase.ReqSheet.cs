@@ -37,6 +37,8 @@ using Logitude.Server.Tools.Utils;
 using Logitude.Customs.Def.Messaging.Customs;
 using System.Linq;
 using System.Configuration;
+using Logitude.Customs.BL.EntityUpdateServices;
+using Logitude.CustomsMessaging.Testers.Messages;
 
 namespace Logitude.CustomsMessaging.MessagingServices
 {
@@ -347,7 +349,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
             TResponseData responseData = default(TResponseData);
             DCAServerUploadResponse dCAServerUploadResponse = null;
             DCAServerUploadStatus dCAServerUploadStatus = null;
-            LogMessagingUtil.Instance.Clear();
+            //LogMessagingUtil.Instance.Clear();
             Stopwatch totalStopwatch = null;
 
 
@@ -365,7 +367,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
 
                 var transitions = InitTransition();
 
-
+                
                 var CommandList = new List<CustomsRCmmand>()
                 {
                     new CustomsRCmmand(CustomsCommandEnum.CustomsCommandGetCustomRequestWR, (o) =>{ return CustomsCommandGetCustomRequest(out customsRequest);   }) ,
@@ -885,6 +887,11 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 //ResponseData = new TResponseData() { HasException = true, Succeeded = false, UserMessage = "Look at Request Sheet for more details !" }  
 
             };
+            if (this.MainInterfaceCode == "8302")// due delay in UROUTER !!
+            {
+                stepRequest.TimeOutInMin = 5;
+            }
+
             if (this.MainInterfaceCode == "9000")
             {
                 stepRequest.TimeOutInMin = 5;
@@ -895,6 +902,17 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 stepRequest.TimeOutInMin = 5;
                 //transactionScopeOption = TransactionScopeOption.Suppress;
             }
+            if (this.MainInterfaceCode == "2751")
+            {
+                stepRequest.TimeOutInMin = 5;
+                //transactionScopeOption = TransactionScopeOption.Suppress;
+            }
+            if (this.MainInterfaceCode == "2715")
+            {
+                stepRequest.TimeOutInMin = 5;
+                //transactionScopeOption = TransactionScopeOption.Suppress;
+            }
+
             if (this.MainInterfaceCode == "US2L01")
             {
                 stepRequest.TimeOutInMin = 9;
@@ -909,8 +927,9 @@ namespace Logitude.CustomsMessaging.MessagingServices
             object ContextObjectTag = null;
             bool toContinueNextCommand = DoStep(stepRequest, () =>
             {
-
+                LogMessagingUtilWR.Instance.AppendLine("AnalyzeCore:b4");
                 var res = AnalyzeCore(requestParams, customsResponse, false);
+                LogMessagingUtilWR.Instance.AppendLine("AnalyzeCore:after");
                 bool tryConcurrentKiller = true;//ConfigurationManager.AppSettings["20180718.ConcurrentKiller"] == "1";
                 if (tryConcurrentKiller)
                 {
@@ -922,7 +941,9 @@ namespace Logitude.CustomsMessaging.MessagingServices
             },
             () =>
             {
+                LogMessagingUtilWR.Instance.AppendLine("GetResponseDataAfterAnalyze:b4");
                 var res = GetResponseDataAfterAnalyze(requestParams, customsResponse);
+                LogMessagingUtilWR.Instance.AppendLine("GetResponseDataAfterAnalyze:after");
                 ContextObjectTag = res.ContextObjectTag;
                 return res;
             },
@@ -978,7 +999,11 @@ namespace Logitude.CustomsMessaging.MessagingServices
                     {
                         Thread.Sleep(TimeSpan.FromMinutes(2));
                     }
-                    if (_CustomsRequestsSheetService.InterfaceTenantDefinitionManagement.InterfaceManagement.SignatureBy != SignQueueByType.None || requestParams.ForcePersonalSign)
+
+                    if (!requestParams.AvoidSign  && requestParams.TestCase== null && ( _CustomsRequestsSheetService.InterfaceTenantDefinitionManagement.InterfaceManagement.SignatureBy != SignQueueByType.None || requestParams.ForcePersonalSign))
+
+                    //if (!requestParams.AvoidSign  && (_CustomsRequestsSheetService.InterfaceTenantDefinitionManagement.InterfaceManagement.SignatureBy != SignQueueByType.None || requestParams.ForcePersonalSign))
+
                     {
                         LogMessagingUtil.Instance.AppendLine("DoCallWSSigned...");
                         customsResponse = TaskCallWSSigned(requestParams, customsRequest, _CustomsRequestsSheetService.GetCustomsRequestSign());
@@ -1174,9 +1199,13 @@ namespace Logitude.CustomsMessaging.MessagingServices
             bool tryConcurrentKiller = true;//ConfigurationManager.AppSettings["20180718.ConcurrentKiller"] == "1";
             if (tryConcurrentKiller)
             {
-                if (CustomsRequestsSheetQueryService.GetintrefaceTypeListDisplayOnly().ToList().Contains(requestParams.InterfaceTypeCode))
+                if (!String.IsNullOrWhiteSpace(requestParams.LoggingObjectTableId) &&
+                          !String.IsNullOrWhiteSpace(requestParams.LoggingEntityId))
                 {
-                    CustomsRequestsSheetDomainModelUtil.ReleaseConcurrentVirtualKey(requestParams);
+                    //if (CustomsRequestsSheetQueryService.GetintrefaceTypeListDisplayOnly().ToList().Contains(requestParams.InterfaceTypeCode))
+                    {
+                        CustomsRequestsSheetDomainModelUtil.ReleaseConcurrentVirtualKey(requestParams);
+                    }
                 }
             }
             var stepRequest = new StepRequest()
@@ -1201,7 +1230,11 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 return res
                 ;
             },
-            null,null);
+            null, () =>
+            {
+                LogMessagingUtil.Instance.AppendLine("CustomsCommandGetCustomRequest.OnUpdateFail()");
+                _RequestService.OnRequestFail(requestParams);
+            });
             customsRequest = ContextObjectTag as TCustomsRequest;
             ;
             return toContinueNextCommand;
@@ -1224,7 +1257,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
             var customsRequestLength = memstream.Length;
             LogMessagingUtil.Instance.AppendLine("customsRequestLength  = " + customsRequestLength.ToString());
 
-            if (customsRequestLength > HugeFileSize)
+            if (customsRequestLength > (HugeFileSize * 1.2))
             {
                 this._HugeFile = true;
             }
@@ -1249,6 +1282,8 @@ namespace Logitude.CustomsMessaging.MessagingServices
         {
             get
             {
+                return CustomsDocumentUpdateService.HugeFileSizeSendToDCA;
+                
                 var my9mb = 9000000;
                 return my9mb;
             }
@@ -1459,7 +1494,7 @@ Exception:" + ee.Message
 
         private void CreateNewDcaRequestDue9MBcustomsRequestLength()
         {
-            throw new NotImplementedException();
+            ///throw new NotImplementedException();
         }
 
 
@@ -1497,6 +1532,81 @@ Exception:" + ee.Message
             return sb.ToString();
         }
 
+        public string CreateFakeDCA(GenericRequestParams requestParamsData)
+        {
+            string uniComm = null;
+            string fileName = null;
+            var transmitionDateTime = DateTime.Now;
+            string xmlESBResponseXmlClass = null;
+
+
+
+            TCustomsResponse customsResponse = GetFakeCustomsResponse(requestParamsData);
+
+            var body = XmlGenericUtil<TCustomsResponse>.SerializeObject(customsResponse);
+            //
+            body = body.Substring(body.IndexOf(Environment.NewLine));
+            var myESBResponseXmlClass = new ESBResponseXmlClass();
+            var extrenalId = "62833ff7-1cd3-4faa-85a6-a4312ae4797a";
+            extrenalId = uniComm ?? Guid.NewGuid().ToString();
+            xmlESBResponseXmlClass = myESBResponseXmlClass.Get(Guid.NewGuid().ToString(), extrenalId, body);
+            var transTime = "2016-04-19_13-35-13-481";
+
+            transTime = transmitionDateTime.ToString("s").Replace("T", "_").Replace(":", "-");
+            transTime += "-";
+            transTime += transmitionDateTime.Millisecond.ToString();
+
+            fileName = "DcaPrefixName.IL941079089FAKEFAKEFAKE." + transTime + "." + extrenalId + ".PLT.xml";
+
+            var ourRef = "";
+            using (var trans = TransactionFactory.GetNewTransaction())
+            {
+                try
+                {
+
+
+                    String theInterfaceCode = requestParamsData.InterfaceTypeCode ?? this.MainInterfaceCode;
+                    var InterfaceManagementQS = new InterfaceManagementQueryService(requestParamsData.Tenant);
+                    var InterfaceManagementPM = InterfaceManagementQS.GetSingleInterfaceManagementwithDefinition(
+                        theInterfaceCode /*this.MainInterfaceCode*/, requestParamsData.Tenant);
+                    fileName = fileName.Replace("DcaPrefixName.", InterfaceManagementPM.DcaPrefixName);
+                    ourRef = this.DcaReceivedCustomResponseCorrelation(InterfaceManagementPM, requestParamsData.Tenant, new Customs.BL.Utils.DCAFileModel()
+                    {
+                        SelectedFileDownload = fileName,
+                        TimStamp = transmitionDateTime
+
+                    }, xmlESBResponseXmlClass);
+
+
+
+                    trans.Complete();
+                    return "המסר נבנה בהצלחה וישלח בתהליך רקע";
+                }
+                catch (CustomsRequestsSheetDomainModelServiceException myCustomsRequestsSheetServiceException)
+                {
+                    if (myCustomsRequestsSheetServiceException.Where == CustomsRequestsSheetDomainModelServiceException.WhereEnum.SameRequestInProgress)
+                    {
+                        Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.AppendLine(" UCB1170 SameRequestInProgress!! " + myCustomsRequestsSheetServiceException.Message);
+
+
+                    }
+                    else if (myCustomsRequestsSheetServiceException.Where == CustomsRequestsSheetDomainModelServiceException.WhereEnum.NoAvailableSignServer)
+                    {
+                        Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.AppendLine("UCB1170 SameRequestInProgress!!  " + myCustomsRequestsSheetServiceException.Message);
+                    }
+                    return "קיים מסר זהה בתהליך";
+                    //throw;
+                }
+            }
+
+        }
+        
+        virtual protected TCustomsResponse GetFakeCustomsResponse(GenericRequestParams requestParamsData)
+        {
+            
+            throw new NotImplementedException("TCustomsResponse GetFakeCustomsResponse(GenericRequestParams requestParamsData):" + this.GetType().FullName);
+        }
+
         public string DcaReceivedCustomResponseCorrelation(
             Logitude.Customs.Def.EntityPMs.InterfaceManagementPM currentDCAInInterfaceManagementPM, int tenant,
             //string selectedFile
@@ -1505,6 +1615,7 @@ Exception:" + ee.Message
         {
             string customsRequestsSheetPMId = "";
             CommStatusEnum stepStatusEnum = CommStatusEnum.W;
+            TRequestParams defaultRequestParamsFromCustomsResponse = null;
             try
             {
                 int tenantSave = tenant;
@@ -1533,7 +1644,7 @@ Exception:" + ee.Message
                 dcaReceivedService.ProccessIt();
                 _CorrelationId = dcaReceivedService.CorrelationId;
                 var customsResponse = dcaReceivedService.CustomsResponse ?? new TCustomsResponse();
-                TRequestParams defaultRequestParamsFromCustomsResponse = null;
+                
                 var CreateDefaultRequestParamsFromCustomsResponseFailed = true;
                 try
                 {
@@ -1803,10 +1914,21 @@ Exception:" + ee.Message
                 bool tryConcurrentKiller = true;//ConfigurationManager.AppSettings["20180718.ConcurrentKiller"] == "1";
                 if (tryConcurrentKiller)
                 {
-                    var requestParams = _CustomsRequestsSheetService.GetRequestParams<TRequestParams>();
-                    if (CustomsRequestsSheetQueryService.GetintrefaceTypeListDisplayOnly().ToList().Contains(requestParams.InterfaceTypeCode))
+                    var requestParams = _CustomsRequestsSheetService.GetRequestParams<TRequestParams>()?? defaultRequestParamsFromCustomsResponse;
+                    if (requestParams != null)
                     {
-                        CustomsRequestsSheetDomainModelUtil.ReleaseConcurrentVirtualKey(requestParams,false);
+                        //throw new Exception("tryConcurrentKiller()--(requestParams==null)");
+
+                        var intrefaceTypeListDisplayOnly = CustomsRequestsSheetQueryService.GetintrefaceTypeListDisplayOnly().ToList();
+                        if (intrefaceTypeListDisplayOnly == null)
+                        {
+                            throw new Exception("tryConcurrentKiller()--(intrefaceTypeListDisplayOnly==null)");
+                        }
+                        if (intrefaceTypeListDisplayOnly/*CustomsRequestsSheetQueryService.GetintrefaceTypeListDisplayOnly().ToList()*/.Contains(requestParams.InterfaceTypeCode))
+                        {
+
+                            CustomsRequestsSheetDomainModelUtil.ReleaseConcurrentVirtualKey(requestParams, false);
+                        }
                     }
                 }
                 if (stepStatusEnum == CommStatusEnum.F)

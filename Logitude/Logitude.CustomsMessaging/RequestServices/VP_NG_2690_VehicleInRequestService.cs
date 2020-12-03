@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UnifreightIIG.Common.VehicleInServiceReference;
+using Logitude.Customs.Data.Repsitories;
 
 namespace Logitude.CustomsMessaging.RequestServices
 {
@@ -16,12 +17,13 @@ namespace Logitude.CustomsMessaging.RequestServices
         <VP_NG_2690_MSG100_VehicleIn, UpdateDeleteVehicleRequestParams>
     {
         public VehiclePM _MyVehicle { get; set; }
+        private ICustomContext _CustomContext { get; set; }
 
         public override VP_NG_2690_MSG100_VehicleIn GetRequest(UpdateDeleteVehicleRequestParams requestParams)
         {
             //Build request 2690- Send Vehicle Details
-            ICustomContext customContext = CustomContext.GetContext(requestParams.Tenant);
-            var myVehicleQueryService = new VehicleQueryService(customContext);
+            _CustomContext = CustomContext.GetContext(requestParams.Tenant);
+            var myVehicleQueryService = new VehicleQueryService(_CustomContext);
             string description = null;
 
             var myVP_NG_2690_MSG100_VehicleIn = new VP_NG_2690_MSG100_VehicleIn();
@@ -67,8 +69,7 @@ namespace Logitude.CustomsMessaging.RequestServices
 
         private VP_MSG100_VehicleInVehicleDetails GetVehicleDetails()
         {
-            var myDbContext = CustomContext.GetContext(this._MyVehicle.Tenant);
-            var clientQueryService = new ClientQueryService(myDbContext);
+            var clientQueryService = new ClientQueryService(_CustomContext);
 
             VP_MSG100_VehicleInVehicleDetails vehicleDetails = new VP_MSG100_VehicleInVehicleDetails();
             if (!string.IsNullOrWhiteSpace(_MyVehicle.RichbitFileNumber))
@@ -154,7 +155,7 @@ namespace Logitude.CustomsMessaging.RequestServices
             //vehicleDetails.richbitOpenDate // not exist in DB
             //vehicleDetails.richbitOpenDateSpecified
 
-            CustomsCountryQueryService customsCountryQueryService = new CustomsCountryQueryService(myDbContext);
+            CustomsCountryQueryService customsCountryQueryService = new CustomsCountryQueryService(_CustomContext);
             CustomsCountryPM customsCountryPM = customsCountryQueryService.GetSingle(_MyVehicle.ManufactureCountryCode, false, true);
             if (customsCountryPM != null)
             {
@@ -313,8 +314,31 @@ namespace Logitude.CustomsMessaging.RequestServices
                 vehicleDetails.VehicleOwner = vehicleOwnerList.ToArray();
             }
 
+            //Get Connected Documents
+            vehicleDetails.ExternalAttachmentID = GetVehicleAttachment();
+
             return vehicleDetails;
         }
 
+        private string[] GetVehicleAttachment()
+        {
+            var vehicleAttachmentList = new List<string>();
+            var customsDocumentQueryService = new CustomsDocumentQueryService(_CustomContext);
+
+            //Get Vehicle Attachments
+            var customsDocumentPMList = customsDocumentQueryService.GetCustomsDocumentPMListWithoutRequestedDoc(new GetTicketsParams() { ParentEntityId = this._MyVehicle.Id, ParentEntityCode = "Vehicle" }, this._MyVehicle.Tenant);
+            int counter = 1;
+            foreach (CustomsDocumentPM customsDocumentPM in customsDocumentPMList)
+            {
+                if (counter > 5) break;
+                if (!string.IsNullOrWhiteSpace(customsDocumentPM.CustomsDocId))
+                {
+                    vehicleAttachmentList.Add(customsDocumentPM.ExternalAttachmentId);
+                }
+                counter++;
+            }
+
+            return vehicleAttachmentList.ToArray();
+        }
     }
 }

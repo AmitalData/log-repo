@@ -5,4 +5,5 @@
       delete from CustomsInterfaces where code = 'CMN'
     ]]>
   </Sql>
+  <Oracle Version="1"></Oracle>
 </Script>

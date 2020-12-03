@@ -695,17 +695,20 @@ export class ShipmentPackagePM {
     public UniqueKey: string;
 
     public IsDirty: boolean;
-    MarkAsDirty(propertyName:string = null) {
-        this.IsDirty = true;
+    public DisableMarkAsDirty: boolean = false;
+    MarkAsDirty(propertyName: string = null) {
+        if (!this.DisableMarkAsDirty) {
+            this.IsDirty = true;
 
-        if (this.EntityParentPM) {
-            this.EntityParentPM.MarkAsDirty();
-        }	
+            if (this.EntityParentPM) {
+                this.EntityParentPM.MarkAsDirty();
+            }
 
-        if (propertyName != null) {
-            this.PropertyChanged.emit(new PropertyChangedArgs(propertyName,this));
-            ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "ShipmentPackage");
-           
+            if (propertyName != null) {
+                this.PropertyChanged.emit(new PropertyChangedArgs(propertyName, this));
+                ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "ShipmentPackage");
+
+            }
         }
     }
     private MyClone: ShipmentPackagePM;

@@ -25,11 +25,11 @@ using Simplog.Data.ShipmentsModel;
 { 
    public partial class OceanOrInlandPackageQueryService
    {
-		public List<OceanOrInlandPackage> OceanOrInlandPackageCustomDataMapping(ShipmentPM MyPM, List<ShipmentPackagePM> MyEntityPMs, int Tenant)
+		public List<OceanOrInlandPackage> OceanOrInlandPackageCustomDataMapping(ShipmentPM MyPM, List<ShipmentPackagePM> MyEntityPMs, int Tenant,string ComputingPartnerName="")
         {
             if (!string.IsNullOrEmpty(MyPM.ShipmentTypeId) && (MyPM.ShipmentTypeId.Contains("LCL") || MyPM.ShipmentTypeId.Contains("LTL")))
             {
-                return this.OceanOrInlandPackageDataMapping(MyEntityPMs, Tenant);
+                return this.OceanOrInlandPackageDataMapping(MyEntityPMs, Tenant, ComputingPartnerName);
             }
             else
             {

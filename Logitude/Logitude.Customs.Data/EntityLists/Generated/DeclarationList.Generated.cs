@@ -255,15 +255,9 @@ namespace Logitude.Customs.Data.EntityLists
        [DataMember]
        public string CasualImporterContact  { get; set; }
        [DataMember]
-       public string MamanStatusCode  { get; set; }
-       [DataMember]
-       public string MamanErrorXml  { get; set; }
-       [DataMember]
        public string ItemsProcessTypesList  { get; set; }
        [DataMember]
        public bool IsClose  { get; set; }
-       [DataMember]
-       public string MamanStatusName  { get; set; }
        [DataMember]
        public string AcceptanceStatusName  { get; set; }
        [DataMember]
@@ -272,6 +266,112 @@ namespace Logitude.Customs.Data.EntityLists
        public string CourierSuspentionName  { get; set; }
        [DataMember]
        public string DepositionStatusCode  { get; set; }
+       [DataMember]
+       public bool IsClosedForFollowUp  { get; set; }
+       [DataMember]
+       public string FastIndividualProcessCode  { get; set; }
+       [DataMember]
+       public decimal? TotalInvoiceAmountInUSD  { get; set; }
+       [DataMember]
+       public bool IsPending902  { get; set; }
+       [DataMember]
+       public bool IsCourierMissingClassification  { get; set; }
+       [DataMember]
+       public string MAWB  { get; set; }
+       [DataMember]
+       public bool IsPending900  { get; set; }
+       [DataMember]
+       public string CourierPendingReasonList  { get; set; }
+       [DataMember]
+       public string CargoDescription  { get; set; }
+       [DataMember]
+       public bool IsPaymentProtested  { get; set; }
+       [DataMember]
+       public string FastIndividualProcessName  { get; set; }
+       [DataMember]
+       public string AmendmentRequestNumber  { get; set; }
+       [DataMember]
+       public string AmendmentStatus  { get; set; }
+       [DataMember]
+       public DateTime? AmendmentissueDate  { get; set; }
+       [DataMember]
+       public string AmendmentRemarks  { get; set; }
+       [DataMember]
+       public bool? AmendmentDeficitInitiated  { get; set; }
+       [DataMember]
+       public string AmendDeficitInitiatedReasTo  { get; set; }
+       [DataMember]
+       public string AmendmentCorrectedByUserId  { get; set; }
+       [DataMember]
+       public string AmendmentRejectionReason  { get; set; }
+       [DataMember]
+       public bool? IsAmendment  { get; set; }
+       [DataMember]
+       public string AmendmentOriginalDeclartation  { get; set; }
+       [DataMember]
+       public string AmendmentCorrectedByUserName  { get; set; }
+       [DataMember]
+       public string AmendmentStatusName  { get; set; }
+       [DataMember]
+       public bool IsPendingNotNull  { get; set; }
+       [DataMember]
+       public bool AmendmentDontDisplayInList  { get; set; }
+       [DataMember]
+       public bool IsMissMandatoryDiamond  { get; set; }
+       [DataMember]
+       public bool IsValidTicketsDiamond  { get; set; }
+       [DataMember]
+       public string CustomFileAmendment  { get; set; }
+       [DataMember]
+       public string DeclarationNoAmendment  { get; set; }
+       [DataMember]
+       public int AmendmentNumber  { get; set; }
+       [DataMember]
+       public string CourierPendingReasonName  { get; set; }
+       [DataMember]
+       public DateTime? LoadingDateTime  { get; set; }
+       [DataMember]
+       public string ShipCode  { get; set; }
+       [DataMember]
+       public bool IsExporterConfirmation  { get; set; }
+       [DataMember]
+       public string ShipName  { get; set; }
+       [DataMember]
+       public string DestinationCountryName  { get; set; }
+       [DataMember]
+       public string Direction  { get; set; }
+       [DataMember]
+       public string AgentRoleCode  { get; set; }
+       [DataMember]
+       public string ExportFile  { get; set; }
+       [DataMember]
+       public string DestinationCountryCode  { get; set; }
+       [DataMember]
+       public string ExportAutonomyRegionTypeCode  { get; set; }
+       [DataMember]
+       public string DeclarationTypeCode  { get; set; }
+       [DataMember]
+       public string CancelRequestReasonCode  { get; set; }
+       [DataMember]
+       public string CancelRequestReasonExplanation  { get; set; }
+       [DataMember]
+       public int? CancelRequestNumber  { get; set; }
+       [DataMember]
+       public string CustomCancelRequestRemarks  { get; set; }
+       [DataMember]
+       public string CancelRequestStatusCode  { get; set; }
+       [DataMember]
+       public string CancelRequestRejectionReason  { get; set; }
+       [DataMember]
+       public DateTime? CancelRequestApproveDate  { get; set; }
+       [DataMember]
+       public bool? IsClaimable  { get; set; }
+       [DataMember]
+       public string ReplacingRepairRequest  { get; set; }
+       [DataMember]
+       public decimal? FOBValueNIS  { get; set; }
+       [DataMember]
+       public decimal? FOBValueDollar  { get; set; }
    }
 
 }

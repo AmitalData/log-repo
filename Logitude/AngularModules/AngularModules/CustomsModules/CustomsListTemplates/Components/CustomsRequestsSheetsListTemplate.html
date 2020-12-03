@@ -1,4 +1,4 @@
-﻿<style>
+<style>
     img {
    position: absolute;
    top: 50%;
@@ -11,8 +11,9 @@
 </style>
 <div>
     <div class="TextTrimming" *ngIf="fieldName == 'RequestCreateDate'" >
-        
-            <span>{{_CustomsRequestsSheet.RequestCreateDate  | DateTimeToDatePipe  }}</span> <span>{{_CustomsRequestsSheet.RequestCreateDate  | DateTimeToTimePipe :'L12' }}</span>
+       
+        <span style="float: right;">{{_CustomsRequestsSheet.RequestCreateDate  | DateTimeToDatePipe  }}</span> 
+        <span style="float: right;">{{_CustomsRequestsSheet.RequestCreateDate  | DateTimeToTimePipe :'L12' }}</span>
         
     </div>
 
@@ -53,7 +54,7 @@
         <button 
                 style="padding-right:10px;"
                 class="Button" 
-                (click)="OnShowLogclick(_CustomsRequestsSheet['Id'],_CustomsRequestsSheet['InterfaceTypeCode'])">{{'CommunicationLogSteps.O.Log' | TextCodeTranslationPipe}}</button>
+                (click)="OnShowLogclick()">{{'CommunicationLogSteps.O.Log' | TextCodeTranslationPipe}}</button>
     </div>
 
     <div class="TextTrimming RightCenter" *ngIf="fieldName == 'ReAnalyze' &&  ReAnalyzeButtonVisibility==true">

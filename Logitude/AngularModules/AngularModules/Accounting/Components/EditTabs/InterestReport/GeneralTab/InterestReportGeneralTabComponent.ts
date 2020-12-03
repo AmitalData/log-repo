@@ -10,6 +10,8 @@ import { TextCodeTranslator } from '../../../../../Infrastructure/Utilities/Text
 import { LogitudeWindow } from '../../../../../Controls/Windows/LogitudeWindow';
 import { EntityListService } from '../../../../../Infrastructure/Services/EntityListService';
 import { ApiQueryFilters } from '../../../../../Infrastructure/DataContracts/ApiQueryFilters';
+import { LogitudeGridExportToExcelComponent } from 'Common/Components/LogitudeGridExportToExcel/LogitudeGridExportToExcelComponent';
+import { QueryColumnPM } from 'Infrastructure/EntityPMs/QueryColumnPM';
 
 @Component({
     
@@ -24,13 +26,16 @@ export class InterestReportGeneralTabComponent extends BaseComponent implements 
     private _entityListService: EntityListService;
     private CurrentSession = SessionLocator.SelectedSession;
     public  NoDataTextCode:string=null;
+    public filterAgrs: ApiQueryFilters;
     public IsNew: boolean = false;
     public isRTL: boolean = false;
     public ValidationErrorsList: string[] = [];
+    public LogitudeGridExportToExcelComponent:LogitudeGridExportToExcelComponent;
      constructor(public entityArgs: EntityArgs) {
         super();
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
-         this.EntityPM = entityArgs.EntityPM;
+        this.LogitudeGridExportToExcelComponent = new LogitudeGridExportToExcelComponent(); 
+        this.EntityPM = entityArgs.EntityPM;
          this.FillNoDataTextCodeValue();
          this.InterestReportLinesByDateList = new ObservableCollection([]);
          this._entityListService = new EntityListService();
@@ -79,6 +84,7 @@ export class InterestReportGeneralTabComponent extends BaseComponent implements 
         this.UIProperties.SetEnabled("OpenBalance", "InterestReport", false);
         this.UIProperties.SetEnabled("InterestCalculationDate", "InterestReport", false);
         this.UIProperties.SetEnabled("GLAccountInterestCreditLimit", "InterestReport", false);
+        this.UIProperties.SetEnabled("CreditAllotmentPercentage", "InterestReport", false);
     }
      public DataSource = {
         pageSize: 50,
@@ -108,13 +114,13 @@ export class InterestReportGeneralTabComponent extends BaseComponent implements 
     }
 
     getRows(skip, take, sortingCol, sortingDir, getCount: boolean, searchfields?: string, filters: ApiQueryFilters = null) {
-        var filters = new ApiQueryFilters();
-        filters.PageSize = take;
-        filters.PageIndex = skip;
-        filters.GetAll = false;
-        filters.GetCount = true;
-        filters.addAdditionalFilter("InterestReportId", this.EntityPM.Id, null, null, "Equals", false, false, false, "string");
-        return this._entityListService.getByFilters("InterestReportLinesByDate", filters); 
+       this.filterAgrs = new ApiQueryFilters();
+       this.filterAgrs.PageSize = take;
+       this.filterAgrs.PageIndex = skip;
+       this.filterAgrs.GetAll = false;
+       this.filterAgrs.GetCount = true;
+       this.filterAgrs.addAdditionalFilter("InterestReportId", this.EntityPM.Id, null, null, "Equals", false, false, false, "string");
+        return this._entityListService.getByFilters("InterestReportLinesByDate", this.filterAgrs); 
     }
 
     EditCalculationDate(){
@@ -201,9 +207,16 @@ export class InterestReportGeneralTabComponent extends BaseComponent implements 
         else
             return false;
     }
+    get CreditAllotmentPercentage() {
+        if (this.EntityPM != null) {
+            return this.EntityPM.CreditAllotmentPercentage;
+        }
+        else
+            return null;
+    }
     
-
     public columns: any[] = null;
+    public QueryColumns: QueryColumnPM[] = [];
     BuildColumns() {
         this.columns = [];
         this.columns.push({
@@ -215,6 +228,7 @@ export class InterestReportGeneralTabComponent extends BaseComponent implements 
             HtmlListComponentUrl: './Accounting/Components/ListTemplates/InterestReportLinesByDateListTemplate',
             IsCustomTemplate: true
         });
+        this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("LineNumber",'Number',TextCodeTranslator.Translate("InterestReportLinesByDate.F.LineNumber")));
         this.columns.push({
             FieldName: 'FromDate',
             DataTypeCode: 'DateTime',
@@ -224,6 +238,8 @@ export class InterestReportGeneralTabComponent extends BaseComponent implements 
             HtmlListComponentUrl: './Accounting/Components/ListTemplates/InterestReportLinesByDateListTemplate',
             IsCustomTemplate: true
         });
+        this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("FromDate",'DateTime',TextCodeTranslator.Translate("InterestReportLinesByDate.F.FromDate")));
+
         this.columns.push({
             FieldName: 'ToDate',
             DataTypeCode: 'DateTime',
@@ -233,6 +249,8 @@ export class InterestReportGeneralTabComponent extends BaseComponent implements 
             HtmlListComponentUrl: './Accounting/Components/ListTemplates/InterestReportLinesByDateListTemplate',
             IsCustomTemplate: true
         });
+        this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("ToDate",'DateTime',TextCodeTranslator.Translate("InterestReportLinesByDate.F.ToDate")));
+
         this.columns.push({
             FieldName: 'TotalInterestDays',
             DataTypeCode: 'Number',
@@ -242,6 +260,8 @@ export class InterestReportGeneralTabComponent extends BaseComponent implements 
             HtmlListComponentUrl: './Accounting/Components/ListTemplates/InterestReportLinesByDateListTemplate',
             IsCustomTemplate: true
         });
+        this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("TotalInterestDays",'Number',TextCodeTranslator.Translate("InterestReportLinesByDate.F.TotalInterestDays")));
+
         this.columns.push({
             FieldName: 'TotalAmount',
             DataTypeCode: 'Number',
@@ -251,6 +271,7 @@ export class InterestReportGeneralTabComponent extends BaseComponent implements 
             HtmlListComponentUrl: './Accounting/Components/ListTemplates/InterestReportLinesByDateListTemplate',
             IsCustomTemplate: true
         });
+        this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("TotalAmount",'Number',TextCodeTranslator.Translate("InterestReportLinesByDate.F.TotalAmount")));
 
         this.columns.push({
             FieldName: 'AccumulatedAmount',
@@ -261,6 +282,7 @@ export class InterestReportGeneralTabComponent extends BaseComponent implements 
             HtmlListComponentUrl: './Accounting/Components/ListTemplates/InterestReportLinesByDateListTemplate',
             IsCustomTemplate: true
         });
+        this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("AccumulatedAmount",'Number',TextCodeTranslator.Translate("InterestReportLinesByDate.F.AccumulatedAmount")));
 
         this.columns.push({
             FieldName: 'TotalInterest',
@@ -271,6 +293,7 @@ export class InterestReportGeneralTabComponent extends BaseComponent implements 
             HtmlListComponentUrl: './Accounting/Components/ListTemplates/InterestReportLinesByDateListTemplate',
             IsCustomTemplate: true
         });
+        this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("TotalInterest",'Number',TextCodeTranslator.Translate("InterestReportLinesByDate.F.TotalInterest")));
 
         this.columns.push({
             FieldName: 'ShowDetails',
@@ -291,6 +314,12 @@ export class InterestReportGeneralTabComponent extends BaseComponent implements 
             HtmlListComponentUrl: './Accounting/Components/ListTemplates/InterestReportLinesByDateListTemplate',
             IsCustomTemplate: true
         });
+        this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("IsOpenBalanceLine",'Boolean',TextCodeTranslator.Translate("InterestReportLinesByDate.F.IsOpenBalanceLine")));
 
     }
+
+    public ExportToExcelClick(){
+        this.LogitudeGridExportToExcelComponent.ExportToExcelExcute("InterestReportLinesByDate",this.filterAgrs,this.QueryColumns);
+    }
+    
 }

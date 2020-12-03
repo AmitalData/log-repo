@@ -1,0 +1,233 @@
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using System.ServiceModel.DomainServices.Server; 
+using Logitude.Server.Tools; 
+using System.Runtime.Serialization;
+using Simplog.Server.Infrastructure.DataContracts; 
+using Logitude.Customs.Def.Validators;
+  
+namespace Logitude.Customs.Def.EntityPMs
+{
+   [CustomValidation(typeof(CustomsClassLevelValidator), "ValidateClass")]
+   [DataContract]
+   public partial class DecDangersContactPM : EntityPM
+   {
+   	  private int tenant ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int Tenant  
+	   {
+	    
+	     get
+		{
+		   return tenant;
+		 }
+		 set
+		 {
+		   if(tenant != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Tenant",OldValue=tenant,NewValue=value,PropertyType="int"};
+		    NotifyPropertyChanged(values);
+		   tenant=value;
+		   }
+			
+		 }
+	   }
+	  private string declarationId ;
+	  
+       [Key]
+	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string DeclarationId  
+	   {
+	    
+	     get
+		{
+		   return declarationId;
+		 }
+		 set
+		 {
+		   if(declarationId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DeclarationId",OldValue=declarationId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   declarationId=value;
+		   }
+			
+		 }
+	   }
+	  private string companyName ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CompanyName  
+	   {
+	    
+	     get
+		{
+		   return companyName;
+		 }
+		 set
+		 {
+		   if(companyName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CompanyName",OldValue=companyName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   companyName=value;
+		   }
+			
+		 }
+	   }
+	  private string companyCommNumber ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CompanyCommNumber  
+	   {
+	    
+	     get
+		{
+		   return companyCommNumber;
+		 }
+		 set
+		 {
+		   if(companyCommNumber != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CompanyCommNumber",OldValue=companyCommNumber,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   companyCommNumber=value;
+		   }
+			
+		 }
+	   }
+	  private string companyCommTypeCode ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CompanyCommTypeCode  
+	   {
+	    
+	     get
+		{
+		   return companyCommTypeCode;
+		 }
+		 set
+		 {
+		   if(companyCommTypeCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CompanyCommTypeCode",OldValue=companyCommTypeCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   companyCommTypeCode=value;
+		   }
+			
+		 }
+	   }
+	  private string contactName ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ContactName  
+	   {
+	    
+	     get
+		{
+		   return contactName;
+		 }
+		 set
+		 {
+		   if(contactName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ContactName",OldValue=contactName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   contactName=value;
+		   }
+			
+		 }
+	   }
+	  private string contactCommNumber ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ContactCommNumber  
+	   {
+	    
+	     get
+		{
+		   return contactCommNumber;
+		 }
+		 set
+		 {
+		   if(contactCommNumber != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ContactCommNumber",OldValue=contactCommNumber,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   contactCommNumber=value;
+		   }
+			
+		 }
+	   }
+	  private string contactCommTypeCode ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ContactCommTypeCode  
+	   {
+	    
+	     get
+		{
+		   return contactCommTypeCode;
+		 }
+		 set
+		 {
+		   if(contactCommTypeCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ContactCommTypeCode",OldValue=contactCommTypeCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   contactCommTypeCode=value;
+		   }
+			
+		 }
+	   }
+	  private string contactId ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ContactId  
+	   {
+	    
+	     get
+		{
+		   return contactId;
+		 }
+		 set
+		 {
+		   if(contactId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ContactId",OldValue=contactId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   contactId=value;
+		   }
+			
+		 }
+	   }
+   }
+   
+}
+	 

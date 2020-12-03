@@ -19,11 +19,9 @@ export class CourierPendingReasonExtendedListService {
     }
 
     GetCourierPendingReasonByUnifreightStatus(unifreightStatusCode: string) {
-        var authHeader = new Headers();
-        authHeader.append('Token', SessionInfo.Token);
 
         return defer(() => {
-            return this._http.get(this._apiUrl + '/GetCourierPendingReasonByUnifreightStatus/?' + 'unifreightStatusCode=' + unifreightStatusCode, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+            return this._http.get(this._apiUrl + '/GetCourierPendingReasonByUnifreightStatus/?' + 'unifreightStatusCode=' + unifreightStatusCode, ServiceHelper.GetHttpHeaders()).pipe(map((response:any) => {
                 var serviceResponse: ServiceResponse = response;
                 var _mappedListsArray: Array<CourierPendingReasonPM> = [];
                 if (serviceResponse.Result) {
@@ -41,24 +39,13 @@ export class CourierPendingReasonExtendedListService {
         });
     }
 
-    DeleteCourierPendingReasonUnifreightStatus(courierPendingReasonCode: string) {
-        var authHeader = new Headers();
-        authHeader.append('Token', SessionInfo.Token);
+    DeleteCourierPendingReasonUnifreightStatus(courierPendingReasonList: string) {
 
         return defer(() => {
-            return this._http.delete(this._apiUrl + '/DeleteCourierPendingReasonUnifreightStatus/?' + 'courierPendingReasonCode=' + courierPendingReasonCode, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-                var serviceResponse: ServiceResponse = response;
-                var _mappedListsArray: Array<CourierPendingReasonPM> = [];
-                if (serviceResponse.Result) {
-                    for (var key in serviceResponse.Result) {
-
-                        var entity: CourierPendingReasonPM;
-                        entity = this.MapJsonToEntityPM(serviceResponse.Result[key]);
-                        _mappedListsArray.push(entity);
-                    }
-                }
-
-                serviceResponse.Result = _mappedListsArray;
+            return this._http.delete(this._apiUrl + '/DeleteCourierPendingReasonUnifreightStatus/?' + 'courierPendingReasonList=' + courierPendingReasonList, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var myJsonResult = response;
+                var serviceResponse = new ServiceResponse();
+                serviceResponse.Result = myJsonResult;
                 return serviceResponse;
             }),catchError(ServiceHelper.HandleServiceError));
         });

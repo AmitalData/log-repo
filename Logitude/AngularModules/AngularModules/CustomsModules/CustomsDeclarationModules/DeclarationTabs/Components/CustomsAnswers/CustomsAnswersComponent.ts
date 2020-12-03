@@ -1,8 +1,7 @@
 declare var window: any;
-import {Component, AfterViewInit, ChangeDetectorRef}  from '@angular/core';
+import {Component, AfterViewInit, ChangeDetectorRef, Output, Input}  from '@angular/core';
 import {EntityArgs} from '../../../../../Infrastructure/DataContracts/EntityArgs';
-import {AppTool, ArrayTool} from '../../../../../Infrastructure/Tools';
-import {FeatureLocator} from '../../../../../Infrastructure/Utilities/FeatureLocator';
+import {AppTool} from '../../../../../Infrastructure/Tools';
 import {SessionLocator} from '../../../../../Infrastructure/Utilities/SessionLocator';
 import {TextCodeTranslator} from '../../../../../Infrastructure/Utilities/TextCodeTranslator';
 import {BaseComponent} from '../../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
@@ -12,30 +11,29 @@ import {MessageWindow} from '../../../../../Controls/Windows/MessageWindow';
 import {ServiceResponse} from '../../../../../Infrastructure/DataContracts/ServiceResponse';
 import {LogitudeWindow} from '../../../../../Controls/Windows/LogitudeWindow';
 import {DeclarationDisplayOnlyChecks, DisplayOnlyCheckResult} from '../../../../../Customs/Utilities/DeclarationDisplayOnlyChecks';
-
 import {DeclarationPM} from '../../../../../Customs/EntityPMs/DeclarationPM';
-import {ConsignmentPM} from '../../../../../Customs/EntityPMs/ConsignmentPM';
 import {SupplierInvoicePM} from '../../../../../Customs/EntityPMs/SupplierInvoicePM';
 import {DeclarationErrorView} from '../../../../../Customs/EntityPMs/Extended/DeclarationErrorView';
 import {DeclarationConstraintPM} from '../../../../../Customs/EntityPMs/DeclarationConstraintPM';
 import {DeclarationEventManager} from '../../../../../Customs/Utilities/DeclarationEventManager';
-
 import {DeclarationWebService} from '../../../../../Customs/Services/WebServices/DeclarationWebService';
 import {DeclarationPMService} from '../../../../../Customs/Services/StandardPMs/DeclarationPMService';
 import {ConstraintApprovalRequestParams} from '../../../../../Customs/DataContract/RequestParams/ConstraintApprovalRequestParams';
 
 // Send Request
 import {INF_MSG_GenericResponseData} from '../../../../../Customs/DataContract/ResponseData/INF_MSG_GenericResponseData';
-import {VendorCommunicationResult} from '../../../../../Customs/DataContract/ResponseData/VendorCommunicationResult';
-import {VendorInsertUpdateDeleteMessageRequestParams, OperationTypes} from '../../../../../Customs/DataContract/RequestParams/VendorInsertUpdateDeleteMessageRequestParams';
 import { CustomMessageProgressComponent } from '../../../../../CustomsModules/CustomsControls/Components/CustomMessageProgressComponent';
 import {DeclarationMessagesService} from '../../../../../Customs/Services/WebServices/DeclarationMessagesService';
 import {SendRequestVIA} from '../../../../../Customs/DataContract/RequestParams/RequestParamsBase';
 import {EntityResourceService} from '../../../../../Infrastructure/Services/EntityResourceService';
 import { DeclarationEditComponentController } from '../../../../../Customs/Controller/DeclarationEditComponentController';
-@Component({
-    
+import { CustomsSettingExtendedListService } from '../../../../../Customs/Services/ExtendedLists/CustomsSettingExtendedListService';
+import { DeclarationExtendedListService } from '../../../../../Customs/Services/ExtendedLists/DeclarationExtendedListService';
+
+@Component({    
     templateUrl: './CustomsAnswersComponent.html',
+    providers: [DeclarationExtendedListService],
+    selector:"CustomsAnswer"
 })
 
 export class CustomsAnswersComponent extends BaseComponent implements AfterViewInit {
@@ -59,6 +57,18 @@ export class CustomsAnswersComponent extends BaseComponent implements AfterViewI
     AllCount: string = "";
     SystemMessageDescribtion: string;
     IsCourierDeclaration: boolean = false;
+    IsDisplayMessage: boolean;
+    @Input() IsAmendmentErrors: boolean;
+    public get DepositionStatusCode(): string {
+        if (this.EntityPM == null) return null; 
+        return this.EntityPM.DepositionStatusCode;
+    }
+    
+    DepositionStatusCodeIcon: string = "";
+    IsDepositionStatusCodeButton: boolean = false;
+    IsDepositionStatusCodeSendDigital: boolean = false;
+    DepositionStatusCodeText: string = "";
+
     //Services
     private declarationWebService: DeclarationWebService = new DeclarationWebService;
     private declarationMessagesService: DeclarationMessagesService = new DeclarationMessagesService;
@@ -76,7 +86,7 @@ export class CustomsAnswersComponent extends BaseComponent implements AfterViewI
 
     //#endregion
     private CurrentSession = SessionLocator.SelectedSession;
-    constructor(public entityArgs: EntityArgs, public cd: ChangeDetectorRef, private EntityResourceService: EntityResourceService) {
+    constructor(public entityArgs: EntityArgs, public cd: ChangeDetectorRef, private EntityResourceService: EntityResourceService, public declarationExtendedListService: DeclarationExtendedListService) {
         super();
 
         this.EntityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe((response:any) => {
@@ -86,6 +96,7 @@ export class CustomsAnswersComponent extends BaseComponent implements AfterViewI
                         this.EntityResourceService.getEntityResourceByTableName("Customs.PaymentOrder").subscribe((response:any) => {
                             this.EntityPM = this.entityArgs.EntityPM;
                             this.IsCourierDeclaration = this.EntityPM.IsCourierDeclaration;
+                            //this.DepositionStatusCode = this.EntityPM.DepositionStatusCode;
                             this.ObjectTableName = this.entityArgs.ObjectTableName;
                             this.Listen();
                             this.ReloadDeclarationErrors();
@@ -105,6 +116,8 @@ export class CustomsAnswersComponent extends BaseComponent implements AfterViewI
                             this.textcode_DenialReason = TextCodeTranslator.Translate("Customs.CustomsCollateral.O.DenialReason");
                             this.textcode_ApprovalReason = TextCodeTranslator.Translate("Customs.CustomsCollateral.O.ApprovalReason");
 
+                            this.GetDepositionDefaults(this.EntityPM.CustomerCode);
+                            //this.DepositionStatusCodeIcon = "./Images/Buttons/EditWithGreenTick.png";
                             //#enderegion
                         });
                     });
@@ -132,7 +145,7 @@ export class CustomsAnswersComponent extends BaseComponent implements AfterViewI
             this.IsManifest = true;
             this.IsConstraintsVisible = false;
             console.log("CustomsAnswersShowManifest");
-            myDeclarationEditComponentController.CustomsAnswersShowManifest = false;
+            //myDeclarationEditComponentController.CustomsAnswersShowManifest = false;
         }
         else {
             this.CourierFilterSelectedValue = 'Declaration';
@@ -206,7 +219,16 @@ export class CustomsAnswersComponent extends BaseComponent implements AfterViewI
 
     DisplayOnlyCheck() {
         this.IsDisplayOnly = this.CurrentSession.CurrentEditComponent.EditComponentController.InDisplayMode;
-        if (this.IsDisplayOnly) {
+        if (this.EntityPM.AmendmentMessage != null && this.EntityPM.AmendmentMessage != "") {
+            {
+            this.IsDisplayMessage = true;
+
+                this.DisplayOnlyMessage = this.EntityPM.AmendmentMessage;
+                if (this.EntityPM.IsAmendmentDisplayOnly) this.IsDisplayOnly = this.EntityPM.IsAmendmentDisplayOnly;
+            }
+        }
+
+        else if (this.IsDisplayOnly) {
             this.DisplayOnlyMessage = "לתצוגה בלבד - " + this.CurrentSession.CurrentEditComponent.EditComponentController.InDisplayModeMessage;
             this.SetScreenFieldsEditability();
             DeclarationEventManager.DisplayModeChanged.emit(this.IsDisplayOnly);
@@ -216,22 +238,35 @@ export class CustomsAnswersComponent extends BaseComponent implements AfterViewI
             this.ShowStorageStatusMessage = true;
             this.DisplayOnlyMessage = "בקשת אחסנה הועברה למחסן - סטטוס הבקשה" + " " + this.EntityPM.StorageStatusName;
         }
+        
         var declarationDisplayOnlyChecks: DeclarationDisplayOnlyChecks = new DeclarationDisplayOnlyChecks();
         declarationDisplayOnlyChecks.DeclarationViewDisplayOnlyChecks(this.EntityPM).subscribe((response: ServiceResponse) => {
             var displayOnlyCheckResult: DisplayOnlyCheckResult = response.Result;
             this.IsDisplayOnly = displayOnlyCheckResult.IsDisplayOnly;
-            if (this.IsDisplayOnly) {
+            if (this.EntityPM.AmendmentMessage != null && this.EntityPM.AmendmentMessage != "") {
+                {
+                this.IsDisplayMessage = true;
+
+                    this.DisplayOnlyMessage = this.EntityPM.AmendmentMessage;
+                    if (this.EntityPM.IsAmendmentDisplayOnly) this.IsDisplayOnly = this.EntityPM.IsAmendmentDisplayOnly;
+                }
+            }
+
+            else if (this.IsDisplayOnly) {
                 this.DisplayOnlyMessage = "לתצוגה בלבד - " + displayOnlyCheckResult.DisplayOnlyMessage;
             }
             else if (this.EntityPM.StorageStatusCode) {
                 this.ShowStorageStatusMessage = true;
                 this.DisplayOnlyMessage = "בקשת אחסנה הועברה למחסן - סטטוס הבקשה" + " " + this.EntityPM.StorageStatusName;
             }
+       
             this.SetScreenFieldsEditability();
             DeclarationEventManager.DisplayModeChanged.emit(this.IsDisplayOnly);
         });
     }
 
+
+ 
     //#region Filter Methods
     IsErrorsVisible: boolean = true;
     IsConstraintsVisible: boolean = true;
@@ -321,7 +356,7 @@ export class CustomsAnswersComponent extends BaseComponent implements AfterViewI
     AllConstraintCount: number = 0;
     // get errors code
     ReloadDeclarationErrors() {
-        this.CurrentSession.StartBusyIndicatorLoading();
+         this.CurrentSession.StartBusyIndicatorLoading();
 
         //[1] GetDeclarationConstraints();
         this.declarationWebService.GetDeclarationConstraintsByDeclrationId(this.EntityPM.Id)
@@ -417,9 +452,9 @@ export class CustomsAnswersComponent extends BaseComponent implements AfterViewI
     }
     errorsForDeclaration;
     LoadDeclarationErrors() {
-        //[2] GetDeclarationErrors();
+         //[2] GetDeclarationErrors();
         this.CurrentSession.StartBusyIndicatorLoading();//Avoiding ReSend !!
-        this.declarationWebService.GetDeclarationErrors(this.EntityPM.Id, this.ListVersionId, this.CourierFilterSelectedValue)
+        this.declarationWebService.GetDeclarationErrors(this.EntityPM.Id, this.ListVersionId, this.CourierFilterSelectedValue, this.IsAmendmentErrors)
             .subscribe((myServiceResponse: ServiceResponse) => {
                 console.log("[Response] GetDeclarationErrors : ", myServiceResponse.Result);
                 var res: any[] = myServiceResponse.Result;
@@ -584,7 +619,7 @@ export class CustomsAnswersComponent extends BaseComponent implements AfterViewI
         if (this.EntityPM.IsDirty) {
             this.CurrentSession.CurrentEditComponent.SaveChanges();
 
-            var event = this.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
+            var event:any = this.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
 
                 if (event) {
                     event.unsubscribe();
@@ -665,7 +700,7 @@ export class CustomsAnswersComponent extends BaseComponent implements AfterViewI
 
     EditEntity(declarationError: DeclarationErrorView) {
 
-
+ 
         if (AppTool.IsNullOrEmpty(declarationError)) {
             console.warn("[!] There is no declaraion error for the constraint!");
         } else {
@@ -859,6 +894,7 @@ export class CustomsAnswersComponent extends BaseComponent implements AfterViewI
                     }
 
                 case "supplierinvioceitemscertificate":
+                case "supplierinvioceitemcertificat":
                     {
                         if (AppTool.IsNullOrEmpty(declarationError.LineNumber)) {
                             console.log("No line number", declarationError);
@@ -1049,6 +1085,97 @@ export class CustomsAnswersComponent extends BaseComponent implements AfterViewI
             this.LoadConstriantsList(this.errorsForDeclaration);
         }
 
+    }
+
+
+    DepositionStatusbuttonclicked(event) {
+
+        //if (!AppTool.IsNullOrEmpty(this.EntityPM.Id) && this.EntityPM.DepositionStatusCode != "L") {
+        this.EntityPM.DepositionStatusCode = "L";
+        this.SaveEntityChanges(null);
+        event.stopPropagation();
+        return;
+        //}
+    }
+    SaveEntityChanges(args: any): any {
+        SessionLocator.SelectedSession.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Saving"));
+        if (!AppTool.IsNullOrEmpty(this.EntityPM.Id)) {
+            this.declarationPMService.update(this.EntityPM).subscribe((myResponse: ServiceResponse) => {
+                SessionLocator.SelectedSession.StopBusyIndicator();
+
+                if (myResponse.HasError) {
+                    //this.ValidationErrorsList = myResponse.ErrorsArray;
+                }
+
+                else {
+                    this.EntityPM = myResponse.Result;
+                    if (AppTool.IsNullOrEmpty(this.EntityPM.Id)) {
+
+                        var myErrors: string[] = [];
+                        myErrors.push("this.EntityPM.Id is null");
+                        //this.ValidationErrorsList = myErrors;
+                    }
+                    else {
+                        if (args == null) {
+                            //this.CancelButtonClicked();
+                        } else {
+
+                            //this.SendButtonClicked();
+                        }
+
+                    }
+                }
+
+
+            });
+
+        }
+    }
+
+
+    private GetDepositionDefaults(CustomerCode: string) {
+        var myCustomsSettingExtendedListService = new CustomsSettingExtendedListService();
+        myCustomsSettingExtendedListService.GetDefault("ISRAEL", "CGG_SHARE_DESPO", "NON", "NON", SessionLocator.Tenant)
+            .subscribe((response:any) => {
+                this.IsDepositionStatusCodeButton = false;
+                this.IsDepositionStatusCodeSendDigital = false;
+                if (!response.HasError && response.Result != null && response.Result.DefaultValue == "Y") {
+
+
+                    myCustomsSettingExtendedListService.GetDefault("ISRAEL", "GGG_BOX_ACTIVAT", "NON", CustomerCode, SessionLocator.Tenant)
+                        .subscribe((response:any) => {
+                            this.IsDepositionStatusCodeButton = false;
+                            this.IsDepositionStatusCodeSendDigital = false;
+                            //this.DepositionStatusCodeIcon = "./Images/LogBox/DSV/U_LOGBOX.png";
+                            this.DepositionStatusCodeIcon = "LOGBOX";
+                            if (!response.HasError && response.Result != null && response.Result.DefaultValue == "Y") {
+                                this.IsDepositionStatusCodeButton = true;
+                            }
+                            myCustomsSettingExtendedListService.GetDefault("ISRAEL", "GGG_LBL_ACTIVAT", "NON", CustomerCode, SessionLocator.Tenant)
+                                .subscribe((res:any) => {
+                                    if (!res.HasError && res.Result != null && res.Result.DefaultValue == "Y") {
+                                        this.IsDepositionStatusCodeButton = true;
+                                        this.IsDepositionStatusCodeSendDigital = true;
+                                    }
+                                    if (this.IsDepositionStatusCodeSendDigital) {
+                                        this.DepositionStatusCodeText = "נשלחה משימה ליבואן בדיגיטל";
+                                        this.DepositionStatusCodeIcon = "DEFAULT";
+                                    }
+                                    else {
+                                        this.DepositionStatusCodeText = "נשלחה משימה ליבואן בלוגבוקס";
+                                    }
+
+                                    //myCustomsSettingExtendedListService.GetDefault("ISRAEL", "GGG_PRV_LBL_LOG", "NON", "NON", SessionLocator.Tenant)
+                                    //  .subscribe(res => {
+                                    //    if (!res.HasError && res.Result != null) {
+                                    //this.DepositionStatusCodeIcon = "./Images/LogBox/DSV/Tab_Logo_Original.png";
+                                    //      this.DepositionStatusCodeIcon = "DEFAULT";
+                                    //}
+                                    //});
+                                });
+                        });
+                }
+            });
     }
     //#endregion
 }

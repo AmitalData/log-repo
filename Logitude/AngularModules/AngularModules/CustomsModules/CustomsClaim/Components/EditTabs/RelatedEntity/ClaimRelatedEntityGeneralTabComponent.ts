@@ -29,6 +29,8 @@ import {EntityResourceService} from '../../../../../Infrastructure/Services/Enti
 })
 
 export class ClaimRelatedEntityGeneralTabComponent extends BaseComponent {
+  public IsDisplayOnly: boolean = false;
+
     public DataContext: ClaimRelatedEntityGeneralTabComponent = this;
     public EntityPM: ClaimsRelatedEntityPM = new ClaimsRelatedEntityPM(null); // added null because it demands a parameter parent.
     public ClaimPM: ClaimPM = new ClaimPM();

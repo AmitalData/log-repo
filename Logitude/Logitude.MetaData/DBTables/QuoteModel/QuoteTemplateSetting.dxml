@@ -1184,6 +1184,32 @@
     <Constraints
       Nullable="false" />
   </Column>
+  <Column
+    Name="HidePageNumber"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="PageNumberingTextDesignId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ShowRegionalTAXPackages"
+    OldNames="ShowRegionalTAX"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="ShowRegionalTAXContainers"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
   <Relation
     ForeignKeyColumn="PageHeaderArea1ImageDetailId"
     ReferencedTable="ImageDetails"
@@ -1327,6 +1353,11 @@
   <Relation
     ForeignKeyColumn="TotalPerContainersTableDesignId"
     ReferencedTable="QuoteTemplateTableDesigns"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="PageNumberingTextDesignId"
+    ReferencedTable="QuoteTemplateTextDesigns"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
 </Table>

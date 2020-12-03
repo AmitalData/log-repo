@@ -24,8 +24,9 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.Weight).HasColumnName("Weight");
             this.Property(t => t.PartnerTypeId).HasColumnName("PartnerTypeId");
             this.Property(t => t.InActive).HasColumnName("InActive");
+            this.Property(t => t.IsCustomer).HasColumnName("IsCustomer");
 
-
+            
 
             this.HasRequired(t => t.Card).WithMany().HasForeignKey(d => d.CardId);
 

@@ -5,6 +5,9 @@ using Logitude.Server.Tools.Helpers;
 using Microsoft.Practices.Unity;
 using System.Diagnostics;
 using System.Linq;
+using Logitude.SystemLogs;
+using System;
+
 namespace Logitude.CustomsMessaging.MessagingServices
 {
     public class MessagingServiceFactoryHelper
@@ -22,6 +25,11 @@ namespace Logitude.CustomsMessaging.MessagingServices
             ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
                 DF_NG_2755_MSG12001_SubmitDeclarationMessagingService>
                 ((new DF_NG_2755_MSG12001_SubmitDeclarationMessagingService()).MainInterfaceCode);
+
+            ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
+        DF_NG_2751_MSG10000_ExportDeclarationMessagingService>
+        ((new DF_NG_2751_MSG10000_ExportDeclarationMessagingService()).MainInterfaceCode);
+
 
             //2715
             ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
@@ -266,8 +274,17 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 ((new DCAInDF_NG_5117_ImportDeclerationAmendmentReplyMessagingService()).MainInterfaceCode);
 
             ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
+          DCAInDF_NG_5118_MSG14004_ImportDeclarationCancellationReplyMsg>
+          ((new DCAInDF_NG_5118_MSG14004_ImportDeclarationCancellationReplyMsg()).MainInterfaceCode);
+
+
+            ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
                 TPG_8304_DeficitFileFilterParamMessagingService>
                 ((new TPG_8304_DeficitFileFilterParamMessagingService()).MainInterfaceCode);
+
+            ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
+                DCAInDE_NG_5108_DecisionMessageMessagingService>
+                ((new DCAInDE_NG_5108_DecisionMessageMessagingService()).MainInterfaceCode);
 
             //<--- Yuval Chalup 23.06.2015 TASK-13278
             ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
@@ -338,6 +355,10 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 ((new CLAIM_2340_ClaimRequestMessagingService()).MainInterfaceCode);
 
             ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
+                CLAIM_5005_ContinuousRequestOnClaimFileMessagingService>
+                ((new CLAIM_5005_ContinuousRequestOnClaimFileMessagingService()).MainInterfaceCode);
+
+            ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
                 DCAInCLAIM_5115_ContinuousMessageMessagingServices>
                 ((new DCAInCLAIM_5115_ContinuousMessageMessagingServices()).MainInterfaceCode);
 
@@ -394,14 +415,28 @@ namespace Logitude.CustomsMessaging.MessagingServices
                             DCAInUCB2750_MsgMessagingService>
                             ((new DCAInUCB2750_MsgMessagingService()).MainInterfaceCode);
 
+            //ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
+            //                DCAInUCB2751_MsgMessagingService>
+            //                ((new DCAInUCB2751_MsgMessagingService()).MainInterfaceCode);
 
             ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
                             DCAInUCB2755_MsgMessagingService>
                             ((new DCAInUCB2755_MsgMessagingService()).MainInterfaceCode);
+            ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
+                DCAInUCB8212_MsgMessagingService>
+                ((new DCAInUCB8212_MsgMessagingService()).MainInterfaceCode);
 
             ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
                             DCAInUCB8250_MsgMessagingService>
                             ((new DCAInUCB8250_MsgMessagingService()).MainInterfaceCode);
+
+            ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
+                            DCAInUCB2715_MsgMessagingService>
+                            ((new DCAInUCB2715_MsgMessagingService()).MainInterfaceCode);
+
+            ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
+                            DCAInUCBStorageSite_MsgMessagingService>
+                            ((new DCAInUCBStorageSite_MsgMessagingService()).MainInterfaceCode);
 
             ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
                             MN_MSG8370_CargoSplitMessagingService>
@@ -414,6 +449,66 @@ namespace Logitude.CustomsMessaging.MessagingServices
             ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
                             DCAInDEPO_NG_2753_MSG4_DepositBankAccountToRefundUpdateRequestMessagingServices>
                             ((new DCAInDEPO_NG_2753_MSG4_DepositBankAccountToRefundUpdateRequestMessagingServices()).MainInterfaceCode);
+
+            ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
+                            GP_1030_GatepassRequestMessageMessagingService>
+                            ((new GP_1030_GatepassRequestMessageMessagingService()).MainInterfaceCode);
+
+
+
+            ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
+                            DCAInUCBStorageSite_MsgMessagingService>
+                            ((new DCAInUCBStorageSite_MsgMessagingService()).MainInterfaceCode);
+
+
+            ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
+                DCAInUCBUD2LT_MsgMessagingService>
+                ((new DCAInUCBUD2LT_MsgMessagingService()).MainInterfaceCode);
+
+            ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
+                DCAInUCBCTML_MsgMessagingService>
+                ((new DCAInUCBCTML_MsgMessagingService()).MainInterfaceCode);
+
+            ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
+                DCAInDE_NG_5108_DecisionMessageMessagingService>
+                ((new DCAInDE_NG_5108_DecisionMessageMessagingService()).MainInterfaceCode);
+
+            ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
+                DCAInDE_NG_5108_DecisionMessageMessagingService>
+                ((new DCAInDE_NG_5108_DecisionMessageMessagingService()).MainInterfaceCode);
+
+            ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
+                DF_MSG2892_ImportDeclarationAmendmentMessagingService>
+                ((new DF_MSG2892_ImportDeclarationAmendmentMessagingService()).MainInterfaceCode);
+
+            ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
+              DF_MSG2892_ImportDeclarationAmendmentMessagingService>
+              ((new DF_MSG2892_ImportDeclarationAmendmentMessagingService()).MainInterfaceCode);
+
+            ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
+                SE_6001_SealUpdateMessagingService>
+                ((new SE_6001_SealUpdateMessagingService()).MainInterfaceCode);
+
+
+
+            ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
+                SaveDF_MSG5002_DeclarationCancellationRequestMsgService>
+                ((new SaveDF_MSG5002_DeclarationCancellationRequestMsgService()).MainInterfaceCode);
+
+
+            ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
+
+              DCAInUCB9999ReAnAnalysis_MsgMessagingService>
+              ((new DCAInUCB9999ReAnAnalysis_MsgMessagingService()).MainInterfaceCode);
+
+
+            ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
+
+               DCAInUCSBondedDocument_MessagingService>
+               ((new DCAInUCSBondedDocument_MessagingService()).MainInterfaceCode);
+
+
+
 
         }
         public static void InitContainer()
@@ -429,7 +524,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
 
         //}
 
-        public static IMessagingServiceInterfaceType GetMessagingService(string mainInterfaceCode,string correlationId="")
+        public static IMessagingServiceInterfaceType GetMessagingService(string mainInterfaceCode, string correlationId = "")
         {
             MessagingServiceFactoryHelper.InitContainer();
 
@@ -451,7 +546,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
             var anaO = ContainerAccessor.Container.Resolve<IMessagingServiceInterfaceType>(mainInterfaceCode);
             return anaO;
 
-            }
+        }
         public static void ResolveAndExecute(string mainInterfaceCode, int tenant, string correlationId,
             CustomsCommandEnum myCustomsCommandEnum, OverrideControllerModel debugModel = null)
         {
@@ -476,16 +571,21 @@ namespace Logitude.CustomsMessaging.MessagingServices
             var anaO = GetMessagingService(mainInterfaceCode, correlationId);
             if (anaO == null)
             {
-                
+
                 mainInterfaceCode = GetMainInteface(mainInterfaceCode);
 
                 anaO = ContainerAccessor.Container.Resolve<IMessagingServiceInterfaceType>(mainInterfaceCode);
             }
+            if (anaO==null)
+            {
+                throw new Exception("CustomsMessagingSheetWR: anaO==null >>ProcessMessage():!ContainerAccessor.Container.IsRegistered :analyzeClass=" + mainInterfaceCode );
+                
+            }
 
             anaO.CurrentCustomsCommandWR = myCustomsCommandEnum;
-            
+
             anaO.MyOverrideControllerModel = debugModel;
-            if (anaO.MyOverrideControllerModel!=null)
+            if (anaO.MyOverrideControllerModel != null)
             {
                 anaO.MyOverrideControllerModel.CurrentCustomsCommandWR = anaO.CurrentCustomsCommandWR;
             }
@@ -500,7 +600,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
 
 
         public static void ResolveAndReQueue(string mainInterfaceCode, int tenant, string correlationId,
-          //CustomsCommandEnum myCustomsCommandEnum, 
+            //CustomsCommandEnum myCustomsCommandEnum, 
             OverrideControllerModel debugModel = null)
         {
             MessagingServiceFactoryHelper.InitContainer();
@@ -529,7 +629,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 anaO = ContainerAccessor.Container.Resolve<IMessagingServiceInterfaceType>(mainInterfaceCode);
             }
 
-            
+
             var resDat = anaO.ReQueue(tenant, correlationId);
             var responseDataBase = resDat as Logitude.CustomsMessaging.Common.ResponseData.ResponseDataBase;
             if (responseDataBase != null && responseDataBase.HasException)
@@ -569,9 +669,9 @@ namespace Logitude.CustomsMessaging.MessagingServices
 
         public static string GetMainInteface(string interfaceTypeCode)
         {
-            
+
             var interfaceManagementDetails = new InterfaceManagementDetails();
-            var requestinterface= interfaceManagementDetails.GetAll().FirstOrDefault(r => r.ResponseInterfaceCode == interfaceTypeCode);
+            var requestinterface = interfaceManagementDetails.GetAll().FirstOrDefault(r => r.ResponseInterfaceCode == interfaceTypeCode);
             if (requestinterface == null)
             {
                 throw new System.Exception("interfaceTypeCode: " + interfaceTypeCode + "  is not not registered  !!!!");

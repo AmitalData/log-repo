@@ -453,6 +453,7 @@ namespace Simplog.Data.CommonDataModel
             modelBuilder.Configurations.Add(new CardContactAdditionalServiceMap()); 
             modelBuilder.Configurations.Add(new UserLastSettingsMap());
             modelBuilder.Configurations.Add(new CustomerOpenFilesAmountMap());
+            modelBuilder.Configurations.Add(new CustomsInterfaceMap());
             modelBuilder.Configurations.Add(new TariffCarrierTranslationMap());
             modelBuilder.Configurations.Add(new VatUniquePartnerTypeMap());
             modelBuilder.Configurations.Add(new WarehouseWeightMeasurementMap());

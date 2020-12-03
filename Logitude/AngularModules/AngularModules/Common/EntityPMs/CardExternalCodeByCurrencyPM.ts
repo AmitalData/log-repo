@@ -98,7 +98,10 @@ export class CardExternalCodeByCurrencyPM {
     public UniqueKey: string;
 	 	
     public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
+       if(!this.DisableMarkAsDirty)
+       {
         this.IsDirty = true;
 		  if (this.EntityParentPM) {
             this.EntityParentPM.MarkAsDirty();
@@ -108,6 +111,7 @@ export class CardExternalCodeByCurrencyPM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "CardExternalCodeByCurrency");
            
         }
+	 }
     }
     private MyClone: CardExternalCodeByCurrencyPM;
 

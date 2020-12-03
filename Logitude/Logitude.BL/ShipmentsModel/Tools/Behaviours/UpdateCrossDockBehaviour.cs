@@ -64,6 +64,10 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviour
             UpdateWareHouseEntryPartners();
             ConnectWarehouseReleaseToShipment();
         }
+        public void Trace(ShipmentTracing shipmentTracing)
+        {
+            shipmentTracing.TraceTerminalData();
+        }
         private void UpdateShipmentWarehouseLegData()
         {
             if (shipmentPM.IsUpdateWarehouseLegData)

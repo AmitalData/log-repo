@@ -26,6 +26,7 @@ namespace Logitude.Infrastructure.BL
                 Code = "TST", 
                 Name = "Test Toggle", 
                 SearchFields = "TST,Test Toggle", 
+                Description = "Test Toggle", 
 			});
 			 
             all.Add(new ToggleDetails()
@@ -121,6 +122,13 @@ namespace Logitude.Infrastructure.BL
 			 
             all.Add(new ToggleDetails()
             {    
+                Code = "KPI", 
+                Name = "KPI Document Fields", 
+                SearchFields = "KPI,KPI Document Fields", 
+			});
+			 
+            all.Add(new ToggleDetails()
+            {    
                 Code = "STR", 
                 SearchFields = "STR,Storage Pricing", 
                 Name = "Storage Pricing", 
@@ -135,16 +143,16 @@ namespace Logitude.Infrastructure.BL
 			 
             all.Add(new ToggleDetails()
             {    
-                Code = "KPI", 
-                Name = "KPI Document Fields", 
-                SearchFields = "KPI,KPI Document Fields", 
+                Name = "Shipment Warning Checkbox", 
+                Code = "SWC", 
+                SearchFields = "SWC,Shipment Warning Checkbox", 
 			});
 			 
             all.Add(new ToggleDetails()
             {    
-                Name = "Shipment Warning Checkbox", 
-                Code = "SWC", 
-                SearchFields = "SWC,Shipment Warning Checkbox", 
+                Code = "AMS", 
+                Name = "AMS in Export", 
+                SearchFields = "AMS,AMS in Export", 
 			});
 			 
             all.Add(new ToggleDetails()
@@ -153,6 +161,31 @@ namespace Logitude.Infrastructure.BL
                 SearchFields = "API,API Update", 
                 Name = "API Update", 
 			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "LIC", 
+                Name = "License Management", 
+                SearchFields = "LIC,License Management", 
+			});
+			 
+
+            all.Add(new ToggleDetails()
+            {    
+                Name = "CRM Customer Quick Search", 
+                Code = "CQS", 
+                SearchFields = "CQS,CRM Customer Quick Search", 
+                Description = "CRM Customer Quick Search", 
+			});
+
+            all.Add(new ToggleDetails()
+            {    
+                Name = "Charges Types Direction Restrictions", 
+                Code = "CTR", 
+                SearchFields = "CTR,Charges Types Direction Restrictions", 
+                Description = "Charges Types Direction Restrictions", 
+			});
+
 			
             return all;
        }
@@ -161,12 +194,13 @@ namespace Logitude.Infrastructure.BL
         {   
 		    newPoco.Code = this.Code;  
 		    newPoco.Name = this.Name;  
-			newPoco.SearchFields = GetSearchFields(this);    
+			newPoco.SearchFields = GetSearchFields(this);   
+		    newPoco.Description = this.Description;   
         }
 
 		public string GetSearchFields(Toggle rec)
         {   
-           return String.Concat(rec.Code,",",rec.Name,",");
+           return String.Concat(rec.Code,",",rec.Name,",",rec.Description,",");
         }
    }
 }

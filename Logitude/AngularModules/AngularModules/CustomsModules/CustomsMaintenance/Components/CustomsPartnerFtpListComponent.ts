@@ -1,41 +1,28 @@
-
-
-import { Component, Output, EventEmitter, OnInit, ComponentRef } from '@angular/core';
-import { EntityArgs } from '../../../Infrastructure/DataContracts/EntityArgs';
-import { AppTool, ArrayTool } from '../../../Infrastructure/Tools';
-import { FeatureLocator } from '../../../Infrastructure/Utilities/FeatureLocator';
+import { Component, OnInit } from '@angular/core';
+import { AppTool } from '../../../Infrastructure/Tools';
 import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator';
-import { LogTab } from '../../../Infrastructure/Components/LogitudeComponents/LogTabsComponent';
 import { TextCodeTranslator } from '../../../Infrastructure/Utilities/TextCodeTranslator';
 import { CustomsPartnerFtpPM } from '../../../Customs/EntityPMs/CustomsPartnerFtpPM';
 import { CustomsPartnerFtpList } from '../../../Customs/EntityLists/CustomsPartnerFtpList';
-
 import { BaseComponent } from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { ObservableCollection } from '../../../Infrastructure/Utilities/ObservableCollection';
 import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
-
 import { CustomsPartnerFtpPMService } from '../../../Customs/Services/StandardPMs/CustomsPartnerFtpPMService';
 import { CustomsPartnerFtpListService } from '../../../Customs/Services/StandardLists/CustomsPartnerFtpListService';
-
 import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
-
-import { ApiQueryFilters } from '../../../Infrastructure/DataContracts/ApiQueryFilters';
 import { EntityResourceService } from '../../../Infrastructure/Services/EntityResourceService';
 import { CustomsPartnerFtpExtendedPMService } from '../../../Customs/Services/ExtendedPMs/CustomsPartnerFtpExtendedPMService';
-import { RegionList } from '../../../Common/EntityLists/RegionList';
 import { FTPDetailPMService } from '../../../Common/Services/StandardPMs/FTPDetailPMService';
 import { FTPDetailPM } from '../../../common/EntityPMs/FTPDetailPM';
-import { retry } from 'rxjs/operators';
-import { Jsonp } from '@angular/http';
+import { KeyValuePair } from '../../CustomsCourier/Components/CourierWorkSheet/CourierWorksheetComponent';
 
-@Component({
-    
+@Component({    
     templateUrl: './CustomsPartnerFtpListComponent.html',
 })
 /// itzik:  bad pattren - Due Design paper - How to copy from  CustomsDocumentsDefinitionComponent - DING DING DING SHAME SHAME!!!
-export class CustomsPartnerFtpListComponent
-    extends BaseComponent
-    implements OnInit {
+export class CustomsPartnerFtpListComponent extends BaseComponent implements OnInit {
+  public IsDisplayOnly: boolean = false;
+
     ngOnInit(): void {
        
     }
@@ -54,9 +41,9 @@ export class CustomsPartnerFtpListComponent
     public _FetchCustomsPartnerFtpResultList: ObservableCollection ;
     
     public ValidationErrorsList: string[] = [];
-    _TypeCodeItems: any[] = [];
-    _InterfaceNameItems: any[] = [];
-    _PartnerCodeItems: any[] = [];
+    _TypeCodeItems: KeyValuePair[] = [];
+    _InterfaceNameItems: KeyValuePair[] = [];
+    _PartnerCodeItems: KeyValuePair[] = [];
     _InterfaceDetailsItems: InterfaceDetails[];
     _InEditMode: boolean = false;
 
@@ -90,7 +77,7 @@ export class CustomsPartnerFtpListComponent
                 this._PartnerCodeItems = screenOption.PartnerCodeItems;
                 //this._InterfaceNameItems = screenOption.InterfaceNameItems;
                 this._InterfaceNameItems = [];
-                this._InterfaceNameItems.push({ Key: '', Value: '' });
+                this._InterfaceNameItems.push(new KeyValuePair('',''));
                 this._InterfaceDetailsItems = [];
                 let listInterfaceDetailsItems: any[] = screenOption.InterfaceDetailsItems;
                 listInterfaceDetailsItems.forEach(r => {
@@ -99,7 +86,7 @@ export class CustomsPartnerFtpListComponent
                     let val = r.Value;
 
                     let myInterfaceDetails: InterfaceDetails = JSON.parse(val);
-                    this._InterfaceNameItems.push({ Key: myInterfaceDetails.Code, Value: myInterfaceDetails.Name });
+                    this._InterfaceNameItems.push(new KeyValuePair(myInterfaceDetails.Code,myInterfaceDetails.Name));
                     this._InterfaceDetailsItems.push(myInterfaceDetails);
                 });
                 this._TypeCodeItems = screenOption.TypeCodeItems;
@@ -199,7 +186,7 @@ export class CustomsPartnerFtpListComponent
     }
 
    
-    private AddCustomsPartnerFtpCommand() {
+    AddCustomsPartnerFtpCommand() {
         this._IsNew = true;
         this._CustomsPartnerFtpPM = new CustomsPartnerFtpPM();
         this._CustomsPartnerFtpPM.Tenant = SessionLocator.Tenant;
@@ -208,7 +195,7 @@ export class CustomsPartnerFtpListComponent
         this._InEditMode = true;
       //  this._CustomsPartnerFtpResultList.Insert(new CustomsPartnerFtpVM(new CustomsPartnerFtpPM(), true));
     }
-    private DeleteButtonClicked(item: CustomsPartnerFtpList) {
+    DeleteButtonClicked(item: CustomsPartnerFtpList) {
         this._IsNew = false;
         //this._CustomsPartnerFtpResultList.Remove(item);
         //.ChangeSetOp == "Delete" || jItem.ChangeSetOp == 3)) {
@@ -228,7 +215,7 @@ export class CustomsPartnerFtpListComponent
         });
         
     }
-    private EditButtonClicked(item: CustomsPartnerFtpList) {
+     EditButtonClicked(item: CustomsPartnerFtpList) {
         this._IsNew = false;
         
         this.ClearScreen();
@@ -291,18 +278,34 @@ export class CustomsPartnerFtpListComponent
     public get Tenant() { return this._CustomsPartnerFtpPM.Tenant; }
     public set Tenant(newValue: number) { if (this._CustomsPartnerFtpPM.Tenant != newValue) { this._CustomsPartnerFtpPM.Tenant = newValue } }
 
-
-
+    //_SelectedItemTypeCode: KeyValuePair;
+    public get SelectedItemTypeCode(): KeyValuePair { return this._TypeCodeItems.filter(r => r.Key == this._CustomsPartnerFtpPM.TypeCode)[0]; }
+    public set SelectedItemTypeCode(newValue: KeyValuePair) {
+        //this._SelectedItemTypeCode = newValue;
+        this.TypeCode = /*this._SelectedItemTypeCode*/newValue.Key;
+    }
     public get TypeCode() { return this._CustomsPartnerFtpPM.TypeCode; }
-    public set TypeCode(newValue: string) { if (this._CustomsPartnerFtpPM.TypeCode != newValue) { this._CustomsPartnerFtpPM.TypeCode = newValue; this.IsRequierd();} }
+    public set TypeCode(newValue: string) {
+        if (this._CustomsPartnerFtpPM.TypeCode != newValue) {
+            this._CustomsPartnerFtpPM.TypeCode = newValue; this.IsRequierd();
+        }
+    }
 
 
+    public get SelectedItemPartnerCode(): KeyValuePair { return this._PartnerCodeItems.filter(r => r.Key == this._CustomsPartnerFtpPM.PartnerCode)[0]; }
+    public set SelectedItemPartnerCode(newValue: KeyValuePair) {
+        this.PartnerCode = newValue.Key;
+    }
 
     public get PartnerCode() { return this._CustomsPartnerFtpPM.PartnerCode; }
     public set PartnerCode(newValue: string) { if (this._CustomsPartnerFtpPM.PartnerCode != newValue) { this._CustomsPartnerFtpPM.PartnerCode = newValue; this.IsRequierd();} }
 
 
-
+    
+    public get SelectedItemInterfaceName(): KeyValuePair { return this._InterfaceNameItems.filter(r => r.Key == this._CustomsPartnerFtpPM.InterfaceName)[0]; }  
+    public set SelectedItemInterfaceName(newValue: KeyValuePair) {
+        this.InterfaceName = newValue.Key;
+    }
     public get InterfaceName() { return this._CustomsPartnerFtpPM.InterfaceName; }
     public set InterfaceName(newValue: string) {
         if (this._CustomsPartnerFtpPM.InterfaceName != newValue) {
@@ -352,17 +355,17 @@ export class CustomsPartnerFtpListComponent
         //this.Password = this.User = null;
 
     }
-    TypeCodeChanged(selectControl: any) {
-        this._CustomsPartnerFtpPM.TypeCode = selectControl.value;
+    TypeCodeChanged(/*selectControl: any*/TypeCode) {
+        this._CustomsPartnerFtpPM.TypeCode = /*selectControl.value*/TypeCode;
         this.IsRequierd()
     }
-    PartnerCodeChanged(selectControl: any) {
-        this._CustomsPartnerFtpPM.PartnerCode = selectControl.value;
+    PartnerCodeChanged(/*selectControl: any*/PartnerCode) {
+        this._CustomsPartnerFtpPM.PartnerCode = /*selectControl.value*/PartnerCode;
         this.IsRequierd()
     }
     _InterfaceDetail: InterfaceDetails;
-    InterfaceNameChanged(selectControl: any) {
-        this._CustomsPartnerFtpPM.InterfaceName = selectControl.value;
+    InterfaceNameChanged(/*selectControl: any*/ InterfaceKey) {
+        this._CustomsPartnerFtpPM.InterfaceName = InterfaceKey/*selectControl.value*/;
         this.IsRequierd()
         this.SetFromServer();
     }

@@ -22,6 +22,8 @@ import {CustomsVendorPM} from '../../../../Customs/EntityPMs/CustomsVendorPM';
 })
 
 export class VendorEditComponent extends BaseComponent {
+  public right: any;
+
     @ViewChildren(LocationDirective) public AllLocations: QueryList<LocationDirective>;
     public EntityPM: CustomsVendorPM;
     public ObjectTableName: string = "Customs.CustomsVendor";

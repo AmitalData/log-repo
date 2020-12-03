@@ -86,8 +86,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
                 List<ObjectFieldPM> objectFieldPMs = new List<ObjectFieldPM>();
                 if (!isParentTenant)
                 {
-                    ObjectFieldQuery objectFieldQuery = new ObjectFieldQuery(authToken.Tenant);
-                    objectFieldPMs = objectFieldQuery.GetCustomObjectFieldsByTenantAndObjectTable(authToken.Tenant, "Shipment");
+                    objectFieldPMs = GetCustomObjectFields(DWOTId, authToken.Tenant);
                 }
        
 
@@ -143,6 +142,19 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
 
         }
 
+        private List<ObjectFieldPM> GetCustomObjectFields(string DWOTId, int tenant)
+        {
+            List<ObjectFieldPM> objectFieldPMs = new List<ObjectFieldPM>();
+            ObjectFieldQuery objectFieldQuery = new ObjectFieldQuery(tenant);
+            DWObjectTableQuery dWObjectTableQuery = new DWObjectTableQuery(tenant);
+            DWObjectTablePM dWObjectTablePM = dWObjectTableQuery.GetSinglePM(DWOTId, tenant);
+            if (dWObjectTablePM != null) objectFieldPMs = objectFieldQuery.GetCustomObjectFieldsByTenantAndObjectTable(tenant, "Shipment");
+
+            //if (dWObjectTablePM != null && dWObjectTablePM.RecordType == "Master")
+            //    objectFieldPMs.AddRange(objectFieldQuery.GetCustomObjectFieldsByTenantAndObjectTable(tenant, "Shipment"));
+
+            return objectFieldPMs;
+        }
         private void ResolveDWCustomObjectFields(List<ObjectFieldPM> objectFieldPMs, DWFieldsGroup MyGroup, int tenant)
         {
             if(objectFieldPMs!=null && objectFieldPMs.Count > 0) {
@@ -177,7 +189,29 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
             }
         }
 
-        
+        public HttpResponseMessage getDWObjectFieldsWithChildren()
+        {
+            try
+            {
+                string logKey = PerformanceLogger.LogCurrentTime();
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+
+                DWObjectFieldQuery dWObjectFieldQuery = new DWObjectFieldQuery(authToken.Tenant);
+                List<DWObjectFieldPM> dWObjectFieldPM = dWObjectFieldQuery.GetDWObjectFieldWithChildrenFieldsPMsByTenant(0).ToList();
+
+                PerformanceLogger.AddServerExecutionTimeHeader(logKey);
+
+                return Request.CreateResponse(HttpStatusCode.OK, dWObjectFieldPM);
+
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+
+        }
 
         public HttpResponseMessage getDWObjectFieldsWithChildrenByDWTableId(string DWOTId)
         {

@@ -30,6 +30,7 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
 
             MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.EnglishName);
             MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.LocalName);
+            MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.Code);
 
             entityPM.SearchFields = mySearchFields;
             entityPoco.SearchFields = mySearchFields;

@@ -184,6 +184,12 @@ export class AutomationsSettingsComponent implements OnInit {
 
                 });
 
+                if (!SessionLocator.LoggedUserPM.IsCustomerCare) {
+                    this.AutomationList = this.AutomationList.filter(d => d.ResultCode != "SENDINTERFACE");
+                }
+
+
+
                 this.RefreshAutomationList("OnCreate");
                 this.RefreshAutomationList("OnUpdate");
                 this.CurrentSession.StopBusyIndicator();
@@ -283,7 +289,7 @@ export class AutomationsSettingsComponent implements OnInit {
         windowArgs.Mode = "Add";
         windowArgs.IsNewEntity = true;
         var logWindow = new LogitudeWindow();
-        logWindow.Width = 820;
+        logWindow.Width = 870;
         logWindow.Height = 815;
         logWindow.Title = "Add " + this.EntityDisplayName+" Automation";
         logWindow.IsShowCloseButton = true;
@@ -305,7 +311,7 @@ export class AutomationsSettingsComponent implements OnInit {
         windowArgs.IsNewEntity = false;
 
         var logWindow = new LogitudeWindow();
-        logWindow.Width = 820;
+        logWindow.Width = 870;
         logWindow.Height = 815;
         logWindow.Title = "Edit " + this.EntityDisplayName + " Automation";
         logWindow.IsShowCloseButton = true;

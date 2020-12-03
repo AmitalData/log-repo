@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Script DBType="Main" Module="Customs" Pre="true">
+  <Sql Version="1">
+  </Sql>
+
+  <Oracle Version="4">
+    <![CDATA[
+ declare
+ n int := 0;
+begin
+  select count(*) into n
+  from EXCEPTIONREASONS
+ where code='901';
+ if n = 0 then
+ 
+INSERT INTO EXCEPTIONREASONS VALUES ('901',1,'','נדרש תצהיר יבואן',1,null,'נדרש תצהיר יבואן,901');commit;
+  end if;
+end;
+
+    ]]>
+  </Oracle>
+</Script>

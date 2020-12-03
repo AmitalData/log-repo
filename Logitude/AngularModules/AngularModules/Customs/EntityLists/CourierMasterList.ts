@@ -41,6 +41,24 @@ export class CourierMasterList {
 	EstimatedArrivalTimeOnly: Date;
 	WeightValueCode: string;
 	WeightValueName: string;
+	StorageSiteCode: string;
+	StorageSiteName: string;
+	TruckerId: string;
+	IntegratorCode: string;
+	IntegratorName: string;
+	IntegratorNumber: string;
+	IsReadyForInvoice: boolean;
+	IsAllDecClosedForFollowUp: boolean;
+	CalcClosedForFollowUp: number;
+	CalcMissingClassification: number;
+	CalcMissingImporterId: number;
+	CalcPendingCustoms: number;
+	CalcPending900: number;
+	CalcSuspendedDeclarations: number;
+	NoOfCourierHawb: string;
+	IsAutomaticManifestSent: boolean;
+	IsEstimatedArrivalToDay: boolean;
+	EstimatedArrivalColor: string;
 	
 }
  

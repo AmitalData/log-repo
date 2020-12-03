@@ -64,7 +64,10 @@ export class CustomerDepositionPM {
     public OldEntityPM: CustomerDepositionPM;
 		
     public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
+       if(!this.DisableMarkAsDirty)
+       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -72,6 +75,7 @@ export class CustomerDepositionPM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "CustomerDeposition");
            
         }
+	 }
     }
     private MyClone: CustomerDepositionPM;
 

@@ -20,17 +20,69 @@ namespace Logitude.Customs.BL
    {
        public List<TapagTypeDetails> GetAll()
        {
-		    var all = new List<TapagTypeDetails>(); 
+		    var all = new List<TapagTypeDetails>();  
+            all.Add(new TapagTypeDetails()
+            {    
+                Code = "1", 
+                SearchFields = "1,,גרעון", 
+                Inactive = false, 
+                LocalName = "גרעון", 
+			});
+			 
+            all.Add(new TapagTypeDetails()
+            {    
+                Code = "2", 
+                SearchFields = "2,,פיקדון", 
+                Inactive = false, 
+                LocalName = "פיקדון", 
+			});
+			 
+            all.Add(new TapagTypeDetails()
+            {    
+                Code = "3", 
+                SearchFields = "3,,תביעה", 
+                Inactive = false, 
+                LocalName = "תביעה", 
+			});
+			 
+            all.Add(new TapagTypeDetails()
+            {    
+                Code = "4", 
+                SearchFields = "4,,ערבות", 
+                Inactive = false, 
+                LocalName = "ערבות", 
+			});
+			 
+            all.Add(new TapagTypeDetails()
+            {    
+                Code = "5", 
+                SearchFields = "5,,בקשה לפיקדון", 
+                Inactive = false, 
+                LocalName = "בקשה לפיקדון", 
+			});
+			 
+            all.Add(new TapagTypeDetails()
+            {    
+                Code = "6", 
+                SearchFields = "6,, בקשה לערבות", 
+                Inactive = false, 
+                LocalName = " בקשה לערבות", 
+			});
+			
             return all;
        }
 
 	    public void MapPoco(TapagType newPoco)
-        {    
+        {   
+		    newPoco.Code = this.Code;  
+			newPoco.SearchFields = GetSearchFields(this);   
+		    newPoco.Inactive = this.Inactive;  
+		    newPoco.LocalName = this.LocalName;   
         }
 
 		public string GetSearchFields(TapagType rec)
         {   
-           return string.Empty;
+           return String.Concat(rec.Code,",",rec.Inactive,",",rec.LocalName,",");
         }
    }
 }

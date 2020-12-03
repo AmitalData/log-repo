@@ -1,17 +1,26 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild, AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder } from '@angular/forms';
-import { CargoTrackingSearchService } from 'src/CargoTracking/Services/Others/CargoTrackingSearchService';
-import { CargoTrackingShipmentList } from 'src/CargoTracking/EntityLists/CargoTrackingShipmentList';
+import { CargoTrackingSearchService } from '../../../../Services/Others/CargoTrackingSearchService';
+import { CargoTrackingShipmentList } from '../../../../EntityLists/CargoTrackingShipmentList';
+import { SessionInfo } from '../../../../../Infrastructure/Utilities/SessionInfo';
+import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
+import { ShipmentDataSource } from '../../../../DataContracts/CargoTrackingShipmentDataSource';
+import { CargoTrackingShipmentFilters } from '../../../../DataContracts/CargoTrackingShipmentFilters';
 import { CargoTrackingBrandingData } from 'src/CargoTracking/DataContracts/CargoTrackingBrandingData';
 
-
 @Component({
-    selector: 'ShipmentsList',
+    selector: 'ShipmentsListComponent',
     templateUrl: './ShipmentsListComponent.html',
-    styleUrls: ['./ShipmentsListComponent.min.css']
+    styleUrls: [
+        './ShipmentsListComponent.css',
+        './ShipmentsListComponent.mobile.css',
+        './ShipmentsListComponent.tablet.css'
+    ],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+
 })
-export class ShipmentsListComponent 
+export class ShipmentsListComponent implements AfterViewInit
 {
 
 
@@ -20,36 +29,76 @@ export class ShipmentsListComponent
     FilteredItems: any[] = [];
     searchForm;
     Shipments: CargoTrackingShipmentList[] = [];
- 
-    isLoading: boolean  = false;
-    isFiltersSideBarOpened: boolean  = false;
-    isFilter1Expanded: boolean  = false;
-    isFilter2Expanded: boolean  = false;
-    isAbdullahCompanyChecked: boolean  = true;
-    showSortDetailsMenu: boolean  = false;
-    showShipmentDetailsMenu: boolean  = false;
+
+    isLoading: boolean = false;
+    isFiltersSideBarOpened: boolean = false;
+    isFilter1Expanded: boolean = false;
+    isFilter2Expanded: boolean = false;
+    isAbdullahCompanyChecked: boolean = true;
+    showSortDetailsMenu: boolean = false;
+    showShipmentDetailsMenu: boolean = false;
+    InvitedCustomersIds: string[];
+    ShipmentsDS;
+    @ViewChild(CdkVirtualScrollViewport) virtualScroll: CdkVirtualScrollViewport;
+
     get tenant(){
         return CargoTrackingBrandingData.Tenant;
     }
+
     constructor(private router: Router,
         private route: ActivatedRoute,
         private formBuilder: FormBuilder,
+        private changeDetector: ChangeDetectorRef,
         private searchService: CargoTrackingSearchService)
     {
- 
-        // this.listenToRouterEvents();
-        this.InitForm();
-        this.SearchText = 'abed';
-        this.Search();
+
+
+        this.InitComponent();
 
     }
+    ngAfterViewInit(): void
+    {
+        this.GetCompanyLoginsFromCache();
+    }
+
+    private InitComponent()
+    {
+
+        this.InitForm();
+
+    }
+
+    private GetCompanyLoginsFromCache()
+    {
+        SessionInfo.LoggedUserCompanyLogins = JSON.parse(sessionStorage.getItem("LoggedUserCompanyLogins"));
+        console.log("[LoggedUserCompanyLogins]", SessionInfo.LoggedUserCompanyLogins);
+        this.GetInvitedCustomers();
+    }
+
+    private GetInvitedCustomers()
+    {
+        this.InvitedCustomersIds = SessionInfo.LoggedUserCompanyLogins
+            .filter(d => d.CardType == 'CS' && d.CardId != null && d.Tenant == this.tenant)
+            .map(d => d.CardId);
+        console.log("[Invited Customers]", this.InvitedCustomersIds);
+
+        this.LoadShipments();
+    }
+
+  
+
     private InitForm()
     {
         this.searchForm = this.formBuilder.group({
             SearchText: ''
+
         });
+
     }
  
+
+
+
     private _SearchText: string = '';
     public get SearchText(): string
     {
@@ -58,8 +107,9 @@ export class ShipmentsListComponent
     public set SearchText(v: string)
     {
         this._SearchText = v;
-        if (!this.SearchText)
-            this.Search();
+
+        // if (this.SearchText)
+        //     this.LoadShipments();
     }
 
     Clear()
@@ -67,6 +117,7 @@ export class ShipmentsListComponent
         this.SearchText = '';
         this.LoadShipments();
     }
+
     Search()
     {
         if (this.tenant!=null && this.SearchText) {
@@ -75,6 +126,8 @@ export class ShipmentsListComponent
         }
 
     }
+
+
 
 
     ItemClicked(item)
@@ -86,124 +139,191 @@ export class ShipmentsListComponent
     }
     LoadShipments()
     {
-
-        this.noResult = false;
-        var searchText = this._SearchText.trim().toLowerCase();
-        if (searchText) {
-            this.isLoading = true;
-            this.searchService.getShipments(searchText, this.tenant).subscribe((result: any) =>
-            {
-                this.isLoading = false;
-                console.log("[getShipments]", result);
-                this.Shipments = result;
-                this.noResult = this.Shipments.length == 0 && !!this.SearchText;
-
-            });
-        } else {
-            this.Shipments = [];
+        if (this.tenant) {
+            var shipmentFilters = this.BuildShipmentFilters();
+            if (this.ShipmentsDS) {
+                this.ShipmentsDS.ReloadData(shipmentFilters);
+                this.virtualScroll.scrollToIndex(0);
+            } else {
+                this.ShipmentsDS = new ShipmentDataSource(this.changeDetector, this.searchService, shipmentFilters, this);
+                this.changeDetector.detectChanges();
+            }
         }
-
     }
     references: string[];
+    isSortDescending: boolean = true;
+    SortClicked(){
+        this.isSortDescending = !this.isSortDescending;
+        this.LoadShipments();
+    }
+    private BuildShipmentFilters()
+    {
+        var shipmentFilters = new CargoTrackingShipmentFilters();
+        shipmentFilters.Tenant = this.tenant;
+        shipmentFilters.SearchText = this._SearchText ? this._SearchText.trim().toLowerCase() : '';
+        shipmentFilters.CustomersIds = this.InvitedCustomersIds;
+        shipmentFilters.CustomersIdsString = this.InvitedCustomersIds?.join(',');
+        shipmentFilters.SortDescending = this.isSortDescending;
+
+        this.SetTransportModeFilters(shipmentFilters);
+        this.SetDirectionFilters(shipmentFilters);
+        return shipmentFilters;
+    }
+
+    private SetDirectionFilters(shipmentFilters: CargoTrackingShipmentFilters)
+    {
+        var direction = "";
+        if (this.SelectedFilters.length > 0){
+            const directionsCodes = ['IM', 'EX'];
+            direction = this.SelectedFilters.filter(d => directionsCodes.includes(d.Code)).map(d => d.Code).join(',');
+        }
+        shipmentFilters.DirectionCodes = direction;
+    }
+
+    private SetTransportModeFilters(shipmentFilters: CargoTrackingShipmentFilters)
+    {
+        var transportMode = "";
+        if (this.SelectedFilters.length > 0){
+            const transportModeCodes = ['A', 'I', 'O'];
+            transportMode = this.SelectedFilters.filter(d => transportModeCodes.includes(d.Code)).map(d => d.Code).join(',');
+        }
+        shipmentFilters.TransportModeCodes = transportMode;
+    }
+
     SplitReference(reference: string)
     {
         this.references = reference != null ? reference.split(',') : null;
 
     }
- 
+
     GetModeIcon(mode: string)
     {
         var iconPath = "";
+        const Air = 'A';
+        const Ocean = 'O';
+        const InLand = 'I';
         switch (mode) {
-            case 'A':
+            case Air:
                 iconPath = "./assets/images/misc/plane.svg";
                 break;
-
-            case 'O':
+            case Ocean:
                 iconPath = "./assets/images/misc/ship.svg";
                 break;
-
-            case 'I':
+            case InLand:
                 iconPath = "./assets/images/misc/Truck.svg";
                 break;
-
             default:
                 break;
         }
-
         return iconPath;
     }
 
-    SearchFilters: SearchFilter[] = [
-        new SearchFilter('Import'),
-        new SearchFilter('Export'),
-        new SearchFilter('Air'),
-        new SearchFilter('Land'),
-        new SearchFilter('Sea'),
+    ToggleFilters: ToggleFilter[] = [
+        new ToggleFilter('IM', 'Import'),
+        new ToggleFilter('EX', 'Export'),
+        new ToggleFilter('A', 'Air'),
+        new ToggleFilter('I', 'Land'),
+        new ToggleFilter('O', 'Sea'),
     ];
 
-    SelectedFilters: SearchFilter[] = [];
-    SelectFilter(filter:SearchFilter ){
-        var item = this.SelectedFilters.find(d=>d.Name == filter.Name);
-        if(!item)
+    SelectedFilters: ToggleFilter[] = [];
+    SelectFilter(filter: ToggleFilter)
+    {
+        var item = this.SelectedFilters.find(d => d.Name == filter.Name);
+        if (!item)
             this.SelectedFilters.push(filter);
+
+        this.LoadShipments();
     }
-    DeselectFilter(filter:SearchFilter ){
-        var index = this.SelectedFilters.findIndex(d=>d.Name == filter.Name);
-        this.SelectedFilters.splice(index,1);
+    DeselectFilter(filter: ToggleFilter)
+    {
+        var index = this.SelectedFilters.findIndex(d => d.Name == filter.Name);
+        this.SelectedFilters.splice(index, 1);
+
+        this.LoadShipments();
+
     }
-    ClearFilters(){
+    ClearFilters()
+    {
         this.SelectedFilters = [];
+        this.LoadShipments();
     }
 
-    ApplyFilterButtonClicked() {
+    ApplyFilterButtonClicked()
+    {
         this.isFiltersSideBarOpened = false;
     }
-    SortMenuClicked(buttonCode: string){
-        console.log("sort by clicked, ",buttonCode);
+    SortMenuClicked(buttonCode: string)
+    {
+        this.isSortDescending = buttonCode == "desc";
+        this.LoadShipments();
     }
 
     lastClickedShipment: any;
-    ShipmentMoreButtonClicked(shipment: any , event: any){
+    ShipmentMoreButtonClicked(shipment: any, event: any)
+    {
         event.preventDefault();
         event.stopPropagation();
 
         this.lastClickedShipment = shipment;
         this.showShipmentDetailsMenu = true;
     }
-    ShipmentDetailsMenuClicked(buttonCode: string){
+    ShipmentDetailsMenuClicked(buttonCode: string)
+    {
         console.log("shipment more details", buttonCode, this.lastClickedShipment);
 
-        if(buttonCode == "set")
+        if (buttonCode == "set")
             this.lastClickedShipment.IsFavorite = true;
-        
+
     }
 
+    ShipmentsCount: number = 0;
+
+    ShipmentsLoadingError: string;
 }
 
-export class SearchFilter {
-    constructor(name: string) {
+export class ToggleFilter
+{
+    constructor(code: string, name: string)
+    {
+        this.Code = code;
         this.Name = name;
     }
-    
-
-    private _Name : string;
-    public get Name() : string {
-        return this._Name;
-    }
-    public set Name(v : string) {
-        this._Name = v;
-    }
 
 
-    
-    private _Count : number = 0;
-    public get Count() : number {
-        return this._Count;
+    private name: string;
+    public get Name(): string
+    {
+        return this.name;
     }
-    public set Count(v : number) {
-        this._Count = v;
+    public set Name(v: string)
+    {
+        this.name = v;
     }
-    
-    
+
+
+
+    private count: number = 0;
+    public get Count(): number
+    {
+        return this.count;
+    }
+    public set Count(v: number)
+    {
+        this.count = v;
+    }
+
+
+    private code: string;
+    public get Code(): string
+    {
+        return this.code;
+    }
+    public set Code(v: string)
+    {
+        this.code = v;
+    }
+
+
+
 }

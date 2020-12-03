@@ -20,6 +20,8 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Unifreight.BL.EntityQueryServices;
+using Unifreight.Data.AmitalModel;
 
 namespace Logitude.Customs.BL.Messaging.U2L.Entry
 {
@@ -29,7 +31,8 @@ namespace Logitude.Customs.BL.Messaging.U2L.Entry
         private LogitudeEntry _LogitudeEntry;
         private Def.EntityPMs.SupplierInvoicePM _MySupplierInvoicePM;
         private ICustomContext _context;
-
+        private GTRTRANQueryService _GTRTRANQueryService;
+        private AmitalContext _AmitalContext;
         public const string UpsertActionConst = "Logitude.Customs.BL.Messaging.U2L.Entry.EntryService.Upsert()";
         private DeclarationPM _MyDeclarationPM;
         private Stopwatch _Stopwatch;
@@ -116,6 +119,11 @@ namespace Logitude.Customs.BL.Messaging.U2L.Entry
                 }
             }
             myLOGIENTRY.LogitudeEntry[0].reshimon_num = declarationPM.DeclarationNumber;
+            
+            if (declarationPM.TaxationDateTime.HasValue)
+            {
+                myLOGIENTRY.LogitudeEntry[0].TaxationDateTime = declarationPM.TaxationDateTime.Value.Date.ToString("dd.MM.yy");
+            }
             myLOGIENTRY.LogitudeEntry[0].quantity = quantity.ToString();
             SupplierInvoicePM primaryInvoice = new SupplierInvoicePM();
 
@@ -178,6 +186,15 @@ namespace Logitude.Customs.BL.Messaging.U2L.Entry
                     mySupplierInvoice.IssueCountryCode = supplierInvoice.IssueCountryCode;
                     mySupplierInvoice.IsPreference = supplierInvoice.IsPreference.ToString();
                     mySupplierInvoice.PreferenceDocumentTypeCode = supplierInvoice.PreferenceDocumentTypeCode;
+                    if (declarationPM.Consignments != null && declarationPM.Consignments.Count() > 0 && declarationPM.Consignments[0].ConsignmentPackages != null && declarationPM.Consignments[0].ConsignmentPackages.Where(r => r.PackageMeasureQualifierCode == "1").Count() > 0)
+                    {
+                        var packageTypeCode = declarationPM.Consignments[0].ConsignmentPackages.Where(r => r.PackageMeasureQualifierCode == "1").FirstOrDefault().PackageTypeCode;
+                        if (!string.IsNullOrWhiteSpace(packageTypeCode))
+                        {
+                            //mySupplierInvoice.PackageTypeCode = GetTranslationP2L("IIGC", "CTBPACKTYPE", packageTypeCode);
+                            mySupplierInvoice.PackageTypeCode = packageTypeCode;
+                        }
+                    }
                     if (supplierInvoice.SupplierInvoiceItems != null && supplierInvoice.SupplierInvoiceItems.Count() > 0)
                     {
                         var items = new List<LogitudeSupplierAccount>();
@@ -186,17 +203,35 @@ namespace Logitude.Customs.BL.Messaging.U2L.Entry
                             var mySupplierInvoiceItem = new LogitudeSupplierAccount();
 
                             mySupplierInvoiceItem.Document = item.PreferenceDocumentNumber;
-                            mySupplierInvoiceItem.ItemNo = item.ItemCode;
+                            if(item.ItemCode != null && item.ItemCode.Length < 31) mySupplierInvoiceItem.ItemNo = item.ItemCode;
                             mySupplierInvoiceItem.OriginCcountryId = item.OriginCountryCode;
                             mySupplierInvoiceItem.PratMehes = item.ClassificationCode;
-                            if (item.InvoiceQuantity.HasValue) mySupplierInvoiceItem.AccountQuantity = item.InvoiceQuantity.ToString();
-                            if (item.StatisticQuantity.HasValue) mySupplierInvoiceItem.StatisticQuantity = item.StatisticQuantity.ToString();
                             mySupplierInvoiceItem.RateGroup = item.TradeAgreementCode;
-                            mySupplierInvoiceItem.SupplierAccountLine = item.CounterKey.ToString();
+                            mySupplierInvoiceItem.SupplierAccountLine = supplierInvoice.SequenceNumeric.ToString(); // item.CounterKey.ToString();
                             mySupplierInvoiceItem.SupplierItemLine = item.LineNumber.ToString();
                             mySupplierInvoiceItem.Unit = item.InvoiceQuantityType;
                             mySupplierInvoiceItem.StatisticQuantityUnit = item.StatisticQuantityType;
-
+                            mySupplierInvoiceItem.MarksAndNumbers = item.MarksAndNumbers;
+                            if (item.Weight.HasValue) mySupplierInvoiceItem.PackageWeight = item.Weight.ToString();
+                            if (item.PackageQuantity.HasValue && item.PackageQuantity > 0)
+                            {
+                                mySupplierInvoiceItem.PackageQuantity = item.PackageQuantity.ToString();
+                                if (item.ItemPrice.HasValue)mySupplierInvoiceItem.ItemPrice = (item.ItemPrice / item.PackageQuantity).ToString();
+                                if (item.WholeSaleItemPrice.HasValue) mySupplierInvoiceItem.WholeSaleItemPrice = (item.WholeSaleItemPrice / item.PackageQuantity).ToString();
+                                if (item.AdditionalQuantity.HasValue) mySupplierInvoiceItem.AdditionalQuantity = (item.AdditionalQuantity / item.PackageQuantity).ToString();
+                                if (item.InvoiceQuantity.HasValue) mySupplierInvoiceItem.AccountQuantity = (item.InvoiceQuantity / item.PackageQuantity).ToString();
+                                if (item.StatisticQuantity.HasValue) mySupplierInvoiceItem.StatisticQuantity = (item.StatisticQuantity / item.PackageQuantity).ToString();
+                            }
+                            else
+                            {
+                                if (item.ItemPrice.HasValue) mySupplierInvoiceItem.ItemPrice = item.ItemPrice.ToString();
+                                if (item.WholeSaleItemPrice.HasValue) mySupplierInvoiceItem.WholeSaleItemPrice = item.WholeSaleItemPrice.ToString();
+                                if (item.AdditionalQuantity.HasValue) mySupplierInvoiceItem.AdditionalQuantity = item.AdditionalQuantity.ToString();
+                                if (item.InvoiceQuantity.HasValue) mySupplierInvoiceItem.AccountQuantity = item.InvoiceQuantity.ToString();
+                                if (item.StatisticQuantity.HasValue) mySupplierInvoiceItem.StatisticQuantity = item.StatisticQuantity.ToString();
+                            }
+                            mySupplierInvoiceItem.WholeSaleItemPriceCurrencyCode = item.WholeSaleItemPriceCurrencyCode;
+                            mySupplierInvoiceItem.AdditionalQuantityType = item.AdditionalQuantityType;
                             items.Add(mySupplierInvoiceItem);
                         }
                         mySupplierInvoice.LogitudeSupplierAccount = items.ToArray();
@@ -265,8 +300,31 @@ namespace Logitude.Customs.BL.Messaging.U2L.Entry
 
                 // moran 25.5.16 - AMI-56624 <--
             }
+            
             var xml = XmlGenericUtil<LOGIENTRY>.SerializeObject(myLOGIENTRY);
             return xml;
+        }
+
+        private string GetTranslationP2L(string partnerID, string tableID, string partnerCode)
+        {
+
+            if (partnerID == null || tableID == null || partnerCode == null)
+            {
+                return ("");
+            }
+
+            using (_AmitalContext = AmitalContext.GetContext(_MyDeclarationPM.Tenant))
+            {
+                _GTRTRANQueryService = new GTRTRANQueryService(_AmitalContext);
+                var myGTRTRANPM = _GTRTRANQueryService.GetSingle(partnerID, tableID, partnerCode, null, true);
+
+                if (myGTRTRANPM == null)
+                {
+                    return ("");
+                }
+                return (myGTRTRANPM.LOCALCODE);
+            }
+
         }
 
         private void DeserilazeObject(string xmlLOGIENTRY)

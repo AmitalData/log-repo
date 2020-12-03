@@ -40,7 +40,7 @@ using Simplog.Data.ShipmentsModel;
         }
 
 		
-		public House GetHouseById(string Id,int Tenant)
+		public House GetHouseById(string Id,int Tenant,string ComputingPartnerName = "")
         { 
 		    try
             {
@@ -50,7 +50,7 @@ using Simplog.Data.ShipmentsModel;
 				 if (temp == null)
                     throw new ApplicationException("Shipment with Id " + Id + " doesn't exist");
 
-				return HouseDataMapping(temp,Tenant);
+				return HouseDataMapping(temp,Tenant,ComputingPartnerName);
 			}
             catch (Exception ex)
             {
@@ -59,7 +59,7 @@ using Simplog.Data.ShipmentsModel;
             }
         }
 		
-		public House GetHouseByShipmentNumber(string ShipmentNumber,int Tenant)
+		public House GetHouseByShipmentNumber(string ShipmentNumber,int Tenant,string ComputingPartnerName = "")
         { 
 		    try
             {
@@ -69,7 +69,7 @@ using Simplog.Data.ShipmentsModel;
 				 if (temp == null)
                     throw new ApplicationException("Shipment with ShipmentNumber " + ShipmentNumber + " doesn't exist");
 
-				return HouseDataMapping(temp,Tenant);
+				return HouseDataMapping(temp,Tenant,ComputingPartnerName);
 			}
             catch (Exception ex)
             {
@@ -90,7 +90,7 @@ using Simplog.Data.ShipmentsModel;
 				   if(MyEntityPM.ShipmentTypeId != null)
 				   {
 					   ShipmentTypeQueryService ShipmentTypeService0 = new ShipmentTypeQueryService(Tenant);
-					   					   temp.ShipmentType = ShipmentTypeService0.ShipmentTypeCustomDataMapping(MyEntityPM.ShipmentTypeId,Tenant); 
+					   					   temp.ShipmentType = ShipmentTypeService0.ShipmentTypeCustomDataMapping(MyEntityPM.ShipmentTypeId,Tenant,ComputingPartnerName); 
 			       
 					   				   }
 				    
@@ -99,7 +99,7 @@ using Simplog.Data.ShipmentsModel;
 				   if(MyEntityPM.TransportModeId != null)
 				   {
 					   TransportModeQueryService TransportModeService1 = new TransportModeQueryService(Tenant);
-					   					   temp.TransportMode = TransportModeService1.GetTransportModeById(MyEntityPM.TransportModeId,Tenant); 
+					   					   temp.TransportMode = TransportModeService1.GetTransportModeById(MyEntityPM.TransportModeId,Tenant,ComputingPartnerName); 
 			       
 					   				   }
 				    
@@ -108,7 +108,7 @@ using Simplog.Data.ShipmentsModel;
 				   if(MyEntityPM.ShipperId != null)
 				   {
 					   CardQueryService CardService2 = new CardQueryService(Tenant);
-					   					   temp.Shipper = CardService2.GetCardById(MyEntityPM.ShipperId,Tenant); 
+					   					   temp.Shipper = CardService2.GetCardById(MyEntityPM.ShipperId,Tenant,ComputingPartnerName); 
 			       
 					   				   }
 				   
@@ -119,7 +119,7 @@ using Simplog.Data.ShipmentsModel;
 				   if(MyEntityPM.ConsigneeId != null)
 				   {
 					   CardQueryService CardService3 = new CardQueryService(Tenant);
-					   					   temp.Consignee = CardService3.GetCardById(MyEntityPM.ConsigneeId,Tenant); 
+					   					   temp.Consignee = CardService3.GetCardById(MyEntityPM.ConsigneeId,Tenant,ComputingPartnerName); 
 			       
 					   				   }
 				   
@@ -130,7 +130,7 @@ using Simplog.Data.ShipmentsModel;
 				   if(MyEntityPM.CustomerId != null)
 				   {
 					   CardQueryService CardService4 = new CardQueryService(Tenant);
-					   					   temp.Customer = CardService4.GetCardById(MyEntityPM.CustomerId,Tenant); 
+					   					   temp.Customer = CardService4.GetCardById(MyEntityPM.CustomerId,Tenant,ComputingPartnerName); 
 			       
 					   				   }
 				    
@@ -139,7 +139,7 @@ using Simplog.Data.ShipmentsModel;
 				   if(MyEntityPM.FromPortId != null)
 				   {
 					   PortQueryService PortService5 = new PortQueryService(Tenant);
-					   					   temp.FromPort = PortService5.GetPortById(MyEntityPM.FromPortId,Tenant); 
+					   					   temp.FromPort = PortService5.GetPortById(MyEntityPM.FromPortId,Tenant,ComputingPartnerName); 
 			       
 					   				   }
 				    
@@ -148,7 +148,7 @@ using Simplog.Data.ShipmentsModel;
 				   if(MyEntityPM.ToPortId != null)
 				   {
 					   PortQueryService PortService6 = new PortQueryService(Tenant);
-					   					   temp.ToPort = PortService6.GetPortById(MyEntityPM.ToPortId,Tenant); 
+					   					   temp.ToPort = PortService6.GetPortById(MyEntityPM.ToPortId,Tenant,ComputingPartnerName); 
 			       
 					   				   }
 				    
@@ -157,7 +157,7 @@ using Simplog.Data.ShipmentsModel;
 				   if(MyEntityPM.GrossWeightUnitCode != null)
 				   {
 					   WeightUnitQueryService WeightUnitService7 = new WeightUnitQueryService(Tenant);
-					   					   temp.GrossWeightUnit = WeightUnitService7.GetWeightUnitByCode(MyEntityPM.GrossWeightUnitCode,Tenant); 
+					   					   temp.GrossWeightUnit = WeightUnitService7.GetWeightUnitByCode(MyEntityPM.GrossWeightUnitCode,Tenant,ComputingPartnerName); 
 			       
 					   				   }
 				    
@@ -166,7 +166,7 @@ using Simplog.Data.ShipmentsModel;
 				   if(MyEntityPM.ChargeableWeightUnitCode != null)
 				   {
 					   WeightUnitQueryService WeightUnitService8 = new WeightUnitQueryService(Tenant);
-					   					   temp.ChargeableWeightUnit = WeightUnitService8.GetWeightUnitByCode(MyEntityPM.ChargeableWeightUnitCode,Tenant); 
+					   					   temp.ChargeableWeightUnit = WeightUnitService8.GetWeightUnitByCode(MyEntityPM.ChargeableWeightUnitCode,Tenant,ComputingPartnerName); 
 			       
 					   				   }
 				    
@@ -175,7 +175,7 @@ using Simplog.Data.ShipmentsModel;
 				   if(MyEntityPM.VolumeUnitCode != null)
 				   {
 					   VolumeUnitQueryService VolumeUnitService9 = new VolumeUnitQueryService(Tenant);
-					   					   temp.VolumeUnit = VolumeUnitService9.GetVolumeUnitByCode(MyEntityPM.VolumeUnitCode,Tenant); 
+					   					   temp.VolumeUnit = VolumeUnitService9.GetVolumeUnitByCode(MyEntityPM.VolumeUnitCode,Tenant,ComputingPartnerName); 
 			       
 					   				   }
 				    
@@ -184,7 +184,7 @@ using Simplog.Data.ShipmentsModel;
 				   if(MyEntityPM.IncotermId != null)
 				   {
 					   IncotermQueryService IncotermService10 = new IncotermQueryService(Tenant);
-					   					   temp.Incoterm = IncotermService10.GetIncotermById(MyEntityPM.IncotermId,Tenant); 
+					   					   temp.Incoterm = IncotermService10.GetIncotermById(MyEntityPM.IncotermId,Tenant,ComputingPartnerName); 
 			       
 					   				   }
 				   
@@ -194,21 +194,21 @@ using Simplog.Data.ShipmentsModel;
 				if(MyEntityPM.ShipmentPackages != null && MyEntityPM.ShipmentPackages.Count > 0)
 				{
 					 AirPackageQueryService AirPackageService11 = new AirPackageQueryService(Tenant);
-					 temp.AirPackages = AirPackageService11.AirPackageCustomDataMapping(MyEntityPM,MyEntityPM.ShipmentPackages,Tenant);
+					 temp.AirPackages = AirPackageService11.AirPackageCustomDataMapping(MyEntityPM,MyEntityPM.ShipmentPackages,Tenant,ComputingPartnerName);
 				}
 
 							 
 				if(MyEntityPM.ShipmentPackages != null && MyEntityPM.ShipmentPackages.Count > 0)
 				{
 					 OceanOrInlandPackageQueryService OceanOrInlandPackageService11 = new OceanOrInlandPackageQueryService(Tenant);
-					 temp.OceanOrInlandPackages = OceanOrInlandPackageService11.OceanOrInlandPackageCustomDataMapping(MyEntityPM,MyEntityPM.ShipmentPackages,Tenant);
+					 temp.OceanOrInlandPackages = OceanOrInlandPackageService11.OceanOrInlandPackageCustomDataMapping(MyEntityPM,MyEntityPM.ShipmentPackages,Tenant,ComputingPartnerName);
 				}
 
 							 
 				if(MyEntityPM.ShipmentPackages != null && MyEntityPM.ShipmentPackages.Count > 0)
 				{
 					 ContainerQueryService ContainerService11 = new ContainerQueryService(Tenant);
-					 temp.Containers = ContainerService11.ContainerCustomDataMapping(MyEntityPM,MyEntityPM.ShipmentPackages,Tenant);
+					 temp.Containers = ContainerService11.ContainerCustomDataMapping(MyEntityPM,MyEntityPM.ShipmentPackages,Tenant,ComputingPartnerName);
 				}
 
 							 
@@ -218,7 +218,7 @@ using Simplog.Data.ShipmentsModel;
 				   if(MyEntityPM.BranchId != null)
 				   {
 					   BranchQueryService BranchService11 = new BranchQueryService(Tenant);
-					   					   temp.Branch = BranchService11.GetBranchById(MyEntityPM.BranchId,Tenant); 
+					   					   temp.Branch = BranchService11.GetBranchById(MyEntityPM.BranchId,Tenant,ComputingPartnerName); 
 			       
 					   				   }
 				    
@@ -227,7 +227,7 @@ using Simplog.Data.ShipmentsModel;
 				   if(MyEntityPM.DepartmentId != null)
 				   {
 					   DepartmentQueryService DepartmentService12 = new DepartmentQueryService(Tenant);
-					   					   temp.Department = DepartmentService12.GetDepartmentById(MyEntityPM.DepartmentId,Tenant); 
+					   					   temp.Department = DepartmentService12.GetDepartmentById(MyEntityPM.DepartmentId,Tenant,ComputingPartnerName); 
 			       
 					   				   }
 				   
@@ -243,7 +243,7 @@ using Simplog.Data.ShipmentsModel;
 				   if(MyEntityPM.DirectionId != null)
 				   {
 					   DirectionQueryService DirectionService13 = new DirectionQueryService(Tenant);
-					   					   temp.Direction = DirectionService13.GetDirectionById(MyEntityPM.DirectionId,Tenant); 
+					   					   temp.Direction = DirectionService13.GetDirectionById(MyEntityPM.DirectionId,Tenant,ComputingPartnerName); 
 			       
 					   				   }
 				   
@@ -256,21 +256,21 @@ using Simplog.Data.ShipmentsModel;
 				   if(MyEntityPM.CreatedByUserId != null)
 				   {
 					   UserQueryService UserService14 = new UserQueryService(Tenant);
-					   					   temp.CreatedByUser = UserService14.GetUserById(MyEntityPM.CreatedByUserId,Tenant); 
+					   					   temp.CreatedByUser = UserService14.GetUserById(MyEntityPM.CreatedByUserId,Tenant,ComputingPartnerName); 
 			       
 					   				   }
 				   
 				if(MyEntityPM.ShipmentPickUps != null && MyEntityPM.ShipmentPickUps.Count > 0)
 				{
 					 PickUpQueryService PickUpService15 = new PickUpQueryService(Tenant);
-					 temp.PickUps = PickUpService15.PickUpDataMapping(MyEntityPM.ShipmentPickUps,Tenant);
+					 temp.PickUps = PickUpService15.PickUpDataMapping(MyEntityPM.ShipmentPickUps,Tenant,ComputingPartnerName);
 				}
 
 							 
 				if(MyEntityPM.ShipmentDeliveries != null && MyEntityPM.ShipmentDeliveries.Count > 0)
 				{
 					 DeliveryQueryService DeliveryService15 = new DeliveryQueryService(Tenant);
-					 temp.Deliveries = DeliveryService15.DeliveryDataMapping(MyEntityPM.ShipmentDeliveries,Tenant);
+					 temp.Deliveries = DeliveryService15.DeliveryDataMapping(MyEntityPM.ShipmentDeliveries,Tenant,ComputingPartnerName);
 				}
 
 							  
@@ -286,21 +286,21 @@ using Simplog.Data.ShipmentsModel;
 				   if(MyEntityPM.ValueOfGoodsCurrencyId != null)
 				   {
 					   CurrencyQueryService CurrencyService16 = new CurrencyQueryService(Tenant);
-					   					   temp.ValueOfGoodsCurrency = CurrencyService16.GetCurrencyById(MyEntityPM.ValueOfGoodsCurrencyId,Tenant); 
+					   					   temp.ValueOfGoodsCurrency = CurrencyService16.GetCurrencyById(MyEntityPM.ValueOfGoodsCurrencyId,Tenant,ComputingPartnerName); 
 			       
 					   				   }
 				   
 				if(MyEntityPM.ShipmentReceivables != null && MyEntityPM.ShipmentReceivables.Count > 0)
 				{
 					 ReceivableQueryService ReceivableService17 = new ReceivableQueryService(Tenant);
-					 temp.Receivables = ReceivableService17.ReceivableDataMapping(MyEntityPM.ShipmentReceivables,Tenant);
+					 temp.Receivables = ReceivableService17.ReceivableDataMapping(MyEntityPM.ShipmentReceivables,Tenant,ComputingPartnerName);
 				}
 
 							 
 				if(MyEntityPM.ShipmentPayables != null && MyEntityPM.ShipmentPayables.Count > 0)
 				{
 					 PayableQueryService PayableService17 = new PayableQueryService(Tenant);
-					 temp.Payables = PayableService17.PayableDataMapping(MyEntityPM.ShipmentPayables,Tenant);
+					 temp.Payables = PayableService17.PayableDataMapping(MyEntityPM.ShipmentPayables,Tenant,ComputingPartnerName);
 				}
 
 							  
@@ -309,7 +309,7 @@ using Simplog.Data.ShipmentsModel;
 				   if(MyEntityPM.DimensionsUnitCode != null)
 				   {
 					   DimensionsUnitQueryService DimensionsUnitService17 = new DimensionsUnitQueryService(Tenant);
-					   					   temp.DimensionsUnit = DimensionsUnitService17.GetDimensionsUnitByCode(MyEntityPM.DimensionsUnitCode,Tenant); 
+					   					   temp.DimensionsUnit = DimensionsUnitService17.GetDimensionsUnitByCode(MyEntityPM.DimensionsUnitCode,Tenant,ComputingPartnerName); 
 			       
 					   				   }
 				   
@@ -324,7 +324,7 @@ using Simplog.Data.ShipmentsModel;
 				   if(MyEntityPM.SalesmanUserId != null)
 				   {
 					   UserQueryService UserService18 = new UserQueryService(Tenant);
-					   					   temp.Salesman = UserService18.GetUserById(MyEntityPM.SalesmanUserId,Tenant); 
+					   					   temp.Salesman = UserService18.GetUserById(MyEntityPM.SalesmanUserId,Tenant,ComputingPartnerName); 
 			       
 					   				   }
 				    
@@ -333,7 +333,7 @@ using Simplog.Data.ShipmentsModel;
 				   if(MyEntityPM.AccountManagerUserId != null)
 				   {
 					   UserQueryService UserService19 = new UserQueryService(Tenant);
-					   					   temp.AccountManager = UserService19.GetUserById(MyEntityPM.AccountManagerUserId,Tenant); 
+					   					   temp.AccountManager = UserService19.GetUserById(MyEntityPM.AccountManagerUserId,Tenant,ComputingPartnerName); 
 			       
 					   				   }
 				    
@@ -342,7 +342,7 @@ using Simplog.Data.ShipmentsModel;
 				   if(MyEntityPM.SpecialServicesTypeId != null)
 				   {
 					   SpecialServicesTypeQueryService SpecialServicesTypeService20 = new SpecialServicesTypeQueryService(Tenant);
-					   					   temp.SpecialServicesType = SpecialServicesTypeService20.GetSpecialServicesTypeById(MyEntityPM.SpecialServicesTypeId,Tenant); 
+					   					   temp.SpecialServicesType = SpecialServicesTypeService20.GetSpecialServicesTypeById(MyEntityPM.SpecialServicesTypeId,Tenant,ComputingPartnerName); 
 			       
 					   				   }
 				    
@@ -351,7 +351,7 @@ using Simplog.Data.ShipmentsModel;
 				   if(MyEntityPM.ShipperNotExporterId != null)
 				   {
 					   CardQueryService CardService21 = new CardQueryService(Tenant);
-					   					   temp.ShipperNotExporter = CardService21.GetCardById(MyEntityPM.ShipperNotExporterId,Tenant); 
+					   					   temp.ShipperNotExporter = CardService21.GetCardById(MyEntityPM.ShipperNotExporterId,Tenant,ComputingPartnerName); 
 			       
 					   				   }
 				    
@@ -360,7 +360,7 @@ using Simplog.Data.ShipmentsModel;
 				   if(MyEntityPM.AgentId != null)
 				   {
 					   CardQueryService CardService22 = new CardQueryService(Tenant);
-					   					   temp.Agent = CardService22.GetCardById(MyEntityPM.AgentId,Tenant); 
+					   					   temp.Agent = CardService22.GetCardById(MyEntityPM.AgentId,Tenant,ComputingPartnerName); 
 			       
 					   				   }
 				    
@@ -369,7 +369,7 @@ using Simplog.Data.ShipmentsModel;
 				   if(MyEntityPM.CustomAgentImportId != null)
 				   {
 					   CardQueryService CardService23 = new CardQueryService(Tenant);
-					   					   temp.CustomAgentImport = CardService23.GetCardById(MyEntityPM.CustomAgentImportId,Tenant); 
+					   					   temp.CustomAgentImport = CardService23.GetCardById(MyEntityPM.CustomAgentImportId,Tenant,ComputingPartnerName); 
 			       
 					   				   }
 				    
@@ -378,7 +378,7 @@ using Simplog.Data.ShipmentsModel;
 				   if(MyEntityPM.ReleasingAgentId != null)
 				   {
 					   CardQueryService CardService24 = new CardQueryService(Tenant);
-					   					   temp.ReleasingAgent = CardService24.GetCardById(MyEntityPM.ReleasingAgentId,Tenant); 
+					   					   temp.ReleasingAgent = CardService24.GetCardById(MyEntityPM.ReleasingAgentId,Tenant,ComputingPartnerName); 
 			       
 					   				   }
 				    
@@ -387,7 +387,7 @@ using Simplog.Data.ShipmentsModel;
 				   if(MyEntityPM.FreightForwarderId != null)
 				   {
 					   CardQueryService CardService25 = new CardQueryService(Tenant);
-					   					   temp.FreightForwarder = CardService25.GetCardById(MyEntityPM.FreightForwarderId,Tenant); 
+					   					   temp.FreightForwarder = CardService25.GetCardById(MyEntityPM.FreightForwarderId,Tenant,ComputingPartnerName); 
 			       
 					   				   }
 				   

@@ -34,7 +34,7 @@ export class PaymentOrderWebService {
             return this._http.post(
                 this._apiUrl + '/PostSendPaymentOrderRequest/',
                 JSON.stringify(entity),
-                { headers: authHeader }).map((res) => {
+                ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
 
                     serviceResponse.Result = res;
 
@@ -55,9 +55,7 @@ export class PaymentOrderWebService {
 
             var serviceResponse: ServiceResponse = new ServiceResponse();
 
-            return this._http.get(this._apiUrl + "/GetPaymentOrderByPaymentOrderConnection/?ConnectedEntityCode=" + connectedEntityCode + "&connectedEntityId=" + connectedEntityId + "&tenant=" + tenant, {
-                headers: authHeader
-            }).map(response => {
+            return this._http.get(this._apiUrl + "/GetPaymentOrderByPaymentOrderConnection/?ConnectedEntityCode=" + connectedEntityCode + "&connectedEntityId=" + connectedEntityId + "&tenant=" + tenant, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                 var allLists = response;
                 var _mappedListsArray: Array<PaymentOrderList> = [];

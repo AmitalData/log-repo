@@ -219,6 +219,7 @@ namespace CommunicationWorkerRole
                                                 //LogPM.CustomerId = CustomerId;
                                                 LogPM.QueueMessage = DictionaryJsonConverter.FromDictionaryToJson((Dictionary<string, string>)response.MessageValues);
                                                 LogPM.QueueType = "PrivateLabelApproval";
+                                                LogPM.Refrence = ForwarderShipment.ShipmentNumber;
                                                 apiLogsService.Create(LogPM);
                                             }
                                             var msg = "Start Sending Approval To Forwarder " + DateTime.Now;

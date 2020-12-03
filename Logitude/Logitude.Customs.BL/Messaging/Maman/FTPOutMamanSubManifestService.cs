@@ -24,7 +24,7 @@ namespace Logitude.Customs.BL.Messaging.Maman
     {
 
 
-        private string communicationSubject= "שידור פנימיים מסוכנים לממן";
+        public const string communicationSubject= "שידור פנימיים מסוכנים לממן";
         public void BuildCommunicationLog(byte[] bytearray, int tenant, string entityId, string FileName= null)///using  by FTPCommunicationWorkerRole
         {
             if (String.IsNullOrWhiteSpace(FileName))

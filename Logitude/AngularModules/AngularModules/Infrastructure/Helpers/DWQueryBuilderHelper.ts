@@ -56,7 +56,7 @@ export class DWQueryBuilderHelper   {
                 view.DimensionTableDisplayName = field.ParentCode;
             }
             if (field.FilterItems.length == 0) {
-                if (field.DWObjectTableCode && field.DWObjectTableCode.indexOf("DIM_") != -1) {
+                if (field.DWObjectTableCode && (field.DWObjectTableCode.indexOf("DIM_") != -1 && (field.DataTypeCode != "DateTime" || field.DWObjectTableCode.indexOf("DIM_Date") != -1))) {
                     if (view.Code == '[Full Date]') {
                         view.ParentDataTypeCode = "Date";
                         view.DataTypeCode = "Date";

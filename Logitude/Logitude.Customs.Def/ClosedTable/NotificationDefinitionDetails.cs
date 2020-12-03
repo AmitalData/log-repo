@@ -198,6 +198,38 @@ namespace Logitude.Customs.Def.ClosedTable
                 AssigneeNotificationTypeCode = "I",
             });
 
+            all.Add(new NotificationDefinitionDetails() // moran 28.4.19 - Task 51282 
+            {
+                Code = "5101A",
+                EnglishName = "Correspondence to Cargo Split Rejected",
+                LocalName = "התכתבות דחיית פיצול מטען",
+                AssigneeNotificationTypeCode = "I",
+            });
+
+            all.Add(new NotificationDefinitionDetails() // moran 28.4.19 - Task 51282 
+            {
+                Code = "5101E",
+                EnglishName = "Correspondence to legality ransom",
+                LocalName = "התכתבות כופר חוקיות",
+                AssigneeNotificationTypeCode = "I",
+            });
+
+            all.Add(new NotificationDefinitionDetails() // moran 28.4.19 - Task 51282 
+            {
+                Code = "5101R",
+                EnglishName = "Correspondence to request for document",
+                LocalName = "התכתבות לדרישת מסמך",
+                AssigneeNotificationTypeCode = "I",
+            });
+
+            all.Add(new NotificationDefinitionDetails() // mirit 25.8.19 - Task 55928 
+            {
+                Code = "5101F",
+                EnglishName = "Collateral Demand",
+                LocalName = "עמידה/אי עמידה בדרישה לבטוחה",
+                AssigneeNotificationTypeCode = "I",
+            });
+
             //all.Add(new NotificationDefinitionDetails() // Mirit 22.04.15 - Task 12713 //delete Task 20106
             //{
             //    Code = "5101I",
@@ -474,13 +506,56 @@ namespace Logitude.Customs.Def.ClosedTable
                 AssigneeNotificationTypeCode = "A",
             });
 
+
+            all.Add(new NotificationDefinitionDetails()  
+            {
+                Code = "5117A",
+                EnglishName = "Declaration Amendment Approved",
+                LocalName = "תיקון הצהרה אושרה",
+                AssigneeNotificationTypeCode = "A",
+            });
+
+            all.Add(new NotificationDefinitionDetails()
+            {
+                Code = "5117P",
+                EnglishName = "Declaration Amendment Partial Approval",
+                LocalName = "תיקון הצהרה אושרה חלקית",
+                AssigneeNotificationTypeCode = "A",
+            });
+
+            all.Add(new NotificationDefinitionDetails()
+            {
+                Code = "5117D",
+                EnglishName = "Declaration Amendment Denial",
+                LocalName = "תיקון הצהרה נדחתה",
+                AssigneeNotificationTypeCode = "A",
+            });
+
+
+            all.Add(new NotificationDefinitionDetails()
+            {
+                Code = "5117C",
+                EnglishName = "Declaration Amendment Denial",
+                LocalName = "תיקון הצהרה בוטלה",
+                AssigneeNotificationTypeCode = "A",
+            });
+
+            all.Add(new NotificationDefinitionDetails()
+            {
+                Code = "5117W",
+                EnglishName = "Amendment Waiting for customs response",
+                LocalName = "תיקון הצהרה ממתינה לטיפול מכס",
+                AssigneeNotificationTypeCode = "A",
+            });
+
             all.Add(new NotificationDefinitionDetails() // moran 13.7.15 - Task 14521  
             {
-                Code = "2754N",
-                EnglishName = "Declaration Re-Payment Needed",
+                Code = "2754C",
+                EnglishName = "Declaration Amendment Cancelled",
                 LocalName = "יש להגיש הצהרה מחדש",
                 AssigneeNotificationTypeCode = "A",
             });
+
 
             all.Add(new NotificationDefinitionDetails() // Mirit 10.08.15 - Task 15423 
             {
@@ -587,6 +662,43 @@ namespace Logitude.Customs.Def.ClosedTable
                 AssigneeNotificationTypeCode = "A",
             });
 
+            all.Add(new NotificationDefinitionDetails() // Mirit 04/08/19 Task 53620
+            {
+                Code = "5108N",
+                EnglishName = "Deficit Customs Answer",
+                LocalName = "החלטה בגין גרעון",
+                AssigneeNotificationTypeCode = "A",
+            });
+
+            all.Add(new NotificationDefinitionDetails()  
+            {
+                Code = "5117A",
+                EnglishName = "Declaration Amendment Approved",
+                LocalName = "תיקון הצהרה אושרה",
+                AssigneeNotificationTypeCode = "I",
+            });
+
+            all.Add(new NotificationDefinitionDetails()
+            {
+                Code = "5117P",
+                EnglishName = "Declaration Amendment Partial Approval",
+                LocalName = "תיקון הצהרה אושרה חלקית",
+                AssigneeNotificationTypeCode = "I",
+            });
+            all.Add(new NotificationDefinitionDetails()
+            {
+                Code = "5117D",
+                EnglishName = "Declaration Amendment Denial",
+                LocalName = "תיקון הצהרה נדחתה",
+                AssigneeNotificationTypeCode = "I",
+            });
+            all.Add(new NotificationDefinitionDetails()
+            {
+                Code = "5117C",
+                EnglishName = "Declaration Amendment Cancelled",
+                LocalName = "תיקון הצהרה בוטלה",
+                AssigneeNotificationTypeCode = "I",
+            });
             return all;
         }
 

@@ -99,7 +99,10 @@ export class TaskSchedulerHistoryPM {
     public OldEntityPM: TaskSchedulerHistoryPM;
 		
     public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
+       if(!this.DisableMarkAsDirty)
+       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -107,6 +110,7 @@ export class TaskSchedulerHistoryPM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "TaskSchedulerHistory");
            
         }
+	 }
     }
     private MyClone: TaskSchedulerHistoryPM;
 

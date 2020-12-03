@@ -53,6 +53,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataContracts\CargoTrackingShipmentFilters.cs" />
     <Compile Include="EntityPMs\Generated\CargoTrackingCardPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\CargoTrackingCountryPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\CargoTrackingHeaderEntityTypePM.Generated.cs" />

@@ -135,7 +135,7 @@ export class LogLovComponent implements OnInit {
     }
     //@Input() SelectedValue: any;
     constructor(public entityListService: EntityListService, private _entityResourceService: EntityResourceService) {
-        this.show = false;
+         this.show = false;
         this.isFirstTime = true;
         this.Detach = true;
 
@@ -162,8 +162,7 @@ export class LogLovComponent implements OnInit {
     }
 
     InitializeControl() {
-
-        this.LogLOVControlClass = "LogLOVControl";
+          this.LogLOVControlClass = "LogLOVControl";
         this.counterId = ControlsIdCounter.GetNextIdCounter();
         this.DivLogLovId = 'LogLov - ' + this.ObjectFieldName + '-' + this.counterId.toString();
         this.ElementId = 'Search - ' + this.ObjectFieldName + '-' + this.counterId.toString();

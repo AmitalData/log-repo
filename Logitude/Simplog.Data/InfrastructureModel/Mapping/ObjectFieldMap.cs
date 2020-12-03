@@ -56,7 +56,8 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             this.Property(t => t.Code).IsRequired().HasMaxLength(100).IsUnicode(false);
             this.Property(t => t.EnableFullscreenTextBox);
             this.Property(t => t.RecordType).HasMaxLength(100).IsUnicode(false);
-            this.Property(t => t.FieldCode).IsRequired().HasMaxLength(200).IsUnicode(false);
+            this.Property(t => t.FieldCode).HasMaxLength(200).IsUnicode(false);
+            //this.Property(t => t.FieldCode).IsRequired().HasMaxLength(200).IsUnicode(false);
             this.Property(t => t.FullNameTextCodeCode).HasMaxLength(100).IsUnicode(false);
             this.Property(t => t.HelpTextCodeCode).HasMaxLength(100).IsUnicode(false);
             this.Property(t => t.ListTextCodeCode).HasMaxLength(100).IsUnicode(false);
@@ -145,19 +146,19 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             this.Property(t => t.ShortNameTextCodeCode).HasColumnName("ShortNameTextCodeCode");
 
             //#if ORACLE_DB
-            string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
-            if (dbms == "oracle")
-            {
-                this.Property(t => t.DisplayInSearchWindowFiltersIndex).HasColumnName("SearchWindowFiltersIndex");
-                this.Property(t => t.AllowedInCustomerFieldsSettings).HasColumnName("AllowedInCustFieldsSettings");
-            }
-
-            //#else
-            else
-            {
+            //string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
+            //if (dbms == "oracle")
+            //{
                 this.Property(t => t.DisplayInSearchWindowFiltersIndex).HasColumnName("DisplayInSearchWindowFiltersIndex");
                 this.Property(t => t.AllowedInCustomerFieldsSettings).HasColumnName("AllowedInCustomerFieldsSettings");
-            }
+            //}
+
+            ////#else
+            //else
+            //{
+            //    this.Property(t => t.SearchWindowFiltersIndex).HasColumnName("DisplayInSearchWindowFiltersIndex");
+            //    this.Property(t => t.AllowedInCustFieldsSettings).HasColumnName("AllowedInCustomerFieldsSettings");
+            //}
 
             //#endif
 

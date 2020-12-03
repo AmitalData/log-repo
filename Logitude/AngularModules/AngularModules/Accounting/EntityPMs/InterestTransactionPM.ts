@@ -143,7 +143,10 @@ export class InterestTransactionPM {
     public OldEntityPM: InterestTransactionPM;
 		
     public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
+       if(!this.DisableMarkAsDirty)
+       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -151,6 +154,7 @@ export class InterestTransactionPM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "InterestTransaction");
            
         }
+       }
     }
 
     private MyClone: InterestTransactionPM;

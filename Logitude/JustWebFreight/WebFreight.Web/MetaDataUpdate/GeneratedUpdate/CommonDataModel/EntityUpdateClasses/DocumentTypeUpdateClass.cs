@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 {
    public class DocumentTypeUpdateClass
    {  		
-		public const string HashString = "95d7f67a42bbc4b3bbe2fe89e9f749d7";
+		public const string HashString = "b096068f8828a786b42ed823ed4c2aa5";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -1513,7 +1513,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInSearchWindowFilters =  true,
 					  						DisplayInSearchWindowFiltersIndex =  0,
-					  						DisplayInDocumentReferences =  false,
+					  						DisplayInDocumentReferences =  true,
 					  						NumberOfDigits =  0,
 					  						DigitsAfterPoint =  0,
 					  						InActive =  false,
@@ -1577,7 +1577,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInSearchWindowFilters =  true,
 					  						DisplayInSearchWindowFiltersIndex =  1,
-					  						DisplayInDocumentReferences =  false,
+					  						DisplayInDocumentReferences =  true,
 					  						NumberOfDigits =  0,
 					  						DigitsAfterPoint =  0,
 					  						InActive =  false,
@@ -2475,6 +2475,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
                  
 			   TextCode DocumentTypeEventsTextCode_TH5 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentType.TH.Events", DefaultText = "Events",LocalDefaultText = null, ObjectTableId = DocumentTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
 			   Feature DocumentTypeEventsFeature_TH5 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EVENTS", ObjectTableId = DocumentTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "DocumentType.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,DocumentTypeObjectTable);
+ 
+                 
+			   TextCode DocumentTypeDocumentTypeCustomsDataTextCode_TH6 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentType.TH.DocumentTypeCustomsData", DefaultText = "Document Type Customs Data",LocalDefaultText = "קשר סוג מסמך לשער עולמי", ObjectTableId = DocumentTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   Feature DocumentTypeDocumentTypeCustomsDataFeature_TH6 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DocumentType.Tab.DocumentTypeCustomsData", ObjectTableId = DocumentTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "DocumentTypeFeatures.DTCT", NameTextCodeDefaultText = "Document Type Customs Data", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,DocumentTypeObjectTable);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
@@ -2482,15 +2486,17 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			    
             AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "DTGC",HtmlComponentName = "DocumentTypeGeneralTabComponent",HtmlComponentUrl = "./InfrastructureModules/InfrastructureDocuments/Components/DocumentType/DocumentTypeGeneralTabComponent", FeatureId = DocumentTypeGeneralFeature_TH0.Id,FeatureUniqeCode = DocumentTypeGeneralFeature_TH0.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.Documents.DocumentTypeTabControl", ObjectTableId = DocumentTypeObjectTable.Id, TabNameTextCodeId = DocumentTypeGeneralTextCode_TH0.Id, TabNameTextCodeCode = DocumentTypeGeneralTextCode_TH0.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "DTSL",HtmlComponentName = "SharedLogisticsTabComponent",HtmlComponentUrl = "./InfrastructureModules/InfrastructureDocuments/Components/DocumentType/Tab/SharedLogisticsTabComponent", FeatureId = DocumentTypeSharedLogisticsFeature_TH1.Id,FeatureUniqeCode = DocumentTypeSharedLogisticsFeature_TH1.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.Documents.DocumentTypes.SharedLogisticsTabControl", ObjectTableId = DocumentTypeObjectTable.Id, TabNameTextCodeId = DocumentTypeSharedLogisticsTextCode_TH1.Id, TabNameTextCodeCode = DocumentTypeSharedLogisticsTextCode_TH1.Code, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "DTSL",HtmlComponentName = "SharedLogisticsTabComponent",HtmlComponentUrl = "./InfrastructureModules/InfrastructureDocuments/Components/DocumentType/Tab/SharedLogisticsTabComponent", FeatureId = DocumentTypeSharedLogisticsFeature_TH1.Id,FeatureUniqeCode = DocumentTypeSharedLogisticsFeature_TH1.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.Documents.DocumentTypes.SharedLogisticsTabControl", ObjectTableId = DocumentTypeObjectTable.Id, TabNameTextCodeId = DocumentTypeSharedLogisticsTextCode_TH1.Id, TabNameTextCodeCode = DocumentTypeSharedLogisticsTextCode_TH1.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "DTCF",HtmlComponentName = "DocumentTypeCustomFieldsComponent",HtmlComponentUrl = "./InfrastructureModules/InfrastructureDocuments/Components/DocumentType/Tab/DocumentTypeCustomFieldsComponent", FeatureId = DocumentTypeCustomFieldsFeature_TH2.Id,FeatureUniqeCode = DocumentTypeCustomFieldsFeature_TH2.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.Documents.DocumentTypes.DocumentTypeCustomFieldsControl", ObjectTableId = DocumentTypeObjectTable.Id, TabNameTextCodeId = DocumentTypeCustomFieldsTextCode_TH2.Id, TabNameTextCodeCode = DocumentTypeCustomFieldsTextCode_TH2.Code, Tenant = 0, IndexOrder = 2 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "DTCF",HtmlComponentName = "DocumentTypeCustomFieldsComponent",HtmlComponentUrl = "./InfrastructureModules/InfrastructureDocuments/Components/DocumentType/Tab/DocumentTypeCustomFieldsComponent", FeatureId = DocumentTypeCustomFieldsFeature_TH2.Id,FeatureUniqeCode = DocumentTypeCustomFieldsFeature_TH2.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.Documents.DocumentTypes.DocumentTypeCustomFieldsControl", ObjectTableId = DocumentTypeObjectTable.Id, TabNameTextCodeId = DocumentTypeCustomFieldsTextCode_TH2.Id, TabNameTextCodeCode = DocumentTypeCustomFieldsTextCode_TH2.Code, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "DTPO",HtmlComponentName = "PrintingOptionsComponent",HtmlComponentUrl = "./InfrastructureModules/InfrastructureDocuments/Components/DocumentType/Tab/PrintingOptionsComponent", FeatureId = DocumentTypeAdvancedOptionsFeature_TH3.Id,FeatureUniqeCode = DocumentTypeAdvancedOptionsFeature_TH3.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.Documents.DocumentTypes.PrintingOptionsControl", ObjectTableId = DocumentTypeObjectTable.Id, TabNameTextCodeId = DocumentTypeAdvancedOptionsTextCode_TH3.Id, TabNameTextCodeCode = DocumentTypeAdvancedOptionsTextCode_TH3.Code, Tenant = 0, IndexOrder = 3 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "DTPO",HtmlComponentName = "PrintingOptionsComponent",HtmlComponentUrl = "./InfrastructureModules/InfrastructureDocuments/Components/DocumentType/Tab/PrintingOptionsComponent", FeatureId = DocumentTypeAdvancedOptionsFeature_TH3.Id,FeatureUniqeCode = DocumentTypeAdvancedOptionsFeature_TH3.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.Documents.DocumentTypes.PrintingOptionsControl", ObjectTableId = DocumentTypeObjectTable.Id, TabNameTextCodeId = DocumentTypeAdvancedOptionsTextCode_TH3.Id, TabNameTextCodeCode = DocumentTypeAdvancedOptionsTextCode_TH3.Code, Tenant = 0, IndexOrder = 2 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "DTCP",HtmlComponentName = "DocumentTypeCopiesComponent",HtmlComponentUrl = "./InfrastructureModules/InfrastructureDocuments/Components/DocumentType/Tab/DocumentTypeCopiesComponent", FeatureId = DocumentTypeCopiesFeature_TH4.Id,FeatureUniqeCode = DocumentTypeCopiesFeature_TH4.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.Documents.DocumentTypes.DocumentTypeCopiesControl", ObjectTableId = DocumentTypeObjectTable.Id, TabNameTextCodeId = DocumentTypeCopiesTextCode_TH4.Id, TabNameTextCodeCode = DocumentTypeCopiesTextCode_TH4.Code, Tenant = 0, IndexOrder = 4 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "DTCP",HtmlComponentName = "DocumentTypeCopiesComponent",HtmlComponentUrl = "./InfrastructureModules/InfrastructureDocuments/Components/DocumentType/Tab/DocumentTypeCopiesComponent", FeatureId = DocumentTypeCopiesFeature_TH4.Id,FeatureUniqeCode = DocumentTypeCopiesFeature_TH4.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.Documents.DocumentTypes.DocumentTypeCopiesControl", ObjectTableId = DocumentTypeObjectTable.Id, TabNameTextCodeId = DocumentTypeCopiesTextCode_TH4.Id, TabNameTextCodeCode = DocumentTypeCopiesTextCode_TH4.Code, Tenant = 0, IndexOrder = 3 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "DTEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = DocumentTypeEventsFeature_TH5.Id,FeatureUniqeCode = DocumentTypeEventsFeature_TH5.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = DocumentTypeObjectTable.Id, TabNameTextCodeId = DocumentTypeEventsTextCode_TH5.Id, TabNameTextCodeCode = DocumentTypeEventsTextCode_TH5.Code, Tenant = 0, IndexOrder = 5 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "DTEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = DocumentTypeEventsFeature_TH5.Id,FeatureUniqeCode = DocumentTypeEventsFeature_TH5.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = DocumentTypeObjectTable.Id, TabNameTextCodeId = DocumentTypeEventsTextCode_TH5.Id, TabNameTextCodeCode = DocumentTypeEventsTextCode_TH5.Code, Tenant = 0, IndexOrder = 4 }, objectTableTabsRepository, TenantObjectTableTabs);
+   
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "DTCT",HtmlComponentName = "DocumentTypeCustomsDataComponent",HtmlComponentUrl = "./CustomsModules/CustomsMaintenance/Components/DocumentTypeCustomsDataComponent", FeatureId = DocumentTypeDocumentTypeCustomsDataFeature_TH6.Id,FeatureUniqeCode = DocumentTypeDocumentTypeCustomsDataFeature_TH6.FeatureUniqeCode, ControlPath = "Logitude.Customs.Views.Tabs.DocumentTypeCustomsDataControl", ObjectTableId = DocumentTypeObjectTable.Id, TabNameTextCodeId = DocumentTypeDocumentTypeCustomsDataTextCode_TH6.Id, TabNameTextCodeCode = DocumentTypeDocumentTypeCustomsDataTextCode_TH6.Code, Tenant = 0, IndexOrder = 5 }, objectTableTabsRepository, TenantObjectTableTabs);
    
 	    } 
 	

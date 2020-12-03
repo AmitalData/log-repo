@@ -14,26 +14,10 @@ using System.Threading.Tasks;
 namespace Logitude.Customs.BL.Messaging.Maman
 {
     
-    public enum MamanActionCodeUpdateOrCancel
-    {
-        Upsert,
-        Cancel
-    }
-    public enum MamanSpecialCode
-    {
-        /// <summary>
-        /// קליטת עיכוב (ללא ששודרה קודם השהיה)
-        /// </summary>
-        ReceivingDelayCertificate_DelayIt = 2,
-        StickerPrinting =4,
-        PrintDocuments= 5
-//2	קליטה תעודת עיכוב	2, קליטה תעודת עיכוב Receiving a delay certificate	0
-//4	הדפסת מדבקה	4, הדפסת מדבקה   Sticker Printing	0
-//5	הדפסת מסמכים	5, הדפסת מסמכים  Printing Documents	0
-    }
+   
 
 
-    public class CourierGWMessageECSpclMamanRequestService
+    public class CourierGWMessageECSpclMamanRequestService : ICourierGWMessageECSpcRequestService
     {
         private DeclarationPM _DeclarationPM;
         private CourierMasterPM _CourierMasterPM;
@@ -85,8 +69,8 @@ namespace Logitude.Customs.BL.Messaging.Maman
                 //var myWebAPICourierGWMessageECTHRDataMamanService = new CourierGWMessageECTHRDataMamanResponseService();
                 //myWebAPICourierGWMessageECTHRDataMamanService.BuildCommunicationLog(bytearray, tenant, declarationId);
 
-                var webAPISendMessage2MamanService = new WebAPISendMessage2MamanService();
-                webAPISendMessage2MamanService.BuildCommunicationLog(bytearray, tenant, declarationId, CustomsPartnerFtpDetails.InterfaceName_ECSPCL);
+                var webAPISendMessage2MamanService = new WebAPISendMessage2MasofService();
+                webAPISendMessage2MamanService.BuildCommunicationLog(bytearray, tenant, declarationId, CustomsPartnerFtpDetails.InterfaceName_ECMMNSPCL_REQUEST, CustomsPartnerFtpDetails.PartnerCode_Mamam);
 
                 scop.Complete();
                 //output  ftp://192.168.10.88/FTP_MAMAN/  
@@ -122,7 +106,10 @@ namespace Logitude.Customs.BL.Messaging.Maman
                 case MamanSpecialCode.PrintDocuments:
                     mamanSpecialActionCode = "5";
                     break;
-             
+                case MamanSpecialCode.Sban:
+                    mamanSpecialActionCode = "6";
+                    break;
+
             }
             return new ECSpclMamanMessage()
             {

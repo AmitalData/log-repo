@@ -20,6 +20,7 @@ import { VehicleReductionTypeList } from '../../../../Customs/EntityLists/Vehicl
 
 
 export class VehicleModificationsComponent extends BaseComponent {
+  public ObjectTableName: any;
 
     EntityPM: DeclarationPM;
     entityListService: EntityListService = new EntityListService();

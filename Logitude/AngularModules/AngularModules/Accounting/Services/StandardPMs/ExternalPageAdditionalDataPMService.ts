@@ -153,6 +153,7 @@ export class ExternalPageAdditionalDataPMService {
         if (!entityPM) {
             
             entityPM = new ExternalPageAdditionalDataPM();
+			entityPM.DisableMarkAsDirty = true;
         }
 
 		var customFields: Array<string> = [];
@@ -193,6 +194,8 @@ export class ExternalPageAdditionalDataPMService {
             entityPM.OldEntityPM = null;
         }
 		entityPM.IsDirty = false;
+	    entityPM.DisableMarkAsDirty = false;
+
         return entityPM;
     }
 

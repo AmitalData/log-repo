@@ -452,8 +452,15 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             entityPoco.ChargeStorageCurrencyId = entityPM.ChargeStorageCurrencyId;
             entityPoco.WeightMeasurementCode = entityPM.WeightMeasurementCode;
             entityPoco.WeightRoundingCode = entityPM.WeightRoundingCode;
+
             entityPoco.IsCFSWarehouse = entityPM.IsCFSWarehouse;
             entityPoco.IsCFSWarehouseChanged = entityPM.IsCFSWarehouseChanged;
+            entityPoco.FinalArrivalDate = entityPM.FinalArrivalDate;
+            entityPoco.EstimatedFinalArrivalDate = entityPM.EstimatedFinalArrivalDate;
+            entityPoco.ActualFinalArrivalDate = entityPM.ActualFinalArrivalDate;
+
+            entityPoco.IsAccrualsApproved = entityPM.IsAccrualsApproved;
+            entityPoco.AccrualsApprovalDate = entityPM.AccrualsApprovalDate;
 
             BuildSearchField(entityPM, entityPoco, entityMasterData, myPackagesList);
             if (!LBcurrentTenant.IsDocumentsArchive)

@@ -2307,6 +2307,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                 {
                                                     PartnerId = a.Id,
                                                     PartnerName = a.PartnerType.Name,
+                                                    InActive = a.InActive
                                                 }).ToList();
 
             return cards;
@@ -2317,5 +2318,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
     {
         public string PartnerId { get; set; }
         public string PartnerName { get; set; }
+        public bool InActive { get; set; }
     }
 }

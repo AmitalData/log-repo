@@ -20,17 +20,40 @@ namespace Logitude.Customs.BL
    {
        public List<CargoIdentityQualifierDetails> GetAll()
        {
-		    var all = new List<CargoIdentityQualifierDetails>(); 
+		    var all = new List<CargoIdentityQualifierDetails>();  
+            all.Add(new CargoIdentityQualifierDetails()
+            {    
+                Code = "CN", 
+                EnglishName = "CN", 
+                SearchFields = "CN", 
+                InActive = false, 
+                LocalName = "CN", 
+			});
+			 
+            all.Add(new CargoIdentityQualifierDetails()
+            {    
+                Code = "ZZZ", 
+                EnglishName = "zzzzz", 
+                SearchFields = "ZZZ", 
+                InActive = false, 
+                LocalName = "zzz", 
+			});
+			
             return all;
        }
 
 	    public void MapPoco(CargoIdentityQualifier newPoco)
-        {    
+        {   
+		    newPoco.Code = this.Code;  
+		    newPoco.EnglishName = this.EnglishName;  
+			newPoco.SearchFields = GetSearchFields(this);   
+		    newPoco.InActive = this.InActive;  
+		    newPoco.LocalName = this.LocalName;   
         }
 
 		public string GetSearchFields(CargoIdentityQualifier rec)
         {   
-           return string.Empty;
+           return String.Concat(rec.Code,",",rec.EnglishName,",",rec.InActive,",",rec.LocalName,",");
         }
    }
 }

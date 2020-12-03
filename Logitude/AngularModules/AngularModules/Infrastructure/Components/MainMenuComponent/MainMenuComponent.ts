@@ -472,6 +472,7 @@ export class MainMenuComponent {
                         listArgs.NewButtonLabel = TextCodeTranslator.Translate("Customs.General.O.NewPaymentOrder");
                         listArgs.HideBackButton = true;
                         this._entityResourceService.getEntityResourceByTableName("Customs.PaymentOrder", 0).subscribe((response:any) => {
+                            this._entityResourceService.getEntityResourceByTableName("Customs.Declaration", 0).subscribe((response:any) => {
                             SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
                                 .then(cmpRef => {
                                     cmpRef.instance.ComponentRef = cmpRef;
@@ -481,6 +482,74 @@ export class MainMenuComponent {
                                     this.isChangingSelected = false;
                                     //this.pointerEvents = 'all';
                                 });
+                            });
+                        });
+                        break;
+                    }
+
+                    // case "General.MH.Declarations": {
+                        
+                    //     var listArgs = new ListComponentArgs();
+                    //     listArgs.ObjectTableName = "Customs.Declaration";
+                    //     listArgs.HideBackButton = true;
+                    //     this._entityResourceService.getEntityResourceByTableName("Customs.Declaration", 0).subscribe((response:any) => {
+                    //         this._entityResourceService.getEntityResourceByTableName("Customs.SupplierInvoice", 0).subscribe((response:any) => {
+                    //          this._entityResourceService.getEntityResourceByTableName("Customs.SupplierInvioceItemCertificat", 0).subscribe((response:any) => {
+
+                    //         SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
+                    //             .then(cmpRef => {
+                    //                 cmpRef.instance.ComponentRef = cmpRef;
+                    //                 cmpRef.instance.Run(listArgs);
+                    //                 this.CurrentSession.AddMenuReference(cmpRef);
+                    //                 this.ChangeSessionHeader(this.SelectedMenu);
+                    //                 this.isChangingSelected = false;
+                    //                 //this.pointerEvents = 'all';
+                    //             });
+                    //         });
+                    //     });
+                    // });
+                    //     break;
+                    // }
+
+                    case "General.MH.PhysicalChecks": {
+                        
+                        var listArgs = new ListComponentArgs();
+                        listArgs.ObjectTableName = "Customs.PhysicalCheck";
+                        listArgs.HideBackButton = true;
+                        
+                        this._entityResourceService.getEntityResourceByTableName("Customs.PhysicalCheck", 0).subscribe((response:any) => {
+                            this._entityResourceService.getEntityResourceByTableName("Customs.Declaration", 0).subscribe((response:any) => {
+                            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
+                                .then(cmpRef => {
+                                    cmpRef.instance.ComponentRef = cmpRef;
+                                    cmpRef.instance.Run(listArgs);
+                                    this.CurrentSession.AddMenuReference(cmpRef);
+                                    this.ChangeSessionHeader(this.SelectedMenu);
+                                    this.isChangingSelected = false;
+                                    //this.pointerEvents = 'all';
+                                });
+                            });
+                        });
+                        break;
+                    }
+                    case "General.MH.Claims": {
+                        
+                        var listArgs = new ListComponentArgs();
+                        listArgs.ObjectTableName = "Customs.Claim";
+                        listArgs.HideBackButton = true;
+                        
+                        this._entityResourceService.getEntityResourceByTableName("Customs.Claim", 0).subscribe((response:any) => {
+                            this._entityResourceService.getEntityResourceByTableName("Customs.Declaration", 0).subscribe((response:any) => {
+                            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
+                                .then(cmpRef => {
+                                    cmpRef.instance.ComponentRef = cmpRef;
+                                    cmpRef.instance.Run(listArgs);
+                                    this.CurrentSession.AddMenuReference(cmpRef);
+                                    this.ChangeSessionHeader(this.SelectedMenu);
+                                    this.isChangingSelected = false;
+                                    //this.pointerEvents = 'all';
+                                });
+                            });
                         });
                         break;
                     }
@@ -569,7 +638,26 @@ export class MainMenuComponent {
                     }
 
 
+                    case "General.MH.ReferantScreen": {
 
+                        var listArgs = new ListComponentArgs();
+                        listArgs.ObjectTableName = "Customs.DeclarationReferantData";
+                        listArgs.NewButtonLabel = TextCodeTranslator.Translate("Customs.General.O.NewCustomsFile");
+                        if (AppTool.IsNullOrEmpty(listArgs.NewButtonLabel)) listArgs.NewButtonLabel = "פתיחת תיק חדש";
+                        listArgs.HideBackButton = true;
+                        this._entityResourceService.getEntityResourceByTableName("Customs.DeclarationReferantData", 0).subscribe(response => {
+                            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
+                                .then(cmpRef => {
+                                    cmpRef.instance.ComponentRef = cmpRef;
+                                    cmpRef.instance.Run(listArgs);
+                                    this.CurrentSession.AddMenuReference(cmpRef);
+                                    this.ChangeSessionHeader(this.SelectedMenu);
+                                    this.isChangingSelected = false;
+                                    //this.pointerEvents = 'all';
+                                });
+                        });
+                        break;
+                    }
                     default: {
                         if (this.SelectedMenu.ObjectTableName) {
                             ServiceLocator.SendTotangoUserActivity(this.SelectedMenu.ObjectTableName, "List View");

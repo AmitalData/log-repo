@@ -1,0 +1,513 @@
+<!-- CargoSealsQueryComponent view  -->
+<style type="text/css">
+    .NotesTextArea {
+        padding: 2px;
+        padding-left: 4px;
+        text-indent: 0px;
+        font-size: 12px;
+        color: black;
+        text-align: right;
+        border: 1px solid gray;
+        border-radius: 3px;
+        -moz-border-radius: 2px;
+        -webkit-border-radius: 2px;
+        -webkit-box-shadow: 0px 0px 5px 3px #C8C8C8;
+        -moz-box-shadow: 0px 0px 5px 3px #C8C8C8;
+        box-shadow: 0px 0px 5px 3px #C8C8C8;
+    }
+
+    .DisbleBox {
+        display: inline-block;
+        border: 1px solid #ffd800;
+        border-radius: 5px;
+        background: #faf5c0;
+        padding: 2px 10px;
+        font-size: 12px;
+        color: black;
+        font-family: sans-serif;
+    }
+
+    .disabled {
+        pointer-events: none;
+        opacity: 0.7;
+        cursor: default;
+    }
+</style>
+
+<div>
+
+    <custom-message-wrapper [CustomSendOptionsButtonCanForcePersonalSign]="false"
+                            [IsShowCustomResponseContent]="false" [CustomRequestContentIsDisable]="IsDisplayOnly">
+
+        <!-- Request -->
+        <div class="class-request-content" *ngIf="IsReady">
+            <table *ngIf="IsReady" style="width: 750px;height: 400px; padding-top: 10px;">
+
+                <tr class="FormFieldRow" *ngIf="Status=='1'">
+                    <td colspan="6">
+                        <div style="width: 100%;text-align:center;  height:25px;">
+                            <div class="DisbleBox">
+                                {{'התקבל אישור סגר'}}
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+
+                <!-- Request Fields -->
+                <tr class="FormFieldRow" style="vertical-align: top">
+                    <td>
+                        <table>
+
+                            <tr class="FormFieldRow" style="height:1px">
+                                <td style="width: 90px;">
+                                    <LogLabel [TextCode]="'Customs.Declaration.F.CustomFileNo'"
+                                              [ObjectFieldName]="'CustomFileNo'" [ObjectTableName]="'Customs.Declaration'" [DataContext]="DataContext"></LogLabel>
+                                </td>
+                                <td style="width: 120px;">
+                                    <LogTextBox [ObjectFieldName]="'CustomFileNo'"
+                                                [InputType]="text"
+                                                [DataContext]="DataContext"
+                                                [ObjectTableName]="ObjectTableName"
+                                                [HideColumns]="true"
+                                                (LostFocus)="CustomFileNoTextChanged($event)"
+                                                [Text]="CustomFileNo"></LogTextBox>
+                                </td>
+
+                                <td><div></div></td>
+                            </tr>
+
+                            <tr class="FormFieldRow">
+                                <td style="width: 90px;">
+                                    <LogLabel [ObjectFieldName]="'CargoIdentifierTypeCode'" [ObjectTableName]="ObjectTableName"
+                                              [DataContext]="DataContext"></LogLabel>
+                                </td>
+                                <td style="width: 120px;">
+                                    <LogLov [ObjectFieldName]="'CargoIdentifierTypeCode'"
+                                            [SelectedValue]="CargoIdentifierTypeCode"
+                                            [ObjectTableName]="ObjectTableName"
+                                            [DataContext]="DataContext"
+                                            [LookUpTableName]="'Customs.CargoIdentifireType'"
+                                            [HideLastColumn]="true"
+                                            [HideColumns]="true"
+                                            (ValueChanged)="SendCargoQueryRequest(false)">
+                                    </LogLov>
+                                </td>
+
+                                <td style="width: 90px;">
+                                    <LogLabel [ObjectFieldName]="'CargoIdentifierKey1'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                </td>
+                                <td style="width: 120px;">
+                                    <LogTextBox [ObjectFieldName]="'CargoIdentifierKey1'"
+                                                [DataContext]="DataContext"
+                                                [ObjectTableName]="ObjectTableName"
+                                                [HideColumns]="true"
+                                                [Text]="CargoIdentifierKey1"
+                                                (ValueChanged)="SendCargoQueryRequest(false)"></LogTextBox>
+                                </td>
+
+                                <td style="width: 90px;">
+                                    <LogLabel [ObjectFieldName]="'CargoIdentifierKey2'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                </td>
+                                <td style="width: 120px;">
+                                    <table>
+                                        <tr>
+
+                                            <td>
+
+
+                                                <LogTextBox [ObjectFieldName]="'CargoIdentifierKey2'"
+                                                            [DataContext]="DataContext"
+                                                            [ObjectTableName]="ObjectTableName"
+                                                            [HideColumns]="true"
+                                                            [Text]="CargoIdentifierKey2"
+                                                            (ValueChanged)="SendCargoQueryRequest(false)"></LogTextBox>
+                                            </td>
+
+                                            <td  *ngIf="CargoIdentifierTypeCode=='11'">
+ 
+                                                    <IconButton style="float:left;" [IsSmall]="true" [Name]="'search'"
+                                                                [IsIconOnly]="true"
+                                                                (click)="SendCargoQueryRequest(true)"></IconButton>
+                                            </td>
+
+                                        </tr>
+                                    </table>
+
+                                </td>
+
+                            </tr>
+
+                            <tr class="FormFieldRow">
+                                <td style="width: 90px;">
+                                    <LogLabel [ObjectFieldName]="'CargoIdentifierKey3'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                </td>
+                                <td style="width: 120px;">
+                                    <LogTextBox [ObjectFieldName]="'CargoIdentifierKey3'"
+                                                [InputType]="text"
+                                                [DataContext]="DataContext"
+                                                [ObjectTableName]="ObjectTableName"
+                                                [HideColumns]="true"
+                                                [Text]="CargoIdentifierKey3"></LogTextBox>
+                                </td>
+
+                                <td style="width: 90px;">
+                                    <LogLabel [ObjectFieldName]="'CargoRowNumber'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                </td>
+                                <td style="width: 120px;">
+                                    <div *ngIf="CargoIdentifierTypeCode=='11'">
+
+                                        <ComboBox [ItemsSource]="containers" class="LogLovContainer LogLOVControl LogLovInputDiv"
+                                                  [SelectedItem]="containerSelected" [Binding]="'Key'"
+                                                  (SelectedItemChanged)="SetContainerNumber($event)" #selectControl></ComboBox>
+                                    </div>
+
+                                    <!--<select class="LogLovContainer LogLOVControl LogLovInputDiv" style="width: 200px; cursor:pointer;" #selectControl (change)="CargoRowNumber=selectControl.value">
+                                    <option *ngFor="let c of RowNumberslist .Collection" [value]="c" [selected]="c==CargoRowNumber">{{c}}</option>
+                                </select>-->
+                                <div *ngIf="CargoIdentifierTypeCode!='11'">
+
+                                    <LogTextBox [ObjectFieldName]="'CargoRowNumber'"
+                                                [InputType]="text"
+                                                [DataContext]="DataContext"
+                                                [ObjectTableName]="ObjectTableName"
+                                                [HideColumns]="true"
+                                                [Text]="CargoRowNumber"></LogTextBox>
+                                </div>
+                                </td>
+    
+
+        <td style="width: 90px;">
+            <LogLabel [ObjectFieldName]="'ContainerNumber'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+        </td>
+        <td style="width: 120px;">
+            <div *ngIf="CargoIdentifierTypeCode=='11'">
+
+                <ComboBox [ItemsSource]="containers" class="LogLovContainer LogLOVControl LogLovInputDiv"
+                          [SelectedItem]="containerSelected" [Binding]="'Value'"
+                          (SelectedItemChanged)="SetContainerNumber($event)" #selectControl></ComboBox>
+            </div>
+
+
+            <!--<select  class="LogLovContainer LogLOVControl LogLovInputDiv" style="width: 200px; cursor:pointer;" #selectControl1 (change)="ContainerNumber=selectControl1.value">
+            <option *ngFor="let c of Containerslist.Collection" [value]="c" [selected]="c==ContainerNumber">{{c}}</option>
+        </select>-->
+            <div *ngIf="CargoIdentifierTypeCode!='11'">
+
+                <LogTextBox [ObjectFieldName]="'ContainerNumber'"
+                            [InputType]="text"
+                            [DataContext]="DataContext"
+                            [ObjectTableName]="ObjectTableName"
+                            [HideColumns]="true"
+                            [Text]="ContainerNumber"></LogTextBox>
+            </div>
+
+        </td>
+        </tr>
+
+        <tr class="FormFieldRow">
+            <td style="width: 90px;">
+                <LogLabel [ObjectFieldName]="'UpdateDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+            </td>
+            <td style="width: 120px;">
+                <LogDatePicker [ObjectFieldName]="'UpdateDate'" [ObjectTableName]="ObjectTableName"
+                               [InputType]="'date'" [DataContext]="DataContext"
+                               [HideColumns]="true"></LogDatePicker>
+            </td>
+
+            <td style="width: 90px;">
+                <LogLabel [ObjectFieldName]="'ImporterNumber'" [DataContext]="DataContext" [TextCode]="'Customs.SpecialActivityRequest.O.ImporterNumber'"> </LogLabel>
+            </td>
+            <td style="width: 120px;">
+                <SearchBox [ObjectTableName]="'Client'"
+                           [IsQuickSearch]="true"
+                           [DropDownWidth]="143"
+                           [DisplayMember]="'ImporterNumber'"
+                           [DisplayText]="ImporterNumber"
+                           [Watermark]="''"
+                           [UseTimer]="false"
+                           [IsImporterDetails]="true"
+                           [ItemHeight]="36"
+                           [HideIcons]="true"
+                           [IsDisabled]="IsDisplayOnly"
+                           [HasFilters]="true"
+                           (LostFocus)="ImporterNumberLostFocus($event)"
+                           (TextChanged)="ImporterNumberTextChanged($event)"
+                           (ItemClicked)="ImporterNumberClicked($event)"></SearchBox>
+            </td>
+
+
+            <td style="width: 90px;">
+                <LogLabel [ObjectFieldName]="'StatusName'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+            </td>
+            <td style="width: 120px;">
+                <LogTextBox [ObjectFieldName]="'StatusName'"
+                            [InputType]="text"
+                            [DataContext]="DataContext"
+                            [ObjectTableName]="ObjectTableName"
+                            [HideColumns]="true"
+                            [Text]="StatusName"></LogTextBox>
+            </td>
+        </tr>
+
+        <!-- Cargo Seal -->
+        <tr style="height: 200px; width: 80%;">
+            <td colspan="8">
+                <div>
+                    <table>
+                        <tr style="height: 30px">
+                            <td class="TabTitleRow" style="width:150px">
+                                {{'Customs.Claim.O.PaymentDetails'| TextCodeTranslationPipe}}
+                            </td>
+                            <td style="height: 20px;padding: 5px;padding-bottom: 0px;">
+                                <div>
+                                    <IconButton [IsSmall]="true"
+                                                [Name]="'Add'"
+                                                (click)="AddCargoSealCommand()"
+                                                style="float:left;"></IconButton>
+                                </div>
+                            </td>
+                        </tr>
+
+                        <tr style="height: 200px; overflow: auto;">
+                            <td colspan="6">
+                                <div class="CellContent">
+                                    <logitude-edit-grid GridWidth="100%" GridHeight="100%" [FooterTop]="FooterMethods"
+                                                        [ItemSource]="CargoSealObslist" [IsReadOnly]="IsDisplayOnly">
+
+                                        <!-- SealNumber -->
+                                        <log-column [header]="'Customs.CargoSeal.F.SealNumber' | TextCodeTranslationPipe"
+                                                    [binding]="'SealNumber'" [width]="'100'" [Alignment]="'right'">
+                                            <ng-template let-item>
+                                                <log-cell-template #logcelltemplate>
+                                                    <div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsDisplayMode">
+                                                        <span>{{item.SealNumber}}</span>
+                                                    </div>
+                                                    <div *ngIf="logcelltemplate.IsEditMode">
+                                                        <LogTextBox [ObjectFieldName]="'SealNumber'" [DataContext]="item"
+                                                                    [FocusOnMe]="true" [ObjectTableName]="ObjectTableName"
+                                                                    [Text]="item.SealNumber" [HideColumns]="true"></LogTextBox>
+
+                                                    </div>
+                                                </log-cell-template>
+                                            </ng-template>
+                                        </log-column>
+
+                                        <!-- SealTypeCode -->
+                                        <log-column [header]="'Customs.CargoSeal.F.SealTypeCode' | TextCodeTranslationPipe"
+                                                    [width]="'100'" [Alignment]="'right'" [binding]="'SealTypeCode'">
+                                            <ng-template let-item>
+                                                <log-cell-template #logcelltemplate>
+                                                    <div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsDisplayMode">
+                                                        <span>{{item.SealTypeName}}</span>
+                                                    </div>
+                                                    <div *ngIf="logcelltemplate.IsEditMode">
+                                                        <LogLov [ObjectFieldName]="'SealTypeCode'"
+                                                                [ObjectTableName]="'Customs.SealType'"
+                                                                [DataContext]="item"
+                                                                [LookUpTableName]="'Customs.SealType'"
+                                                                (SelectedItemChanged)="item.SetLocalName($event,'SealTypeName')"
+                                                                [HideColumns]="true"
+                                                                [FocusOnMe]="true"
+                                                                [SelectedValue]="item.SealTypeCode">
+                                                        </LogLov>
+                                                    </div>
+                                                </log-cell-template>
+                                            </ng-template>
+                                        </log-column>
+
+                                        <!-- SealCompletenessStateCode -->
+                                        <log-column [header]="'Customs.CargoSeal.F.SealCompletenessStateCode' | TextCodeTranslationPipe"
+                                                    [width]="'100'" [Alignment]="'right'" [binding]="'SealCompletenessStateCode'">
+                                            <ng-template let-item>
+                                                <log-cell-template #logcelltemplate>
+                                                    <div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsDisplayMode">
+                                                        <span>{{item.SealCompletenessStateName}}</span>
+                                                    </div>
+                                                    <div *ngIf="logcelltemplate.IsEditMode">
+                                                        <LogLov [ObjectFieldName]="'SealCompletenessStateCode'"
+                                                                [ObjectTableName]="'Customs.SealCompletenes'"
+                                                                [DataContext]="item"
+                                                                [LookUpTableName]="'Customs.SealCompletenes'"
+                                                                (SelectedItemChanged)="item.SetLocalName($event,'SealCompletenessStateName')"
+                                                                [HideColumns]="true"
+                                                                [FocusOnMe]="true"
+                                                                [SelectedValue]="item.SealCompletenessStateCode">
+                                                        </LogLov>
+                                                    </div>
+                                                </log-cell-template>
+                                            </ng-template>
+                                        </log-column>
+
+                                        <!-- UpdateReasonCode -->
+                                        <log-column [header]="'Customs.CargoSeal.F.UpdateReasonCode' | TextCodeTranslationPipe"
+                                                    [width]="'100'" [Alignment]="'right'" [binding]="'UpdateReasonCode'">
+                                            <ng-template let-item>
+                                                <log-cell-template #logcelltemplate>
+                                                    <div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsDisplayMode">
+                                                        <span>{{item.UpdateReasonName}}</span>
+                                                    </div>
+                                                    <div *ngIf="logcelltemplate.IsEditMode">
+                                                        <LogLov [ObjectFieldName]="'UpdateReasonCode'"
+                                                                [ObjectTableName]="'Customs.SealUpdateReasonType'"
+                                                                [DataContext]="item"
+                                                                [LookUpTableName]="'Customs.SealUpdateReasonType'"
+                                                                (SelectedItemChanged)="item.SetLocalName($event,'UpdateReasonName')"
+                                                                [HideColumns]="true"
+                                                                [FocusOnMe]="true"
+                                                                [SelectedValue]="item.UpdateReasonCode">
+                                                        </LogLov>
+                                                    </div>
+                                                </log-cell-template>
+                                            </ng-template>
+                                        </log-column>
+
+                                        <log-column [header]="'Customs.CargoSeal.F.UpdateTypeCode' | TextCodeTranslationPipe"
+                                                    [width]="'100'" [Alignment]="'right'" [binding]="'UpdateTypeCode'">
+                                            <ng-template let-item>
+                                                <log-cell-template #logcelltemplate>
+                                                    <div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsDisplayMode">
+                                                        <span>{{item.UpdateTypeName}}</span>
+                                                    </div>
+                                                    <div *ngIf="logcelltemplate.IsEditMode">
+                                                        <LogLov [ObjectFieldName]="'UpdateTypeCode'"
+                                                                [ObjectTableName]="'Customs.AmendmentType'"
+                                                                [DataContext]="item"
+                                                                [LookUpTableName]="'Customs.AmendmentType'"
+                                                                (SelectedItemChanged)="item.SetLocalName($event,'UpdateTypeName')"
+                                                                [HideColumns]="true"
+                                                                [FocusOnMe]="true"
+                                                                [SelectedValue]="item.UpdateTypeCode">
+                                                        </LogLov>
+                                                    </div>
+                                                </log-cell-template>
+                                            </ng-template>
+                                        </log-column>
+
+
+                                        <!-- UpdateTypeCode -->
+                                        <!-- <log-column [header]="'Customs.CargoSeal.F.UpdateTypeCode' | TextCodeTranslationPipe"
+                                                                                                            [width]="'100'" [Alignment]="'right'" [binding]="'UpdateTypeCode'">
+                                                                                                    <ng-template let-item>
+                                    <log-cell-template  #logcelltemplate [IgnoreMods]="item.CanToAdd!=false">
+                                                                                                        <div  class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsDisplayMode || item.CanToAdd!=false">
+                                                                                                            <span>{{item.UpdateTypeName}}</span>
+                                                                                                        </div>
+                                                                                                        <div *ngIf="logcelltemplate.IsEditMode &&   item.CanToAdd==false">
+
+                                                                                                            <LogLov [ObjectFieldName]="'UpdateTypeCode'"
+                                                                                                                    [ObjectTableName]="'Customs.AmendmentType'"
+                                                                                                                    [DataContext]="item"
+                                                                                                                    [LookUpTableName]="'Customs.AmendmentType'"
+                                                                                                                    (SelectedItemChanged)="item.SetLocalName($event,'UpdateTypeName')"
+                                                                                                                    [HideColumns]="true"
+                                                                                                                    [FocusOnMe]="true"
+                                                                                                                    [SelectedValue]="item.UpdateTypeCode">
+                                                                                                            </LogLov>
+                                                                                                        </div>
+                                                                                                    </log-cell-template>
+                                    </ng-template>
+                                                                                                </log-column> -->
+                                        <!-- Remarks -->
+                                        <log-column [header]="'Customs.CargoSeal.F.Remarks' | TextCodeTranslationPipe"
+                                                    [binding]="'Remarks'" [width]="'150'" [Alignment]="'right'" [Editable]="true">
+                                            <ng-template let-item>
+                                                <log-cell-template #logcelltemplate>
+                                                    <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right">
+                                                        <span>{{item.Remarks}}</span>
+                                                    </div>
+                                                    <div *ngIf="logcelltemplate.IsEditMode" style="height: 100%; width: 100%;">
+                                                        <LogTextBox [ObjectFieldName]="'Remarks'" [InputType]="'ntext'" [DataContext]="item"
+                                                                    [ObjectTableName]="'Customs.SealType'" [HideColumns]="true"
+                                                                    [IsMultiline]="true"></LogTextBox>
+                                                    </div>
+                                                </log-cell-template>
+                                            </ng-template>
+                                        </log-column>
+
+                                        <!-- Delete Button-->
+                                        <log-column [width]="'70'" [Alignment]="'right'">
+                                            <ng-template let-item>
+                                                <log-cell-template [TabIndex]="-1" [IgnoreMods]="true">
+                                                    <IconButton [Name]="'Delete'" [IsSmall]="true" *ngIf="!item.Id" (click)="DeleteCargoSealCommand(item)"
+                                                                style="display: block; float: right; margin-right:3px; margin-top:2px;"></IconButton>
+
+                                                </log-cell-template>
+                                            </ng-template>
+                                        </log-column>
+
+                                    </logitude-edit-grid>
+                                </div>
+                            </td>
+
+                            <td> <div></div> </td>
+                        </tr>
+
+                        <tr><td><div></div></td></tr>
+                    </table>
+                </div>
+            </td>
+        </tr>
+
+        <!-- ResponseMessage -->
+        </table>
+        </td>
+        <tr> <td><div></div></td> </tr>
+        </table>
+        <table style="width: 650px; height:50px">
+            <tr class="FormFieldRow" *ngIf="IsResponseMessageVisibility">
+                <td colspan="12" style="width: 650px; height:50px">
+                    <table>
+                        <!--<tr class="FormFieldRow">
+                        <td style="width: 150px;">
+                            <div style="width: 100%; height:22px; text-align:right">
+                                <div>
+                                    <span>{{'Customs.Claim.TH.CustomAnswer' | TextCodeTranslationPipe}}</span>
+                                </div>
+                            </div>
+                        </td>
+
+                        <td><div></div></td>
+                    </tr>-->
+
+                        <tr class="FormFieldRow">
+                            <td style="width: 500px;">
+                                px
+                                aF
+                                <div class="MediaFill">
+                                    <textarea class="NotesTextArea"
+                                              [(ngModel)]="ResponseMessage"
+                                              [readonly]="false"
+                                              style="background: #FFFADC !important;"></textarea>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+</div>
+
+        <!-- Response -->
+        <!--<div class="class-response-content" style="width: 500px;height: 50px;">
+            <table style="width: 500px;height:70px;padding-top: 10px;">
+
+                <tr style="height: 70px;">
+                    <td>
+                        <table>
+                            <tr class="FormFieldRow">
+                       
+                                <td style="width: 300px;">
+                                    <LogTextBox [ObjectFieldName]="'ResponseMessage'" [DataContext]="DataContext"> </LogTextBox>
+                                </td>
+
+                                <td><div></div></td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr> <td><div></div></td> </tr>
+            </table>
+        </div>-->
+
+    </custom-message-wrapper>
+</div>

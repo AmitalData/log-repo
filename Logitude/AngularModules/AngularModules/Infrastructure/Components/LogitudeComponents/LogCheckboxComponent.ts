@@ -53,7 +53,7 @@ export class LogCheckboxComponent implements OnInit, OnDestroy {
     private show: boolean;
 
     private isDisabled: boolean;
-    public get IsDisabled() {
+    @Input()  public get IsDisabled() {
         return this.isDisabled;
     }
 

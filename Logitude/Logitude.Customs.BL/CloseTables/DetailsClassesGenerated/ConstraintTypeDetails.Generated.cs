@@ -20,17 +20,757 @@ namespace Logitude.Customs.BL
    {
        public List<ConstraintTypeDetails> GetAll()
        {
-		    var all = new List<ConstraintTypeDetails>(); 
+		    var all = new List<ConstraintTypeDetails>();  
+            all.Add(new ConstraintTypeDetails()
+            {    
+                Code = "1", 
+                SearchFields = "1,לא קיימת רשומת שטר מטען במצהר ימי", 
+                Inactive = false, 
+                LocalName = "לא קיימת רשומת שטר מטען במצהר ימי", 
+			});
+			 
+            all.Add(new ConstraintTypeDetails()
+            {    
+                Code = "10", 
+                SearchFields = "10,יבואן שח''מ אינו זהה ליבואן כנ''מ", 
+                Inactive = false, 
+                LocalName = "יבואן שח''מ אינו זהה ליבואן כנ''מ", 
+			});
+			 
+            all.Add(new ConstraintTypeDetails()
+            {    
+                Code = "1024", 
+                SearchFields = "1024,בדיקת חובות יבואן  - מס רכוש", 
+                Inactive = false, 
+                LocalName = "בדיקת חובות יבואן  - מס רכוש", 
+			});
+			 
+            all.Add(new ConstraintTypeDetails()
+            {    
+                Code = "1025", 
+                SearchFields = "1025,בדיקת חובות יבואן  - מס שבח", 
+                Inactive = false, 
+                LocalName = "בדיקת חובות יבואן  - מס שבח", 
+			});
+			 
+            all.Add(new ConstraintTypeDetails()
+            {    
+                Code = "1026", 
+                SearchFields = "1026,יבואן/יבואן מעביר חייב ניכויים", 
+                Inactive = false, 
+                LocalName = "יבואן/יבואן מעביר חייב ניכויים", 
+			});
+			 
+            all.Add(new ConstraintTypeDetails()
+            {    
+                Code = "1027", 
+                SearchFields = "1027,יבואן/יבואן מעביר חייב מס הכנסה", 
+                Inactive = false, 
+                LocalName = "יבואן/יבואן מעביר חייב מס הכנסה", 
+			});
+			 
+            all.Add(new ConstraintTypeDetails()
+            {    
+                Code = "1028", 
+                SearchFields = "1028,יבואן/יבואן מעביר בהצהרה חייב מע''מ", 
+                Inactive = false, 
+                LocalName = "יבואן/יבואן מעביר בהצהרה חייב מע''מ", 
+			});
+			 
+            all.Add(new ConstraintTypeDetails()
+            {    
+                Code = "1034", 
+                SearchFields = "1034,1034", 
+                Inactive = false, 
+                LocalName = "1034", 
+			});
+			 
+            all.Add(new ConstraintTypeDetails()
+            {    
+                Code = "1036", 
+                SearchFields = "1036,1036", 
+                Inactive = false, 
+                LocalName = "1036", 
+			});
+			 
+            all.Add(new ConstraintTypeDetails()
+            {    
+                Code = "1043", 
+                SearchFields = "1043,אין התאמה בין בית מכס מטפל בהצהרה לבין בית המכס האחראי על אתר האחסון", 
+                Inactive = false, 
+                LocalName = "אין התאמה בין בית מכס מטפל בהצהרה לבין בית המכס האחראי על אתר האחסון", 
+			});
+			 
+            all.Add(new ConstraintTypeDetails()
+            {    
+                Code = "1052", 
+                SearchFields = "1052,1052", 
+                Inactive = false, 
+                LocalName = "1052", 
+			});
+			 
+            all.Add(new ConstraintTypeDetails()
+            {    
+                Code = "1061", 
+                SearchFields = "1061,1061", 
+                Inactive = false, 
+                LocalName = "1061", 
+			});
+			 
+            all.Add(new ConstraintTypeDetails()
+            {    
+                Code = "1068", 
+                SearchFields = "1068,1068", 
+                Inactive = false, 
+                LocalName = "1068", 
+			});
+			 
+            all.Add(new ConstraintTypeDetails()
+            {    
+                Code = "1085011", 
+                SearchFields = "1085011,1085011", 
+                Inactive = false, 
+                LocalName = "1085011", 
+			});
+			 
+            all.Add(new ConstraintTypeDetails()
+            {    
+                Code = "1085041", 
+                SearchFields = "1085041,1085041", 
+                Inactive = false, 
+                LocalName = "1085041", 
+			});
+			 
+            all.Add(new ConstraintTypeDetails()
+            {    
+                Code = "108525", 
+                SearchFields = "108525,108525", 
+                Inactive = false, 
+                LocalName = "108525", 
+			});
+			 
+            all.Add(new ConstraintTypeDetails()
+            {    
+                Code = "11", 
+                SearchFields = "11,קוד מטבע בשח''מ שונה מהקוד בכנ''מ", 
+                Inactive = false, 
+                LocalName = "קוד מטבע בשח''מ שונה מהקוד בכנ''מ", 
+			});
+			 
+            all.Add(new ConstraintTypeDetails()
+            {    
+                Code = "1103", 
+                SearchFields = "1103,1103", 
+                Inactive = false, 
+                LocalName = "1103", 
+			});
+			 
+            all.Add(new ConstraintTypeDetails()
+            {    
+                Code = "1181", 
+                SearchFields = "1181,קוד מטבע ברשימון כנ''ם שונה מהקוד בשח''ם", 
+                Inactive = false, 
+                LocalName = "קוד מטבע ברשימון כנ''ם שונה מהקוד בשח''ם", 
+			});
+			 
+            all.Add(new ConstraintTypeDetails()
+            {    
+                Code = "1199", 
+                SearchFields = "1199,יבואן בהצהרת שח''ם אינו זהה ליבואן כנ''ם", 
+                Inactive = false, 
+                LocalName = "יבואן בהצהרת שח''ם אינו זהה ליבואן כנ''ם", 
+			});
+			 
+            all.Add(new ConstraintTypeDetails()
+            {    
+                Code = "12", 
+                SearchFields = "12,בגוש במחסן נשארות אריזות והמט''ח התאפס או אין אריזות", 
+                Inactive = false, 
+                LocalName = "בגוש במחסן נשארות אריזות והמט''ח התאפס או אין אריזות", 
+			});
+			 
+            all.Add(new ConstraintTypeDetails()
+            {    
+                Code = "1210", 
+                SearchFields = "1210,אי-התאמה בפרט בין הצהרת הכנ''מ לשח''מ", 
+                Inactive = false, 
+                LocalName = "אי-התאמה בפרט בין הצהרת הכנ''מ לשח''מ", 
+			});
+			 
+            all.Add(new ConstraintTypeDetails()
+            {    
+                Code = "1215", 
+                SearchFields = "1215,1215", 
+                Inactive = false, 
+                LocalName = "1215", 
+			});
+			 
+            all.Add(new ConstraintTypeDetails()
+            {    
+                Code = "1217", 
+                SearchFields = "1217,שימוש כפול במזהה רכב בהצהרות שונות", 
+                Inactive = false, 
+                LocalName = "שימוש כפול במזהה רכב בהצהרות שונות", 
+			});
+			 
+            all.Add(new ConstraintTypeDetails()
+            {    
+                Code = "1237", 
+                SearchFields = "1237,היבואן הוא יבואן שחייב לשדר את זיהוי הרכב עם רכבית", 
+                Inactive = false, 
+                LocalName = "היבואן הוא יבואן שחייב לשדר את זיהוי הרכב עם רכבית", 
+			});
+			 
+            all.Add(new ConstraintTypeDetails()
+            {    
+                Code = "1248", 
+                SearchFields = "1248,שגיאה במלל ופלט השגיאה בבדיקת הצהרה", 
+                Inactive = false, 
+                LocalName = "שגיאה במלל ופלט השגיאה בבדיקת הצהרה", 
+			});
+			 
+            all.Add(new ConstraintTypeDetails()
+            {    
+                Code = "1249", 
+                SearchFields = "1249,1249", 
+                Inactive = false, 
+                LocalName = "1249", 
+			});
+			 
+            all.Add(new ConstraintTypeDetails()
+            {    
+                Code = "13", 
+                SearchFields = "13,יבואן/יבואן מעביר חייב מע''מ", 
+                Inactive = false, 
+                LocalName = "יבואן/יבואן מעביר חייב מע''מ", 
+			});
+			 
+            all.Add(new ConstraintTypeDetails()
+            {    
+                Code = "1320", 
+                SearchFields = "1320,1320", 
+                Inactive = false, 
+                LocalName = "1320", 
+			});
+			 
+            all.Add(new ConstraintTypeDetails()
+            {    
+                Code = "1377", 
+                SearchFields = "1377,1377", 
+                Inactive = false, 
+                LocalName = "1377", 
+			});
+			 
+            all.Add(new ConstraintTypeDetails()
+            {    
+                Code = "1379", 
+                SearchFields = "1379,1379", 
+                Inactive = false, 
+                LocalName = "1379", 
+			});
+			 
+            all.Add(new ConstraintTypeDetails()
+            {    
+                Code = "1393", 
+                SearchFields = "1393,1393", 
+                Inactive = false, 
+                LocalName = "1393", 
+			});
+			 
+            all.Add(new ConstraintTypeDetails()
+            {    
+                Code = "14", 
+                SearchFields = "14,יבואן/יבואן מעביר לא ברשת מע''מ", 
+                Inactive = false, 
+                LocalName = "יבואן/יבואן מעביר לא ברשת מע''מ", 
+			});
+			 
+            all.Add(new ConstraintTypeDetails()
+            {    
+                Code = "1401", 
+                SearchFields = "1401,נתוני פקודת מסירה חסרים", 
+                Inactive = false, 
+                LocalName = "נתוני פקודת מסירה חסרים", 
+			});
+			 
+            all.Add(new ConstraintTypeDetails()
+            {    
+                Code = "1402", 
+                SearchFields = "1402,נתוני פקודת מסירה חסרים שגויים", 
+                Inactive = false, 
+                LocalName = "נתוני פקודת מסירה חסרים שגויים", 
+			});
+			 
+            all.Add(new ConstraintTypeDetails()
+            {    
+                Code = "1426", 
+                SearchFields = "1426,1426", 
+                Inactive = false, 
+                LocalName = "1426", 
+			});
+			 
+            all.Add(new ConstraintTypeDetails()
+            {    
+                Code = "1427", 
+                SearchFields = "1427,1427", 
+                Inactive = false, 
+                LocalName = "1427", 
+			});
+			 
+            all.Add(new ConstraintTypeDetails()
+            {    
+                Code = "1433", 
+                SearchFields = "1433,1433", 
+                Inactive = false, 
+                LocalName = "1433", 
+			});
+			 
+            all.Add(new ConstraintTypeDetails()
+            {    
+                Code = "1435", 
+                SearchFields = "1435,1435", 
+                Inactive = false, 
+                LocalName = "1435", 
+			});
+			 
+            all.Add(new ConstraintTypeDetails()
+            {    
+                Code = "1489", 
+                SearchFields = "1489,1489", 
+                Inactive = false, 
+                LocalName = "1489", 
+			});
+			 
+            all.Add(new ConstraintTypeDetails()
+            {    
+                Code = "15", 
+                SearchFields = "15,יבואן חייב מס הכנסה", 
+                Inactive = false, 
+                LocalName = "יבואן חייב מס הכנסה", 
+			});
+			 
+            all.Add(new ConstraintTypeDetails()
+            {    
+                Code = "1535", 
+                SearchFields = "1535,1535", 
+                Inactive = false, 
+                LocalName = "1535", 
+			});
+			 
+            all.Add(new ConstraintTypeDetails()
+            {    
+                Code = "1536", 
+                SearchFields = "1536,1536", 
+                Inactive = false, 
+                LocalName = "1536", 
+			});
+			 
+            all.Add(new ConstraintTypeDetails()
+            {    
+                Code = "1537", 
+                SearchFields = "1537,1537", 
+                Inactive = false, 
+                LocalName = "1537", 
+			});
+			 
+            all.Add(new ConstraintTypeDetails()
+            {    
+                Code = "16", 
+                SearchFields = "16,יבואן חייב ניכויים", 
+                Inactive = false, 
+                LocalName = "יבואן חייב ניכויים", 
+			});
+			 
+            all.Add(new ConstraintTypeDetails()
+            {    
+                Code = "1622", 
+                SearchFields = "1622,1622", 
+                Inactive = false, 
+                LocalName = "1622", 
+			});
+			 
+            all.Add(new ConstraintTypeDetails()
+            {    
+                Code = "1628", 
+                SearchFields = "1628,תאימות בין מדינת חשבון לקוד הסכם", 
+                Inactive = false, 
+                LocalName = "תאימות בין מדינת חשבון לקוד הסכם", 
+			});
+			 
+            all.Add(new ConstraintTypeDetails()
+            {    
+                Code = "1675", 
+                SearchFields = "1675,1675", 
+                Inactive = false, 
+                LocalName = "1675", 
+			});
+			 
+            all.Add(new ConstraintTypeDetails()
+            {    
+                Code = "1698", 
+                SearchFields = "1698,1698", 
+                Inactive = false, 
+                LocalName = "1698", 
+			});
+			 
+            all.Add(new ConstraintTypeDetails()
+            {    
+                Code = "17", 
+                SearchFields = "17,יבואן חייב מס שבח", 
+                Inactive = false, 
+                LocalName = "יבואן חייב מס שבח", 
+			});
+			 
+            all.Add(new ConstraintTypeDetails()
+            {    
+                Code = "1700", 
+                SearchFields = "1700,לא ניתן להגיש הצהרה יבוא הממירה קרנה לאחר שתם תוקף הקרנה", 
+                Inactive = false, 
+                LocalName = "לא ניתן להגיש הצהרה יבוא הממירה קרנה לאחר שתם תוקף הקרנה", 
+			});
+			 
+            all.Add(new ConstraintTypeDetails()
+            {    
+                Code = "1712", 
+                SearchFields = "1712,1712", 
+                Inactive = false, 
+                LocalName = "1712", 
+			});
+			 
+            all.Add(new ConstraintTypeDetails()
+            {    
+                Code = "1720", 
+                SearchFields = "1720,1720", 
+                Inactive = false, 
+                LocalName = "1720", 
+			});
+			 
+            all.Add(new ConstraintTypeDetails()
+            {    
+                Code = "1721", 
+                SearchFields = "1721,1721", 
+                Inactive = false, 
+                LocalName = "1721", 
+			});
+			 
+            all.Add(new ConstraintTypeDetails()
+            {    
+                Code = "1728", 
+                SearchFields = "1728,1728", 
+                Inactive = false, 
+                LocalName = "1728", 
+			});
+			 
+            all.Add(new ConstraintTypeDetails()
+            {    
+                Code = "1739", 
+                SearchFields = "1739,1739", 
+                Inactive = false, 
+                LocalName = "1739", 
+			});
+			 
+            all.Add(new ConstraintTypeDetails()
+            {    
+                Code = "1754", 
+                SearchFields = "1754,הצרופה איננה מקורית", 
+                Inactive = false, 
+                LocalName = "הצרופה איננה מקורית", 
+			});
+			 
+            all.Add(new ConstraintTypeDetails()
+            {    
+                Code = "1755", 
+                SearchFields = "1755,סוג האריזה  אסור ליבוא במסירה ישירה למצהר ימי", 
+                Inactive = false, 
+                LocalName = "סוג האריזה  אסור ליבוא במסירה ישירה למצהר ימי", 
+			});
+			 
+            all.Add(new ConstraintTypeDetails()
+            {    
+                Code = "1757", 
+                SearchFields = "1757,פרט המכס הינו חומר מסוכן אשר אסור לשהייה בנמל והינו אסור למסירה ישירה", 
+                Inactive = false, 
+                LocalName = "פרט המכס הינו חומר מסוכן אשר אסור לשהייה בנמל והינו אסור למסירה ישירה", 
+			});
+			 
+            all.Add(new ConstraintTypeDetails()
+            {    
+                Code = "1768", 
+                SearchFields = "1768,1768", 
+                Inactive = false, 
+                LocalName = "1768", 
+			});
+			 
+            all.Add(new ConstraintTypeDetails()
+            {    
+                Code = "1773", 
+                SearchFields = "1773,יש למלא את פרטי הגופה בשדות שם יבואן וכתובת יבואן", 
+                Inactive = false, 
+                LocalName = "יש למלא את פרטי הגופה בשדות שם יבואן וכתובת יבואן", 
+			});
+			 
+            all.Add(new ConstraintTypeDetails()
+            {    
+                Code = "1791", 
+                SearchFields = "1791,אילוץ מסירה ישירה", 
+                Inactive = false, 
+                LocalName = "אילוץ מסירה ישירה", 
+			});
+			 
+            all.Add(new ConstraintTypeDetails()
+            {    
+                Code = "1793", 
+                SearchFields = "1793,מספר זיהוי הרכב בהצהרה שונה ממספר זיהוי הרכב במ.ב. 161", 
+                Inactive = false, 
+                LocalName = "מספר זיהוי הרכב בהצהרה שונה ממספר זיהוי הרכב במ.ב. 161", 
+			});
+			 
+            all.Add(new ConstraintTypeDetails()
+            {    
+                Code = "1794", 
+                SearchFields = "1794,זיהוי היבואן בהצהרה שונה מזיהוי היבואן  במ.ב. 161", 
+                Inactive = false, 
+                LocalName = "זיהוי היבואן בהצהרה שונה מזיהוי היבואן  במ.ב. 161", 
+			});
+			 
+            all.Add(new ConstraintTypeDetails()
+            {    
+                Code = "1797", 
+                SearchFields = "1797,תהליך מסירה ישירה באוויר מחייב אילוץ הגשה", 
+                Inactive = false, 
+                LocalName = "תהליך מסירה ישירה באוויר מחייב אילוץ הגשה", 
+			});
+			 
+            all.Add(new ConstraintTypeDetails()
+            {    
+                Code = "18", 
+                SearchFields = "18,לא עמד בתנאי הרישיון", 
+                Inactive = false, 
+                LocalName = "לא עמד בתנאי הרישיון", 
+			});
+			 
+            all.Add(new ConstraintTypeDetails()
+            {    
+                Code = "1807", 
+                SearchFields = "1807,בהצהרה קיים אישור זכאות מילולית המחייב בדיקה ידנית", 
+                Inactive = false, 
+                LocalName = "בהצהרה קיים אישור זכאות מילולית המחייב בדיקה ידנית", 
+			});
+			 
+            all.Add(new ConstraintTypeDetails()
+            {    
+                Code = "1819", 
+                SearchFields = "1819,1819", 
+                Inactive = false, 
+                LocalName = "1819", 
+			});
+			 
+            all.Add(new ConstraintTypeDetails()
+            {    
+                Code = "1843", 
+                SearchFields = "1843,1843", 
+                Inactive = false, 
+                LocalName = "1843", 
+			});
+			 
+            all.Add(new ConstraintTypeDetails()
+            {    
+                Code = "19", 
+                SearchFields = "19,לא עמד בתנאי יצוא מוחזר", 
+                Inactive = false, 
+                LocalName = "לא עמד בתנאי יצוא מוחזר", 
+			});
+			 
+            all.Add(new ConstraintTypeDetails()
+            {    
+                Code = "2", 
+                SearchFields = "2,ארץ אסורה ביבוא", 
+                Inactive = false, 
+                LocalName = "ארץ אסורה ביבוא", 
+			});
+			 
+            all.Add(new ConstraintTypeDetails()
+            {    
+                Code = "20", 
+                SearchFields = "20,בדיקת קיום אישור פטור (תרומות לרש''פ)", 
+                Inactive = false, 
+                LocalName = "בדיקת קיום אישור פטור (תרומות לרש''פ)", 
+			});
+			 
+            all.Add(new ConstraintTypeDetails()
+            {    
+                Code = "21", 
+                SearchFields = "21,לשכת שירות ת''א", 
+                Inactive = false, 
+                LocalName = "לשכת שירות ת''א", 
+			});
+			 
+            all.Add(new ConstraintTypeDetails()
+            {    
+                Code = "22", 
+                SearchFields = "22,ציוד תקשורת בפט''מ", 
+                Inactive = false, 
+                LocalName = "ציוד תקשורת בפט''מ", 
+			});
+			 
+            all.Add(new ConstraintTypeDetails()
+            {    
+                Code = "23", 
+                SearchFields = "23,שחרור מפוצל בנמלים שונים", 
+                Inactive = false, 
+                LocalName = "שחרור מפוצל בנמלים שונים", 
+			});
+			 
+            all.Add(new ConstraintTypeDetails()
+            {    
+                Code = "24", 
+                SearchFields = "24,אי-התאמה בין ש/מ פרטני לנתוני הרשימון", 
+                Inactive = false, 
+                LocalName = "אי-התאמה בין ש/מ פרטני לנתוני הרשימון", 
+			});
+			 
+            all.Add(new ConstraintTypeDetails()
+            {    
+                Code = "25", 
+                SearchFields = "25,רשימון עם פרט מהותי פט''מ", 
+                Inactive = false, 
+                LocalName = "רשימון עם פרט מהותי פט''מ", 
+			});
+			 
+            all.Add(new ConstraintTypeDetails()
+            {    
+                Code = "26", 
+                SearchFields = "26,אי-הזנת רישיון ברשימון", 
+                Inactive = false, 
+                LocalName = "אי-הזנת רישיון ברשימון", 
+			});
+			 
+            all.Add(new ConstraintTypeDetails()
+            {    
+                Code = "27", 
+                SearchFields = "27,תאריך תוקף גדול מתאריך גמר פריקה", 
+                Inactive = false, 
+                LocalName = "תאריך תוקף גדול מתאריך גמר פריקה", 
+			});
+			 
+            all.Add(new ConstraintTypeDetails()
+            {    
+                Code = "28", 
+                SearchFields = "28,שחרור לפי סיווג רכב בתהליך ברמת סחורה שאינו רכב", 
+                Inactive = false, 
+                LocalName = "שחרור לפי סיווג רכב בתהליך ברמת סחורה שאינו רכב", 
+			});
+			 
+            all.Add(new ConstraintTypeDetails()
+            {    
+                Code = "29", 
+                SearchFields = "29,הצהרת היבוא בתהליך כנ''מ/אח''מ הינו בסטטוס שאינו מאפשר הגשת הצהרת היבוא בתהליך שח''מ", 
+                Inactive = false, 
+                LocalName = "הצהרת היבוא בתהליך כנ''מ/אח''מ הינו בסטטוס שאינו מאפשר הגשת הצהרת היבוא בתהליך שח''מ", 
+			});
+			 
+            all.Add(new ConstraintTypeDetails()
+            {    
+                Code = "3", 
+                SearchFields = "3,מסירה ישירה", 
+                Inactive = false, 
+                LocalName = "מסירה ישירה", 
+			});
+			 
+            all.Add(new ConstraintTypeDetails()
+            {    
+                Code = "30", 
+                SearchFields = "30,אילוץ לבדיקה 1516 - כמות בפרט אינה תואמת ליחידת מידה (שבר עשרוני)", 
+                Inactive = false, 
+                LocalName = "אילוץ לבדיקה 1516 - כמות בפרט אינה תואמת ליחידת מידה (שבר עשרוני)", 
+			});
+			 
+            all.Add(new ConstraintTypeDetails()
+            {    
+                Code = "31", 
+                SearchFields = "31,אילוץ לבדיקה 1526 - פרטי מכס מסוג רכב ניתן לשחרר רק כאשר התהליך הוא רכב", 
+                Inactive = false, 
+                LocalName = "אילוץ לבדיקה 1526 - פרטי מכס מסוג רכב ניתן לשחרר רק כאשר התהליך הוא רכב", 
+			});
+			 
+            all.Add(new ConstraintTypeDetails()
+            {    
+                Code = "32", 
+                SearchFields = "32,אילוץ לבדיקה 1418 - נעשה שימוש במזהה עסקה יבשתי בהצהרת יבוא קודמת", 
+                Inactive = false, 
+                LocalName = "אילוץ לבדיקה 1418 - נעשה שימוש במזהה עסקה יבשתי בהצהרת יבוא קודמת", 
+			});
+			 
+            all.Add(new ConstraintTypeDetails()
+            {    
+                Code = "33", 
+                SearchFields = "33,אילוץ לבדיקה 1403 - לעסקה קיימת תנועה שהוגשה בעבר", 
+                Inactive = false, 
+                LocalName = "אילוץ לבדיקה 1403 - לעסקה קיימת תנועה שהוגשה בעבר", 
+			});
+			 
+            all.Add(new ConstraintTypeDetails()
+            {    
+                Code = "34", 
+                SearchFields = "34,סחורה מסוג בעלי חיים חייבת באישור וטרינרי של משרד החקלאות על מנת לקבל התרה", 
+                Inactive = false, 
+                LocalName = "סחורה מסוג בעלי חיים חייבת באישור וטרינרי של משרד החקלאות על מנת לקבל התרה", 
+			});
+			 
+            all.Add(new ConstraintTypeDetails()
+            {    
+                Code = "4", 
+                SearchFields = "4,חוסר בצרופה", 
+                Inactive = false, 
+                LocalName = "חוסר בצרופה", 
+			});
+			 
+            all.Add(new ConstraintTypeDetails()
+            {    
+                Code = "5", 
+                SearchFields = "5,חוסר ברשיון", 
+                Inactive = false, 
+                LocalName = "חוסר ברשיון", 
+			});
+			 
+            all.Add(new ConstraintTypeDetails()
+            {    
+                Code = "6", 
+                SearchFields = "6,לשטר מטען הוגש רשימון", 
+                Inactive = false, 
+                LocalName = "לשטר מטען הוגש רשימון", 
+			});
+			 
+            all.Add(new ConstraintTypeDetails()
+            {    
+                Code = "7", 
+                SearchFields = "7,תחנת מכס להגשה שונה מזו שמטפלת באתר אחסון", 
+                Inactive = false, 
+                LocalName = "תחנת מכס להגשה שונה מזו שמטפלת באתר אחסון", 
+			});
+			 
+            all.Add(new ConstraintTypeDetails()
+            {    
+                Code = "8", 
+                SearchFields = "8,קביעת ערבות ע''י ממונה תש''ר", 
+                Inactive = false, 
+                LocalName = "קביעת ערבות ע''י ממונה תש''ר", 
+			});
+			
             return all;
        }
 
 	    public void MapPoco(ConstraintType newPoco)
-        {    
+        {   
+		    newPoco.Code = this.Code;  
+			newPoco.SearchFields = GetSearchFields(this);   
+		    newPoco.Inactive = this.Inactive;  
+		    newPoco.LocalName = this.LocalName;   
         }
 
 		public string GetSearchFields(ConstraintType rec)
         {   
-           return string.Empty;
+           return String.Concat(rec.Code,",",rec.Inactive,",",rec.LocalName,",");
         }
    }
 }

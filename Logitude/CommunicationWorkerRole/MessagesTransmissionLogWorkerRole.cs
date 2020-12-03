@@ -1,6 +1,7 @@
 ﻿using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.Server.Tools.Counters;
+using Logitude.Server.Tools.EntityChanges;
 using Logitude.Server.Tools.Helpers;
 using Logitude.Server.Tools.QueueService;
 using Logitude.SystemLogs;
@@ -222,9 +223,8 @@ namespace CommunicationWorkerRole
 
             if (myLog != null)
             {
-                EntityChangeHelper entityChangeHelper = new EntityChangeHelper();
-
-                entityChangeHelper.AddEntityChange(myLog, null, "OnCreate", "", "LogitudeMessagesTransmissionLog");
+                var mainEntityChangeService = new MainEntityChangeService(new EntityChangeArgs() { EntityPM = myLog, ProcessType = "OnCreate", ObjectTableName = "LogitudeMessagesTransmissionLog", EntityId = myLog.Id, Tenant = tenant });
+                mainEntityChangeService.AddEntityChange();
             }
         }
     }

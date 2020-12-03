@@ -286,45 +286,13 @@ export class LedgerTransactionExtendedListService {
     }
 
 
-    getFirst100LedgerForReconciliation(accountId: string, filters: ApiQueryFilters) {
+    GetFirst500LedgerForReconciliation(accountId: string, filters: ApiQueryFilters) {
 
 
-        var url = this._reconciliationUrl + "/GetFirst100LedgerForReconciliation";
+        var url = this._reconciliationUrl + "/GetFirst500LedgerForReconciliation";
 
-        var urlparameters = '?gLAccountId=' + accountId
-            + '&tenant=' + SessionInfo.LoggedUserTenant;
+        var callUrl = this.ParseFiltersIntoURL(accountId, filters, url); 
 
-
-
-        //#region Parse Filters into URI
-        var mykeys = Object.keys(filters);
-        var addtionalFiltersValues = null;
-        for (var i in mykeys) {
-            var propName = mykeys[i];
-            var propValue = filters[propName];
-
-            var ignoreFilter = ((propName.indexOf("Operator") > 0 && propValue == "Equals") || propName == "AdditionalFilters");
-
-            if (urlparameters != "?") {
-                urlparameters = urlparameters.concat('&');
-            }
-            if (!ignoreFilter) {
-                propValue = encodeURIComponent(propValue);
-                urlparameters = urlparameters.concat(propName.concat('=').concat(propValue));
-            }
-
-            if (propName == "AdditionalFilters" && propValue.length > 0)
-                addtionalFiltersValues = JSON.stringify(propValue);
-
-
-        }
-        if (addtionalFiltersValues) {
-            urlparameters = urlparameters.concat("&AdditionalFilters=").concat(addtionalFiltersValues);
-        }
-        //#endregion End Parse
-
-
-        var callUrl = url.concat(urlparameters);
         return this.httpClient.get(callUrl, ServiceHelper.GetHttpHeaders()).pipe(
             map((response: ServiceResponse) => {
                 var serviceResponse: ServiceResponse = new ServiceResponse();
@@ -335,6 +303,31 @@ export class LedgerTransactionExtendedListService {
 
     }
 
+
+    private ParseFiltersIntoURL(accountId: string, filters: ApiQueryFilters, url: string)
+    {
+        var urlparameters = '?gLAccountId=' + accountId  + '&tenant=' + SessionInfo.LoggedUserTenant;
+        var mykeys = Object.keys(filters);
+        var addtionalFiltersValues = null;
+        for (var i in mykeys) {
+            var propName = mykeys[i];
+            var propValue = filters[propName];
+            var ignoreFilter = ((propName.indexOf("Operator") > 0 && propValue == "Equals") || propName == "AdditionalFilters");
+            if (urlparameters != "?") {
+                urlparameters = urlparameters.concat('&');
+            }
+            if (!ignoreFilter) {
+                propValue = encodeURIComponent(propValue);
+                urlparameters = urlparameters.concat(propName.concat('=').concat(propValue));
+            }
+            if (propName == "AdditionalFilters" && propValue.length > 0)
+                addtionalFiltersValues = JSON.stringify(propValue);
+        }
+        if (addtionalFiltersValues) {
+            urlparameters = urlparameters.concat("&AdditionalFilters=").concat(addtionalFiltersValues);
+        }
+        return url.concat(urlparameters);
+    }
 
     getLast10TransactionsForAccount(accountId: string) {
 

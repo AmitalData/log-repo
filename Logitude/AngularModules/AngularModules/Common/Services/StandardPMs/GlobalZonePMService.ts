@@ -153,6 +153,7 @@ export class GlobalZonePMService {
         if (!entityPM) {
             
             entityPM = new GlobalZonePM();
+			entityPM.DisableMarkAsDirty = true;
         }
 
 		var customFields: Array<string> = [];
@@ -193,6 +194,8 @@ export class GlobalZonePMService {
             entityPM.OldEntityPM = null;
         }
 		entityPM.IsDirty = false;
+	    entityPM.DisableMarkAsDirty = false;
+
         return entityPM;
     }
 

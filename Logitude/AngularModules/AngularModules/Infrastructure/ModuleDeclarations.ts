@@ -15,7 +15,8 @@ import { TextAlignEnd } from './Utilities/RTLDirectives/TextAlignEnd';
 import {DateTimeToColorPipe} from './Pipes/DateTimePipes/DateTimeToColorPipe';
 import {NumbersPipe} from './Pipes/NumbersPipe';
 import {PaddingPipe} from './Pipes/PaddingPipe';
-import {ReplacePipe} from './Pipes/ReplacePipe';
+import { ReplacePipe } from './Pipes/ReplacePipe';
+import { HighlightSearch } from './Pipes/HighlightSearch'; 
 import {StringToColorPipe} from './Pipes/StringToColorPipe';
 import {DateTimeToTimePipe} from './Pipes/DateTimeToTimePipe';
 import {AttatchmentIconPipe} from './Pipes/AttatchmentIconPipe';
@@ -116,6 +117,7 @@ import {TipsComponent} from './Components/LogitudeComponents/TipsComponent/TipsC
 import {MainMenuAutomationComponent} from './Components/Maintenance/Automation/MainMenuAutomationComponent';
 import {AutomationsSettingsComponent} from './Components/Maintenance/Automation/AutomationsSettingsComponent';
 import {AddEditAutomationsComponent} from './Components/Maintenance/Automation/AddEditAutomationsComponent';
+import { ChooseSpecificUserComponent } from './Components/Maintenance/Automation/ChooseSpecificUserComponent';
 import {DelayAutomationconditionsComponent} from './Components/Maintenance/Automation/DelayAutomationconditionsComponent';
 import {ViewAutomationHistoryComponent} from './Components/Maintenance/Automation/ViewAutomationHistoryComponent';
 import {AuditAutomationTabComponent} from './Components/Maintenance/Automation/AuditAutomationTabComponent';
@@ -174,7 +176,18 @@ import { BTEGeneralTabComponent } from './Components/Maintenance/BatchTaskExecut
 import { BTELogTabComponent } from './Components/Maintenance/BatchTaskExecution/BTELogTabComponent';
 import { BTEParameterTabComponent } from './Components/Maintenance/BatchTaskExecution/BTEParameterTabComponent/BTEParameterTabComponent';
 import { TaskSchedulerHistoryComponent } from '../InfrastructureModules/InfrastructureBatchService/Components/TaskScheduler/TaskSchedulerHistoryComponent';
+import { DropdownMenuComponent } from './Components/LogitudeComponents/DropdownMenuComponent';
+import { MultiSelectLOVComponent } from './Components/LogitudeComponents/MultiSelectLOVComponent';
+
 import { FTBSchedulerTemplateComponent } from '../InfrastructureModules/InfrastructureBatchService/Components/TaskScheduler/SchedulerTemplates/FTBSchedulerTemplateComponent';
+import { SendInterfaceResultComponent } from './Components/Maintenance/Automation/AutomationResult/SendInterfaceResultComponent';
+import { FTPAutomationDetailsComponent } from './Components/Maintenance/Automation/AutomationResult/FTPAutomationDetailsComponent';
+
+
+
+
+
+
 //import { ScrollingModule } from '@angular/cdk/scrolling';
 export const Directives =
     [
@@ -192,6 +205,7 @@ export const Pipes =
         NumbersPipe,
         PaddingPipe,
         ReplacePipe,
+        HighlightSearch,
         StringToColorPipe,
         DateTimeToTimePipe,
         AttatchmentIconPipe,
@@ -280,7 +294,12 @@ export const ControlsComponents =
         LogTextBoxComponentV3,
         ImageLibraryComponent,
         TaskSchedulerHistoryComponent,
-        FTBSchedulerTemplateComponent
+        DropdownMenuComponent,
+        MultiSelectLOVComponent,
+        
+        FTBSchedulerTemplateComponent,
+        SendInterfaceResultComponent,
+        FTPAutomationDetailsComponent,
     ];
 export const Components =
     [
@@ -308,6 +327,7 @@ export const Components =
         MainMenuAutomationComponent,
         AutomationsSettingsComponent,
         AddEditAutomationsComponent,
+        ChooseSpecificUserComponent,
         DelayAutomationconditionsComponent,
         ViewAutomationHistoryComponent,
 
@@ -392,6 +412,7 @@ export class ModuleDeclarations {
             case 'MainMenuAutomationComponent': { myResult = MainMenuAutomationComponent; break; }
             case 'AutomationsSettingsComponent': { myResult = AutomationsSettingsComponent; break; }
             case 'AddEditAutomationsComponent': { myResult = AddEditAutomationsComponent; break; }
+            case 'ChooseSpecificUserComponent': { myResult = ChooseSpecificUserComponent; break; }
             case 'DelayAutomationconditionsComponent': { myResult = DelayAutomationconditionsComponent; break; }
             case 'ViewAutomationHistoryComponent': { myResult = ViewAutomationHistoryComponent; break; }
 
@@ -455,6 +476,13 @@ export class ModuleDeclarations {
             case 'MultilineTextBoxWindow': { myResult = MultilineTextBoxWindow; break; }
             case 'ImageLibraryComponent': { myResult = ImageLibraryComponent; break; }
             case 'FTBSchedulerTemplateComponent': { myResult = FTBSchedulerTemplateComponent; break; }
+            case 'SendInterfaceResultComponent': { myResult = SendInterfaceResultComponent; break; }
+            case 'FTPAutomationDetailsComponent': { myResult = FTPAutomationDetailsComponent; break; }
+
+                
+
+
+                
 
         }
 

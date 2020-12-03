@@ -90,7 +90,7 @@ namespace CustomsWorkerRole
 
         }
 
-        public static List<WorkerEntryPoint> GetAllWorkerEntryPointType()
+        public static List<Logitude.Server.Tools.WorkerEntryPoint> GetAllWorkerEntryPointType()
         //where TWorker :WorkerEntryPoint,new() 
         {
 #if false

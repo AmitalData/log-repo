@@ -96,7 +96,7 @@
                                                                                 <input type="text" style="height:22px;width:200px;" [(ngModel)]="Name" value="" />
                                                                             </td>
                                                                         </tr>
-                                                                        <tr  *ngIf="!IsShowAutomationCodeField" style="height:5px">
+                                                                        <tr *ngIf="!IsShowAutomationCodeField" style="height:5px">
                                                                             <td colspan="2"></td>
                                                                         </tr>
                                                                         <tr style="height:20px;">
@@ -112,11 +112,11 @@
                                                                         </tr>
                                                                     </table>
                                                                 </td>
-                                                                
+
                                                                 <td style="width:100%">
                                                                     <div></div>
                                                                 </td>
-                                                                
+
                                                                 <td style="vertical-align:top">
                                                                     <table>
                                                                         <tr>
@@ -179,7 +179,7 @@
 
                                                                 <tr style="height:25px">
                                                                     <td>
-                                                                        <div style="background-color:#EDEDED;height:25px;border-top:2px solid #E4E3E1;border-bottom:2px solid #E4E3E1;border-top-Right-radius:6px; border-top-left-radius:6px;color:black">                                                                            
+                                                                        <div style="background-color:#EDEDED;height:25px;border-top:2px solid #E4E3E1;border-bottom:2px solid #E4E3E1;border-top-Right-radius:6px; border-top-left-radius:6px;color:black">
                                                                             <table>
                                                                                 <tr>
                                                                                     <td style="width:300px">
@@ -202,7 +202,7 @@
                                                                         <table>
 
                                                                             <!--Result-->
-                                                                            <tr [style.height]="ResultCodeSelected.Code =='EMAIL' ?'100px':(ResultCodeSelected.Code =='FIELDSET' && ObjectTableName == 'Shipment') ? '50px' : '70px'">
+                                                                            <tr [style.height]="IsResultEmail ?'100px':(ResultCodeSelected.Code =='FIELDSET' && ObjectTableName == 'Shipment') ? '50px' : '70px'">
                                                                                 <td>
                                                                                     <table>
 
@@ -252,20 +252,20 @@
                                                                                                         <td style="vertical-align:central;width:100px;">
                                                                                                             <RadioButton [Name]="'DateRadio'" [Text]="'Immediately'" [IsChecked]="IsSelectedImmediatly" (Checked)="SelectedDelayedImmediatlRadioClcik('Immeduiatly')"></RadioButton>
                                                                                                             <!--<div class="RadioButton" style="width:100px;display:inline">
-                                                                                                                <input [attr.id]="ImmediatlyHtmlinputId" type="radio" (click)="SelectedDelayedImmediatlRadioClcik('Immeduiatly')" name="DateRadio" [checked]="IsSelectedImmediatly" />
-                                                                                                                <label [attr.for]="ImmediatlyHtmlinputId" style="font-size: 12px">
-                                                                                                                    Immediately
-                                                                                                                </label>
-                                                                                                            </div>-->
+                            <input [attr.id]="ImmediatlyHtmlinputId" type="radio" (click)="SelectedDelayedImmediatlRadioClcik('Immeduiatly')" name="DateRadio" [checked]="IsSelectedImmediatly" />
+                            <label [attr.for]="ImmediatlyHtmlinputId" style="font-size: 12px">
+                                Immediately
+                            </label>
+                        </div>-->
                                                                                                         </td>
                                                                                                         <td style="vertical-align:central;width:100px;">
                                                                                                             <RadioButton [Name]="'DateRadio'" [Text]="'Delayed'" [IsChecked]="IsSelectedDelayed" (Checked)="SelectedDelayedImmediatlRadioClcik('Delayed')"></RadioButton>
                                                                                                             <!--<div class="Delayed" style="width:100px;display:inline">
-                                                                                                                <input [attr.id]="DelayedHtmlinputId" type="radio" (click)="SelectedDelayedImmediatlRadioClcik('Delayed')" name="DateRadio" [checked]="IsSelectedDelayed" />
-                                                                                                                <label [attr.for]="DelayedHtmlinputId" style="font-size: 12px">
-                                                                                                                    Delayed
-                                                                                                                </label>
-                                                                                                            </div>-->
+                            <input [attr.id]="DelayedHtmlinputId" type="radio" (click)="SelectedDelayedImmediatlRadioClcik('Delayed')" name="DateRadio" [checked]="IsSelectedDelayed" />
+                            <label [attr.for]="DelayedHtmlinputId" style="font-size: 12px">
+                                Delayed
+                            </label>
+                        </div>-->
                                                                                                         </td>
                                                                                                         <td>
                                                                                                             <div></div>
@@ -303,8 +303,8 @@
 
                                                                                                                                         <td [style.width]="(ResultCodeSelected.Code =='FOLLOWUP' ||ResultCodeSelected.Code =='DOCOUTFOLLOWUP'|| ResultCodeSelected.Code =='DOCINFOLLOWUP') ?'75px':'97px'" class="CellStretched">
 
-                                                                                                                                            <div [style.width]="(ResultCodeSelected.Code =='FOLLOWUP' ||ResultCodeSelected.Code =='DOCOUTFOLLOWUP'|| ResultCodeSelected.Code =='DOCINFOLLOWUP') ?'75px':'97px'">
-                                                                                                                                                <LogTextBox  [FocusOnMe]="'true'"  [IsFreeText]="true" [InputType]="'integer'" [ObjectFieldName]="'DelayTime'" [NoObjectField]="true" [Text]="DelayTime" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
+                                                                                                                                            <div [style.width]="(ResultCodeSelected.Code =='FOLLOWUP' ||ResultCodeSelected.Code =='DOCOUTFOLLOWUP'|| ResultCodeSelected.Code =='DOCINFOLLOWUP') ?'75px':'60px'">
+                                                                                                                                                <LogTextBox [FocusOnMe]="'true'" [IsFreeText]="true" [InputType]="'integer'" [ObjectFieldName]="'DelayTime'" [NoObjectField]="true" [Text]="DelayTime" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
                                                                                                                                             </div>
 
                                                                                                                                             <!--  <input [style.width]="(ResultCodeSelected.Code =='FOLLOWUP' ||ResultCodeSelected.Code =='DOCOUTFOLLOWUP'|| ResultCodeSelected.Code =='DOCINFOLLOWUP') ?'75px':'100px'" type="number" (chang)="ChangeDelayTime()" [(ngModel)]="DelayTime" style="height:22px;border-radius:2px;border:1px solid #a8a8a8;color:gray;opacity:1;font-size:12px">-->
@@ -312,18 +312,39 @@
                                                                                                                                         <td style="width:5px">
                                                                                                                                             <div style="width:5px"></div>
                                                                                                                                         </td>
-                                                                                                                                        <td class="CellStretched" style="width:100px;">
+                                                                                                                                        <!--<td class="CellStretched" style="width:100px;">
 
-                                                                                                                                            <div style="height:22px;width:100px">
-                                                                                                                                                <LogLov  style="display:inline;" [ObjectFieldName]="'DelaytimeIndicator'"
-                                                                                                                                                        [ObjectTableName]="'TimeUnit'"
-                                                                                                                                                        [DataContext]="DataContext"
-                                                                                                                                                        [NoValidation]="true"
-                                                                                                                                                        [LookUpTableName]="'TimeUnit'"
-                                                                                                                                                        [SelectedValue]="DelaytimeIndicator"
-                                                                                                                                                        [IsFreeText]="true"
-                                                                                                                                                        [HideColumns]="true">
-                                                                                                                                                </LogLov>
+                                                        <div style="height:22px;width:100px">
+                                                            <LogLov style="display:inline;" [ObjectFieldName]="'DelaytimeIndicator'"
+                                                                    [ObjectTableName]="'TimeUnit'"
+                                                                    [DataContext]="DataContext"
+                                                                    [NoValidation]="true"
+                                                                    [LookUpTableName]="'TimeUnit'"
+                                                                    [SelectedValue]="DelaytimeIndicator"
+                                                                    [IsFreeText]="true"
+                                                                    [HideColumns]="true">
+                                                            </LogLov>
+                                                        </div>
+                                                    </td>-->
+                                                                                                                                        <td style="width:70px;">
+                                                                                                                                            <div style="height:22px;width:70px">
+                                                                                                                                                <ComboBox style="width:70px;" (SelectedItemChanged)="DelaytimeIndicator = $event" [SelectedItem]="DelaytimeIndicator" [ItemsSource]="TimeUnits" [Binding]="'Name'"></ComboBox>
+                                                                                                                                            </div>
+                                                                                                                                        </td>
+                                                                                                                                        <td style="width:5px">
+                                                                                                                                            <div style="width:5px"></div>
+                                                                                                                                        </td>
+                                                                                                                                        <td style="width:60px;" *ngIf="DelaytimeIndicator && DelaytimeIndicator.Code == 'DD'">
+                                                                                                                                            <div style="height:22px;width:60px">
+                                                                                                                                                <ComboBox style="width:60px;" (SelectedItemChanged)="DelaytimeOpIndicator = $event" [SelectedItem]="DelaytimeOpIndicator" [ItemsSource]="TimeUnitOps" [Binding]="'Name'"></ComboBox>
+                                                                                                                                            </div>
+                                                                                                                                        </td>
+                                                                                                                                        <td style="width:5px">
+                                                                                                                                            <div style="width:5px"></div>
+                                                                                                                                        </td>
+                                                                                                                                        <td style="width:130px;" *ngIf="DelaytimeIndicator && DelaytimeIndicator.Code == 'DD'">
+                                                                                                                                            <div style="height:22px;width:130px">
+                                                                                                                                                <ComboBox style="width:130px;" (SelectedItemChanged)="DelayTimeObjectFieldsIndicator = $event" [SelectedItem]="DelayTimeObjectFieldsIndicator" [ItemsSource]="DelayTimeObjectFields" [Binding]="'FullNameTextCodeDefaultText'"></ComboBox>
                                                                                                                                             </div>
                                                                                                                                         </td>
                                                                                                                                         <td style="width:5px">
@@ -375,67 +396,88 @@
 
                                                                                         </tr>
 
+
+
+                                                                                        <tr style="height:1px">
+                                                                                            <td colspan="4">
+                                                                                                <div class="LocationDirective" LocationDirective Code="SENDINTERFACE"> </div>
+                                                                                            </td>
+                                                                                        </tr>
+
+
+
                                                                                         <!--Documen tType Area-->
-                                                                                        <tr *ngIf="ResultCodeSelected.Code =='EMAIL'" style="height:2px;">
+                                                                                        <tr *ngIf="IsResultEmail" style="height:2px;">
                                                                                             <td colspan="4" style="height:2px">
 
                                                                                                 <div style="height:3px"></div>
                                                                                             </td>
                                                                                         </tr>
-                                                                                        <tr *ngIf="ResultCodeSelected.Code =='EMAIL'" style="height:25px">
+                                                                                        <tr *ngIf="IsResultEmail" style="height:25px">
+                                                                                            <td colspan="4">
+                                                                                                <div *ngIf="ResultCodeSelected.Code !='EMAIL'">
+                                                                                                    <p style="font-size:11px;margin-top:1px;color:Gray;margin-left:10px">Email Body</p>
 
-                                                                                            <td style="width:10px">
-                                                                                                <div></div>
-                                                                                            </td>
-
-
-                                                                                            <td style="width:100px">
-                                                                                                <p style="font-size:11px;margin-top:1px;color:#6E7172">Document</p>
-                                                                                            </td>
-                                                                                            <td style="width:200px">
-                                                                                                <div style="text-align:left;width:200px;">
-                                                                                                    <ComboBox style="width:200px;" (SelectedItemChanged)="DocumentTypeListsValueChanged($event)" [ItemsSource]="DocumentTypeLists" [SelectedItem]="DocumentTypeSelected" [Binding]="'Name'"></ComboBox>
                                                                                                 </div>
-                                                                                            </td>
-                                                                                            <td>
-                                                                                                <div>
-                                                                                                    <table>
+                                                                                                <div [style.border]="ResultCodeSelected.Code !='EMAIL' ?'2px solid #E4E3E1':''" [style.padding-top]="ResultCodeSelected.Code !='EMAIL' ?'7px':''" [style.padding-bottom]="ResultCodeSelected.Code !='EMAIL' ?'7px':''" style="border-radius: 5px" >
+                                                                                                    <table >
                                                                                                         <tr>
-                                                                                                            <td style="width:20px">
-                                                                                                                <div style="width:20px"></div>
+                                                                                                            <td style="width:10px">
+                                                                                                                <div></div>
                                                                                                             </td>
 
+
+                                                                                                            <td style="width:100px">
+                                                                                                                <p style="font-size:11px;margin-top:1px;color:#6E7172">Document</p>
+                                                                                                            </td>
+                                                                                                            <td style="width:200px">
+                                                                                                                <div style="text-align:left;width:200px;">
+                                                                                                                    <ComboBox style="width:200px;" (SelectedItemChanged)="DocumentTypeListsValueChanged($event)" [ItemsSource]="DocumentTypeLists" [SelectedItem]="DocumentTypeSelected" [Binding]="'Name'"></ComboBox>
+                                                                                                                </div>
+                                                                                                            </td>
                                                                                                             <td>
                                                                                                                 <div>
                                                                                                                     <table>
                                                                                                                         <tr>
-                                                                                                                            <td class="CellStretched" style="width:80px;vertical-align:central">
-                                                                                                                                <p style="font-size:12px;color:#6E7172">Template</p>
-                                                                                                                            </td>
-
-                                                                                                                            <td style="vertical-align:central;width:203px">
-                                                                                                                                <div style="text-align:left;width:203px;vertical-align:central">
-                                                                                                                                    <ComboBox style="width:203px;" (SelectedItemChanged)="DocumentTypeTemplateListValueChanged($event)" [ItemsSource]="DocumentTypeTemplateLists" [SelectedItem]="DocumentTypetTemplateSelected" [Binding]="'Description'"></ComboBox>
-                                                                                                                                </div>
-                                                                                                                            </td>
-
-
-
-                                                                                                                            <td class="CellStretched" style="width:30px; min-width:30px; max-width:30px; position: relative;vertical-align:central">
-                                                                                                                                <div class="EditButton" (click)="EditDocumentTemplate(DocumentTypetTemplateSelected)" style="display:inline;width:18px;">
-                                                                                                                                    <IconButton [disabled]="!IsEnableEditTemplate" [Name]="'Edit'" [IsSmall]="true" style="display: block;margin-left:7px"></IconButton>
-                                                                                                                                </div>
-
-                                                                                                                            </td>
-
-                                                                                                                            <td class="CellStretched" style="width:25px; min-width:25px; max-width:25px; position: relative;vertical-align:central">
-
-                                                                                                                                <IconButton [disabled]="!IsEnableAddTemplate" [Name]="'Add'" [IsSmall]="true" (click)="AddDocumentTypeTemplate()"></IconButton>
-
+                                                                                                                            <td style="width:20px">
+                                                                                                                                <div style="width:20px"></div>
                                                                                                                             </td>
 
                                                                                                                             <td>
-                                                                                                                                <div></div>
+                                                                                                                                <div>
+                                                                                                                                    <table>
+                                                                                                                                        <tr>
+                                                                                                                                            <td class="CellStretched" style="width:80px;vertical-align:central">
+                                                                                                                                                <p style="font-size:12px;color:#6E7172">Template</p>
+                                                                                                                                            </td>
+
+                                                                                                                                            <td style="vertical-align:central;width:203px">
+                                                                                                                                                <div style="text-align:left;width:203px;vertical-align:central">
+                                                                                                                                                    <ComboBox style="width:203px;" (SelectedItemChanged)="DocumentTypeTemplateListValueChanged($event)" [ItemsSource]="DocumentTypeTemplateLists" [SelectedItem]="DocumentTypetTemplateSelected" [Binding]="'Description'"></ComboBox>
+                                                                                                                                                </div>
+                                                                                                                                            </td>
+
+
+
+                                                                                                                                            <td class="CellStretched" style="width:30px; min-width:30px; max-width:30px; position: relative;vertical-align:central">
+                                                                                                                                                <div class="EditButton" (click)="EditDocumentTemplate(DocumentTypetTemplateSelected)" style="display:inline;width:18px;">
+                                                                                                                                                    <IconButton [disabled]="!IsEnableEditTemplate" [Name]="'Edit'" [IsSmall]="true" style="display: block;margin-left:7px"></IconButton>
+                                                                                                                                                </div>
+
+                                                                                                                                            </td>
+
+                                                                                                                                            <td class="CellStretched" style="width:25px; min-width:25px; max-width:25px; position: relative;vertical-align:central">
+
+                                                                                                                                                <IconButton [disabled]="!IsEnableAddTemplate" [Name]="'Add'" [IsSmall]="true" (click)="AddDocumentTypeTemplate()"></IconButton>
+
+                                                                                                                                            </td>
+
+                                                                                                                                            <td>
+                                                                                                                                                <div></div>
+                                                                                                                                            </td>
+                                                                                                                                        </tr>
+                                                                                                                                    </table>
+                                                                                                                                </div>
                                                                                                                             </td>
                                                                                                                         </tr>
                                                                                                                     </table>
@@ -445,7 +487,13 @@
                                                                                                     </table>
                                                                                                 </div>
                                                                                             </td>
+
+                                                                                  
                                                                                         </tr>
+
+
+
+
 
                                                                                         <tr>
                                                                                             <td colspan="4">
@@ -459,7 +507,7 @@
                                                                             </tr>
 
                                                                             <!--Recipients-->
-                                                                            <tr style="width:100%" *ngIf="ResultCodeSelected.Code =='EMAIL'">
+                                                                            <tr style="width:100%" *ngIf="IsResultEmail">
 
                                                                                 <td colspan="2">
                                                                                     <table>
@@ -552,22 +600,28 @@
 
                                                                                                                                 <td style="vertical-align:top" *ngIf="IsLoadAutomationResultEmailRecipient">
                                                                                                                                     <EmailSearchTextBox [IsDisabled]="IsAutomationResultEmailAllActiveUsers" [DontInCludeInactive]="true" [EmailsText]="UserIds" [SelectedValuePath]="'Id'" [IsUsersList]="true" (EmailsTextChanged)="UserIds = $event"></EmailSearchTextBox>
-                                                                                                                               
 
-                                                                                                                                 </td>
+
+                                                                                                                                </td>
                                                                                                                                 <td style="width:10px"><div></div></td>
                                                                                                                                 <td style="width:110px;vertical-align:top;margin-top:2px">
-                                                                                                                                   <div style="vertical-align:central;margin-top:2px">
-                                                                                                                                       <CheckBox [IsChecked]="IsAutomationResultEmailAllActiveUsers" [Text]="'All Active Users'" (Checked)="IsAutomationResultEmailAllActiveUsers = $event;IsChangeAutomation=true" [IsEnabled]="!UserIds"></CheckBox>
+                                                                                                                                    <div style="vertical-align:central;margin-top:2px">
+                                                                                                                                        <CheckBox [IsChecked]="IsAutomationResultEmailAllActiveUsers" [Text]="'All Active Users'" (Checked)="IsAutomationResultEmailAllActiveUsers = $event;IsChangeAutomation=true" [IsEnabled]="!UserIds"></CheckBox>
 
-                                                                                                                                   </div>
-                                                                                                                                  
+                                                                                                                                    </div>
+
                                                                                                                                 </td>
 
                                                                                                                                 <td style="width:10px">
                                                                                                                                     <div style="width:10px"></div>
                                                                                                                                 </td>
                                                                                                                             </tr>
+                                                                                                                            <tr>
+                                                                                                                                <td>
+                                                                                                                                    <div style="height:3px"></div>
+                                                                                                                                </td>
+                                                                                                                            </tr>
+
                                                                                                                         </table>
 
                                                                                                                     </div>
@@ -578,6 +632,8 @@
 
 
                                                                                                         </tr>
+
+
                                                                                                         <tr style="height:5px">
                                                                                                             <td></td>
                                                                                                         </tr>
@@ -589,8 +645,86 @@
 
 
                                                                                         </tr>
+
+                                                                                        <tr style="height:5px">
+                                                                                            <td>
+                                                                                                <div></div>
+                                                                                            </td>
+
+                                                                                        </tr>
+
+                                                                                        <tr style="height:40px" *ngIf="SelectedNotRequiredFields.length > 0">
+
+                                                                                            <td colspan="3">
+
+                                                                                                <div style="height:40px;border:2px solid #E4E3E1;border-radius:3px;margin-left:5px;margin-right:5px">
+                                                                                                    <table>
+
+                                                                                                        <tr style="height:10px">
+                                                                                                            <td></td>
+                                                                                                        </tr>
+
+                                                                                                        <tr>
+
+
+                                                                                                            <td style="vertical-align:top">
+                                                                                                                <div style="vertical-align:top">
+                                                                                                                    <div style="vertical-align:top">
+
+                                                                                                                        <table>
+                                                                                                                            <tr>
+                                                                                                                                <td style="width:20px;vertical-align:top;">
+                                                                                                                                    <div style="width:20px;margin-left:15px;font-size:13px;color:#606058;font-weight:bold;margin-top:0px">Notify Back</div>
+                                                                                                                                </td>
+                                                                                                                                <td style="width:5px">
+                                                                                                                                    <div style="width:5px"></div>
+                                                                                                                                </td>
+
+                                                                                                                                <td style="width:150px;">
+                                                                                                                                    <ComboBox [ItemsSource]="NotifyBackValuesList" [SelectedItem]="NotifyBackSelectedItem" [Binding]="'Name'" (SelectedItemChanged)="NotifyBackSelectedItem = $event"></ComboBox>
+                                                                                                                                </td>
+                                                                                                                                <td style="width:3px"><div></div></td>
+                                                                                                                                <td style="width:30px;" *ngIf="IsChooseUsersVisible">
+                                                                                                                                    <div style="width:60px"><Hyperlink style="margin-left:5px;" (click)="ChooseUsers()" [FontSize]="12" [Text]="'Choose'"></Hyperlink></div>
+
+                                                                                                                                </td>
+                                                                                                                                <td style="width:30px" *ngIf="!IsChooseUsersVisible">
+                                                                                                                                    <div style="width:60px"></div>
+                                                                                                                                </td>
+                                                                                                                                <td style="width:30px">
+                                                                                                                                    <div style="width:60px"></div>
+                                                                                                                                </td>
+                                                                                                                            </tr>
+                                                                                                                            <tr>
+                                                                                                                                <td>
+                                                                                                                                    <div style="height:3px"></div>
+                                                                                                                                </td>
+                                                                                                                            </tr>
+
+                                                                                                                        </table>
+
+                                                                                                                    </div>
+                                                                                                                </div>
+
+
+                                                                                                            </td>
+
+
+                                                                                                        </tr>
+
+
+                                                                                                        <tr style="height:5px">
+                                                                                                            <td></td>
+                                                                                                        </tr>
+                                                                                                    </table>
+
+
+                                                                                                </div>
+                                                                                            </td>
+                                                                                        </tr>
+
                                                                                         <tr>
-                                                                                            <td colspan="3"></td>
+                                                                                            <td colspan="2"></td>
                                                                                         </tr>
 
                                                                                     </table>
@@ -891,7 +1025,7 @@
 
                                                                                                             <td style="width:100px;" class="Label">Queue</td>
 
-                                                                                                            <td style="width:236px;">                                                                                                                
+                                                                                                            <td style="width:236px;">
                                                                                                                 <LogLov [ObjectFieldName]="'QueueId'"
                                                                                                                         [NoObjectField]="true"
                                                                                                                         [DataContext]="DataContext"
@@ -943,7 +1077,7 @@
                                                                                                                 <table>
                                                                                                                     <tr>
                                                                                                                         <td style="width:66px;">
-                                                                                                                            <ComboBox [ItemsSource]="TaskOffsetTypeList" [SelectedItem]="SelectedTaskOffsetType" (SelectedItemChanged)="SelectedTaskOffsetType = $event" [Binding]="'Name'"></ComboBox>                                                                                                                           
+                                                                                                                            <ComboBox [ItemsSource]="TaskOffsetTypeList" [SelectedItem]="SelectedTaskOffsetType" (SelectedItemChanged)="SelectedTaskOffsetType = $event" [Binding]="'Name'"></ComboBox>
                                                                                                                         </td>
 
                                                                                                                         <td style="width:1px;">
@@ -1021,7 +1155,7 @@
                                                                                                                         </td>
                                                                                                                     </tr>
                                                                                                                 </table>
-                                                                                                            </td>                                                                                                            
+                                                                                                            </td>
                                                                                                         </tr>
 
                                                                                                         <tr class="FormFieldRow">
@@ -1126,7 +1260,7 @@
 
                         </div>
 
-                    </div>                    
+                    </div>
 
                     <!-- Tab  2-->
                     <div class="LocationDirectiveHolder" [hidden]="SelectedTabCode != 'EVE'">
@@ -1269,4 +1403,4 @@
             </table>
         </td>
     </tr>
-</table> 
+</table>

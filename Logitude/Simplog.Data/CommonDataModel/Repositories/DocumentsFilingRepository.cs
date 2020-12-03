@@ -4,6 +4,7 @@ using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Server.Infrastructure.Helpers;
 using Simplog.Server.Infrastructure;
 using System;
+using System.Data.Entity.Infrastructure;
 
 namespace Simplog.Data.CommonDataModel.Repositories
 {
@@ -14,6 +15,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
         public DocumentsFilingRepository()
         {
             commonDataContext = new CommonDataContext();
+            (context as System.Data.Entity.Infrastructure.IObjectContextAdapter).ObjectContext.ContextOptions.UseCSharpNullComparisonBehavior = false; //Pasted from <http://stackoverflow.com/questions/682429/how-can-i-query-for-null-values-in-entity-framework?lq=1> 
         }
 
         public DocumentsFilingRepository(int tenant)
@@ -86,6 +88,8 @@ namespace Simplog.Data.CommonDataModel.Repositories
             DocumentsFiling externalDocument = null;
             externalDocument = CacheManager.GetOrInsertNewObject<DocumentsFiling>(name, () =>
         {
+            (context as IObjectContextAdapter).ObjectContext.ContextOptions.UseCSharpNullComparisonBehavior = false; //Pasted from <http://stackoverflow.com/questions/682429/how-can-i-query-for-null-values-in-entity-framework?lq=1> 
+
             var poco = (from a in context.DocumentsFilings
                         ///.Include("CreatedByUser.Contact").Include("Document").Include("Owner.Contact").Include("ObjectTable").Include("DocumentType")
                         where a.DocumentId == DocumentId && a.Tenant == tenant

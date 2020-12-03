@@ -40,7 +40,7 @@ using Simplog.Data.CommonDataModel;
         }
 
 		
-		public Port GetPortById(string Id,int Tenant)
+		public Port GetPortById(string Id,int Tenant,string ComputingPartnerName = "")
         { 
 		    try
             {
@@ -50,7 +50,7 @@ using Simplog.Data.CommonDataModel;
 				 if (temp == null)
                     throw new ApplicationException("Port with Id " + Id + " doesn't exist");
 
-				return PortDataMapping(temp,Tenant);
+				return PortDataMapping(temp,Tenant,ComputingPartnerName);
 			}
             catch (Exception ex)
             {
@@ -59,7 +59,7 @@ using Simplog.Data.CommonDataModel;
             }
         }
 		
-		public Port GetPortByCombinedCode(string CombinedCode,int Tenant)
+		public Port GetPortByCombinedCode(string CombinedCode,int Tenant,string ComputingPartnerName = "")
         { 
 		    try
             {
@@ -69,7 +69,7 @@ using Simplog.Data.CommonDataModel;
 				 if (temp == null)
                     throw new ApplicationException("Port with CombinedCode " + CombinedCode + " doesn't exist");
 
-				return PortDataMapping(temp,Tenant);
+				return PortDataMapping(temp,Tenant,ComputingPartnerName);
 			}
             catch (Exception ex)
             {

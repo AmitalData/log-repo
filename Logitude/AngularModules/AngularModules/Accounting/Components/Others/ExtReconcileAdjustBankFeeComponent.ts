@@ -248,10 +248,16 @@ export class ExtReconcileAdjustBankFeeComponent extends BaseComponent implements
     _SelectedReconcileExternalPageLinePMList: ReconcileExternalPageLinePM[]=[];
     _SelectedLedgerTransactionIdList: [];
     _BankAccountPMId: string;
+    TotalDifference:number;
+    TotalDifferenceCurrency:  string;
     SetWindowArgs(winArgs) {
         //logitudeWindow.WindowArgs = { "ExtPageSelectedLine": this.ExtPageSelectedLines[0], "LedgerTransactionIdList": LedgerTransactionIdList, "BankAccountPMId": this.BankAccountPM.Id };
         //"ReconcileExternalPageLinePMList": ReconcileExternalPageLinePMList,
         this._BankAccountPMId = winArgs.BankAccountPMId;
+        
+        this.TotalDifference = winArgs.TotalDifference;
+        this.TotalDifferenceCurrency = winArgs.TotalDifferenceCurrency;
+
         this._SelectedReconcileExternalPageLinePMList = winArgs.ReconcileExternalPageLinePMList;
         if (!AppTool.IsNullOrEmpty(this._SelectedReconcileExternalPageLinePMList)) {
             let firstNote = this._SelectedReconcileExternalPageLinePMList.filter(r => !AppTool.IsNullOrEmpty(r.Notes))[0]

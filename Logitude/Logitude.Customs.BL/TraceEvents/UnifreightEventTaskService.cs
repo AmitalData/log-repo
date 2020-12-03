@@ -6,7 +6,9 @@ using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.Helpers;
 using System;
+using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using System.Transactions;
 using System.Xml.Linq;
 using Unifreight.BL.EntityPMs;
@@ -17,7 +19,7 @@ using Unifreight.Data.AmitalModel;
 
 namespace Logitude.Customs.BL.TraceEvents
 {
-    internal class UnifreightEventTaskService
+    public class UnifreightEventTaskService
     {
         private AmitalContext _AmitalContext;
 
@@ -161,24 +163,50 @@ namespace Logitude.Customs.BL.TraceEvents
 
         private static XElement GetEventsXElement(UnifreightEventParam MyUnifreightEventParam, string unfreightUserId, string EventDate, string EventTime)
         {
-            var EventsXElement =
-                        //new XDocument(
-                        //new XDeclaration("1.0", "utf-8", "yes"),
-                        //new XComment("OpenUnifreighTaskService.UpsertEventLE2U"),
-                        new XElement("Events",
-                            new XElement("Event",
-                                new XElement("Code", MyUnifreightEventParam.Code),
-                                new XElement("Mode", MyUnifreightEventParam.Mode.ToString()),
+            var EventsXElement = new XElement("Events");
+            if (MyUnifreightEventParam.PrimaryNumList != null && MyUnifreightEventParam.PrimaryNumList.Count > 0)
+            {
+                EventsXElement =
+                            //new XDocument(
+                            //new XDeclaration("1.0", "utf-8", "yes"),
+                            //new XComment("OpenUnifreighTaskService.UpsertEventLE2U"),
+                            new XElement("Events",
+                            from PrimaryNumParam in MyUnifreightEventParam.PrimaryNumList
+                            select new XElement("Event",
+                                    new XElement("Code", MyUnifreightEventParam.Code),
+                                    new XElement("Mode", MyUnifreightEventParam.Mode.ToString()),
 
-                                new XElement("EventDate", EventDate),
-                                new XElement("EventTime", EventTime),
+                                    new XElement("EventDate", EventDate),
+                                    new XElement("EventTime", EventTime),
 
-                                new XElement("EventRemarks", MyUnifreightEventParam.EventRemarks),
-                                new XElement("EventUser", unfreightUserId),
-                                new XElement("Entname", MyUnifreightEventParam.Entname),
-                                new XElement("PrimaryNum", MyUnifreightEventParam.PrimaryNum)
-                                )
-                        );
+                                    new XElement("EventRemarks", MyUnifreightEventParam.EventRemarks),
+                                    new XElement("EventUser", unfreightUserId),
+                                    new XElement("Entname", MyUnifreightEventParam.Entname),
+                                    new XElement("PrimaryNum", PrimaryNumParam)
+                                    )
+                            );
+            }
+            else
+            {
+                EventsXElement =
+                            //new XDocument(
+                            //new XDeclaration("1.0", "utf-8", "yes"),
+                            //new XComment("OpenUnifreighTaskService.UpsertEventLE2U"),
+                            new XElement("Events",
+                                new XElement("Event",
+                                    new XElement("Code", MyUnifreightEventParam.Code),
+                                    new XElement("Mode", MyUnifreightEventParam.Mode.ToString()),
+
+                                    new XElement("EventDate", EventDate),
+                                    new XElement("EventTime", EventTime),
+
+                                    new XElement("EventRemarks", MyUnifreightEventParam.EventRemarks),
+                                    new XElement("EventUser", unfreightUserId),
+                                    new XElement("Entname", MyUnifreightEventParam.Entname),
+                                    new XElement("PrimaryNum", MyUnifreightEventParam.PrimaryNum)
+                                    )
+                            );
+            }
             return EventsXElement;
         }
 
@@ -238,6 +266,7 @@ namespace Logitude.Customs.BL.TraceEvents
         public string EventUser { get; set; }
         public string Entname { get; set; }
         public string PrimaryNum { get; set; }
+        public List<string> PrimaryNumList { get; set; }
 
         internal bool IsValid()
         {

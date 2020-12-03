@@ -426,6 +426,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                 Category5Id = "",
 
                 ChartOfAccountsId = GetFilterValue<string>("ChartOfAccountId"),
+                ChartOfAccountsTypeCode = GetFilterValue<string>("ChartOfAccountsTypeCode"),
                 AccountTypeCode = GetFilterValue<string>("AccountTypeCode"),
                 IsReconciled = GetFilterValue<bool?>("IsReconciled"),
                 IncludeChildAccounts = GetFilterValue<bool>("IncludeChildAccounts"),

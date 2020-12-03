@@ -1,371 +1,429 @@
-﻿<!-- FaultQueryComponent view  -->
+<!-- FaultQueryComponent view  -->
 <div>
-    <custom-message-wrapper (CustomSendOptionsClick)="OnCustomSendOptionsButtonClick($event)">
+  <custom-message-wrapper (CustomSendOptionsClick)="OnCustomSendOptionsButtonClick($event)">
 
-        <!-- Request -->
-        <div class="class-request-content" *ngIf="RequestParams">
-            <table style="width: 560px;height: 116px;padding-top: 10px;">
-                <!-- Request Fields -->
-                <tr style="height: 46px;">
-                    <td>
-                        <table>
-                            <!--Client + Importer-->
-                            <tr class="FormFieldRow">
-                                <td style="width: 110px;">
-                                    <LogLabel [ObjectFieldName]="'CustomerId'"
-                                              [DataContext]="DataContext"
-                                              [TextCode]="'Customs.General.O.FaultQueryClient'">
-                                    </LogLabel>
-                                </td>
+    <!-- Request -->
+    <div class="class-request-content" *ngIf="RequestParams">
+      <table style="width: 560px;height: 116px;padding-top: 10px;">
+        <!-- Request Fields -->
+        <tr style="height: 46px;">
+          <td>
+            <table>
+              <!--Client + Importer-->
+              <tr class="FormFieldRow">
+                <td style="width: 110px;">
+                  <LogLabel [ObjectFieldName]="'CustomerId'"
+                            [DataContext]="DataContext"
+                            [TextCode]="'Customs.General.O.FaultQueryClient'">
+                  </LogLabel>
+                </td>
 
-                                <td colspan="2" style="width: 130px;">
-                                    <LogLov [ObjectFieldName]="'CustomerId'"
-                                            [ObjectTableName]="ObjectTableName"
-                                            [DataContext]="DataContext"
-                                            [SelectedValue]="CustomerId"
-                                            [DependencyFilter1Value]="'CS'"
-                                            [HideAddLink]="true"
-                                            [LookUpTableName]="'Card'"
-                                            [DisplayFieldsFromList]="'Code,LocalName,EnglishName'">
-                                    </LogLov>
-                                </td>
-                                
-                                <td style="width: 3px;"><div></div></td>
+                <td colspan="2" style="width: 130px;">
+                  <LogLov [ObjectFieldName]="'CustomerId'"
+                          [ObjectTableName]="ObjectTableName"
+                          [DataContext]="DataContext"
+                          [SelectedValue]="CustomerId"
+                          [DependencyFilter1Value]="'CS'"
+                          [HideAddLink]="true"
+                          [LookUpTableName]="'Card'"
+                          [DisplayFieldsFromList]="'Code,LocalName,EnglishName'">
+                  </LogLov>
+                </td>
 
-                                <td style="width: 130px;">
-                                    <SearchBox [ObjectTableName]="'Customs.Client'"
-                                               [IsQuickSearch]="true"
-                                               [DropDownWidth]="143"
-                                               [DisplayText]="ImporterCode"
-                                               [DisplayMember]="'Code'"
-                                               [IsDisabled]="IsImporerCodeEnabled"
-                                               [ItemHeight]="33"
-                                               [HideIcons]="true"
-                                               [Watermark]="''"
-                                               (TextChanged)="ImporterTextChanged('Importer', $event)"
-                                               (ItemClicked)="ImporterClicked('Importer',$event)"></SearchBox>
-                                </td>
-                                <td style="width: 120px; min-width: 120px; max-width: 120px; text-align: right; padding-right: 5px;">
-                                    <div style="color: #646464; font-size: 11px;">{{ImporterName}}</div>
-                                </td>
+                <td style="width: 3px;">
+                  <div></div>
+                </td>
 
-                                <td><div></div></td>
-                            </tr>
+                <td style="width: 130px;">
+                  <SearchBox [ObjectTableName]="'Customs.Client'"
+                             [IsQuickSearch]="true"
+                             [DropDownWidth]="143"
+                             [DisplayText]="ImporterCode"
+                             [DisplayMember]="'Code'"
+                             [IsDisabled]="IsImporerCodeEnabled"
+                             [ItemHeight]="33"
+                             [HideIcons]="true"
+                             [Watermark]="''"
+                             (TextChanged)="ImporterTextChanged('Importer', $event)"
+                             (ItemClicked)="ImporterClicked('Importer',$event)"></SearchBox>
+                </td>
+                <td style="width: 120px; min-width: 120px; max-width: 120px; text-align: right; padding-right: 5px;">
+                  <div style="color: #646464; font-size: 11px;">{{ImporterName}}</div>
+                </td>
 
-                            <!--Custom file + Declaration No.-->
-                            <tr class="FormFieldRow" >
-                                <td style="width: 110px;">
-                                    <LogLabel [ObjectFieldName]="'CustomFileNo'"
-                                              [DataContext]="DataContext"
-                                              [TextCode]="'Customs.General.O.FaultQueryCustomFileDeclaration'">
-                                    </LogLabel>
-                                </td>
-                                <td style="width: 130px;">
-                                    <LogTextBox [ObjectFieldName]="'CustomFileNo'" [InputType]="'text'" [DataContext]="DataContext" [ObjectTableName]="ObjectTableName"
-                                                [HideColumns]="true"
-                                                (LostFocus)="CustomFileNoTextChanged($event)"
-                                                [Text]="CustomFileNo"></LogTextBox>
-                                </td>
+                <td>
+                  <div></div>
+                </td>
+              </tr>
 
-                                <td style="width: 35px;"><div></div></td>
+              <!--Custom file + Declaration No.-->
+              <tr class="FormFieldRow">
+                <td style="width: 110px;">
+                  <LogLabel [ObjectFieldName]="'CustomFileNo'"
+                            [DataContext]="DataContext"
+                            [TextCode]="'Customs.General.O.FaultQueryCustomFileDeclaration'">
+                  </LogLabel>
+                </td>
+                <td style="width: 130px;">
+                  <LogTextBox [ObjectFieldName]="'CustomFileNo'" [InputType]="'text'" [DataContext]="DataContext" [ObjectTableName]="ObjectTableName"
+                              [HideColumns]="true"
+                              (LostFocus)="CustomFileNoTextChanged($event)"
+                              [Text]="CustomFileNo"></LogTextBox>
+                </td>
 
-                                <td style="width: 3px;"><div></div></td>
+                <td style="width: 35px;">
+                  <div></div>
+                </td>
 
-                                <td style="width: 150px;">
-                                    <LogTextBox [ObjectFieldName]="'DeclarationNumber'" [InputType]="'text'" [DataContext]="DataContext" [ObjectTableName]="ObjectTableName"
-                                                [HideColumns]="true" [Text]="DeclarationNumber"
-                                                (LostFocus)="DeclarationNumberTextChanged($event)"></LogTextBox>
-                                </td>
+                <td style="width: 3px;">
+                  <div></div>
+                </td>
 
-                                <td><div></div></td>
-                            </tr>
+                <td style="width: 150px;">
+                  <LogTextBox [ObjectFieldName]="'DeclarationNumber'" [InputType]="'text'" [DataContext]="DataContext" [ObjectTableName]="ObjectTableName"
+                              [HideColumns]="true" [Text]="DeclarationNumber"
+                              (LostFocus)="DeclarationNumberTextChanged($event)"></LogTextBox>
+                </td>
 
-                            <!--Dates-->
-                            <tr class="FormFieldRow" >
-                                <td style="width: 110px;">
-                                    <LogLabel [ObjectFieldName]="'StartDate'"
-                                              [DataContext]="DataContext"
-                                              [TextCode]="'Customs.General.O.FaultQueryDates'">
-                                    </LogLabel>
-                                </td>
-                                <td style="width: 130px;">
-                                    <LogDatePicker [NoObjectField]="true" [ObjectFieldName]="'StartDate'" [ObjectTableName]="ObjectTableName"
-                                                   [InputType]="'date'" [DataContext]="DataContext"
-                                                   [HideColumns]="true"></LogDatePicker>
-                                </td>
+                <td>
+                  <div></div>
+                </td>
+              </tr>
 
-                                <td style="width: 35px;"><div></div></td>
+              <!--Dates-->
+              <tr class="FormFieldRow">
+                <td style="width: 110px;">
+                  <LogLabel [ObjectFieldName]="'StartDate'"
+                            [DataContext]="DataContext"
+                            [TextCode]="'Customs.General.O.FaultQueryDates'">
+                  </LogLabel>
+                </td>
+                <td style="width: 130px;">
+                  <LogDatePicker [NoObjectField]="true" [ObjectFieldName]="'StartDate'" [ObjectTableName]="ObjectTableName"
+                                 [InputType]="'date'" [DataContext]="DataContext"
+                                 [HideColumns]="true"></LogDatePicker>
+                </td>
 
-                                <td style="width: 3px;"><div></div></td>
+                <td style="width: 35px;">
+                  <div></div>
+                </td>
 
-                                <td style="width: 130px;">
-                                    <LogDatePicker [NoObjectField]="true" [ObjectFieldName]="'EndDate'" [ObjectTableName]="ObjectTableName"
-                                                   [InputType]="'date'" [DataContext]="DataContext"
-                                                   [HideColumns]="true"></LogDatePicker>
-                                </td>
+                <td style="width: 3px;">
+                  <div></div>
+                </td>
 
-                                <td><div></div></td>
-                            </tr>
+                <td style="width: 130px;">
+                  <LogDatePicker [NoObjectField]="true" [ObjectFieldName]="'EndDate'" [ObjectTableName]="ObjectTableName"
+                                 [InputType]="'date'" [DataContext]="DataContext"
+                                 [HideColumns]="true"></LogDatePicker>
+                </td>
 
-                            <!--Fault Code-->
-                            <tr class="FormFieldRow" >
-                                <td style="width: 110px;">
-                                    <LogLabel [ObjectFieldName]="'FaultCode'"
-                                              [DataContext]="DataContext"
-                                              [TextCode]="'Customs.General.O.FaultQueryFaultCode'">
-                                    </LogLabel>
-                                </td>
-                                <td style="width: 130px;">
-                                    <LogLov [ObjectFieldName]="'FaultCode'"
-                                            [ObjectTableName]="'Customs.ProceduralFaultType'"
-                                            [DataContext]="DataContext"
-                                            [LookUpTableName]="'Customs.ProceduralFaultType'"
-                                            [HideLastColumn]="true"
-                                            [HideColumns]="true">
-                                    </LogLov>
-                                </td>
+                <td>
+                  <div></div>
+                </td>
+              </tr>
 
-                                <td><div></div></td>
-                            </tr>
+              <!--Fault Code-->
+              <tr class="FormFieldRow">
+                <td style="width: 110px;">
+                  <LogLabel [ObjectFieldName]="'FaultCode'"
+                            [DataContext]="DataContext"
+                            [TextCode]="'Customs.General.O.FaultQueryFaultCode'">
+                  </LogLabel>
+                </td>
+                <td style="width: 130px;">
+                  <LogLov [ObjectFieldName]="'FaultCode'"
+                          [ObjectTableName]="'Customs.ProceduralFaultType'"
+                          [DataContext]="DataContext"
+                          [LookUpTableName]="'Customs.ProceduralFaultType'"
+                          [HideLastColumn]="true"
+                          [HideColumns]="true">
+                  </LogLov>
+                </td>
 
-                            <!--Agent Code-->
-                            <tr class="FormFieldRow" >
-                                <td style="width: 110px;">
-                                    <LogLabel [ObjectFieldName]="'AgentExternalID'"
-                                              [DataContext]="DataContext"
-                                              [TextCode]="'Customs.General.O.FaultQueryAgent'">
-                                    </LogLabel>
-                                </td>
-                                <td style="width: 130px;">
-                                    <LogTextBox [ObjectFieldName]="'AgentExternalID'"
-                                                [Text]="AgentExternalID" [HideColumns]="true"
-                                                [DataContext]="DataContext">
-                                    </LogTextBox>
-                                </td>
+                <td>
+                  <div></div>
+                </td>
+              </tr>
 
-                                <td><div></div></td>
-                            </tr>
+              <!--Agent Code-->
+              <tr class="FormFieldRow">
+                <td style="width: 110px;">
+                  <LogLabel [ObjectFieldName]="'AgentExternalID'"
+                            [DataContext]="DataContext"
+                            [TextCode]="'Customs.General.O.FaultQueryAgent'">
+                  </LogLabel>
+                </td>
+                <td style="width: 130px;">
+                  <LogTextBox [ObjectFieldName]="'AgentExternalID'"
+                              [Text]="AgentExternalID" [HideColumns]="true"
+                              [DataContext]="DataContext">
+                  </LogTextBox>
+                </td>
 
-                            <tr><td><div></div></td></tr>
-                        </table>
-                    </td>
-                </tr>
+                <td>
+                  <div></div>
+                </td>
+              </tr>
 
-                <tr>
-                    <td><div></div></td>
-                </tr>
+              <tr>
+                <td>
+                  <div></div>
+                </td>
+              </tr>
             </table>
-        </div>
+          </td>
+        </tr>
 
-        <!-- Response -->
-        <div class="class-response-content">
-            <table style="width: 720px;height: 300px;padding-top: 10px; overflow: auto">
+        <tr>
+          <td>
+            <div></div>
+          </td>
+        </tr>
+      </table>
+    </div>
 
-                <!--Fault Query Resault-->
-                <tr style="height:300px; overflow: auto; overflow-x: hidden;">
-                    <td colspan="5" style="width: 700px;">
-                        <div class="GeneratedGridContainer" style="width: 100% ; height: 100%; ">
-                            <logitude-edit-grid GridWidth="100%" GridHeight="100%" [ItemSource]="FaultGeneralDetailList" (RowDataLoaded)="OnRowLoaded($event)" >
+    <!-- Response -->
+    <div class="class-response-content">
+      <table style="width: 720px;height: 300px;padding-top: 10px; overflow: auto">
 
-                                <!-- FaultAdittionalInformationList -->
-                                <log-row-details>
-                                    <row-template template="let item">
-                                        <div style="min-height: 80px; width: 660px; background: #E8F7FF; position: relative;" [style.height.px]="item.RowDetailsHeights">
-                                            <div style="position: absolute; top: 10px; right: 10px; bottom: 10px; left: 10px;">
-                                                <logitude-edit-grid GridWidth="100%" GridHeight="100%" [ItemSource]="item.FaultAdittionalInformationListObs">
-                                                    <!-- AgentInDeclarationName -->
-                                                    <log-column [width]="'120'" [Alignment]="'right'"
-                                                                [header]="'Customs.FaultQuery.O.AgentInDeclaration' | TextCodeTranslationPipe"
-                                                                [binding]="'AgentInDeclarationName'">
-                                                        <log-cell-template template="let item" #logcelltemplate>
-                                                            <div style="width:100%;height:100%;">
-                                                                <div class="RightCenter">
-                                                                    <span>{{item.AgentInDeclarationName }}</span>
-                                                                </div>
-                                                            </div>
-                                                        </log-cell-template>
-                                                    </log-column>
+        <!--Fault Query Resault-->
+        <tr style="height:300px; overflow: auto; overflow-x: hidden;">
+          <td colspan="5" style="width: 700px;">
+            <div class="GeneratedGridContainer" style="width: 100% ; height: 100%; ">
+              <logitude-edit-grid GridWidth="100%" GridHeight="100%" [ItemSource]="FaultGeneralDetailList" (RowDataLoaded)="OnRowLoaded($event)">
 
-                                                    <!-- ExporterImporterInDeclarationName -->
-                                                    <log-column [width]="'120'" [Alignment]="'right'"
-                                                                [header]="'Customs.FaultQuery.O.ExporterImporterInDeclaration' | TextCodeTranslationPipe"
-                                                                [binding]="'ExporterImporterInDeclarationName'">
-                                                        <log-cell-template template="let item" #logcelltemplate>
-                                                            <div style="width:100%;height:100%;">
-                                                                <div class="RightCenter">
-                                                                    <span>{{item.ExporterImporterInDeclarationName }}</span>
-                                                                </div>
-                                                            </div>
-                                                        </log-cell-template>
-                                                    </log-column>
+                <!-- FaultAdittionalInformationList -->
+                <log-row-details>
+                  <row-template>
+                    <ng-template let-item>
+                      <div style="min-height: 80px; width: 660px; background: #E8F7FF; position: relative;" [style.height.px]="item.RowDetailsHeights">
+                        <div style="position: absolute; top: 10px; right: 10px; bottom: 10px; left: 10px;">
+                          <logitude-edit-grid GridWidth="100%" GridHeight="100%" [ItemSource]="item.FaultAdittionalInformationListObs">
+                            <!-- AgentInDeclarationName -->
+                            <log-column [width]="'120'" [Alignment]="'right'"
+                                        [header]="'Customs.FaultQuery.O.AgentInDeclaration' | TextCodeTranslationPipe"
+                                        [binding]="'AgentInDeclarationName'">
+                              <ng-template let-item>
+                                <log-cell-template #logcelltemplate>
+                                  <div style="width:100%;height:100%;">
+                                    <div class="RightCenter">
+                                      <span>{{item.AgentInDeclarationName }}</span>
+                                    </div>
+                                  </div>
+                                </log-cell-template>
+                              </ng-template>
+                            </log-column>
 
-                                                    <!-- SeverityName -->
-                                                    <log-column [width]="'70'" [Alignment]="'right'"
-                                                                [header]="'Customs.FaultQuery.O.Severity' | TextCodeTranslationPipe"
-                                                                [binding]="'SeverityName'">
-                                                        <log-cell-template template="let item" #logcelltemplate>
-                                                            <div style="width:100%;height:100%;">
-                                                                <div class="RightCenter">
-                                                                    <span>{{item.SeverityName }}</span>
-                                                                </div>
-                                                            </div>
-                                                        </log-cell-template>
-                                                    </log-column>
+                            <!-- ExporterImporterInDeclarationName -->
+                            <log-column [width]="'120'" [Alignment]="'right'"
+                                        [header]="'Customs.FaultQuery.O.ExporterImporterInDeclaration' | TextCodeTranslationPipe"
+                                        [binding]="'ExporterImporterInDeclarationName'">
+                              <ng-template let-item>
+                                <log-cell-template #logcelltemplate>
+                                  <div style="width:100%;height:100%;">
+                                    <div class="RightCenter">
+                                      <span>{{item.ExporterImporterInDeclarationName }}</span>
+                                    </div>
+                                  </div>
+                                </log-cell-template>
+                              </ng-template>
+                            </log-column>
 
-                                                    <!-- FelonyType -->
-                                                    <log-column [width]="'70'" [Alignment]="'right'"
-                                                                [header]="'Customs.FaultQuery.O.FelonyType' | TextCodeTranslationPipe"
-                                                                [binding]="'FelonyTypeName'">
-                                                        <log-cell-template template="let item" #logcelltemplate>
-                                                            <div style="width:100%;height:100%;">
-                                                                <div class="RightCenter">
-                                                                    <span>{{item.FelonyTypeName }}</span>
-                                                                </div>
-                                                            </div>
-                                                        </log-cell-template>
-                                                    </log-column>
+                            <!-- SeverityName -->
+                            <log-column [width]="'70'" [Alignment]="'right'"
+                                        [header]="'Customs.FaultQuery.O.Severity' | TextCodeTranslationPipe"
+                                        [binding]="'SeverityName'">
+                              <ng-template let-item>
+                                <log-cell-template #logcelltemplate>
+                                  <div style="width:100%;height:100%;">
+                                    <div class="RightCenter">
+                                      <span>{{item.SeverityName }}</span>
+                                    </div>
+                                  </div>
+                                </log-cell-template>
+                              </ng-template>
+                            </log-column>
 
-                                                    <!-- RansomViolationType -->
-                                                    <log-column [width]="'70'" [Alignment]="'right'"
-                                                                [header]="'Customs.FaultQuery.O.RansomViolationType' | TextCodeTranslationPipe"
-                                                                [binding]="'RansomViolationTypeName'">
-                                                        <log-cell-template template="let item" #logcelltemplate>
-                                                            <div style="width:100%;height:100%;">
-                                                                <div class="RightCenter">
-                                                                    <span>{{item.RansomViolationTypeName }}</span>
-                                                                </div>
-                                                            </div>
-                                                        </log-cell-template>
-                                                    </log-column>
+                            <!-- FelonyType -->
+                            <log-column [width]="'70'" [Alignment]="'right'"
+                                        [header]="'Customs.FaultQuery.O.FelonyType' | TextCodeTranslationPipe"
+                                        [binding]="'FelonyTypeName'">
+                              <ng-template let-item>
+                                <log-cell-template #logcelltemplate>
+                                  <div style="width:100%;height:100%;">
+                                    <div class="RightCenter">
+                                      <span>{{item.FelonyTypeName }}</span>
+                                    </div>
+                                  </div>
+                                </log-cell-template>
+                              </ng-template>
+                            </log-column>
 
-                                                    <!-- RansomViolationSum -->
-                                                    <log-column [width]="'90'" [Alignment]="'right'"
-                                                                [header]="'Customs.FaultQuery.O.RansomViolationSum' | TextCodeTranslationPipe"
-                                                                [binding]="'RansomViolationSum'">
-                                                        <log-cell-template template="let item" #logcelltemplate>
-                                                            <div style="width:100%;height:100%;">
-                                                                <div class="RightCenter">
-                                                                    <span>{{item.RansomViolationSum }}</span>
-                                                                </div>
-                                                            </div>
-                                                        </log-cell-template>
-                                                    </log-column>
+                            <!-- RansomViolationType -->
+                            <log-column [width]="'70'" [Alignment]="'right'"
+                                        [header]="'Customs.FaultQuery.O.RansomViolationType' | TextCodeTranslationPipe"
+                                        [binding]="'RansomViolationTypeName'">
+                              <ng-template let-item>
+                                <log-cell-template #logcelltemplate>
+                                  <div style="width:100%;height:100%;">
+                                    <div class="RightCenter">
+                                      <span>{{item.RansomViolationTypeName }}</span>
+                                    </div>
+                                  </div>
+                                </log-cell-template>
+                              </ng-template>
+                            </log-column>
 
-                                                    <!-- Scoring -->
-                                                    <log-column [width]="'70'" [Alignment]="'right'"
-                                                                [header]="'Customs.FaultQuery.O.Scoring' | TextCodeTranslationPipe"
-                                                                [binding]="'Scoring'">
-                                                        <log-cell-template template="let item" #logcelltemplate>
-                                                            <div style="width:100%;height:100%;">
-                                                                <div class="RightCenter">
-                                                                    <span>{{item.Scoring }}</span>
-                                                                </div>
-                                                            </div>
-                                                        </log-cell-template>
-                                                    </log-column>
+                            <!-- RansomViolationSum -->
+                            <log-column [width]="'90'" [Alignment]="'right'"
+                                        [header]="'Customs.FaultQuery.O.RansomViolationSum' | TextCodeTranslationPipe"
+                                        [binding]="'RansomViolationSum'">
+                              <ng-template let-item>
+                                <log-cell-template #logcelltemplate>
+                                  <div style="width:100%;height:100%;">
+                                    <div class="RightCenter">
+                                      <span>{{item.RansomViolationSum }}</span>
+                                    </div>
+                                  </div>
+                                </log-cell-template>
+                              </ng-template>
+                            </log-column>
 
-                                                </logitude-edit-grid>
-                                            </div>
-                                        </div>
-                                    </row-template>
-                                </log-row-details>
+                            <!-- Scoring -->
+                            <log-column [width]="'70'" [Alignment]="'right'"
+                                        [header]="'Customs.FaultQuery.O.Scoring' | TextCodeTranslationPipe"
+                                        [binding]="'Scoring'">
+                              <ng-template let-item>
+                                <log-cell-template #logcelltemplate>
+                                  <div style="width:100%;height:100%;">
+                                    <div class="RightCenter">
+                                      <span>{{item.Scoring }}</span>
+                                    </div>
+                                  </div>
+                                </log-cell-template>
+                              </ng-template>
+                            </log-column>
 
-                                <!-- ProceduralFaultID -->
-                                <log-column [width]="'70'" [Alignment]="'right'"
-                                            [header]="'Customs.FaultQuery.O.ProceduralFaultID' | TextCodeTranslationPipe"
-                                            [binding]="'ProceduralFaultID'">
-                                    <log-cell-template template="let item" #logcelltemplate>
-                                        <div class="RightCenter">
-                                            <span>{{item.ProceduralFaultID}}</span>
-                                        </div>
-                                    </log-cell-template>
-                                </log-column>
-
-                                <!-- ProceduralFaultInputProcessName -->
-                                <log-column [width]="'100'" [Alignment]="'right'"
-                                            [header]="'Customs.FaultQuery.O.ProceduralFaultInputProcess' | TextCodeTranslationPipe"
-                                            [binding]="'ProceduralFaultInputProcessName'">
-                                    <log-cell-template template="let item" #logcelltemplate>
-                                        <div class="RightCenter">
-                                            <span>{{item.ProceduralFaultInputProcessName}}</span>
-                                        </div>
-                                    </log-cell-template>
-                                </log-column>
-
-                                <!-- CreateDate -->
-                                <log-column [width]="'80'" [Alignment]="'right'"
-                                            [header]="'Customs.FaultQuery.O.CreateDate' | TextCodeTranslationPipe"
-                                            [binding]="'CreateDate'">
-                                    <log-cell-template template="let item" #logcelltemplate>
-                                        <div class="RightCenter">
-                                            <span>{{item.CreateDate }}</span>
-                                        </div>
-                                    </log-cell-template>
-                                </log-column>
-
-                                <!-- ProceduralFaultStatusName -->
-                                <log-column [width]="'80'" [Alignment]="'right'"
-                                            [header]="'Customs.FaultQuery.O.ProceduralFaultStatus' | TextCodeTranslationPipe"
-                                            [binding]="'ProceduralFaultStatusName'">
-                                    <log-cell-template template="let item" #logcelltemplate>
-                                        <div style="width:100%;height:100%;">
-                                            <div class="RightCenter">
-                                                <span>{{item.ProceduralFaultStatusName }}</span>
-                                            </div>
-                                        </div>
-                                    </log-cell-template>
-                                </log-column>
-
-                                <!-- DeclarationId -->
-                                <log-column [width]="'110'" [Alignment]="'right'"
-                                            [header]="'Customs.FaultQuery.O.DeclarationId' | TextCodeTranslationPipe"
-                                            [binding]="'DeclarationId'">
-                                    <log-cell-template template="let item" #logcelltemplate>
-                                        <div style="width:100%;height:100%;">
-                                            <div class="RightCenter">
-                                                <span>{{item.DeclarationId }}</span>
-                                            </div>
-                                        </div>
-                                    </log-cell-template>
-                                </log-column>
-
-                                <!-- ResponsibilityName -->
-                                <log-column [width]="'120'" [Alignment]="'right'"
-                                            [header]="'Customs.FaultQuery.O.ResponsibilityID' | TextCodeTranslationPipe"
-                                            [binding]="'ImporterExporterResponsibilityName'">
-                                    <log-cell-template template="let item" #logcelltemplate>
-                                        <div style="width:100%;height:100%;">
-                                            <div class="RightCenter">
-                                                <span>{{item.ImporterExporterResponsibilityName }}</span>
-                                            </div>
-                                        </div>
-                                    </log-cell-template>
-                                </log-column>
-
-                                <!-- CustomsHouseName -->
-                                <log-column [width]="'90'" [Alignment]="'right'"
-                                            [header]="'Customs.FaultQuery.O.CustomsHouse' | TextCodeTranslationPipe"
-                                            [binding]="'CustomsHouseName'">
-                                    <log-cell-template template="let item" #logcelltemplate>
-                                        <div style="width:100%;height:100%;">
-                                            <div class="RightCenter">
-                                                <span>{{item.CustomsHouseName }}</span>
-                                            </div>
-                                        </div>
-                                    </log-cell-template>
-                                </log-column>
-
-                            </logitude-edit-grid>
+                          </logitude-edit-grid>
                         </div>
-                    </td>
-                </tr>
+                      </div>
+                    </ng-template>
+                  </row-template>
+                </log-row-details>
 
-                <tr>
-                    <td><div></div></td>
-                </tr>
-            </table>
+                <!-- ProceduralFaultID -->
+                <log-column [width]="'70'" [Alignment]="'right'"
+                            [header]="'Customs.FaultQuery.O.ProceduralFaultID' | TextCodeTranslationPipe"
+                            [binding]="'ProceduralFaultID'">
+                  <ng-template let-item>
+                    <log-cell-template #logcelltemplate>
+                      <div class="RightCenter">
+                        <span>{{item.ProceduralFaultID}}</span>
+                      </div>
+                    </log-cell-template>
+                  </ng-template>
+                </log-column>
 
-        </div>
+                <!-- ProceduralFaultInputProcessName -->
+                <log-column [width]="'100'" [Alignment]="'right'"
+                            [header]="'Customs.FaultQuery.O.ProceduralFaultInputProcess' | TextCodeTranslationPipe"
+                            [binding]="'ProceduralFaultInputProcessName'">
+                  <ng-template let-item>
+                    <log-cell-template #logcelltemplate>
+                      <div class="RightCenter">
+                        <span>{{item.ProceduralFaultInputProcessName}}</span>
+                      </div>
+                    </log-cell-template>
+                  </ng-template>
+                </log-column>
 
-    </custom-message-wrapper>
+                <!-- CreateDate -->
+                <log-column [width]="'80'" [Alignment]="'right'"
+                            [header]="'Customs.FaultQuery.O.CreateDate' | TextCodeTranslationPipe"
+                            [binding]="'CreateDate'">
+                  <ng-template let-item>
+                    <log-cell-template #logcelltemplate>
+                      <div class="RightCenter">
+                        <span>{{item.CreateDate }}</span>
+                      </div>
+                    </log-cell-template>
+                  </ng-template>
+                </log-column>
+
+                <!-- ProceduralFaultStatusName -->
+                <log-column [width]="'80'" [Alignment]="'right'"
+                            [header]="'Customs.FaultQuery.O.ProceduralFaultStatus' | TextCodeTranslationPipe"
+                            [binding]="'ProceduralFaultStatusName'">
+                  <ng-template let-item>
+                    <log-cell-template #logcelltemplate>
+                      <div style="width:100%;height:100%;">
+                        <div class="RightCenter">
+                          <span>{{item.ProceduralFaultStatusName }}</span>
+                        </div>
+                      </div>
+                    </log-cell-template>
+                  </ng-template>
+                </log-column>
+
+                <!-- DeclarationId -->
+                <log-column [width]="'110'" [Alignment]="'right'"
+                            [header]="'Customs.FaultQuery.O.DeclarationId' | TextCodeTranslationPipe"
+                            [binding]="'DeclarationId'">
+                  <ng-template let-item>
+                    <log-cell-template #logcelltemplate>
+                      <div style="width:100%;height:100%;">
+                        <div class="RightCenter">
+                          <span>{{item.DeclarationId }}</span>
+                        </div>
+                      </div>
+                    </log-cell-template>
+                  </ng-template>
+                </log-column>
+
+                <!-- ResponsibilityName -->
+                <log-column [width]="'120'" [Alignment]="'right'"
+                            [header]="'Customs.FaultQuery.O.ResponsibilityID' | TextCodeTranslationPipe"
+                            [binding]="'ImporterExporterResponsibilityName'">
+                  <ng-template let-item>
+                    <log-cell-template #logcelltemplate>
+                      <div style="width:100%;height:100%;">
+                        <div class="RightCenter">
+                          <span>{{item.ImporterExporterResponsibilityName }}</span>
+                        </div>
+                      </div>
+                    </log-cell-template>
+                  </ng-template>
+                </log-column>
+
+                <!-- CustomsHouseName -->
+                <log-column [width]="'90'" [Alignment]="'right'"
+                            [header]="'Customs.FaultQuery.O.CustomsHouse' | TextCodeTranslationPipe"
+                            [binding]="'CustomsHouseName'">
+                  <ng-template let-item>
+                    <log-cell-template #logcelltemplate>
+                      <div style="width:100%;height:100%;">
+                        <div class="RightCenter">
+                          <span>{{item.CustomsHouseName }}</span>
+                        </div>
+                      </div>
+                    </log-cell-template>
+                  </ng-template>
+                </log-column>
+
+              </logitude-edit-grid>
+            </div>
+          </td>
+        </tr>
+
+        <tr>
+          <td>
+            <div></div>
+          </td>
+        </tr>
+      </table>
+
+    </div>
+
+  </custom-message-wrapper>
 </div>

@@ -128,7 +128,7 @@ export class StorageEntranceComponent
         }
     }
 
-    private DeleteStorageEntranceCommand(item: DeclarationConsignmentAcceptanceComponent) {
+    DeleteStorageEntranceCommand(item: DeclarationConsignmentAcceptanceComponent) {
         this.StorageEntranceObservableList.Remove(item);
     }
 

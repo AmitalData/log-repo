@@ -20,17 +20,85 @@ namespace Logitude.Customs.BL
    {
        public List<PaymentMethodStatusDetails> GetAll()
        {
-		    var all = new List<PaymentMethodStatusDetails>(); 
+		    var all = new List<PaymentMethodStatusDetails>();  
+            all.Add(new PaymentMethodStatusDetails()
+            {    
+                Code = "1", 
+                SearchFields = "1,הוכן", 
+                Inactive = false, 
+                LocalName = "הוכן", 
+			});
+			 
+            all.Add(new PaymentMethodStatusDetails()
+            {    
+                Code = "2", 
+                SearchFields = "2,אושר", 
+                Inactive = false, 
+                LocalName = "אושר", 
+			});
+			 
+            all.Add(new PaymentMethodStatusDetails()
+            {    
+                Code = "3", 
+                SearchFields = "3,שולם", 
+                Inactive = false, 
+                LocalName = "שולם", 
+			});
+			 
+            all.Add(new PaymentMethodStatusDetails()
+            {    
+                Code = "4", 
+                SearchFields = "4,נכשל", 
+                Inactive = false, 
+                LocalName = "נכשל", 
+			});
+			 
+            all.Add(new PaymentMethodStatusDetails()
+            {    
+                Code = "5", 
+                SearchFields = "5,עוקל", 
+                Inactive = false, 
+                LocalName = "עוקל", 
+			});
+			 
+            all.Add(new PaymentMethodStatusDetails()
+            {    
+                Code = "6", 
+                SearchFields = "6,בוטל", 
+                Inactive = false, 
+                LocalName = "בוטל", 
+			});
+			 
+            all.Add(new PaymentMethodStatusDetails()
+            {    
+                Code = "7", 
+                SearchFields = "7,פג תוקף", 
+                Inactive = false, 
+                LocalName = "פג תוקף", 
+			});
+			 
+            all.Add(new PaymentMethodStatusDetails()
+            {    
+                Code = "8", 
+                SearchFields = "8,נבדק חלקית", 
+                Inactive = false, 
+                LocalName = "נבדק חלקית", 
+			});
+			
             return all;
        }
 
 	    public void MapPoco(PaymentMethodStatus newPoco)
-        {    
+        {   
+		    newPoco.Code = this.Code;  
+			newPoco.SearchFields = GetSearchFields(this);   
+		    newPoco.Inactive = this.Inactive;  
+		    newPoco.LocalName = this.LocalName;   
         }
 
 		public string GetSearchFields(PaymentMethodStatus rec)
         {   
-           return string.Empty;
+           return String.Concat(rec.Code,",",rec.Inactive,",",rec.LocalName,",");
         }
    }
 }

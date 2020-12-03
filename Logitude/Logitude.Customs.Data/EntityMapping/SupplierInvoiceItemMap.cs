@@ -51,7 +51,7 @@ namespace Logitude.Customs.Data.EntityMapping
 
             this.Property(t => t.TaxExemptCode).HasColumnName("TaxExemptCode").HasMaxLength(15).IsUnicode(true);
 
-            this.Property(t => t.OptionalTamaPercentage).HasColumnName("OptionalTamaPercentage");
+            this.Property(t => t.OptionalTamaPercentage).HasColumnName("OptionalTamaPercentage").HasPrecision(18, 2);
 
             this.Property(t => t.SalesTaxExemptionTypeCode).HasColumnName("SalesTaxExemptionTypeCode").HasMaxLength(4).IsUnicode(false);
 
@@ -114,6 +114,28 @@ namespace Logitude.Customs.Data.EntityMapping
             this.Property(t => t.ClasifiedRemarks).HasColumnName("ClasifiedRemarks").HasMaxLength(1024).IsUnicode(true);
 
             this.Property(t => t.SearchFields).HasColumnName("SearchFields").HasMaxLength(1000).IsUnicode(true);
+
+            this.Property(t => t.MarksAndNumbers).HasColumnName("MarksAndNumbers").HasMaxLength(30).IsUnicode(false);
+
+            this.Property(t => t.PackageQuantity).HasColumnName("PackageQuantity");
+
+            this.Property(t => t.Weight).HasColumnName("Weight").HasPrecision(15, 3);
+
+            this.Property(t => t.OcrHeight).HasColumnName("OcrHeight").HasPrecision(5, 0);
+
+            this.Property(t => t.OcrTop).HasColumnName("OcrTop").HasPrecision(5, 0);
+
+            this.Property(t => t.OcrPageNumber).HasColumnName("OcrPageNumber").HasPrecision(3, 0);
+
+            this.Property(t => t.ClassificationTypeCode).HasColumnName("ClassificationTypeCode").HasMaxLength(4).IsUnicode(false);
+
+            this.Property(t => t.TransactionNatureCode).HasColumnName("TransactionNatureCode").HasMaxLength(4).IsUnicode(false);
+
+            this.Property(t => t.ClaimReasonCode).HasColumnName("ClaimReasonCode").HasMaxLength(4).IsUnicode(false);
+
+            this.Property(t => t.ItemFOBAmountForeign).HasColumnName("ItemFOBAmountForeign").HasPrecision(16, 2);
+
+            this.Property(t => t.ItemFOBAmountNIS).HasColumnName("ItemFOBAmountNIS").HasPrecision(16, 2);
         }
     }
 }

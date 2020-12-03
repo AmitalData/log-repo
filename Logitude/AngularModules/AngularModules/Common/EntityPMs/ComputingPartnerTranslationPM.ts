@@ -104,7 +104,10 @@ export class ComputingPartnerTranslationPM {
     public OldEntityPM: ComputingPartnerTranslationPM;
 		
     public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
+       if(!this.DisableMarkAsDirty)
+       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -112,6 +115,7 @@ export class ComputingPartnerTranslationPM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "ComputingPartnerTranslation");
            
         }
+	 }
     }
     private MyClone: ComputingPartnerTranslationPM;
 

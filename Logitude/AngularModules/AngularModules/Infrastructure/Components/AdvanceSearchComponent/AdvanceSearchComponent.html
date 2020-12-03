@@ -173,13 +173,13 @@
                             <div *ngSwitchCase="'Text'" style="display: inline-flex;"> 
                                 <ComboBox style="width:150px;margin-right:5px;" (SelectedItemChanged)="item.OperationValueChanged($event)" [ItemsSource]="item.Operators" [SelectedItem]="item.Operation" [Binding]="'Name'"></ComboBox>
                                 <div style="width:150px;"  [style.margin-right]="LayoutDirection=='rtl' ? '6px' : ''">
-                                    <LogTextBox (ValueChanged)="item.onTextChange($event)" [LogitudeForm]="myForm" *ngIf="item.ObjectField != undefined" [ObjectFieldName]="item.ObjectField.FieldName" [DataContext]="item" [NoValidation]="true" [InputType]="item.ObjectField.DataTypeCode"></LogTextBox>
+                                    <LogTextBox (ValueChanged)="item.onTextChange($event)" [LogitudeForm]="myForm" *ngIf="item.ObjectField != undefined" [ObjectFieldName]="'TextValue'" [DataContext]="item" [NoValidation]="true" [InputType]="item.ObjectField.DataTypeCode"></LogTextBox>
                                 </div>
                             </div>
                             <div *ngSwitchCase="'nText'" style="display: inline-flex;">
                                 <ComboBox style="width:150px;margin-right:5px;" (SelectedItemChanged)="item.OperationValueChanged($event)" [ItemsSource]="item.Operators" [SelectedItem]="item.Operation" [Binding]="'Name'"></ComboBox>
                                 <div style="width:150px;" [style.margin-right]="LayoutDirection=='rtl' ? '6px' : ''">
-                                    <LogTextBox (ValueChanged)="item.onTextChange($event)" [LogitudeForm]="myForm" *ngIf="item.ObjectField != undefined" [ObjectFieldName]="item.ObjectField.FieldName" [DataContext]="item" [NoValidation]="true" [InputType]="item.ObjectField.DataTypeCode"></LogTextBox>
+                                    <LogTextBox (ValueChanged)="item.onTextChange($event)" [LogitudeForm]="myForm" *ngIf="item.ObjectField != undefined" [ObjectFieldName]="'TextValue'" [DataContext]="item" [NoValidation]="true" [InputType]="item.ObjectField.DataTypeCode"></LogTextBox>
                                 </div>
                             </div>
                             <div *ngSwitchCase="'LookUp'" style="display: inline-flex;">
@@ -214,19 +214,19 @@
                             <div *ngSwitchCase="'Integer'" style="display: inline-flex;">
                                 <ComboBox style="width:150px;margin-right:5px;" (SelectedItemChanged)="item.OperationValueChanged($event)" [ItemsSource]="item.Operators" [SelectedItem]="item.Operation" [Binding]="'Name'"></ComboBox>
                                 <div style="width:150px;" [style.margin-right]="LayoutDirection=='rtl' ? '6px' : ''">
-                                    <LogTextBox (ValueChanged)="item.onTextChange($event)" [LogitudeForm]="myForm" *ngIf="item.ObjectField != undefined" [ObjectFieldName]="item.ObjectField.FieldName" [DataContext]="item" [NoValidation]="true" [InputType]="item.ObjectField.DataTypeCode"></LogTextBox>
+                                    <LogTextBox (ValueChanged)="item.onTextChange($event)" [LogitudeForm]="myForm" *ngIf="item.ObjectField != undefined" [ObjectFieldName]="'TextValue'" [DataContext]="item" [NoValidation]="true" [InputType]="item.ObjectField.DataTypeCode"></LogTextBox>
                                 </div>
                             </div>
                             <div *ngSwitchCase="'Double'" style="display: inline-flex;">
                                 <ComboBox style="width:150px;margin-right:5px;" (SelectedItemChanged)="item.OperationValueChanged($event)" [ItemsSource]="item.Operators" [SelectedItem]="item.Operation" [Binding]="'Name'"></ComboBox>
                                 <div style="width:150px;" [style.margin-right]="LayoutDirection=='rtl' ? '6px' : ''">
-                                    <LogTextBox (ValueChanged)="item.onTextChange($event)" [LogitudeForm]="myForm" *ngIf="item.ObjectField != undefined" [ObjectFieldName]="item.ObjectField.FieldName" [DataContext]="item" [NoValidation]="true" [InputType]="item.ObjectField.DataTypeCode"></LogTextBox>
+                                    <LogTextBox (ValueChanged)="item.onTextChange($event)" [LogitudeForm]="myForm" *ngIf="item.ObjectField != undefined" [ObjectFieldName]="'TextValue'" [DataContext]="item" [NoValidation]="true" [InputType]="item.ObjectField.DataTypeCode"></LogTextBox>
                                 </div>
                             </div>
                             <div *ngSwitchCase="'Decimal'" style="display: inline-flex;">
                                 <ComboBox style="width:150px;margin-right:5px;" (SelectedItemChanged)="item.OperationValueChanged($event)" [ItemsSource]="item.Operators" [SelectedItem]="item.Operation" [Binding]="'Name'"></ComboBox>
                                 <div style="width:150px;" [style.margin-right]="LayoutDirection=='rtl' ? '6px' : ''">
-                                    <LogTextBox (ValueChanged)="item.onTextChange($event)" [InputType]="item.ObjectField.DataTypeCode" [LogitudeForm]="myForm" *ngIf="item.ObjectField != undefined" [ObjectFieldName]="item.ObjectField.FieldName" [DataContext]="item" [NoValidation]="true"></LogTextBox>
+                                    <LogTextBox (ValueChanged)="item.onTextChange($event)" [InputType]="item.ObjectField.DataTypeCode" [LogitudeForm]="myForm" *ngIf="item.ObjectField != undefined" [ObjectFieldName]="'TextValue'" [DataContext]="item" [NoValidation]="true"></LogTextBox>
                                 </div>
                             </div>
                             <div *ngSwitchCase="'PickList'" style="display: inline-flex;">
@@ -271,13 +271,13 @@
                             <div *ngSwitchCase="'Text'" style="display: inline-flex;">
                                 <ComboBox style="width:150px;margin-right:5px;" (SelectedItemChanged)="item.OperationValueChanged($event)" [ItemsSource]="item.Operators" [SelectedItem]="item.Operation" [Binding]="'Name'"></ComboBox>
                                 <div style="width:150px;" [style.margin-right]="LayoutDirection=='rtl' ? '6px' : ''">
-                                    <LogTextBox (ValueChanged)="item.onTextChange($event)" [InputType]="item.ObjectField.DataTypeCode" [LogitudeForm]="myForm" *ngIf="item.ObjectField != undefined" [ObjectFieldName]="item.ObjectField.FieldName" [DataContext]="item" [NoValidation]="true"></LogTextBox>
+                                    <LogTextBox (ValueChanged)="item.onTextChange($event)" [InputType]="item.ObjectField.DataTypeCode" [LogitudeForm]="myForm" *ngIf="item.ObjectField != undefined" [ObjectFieldName]="'TextValue'" [DataContext]="item" [NoValidation]="true"></LogTextBox>
                                 </div>
                             </div>
                             <div *ngSwitchCase="'nText'" style="display: inline-flex;">
                                 <ComboBox style="width:150px;margin-right:5px;" (SelectedItemChanged)="item.OperationValueChanged($event)" [ItemsSource]="item.Operators" [SelectedItem]="item.Operation" [Binding]="'Name'"></ComboBox>
                                 <div style="width:150px;" [style.margin-right]="LayoutDirection=='rtl' ? '6px' : ''">
-                                    <LogTextBox (ValueChanged)="item.onTextChange($event)" [InputType]="item.ObjectField.DataTypeCode" [LogitudeForm]="myForm" *ngIf="item.ObjectField != undefined" [ObjectFieldName]="item.ObjectField.FieldName" [DataContext]="item" [NoValidation]="true"></LogTextBox>
+                                    <LogTextBox (ValueChanged)="item.onTextChange($event)" [InputType]="item.ObjectField.DataTypeCode" [LogitudeForm]="myForm" *ngIf="item.ObjectField != undefined" [ObjectFieldName]="'TextValue'" [DataContext]="item" [NoValidation]="true"></LogTextBox>
                                 </div>
                             </div>
                             <div *ngSwitchCase="'LookUp'" style="display: inline-flex;">
@@ -312,19 +312,19 @@
                             <div *ngSwitchCase="'Integer'" style="display: inline-flex;">
                                 <ComboBox style="width:150px;margin-right:5px;" (SelectedItemChanged)="item.OperationValueChanged($event)" [ItemsSource]="item.Operators" [SelectedItem]="item.Operation" [Binding]="'Name'"></ComboBox>
                                 <div style="width:150px;" [style.margin-right]="LayoutDirection=='rtl' ? '6px' : ''">
-                                    <LogTextBox (ValueChanged)="item.onTextChange($event)" [InputType]="item.ObjectField.DataTypeCode" [LogitudeForm]="myForm" *ngIf="item.ObjectField != undefined" [ObjectFieldName]="item.ObjectField.FieldName" [DataContext]="item" [NoValidation]="true"></LogTextBox>
+                                    <LogTextBox (ValueChanged)="item.onTextChange($event)" [InputType]="item.ObjectField.DataTypeCode" [LogitudeForm]="myForm" *ngIf="item.ObjectField != undefined" [ObjectFieldName]="'TextValue'" [DataContext]="item" [NoValidation]="true"></LogTextBox>
                                 </div>
                             </div>
                             <div *ngSwitchCase="'Double'" style="display: inline-flex;">
                                 <ComboBox style="width:150px;margin-right:5px;" (SelectedItemChanged)="item.OperationValueChanged($event)" [ItemsSource]="item.Operators" [SelectedItem]="item.Operation" [Binding]="'Name'"></ComboBox>
                                 <div style="width:150px;" [style.margin-right]="LayoutDirection=='rtl' ? '6px' : ''">
-                                    <LogTextBox (ValueChanged)="item.onTextChange($event)" [InputType]="item.ObjectField.DataTypeCode" [LogitudeForm]="myForm" *ngIf="item.ObjectField != undefined" [ObjectFieldName]="item.ObjectField.FieldName" [DataContext]="item" [NoValidation]="true"></LogTextBox>
+                                    <LogTextBox (ValueChanged)="item.onTextChange($event)" [InputType]="item.ObjectField.DataTypeCode" [LogitudeForm]="myForm" *ngIf="item.ObjectField != undefined" [ObjectFieldName]="'TextValue'" [DataContext]="item" [NoValidation]="true"></LogTextBox>
                                 </div>
                             </div>
                             <div *ngSwitchCase="'Decimal'" style="display: inline-flex;">
                                 <ComboBox style="width:150px;margin-right:5px;" (SelectedItemChanged)="item.OperationValueChanged($event)" [ItemsSource]="item.Operators" [SelectedItem]="item.Operation" [Binding]="'Name'"></ComboBox>
                                 <div style="width:150px;" [style.margin-right]="LayoutDirection=='rtl' ? '6px' : ''">
-                                    <LogTextBox (ValueChanged)="item.onTextChange($event)" [InputType]="item.ObjectField.DataTypeCode" [LogitudeForm]="myForm" *ngIf="item.ObjectField != undefined" [ObjectFieldName]="item.ObjectField.FieldName" [DataContext]="item" [NoValidation]="true"></LogTextBox>
+                                    <LogTextBox (ValueChanged)="item.onTextChange($event)" [InputType]="item.ObjectField.DataTypeCode" [LogitudeForm]="myForm" *ngIf="item.ObjectField != undefined" [ObjectFieldName]="'TextValue'" [DataContext]="item" [NoValidation]="true"></LogTextBox>
                                 </div>
                             </div>
                             <div *ngSwitchCase="'PickList'" style="display: inline-flex;">

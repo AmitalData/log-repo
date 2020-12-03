@@ -35,11 +35,13 @@ using Logitude.BL.Helpers;
 using Logitude.SystemLogs;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using System.Configuration;
+using System.Xml.Serialization;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using Simplog.Data.ShipmentsModel;
 using Logitude.BL.ShipmentsModel.Tools.EntityService;
 using Logitude.BL.Security;
 using Simplog.Server.Infrastructure.Helpers;
+using Logitude.Customs.Def.EntityQueryServicesExt;
 
 namespace Logitude.BL.CommonDataModel.Tools.EntityService
 {
@@ -437,6 +439,29 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             }
         }
 
+        private void TryBuildUD2LT(DocumentsFilingPM extDocPM)
+        {
+            ICreateUD2LTService myICreateUD2LTService = ContainerAccessor.Container.Resolve(typeof(ICreateUD2LTService), "CreateUD2LTService", new ParameterOverride("", tenant)) as ICreateUD2LTService;
+            myICreateUD2LTService.JustDoIt(extDocPM);
+
+        }
+        private void TrySendBondedCustomDocument(DocumentsFilingPM extDocPM)
+        {
+            DocumentsMetaDataTypeRepository DocumentsMetaDataTypeRepo = new DocumentsMetaDataTypeRepository(extDocPM.Tenant);
+            var ENDOC = DocumentsMetaDataTypeRepo.GetSingleDocumentsMetaDataTypeByCode("ENDOC", extDocPM.Tenant);
+            if (ENDOC != null)
+            {
+                if (extDocPM.DocumentsFilingMetaDataValues.Any(r => r.DocumentsMetaDataTypeCode == "ENDOC")
+                    ||
+                    extDocPM.DocumentsFilingMetaDataValues.Any(r => r.DocumentsMetaDataTypeId == ENDOC.Id))
+                {
+                    this.HaveENDOC_DocumentsFilingMetaDataValues = true;
+                    ISendBondedCustomDocumentService myISendBondedCustomDocumentService = ContainerAccessor.Container.Resolve(typeof(ISendBondedCustomDocumentService), "SendBondedCustomDocumentService", new ParameterOverride("", tenant)) as ISendBondedCustomDocumentService;
+                    myISendBondedCustomDocumentService.JustDoIt(extDocPM);
+                }
+            }
+
+        }
         private void AddDocumentBackupLog()
         {
             var OTName = ObjectTableRepository.GetSingleObjectTable(entityPM.ObjectTableId, tenant, false);
@@ -1110,20 +1135,32 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
         public void AddToTasksQueue(DocumentsFilingPM extDocPM, bool isnew, string loggedUserId)
         {
+            if (LogitudeSettings.IsCostomsDeploy)
+            {
+                TryBuildUD2LT(extDocPM);
+                TrySendBondedCustomDocument(extDocPM);
+            }
             if (!string.IsNullOrWhiteSpace(this.MetaDataVersionValue))
             {
-                DocumentsFilingMetaDataValueQuery.UpSert(extDocPM, "VER", this.MetaDataVersionValue);
+                DocumentsFilingMetaDataValueQuery.UpSert_Del(extDocPM, "VER", this.MetaDataVersionValue);
             }
 
-            if (LogitudeSettings.EnableHybridQueue && (CurrentHybridPartner != null && !CurrentHybridPartner.IsExternalPartner) && (!extDocPM.IsHybrid || (extDocPM.IsAttachment))
+            if 
+                (
+                (!extDocPM.IsHybrid   && LogitudeSettings.IsCostomsDeploy) ||
+                (LogitudeSettings.EnableHybridQueue && (CurrentHybridPartner != null && !CurrentHybridPartner.IsExternalPartner) && (!extDocPM.IsHybrid || (extDocPM.IsAttachment))
                 && LogitudeSettings.DeploymentStage != "Simplog" && !extDocPM.NoAddToTasksQueue)
+                )
             {
                 ObjectTable docTable = ObjectTableRepository.GetObjectTableById(extDocPM.ObjectTableId, extDocPM.Tenant);
-                if (docTable != null && (docTable.Name == "Customer" || docTable.Name == "Shipment" ||
+                if (this.HaveENDOC_DocumentsFilingMetaDataValues ||
+                    
+                    (docTable != null && (docTable.Name == "Customer" || docTable.Name == "Shipment" ||
                     docTable.Name == "Customs.Declaration"
                     || docTable.Name == "Customs.Claim"
                     || docTable.Name == "Customs.PaymentOrder"
                     || docTable.Name == "Customs.Deficit"))
+                    )
                 {
 
                     if (!string.IsNullOrEmpty(extDocPM.DocumentId))
@@ -1203,57 +1240,71 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                             DocumentsFilingPM mappedPM = DocumentsFilingHybridMapping.MapEntityToHybrid(extDocPM);
 
                             string xmlstring = LogitudeXmlSerializer.SerializeObjectToXmlString(mappedPM);
-                            List<QueueTask> queue1Tasks = new List<QueueTask>();
 
-
-                            queue1Tasks.Add(new QueueTask()
+                            //54378
+                            //string UseSend2UServer =ConfigurationManager.AppSettings["20190909.UseSend2UServer8302"]??"";
+                            string SuppressUseSend2UServer8302 = ConfigurationManager.AppSettings["20200123.SuppressUseSend2UServer8302"] ?? "";
+                            if (string.IsNullOrWhiteSpace(SuppressUseSend2UServer8302)//!string.IsNullOrWhiteSpace(UseSend2UServer) 
+                                && !string.IsNullOrWhiteSpace(this.MetaDataVersionValue))//DeclarationPrint
                             {
-                                Action = "DocumentsFiling.Upsert",
-                                Parameters = new List<Parameter>()
+                                Send2UServer(mappedPM, loggedUserId, extDocPM.Id);
+                            }
+                            else
+                            {
+
+                                List<QueueTask> queue1Tasks = new List<QueueTask>();
+
+
+                                queue1Tasks.Add(new QueueTask()
+                                {
+                                    Action = "DocumentsFiling.Upsert",
+                                    Parameters = new List<Parameter>()
                                              {
                                                 new Parameter{ Name = "DocumentMetaData", Order = 1, Value = xmlstring }
                                              }
-                            });
+                                });
 
-                            logParams.ByteData = LogitudeXmlSerializer.SerializeObject(queue1Tasks);
-                            Communications.AddCommunicationLog(logParams);
+                                logParams.ByteData = LogitudeXmlSerializer.SerializeObject(queue1Tasks);
+                                Communications.AddCommunicationLog(logParams);
 
-                            if (!sendOnlyMetaData)
-                            {
-
-                                CommunicationsParams task2logParams = new CommunicationsParams()
+                                if (!sendOnlyMetaData)
                                 {
-                                    Tenant = tenant,
-                                    CommunicationLogTypeCode = "Q",
-                                    QueueName = "externaltasksqueue" + tenant + 2,
-                                    Priority = 1,
-                                    InOut = "O",
-                                    Status = "W",
-                                    LoggingUserId = loggedUserId,
-                                    LoggingObjectTableId = table.Id,
-                                    LoggingEntityId = extDocPM.Id,
-                                    Subject = "Documents Filing Uploading binary file",
-                                    FolderName = "ExternalTasksQueue",
-                                };
 
-                                // adding file data task
-                                List<QueueTask> queue2Tasks = new List<QueueTask>();
-                                string base64String = System.Convert.ToBase64String(fileData, 0, fileData.Length);
-                                queue2Tasks.Add(
-                                    new QueueTask()
+                                    CommunicationsParams task2logParams = new CommunicationsParams()
                                     {
-                                        Action = "DocumentsFiling.UploadBinaryData",
-                                        Parameters = new List<Parameter>()
-                                    {
+                                        Tenant = tenant,
+                                        CommunicationLogTypeCode = "Q",
+                                        QueueName = "externaltasksqueue" + tenant + 2,
+                                        Priority = 1,
+                                        InOut = "O",
+                                        Status = "W",
+                                        LoggingUserId = loggedUserId,
+                                        LoggingObjectTableId = table.Id,
+                                        LoggingEntityId = extDocPM.Id,
+                                        Subject = "Documents Filing Uploading binary file",
+                                        FolderName = "ExternalTasksQueue",
+                                    };
+
+                                    // adding file data task
+                                    List<QueueTask> queue2Tasks = new List<QueueTask>();
+                                    string base64String = System.Convert.ToBase64String(fileData, 0, fileData.Length);
+                                    queue2Tasks.Add(
+                                        new QueueTask()
+                                        {
+                                            Action = "DocumentsFiling.UploadBinaryData",
+                                            Parameters = new List<Parameter>()
+                                        {
                                          new Parameter{ Name = "DocumentMetaData", Order = 1,Value =  xmlstring},
                                          new Parameter{ Name = "FileBinaryData",Order = 2,Value =  base64String},
-                                    }
-                                    });
+                                        }
+                                        });
 
-                                task2logParams.ByteData = LogitudeXmlSerializer.SerializeObject(queue2Tasks);
-                                Communications.AddCommunicationLog(task2logParams);
+                                    task2logParams.ByteData = LogitudeXmlSerializer.SerializeObject(queue2Tasks);
+                                    Communications.AddCommunicationLog(task2logParams);
+                                }
                             }
-
+                            LogMessagingUtil.Instance.AppendLine("AddToTasksQueue (DocumentsFilingService)");
+                            
                             // AzureLog.SaveLogsInStorage("After adding document filing queue (Id:" + extDocPM.Id + ",Tenant:" + extDocPM.Tenant + ")", "L", DateTime.Now, "", "", 0, loggedUserId, loggedUserId, null);
                         }
                         catch (Exception ex)
@@ -1265,9 +1316,60 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 }
             }
         }
+        public void Send2UServer(DocumentsFilingPM myDocumentsFilingPM, string loggingUserId, string extDocPMId)
+        {
+            var amitalCustomFileCommunicationModel = new Logitude.Customs.BL.Messaging.Amital.AmitalCommunicationModelBase(
+               Logitude.Server.Tools.Models.AmitalStandardCommunicationModel.OperationMethod.DataAccess,
+               "GGGHQHYBRID", "LogitudeTaskByUrouter")
+            {
+                Tenant = myDocumentsFilingPM.Tenant,
+                objectTableName = "DocumentsFiling",
+                CommunicationLoggingEntityReference = myDocumentsFilingPM.Id,
+                EntityId = extDocPMId,
+                UserId = loggingUserId,
+                CommunicationSubject = "Documents Filing Data-HYBRID VIA USERVER",
 
+                //LogitudeFile = myFile,
+            };
+
+
+            string xml = LogitudeXmlSerializer.SerializeObjectToUTF8XmlString<DocumentsFilingPM>(myDocumentsFilingPM);
+                
+                
+            
+            var myEnvelope = new Envelope() {
+                 CommunicationLogId = Guid.NewGuid().ToString(),
+                  Tasks= new List<QueueTask>() {
+                      
+
+                      new QueueTask() {
+
+                          Action = "DocumentsFiling.Upsert",
+                      Parameters = new List<Parameter>()
+                      {
+                            new Parameter()
+                            {
+                                 Value = xml
+                            }
+                      }
+                  } }
+                  
+            };
+
+            var myUServerCommunicationService = new Logitude.Customs.BL.Messaging.Amital.UServerCommunicationService
+                <Logitude.Customs.BL.Messaging.Amital.AmitalCommunicationModelBase, Envelope>(
+                amitalCustomFileCommunicationModel, /*myDocumentsFilingPM*/ myEnvelope);
+            bool pImmediately = true;
+            var info = myUServerCommunicationService.Send(pImmediately);
+            if (info.GenericResponseObj?.Status !="0" )//&&  !string.IsNullOrWhiteSpace(info.GenericResponseObj?.ErrorDescription))
+            {
+                throw new Exception($"Send 2 Urouter ErrorDescription{info.GenericResponseObj?.ErrorDescription}");
+            }
+        }
 
         private List<DocumentsFilingMetaDataValuePM> documentsFilingMetaDataValueChangeSet;
+        private bool HaveENDOC_DocumentsFilingMetaDataValues=false;
+
         public void SetChangeSet(List<DocumentsFilingMetaDataValuePM> documentsFilingMetaDataValueChangeSet)
         {
             this.documentsFilingMetaDataValueChangeSet = documentsFilingMetaDataValueChangeSet;
@@ -1340,6 +1442,25 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
         }
         protected UniFileVerM MyUniFileVerM { get; set; }
         protected string MetaDataVersionValue { get; set; }
+
+        public DocumentsFilingMetaDataValuePM GetDocumentsFilingMetaDataValueByFilingIdAndCode(string documentsFilingId, string code, string type = null)
+        {
+            DocumentsFilingMetaDataValuePM MyDocumentMetaDataValues = null;
+            if (string.IsNullOrEmpty(type) && !string.IsNullOrEmpty(code))
+            {
+                var documentTypeMetaDataRepo = new DocumentsMetaDataTypeRepository(tenant);
+                //                DocumentsMetaDataType myDocumentsMetaDataType = documentTypeMetaDataRepo.GetSingleDocumentsMetaDataTypeByCode(code, tenant);
+                DocumentsMetaDataType myDocumentsMetaDataType = documentTypeMetaDataRepo.GetSingleDocumentsMetaDataTypeByCustomsMetaDataCode(code, tenant);
+                if (myDocumentsMetaDataType != null) type = myDocumentsMetaDataType.Id;
+            }
+            
+            if (!string.IsNullOrEmpty(type))
+            {
+                var documentsFilingMetaDataValueQuery = new DocumentsFilingMetaDataValueQuery(tenant);
+                MyDocumentMetaDataValues = documentsFilingMetaDataValueQuery.GetDocumentsFilingMetaDataValuePMsByDocumentIdTypeTenant(documentsFilingId, type, tenant);
+            }
+            return MyDocumentMetaDataValues;
+        }
 
     }
     public class UniFileVerM

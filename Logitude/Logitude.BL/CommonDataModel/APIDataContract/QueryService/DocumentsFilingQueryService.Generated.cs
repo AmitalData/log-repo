@@ -40,7 +40,7 @@ using Simplog.Data.CommonDataModel;
         }
 
 		
-		public DocumentsFiling GetDocumentsFilingById(string Id,int Tenant)
+		public DocumentsFiling GetDocumentsFilingById(string Id,int Tenant,string ComputingPartnerName = "")
         { 
 		    try
             {
@@ -50,7 +50,7 @@ using Simplog.Data.CommonDataModel;
 				 if (temp == null)
                     throw new ApplicationException("DocumentsFiling with Id " + Id + " doesn't exist");
 
-				return DocumentsFilingDataMapping(temp,Tenant);
+				return DocumentsFilingDataMapping(temp,Tenant,ComputingPartnerName);
 			}
             catch (Exception ex)
             {
@@ -59,7 +59,7 @@ using Simplog.Data.CommonDataModel;
             }
         }
 		
-		public DocumentsFiling GetDocumentsFilingByCode(string Code,int Tenant)
+		public DocumentsFiling GetDocumentsFilingByCode(string Code,int Tenant,string ComputingPartnerName = "")
         { 
 		    try
             {
@@ -69,7 +69,7 @@ using Simplog.Data.CommonDataModel;
 				 if (temp == null)
                     throw new ApplicationException("DocumentsFiling with Code " + Code + " doesn't exist");
 
-				return DocumentsFilingDataMapping(temp,Tenant);
+				return DocumentsFilingDataMapping(temp,Tenant,ComputingPartnerName);
 			}
             catch (Exception ex)
             {
@@ -91,7 +91,7 @@ using Simplog.Data.CommonDataModel;
 				   if(MyEntityPM.CreatedByUserId != null)
 				   {
 					   UserQueryService UserService0 = new UserQueryService(Tenant);
-					   					   temp.CreatedByUser = UserService0.GetUserById(MyEntityPM.CreatedByUserId,Tenant); 
+					   					   temp.CreatedByUser = UserService0.GetUserById(MyEntityPM.CreatedByUserId,Tenant,ComputingPartnerName); 
 			       
 					   				   }
 				   
@@ -101,7 +101,7 @@ using Simplog.Data.CommonDataModel;
 				   if(MyEntityPM.ObjectTableId != null)
 				   {
 					   ObjectTableQueryService ObjectTableService1 = new ObjectTableQueryService(Tenant);
-					   					   temp.EntityType = ObjectTableService1.GetObjectTableById(MyEntityPM.ObjectTableId,Tenant); 
+					   					   temp.EntityType = ObjectTableService1.GetObjectTableById(MyEntityPM.ObjectTableId,Tenant,ComputingPartnerName); 
 			       
 					   				   }
 				    
@@ -110,7 +110,7 @@ using Simplog.Data.CommonDataModel;
 				   if(MyEntityPM.DocumentTypeId != null)
 				   {
 					   DocumentTypeQueryService DocumentTypeService2 = new DocumentTypeQueryService(Tenant);
-					   					   temp.DocumentType = DocumentTypeService2.GetDocumentTypeById(MyEntityPM.DocumentTypeId,Tenant); 
+					   					   temp.DocumentType = DocumentTypeService2.GetDocumentTypeById(MyEntityPM.DocumentTypeId,Tenant,ComputingPartnerName); 
 			       
 					   				   }
 				   

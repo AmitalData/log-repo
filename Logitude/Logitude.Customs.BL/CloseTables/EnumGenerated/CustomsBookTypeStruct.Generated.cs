@@ -10,6 +10,9 @@ namespace Logitude.Customs.BL.CloseTables
 {
     public struct CustomsBookTypeValues
     {   
+       public const string יבוא = "1";  
+       public const string יצוא = "2";  
+       public const string אוטונומיה = "3";  
     }
 }
 

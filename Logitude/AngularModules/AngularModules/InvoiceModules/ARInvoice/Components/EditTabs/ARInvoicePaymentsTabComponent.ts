@@ -134,9 +134,12 @@ export class ARInvoicePaymentsTabComponent implements OnDestroy {
     private myService: ARPaymentListService;
     public IsNoPermissionVisible: boolean = false;
     LoadInvoicePayments() {
+
         var isLoading = true;
         this.ItemsSource1 = [];
         this.ItemsSource2 = [];
+
+        this.LoadConnectedPayments();
 
         if (AppTool.IsNullOrEmpty(this.EntityPM.Id) || AppTool.IsNullOrEmpty(this.EntityPM.StatusCode) || this.EntityPM.StatusCode == "DR" || this.EntityPM.StatusCode == "VD") {
             isLoading = false;
@@ -145,6 +148,10 @@ export class ARInvoicePaymentsTabComponent implements OnDestroy {
         if (!FeatureLocator.HasFeaturePermession("ARPayment", "READ")) {
             isLoading = false;
             this.IsNoPermissionVisible = true;
+        }
+
+        if (this.EntityPM.IsClosed) {
+            isLoading = false;
         }
 
         if (isLoading) {
@@ -167,60 +174,81 @@ export class ARInvoicePaymentsTabComponent implements OnDestroy {
             filters.Filter2Value = "DR,AD,PP,PD,CL";
             filters.Filter2Operator = "InList";
 
+            filters.Filter3Name = "IsClosed";
+            filters.Filter3Value = false;
+            filters.Filter3Operator = "Equals";
+
             this.myService.getByFilters(filters).subscribe((myResponse: ServiceResponse) => {
                 if (!myResponse.HasError) {
 
                     var list: ARPaymentList[] = myResponse.Result;
-                    var connectedList: ARPaymentList[] = [];
                     var unConnectedMatchedList: ARPaymentList[] = [];
                     var unConnectedListNotMatched: ARPaymentList[] = [];
 
                     list = list.sort(function (a, b) { return a.PaymentNo.toLowerCase() == b.PaymentNo.toLowerCase() ? 0 : a.PaymentNo.toLowerCase() < b.PaymentNo.toLowerCase() ? -1 : 1; });
 
                     list.forEach(item => {
-
-                        if (this.EntityPM.StatusCode == "PD") {
-                            if (this.EntityPM.InvoicePayments.filter(f => f.ARPaymentId == item.Id).length > 0) {
-                                connectedList.push(item);
-                            }
-                        }
-
-                        else {
-                            if (this.EntityPM.InvoicePayments.filter(f => f.ARPaymentId == item.Id).length > 0) {
-                                connectedList.push(item);
+                        if (this.EntityPM.InvoicePayments.filter(f => f.ARPaymentId == item.Id).length == 0) {
+                            if (item.PaymentCurrencyId != this.EntityPM.InvoiceCurrencyId || item.OpenAmount <= 0) {
+                                unConnectedListNotMatched.push(item);
                             }
 
                             else {
-                                if (!item.IsClosed) {
-                                    if (item.PaymentCurrencyId != this.EntityPM.InvoiceCurrencyId || item.OpenAmount <= 0) {
-                                        unConnectedListNotMatched.push(item);
-                                    }
-
-                                    else {
-                                        unConnectedMatchedList.push(item);
-                                    }
-                                }
+                                unConnectedMatchedList.push(item);
                             }
-                        }
+                        } 
                     });
 
-
-                    connectedList.forEach(item => {
-                        this.ItemsSource1.push(new ARInvoicePaymentItem(item,this));
+                    unConnectedMatchedList.forEach(item => {
+                        this.ItemsSource2.push(new ARInvoicePaymentItem(item, this));
                     });
 
-                    if (!this.EntityPM.IsClosed) {
-                        unConnectedMatchedList.forEach(item => {
-                            this.ItemsSource2.push(new ARInvoicePaymentItem(item,this));
-                        });
-
-                        unConnectedListNotMatched.forEach(item => {
-                            this.ItemsSource2.push(new ARInvoicePaymentItem(item,this));
-                        });
-                    }
+                    unConnectedListNotMatched.forEach(item => {
+                        this.ItemsSource2.push(new ARInvoicePaymentItem(item, this));
+                    });
                 }
 
                 this.CurrentSession.StopBusyIndicator();
+            });
+        }
+    }
+    LoadConnectedPayments() {
+
+        var ids: string = null;
+
+        this.EntityPM.InvoicePayments.forEach(item => {
+            if (ids) {
+                ids += "," + item.ARPaymentId;
+            }
+
+            else {
+                ids = item.ARPaymentId;
+            }
+        });
+
+        if (ids) {
+
+            var filters = new ApiQueryFilters();
+            filters.PageIndex = 0;
+            filters.PageSize = 500;
+
+            filters.Filter1Name = "Id";
+            filters.Filter1Value = ids;
+            filters.Filter1Operator = "InList";
+
+            var service = new ARPaymentListService();
+
+            service.getByFilters(filters).subscribe((myResponse: ServiceResponse) => {
+                if (!myResponse.HasError) {
+
+                    var list: ARPaymentList[] = myResponse.Result;
+
+                    list = list.sort(function (a, b) { return a.PaymentNo.toLowerCase() == b.PaymentNo.toLowerCase() ? 0 : a.PaymentNo.toLowerCase() < b.PaymentNo.toLowerCase() ? -1 : 1; });
+
+                    list.forEach(item => {
+                        this.ItemsSource1.push(new ARInvoicePaymentItem(item, this));
+                    });
+                }
             });
         }
     }

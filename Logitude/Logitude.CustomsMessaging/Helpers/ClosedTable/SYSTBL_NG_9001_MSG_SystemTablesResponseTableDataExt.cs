@@ -11,6 +11,7 @@ namespace Logitude.CustomsMessaging.Helpers.ClosedTable
     {
         public GovernmentProcedureType MyGovernmentProcedureType { get; set; }
         public InternationalSiteP MyInternationalSite { get; set; }
+        public ModificationAndDiscountType MyModificationAndDiscountType { get; set; }
 
         internal static SYSTBL_NG_9001_MSG_SystemTablesResponseTableDataExt CreateNew(SYSTBL_NG_9001_MSG_SystemTablesResponseTableData item)
         {
@@ -33,9 +34,16 @@ namespace Logitude.CustomsMessaging.Helpers.ClosedTable
     public class GovernmentProcedureType
     {
         public bool IsImport { get; set; }
+        public bool IsExport { get; set; }
+
     }
     public class InternationalSiteP
     {
         public string CountryTypeCode { get; set; }
+    }
+    public class ModificationAndDiscountType
+    {
+        public Boolean IsRelevantGoodsItem { get; set; }
+        public Boolean IsRelevantInvoice { get; set; }
     }
 }

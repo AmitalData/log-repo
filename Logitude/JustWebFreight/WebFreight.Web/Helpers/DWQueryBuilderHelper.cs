@@ -1,5 +1,6 @@
 ﻿using Logitude.BL.CommonDataModel.DataContracts;
 using Logitude.BL.Helpers;
+using Logitude.BL.InfrastructureModel.EntityPMs;
 using Logitude.BL.InfrastructureModel.EntityQueries;
 using Logitude.Server.Tools;
 using Microsoft.Practices.Unity;
@@ -464,7 +465,10 @@ namespace WebFreight.Web.Helpers
                 if (field.ParentDataTypeCode == "DateParts")
                 {
                     string displayDateName = GetDatePartsSqlColum(field);
-
+                    if (!string.IsNullOrEmpty(field.DimensionTableDisplayName) && InnerTables.Where(a => a.DimensionTableDisplayName == field.DimensionTableDisplayName).Count() == 0)
+                    {
+                        InnerTables.Add(field);
+                    }
                     SelectStmt.Append(displayDateName);
                     string groupFrom = isMainSelectStmt ? "AllQuery." + field.DisplayName : "[" + field.DWObjectTableCode + field.DimensionTableDisplayName + "]." + field.Code;
                     GroupByStmt.Append(groupFrom + ",");
@@ -557,13 +561,28 @@ namespace WebFreight.Web.Helpers
             bool HasMeasurement = sqlStatmentDetails.Columns.Where(a => a.IsMeasurement == true).Count() > 0;
             bool HasMultipleSelection = sqlStatmentDetails.Columns.Where(a => a.IsMultipleSelection && a.MultiSelectedValueLists.Count()>0).Count() > 0;
             string FinalSelectStmt = sqlStatmentDetails.FinalSelectStmt;
+            string selectFieldTenantSql = string.Empty;
             string FinalGroupByStmt = sqlStatmentDetails.FinalGroupByStmt;
             string Fact = sqlStatmentDetails.FromTables.Find(a => a == "Fact");
+            DWObjectTablePM dWObjectTablePM = null;
             if (string.IsNullOrEmpty(Fact))
             {
                 Fact = DWQueryParam.FactTableName;
             }
-            FinalSelectStmt += " from " + Fact;
+
+            if (!string.IsNullOrEmpty(Fact))
+            {
+                DWObjectTableQuery dWObjectTableQuery = new DWObjectTableQuery(Tenant);
+                dWObjectTablePM = dWObjectTableQuery.GetSinglePM(Fact , Tenant);
+                 Fact = (dWObjectTablePM != null && !string.IsNullOrEmpty(dWObjectTablePM.ParentFactCode)) ? dWObjectTablePM.ParentFactCode : Fact;
+            }
+
+
+            var DWSettings = new DWHSettingRepository(Tenant);
+            var isParentTenant = DWSettings.IsParentTenant(Tenant);
+
+            selectFieldTenantSql = "," + (!isParentTenant ? (Fact + ".[Source Tenant]  ") : (Fact + ".[Parent Tenant]")) + "as Tenant";
+            FinalSelectStmt += "@SelectFieldTenantSql from " + Fact;
 
             if (Filters != null)
             {
@@ -662,9 +681,7 @@ namespace WebFreight.Web.Helpers
             }
 
             string TenantWhere = ".[Parent Tenant] = ";
-            var DWSettings = new DWHSettingRepository(Tenant);
             var temp = DWSettings.GetSingleDWHSetting(Tenant);
-            var isParentTenant = DWSettings.IsParentTenant(Tenant);
             if (!isParentTenant)//temp != null &&  temp.Tenant != temp.ParentTenant)
             {
                 TenantWhere = ".[Source Tenant] = ";
@@ -674,17 +691,45 @@ namespace WebFreight.Web.Helpers
                 CheckBICentralDWHFeature();
             }
 
+
+
+
+            string recordTypeCondation = "";
+            List<string>shipmentLevelLists = GetShipmentLevelListsByRecordType(dWObjectTablePM.RecordType);
+            if (shipmentLevelLists.Count() > 0)
+            {
+
+                recordTypeCondation = (" " + Fact + ".[DirectHouse] in (");
+                foreach (string shipmentType in shipmentLevelLists)
+                {
+                    string parameterTenantName = "@ShipmentLevel" + shipmentType.ToString();
+                    recordTypeCondation += parameterTenantName + ",";
+                    sqlCommandDefinition.Parameters.Add(new SqlParameterDetails() { ParameterName = parameterTenantName, Value = shipmentType.ToString() ,DataType = "MultiValue" });
+                }
+                recordTypeCondation = recordTypeCondation.Remove(recordTypeCondation.Length - 1);
+                recordTypeCondation += ") ";
+            }
+
             if (FinalQuery.Contains("where"))
             {
-                FinalQuery = FinalQuery.Replace("where", "where " + Fact + TenantWhere + "@Tenant" + " and");
+
+                string finarlCondition = ("where " + Fact + TenantWhere + "@Tenant" + " and");
+                if (!string.IsNullOrEmpty(recordTypeCondation)) finarlCondition += recordTypeCondation + " and";
+                FinalQuery = FinalQuery.Replace("where", finarlCondition);
             }
             else if (FinalQuery.Contains("group by"))
             {
-                FinalQuery = FinalQuery.Replace("group by", "where " + Fact + TenantWhere + "@Tenant" + " group by");
+                string finarlCondition = ("where " + Fact + TenantWhere + "@Tenant");
+                if (!string.IsNullOrEmpty(recordTypeCondation)) finarlCondition += (" and " + recordTypeCondation)  ;
+                finarlCondition +=" group by";
+                FinalQuery = FinalQuery.Replace("where", finarlCondition);
+
             }
             else
             {
                 FinalQuery = FinalQuery + " where " + Fact + TenantWhere + "@Tenant";
+                if (!string.IsNullOrEmpty(recordTypeCondation)) FinalQuery +=(" and" + recordTypeCondation);
+
             }
 
             if (HasMultipleSelection && (sqlColumnStatmentDetails != null && sqlColumnStatmentDetails.MultiSelectedCount > 0))
@@ -698,9 +743,35 @@ namespace WebFreight.Web.Helpers
                 sqlCommandDefinition.Parameters.Add(new SqlParameterDetails() { ParameterName = "@Tenant", Value = Tenant.ToString() });
             }
 
+            if (sqlCommandDefinition.Parameters.Where(p => p.ParameterName == "@RecordType").Count() == 0)
+            {
+                sqlCommandDefinition.Parameters.Add(new SqlParameterDetails() { ParameterName = "@RecordType", Value = dWObjectTablePM.RecordType});
+            }
+
             sqlCommandDefinition.SQLString = FinalQuery + PagingString + offsetPagingString;
+            if (sqlCommandDefinition.SQLString.Contains("group by")) selectFieldTenantSql = "";
+            sqlCommandDefinition.SQLString = sqlCommandDefinition.SQLString.Replace("@SelectFieldTenantSql", selectFieldTenantSql);
 
             return sqlCommandDefinition;
+        }
+
+        private List<string> GetShipmentLevelListsByRecordType(string recordType)
+        {
+            var result = new List<string>();
+            if (!string.IsNullOrEmpty(recordType))
+            {
+                if (recordType == "Master")
+                {
+                    result.Add("Consol");
+                    result.Add("Direct");
+                }
+                else if (recordType == "Shipment")
+                {
+                    result.Add("Direct");
+                    result.Add("House");
+                }
+            }
+            return result;
         }
 
         private string GetChargesTypeConditions(List<DWObjectFieldsDetails> columns,string pivotTableNickname, int columnIndex)
@@ -734,9 +805,14 @@ namespace WebFreight.Web.Helpers
 
         private static string GetDatePartsSqlColum(DWObjectFieldsDetails field)
         {
+            string fieldCode = field.DWObjectTableCode + "." + field.Code;
+            if (!string.IsNullOrEmpty(field.DimensionTableDisplayName))
+                fieldCode = "[" + field.DWObjectTableCode + field.DimensionTableDisplayName + "]." + field.Code;
+
             string datePartsSqlColum = field.DWObjectTableCode + "." + field.Code;
-            if (field.DataTypeCode == "Time") datePartsSqlColum = "convert(varchar(5)," + (field.DWObjectTableCode + "." + field.Code) + ", 8)";
-            else if (field.DataTypeCode == "Date") datePartsSqlColum = "convert(varchar(10)," + (field.DWObjectTableCode + "." + field.Code) + ", 120)";
+            if (field.DataTypeCode == "Time") datePartsSqlColum = "convert(varchar(5)," + fieldCode + ", 8)";
+            else if (field.DataTypeCode == "Date") datePartsSqlColum = "convert(varchar(10)," + fieldCode + ", 120)";
+
             datePartsSqlColum += ((!string.IsNullOrEmpty(field.DisplayName) ? " as " + field.DisplayName + "," : ","));
             return datePartsSqlColum;
         }

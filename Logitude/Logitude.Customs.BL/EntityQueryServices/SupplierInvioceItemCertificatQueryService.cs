@@ -151,7 +151,13 @@ namespace Logitude.Customs.BL.EntityQueryServices
             {
                 invoiceNumber = invoicenumberFilter.FieldValue.ToString();
             }
-            IQueryable<CertificateConnectedItems> query2 = repository.GetCertificateConnectedItems(declarationId, attachmentTypeCode, reqConfirmationTypeCode, CertificateExemptionTypeCode, CertificateNumber, ResConfirmationTypeCode, tenant, invoiceNumber, skippedItems, queryOperations.PageSize, false);
+            string ClassificationCode = null;
+            QueryFilterItem ClassificationCodeFilter = queryOperations.QueryFilterItems.Where(d => d.FieldName == "ClassificationCode").FirstOrDefault();
+            if (ClassificationCodeFilter != null)
+            {
+                ClassificationCode = ClassificationCodeFilter.FieldValue.ToString();
+            }
+            IQueryable<CertificateConnectedItems> query2 = repository.GetCertificateConnectedItems(declarationId, attachmentTypeCode, reqConfirmationTypeCode, CertificateExemptionTypeCode, CertificateNumber, ResConfirmationTypeCode, tenant, invoiceNumber, ClassificationCode, skippedItems, queryOperations.PageSize, false);
 
 
 
@@ -232,7 +238,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
 
         public List<CertificateConnectedItems> GetCertificateConnectedItemsList(string declarationId, string attachmentTypeCode, string reqConfirmationTypeCode, string CertificateExemptionTypeCode, string CertificateNumber, string ResConfirmationTypeCode, int tenant)
         {
-            List<CertificateConnectedItems> conntectedItems = repository.GetCertificateConnectedItems(declarationId, attachmentTypeCode, reqConfirmationTypeCode, CertificateExemptionTypeCode, CertificateNumber, ResConfirmationTypeCode, tenant, null, 0, 0, true).ToList();
+            List<CertificateConnectedItems> conntectedItems = repository.GetCertificateConnectedItems(declarationId, attachmentTypeCode, reqConfirmationTypeCode, CertificateExemptionTypeCode, CertificateNumber, ResConfirmationTypeCode, tenant, null, null, 0, 0, true).ToList();
             return conntectedItems;
         }
 
@@ -248,7 +254,13 @@ namespace Logitude.Customs.BL.EntityQueryServices
             {
                 invoiceNumber = invoicenumberFilter.FieldValue.ToString();
             }
-            int count = repository.GetCertificateConnectedItemsCount(declarationId, attachmentTypeCode, reqConfirmationTypeCode, CertificateExemptionTypeCode, CertificateNumber, ResConfirmationTypeCode, tenant,invoiceNumber);
+            string ClassificationCode = null;
+            QueryFilterItem ClassificationCodeFilter = queryOperations.QueryFilterItems.Where(d => d.FieldName == "ClassificationCode").FirstOrDefault();
+            if (ClassificationCodeFilter != null)
+            {
+                ClassificationCode = ClassificationCodeFilter.FieldValue.ToString();
+            }
+            int count = repository.GetCertificateConnectedItemsCount(declarationId, attachmentTypeCode, reqConfirmationTypeCode, CertificateExemptionTypeCode, CertificateNumber, ResConfirmationTypeCode, tenant, invoiceNumber, ClassificationCode);
             
             return count;
         }
@@ -280,6 +292,36 @@ namespace Logitude.Customs.BL.EntityQueryServices
         public int? GetMaxCounterKey(string declarationId,int invoiceCounterKey,int invoiceItemLineNum, int tenant)
         {
             return repository.GetMaxCounterKey(declarationId, invoiceCounterKey, invoiceItemLineNum, tenant);
+        }
+        public SupplierInvioceItemCertificatPM GetSupplierInvioceItemCertificatWithExternalRequestTypeCode(string code, string decId, int lineNumber)
+        {
+            SupplierInvioceItemCertificat supplierInvioceItemCertificates = repository.GetSupplierInvioceItemCertificatWithExternalRequestTypeCode(code,decId,lineNumber);
+            if (supplierInvioceItemCertificates != null)
+            {
+                SupplierInvioceItemCertificatPM supplierInvioceItemCertificatPM = new SupplierInvioceItemCertificatPM()
+                {
+                    DeclarationId = supplierInvioceItemCertificates.DeclarationId,
+                    AttachmentTypeCode = supplierInvioceItemCertificates.AttachmentTypeCode,
+                    AttachmentTypeName = supplierInvioceItemCertificates.AttachmentType != null ? supplierInvioceItemCertificates.AttachmentType.LocalName : null,
+                    CertificateExemptionTypeCode = supplierInvioceItemCertificates.CertificateExemptionTypeCode,
+                    CertificateExemptionTypeName = supplierInvioceItemCertificates.CertificateExemptionType != null ? supplierInvioceItemCertificates.CertificateExemptionType.LocalName : null,
+                    CertificateNumber = supplierInvioceItemCertificates.CertificateNumber,
+                    CustomsAttachmentID = supplierInvioceItemCertificates.CustomsAttachmentID,
+                    ItemCertificateCounterKey = supplierInvioceItemCertificates.ItemCertificateCounterKey,
+                    ReqConfirmationTypeCode = supplierInvioceItemCertificates.ReqConfirmationTypeCode,
+                    ReqConfirmationTypeName = supplierInvioceItemCertificates.RequestConfirmationType != null ? supplierInvioceItemCertificates.RequestConfirmationType.LocalName : null,
+                    ResConfirmationTypeCode = supplierInvioceItemCertificates.ResConfirmationTypeCode,
+                    ResConfirmationTypeName = supplierInvioceItemCertificates.ResponseConfirmationType != null ? supplierInvioceItemCertificates.ResponseConfirmationType.LocalName : null,
+                    InvoiceCounterKey = supplierInvioceItemCertificates.InvoiceCounterKey,
+                    LineNumber = supplierInvioceItemCertificates.LineNumber,
+                    Tenant = supplierInvioceItemCertificates.Tenant,
+                    SequenceNumeric = supplierInvioceItemCertificates.SequenceNumeric,
+                    ApprovalRequestNumber = supplierInvioceItemCertificates.ApprovalRequestNumber,
+                    ExternalRequestTypeCode = supplierInvioceItemCertificates.ExternalRequestTypeCode
+                };
+                return supplierInvioceItemCertificatPM;
+            }
+            return null;
         }
 
     }

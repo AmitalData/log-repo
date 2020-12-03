@@ -12,7 +12,10 @@ import { AppTool, DateTool} from '../../../Infrastructure/Tools';
 import {EntityResourceService} from '../../../Infrastructure/Services/EntityResourceService';
 //import {CustomsSettingExtendedListService} from '../../../Customs/Services/ExtendedLists/CustomsSettingExtendedListService';
 import {ObjectsLocator} from '../../Locators/ObjectsLocator';
+import { DeclarationRemarksService } from '../../../Common/Services/ExtendedPMs/DeclarationRemarksService';
+import { DeclarationRemarks } from '../../../Customs/EntityPMs/Extended/DeclarationRemarks';
 import { SessionInfo } from '../../Utilities/SessionInfo';
+import { AmitalGatewayUtil } from '../../Utilities/AmitalGatewayUtil';
 //import {RecallClientsForCutoms} from '../../../Customs/Components/CustomsRequests/GeneralRequests/RecallClientsForCutoms';
 
 @Component({
@@ -72,7 +75,7 @@ export class MaintenanceComponent {
             this.PagesMenu.push(new Menu("OCS", "Occasions"));
         }
 
-        if (FeatureLocator.HasFeaturePermession("General", "CUSTOMS")) {
+        if (FeatureLocator.HasFeaturePermession("CustomsGeneral", "CUSTOMS")) {
             this.PagesMenu.push(new Menu("CSM", TextCodeTranslator.Translate("General.MC.Custom.Customs")));
         }
 
@@ -160,7 +163,7 @@ export class MaintenanceComponent {
             item2.ObjectTableName = "Terms of Use";
             this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item2));
         }
-
+   
         if (FeatureLocator.HasFeaturePermession("General", "SYSTEMSETTINGS")) {
 
             if (FeatureLocator.HasFeaturePermession("General", "General.Features.CompanyAddress")) {
@@ -343,7 +346,7 @@ export class MaintenanceComponent {
                 item.Icon = "List"
                 item.Code = "WHKS";
                 item.ObjectTableName = "WebhookKeys";
-                item.ObjectTableId = window.ObjectTables.filter(d => d.Name == "WebhookKeys")[0].Id
+                item.ObjectTableId = window.ObjectTables.filter(d => d.Name == "WebhookKeys")[0]?window.ObjectTables.filter(d => d.Name == "WebhookKeys")[0].Id:null;
                 this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
             }
             if (FeatureLocator.HasFeaturePermession("APILogs", "APILogs")) {
@@ -493,6 +496,23 @@ export class MaintenanceComponent {
             item.ObjectTableId = window.ObjectTables.filter(d => d.Name == "Customs.CustomsSetting")[0].Id
             this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
         }
+
+        //let LoggedUserPMCode = SessionLocator.LoggedUserPM.Code || "";
+        //LoggedUserPMCode = LoggedUserPMCode.toLowerCase();
+        //let allowed = false;
+        //allowed = (LoggedUserPMCode == "amital" || LoggedUserPMCode.startsWith("amital."));
+
+        if (SessionLocator.LoggedUserPM.Email.includes("amital"))             
+         {
+            var item = new MenusTablePM();
+            item.CategoryTypeCode = "CSM";
+            item.Icon = "Settings"
+             item.Code = "CSRA";
+            item.ObjectTableName = TextCodeTranslator.Translate("General.MC.Customs.ReAnalysis") ;
+            this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
+
+        }
+
     }
     private BuildAccountingMenus() {
 
@@ -589,14 +609,18 @@ export class MaintenanceComponent {
             item.ObjectTableName = "Cache Log";
             this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
         }
-        // if (FeatureLocator.HasFeaturePermession("General", "CARGOTRACKING")) {
+
+
+        // if (FeatureLocator.HasFeaturePermession("UserDefinedReport", "Module")) {
         //     var item = new MenusTablePM();
         //     item.CategoryTypeCode = "OTH";
         //     item.Icon = "Settings"
-        //     item.Code = "CARGO";
-        //     item.ObjectTableName = "Cargo Tracking";
+        //     item.Code = "UDR";
+        //     item.ObjectTableName = "UserDefinedReport";
         //     this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
         // }
+      
+
         if (SessionLocator.Tenant == 0) {
             var item = new MenusTablePM();
             item.CategoryTypeCode = "CMS";
@@ -636,6 +660,8 @@ export class MaintenanceComponent {
             item.ObjectTableName = "Cargo Tracking";
             this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
        
+
+           
 
             var item = new MenusTablePM();
             item.CategoryTypeCode = "MNG";
@@ -767,6 +793,7 @@ export class MaintenanceComponent {
                     this.InterfaceManageentMethod(item);
                     break;
                 }
+                ///case "MCPA": { this.CustomsAutonomyKeywordMethod(item); break; }
                 case "CSMN": {
                     let test = true;
                     let strict = true;
@@ -788,10 +815,47 @@ export class MaintenanceComponent {
                     let windowTitle = "הגדרות מכס"//"Customs Settings";
                     let logWindow = new LogitudeWindow();
                     logWindow.Width = 750;
-                    logWindow.Height = 500;
+                    logWindow.Height = 700;
                     logWindow.Title = windowTitle;
                     logWindow.IsShowCloseButton = true;
                     logWindow.Show('./CustomsModules/CustomsMaintenance/Components/Maintenance/CustomsSettingsComponent');
+                    break;
+                }
+                case "CSRA": {
+                    let test = true;
+                    let strict = true;
+                    if (test) {
+                        if (DateTool.GetCurrentDateAsUtc().valueOf() < new Date(2017, 7, 20).valueOf()) {
+                            strict = false;
+                        }
+                    }
+                    let LoggedUserPMCode = SessionLocator.LoggedUserPM.Code || "";
+                    LoggedUserPMCode = LoggedUserPMCode.toLowerCase();
+                    let allowed = false;
+                    allowed = SessionLocator.LoggedUserPM.IsCustomerCare || (LoggedUserPMCode == "amital" || LoggedUserPMCode.startsWith("amital.")) ? true : false;
+                    if (!allowed) {
+
+                        let messageWindow = new MessageWindow()
+                        messageWindow.Show("Logged User Is not Customer Care ");
+                        return;
+                    }
+                    var windowArgs: any = {};;
+                    windowArgs.isReAnAnalysis = true;
+
+                    let windowTitle = TextCodeTranslator.Translate("General.MC.Customs.ReAnalysis");//"גליון בקשות - ניתוח מחדש"//"Customs Settings";
+                    let logWindow = new LogitudeWindow();
+                    logWindow.Width = 1300;
+                    logWindow.Height = 700;
+                    logWindow.Title = windowTitle;
+                    logWindow.IsShowCloseButton = true;
+                    logWindow.WindowArgs = windowArgs;
+                    logWindow.Show('./CustomsModules/CustomsControls/Components/CustomsRequestsSheetsComponent');
+
+                 
+                        
+                
+
+ 
                     break;
                 }
                 case "COAD": {
@@ -1075,7 +1139,16 @@ export class MaintenanceComponent {
                     LoggedUserPMCode = LoggedUserPMCode.toLowerCase();
                     let allowed = false;
                     allowed = (LoggedUserPMCode == "amital" || LoggedUserPMCode.startsWith("amital."));
-                    if (!SessionLocator.LoggedUserPM.IsCustomerCare && allowed) {
+                    let LoggedUserIsnotCustomerCare: boolean = true;
+                    if (SessionLocator.LoggedUserPM.IsCustomerCare ) {
+                        LoggedUserIsnotCustomerCare = false;
+                    }
+                    if (allowed) {
+                        LoggedUserIsnotCustomerCare = false;
+                    }
+
+                    //if (!SessionLocator.LoggedUserPM.IsCustomerCare && allowed) {
+                    if (LoggedUserIsnotCustomerCare) {
 
                         let messageWindow = new MessageWindow()
                         messageWindow.Show("Logged User Is not Customer Care ");
@@ -1242,6 +1315,15 @@ export class MaintenanceComponent {
                     logitudeWindow.Show('./CustomsModules/CustomsGeneralRequests/Components/RecallSuppliersFromFileComponent');
                     break;
                 }
+                case "MRCF": {
+                    var logitudeWindow = new LogitudeWindow();
+                    logitudeWindow.Title = "קליטת קובץ אישורים מאיקאה להצהרה";
+                    logitudeWindow.ShowCloseButton = true;
+                    logitudeWindow.Height = 600;
+                    logitudeWindow.Width = 700;
+                    logitudeWindow.Show('./CustomsModules/CustomsGeneralRequests/Components/ReceiptCertificateFromFileComponent')
+                    break;
+                }
                 case "MTDD": {
                     var logitudeWindow = new LogitudeWindow();
                     logitudeWindow.Title = TextCodeTranslator.Translate("General.MC.Customs.DocumentsDefinition");
@@ -1283,7 +1365,13 @@ export class MaintenanceComponent {
                         confirmWindow.WindowClosed.subscribe((event: any) => {
                             if (confirmWindow.Yes) {
 
-                                var servicelink = '../../../CustomsModules/CustomsGeneralRequests/Components/RecallClientsForCutoms';
+                                var servicelink = './Customs/CustomsGeneralRequests/Components/RecallClientsForCutoms';
+                              //  servicelink = './Customs/Services/Others/CustomsRequestMenuService';
+
+                                // SessionLocator.DynamicLoader.GetInstance(servicelink).then((service: any) => {
+                                //     service.SendRecallMessageToServer();
+                                // });
+
                                 SessionLocator.DynamicLoader.GetInstance(servicelink).then((service: any) => {
                                     service.SendRecallMessageToServer();
                                 });
@@ -1384,6 +1472,13 @@ export class MaintenanceComponent {
                                 }
                             }
 
+                            if(item.Code=="UDRM"){
+                                this._entityResourceService.getEntityResourceByTableName("CalculatedChartsOfAccount", 0).subscribe((response:any) => {
+                                    this._entityResourceService.getEntityResourceByTableName("CalculatedChartsOfAccountsLine", 0).subscribe((response:any) => {
+                                    });
+                                });
+                              
+                            }
                             //var SelectedQuery = allQueries.filter(f => ((f.UserId == SessionLocator.LoggedUserId && f.Tenant == SessionLocator.Tenant) || f.Tenant == 0) && f.Perspective == listArgs.Perspective)[0];
 
                             var objectTablePM = window.ObjectTables.filter(d => d.Id == item.ObjectTableId)[0];
@@ -1415,8 +1510,31 @@ export class MaintenanceComponent {
             }
         }
     }
+    
     DoJoker(text: string) {
         switch (text) {
+            case "jokerinv":
+                {
+
+                        //$$GGG_IN = "UnifreightEntity=CFIFILEM;UnifreightEntityNumber=%%FILE_NO.CFIFILEM;LogitudeEntity=Customs.Declaration;LogitudeEntityNumber=%%LOGITUDE_FILE.CFIFILEM;LogitudeViewModel=UnifreightMassageHandler;LogitudeCommandId=CreateInvoiceCommand;formtitle=%%$text(IMP_DECLERATION)"
+                    ///"UnifreightEntity=CFIFILEM·;
+                    //UnifreightEntityNumber = 3000028·;
+                    //LogitudeEntity = Customs.Declaration·;
+                    //LogitudeEntityNumber = 1 - 211622·;
+                    //LogitudeViewModel = UnifreightMassageHandler·;
+                    //LogitudeCommandId = CreateInvoiceCommand·;
+                    //formtitle = הצהרת יבוא"
+                    var json = '{"UnifreightEntity"  :  "CFIFILEM" , "UnifreightEntityNumber"  :  "93320020" , "LogitudeEntity"  :  "Customs.Declaration" , "LogitudeEntityNumber"  :  "1-5415" , "LogitudeViewModel"  :  "UnifreightMassageHandler" , "LogitudeCommandId"  :  "CreateInvoiceCommand" , "formtitle"  :  "הצהרת יבוא"}';
+                    
+                    var objParams = JSON.parse(json);
+                    objParams.Requset = new Array();
+                    //objParams.Requset.push(["Requset.JumpTo", "Payment"]);
+                    //objParams.Requset.push(["Requset.JumpTo", "RequestSheet"]);
+                    objParams.Requset.push(["Requset.JumpTo", "Answer"]);
+
+                    AmitalGatewayUtil.Instance.UnifaceRequest(objParams, null, null, null);
+                    
+                } break;
             case "jokeraccfunctionaltest": {
 
 
@@ -1468,15 +1586,34 @@ export class MaintenanceComponent {
                 break;
             }
 
-            case "jokerloadtest": {
+            case "jokerremark": {
+                var windowArgs: any = {};
                 var logitudeWindow = new LogitudeWindow();
-                logitudeWindow.Title = "Load Test";//TextCodeTranslator.Translate("Customs.General.O.RequiredFields");
-                logitudeWindow.ShowCloseButton = true;
                 logitudeWindow.Height = 525;
                 logitudeWindow.Width = 750;
-
-
-                logitudeWindow.Show('./CustomsModules/CustomsMaintenance/Components/Maintenance/LoadTestComponent');
+                logitudeWindow.ShowCloseButton = true;
+                windowArgs.QueType = 2;
+                let EntityPM;
+                var _declarationRemarksService: DeclarationRemarksService = new DeclarationRemarksService();
+                if (windowArgs.QueType == 2) {
+                    _declarationRemarksService.GetSVCOrSRVStatusList(1, "41100314")
+                        .subscribe((response: any) => {
+                            windowArgs.EntityPM = response.Result;
+                            windowArgs.length = response.Result.length;
+                            logitudeWindow.Title = windowArgs.length+ "  הערות מסווג  " ;
+                            logitudeWindow.WindowArgs = windowArgs;
+                            logitudeWindow.Show('./CustomsModules/CustomsMaintenance/Components/DeclarationRemarksComponent');
+                        });
+                } else {
+                    _declarationRemarksService.GetINCorINAtatusList(1, "41100314")
+                        .subscribe((response: any) => {
+                            windowArgs.EntityPM = response.Result;
+                            let counter = response.Result.length;
+                            logitudeWindow.Title = counter + "  הערות מבקר  ";
+                            logitudeWindow.WindowArgs = windowArgs;
+                            logitudeWindow.Show('./CustomsModules/CustomsMaintenance/Components/DeclarationRemarksComponent');
+                        });
+                }
                 break;
             }
             default: {
@@ -1515,6 +1652,21 @@ export class MaintenanceComponent {
                 });
         });
     }
+    CustomsAutonomyKeywordMethod(item: MaintenanceMenuItem): any {
+        
+        this._entityResourceService.getEntityResourceByTableName(item.ObjectTableName, 0).subscribe(response => {
+            var logitudeWindow = new LogitudeWindow();
+            logitudeWindow.Title = item.TranslatedName
+            logitudeWindow.ShowCloseButton = true;
+            logitudeWindow.Height = 400;
+            logitudeWindow.Width = 500;
+            //logitudeWindow.Show('./Customs/Components/CustomsRequests/GeneralRequests/RecallSuppliersFromFileComponent');
+            logitudeWindow.Show('./CustomsModules/CustomsCourier/Components/AutonomyKeywordComponent');
+
+        });
+
+    }
+
     InterfaceManageentMethod(item: MaintenanceMenuItem) {
         //ObjectTableName                     :        "Customs.CustomsClosedTable"
         this._entityResourceService.getEntityResourceByTableName(item.ObjectTableName, 0).subscribe((response:any) => {

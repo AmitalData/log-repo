@@ -20,17 +20,477 @@ namespace Logitude.Customs.BL
    {
        public List<TradeAgreementDetails> GetAll()
        {
-		    var all = new List<TradeAgreementDetails>(); 
+		    var all = new List<TradeAgreementDetails>();  
+            all.Add(new TradeAgreementDetails()
+            {    
+                Code = "10", 
+                SearchFields = "10,סלובקיה", 
+                Inactive = false, 
+                LocalName = "סלובקיה", 
+			});
+			 
+            all.Add(new TradeAgreementDetails()
+            {    
+                Code = "101", 
+                SearchFields = "101,A1", 
+                Inactive = false, 
+                LocalName = "A1", 
+			});
+			 
+            all.Add(new TradeAgreementDetails()
+            {    
+                Code = "102", 
+                SearchFields = "102,A1JE", 
+                Inactive = false, 
+                LocalName = "A1JE", 
+			});
+			 
+            all.Add(new TradeAgreementDetails()
+            {    
+                Code = "103", 
+                SearchFields = "103,A2", 
+                Inactive = false, 
+                LocalName = "A2", 
+			});
+			 
+            all.Add(new TradeAgreementDetails()
+            {    
+                Code = "11", 
+                SearchFields = "11,הונגריה", 
+                Inactive = false, 
+                LocalName = "הונגריה", 
+			});
+			 
+            all.Add(new TradeAgreementDetails()
+            {    
+                Code = "12", 
+                SearchFields = "12,פולין", 
+                Inactive = false, 
+                LocalName = "פולין", 
+			});
+			 
+            all.Add(new TradeAgreementDetails()
+            {    
+                Code = "13", 
+                SearchFields = "13,סלובניה", 
+                Inactive = false, 
+                LocalName = "סלובניה", 
+			});
+			 
+            all.Add(new TradeAgreementDetails()
+            {    
+                Code = "14", 
+                SearchFields = "14,מקסיקו", 
+                Inactive = false, 
+                LocalName = "מקסיקו", 
+			});
+			 
+            all.Add(new TradeAgreementDetails()
+            {    
+                Code = "15", 
+                SearchFields = "15,רומניה", 
+                Inactive = false, 
+                LocalName = "רומניה", 
+			});
+			 
+            all.Add(new TradeAgreementDetails()
+            {    
+                Code = "16", 
+                SearchFields = "16,בולגריה", 
+                Inactive = false, 
+                LocalName = "בולגריה", 
+			});
+			 
+            all.Add(new TradeAgreementDetails()
+            {    
+                Code = "17", 
+                SearchFields = "17,איחוד", 
+                Inactive = false, 
+                LocalName = "איחוד", 
+			});
+			 
+            all.Add(new TradeAgreementDetails()
+            {    
+                Code = "18", 
+                SearchFields = "18,WTO", 
+                Inactive = false, 
+                LocalName = "WTO", 
+			});
+			 
+            all.Add(new TradeAgreementDetails()
+            {    
+                Code = "19", 
+                SearchFields = "19,ברזיל -- מרקורסור", 
+                Inactive = false, 
+                LocalName = "ברזיל -- מרקורסור", 
+			});
+			 
+            all.Add(new TradeAgreementDetails()
+            {    
+                Code = "2", 
+                SearchFields = "2,קהיליה", 
+                Inactive = true, 
+                LocalName = "קהיליה", 
+			});
+			 
+            all.Add(new TradeAgreementDetails()
+            {    
+                Code = "20", 
+                SearchFields = "20,אורוגוואי -- מרקורסור", 
+                Inactive = false, 
+                LocalName = "אורוגוואי -- מרקורסור", 
+			});
+			 
+            all.Add(new TradeAgreementDetails()
+            {    
+                Code = "21", 
+                SearchFields = "21,פרגוואי -- מרקורסור", 
+                Inactive = false, 
+                LocalName = "פרגוואי -- מרקורסור", 
+			});
+			 
+            all.Add(new TradeAgreementDetails()
+            {    
+                Code = "22", 
+                SearchFields = "22,ארגנטינה -- מרקורסור", 
+                Inactive = false, 
+                LocalName = "ארגנטינה -- מרקורסור", 
+			});
+			 
+            all.Add(new TradeAgreementDetails()
+            {    
+                Code = "23", 
+                SearchFields = "23,בדיקה", 
+                Inactive = true, 
+                LocalName = "בדיקה", 
+			});
+			 
+            all.Add(new TradeAgreementDetails()
+            {    
+                Code = "24", 
+                SearchFields = "24,אוטונומיה", 
+                Inactive = true, 
+                LocalName = "אוטונומיה", 
+			});
+			 
+            all.Add(new TradeAgreementDetails()
+            {    
+                Code = "25", 
+                SearchFields = "25,מכסה זהה", 
+                Inactive = true, 
+                LocalName = "מכסה זהה", 
+			});
+			 
+            all.Add(new TradeAgreementDetails()
+            {    
+                Code = "26", 
+                SearchFields = "26,מכסה זהה2", 
+                Inactive = true, 
+                LocalName = "מכסה זהה2", 
+			});
+			 
+            all.Add(new TradeAgreementDetails()
+            {    
+                Code = "27", 
+                SearchFields = "27,תעריף מחושב", 
+                Inactive = true, 
+                LocalName = "תעריף מחושב", 
+			});
+			 
+            all.Add(new TradeAgreementDetails()
+            {    
+                Code = "3", 
+                SearchFields = "3,ארה''ב", 
+                Inactive = false, 
+                LocalName = "ארה''ב", 
+			});
+			 
+            all.Add(new TradeAgreementDetails()
+            {    
+                Code = "4", 
+                SearchFields = "4,ארצות ערב", 
+                Inactive = false, 
+                LocalName = "ארצות ערב", 
+			});
+			 
+            all.Add(new TradeAgreementDetails()
+            {    
+                Code = "5", 
+                SearchFields = "5,ירדן", 
+                Inactive = false, 
+                LocalName = "ירדן", 
+			});
+			 
+            all.Add(new TradeAgreementDetails()
+            {    
+                Code = "50", 
+                SearchFields = "50,QIZ ירדן", 
+                Inactive = false, 
+                LocalName = "QIZ ירדן", 
+			});
+			 
+            all.Add(new TradeAgreementDetails()
+            {    
+                Code = "51", 
+                SearchFields = "51,QIZ מצריים", 
+                Inactive = false, 
+                LocalName = "QIZ מצריים", 
+			});
+			 
+            all.Add(new TradeAgreementDetails()
+            {    
+                Code = "6", 
+                SearchFields = "6,קנדה", 
+                Inactive = false, 
+                LocalName = "קנדה", 
+			});
+			 
+            all.Add(new TradeAgreementDetails()
+            {    
+                Code = "7", 
+                SearchFields = "7,אפט''א", 
+                Inactive = false, 
+                LocalName = "אפט''א", 
+			});
+			 
+            all.Add(new TradeAgreementDetails()
+            {    
+                Code = "8", 
+                SearchFields = "8,טורקיה", 
+                Inactive = false, 
+                LocalName = "טורקיה", 
+			});
+			 
+            all.Add(new TradeAgreementDetails()
+            {    
+                Code = "9", 
+                SearchFields = "9,צ'כיה", 
+                Inactive = false, 
+                LocalName = "צ'כיה", 
+			});
+			 
+            all.Add(new TradeAgreementDetails()
+            {    
+                Code = "BGR", 
+                SearchFields = "BGR,בולגריה", 
+                Inactive = true, 
+                LocalName = "בולגריה", 
+			});
+			 
+            all.Add(new TradeAgreementDetails()
+            {    
+                Code = "CAN", 
+                SearchFields = "CAN,קנדה", 
+                Inactive = true, 
+                LocalName = "קנדה", 
+			});
+			 
+            all.Add(new TradeAgreementDetails()
+            {    
+                Code = "CHECK", 
+                SearchFields = "CHECK,בדיקה", 
+                Inactive = true, 
+                LocalName = "בדיקה", 
+			});
+			 
+            all.Add(new TradeAgreementDetails()
+            {    
+                Code = "CZE", 
+                SearchFields = "CZE,צ'כיה", 
+                Inactive = true, 
+                LocalName = "צ'כיה", 
+			});
+			 
+            all.Add(new TradeAgreementDetails()
+            {    
+                Code = "DOUBLE", 
+                SearchFields = "DOUBLE,מכסה זהה", 
+                Inactive = true, 
+                LocalName = "מכסה זהה", 
+			});
+			 
+            all.Add(new TradeAgreementDetails()
+            {    
+                Code = "DOUBLE2", 
+                SearchFields = "DOUBLE2,מכסה זהה2", 
+                Inactive = true, 
+                LocalName = "מכסה זהה2", 
+			});
+			 
+            all.Add(new TradeAgreementDetails()
+            {    
+                Code = "EFTA", 
+                SearchFields = "EFTA,אפט''א", 
+                Inactive = true, 
+                LocalName = "אפט''א", 
+			});
+			 
+            all.Add(new TradeAgreementDetails()
+            {    
+                Code = "EU", 
+                SearchFields = "EU,איחוד", 
+                Inactive = true, 
+                LocalName = "איחוד", 
+			});
+			 
+            all.Add(new TradeAgreementDetails()
+            {    
+                Code = "EU1", 
+                SearchFields = "EU1,קהיליה", 
+                Inactive = true, 
+                LocalName = "קהיליה", 
+			});
+			 
+            all.Add(new TradeAgreementDetails()
+            {    
+                Code = "EUROPE", 
+                SearchFields = "EUROPE,כללי", 
+                Inactive = true, 
+                LocalName = "כללי", 
+			});
+			 
+            all.Add(new TradeAgreementDetails()
+            {    
+                Code = "HUN", 
+                SearchFields = "HUN,הונגריה", 
+                Inactive = true, 
+                LocalName = "הונגריה", 
+			});
+			 
+            all.Add(new TradeAgreementDetails()
+            {    
+                Code = "JOR", 
+                SearchFields = "JOR,ירדן", 
+                Inactive = true, 
+                LocalName = "ירדן", 
+			});
+			 
+            all.Add(new TradeAgreementDetails()
+            {    
+                Code = "MERC-AR", 
+                SearchFields = "MERC-AR,ארגנטינה -- מרקורסור", 
+                Inactive = true, 
+                LocalName = "ארגנטינה -- מרקורסור", 
+			});
+			 
+            all.Add(new TradeAgreementDetails()
+            {    
+                Code = "MERC-BR", 
+                SearchFields = "MERC-BR,ברזיל -- מרקורסור", 
+                Inactive = true, 
+                LocalName = "ברזיל -- מרקורסור", 
+			});
+			 
+            all.Add(new TradeAgreementDetails()
+            {    
+                Code = "MERC-PY", 
+                SearchFields = "MERC-PY,פרגוואי -- מרקורסור", 
+                Inactive = true, 
+                LocalName = "פרגוואי -- מרקורסור", 
+			});
+			 
+            all.Add(new TradeAgreementDetails()
+            {    
+                Code = "MERC-UY", 
+                SearchFields = "MERC-UY,אורוגוואי -- מרקורסור", 
+                Inactive = true, 
+                LocalName = "אורוגוואי -- מרקורסור", 
+			});
+			 
+            all.Add(new TradeAgreementDetails()
+            {    
+                Code = "MEX", 
+                SearchFields = "MEX,מקסיקו", 
+                Inactive = true, 
+                LocalName = "מקסיקו", 
+			});
+			 
+            all.Add(new TradeAgreementDetails()
+            {    
+                Code = "ORLY22", 
+                SearchFields = "ORLY22,אורלי 22", 
+                Inactive = true, 
+                LocalName = "אורלי 22", 
+			});
+			 
+            all.Add(new TradeAgreementDetails()
+            {    
+                Code = "OTO", 
+                SearchFields = "OTO,אוטונומיה", 
+                Inactive = true, 
+                LocalName = "אוטונומיה", 
+			});
+			 
+            all.Add(new TradeAgreementDetails()
+            {    
+                Code = "POL", 
+                SearchFields = "POL,פולין", 
+                Inactive = true, 
+                LocalName = "פולין", 
+			});
+			 
+            all.Add(new TradeAgreementDetails()
+            {    
+                Code = "ROM", 
+                SearchFields = "ROM,רומניה", 
+                Inactive = true, 
+                LocalName = "רומניה", 
+			});
+			 
+            all.Add(new TradeAgreementDetails()
+            {    
+                Code = "SVK", 
+                SearchFields = "SVK,סלובקיה", 
+                Inactive = true, 
+                LocalName = "סלובקיה", 
+			});
+			 
+            all.Add(new TradeAgreementDetails()
+            {    
+                Code = "SVN", 
+                SearchFields = "SVN,סלובניה", 
+                Inactive = true, 
+                LocalName = "סלובניה", 
+			});
+			 
+            all.Add(new TradeAgreementDetails()
+            {    
+                Code = "TUR", 
+                SearchFields = "TUR,טורקיה", 
+                Inactive = true, 
+                LocalName = "טורקיה", 
+			});
+			 
+            all.Add(new TradeAgreementDetails()
+            {    
+                Code = "USA", 
+                SearchFields = "USA,ארה''ב", 
+                Inactive = true, 
+                LocalName = "ארה''ב", 
+			});
+			 
+            all.Add(new TradeAgreementDetails()
+            {    
+                Code = "WTO", 
+                SearchFields = "WTO,WTO", 
+                Inactive = true, 
+                LocalName = "WTO", 
+			});
+			
             return all;
        }
 
 	    public void MapPoco(TradeAgreement newPoco)
-        {    
+        {   
+		    newPoco.Code = this.Code;  
+			newPoco.SearchFields = GetSearchFields(this);   
+		    newPoco.Inactive = this.Inactive;  
+		    newPoco.LocalName = this.LocalName;   
         }
 
 		public string GetSearchFields(TradeAgreement rec)
         {   
-           return string.Empty;
+           return String.Concat(rec.Code,",",rec.Inactive,",",rec.LocalName,",");
         }
    }
 }

@@ -1,0 +1,174 @@
+<table *ngIf="finishedLoad">
+    <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+        <td colspan="4">
+            <ValidationSummary [ItemsSource]="ValidationErrorsList" [SingleLine]="false"></ValidationSummary>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <table>
+
+                <tr style="height: 25px;">
+                    <td>
+                        <LogLabel [ObjectFieldName]="'ClassificationFourDigit'" [ObjectTableName]="ObjectTableName"
+                                  [DataContext]="DataContext"></LogLabel>
+                    </td>
+                    <td>
+                        <LogTextBox [ObjectFieldName]="'ClassificationFourDigit'" [ObjectTableName]="ObjectTableName" [Text]="ClassificationFourDigit"
+                                    [HideColumns]="true" [DataContext]="DataContext"></LogTextBox>
+                    </td>
+                    <td style="width:7px"></td>
+
+                    <td>
+                        <LogLabel [ObjectFieldName]="'UNCode'" [ObjectTableName]="ObjectTableName"
+                                  [DataContext]="DataContext"></LogLabel>
+                    </td>
+
+                    <td>
+                        <LogLov [ObjectFieldName]="'UNCode'"
+                                [ObjectTableName]="ObjectTableName"
+                                [DataContext]="DataContext"
+                                [HideColumns]="true"
+                                [LookUpTableName]="'Customs.HazardousSubstance'">
+                        </LogLov>
+                        <!--<LogTextBox [ObjectFieldName]="'UNCode'" [ObjectTableName]="ObjectTableName"
+                        [HideColumns]="true" [DataContext]="DataContext"></LogTextBox>-->
+                    </td>
+                    <td style="width:7px"></td>
+                    <td>
+                        <LogLabel [ObjectFieldName]="'DangerousGoodsPackingReqCode'" [ObjectTableName]="ObjectTableName"
+                                  [DataContext]="DataContext"></LogLabel>
+                    </td>
+                    <td>
+                        <LogLov [ObjectFieldName]="'DangerousGoodsPackingReqCode'"
+                                [ObjectTableName]="ObjectTableName"
+                                [DataContext]="DataContext"
+                                [HideColumns]="true"
+                                [LookUpTableName]="'Customs.DangerousGoodsPackingReq'">
+                        </LogLov>
+                    </td>
+                </tr>
+                <tr style="height: 25px;">
+                    <td>
+                        <LogLabel [ObjectFieldName]="'FlashpointTemperature'" [ObjectTableName]="ObjectTableName"
+                                  [DataContext]="DataContext"></LogLabel>
+                    </td>
+                    <td>
+                        <LogTextBox [ObjectFieldName]="'FlashpointTemperature'" [ObjectTableName]="ObjectTableName" [Text]="FlashpointTemperature"
+                                    [HideColumns]="true" [DataContext]="DataContext"></LogTextBox>
+                    </td>
+                    <td style="width:7px"></td>
+                    <td>
+                        <LogLabel [ObjectFieldName]="'StorageTemperature'" [ObjectTableName]="ObjectTableName"
+                                  [DataContext]="DataContext"></LogLabel>
+                    </td>
+                    <td>
+                        <LogTextBox [ObjectFieldName]="'StorageTemperature'" [ObjectTableName]="ObjectTableName" [Text]="StorageTemperature"
+                                    [HideColumns]="true" [DataContext]="DataContext"></LogTextBox>
+                    </td>
+
+                </tr>
+                <tr style="height: 25px;">
+                    <td colspan="3">
+                        <!--אנשי קשר-->
+                    </td>
+                </tr>
+                <tr style="height: 25px;">
+                    <td>
+                        <LogLabel [ObjectFieldName]="'CompanyName'" [ObjectTableName]="ObjectTableNameContact"
+                                  [DataContext]="DataContext"></LogLabel>
+                    </td>
+                    <td>
+                        <LogTextBox [ObjectFieldName]="'CompanyName'" [ObjectTableName]="ObjectTableNameContact"
+                                    [HideColumns]="true" [DataContext]="DataContext"></LogTextBox>
+                    </td>
+
+                    <td style="width:7px"></td>
+                    <td>
+                        <LogLabel [ObjectFieldName]="'CompanyCommTypeCode'" [ObjectTableName]="ObjectTableNameContact"
+                                  [DataContext]="DataContext"></LogLabel>
+                    </td>
+                    <td>
+                        <LogLov [ObjectFieldName]="'CompanyCommTypeCode'"
+                                [ObjectTableName]="ObjectTableNameContact"
+                                [DataContext]="DataContext"
+                                [HideColumns]="true"
+                                [LookUpTableName]="'Customs.CommunicationType'">
+                        </LogLov>
+
+                    </td>
+
+                    <td style="width:7px"></td>
+                    <td>
+                        <LogLabel [ObjectFieldName]="'CompanyCommNumber'" [ObjectTableName]="ObjectTableNameContact"
+                                  [DataContext]="DataContext"></LogLabel>
+                    </td>
+                    <td>
+                        <LogTextBox [ObjectFieldName]="'CompanyCommNumber'" [ObjectTableName]="ObjectTableNameContact"
+                                    [HideColumns]="true" [DataContext]="DataContext"></LogTextBox>
+                    </td>
+
+                </tr>
+                <tr style="height: 25px;">
+                    <td>
+                        <LogLabel [ObjectFieldName]="'ContactName'" [ObjectTableName]="ObjectTableNameContact"
+                                  [DataContext]="DataContext"></LogLabel>
+                    </td>
+                    <td>
+                        <LogTextBox [ObjectFieldName]="'ContactName'" [ObjectTableName]="ObjectTableNameContact"
+                                    [HideColumns]="true" [DataContext]="DataContext"></LogTextBox>
+                    </td>
+                    <td style="width:7px"></td>
+                    <td>
+                        <LogLabel [ObjectFieldName]="'ContactCommTypeCode'" [ObjectTableName]="ObjectTableNameContact"
+                                  [DataContext]="DataContext"></LogLabel>
+                    </td>
+                    <td>
+                        <LogLov [ObjectFieldName]="'ContactCommTypeCode'"
+                                [ObjectTableName]="ObjectTableNameContact"
+                                [DataContext]="DataContext"
+                                [HideColumns]="true"
+                                [LookUpTableName]="'Customs.CommunicationType'">
+                        </LogLov>
+                    </td>
+                    <td style="width:7px"></td>
+                    <td>
+                        <LogLabel [ObjectFieldName]="'ContactCommNumber'" [ObjectTableName]="ObjectTableNameContact"
+                                  [DataContext]="DataContext"></LogLabel>
+                    </td>
+                    <td>
+                        <LogTextBox [ObjectFieldName]="'ContactCommNumber'" [ObjectTableName]="ObjectTableNameContact"
+                                    [HideColumns]="true" [DataContext]="DataContext"></LogTextBox>
+                    </td>
+
+                </tr>
+
+                <!-- #region cancel and ok buttons -->
+                <tr style="height: 32px;">
+                    <td colspan="9" style="vertical-align: bottom ; left:5px;">
+                        <table style="height: 22px;">
+                            <tr>
+                                <td>
+                                    <div></div>
+                                </td>
+
+                                <td style="width: 57px;">
+                                    <button class="Button" (click)="CancelButtonClicked()">{{'General.B.Cancel' | TextCodeTranslationPipe}}</button>
+                                </td>
+
+                                <td style="width: 5px;">
+                                    <div></div>
+                                </td>
+
+                                <td style="width: 57px;">
+                                    <button class="RedButton" (click)="OkButtonClicked()" [disabled]="IsDisplayOnly">{{'General.B.Ok' | TextCodeTranslationPipe}}</button>
+                                </td>
+                            </tr>
+                        </table>
+
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>

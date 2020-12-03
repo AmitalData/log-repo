@@ -1,4 +1,5 @@
-﻿using Logitude.BL.CommonDataModel.EntityPMs;
+﻿using Devart.Data.Oracle;
+using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.GlobalModel.EntityLists;
 using Logitude.BL.GlobalModel.EntityPMs;
@@ -121,6 +122,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         if (LogitudeSettings.IsCostomsDeploy)
                         {
                             myResult.ProductInfo = LogitudeSettings.ProductInfo;//.Replace(Environment.NewLine ,"<br>") ;
+                            myResult.ProductMessage = LogitudeSettings.ProductMessage;
                         }
                     }
 
@@ -369,18 +371,36 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             var FaildDataTable = new DataTable();
             var WaitingDataTable = new DataTable();
 
-            using (SqlConnection DBConnection = new SqlConnection(connectionString))
+            string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
+            if (dbms == "oracle")
             {
-                DBConnection.Open();
-                SqlCommand commandWaitingData = new SqlCommand("select Count(*) as WCount,QueueDefinitionCode from QueueMessageMoreDetails where CreateDateTime >= '" + filterByDate.Value.Date.ToShortDateString() + "' and Status = 0 group by QueueDefinitionCode ", DBConnection);
-                SqlCommand commandFaildData = new SqlCommand("select Count(*) as FCount,QueueDefinitionCode from QueueMessageMoreDetails where CreateDateTime >= '" + filterByDate.Value.Date.ToShortDateString() + "' and Status = -1 group by QueueDefinitionCode ", DBConnection);
-
-                SqlDataReader reader = commandWaitingData.ExecuteReader();
-                WaitingDataTable.Load(reader);
-                reader = commandFaildData.ExecuteReader();
-                FaildDataTable.Load(reader);
-                reader.Close();
+                using (OracleConnection DBConnection = new OracleConnection(connectionString))
+                {
+                    DBConnection.Open();
+                    OracleCommand commandWaitingData = new OracleCommand("select Count(*) as WCount,QueueDefinitionCode from QueueMessageMoreDetails where CreateDateTime >= TO_DATE('" + filterByDate.Value.ToShortDateString() + "', 'DD/MM/YYYY') and Status = 0 group by QueueDefinitionCode ", DBConnection);
+                    OracleCommand commandFaildData = new OracleCommand("select Count(*) as FCount,QueueDefinitionCode from QueueMessageMoreDetails where CreateDateTime >= TO_DATE('" + filterByDate.Value.ToShortDateString() + "', 'DD/MM/YYYY') and Status = -1 group by QueueDefinitionCode ", DBConnection);
+                    OracleDataReader reader = commandWaitingData.ExecuteReader();
+                    WaitingDataTable.Load(reader);
+                    reader = commandFaildData.ExecuteReader();
+                    FaildDataTable.Load(reader);
+                    reader.Close();
+                }
             }
+            else
+            {
+                using (SqlConnection DBConnection = new SqlConnection(connectionString))
+                {
+                    DBConnection.Open();
+                    SqlCommand commandWaitingData = new SqlCommand("select Count(*) as WCount,QueueDefinitionCode from QueueMessageMoreDetails where CreateDateTime >= '" + filterByDate.Value.Date.ToShortDateString() + "' and Status = 0 group by QueueDefinitionCode ", DBConnection);
+                    SqlCommand commandFaildData = new SqlCommand("select Count(*) as FCount,QueueDefinitionCode from QueueMessageMoreDetails where CreateDateTime >= '" + filterByDate.Value.Date.ToShortDateString() + "' and Status = -1 group by QueueDefinitionCode ", DBConnection);
+                    SqlDataReader reader = commandWaitingData.ExecuteReader();
+                    WaitingDataTable.Load(reader);
+                    reader = commandFaildData.ExecuteReader();
+                    FaildDataTable.Load(reader);
+                    reader.Close();
+                }
+            }
+
             var FaildQueueMessageCounts = (from DataRow dr in FaildDataTable.Rows
                                            select new QueueMessagesDetails()
                                            {
@@ -678,6 +698,9 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
         public bool SameUserLoginEnabled { get; set; }
         public string LayoutDirection { get; set; }
         public string ProductInfo { get; internal set; }
+
+        public string ProductMessage { get; internal set; }
+        
         public bool ReportsRunUsingWR { get; set; }
         public string DocumentFilingEmailDomain { get; set; }
         public string DeploymentStage { get; set; }

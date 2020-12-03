@@ -49,7 +49,10 @@ namespace Logitude.CustomsMessaging.RequestServices
                     case "2": // "Vendor"
                         relatedTo = 3;
                         var customsVendorPM = vendorQueryService.GetSingle(requestParams.Code, true, false);
-                        code = customsVendorPM.VendorNumber;
+                        if (customsVendorPM != null)
+                        {
+                            code = customsVendorPM.VendorNumber;
+                        }
                         break;
                     case "4": // "Declaration"
                         relatedTo = 4;

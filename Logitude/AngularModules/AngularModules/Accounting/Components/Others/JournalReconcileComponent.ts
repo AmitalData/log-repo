@@ -281,9 +281,12 @@ export class JournalReconcileComponent extends BaseComponent implements OnInit {
 
     _SelectedLines: ObservableCollection;//SelectedLines[];
     _GLAccountPMId: string;
+
+    TotalDifference: any;
     SetWindowArgs(winArgs) {
         this._SelectedLines = winArgs.SelectedLines;
         this._GLAccountPMId = winArgs.GLAccountPMId;
+        this.TotalDifference = winArgs.TotalDifference;
     }
     FillErrors() {
         this.ValidationErrorsList = [];

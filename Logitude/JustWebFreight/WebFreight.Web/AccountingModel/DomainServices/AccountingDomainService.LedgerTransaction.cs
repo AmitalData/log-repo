@@ -397,6 +397,8 @@ namespace WebFreight.Web.AccountingModel.DomainServices
                                                             SearchFields = a.SearchFields,
                                                             OpenAmountCurrencyCode = a.OpenAmountCurrency.Code,
                                                             IsReconciled = a.IsReconciled,
+                                                            IsExternalReconcile = a.IsExternalReconcile,
+                                                            InReconcileProgress = a.InReconcileProgress,
                                                         };
 
             query2 = filter.GetFilteredQuery<LedgerTransactionList>(listQueryOperation, query2);

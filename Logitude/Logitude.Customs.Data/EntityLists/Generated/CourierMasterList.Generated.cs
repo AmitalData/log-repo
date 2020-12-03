@@ -80,6 +80,42 @@ namespace Logitude.Customs.Data.EntityLists
        public string WeightValueCode  { get; set; }
        [DataMember]
        public string WeightValueName  { get; set; }
+       [DataMember]
+       public string StorageSiteCode  { get; set; }
+       [DataMember]
+       public string StorageSiteName  { get; set; }
+       [DataMember]
+       public string TruckerId  { get; set; }
+       [DataMember]
+       public string IntegratorCode  { get; set; }
+       [DataMember]
+       public string IntegratorName  { get; set; }
+       [DataMember]
+       public string IntegratorNumber  { get; set; }
+       [DataMember]
+       public bool IsReadyForInvoice  { get; set; }
+       [DataMember]
+       public bool IsAllDecClosedForFollowUp  { get; set; }
+       [DataMember]
+       public int CalcClosedForFollowUp  { get; set; }
+       [DataMember]
+       public int CalcMissingClassification  { get; set; }
+       [DataMember]
+       public int CalcMissingImporterId  { get; set; }
+       [DataMember]
+       public int CalcPendingCustoms  { get; set; }
+       [DataMember]
+       public int CalcPending900  { get; set; }
+       [DataMember]
+       public int CalcSuspendedDeclarations  { get; set; }
+       [DataMember]
+       public string NoOfCourierHawb  { get; set; }
+       [DataMember]
+       public bool IsAutomaticManifestSent  { get; set; }
+       [DataMember]
+       public bool? IsEstimatedArrivalToDay  { get; set; }
+       [DataMember]
+       public string EstimatedArrivalColor  { get; set; }
    }
 
 }

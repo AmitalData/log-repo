@@ -83,8 +83,7 @@ export class SignStationExtendedListService {
         return defer(() => {
             return this._http.get(
                 this._apiUrl + '/GetSignStationGroupByStatus?' + "&searchfields=" + searchfields ,
-                { headers: authHeader })
-                .map(response => {
+                ServiceHelper.GetHttpHeaders()).pipe(map((response:any) => {
                     var serviceResponse: ServiceResponse;
                     serviceResponse = response;
                     //var _mappedListsArray: Array<SignStationGroup> = [];
@@ -108,8 +107,7 @@ export class SignStationExtendedListService {
         return defer(() => {
             return this._http.get(
                 this._apiUrl + '/GetSignStations?' + "&skip=" + skip.toString() + "&take=" + take.toString() + "&sortingCol=" + sortingCol.toString() + "&sortingDir=" + sortingDir.toString() + "&searchfields=" + searchfields + "&FilterByStatus=" + FilterByStatus.toString(),
-                { headers: authHeader })
-                .map(response => {
+                ServiceHelper.GetHttpHeaders()).pipe(map((response:any) => {
                     var serviceResponse: ServiceResponse;
                     serviceResponse = response;
                     var _mappedListsArray: Array<SignStationList> = [];

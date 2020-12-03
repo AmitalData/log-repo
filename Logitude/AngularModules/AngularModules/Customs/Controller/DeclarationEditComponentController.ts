@@ -4,8 +4,53 @@ import { SessionLocator } from '../../Infrastructure/Utilities/SessionLocator';
 import { IEditComponentController } from '../../Infrastructure/Components/EditComponent/EditComponent';
 import { DeclarationPM } from '../../Customs/EntityPMs/DeclarationPM';
 import {MenuButtonsEvents, MenuButtonsStateChangedEventArgs} from '../../Infrastructure/Utilities/events/MenuButtonsEvents';
+import { FeatureLocator } from '../../Infrastructure/Utilities/FeatureLocator';
 
 export class DeclarationEditComponentController implements IEditComponentController {
+    FilterTabs(allTabs: any[]) {
+        let currentEntity: DeclarationPM = this.CurrentSession.CurrentEditComponent.EntityPM;
+         var indexOfTab = allTabs.findIndex(t => t.Code == "DCCR");
+        if (!currentEntity.IsAmendment && FeatureLocator.HasFeaturePermession("Customs.Declaration", "DECLARATIONAMENDMENT")) {
+            if (indexOfTab > -1) {
+                allTabs.splice(indexOfTab, 1);
+            }
+        }
+
+       else if (!FeatureLocator.HasFeaturePermession("Customs.Declaration", "DECLARATIONAMENDMENT")) {
+            allTabs[indexOfTab].IndexOrder = Math.max.apply(Math, allTabs.map(function (o) { return o.IndexOrder; })) + 1;
+        }
+       else if (currentEntity.IsAmendment && FeatureLocator.HasFeaturePermession("Customs.Declaration", "DECLARATIONAMENDMENT")) {
+            allTabs[indexOfTab].IndexOrder = -1;
+        }
+
+        if (currentEntity.AmendmentDontDisplayInList) {
+            var indexOfTab = allTabs.findIndex(t => t.Code == "DCDA");
+            if (indexOfTab > -1) {
+                allTabs.splice(indexOfTab, 1);
+            }
+
+        }
+          if (currentEntity.Direction=="E") {
+            var indexOfTab = allTabs.findIndex(t => t.Code == "DEIN");
+             if (indexOfTab > -1) {
+                 allTabs[indexOfTab].TabNameTextCodeCode = "Customs.Declaration.TH.ExporterInvoices";
+             }
+        
+
+        }
+         else {
+             var indexOfTab = allTabs.findIndex(t => t.Code == "DEIN");
+             if (indexOfTab > -1) {
+                 allTabs[indexOfTab].TabNameTextCodeCode = "Customs.Declaration.TH.Invoices";
+             }
+               var indexOfTab = allTabs.findIndex(t => t.Code == "DCDI");
+              if (indexOfTab > -1) {
+                  allTabs.splice(indexOfTab, 1);
+
+              }
+         }
+
+    }
     public MustRefresh: boolean = null;
     public MustRefreshMessage: string = null;
     public IsInBatchRequest: boolean = null;
@@ -176,4 +221,12 @@ export class DeclarationEditComponentController implements IEditComponentControl
         return false; 
         
     }
+
+    private _TapagId: string;
+    public get TapagId() { return this._TapagId; }
+    public set TapagId(value: string) { this._TapagId = value; }
+
+    private _CargoSplitId: string;
+    public get CargoSplitId() { return this._CargoSplitId; }
+    public set CargoSplitId(value: string) { this._CargoSplitId = value; }
 }

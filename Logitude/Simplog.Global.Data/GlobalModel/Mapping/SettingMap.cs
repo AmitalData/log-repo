@@ -66,10 +66,10 @@ namespace Simplog.Global.Data.GlobalModel.Mapping
             this.Property(t => t.OceanInsightsToken).HasMaxLength(200).IsUnicode(false);
             this.Property(t => t.ReleaseNotesURL).HasMaxLength(600).IsUnicode(false);
             this.Property(t => t.CPUIntensiveWebServicesURL).HasMaxLength(1000).IsUnicode(false);
-            this.Property(t => t.ChampProdAPIURL).IsRequired().HasMaxLength(1000).IsUnicode(false);
-            this.Property(t => t.ChampProdAPIPassword).IsRequired().HasMaxLength(40).IsUnicode(false);
-            this.Property(t => t.ChampTestAPIURL).IsRequired().HasMaxLength(1000).IsUnicode(false);
-            this.Property(t => t.ChampTestAPIPassword).IsRequired().HasMaxLength(40).IsUnicode(false);
+            this.Property(t => t.ChampProdAPIURL).HasMaxLength(1000).IsUnicode(false);
+            this.Property(t => t.ChampProdAPIPassword).HasMaxLength(40).IsUnicode(false);
+            this.Property(t => t.ChampTestAPIURL).HasMaxLength(1000).IsUnicode(false);
+            this.Property(t => t.ChampTestAPIPassword).HasMaxLength(40).IsUnicode(false);
             this.Property(t => t.QBOClientID).HasMaxLength(100).IsUnicode(false);
             this.Property(t => t.QBOClientSecret).HasMaxLength(100).IsUnicode(false);
             this.Property(t => t.StorageAccountKey).IsRequired().HasMaxLength(1000).IsUnicode(false);

@@ -47,6 +47,7 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public string CC { get; set; }
         public string BCC { get; set; }
 
+        public string DefultAttachmentsXML { get; set; }
         //public bool IsDuplex { get; set; }
         [ForeignKey("LastUpdatedByUserId")]
         public virtual User LastUpdatedByUser { get; set; }

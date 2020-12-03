@@ -144,22 +144,26 @@
                                             <log-column [header]="'Customs.CustomsExchangeRate.F.CurrencyTypeCode' | TextCodeTranslationPipe"
                                                         [width]="'100'" [Alignment]="'right'"
                                                         [binding]="'InvoiceCurrencyId'">
-                                                <log-cell-template template="let item" #logcelltemplate>
+                                                <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                                     <div class="TextTrimming RightCenter">
                                                         <span>{{item.InvoiceCurrencyId}}</span>
                                                     </div>
                                                 </log-cell-template>
+</ng-template>
                                             </log-column>
 
                                             <!-- rate -->
                                             <log-column [header]="'Customs.CustomsExchangeRate.F.ExchangeRate' | TextCodeTranslationPipe"
                                                         [width]="'100'" [Alignment]="'right'"
                                                         [binding]="'ExchangeRate'">
-                                                <log-cell-template template="let item" #logcelltemplate>
+                                                <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                                     <div class="TextTrimming RightCenter" >
                                                         <span>{{item.ExchangeRate}}</span>
                                                     </div>
                                                 </log-cell-template>
+</ng-template>
                                             </log-column>
 
                                         </logitude-edit-grid>
@@ -194,16 +198,20 @@
                                                     [width]="'100'" [Alignment]="'right'"
                                                     [binding]="'TaxTypeName'">
                                             <log-footer>
-                                                <log-footer-template template="let item">
+                                                <ng-template let-item>  
+                                                <log-footer-template >
                                                     <div class="TextTrimming RightCenter" style="font-size: 12px; font-weight: bold; color:#25446C;">{{'Customs.Declaration.O.TotalTaxes' | TextCodeTranslationPipe}}</div>
                                                 </log-footer-template>
+                                            </ng-template >  
                                             </log-footer>
 
-                                            <log-cell-template template="let item" #logcelltemplate>
+                                            <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                                 <div class="TextTrimming RightCenter">
                                                     <span>{{item.TaxTypeName}}</span>
                                                 </div>
                                             </log-cell-template>
+</ng-template>
 
                                             
                                         </log-column>
@@ -213,16 +221,20 @@
                                                     [width]="'130'" [Alignment]="'right'"
                                                     [binding]="'TaxBaseAmount'">
                                             <log-footer>
-                                                <log-footer-template template="let item">
+                                                <ng-template let-item>  
+                                                <log-footer-template >
                                                     <div class="TextTrimming RightCenter" style="font-size: 12px; font-weight: bold; color:#25446C;">{{TaxBaseAmountTotal | NumbersPipe:'N2'}}</div>
                                                 </log-footer-template>
+                                            </ng-template >  
                                             </log-footer>
 
-                                             <log-cell-template template="let item" #logcelltemplate>
+                                             <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                                 <div class="TextTrimming RightCenter">
                                                     <span>{{item.TaxBaseAmount | NumbersPipe :'N2'  }}</span>
                                                 </div>
                                             </log-cell-template>
+</ng-template>
 
                                            
                                         </log-column>
@@ -233,16 +245,20 @@
                                                     [width]="'100'" [Alignment]="'right'"
                                                     [binding]="'TaxToPay'">
                                             <log-footer>
-                                                <log-footer-template template="let item">
+                                                <ng-template let-item>  
+                                                <log-footer-template >
                                                     <div class="TextTrimming RightCenter" style="font-size: 12px; font-weight: bold; color:#25446C;">{{TaxToPayTotal | NumbersPipe:'N2'}}</div>
                                                 </log-footer-template>
+                                            </ng-template >  
                                             </log-footer>
 
-                                            <log-cell-template template="let item" #logcelltemplate>
+                                            <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                                 <div class="TextTrimming RightCenter">
                                                     <span>{{item.TaxToPay | NumbersPipe :'N2'  }}</span>
                                                 </div>
                                             </log-cell-template>
+</ng-template>
                                         </log-column>
 
 
@@ -251,15 +267,19 @@
                                                     [width]="'100'" [Alignment]="'right'"
                                                     [binding]="'TotalAmount'">
                                             <log-footer>
-                                                <log-footer-template template="let item">
+                                                <ng-template let-item>  
+                                                <log-footer-template >
                                                     <div class="TextTrimming RightCenter" style="font-size: 12px; font-weight: bold; color:#25446C;">{{TotalAmountTotal | NumbersPipe:'N2'}}</div>
                                                 </log-footer-template>
+                                            </ng-template>  
                                             </log-footer>
-                                            <log-cell-template template="let item" #logcelltemplate>
+                                            <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                                 <div class="TextTrimming RightCenter">
                                                     <span>{{item.TotalAmount | NumbersPipe :'N2'  }}</span>
                                                 </div>
                                             </log-cell-template>
+</ng-template>
                                         </log-column>
 
 
@@ -269,15 +289,19 @@
                                                     [width]="'100'" [Alignment]="'right'"
                                                     [binding]="'DeferredTaxAmount'">
                                             <log-footer>
-                                                <log-footer-template template="let item">
+                                                <ng-template let-item>  
+                                                <log-footer-template >
                                                     <div class="TextTrimming RightCenter" style="font-size: 12px; font-weight: bold; color:#25446C;">{{DeferredTaxAmountTotal | NumbersPipe:'N2'}}</div>
                                                 </log-footer-template>
+                                            </ng-template>  
                                             </log-footer>
-                                            <log-cell-template template="let item" #logcelltemplate>
+                                            <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                                 <div class="TextTrimming RightCenter" >
                                                     <span>{{item.DeferredTaxAmount | NumbersPipe :'N2'  }}</span>
                                                 </div>
                                             </log-cell-template>
+</ng-template>
                                         </log-column>
 
                                     </logitude-edit-grid>

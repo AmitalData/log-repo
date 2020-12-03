@@ -71,7 +71,7 @@ namespace Logitude.Customs.Data.EntityMapping
 			}
             else
             {
-              this.Property(t => t.SearchFields).HasMaxLength(5000);
+              this.Property(t => t.SearchFields).HasMaxLength(4000);
 			}
 
 
@@ -94,7 +94,7 @@ namespace Logitude.Customs.Data.EntityMapping
 			}
             else
             {
-              this.Property(t => t.Description).HasMaxLength(32000);
+              this.Property(t => t.Description).HasMaxLength(4000);
 			}
 
 

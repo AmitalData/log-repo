@@ -15,15 +15,17 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.Id).IsRequired().HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.ObjectTableId).IsRequired().HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.NameTextCodeId).IsRequired().HasMaxLength(30).IsUnicode(false);
-            //this.Property(t => t.Code).IsRequired().HasMaxLength(40).IsUnicode(false);
-            this.Property(t => t.Code).IsRequired().HasMaxLength(120).IsUnicode(false);
+            this.Property(t => t.Code).HasMaxLength(120).IsUnicode(false);
+            //this.Property(t => t.Code).IsRequired().HasMaxLength(120).IsUnicode(false);
             this.Property(t => t.FeatureTypeCode).IsRequired().HasMaxLength(4).IsUnicode(false);
             this.Property(t => t.IsBusinessUnitEnabled).IsRequired();
             this.Property(t => t.IsOld).IsRequired();
             this.Property(t => t.IsCoreFeature).IsRequired();
             this.Property(t => t.ToggleCode).HasMaxLength(3).IsUnicode(false);
-            this.Property(t => t.NameTextCodeCode).IsRequired().HasMaxLength(100).IsUnicode(false);
-            this.Property(t => t.FeatureUniqeCode).IsRequired().HasMaxLength(120).IsUnicode(false);
+            //this.Property(t => t.NameTextCodeCode).IsRequired().HasMaxLength(100).IsUnicode(false);
+            this.Property(t => t.NameTextCodeCode).HasMaxLength(100).IsUnicode(false);
+            this.Property(t => t.FeatureUniqeCode).HasMaxLength(120).IsUnicode(false);
+            //this.Property(t => t.FeatureUniqeCode).IsRequired().HasMaxLength(120).IsUnicode(false);
 
 
             // Table & Column Mappings

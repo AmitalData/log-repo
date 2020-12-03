@@ -246,7 +246,7 @@ namespace WebFreight.Web.Helpers
             string url = "";
             string extension = "tiff"; //IsUsingFileStreamAndTiffImage(reportFliter.tenant) ? "tiff" : "mdc";
             IBlobService storageservice = ContainerAccessor.Container.Resolve(typeof(IBlobService), "StorageService", new ParameterOverride("", 1)) as IBlobService;
-            BlobFileInfo fileInfo = GetNewBlobFileInfo(reportFliter.ReportKey + "@" + reportFliter.ReportName, extension, reportFliter.tenant);
+            BlobFileInfo fileInfo = GetNewBlobFileInfo((reportFliter.ReportKey + "@" + reportFliter.ReportName + extension), extension, reportFliter.tenant);
             byte[] result = storageservice.Read(fileInfo);
             if (result != null)
             {
@@ -849,6 +849,12 @@ namespace WebFreight.Web.Helpers
                     {
                         ExternalReconciliationLinesReportManager ExternalReconciliationManager = new ExternalReconciliationLinesReportManager(filters, reportFliter.tenant);
                         dataProvider = ExternalReconciliationManager.GetData();
+                        break;
+                    }
+                case "URDR":
+                    {
+                        UserDefinedReportManager UserDefinedReportManager = new UserDefinedReportManager(filters, reportFliter.tenant);
+                        dataProvider = UserDefinedReportManager.GetData();
                         break;
                     }
                 case "UPTR":
@@ -1851,6 +1857,14 @@ namespace WebFreight.Web.Helpers
                         stimulReportDataProviderDetails.CurrentBusinessObject = new StiBusinessObject() { Category = "ERLR", Name = "ExternalReconciliationLinesReportDataProvider", BusinessObjectValue = reportDataProvider };
                         break;
                     }
+                case "URDR":
+                    {
+                        XmlSerializer serializer = new XmlSerializer(typeof(UserDefinedReportDataProvider));
+                        UserDefinedReportDataProvider reportDataProvider = (UserDefinedReportDataProvider)serializer.Deserialize(memorystream);
+                        reportDataProvider.Today_DateTime = TenantServerConfigration.GetCurrentDateTime(stimulReportDataProviderDetails.Tenant);
+                        stimulReportDataProviderDetails.CurrentBusinessObject = new StiBusinessObject() { Category = "URDR", Name = "UserDefinedReportDataProvider", BusinessObjectValue = reportDataProvider };
+                        break;
+                    }
 
                 case "ATRE":
                     {
@@ -1994,7 +2008,7 @@ namespace WebFreight.Web.Helpers
                 if (reportData != null)
                 {
                     if (string.IsNullOrEmpty(reportFliter.ReportKey) || !reportFliter.ReportsRunUsingWR) reportFliter.ReportKey = Guid.NewGuid().ToString();
-                    BlobFileInfo fileInfo = GetNewBlobFileInfo(reportFliter.ReportKey + "@" + reportFliter.ReportName, fileType, reportFliter.tenant);
+                    BlobFileInfo fileInfo = GetNewBlobFileInfo((reportFliter.ReportKey + "@" + reportFliter.ReportName+ fileType), fileType, reportFliter.tenant);
                     fileInfo.FileSize = reportData.Length;
 
                     IBlobService storageservice = ContainerAccessor.Container.Resolve(typeof(IBlobService), "StorageService", new ParameterOverride("", 1)) as IBlobService;
@@ -2005,7 +2019,7 @@ namespace WebFreight.Web.Helpers
 
         private void ReadFileFromStreamFileAndSaveOnStorgeByChunks(string tempFilePath, ReportFliter reportFliter, string extension)
         {
-            BlobFileInfo fileInfo = GetNewBlobFileInfo(reportFliter.ReportKey + "@" + reportFliter.ReportName, extension, reportFliter.tenant);
+            BlobFileInfo fileInfo = GetNewBlobFileInfo((reportFliter.ReportKey + "@" + reportFliter.ReportName + extension), extension, reportFliter.tenant);
             IBlobService storageservice = ContainerAccessor.Container.Resolve(typeof(IBlobService), "StorageService", new ParameterOverride("", 1)) as IBlobService;
             List<string> blockIdsList = new List<string>();
             int bufferNumber = 0; long sendSize = 0;

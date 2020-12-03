@@ -307,11 +307,11 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
                 }
                 else
                 {
-
                     chargesType = chargesTypes.Where(s => s.InActive == false).FirstOrDefault();
+
                 }
+
             }
-          
             return chargesType;
         }
 

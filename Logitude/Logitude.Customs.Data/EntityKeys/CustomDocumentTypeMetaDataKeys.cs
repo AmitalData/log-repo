@@ -24,7 +24,8 @@ namespace Logitude.Customs.Data.EntityKeys
 	 
 	  public override string GetFullKey()
       {
-          return MetaDataTypeCode+'_'+DocumentTypeCode;
+                 return MetaDataTypeCode+'_'+DocumentTypeCode ;
+                 
       }
 
       public override string GetEntityPMName()

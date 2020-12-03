@@ -240,7 +240,10 @@ else{
 	 #>
 	
     public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
+       if(!this.DisableMarkAsDirty)
+       {
         this.IsDirty = true;
 		  <#+
 	 if(hasParent){
@@ -261,6 +264,7 @@ else{
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "<#=entity.ObjectTableName.Trim('"') #>");
            
         }
+       }
     }
 
     private MyClone: <#=tableName #>PM;

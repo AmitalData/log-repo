@@ -156,6 +156,7 @@ export class CustomerSizePMService {
         if (!entityPM) {
             
             entityPM = new CustomerSizePM();
+			entityPM.DisableMarkAsDirty = true;
         }
 
 		var customFields: Array<string> = [];
@@ -196,6 +197,8 @@ export class CustomerSizePMService {
             entityPM.OldEntityPM = null;
         }
 		entityPM.IsDirty = false;
+	    entityPM.DisableMarkAsDirty = false;
+
         return entityPM;
     }
 

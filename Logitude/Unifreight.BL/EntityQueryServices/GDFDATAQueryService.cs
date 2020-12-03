@@ -46,7 +46,7 @@ namespace Unifreight.BL.EntityQueryServices
             }
 
             return accountNo;
-            
+
             /*string entityKeyString = "GDFDATA," + DISTRID + "," + DEFID + "," + BRANCHID + "," + CARDID;
             var pm = CacheManager.GetOrInsertNewObject<GDFDATAPM>(entityKeyString, () =>
             {
@@ -54,6 +54,24 @@ namespace Unifreight.BL.EntityQueryServices
             });
             return pm;*/
 
+        }
+
+        public static string GetDefault(int tenant, string DISTRID, string DEFID, string BRANCHID, string CARDID)
+        {
+            AmitalContext amitalContext = AmitalContext.GetContext(tenant);
+            var myGDFDATAQueryService = new GDFDATAQueryService(amitalContext);
+
+            if (DISTRID == null || DEFID == null || BRANCHID == null || CARDID == null)
+            {
+                return ("");
+            }
+
+            GDFDATAPM myGDFDATAPM = myGDFDATAQueryService.GetSingle(DISTRID, DEFID, BRANCHID, CARDID, false, true);
+            if (myGDFDATAPM == null)
+            {
+                return ("");
+            }
+            return (myGDFDATAPM.DEFDATA);
         }
     }
 }

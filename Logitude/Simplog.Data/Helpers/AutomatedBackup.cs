@@ -32,6 +32,14 @@ namespace Simplog.Data.Helpers
         [DataMember]
         public int Delaytime { get; set; }
 
+
+        [DataMember]
+        public string DelaytimeOp { get; set; }
+
+
+        [DataMember]
+        public string SelectedDelaytimeFieldCode { get; set; }
+
         [DataMember]
         public string DelaytimeIndicator { get; set; }
 
@@ -92,6 +100,11 @@ namespace Simplog.Data.Helpers
 
         [DataMember]
         public AutomationSetSLAValue AutomationSetSLAValue { get; set; }
+
+
+        [DataMember]
+        public AutomationSendInterface AutomationSendInterface { get; set; }
+
     }
 
 
@@ -104,10 +117,13 @@ namespace Simplog.Data.Helpers
         [DataMember]
         public string ObjectFieldId { get; set; }
 
-
         [DataMember]
         public string ObjectFieldCode { get; set; }
 
-        
     }
+
+
+   
+
+
 }

@@ -241,6 +241,9 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
             UpdatePaymentCheques(pagePM);
 
+            ExternalPageAdditionalDataPM additionalData = GetOrCreateEntityAdditionalData(pagePM);
+            UpdateAdditionalDataLastPage(pagePM, additionalData);
+
         }
 
         private void OnPageRestored(ReconcileExternalPagePM pagePM)

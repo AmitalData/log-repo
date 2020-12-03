@@ -44,9 +44,7 @@ export class CustomsRequestSheetExtendedPMService {
                     .post(
                     this._apiUrl + '/PostSetCustomsRequestSheetStatus/',
                     JSON.stringify(mappedEntity),
-                    { headers: authHeader }
-                    )
-                    .map(response => {
+                    ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                     var serviceResponse: ServiceResponse = new ServiceResponse();
                     var requestSheets = response;
                     serviceResponse.Result = requestSheets;
@@ -88,9 +86,7 @@ export class CustomsRequestSheetExtendedPMService {
                     .post(
                     this._apiUrl + '/PostCustomsRequestSheetReQueue/',
                     JSON.stringify(mappedEntity),
-                    { headers: authHeader }
-                    )
-                    .map(response => {
+                    ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                         var serviceResponse: ServiceResponse = new ServiceResponse();
                         var requestSheets = response;
                         serviceResponse.Result = requestSheets;

@@ -62,6 +62,16 @@
         <xs:element minOccurs="0" maxOccurs="1" ref="CasualImporterEmail" />
         <xs:element minOccurs="0" maxOccurs="1" ref="CasualImportelTel" />
         <xs:element minOccurs="0" maxOccurs="1" ref="CasualImporterContact" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="CasualImporterCountry" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="IsDiamondsDeclaration" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="EstimatedTimeOfArrival" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="OrderNumber" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="WithPaper" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="FileStatus" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="NewFile" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="ImporterFile" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="Team" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="FileOpenDate" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -117,4 +127,14 @@
   <xs:element name="CasualImporterEmail" type="xs:string" />
   <xs:element name="CasualImportelTel" type="xs:string" />
   <xs:element name="CasualImporterContact" type="xs:string" />
+  <xs:element name="CasualImporterCountry" type="xs:string" />
+  <xs:element name="IsDiamondsDeclaration" type="xs:string" />
+  <xs:element name="EstimatedTimeOfArrival" type="xs:string" />
+  <xs:element name="OrderNumber" type="xs:string" />
+  <xs:element name="WithPaper" type="xs:string" />
+  <xs:element name="FileStatus" type="xs:string" />
+  <xs:element name="NewFile" type="xs:string" />
+  <xs:element name="ImporterFile" type="xs:string" />
+  <xs:element name="Team" type="xs:string" />
+  <xs:element name="FileOpenDate" type="xs:string" />
 </xs:schema>

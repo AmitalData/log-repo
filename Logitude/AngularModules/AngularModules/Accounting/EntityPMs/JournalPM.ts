@@ -294,11 +294,24 @@ export class JournalPM {
     public set IsNew(newValue: boolean) { if (this.isNew != newValue) { this.isNew = newValue; this.MarkAsDirty("IsNew"); } }
        
 	 
+    private copied: boolean;
+    public get Copied() { return this.copied; }
+    public set Copied(newValue: boolean) { if (this.copied != newValue) { this.copied = newValue; this.MarkAsDirty("Copied"); } }
+       
+	 
+    private copiedFrom: string;
+    public get CopiedFrom() { return this.copiedFrom; }
+    public set CopiedFrom(newValue: string) { if (this.copiedFrom != newValue) { this.copiedFrom = newValue; this.MarkAsDirty("CopiedFrom"); } }
+       
+	 
 
     public OldEntityPM: JournalPM;
 		
     public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
+       if(!this.DisableMarkAsDirty)
+       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -306,6 +319,7 @@ export class JournalPM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "Journal");
            
         }
+       }
     }
 
     private MyClone: JournalPM;

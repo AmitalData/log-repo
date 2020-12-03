@@ -134,7 +134,10 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                         notificationDefinitionCode = "3050U";
                         break;
                     case EventContextTagModel.ProccessEnum.TSH_MSG2_PaymentOrderReplyResponseServiceCreate:
-                        notificationDefinitionCode = "3050N";
+                        if (connectedDeclarationPM == null || connectedDeclarationPM.IsCourierDeclaration != true)
+                        {
+                            notificationDefinitionCode = "3050N";
+                        }
                         break;
                         // moran 30.10.14 - Task 8327
                     case EventContextTagModel.ProccessEnum.Deficit_NG_5009_MSG14_FirstAndSeconderyRequirementsMessageResponseService:

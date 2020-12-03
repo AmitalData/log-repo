@@ -15,6 +15,7 @@ export class ListComponentArgs {
     public SelectedDirection: string = "All";
     public SelectedTransportMode: string = "All";
     public SuppressOnRowSelected: boolean = false;
+    public SuppressOnRowSelectedField: boolean = false;
     public IsTasksMenuClicked: boolean;
     public BIReportFolderId: string;
 }
@@ -32,5 +33,6 @@ export class UserArgs {
 export class UserLicenseArgs {
     public AllUserLicenses: any[];
     public AllPackages: any[];
-    public ActiveNotAdditionalUsersCount: number
+    public ActiveNotAdditionalUsersCount: number;
+    public SearchField: string;
 }

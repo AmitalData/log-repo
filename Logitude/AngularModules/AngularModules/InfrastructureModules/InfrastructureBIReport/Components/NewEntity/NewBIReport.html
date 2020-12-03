@@ -91,7 +91,7 @@
                         <LogLabel [ObjectFieldName]="'FactTableName'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                     </td>
                     <td>
-                        <ComboBox (SelectedItemChanged)="FactTableSelectionChanged($event)" [SelectedItem]="SelectdFactTableName" [ItemsSource]="FactTables"></ComboBox>
+                        <ComboBox [IsDisabled]="IsCopy" (SelectedItemChanged)="SelectdFactTable = $event" [SelectedItem]="SelectdFactTable" [ItemsSource]="FactTables" [Binding]="'Name'"></ComboBox>
                     </td>
                 </tr>
 
@@ -142,7 +142,7 @@
                         <LogLabel [ObjectFieldName]="'FactTableName'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                     </td>
                     <td>
-                        <ComboBox [IsDisabled]="true" (SelectedItemChanged)="FactTableSelectionChanged($event)" [SelectedItem]="SelectdFactTableName" [ItemsSource]="FactTables"></ComboBox>
+                        <ComboBox [IsDisabled]="true" (SelectedItemChanged)="SelectdFactTable = $event" [SelectedItem]="SelectdFactTable" [ItemsSource]="FactTables" [Binding]="'Name'"></ComboBox>
                     </td>
                 </tr>
 
@@ -226,7 +226,7 @@
                     </td>
 
                     <td style="width: 57px;">
-                        <button class="RedButton" (click)="OkButtonClicked()">{{'General.B.Ok' | TextCodeTranslationPipe}}</button>
+                        <button id="{{'OKButton' | IdGeneratorPipe}}" class="RedButton" (click)="OkButtonClicked()">{{'General.B.Ok' | TextCodeTranslationPipe}}</button>
                     </td>
                 </tr>
             </table>

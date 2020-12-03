@@ -748,6 +748,9 @@ namespace Simplog.Data.QuoteModel.Mapping
               .HasMaxLength(15)
               .IsUnicode(false);
 
+            this.Property(t => t.PageNumberingTextDesignId)
+              .HasMaxLength(15)
+              .IsUnicode(false);
 
             this.Property(t => t.TotalPerContainersCurrencyType)
               .HasMaxLength(10)
@@ -1011,6 +1014,9 @@ namespace Simplog.Data.QuoteModel.Mapping
 
             this.Property(t => t.QuoteTemplatePDFMarginBottom).HasColumnName("QuoteTemplatePDFMarginBottom");
             this.Property(t => t.QuoteTemplatePDFMarginTop).HasColumnName("QuoteTemplatePDFMarginTop");
+
+
+            
             this.Property(t => t.ShowIncludedChargesPackages).HasColumnName("ShowIncludedChargesPackages");
             this.Property(t => t.ShowIncludedChargesContainers).HasColumnName("ShowIncludedChargesContainers");
 
@@ -1019,13 +1025,15 @@ namespace Simplog.Data.QuoteModel.Mapping
             this.Property(t => t.ShowVATTypeContainers).HasColumnName("ShowVATTypeContainers");
             this.Property(t => t.ShowVATPercentagePackages).HasColumnName("ShowVATPercentagePackages");
             this.Property(t => t.ShowVATPercentageContainers).HasColumnName("ShowVATPercentageContainers");
-
+            this.Property(t => t.HidePageNumber).HasColumnName("HidePageNumber");
+            this.Property(t => t.ShowRegionalTAXPackages).HasColumnName("ShowRegionalTAXPackages");
+            this.Property(t => t.ShowRegionalTAXContainers).HasColumnName("ShowRegionalTAXContainers");
 
             //#if ORACLE_DB
             string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
             if (dbms == "oracle")
             {
-                this.Property(t => t.ShowIncludedChargesPerContainers).HasColumnName("ShowIncludedChargesPerConts");
+                this.Property(t => t.ShowIncludedChargesPerContainers).HasColumnName("ShowIncludedChargPerContainers");
                 this.Property(t => t.ShowTotalInSaleCurrencyPackages).HasColumnName("ShowTotalSaleCurrencyPackages");
                 this.Property(t => t.ShowTotalInSaleCurrencyContainers).HasColumnName("ShowTotaInSaleCurrContainers");
                 this.Property(t => t.ShowTotalInLocalCurrencyPackages).HasColumnName("ShowTotalLocalCurrencyPackages");
@@ -1063,6 +1071,7 @@ namespace Simplog.Data.QuoteModel.Mapping
                 this.Property(t => t.ShowTitleTotalPerContainersTable).HasColumnName("ShowTitleTotalPerContainers");
                 this.Property(t => t.ShowTotalPerChargeGroupPackages).HasColumnName("ShowTotalPerChargeGroupPacks");
                 this.Property(t => t.ShowTotalPerChargeGroupContainers).HasColumnName("ShowTotalPerChargeGroupConts");
+                this.Property(t => t.PageNumberingTextDesignId).HasColumnName("PageNumberingTextDesignId");
 
             }
 
@@ -1110,6 +1119,7 @@ namespace Simplog.Data.QuoteModel.Mapping
 
             this.Property(t => t.ShowHeaderLabelsPackages).HasColumnName("ShowHeaderLabelsPackages");
            this.Property(t => t.ShowHeaderLabelsContainers).HasColumnName("ShowHeaderLabelsContainers");
+                this.Property(t => t.PageNumberingTextDesignId).HasColumnName("PageNumberingTextDesignId");
             }
 
 
@@ -1316,6 +1326,9 @@ namespace Simplog.Data.QuoteModel.Mapping
                 .HasForeignKey(d => d.TotalPerContainersTableDesignId);
 
 
+            this.HasOptional(t => t.PageNumberingTextDesign)
+                 .WithMany()
+                .HasForeignKey(d => d.PageNumberingTextDesignId);
 
 
             this.HasOptional(t => t.TotalPerContainersAdditionalTextDesign)

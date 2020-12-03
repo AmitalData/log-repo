@@ -57,7 +57,8 @@ Insert into BATCHSERVICESDEFINITIONMODS (CODE,INACTIVE,NUMBEROFTHREADS) values (
         
 INSERT INTO "ANALYZEQUEUESTATUS" (CODE, NAME) VALUES ('D', 'Done')
 INSERT INTO "ANALYZEQUEUESTATUS" (CODE, NAME) VALUES ('F', 'Fail')
-INSERT INTO "ANALYZEQUEUESTATUS" (CODE, NAME) VALUES ('W', 'Waiting')
+INSERT INTO "ANALYZEQUEUESTATUS" (CODE, NAME) VALUES ('W', 'Waiting')
+
      */
 
     //public class SendWebAPI2MamanGWMessageECTHRDataWR
@@ -116,7 +117,7 @@ INSERT INTO "ANALYZEQUEUESTATUS" (CODE, NAME) VALUES ('W', 'Waiting')
             {
                 if (_OnStartDone) return true;
                 _OnStartDone = true;
-
+                DoneItemsInRange = new Dictionary<DateTime, int>();
 
 
                 var myClass = this.GetType().Name;
@@ -218,6 +219,7 @@ INSERT INTO "ANALYZEQUEUESTATUS" (CODE, NAME) VALUES ('W', 'Waiting')
 
                 foreach (CustomsPartnerFtpPM ftpDef in _FtpDefinitions)
                 {
+                    LastActivity = DateTime.UtcNow;
                     DownloadFTPFiles(ftpDef);
                 }
 
@@ -230,12 +232,17 @@ INSERT INTO "ANALYZEQUEUESTATUS" (CODE, NAME) VALUES ('W', 'Waiting')
 
             }
         }
-
+        static List<string> _BadFileNamesCache = new List<string>();
+        static DateTime _LastClearCacheBadFileNames = DateTime.MinValue;
         private void DownloadFTPFiles(CustomsPartnerFtpPM customsPartnerFtpPM)
         {
 
             try
             {
+                if (DateTime.Now.Subtract( _LastClearCacheBadFileNames)> TimeSpan.FromHours(1))
+                {
+                    ClearBadFileNamesCache();
+                }
                 var customsPartnerFtpDetails = new CustomsPartnerFtpDetails();
                 var defInterfaceDetails = customsPartnerFtpDetails.GetAllInterfaceDetails()
                     .Where(r => r.Code == customsPartnerFtpPM.InterfaceName).First();
@@ -246,27 +253,37 @@ INSERT INTO "ANALYZEQUEUESTATUS" (CODE, NAME) VALUES ('W', 'Waiting')
                 FTPService ftpService = new FTPService(ftpDetail.Host, ftpDetail.UserName, ftpDetail.Password);
                 Debug.WriteLine($"DirectoryListSimple({ftpDetail.Folder})");
                 var directoryFiles = ftpService.DirectoryListSimple(ftpDetail.Folder).ToList();
-
+                Debug.WriteLine($"directoryFiles.Count=({directoryFiles.Count})");
                 if (!string.IsNullOrWhiteSpace(customsPartnerFtpPM.FileExt))
                 {
+
+                    Debug.WriteLine($"FileExt=({customsPartnerFtpPM.FileExt})");
                     directoryFiles = directoryFiles.Where(f => (
                     Path.GetExtension(f)
-                    .Equals(customsPartnerFtpPM.FileExt, StringComparison.CurrentCultureIgnoreCase)))
+                    .Contains(customsPartnerFtpPM.FileExt)))
                     .ToList();
+                    Debug.WriteLine($"directoryFiles.Count=({directoryFiles.Count})");
                 }
-                if (!string.IsNullOrWhiteSpace(customsPartnerFtpPM.FileExt))
+                if (!string.IsNullOrWhiteSpace(customsPartnerFtpPM.FileName))
                 {
+                    Debug.WriteLine($"FileExt=({customsPartnerFtpPM.FileName})");
                     directoryFiles = directoryFiles.Where(f => (
                      Path.GetFileNameWithoutExtension(f)
-                    .Equals(customsPartnerFtpPM.FileName, StringComparison.CurrentCultureIgnoreCase)))
+                    .Contains(customsPartnerFtpPM.FileName)))
                     .ToList();
+                    Debug.WriteLine($"directoryFiles.Count=({directoryFiles.Count})");
                 }
                 directoryFiles = directoryFiles.Where(r => !String.IsNullOrWhiteSpace(r)).ToList();
                 directoryFiles = directoryFiles.OrderBy(fileName => fileName).ToList();
                 foreach (string fileName in directoryFiles)
                 {
+                    if (_BadFileNamesCache.Contains(fileName))
+                    {
+                        Debug.WriteLine($"continue>BadFileNamesCache({fileName})");
+                        continue;
+                    }
 
-                    var fileWithFolder = ftpDetail.Folder + "/" + fileName;
+                    var fileWithFolder = ftpDetail.Folder + "/" + Path.GetFileName(fileName);//in linux i get folder\fileName  in win only file name !!
                     Debug.WriteLine($"ftpService.Download({fileWithFolder})");
 					string p_message = "";
 					byte[] fileData = ftpService.Download(fileWithFolder,out p_message);
@@ -274,13 +291,28 @@ INSERT INTO "ANALYZEQUEUESTATUS" (CODE, NAME) VALUES ('W', 'Waiting')
 
 
                     Debug.WriteLine($"SaveMessageToAnalyzeQueue");
-                    var analyzeQueueUtil = new AnalyzeQueueUtil();
 
-                    
-                    analyzeQueueUtil.SaveMessageToAnalyzeQueue(fileName, fileData, customsPartnerFtpPM.Tenant, defInterfaceDetails);
+                    int tenant = customsPartnerFtpPM.Tenant;
+                    LastActivity = DateTime.UtcNow;
+                    try
+                    {
+                        Debug.WriteLine($"fileData.Length == {fileData.Length}");
+                        if (fileData.Length > 0)
+                        {
+                            
+                            SaveAnalyzeQueue(defInterfaceDetails, fileName, fileData, tenant);
+                        }
+                        Debug.WriteLine($"ftpService.Delete({fileName})");
+                        ftpService.Delete(fileWithFolder);
+                        LogDoneItemInMemory();
 
-                    Debug.WriteLine($"ftpService.Delete({fileName})");
-                    ftpService.Delete(fileWithFolder);
+                    }
+                    catch (Exception ex1)
+                    {
+                        _BadFileNamesCache.Add(fileName);
+                        ExceptionHandler.HandleException(ex1, DateTime.Now, 0, null, "FTP To AnalyzeQueue WorkerRole", ex1.Message, null);
+
+                    }
                 }
 
             }
@@ -291,6 +323,25 @@ INSERT INTO "ANALYZEQUEUESTATUS" (CODE, NAME) VALUES ('W', 'Waiting')
             }
         }
 
+        public static void SaveAnalyzeQueue(InterfaceDetails defInterfaceDetails, string fileName, byte[] fileData, int tenant)
+        {
+            var analyzeQueueUtil = new AnalyzeQueueUtil();
+            analyzeQueueUtil.SaveMessageToAnalyzeQueue(fileName, fileData, tenant, "", defInterfaceDetails, null);
+        }
+
+        private void ClearBadFileNamesCache()
+        {
+            _LastClearCacheBadFileNames = DateTime.Now;
+            _BadFileNamesCache.Clear();
+        }
+
+        public static void SaveAnalyzeQueueFromCode(int tenant, string interfaceCode, string fileName, byte[] fileData)
+        {
+            var customsPartnerFtpDetails = new CustomsPartnerFtpDetails();
+            var defInterfaceDetails = customsPartnerFtpDetails.GetAllInterfaceDetails()
+                    .Where(r => r.Code == interfaceCode).First();
+            SaveAnalyzeQueue(defInterfaceDetails, fileName, fileData, tenant);
+        }
     }
 
 

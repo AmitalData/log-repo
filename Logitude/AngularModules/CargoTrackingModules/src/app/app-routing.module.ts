@@ -1,6 +1,7 @@
 
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { LoginComponent } from 'src/Infrastructure/Components/LoginComponent/Login.Component';
 import { Error401Component } from 'src/CargoTracking/Components/Errors/Error401Component';
 import { HomeComponent } from 'src/CargoTracking/Components/PublicSite/HomeComponent/HomeComponent';
 import { PublicShipmentDetailsComponent } from 'src/CargoTracking/Components/PublicSite/PublicShipmentDetailsComponent/PublicShipmentDetailsComponent';
@@ -9,6 +10,9 @@ import { FavoritesPageComponent } from 'src/CargoTracking/Components/UserDashboa
 import { ShipmentDetailsComponent } from 'src/CargoTracking/Components/UserDashboard/ShipmentsPage/ShipmentDetails/ShipmentDetailsComponent';
 import { ShipmentsListComponent } from 'src/CargoTracking/Components/UserDashboard/ShipmentsPage/ShipmentsList/ShipmentsListComponent';
 import { UserDashboardComponent } from 'src/CargoTracking/Components/UserDashboard/UserDashboardComponent';
+import { ResetPasswordComponent } from 'src/Infrastructure/Components/LoginComponent/ResetPassword.Component';
+import { ChangePasswordComponent } from 'src/Infrastructure/Components/LoginComponent/ChangePassword.Component';
+import { AuthGuardService as AuthGuard  } from 'src/Infrastructure/Services/auth-guard.service';
 
 const routes: Routes = [
     
@@ -17,11 +21,12 @@ const routes: Routes = [
     { 
         path: 'dashboard', 
         component: UserDashboardComponent,
+        canActivate: [AuthGuard],
         children: [
             { path: "", redirectTo: "shipments", pathMatch: "full" }, 
             { path: "shipments", component: ShipmentsListComponent }, 
             { path: "shipment/:SecurityKey", component: ShipmentDetailsComponent }, 
-            { path: "favorites", component: FavoritesPageComponent }, 
+            { path: "favorites", component: FavoritesPageComponent  }, 
            
         ]
     },
@@ -37,9 +42,15 @@ const routes: Routes = [
         ]
     },
     
+ 
+
+    { path: 'login', component: LoginComponent },
+    { path: 'resetpassword', component: ResetPasswordComponent },
+    { path: 'changepassword', component: ChangePasswordComponent },
     {path: 'Error401', component: Error401Component },
     {path: '', redirectTo: 'public-tracking/search', pathMatch: 'full' },
     {path: '**', redirectTo: 'public-tracking/search', pathMatch: 'full' },
+
     // {path: '**',redirectTo: '1/search', pathMatch: 'full'  },
 
  

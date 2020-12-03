@@ -467,6 +467,7 @@ if(hasCustomValidator)
         if (!entityPM) {
             
             entityPM = new <#= pmName #>();
+			entityPM.DisableMarkAsDirty = true;
         }
 
 		var customFields: Array<string> = [];
@@ -578,6 +579,8 @@ if(hasCustomValidator)
             entityPM.OldEntityPM = null;
         }
 		entityPM.IsDirty = false;
+	    entityPM.DisableMarkAsDirty = false;
+
         return entityPM;
     }
 
@@ -797,7 +800,8 @@ private void GenerateCompositionFieldMap(dynamic entity,dynamic field,bool insid
             {
                 new<#= pmname #> = new <#= pmname #>(null);
             }
-                
+ 			new<#= pmname #>.DisableMarkAsDirty = true;
+               
             var pmKeysArray = Object.keys(jItem);
             for (var pmKey in pmKeysArray) {
                 if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
@@ -867,7 +871,7 @@ else{
                 new<#= pmname #>.OldEntityPM = null;
                 new<#= pmname #>.EntityParentPM = null;
             }
-			
+			 new<#= pmname #>.DisableMarkAsDirty = false;
 			 new<#= pmname #>.IsDirty = false;
             entityPM.<#= fieldName #>.push(new<#= pmname #>);
         }
@@ -881,6 +885,7 @@ else{
                         //entityPM.<#= fieldName #>.push(old<#= fieldName #>[itemKey]);
 						var oldItemJson = old<#= fieldName #>[itemKey];
                         var deletedPM: <#= pmname #> = new <#= pmname #>(null);
+						deletedPM.DisableMarkAsDirty = true;
                         var pmKeys = Object.keys(oldItemJson);
                         for (var key in pmKeys) {
 
@@ -892,7 +897,7 @@ else{
                             deletedPM[property] = oldItemJson[property];
                         }
 
-                      
+					    deletedPM.DisableMarkAsDirty = false;
                         deletedPM.IsDirty = false;
                         deletedPM.ChangeSetOp = "Delete";
                         
@@ -1063,7 +1068,7 @@ private void GenerateNonCompositionFieldMap(dynamic entity,dynamic field){
             }
             var new<#= pmname #>: <#= pmname #>;
             new<#= pmname #> = new <#= pmname #>();
-				                
+		    new<#= pmname #>.DisableMarkAsDirty = true;                
             var pmKeysArray = Object.keys(jItem);
             for (var pmKey in pmKeysArray) {
 			
@@ -1073,6 +1078,7 @@ private void GenerateNonCompositionFieldMap(dynamic entity,dynamic field){
                 var pmProperty = pmKeysArray[pmKey];
                 new<#= pmname #>[pmProperty] = jItem[pmProperty];
             }
+			new<#= pmname #>.DisableMarkAsDirty = false;
             new<#= pmname #>.IsDirty = false;
             entityPM.<#= fieldName #>.push(new<#= pmname #>);
         }

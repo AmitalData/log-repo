@@ -32,6 +32,9 @@ import {EntityResourceService} from '../../../../../Infrastructure/Services/Enti
 })
 
 export class PaymentOrdersGeneralTabComponent extends BaseComponent {
+  public IsDisplayOnly: boolean = false;
+  public ProtestTypeCode: any;
+
     public DataContext: PaymentOrdersGeneralTabComponent = this;
     public EntityPM: PaymentOrderPM = new PaymentOrderPM();
     public ObjectTableName: string = "Customs.PaymentOrder";
@@ -62,7 +65,7 @@ export class PaymentOrdersGeneralTabComponent extends BaseComponent {
 
     imgNgStyle = "";
     private CurrentSession = SessionLocator.SelectedSession;
-    constructor(public entityArgs: EntityArgs, private EntityResourceService: EntityResourceService) {
+    constructor(public entityArgs: EntityArgs, private EntityResourceService: EntityResourceService ) {
         super();
         this.LinesList = new ObservableCollection([]);
         this.MethodsList = new ObservableCollection([]);

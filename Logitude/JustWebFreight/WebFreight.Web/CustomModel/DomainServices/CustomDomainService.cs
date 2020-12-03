@@ -135,7 +135,8 @@ using Logitude.Customs.BL.Messaging.Customs;
         private CargoIdentifireTypeQueryService cargoIdentifireTypeQuery;
         private PhysicalCheckOperationQueryService physicalCheckOperationQuery;
         private PhysicalCheckStatusMessageQueryService physicalCheckStatusMessageQuery;
-        private SiteLookupQueryService siteQuery;      
+        private SiteLookupQueryService siteQuery;
+        private CustomsShipQueryService customsShipQueryService;
         private CustomsVendorQueryService vendorQuery;
         private VendorTypeQueryService vendorTypeQuery;
         private CommunicationTypeQueryService communicationTypeQuery;
@@ -337,7 +338,9 @@ using Logitude.Customs.BL.Messaging.Customs;
         private DecCargoSplitConsItemQueryService decCargoSplitConsItemQueryService;
         private DecCargoSplitConsPackDetQueryService decCargoSplitConsPackDetQueryService;
         private DecCargoSplitCargoIdentifierQueryService decCargoSplitCargoIdentifierQueryService;
-        
+        private PendingByKeywordQueryService pendingByKeywordQuery;
+        private DeclarationPendingQueryService declarationPendingQueryService;
+
         // private CustomsHouse
         protected override bool PersistChangeSet()
         {

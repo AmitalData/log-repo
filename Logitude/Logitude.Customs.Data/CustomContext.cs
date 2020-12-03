@@ -23,7 +23,7 @@ using Logitude.Customs.Data.EntityPOCOs;
 
 namespace Logitude.Customs.Data
 {
-   public class CustomContext: DbContextBase, ICustomContext
+   public partial class CustomContext: DbContextBase, ICustomContext
     {
         public CustomContext()
         {
@@ -43,9 +43,7 @@ namespace Logitude.Customs.Data
             GlobalDB currentDb;
 			currentDb = GlobalDbHelper.GetGlobalDB(tenant);
 			string dbConnectionInfo = currentDb.DBConnection;
-            string dbSeconderyConnectionInfo = currentDb.SecondaryAzureDBConnection;
-
-            DbConnection connection =DatabaseInitializer.GetConnection(dbConnectionInfo,dbSeconderyConnectionInfo);
+            DbConnection connection =DatabaseInitializer.GetConnection(dbConnectionInfo);
             CustomContext context = new CustomContext(connection);
             return context;
         }
@@ -82,6 +80,14 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new AmendmentRequestStatusMap());
 	
+            modelBuilder.Configurations.Add(new AmendmentStatusMap());
+	
+            modelBuilder.Configurations.Add(new AmendmentTypeMap());
+	
+            modelBuilder.Configurations.Add(new AmountTypeMap());
+	
+            modelBuilder.Configurations.Add(new ApprovedProfessionMap());
+	
             modelBuilder.Configurations.Add(new AssigneeNotificationTypeMap());
 	
             modelBuilder.Configurations.Add(new AttachmentTypeMap());
@@ -90,13 +96,23 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new AuthorizedSignerPermitMap());
 	
+            modelBuilder.Configurations.Add(new AutonomyRegionTypeMap());
+	
             modelBuilder.Configurations.Add(new AutonomyTypeMap());
 	
             modelBuilder.Configurations.Add(new BankMap());
 	
+            modelBuilder.Configurations.Add(new CancellationReasonRequestTypeMap());
+	
+            modelBuilder.Configurations.Add(new CancellationRequestStatusMap());
+	
             modelBuilder.Configurations.Add(new CargoIdentifireTypeMap());
 	
             modelBuilder.Configurations.Add(new CargoIdentityQualifierMap());
+	
+            modelBuilder.Configurations.Add(new CargoSealMap());
+	
+            modelBuilder.Configurations.Add(new CargoSealIdentifierMap());
 	
             modelBuilder.Configurations.Add(new CargoSplitRequestStatusMap());
 	
@@ -132,6 +148,8 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new ClaimImporterDeclarsPage3BMap());
 	
+            modelBuilder.Configurations.Add(new ClaimReasonTypeMap());
+	
             modelBuilder.Configurations.Add(new ClaimsRelatedEntitiesAmountMap());
 	
             modelBuilder.Configurations.Add(new ClaimsRelatedEntitiesReasonMap());
@@ -145,6 +163,8 @@ namespace Logitude.Customs.Data
             modelBuilder.Configurations.Add(new ClaimsRelatedEntsExpDeclarMap());
 	
             modelBuilder.Configurations.Add(new ClaimsRelatedEntsReasonsExpMap());
+	
+            modelBuilder.Configurations.Add(new ClassificationTypeMap());
 	
             modelBuilder.Configurations.Add(new ClientMap());
 	
@@ -180,6 +200,8 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new ConsignmentPackageMap());
 	
+            modelBuilder.Configurations.Add(new ConsignmentPackDangerMap());
+	
             modelBuilder.Configurations.Add(new ConstraintApprovalDecisionMap());
 	
             modelBuilder.Configurations.Add(new ConstraintProcessTypeMap());
@@ -191,6 +213,8 @@ namespace Logitude.Customs.Data
             modelBuilder.Configurations.Add(new ContactRoleTypeMap());
 	
             modelBuilder.Configurations.Add(new ContinuousMessagesTypeCodeMap());
+	
+            modelBuilder.Configurations.Add(new ContinuousRequestTypeMap());
 	
             modelBuilder.Configurations.Add(new ConverterTypeMap());
 	
@@ -218,6 +242,8 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new CurrencyTypeMap());
 	
+            modelBuilder.Configurations.Add(new CurrencyTypeTenantMap());
+	
             modelBuilder.Configurations.Add(new CustomBankMap());
 	
             modelBuilder.Configurations.Add(new CustomBanksCardMap());
@@ -239,6 +265,8 @@ namespace Logitude.Customs.Data
             modelBuilder.Configurations.Add(new CustomsAddressTypeMap());
 	
             modelBuilder.Configurations.Add(new CustomsAirlineMap());
+	
+            modelBuilder.Configurations.Add(new CustomsAutonomyKeywordMap());
 	
             modelBuilder.Configurations.Add(new CustomsBookMap());
 	
@@ -272,6 +300,8 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new CustomsExchangeRateMap());
 	
+            modelBuilder.Configurations.Add(new CustomsGeneralMap());
+	
             modelBuilder.Configurations.Add(new CustomsHouseTypeMap());
 	
             modelBuilder.Configurations.Add(new CustomsHouseTypeAdditionalMap());
@@ -296,6 +326,8 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new CustomsSettingMap());
 	
+            modelBuilder.Configurations.Add(new CustomsShipMap());
+	
             modelBuilder.Configurations.Add(new CustomsTransportModeMap());
 	
             modelBuilder.Configurations.Add(new CustomsVendorMap());
@@ -303,6 +335,10 @@ namespace Logitude.Customs.Data
             modelBuilder.Configurations.Add(new CustomsVerificationStatusTypeMap());
 	
             modelBuilder.Configurations.Add(new DangerousGoodsPackingReqMap());
+	
+            modelBuilder.Configurations.Add(new DBMigrationMap());
+	
+            modelBuilder.Configurations.Add(new DBMigrationLineMap());
 	
             modelBuilder.Configurations.Add(new DebtNotificationTypeMap());
 	
@@ -313,6 +349,8 @@ namespace Logitude.Customs.Data
             modelBuilder.Configurations.Add(new DecCargoSplitConsItemMap());
 	
             modelBuilder.Configurations.Add(new DecCargoSplitConsPackDetMap());
+	
+            modelBuilder.Configurations.Add(new DecDangersContactMap());
 	
             modelBuilder.Configurations.Add(new DecisionTypeMap());
 	
@@ -328,6 +366,8 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new DeclarationErrorMappingMap());
 	
+            modelBuilder.Configurations.Add(new DeclarationExportRecipientMap());
+	
             modelBuilder.Configurations.Add(new DeclarationMamanSpecialActionMap());
 	
             modelBuilder.Configurations.Add(new DeclarationPaymentMap());
@@ -335,6 +375,10 @@ namespace Logitude.Customs.Data
             modelBuilder.Configurations.Add(new DeclarationPaymentMethodMap());
 	
             modelBuilder.Configurations.Add(new DeclarationPaymentProtestMap());
+	
+            modelBuilder.Configurations.Add(new DeclarationPendingMap());
+	
+            modelBuilder.Configurations.Add(new DeclarationReferantDataMap());
 	
             modelBuilder.Configurations.Add(new DeclarationStatementTypeMap());
 	
@@ -345,6 +389,8 @@ namespace Logitude.Customs.Data
             modelBuilder.Configurations.Add(new DeficitMap());
 	
             modelBuilder.Configurations.Add(new DeficitConnFileParagraphTypeMap());
+	
+            modelBuilder.Configurations.Add(new DeficitDecisionMap());
 	
             modelBuilder.Configurations.Add(new DeliverySiteTypeMap());
 	
@@ -366,6 +412,10 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new EntityTypeLookupMap());
 	
+            modelBuilder.Configurations.Add(new ExceptionReasonMap());
+	
+            modelBuilder.Configurations.Add(new ExporterRoleTypeMap());
+	
             modelBuilder.Configurations.Add(new FacilitationTypeMap());
 	
             modelBuilder.Configurations.Add(new FaultInspectionTypeMap());
@@ -373,6 +423,10 @@ namespace Logitude.Customs.Data
             modelBuilder.Configurations.Add(new FreightPaymentMethodMap());
 	
             modelBuilder.Configurations.Add(new FuelTypeMap());
+	
+            modelBuilder.Configurations.Add(new GatepassRequestMap());
+	
+            modelBuilder.Configurations.Add(new GatepassReturnCodeMap());
 	
             modelBuilder.Configurations.Add(new GenderMap());
 	
@@ -385,6 +439,8 @@ namespace Logitude.Customs.Data
             modelBuilder.Configurations.Add(new GuaranteeConditionMap());
 	
             modelBuilder.Configurations.Add(new GuaranteeCustomerActivityMap());
+	
+            modelBuilder.Configurations.Add(new HazardousSubstanceMap());
 	
             modelBuilder.Configurations.Add(new ImporterDeclarationTypeMap());
 	
@@ -432,6 +488,8 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new MorningMessageTypeMap());
 	
+            modelBuilder.Configurations.Add(new NbcDeclarationTypeMap());
+	
             modelBuilder.Configurations.Add(new NotificationMap());
 	
             modelBuilder.Configurations.Add(new NotificationDefinitionMap());
@@ -449,6 +507,8 @@ namespace Logitude.Customs.Data
             modelBuilder.Configurations.Add(new PackingTypeMap());
 	
             modelBuilder.Configurations.Add(new ParagraphTypeMap());
+	
+            modelBuilder.Configurations.Add(new PartyRelationshipTypeMap());
 	
             modelBuilder.Configurations.Add(new PassportTypeMap());
 	
@@ -479,6 +539,8 @@ namespace Logitude.Customs.Data
             modelBuilder.Configurations.Add(new PaymentProtestTypeMap());
 	
             modelBuilder.Configurations.Add(new PaymentTypeMap());
+	
+            modelBuilder.Configurations.Add(new PendingByKeywordMap());
 	
             modelBuilder.Configurations.Add(new PendingErrorPlaceMap());
 	
@@ -512,17 +574,29 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new RansomViolationTypeMap());
 	
+            modelBuilder.Configurations.Add(new ReferantExceptionMap());
+	
+            modelBuilder.Configurations.Add(new ReferantTeamMap());
+	
             modelBuilder.Configurations.Add(new RefundCustomerActivityTypeMap());
 	
             modelBuilder.Configurations.Add(new RegisteredWarehouseSiteTypeMap());
 	
             modelBuilder.Configurations.Add(new RequestStatusMap());
 	
+            modelBuilder.Configurations.Add(new RequestTypeMap());
+	
             modelBuilder.Configurations.Add(new RequiredGuaranteeTypeMap());
 	
             modelBuilder.Configurations.Add(new ReturnConditionMap());
 	
             modelBuilder.Configurations.Add(new SalesTaxExemptionTypeMap());
+	
+            modelBuilder.Configurations.Add(new SealCompletenesMap());
+	
+            modelBuilder.Configurations.Add(new SealTypeMap());
+	
+            modelBuilder.Configurations.Add(new SealUpdateReasonTypeMap());
 	
             modelBuilder.Configurations.Add(new SeizureFactorTypeMap());
 	
@@ -546,6 +620,8 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new SubCountryMap());
 	
+            modelBuilder.Configurations.Add(new SuppInvoiceItemsAbachStatementMap());
+	
             modelBuilder.Configurations.Add(new SupplierInvioceItemCertificatMap());
 	
             modelBuilder.Configurations.Add(new SupplierInvoiceMap());
@@ -566,6 +642,8 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new SupplierInvoiceItemsModMap());
 	
+            modelBuilder.Configurations.Add(new SupplierInvoiceItemsPriceMap());
+	
             modelBuilder.Configurations.Add(new SupplierInvoiceItemsProdIdentMap());
 	
             modelBuilder.Configurations.Add(new SupplierInvoiceItemsSerialNumMap());
@@ -579,6 +657,10 @@ namespace Logitude.Customs.Data
             modelBuilder.Configurations.Add(new SupplierInvoiceItemVehicleModMap());
 	
             modelBuilder.Configurations.Add(new SupplierInvoiceModificationMap());
+	
+            modelBuilder.Configurations.Add(new SupplierInvoicePaymentMap());
+	
+            modelBuilder.Configurations.Add(new SupplierInvoiceUCRMap());
 	
             modelBuilder.Configurations.Add(new TapagMap());
 	
@@ -594,6 +676,10 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new TradeLevyExamptTypeMap());
 	
+            modelBuilder.Configurations.Add(new TransactionNatureTypeMap());
+	
+            modelBuilder.Configurations.Add(new TransferCargoMethodTypeMap());
+	
             modelBuilder.Configurations.Add(new TreatmentWayMap());
 	
             modelBuilder.Configurations.Add(new UIMessageMap());
@@ -601,6 +687,8 @@ namespace Logitude.Customs.Data
             modelBuilder.Configurations.Add(new UIMessageAdditionalMap());
 	
             modelBuilder.Configurations.Add(new UnloadingSiteTypeMap());
+	
+            modelBuilder.Configurations.Add(new UpdateCodeMap());
 	
             modelBuilder.Configurations.Add(new ValidCustomsItemMap());
 	
@@ -667,11 +755,23 @@ namespace Logitude.Customs.Data
 				
 			modelBuilder.Entity<CollateralsRequestFileCond>().Property(x => x.RequestedAmount).HasPrecision(18, 2);
 				
+			modelBuilder.Entity<ConsignmentPackage>().Property(x => x.GrossMassMeasure).HasPrecision(18, 2);
+				
 			modelBuilder.Entity<CourierMaster>().Property(x => x.GrossMassMeasure).HasPrecision(18, 2);
+				
+			modelBuilder.Entity<CustomsCollateralsAnswer>().Property(x => x.AllocatedAmount).HasPrecision(18, 2);
 				
 			modelBuilder.Entity<CustomsCollateralsAnswer>().Property(x => x.RequestFileAmount).HasPrecision(18, 2);
 				
-			modelBuilder.Entity<CustomsExchangeRate>().Property(x => x.ExchangeRate).HasPrecision(12, 10);
+			modelBuilder.Entity<CustomsCollateralsCondition>().Property(x => x.RequestedAmount).HasPrecision(18, 2);
+				
+			modelBuilder.Entity<CustomsExchangeRate>().Property(x => x.ExchangeRate).HasPrecision(15, 10);
+				
+			modelBuilder.Entity<DBMigration>().Property(x => x.MajorVersion).HasPrecision(5, 2);
+				
+			modelBuilder.Entity<DecCargoSplitConsItem>().Property(x => x.GrossMassMeasure).HasPrecision(18, 2);
+				
+			modelBuilder.Entity<DecCargoSplitConsPackDet>().Property(x => x.GrossMassMeasure).HasPrecision(18, 2);
 				
 			modelBuilder.Entity<Declaration>().Property(x => x.LoadingFactor).HasPrecision(18, 10);
 				
@@ -681,9 +781,15 @@ namespace Logitude.Customs.Data
 				
 			modelBuilder.Entity<Declaration>().Property(x => x.TotalTax).HasPrecision(16, 2);
 				
+			modelBuilder.Entity<Declaration>().Property(x => x.PlatformFee).HasPrecision(18, 2);
+				
 			modelBuilder.Entity<Declaration>().Property(x => x.DealValueWithoutFactor).HasPrecision(16, 2);
 				
 			modelBuilder.Entity<Declaration>().Property(x => x.DealValueWithFactor).HasPrecision(16, 2);
+				
+			modelBuilder.Entity<Declaration>().Property(x => x.FOBValueNIS).HasPrecision(16, 2);
+				
+			modelBuilder.Entity<Declaration>().Property(x => x.FOBValueDollar).HasPrecision(16, 2);
 				
 			modelBuilder.Entity<DeclarationConsAcceptance>().Property(x => x.GrossWeight).HasPrecision(11, 3);
 				
@@ -695,6 +801,8 @@ namespace Logitude.Customs.Data
 				
 			modelBuilder.Entity<DeclarationPaymentProtest>().Property(x => x.AmountInDispute).HasPrecision(16, 2);
 				
+			modelBuilder.Entity<DeclarationReferantData>().Property(x => x.Weight).HasPrecision(15, 3);
+				
 			modelBuilder.Entity<DeclarationTax>().Property(x => x.TotalAmount).HasPrecision(16, 2);
 				
 			modelBuilder.Entity<DeclarationTax>().Property(x => x.DeferredTaxAmount).HasPrecision(16, 2);
@@ -703,13 +811,27 @@ namespace Logitude.Customs.Data
 				
 			modelBuilder.Entity<DeficitConnFileParagraphType>().Property(x => x.Amount).HasPrecision(16, 2);
 				
+			modelBuilder.Entity<DeficitDecision>().Property(x => x.TotalComponentAmount).HasPrecision(16, 2);
+				
+			modelBuilder.Entity<DeficitDecision>().Property(x => x.TotalEstimatedAmount).HasPrecision(16, 2);
+				
+			modelBuilder.Entity<DeficitDecision>().Property(x => x.TotalFinancialPenaltyAmount).HasPrecision(16, 2);
+				
+			modelBuilder.Entity<DeficitDecision>().Property(x => x.TotalInterestAmount).HasPrecision(16, 2);
+				
+			modelBuilder.Entity<DeficitDecision>().Property(x => x.TotalLinkingAmount).HasPrecision(16, 2);
+				
 			modelBuilder.Entity<Deposit>().Property(x => x.DepositAmount).HasPrecision(16, 2);
 				
 			modelBuilder.Entity<DepositCondition>().Property(x => x.DepositAmount).HasPrecision(16, 2);
 				
 			modelBuilder.Entity<GuaranteeCondition>().Property(x => x.GuaranteeAmount).HasPrecision(16, 2);
 				
+			modelBuilder.Entity<PaymentOrder>().Property(x => x.TotalSumToPay).HasPrecision(18, 2);
+				
 			modelBuilder.Entity<PaymentOrder>().Property(x => x.PaymentOrderLeftAmount).HasPrecision(16, 2);
+				
+			modelBuilder.Entity<PaymentOrderLine>().Property(x => x.Amount).HasPrecision(18, 2);
 				
 			modelBuilder.Entity<PaymentOrderMethod>().Property(x => x.Amount).HasPrecision(16, 2);
 				
@@ -747,6 +869,8 @@ namespace Logitude.Customs.Data
 				
 			modelBuilder.Entity<SupplierInvoiceItem>().Property(x => x.WholeSaleItemPrice).HasPrecision(16, 2);
 				
+			modelBuilder.Entity<SupplierInvoiceItem>().Property(x => x.OptionalTamaPercentage).HasPrecision(18, 2);
+				
 			modelBuilder.Entity<SupplierInvoiceItem>().Property(x => x.StatisticQuantity).HasPrecision(14, 3);
 				
 			modelBuilder.Entity<SupplierInvoiceItem>().Property(x => x.InvoiceQuantity).HasPrecision(14, 3);
@@ -757,11 +881,25 @@ namespace Logitude.Customs.Data
 				
 			modelBuilder.Entity<SupplierInvoiceItem>().Property(x => x.DeferredPurchaseTax).HasPrecision(5, 2);
 				
+			modelBuilder.Entity<SupplierInvoiceItem>().Property(x => x.Weight).HasPrecision(15, 3);
+				
+			modelBuilder.Entity<SupplierInvoiceItem>().Property(x => x.OcrHeight).HasPrecision(5, 0);
+				
+			modelBuilder.Entity<SupplierInvoiceItem>().Property(x => x.OcrTop).HasPrecision(5, 0);
+				
+			modelBuilder.Entity<SupplierInvoiceItem>().Property(x => x.OcrPageNumber).HasPrecision(3, 0);
+				
+			modelBuilder.Entity<SupplierInvoiceItem>().Property(x => x.ItemFOBAmountForeign).HasPrecision(16, 2);
+				
+			modelBuilder.Entity<SupplierInvoiceItem>().Property(x => x.ItemFOBAmountNIS).HasPrecision(16, 2);
+				
 			modelBuilder.Entity<SupplierInvoiceItemModVehicle>().Property(x => x.DeductAmount).HasPrecision(16, 2);
 				
 			modelBuilder.Entity<SupplierInvoiceItemsConDeclar>().Property(x => x.Quantity).HasPrecision(14, 3);
 				
 			modelBuilder.Entity<SupplierInvoiceItemsMod>().Property(x => x.Amount).HasPrecision(16, 2);
+				
+			modelBuilder.Entity<SupplierInvoiceItemsPrice>().Property(x => x.AdditionalPrice).HasPrecision(16, 2);
 				
 			modelBuilder.Entity<SupplierInvoiceItemsTax>().Property(x => x.TaxRate).HasPrecision(17, 2);
 				
@@ -771,11 +909,25 @@ namespace Logitude.Customs.Data
 				
 			modelBuilder.Entity<SupplierInvoiceItemsTax>().Property(x => x.DeferedTaxAmount).HasPrecision(16, 2);
 				
+			modelBuilder.Entity<SupplierInvoiceItemsTax>().Property(x => x.DefinedPerUnitMeasure).HasPrecision(18, 2);
+				
+			modelBuilder.Entity<SupplierInvoiceItemsTax>().Property(x => x.AlternateDefinedPerUnitMeasure).HasPrecision(18, 2);
+				
+			modelBuilder.Entity<SupplierInvoiceItemsTax>().Property(x => x.DefinedPerUnitQuantity).HasPrecision(18, 2);
+				
+			modelBuilder.Entity<SupplierInvoiceItemsTax>().Property(x => x.AlternateDefinedPerUnitQuant).HasPrecision(18, 2);
+				
+			modelBuilder.Entity<SupplierInvoiceItemsTax>().Property(x => x.TotalBtlCoverageNIS).HasPrecision(18, 2);
+				
+			modelBuilder.Entity<SupplierInvoiceItemsTax>().Property(x => x.AlternateRate).HasPrecision(18, 2);
+				
 			modelBuilder.Entity<SupplierInvoiceItemVehicleAdd>().Property(x => x.ChassisVat).HasPrecision(16, 2);
 				
 			modelBuilder.Entity<SupplierInvoiceItemVehicleMod>().Property(x => x.DeductAmount).HasPrecision(16, 2);
 				
 			modelBuilder.Entity<SupplierInvoiceModification>().Property(x => x.Amount).HasPrecision(16, 2);
+				
+			modelBuilder.Entity<SupplierInvoicePayment>().Property(x => x.PaymentAmount).HasPrecision(16, 2);
 				
 			modelBuilder.Entity<Vehicle>().Property(x => x.GreenIndex).HasPrecision(9, 3);
 				
@@ -999,7 +1151,7 @@ namespace Logitude.Customs.Data
             modelBuilder.Configurations.Add(new ChargeTypeAccountingMap());
             modelBuilder.Configurations.Add(new ReportMap());
             modelBuilder.Configurations.Add(new ContactLastLoginMap());
-            modelBuilder.Configurations.Add(new SharedLogisticsContactLastLoginMap());
+			modelBuilder.Configurations.Add(new SharedLogisticsContactLastLoginMap());
             modelBuilder.Configurations.Add(new ContactLoginLogMap());
             modelBuilder.Configurations.Add(new SmallDocumentMap());
             modelBuilder.Configurations.Add(new CommunicationLogStepMap());
@@ -1027,8 +1179,7 @@ namespace Logitude.Customs.Data
             modelBuilder.Configurations.Add(new AirlineStatisticsMap());
 			modelBuilder.Configurations.Add(new AWBDescriptionOfGoodsMap());
 			modelBuilder.Configurations.Add(new LogitudeMessagesTransmissionLogMap());
-            modelBuilder.Configurations.Add(new CustomsShipperMap());
-
+			            modelBuilder.Configurations.Add(new CustomsShipperMap());
             #endregion 
             base.OnModelCreating(modelBuilder);
         }
@@ -1110,6 +1261,30 @@ namespace Logitude.Customs.Data
 	 
 	 }
 	
+	 public IDbSet<AmendmentStatus> AmendmentStatuses 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<AmendmentType> AmendmentTypes 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<AmountType> AmountTypes 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<ApprovedProfession> ApprovedProfessions 
+	 {
+	      get; set;
+	 
+	 }
+	
 	 public IDbSet<AssigneeNotificationType> AssigneeNotificationTypes 
 	 {
 	      get; set;
@@ -1134,6 +1309,12 @@ namespace Logitude.Customs.Data
 	 
 	 }
 	
+	 public IDbSet<AutonomyRegionType> AutonomyRegionTypes 
+	 {
+	      get; set;
+	 
+	 }
+	
 	 public IDbSet<AutonomyType> AutonomyTypes 
 	 {
 	      get; set;
@@ -1146,6 +1327,18 @@ namespace Logitude.Customs.Data
 	 
 	 }
 	
+	 public IDbSet<CancellationReasonRequestType> CancellationReasonRequestTypes 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<CancellationRequestStatus> CancellationRequestStatuses 
+	 {
+	      get; set;
+	 
+	 }
+	
 	 public IDbSet<CargoIdentifireType> CargoIdentifireTypes 
 	 {
 	      get; set;
@@ -1153,6 +1346,18 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<CargoIdentityQualifier> CargoIdentityQualifiers 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<CargoSeal> CargoSeals 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<CargoSealIdentifier> CargoSealIdentifiers 
 	 {
 	      get; set;
 	 
@@ -1260,6 +1465,12 @@ namespace Logitude.Customs.Data
 	 
 	 }
 	
+	 public IDbSet<ClaimReasonType> ClaimReasonTypes 
+	 {
+	      get; set;
+	 
+	 }
+	
 	 public IDbSet<ClaimsRelatedEntitiesAmount> ClaimsRelatedEntitiesAmounts 
 	 {
 	      get; set;
@@ -1297,6 +1508,12 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<ClaimsRelatedEntsReasonsExp> ClaimsRelatedEntsReasonsExps 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<ClassificationType> ClassificationTypes 
 	 {
 	      get; set;
 	 
@@ -1404,6 +1621,12 @@ namespace Logitude.Customs.Data
 	 
 	 }
 	
+	 public IDbSet<ConsignmentPackDanger> ConsignmentPackDangers 
+	 {
+	      get; set;
+	 
+	 }
+	
 	 public IDbSet<ConstraintApprovalDecision> ConstraintApprovalDecisions 
 	 {
 	      get; set;
@@ -1435,6 +1658,12 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<ContinuousMessagesTypeCode> ContinuousMessagesTypeCodes 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<ContinuousRequestType> ContinuousRequestTypes 
 	 {
 	      get; set;
 	 
@@ -1518,6 +1747,12 @@ namespace Logitude.Customs.Data
 	 
 	 }
 	
+	 public IDbSet<CurrencyTypeTenant> CurrencyTypeTenants 
+	 {
+	      get; set;
+	 
+	 }
+	
 	 public IDbSet<CustomBank> CustomBanks 
 	 {
 	      get; set;
@@ -1579,6 +1814,12 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<CustomsAirline> CustomsAirlines 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<CustomsAutonomyKeyword> CustomsAutonomyKeywords 
 	 {
 	      get; set;
 	 
@@ -1680,6 +1921,12 @@ namespace Logitude.Customs.Data
 	 
 	 }
 	
+	 public IDbSet<CustomsGeneral> CustomsGenerals 
+	 {
+	      get; set;
+	 
+	 }
+	
 	 public IDbSet<CustomsHouseType> CustomsHouseTypes 
 	 {
 	      get; set;
@@ -1752,6 +1999,12 @@ namespace Logitude.Customs.Data
 	 
 	 }
 	
+	 public IDbSet<CustomsShip> CustomsShips 
+	 {
+	      get; set;
+	 
+	 }
+	
 	 public IDbSet<CustomsTransportMode> CustomsTransportModes 
 	 {
 	      get; set;
@@ -1771,6 +2024,18 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<DangerousGoodsPackingReq> DangerousGoodsPackingReqs 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<DBMigration> DBMigrations 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<DBMigrationLine> DBMigrationLines 
 	 {
 	      get; set;
 	 
@@ -1801,6 +2066,12 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<DecCargoSplitConsPackDet> DecCargoSplitConsPackDets 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<DecDangersContact> DecDangersContacts 
 	 {
 	      get; set;
 	 
@@ -1848,6 +2119,12 @@ namespace Logitude.Customs.Data
 	 
 	 }
 	
+	 public IDbSet<DeclarationExportRecipient> DeclarationExportRecipients 
+	 {
+	      get; set;
+	 
+	 }
+	
 	 public IDbSet<DeclarationMamanSpecialAction> DeclarationMamanSpecialActions 
 	 {
 	      get; set;
@@ -1867,6 +2144,18 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<DeclarationPaymentProtest> DeclarationPaymentProtests 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<DeclarationPending> DeclarationPendings 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<DeclarationReferantData> DeclarationReferantDatas 
 	 {
 	      get; set;
 	 
@@ -1897,6 +2186,12 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<DeficitConnFileParagraphType> DeficitConnFileParagraphTypes 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<DeficitDecision> DeficitDecisions 
 	 {
 	      get; set;
 	 
@@ -1962,6 +2257,18 @@ namespace Logitude.Customs.Data
 	 
 	 }
 	
+	 public IDbSet<ExceptionReason> ExceptionReasons 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<ExporterRoleType> ExporterRoleTypes 
+	 {
+	      get; set;
+	 
+	 }
+	
 	 public IDbSet<FacilitationType> FacilitationTypes 
 	 {
 	      get; set;
@@ -1981,6 +2288,18 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<FuelType> FuelTypes 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<GatepassRequest> GatepassRequests 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<GatepassReturnCode> GatepassReturnCodes 
 	 {
 	      get; set;
 	 
@@ -2017,6 +2336,12 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<GuaranteeCustomerActivity> GuaranteeCustomerActivities 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<HazardousSubstance> HazardousSubstances 
 	 {
 	      get; set;
 	 
@@ -2160,6 +2485,12 @@ namespace Logitude.Customs.Data
 	 
 	 }
 	
+	 public IDbSet<NbcDeclarationType> NbcDeclarationTypes 
+	 {
+	      get; set;
+	 
+	 }
+	
 	 public IDbSet<Notification> Notifications 
 	 {
 	      get; set;
@@ -2209,6 +2540,12 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<ParagraphType> ParagraphTypes 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<PartyRelationshipType> PartyRelationshipTypes 
 	 {
 	      get; set;
 	 
@@ -2299,6 +2636,12 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<PaymentType> PaymentTypes 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<PendingByKeyword> PendingByKeywords 
 	 {
 	      get; set;
 	 
@@ -2400,6 +2743,18 @@ namespace Logitude.Customs.Data
 	 
 	 }
 	
+	 public IDbSet<ReferantException> ReferantExceptions 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<ReferantTeam> ReferantTeams 
+	 {
+	      get; set;
+	 
+	 }
+	
 	 public IDbSet<RefundCustomerActivityType> RefundCustomerActivityTypes 
 	 {
 	      get; set;
@@ -2418,6 +2773,12 @@ namespace Logitude.Customs.Data
 	 
 	 }
 	
+	 public IDbSet<RequestType> RequestTypes 
+	 {
+	      get; set;
+	 
+	 }
+	
 	 public IDbSet<RequiredGuaranteeType> RequiredGuaranteeTypes 
 	 {
 	      get; set;
@@ -2431,6 +2792,24 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<SalesTaxExemptionType> SalesTaxExemptionTypes 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<SealCompletenes> SealCompleteness 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<SealType> SealTypes 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<SealUpdateReasonType> SealUpdateReasonTypes 
 	 {
 	      get; set;
 	 
@@ -2502,6 +2881,12 @@ namespace Logitude.Customs.Data
 	 
 	 }
 	
+	 public IDbSet<SuppInvoiceItemsAbachStatement> SuppInvoiceItemsAbachStatement 
+	 {
+	      get; set;
+	 
+	 }
+	
 	 public IDbSet<SupplierInvioceItemCertificat> SupplierInvioceItemCertificats 
 	 {
 	      get; set;
@@ -2562,6 +2947,12 @@ namespace Logitude.Customs.Data
 	 
 	 }
 	
+	 public IDbSet<SupplierInvoiceItemsPrice> SupplierInvoiceItemsPrices 
+	 {
+	      get; set;
+	 
+	 }
+	
 	 public IDbSet<SupplierInvoiceItemsProdIdent> SupplierInvoiceItemsProdIdents 
 	 {
 	      get; set;
@@ -2599,6 +2990,18 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<SupplierInvoiceModification> SupplierInvoiceModifications 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<SupplierInvoicePayment> SupplierInvoicePayments 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<SupplierInvoiceUCR> SupplierInvoiceUCRs 
 	 {
 	      get; set;
 	 
@@ -2646,6 +3049,18 @@ namespace Logitude.Customs.Data
 	 
 	 }
 	
+	 public IDbSet<TransactionNatureType> TransactionNatureTypes 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<TransferCargoMethodType> TransferCargoMethodTypes 
+	 {
+	      get; set;
+	 
+	 }
+	
 	 public IDbSet<TreatmentWay> TreatmentWays 
 	 {
 	      get; set;
@@ -2665,6 +3080,12 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<UnloadingSiteType> UnloadingSiteType 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<UpdateCode> UpdateCodes 
 	 {
 	      get; set;
 	 
@@ -2781,4 +3202,4 @@ namespace Logitude.Customs.Data
  }
 
 
-}
+}

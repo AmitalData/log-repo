@@ -35,7 +35,8 @@ using System.Drawing;
 
 namespace WebFreight.Web.Helpers
 {
-    public class ExportToExcelHelper
+    //public class ExportToExcelHelper
+    public partial class ExportToExcelHelper
     {
         public byte[] ExportQueryToExcel(ExportToExcelArgs exportToExcelArgs)
         {
@@ -623,6 +624,10 @@ namespace WebFreight.Web.Helpers
             DWQueryBuilderHelper QBHelper = new DWQueryBuilderHelper(tenant);
             SqlCommandDefinition sqlCommandDefinition = QBHelper.GetQuerySQL(bIReportXMLData.DWQueryData);
             DataTable dataTable = QBHelper.GetDWQueryData(sqlCommandDefinition);
+
+            BIReportsSecurityIntegrationService bIReportsSecurityIntegrationService = new BIReportsSecurityIntegrationService(tenant);
+            bIReportsSecurityIntegrationService.CheckBIReportDataSecurity(dataTable);
+
 
             var bITabularViewSettings = LogitudeXmlSerializer.DeserializeObject<BITabularViewSettings>(biReportEntityPM.AGGridOptionsXML);
             List<string> MeasurmentColumns = null;

@@ -17,7 +17,8 @@ using Logitude.BL.ShipmentsModel.EntityQueries;
 using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.BL.QuoteModel.EntityQueries;
 using Logitude.BL.QuoteModel.EntityPMs;
-
+using Simplog.Data.Helpers;
+using Logitude.Server.Tools;
 
 namespace Logitude.BL.CommonDataModel.EntityQueries
 {
@@ -40,9 +41,9 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             this.repository = repository;
         }
 
-        public IQueryable<DocumentTypeTemplatePM> GetDocumentTypeTemplatesByDocumentTypeId(string documentTypeId, int tenant)
+        public List<DocumentTypeTemplatePM> GetDocumentTypeTemplatesByDocumentTypeId(string documentTypeId, int tenant)
         {
-            IQueryable<DocumentTypeTemplatePM> documentTypeTemplates = (from a in repository.context.DocumentTypeTemplates.Include("LastUpdatedByUser.Contact").Include("DocumentType")
+            List<DocumentTypeTemplatePM> documentTypeTemplates = (from a in repository.context.DocumentTypeTemplates.Include("LastUpdatedByUser.Contact").Include("DocumentType")
                                                                         where a.DocumentTypeId == documentTypeId && a.Tenant == tenant
                                                                         select new DocumentTypeTemplatePM()
                                                                         {
@@ -81,7 +82,16 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                                             TemplateTechnologyCode = a.TemplateTechnologyCode,
                                                                             CC = a.CC,
                                                                             BCC = a.BCC,
-                                                                        });
+                                                                            DefultAttachmentsXML = a.DefultAttachmentsXML,
+
+                                                                        }).ToList();
+
+
+            foreach (DocumentTypeTemplatePM item in documentTypeTemplates.Where(d=>d.TemplateType == "M").ToList())
+            {
+                item.DocumentDefultAttachments = BuildDefultAttachments(item.DefultAttachmentsXML);
+            }
+
 
             return documentTypeTemplates;
         }
@@ -124,6 +134,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                                         BCC = a.BCC,
 
                                                                     }).ToList();
+
+
             return documentTypeTemplates;
         }
 
@@ -199,12 +211,14 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                        DocumentTypeName = a.DocumentType != null ? a.DocumentType.Name : "",
                        CC = a.CC,
                        BCC = a.BCC,
+                       DefultAttachmentsXML = a.DefultAttachmentsXML,
+
                    };
         }
 
         public DocumentTypeTemplatePM GetSingleDocumentTypeTemplatePM(string id)
         {
-            return (from a in repository.context.DocumentTypeTemplates.Include("LastUpdatedByUser.Contact").Include("DocumentType")
+            var documentTypeTemplatePM = (from a in repository.context.DocumentTypeTemplates.Include("LastUpdatedByUser.Contact").Include("DocumentType")
                     where a.Id == id
                     select new DocumentTypeTemplatePM()
                     {
@@ -242,6 +256,14 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                         CC = a.CC,
                         BCC = a.BCC,
                     }).FirstOrDefault();
+
+
+            if (documentTypeTemplatePM != null)
+            {
+                documentTypeTemplatePM.DocumentDefultAttachments = BuildDefultAttachments(documentTypeTemplatePM.DefultAttachmentsXML);
+            }
+
+            return documentTypeTemplatePM;
         }
 
 
@@ -289,7 +311,15 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                                       TemplateTechnologyCode = a.TemplateTechnologyCode,
                                                                       CC = a.CC,
                                                                       BCC = a.BCC,
+                                                                      DefultAttachmentsXML = a.DefultAttachmentsXML,
                                                                   }).ToList();
+
+            foreach (DocumentTypeTemplatePM item in documentTypeTemplates.Where(d => d.TemplateType == "M").ToList())
+            {
+                item.DocumentDefultAttachments = BuildDefultAttachments(item.DefultAttachmentsXML);
+            }
+
+
             return documentTypeTemplates;
 
         }
@@ -309,7 +339,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
            }
             
-            return (from a in repository.context.DocumentTypeTemplates.Include("LastUpdatedByUser.Contact").Include("DocumentType")
+            var documentTypeTemplatePM = (from a in repository.context.DocumentTypeTemplates.Include("LastUpdatedByUser.Contact").Include("DocumentType")
                     where a.Id == id && a.Tenant == tenant
                     select new DocumentTypeTemplatePM()
                     {
@@ -347,8 +377,16 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                         TemplateTechnologyCode = a.TemplateTechnologyCode,
                         CC = a.CC,
                         BCC = a.BCC,
+                        DefultAttachmentsXML = a.DefultAttachmentsXML,
 
                     }).FirstOrDefault();
+
+            if (documentTypeTemplatePM != null)
+            {
+                documentTypeTemplatePM.DocumentDefultAttachments = BuildDefultAttachments(documentTypeTemplatePM.DefultAttachmentsXML);
+            }
+
+            return documentTypeTemplatePM;
         }
 
 
@@ -848,6 +886,31 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             return documentTypeTemplates;
 
         }
+       
+        
+        
+        private List<DocumentDefultAttachment> BuildDefultAttachments(string defultAttachmentsXML)
+        {
+            return !string.IsNullOrEmpty(defultAttachmentsXML) ? LogitudeXmlSerializer.DeserializeObject<List<DocumentDefultAttachment>>(defultAttachmentsXML) : null;
+        }
+
+
+
+
+        public List<DocumentDefultAttachment> GetDefultAttachmentLists(string id, int tenant)
+        {
+            var defultAttachmentsXML = (from a in repository.context.DocumentTypeTemplates
+                    where a.Tenant == tenant && a.Id == id
+                    select a.DefultAttachmentsXML).FirstOrDefault();
+
+            return BuildDefultAttachments(defultAttachmentsXML);
+
+        }
+
+
+
+
+
 
     }
 }

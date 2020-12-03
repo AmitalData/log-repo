@@ -351,7 +351,10 @@ namespace Simplog.Data.QuoteModel.EntityPOCOs
         public bool ShowVATTypeContainers { get; set; }
         public bool ShowVATPercentagePackages { get; set; }
         public bool ShowVATPercentageContainers { get; set; }
-
+        public string PageNumberingTextDesignId { get; set; }
+        public bool HidePageNumber { get; set; }
+        public bool ShowRegionalTAXPackages { get; set; }
+        public bool ShowRegionalTAXContainers { get; set; }
 
 
 
@@ -362,7 +365,8 @@ namespace Simplog.Data.QuoteModel.EntityPOCOs
         [ForeignKey("TotalPerContainersTableDesignId")]
         public virtual QuoteTemplateTableDesign TotalPerContainersTableDesign { get; set; }
 
-
+        [ForeignKey("PageNumberingTextDesignId")]
+        public virtual QuoteTemplateTableDesign PageNumberingTextDesign { get; set; }
 
 
         [ForeignKey("PricingPackagesTitleDesignId")]

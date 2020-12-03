@@ -51,7 +51,6 @@
   ApplyOnPropertyChangedCode="true"
   HasApiHelper="true"
   AllowedForComputingPartners="false"
-  IsBusinessUnitEnabled="false"
   Code1="&quot;9a70&quot;"
   Name1="&quot; Query Group&quot;"
   CustomFieldsCount="0"
@@ -215,10 +214,11 @@
     FieldName="&quot;MainEntityId&quot;"
     OldNames="MainEntityId"
     IsNew="false"
-    IsChecked="false"
+    IsChecked="true"
     IsDeleted="false"
     ObjectTableName="&quot;ARInvoice&quot;"
-    FieldsDataType="&quot;Text&quot;"
+    FieldsDataType="&quot;LookUp&quot;"
+    LookUpTableName="&quot;Shipment&quot;"
     MinLength="0"
     MaxLength="15"
     IsRequired="false"
@@ -230,7 +230,7 @@
     SystemRequired="false"
     ObjectFieldNotRequired="false"
     SystemMaxLength="0"
-    DisplayInList="true"
+    DisplayInList="false"
     IsCustomFilter="false"
     MultiLine="false"
     IsTimeFrameFilter="false"
@@ -255,11 +255,11 @@
     InActive="false"
     DisplayLongName="false"
     FullFieldLable="&quot;MainEntityId&quot;"
-    DefaultText="&quot;MainEntityId&quot;"
+    DefaultText="&quot;Shipment&quot;"
     FullLocalDefaultText="&quot;MainEntityId&quot;"
     ListFieldLable="&quot;MainEntityIdListLable&quot;"
-    ListLableDefaultText="&quot;MainEntityId&quot;"
-    ListLocalDefaultText="&quot;MainEntityId&quot;"
+    ListLableDefaultText="&quot;Shipment&quot;"
+    ListLocalDefaultText="&quot;Shipment&quot;"
     IsNullable="false"
     IsForeignKey="false"
     DontBuildRelationOnDB="false"
@@ -268,7 +268,7 @@
     HasPMField="true"
     IsComposition="false"
     IsMaxLength="false"
-    NoMetaDataField="true"
+    NoMetaDataField="false"
     GenerateInList="true"
     IsFixedLength="false"
     EnableAutoFill="false"
@@ -276,7 +276,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
-    DisplayInAutomationAsEnitity="false"
+    DisplayInAutomationAsEnitity="true"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -16921,8 +16921,7 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsCompositKey="false" />
       <DCField
         DCFieldName="&quot;InvoiceType&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -16937,8 +16936,7 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsCompositKey="false" />
       <DCField
         DCFieldName="&quot;BillTo&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -16953,8 +16951,7 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsCompositKey="false" />
       <DCField
         DCFieldName="&quot;InvoiceNumber&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -16969,8 +16966,7 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsCompositKey="false" />
       <DCField
         DCFieldName="&quot;InvoiceDate&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -16985,8 +16981,7 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsCompositKey="false" />
       <DCField
         DCFieldName="&quot;PrintDate&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -17001,8 +16996,7 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsCompositKey="false" />
       <DCField
         DCFieldName="&quot;IsPrinted&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -17017,8 +17011,7 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsCompositKey="false" />
       <DCField
         DCFieldName="&quot;MainEntityReference&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -17033,8 +17026,7 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsCompositKey="false" />
       <DCField
         DCFieldName="&quot;IsConstituentInvoice&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -17049,8 +17041,7 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsCompositKey="false" />
       <DCField
         DCFieldName="&quot;IsConsolidationInvoice&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -17065,8 +17056,7 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsCompositKey="false" />
       <DCField
         DCFieldName="&quot;InvoiceCurrency&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -17081,8 +17071,7 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsCompositKey="false" />
       <DCField
         DCFieldName="&quot;AmountInLocalCurrency&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -17097,8 +17086,7 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsCompositKey="false" />
       <DCField
         DCFieldName="&quot;CancelledByARInvoice&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -17113,8 +17101,7 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsCompositKey="false" />
       <DCField
         DCFieldName="&quot;CreatedByUser&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -17129,8 +17116,7 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsCompositKey="false" />
       <DCField
         DCFieldName="&quot;VATNumber&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -17145,8 +17131,7 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsCompositKey="false" />
       <DCField
         DCFieldName="&quot;BillToAddress&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -17161,8 +17146,7 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsCompositKey="false" />
       <DCField
         DCFieldName="&quot;PrintNotes&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -17177,8 +17161,7 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsCompositKey="false" />
       <DCField
         DCFieldName="&quot;IssuedByUser&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -17193,8 +17176,7 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsCompositKey="false" />
       <DCField
         DCFieldName="&quot;InvoiceCurrencyExchangeRate&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -17209,8 +17191,7 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsCompositKey="false" />
       <DCField
         DCFieldName="&quot;ARInvoiceLines&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -17226,8 +17207,7 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsCompositKey="false" />
       <DCField
         DCFieldName="&quot;DueDate&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -17242,8 +17222,7 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsCompositKey="false" />
       <DCField
         DCFieldName="&quot;SubTotalInInvoiceCurrency&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -17258,8 +17237,7 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsCompositKey="false" />
       <DCField
         DCFieldName="&quot;SubTotalInLocalCurrency&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -17274,8 +17252,7 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsCompositKey="false" />
       <DCField
         DCFieldName="&quot;AmountInInvoiceCurrency&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -17290,8 +17267,7 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsCompositKey="false" />
       <DCField
         DCFieldName="&quot;IsDraft&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -17306,8 +17282,7 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsCompositKey="false" />
       <DCField
         DCFieldName="&quot;ProfitCurrencyExchangeRate&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -17322,8 +17297,7 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsCompositKey="false" />
       <DCField
         DCFieldName="&quot;AmountInProfitCurrency&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -17338,8 +17312,7 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsCompositKey="false" />
       <DCField
         DCFieldName="&quot;TransferStatus&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -17354,8 +17327,7 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsCompositKey="false" />
       <DCField
         DCFieldName="&quot;Branch&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -17370,8 +17342,7 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsCompositKey="false" />
       <DCField
         DCFieldName="&quot;LocalCurrency&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -17386,8 +17357,7 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsCompositKey="false" />
       <DCField
         DCFieldName="&quot;Tenant&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -17402,8 +17372,7 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsCompositKey="false" />
       <DCField
         DCFieldName="&quot;IsMultiCurrency&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -17418,8 +17387,7 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsCompositKey="false" />
       <DCField
         DCFieldName="&quot;CreditARInvoice&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -17434,8 +17402,7 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsCompositKey="false" />
       <DCField
         DCFieldName="&quot;ExternalAccountingEntityId&quot;"
         FieldName="&quot;ExternalAccountingEntityId&quot;"
@@ -17449,8 +17416,7 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsCompositKey="false" />
       <DCField
         DCFieldName="&quot;BillToGLAccount&quot;"
         FieldName="&quot;BillToGLAccountId&quot;"
@@ -17464,8 +17430,7 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsCompositKey="false" />
       <DCField
         DCFieldName="&quot;Status&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -17480,8 +17445,7 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsCompositKey="false" />
     </DataContract>
   </DataContracts>
   <AdditionalTextCodes>

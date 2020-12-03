@@ -30,6 +30,7 @@
         <xs:element minOccurs="0" maxOccurs="1" ref="CasualImporterEmail" />
         <xs:element minOccurs="0" maxOccurs="1" ref="CasualImportelTel" />
         <xs:element minOccurs="0" maxOccurs="1" ref="CasualImporterContact" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="VALUE_IN_USD" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -53,4 +54,5 @@
   <xs:element name="CasualImporterEmail" type="xs:string" />
   <xs:element name="CasualImportelTel" type="xs:string" />
   <xs:element name="CasualImporterContact" type="xs:string" />
+  <xs:element name="VALUE_IN_USD" type="xs:string" />
 </xs:schema>

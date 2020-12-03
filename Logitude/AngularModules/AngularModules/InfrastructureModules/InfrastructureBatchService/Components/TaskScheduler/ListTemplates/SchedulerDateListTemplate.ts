@@ -7,6 +7,7 @@ import { DownloadManager } from '../../../../../Infrastructure/Utilities/Downloa
 import { AppTool } from '../../../../../Infrastructure/Tools';
 import { TasksSchedulerPMService } from '../../../../../Infrastructure/Services/StandardPMs/TasksSchedulerPMService';
 import { TaskSchedulerItemClass } from '../../../../../InfrastructureModules/InfrastructureBatchService/Components/TaskScheduler/TaskSchedulerComponent';
+import { MessageWindow } from '../../../../../Controls/Windows/MessageWindow';
 
 
 @Component({
@@ -70,6 +71,10 @@ export class SchedulerDateListTemplate {
         if (!AppTool.IsNullOrEmpty(logDocumentId)) {
 
             DownloadManager.DownloadPage(logDocumentId);
+        } else {
+            
+            var logWindow = new MessageWindow();
+            logWindow.Show("No log is available");
         }
     }
 

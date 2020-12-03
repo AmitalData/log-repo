@@ -3,7 +3,7 @@
   Name="AgentSharedLogisticsKeys"
   Schema="dbo"
   DBType="Global"
-  Module="Global">
+  Module="Infrastructure">
   <Column
     Name="SharedKey"
     Type="varchar"

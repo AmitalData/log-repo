@@ -39,7 +39,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 ProfessionUnitTypeCode = entityPM.ProfessionUnitTypeCode,
                 SpecializationTypeCode = entityPM.SpecializationTypeCode,
                 TapagNumber = entityPM.TapagNumber,
-                TapagTypeCode = entityPM.TapagTypeCode,
+                TapagTypeCode = "1",
                 ValidityDate = entityPM.ValidityDate,
                 CreateDate = entityPM.CreateDate,
                 ChangeSetOp = ChangeSetOperation.Insert,
@@ -69,12 +69,19 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             if (tapagPM != null)
             {
                 tapagPM.ChangeSetOp = ChangeSetOperation.Update;
-                tapagPM.TapagTypeCode = entityPM.TapagTypeCode;
-                tapagPM.CustomsBranchCode = entityPM.CustomsBranchCode;
+                //tapagPM.CustomsBranchCode = entityPM.CustomsBranchCode;
                 tapagPM.ValidityDate = entityPM.ValidityDate;
                 tapagPM.FollowDate = entityPM.FollowDate;
                 tapagUpdateService.Update(tapagPM, false);
             }
+        }
+
+        protected override void UpdateComposition(DeficitPM entityPM)
+        {
+            DeficitDecisionUpdateService deficitDecisionUpdateService = new DeficitDecisionUpdateService(MainContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), Tenant);
+            deficitDecisionUpdateService.UpdateMulti(entityPM.DeficitDecisions, entityPM.DeletedDeficitDecisions, entityPM, false);
+            base.UpdateComposition(entityPM);
+
         }
     }
 }

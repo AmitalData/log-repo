@@ -26,8 +26,8 @@
     <script src="../HtmlHelpers/JS/Logitude.Converters.js" type="text/javascript"></script>
     <script src="../HtmlHelpers/JS/Logitude.Entites.js" type="text/javascript"></script>
     <script src="../HtmlHelpers/JS/ContactActivityLog.js" type="text/javascript"></script>
- 
-    
+
+
 <style type="text/css">
     img[src] {
         visibility: visible;
@@ -515,7 +515,7 @@
 
                                                                             </td>
                                                                             <td style="width:100px;text-align:right">
-                                                                                <a  id="DownloadAll"  href='javascript:document.location.href=GetURL();' target="_blank" onclick='OnDownloadAllDocument()'>
+                                                                                <a  id="DownloadAll" onclick='OnDownloadAllDocument()'>
                                                                                 <div style="cursor:pointer; font-size:13px; color:#27AAE1; text-align:right;padding-right:5px"> Download All</div>
                                                                                     </a>
                                                                                </td>
@@ -936,13 +936,13 @@
     </script>
 
     <script type="text/x-kendo-tmpl" id="DocumentListBoxItemDataTemplate">
-        <a class="DocumentListBoxItem" id="#= Id #"  href="#= Url #" target="_blank" OnClick="OnDownloadDocument()">
+        <a class="DocumentListBoxItem" id="#= Id #" OnClick="OnDownloadDocument(Id)">
              <div class="content">
                  <div>${Name}</div>
              </div>
         </a>
     </script>
-
+    
     <script type="text/x-kendo-tmpl" id="EventListBoxItemDataTemplate">
         <div class="EventListBoxItem">
             <div>
@@ -988,11 +988,12 @@
             </div>
         </div>
     </script>
-    
     <script type="text/javascript">
-        function OnDownloadDocument() {
+        function OnDownloadDocument(url) {
             $.SendContactActivity($.CurrentEmail, "Shipment", "Document Download", $.CurrentTenant, $.CurrentCardId);
+            window.open(url);
         }
+
 
         function OnDownloadAllDocument() {
             $.SendContactsActivity($.CurrentEmail, "Shipment", "Document Download", $.CurrentTenant, $.CurrentCardId);
@@ -1000,7 +1001,8 @@
         }
 
         function GetURL() {
-            return "../WebPages/SharedDownloadPage.aspx?id=" + $.CurrentTenant + ":" + null + ":ship:" + $.CurrentEntityId + ":" + $.CurrentCardType;
+            return null;
+            //return "../WebPages/SharedDownloadPage.aspx?id=" + $.CurrentTenant + ":" + null + ":ship:" + $.CurrentEntityId + ":" + $.CurrentCardType;
         }
     </script>
    

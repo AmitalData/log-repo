@@ -1,4 +1,4 @@
-﻿<style type="text/css">
+<style type="text/css">
     
     .subTitle {
         color: #1b90cb;
@@ -27,28 +27,50 @@
     <tr>
         <td colspan="2" style="height: 100%; padding-top: 5px;">
             <div class="CellContent">
-                <logitude-edit-grid GridWidth="100%" GridHeight="100%" 
-                                    [ItemSource]="FieldsList" 
+                <logitude-edit-grid GridWidth="100%" GridHeight="100%"
+                                    [ItemSource]="FieldsList"
                                     [UseVirtuallization]="true"
                                     (SelectedItemChanged)="OnRowSelected($event)"
                                     [SelectedRow]="SelectedRow">
 
                     <!-- Name -->
                     <log-column [header]="'שם'" [width]="'250'" [Alignment]="'right'" [binding]="'Name'">
-                        <log-cell-template template="let item" #logcelltemplate>
-                            <div style="text-align: right;" class="TextTrimming">
-                                <span>{{ item.Name | TextCodeTranslationPipe }}</span>
-                            </div>
-                        </log-cell-template>
+                        <ng-template let-item>
+                            <log-cell-template #logcelltemplate>
+                                <div style="text-align: right;" class="TextTrimming">
+                                    <span>{{ item.Name | TextCodeTranslationPipe }}</span>
+                                </div>
+                            </log-cell-template>
+                        </ng-template>
                     </log-column>
 
-                    <!-- Active -->
-                    <log-column [header]="'פעיל'" [width]="'45'" [Alignment]="'right'">
-                        <log-cell-template template="let item" [TabIndex]="-1" [IgnoreMods]="true">
-                            <!--{{ item.Active }}-->
-                            <CheckBox (Checked)="CheckBoxChanged($event, item)" [IsChecked]="item.Active"></CheckBox>
-                        </log-cell-template>
+
+
+                    <log-column [header]="'חובה ליבוא'" [width]="'65'" [Alignment]="'right'">
+                        <ng-template let-item>
+                            <log-cell-template [TabIndex]="-1" [IgnoreMods]="true">
+                                <!--{{ item.Active }}-->
+                                <CheckBox (Checked)="item.IsImport=$event;  CheckBoxChanged($event, item)" [IsChecked]="item.IsImport"></CheckBox>
+                            </log-cell-template>
+                        </ng-template>
                     </log-column>
+
+                    <log-column [header]="'חובה ליצוא'" [width]="'65'" [Alignment]="'right'">
+                        <ng-template let-item>
+                            <log-cell-template [TabIndex]="-1" [IgnoreMods]="true">
+                                <!--{{ item.Active }}-->
+                                <CheckBox (Checked)="item.IsExport=$event; CheckBoxChanged($event, item)" [IsChecked]="item.isExport"></CheckBox>
+                            </log-cell-template>
+                        </ng-template>
+                    </log-column>
+                    <!-- Active -->
+                    <!--<log-column [header]="'פעיל'" [width]="'45'" [Alignment]="'right'">
+        <ng-template let-item>
+            <log-cell-template [TabIndex]="-1" [IgnoreMods]="true">
+                 <CheckBox (Checked)="CheckBoxChanged($event, item)" [IsChecked]="item.Active"></CheckBox>
+            </log-cell-template>
+        </ng-template>
+    </log-column>-->
 
                 </logitude-edit-grid>
             </div>

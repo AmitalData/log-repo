@@ -54,6 +54,7 @@
   ApplyOnPropertyChangedCode="false"
   HasApiHelper="false"
   AllowedForComputingPartners="false"
+  IsBusinessUnitEnabled="false"
   Code1="&quot;3701&quot;"
   Name1="&quot; Query Group&quot;"
   CustomFieldsCount="0"
@@ -1666,7 +1667,7 @@
       IsCoreFeature="false"
       IsBusinessUnitEnabled="false" />
     <Feature
-      Code="&quot;BIReport.Fact.Shipments&quot;"
+      Code="&quot;BIReport.Fact_Shipments&quot;"
       FeatureTypeCode="&quot;AREA&quot;"
       FeatureTextCodeCode="&quot;BIReport.Features.BIReport.Fact.Shipments&quot;"
       FeatureDefaultText="&quot;Shipments&quot;"
@@ -1675,10 +1676,37 @@
       IsCoreFeature="false"
       IsBusinessUnitEnabled="false" />
     <Feature
-      Code="&quot;BIReport.Fact.ShipmentCharges&quot;"
+      Code="&quot;BIReport.Fact_Charges&quot;"
       FeatureTypeCode="&quot;AREA&quot;"
       FeatureTextCodeCode="&quot;BIReport.Features.BIReport.Fact.ShipmentCharges&quot;"
       FeatureDefaultText="&quot;Shipment Charges&quot;"
+      IsPackagable="true"
+      IsOld="false"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
+    <Feature
+      Code="&quot;BIReport.Fact_Masters&quot;"
+      FeatureTypeCode="&quot;AREA&quot;"
+      FeatureTextCodeCode="&quot;BIReport.Features.BIReport.Fact.Masters&quot;"
+      FeatureDefaultText="&quot;Masters&quot;"
+      IsPackagable="true"
+      IsOld="false"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
+    <Feature
+      Code="&quot;BIReport.Fact_MasterCharges&quot;"
+      FeatureTypeCode="&quot;AREA&quot;"
+      FeatureTextCodeCode="&quot;BIReport.Features.BIReport.Fact.MasterCharges&quot;"
+      FeatureDefaultText="&quot;Master Charges&quot;"
+      IsPackagable="true"
+      IsOld="false"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
+    <Feature
+      Code="&quot;BIReportDownload&quot;"
+      FeatureTypeCode="&quot;ACT&quot;"
+      FeatureTextCodeCode="&quot;BIReport.Features.BIReportDownload&quot;"
+      FeatureDefaultText="&quot;Download&quot;"
       IsPackagable="true"
       IsOld="false"
       IsCoreFeature="false"

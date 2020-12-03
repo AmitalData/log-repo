@@ -392,7 +392,42 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
-   }
+
+	   private List<ConsignmentPackDangerPM> consignmentPackDangers;
+	    
+       [Composition]
+ 
+		     
+	   [Include]
+	   [Association("ConsPackConsignmentPackDangers", "DeclarationId","DeclarationId")]
+	   [DataMember]
+	   public virtual List<ConsignmentPackDangerPM> ConsignmentPackDangers  
+	   {
+	        get
+             {
+                 if (consignmentPackDangers == null)
+                 {
+                     consignmentPackDangers = new List<ConsignmentPackDangerPM>();
+                 }
+                 return consignmentPackDangers;
+              }
+             set { consignmentPackDangers = value; }
+	    }
+		   
+	   private List<ConsignmentPackDangerPM>  deletedConsignmentPackDangers;
+	   public virtual List<ConsignmentPackDangerPM> DeletedConsignmentPackDangers  
+	   {
+	        get
+             {
+                 if ( deletedConsignmentPackDangers == null)
+                 {
+                      deletedConsignmentPackDangers = new List<ConsignmentPackDangerPM>();
+                 }
+                 return  deletedConsignmentPackDangers;
+              }
+             set {  deletedConsignmentPackDangers = value; }
+	    }
+	     }
    
 }
 	 

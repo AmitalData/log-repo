@@ -406,6 +406,12 @@ __pycache__/
 /Logitude/Logitude.IntegrationTests/DownloadedFiles
 /Logitude/AngularModules/AngularModules/--protractor-html-reporter-2
 /Logitude/AngularModules/AngularModules/webpack.config-prod.js
+/Logitude/JustWebFreight/WebFreight.Web/JustAmitalCustomsWindowsServiceappSettings.config
+/Logitude/JustWebFreight/WebFreight.Web/JustAmitalCustomsWindowsServiceConnectionStrings.config
+*.7z
+/Logitude/AngularModules/package.json
+/Logitude/AngularModules/AngularModules/CustomsModules/Workspaces
+/Logitude/AngularModules/AngularModules/CustomsModules/CustomsCourier/CustomsRequests
 /Logitude/Logitude.HybridTest/Properties/DataSources
 /Logitude/AngularModules/AngularModules/node_modules.rar
 /Logitude/Logitude.Update/performancelog.csv
@@ -420,4 +426,7 @@ __pycache__/
 /Logitude/AngularModules/CargoTrackingModules/dist
 
 /Logitude/Logitude.MetadataUpdate/performancelog.csv
+/Logitude/AngularModules/AngularModules/report.20200531.114949.5976.0.001.json
+
+/e2e/Cypress/IslamsTeam/ReleaseTestsQ4/Quotation/CreateEditQuote.ts
 /Logitude/AngularModules/.vscode/AngularModules

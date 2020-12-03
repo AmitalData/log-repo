@@ -8,6 +8,7 @@
 //------------------------------------------------------------------------------
 
 import {ConsignmentPM} from './ConsignmentPM';
+import {ConsignmentPackDangerPM} from './ConsignmentPackDangerPM';
 import {UIProperties, UIProperty} from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
 import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceLocator} from '../../Infrastructure/Locators/ServiceLocator';
@@ -107,7 +108,41 @@ export class ConsignmentPackagePM {
     public set GrossMassMeasureTypeName(newValue: string) { if (this.grossMassMeasureTypeName != newValue) { this.grossMassMeasureTypeName = newValue; this.MarkAsDirty("GrossMassMeasureTypeName"); } }
        
 	 
+     
+	private consignmentPackDangers: ConsignmentPackDangerPM[];
+    get  ConsignmentPackDangers() {
+        if (this.consignmentPackDangers == null) {
+            this.consignmentPackDangers = [];
+        }
 
+        return this.consignmentPackDangers;
+    }
+    set  ConsignmentPackDangers(newValue: ConsignmentPackDangerPM[]) {
+        if (this.consignmentPackDangers != newValue) {
+            this.consignmentPackDangers = newValue;
+        }
+    }
+    public AddConsignmentPackDanger(item: ConsignmentPackDangerPM) {
+        if (item != null) {
+            var index = this. ConsignmentPackDangers.indexOf(item);
+            if (index == -1) {
+                item.EntityParentPM = this;
+                this. ConsignmentPackDangers.push(item);
+                this.MarkAsDirty();
+            }
+        }
+    }
+    public RemoveConsignmentPackDanger(item: ConsignmentPackDangerPM) {
+        if (item != null) {
+            var index = this. ConsignmentPackDangers.indexOf(item);
+            if (index > -1) {
+                this. ConsignmentPackDangers.splice(index, 1);
+                this.MarkAsDirty();
+            }
+        }
+    }
+    //public ConsignmentPackDangers: Array<ConsignmentPackDangerPM>= [];
+ 
     public OldEntityPM: ConsignmentPackagePM;
 	
     private entityParentPM: any;

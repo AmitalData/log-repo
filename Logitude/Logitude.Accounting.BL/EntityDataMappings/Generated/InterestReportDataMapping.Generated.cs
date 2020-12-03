@@ -40,7 +40,9 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         InterestReportStatusCode, 
 	         SearchFields, 
 	         CustomerId, 
-	         InvoiceFailureReason,
+	         InvoiceFailureReason, 
+	         CreditAllotmentPercentage, 
+	         CalCreditAllotmentCommission,
 	      }
 
 
@@ -84,7 +86,9 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         IsUpdatedFromBatch, 
 	         CanRecalculate, 
 	         InvoiceDate, 
-	         IsNewReport,
+	         IsNewReport, 
+	         CreditAllotmentPercentage, 
+	         CalCreditAllotmentCommission,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -181,6 +185,16 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.InvoiceFailureReason))
             {
 				entityPOCO.InvoiceFailureReason = entityPM.InvoiceFailureReason;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CreditAllotmentPercentage))
+            {
+				entityPOCO.CreditAllotmentPercentage = entityPM.CreditAllotmentPercentage;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CalCreditAllotmentCommission))
+            {
+				entityPOCO.CalCreditAllotmentCommission = entityPM.CalCreditAllotmentCommission;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -284,6 +298,16 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 					entityPM.InvoiceFailureReason = entityPOCO.InvoiceFailureReason;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CreditAllotmentPercentage))
+            {
+					entityPM.CreditAllotmentPercentage = entityPOCO.CreditAllotmentPercentage;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CalCreditAllotmentCommission))
+            {
+					entityPM.CalCreditAllotmentCommission = entityPOCO.CalCreditAllotmentCommission;
+            }
+
 		}
 
 		public void PMToOldPM(InterestReportPM entityPM, InterestReportPM oldEntityPM)
@@ -378,6 +402,16 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.InvoiceFailureReason))
             {
                 oldEntityPM.InvoiceFailureReason = entityPM.InvoiceFailureReason;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CreditAllotmentPercentage))
+            {
+                oldEntityPM.CreditAllotmentPercentage = entityPM.CreditAllotmentPercentage;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CalCreditAllotmentCommission))
+            {
+                oldEntityPM.CalCreditAllotmentCommission = entityPM.CalCreditAllotmentCommission;
             }
 			
 		}

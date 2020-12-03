@@ -372,7 +372,10 @@ export class ContactPM {
     public OldEntityPM: ContactPM;
 		
     public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
+       if(!this.DisableMarkAsDirty)
+       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -380,6 +383,7 @@ export class ContactPM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "Contact");
            
         }
+	 }
     }
     private MyClone: ContactPM;
 

@@ -1,4 +1,4 @@
-﻿
+
 import {DocumentCustomFieldsComponent} from './Components/DocumentComponent/DocumentCustomFieldsComponent';
 import {GeneratedDocumentCustomFieldComponent} from './Components/DocumentComponent/GeneratedDocumentCustomFieldComponent'
 import {PrintDocumentComponent} from './Components/DocumentComponent/PrintDocumentComponent';
@@ -32,7 +32,15 @@ import {NewReportTemplateComponent} from './Components/DocumentType/NewReportTem
 import {SendToContactsComponent} from './Components/SendMessageContacts/SendToContactsComponent';
 import {SharedDocumentsPermissionsComponent} from './Components/SharedDocument/SharedDocumentsPermissionsComponent';
 import {SharedDocumentComponent} from './Components/SharedDocument/SharedDocumentComponent';
-import {DocumentsFilingGeneralTabComponent} from './Components/DocumentsFiling/DocumentsFilingGeneralTabComponent';
+import { DocumentsFilingGeneralTabComponent } from './Components/DocumentsFiling/DocumentsFilingGeneralTabComponent';
+import { DocumentDefultAttachmentsComponent } from './Components/DocumentComponent/DocumentDefultAttachmentsComponent';
+
+
+
+
+
+
+
 
 export const Components =
     [
@@ -70,6 +78,7 @@ export const Components =
         SharedDocumentsPermissionsComponent,
         SharedDocumentComponent,
         DocumentsFilingGeneralTabComponent,
+        DocumentDefultAttachmentsComponent,
 
     ];
 
@@ -113,6 +122,13 @@ export class ModuleDeclarations {
             case "SharedDocumentsPermissionsComponent": { myResult = SharedDocumentsPermissionsComponent; break; }
             case "SharedDocumentComponent": { myResult = SharedDocumentComponent; break; }
             case "DocumentsFilingGeneralTabComponent": { myResult = DocumentsFilingGeneralTabComponent; break; }
+            case "DocumentDefultAttachmentsComponent": { myResult = DocumentDefultAttachmentsComponent; break; }
+
+
+                
+
+
+
         }
 
         return myResult;

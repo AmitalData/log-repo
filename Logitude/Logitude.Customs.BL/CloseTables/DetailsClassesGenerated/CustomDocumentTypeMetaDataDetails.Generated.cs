@@ -20,17 +20,5074 @@ namespace Logitude.Customs.BL
    {
        public List<CustomDocumentTypeMetaDataDetails> GetAll()
        {
-		    var all = new List<CustomDocumentTypeMetaDataDetails>(); 
+		    var all = new List<CustomDocumentTypeMetaDataDetails>();  
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 419, 
+                Mandatory = false, 
+                Format = "boolean", 
+                DocumentTypeCode = 1, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 69, 
+                Mandatory = true, 
+                Format = "Boolean", 
+                DocumentTypeCode = 271, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 87, 
+                Mandatory = true, 
+                Format = "Boolean", 
+                DocumentTypeCode = 271, 
+                IsLeading = true, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 96, 
+                Mandatory = false, 
+                Format = "Boolean", 
+                DocumentTypeCode = 271, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 69, 
+                Mandatory = true, 
+                Format = "Boolean", 
+                DocumentTypeCode = 325, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 87, 
+                Mandatory = true, 
+                Format = "Boolean", 
+                DocumentTypeCode = 325, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 87, 
+                Mandatory = true, 
+                Format = "Boolean", 
+                DocumentTypeCode = 380, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 96, 
+                Mandatory = false, 
+                Format = "Boolean", 
+                DocumentTypeCode = 380, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 69, 
+                Mandatory = false, 
+                Format = "Boolean", 
+                DocumentTypeCode = 380, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 70, 
+                Mandatory = false, 
+                Format = "Boolean", 
+                DocumentTypeCode = 380, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 71, 
+                Mandatory = false, 
+                Format = "Boolean", 
+                DocumentTypeCode = 707, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 69, 
+                Mandatory = false, 
+                Format = "Boolean", 
+                DocumentTypeCode = 780, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 87, 
+                Mandatory = true, 
+                Format = "Boolean", 
+                DocumentTypeCode = 780, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 70, 
+                Mandatory = false, 
+                Format = "Boolean", 
+                DocumentTypeCode = IL_124, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 72, 
+                Mandatory = false, 
+                Format = "Boolean", 
+                DocumentTypeCode = IL_124, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 69, 
+                Mandatory = true, 
+                Format = "Boolean", 
+                DocumentTypeCode = IL_126, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 70, 
+                Mandatory = false, 
+                Format = "Boolean", 
+                DocumentTypeCode = IL_126, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 87, 
+                Mandatory = true, 
+                Format = "Boolean", 
+                DocumentTypeCode = IL_126, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 87, 
+                Mandatory = false, 
+                Format = "Boolean", 
+                DocumentTypeCode = IL_133, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 69, 
+                Mandatory = true, 
+                Format = "Boolean", 
+                DocumentTypeCode = IL_184, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 70, 
+                Mandatory = false, 
+                Format = "Boolean", 
+                DocumentTypeCode = IL_184, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 87, 
+                Mandatory = true, 
+                Format = "Boolean", 
+                DocumentTypeCode = IL_184, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 69, 
+                Mandatory = true, 
+                Format = "Boolean", 
+                DocumentTypeCode = IL_185, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 70, 
+                Mandatory = false, 
+                Format = "Boolean", 
+                DocumentTypeCode = IL_185, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 87, 
+                Mandatory = true, 
+                Format = "Boolean", 
+                DocumentTypeCode = IL_185, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 77, 
+                Mandatory = true, 
+                Format = "Boolean", 
+                DocumentTypeCode = IL_261, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 77, 
+                Mandatory = true, 
+                Format = "Boolean", 
+                DocumentTypeCode = IL_262, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 106, 
+                Mandatory = true, 
+                Format = "Boolean", 
+                DocumentTypeCode = IL_345, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 107, 
+                Mandatory = true, 
+                Format = "Boolean", 
+                DocumentTypeCode = IL_345, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 69, 
+                Mandatory = false, 
+                Format = "Boolean", 
+                DocumentTypeCode = IL_70, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 87, 
+                Mandatory = true, 
+                Format = "Boolean", 
+                DocumentTypeCode = IL_70, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 57, 
+                Mandatory = true, 
+                Format = "Date", 
+                DocumentTypeCode = IL_83, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 60, 
+                Mandatory = true, 
+                Format = "Date", 
+                DocumentTypeCode = IL_83, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 7, 
+                Mandatory = true, 
+                Format = "Date", 
+                DocumentTypeCode = IL_83, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 57, 
+                Mandatory = true, 
+                Format = "Date", 
+                DocumentTypeCode = IL_60, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 57, 
+                Mandatory = true, 
+                Format = "Date", 
+                DocumentTypeCode = IL_61, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 105, 
+                Mandatory = true, 
+                Format = "Date", 
+                DocumentTypeCode = IL_345, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 57, 
+                Mandatory = true, 
+                Format = "Date", 
+                DocumentTypeCode = IL_40, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 60, 
+                Mandatory = true, 
+                Format = "Date", 
+                DocumentTypeCode = IL_339, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 86, 
+                Mandatory = true, 
+                Format = "Date", 
+                DocumentTypeCode = IL_285, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 57, 
+                Mandatory = true, 
+                Format = "Date", 
+                DocumentTypeCode = IL_29, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 57, 
+                Mandatory = true, 
+                Format = "Date", 
+                DocumentTypeCode = IL_30, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 92, 
+                Mandatory = true, 
+                Format = "Date", 
+                DocumentTypeCode = IL_304, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 60, 
+                Mandatory = false, 
+                Format = "Date", 
+                DocumentTypeCode = IL_306, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 91, 
+                Mandatory = true, 
+                Format = "Date", 
+                DocumentTypeCode = IL_303, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 57, 
+                Mandatory = false, 
+                Format = "Date", 
+                DocumentTypeCode = IL_27, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 58, 
+                Mandatory = true, 
+                Format = "Date", 
+                DocumentTypeCode = IL_185, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 60, 
+                Mandatory = false, 
+                Format = "Date", 
+                DocumentTypeCode = IL_26, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 57, 
+                Mandatory = false, 
+                Format = "Date", 
+                DocumentTypeCode = IL_26, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 57, 
+                Mandatory = true, 
+                Format = "Date", 
+                DocumentTypeCode = IL_28, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 82, 
+                Mandatory = true, 
+                Format = "Date", 
+                DocumentTypeCode = IL_284, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 60, 
+                Mandatory = false, 
+                Format = "Date", 
+                DocumentTypeCode = IL_17, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 60, 
+                Mandatory = false, 
+                Format = "Date", 
+                DocumentTypeCode = IL_180, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 60, 
+                Mandatory = false, 
+                Format = "Date", 
+                DocumentTypeCode = IL_183, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 60, 
+                Mandatory = false, 
+                Format = "Date", 
+                DocumentTypeCode = IL_182, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 58, 
+                Mandatory = true, 
+                Format = "Date", 
+                DocumentTypeCode = IL_126, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 58, 
+                Mandatory = true, 
+                Format = "Date", 
+                DocumentTypeCode = IL_184, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 60, 
+                Mandatory = true, 
+                Format = "Date", 
+                DocumentTypeCode = IL_204, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 60, 
+                Mandatory = true, 
+                Format = "Date", 
+                DocumentTypeCode = IL_21, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 60, 
+                Mandatory = true, 
+                Format = "Date", 
+                DocumentTypeCode = IL_22, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 57, 
+                Mandatory = true, 
+                Format = "Date", 
+                DocumentTypeCode = IL_132, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 60, 
+                Mandatory = true, 
+                Format = "Date", 
+                DocumentTypeCode = IL_132, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 57, 
+                Mandatory = true, 
+                Format = "Date", 
+                DocumentTypeCode = IL_133, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 60, 
+                Mandatory = true, 
+                Format = "Date", 
+                DocumentTypeCode = IL_133, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 57, 
+                Mandatory = true, 
+                Format = "Date", 
+                DocumentTypeCode = IL_135, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 60, 
+                Mandatory = true, 
+                Format = "Date", 
+                DocumentTypeCode = IL_135, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 60, 
+                Mandatory = true, 
+                Format = "Date", 
+                DocumentTypeCode = IL_14, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 57, 
+                Mandatory = true, 
+                Format = "Date", 
+                DocumentTypeCode = IL_141, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 60, 
+                Mandatory = true, 
+                Format = "Date", 
+                DocumentTypeCode = IL_141, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 57, 
+                Mandatory = true, 
+                Format = "Date", 
+                DocumentTypeCode = IL_143, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 60, 
+                Mandatory = true, 
+                Format = "Date", 
+                DocumentTypeCode = IL_143, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 57, 
+                Mandatory = true, 
+                Format = "Date", 
+                DocumentTypeCode = IL_145, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 57, 
+                Mandatory = true, 
+                Format = "Date", 
+                DocumentTypeCode = IL_128, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 57, 
+                Mandatory = true, 
+                Format = "Date", 
+                DocumentTypeCode = IL_129, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 57, 
+                Mandatory = true, 
+                Format = "Date", 
+                DocumentTypeCode = IL_125, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 57, 
+                Mandatory = true, 
+                Format = "Date", 
+                DocumentTypeCode = IL_119, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 60, 
+                Mandatory = false, 
+                Format = "Date", 
+                DocumentTypeCode = IL_119, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 57, 
+                Mandatory = true, 
+                Format = "Date", 
+                DocumentTypeCode = IL_123, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 57, 
+                Mandatory = true, 
+                Format = "Date", 
+                DocumentTypeCode = 780, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 57, 
+                Mandatory = true, 
+                Format = "Date", 
+                DocumentTypeCode = IL_124, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 60, 
+                Mandatory = false, 
+                Format = "Date", 
+                DocumentTypeCode = IL_100, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 57, 
+                Mandatory = true, 
+                Format = "Date", 
+                DocumentTypeCode = 714, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 57, 
+                Mandatory = true, 
+                Format = "Date", 
+                DocumentTypeCode = 740, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 57, 
+                Mandatory = true, 
+                Format = "Date", 
+                DocumentTypeCode = 741, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 57, 
+                Mandatory = true, 
+                Format = "Date", 
+                DocumentTypeCode = 706, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 57, 
+                Mandatory = true, 
+                Format = "Date", 
+                DocumentTypeCode = 712, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 57, 
+                Mandatory = true, 
+                Format = "Date", 
+                DocumentTypeCode = 703, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 57, 
+                Mandatory = true, 
+                Format = "Date", 
+                DocumentTypeCode = 704, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 57, 
+                Mandatory = true, 
+                Format = "Date", 
+                DocumentTypeCode = 705, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 55, 
+                Mandatory = true, 
+                Format = "Date", 
+                DocumentTypeCode = 380, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 119, 
+                Mandatory = false, 
+                Format = "date", 
+                DocumentTypeCode = 1, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 56, 
+                Mandatory = true, 
+                Format = "Date", 
+                DocumentTypeCode = 325, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 57, 
+                Mandatory = true, 
+                Format = "Date", 
+                DocumentTypeCode = 419, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 112, 
+                Mandatory = true, 
+                Format = "Date", 
+                DocumentTypeCode = 419, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 57, 
+                Mandatory = true, 
+                Format = "Date", 
+                DocumentTypeCode = 700, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 57, 
+                Mandatory = true, 
+                Format = "Date", 
+                DocumentTypeCode = 270, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 57, 
+                Mandatory = true, 
+                Format = "Date", 
+                DocumentTypeCode = 106, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 57, 
+                Mandatory = true, 
+                Format = "Date", 
+                DocumentTypeCode = 14, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 99, 
+                Mandatory = true, 
+                Format = "Int", 
+                DocumentTypeCode = 106, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 106, 
+                Mandatory = true, 
+                Format = "int", 
+                DocumentTypeCode = 1, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 81, 
+                Mandatory = false, 
+                Format = "Int", 
+                DocumentTypeCode = 1, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 99, 
+                Mandatory = true, 
+                Format = "Int", 
+                DocumentTypeCode = 270, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 99, 
+                Mandatory = true, 
+                Format = "Int", 
+                DocumentTypeCode = 14, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 99, 
+                Mandatory = true, 
+                Format = "Int", 
+                DocumentTypeCode = 419, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 99, 
+                Mandatory = true, 
+                Format = "Int", 
+                DocumentTypeCode = 700, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 99, 
+                Mandatory = true, 
+                Format = "Int", 
+                DocumentTypeCode = 704, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 99, 
+                Mandatory = true, 
+                Format = "Int", 
+                DocumentTypeCode = 703, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 99, 
+                Mandatory = true, 
+                Format = "Int", 
+                DocumentTypeCode = 712, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 99, 
+                Mandatory = true, 
+                Format = "Int", 
+                DocumentTypeCode = 707, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 99, 
+                Mandatory = true, 
+                Format = "Int", 
+                DocumentTypeCode = 706, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 99, 
+                Mandatory = true, 
+                Format = "Int", 
+                DocumentTypeCode = 741, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 99, 
+                Mandatory = true, 
+                Format = "Int", 
+                DocumentTypeCode = 740, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 99, 
+                Mandatory = true, 
+                Format = "Int", 
+                DocumentTypeCode = 714, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 99, 
+                Mandatory = true, 
+                Format = "Int", 
+                DocumentTypeCode = 705, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 25, 
+                Mandatory = true, 
+                Format = "Int", 
+                DocumentTypeCode = 780, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 28, 
+                Mandatory = true, 
+                Format = "Int", 
+                DocumentTypeCode = 85, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 43, 
+                Mandatory = true, 
+                Format = "Int", 
+                DocumentTypeCode = IL_124, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 47, 
+                Mandatory = false, 
+                Format = "Int", 
+                DocumentTypeCode = IL_100, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 50, 
+                Mandatory = false, 
+                Format = "Int", 
+                DocumentTypeCode = IL_100, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 43, 
+                Mandatory = true, 
+                Format = "Int", 
+                DocumentTypeCode = IL_11, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 43, 
+                Mandatory = true, 
+                Format = "Int", 
+                DocumentTypeCode = IL_13, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 27, 
+                Mandatory = false, 
+                Format = "Int", 
+                DocumentTypeCode = IL_14, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 49, 
+                Mandatory = true, 
+                Format = "Int", 
+                DocumentTypeCode = IL_133, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 53, 
+                Mandatory = true, 
+                Format = "Int", 
+                DocumentTypeCode = IL_133, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 49, 
+                Mandatory = true, 
+                Format = "Int", 
+                DocumentTypeCode = IL_132, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 53, 
+                Mandatory = true, 
+                Format = "Int", 
+                DocumentTypeCode = IL_132, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 49, 
+                Mandatory = true, 
+                Format = "Int", 
+                DocumentTypeCode = IL_134, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 52, 
+                Mandatory = true, 
+                Format = "Int", 
+                DocumentTypeCode = IL_134, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 53, 
+                Mandatory = true, 
+                Format = "Int", 
+                DocumentTypeCode = IL_134, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 37, 
+                Mandatory = true, 
+                Format = "Int", 
+                DocumentTypeCode = IL_136, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 24, 
+                Mandatory = true, 
+                Format = "Int", 
+                DocumentTypeCode = IL_22, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 26, 
+                Mandatory = true, 
+                Format = "Int", 
+                DocumentTypeCode = IL_22, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 93, 
+                Mandatory = true, 
+                Format = "Int", 
+                DocumentTypeCode = IL_234, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 24, 
+                Mandatory = true, 
+                Format = "Int", 
+                DocumentTypeCode = IL_21, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 26, 
+                Mandatory = true, 
+                Format = "Int", 
+                DocumentTypeCode = IL_21, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 75, 
+                Mandatory = true, 
+                Format = "Int", 
+                DocumentTypeCode = IL_235, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 75, 
+                Mandatory = true, 
+                Format = "Int", 
+                DocumentTypeCode = IL_236, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 75, 
+                Mandatory = true, 
+                Format = "Int", 
+                DocumentTypeCode = IL_237, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 75, 
+                Mandatory = true, 
+                Format = "Int", 
+                DocumentTypeCode = IL_238, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 75, 
+                Mandatory = true, 
+                Format = "Int", 
+                DocumentTypeCode = IL_239, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 75, 
+                Mandatory = true, 
+                Format = "Int", 
+                DocumentTypeCode = IL_240, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 75, 
+                Mandatory = true, 
+                Format = "Int", 
+                DocumentTypeCode = IL_241, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 47, 
+                Mandatory = false, 
+                Format = "Int", 
+                DocumentTypeCode = IL_183, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 50, 
+                Mandatory = false, 
+                Format = "Int", 
+                DocumentTypeCode = IL_183, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 24, 
+                Mandatory = false, 
+                Format = "Int", 
+                DocumentTypeCode = IL_182, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 26, 
+                Mandatory = true, 
+                Format = "Int", 
+                DocumentTypeCode = IL_182, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 24, 
+                Mandatory = false, 
+                Format = "Int", 
+                DocumentTypeCode = IL_180, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 26, 
+                Mandatory = true, 
+                Format = "Int", 
+                DocumentTypeCode = IL_180, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 32, 
+                Mandatory = true, 
+                Format = "Int", 
+                DocumentTypeCode = IL_147, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 88, 
+                Mandatory = true, 
+                Format = "Int", 
+                DocumentTypeCode = IL_15, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 24, 
+                Mandatory = false, 
+                Format = "Int", 
+                DocumentTypeCode = IL_17, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 26, 
+                Mandatory = true, 
+                Format = "Int", 
+                DocumentTypeCode = IL_17, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 43, 
+                Mandatory = false, 
+                Format = "Int", 
+                DocumentTypeCode = IL_202, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 30, 
+                Mandatory = true, 
+                Format = "Int", 
+                DocumentTypeCode = IL_207, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 30, 
+                Mandatory = true, 
+                Format = "Int", 
+                DocumentTypeCode = IL_208, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 85, 
+                Mandatory = true, 
+                Format = "Int", 
+                DocumentTypeCode = IL_284, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 81, 
+                Mandatory = false, 
+                Format = "Int", 
+                DocumentTypeCode = IL_282, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 43, 
+                Mandatory = true, 
+                Format = "Int", 
+                DocumentTypeCode = IL_262, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 81, 
+                Mandatory = false, 
+                Format = "Int", 
+                DocumentTypeCode = IL_283, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 81, 
+                Mandatory = false, 
+                Format = "Int", 
+                DocumentTypeCode = IL_281, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 81, 
+                Mandatory = false, 
+                Format = "Int", 
+                DocumentTypeCode = IL_273, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 81, 
+                Mandatory = true, 
+                Format = "Int", 
+                DocumentTypeCode = IL_278, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 43, 
+                Mandatory = true, 
+                Format = "Int", 
+                DocumentTypeCode = IL_261, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 81, 
+                Mandatory = false, 
+                Format = "Int", 
+                DocumentTypeCode = IL_272, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 75, 
+                Mandatory = true, 
+                Format = "Int", 
+                DocumentTypeCode = IL_242, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 75, 
+                Mandatory = true, 
+                Format = "Int", 
+                DocumentTypeCode = IL_243, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 75, 
+                Mandatory = true, 
+                Format = "Int", 
+                DocumentTypeCode = IL_244, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 75, 
+                Mandatory = true, 
+                Format = "Int", 
+                DocumentTypeCode = IL_245, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 75, 
+                Mandatory = true, 
+                Format = "Int", 
+                DocumentTypeCode = IL_246, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 75, 
+                Mandatory = true, 
+                Format = "Int", 
+                DocumentTypeCode = IL_247, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 75, 
+                Mandatory = true, 
+                Format = "Int", 
+                DocumentTypeCode = IL_249, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 23, 
+                Mandatory = true, 
+                Format = "Int", 
+                DocumentTypeCode = IL_25, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 75, 
+                Mandatory = true, 
+                Format = "Int", 
+                DocumentTypeCode = IL_248, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 75, 
+                Mandatory = true, 
+                Format = "Int", 
+                DocumentTypeCode = IL_252, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 75, 
+                Mandatory = true, 
+                Format = "Int", 
+                DocumentTypeCode = Il_253, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 75, 
+                Mandatory = true, 
+                Format = "Int", 
+                DocumentTypeCode = IL_254, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 75, 
+                Mandatory = true, 
+                Format = "Int", 
+                DocumentTypeCode = IL_255, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 75, 
+                Mandatory = true, 
+                Format = "Int", 
+                DocumentTypeCode = IL_256, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 75, 
+                Mandatory = true, 
+                Format = "Int", 
+                DocumentTypeCode = IL_257, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 75, 
+                Mandatory = true, 
+                Format = "Int", 
+                DocumentTypeCode = IL_258, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 99, 
+                Mandatory = true, 
+                Format = "Int", 
+                DocumentTypeCode = IL_303, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 95, 
+                Mandatory = true, 
+                Format = "Int", 
+                DocumentTypeCode = IL_310, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 30, 
+                Mandatory = true, 
+                Format = "Int", 
+                DocumentTypeCode = IL_325, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 95, 
+                Mandatory = true, 
+                Format = "Int", 
+                DocumentTypeCode = IL_311, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 47, 
+                Mandatory = true, 
+                Format = "Int", 
+                DocumentTypeCode = IL_336, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 24, 
+                Mandatory = true, 
+                Format = "Int", 
+                DocumentTypeCode = IL_304, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 26, 
+                Mandatory = true, 
+                Format = "Int", 
+                DocumentTypeCode = IL_304, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 90, 
+                Mandatory = true, 
+                Format = "Int", 
+                DocumentTypeCode = IL_300, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 27, 
+                Mandatory = true, 
+                Format = "Int", 
+                DocumentTypeCode = Il_286, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 37, 
+                Mandatory = true, 
+                Format = "Int", 
+                DocumentTypeCode = Il_286, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 28, 
+                Mandatory = true, 
+                Format = "Int", 
+                DocumentTypeCode = IL_34, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 97, 
+                Mandatory = true, 
+                Format = "Int", 
+                DocumentTypeCode = IL_336, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 27, 
+                Mandatory = true, 
+                Format = "Int", 
+                DocumentTypeCode = IL_338, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 108, 
+                Mandatory = true, 
+                Format = "Int", 
+                DocumentTypeCode = IL_346, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 109, 
+                Mandatory = true, 
+                Format = "Int", 
+                DocumentTypeCode = IL_346, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 108, 
+                Mandatory = true, 
+                Format = "Int", 
+                DocumentTypeCode = IL_347, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 109, 
+                Mandatory = true, 
+                Format = "Int", 
+                DocumentTypeCode = IL_347, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 110, 
+                Mandatory = true, 
+                Format = "Int", 
+                DocumentTypeCode = IL_348, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 108, 
+                Mandatory = true, 
+                Format = "Int", 
+                DocumentTypeCode = IL_349, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 109, 
+                Mandatory = true, 
+                Format = "Int", 
+                DocumentTypeCode = IL_349, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 43, 
+                Mandatory = true, 
+                Format = "Int", 
+                DocumentTypeCode = IL_40, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 27, 
+                Mandatory = true, 
+                Format = "Int", 
+                DocumentTypeCode = IL_340, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 108, 
+                Mandatory = true, 
+                Format = "Int", 
+                DocumentTypeCode = IL_355, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 109, 
+                Mandatory = true, 
+                Format = "Int", 
+                DocumentTypeCode = IL_355, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 110, 
+                Mandatory = true, 
+                Format = "Int", 
+                DocumentTypeCode = IL_356, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 29, 
+                Mandatory = true, 
+                Format = "Int", 
+                DocumentTypeCode = IL_56, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 32, 
+                Mandatory = true, 
+                Format = "Int", 
+                DocumentTypeCode = IL_57, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 28, 
+                Mandatory = true, 
+                Format = "Int", 
+                DocumentTypeCode = IL_44, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 81, 
+                Mandatory = false, 
+                Format = "Int", 
+                DocumentTypeCode = IL_81, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 81, 
+                Mandatory = false, 
+                Format = "Int", 
+                DocumentTypeCode = IL_85, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 22, 
+                Mandatory = true, 
+                Format = "Int", 
+                DocumentTypeCode = IL_83, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 75, 
+                Mandatory = true, 
+                Format = "Int", 
+                DocumentTypeCode = IL_97, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 21, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = IL_9, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 14, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = IL_97, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 18, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = IL_83, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 80, 
+                Mandatory = false, 
+                Format = "String", 
+                DocumentTypeCode = IL_81, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 80, 
+                Mandatory = false, 
+                Format = "String", 
+                DocumentTypeCode = IL_85, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 6, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = IL_44, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 14, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = IL_45, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 6, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = IL_45, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 14, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = IL_48, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 61, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = IL_48, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 14, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = IL_49, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 14, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = IL_50, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 20, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = IL_50, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 8, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = IL_50, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 13, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = IL_52, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 61, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = IL_52, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 14, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = IL_53, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 20, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = IL_53, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 8, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = IL_53, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 14, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = IL_54, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 20, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = IL_54, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 8, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = IL_54, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 16, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = IL_55, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 14, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = IL_56, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 14, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = IL_58, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 6, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = IL_58, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 14, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = IL_60, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 14, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = IL_57, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 14, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = IL_61, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 13, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = IL_63, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 13, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = IL_64, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 14, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = IL_67, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 20, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = IL_67, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 8, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = IL_67, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 14, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = IL_68, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 20, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = IL_68, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 8, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = IL_68, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 14, 
+                Mandatory = false, 
+                Format = "String", 
+                DocumentTypeCode = IL_69, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 20, 
+                Mandatory = false, 
+                Format = "String", 
+                DocumentTypeCode = IL_69, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 8, 
+                Mandatory = false, 
+                Format = "String", 
+                DocumentTypeCode = IL_69, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 14, 
+                Mandatory = false, 
+                Format = "String", 
+                DocumentTypeCode = IL_70, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 14, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = IL_37, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 14, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = IL_38, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 14, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = IL_4, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 14, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = IL_40, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 103, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = IL_341, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 104, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = IL_341, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 14, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = IL_342, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 21, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = IL_345, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 14, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = IL_41, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 54, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = IL_41, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 13, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = IL_42, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 6, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = IL_42, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 14, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = IL_43, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 6, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = IL_43, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 14, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = IL_35, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 21, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = IL_350, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 21, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = IL_351, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 21, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = IL_352, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 21, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = IL_353, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 21, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = IL_354, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 103, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = IL_339, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 98, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = IL_336, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 103, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = IL_338, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 6, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = IL_34, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 103, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = IL_340, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 16, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = IL_289, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 14, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = IL_29, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 14, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = IL_290, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 14, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = IL_3, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 14, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = IL_30, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 100, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = IL_303, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 101, 
+                Mandatory = false, 
+                Format = "String", 
+                DocumentTypeCode = IL_303, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 102, 
+                Mandatory = false, 
+                Format = "String", 
+                DocumentTypeCode = IL_303, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 19, 
+                Mandatory = false, 
+                Format = "String", 
+                DocumentTypeCode = IL_303, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 62, 
+                Mandatory = false, 
+                Format = "String", 
+                DocumentTypeCode = IL_303, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 21, 
+                Mandatory = false, 
+                Format = "String", 
+                DocumentTypeCode = IL_306, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 36, 
+                Mandatory = false, 
+                Format = "String", 
+                DocumentTypeCode = IL_306, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 61, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = IL_336, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 14, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = IL_32, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 21, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = IL_327, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 14, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = IL_33, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 21, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = IL_331, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 21, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = IL_333, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 21, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = IL_334, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 61, 
+                Mandatory = false, 
+                Format = "String", 
+                DocumentTypeCode = IL_311, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 89, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = IL_304, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 79, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = IL_306, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 89, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = IL_306, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 94, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = IL_309, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 14, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = IL_31, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 54, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = IL_31, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 14, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = IL_26, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 14, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = IL_258, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 14, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = IL_257, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 14, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = IL_256, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 14, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = IL_255, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 14, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = IL_254, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 14, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = Il_253, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 14, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = IL_249, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 40, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = IL_25, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 14, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = IL_252, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 14, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = IL_248, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 14, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = IL_247, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 14, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = IL_246, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 14, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = IL_245, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 14, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = IL_244, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 14, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = IL_243, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 80, 
+                Mandatory = false, 
+                Format = "String", 
+                DocumentTypeCode = IL_272, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 80, 
+                Mandatory = false, 
+                Format = "String", 
+                DocumentTypeCode = IL_273, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 14, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = IL_271, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 39, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = IL_271, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 79, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = IL_265, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 14, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = IL_27, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 54, 
+                Mandatory = false, 
+                Format = "String", 
+                DocumentTypeCode = IL_27, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 78, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = IL_261, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 2, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = IL_262, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 2, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = IL_261, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 54, 
+                Mandatory = false, 
+                Format = "String", 
+                DocumentTypeCode = IL_26, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 80, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = IL_278, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 14, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = IL_28, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 80, 
+                Mandatory = false, 
+                Format = "String", 
+                DocumentTypeCode = IL_282, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 80, 
+                Mandatory = false, 
+                Format = "String", 
+                DocumentTypeCode = IL_281, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 80, 
+                Mandatory = false, 
+                Format = "String", 
+                DocumentTypeCode = IL_283, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 103, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = IL_285, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 6, 
+                Mandatory = false, 
+                Format = "String", 
+                DocumentTypeCode = IL_285, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 83, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = IL_284, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 84, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = IL_284, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 14, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = IL_209, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 6, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = IL_209, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 6, 
+                Mandatory = false, 
+                Format = "String", 
+                DocumentTypeCode = IL_202, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 14, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = IL_203, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 6, 
+                Mandatory = false, 
+                Format = "String", 
+                DocumentTypeCode = IL_203, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 103, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = IL_204, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 21, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = IL_199, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 39, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = IL_199, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 41, 
+                Mandatory = false, 
+                Format = "String", 
+                DocumentTypeCode = IL_202, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 12, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = IL_185, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 19, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = IL_185, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 35, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = IL_185, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 14, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = IL_148, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 14, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = IL_149, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 12, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = IL_184, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 19, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = IL_184, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 35, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = IL_184, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 14, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = IL_242, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 14, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = IL_241, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 14, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = IL_24, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 6, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = IL_24, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 14, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = IL_240, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 14, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = IL_239, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 14, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = IL_238, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 14, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = IL_237, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 14, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = IL_236, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 14, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = IL_205, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 14, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = IL_206, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 14, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = IL_210, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 6, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = IL_210, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 14, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = IL_211, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 6, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = IL_211, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 6, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = IL_212, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 14, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = IL_235, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 14, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = IL_23, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 6, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = IL_23, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 21, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = IL_234, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 14, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = IL_138, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 14, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = IL_139, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 1, 
+                Mandatory = false, 
+                Format = "String", 
+                DocumentTypeCode = IL_14, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 14, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = IL_14, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 15, 
+                Mandatory = false, 
+                Format = "String", 
+                DocumentTypeCode = IL_14, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 10, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = IL_135, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 44, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = IL_135, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 45, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = IL_133, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 18, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = IL_140, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 21, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = IL_141, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 14, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = IL_147, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 21, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = IL_144, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 21, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = IL_145, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 18, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = IL_142, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 18, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = IL_143, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 2, 
+                Mandatory = false, 
+                Format = "String", 
+                DocumentTypeCode = IL_14, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 20, 
+                Mandatory = false, 
+                Format = "String", 
+                DocumentTypeCode = IL_14, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 10, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = IL_136, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 45, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = IL_132, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 16, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = IL_13, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 6, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = IL_128, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 14, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = IL_129, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 12, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = IL_126, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 19, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = IL_126, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 35, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = IL_126, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 11, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = IL_125, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 18, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = IL_125, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 14, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = IL_119, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 54, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = IL_119, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 15, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = IL_123, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 17, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = IL_123, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 46, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = IL_124, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 5, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = IL_124, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 1, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = IL_124, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 14, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = IL_124, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 2, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = IL_124, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 66, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = 85, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 66, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = 86, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 66, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = 890, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 67, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = 890, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 66, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = 98, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 21, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = IL_1, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 39, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = IL_1, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 66, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = 785, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 9, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = IL_103, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 9, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = IL_104, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 9, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = IL_105, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 16, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = IL_11, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 100, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = 740, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 101, 
+                Mandatory = false, 
+                Format = "String", 
+                DocumentTypeCode = 740, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 102, 
+                Mandatory = false, 
+                Format = "String", 
+                DocumentTypeCode = 740, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 62, 
+                Mandatory = false, 
+                Format = "String", 
+                DocumentTypeCode = 740, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 62, 
+                Mandatory = false, 
+                Format = "String", 
+                DocumentTypeCode = 714, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 100, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = 741, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 101, 
+                Mandatory = false, 
+                Format = "String", 
+                DocumentTypeCode = 741, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 102, 
+                Mandatory = false, 
+                Format = "String", 
+                DocumentTypeCode = 741, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 14, 
+                Mandatory = false, 
+                Format = "String", 
+                DocumentTypeCode = 780, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 62, 
+                Mandatory = false, 
+                Format = "String", 
+                DocumentTypeCode = 741, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 100, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = 707, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 101, 
+                Mandatory = false, 
+                Format = "String", 
+                DocumentTypeCode = 707, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 102, 
+                Mandatory = false, 
+                Format = "String", 
+                DocumentTypeCode = 707, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 62, 
+                Mandatory = false, 
+                Format = "String", 
+                DocumentTypeCode = 707, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 100, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = 712, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 101, 
+                Mandatory = false, 
+                Format = "String", 
+                DocumentTypeCode = 712, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 102, 
+                Mandatory = false, 
+                Format = "String", 
+                DocumentTypeCode = 712, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 100, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = 714, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 101, 
+                Mandatory = false, 
+                Format = "String", 
+                DocumentTypeCode = 714, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 102, 
+                Mandatory = false, 
+                Format = "String", 
+                DocumentTypeCode = 714, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 62, 
+                Mandatory = false, 
+                Format = "String", 
+                DocumentTypeCode = 712, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 62, 
+                Mandatory = false, 
+                Format = "String", 
+                DocumentTypeCode = 706, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 100, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = 704, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 101, 
+                Mandatory = false, 
+                Format = "String", 
+                DocumentTypeCode = 704, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 102, 
+                Mandatory = false, 
+                Format = "String", 
+                DocumentTypeCode = 704, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 62, 
+                Mandatory = false, 
+                Format = "String", 
+                DocumentTypeCode = 704, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 62, 
+                Mandatory = false, 
+                Format = "String", 
+                DocumentTypeCode = 703, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 100, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = 705, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 101, 
+                Mandatory = false, 
+                Format = "String", 
+                DocumentTypeCode = 705, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 102, 
+                Mandatory = false, 
+                Format = "String", 
+                DocumentTypeCode = 705, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 62, 
+                Mandatory = false, 
+                Format = "String", 
+                DocumentTypeCode = 705, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 100, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = 706, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 101, 
+                Mandatory = false, 
+                Format = "String", 
+                DocumentTypeCode = 706, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 102, 
+                Mandatory = false, 
+                Format = "String", 
+                DocumentTypeCode = 706, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 100, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = 703, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 101, 
+                Mandatory = false, 
+                Format = "String", 
+                DocumentTypeCode = 703, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 102, 
+                Mandatory = false, 
+                Format = "String", 
+                DocumentTypeCode = 703, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 62, 
+                Mandatory = false, 
+                Format = "String", 
+                DocumentTypeCode = 700, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 62, 
+                Mandatory = false, 
+                Format = "String", 
+                DocumentTypeCode = 419, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 66, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = 422, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 65, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = 635, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 68, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = 640, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 100, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = 700, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 101, 
+                Mandatory = false, 
+                Format = "String", 
+                DocumentTypeCode = 700, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 102, 
+                Mandatory = false, 
+                Format = "String", 
+                DocumentTypeCode = 700, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 66, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = 336, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 67, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = 336, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 14, 
+                Mandatory = false, 
+                Format = "String", 
+                DocumentTypeCode = 380, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 18, 
+                Mandatory = false, 
+                Format = "String", 
+                DocumentTypeCode = 380, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 3, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = 380, 
+                ValuesTable = "1136", 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 39, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = 380, 
+                IsLeading = true, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 100, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = 419, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 101, 
+                Mandatory = false, 
+                Format = "String", 
+                DocumentTypeCode = 419, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 102, 
+                Mandatory = false, 
+                Format = "String", 
+                DocumentTypeCode = 419, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 111, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = 419, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 100, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = 270, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 101, 
+                Mandatory = false, 
+                Format = "String", 
+                DocumentTypeCode = 270, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 102, 
+                Mandatory = false, 
+                Format = "String", 
+                DocumentTypeCode = 270, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 14, 
+                Mandatory = false, 
+                Format = "String", 
+                DocumentTypeCode = 271, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 41, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = 271, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 62, 
+                Mandatory = false, 
+                Format = "String", 
+                DocumentTypeCode = 270, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 66, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = 298, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 67, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = 298, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 14, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = 325, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 4, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = 325, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 42, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = 325, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 100, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = 106, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 101, 
+                Mandatory = false, 
+                Format = "String", 
+                DocumentTypeCode = 106, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 102, 
+                Mandatory = false, 
+                Format = "String", 
+                DocumentTypeCode = 106, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 1, 
+                Mandatory = false, 
+                Format = "string", 
+                DocumentTypeCode = 1, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 80, 
+                Mandatory = false, 
+                Format = "String", 
+                DocumentTypeCode = 1, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 66, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = 119, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 66, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = 122, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 100, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = 14, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 101, 
+                Mandatory = false, 
+                Format = "String", 
+                DocumentTypeCode = 14, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 102, 
+                Mandatory = false, 
+                Format = "String", 
+                DocumentTypeCode = 14, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 62, 
+                Mandatory = false, 
+                Format = "String", 
+                DocumentTypeCode = 14, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 64, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = 14, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 62, 
+                Mandatory = false, 
+                Format = "String", 
+                DocumentTypeCode = 106, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CustomDocumentTypeMetaDataDetails()
+            {    
+                MetaDataTypeCode = 64, 
+                Mandatory = true, 
+                Format = "String", 
+                DocumentTypeCode = 106, 
+                IsLeading = false, 
+                Inactive = false, 
+			});
+			
             return all;
        }
 
 	    public void MapPoco(CustomDocumentTypeMetaData newPoco)
-        {    
+        {   
+		    newPoco.MetaDataTypeCode = this.MetaDataTypeCode;  
+		    newPoco.Mandatory = this.Mandatory;  
+		    newPoco.Format = this.Format;  
+		    newPoco.DocumentTypeCode = this.DocumentTypeCode;  
+		    newPoco.IsLeading = this.IsLeading;  
+		    newPoco.Inactive = this.Inactive;   
         }
 
 		public string GetSearchFields(CustomDocumentTypeMetaData rec)
         {   
-           return string.Empty;
+           return String.Concat(rec.MetaDataTypeCode,",",rec.Mandatory,",",rec.Format,",",rec.DocumentTypeCode,",",rec.IsLeading,",",rec.Inactive,",");
         }
 		public string Code
         {

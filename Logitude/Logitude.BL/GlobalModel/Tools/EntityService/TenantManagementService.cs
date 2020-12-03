@@ -208,14 +208,14 @@ namespace Logitude.BL.GlobalModel.Tools.EntityService
                 var LBtenantRepository = new LogBoxTenantSettingRepository(0);
                 LogBoxTenantSetting LBcurrentTenant = LBtenantRepository.GetSingleLBTenant(entityPM.Id);
 
-                if (currentTenant != null && entityPM.PackageCode == "IMPO" && !LBcurrentTenant.IsDocumentsArchive)
+                if (LBcurrentTenant!= null && currentTenant != null && entityPM.PackageCode == "IMPO" && !LBcurrentTenant.IsDocumentsArchive)
                 {
                     LBcurrentTenant.IsDocumentsArchive = true;
                     tenantRepository.Update(currentTenant);
                     tenantRepository.SubmitChanges();
                 }
 
-                else if (currentTenant != null && entityPM.PackageCode != "IMPO" && LBcurrentTenant.IsDocumentsArchive)
+                else if (LBcurrentTenant != null && currentTenant != null && entityPM.PackageCode != "IMPO" && LBcurrentTenant.IsDocumentsArchive)
                 {
                     LBcurrentTenant.IsDocumentsArchive = false;
                     tenantRepository.Update(currentTenant);

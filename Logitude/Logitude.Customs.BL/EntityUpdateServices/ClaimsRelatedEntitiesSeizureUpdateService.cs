@@ -18,6 +18,12 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             entityPM.ClaimId = entityParentPM.ClaimId;
             entityPM.Tenant = entityParentPM.Tenant;
             entityPM.CounterKey = entityParentPM.EntityCounterKey;
+            int line = 0;
+            if (entityParentPM.ClaimsRelatedEntitiesSeizures.Count > 0)
+            {
+                line = entityParentPM.ClaimsRelatedEntitiesSeizures.Max(d => d.SeizureLinoNo);
+            }
+            entityPM.SeizureLinoNo = line + 1;
 
             base.OnCreating(entityPM, entityParentPM);
         }

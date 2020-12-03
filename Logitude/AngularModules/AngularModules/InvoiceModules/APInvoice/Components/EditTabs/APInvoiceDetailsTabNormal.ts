@@ -456,7 +456,10 @@ export class APInvoiceDetailsTabNormal extends BaseComponent implements OnDestro
             var otherLines: APInvoiceLinePM[] = this.EntityPM.InvoiceLines.filter(d => d.VendorId != this.VendorId);
 
             defaultConnectedLines.forEach(line => {
-                this.ItemsSource.Insert(new APInvoiceLineItem(line, this, false));
+                var aPInvoiceLineItem = new APInvoiceLineItem(line, this, false);
+                aPInvoiceLineItem.Exists = true;
+                aPInvoiceLineItem.ApplyInvoiceLineChecked();
+                this.ItemsSource.Insert(aPInvoiceLineItem);
             });
 
             otherLines.forEach(line => {
@@ -911,6 +914,8 @@ export class APInvoiceDetailsTabNormal extends BaseComponent implements OnDestro
                 else {
                     this.VATNumber = list.VatNumber;
                     this.EntityPM.VendorName = list.LocalName || list.EnglishName;
+                    this.EntityPM.VendorLocalName = list.LocalName;
+                    
                     if (!AppTool.IsNullOrEmpty(list.InvoiceCurrencyId)) {
                         this.InvoiceCurrencyId = list.InvoiceCurrencyId;
                     }
@@ -1222,6 +1227,10 @@ export class APInvoiceLineItem extends BaseComponent {
         this.GetUserName();
         this.setColors();
         this.ReadVatTypeData();
+
+        if (this.invoicePM.InvoiceLines.indexOf(this.invoiceLinePM) > -1) {
+            this.exists = true;
+        }
     }
 
     private GetUserName() {
@@ -1461,16 +1470,33 @@ export class APInvoiceLineItem extends BaseComponent {
         return result;
     }
 
+    private exists: boolean = false;
     get Exists() {
-        var myResult = false;
+        var exists = false;
+
         if (this.invoicePM.InvoiceLines.indexOf(this.invoiceLinePM) > -1) {
-            myResult = true;
+            exists = true;
         }
-        return myResult;
+
+        return exists;
     }
 
-    set Exists(newValue: boolean) {
-        if (newValue == true) {
+    set Exists(value: boolean) {
+        if (this.exists != value) {
+
+            this.exists = value;
+
+            this.ApplyInvoiceLineChecked();
+        }
+    }
+
+    ApplyInvoiceLineChecked() {
+        if (this.exists == true) {
+
+            if (this.invoiceLinePM.AmountTypeCode != "NEXP") {
+                this.ForiegnCurrencyAmount = this.OpenAmount;
+            }
+
             this.invoicePM.AddAPInvoiceLinePM(this.invoiceLinePM);
         }
 

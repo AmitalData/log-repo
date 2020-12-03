@@ -29,6 +29,13 @@ namespace Logitude.Customs.Data.Repsitories
             return selectedcourierPendingReasons;
         }
 
+        public CourierPendingReason GetByCode(string code, int tenant)
+        {
+            return (from a in context.CourierPendingReasons
+                    where a.Code == code && a.Tenant == tenant
+                    select a).FirstOrDefault();
+        }
+
     }
 
 }

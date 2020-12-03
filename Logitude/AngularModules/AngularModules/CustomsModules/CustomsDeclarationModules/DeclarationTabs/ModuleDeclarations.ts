@@ -20,14 +20,20 @@ import { CertificateSelectionComponent } from './Components/Certificate/Certific
 import { DeclarationCargoSplitTabComponent } from './Components/CargoSplit/DeclarationCargoSplitTabComponent';
 import { ImporterDetailsComponent } from './Components/General/ImporterDetails/ImporterDetailsComponent';
 import { GuaranteeDataComponent } from './Components/Tapag/GuaranteeDataComponent';
-
+import { ConsigmentPackagesDangerComponent } from './Components/General/ConsigmentTabContent/ConsigmentPackagesDanger/ConsigmentPackagesDangerComponent';
 import { DeclarationClassificationComponent } from './Components/Classification/DeclarationClassificationComponent';
 import { SInvoiceClassificationTabComponent } from './Components/Classification/SInvoiceClassificationTabComponent';
+import { CasualSupplierDetailsComponent } from './Components/Classification/CasualSupplierDetailsComponent';
+import { DeclarationAmendmentComponent } from './Components/DeclarationAmendment/DeclarationAmendmentComponent';
+import { DeclarationCargoSealTabComponent } from './Components/CargoSeal/DeclarationCargoSealTabComponent';
+import { ExportDeclarationComponent } from './Components/General/ExportDeclarationComponent';
+import { ExportConsigmentContentComponent } from './Components/General/ConsigmentTabContent/ExportConsigmentContentComponent';
 
 export const Components =
     [
         DeclarationGeneralComponent,
         ConsigmentTabContentComponent,
+        ExportConsigmentContentComponent,
         CustomsAnswersComponent,
         DeclarationCorrectionsComponent,
         CertificateTabComponent,
@@ -47,11 +53,13 @@ export const Components =
         DeclarationCargoSplitTabComponent,
         ImporterDetailsComponent,
         GuaranteeDataComponent,
-
-    DeclarationClassificationComponent,
-    SInvoiceClassificationTabComponent,
-
-
+        ConsigmentPackagesDangerComponent,
+        DeclarationClassificationComponent,
+        SInvoiceClassificationTabComponent,
+        CasualSupplierDetailsComponent,
+        DeclarationAmendmentComponent,
+        DeclarationCargoSealTabComponent,
+        ExportDeclarationComponent,
 
     ];
 
@@ -63,6 +71,8 @@ export class ModuleDeclarations {
         switch (name) {
             case "DeclarationGeneralComponent": { myResult = DeclarationGeneralComponent; break; }
             case "ConsigmentTabContentComponent": { myResult = ConsigmentTabContentComponent; break; }
+            case "ExportConsigmentContentComponent": { myResult = ExportConsigmentContentComponent; break; }
+
             case "CustomsAnswersComponent": { myResult = CustomsAnswersComponent; break; }
             case "DeclarationCorrectionsComponent": { myResult = DeclarationCorrectionsComponent; break; }
             case "CertificateTabComponent": { myResult = CertificateTabComponent; break; }
@@ -82,10 +92,14 @@ export class ModuleDeclarations {
             case "DeclarationCollateralsComponent": { myResult = DeclarationCollateralsComponent; break; }
             case "DeclarationCargoSplitTabComponent": { myResult = DeclarationCargoSplitTabComponent; break; }
             case "ImporterDetailsComponent": { myResult = ImporterDetailsComponent; break; }
-          case "GuaranteeDataComponent": { myResult = GuaranteeDataComponent; break; }
-
-          case "DeclarationClassificationComponent": { myResult = DeclarationClassificationComponent; break; }
-          case "SInvoiceClassificationTabComponent": { myResult = SInvoiceClassificationTabComponent; break; }
+            case "GuaranteeDataComponent": { myResult = GuaranteeDataComponent; break; }
+            case "DeclarationClassificationComponent": { myResult = DeclarationClassificationComponent; break; }
+            case "SInvoiceClassificationTabComponent": { myResult = SInvoiceClassificationTabComponent; break; }
+            case "CasualSupplierDetailsComponent": { myResult = CasualSupplierDetailsComponent; break; }
+            case "ConsigmentPackagesDangerComponent": { myResult = ConsigmentPackagesDangerComponent; break; }
+            case "DeclarationAmendmentComponent": { myResult = DeclarationAmendmentComponent; break; }
+            case "DeclarationCargoSealTabComponent": { myResult = DeclarationCargoSealTabComponent; break; }
+            case "ExportDeclarationComponent": { myResult = ExportDeclarationComponent; break; }
         }
 
         return myResult;

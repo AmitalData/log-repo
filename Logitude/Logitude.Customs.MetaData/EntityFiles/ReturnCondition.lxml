@@ -1,13 +1,609 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
-<entity Id="&quot;18170200-def2-4ca0-be7b-724b09b950ca&quot;" ObjectTableName="&quot;Customs.ReturnCondition&quot;" DBTableName="&quot;Customs.ReturnConditions&quot;" ObjectTableSingular="&quot;Return Condition&quot;" ObjectTablePlural="&quot;Return Conditions&quot;" HasCustomFilter="false" IsEditable="false" IsNewWizard="false" LookUp1="&quot;Code&quot;" LookUp2="&quot;LocalName&quot;" KeyPropertyPath="&quot;Code&quot;" AutoCompleteSearchWindow="false" IsClosed="true" CacheOnClient="true" EditableFromAutoCompleteWindow="false" HasCounter="false" EnableAddFromLOV="false" IsRestrictable="false" IsMain="false" IsAutoComplete="false" EnableEditFromLOV="false" SortingByObjectField="&quot;Code&quot;" InActive="false" IsSaveButtonVisible="false" IsComposition="false" EnableSecurity="false" AllowCustomFields="false" HasDynamicHeader="false" ObjectTableTypeCode="&quot;BR&quot;" MaxNumberOfCustomFields="0" DefaultText="&quot;Return Condition&quot;" Code="&quot;a039&quot;" Name="&quot;Customs.ReturnCondition Query Group&quot;" CloseTableCode="&quot;Code&quot;" CloseTableName="&quot;LocalName&quot;" GenerateDomainService="false" ClientModuleName="&quot;Customs&quot;" ServerModuleName="&quot;Customs&quot;">
-  <field Id="&quot;167d5c54-162f-4cda-8628-b685e80d2698&quot;" FieldName="&quot;Code&quot;" ObjectTableName="&quot;Customs.ReturnCondition&quot;" FieldsDataType="&quot;Text&quot;" MinLength="0" MaxLength="2" IsRequired="true" DisplayOnLookUp="true" CanFilter="true" DisplayOnly="false" SystemRequired="false" ObjectFieldNotRequired="false" SystemMaxLength="2" DisplayInList="true" IsCustomFilter="false" Operator="&quot;StartsWith&quot;" MultiLine="false" IsTimeFrameFilter="false" DisplayInSearchWindowList="true" PMPropertyPath="&quot;Code&quot;" ListPropertyPath="&quot;Code&quot;" DisplayInLookUpIndex="0" AutomaticField="false" UniqueField="false" DisplayInSearchWindowListIndex="0" IsMulti="false" DependencyFilter1IsList="false" DependencyFilter2IsList="false" ValidForQuerySection1="&quot;Customs.ReturnCondition&quot;" DisplayInEntityVariables="false" InActive="false" DisplayLongName="false" FullFieldLable="&quot;Code&quot;" DefaultText="&quot;Code&quot;" ListFieldLable="&quot;CodeListLable&quot;" ListLableDefaultText="&quot;Code&quot;" IsNullable="false" IsForeignKey="false" IsPrimaryKey="true" HasDataBaseField="true" HasPMField="true" IsComposition="false" IsMaxLength="false" NoMetaDataField="false" GenerateInList="false" IsFixedLength="false" EnableAutoFill="false" IncludeInSearchField="false" AllowedinAutomationConditions="false" AutomationEmailRecipient="false" CanAutomateSetValue="false" />
-  <field Id="&quot;8eeb697b-e69d-4256-9222-728c3b12fb01&quot;" FieldName="&quot;EnglishName&quot;" ObjectTableName="&quot;Customs.ReturnCondition&quot;" FieldsDataType="&quot;Text&quot;" MinLength="0" MaxLength="100" IsRequired="false" DisplayOnLookUp="false" CanFilter="true" DisplayOnly="false" SystemRequired="false" ObjectFieldNotRequired="false" SystemMaxLength="100" DisplayInList="true" IsCustomFilter="false" Operator="&quot;StartsWith&quot;" MultiLine="false" IsTimeFrameFilter="false" DisplayInSearchWindowList="false" PMPropertyPath="&quot;EnglishName&quot;" ListPropertyPath="&quot;EnglishName&quot;" DisplayInLookUpIndex="0" AutomaticField="false" UniqueField="false" DisplayInSearchWindowListIndex="0" IsMulti="false" DependencyFilter1IsList="false" DependencyFilter2IsList="false" ValidForQuerySection1="&quot;Customs.ReturnCondition&quot;" DisplayInEntityVariables="false" InActive="false" DisplayLongName="false" FullFieldLable="&quot;EnglishName&quot;" DefaultText="&quot;English Name&quot;" ListFieldLable="&quot;EnglishNameListLable&quot;" ListLableDefaultText="&quot;English Name&quot;" IsNullable="true" IsForeignKey="false" IsPrimaryKey="false" HasDataBaseField="true" HasPMField="true" IsComposition="false" IsMaxLength="false" NoMetaDataField="false" GenerateInList="false" IsFixedLength="false" EnableAutoFill="false" IncludeInSearchField="false" AllowedinAutomationConditions="false" AutomationEmailRecipient="false" CanAutomateSetValue="false" />
-  <field Id="&quot;b534cf7d-7bb7-4a22-8640-ad1bdef6d954&quot;" FieldName="&quot;LocalName&quot;" ObjectTableName="&quot;Customs.ReturnCondition&quot;" FieldsDataType="&quot;nText&quot;" MinLength="0" MaxLength="100" IsRequired="false" DisplayOnLookUp="true" CanFilter="true" DisplayOnly="false" SystemRequired="false" ObjectFieldNotRequired="false" SystemMaxLength="100" DisplayInList="true" IsCustomFilter="false" Operator="&quot;StartsWith&quot;" MultiLine="false" IsTimeFrameFilter="false" DisplayInSearchWindowList="true" PMPropertyPath="&quot;LocalName&quot;" ListPropertyPath="&quot;LocalName&quot;" DisplayInLookUpIndex="1" AutomaticField="false" UniqueField="false" DisplayInSearchWindowListIndex="1" IsMulti="false" DependencyFilter1IsList="false" DependencyFilter2IsList="false" ValidForQuerySection1="&quot;Customs.ReturnCondition&quot;" DisplayInEntityVariables="false" InActive="false" DisplayLongName="false" FullFieldLable="&quot;LocalName&quot;" DefaultText="&quot;Local Name&quot;" ListFieldLable="&quot;LocalNameListLable&quot;" ListLableDefaultText="&quot;Local Name&quot;" IsNullable="true" IsForeignKey="false" IsPrimaryKey="false" HasDataBaseField="true" HasPMField="true" IsComposition="false" IsMaxLength="false" NoMetaDataField="false" GenerateInList="false" IsFixedLength="false" EnableAutoFill="false" IncludeInSearchField="false" AllowedinAutomationConditions="false" AutomationEmailRecipient="false" CanAutomateSetValue="false" />
-  <field Id="&quot;0f7b316f-6aaf-4833-91e4-8ae3690d227e&quot;" FieldName="&quot;SearchFields&quot;" ObjectTableName="&quot;Customs.ReturnCondition&quot;" FieldsDataType="&quot;nText&quot;" MinLength="0" MaxLength="1000" IsRequired="false" DisplayOnLookUp="false" CanFilter="false" DisplayOnly="false" SystemRequired="false" ObjectFieldNotRequired="false" SystemMaxLength="1000" DisplayInList="false" IsCustomFilter="false" MultiLine="false" IsTimeFrameFilter="false" DisplayInSearchWindowList="false" PMPropertyPath="&quot;SearchFields&quot;" ListPropertyPath="&quot;SearchFields&quot;" DisplayInLookUpIndex="0" AutomaticField="false" UniqueField="false" DisplayInSearchWindowListIndex="0" IsMulti="false" DependencyFilter1IsList="false" DependencyFilter2IsList="false" ValidForQuerySection1="&quot;Customs.ReturnCondition&quot;" DisplayInEntityVariables="false" InActive="false" DisplayLongName="false" FullFieldLable="&quot;SearchFields&quot;" DefaultText="&quot;SearchFields&quot;" ListFieldLable="&quot;SearchFieldsListLable&quot;" ListLableDefaultText="&quot;SearchFields&quot;" IsNullable="true" IsForeignKey="false" IsPrimaryKey="false" HasDataBaseField="true" HasPMField="true" IsComposition="false" IsMaxLength="false" NoMetaDataField="false" GenerateInList="true" IsFixedLength="false" EnableAutoFill="false" IncludeInSearchField="false" AllowedinAutomationConditions="false" AutomationEmailRecipient="false" CanAutomateSetValue="false" />
-  <field Id="&quot;25a40b6c-2efb-4af6-a359-048eb2216b17&quot;" FieldName="&quot;Inactive&quot;" ObjectTableName="&quot;Customs.ReturnCondition&quot;" FieldsDataType="&quot;Boolean&quot;" MinLength="0" MaxLength="0" IsRequired="false" DisplayOnLookUp="false" CanFilter="true" DisplayOnly="false" SystemRequired="false" ObjectFieldNotRequired="false" SystemMaxLength="0" DisplayInList="true" IsCustomFilter="false" Operator="&quot;Equals&quot;" MultiLine="false" IsTimeFrameFilter="false" DisplayInSearchWindowList="false" PMPropertyPath="&quot;Inactive&quot;" ListPropertyPath="&quot;Inactive&quot;" DisplayInLookUpIndex="0" AutomaticField="false" UniqueField="false" DisplayInSearchWindowListIndex="0" IsMulti="false" DependencyFilter1IsList="false" DependencyFilter2IsList="false" ValidForQuerySection1="&quot;Customs.ReturnCondition&quot;" DisplayInEntityVariables="false" InActive="false" DisplayLongName="false" FullFieldLable="&quot;Inactive&quot;" DefaultText="&quot;Inactive &quot;" FullLocalDefaultText="&quot;לא פּעיל&quot;" ListFieldLable="&quot;InactiveListLable&quot;" ListLableDefaultText="&quot;Inactive&quot;" ListLocalDefaultText="&quot;לא פּעיל&quot;" IsNullable="false" IsForeignKey="false" IsPrimaryKey="false" HasDataBaseField="true" HasPMField="true" IsComposition="false" IsMaxLength="false" NoMetaDataField="false" GenerateInList="true" IsFixedLength="false" EnableAutoFill="false" IncludeInSearchField="false" AllowedinAutomationConditions="false" AutomationEmailRecipient="false" CanAutomateSetValue="false" />
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity
+  Id="&quot;18170200-def2-4ca0-be7b-724b09b950ca&quot;"
+  ObjectTableName="&quot;Customs.ReturnCondition&quot;"
+  DBTableName="&quot;Customs.ReturnConditions&quot;"
+  ObjectTableSingular="&quot;Return Condition&quot;"
+  ObjectTablePlural="&quot;Return Conditions&quot;"
+  HasCustomFilter="false"
+  IsEditable="false"
+  IsNewWizard="false"
+  LookUp1="&quot;Code&quot;"
+  LookUp2="&quot;LocalName&quot;"
+  KeyPropertyPath="&quot;Code&quot;"
+  AutoCompleteSearchWindow="false"
+  IsClosed="true"
+  CacheOnClient="true"
+  EditableFromAutoCompleteWindow="false"
+  HasCounter="false"
+  EnableAddFromLOV="false"
+  IsRestrictable="false"
+  IsMain="false"
+  IsAutoComplete="false"
+  EnableEditFromLOV="false"
+  SortingByObjectField="&quot;Code&quot;"
+  InActive="false"
+  IsSaveButtonVisible="false"
+  IsComposition="false"
+  EnableSecurity="false"
+  AllowCustomFields="false"
+  HasDynamicHeader="false"
+  ObjectTableTypeCode="&quot;BR&quot;"
+  MaxNumberOfCustomFields="0"
+  DefaultText="&quot;Return Condition&quot;"
+  Code="&quot;RETC&quot;"
+  Name="&quot;Customs.ReturnCondition&quot;"
+  CloseTableCode="&quot;Code&quot;"
+  CloseTableName="&quot;LocalName&quot;"
+  GenerateDomainService="false"
+  ClientModuleName="&quot;Customs&quot;"
+  ServerModuleName="&quot;Customs&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="Customs">
+  <field
+    Id="&quot;167d5c54-162f-4cda-8628-b685e80d2698&quot;"
+    FieldName="&quot;Code&quot;"
+    ObjectTableName="&quot;Customs.ReturnCondition&quot;"
+    FieldsDataType="&quot;Text&quot;"
+    MinLength="0"
+    MaxLength="2"
+    IsRequired="true"
+    DisplayOnLookUp="true"
+    CanFilter="true"
+    DisplayOnly="false"
+    SystemRequired="false"
+    ObjectFieldNotRequired="false"
+    SystemMaxLength="2"
+    DisplayInList="true"
+    IsCustomFilter="false"
+    Operator="&quot;StartsWith&quot;"
+    MultiLine="false"
+    IsTimeFrameFilter="false"
+    DisplayInSearchWindowList="true"
+    PMPropertyPath="&quot;Code&quot;"
+    ListPropertyPath="&quot;Code&quot;"
+    DisplayInLookUpIndex="0"
+    AutomaticField="false"
+    UniqueField="false"
+    DisplayInSearchWindowListIndex="0"
+    IsMulti="false"
+    DependencyFilter1IsList="false"
+    DependencyFilter2IsList="false"
+    ValidForQuerySection1="&quot;Customs.ReturnCondition&quot;"
+    DisplayInEntityVariables="false"
+    InActive="false"
+    DisplayLongName="false"
+    FullFieldLable="&quot;Code&quot;"
+    DefaultText="&quot;Code&quot;"
+    ListFieldLable="&quot;CodeListLable&quot;"
+    ListLableDefaultText="&quot;Code&quot;"
+    IsNullable="false"
+    IsForeignKey="false"
+    IsPrimaryKey="true"
+    HasDataBaseField="true"
+    HasPMField="true"
+    IsComposition="false"
+    IsMaxLength="false"
+    NoMetaDataField="false"
+    GenerateInList="false"
+    IsFixedLength="false"
+    EnableAutoFill="false"
+    IncludeInSearchField="false"
+    AllowedinAutomationConditions="false"
+    AutomationEmailRecipient="false"
+    CanAutomateSetValue="false" />
+  <field
+    Id="&quot;8eeb697b-e69d-4256-9222-728c3b12fb01&quot;"
+    FieldName="&quot;EnglishName&quot;"
+    ObjectTableName="&quot;Customs.ReturnCondition&quot;"
+    FieldsDataType="&quot;Text&quot;"
+    MinLength="0"
+    MaxLength="100"
+    IsRequired="false"
+    DisplayOnLookUp="false"
+    CanFilter="true"
+    DisplayOnly="false"
+    SystemRequired="false"
+    ObjectFieldNotRequired="false"
+    SystemMaxLength="100"
+    DisplayInList="true"
+    IsCustomFilter="false"
+    Operator="&quot;StartsWith&quot;"
+    MultiLine="false"
+    IsTimeFrameFilter="false"
+    DisplayInSearchWindowList="false"
+    PMPropertyPath="&quot;EnglishName&quot;"
+    ListPropertyPath="&quot;EnglishName&quot;"
+    DisplayInLookUpIndex="0"
+    AutomaticField="false"
+    UniqueField="false"
+    DisplayInSearchWindowListIndex="0"
+    IsMulti="false"
+    DependencyFilter1IsList="false"
+    DependencyFilter2IsList="false"
+    ValidForQuerySection1="&quot;Customs.ReturnCondition&quot;"
+    DisplayInEntityVariables="false"
+    InActive="false"
+    DisplayLongName="false"
+    FullFieldLable="&quot;EnglishName&quot;"
+    DefaultText="&quot;English Name&quot;"
+    ListFieldLable="&quot;EnglishNameListLable&quot;"
+    ListLableDefaultText="&quot;English Name&quot;"
+    IsNullable="true"
+    IsForeignKey="false"
+    IsPrimaryKey="false"
+    HasDataBaseField="true"
+    HasPMField="true"
+    IsComposition="false"
+    IsMaxLength="false"
+    NoMetaDataField="false"
+    GenerateInList="false"
+    IsFixedLength="false"
+    EnableAutoFill="false"
+    IncludeInSearchField="false"
+    AllowedinAutomationConditions="false"
+    AutomationEmailRecipient="false"
+    CanAutomateSetValue="false" />
+  <field
+    Id="&quot;b534cf7d-7bb7-4a22-8640-ad1bdef6d954&quot;"
+    FieldName="&quot;LocalName&quot;"
+    ObjectTableName="&quot;Customs.ReturnCondition&quot;"
+    FieldsDataType="&quot;nText&quot;"
+    MinLength="0"
+    MaxLength="100"
+    IsRequired="false"
+    DisplayOnLookUp="true"
+    CanFilter="true"
+    DisplayOnly="false"
+    SystemRequired="false"
+    ObjectFieldNotRequired="false"
+    SystemMaxLength="100"
+    DisplayInList="true"
+    IsCustomFilter="false"
+    Operator="&quot;StartsWith&quot;"
+    MultiLine="false"
+    IsTimeFrameFilter="false"
+    DisplayInSearchWindowList="true"
+    PMPropertyPath="&quot;LocalName&quot;"
+    ListPropertyPath="&quot;LocalName&quot;"
+    DisplayInLookUpIndex="1"
+    AutomaticField="false"
+    UniqueField="false"
+    DisplayInSearchWindowListIndex="1"
+    IsMulti="false"
+    DependencyFilter1IsList="false"
+    DependencyFilter2IsList="false"
+    ValidForQuerySection1="&quot;Customs.ReturnCondition&quot;"
+    DisplayInEntityVariables="false"
+    InActive="false"
+    DisplayLongName="false"
+    FullFieldLable="&quot;LocalName&quot;"
+    DefaultText="&quot;Local Name&quot;"
+    ListFieldLable="&quot;LocalNameListLable&quot;"
+    ListLableDefaultText="&quot;Local Name&quot;"
+    IsNullable="true"
+    IsForeignKey="false"
+    IsPrimaryKey="false"
+    HasDataBaseField="true"
+    HasPMField="true"
+    IsComposition="false"
+    IsMaxLength="false"
+    NoMetaDataField="false"
+    GenerateInList="false"
+    IsFixedLength="false"
+    EnableAutoFill="false"
+    IncludeInSearchField="false"
+    AllowedinAutomationConditions="false"
+    AutomationEmailRecipient="false"
+    CanAutomateSetValue="false" />
+  <field
+    Id="&quot;0f7b316f-6aaf-4833-91e4-8ae3690d227e&quot;"
+    FieldName="&quot;SearchFields&quot;"
+    ObjectTableName="&quot;Customs.ReturnCondition&quot;"
+    FieldsDataType="&quot;nText&quot;"
+    MinLength="0"
+    MaxLength="1000"
+    IsRequired="false"
+    DisplayOnLookUp="false"
+    CanFilter="false"
+    DisplayOnly="false"
+    SystemRequired="false"
+    ObjectFieldNotRequired="false"
+    SystemMaxLength="1000"
+    DisplayInList="false"
+    IsCustomFilter="false"
+    MultiLine="false"
+    IsTimeFrameFilter="false"
+    DisplayInSearchWindowList="false"
+    PMPropertyPath="&quot;SearchFields&quot;"
+    ListPropertyPath="&quot;SearchFields&quot;"
+    DisplayInLookUpIndex="0"
+    AutomaticField="false"
+    UniqueField="false"
+    DisplayInSearchWindowListIndex="0"
+    IsMulti="false"
+    DependencyFilter1IsList="false"
+    DependencyFilter2IsList="false"
+    ValidForQuerySection1="&quot;Customs.ReturnCondition&quot;"
+    DisplayInEntityVariables="false"
+    InActive="false"
+    DisplayLongName="false"
+    FullFieldLable="&quot;SearchFields&quot;"
+    DefaultText="&quot;SearchFields&quot;"
+    ListFieldLable="&quot;SearchFieldsListLable&quot;"
+    ListLableDefaultText="&quot;SearchFields&quot;"
+    IsNullable="true"
+    IsForeignKey="false"
+    IsPrimaryKey="false"
+    HasDataBaseField="true"
+    HasPMField="true"
+    IsComposition="false"
+    IsMaxLength="false"
+    NoMetaDataField="false"
+    GenerateInList="true"
+    IsFixedLength="false"
+    EnableAutoFill="false"
+    IncludeInSearchField="false"
+    AllowedinAutomationConditions="false"
+    AutomationEmailRecipient="false"
+    CanAutomateSetValue="false" />
+  <field
+    Id="&quot;25a40b6c-2efb-4af6-a359-048eb2216b17&quot;"
+    FieldName="&quot;Inactive&quot;"
+    ObjectTableName="&quot;Customs.ReturnCondition&quot;"
+    FieldsDataType="&quot;Boolean&quot;"
+    MinLength="0"
+    MaxLength="0"
+    IsRequired="false"
+    DisplayOnLookUp="false"
+    CanFilter="true"
+    DisplayOnly="false"
+    SystemRequired="false"
+    ObjectFieldNotRequired="false"
+    SystemMaxLength="0"
+    DisplayInList="true"
+    IsCustomFilter="false"
+    Operator="&quot;Equals&quot;"
+    MultiLine="false"
+    IsTimeFrameFilter="false"
+    DisplayInSearchWindowList="false"
+    PMPropertyPath="&quot;Inactive&quot;"
+    ListPropertyPath="&quot;Inactive&quot;"
+    DisplayInLookUpIndex="0"
+    AutomaticField="false"
+    UniqueField="false"
+    DisplayInSearchWindowListIndex="0"
+    IsMulti="false"
+    DependencyFilter1IsList="false"
+    DependencyFilter2IsList="false"
+    ValidForQuerySection1="&quot;Customs.ReturnCondition&quot;"
+    DisplayInEntityVariables="false"
+    InActive="false"
+    DisplayLongName="false"
+    FullFieldLable="&quot;Inactive&quot;"
+    DefaultText="&quot;Inactive &quot;"
+    FullLocalDefaultText="&quot;לא פּעיל&quot;"
+    ListFieldLable="&quot;InactiveListLable&quot;"
+    ListLableDefaultText="&quot;Inactive&quot;"
+    ListLocalDefaultText="&quot;לא פּעיל&quot;"
+    IsNullable="false"
+    IsForeignKey="false"
+    IsPrimaryKey="false"
+    HasDataBaseField="true"
+    HasPMField="true"
+    IsComposition="false"
+    IsMaxLength="false"
+    NoMetaDataField="false"
+    GenerateInList="true"
+    IsFixedLength="false"
+    EnableAutoFill="false"
+    IncludeInSearchField="false"
+    AllowedinAutomationConditions="false"
+    AutomationEmailRecipient="false"
+    CanAutomateSetValue="false" />
+  <Records>
+    <Record
+      Code="&quot;1&quot;"
+      SearchFields="&quot;1,החזרת הטובין לחו&quot;ל&quot;"
+      Inactive="false"
+      LocalName="&quot;החזרת הטובין לחו&quot;ל&quot;" />
+    <Record
+      Code="&quot;10&quot;"
+      SearchFields="&quot;10,עד תוצאות מעבדה&quot;"
+      Inactive="false"
+      LocalName="&quot;עד תוצאות מעבדה&quot;" />
+    <Record
+      Code="&quot;11&quot;"
+      SearchFields="&quot;11,עד המצאת קרנה מקורי&quot;"
+      Inactive="false"
+      LocalName="&quot;עד המצאת קרנה מקורי&quot;" />
+    <Record
+      Code="&quot;12&quot;"
+      SearchFields="&quot;12,שטעון טובין&quot;"
+      Inactive="false"
+      LocalName="&quot;שטעון טובין&quot;" />
+    <Record
+      Code="&quot;13&quot;"
+      SearchFields="&quot;13,הבטחת תשלום המיסים על הטובין המאוחסנים&quot;"
+      Inactive="false"
+      LocalName="&quot;הבטחת תשלום המיסים על הטובין המאוחסנים&quot;" />
+    <Record
+      Code="&quot;14&quot;"
+      SearchFields="&quot;14,חשבונות&quot;"
+      Inactive="false"
+      LocalName="&quot;חשבונות&quot;" />
+    <Record
+      Code="&quot;15&quot;"
+      SearchFields="&quot;15,עד החלטת בית משפט&quot;"
+      Inactive="false"
+      LocalName="&quot;עד החלטת בית משפט&quot;" />
+    <Record
+      Code="&quot;16&quot;"
+      SearchFields="&quot;16,הבטחת הסדרי תשלום&quot;"
+      Inactive="false"
+      LocalName="&quot;הבטחת הסדרי תשלום&quot;" />
+    <Record
+      Code="&quot;17&quot;"
+      SearchFields="&quot;17,עד החלטות ועדת תעודות שוק מקומית&quot;"
+      Inactive="false"
+      LocalName="&quot;עד החלטות ועדת תעודות שוק מקומית&quot;" />
+    <Record
+      Code="&quot;18&quot;"
+      SearchFields="&quot;18,עד החלטת וועדת סיווג&quot;"
+      Inactive="false"
+      LocalName="&quot;עד החלטת וועדת סיווג&quot;" />
+    <Record
+      Code="&quot;19&quot;"
+      SearchFields="&quot;19,עד החלטת וועדת הערכה&quot;"
+      Inactive="false"
+      LocalName="&quot;עד החלטת וועדת הערכה&quot;" />
+    <Record
+      Code="&quot;2&quot;"
+      SearchFields="&quot;2,השמדת טובין&quot;"
+      Inactive="false"
+      LocalName="&quot;השמדת טובין&quot;" />
+    <Record
+      Code="&quot;20&quot;"
+      SearchFields="&quot;20,עד החלטת וועדת מיסים עקיפים מקומית&quot;"
+      Inactive="false"
+      LocalName="&quot;עד החלטת וועדת מיסים עקיפים מקומית&quot;" />
+    <Record
+      Code="&quot;21&quot;"
+      SearchFields="&quot;21,להבטחת תשלום החוב(עיכוב הליכי גבייה)&quot;"
+      Inactive="false"
+      LocalName="&quot;להבטחת תשלום החוב(עיכוב הליכי גבייה)&quot;" />
+    <Record
+      Code="&quot;22&quot;"
+      SearchFields="&quot;22,עד החלטת חו&quot;ד משפטית&quot;"
+      Inactive="false"
+      LocalName="&quot;עד החלטת חו&quot;ד משפטית&quot;" />
+    <Record
+      Code="&quot;23&quot;"
+      SearchFields="&quot;23,עד סיום תהליך קניין רוחני&quot;"
+      Inactive="false"
+      LocalName="&quot;עד סיום תהליך קניין רוחני&quot;" />
+    <Record
+      Code="&quot;24&quot;"
+      SearchFields="&quot;24,עד החלטת וועדת תפיסות&quot;"
+      Inactive="false"
+      LocalName="&quot;עד החלטת וועדת תפיסות&quot;" />
+    <Record
+      Code="&quot;25&quot;"
+      SearchFields="&quot;25,יצוא טובין לחו&quot;ל&quot;"
+      Inactive="false"
+      LocalName="&quot;יצוא טובין לחו&quot;ל&quot;" />
+    <Record
+      Code="&quot;26&quot;"
+      SearchFields="&quot;26,אשור אשרה&quot;"
+      Inactive="false"
+      LocalName="&quot;אשור אשרה&quot;" />
+    <Record
+      Code="&quot;27&quot;"
+      SearchFields="&quot;27,יצוא הרכב לחו&quot;ל&quot;"
+      Inactive="false"
+      LocalName="&quot;יצוא הרכב לחו&quot;ל&quot;" />
+    <Record
+      Code="&quot;28&quot;"
+      SearchFields="&quot;28,עד המצאת העברת בעלות&quot;"
+      Inactive="false"
+      LocalName="&quot;עד המצאת העברת בעלות&quot;" />
+    <Record
+      Code="&quot;29&quot;"
+      SearchFields="&quot;29,זכויות עולה חדש&quot;"
+      Inactive="false"
+      LocalName="&quot;זכויות עולה חדש&quot;" />
+    <Record
+      Code="&quot;3&quot;"
+      SearchFields="&quot;3,עד קביעת ערך הטובין&quot;"
+      Inactive="false"
+      LocalName="&quot;עד קביעת ערך הטובין&quot;" />
+    <Record
+      Code="&quot;30&quot;"
+      SearchFields="&quot;30,קיום תנאי פרט מותנה&quot;"
+      Inactive="false"
+      LocalName="&quot;קיום תנאי פרט מותנה&quot;" />
+    <Record
+      Code="&quot;31&quot;"
+      SearchFields="&quot;31,עד הרכבת הטובין במפעל&quot;"
+      Inactive="false"
+      LocalName="&quot;עד הרכבת הטובין במפעל&quot;" />
+    <Record
+      Code="&quot;32&quot;"
+      SearchFields="&quot;32,סגירת תיק הישבון&quot;"
+      Inactive="false"
+      LocalName="&quot;סגירת תיק הישבון&quot;" />
+    <Record
+      Code="&quot;33&quot;"
+      SearchFields="&quot;33,מס&quot;ב&quot;"
+      Inactive="false"
+      LocalName="&quot;מס&quot;ב&quot;" />
+    <Record
+      Code="&quot;34&quot;"
+      SearchFields="&quot;34,להבטחת תשלום החוב&quot;"
+      Inactive="false"
+      LocalName="&quot;להבטחת תשלום החוב&quot;" />
+    <Record
+      Code="&quot;35&quot;"
+      SearchFields="&quot;35,להבטחת התייצבות בבית משפט&quot;"
+      Inactive="false"
+      LocalName="&quot;להבטחת התייצבות בבית משפט&quot;" />
+    <Record
+      Code="&quot;36&quot;"
+      SearchFields="&quot;36,עד קביעת גרעון&quot;"
+      Inactive="false"
+      LocalName="&quot;עד קביעת גרעון&quot;" />
+    <Record
+      Code="&quot;37&quot;"
+      SearchFields="&quot;37,עד רישיון כלי תחרותי&quot;"
+      Inactive="false"
+      LocalName="&quot;עד רישיון כלי תחרותי&quot;" />
+    <Record
+      Code="&quot;38&quot;"
+      SearchFields="&quot;38,עד החלטת וועדת כללי מקור עליונה&quot;"
+      Inactive="false"
+      LocalName="&quot;עד החלטת וועדת כללי מקור עליונה&quot;" />
+    <Record
+      Code="&quot;39&quot;"
+      SearchFields="&quot;39,ערובה זמנית&quot;"
+      Inactive="false"
+      LocalName="&quot;ערובה זמנית&quot;" />
+    <Record
+      Code="&quot;4&quot;"
+      SearchFields="&quot;4,עד קביעת סיווג הטובין&quot;"
+      Inactive="false"
+      LocalName="&quot;עד קביעת סיווג הטובין&quot;" />
+    <Record
+      Code="&quot;40&quot;"
+      SearchFields="&quot;40,עד החלטת וועדת יבוא&quot;"
+      Inactive="false"
+      LocalName="&quot;עד החלטת וועדת יבוא&quot;" />
+    <Record
+      Code="&quot;41&quot;"
+      SearchFields="&quot;41,עד החלטת וועדת מיסים עקיפים עליונה&quot;"
+      Inactive="false"
+      LocalName="&quot;עד החלטת וועדת מיסים עקיפים עליונה&quot;" />
+    <Record
+      Code="&quot;42&quot;"
+      SearchFields="&quot;42,אימות מסמך העדפה&quot;"
+      Inactive="false"
+      LocalName="&quot;אימות מסמך העדפה&quot;" />
+    <Record
+      Code="&quot;43&quot;"
+      SearchFields="&quot;43,היטל היצף&quot;"
+      Inactive="false"
+      LocalName="&quot;היטל היצף&quot;" />
+    <Record
+      Code="&quot;44&quot;"
+      SearchFields="&quot;44,היטל סחר&quot;"
+      Inactive="false"
+      LocalName="&quot;היטל סחר&quot;" />
+    <Record
+      Code="&quot;45&quot;"
+      SearchFields="&quot;45,עד החלטת ביהמ&quot;ש (תנאי 8)&quot;"
+      Inactive="false"
+      LocalName="&quot;עד החלטת ביהמ&quot;ש (תנאי 8)&quot;" />
+    <Record
+      Code="&quot;46&quot;"
+      SearchFields="&quot;46,כללי - עד החלטת מכס&quot;"
+      Inactive="false"
+      LocalName="&quot;כללי - עד החלטת מכס&quot;" />
+    <Record
+      Code="&quot;5&quot;"
+      SearchFields="&quot;5,עד קביעת מקור הטובין&quot;"
+      Inactive="false"
+      LocalName="&quot;עד קביעת מקור הטובין&quot;" />
+    <Record
+      Code="&quot;6&quot;"
+      SearchFields="&quot;6,עד קבלת החלטת תמ&quot;ת לגבי היטל&quot;"
+      Inactive="false"
+      LocalName="&quot;עד קבלת החלטת תמ&quot;ת לגבי היטל&quot;" />
+    <Record
+      Code="&quot;7&quot;"
+      SearchFields="&quot;7,המצאת מסמכים מקוריים חשבון, מסמכי העדפה וכדומה&quot;"
+      Inactive="false"
+      LocalName="&quot;המצאת מסמכים מקוריים חשבון, מסמכי העדפה וכדומה&quot;" />
+    <Record
+      Code="&quot;8&quot;"
+      SearchFields="&quot;8,מונית-הוכחות לשימוש במונית קודמת&quot;"
+      Inactive="false"
+      LocalName="&quot;מונית-הוכחות לשימוש במונית קודמת&quot;" />
+    <Record
+      Code="&quot;9&quot;"
+      SearchFields="&quot;9,עד סימון הטובין&quot;"
+      Inactive="false"
+      LocalName="&quot;עד סימון הטובין&quot;" />
+  </Records>
+  <AdditionalTextCodes />
+  <AdditionalFeatures></AdditionalFeatures>
+  <Query
+    Code="&quot;ReturnCondition&quot;"
+    ObjectTableName="&quot;Customs.ReturnCondition&quot;"
+    IsAddNewEntity="false"
+    SystemLevel="true"
+    QuerySection="&quot;Customs.ReturnCondition&quot;"
+    IndexOrder="0"
+    QueryGroupCode="&quot;RETC&quot;"
+    QueryGroupName="&quot;Customs.ReturnCondition&quot;"
+    LocalTextCode="&quot;תנאי להחזר&quot;"
+    TextCode="&quot;Return Conditions&quot;"
+    TextCodeCode="&quot;Customs.ReturnCondition.Q.ReturnConditionQuery&quot;"
+    IsSpellChecked="false"
+    FeatureCode="&quot;RETURNCONDITION&quot;"
+    IsPackagable="true"
+    FeatureTextCodeCode="&quot;Customs.ReturnCondition.Features.ReturnConditions&quot;"
+    FeatureDefaultText="&quot;Return Conditions&quot;">
+    <QueryColumns>
+      <QueryColumn
+        IndexOrder="0"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;Code&quot;"
+        QueryCode="&quot;ReturnCondition&quot;" />
+      <QueryColumn
+        IndexOrder="1"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;EnglishName&quot;"
+        QueryCode="&quot;ReturnCondition&quot;" />
+      <QueryColumn
+        IndexOrder="2"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;LocalName&quot;"
+        QueryCode="&quot;ReturnCondition&quot;" />
+      <QueryColumn
+        IndexOrder="3"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;Inactive&quot;"
+        QueryCode="&quot;ReturnCondition&quot;" />
+    </QueryColumns>
+    <QueryFilters />
+  </Query>
   <EventTypes>
-    <EventType Code="&quot;CREV&quot;" ObjectTableName="&quot;Customs.ReturnCondition&quot;" EnglishName="&quot;Created&quot;" LocalName="&quot;Created&quot;" IsManualEntry="false" ShortView="true" />
-    <EventType Code="&quot;UPEV&quot;" ObjectTableName="&quot;Customs.ReturnCondition&quot;" EnglishName="&quot;Updated&quot;" LocalName="&quot;Updated&quot;" IsManualEntry="false" ShortView="false" />
+    <EventType
+      Code="&quot;CREV&quot;"
+      ObjectTableName="&quot;Customs.ReturnCondition&quot;"
+      ShortView="true"
+      IsManualEntry="false"
+      LocalName="&quot;Created&quot;"
+      EnglishName="&quot;Created&quot;"
+      EventTypeCategoryCode="&quot;OPE&quot;"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
+    <EventType
+      Code="&quot;UPEV&quot;"
+      ObjectTableName="&quot;Customs.ReturnCondition&quot;"
+      ShortView="false"
+      IsManualEntry="false"
+      LocalName="&quot;Updated&quot;"
+      EnglishName="&quot;Updated&quot;"
+      EventTypeCategoryCode="&quot;OPE&quot;"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
   </EventTypes>
-  <Records />
 </entity>

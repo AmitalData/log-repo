@@ -39,14 +39,14 @@ namespace Logitude.BL.InfrastructureModel.APIDataContract.ApiV1
         }
 
 
-        public ObjectTable GetObjectTableById(string Id, int Tenant)
+        public ObjectTable GetObjectTableById(string Id, int Tenant, string ComputingPartnerName = "")
         {
             try
             {
 
 
                 var temp = query.GetSinglePM(Id, Tenant);
-                return ObjectTableDataMapping(temp, Tenant);
+                return ObjectTableDataMapping(temp, Tenant,ComputingPartnerName);
             }
             catch (Exception ex)
             {

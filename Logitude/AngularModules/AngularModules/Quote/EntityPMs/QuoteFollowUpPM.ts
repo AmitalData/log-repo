@@ -1,4 +1,4 @@
-﻿import {QuotePM} from './QuotePM';
+import {QuotePM} from './QuotePM';
 import {UIProperties, UIProperty} from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
 import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceLocator} from '../../Infrastructure/Locators/ServiceLocator';
@@ -125,17 +125,19 @@ export class QuoteFollowUpPM {
     public OldEntityPM: QuoteFollowUpPM;
     public UniqueKey: string;
     public IsDirty: boolean;
-
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName: string = null) {
-        this.IsDirty = true;
+        if (!this.DisableMarkAsDirty) {
+            this.IsDirty = true;
 
-        if (this.EntityParentPM) {
-            this.EntityParentPM.MarkAsDirty();
-        }
+            if (this.EntityParentPM) {
+                this.EntityParentPM.MarkAsDirty();
+            }
 
-        if (propertyName != null) {
-            this.PropertyChanged.emit(new PropertyChangedArgs(propertyName, this));
-            ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "ShipmentReceivable");
+            if (propertyName != null) {
+                this.PropertyChanged.emit(new PropertyChangedArgs(propertyName, this));
+                ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "ShipmentReceivable");
+            }
         }
     }
 }

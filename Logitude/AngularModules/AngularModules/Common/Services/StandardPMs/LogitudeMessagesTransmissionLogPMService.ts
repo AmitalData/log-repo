@@ -153,6 +153,7 @@ export class LogitudeMessagesTransmissionLogPMService {
         if (!entityPM) {
             
             entityPM = new LogitudeMessagesTransmissionLogPM();
+			entityPM.DisableMarkAsDirty = true;
         }
 
 		var customFields: Array<string> = [];
@@ -193,6 +194,8 @@ export class LogitudeMessagesTransmissionLogPMService {
             entityPM.OldEntityPM = null;
         }
 		entityPM.IsDirty = false;
+	    entityPM.DisableMarkAsDirty = false;
+
         return entityPM;
     }
 

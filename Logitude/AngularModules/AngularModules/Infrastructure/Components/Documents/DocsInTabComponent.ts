@@ -36,7 +36,7 @@ import { ObjectsLocator } from '../../Locators/ObjectsLocator';
     
     selector: "DocsInTabControl",
     templateUrl: './DocsInTabComponent.html',
-    inputs: ['EntityPM' , 'EntityId', 'ChildEntityId', 'ObjectTableId', 'ChildObjectTableId', 'TransportModeId', 'ShipmentlevelCode', 'ChildEntityReference'],
+    inputs: ['EntityPM', 'EntityId', 'ChildEntityId', 'ObjectTableId', 'ChildObjectTableId', 'TransportModeId', 'ShipmentlevelCode', 'ChildEntityReference', 'CategoryCode', 'EntityNumber', '', 'ExternalEntityReference', 'ExternalEntityName'],
     providers: [DocumentTypeListExtendedService, DocumentsFilingExtendedPMService, DocumentsFilingPMService, ServiceArgs, ImageLibraryService, DocumentTypeListService],
 })
 
@@ -49,6 +49,10 @@ export class DocsInTabComponent extends BaseComponent implements OnInit {
     public ChildEntityId: string = "";
     public ObjectTableId: string = "";
     public ChildObjectTableId: string = "";
+    public CategoryCode: string = "";
+    public EntityNumber: string="";
+    public ExternalEntityReference: string="";
+    public ExternalEntityName: string="";
     public TransportModeId: string = "";
     public ShipmentlevelCode: string = "";
     public ChildEntityReference: string = "";
@@ -69,6 +73,7 @@ export class DocsInTabComponent extends BaseComponent implements OnInit {
     SelectedExternalViewModel: DocsInDataViewModel;
     DeleteAttachmentButtonEnable: boolean = false;
     IsStardLoadPage: boolean;
+    AllowChangeReceiveDateDocsIn : boolean =false;
     public documentsFilingPMService: DocumentsFilingPMService;
     public UndoReceivedButtonEnable: boolean;
     public TabHeaderTextCode: string;
@@ -117,10 +122,11 @@ export class DocsInTabComponent extends BaseComponent implements OnInit {
         else this.ObjectTableName = "Shipment";
 
 
+      
         if (FeatureLocator.HasFeaturePermession("Shipment", "DOCSINDOWNLOADDOCUMENTS") && this.ObjectTableName == "Shipment") {
             this.DownloadAllVisibile = true;
         }
-
+            
 
         // Ayman:
         // we need this for Translation
@@ -279,6 +285,11 @@ export class DocsInTabComponent extends BaseComponent implements OnInit {
         var apiQueryFilters: ApiQueryFilters = new ApiQueryFilters();
         apiQueryFilters.GetAll = true;
         apiQueryFilters.Tenant = this.Tenant;
+
+        if ((!AppTool.IsNullOrEmpty(this.CategoryCode)) && this.CategoryCode == 'E') {
+            apiQueryFilters.ForceCacheRefresh = true;
+        }
+            
         this._documentTypeListService.getAllFromCache(apiQueryFilters).subscribe((res:any) => {
 
             var pmResponse: ServiceResponse = res;
@@ -336,7 +347,7 @@ export class DocsInTabComponent extends BaseComponent implements OnInit {
             this.DocumentTypes.forEach((docType) => {
                 var exists = this.StaticDocumentsList.filter(d => d.Id == docType.Id)[0];
                 if (!exists) {
-                    var docVeiwModel = new DocsInDataViewModel(null, this, docType, this.EntityId, this.ChildEntityId, this.ChildEntityReference, this.externalDocs, this.ObjectTableId);
+                    var docVeiwModel = new DocsInDataViewModel(null, this, docType, this.EntityId, this.ChildEntityId, this.ChildEntityReference, this.externalDocs, this.ObjectTableId, this.EntityNumber, this.ExternalEntityName, this.ExternalEntityReference);
                     this.StaticDocumentsList.push(docVeiwModel);
                 }
 
@@ -356,7 +367,7 @@ export class DocsInTabComponent extends BaseComponent implements OnInit {
                     }
                   
                     if (!exists) {
-                        var docVeiwModel = new DocsInDataViewModel(null, this, docType, this.EntityId, this.ChildEntityId, this.ChildEntityReference, this.externalDocs, this.ObjectTableId);
+                        var docVeiwModel = new DocsInDataViewModel(null, this, docType, this.EntityId, this.ChildEntityId, this.ChildEntityReference, this.externalDocs, this.ObjectTableId, this.EntityNumber, this.ExternalEntityName, this.ExternalEntityReference);
                         docVeiwModel.HasFollowUp = true;
                         this.StaticDocumentsList.push(docVeiwModel);
                     }
@@ -428,7 +439,13 @@ export class DocsInTabComponent extends BaseComponent implements OnInit {
                 if (!AppTool.IsNullOrEmpty(this.ChildObjectTableId) && this.ChildObjectTableId) objecttableid = this.ChildObjectTableId;
                 else objecttableid = this.ObjectTableId;
        
-                this.DocumentTypes = this.AllDocumentTypeList.filter(d => d.ObjectTableId == objecttableid && d.IsDocIn && !d.InActive);
+            this.DocumentTypes = this.AllDocumentTypeList.filter(d => d.ObjectTableId == objecttableid && d.IsDocIn && !d.InActive);
+             if (!AppTool.IsNullOrEmpty(this.CategoryCode)) {
+
+                this.DocumentTypes = this.DocumentTypes.filter(a => a.DocumentTypeCategoryCode == this.CategoryCode);
+
+
+            }
                 if (!AppTool.IsNullOrEmpty(this.TransportModeId)) {
                 switch (this.TransportModeId) {
                     case "A":
@@ -739,7 +756,7 @@ export class DocsInTabComponent extends BaseComponent implements OnInit {
                     if (this.AllDocumentTypeList != null) {
                         var docType = this.AllDocumentTypeList.filter(d => d.Id == docin.DocumentTypeId && d.InActive == false)[0];
                         if (docType) {
-                            var docVeiwModel = new DocsInDataViewModel(docin, this, docType, this.EntityId, docin.ChildEntityId, docin.ChildEntityReference, this.externalDocs, this.ObjectTableId);
+                            var docVeiwModel = new DocsInDataViewModel(docin, this, docType, this.EntityId, docin.ChildEntityId, docin.ChildEntityReference, this.externalDocs, this.ObjectTableId, this.EntityNumber, this.ExternalEntityName, this.ExternalEntityReference);
                             this.StaticDocumentsList.push(docVeiwModel);
                         }
                     }

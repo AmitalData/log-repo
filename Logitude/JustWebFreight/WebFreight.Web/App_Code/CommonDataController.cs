@@ -42,6 +42,8 @@ using Microsoft.Practices.Unity;
 using Logitude.Infrastructure.Data.Repsitories;
 using Logitude.Infrastructure.Data.EntityPOCOs;
 using Logitude.Server.Tools.Helpers;
+using System.Runtime.Remoting.Messaging;
+using Logitude.Infrastructure.BL.EntityQueryServices;
 
 namespace WebFreight.Web
 {
@@ -61,69 +63,34 @@ namespace WebFreight.Web
 
         public string GetTenantLogoUri(int companyId)     
         {
-
             try
             {
-                // string documentId = "smalllogo" + companyId;
-                //   CloudBlobContainer blobContainer;
+                SharedLogisticsSettingQueryService sharedLogisticsSettingQueryService = new SharedLogisticsSettingQueryService(companyId);
+                string uri = sharedLogisticsSettingQueryService.GetTenantLogoUri(companyId, true);
 
-                string fileName = "sharedLogtsitcslogo";//smalllogo
-              
-                BlobFileInfo fileInfo = new BlobFileInfo()
-                {
-                    FileName = fileName + companyId,
-                    FolderName = "logos",
-                    Extension = "png",
-                    Tenant = companyId,
-                    
-
-                };
-
-                IBlobService storageservice = ContainerAccessor.Container.Resolve(typeof(IBlobService), "StorageService", new ParameterOverride("", 1)) as IBlobService;
-                byte[] datainByte = storageservice.Read(fileInfo);
-
-
-                if (datainByte == null)
-                {
-                    fileName = "smalllogo";
-                    fileInfo.FileName = fileName + companyId;
-                    fileInfo.Extension = "jpg";
-                    datainByte = storageservice.Read(fileInfo);
-                }
-
-                    if (datainByte != null)
-                {
-
-                    using (MemoryStream memstream = new MemoryStream())
-                    {
-
-
-                        //blobfile.DownloadToStream(memstream);
-                          //memstream.ToArray();
-                        // <img src="data:image/gif;base64,xxxxxxxxxxxxx...">
-                        //data:image/gif;base64,xxxxxxxxxxxxx...
-                        string base64String = System.Convert.ToBase64String(datainByte,
-                               0,
-                               datainByte.Length);
-
-                        string uri = "data:image/jpg;base64," + base64String;
-                        return uri;//blobfile.Uri.AbsoluteUri;
-
-                    }
-
-                }
-
-                else
-                    return null;
-
+                return uri;
             }
             catch (Exception e)
             {
                 ExceptionHandler.HandleException(e, DateTime.Now, companyId, User != null ? User.Identity.Name : "", User != null ? User.Identity.Name : "", "Uploader : DownloadFile Method", null);
                 return null;
             }
+        }
 
+        public string GetTenantCompanyLogoUri(int companyId, bool isSmalLogo)
+        {
+            try
+            {
+                SharedLogisticsSettingQueryService sharedLogisticsSettingQueryService = new SharedLogisticsSettingQueryService(companyId);
+                string uri = sharedLogisticsSettingQueryService.GetTenantLogoUri(companyId, isSmalLogo);
 
+                return uri;
+            }
+            catch (Exception e)
+            {
+                ExceptionHandler.HandleException(e, DateTime.Now, companyId, User != null ? User.Identity.Name : "", User != null ? User.Identity.Name : "", "Uploader : DownloadFile Method", null);
+                return null;
+            }
         }
 
         //public static bool ValidateUser(string username, string password)

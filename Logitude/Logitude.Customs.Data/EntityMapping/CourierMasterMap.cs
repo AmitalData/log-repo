@@ -43,7 +43,7 @@ namespace Logitude.Customs.Data.EntityMapping
 
             this.Property(t => t.EstimatedArrivalDate).HasColumnName("EstimatedArrivalDate");
 
-            this.Property(t => t.GatewayPortCode).HasColumnName("GatewayPortCode").HasMaxLength(35).IsUnicode(false);
+            this.Property(t => t.GatewayPortCode).HasColumnName("GatewayPortCode").HasMaxLength(17).IsUnicode(false);
 
             this.Property(t => t.OriginPortCode).HasColumnName("OriginPortCode").HasMaxLength(17).IsUnicode(false);
 
@@ -68,6 +68,18 @@ namespace Logitude.Customs.Data.EntityMapping
             this.Property(t => t.DepartureDate).HasColumnName("DepartureDate");
 
             this.Property(t => t.WeightValueCode).HasColumnName("WeightValueCode").HasMaxLength(3).IsUnicode(false);
+
+            this.Property(t => t.StorageSiteCode).HasColumnName("StorageSiteCode").HasMaxLength(20).IsUnicode(false);
+
+            this.Property(t => t.TruckerId).HasColumnName("TruckerId").HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.IntegratorCode).HasColumnName("IntegratorCode").HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.IsReadyForInvoice).HasColumnName("IsReadyForInvoice");
+
+            this.Property(t => t.NoOfCourierHawb).HasColumnName("NoOfCourierHawb").HasMaxLength(5).IsUnicode(false);
+
+            this.Property(t => t.IsAutomaticManifestSent).HasColumnName("IsAutomaticManifestSent");
         }
     }
 }

@@ -62,8 +62,65 @@ namespace Logitude.CustomsMessaging.ResponseServices.DeclarationErrorPointer
 
             return myDeclaretionErrorXml;
         }
+        public string AnalyzeErrorPionterExport(UnifreightIIG.Common.ExportDeclarationServiceReference.ResponseError[] responseError, DeclarationPM declarationPM, WCOTypeEnum myWCOTypeEnum = WCOTypeEnum.WCO, bool isRaiseUnifreightEvent = false) // to add ref to ResponseError in Logitude.CustomsMessaging
+        {
+            if (responseError == null)
+            {
+                return null;
+            }
+
+            _MyDeclarationPM = declarationPM;
+
+            _declarationErrorPointer = new DeclarationError();
+            _declarationErrorPointer.Entitites = new List<Entity>();
+
+            foreach (var errorItem in responseError)
+            {
+                //if (Environment.UserDomainName.Equals("ntdomain", StringComparison.OrdinalIgnoreCase))
+                //{
+                //Analyze pointers
+                GetLogitudeEntityExport(errorItem, myWCOTypeEnum, isRaiseUnifreightEvent);
+                //}
+            }
+
+            var myDeclaretionErrorXml = XmlGenericUtil<DeclarationError>.SerializeObject(_declarationErrorPointer);
+
+            return myDeclaretionErrorXml;
+        }
 
         public string AnalyzeDeclarationException(UnifreightIIG.Common.ImportDeclarationServiceReference.Exception[] exception)
+        {
+            if (exception == null)
+            {
+                return null;
+            }
+
+            _declarationErrorPointer = new DeclarationError();
+            _declarationErrorPointer.Entitites = new List<Entity>();
+
+            Entity myEntityErrorDetail = new Entity();
+            myEntityErrorDetail.Child1Type = "";
+            myEntityErrorDetail.Child1Sequence = "";
+            myEntityErrorDetail.Child2Type = "";
+            myEntityErrorDetail.Child2Sequence = "";
+            myEntityErrorDetail.Child3Type = "";
+            myEntityErrorDetail.Child3Sequence = "";
+
+            var myFieldError = new field();
+            myFieldError.Code = "Buisness";
+            myFieldError.ListVersionID = "1";
+            myFieldError.MessageError = exception[0].ExeptionDescription;
+            myEntityErrorDetail.FieldErrors = new List<field>();
+            myEntityErrorDetail.FieldErrors.Add(myFieldError);
+
+            _declarationErrorPointer.Entitites.Add(myEntityErrorDetail);
+
+            var myDeclaretionErrorXml = XmlGenericUtil<DeclarationError>.SerializeObject(_declarationErrorPointer);
+
+            return myDeclaretionErrorXml;
+        }
+
+        public string AnalyzeDeclarationExceptionExport(UnifreightIIG.Common.ExportDeclarationServiceReference.Exception[] exception)
         {
             if (exception == null)
             {
@@ -239,6 +296,151 @@ namespace Logitude.CustomsMessaging.ResponseServices.DeclarationErrorPointer
                 _declarationErrorPointer.Entitites.Add(myEntityErrorDetail);
             }
         }
+        private void GetLogitudeEntityExport(UnifreightIIG.Common.ExportDeclarationServiceReference.ResponseError errorItem, WCOTypeEnum myWCOTypeEnum = WCOTypeEnum.WCO, bool isRaiseUnifreightEvent = false)
+        {
+            int pointerLevelCounter = 0;
+            WCOErrorPointerModel myCargoDescription = null;
+            WCOErrorPointerModel.LogitudeEntityEnum lastLogitudeEntity = WCOErrorPointerModel.LogitudeEntityEnum.None;
+
+            string myChild1Type = "";
+            string myChild1Sequence = "";
+            string myChild2Type = "";
+            string myChild2Sequence = "";
+            string myChild3Type = "";
+            string myChild3Sequence = "";
+            bool isNewEntity = false;
+
+            foreach (var pointerItem in errorItem.Pointer)
+            {
+                //string  NaturalKey = "";
+                string SequenceNumeric = "0";
+                myCargoDescription = WCO.Instance.CreateDB().GetTagID(pointerLevelCounter, pointerItem.DocumentSectionCode.Value);
+                int pointerLevelCounterCurrent = pointerLevelCounter;
+                var myDB = WCO.Instance.CreateDB(myWCOTypeEnum);
+
+                myDB = myDB.GetNode(pointerLevelCounter++, pointerItem.DocumentSectionCode.Value);
+                //lastLogitudeEntity = myCargoDescription.LogitudeEntity;
+
+                if (pointerItem.TagID != null && !string.IsNullOrEmpty(pointerItem.TagID.Value))
+                {
+                    myCargoDescription = myDB.GetTagID(pointerLevelCounter, pointerItem.TagID.Value);
+                }
+
+                SequenceNumeric = pointerItem.SequenceNumeric.ToString();
+
+                if (pointerItem.DMExtensions != null && pointerItem.DMExtensions.NaturalKey != null && pointerItem.DMExtensions.NaturalKey.Value != null)
+                {
+                    //NaturalKey = pointerItem.DMExtensions.NaturalKey.Value;
+                    SequenceNumeric = pointerItem.DMExtensions.NaturalKey.Value;
+                }
+
+                if (myCargoDescription == null) //Temporary treatment until mapping all WCO records
+                {
+                    myCargoDescription = new WCOErrorPointerModel();
+                    myCargoDescription.LogitudeEntity = WCOErrorPointerModel.LogitudeEntityEnum.None;
+                    myCargoDescription.LogitudeFieldID = "";
+                }
+
+                switch (myCargoDescription.LogitudeEntity)
+                {
+                    case WCOErrorPointerModel.LogitudeEntityEnum.None:
+                        HandleSpecialErrorExport(errorItem, ref myChild1Type, ref myChild1Sequence, ref myChild2Type, ref myChild2Sequence, ref myChild3Type, ref myChild3Sequence, pointerLevelCounterCurrent, SequenceNumeric, pointerItem.DocumentSectionCode.Value); // Handling special cases
+                        break;
+                    case WCOErrorPointerModel.LogitudeEntityEnum.Declaration:
+                        break;
+                    case WCOErrorPointerModel.LogitudeEntityEnum.DeclarationTaxes:
+                        myChild1Type = "DeclarationTaxes";
+                        myChild1Sequence = SequenceNumeric;
+                        break;
+                    case WCOErrorPointerModel.LogitudeEntityEnum.Consignment:
+                        myChild1Type = "Consignment";
+                        myChild1Sequence = SequenceNumeric;
+                        break;
+                    case WCOErrorPointerModel.LogitudeEntityEnum.ConsignmentPackages:
+                        myChild2Type = "ConsignmentPackages";
+                        myChild2Sequence = SequenceNumeric;
+                        break;
+                    case WCOErrorPointerModel.LogitudeEntityEnum.ConsignmentInternalTransitions:
+                        myChild2Type = "ConsignmentInternalTransitions";
+                        myChild2Sequence = SequenceNumeric;
+                        break;
+                    case WCOErrorPointerModel.LogitudeEntityEnum.GoodsShipment:
+                        myChild1Type = "SupplierInvoice";
+                        myChild1Sequence = SequenceNumeric;
+                        break;
+                    case WCOErrorPointerModel.LogitudeEntityEnum.CustomsValuation:
+                        myChild2Type = "SupplierInvoiceModifications";
+                        myChild2Sequence = SequenceNumeric;
+                        break;
+                    case WCOErrorPointerModel.LogitudeEntityEnum.GoodsItem:
+                        myChild2Type = "SupplierInvoiceItem";
+                        myChild2Sequence = SequenceNumeric;
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+            HandleSpecialErrorExport(errorItem, ref myChild1Type, ref myChild1Sequence, ref myChild2Type, ref myChild2Sequence, ref myChild3Type, ref myChild3Sequence);// Handling special cases
+            if (isRaiseUnifreightEvent)
+            {
+                HandleValidationCodeErrorExport(errorItem);
+            }
+
+            Entity myEntityErrorDetail = FindEntityinList(myChild1Type, myChild1Sequence, myChild2Type, myChild2Sequence, myChild3Type, myChild3Sequence);
+            if (myEntityErrorDetail == null)
+            {
+                myEntityErrorDetail = new Entity();
+                myEntityErrorDetail.Child1Type = myChild1Type;
+                myEntityErrorDetail.Child1Sequence = myChild1Sequence;
+                myEntityErrorDetail.Child2Type = myChild2Type;
+                myEntityErrorDetail.Child2Sequence = myChild2Sequence;
+                myEntityErrorDetail.Child3Type = myChild3Type;
+                myEntityErrorDetail.Child3Sequence = myChild3Sequence;
+                isNewEntity = true;
+            }
+
+            if (myCargoDescription.LogitudeFieldID == "")
+            {
+                //Add New Entity Error
+                var myEntityError = new error();
+                myEntityError.Code = errorItem.ValidationCode.Value;
+                myEntityError.ListVersionID = errorItem.ValidationCode.listVersionID;
+                myEntityError.MessageError = errorItem.ValidationCode.name;
+                if (errorItem.DMExtensions != null && errorItem.DMExtensions.ConstraintID != 0) //Get Constraint
+                {
+                    myEntityError.ConstraintID = errorItem.DMExtensions.ConstraintID.ToString();
+                }
+                if (myEntityErrorDetail.EntityErrors == null)
+                {
+                    myEntityErrorDetail.EntityErrors = new List<error>();
+                }
+                myEntityErrorDetail.EntityErrors.Add(myEntityError);
+            }
+            else
+            {
+                //Add New Fields Error
+                var myFieldError = new field();
+                myFieldError.Code = errorItem.ValidationCode.Value;
+                myFieldError.ListVersionID = errorItem.ValidationCode.listVersionID;
+                myFieldError.MessageError = errorItem.ValidationCode.name;
+                myFieldError.Fieldcode = myCargoDescription.LogitudeFieldID;
+                if (errorItem.DMExtensions != null && errorItem.DMExtensions.ConstraintID != 0) //Get Constraint
+                {
+                    myFieldError.ConstraintID = errorItem.DMExtensions.ConstraintID.ToString();
+                }
+                if (myEntityErrorDetail.FieldErrors == null)
+                {
+                    myEntityErrorDetail.FieldErrors = new List<field>();
+                }
+                myEntityErrorDetail.FieldErrors.Add(myFieldError);
+            }
+
+            if (isNewEntity == true)
+            {
+                _declarationErrorPointer.Entitites.Add(myEntityErrorDetail);
+            }
+        }
 
         private void HandleSpecialError(ResponseError errorItem, ref string myChild1Type, ref string myChild1Sequence, ref string myChild2Type, ref string myChild2Sequence, ref string myChild3Type, ref string myChild3Sequence, int pointerLevelCounterCurrent = 0, string SequenceNumeric = "", string DocumentSectionCode = "")
         {
@@ -261,7 +463,29 @@ namespace Logitude.CustomsMessaging.ResponseServices.DeclarationErrorPointer
                 myChild3Sequence = SequenceNumeric;
             }
         }
+        private void HandleSpecialErrorExport(UnifreightIIG.Common.ExportDeclarationServiceReference.ResponseError errorItem, ref string myChild1Type, ref string myChild1Sequence, ref string myChild2Type, ref string myChild2Sequence, ref string myChild3Type, ref string myChild3Sequence, int pointerLevelCounterCurrent = 0, string SequenceNumeric = "", string DocumentSectionCode = "")
+        {
+            string code = errorItem.ValidationCode.Value;
+            switch (code)
+            {
+                case "2592":
+                    {
+                        myChild3Type = "SupplierInvioceItemsCertificate";
+                        myChild3Sequence = "1";
+                        break;
+                    }
 
+            }
+
+            //Special: If this is level 3 of SupplierInvoiceItem as level 2 AND it is AdditionalDocument
+            if (!string.IsNullOrWhiteSpace(SequenceNumeric) && myChild2Type == "SupplierInvoiceItem" && pointerLevelCounterCurrent == 3 && DocumentSectionCode == "02A")
+            {
+                myChild3Type = "SupplierInvioceItemsCertificate";
+                myChild3Sequence = SequenceNumeric;
+            }
+        }
+
+ 
         private void HandleValidationCodeError(ResponseError errorItem)
         {
             switch (errorItem.ValidationCode.Value)
@@ -274,6 +498,30 @@ namespace Logitude.CustomsMessaging.ResponseServices.DeclarationErrorPointer
                 case "4589":
                     {
                         RaiseUnifreightEvent("MID", "MID", "");
+                        if (string.IsNullOrWhiteSpace(_MyDeclarationPM.DepositionStatusCode)) _MyDeclarationPM.DepositionStatusCode = "R";
+                        break;
+                    }
+                case "2244":
+                    {
+                        RaiseUnifreightEvent("IDE", "IDE", "");
+                        break;
+                    }
+            }
+
+        }
+        private void HandleValidationCodeErrorExport(UnifreightIIG.Common.ExportDeclarationServiceReference.ResponseError errorItem)
+        {
+            switch (errorItem.ValidationCode.Value)
+            {
+                case "1501":
+                    {
+                        RaiseUnifreightEvent("MPOA", "MPOA", ""); //errorItem.ValidationCode.name
+                        break;
+                    }
+                case "4589":
+                    {
+                        RaiseUnifreightEvent("MID", "MID", "");
+                        if (string.IsNullOrWhiteSpace(_MyDeclarationPM.DepositionStatusCode)) _MyDeclarationPM.DepositionStatusCode = "R";
                         break;
                     }
                 case "2244":
@@ -377,8 +625,69 @@ namespace Logitude.CustomsMessaging.ResponseServices.DeclarationErrorPointer
             var myDeclaretionErrorXml = XmlGenericUtil<DeclarationError>.SerializeObject(_declarationErrorPointer);
             return myDeclaretionErrorXml;
         }
+        internal string AddDeclarationException(string errorXml, string errorType, UnifreightIIG.Common.ImportDeclarationServiceReference.Exception exception, bool errorUpsert = false)
+        {
+            if (exception == null)
+            {
+                return errorXml;
+            }
 
-        internal string AddDeclarationException(string errorXml, string errorType, UnifreightIIG.Common.ImportDeclarationServiceReference.Exception exception,bool errorUpsert=false)
+            if (string.IsNullOrWhiteSpace(errorXml))
+            {
+                _declarationErrorPointer = new DeclarationError();
+                _declarationErrorPointer.Entitites = new List<Entity>();
+            }
+            else
+            {
+                byte[] errorsByte = Encoding.UTF8.GetBytes(errorXml);
+                MemoryStream memorystream = new MemoryStream(errorsByte);
+                XmlSerializer serializer = new XmlSerializer(typeof(DeclarationError));
+                _declarationErrorPointer = (DeclarationError)serializer.Deserialize(memorystream);
+            }
+
+            Entity myEntityErrorDetail = new Entity();
+            Entity currentEntityErrorDetail = FindEntityinList("", "", "", "", "", "");
+            if (currentEntityErrorDetail == null)
+            {
+                myEntityErrorDetail.Child1Type = "";
+                myEntityErrorDetail.Child1Sequence = "";
+                myEntityErrorDetail.Child2Type = "";
+                myEntityErrorDetail.Child2Sequence = "";
+                myEntityErrorDetail.Child3Type = "";
+                myEntityErrorDetail.Child3Sequence = "";
+            }
+            else
+            {
+                myEntityErrorDetail = currentEntityErrorDetail;
+                if (!errorUpsert)
+                {
+                    _declarationErrorPointer.Entitites.Remove(currentEntityErrorDetail);
+                }
+            }
+
+            var myFieldError = new field();
+            if (errorType == "Buisness")
+            {
+                myFieldError.Code = "Buisness";
+                myFieldError.ListVersionID = "1";
+            }
+            else if (errorType == "Warning")
+            {
+                myFieldError.Code = "Warning";
+                myFieldError.ListVersionID = "4";
+            }
+
+            myFieldError.MessageError = exception.ExeptionDescription;
+            myEntityErrorDetail.FieldErrors = new List<field>();
+            myEntityErrorDetail.FieldErrors.Add(myFieldError);
+
+            _declarationErrorPointer.Entitites.Add(myEntityErrorDetail);
+
+            var myDeclaretionErrorXml = XmlGenericUtil<DeclarationError>.SerializeObject(_declarationErrorPointer);
+            return myDeclaretionErrorXml;
+        }
+
+        internal string AddDeclarationExceptionExport(string errorXml, string errorType, UnifreightIIG.Common.ExportDeclarationServiceReference.Exception exception,bool errorUpsert=false)
         {
             if (exception == null)
             {

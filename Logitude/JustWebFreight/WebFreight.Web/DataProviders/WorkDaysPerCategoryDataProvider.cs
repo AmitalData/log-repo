@@ -16,9 +16,9 @@ namespace WebFreight.Web.DataProviders
         public DateTime? FromDate { get; set; }
         public DateTime? ToDate { get; set; }
         public DateTime? Today_DateTime { get; set; }
-        public string Total_TotalDaysIncludingInner{ get; set; }
-        public string Total_TotalDaysWithoutIncludingInner { get; set; }
-        public string Total_TotalGategoryDays { get; set; }
+        public double Total_TotalDaysIncludingInner{ get; set; }
+        public double Total_TotalDaysWithoutIncludingInner { get; set; }
+        public double Total_TotalGategoryDays { get; set; }
         public List<WorkDaysPerGategoryData> GategoryRecordList { get; set; }
     }
 
@@ -31,9 +31,9 @@ namespace WebFreight.Web.DataProviders
         public string ProjectName { get; set; }
         public string ProjectId { get; set; }
         public string ProjectNumber { get; set; }
-        public string TotalDaysIncludingInner { get; set; }
-        public string TotalDaysWithoutIncludingInner { get; set; }
-        public string TotalGategoryDays { get; set; }
+        public double TotalDaysIncludingInner { get; set; }
+        public double TotalDaysWithoutIncludingInner { get; set; }
+        public double TotalGategoryDays { get; set; }
         public double TotalMinutes { get; set; }
         public double TotalDaysIncludingInnerDouble { get; set; }
         public double TotalDaysWithoutIncludingInnerDouble { get; set; }

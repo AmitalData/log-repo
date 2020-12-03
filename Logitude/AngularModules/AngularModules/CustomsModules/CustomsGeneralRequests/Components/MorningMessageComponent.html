@@ -141,7 +141,7 @@
                                                 (RowDataLoaded)="OnRowLoaded($event)" 
                                                 [ItemSource]="MorningMessageObservableList">
                                 <!--<log-row-details>
-                                    <row-template template="let item">
+                                    <row-template >
                                         
                                         <div style="white-space: pre-wrap; height: 80px; width: 90%; background: #E8F7FF; position: relative;overflow-y:auto;">
                                                 {{item.Content}}
@@ -155,53 +155,62 @@
                                 <log-column [header]="'Customs.MorningMessage.O.MessageDate' | TextCodeTranslationPipe"
                                             [width]="'100'" [Alignment]="'right'"
                                             [binding]="'Content'">
-                                    <log-cell-template template="let item" #logcelltemplate>
+                                    <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                         <div class="TextTrimming RightCenter">
                                             <span>{{item.MessageDate}}</span>
                                         </div>
                                     </log-cell-template>
+</ng-template>
                                 </log-column>
 
                                 <!-- MessageID -->
                                 <log-column [header]="'Customs.MorningMessage.O.MessageID' | TextCodeTranslationPipe"
                                             [binding]="'MessageID'"
                                             [width]="'90'" [Alignment]="'right'">
-                                    <log-cell-template template="let item" #logcelltemplate>
+                                    <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                         <div class="RightCenter">
                                             <span>{{item.MessageID}}</span>
                                         </div>
                                     </log-cell-template>
+</ng-template>
                                 </log-column>
 
                                 <!-- CategoryName -->
                                 <log-column [header]="'Customs.MorningMessage.O.Category' | TextCodeTranslationPipe"
                                             [width]="'100'" [Alignment]="'right'"
                                             [binding]="'CategoryName'">
-                                    <log-cell-template template="let item" #logcelltemplate>
+                                    <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                         <div class="RightCenter">
                                             <span>{{item.CategoryName }}</span>
                                         </div>
                                     </log-cell-template>
+</ng-template>
                                 </log-column>
 
                                 <!-- Subject -->
                                 <log-column [width]="'200'" [binding]="'Subject'"
                                             [Alignment]="'right'"
                                             [header]="'Customs.MorningMessage.O.Subject' | TextCodeTranslationPipe">
-                                    <log-cell-template template="let item" #logcelltemplate>
+                                    <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                         <div style="width:100%;height:100%;">
                                             <div class="TextTrimming RightCenter">
                                                 <span>{{item.Subject }}</span>
                                             </div>
                                         </div>
                                     </log-cell-template>
+</ng-template>
                                 </log-column>
 
                                 <!-- Content -->
                                 <log-column [header]="'Customs.MorningMessage.O.Content' | TextCodeTranslationPipe"
                                             [width]="'200'" [Alignment]="'right'"
                                             [binding]="'Content'">
-                                    <log-cell-template template="let item" #logcelltemplate>
+                                    <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                         <div style="width:100%;height:100%;white-space: nowrap;">
                                             <!--<div style="text-overflow: ellipsis;overflow: hidden;white-space: nowrap;">-->
                                                 <a *ngIf="item.NeedExpandaple" title="Show more"  href="#" (click)="ShowMore(item.Content,item.Subject)">
@@ -215,6 +224,7 @@
 
 
                                     </log-cell-template>
+</ng-template>
                                 </log-column>
 
 

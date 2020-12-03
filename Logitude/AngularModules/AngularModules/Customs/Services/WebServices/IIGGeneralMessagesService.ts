@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+﻿import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
 import { defer, of } from 'rxjs';
@@ -35,7 +35,6 @@ export class IIGGeneralMessagesService {
     }
 
     PostMorningMessages(entity: MorningMessageRequestParams) {
-
         return defer(() => {
 
             var authHeader = new Headers();
@@ -45,13 +44,16 @@ export class IIGGeneralMessagesService {
             var serviceResponse: ServiceResponse;
             serviceResponse = new ServiceResponse();
 
-
             return this._http.post(
-                this._apiUrl + '/PostMorningMessages/',JSON.stringify(entity), ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
-                    //               serviceResponse.Result = res;
-                    //             return serviceResponse;
+                this._apiUrl + '/PostMorningMessages/',
+                JSON.stringify(entity),
+                ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
+
+                    serviceResponse.Result = res;
+
+                    return serviceResponse;
+
                 }),catchError(ServiceHelper.HandleServiceError));
-            ;
 
         }
 
@@ -71,7 +73,8 @@ export class IIGGeneralMessagesService {
 
             return this._http.post(
                 this._apiUrl + '/PostCourierBOLRequest/',
-              JSON.stringify(entity), ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
+                JSON.stringify(entity),
+                ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
 
                     serviceResponse.Result = res;
 
@@ -96,7 +99,8 @@ export class IIGGeneralMessagesService {
 
             return this._http.post(
                 this._apiUrl + '/PostMasterBOLRequest/',
-              JSON.stringify(entity), ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
+                JSON.stringify(entity),
+                ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
                     serviceResponse.Result = res;
                     return serviceResponse;
                 }),catchError(ServiceHelper.HandleServiceError));
@@ -117,7 +121,8 @@ export class IIGGeneralMessagesService {
 
             return this._http.post(
                 this._apiUrl + '/PostCreditQueryRequest/',
-              JSON.stringify(entity), ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
+                JSON.stringify(entity),
+                ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
                     serviceResponse.Result = res;
                     return serviceResponse;
                 }),catchError(ServiceHelper.HandleServiceError));
@@ -138,7 +143,8 @@ export class IIGGeneralMessagesService {
 
             return this._http.post(
                 this._apiUrl + '/PostGoldCreditQueryRequest/',
-              JSON.stringify(entity), ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
+                JSON.stringify(entity),
+                ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
                     serviceResponse.Result = res;
                     return serviceResponse;
                 }),catchError(ServiceHelper.HandleServiceError));
@@ -159,7 +165,8 @@ export class IIGGeneralMessagesService {
 
             return this._http.post(
                 this._apiUrl + '/PostSpecialActivityRequest/',
-              JSON.stringify(entity), ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
+                JSON.stringify(entity),
+                ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
                     serviceResponse.Result = res;
                     return serviceResponse;
                 }),catchError(ServiceHelper.HandleServiceError));
@@ -180,7 +187,8 @@ export class IIGGeneralMessagesService {
 
             return this._http.post(
                 this._apiUrl + '/PostImporterDeclarationRequest/',
-              JSON.stringify(entity), ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
+                JSON.stringify(entity),
+                ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
                     serviceResponse.Result = res;
                     return serviceResponse;
                 }),catchError(ServiceHelper.HandleServiceError));
@@ -190,12 +198,16 @@ export class IIGGeneralMessagesService {
     }
 
     GetClientProgressBarIndicatorCurrentStage(tenant: number, CustomsRequestsSheetId: string, BasicResponse: boolean) {
+        var authHeader = new Headers();
+        authHeader.append('Token', SessionInfo.Token);
+
 
 
         return defer(() => {
             return this._http
                 //GetClientProgressBarIndicatorCurrentStage(int tenant, string CustomsRequestsSheetId)
-              .get(this._apiUrl + '/GetClientProgressBarIndicatorCurrentStage/?' + '&BasicResponse=' + BasicResponse + '&tenant=' + tenant + '&CustomsRequestsSheetId=' + CustomsRequestsSheetId, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                .get(this._apiUrl + '/GetClientProgressBarIndicatorCurrentStage/?' + '&BasicResponse=' + BasicResponse + '&tenant=' + tenant + '&CustomsRequestsSheetId=' + CustomsRequestsSheetId,
+                ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
 
                     var serviceResponse: ServiceResponse = new ServiceResponse();
@@ -209,6 +221,10 @@ export class IIGGeneralMessagesService {
 
         return defer(() => {
 
+            var authHeader = new Headers();
+            authHeader.append('Token', SessionInfo.Token);
+            authHeader.append('Content-Type', 'application/json');
+
 
 
             var serviceResponse: ServiceResponse;
@@ -216,7 +232,8 @@ export class IIGGeneralMessagesService {
 
             return this._http.post(
                 this._apiUrl + '/PostExchangeRatesQuery/',
-              JSON.stringify(entity), ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
+                JSON.stringify(entity),
+                ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
 
                     serviceResponse.Result = res;
 
@@ -242,7 +259,8 @@ export class IIGGeneralMessagesService {
 
             return this._http.post(
                 this._apiUrl + '/PostCustomItemLegalDemandsQuery/',
-              JSON.stringify(entity), ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
+                JSON.stringify(entity),
+                ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
                     serviceResponse.Result = res;
                     return serviceResponse;
                 }),catchError(ServiceHelper.HandleServiceError));
@@ -262,7 +280,8 @@ export class IIGGeneralMessagesService {
 
             return this._http.post(
                 this._apiUrl + '/PostUpdateClosedTables/',
-              JSON.stringify(entity), ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
+                JSON.stringify(entity),
+                ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
                     serviceResponse.Result = res;
                     return serviceResponse;
                 }),catchError(ServiceHelper.HandleServiceError));
@@ -283,7 +302,8 @@ export class IIGGeneralMessagesService {
 
             return this._http.post(
                 this._apiUrl + '/PostFillNotExistedClosedTables/',
-              JSON.stringify(entity), ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
+                JSON.stringify(entity),
+                ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
                     serviceResponse.Result = res;
                     return serviceResponse;
                 }),catchError(ServiceHelper.HandleServiceError));
@@ -306,7 +326,8 @@ export class IIGGeneralMessagesService {
 
             return this._http.post(
                 this._apiUrl + '/PostVehicleRequest/',
-              JSON.stringify(entity), ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
+                JSON.stringify(entity),
+                ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
                     serviceResponse.Result = res;
                     return serviceResponse;
                 }),catchError(ServiceHelper.HandleServiceError));
@@ -328,7 +349,8 @@ export class IIGGeneralMessagesService {
 
             return this._http.post(
                 this._apiUrl + '/PostCustomFileCredit/',
-              JSON.stringify(entity), ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
+                JSON.stringify(entity),
+                ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
                     serviceResponse.Result = res;
                     return serviceResponse;
                 }),catchError(ServiceHelper.HandleServiceError));
@@ -347,7 +369,9 @@ export class IIGGeneralMessagesService {
             serviceResponse = new ServiceResponse();
 
             return this._http.get(
-              this._apiUrl + '/GetDefBankForCustomer/?' + 'customerCode=' + customerCode + '&tenant=' + tenant.toString(), ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
+                this._apiUrl + '/GetDefBankForCustomer/?' + 'customerCode=' + customerCode + '&tenant=' + tenant.toString(),
+                //JSON.stringify(entity),
+                ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
                     serviceResponse.Result = res;
                     return serviceResponse;
                 }),catchError(ServiceHelper.HandleServiceError));
@@ -366,7 +390,8 @@ export class IIGGeneralMessagesService {
 
             return this._http.post(
                 this._apiUrl + '/PostChangingTimeRequestParams/',
-              JSON.stringify(entity), ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
+                JSON.stringify(entity),
+                ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
                     serviceResponse.Result = res;
                     return serviceResponse;
                 }),catchError(ServiceHelper.HandleServiceError));
@@ -387,7 +412,8 @@ export class IIGGeneralMessagesService {
         return defer(() => {
             return this._http
                 //GetClientProgressBarIndicatorCurrentStage(int tenant, string CustomsRequestsSheetId)
-              .get(this._apiUrl + '/GetResetDeclarationNumber/?' + '&declarationId=' + declarationId + '&tenant=' + tenant, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                .get(this._apiUrl + '/GetResetDeclarationNumber/?' + '&declarationId=' + declarationId + '&tenant=' + tenant,
+                ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
 
                     var serviceResponse: ServiceResponse = new ServiceResponse();
@@ -412,7 +438,8 @@ export class IIGGeneralMessagesService {
 
             return this._http.post(
                 this._apiUrl + '/PostCargoQueryRequestParams/',
-              JSON.stringify(entity), ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
+                JSON.stringify(entity),
+                ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
                     serviceResponse.Result = res;
                     return serviceResponse;
                 }),catchError(ServiceHelper.HandleServiceError));
@@ -433,7 +460,8 @@ export class IIGGeneralMessagesService {
 
             return this._http.post(
                 this._apiUrl + '/PostMessageRestoreRequestParams/',
-              JSON.stringify(entity), ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
+                JSON.stringify(entity),
+                ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
                     serviceResponse.Result = res;
                     return serviceResponse;
                 }),catchError(ServiceHelper.HandleServiceError));
@@ -452,7 +480,8 @@ export class IIGGeneralMessagesService {
 
             return this._http.post(
                 this._apiUrl + '/PostBlockListInWarehouseRequestParams/',
-              JSON.stringify(entity), ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
+                JSON.stringify(entity),
+                ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
                     serviceResponse.Result = res;
                     return serviceResponse;
                 }),catchError(ServiceHelper.HandleServiceError));
@@ -479,7 +508,8 @@ export class IIGGeneralMessagesService {
                 '&declarationId=' + declarationId +
                 '&InvoiceCounterKey=' + InvoiceCounterKey +
                 '&LineNumber=' + LineNumber +
-                  '&tenant=' + tenant, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                '&tenant=' + tenant,
+                ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
 
                     var serviceResponse: ServiceResponse = new ServiceResponse();
@@ -506,7 +536,8 @@ export class IIGGeneralMessagesService {
 
             return this._http.post(
                 this._apiUrl + '/PostCustomsBookInRequestParams/',
-              JSON.stringify(entity), ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
+                JSON.stringify(entity),
+                ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
                     serviceResponse.Result = res;
                     return serviceResponse;
                 }),catchError(ServiceHelper.HandleServiceError));
@@ -525,7 +556,8 @@ export class IIGGeneralMessagesService {
 
             return this._http.post(
                 this._apiUrl + '/PostDeficitFileFilterRequestParams/',
-              JSON.stringify(entity), ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
+                JSON.stringify(entity),
+                ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
                     serviceResponse.Result = res;
                     return serviceResponse;
                 }),catchError(ServiceHelper.HandleServiceError));
@@ -545,7 +577,8 @@ export class IIGGeneralMessagesService {
 
             return this._http.post(
                 this._apiUrl + '/PostTPG_NG_8244_ClaimFileFilterRequestParams/',
-              JSON.stringify(entity), ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
+                JSON.stringify(entity),
+                ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
                     serviceResponse.Result = res;
                     return serviceResponse;
                 }),catchError(ServiceHelper.HandleServiceError));
@@ -564,3 +597,4 @@ export class ResultClientProgressBar {
 
 }
 ////////////////////////////////////////
+   

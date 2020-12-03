@@ -28,6 +28,15 @@ namespace Logitude.Customs.Data.Repsitories
                     select a).ToList();
         }
 
+
+        public List<DeclarationCargoSplit> GetDeclarationCargoSplitsList(List<string> declarationIds, int tenant)
+        {
+            return (from a in context.DeclarationCargoSplits
+                    where declarationIds.Contains( a.DeclarationId) && a.Tenant == tenant
+                    select a).ToList();
+        }
+
+
         public string GetIdByDeclarationCargoSplitRequestNumber(string declarationCargoSplitRequestNumber, int tenant)
         {
             if (String.IsNullOrWhiteSpace(declarationCargoSplitRequestNumber)) return "";

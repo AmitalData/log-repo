@@ -100,6 +100,12 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
 
         private void ComputeTaskAverageRunTime(string TaskId)
         {
+            if (LogitudeSettings.DatabaseManagementSystem == "oracle")
+            {
+                // in devart oracle DbFunctions.DiffSeconds - undeclare !!
+                return;// meanwhile  no need to  ComputeTaskAverageRunTime 
+            }
+                
             TasksScheduler SelectedTasksScheduler = (from a in ObjectContext.TasksSchedulers
                                                      where a.Id == TaskId
                                                      select a).FirstOrDefault();

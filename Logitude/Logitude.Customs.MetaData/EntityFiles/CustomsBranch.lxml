@@ -1,15 +1,5134 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
-<entity Id="&quot;6d7c44a2-9534-420a-9b43-ea98f2e66606&quot;" ObjectTableName="&quot;Customs.CustomsBranch&quot;" DBTableName="&quot;Customs.CustomsBranches&quot;" ObjectTableSingular="&quot;Branch&quot;" ObjectTablePlural="&quot;Branchs&quot;" HasCustomFilter="false" IsEditable="false" IsNewWizard="false" LookUp1="&quot;Code&quot;" LookUp2="&quot;LocalName&quot;" DependencyFilter1="&quot;BankCode&quot;" KeyPropertyPath="&quot;Id&quot;" AutoCompleteSearchWindow="false" IsClosed="true" CacheOnClient="true" EditableFromAutoCompleteWindow="false" HasCounter="false" EnableAddFromLOV="false" IsRestrictable="false" IsMain="false" IsAutoComplete="true" EnableEditFromLOV="false" SortingByObjectField="&quot;Code&quot;" InActive="false" IsSaveButtonVisible="false" IsComposition="false" EnableSecurity="false" AllowCustomFields="false" HasDynamicHeader="false" ObjectTableTypeCode="&quot;BR&quot;" MaxNumberOfCustomFields="0" DefaultText="&quot;Branch&quot;" Code="&quot;df03&quot;" Name="&quot;Customs.CustomsBranch Query Group&quot;" CloseTableCode="&quot;Code&quot;" CloseTableName="&quot;LocalName&quot;" GenerateDomainService="false" ClientModuleName="&quot;Customs&quot;" ServerModuleName="&quot;Customs&quot;">
-  <field Id="&quot;f3e0e00a-6233-4e91-910e-9173ecf91bc4&quot;" FieldName="&quot;Code&quot;" ObjectTableName="&quot;Customs.CustomsBranch&quot;" FieldsDataType="&quot;Text&quot;" MinLength="0" MaxLength="3" IsRequired="false" DisplayOnLookUp="true" CanFilter="true" DisplayOnly="false" SystemRequired="false" ObjectFieldNotRequired="false" SystemMaxLength="3" DisplayInList="true" IsCustomFilter="false" Operator="&quot;StartsWith&quot;" MultiLine="false" IsTimeFrameFilter="false" DisplayInSearchWindowList="true" PMPropertyPath="&quot;Code&quot;" ListPropertyPath="&quot;Code&quot;" DisplayInLookUpIndex="0" AutomaticField="false" UniqueField="false" DisplayInSearchWindowListIndex="0" IsMulti="false" DependencyFilter1IsList="false" DependencyFilter2IsList="false" ValidForQuerySection1="&quot;Customs.CustomsBranch&quot;" DisplayInEntityVariables="false" DigitsAfterPoint="0" InActive="false" DisplayLongName="false" FullFieldLable="&quot;Code&quot;" DefaultText="&quot;Code&quot;" FullLocalDefaultText="&quot;קוד&quot;" ListFieldLable="&quot;CodeListLable&quot;" ListLableDefaultText="&quot;Code&quot;" ListLocalDefaultText="&quot;קוד&quot;" IsNullable="false" IsForeignKey="false" IsPrimaryKey="false" HasDataBaseField="true" HasPMField="true" IsComposition="false" IsMaxLength="false" NoMetaDataField="false" GenerateInList="true" IsFixedLength="false" EnableAutoFill="false" IncludeInSearchField="false" AllowedinAutomationConditions="false" AutomationEmailRecipient="false" CanAutomateSetValue="false" />
-  <field Id="&quot;c1d9d544-e127-47cd-b3bb-05f487baa7be&quot;" FieldName="&quot;EnglishName&quot;" ObjectTableName="&quot;Customs.CustomsBranch&quot;" FieldsDataType="&quot;Text&quot;" MinLength="0" MaxLength="100" IsRequired="false" DisplayOnLookUp="false" CanFilter="true" DisplayOnly="false" SystemRequired="false" ObjectFieldNotRequired="false" SystemMaxLength="100" DisplayInList="true" IsCustomFilter="false" Operator="&quot;StartsWith&quot;" MultiLine="false" IsTimeFrameFilter="false" DisplayInSearchWindowList="false" PMPropertyPath="&quot;EnglishName&quot;" ListPropertyPath="&quot;EnglishName&quot;" DisplayInLookUpIndex="0" AutomaticField="false" UniqueField="false" DisplayInSearchWindowListIndex="0" IsMulti="false" DependencyFilter1IsList="false" DependencyFilter2IsList="false" ValidForQuerySection1="&quot;Customs.CustomsBranch&quot;" DisplayInEntityVariables="false" DigitsAfterPoint="0" InActive="false" DisplayLongName="false" FullFieldLable="&quot;EnglishName&quot;" DefaultText="&quot;EnglishName&quot;" FullLocalDefaultText="&quot;שם אנגלית&quot;" ListFieldLable="&quot;EnglishNameListLable&quot;" ListLableDefaultText="&quot;English Name&quot;" ListLocalDefaultText="&quot;שם אנגלית&quot;" IsNullable="true" IsForeignKey="false" IsPrimaryKey="false" HasDataBaseField="true" HasPMField="true" IsComposition="false" IsMaxLength="false" NoMetaDataField="false" GenerateInList="true" IsFixedLength="false" EnableAutoFill="false" IncludeInSearchField="false" AllowedinAutomationConditions="false" AutomationEmailRecipient="false" CanAutomateSetValue="false" />
-  <field Id="&quot;ebaded50-87a5-4b08-b706-6c8438bed9b6&quot;" FieldName="&quot;LocalName&quot;" ObjectTableName="&quot;Customs.CustomsBranch&quot;" FieldsDataType="&quot;nText&quot;" MinLength="0" MaxLength="100" IsRequired="false" DisplayOnLookUp="true" CanFilter="true" DisplayOnly="false" SystemRequired="false" ObjectFieldNotRequired="false" SystemMaxLength="100" DisplayInList="true" IsCustomFilter="false" Operator="&quot;StartsWith&quot;" MultiLine="false" IsTimeFrameFilter="false" DisplayInSearchWindowList="true" PMPropertyPath="&quot;LocalName&quot;" ListPropertyPath="&quot;LocalName&quot;" DisplayInLookUpIndex="1" AutomaticField="false" UniqueField="false" DisplayInSearchWindowListIndex="1" IsMulti="false" DependencyFilter1IsList="false" DependencyFilter2IsList="false" ValidForQuerySection1="&quot;Customs.CustomsBranch&quot;" DisplayInEntityVariables="false" DigitsAfterPoint="0" InActive="false" DisplayLongName="false" FullFieldLable="&quot;LocalName&quot;" DefaultText="&quot;Local Name&quot;" FullLocalDefaultText="&quot;שם מקומי&quot;" ListFieldLable="&quot;LocalNameListLable&quot;" ListLableDefaultText="&quot;Local Name&quot;" ListLocalDefaultText="&quot;שם מקומי&quot;" IsNullable="true" IsForeignKey="false" IsPrimaryKey="false" HasDataBaseField="true" HasPMField="true" IsComposition="false" IsMaxLength="false" NoMetaDataField="false" GenerateInList="true" IsFixedLength="false" EnableAutoFill="false" IncludeInSearchField="false" AllowedinAutomationConditions="false" AutomationEmailRecipient="false" CanAutomateSetValue="false" />
-  <field Id="&quot;ceefc947-5a79-499f-8e82-ceb57397a57c&quot;" FieldName="&quot;SearchFields&quot;" ObjectTableName="&quot;Customs.CustomsBranch&quot;" FieldsDataType="&quot;nText&quot;" MinLength="0" MaxLength="1000" IsRequired="false" DisplayOnLookUp="false" CanFilter="false" DisplayOnly="false" SystemRequired="false" ObjectFieldNotRequired="false" SystemMaxLength="1000" DisplayInList="false" IsCustomFilter="false" MultiLine="false" IsTimeFrameFilter="false" DisplayInSearchWindowList="false" PMPropertyPath="&quot;SearchFields&quot;" ListPropertyPath="&quot;SearchFields&quot;" DisplayInLookUpIndex="0" AutomaticField="false" UniqueField="false" DisplayInSearchWindowListIndex="0" IsMulti="false" DependencyFilter1IsList="false" DependencyFilter2IsList="false" ValidForQuerySection1="&quot;Customs.CustomsBranch&quot;" DisplayInEntityVariables="false" DigitsAfterPoint="0" InActive="false" DisplayLongName="false" FullFieldLable="&quot;SearchFields&quot;" DefaultText="&quot;SearchFields&quot;" ListFieldLable="&quot;SearchFieldsListLable&quot;" ListLableDefaultText="&quot;SearchFields&quot;" IsNullable="true" IsForeignKey="false" IsPrimaryKey="false" HasDataBaseField="true" HasPMField="true" IsComposition="false" IsMaxLength="false" NoMetaDataField="false" GenerateInList="true" IsFixedLength="false" EnableAutoFill="false" IncludeInSearchField="false" AllowedinAutomationConditions="false" AutomationEmailRecipient="false" CanAutomateSetValue="false" />
-  <field Id="&quot;3da6f505-e2ca-466a-aa31-f9fb58385df0&quot;" FieldName="&quot;Inactive&quot;" ObjectTableName="&quot;Customs.CustomsBranch&quot;" FieldsDataType="&quot;Boolean&quot;" MinLength="0" MaxLength="0" IsRequired="false" DisplayOnLookUp="false" CanFilter="true" DisplayOnly="false" SystemRequired="false" ObjectFieldNotRequired="false" SystemMaxLength="0" DisplayInList="true" IsCustomFilter="false" Operator="&quot;Equals&quot;" MultiLine="false" IsTimeFrameFilter="false" DisplayInSearchWindowList="false" PMPropertyPath="&quot;Inactive&quot;" ListPropertyPath="&quot;Inactive&quot;" DisplayInLookUpIndex="0" AutomaticField="false" UniqueField="false" DisplayInSearchWindowListIndex="0" IsMulti="false" DependencyFilter1IsList="false" DependencyFilter2IsList="false" ValidForQuerySection1="&quot;Customs.CustomsBranch&quot;" DisplayInEntityVariables="false" InActive="false" DisplayLongName="false" FullFieldLable="&quot;Inactive&quot;" DefaultText="&quot;Inactive &quot;" FullLocalDefaultText="&quot;לא פּעיל&quot;" ListFieldLable="&quot;InactiveListLable&quot;" ListLableDefaultText="&quot;Inactive&quot;" ListLocalDefaultText="&quot;לא פּעיל&quot;" IsNullable="false" IsForeignKey="false" IsPrimaryKey="false" HasDataBaseField="true" HasPMField="true" IsComposition="false" IsMaxLength="false" NoMetaDataField="false" GenerateInList="true" IsFixedLength="false" EnableAutoFill="false" IncludeInSearchField="false" AllowedinAutomationConditions="false" AutomationEmailRecipient="false" CanAutomateSetValue="false" />
-  <field Id="&quot;d66559c5-a3c5-4f3d-8799-5ea09af5dc84&quot;" FieldName="&quot;BankCode&quot;" ObjectTableName="&quot;Customs.CustomsBranch&quot;" FieldsDataType="&quot;Text&quot;" MinLength="0" MaxLength="2" IsRequired="false" DisplayOnLookUp="false" CanFilter="false" DisplayOnly="false" SystemRequired="false" ObjectFieldNotRequired="false" SystemMaxLength="2" DisplayInList="false" IsCustomFilter="false" MultiLine="false" IsTimeFrameFilter="false" DisplayInSearchWindowList="false" PMPropertyPath="&quot;BankCode&quot;" ListPropertyPath="&quot;BankCode&quot;" DisplayInLookUpIndex="0" AutomaticField="false" UniqueField="false" DisplayInSearchWindowListIndex="0" IsMulti="false" DependencyFilter1IsList="false" DependencyFilter2IsList="false" DisplayInEntityVariables="false" InActive="false" DisplayLongName="false" FullFieldLable="&quot;BankCode&quot;" DefaultText="&quot;Bank Code&quot;" IsNullable="true" IsForeignKey="true" ForeignEntity="Bank" NavigationPropertyName="Bank" IsPrimaryKey="false" HasDataBaseField="true" HasPMField="true" IsComposition="false" IsMaxLength="false" NoMetaDataField="false" GenerateInList="true" IsFixedLength="false" EnableAutoFill="false" IncludeInSearchField="false" AllowedinAutomationConditions="false" AutomationEmailRecipient="false" CanAutomateSetValue="false" />
-  <field Id="&quot;26a10a50-238d-4142-b3d8-e2e94968c268&quot;" FieldName="&quot;Id&quot;" ObjectTableName="&quot;Customs.CustomsBranch&quot;" FieldsDataType="&quot;Text&quot;" MinLength="0" MaxLength="6" IsRequired="false" DisplayOnLookUp="false" CanFilter="false" DisplayOnly="false" SystemRequired="false" ObjectFieldNotRequired="false" SystemMaxLength="6" DisplayInList="false" IsCustomFilter="false" MultiLine="false" IsTimeFrameFilter="false" DisplayInSearchWindowList="false" PMPropertyPath="&quot;Id&quot;" ListPropertyPath="&quot;Id&quot;" DisplayInLookUpIndex="0" AutomaticField="false" UniqueField="false" DisplayInSearchWindowListIndex="0" IsMulti="false" DependencyFilter1IsList="false" DependencyFilter2IsList="false" DisplayInEntityVariables="false" InActive="false" DisplayLongName="false" FullFieldLable="&quot;Id&quot;" DefaultText="&quot;Id&quot;" IsNullable="false" IsForeignKey="false" IsPrimaryKey="true" HasDataBaseField="true" HasPMField="true" IsComposition="false" IsMaxLength="false" NoMetaDataField="false" GenerateInList="true" IsFixedLength="false" EnableAutoFill="false" IncludeInSearchField="false" AllowedinAutomationConditions="false" AutomationEmailRecipient="false" CanAutomateSetValue="false" />
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity
+  Id="&quot;6d7c44a2-9534-420a-9b43-ea98f2e66606&quot;"
+  ObjectTableName="&quot;Customs.CustomsBranch&quot;"
+  DBTableName="&quot;Customs.CustomsBranches&quot;"
+  ObjectTableSingular="&quot;Branch&quot;"
+  ObjectTablePlural="&quot;Branchs&quot;"
+  HasCustomFilter="false"
+  IsEditable="false"
+  IsNewWizard="false"
+  LookUp1="&quot;Code&quot;"
+  LookUp2="&quot;LocalName&quot;"
+  DependencyFilter1="&quot;BankCode&quot;"
+  KeyPropertyPath="&quot;Id&quot;"
+  AutoCompleteSearchWindow="false"
+  IsClosed="true"
+  CacheOnClient="true"
+  EditableFromAutoCompleteWindow="false"
+  HasCounter="false"
+  EnableAddFromLOV="false"
+  IsRestrictable="false"
+  IsMain="false"
+  IsAutoComplete="true"
+  EnableEditFromLOV="false"
+  SortingByObjectField="&quot;Code&quot;"
+  InActive="false"
+  IsSaveButtonVisible="false"
+  IsComposition="false"
+  EnableSecurity="false"
+  AllowCustomFields="false"
+  HasDynamicHeader="false"
+  ObjectTableTypeCode="&quot;BR&quot;"
+  MaxNumberOfCustomFields="0"
+  DefaultText="&quot;Branch&quot;"
+  Code="&quot;CUBR&quot;"
+  Name="&quot;Customs.CustomsBranch&quot;"
+  CloseTableCode="&quot;Code&quot;"
+  CloseTableName="&quot;LocalName&quot;"
+  GenerateDomainService="false"
+  ClientModuleName="&quot;Customs&quot;"
+  ServerModuleName="&quot;Customs&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="Customs">
+  <field
+    Id="&quot;f3e0e00a-6233-4e91-910e-9173ecf91bc4&quot;"
+    FieldName="&quot;Code&quot;"
+    ObjectTableName="&quot;Customs.CustomsBranch&quot;"
+    FieldsDataType="&quot;Text&quot;"
+    MinLength="0"
+    MaxLength="3"
+    IsRequired="false"
+    DisplayOnLookUp="true"
+    CanFilter="true"
+    DisplayOnly="false"
+    SystemRequired="false"
+    ObjectFieldNotRequired="false"
+    SystemMaxLength="3"
+    DisplayInList="true"
+    IsCustomFilter="false"
+    Operator="&quot;StartsWith&quot;"
+    MultiLine="false"
+    IsTimeFrameFilter="false"
+    DisplayInSearchWindowList="true"
+    PMPropertyPath="&quot;Code&quot;"
+    ListPropertyPath="&quot;Code&quot;"
+    DisplayInLookUpIndex="0"
+    AutomaticField="false"
+    UniqueField="false"
+    DisplayInSearchWindowListIndex="0"
+    IsMulti="false"
+    DependencyFilter1IsList="false"
+    DependencyFilter2IsList="false"
+    ValidForQuerySection1="&quot;Customs.CustomsBranch&quot;"
+    DisplayInEntityVariables="false"
+    DigitsAfterPoint="0"
+    InActive="false"
+    DisplayLongName="false"
+    FullFieldLable="&quot;Code&quot;"
+    DefaultText="&quot;Code&quot;"
+    FullLocalDefaultText="&quot;קוד&quot;"
+    ListFieldLable="&quot;CodeListLable&quot;"
+    ListLableDefaultText="&quot;Code&quot;"
+    ListLocalDefaultText="&quot;קוד&quot;"
+    IsNullable="false"
+    IsForeignKey="false"
+    IsPrimaryKey="false"
+    HasDataBaseField="true"
+    HasPMField="true"
+    IsComposition="false"
+    IsMaxLength="false"
+    NoMetaDataField="false"
+    GenerateInList="true"
+    IsFixedLength="false"
+    EnableAutoFill="false"
+    IncludeInSearchField="false"
+    AllowedinAutomationConditions="false"
+    AutomationEmailRecipient="false"
+    CanAutomateSetValue="false" />
+  <field
+    Id="&quot;c1d9d544-e127-47cd-b3bb-05f487baa7be&quot;"
+    FieldName="&quot;EnglishName&quot;"
+    ObjectTableName="&quot;Customs.CustomsBranch&quot;"
+    FieldsDataType="&quot;Text&quot;"
+    MinLength="0"
+    MaxLength="100"
+    IsRequired="false"
+    DisplayOnLookUp="false"
+    CanFilter="true"
+    DisplayOnly="false"
+    SystemRequired="false"
+    ObjectFieldNotRequired="false"
+    SystemMaxLength="100"
+    DisplayInList="true"
+    IsCustomFilter="false"
+    Operator="&quot;StartsWith&quot;"
+    MultiLine="false"
+    IsTimeFrameFilter="false"
+    DisplayInSearchWindowList="false"
+    PMPropertyPath="&quot;EnglishName&quot;"
+    ListPropertyPath="&quot;EnglishName&quot;"
+    DisplayInLookUpIndex="0"
+    AutomaticField="false"
+    UniqueField="false"
+    DisplayInSearchWindowListIndex="0"
+    IsMulti="false"
+    DependencyFilter1IsList="false"
+    DependencyFilter2IsList="false"
+    ValidForQuerySection1="&quot;Customs.CustomsBranch&quot;"
+    DisplayInEntityVariables="false"
+    DigitsAfterPoint="0"
+    InActive="false"
+    DisplayLongName="false"
+    FullFieldLable="&quot;EnglishName&quot;"
+    DefaultText="&quot;EnglishName&quot;"
+    FullLocalDefaultText="&quot;שם אנגלית&quot;"
+    ListFieldLable="&quot;EnglishNameListLable&quot;"
+    ListLableDefaultText="&quot;English Name&quot;"
+    ListLocalDefaultText="&quot;שם אנגלית&quot;"
+    IsNullable="true"
+    IsForeignKey="false"
+    IsPrimaryKey="false"
+    HasDataBaseField="true"
+    HasPMField="true"
+    IsComposition="false"
+    IsMaxLength="false"
+    NoMetaDataField="false"
+    GenerateInList="true"
+    IsFixedLength="false"
+    EnableAutoFill="false"
+    IncludeInSearchField="false"
+    AllowedinAutomationConditions="false"
+    AutomationEmailRecipient="false"
+    CanAutomateSetValue="false" />
+  <field
+    Id="&quot;ebaded50-87a5-4b08-b706-6c8438bed9b6&quot;"
+    FieldName="&quot;LocalName&quot;"
+    ObjectTableName="&quot;Customs.CustomsBranch&quot;"
+    FieldsDataType="&quot;nText&quot;"
+    MinLength="0"
+    MaxLength="100"
+    IsRequired="false"
+    DisplayOnLookUp="true"
+    CanFilter="true"
+    DisplayOnly="false"
+    SystemRequired="false"
+    ObjectFieldNotRequired="false"
+    SystemMaxLength="100"
+    DisplayInList="true"
+    IsCustomFilter="false"
+    Operator="&quot;StartsWith&quot;"
+    MultiLine="false"
+    IsTimeFrameFilter="false"
+    DisplayInSearchWindowList="true"
+    PMPropertyPath="&quot;LocalName&quot;"
+    ListPropertyPath="&quot;LocalName&quot;"
+    DisplayInLookUpIndex="1"
+    AutomaticField="false"
+    UniqueField="false"
+    DisplayInSearchWindowListIndex="1"
+    IsMulti="false"
+    DependencyFilter1IsList="false"
+    DependencyFilter2IsList="false"
+    ValidForQuerySection1="&quot;Customs.CustomsBranch&quot;"
+    DisplayInEntityVariables="false"
+    DigitsAfterPoint="0"
+    InActive="false"
+    DisplayLongName="false"
+    FullFieldLable="&quot;LocalName&quot;"
+    DefaultText="&quot;Local Name&quot;"
+    FullLocalDefaultText="&quot;שם מקומי&quot;"
+    ListFieldLable="&quot;LocalNameListLable&quot;"
+    ListLableDefaultText="&quot;Local Name&quot;"
+    ListLocalDefaultText="&quot;שם מקומי&quot;"
+    IsNullable="true"
+    IsForeignKey="false"
+    IsPrimaryKey="false"
+    HasDataBaseField="true"
+    HasPMField="true"
+    IsComposition="false"
+    IsMaxLength="false"
+    NoMetaDataField="false"
+    GenerateInList="true"
+    IsFixedLength="false"
+    EnableAutoFill="false"
+    IncludeInSearchField="false"
+    AllowedinAutomationConditions="false"
+    AutomationEmailRecipient="false"
+    CanAutomateSetValue="false" />
+  <field
+    Id="&quot;ceefc947-5a79-499f-8e82-ceb57397a57c&quot;"
+    FieldName="&quot;SearchFields&quot;"
+    ObjectTableName="&quot;Customs.CustomsBranch&quot;"
+    FieldsDataType="&quot;nText&quot;"
+    MinLength="0"
+    MaxLength="1000"
+    IsRequired="false"
+    DisplayOnLookUp="false"
+    CanFilter="false"
+    DisplayOnly="false"
+    SystemRequired="false"
+    ObjectFieldNotRequired="false"
+    SystemMaxLength="1000"
+    DisplayInList="false"
+    IsCustomFilter="false"
+    MultiLine="false"
+    IsTimeFrameFilter="false"
+    DisplayInSearchWindowList="false"
+    PMPropertyPath="&quot;SearchFields&quot;"
+    ListPropertyPath="&quot;SearchFields&quot;"
+    DisplayInLookUpIndex="0"
+    AutomaticField="false"
+    UniqueField="false"
+    DisplayInSearchWindowListIndex="0"
+    IsMulti="false"
+    DependencyFilter1IsList="false"
+    DependencyFilter2IsList="false"
+    ValidForQuerySection1="&quot;Customs.CustomsBranch&quot;"
+    DisplayInEntityVariables="false"
+    DigitsAfterPoint="0"
+    InActive="false"
+    DisplayLongName="false"
+    FullFieldLable="&quot;SearchFields&quot;"
+    DefaultText="&quot;SearchFields&quot;"
+    ListFieldLable="&quot;SearchFieldsListLable&quot;"
+    ListLableDefaultText="&quot;SearchFields&quot;"
+    IsNullable="true"
+    IsForeignKey="false"
+    IsPrimaryKey="false"
+    HasDataBaseField="true"
+    HasPMField="true"
+    IsComposition="false"
+    IsMaxLength="false"
+    NoMetaDataField="false"
+    GenerateInList="true"
+    IsFixedLength="false"
+    EnableAutoFill="false"
+    IncludeInSearchField="false"
+    AllowedinAutomationConditions="false"
+    AutomationEmailRecipient="false"
+    CanAutomateSetValue="false" />
+  <field
+    Id="&quot;3da6f505-e2ca-466a-aa31-f9fb58385df0&quot;"
+    FieldName="&quot;Inactive&quot;"
+    ObjectTableName="&quot;Customs.CustomsBranch&quot;"
+    FieldsDataType="&quot;Boolean&quot;"
+    MinLength="0"
+    MaxLength="0"
+    IsRequired="false"
+    DisplayOnLookUp="false"
+    CanFilter="true"
+    DisplayOnly="false"
+    SystemRequired="false"
+    ObjectFieldNotRequired="false"
+    SystemMaxLength="0"
+    DisplayInList="true"
+    IsCustomFilter="false"
+    Operator="&quot;Equals&quot;"
+    MultiLine="false"
+    IsTimeFrameFilter="false"
+    DisplayInSearchWindowList="false"
+    PMPropertyPath="&quot;Inactive&quot;"
+    ListPropertyPath="&quot;Inactive&quot;"
+    DisplayInLookUpIndex="0"
+    AutomaticField="false"
+    UniqueField="false"
+    DisplayInSearchWindowListIndex="0"
+    IsMulti="false"
+    DependencyFilter1IsList="false"
+    DependencyFilter2IsList="false"
+    ValidForQuerySection1="&quot;Customs.CustomsBranch&quot;"
+    DisplayInEntityVariables="false"
+    InActive="false"
+    DisplayLongName="false"
+    FullFieldLable="&quot;Inactive&quot;"
+    DefaultText="&quot;Inactive &quot;"
+    FullLocalDefaultText="&quot;לא פּעיל&quot;"
+    ListFieldLable="&quot;InactiveListLable&quot;"
+    ListLableDefaultText="&quot;Inactive&quot;"
+    ListLocalDefaultText="&quot;לא פּעיל&quot;"
+    IsNullable="false"
+    IsForeignKey="false"
+    IsPrimaryKey="false"
+    HasDataBaseField="true"
+    HasPMField="true"
+    IsComposition="false"
+    IsMaxLength="false"
+    NoMetaDataField="false"
+    GenerateInList="true"
+    IsFixedLength="false"
+    EnableAutoFill="false"
+    IncludeInSearchField="false"
+    AllowedinAutomationConditions="false"
+    AutomationEmailRecipient="false"
+    CanAutomateSetValue="false" />
+  <field
+    Id="&quot;d66559c5-a3c5-4f3d-8799-5ea09af5dc84&quot;"
+    FieldName="&quot;BankCode&quot;"
+    ObjectTableName="&quot;Customs.CustomsBranch&quot;"
+    FieldsDataType="&quot;Text&quot;"
+    MinLength="0"
+    MaxLength="2"
+    IsRequired="false"
+    DisplayOnLookUp="false"
+    CanFilter="false"
+    DisplayOnly="false"
+    SystemRequired="false"
+    ObjectFieldNotRequired="false"
+    SystemMaxLength="2"
+    DisplayInList="false"
+    IsCustomFilter="false"
+    MultiLine="false"
+    IsTimeFrameFilter="false"
+    DisplayInSearchWindowList="false"
+    PMPropertyPath="&quot;BankCode&quot;"
+    ListPropertyPath="&quot;BankCode&quot;"
+    DisplayInLookUpIndex="0"
+    AutomaticField="false"
+    UniqueField="false"
+    DisplayInSearchWindowListIndex="0"
+    IsMulti="false"
+    DependencyFilter1IsList="false"
+    DependencyFilter2IsList="false"
+    DisplayInEntityVariables="false"
+    InActive="false"
+    DisplayLongName="false"
+    FullFieldLable="&quot;BankCode&quot;"
+    DefaultText="&quot;Bank Code&quot;"
+    IsNullable="true"
+    IsForeignKey="true"
+    ForeignEntity="Bank"
+    NavigationPropertyName="Bank"
+    IsPrimaryKey="false"
+    HasDataBaseField="true"
+    HasPMField="true"
+    IsComposition="false"
+    IsMaxLength="false"
+    NoMetaDataField="false"
+    GenerateInList="true"
+    IsFixedLength="false"
+    EnableAutoFill="false"
+    IncludeInSearchField="false"
+    AllowedinAutomationConditions="false"
+    AutomationEmailRecipient="false"
+    CanAutomateSetValue="false" />
+  <field
+    Id="&quot;26a10a50-238d-4142-b3d8-e2e94968c268&quot;"
+    FieldName="&quot;Id&quot;"
+    ObjectTableName="&quot;Customs.CustomsBranch&quot;"
+    FieldsDataType="&quot;Text&quot;"
+    MinLength="0"
+    MaxLength="6"
+    IsRequired="false"
+    DisplayOnLookUp="false"
+    CanFilter="false"
+    DisplayOnly="false"
+    SystemRequired="false"
+    ObjectFieldNotRequired="false"
+    SystemMaxLength="6"
+    DisplayInList="false"
+    IsCustomFilter="false"
+    MultiLine="false"
+    IsTimeFrameFilter="false"
+    DisplayInSearchWindowList="false"
+    PMPropertyPath="&quot;Id&quot;"
+    ListPropertyPath="&quot;Id&quot;"
+    DisplayInLookUpIndex="0"
+    AutomaticField="false"
+    UniqueField="false"
+    DisplayInSearchWindowListIndex="0"
+    IsMulti="false"
+    DependencyFilter1IsList="false"
+    DependencyFilter2IsList="false"
+    DisplayInEntityVariables="false"
+    InActive="false"
+    DisplayLongName="false"
+    FullFieldLable="&quot;Id&quot;"
+    DefaultText="&quot;Id&quot;"
+    IsNullable="false"
+    IsForeignKey="false"
+    IsPrimaryKey="true"
+    HasDataBaseField="true"
+    HasPMField="true"
+    IsComposition="false"
+    IsMaxLength="false"
+    NoMetaDataField="true"
+    GenerateInList="true"
+    IsFixedLength="false"
+    EnableAutoFill="false"
+    IncludeInSearchField="false"
+    AllowedinAutomationConditions="false"
+    AutomationEmailRecipient="false"
+    CanAutomateSetValue="false" />
+  <Records>
+    <Record
+      Code="&quot;0&quot;"
+      SearchFields="&quot;0,בנק אמריקאי ישראלי&quot;"
+      Inactive="false"
+      LocalName="&quot;בנק אמריקאי ישראלי&quot;" />
+    <Record
+      Code="&quot;1&quot;"
+      EnglishName="&quot;main&quot;"
+      SearchFields="&quot;1,משרד ראשי&quot;"
+      Inactive="false"
+      LocalName="&quot;משרד ראשי&quot;" />
+    <Record
+      Code="&quot;10&quot;"
+      SearchFields="&quot;10,ירושלים&quot;"
+      Inactive="false"
+      LocalName="&quot;ירושלים&quot;" />
+    <Record
+      Code="&quot;100&quot;"
+      SearchFields="&quot;100,שדרות רוטשילד&quot;"
+      Inactive="false"
+      LocalName="&quot;שדרות רוטשילד&quot;" />
+    <Record
+      Code="&quot;101&quot;"
+      SearchFields="&quot;101,המלך שלמה&quot;"
+      Inactive="false"
+      LocalName="&quot;המלך שלמה&quot;" />
+    <Record
+      Code="&quot;102&quot;"
+      SearchFields="&quot;102,סניף פנימי&quot;"
+      Inactive="false"
+      LocalName="&quot;סניף פנימי&quot;" />
+    <Record
+      Code="&quot;103&quot;"
+      SearchFields="&quot;103,נאות שושנים&quot;"
+      Inactive="false"
+      LocalName="&quot;נאות שושנים&quot;" />
+    <Record
+      Code="&quot;104&quot;"
+      SearchFields="&quot;104,העצמאות&quot;"
+      Inactive="false"
+      LocalName="&quot;העצמאות&quot;" />
+    <Record
+      Code="&quot;105&quot;"
+      SearchFields="&quot;105,הדר חיפה&quot;"
+      Inactive="false"
+      LocalName="&quot;הדר חיפה&quot;" />
+    <Record
+      Code="&quot;106&quot;"
+      SearchFields="&quot;106,&quot;באר שבע-פלמ&quot;&quot;ח&quot;&quot;"
+      Inactive="false"
+      LocalName="&quot;&quot;באר שבע-פלמ&quot;&quot;ח&quot;&quot;" />
+    <Record
+      Code="&quot;107&quot;"
+      SearchFields="&quot;107,מוריה&quot;"
+      Inactive="false"
+      LocalName="&quot;מוריה&quot;" />
+    <Record
+      Code="&quot;108&quot;"
+      SearchFields="&quot;108,גונן&quot;"
+      Inactive="false"
+      LocalName="&quot;גונן&quot;" />
+    <Record
+      Code="&quot;109&quot;"
+      SearchFields="&quot;109,אשקלון&quot;"
+      Inactive="false"
+      LocalName="&quot;אשקלון&quot;" />
+    <Record
+      Code="&quot;11&quot;"
+      SearchFields="&quot;11,פתח תקוה&quot;"
+      Inactive="false"
+      LocalName="&quot;פתח תקוה&quot;" />
+    <Record
+      Code="&quot;110&quot;"
+      SearchFields="&quot;110,נצרת&quot;"
+      Inactive="false"
+      LocalName="&quot;נצרת&quot;" />
+    <Record
+      Code="&quot;111&quot;"
+      SearchFields="&quot;111,משרד ראשי&quot;"
+      Inactive="false"
+      LocalName="&quot;משרד ראשי&quot;" />
+    <Record
+      Code="&quot;112&quot;"
+      SearchFields="&quot;112,דניה&quot;"
+      Inactive="false"
+      LocalName="&quot;דניה&quot;" />
+    <Record
+      Code="&quot;113&quot;"
+      SearchFields="&quot;113,רעננה&quot;"
+      Inactive="false"
+      LocalName="&quot;רעננה&quot;" />
+    <Record
+      Code="&quot;114&quot;"
+      SearchFields="&quot;114,נס ציונה&quot;"
+      Inactive="false"
+      LocalName="&quot;נס ציונה&quot;" />
+    <Record
+      Code="&quot;115&quot;"
+      SearchFields="&quot;115,יד חרוצים&quot;"
+      Inactive="false"
+      LocalName="&quot;יד חרוצים&quot;" />
+    <Record
+      Code="&quot;116&quot;"
+      SearchFields="&quot;116,אור עקיבא&quot;"
+      Inactive="false"
+      LocalName="&quot;אור עקיבא&quot;" />
+    <Record
+      Code="&quot;117&quot;"
+      SearchFields="&quot;117,פרדס חנה&quot;"
+      Inactive="false"
+      LocalName="&quot;פרדס חנה&quot;" />
+    <Record
+      Code="&quot;118&quot;"
+      SearchFields="&quot;118,קרית שמונה&quot;"
+      Inactive="false"
+      LocalName="&quot;קרית שמונה&quot;" />
+    <Record
+      Code="&quot;119&quot;"
+      SearchFields="&quot;119,מודיעין&quot;"
+      Inactive="false"
+      LocalName="&quot;מודיעין&quot;" />
+    <Record
+      Code="&quot;12&quot;"
+      SearchFields="&quot;12,אילת&quot;"
+      Inactive="false"
+      LocalName="&quot;אילת&quot;" />
+    <Record
+      Code="&quot;120&quot;"
+      SearchFields="&quot;120,כפר ורדים&quot;"
+      Inactive="false"
+      LocalName="&quot;כפר ורדים&quot;" />
+    <Record
+      Code="&quot;121&quot;"
+      SearchFields="&quot;121,שלוחת מודיעין&quot;"
+      Inactive="false"
+      LocalName="&quot;שלוחת מודיעין&quot;" />
+    <Record
+      Code="&quot;122&quot;"
+      SearchFields="&quot;122,פסגת זאב&quot;"
+      Inactive="false"
+      LocalName="&quot;פסגת זאב&quot;" />
+    <Record
+      Code="&quot;123&quot;"
+      SearchFields="&quot;123,דרת&quot;"
+      Inactive="false"
+      LocalName="&quot;דרת&quot;" />
+    <Record
+      Code="&quot;124&quot;"
+      SearchFields="&quot;124,מרכז גילת&quot;"
+      Inactive="false"
+      LocalName="&quot;מרכז גילת&quot;" />
+    <Record
+      Code="&quot;125&quot;"
+      SearchFields="&quot;125,אשקלון&quot;"
+      Inactive="false"
+      LocalName="&quot;אשקלון&quot;" />
+    <Record
+      Code="&quot;126&quot;"
+      SearchFields="&quot;126,רמת שאול&quot;"
+      Inactive="false"
+      LocalName="&quot;רמת שאול&quot;" />
+    <Record
+      Code="&quot;127&quot;"
+      SearchFields="&quot;127,אביבים&quot;"
+      Inactive="false"
+      LocalName="&quot;אביבים&quot;" />
+    <Record
+      Code="&quot;128&quot;"
+      SearchFields="&quot;128,מודיעין&quot;"
+      Inactive="false"
+      LocalName="&quot;מודיעין&quot;" />
+    <Record
+      Code="&quot;129&quot;"
+      SearchFields="&quot;129,מרכז בנקאות פרטית בינלאומית&quot;"
+      Inactive="false"
+      LocalName="&quot;מרכז בנקאות פרטית בינלאומית&quot;" />
+    <Record
+      Code="&quot;13&quot;"
+      SearchFields="&quot;13,חולון&quot;"
+      Inactive="false"
+      LocalName="&quot;חולון&quot;" />
+    <Record
+      Code="&quot;130&quot;"
+      SearchFields="&quot;130,מת&quot;ם&quot;"
+      Inactive="false"
+      LocalName="&quot;מת&quot;ם&quot;" />
+    <Record
+      Code="&quot;131&quot;"
+      SearchFields="&quot;131,יוקנעם&quot;"
+      Inactive="false"
+      LocalName="&quot;יוקנעם&quot;" />
+    <Record
+      Code="&quot;132&quot;"
+      SearchFields="&quot;132,&quot;תה&quot;&quot;ש&quot;&quot;"
+      Inactive="false"
+      LocalName="&quot;&quot;תה&quot;&quot;ש&quot;&quot;" />
+    <Record
+      Code="&quot;133&quot;"
+      SearchFields="&quot;133,אשדוד&quot;"
+      Inactive="false"
+      LocalName="&quot;אשדוד&quot;" />
+    <Record
+      Code="&quot;134&quot;"
+      SearchFields="&quot;134,נתב&quot;ג&quot;"
+      Inactive="false"
+      LocalName="&quot;נתב&quot;ג&quot;" />
+    <Record
+      Code="&quot;135&quot;"
+      SearchFields="&quot;135,משרד הבטחון&quot;"
+      Inactive="false"
+      LocalName="&quot;משרד הבטחון&quot;" />
+    <Record
+      Code="&quot;136&quot;"
+      SearchFields="&quot;136,קיראון&quot;"
+      Inactive="false"
+      LocalName="&quot;קיראון&quot;" />
+    <Record
+      Code="&quot;137&quot;"
+      SearchFields="&quot;137,מגדל העמק&quot;"
+      Inactive="false"
+      LocalName="&quot;מגדל העמק&quot;" />
+    <Record
+      Code="&quot;138&quot;"
+      SearchFields="&quot;138,קרית ים&quot;"
+      Inactive="false"
+      LocalName="&quot;קרית ים&quot;" />
+    <Record
+      Code="&quot;139&quot;"
+      SearchFields="&quot;139,בני ברק&quot;"
+      Inactive="false"
+      LocalName="&quot;בני ברק&quot;" />
+    <Record
+      Code="&quot;14&quot;"
+      SearchFields="&quot;14,כרמיאל&quot;"
+      Inactive="false"
+      LocalName="&quot;כרמיאל&quot;" />
+    <Record
+      Code="&quot;140&quot;"
+      SearchFields="&quot;140,שד' בן גוריון&quot;"
+      Inactive="false"
+      LocalName="&quot;שד' בן גוריון&quot;" />
+    <Record
+      Code="&quot;141&quot;"
+      SearchFields="&quot;141,בן-נון&quot;"
+      Inactive="false"
+      LocalName="&quot;בן-נון&quot;" />
+    <Record
+      Code="&quot;142&quot;"
+      SearchFields="&quot;142,&quot;רש&quot;&quot;י&quot;&quot;"
+      Inactive="false"
+      LocalName="&quot;&quot;רש&quot;&quot;י&quot;&quot;" />
+    <Record
+      Code="&quot;143&quot;"
+      SearchFields="&quot;143,אלעד&quot;"
+      Inactive="false"
+      LocalName="&quot;אלעד&quot;" />
+    <Record
+      Code="&quot;144&quot;"
+      SearchFields="&quot;144,נווה סביון&quot;"
+      Inactive="false"
+      LocalName="&quot;נווה סביון&quot;" />
+    <Record
+      Code="&quot;145&quot;"
+      SearchFields="&quot;145,ראשל&quot;צ מערב&quot;"
+      Inactive="false"
+      LocalName="&quot;ראשל&quot;צ מערב&quot;" />
+    <Record
+      Code="&quot;146&quot;"
+      SearchFields="&quot;146,קרית גת&quot;"
+      Inactive="false"
+      LocalName="&quot;קרית גת&quot;" />
+    <Record
+      Code="&quot;147&quot;"
+      SearchFields="&quot;147,בית שמש&quot;"
+      Inactive="false"
+      LocalName="&quot;בית שמש&quot;" />
+    <Record
+      Code="&quot;148&quot;"
+      SearchFields="&quot;148,רימונים&quot;"
+      Inactive="false"
+      LocalName="&quot;רימונים&quot;" />
+    <Record
+      Code="&quot;149&quot;"
+      SearchFields="&quot;149,הנהלה ראשית&quot;"
+      Inactive="false"
+      LocalName="&quot;הנהלה ראשית&quot;" />
+    <Record
+      Code="&quot;15&quot;"
+      SearchFields="&quot;15,כפר סבא&quot;"
+      Inactive="false"
+      LocalName="&quot;כפר סבא&quot;" />
+    <Record
+      Code="&quot;150&quot;"
+      SearchFields="&quot;150,קניון הנגב&quot;"
+      Inactive="false"
+      LocalName="&quot;קניון הנגב&quot;" />
+    <Record
+      Code="&quot;151&quot;"
+      SearchFields="&quot;151,יד אליהו&quot;"
+      Inactive="false"
+      LocalName="&quot;יד אליהו&quot;" />
+    <Record
+      Code="&quot;152&quot;"
+      SearchFields="&quot;152,הוד השרון&quot;"
+      Inactive="false"
+      LocalName="&quot;הוד השרון&quot;" />
+    <Record
+      Code="&quot;153&quot;"
+      SearchFields="&quot;153,כפר גנים&quot;"
+      Inactive="false"
+      LocalName="&quot;כפר גנים&quot;" />
+    <Record
+      Code="&quot;154&quot;"
+      SearchFields="&quot;154,תל אביב&quot;"
+      Inactive="false"
+      LocalName="&quot;תל אביב&quot;" />
+    <Record
+      Code="&quot;155&quot;"
+      SearchFields="&quot;155,רמת השרון&quot;"
+      Inactive="false"
+      LocalName="&quot;רמת השרון&quot;" />
+    <Record
+      Code="&quot;156&quot;"
+      SearchFields="&quot;156,כפר גנים&quot;"
+      Inactive="false"
+      LocalName="&quot;כפר גנים&quot;" />
+    <Record
+      Code="&quot;157&quot;"
+      SearchFields="&quot;157,התעשיה חולון&quot;"
+      Inactive="false"
+      LocalName="&quot;התעשיה חולון&quot;" />
+    <Record
+      Code="&quot;158&quot;"
+      SearchFields="&quot;158,המושבה הגרמנית&quot;"
+      Inactive="false"
+      LocalName="&quot;המושבה הגרמנית&quot;" />
+    <Record
+      Code="&quot;159&quot;"
+      SearchFields="&quot;159,תל - אביב עסקים&quot;"
+      Inactive="false"
+      LocalName="&quot;תל - אביב עסקים&quot;" />
+    <Record
+      Code="&quot;16&quot;"
+      SearchFields="&quot;16,רמלה&quot;"
+      Inactive="false"
+      LocalName="&quot;רמלה&quot;" />
+    <Record
+      Code="&quot;160&quot;"
+      SearchFields="&quot;160,נווה זאב&quot;"
+      Inactive="false"
+      LocalName="&quot;נווה זאב&quot;" />
+    <Record
+      Code="&quot;161&quot;"
+      SearchFields="&quot;161,תלמי מנשה&quot;"
+      Inactive="false"
+      LocalName="&quot;תלמי מנשה&quot;" />
+    <Record
+      Code="&quot;162&quot;"
+      SearchFields="&quot;162,חולון&quot;"
+      Inactive="false"
+      LocalName="&quot;חולון&quot;" />
+    <Record
+      Code="&quot;163&quot;"
+      SearchFields="&quot;163,ככר מנורה&quot;"
+      Inactive="false"
+      LocalName="&quot;ככר מנורה&quot;" />
+    <Record
+      Code="&quot;164&quot;"
+      SearchFields="&quot;164,גבעת מרדכי&quot;"
+      Inactive="false"
+      LocalName="&quot;גבעת מרדכי&quot;" />
+    <Record
+      Code="&quot;165&quot;"
+      SearchFields="&quot;165,כפר סבא&quot;"
+      Inactive="false"
+      LocalName="&quot;כפר סבא&quot;" />
+    <Record
+      Code="&quot;166&quot;"
+      SearchFields="&quot;166,ירושלים&quot;"
+      Inactive="false"
+      LocalName="&quot;ירושלים&quot;" />
+    <Record
+      Code="&quot;167&quot;"
+      SearchFields="&quot;167,נתניה עסקים&quot;"
+      Inactive="false"
+      LocalName="&quot;נתניה עסקים&quot;" />
+    <Record
+      Code="&quot;168&quot;"
+      SearchFields="&quot;168,נהריה עסקים&quot;"
+      Inactive="false"
+      LocalName="&quot;נהריה עסקים&quot;" />
+    <Record
+      Code="&quot;169&quot;"
+      SearchFields="&quot;169,המפרץ עסקים&quot;"
+      Inactive="false"
+      LocalName="&quot;המפרץ עסקים&quot;" />
+    <Record
+      Code="&quot;17&quot;"
+      SearchFields="&quot;17,קרית גת&quot;"
+      Inactive="false"
+      LocalName="&quot;קרית גת&quot;" />
+    <Record
+      Code="&quot;170&quot;"
+      SearchFields="&quot;170,הסניף הראשי&quot;"
+      Inactive="false"
+      LocalName="&quot;הסניף הראשי&quot;" />
+    <Record
+      Code="&quot;171&quot;"
+      SearchFields="&quot;171,בת ים&quot;"
+      Inactive="false"
+      LocalName="&quot;בת ים&quot;" />
+    <Record
+      Code="&quot;172&quot;"
+      SearchFields="&quot;172,נתניה&quot;"
+      Inactive="false"
+      LocalName="&quot;נתניה&quot;" />
+    <Record
+      Code="&quot;173&quot;"
+      SearchFields="&quot;173,נתיבות&quot;"
+      Inactive="false"
+      LocalName="&quot;נתיבות&quot;" />
+    <Record
+      Code="&quot;174&quot;"
+      SearchFields="&quot;174,רחובות&quot;"
+      Inactive="false"
+      LocalName="&quot;רחובות&quot;" />
+    <Record
+      Code="&quot;175&quot;"
+      SearchFields="&quot;175,איירפורט סיטי עסקים&quot;"
+      Inactive="false"
+      LocalName="&quot;איירפורט סיטי עסקים&quot;" />
+    <Record
+      Code="&quot;176&quot;"
+      SearchFields="&quot;176,רמת גן עסקים&quot;"
+      Inactive="false"
+      LocalName="&quot;רמת גן עסקים&quot;" />
+    <Record
+      Code="&quot;177&quot;"
+      SearchFields="&quot;177,באר-שבע עסקים&quot;"
+      Inactive="false"
+      LocalName="&quot;באר-שבע עסקים&quot;" />
+    <Record
+      Code="&quot;178&quot;"
+      SearchFields="&quot;178,חיפה&quot;"
+      Inactive="false"
+      LocalName="&quot;חיפה&quot;" />
+    <Record
+      Code="&quot;179&quot;"
+      SearchFields="&quot;179,רמת בית שמש&quot;"
+      Inactive="false"
+      LocalName="&quot;רמת בית שמש&quot;" />
+    <Record
+      Code="&quot;18&quot;"
+      SearchFields="&quot;18,רוטשילד&quot;"
+      Inactive="false"
+      LocalName="&quot;רוטשילד&quot;" />
+    <Record
+      Code="&quot;180&quot;"
+      SearchFields="&quot;180,סניף מרכזי&quot;"
+      Inactive="false"
+      LocalName="&quot;סניף מרכזי&quot;" />
+    <Record
+      Code="&quot;181&quot;"
+      SearchFields="&quot;181,פתח תקוה&quot;"
+      Inactive="false"
+      LocalName="&quot;פתח תקוה&quot;" />
+    <Record
+      Code="&quot;182&quot;"
+      SearchFields="&quot;182,שלומציון&quot;"
+      Inactive="false"
+      LocalName="&quot;שלומציון&quot;" />
+    <Record
+      Code="&quot;183&quot;"
+      SearchFields="&quot;183,רבי עקיבא&quot;"
+      Inactive="false"
+      LocalName="&quot;רבי עקיבא&quot;" />
+    <Record
+      Code="&quot;184&quot;"
+      SearchFields="&quot;184,מרכז מזומנים&quot;"
+      Inactive="false"
+      LocalName="&quot;מרכז מזומנים&quot;" />
+    <Record
+      Code="&quot;185&quot;"
+      SearchFields="&quot;185,אשדוד&quot;"
+      Inactive="false"
+      LocalName="&quot;אשדוד&quot;" />
+    <Record
+      Code="&quot;186&quot;"
+      SearchFields="&quot;186,שילה&quot;"
+      Inactive="false"
+      LocalName="&quot;שילה&quot;" />
+    <Record
+      Code="&quot;187&quot;"
+      SearchFields="&quot;187,שכר דירה מרחב ירושלים&quot;"
+      Inactive="false"
+      LocalName="&quot;שכר דירה מרחב ירושלים&quot;" />
+    <Record
+      Code="&quot;188&quot;"
+      SearchFields="&quot;188,פתח תקוה&quot;"
+      Inactive="false"
+      LocalName="&quot;פתח תקוה&quot;" />
+    <Record
+      Code="&quot;189&quot;"
+      SearchFields="&quot;189,&quot;התחנה המרכזית החדשה - ת&quot;&quot;א&quot;&quot;"
+      Inactive="false"
+      LocalName="&quot;&quot;התחנה המרכזית החדשה - ת&quot;&quot;א&quot;&quot;" />
+    <Record
+      Code="&quot;19&quot;"
+      SearchFields="&quot;19,גאולה&quot;"
+      Inactive="false"
+      LocalName="&quot;גאולה&quot;" />
+    <Record
+      Code="&quot;190&quot;"
+      SearchFields="&quot;190,סניף הים&quot;"
+      Inactive="false"
+      LocalName="&quot;סניף הים&quot;" />
+    <Record
+      Code="&quot;191&quot;"
+      SearchFields="&quot;191,תל אביב&quot;"
+      Inactive="false"
+      LocalName="&quot;תל אביב&quot;" />
+    <Record
+      Code="&quot;192&quot;"
+      SearchFields="&quot;192,נתניה&quot;"
+      Inactive="false"
+      LocalName="&quot;נתניה&quot;" />
+    <Record
+      Code="&quot;193&quot;"
+      SearchFields="&quot;193,מרכז בילדינג&quot;"
+      Inactive="false"
+      LocalName="&quot;מרכז בילדינג&quot;" />
+    <Record
+      Code="&quot;194&quot;"
+      SearchFields="&quot;194,ככר העצמאות&quot;"
+      Inactive="false"
+      LocalName="&quot;ככר העצמאות&quot;" />
+    <Record
+      Code="&quot;195&quot;"
+      SearchFields="&quot;195,חיפה&quot;"
+      Inactive="false"
+      LocalName="&quot;חיפה&quot;" />
+    <Record
+      Code="&quot;196&quot;"
+      SearchFields="&quot;196,באר שבע&quot;"
+      Inactive="false"
+      LocalName="&quot;באר שבע&quot;" />
+    <Record
+      Code="&quot;197&quot;"
+      SearchFields="&quot;197,אשדוד&quot;"
+      Inactive="false"
+      LocalName="&quot;אשדוד&quot;" />
+    <Record
+      Code="&quot;198&quot;"
+      SearchFields="&quot;198,ירושלים&quot;"
+      Inactive="false"
+      LocalName="&quot;ירושלים&quot;" />
+    <Record
+      Code="&quot;199&quot;"
+      SearchFields="&quot;199,רמת אשכול&quot;"
+      Inactive="false"
+      LocalName="&quot;רמת אשכול&quot;" />
+    <Record
+      Code="&quot;2&quot;"
+      SearchFields="&quot;2,באר שבע מרכז הנגב&quot;"
+      Inactive="false"
+      LocalName="&quot;באר שבע מרכז הנגב&quot;" />
+    <Record
+      Code="&quot;20&quot;"
+      SearchFields="&quot;20,עליה&quot;"
+      Inactive="false"
+      LocalName="&quot;עליה&quot;" />
+    <Record
+      Code="&quot;200&quot;"
+      SearchFields="&quot;200,דטצך&quot;"
+      Inactive="false"
+      LocalName="&quot;דטצך&quot;" />
+    <Record
+      Code="&quot;201&quot;"
+      SearchFields="&quot;201,מרכזי&quot;"
+      Inactive="false"
+      LocalName="&quot;מרכזי&quot;" />
+    <Record
+      Code="&quot;202&quot;"
+      SearchFields="&quot;202,אבן-גבירול&quot;"
+      Inactive="false"
+      LocalName="&quot;אבן-גבירול&quot;" />
+    <Record
+      Code="&quot;203&quot;"
+      SearchFields="&quot;203,בן-יהודה&quot;"
+      Inactive="false"
+      LocalName="&quot;בן-יהודה&quot;" />
+    <Record
+      Code="&quot;204&quot;"
+      SearchFields="&quot;204,סניף הירדן&quot;"
+      Inactive="false"
+      LocalName="&quot;סניף הירדן&quot;" />
+    <Record
+      Code="&quot;205&quot;"
+      SearchFields="&quot;205,השגרירות האמריקאית&quot;"
+      Inactive="false"
+      LocalName="&quot;השגרירות האמריקאית&quot;" />
+    <Record
+      Code="&quot;206&quot;"
+      SearchFields="&quot;206,רמת גן&quot;"
+      Inactive="false"
+      LocalName="&quot;רמת גן&quot;" />
+    <Record
+      Code="&quot;207&quot;"
+      SearchFields="&quot;207,אחד העם הרצליה&quot;"
+      Inactive="false"
+      LocalName="&quot;אחד העם הרצליה&quot;" />
+    <Record
+      Code="&quot;208&quot;"
+      SearchFields="&quot;208,בית התעשיה&quot;"
+      Inactive="false"
+      LocalName="&quot;בית התעשיה&quot;" />
+    <Record
+      Code="&quot;209&quot;"
+      SearchFields="&quot;209,נורדאו&quot;"
+      Inactive="false"
+      LocalName="&quot;נורדאו&quot;" />
+    <Record
+      Code="&quot;21&quot;"
+      SearchFields="&quot;21,אשקלון&quot;"
+      Inactive="false"
+      LocalName="&quot;אשקלון&quot;" />
+    <Record
+      Code="&quot;210&quot;"
+      SearchFields="&quot;210,אילת&quot;"
+      Inactive="false"
+      LocalName="&quot;אילת&quot;" />
+    <Record
+      Code="&quot;211&quot;"
+      SearchFields="&quot;211,הלל&quot;"
+      Inactive="false"
+      LocalName="&quot;הלל&quot;" />
+    <Record
+      Code="&quot;212&quot;"
+      SearchFields="&quot;212,רחביה&quot;"
+      Inactive="false"
+      LocalName="&quot;רחביה&quot;" />
+    <Record
+      Code="&quot;213&quot;"
+      SearchFields="&quot;213,חולון&quot;"
+      Inactive="false"
+      LocalName="&quot;חולון&quot;" />
+    <Record
+      Code="&quot;214&quot;"
+      SearchFields="&quot;214,רחוב יפו&quot;"
+      Inactive="false"
+      LocalName="&quot;רחוב יפו&quot;" />
+    <Record
+      Code="&quot;216&quot;"
+      SearchFields="&quot;216,רמלה&quot;"
+      Inactive="false"
+      LocalName="&quot;רמלה&quot;" />
+    <Record
+      Code="&quot;217&quot;"
+      SearchFields="&quot;217,קרית גת&quot;"
+      Inactive="false"
+      LocalName="&quot;קרית גת&quot;" />
+    <Record
+      Code="&quot;218&quot;"
+      SearchFields="&quot;218,בת ים&quot;"
+      Inactive="false"
+      LocalName="&quot;בת ים&quot;" />
+    <Record
+      Code="&quot;219&quot;"
+      SearchFields="&quot;219,&quot;ירושלים,גאולה&quot;&quot;"
+      Inactive="false"
+      LocalName="&quot;&quot;ירושלים,גאולה&quot;&quot;" />
+    <Record
+      Code="&quot;22&quot;"
+      SearchFields="&quot;22,קיבוץ געש&quot;"
+      Inactive="false"
+      LocalName="&quot;קיבוץ געש&quot;" />
+    <Record
+      Code="&quot;221&quot;"
+      SearchFields="&quot;221,חיפה&quot;"
+      Inactive="false"
+      LocalName="&quot;חיפה&quot;" />
+    <Record
+      Code="&quot;222&quot;"
+      SearchFields="&quot;222,הבנק הבינלאומי&quot;"
+      Inactive="false"
+      LocalName="&quot;הבנק הבינלאומי&quot;" />
+    <Record
+      Code="&quot;224&quot;"
+      SearchFields="&quot;224,קריון&quot;"
+      Inactive="false"
+      LocalName="&quot;קריון&quot;" />
+    <Record
+      Code="&quot;225&quot;"
+      SearchFields="&quot;225,דקלים&quot;"
+      Inactive="false"
+      LocalName="&quot;דקלים&quot;" />
+    <Record
+      Code="&quot;226&quot;"
+      SearchFields="&quot;226,רננים&quot;"
+      Inactive="false"
+      LocalName="&quot;רננים&quot;" />
+    <Record
+      Code="&quot;227&quot;"
+      SearchFields="&quot;227,עכו&quot;"
+      Inactive="false"
+      LocalName="&quot;עכו&quot;" />
+    <Record
+      Code="&quot;228&quot;"
+      SearchFields="&quot;228,מצפה ספיר&quot;"
+      Inactive="false"
+      LocalName="&quot;מצפה ספיר&quot;" />
+    <Record
+      Code="&quot;229&quot;"
+      SearchFields="&quot;229,להב&quot;"
+      Inactive="false"
+      LocalName="&quot;להב&quot;" />
+    <Record
+      Code="&quot;23&quot;"
+      SearchFields="&quot;23,ראש העין&quot;"
+      Inactive="false"
+      LocalName="&quot;ראש העין&quot;" />
+    <Record
+      Code="&quot;230&quot;"
+      SearchFields="&quot;230,רותם&quot;"
+      Inactive="false"
+      LocalName="&quot;רותם&quot;" />
+    <Record
+      Code="&quot;231&quot;"
+      SearchFields="&quot;231,אילן&quot;"
+      Inactive="false"
+      LocalName="&quot;אילן&quot;" />
+    <Record
+      Code="&quot;234&quot;"
+      SearchFields="&quot;234,ראשון לציון&quot;"
+      Inactive="false"
+      LocalName="&quot;ראשון לציון&quot;" />
+    <Record
+      Code="&quot;235&quot;"
+      SearchFields="&quot;235,רחובות&quot;"
+      Inactive="false"
+      LocalName="&quot;רחובות&quot;" />
+    <Record
+      Code="&quot;236&quot;"
+      SearchFields="&quot;236,חדרה&quot;"
+      Inactive="false"
+      LocalName="&quot;חדרה&quot;" />
+    <Record
+      Code="&quot;237&quot;"
+      SearchFields="&quot;237,הרצליה&quot;"
+      Inactive="false"
+      LocalName="&quot;הרצליה&quot;" />
+    <Record
+      Code="&quot;238&quot;"
+      SearchFields="&quot;238,טבריה&quot;"
+      Inactive="false"
+      LocalName="&quot;טבריה&quot;" />
+    <Record
+      Code="&quot;24&quot;"
+      SearchFields="&quot;24,לוד&quot;"
+      Inactive="false"
+      LocalName="&quot;לוד&quot;" />
+    <Record
+      Code="&quot;240&quot;"
+      SearchFields="&quot;240,האירוסים&quot;"
+      Inactive="false"
+      LocalName="&quot;האירוסים&quot;" />
+    <Record
+      Code="&quot;241&quot;"
+      SearchFields="&quot;241,רמת גן&quot;"
+      Inactive="false"
+      LocalName="&quot;רמת גן&quot;" />
+    <Record
+      Code="&quot;243&quot;"
+      SearchFields="&quot;243,רמז&quot;"
+      Inactive="false"
+      LocalName="&quot;רמז&quot;" />
+    <Record
+      Code="&quot;245&quot;"
+      SearchFields="&quot;245,עפולה&quot;"
+      Inactive="false"
+      LocalName="&quot;עפולה&quot;" />
+    <Record
+      Code="&quot;246&quot;"
+      SearchFields="&quot;246,סניף טבריה&quot;"
+      Inactive="false"
+      LocalName="&quot;סניף טבריה&quot;" />
+    <Record
+      Code="&quot;247&quot;"
+      SearchFields="&quot;247,הנדיב&quot;"
+      Inactive="false"
+      LocalName="&quot;הנדיב&quot;" />
+    <Record
+      Code="&quot;248&quot;"
+      SearchFields="&quot;248,סוקולוב&quot;"
+      Inactive="false"
+      LocalName="&quot;סוקולוב&quot;" />
+    <Record
+      Code="&quot;25&quot;"
+      SearchFields="&quot;25,קרית ים&quot;"
+      Inactive="false"
+      LocalName="&quot;קרית ים&quot;" />
+    <Record
+      Code="&quot;251&quot;"
+      SearchFields="&quot;251,תל אביב&quot;"
+      Inactive="false"
+      LocalName="&quot;תל אביב&quot;" />
+    <Record
+      Code="&quot;252&quot;"
+      SearchFields="&quot;252,סניף ירושלים&quot;"
+      Inactive="false"
+      LocalName="&quot;סניף ירושלים&quot;" />
+    <Record
+      Code="&quot;253&quot;"
+      SearchFields="&quot;253,חיפה&quot;"
+      Inactive="false"
+      LocalName="&quot;חיפה&quot;" />
+    <Record
+      Code="&quot;254&quot;"
+      SearchFields="&quot;254,אשדוד&quot;"
+      Inactive="false"
+      LocalName="&quot;אשדוד&quot;" />
+    <Record
+      Code="&quot;255&quot;"
+      SearchFields="&quot;255,כרמיאל&quot;"
+      Inactive="false"
+      LocalName="&quot;כרמיאל&quot;" />
+    <Record
+      Code="&quot;256&quot;"
+      SearchFields="&quot;256,באר שבע&quot;"
+      Inactive="false"
+      LocalName="&quot;באר שבע&quot;" />
+    <Record
+      Code="&quot;257&quot;"
+      SearchFields="&quot;257,רעננה&quot;"
+      Inactive="false"
+      LocalName="&quot;רעננה&quot;" />
+    <Record
+      Code="&quot;258&quot;"
+      SearchFields="&quot;258,הדר&quot;"
+      Inactive="false"
+      LocalName="&quot;הדר&quot;" />
+    <Record
+      Code="&quot;26&quot;"
+      SearchFields="&quot;26,גאולה&quot;"
+      Inactive="false"
+      LocalName="&quot;גאולה&quot;" />
+    <Record
+      Code="&quot;260&quot;"
+      SearchFields="&quot;260,מונטיפיורי&quot;"
+      Inactive="false"
+      LocalName="&quot;מונטיפיורי&quot;" />
+    <Record
+      Code="&quot;261&quot;"
+      SearchFields="&quot;261,באר שבע&quot;"
+      Inactive="false"
+      LocalName="&quot;באר שבע&quot;" />
+    <Record
+      Code="&quot;262&quot;"
+      SearchFields="&quot;262,בני ברק&quot;"
+      Inactive="false"
+      LocalName="&quot;בני ברק&quot;" />
+    <Record
+      Code="&quot;266&quot;"
+      SearchFields="&quot;266,אקספרס בני ברק&quot;"
+      Inactive="false"
+      LocalName="&quot;אקספרס בני ברק&quot;" />
+    <Record
+      Code="&quot;269&quot;"
+      SearchFields="&quot;269,אקספרס אשדוד&quot;"
+      Inactive="false"
+      LocalName="&quot;אקספרס אשדוד&quot;" />
+    <Record
+      Code="&quot;27&quot;"
+      SearchFields="&quot;27,עכו&quot;"
+      Inactive="false"
+      LocalName="&quot;עכו&quot;" />
+    <Record
+      Code="&quot;275&quot;"
+      SearchFields="&quot;275,כיכר המדינה&quot;"
+      Inactive="false"
+      LocalName="&quot;כיכר המדינה&quot;" />
+    <Record
+      Code="&quot;276&quot;"
+      SearchFields="&quot;276,רמת השרון&quot;"
+      Inactive="false"
+      LocalName="&quot;רמת השרון&quot;" />
+    <Record
+      Code="&quot;277&quot;"
+      SearchFields="&quot;277,מלחה&quot;"
+      Inactive="false"
+      LocalName="&quot;מלחה&quot;" />
+    <Record
+      Code="&quot;278&quot;"
+      SearchFields="&quot;278,ראשון לציון&quot;"
+      Inactive="false"
+      LocalName="&quot;ראשון לציון&quot;" />
+    <Record
+      Code="&quot;279&quot;"
+      SearchFields="&quot;279,רחובות&quot;"
+      Inactive="false"
+      LocalName="&quot;רחובות&quot;" />
+    <Record
+      Code="&quot;28&quot;"
+      SearchFields="&quot;28,&quot;בית אבות &quot;&quot;לב גנים&quot;&quot;&quot;&quot;"
+      Inactive="false"
+      LocalName="&quot;&quot;בית אבות &quot;&quot;לב גנים&quot;&quot;&quot;&quot;" />
+    <Record
+      Code="&quot;280&quot;"
+      SearchFields="&quot;280,רעננה&quot;"
+      Inactive="false"
+      LocalName="&quot;רעננה&quot;" />
+    <Record
+      Code="&quot;281&quot;"
+      SearchFields="&quot;281,אילת&quot;"
+      Inactive="false"
+      LocalName="&quot;אילת&quot;" />
+    <Record
+      Code="&quot;283&quot;"
+      SearchFields="&quot;283,רמת החייל&quot;"
+      Inactive="false"
+      LocalName="&quot;רמת החייל&quot;" />
+    <Record
+      Code="&quot;284&quot;"
+      SearchFields="&quot;284,חולון&quot;"
+      Inactive="false"
+      LocalName="&quot;חולון&quot;" />
+    <Record
+      Code="&quot;285&quot;"
+      SearchFields="&quot;285,אקספרס פתח- תקוה&quot;"
+      Inactive="false"
+      LocalName="&quot;אקספרס פתח- תקוה&quot;" />
+    <Record
+      Code="&quot;286&quot;"
+      SearchFields="&quot;286,אקספרס אריאל&quot;"
+      Inactive="false"
+      LocalName="&quot;אקספרס אריאל&quot;" />
+    <Record
+      Code="&quot;287&quot;"
+      SearchFields="&quot;287,תל אביב (ראשי)&quot;"
+      Inactive="false"
+      LocalName="&quot;תל אביב (ראשי)&quot;" />
+    <Record
+      Code="&quot;288&quot;"
+      SearchFields="&quot;288,ירושלים&quot;"
+      Inactive="false"
+      LocalName="&quot;ירושלים&quot;" />
+    <Record
+      Code="&quot;289&quot;"
+      SearchFields="&quot;289,חיפה&quot;"
+      Inactive="false"
+      LocalName="&quot;חיפה&quot;" />
+    <Record
+      Code="&quot;29&quot;"
+      SearchFields="&quot;29,קרית מלאכי&quot;"
+      Inactive="false"
+      LocalName="&quot;קרית מלאכי&quot;" />
+    <Record
+      Code="&quot;290&quot;"
+      SearchFields="&quot;290,אקספרס ביתר עילית&quot;"
+      Inactive="false"
+      LocalName="&quot;אקספרס ביתר עילית&quot;" />
+    <Record
+      Code="&quot;291&quot;"
+      SearchFields="&quot;291,אקספרס מעלה אדומים&quot;"
+      Inactive="false"
+      LocalName="&quot;אקספרס מעלה אדומים&quot;" />
+    <Record
+      Code="&quot;292&quot;"
+      SearchFields="&quot;292,אקספרס מודיעין עילית&quot;"
+      Inactive="false"
+      LocalName="&quot;אקספרס מודיעין עילית&quot;" />
+    <Record
+      Code="&quot;293&quot;"
+      SearchFields="&quot;293,אקספרס קרית אתא&quot;"
+      Inactive="false"
+      LocalName="&quot;אקספרס קרית אתא&quot;" />
+    <Record
+      Code="&quot;295&quot;"
+      SearchFields="&quot;295,בינלאומי קול&quot;"
+      Inactive="false"
+      LocalName="&quot;בינלאומי קול&quot;" />
+    <Record
+      Code="&quot;296&quot;"
+      SearchFields="&quot;296,אקספרס המכללה למנהל&quot;"
+      Inactive="false"
+      LocalName="&quot;אקספרס המכללה למנהל&quot;" />
+    <Record
+      Code="&quot;297&quot;"
+      SearchFields="&quot;297,יחידה מרכזת&quot;"
+      Inactive="false"
+      LocalName="&quot;יחידה מרכזת&quot;" />
+    <Record
+      Code="&quot;298&quot;"
+      SearchFields="&quot;298,הנהלת חשבונות ראשית&quot;"
+      Inactive="false"
+      LocalName="&quot;הנהלת חשבונות ראשית&quot;" />
+    <Record
+      Code="&quot;3&quot;"
+      SearchFields="&quot;3,סיטיבנק תל-אביב&quot;"
+      Inactive="false"
+      LocalName="&quot;סיטיבנק תל-אביב&quot;" />
+    <Record
+      Code="&quot;30&quot;"
+      SearchFields="&quot;30,דיאנא נצרת&quot;"
+      Inactive="false"
+      LocalName="&quot;דיאנא נצרת&quot;" />
+    <Record
+      Code="&quot;302&quot;"
+      SearchFields="&quot;302,גבעת טל&quot;"
+      Inactive="false"
+      LocalName="&quot;גבעת טל&quot;" />
+    <Record
+      Code="&quot;303&quot;"
+      SearchFields="&quot;303,חיפה&quot;"
+      Inactive="false"
+      LocalName="&quot;חיפה&quot;" />
+    <Record
+      Code="&quot;305&quot;"
+      SearchFields="&quot;305,ילמ&quot;"
+      Inactive="false"
+      LocalName="&quot;ילמ&quot;" />
+    <Record
+      Code="&quot;308&quot;"
+      SearchFields="&quot;308,ייעוץ פנסיוני&quot;"
+      Inactive="false"
+      LocalName="&quot;ייעוץ פנסיוני&quot;" />
+    <Record
+      Code="&quot;31&quot;"
+      SearchFields="&quot;31,בני-ברק&quot;"
+      Inactive="false"
+      LocalName="&quot;בני-ברק&quot;" />
+    <Record
+      Code="&quot;311&quot;"
+      SearchFields="&quot;311,כרמל&quot;"
+      Inactive="false"
+      LocalName="&quot;כרמל&quot;" />
+    <Record
+      Code="&quot;313&quot;"
+      SearchFields="&quot;313,ראש פינה&quot;"
+      Inactive="false"
+      LocalName="&quot;ראש פינה&quot;" />
+    <Record
+      Code="&quot;314&quot;"
+      SearchFields="&quot;314,גלילות&quot;"
+      Inactive="false"
+      LocalName="&quot;גלילות&quot;" />
+    <Record
+      Code="&quot;315&quot;"
+      SearchFields="&quot;315,מודיעין&quot;"
+      Inactive="false"
+      LocalName="&quot;מודיעין&quot;" />
+    <Record
+      Code="&quot;316&quot;"
+      SearchFields="&quot;316,רמת פולג&quot;"
+      Inactive="false"
+      LocalName="&quot;רמת פולג&quot;" />
+    <Record
+      Code="&quot;317&quot;"
+      SearchFields="&quot;317,כפר-גנים&quot;"
+      Inactive="false"
+      LocalName="&quot;כפר-גנים&quot;" />
+    <Record
+      Code="&quot;318&quot;"
+      SearchFields="&quot;318,עיר ימים&quot;"
+      Inactive="false"
+      LocalName="&quot;עיר ימים&quot;" />
+    <Record
+      Code="&quot;319&quot;"
+      SearchFields="&quot;319,גבעת שמואל&quot;"
+      Inactive="false"
+      LocalName="&quot;גבעת שמואל&quot;" />
+    <Record
+      Code="&quot;32&quot;"
+      SearchFields="&quot;32,נצרת עלית&quot;"
+      Inactive="false"
+      LocalName="&quot;נצרת עלית&quot;" />
+    <Record
+      Code="&quot;320&quot;"
+      SearchFields="&quot;320,קריית השרון&quot;"
+      Inactive="false"
+      LocalName="&quot;קריית השרון&quot;" />
+    <Record
+      Code="&quot;321&quot;"
+      SearchFields="&quot;321,המרכז למימון מתמחה&quot;"
+      Inactive="false"
+      LocalName="&quot;המרכז למימון מתמחה&quot;" />
+    <Record
+      Code="&quot;324&quot;"
+      SearchFields="&quot;324,הגוש הגדול&quot;"
+      Inactive="false"
+      LocalName="&quot;הגוש הגדול&quot;" />
+    <Record
+      Code="&quot;329&quot;"
+      SearchFields="&quot;329,מת&quot;ם&quot;"
+      Inactive="false"
+      LocalName="&quot;מת&quot;ם&quot;" />
+    <Record
+      Code="&quot;33&quot;"
+      SearchFields="&quot;33,שלוחת קרית גת&quot;"
+      Inactive="false"
+      LocalName="&quot;שלוחת קרית גת&quot;" />
+    <Record
+      Code="&quot;330&quot;"
+      SearchFields="&quot;330,בי&quot;ח וולפסון&quot;"
+      Inactive="false"
+      LocalName="&quot;בי&quot;ח וולפסון&quot;" />
+    <Record
+      Code="&quot;331&quot;"
+      SearchFields="&quot;331,כנפי נשרים&quot;"
+      Inactive="false"
+      LocalName="&quot;כנפי נשרים&quot;" />
+    <Record
+      Code="&quot;338&quot;"
+      SearchFields="&quot;338,לקוחות נבחרים&quot;"
+      Inactive="false"
+      LocalName="&quot;לקוחות נבחרים&quot;" />
+    <Record
+      Code="&quot;34&quot;"
+      SearchFields="&quot;34,שלוחת רחובות&quot;"
+      Inactive="false"
+      LocalName="&quot;שלוחת רחובות&quot;" />
+    <Record
+      Code="&quot;340&quot;"
+      SearchFields="&quot;340,המרכז לבנקאות פרטית השרון&quot;"
+      Inactive="false"
+      LocalName="&quot;המרכז לבנקאות פרטית השרון&quot;" />
+    <Record
+      Code="&quot;341&quot;"
+      SearchFields="&quot;341,צריפין&quot;"
+      Inactive="false"
+      LocalName="&quot;צריפין&quot;" />
+    <Record
+      Code="&quot;342&quot;"
+      SearchFields="&quot;342,נבטים&quot;"
+      Inactive="false"
+      LocalName="&quot;נבטים&quot;" />
+    <Record
+      Code="&quot;343&quot;"
+      SearchFields="&quot;343,אריאל&quot;"
+      Inactive="false"
+      LocalName="&quot;אריאל&quot;" />
+    <Record
+      Code="&quot;344&quot;"
+      SearchFields="&quot;344,ראשון לציון&quot;"
+      Inactive="false"
+      LocalName="&quot;ראשון לציון&quot;" />
+    <Record
+      Code="&quot;345&quot;"
+      SearchFields="&quot;345,רעות&quot;"
+      Inactive="false"
+      LocalName="&quot;רעות&quot;" />
+    <Record
+      Code="&quot;346&quot;"
+      SearchFields="&quot;346,נתניה&quot;"
+      Inactive="false"
+      LocalName="&quot;נתניה&quot;" />
+    <Record
+      Code="&quot;347&quot;"
+      SearchFields="&quot;347,פתח תקוה&quot;"
+      Inactive="false"
+      LocalName="&quot;פתח תקוה&quot;" />
+    <Record
+      Code="&quot;348&quot;"
+      SearchFields="&quot;348,אפק&quot;"
+      Inactive="false"
+      LocalName="&quot;אפק&quot;" />
+    <Record
+      Code="&quot;349&quot;"
+      SearchFields="&quot;349,אשקלון&quot;"
+      Inactive="false"
+      LocalName="&quot;אשקלון&quot;" />
+    <Record
+      Code="&quot;35&quot;"
+      SearchFields="&quot;35,רחובות&quot;"
+      Inactive="false"
+      LocalName="&quot;רחובות&quot;" />
+    <Record
+      Code="&quot;350&quot;"
+      SearchFields="&quot;350,מת&quot;מ אומגה&quot;"
+      Inactive="false"
+      LocalName="&quot;מת&quot;מ אומגה&quot;" />
+    <Record
+      Code="&quot;351&quot;"
+      SearchFields="&quot;351,משאבי שדה&quot;"
+      Inactive="false"
+      LocalName="&quot;משאבי שדה&quot;" />
+    <Record
+      Code="&quot;352&quot;"
+      SearchFields="&quot;352,&quot;התעשיה רשל&quot;&quot;צ&quot;&quot;"
+      Inactive="false"
+      LocalName="&quot;&quot;התעשיה רשל&quot;&quot;צ&quot;&quot;" />
+    <Record
+      Code="&quot;353&quot;"
+      SearchFields="&quot;353,שקמונה&quot;"
+      Inactive="false"
+      LocalName="&quot;שקמונה&quot;" />
+    <Record
+      Code="&quot;354&quot;"
+      SearchFields="&quot;354,רמת החייל&quot;"
+      Inactive="false"
+      LocalName="&quot;רמת החייל&quot;" />
+    <Record
+      Code="&quot;355&quot;"
+      SearchFields="&quot;355,אשדוד&quot;"
+      Inactive="false"
+      LocalName="&quot;אשדוד&quot;" />
+    <Record
+      Code="&quot;356&quot;"
+      SearchFields="&quot;356,היוצרים&quot;"
+      Inactive="false"
+      LocalName="&quot;היוצרים&quot;" />
+    <Record
+      Code="&quot;357&quot;"
+      SearchFields="&quot;357,הסניף המרכזי&quot;"
+      Inactive="false"
+      LocalName="&quot;הסניף המרכזי&quot;" />
+    <Record
+      Code="&quot;36&quot;"
+      SearchFields="&quot;36,חדרה&quot;"
+      Inactive="false"
+      LocalName="&quot;חדרה&quot;" />
+    <Record
+      Code="&quot;360&quot;"
+      SearchFields="&quot;360,סביונים&quot;"
+      Inactive="false"
+      LocalName="&quot;סביונים&quot;" />
+    <Record
+      Code="&quot;361&quot;"
+      SearchFields="&quot;361,החשמונאים&quot;"
+      Inactive="false"
+      LocalName="&quot;החשמונאים&quot;" />
+    <Record
+      Code="&quot;362&quot;"
+      SearchFields="&quot;362,אם המושבות&quot;"
+      Inactive="false"
+      LocalName="&quot;אם המושבות&quot;" />
+    <Record
+      Code="&quot;363&quot;"
+      SearchFields="&quot;363,דיסקונט בדרך שלך שרונים&quot;"
+      Inactive="false"
+      LocalName="&quot;דיסקונט בדרך שלך שרונים&quot;" />
+    <Record
+      Code="&quot;365&quot;"
+      SearchFields="&quot;365,צהלה&quot;"
+      Inactive="false"
+      LocalName="&quot;צהלה&quot;" />
+    <Record
+      Code="&quot;366&quot;"
+      SearchFields="&quot;366,תל נוף&quot;"
+      Inactive="false"
+      LocalName="&quot;תל נוף&quot;" />
+    <Record
+      Code="&quot;367&quot;"
+      SearchFields="&quot;367,חצור&quot;"
+      Inactive="false"
+      LocalName="&quot;חצור&quot;" />
+    <Record
+      Code="&quot;368&quot;"
+      SearchFields="&quot;368,ויצמן&quot;"
+      Inactive="false"
+      LocalName="&quot;ויצמן&quot;" />
+    <Record
+      Code="&quot;369&quot;"
+      SearchFields="&quot;369,ירושלים&quot;"
+      Inactive="false"
+      LocalName="&quot;ירושלים&quot;" />
+    <Record
+      Code="&quot;37&quot;"
+      SearchFields="&quot;37,הרצליה&quot;"
+      Inactive="false"
+      LocalName="&quot;הרצליה&quot;" />
+    <Record
+      Code="&quot;370&quot;"
+      SearchFields="&quot;370,לוד&quot;"
+      Inactive="false"
+      LocalName="&quot;לוד&quot;" />
+    <Record
+      Code="&quot;371&quot;"
+      SearchFields="&quot;371,רמת דוד&quot;"
+      Inactive="false"
+      LocalName="&quot;רמת דוד&quot;" />
+    <Record
+      Code="&quot;372&quot;"
+      SearchFields="&quot;372,תל השומר&quot;"
+      Inactive="false"
+      LocalName="&quot;תל השומר&quot;" />
+    <Record
+      Code="&quot;374&quot;"
+      SearchFields="&quot;374,לוד תעשיה אוירית&quot;"
+      Inactive="false"
+      LocalName="&quot;לוד תעשיה אוירית&quot;" />
+    <Record
+      Code="&quot;375&quot;"
+      SearchFields="&quot;375,רמת השרון&quot;"
+      Inactive="false"
+      LocalName="&quot;רמת השרון&quot;" />
+    <Record
+      Code="&quot;376&quot;"
+      SearchFields="&quot;376,חצרים&quot;"
+      Inactive="false"
+      LocalName="&quot;חצרים&quot;" />
+    <Record
+      Code="&quot;377&quot;"
+      SearchFields="&quot;377,אילת&quot;"
+      Inactive="false"
+      LocalName="&quot;אילת&quot;" />
+    <Record
+      Code="&quot;378&quot;"
+      SearchFields="&quot;378,הקריה&quot;"
+      Inactive="false"
+      LocalName="&quot;הקריה&quot;" />
+    <Record
+      Code="&quot;379&quot;"
+      SearchFields="&quot;379,פלמחים&quot;"
+      Inactive="false"
+      LocalName="&quot;פלמחים&quot;" />
+    <Record
+      Code="&quot;38&quot;"
+      SearchFields="&quot;38,טבריה&quot;"
+      Inactive="false"
+      LocalName="&quot;טבריה&quot;" />
+    <Record
+      Code="&quot;380&quot;"
+      SearchFields="&quot;380,מרכז עסקים דן&quot;"
+      Inactive="false"
+      LocalName="&quot;מרכז עסקים דן&quot;" />
+    <Record
+      Code="&quot;381&quot;"
+      SearchFields="&quot;381,עזה&quot;"
+      Inactive="false"
+      LocalName="&quot;עזה&quot;" />
+    <Record
+      Code="&quot;382&quot;"
+      SearchFields="&quot;382,חברון&quot;"
+      Inactive="false"
+      LocalName="&quot;חברון&quot;" />
+    <Record
+      Code="&quot;383&quot;"
+      SearchFields="&quot;383,מרכז עסקים צפון&quot;"
+      Inactive="false"
+      LocalName="&quot;מרכז עסקים צפון&quot;" />
+    <Record
+      Code="&quot;384&quot;"
+      SearchFields="&quot;384,&quot;ב&quot;&quot;יס טכני ח&quot;&quot;א&quot;&quot;"
+      Inactive="false"
+      LocalName="&quot;&quot;ב&quot;&quot;יס טכני ח&quot;&quot;א&quot;&quot;" />
+    <Record
+      Code="&quot;385&quot;"
+      SearchFields="&quot;385,&quot;תע&quot;&quot;ש חיפה&quot;&quot;"
+      Inactive="false"
+      LocalName="&quot;&quot;תע&quot;&quot;ש חיפה&quot;&quot;" />
+    <Record
+      Code="&quot;386&quot;"
+      SearchFields="&quot;386,בת גלים&quot;"
+      Inactive="false"
+      LocalName="&quot;בת גלים&quot;" />
+    <Record
+      Code="&quot;388&quot;"
+      SearchFields="&quot;388,אוצר ישיר&quot;"
+      Inactive="false"
+      LocalName="&quot;אוצר ישיר&quot;" />
+    <Record
+      Code="&quot;389&quot;"
+      SearchFields="&quot;389,הנהלה ראשית&quot;"
+      Inactive="false"
+      LocalName="&quot;הנהלה ראשית&quot;" />
+    <Record
+      Code="&quot;39&quot;"
+      SearchFields="&quot;39,שכר דירה&quot;"
+      Inactive="false"
+      LocalName="&quot;שכר דירה&quot;" />
+    <Record
+      Code="&quot;391&quot;"
+      SearchFields="&quot;391,ראשון לציון עסקים&quot;"
+      Inactive="false"
+      LocalName="&quot;ראשון לציון עסקים&quot;" />
+    <Record
+      Code="&quot;392&quot;"
+      SearchFields="&quot;392,מערב ראשון לציון&quot;"
+      Inactive="false"
+      LocalName="&quot;מערב ראשון לציון&quot;" />
+    <Record
+      Code="&quot;393&quot;"
+      SearchFields="&quot;393,רובע י&quot;ז אשדוד&quot;"
+      Inactive="false"
+      LocalName="&quot;רובע י&quot;ז אשדוד&quot;" />
+    <Record
+      Code="&quot;394&quot;"
+      SearchFields="&quot;394,רעננה עסקים&quot;"
+      Inactive="false"
+      LocalName="&quot;רעננה עסקים&quot;" />
+    <Record
+      Code="&quot;395&quot;"
+      SearchFields="&quot;395,רחובות&quot;"
+      Inactive="false"
+      LocalName="&quot;רחובות&quot;" />
+    <Record
+      Code="&quot;396&quot;"
+      SearchFields="&quot;396,אסף הרופא&quot;"
+      Inactive="false"
+      LocalName="&quot;אסף הרופא&quot;" />
+    <Record
+      Code="&quot;397&quot;"
+      SearchFields="&quot;397,גדרה&quot;"
+      Inactive="false"
+      LocalName="&quot;גדרה&quot;" />
+    <Record
+      Code="&quot;398&quot;"
+      SearchFields="&quot;398,כרמיאל&quot;"
+      Inactive="false"
+      LocalName="&quot;כרמיאל&quot;" />
+    <Record
+      Code="&quot;399&quot;"
+      SearchFields="&quot;399,אשדוד עסקים&quot;"
+      Inactive="false"
+      LocalName="&quot;אשדוד עסקים&quot;" />
+    <Record
+      Code="&quot;4&quot;"
+      SearchFields="&quot;4,בן יהודה&quot;"
+      Inactive="false"
+      LocalName="&quot;בן יהודה&quot;" />
+    <Record
+      Code="&quot;40&quot;"
+      SearchFields="&quot;40,שכר דירה&quot;"
+      Inactive="false"
+      LocalName="&quot;שכר דירה&quot;" />
+    <Record
+      Code="&quot;400&quot;"
+      SearchFields="&quot;400,עוספיה&quot;"
+      Inactive="false"
+      LocalName="&quot;עוספיה&quot;" />
+    <Record
+      Code="&quot;401&quot;"
+      SearchFields="&quot;401,רמת גן&quot;"
+      Inactive="false"
+      LocalName="&quot;רמת גן&quot;" />
+    <Record
+      Code="&quot;402&quot;"
+      SearchFields="&quot;402,עזה&quot;"
+      Inactive="false"
+      LocalName="&quot;עזה&quot;" />
+    <Record
+      Code="&quot;403&quot;"
+      SearchFields="&quot;403,שכם&quot;"
+      Inactive="false"
+      LocalName="&quot;שכם&quot;" />
+    <Record
+      Code="&quot;404&quot;"
+      SearchFields="&quot;404,חברון&quot;"
+      Inactive="false"
+      LocalName="&quot;חברון&quot;" />
+    <Record
+      Code="&quot;405&quot;"
+      SearchFields="&quot;405,חלחול&quot;"
+      Inactive="false"
+      LocalName="&quot;חלחול&quot;" />
+    <Record
+      Code="&quot;406&quot;"
+      SearchFields="&quot;406,ביר זית&quot;"
+      Inactive="false"
+      LocalName="&quot;ביר זית&quot;" />
+    <Record
+      Code="&quot;407&quot;"
+      SearchFields="&quot;407,בית אל על&quot;"
+      Inactive="false"
+      LocalName="&quot;בית אל על&quot;" />
+    <Record
+      Code="&quot;408&quot;"
+      SearchFields="&quot;408,ריבל&quot;"
+      Inactive="false"
+      LocalName="&quot;ריבל&quot;" />
+    <Record
+      Code="&quot;409&quot;"
+      SearchFields="&quot;409,בית לחם&quot;"
+      Inactive="false"
+      LocalName="&quot;בית לחם&quot;" />
+    <Record
+      Code="&quot;41&quot;"
+      SearchFields="&quot;41,רמת גן&quot;"
+      Inactive="false"
+      LocalName="&quot;רמת גן&quot;" />
+    <Record
+      Code="&quot;410&quot;"
+      SearchFields="&quot;410,יאטה&quot;"
+      Inactive="false"
+      LocalName="&quot;יאטה&quot;" />
+    <Record
+      Code="&quot;411&quot;"
+      SearchFields="&quot;411,סופר בנק תל חנן&quot;"
+      Inactive="false"
+      LocalName="&quot;סופר בנק תל חנן&quot;" />
+    <Record
+      Code="&quot;412&quot;"
+      SearchFields="&quot;412,סופר בנק הדרים&quot;"
+      Inactive="false"
+      LocalName="&quot;סופר בנק הדרים&quot;" />
+    <Record
+      Code="&quot;413&quot;"
+      SearchFields="&quot;413,סופר בנק היפרכל&quot;"
+      Inactive="false"
+      LocalName="&quot;סופר בנק היפרכל&quot;" />
+    <Record
+      Code="&quot;414&quot;"
+      SearchFields="&quot;414,משרד ראשי&quot;"
+      Inactive="false"
+      LocalName="&quot;משרד ראשי&quot;" />
+    <Record
+      Code="&quot;415&quot;"
+      SearchFields="&quot;415,סופר בנק רחובות&quot;"
+      Inactive="false"
+      LocalName="&quot;סופר בנק רחובות&quot;" />
+    <Record
+      Code="&quot;416&quot;"
+      SearchFields="&quot;416,אשדוד&quot;"
+      Inactive="false"
+      LocalName="&quot;אשדוד&quot;" />
+    <Record
+      Code="&quot;417&quot;"
+      SearchFields="&quot;417,גאולה י-ם&quot;"
+      Inactive="false"
+      LocalName="&quot;גאולה י-ם&quot;" />
+    <Record
+      Code="&quot;418&quot;"
+      SearchFields="&quot;418,נתב&quot;ג&quot;"
+      Inactive="false"
+      LocalName="&quot;נתב&quot;ג&quot;" />
+    <Record
+      Code="&quot;419&quot;"
+      SearchFields="&quot;419,סופר בנק קניון הזהב&quot;"
+      Inactive="false"
+      LocalName="&quot;סופר בנק קניון הזהב&quot;" />
+    <Record
+      Code="&quot;42&quot;"
+      SearchFields="&quot;42,מגדל העמק&quot;"
+      Inactive="false"
+      LocalName="&quot;מגדל העמק&quot;" />
+    <Record
+      Code="&quot;420&quot;"
+      SearchFields="&quot;420,חדרה&quot;"
+      Inactive="false"
+      LocalName="&quot;חדרה&quot;" />
+    <Record
+      Code="&quot;421&quot;"
+      SearchFields="&quot;421,אקספרס עראבה&quot;"
+      Inactive="false"
+      LocalName="&quot;אקספרס עראבה&quot;" />
+    <Record
+      Code="&quot;422&quot;"
+      SearchFields="&quot;422,סופרבנק 7 הכוכבים&quot;"
+      Inactive="false"
+      LocalName="&quot;סופרבנק 7 הכוכבים&quot;" />
+    <Record
+      Code="&quot;423&quot;"
+      SearchFields="&quot;423,סופר בנק בארות יצחק&quot;"
+      Inactive="false"
+      LocalName="&quot;סופר בנק בארות יצחק&quot;" />
+    <Record
+      Code="&quot;424&quot;"
+      SearchFields="&quot;424,סופר בנק גרנד קניון&quot;"
+      Inactive="false"
+      LocalName="&quot;סופר בנק גרנד קניון&quot;" />
+    <Record
+      Code="&quot;425&quot;"
+      SearchFields="&quot;425,עזה&quot;"
+      Inactive="false"
+      LocalName="&quot;עזה&quot;" />
+    <Record
+      Code="&quot;426&quot;"
+      SearchFields="&quot;426,אל-עיזריה&quot;"
+      Inactive="false"
+      LocalName="&quot;אל-עיזריה&quot;" />
+    <Record
+      Code="&quot;427&quot;"
+      SearchFields="&quot;427,שכם&quot;"
+      Inactive="false"
+      LocalName="&quot;שכם&quot;" />
+    <Record
+      Code="&quot;428&quot;"
+      SearchFields="&quot;428,בית ג'אלה&quot;"
+      Inactive="false"
+      LocalName="&quot;בית ג'אלה&quot;" />
+    <Record
+      Code="&quot;429&quot;"
+      SearchFields="&quot;429,רמאללה&quot;"
+      Inactive="false"
+      LocalName="&quot;רמאללה&quot;" />
+    <Record
+      Code="&quot;43&quot;"
+      SearchFields="&quot;43,שלוחת נהריה&quot;"
+      Inactive="false"
+      LocalName="&quot;שלוחת נהריה&quot;" />
+    <Record
+      Code="&quot;430&quot;"
+      SearchFields="&quot;430,סלפית&quot;"
+      Inactive="false"
+      LocalName="&quot;סלפית&quot;" />
+    <Record
+      Code="&quot;431&quot;"
+      SearchFields="&quot;431,רמאללה - הנהלה אזורית&quot;"
+      Inactive="false"
+      LocalName="&quot;רמאללה - הנהלה אזורית&quot;" />
+    <Record
+      Code="&quot;432&quot;"
+      SearchFields="&quot;432,רמלה&quot;"
+      Inactive="false"
+      LocalName="&quot;רמלה&quot;" />
+    <Record
+      Code="&quot;433&quot;"
+      SearchFields="&quot;433,קרית גת&quot;"
+      Inactive="false"
+      LocalName="&quot;קרית גת&quot;" />
+    <Record
+      Code="&quot;434&quot;"
+      SearchFields="&quot;434,רחובות&quot;"
+      Inactive="false"
+      LocalName="&quot;רחובות&quot;" />
+    <Record
+      Code="&quot;435&quot;"
+      SearchFields="&quot;435,ראשון לציון&quot;"
+      Inactive="false"
+      LocalName="&quot;ראשון לציון&quot;" />
+    <Record
+      Code="&quot;436&quot;"
+      SearchFields="&quot;436,סניף ראשי&quot;"
+      Inactive="false"
+      LocalName="&quot;סניף ראשי&quot;" />
+    <Record
+      Code="&quot;437&quot;"
+      SearchFields="&quot;437,אופקים&quot;"
+      Inactive="false"
+      LocalName="&quot;אופקים&quot;" />
+    <Record
+      Code="&quot;438&quot;"
+      SearchFields="&quot;438,קניון אורות&quot;"
+      Inactive="false"
+      LocalName="&quot;קניון אורות&quot;" />
+    <Record
+      Code="&quot;439&quot;"
+      SearchFields="&quot;439,בית שאן&quot;"
+      Inactive="false"
+      LocalName="&quot;בית שאן&quot;" />
+    <Record
+      Code="&quot;44&quot;"
+      SearchFields="&quot;44,הלל יפה חדרה&quot;"
+      Inactive="false"
+      LocalName="&quot;הלל יפה חדרה&quot;" />
+    <Record
+      Code="&quot;440&quot;"
+      SearchFields="&quot;440,סקטור תפעול מט&quot;ח&quot;"
+      Inactive="false"
+      LocalName="&quot;סקטור תפעול מט&quot;ח&quot;" />
+    <Record
+      Code="&quot;441&quot;"
+      SearchFields="&quot;441,חאן יונס&quot;"
+      Inactive="false"
+      LocalName="&quot;חאן יונס&quot;" />
+    <Record
+      Code="&quot;442&quot;"
+      SearchFields="&quot;442,חברון&quot;"
+      Inactive="false"
+      LocalName="&quot;חברון&quot;" />
+    <Record
+      Code="&quot;443&quot;"
+      SearchFields="&quot;443,שכם&quot;"
+      Inactive="false"
+      LocalName="&quot;שכם&quot;" />
+    <Record
+      Code="&quot;444&quot;"
+      SearchFields="&quot;444,בית לחם&quot;"
+      Inactive="false"
+      LocalName="&quot;בית לחם&quot;" />
+    <Record
+      Code="&quot;445&quot;"
+      SearchFields="&quot;445,סניף ראשי&quot;"
+      Inactive="false"
+      LocalName="&quot;סניף ראשי&quot;" />
+    <Record
+      Code="&quot;446&quot;"
+      SearchFields="&quot;446,עזה - אלנאסר&quot;"
+      Inactive="false"
+      LocalName="&quot;עזה - אלנאסר&quot;" />
+    <Record
+      Code="&quot;447&quot;"
+      SearchFields="&quot;447,חברון&quot;"
+      Inactive="false"
+      LocalName="&quot;חברון&quot;" />
+    <Record
+      Code="&quot;448&quot;"
+      SearchFields="&quot;448,נוסיראת&quot;"
+      Inactive="false"
+      LocalName="&quot;נוסיראת&quot;" />
+    <Record
+      Code="&quot;449&quot;"
+      SearchFields="&quot;449,ג'נין&quot;"
+      Inactive="false"
+      LocalName="&quot;ג'נין&quot;" />
+    <Record
+      Code="&quot;45&quot;"
+      SearchFields="&quot;45,חולון&quot;"
+      Inactive="false"
+      LocalName="&quot;חולון&quot;" />
+    <Record
+      Code="&quot;450&quot;"
+      SearchFields="&quot;450,בית לחם&quot;"
+      Inactive="false"
+      LocalName="&quot;בית לחם&quot;" />
+    <Record
+      Code="&quot;451&quot;"
+      SearchFields="&quot;451,מרכז עסקים תל אביב ב'&quot;"
+      Inactive="false"
+      LocalName="&quot;מרכז עסקים תל אביב ב'&quot;" />
+    <Record
+      Code="&quot;452&quot;"
+      SearchFields="&quot;452,חאן יונס&quot;"
+      Inactive="false"
+      LocalName="&quot;חאן יונס&quot;" />
+    <Record
+      Code="&quot;453&quot;"
+      SearchFields="&quot;453,ג'בליה&quot;"
+      Inactive="false"
+      LocalName="&quot;ג'בליה&quot;" />
+    <Record
+      Code="&quot;454&quot;"
+      SearchFields="&quot;454,אל-רימאל&quot;"
+      Inactive="false"
+      LocalName="&quot;אל-רימאל&quot;" />
+    <Record
+      Code="&quot;455&quot;"
+      SearchFields="&quot;455,רפיח&quot;"
+      Inactive="false"
+      LocalName="&quot;רפיח&quot;" />
+    <Record
+      Code="&quot;456&quot;"
+      SearchFields="&quot;456,פעו&quot;"
+      Inactive="false"
+      LocalName="&quot;פעו&quot;" />
+    <Record
+      Code="&quot;457&quot;"
+      SearchFields="&quot;457,שכם&quot;"
+      Inactive="false"
+      LocalName="&quot;שכם&quot;" />
+    <Record
+      Code="&quot;458&quot;"
+      SearchFields="&quot;458,רמאללה&quot;"
+      Inactive="false"
+      LocalName="&quot;רמאללה&quot;" />
+    <Record
+      Code="&quot;459&quot;"
+      SearchFields="&quot;459,היצירה&quot;"
+      Inactive="false"
+      LocalName="&quot;היצירה&quot;" />
+    <Record
+      Code="&quot;46&quot;"
+      SearchFields="&quot;46,תל אביב ראשי&quot;"
+      Inactive="false"
+      LocalName="&quot;תל אביב ראשי&quot;" />
+    <Record
+      Code="&quot;460&quot;"
+      SearchFields="&quot;460,מונטיפיורי&quot;"
+      Inactive="false"
+      LocalName="&quot;מונטיפיורי&quot;" />
+    <Record
+      Code="&quot;461&quot;"
+      SearchFields="&quot;461,שכם&quot;"
+      Inactive="false"
+      LocalName="&quot;שכם&quot;" />
+    <Record
+      Code="&quot;462&quot;"
+      SearchFields="&quot;462,עיר ימים&quot;"
+      Inactive="false"
+      LocalName="&quot;עיר ימים&quot;" />
+    <Record
+      Code="&quot;464&quot;"
+      SearchFields="&quot;464,יובלים&quot;"
+      Inactive="false"
+      LocalName="&quot;יובלים&quot;" />
+    <Record
+      Code="&quot;465&quot;"
+      SearchFields="&quot;465,אם המושבות&quot;"
+      Inactive="false"
+      LocalName="&quot;אם המושבות&quot;" />
+    <Record
+      Code="&quot;466&quot;"
+      SearchFields="&quot;466,קלקיליה&quot;"
+      Inactive="false"
+      LocalName="&quot;קלקיליה&quot;" />
+    <Record
+      Code="&quot;467&quot;"
+      SearchFields="&quot;467,טול כרם&quot;"
+      Inactive="false"
+      LocalName="&quot;טול כרם&quot;" />
+    <Record
+      Code="&quot;468&quot;"
+      SearchFields="&quot;468,טובס&quot;"
+      Inactive="false"
+      LocalName="&quot;טובס&quot;" />
+    <Record
+      Code="&quot;469&quot;"
+      SearchFields="&quot;469,סלפית&quot;"
+      Inactive="false"
+      LocalName="&quot;סלפית&quot;" />
+    <Record
+      Code="&quot;47&quot;"
+      SearchFields="&quot;47,ג'דיידה - מכר&quot;"
+      Inactive="false"
+      LocalName="&quot;ג'דיידה - מכר&quot;" />
+    <Record
+      Code="&quot;470&quot;"
+      SearchFields="&quot;470,אקספרס ריינה&quot;"
+      Inactive="false"
+      LocalName="&quot;אקספרס ריינה&quot;" />
+    <Record
+      Code="&quot;471&quot;"
+      SearchFields="&quot;471,אל מסיון&quot;"
+      Inactive="false"
+      LocalName="&quot;אל מסיון&quot;" />
+    <Record
+      Code="&quot;472&quot;"
+      SearchFields="&quot;472,עפולה עסקים&quot;"
+      Inactive="false"
+      LocalName="&quot;עפולה עסקים&quot;" />
+    <Record
+      Code="&quot;473&quot;"
+      SearchFields="&quot;473,פרדס חנה&quot;"
+      Inactive="false"
+      LocalName="&quot;פרדס חנה&quot;" />
+    <Record
+      Code="&quot;474&quot;"
+      SearchFields="&quot;474,אלמסיון&quot;"
+      Inactive="false"
+      LocalName="&quot;אלמסיון&quot;" />
+    <Record
+      Code="&quot;475&quot;"
+      SearchFields="&quot;475,herib-la&quot;"
+      Inactive="false"
+      LocalName="&quot;heriB-lA&quot;" />
+    <Record
+      Code="&quot;476&quot;"
+      SearchFields="&quot;476,sulban wen&quot;"
+      Inactive="false"
+      LocalName="&quot;sulbaN weN&quot;" />
+    <Record
+      Code="&quot;477&quot;"
+      SearchFields="&quot;477,meraklut&quot;"
+      Inactive="false"
+      LocalName="&quot;merakluT&quot;" />
+    <Record
+      Code="&quot;478&quot;"
+      SearchFields="&quot;478,ohcirej&quot;"
+      Inactive="false"
+      LocalName="&quot;ohcireJ&quot;" />
+    <Record
+      Code="&quot;479&quot;"
+      SearchFields="&quot;479,גבעת שאול&quot;"
+      Inactive="false"
+      LocalName="&quot;גבעת שאול&quot;" />
+    <Record
+      Code="&quot;48&quot;"
+      SearchFields="&quot;48,&quot;גבעת רמב&quot;&quot;ם&quot;&quot;"
+      Inactive="false"
+      LocalName="&quot;&quot;גבעת רמב&quot;&quot;ם&quot;&quot;" />
+    <Record
+      Code="&quot;480&quot;"
+      SearchFields="&quot;480,ניירות ערך&quot;"
+      Inactive="false"
+      LocalName="&quot;ניירות ערך&quot;" />
+    <Record
+      Code="&quot;481&quot;"
+      SearchFields="&quot;481,&quot;הנה&quot;&quot;ר וסניף ת&quot;&quot;א&quot;&quot;"
+      Inactive="false"
+      LocalName="&quot;&quot;הנה&quot;&quot;ר וסניף ת&quot;&quot;א&quot;&quot;" />
+    <Record
+      Code="&quot;482&quot;"
+      SearchFields="&quot;482,עזה&quot;"
+      Inactive="false"
+      LocalName="&quot;עזה&quot;" />
+    <Record
+      Code="&quot;483&quot;"
+      SearchFields="&quot;483,ירושלים&quot;"
+      Inactive="false"
+      LocalName="&quot;ירושלים&quot;" />
+    <Record
+      Code="&quot;484&quot;"
+      SearchFields="&quot;484,שכם&quot;"
+      Inactive="false"
+      LocalName="&quot;שכם&quot;" />
+    <Record
+      Code="&quot;485&quot;"
+      SearchFields="&quot;485,אל עזריה&quot;"
+      Inactive="false"
+      LocalName="&quot;אל עזריה&quot;" />
+    <Record
+      Code="&quot;486&quot;"
+      SearchFields="&quot;486,אל מסיון-אל בירה&quot;"
+      Inactive="false"
+      LocalName="&quot;אל מסיון-אל בירה&quot;" />
+    <Record
+      Code="&quot;487&quot;"
+      SearchFields="&quot;487,קרית שמונה&quot;"
+      Inactive="false"
+      LocalName="&quot;קרית שמונה&quot;" />
+    <Record
+      Code="&quot;488&quot;"
+      SearchFields="&quot;488,סקטור קופ&quot;ג&quot;"
+      Inactive="false"
+      LocalName="&quot;סקטור קופ&quot;ג&quot;" />
+    <Record
+      Code="&quot;489&quot;"
+      SearchFields="&quot;489,ערד&quot;"
+      Inactive="false"
+      LocalName="&quot;ערד&quot;" />
+    <Record
+      Code="&quot;49&quot;"
+      SearchFields="&quot;49,יחידת ביצוע מחלקת מט&quot;י&quot;"
+      Inactive="false"
+      LocalName="&quot;יחידת ביצוע מחלקת מט&quot;י&quot;" />
+    <Record
+      Code="&quot;490&quot;"
+      SearchFields="&quot;490,אשקלון&quot;"
+      Inactive="false"
+      LocalName="&quot;אשקלון&quot;" />
+    <Record
+      Code="&quot;491&quot;"
+      SearchFields="&quot;491,סניף ראשי&quot;"
+      Inactive="false"
+      LocalName="&quot;סניף ראשי&quot;" />
+    <Record
+      Code="&quot;492&quot;"
+      SearchFields="&quot;492,עזה&quot;"
+      Inactive="false"
+      LocalName="&quot;עזה&quot;" />
+    <Record
+      Code="&quot;493&quot;"
+      SearchFields="&quot;493,שכם&quot;"
+      Inactive="false"
+      LocalName="&quot;שכם&quot;" />
+    <Record
+      Code="&quot;494&quot;"
+      SearchFields="&quot;494,חשמונאים&quot;"
+      Inactive="false"
+      LocalName="&quot;חשמונאים&quot;" />
+    <Record
+      Code="&quot;495&quot;"
+      SearchFields="&quot;495,א&quot;ת ראשל&quot;צ&quot;"
+      Inactive="false"
+      LocalName="&quot;א&quot;ת ראשל&quot;צ&quot;" />
+    <Record
+      Code="&quot;496&quot;"
+      SearchFields="&quot;496,רעננה&quot;"
+      Inactive="false"
+      LocalName="&quot;רעננה&quot;" />
+    <Record
+      Code="&quot;497&quot;"
+      SearchFields="&quot;497,גדרה&quot;"
+      Inactive="false"
+      LocalName="&quot;גדרה&quot;" />
+    <Record
+      Code="&quot;499&quot;"
+      SearchFields="&quot;499,משרד ראשי&quot;"
+      Inactive="false"
+      LocalName="&quot;משרד ראשי&quot;" />
+    <Record
+      Code="&quot;5&quot;"
+      SearchFields="&quot;5,גאולה&quot;"
+      Inactive="false"
+      LocalName="&quot;גאולה&quot;" />
+    <Record
+      Code="&quot;50&quot;"
+      SearchFields="&quot;50,ז'בוטינסקי&quot;"
+      Inactive="false"
+      LocalName="&quot;ז'בוטינסקי&quot;" />
+    <Record
+      Code="&quot;500&quot;"
+      SearchFields="&quot;500,הרימון&quot;"
+      Inactive="false"
+      LocalName="&quot;הרימון&quot;" />
+    <Record
+      Code="&quot;501&quot;"
+      SearchFields="&quot;501,מרכז ארצי לתושבי חוץ&quot;"
+      Inactive="false"
+      LocalName="&quot;מרכז ארצי לתושבי חוץ&quot;" />
+    <Record
+      Code="&quot;502&quot;"
+      SearchFields="&quot;502,קרן קיימת&quot;"
+      Inactive="false"
+      LocalName="&quot;קרן קיימת&quot;" />
+    <Record
+      Code="&quot;503&quot;"
+      SearchFields="&quot;503,מודיעין דיור&quot;"
+      Inactive="false"
+      LocalName="&quot;מודיעין דיור&quot;" />
+    <Record
+      Code="&quot;504&quot;"
+      SearchFields="&quot;504,פרימקו&quot;"
+      Inactive="false"
+      LocalName="&quot;פרימקו&quot;" />
+    <Record
+      Code="&quot;505&quot;"
+      SearchFields="&quot;505,המעפילים&quot;"
+      Inactive="false"
+      LocalName="&quot;המעפילים&quot;" />
+    <Record
+      Code="&quot;506&quot;"
+      SearchFields="&quot;506,שפרעם&quot;"
+      Inactive="false"
+      LocalName="&quot;שפרעם&quot;" />
+    <Record
+      Code="&quot;507&quot;"
+      SearchFields="&quot;507,קרית אונו החדשה&quot;"
+      Inactive="false"
+      LocalName="&quot;קרית אונו החדשה&quot;" />
+    <Record
+      Code="&quot;508&quot;"
+      SearchFields="&quot;508,מגדיאל - הוד השרון&quot;"
+      Inactive="false"
+      LocalName="&quot;מגדיאל - הוד השרון&quot;" />
+    <Record
+      Code="&quot;509&quot;"
+      SearchFields="&quot;509,הנביאים חיפה&quot;"
+      Inactive="false"
+      LocalName="&quot;הנביאים חיפה&quot;" />
+    <Record
+      Code="&quot;51&quot;"
+      SearchFields="&quot;51,תל אביב&quot;"
+      Inactive="false"
+      LocalName="&quot;תל אביב&quot;" />
+    <Record
+      Code="&quot;510&quot;"
+      SearchFields="&quot;510,מרכז מזומנים&quot;"
+      Inactive="false"
+      LocalName="&quot;מרכז מזומנים&quot;" />
+    <Record
+      Code="&quot;511&quot;"
+      SearchFields="&quot;511,ככר עצמאות&quot;"
+      Inactive="false"
+      LocalName="&quot;ככר עצמאות&quot;" />
+    <Record
+      Code="&quot;512&quot;"
+      SearchFields="&quot;512,נוה&quot;"
+      Inactive="false"
+      LocalName="&quot;נוה&quot;" />
+    <Record
+      Code="&quot;513&quot;"
+      SearchFields="&quot;513,כרמיאל&quot;"
+      Inactive="false"
+      LocalName="&quot;כרמיאל&quot;" />
+    <Record
+      Code="&quot;514&quot;"
+      SearchFields="&quot;514,המלאכה&quot;"
+      Inactive="false"
+      LocalName="&quot;המלאכה&quot;" />
+    <Record
+      Code="&quot;515&quot;"
+      SearchFields="&quot;515,ירושלים&quot;"
+      Inactive="false"
+      LocalName="&quot;ירושלים&quot;" />
+    <Record
+      Code="&quot;516&quot;"
+      SearchFields="&quot;516,אשדוד&quot;"
+      Inactive="false"
+      LocalName="&quot;אשדוד&quot;" />
+    <Record
+      Code="&quot;517&quot;"
+      SearchFields="&quot;517,חדרה&quot;"
+      Inactive="false"
+      LocalName="&quot;חדרה&quot;" />
+    <Record
+      Code="&quot;518&quot;"
+      SearchFields="&quot;518,מחלקת בנקים ומוסדות פיננסים&quot;"
+      Inactive="false"
+      LocalName="&quot;מחלקת בנקים ומוסדות פיננסים&quot;" />
+    <Record
+      Code="&quot;519&quot;"
+      SearchFields="&quot;519,קרית אריה&quot;"
+      Inactive="false"
+      LocalName="&quot;קרית אריה&quot;" />
+    <Record
+      Code="&quot;52&quot;"
+      SearchFields="&quot;52,מחנה יהודה&quot;"
+      Inactive="false"
+      LocalName="&quot;מחנה יהודה&quot;" />
+    <Record
+      Code="&quot;520&quot;"
+      SearchFields="&quot;520,מרכז בנקאות פרטית לתושבי חוץ י-ם&quot;"
+      Inactive="false"
+      LocalName="&quot;מרכז בנקאות פרטית לתושבי חוץ י-ם&quot;" />
+    <Record
+      Code="&quot;521&quot;"
+      SearchFields="&quot;521,מודיעין&quot;"
+      Inactive="false"
+      LocalName="&quot;מודיעין&quot;" />
+    <Record
+      Code="&quot;522&quot;"
+      SearchFields="&quot;522,הרצליה פיתוח&quot;"
+      Inactive="false"
+      LocalName="&quot;הרצליה פיתוח&quot;" />
+    <Record
+      Code="&quot;523&quot;"
+      SearchFields="&quot;523,&quot;הרא&quot;&quot;ה&quot;&quot;"
+      Inactive="false"
+      LocalName="&quot;&quot;הרא&quot;&quot;ה&quot;&quot;" />
+    <Record
+      Code="&quot;524&quot;"
+      SearchFields="&quot;524,עמק שרה&quot;"
+      Inactive="false"
+      LocalName="&quot;עמק שרה&quot;" />
+    <Record
+      Code="&quot;525&quot;"
+      SearchFields="&quot;525,שלבים&quot;"
+      Inactive="false"
+      LocalName="&quot;שלבים&quot;" />
+    <Record
+      Code="&quot;526&quot;"
+      SearchFields="&quot;526,שלומציון&quot;"
+      Inactive="false"
+      LocalName="&quot;שלומציון&quot;" />
+    <Record
+      Code="&quot;527&quot;"
+      SearchFields="&quot;527,רעננה&quot;"
+      Inactive="false"
+      LocalName="&quot;רעננה&quot;" />
+    <Record
+      Code="&quot;528&quot;"
+      SearchFields="&quot;528,הלוואות עובדים&quot;"
+      Inactive="false"
+      LocalName="&quot;הלוואות עובדים&quot;" />
+    <Record
+      Code="&quot;529&quot;"
+      SearchFields="&quot;529,קניון הבאר&quot;"
+      Inactive="false"
+      LocalName="&quot;קניון הבאר&quot;" />
+    <Record
+      Code="&quot;53&quot;"
+      SearchFields="&quot;53,שעריים&quot;"
+      Inactive="false"
+      LocalName="&quot;שעריים&quot;" />
+    <Record
+      Code="&quot;530&quot;"
+      SearchFields="&quot;530,קרית מנחם&quot;"
+      Inactive="false"
+      LocalName="&quot;קרית מנחם&quot;" />
+    <Record
+      Code="&quot;531&quot;"
+      SearchFields="&quot;531,ניהול קופות גמל&quot;"
+      Inactive="false"
+      LocalName="&quot;ניהול קופות גמל&quot;" />
+    <Record
+      Code="&quot;532&quot;"
+      SearchFields="&quot;532,פארק המדע רחובות&quot;"
+      Inactive="false"
+      LocalName="&quot;פארק המדע רחובות&quot;" />
+    <Record
+      Code="&quot;533&quot;"
+      SearchFields="&quot;533,מול הים&quot;"
+      Inactive="false"
+      LocalName="&quot;מול הים&quot;" />
+    <Record
+      Code="&quot;534&quot;"
+      SearchFields="&quot;534,הפועלים&quot;"
+      Inactive="false"
+      LocalName="&quot;הפועלים&quot;" />
+    <Record
+      Code="&quot;535&quot;"
+      SearchFields="&quot;535,הירקון- המרכז הארצי לתושבי חוץ&quot;"
+      Inactive="false"
+      LocalName="&quot;הירקון- המרכז הארצי לתושבי חוץ&quot;" />
+    <Record
+      Code="&quot;536&quot;"
+      SearchFields="&quot;536,תפעול עורפי&quot;"
+      Inactive="false"
+      LocalName="&quot;תפעול עורפי&quot;" />
+    <Record
+      Code="&quot;537&quot;"
+      SearchFields="&quot;537,מגמ&quot;ש (מרכז גביה משפטית&quot;"
+      Inactive="false"
+      LocalName="&quot;מגמ&quot;ש (מרכז גביה משפטית&quot;" />
+    <Record
+      Code="&quot;538&quot;"
+      SearchFields="&quot;538,רמות&quot;"
+      Inactive="false"
+      LocalName="&quot;רמות&quot;" />
+    <Record
+      Code="&quot;539&quot;"
+      SearchFields="&quot;539,באר שבע&quot;"
+      Inactive="false"
+      LocalName="&quot;באר שבע&quot;" />
+    <Record
+      Code="&quot;54&quot;"
+      SearchFields="&quot;54,המלך ג'ורג'&quot;"
+      Inactive="false"
+      LocalName="&quot;המלך ג'ורג'&quot;" />
+    <Record
+      Code="&quot;540&quot;"
+      SearchFields="&quot;540,יבנה&quot;"
+      Inactive="false"
+      LocalName="&quot;יבנה&quot;" />
+    <Record
+      Code="&quot;541&quot;"
+      SearchFields="&quot;541,מרכז בנקאות פרטת נתניה&quot;"
+      Inactive="false"
+      LocalName="&quot;מרכז בנקאות פרטת נתניה&quot;" />
+    <Record
+      Code="&quot;542&quot;"
+      SearchFields="&quot;542,עיר ימים נתניה&quot;"
+      Inactive="false"
+      LocalName="&quot;עיר ימים נתניה&quot;" />
+    <Record
+      Code="&quot;543&quot;"
+      SearchFields="&quot;543,כורזין&quot;"
+      Inactive="false"
+      LocalName="&quot;כורזין&quot;" />
+    <Record
+      Code="&quot;544&quot;"
+      SearchFields="&quot;544,קק&quot;ל&quot;"
+      Inactive="false"
+      LocalName="&quot;קק&quot;ל&quot;" />
+    <Record
+      Code="&quot;545&quot;"
+      SearchFields="&quot;545,הדר&quot;"
+      Inactive="false"
+      LocalName="&quot;הדר&quot;" />
+    <Record
+      Code="&quot;546&quot;"
+      SearchFields="&quot;546,גצםמג&quot;"
+      Inactive="false"
+      LocalName="&quot;גצםמג&quot;" />
+    <Record
+      Code="&quot;547&quot;"
+      SearchFields="&quot;547,&quot;גלבוע ת&quot;&quot;א&quot;&quot;"
+      Inactive="false"
+      LocalName="&quot;&quot;גלבוע ת&quot;&quot;א&quot;&quot;" />
+    <Record
+      Code="&quot;548&quot;"
+      SearchFields="&quot;548,כפר גנים&quot;"
+      Inactive="false"
+      LocalName="&quot;כפר גנים&quot;" />
+    <Record
+      Code="&quot;549&quot;"
+      SearchFields="&quot;549,כפר תבור&quot;"
+      Inactive="false"
+      LocalName="&quot;כפר תבור&quot;" />
+    <Record
+      Code="&quot;55&quot;"
+      SearchFields="&quot;55,&quot;בית אבות &quot;&quot;משען פיכמן&quot;&quot;&quot;&quot;"
+      Inactive="false"
+      LocalName="&quot;&quot;בית אבות &quot;&quot;משען פיכמן&quot;&quot;&quot;&quot;" />
+    <Record
+      Code="&quot;550&quot;"
+      SearchFields="&quot;550,רוטשילד פ&quot;ת&quot;"
+      Inactive="false"
+      LocalName="&quot;רוטשילד פ&quot;ת&quot;" />
+    <Record
+      Code="&quot;551&quot;"
+      SearchFields="&quot;551,פז רמת גן&quot;"
+      Inactive="false"
+      LocalName="&quot;פז רמת גן&quot;" />
+    <Record
+      Code="&quot;552&quot;"
+      SearchFields="&quot;552,רוטשילד ראשל&quot;צ&quot;"
+      Inactive="false"
+      LocalName="&quot;רוטשילד ראשל&quot;צ&quot;" />
+    <Record
+      Code="&quot;553&quot;"
+      SearchFields="&quot;553,ברקת, נתניה&quot;"
+      Inactive="false"
+      LocalName="&quot;ברקת, נתניה&quot;" />
+    <Record
+      Code="&quot;554&quot;"
+      SearchFields="&quot;554,ככר נמיר&quot;"
+      Inactive="false"
+      LocalName="&quot;ככר נמיר&quot;" />
+    <Record
+      Code="&quot;555&quot;"
+      SearchFields="&quot;555,קוגל,חולון&quot;"
+      Inactive="false"
+      LocalName="&quot;קוגל,חולון&quot;" />
+    <Record
+      Code="&quot;556&quot;"
+      SearchFields="&quot;556,החשמונאים, ת&quot;א&quot;"
+      Inactive="false"
+      LocalName="&quot;החשמונאים, ת&quot;א&quot;" />
+    <Record
+      Code="&quot;557&quot;"
+      SearchFields="&quot;557,רוטשילד, ראשל&quot;צ&quot;"
+      Inactive="false"
+      LocalName="&quot;רוטשילד, ראשל&quot;צ&quot;" />
+    <Record
+      Code="&quot;558&quot;"
+      SearchFields="&quot;558,מעלות&quot;"
+      Inactive="false"
+      LocalName="&quot;מעלות&quot;" />
+    <Record
+      Code="&quot;559&quot;"
+      SearchFields="&quot;559,נצרת&quot;"
+      Inactive="false"
+      LocalName="&quot;נצרת&quot;" />
+    <Record
+      Code="&quot;56&quot;"
+      SearchFields="&quot;56,&quot;בית אבות &quot;&quot;משען נווה אביבים&quot;&quot;&quot;&quot;"
+      Inactive="false"
+      LocalName="&quot;&quot;בית אבות &quot;&quot;משען נווה אביבים&quot;&quot;&quot;&quot;" />
+    <Record
+      Code="&quot;560&quot;"
+      SearchFields="&quot;560,נצרת עלית&quot;"
+      Inactive="false"
+      LocalName="&quot;נצרת עלית&quot;" />
+    <Record
+      Code="&quot;561&quot;"
+      SearchFields="&quot;561,המעיין&quot;"
+      Inactive="false"
+      LocalName="&quot;המעיין&quot;" />
+    <Record
+      Code="&quot;562&quot;"
+      SearchFields="&quot;562,חיפה עסקים&quot;"
+      Inactive="false"
+      LocalName="&quot;חיפה עסקים&quot;" />
+    <Record
+      Code="&quot;563&quot;"
+      SearchFields="&quot;563,לוי אשכול,ק.ים&quot;"
+      Inactive="false"
+      LocalName="&quot;לוי אשכול,ק.ים&quot;" />
+    <Record
+      Code="&quot;564&quot;"
+      SearchFields="&quot;564,פלי&quot;ם, חיפה&quot;"
+      Inactive="false"
+      LocalName="&quot;פלי&quot;ם, חיפה&quot;" />
+    <Record
+      Code="&quot;565&quot;"
+      SearchFields="&quot;565,מנחמיה&quot;"
+      Inactive="false"
+      LocalName="&quot;מנחמיה&quot;" />
+    <Record
+      Code="&quot;566&quot;"
+      SearchFields="&quot;566,דרך מצדה, ב&quot;ש&quot;"
+      Inactive="false"
+      LocalName="&quot;דרך מצדה, ב&quot;ש&quot;" />
+    <Record
+      Code="&quot;567&quot;"
+      SearchFields="&quot;567,בית שמש&quot;"
+      Inactive="false"
+      LocalName="&quot;בית שמש&quot;" />
+    <Record
+      Code="&quot;568&quot;"
+      SearchFields="&quot;568,הלני המלכה, י-ם&quot;"
+      Inactive="false"
+      LocalName="&quot;הלני המלכה, י-ם&quot;" />
+    <Record
+      Code="&quot;569&quot;"
+      SearchFields="&quot;569,רמת אשכול, י-ם&quot;"
+      Inactive="false"
+      LocalName="&quot;רמת אשכול, י-ם&quot;" />
+    <Record
+      Code="&quot;57&quot;"
+      SearchFields="&quot;57,&quot;תחנה מרכזית פ&quot;&quot;ת&quot;&quot;"
+      Inactive="false"
+      LocalName="&quot;&quot;תחנה מרכזית פ&quot;&quot;ת&quot;&quot;" />
+    <Record
+      Code="&quot;570&quot;"
+      SearchFields="&quot;570,מכס אילת&quot;"
+      Inactive="false"
+      LocalName="&quot;מכס אילת&quot;" />
+    <Record
+      Code="&quot;571&quot;"
+      SearchFields="&quot;571,עתיד&quot;"
+      Inactive="false"
+      LocalName="&quot;עתיד&quot;" />
+    <Record
+      Code="&quot;572&quot;"
+      SearchFields="&quot;572,אופק&quot;"
+      Inactive="false"
+      LocalName="&quot;אופק&quot;" />
+    <Record
+      Code="&quot;573&quot;"
+      SearchFields="&quot;573,שחק&quot;"
+      Inactive="false"
+      LocalName="&quot;שחק&quot;" />
+    <Record
+      Code="&quot;574&quot;"
+      SearchFields="&quot;574,שגב&quot;"
+      Inactive="false"
+      LocalName="&quot;שגב&quot;" />
+    <Record
+      Code="&quot;575&quot;"
+      SearchFields="&quot;575,שמואל הנציב&quot;"
+      Inactive="false"
+      LocalName="&quot;שמואל הנציב&quot;" />
+    <Record
+      Code="&quot;576&quot;"
+      SearchFields="&quot;576,ברק&quot;"
+      Inactive="false"
+      LocalName="&quot;ברק&quot;" />
+    <Record
+      Code="&quot;577&quot;"
+      SearchFields="&quot;577,הדקל&quot;"
+      Inactive="false"
+      LocalName="&quot;הדקל&quot;" />
+    <Record
+      Code="&quot;578&quot;"
+      SearchFields="&quot;578,כפר קרע&quot;"
+      Inactive="false"
+      LocalName="&quot;כפר קרע&quot;" />
+    <Record
+      Code="&quot;579&quot;"
+      SearchFields="&quot;579,חברות בנות&quot;"
+      Inactive="false"
+      LocalName="&quot;חברות בנות&quot;" />
+    <Record
+      Code="&quot;58&quot;"
+      SearchFields="&quot;58,דרך בן גוריון&quot;"
+      Inactive="false"
+      LocalName="&quot;דרך בן גוריון&quot;" />
+    <Record
+      Code="&quot;580&quot;"
+      SearchFields="&quot;580,בטוח לאומי ושרות תעסוקה&quot;"
+      Inactive="false"
+      LocalName="&quot;בטוח לאומי ושרות תעסוקה&quot;" />
+    <Record
+      Code="&quot;581&quot;"
+      SearchFields="&quot;581,מג'אר&quot;"
+      Inactive="false"
+      LocalName="&quot;מג'אר&quot;" />
+    <Record
+      Code="&quot;582&quot;"
+      SearchFields="&quot;582,מודיעין&quot;"
+      Inactive="false"
+      LocalName="&quot;מודיעין&quot;" />
+    <Record
+      Code="&quot;584&quot;"
+      SearchFields="&quot;584,הגלים&quot;"
+      Inactive="false"
+      LocalName="&quot;הגלים&quot;" />
+    <Record
+      Code="&quot;585&quot;"
+      SearchFields="&quot;585,גילה&quot;"
+      Inactive="false"
+      LocalName="&quot;גילה&quot;" />
+    <Record
+      Code="&quot;586&quot;"
+      SearchFields="&quot;586,חולון עסקים&quot;"
+      Inactive="false"
+      LocalName="&quot;חולון עסקים&quot;" />
+    <Record
+      Code="&quot;588&quot;"
+      SearchFields="&quot;588,ארמון הנציב&quot;"
+      Inactive="false"
+      LocalName="&quot;ארמון הנציב&quot;" />
+    <Record
+      Code="&quot;59&quot;"
+      SearchFields="&quot;59,כרמיאל&quot;"
+      Inactive="false"
+      LocalName="&quot;כרמיאל&quot;" />
+    <Record
+      Code="&quot;590&quot;"
+      SearchFields="&quot;590,היפרנטו-קרית מוצקין&quot;"
+      Inactive="false"
+      LocalName="&quot;היפרנטו-קרית מוצקין&quot;" />
+    <Record
+      Code="&quot;591&quot;"
+      SearchFields="&quot;591,אורן&quot;"
+      Inactive="false"
+      LocalName="&quot;אורן&quot;" />
+    <Record
+      Code="&quot;593&quot;"
+      SearchFields="&quot;593,ג'ת&quot;"
+      Inactive="false"
+      LocalName="&quot;ג'ת&quot;" />
+    <Record
+      Code="&quot;594&quot;"
+      SearchFields="&quot;594,טוביהו&quot;"
+      Inactive="false"
+      LocalName="&quot;טוביהו&quot;" />
+    <Record
+      Code="&quot;595&quot;"
+      SearchFields="&quot;595,הלוואות עובדים&quot;"
+      Inactive="false"
+      LocalName="&quot;הלוואות עובדים&quot;" />
+    <Record
+      Code="&quot;596&quot;"
+      SearchFields="&quot;596,הלו' חרושת אמפל וניר&quot;"
+      Inactive="false"
+      LocalName="&quot;הלו' חרושת אמפל וניר&quot;" />
+    <Record
+      Code="&quot;597&quot;"
+      SearchFields="&quot;597,גנים&quot;"
+      Inactive="false"
+      LocalName="&quot;גנים&quot;" />
+    <Record
+      Code="&quot;598&quot;"
+      SearchFields="&quot;598,התעשיה נתניה&quot;"
+      Inactive="false"
+      LocalName="&quot;התעשיה נתניה&quot;" />
+    <Record
+      Code="&quot;599&quot;"
+      SearchFields="&quot;599,הגן הטכנולוגי&quot;"
+      Inactive="false"
+      LocalName="&quot;הגן הטכנולוגי&quot;" />
+    <Record
+      Code="&quot;6&quot;"
+      SearchFields="&quot;6,בני ברק&quot;"
+      Inactive="false"
+      LocalName="&quot;בני ברק&quot;" />
+    <Record
+      Code="&quot;60&quot;"
+      SearchFields="&quot;60,יחידת בצוע ני&quot;ע&quot;"
+      Inactive="false"
+      LocalName="&quot;יחידת בצוע ני&quot;ע&quot;" />
+    <Record
+      Code="&quot;600&quot;"
+      SearchFields="&quot;600,קרן חסויים&quot;"
+      Inactive="false"
+      LocalName="&quot;קרן חסויים&quot;" />
+    <Record
+      Code="&quot;601&quot;"
+      SearchFields="&quot;601,אלנבי&quot;"
+      Inactive="false"
+      LocalName="&quot;אלנבי&quot;" />
+    <Record
+      Code="&quot;602&quot;"
+      SearchFields="&quot;602,ירכא&quot;"
+      Inactive="false"
+      LocalName="&quot;ירכא&quot;" />
+    <Record
+      Code="&quot;603&quot;"
+      SearchFields="&quot;603,מיתר&quot;"
+      Inactive="false"
+      LocalName="&quot;מיתר&quot;" />
+    <Record
+      Code="&quot;604&quot;"
+      SearchFields="&quot;604,קרית שלום&quot;"
+      Inactive="false"
+      LocalName="&quot;קרית שלום&quot;" />
+    <Record
+      Code="&quot;605&quot;"
+      SearchFields="&quot;605,יהודה המכבי&quot;"
+      Inactive="false"
+      LocalName="&quot;יהודה המכבי&quot;" />
+    <Record
+      Code="&quot;606&quot;"
+      SearchFields="&quot;606,רמת אביב&quot;"
+      Inactive="false"
+      LocalName="&quot;רמת אביב&quot;" />
+    <Record
+      Code="&quot;607&quot;"
+      SearchFields="&quot;607,שכונת התקוה&quot;"
+      Inactive="false"
+      LocalName="&quot;שכונת התקוה&quot;" />
+    <Record
+      Code="&quot;608&quot;"
+      SearchFields="&quot;608,ארלוזורוב&quot;"
+      Inactive="false"
+      LocalName="&quot;ארלוזורוב&quot;" />
+    <Record
+      Code="&quot;609&quot;"
+      SearchFields="&quot;609,המסגר&quot;"
+      Inactive="false"
+      LocalName="&quot;המסגר&quot;" />
+    <Record
+      Code="&quot;61&quot;"
+      SearchFields="&quot;61,פתח-תקוה עסקים&quot;"
+      Inactive="false"
+      LocalName="&quot;פתח-תקוה עסקים&quot;" />
+    <Record
+      Code="&quot;610&quot;"
+      SearchFields="&quot;610,שוק הכרמל&quot;"
+      Inactive="false"
+      LocalName="&quot;שוק הכרמל&quot;" />
+    <Record
+      Code="&quot;611&quot;"
+      SearchFields="&quot;611,יפו&quot;"
+      Inactive="false"
+      LocalName="&quot;יפו&quot;" />
+    <Record
+      Code="&quot;612&quot;"
+      SearchFields="&quot;612,נתניה&quot;"
+      Inactive="false"
+      LocalName="&quot;נתניה&quot;" />
+    <Record
+      Code="&quot;613&quot;"
+      SearchFields="&quot;613,מונטיפיורי&quot;"
+      Inactive="false"
+      LocalName="&quot;מונטיפיורי&quot;" />
+    <Record
+      Code="&quot;614&quot;"
+      SearchFields="&quot;614,טמרה&quot;"
+      Inactive="false"
+      LocalName="&quot;טמרה&quot;" />
+    <Record
+      Code="&quot;615&quot;"
+      SearchFields="&quot;615,באקה אל-גרביה&quot;"
+      Inactive="false"
+      LocalName="&quot;באקה אל-גרביה&quot;" />
+    <Record
+      Code="&quot;616&quot;"
+      SearchFields="&quot;616,גני הדרים&quot;"
+      Inactive="false"
+      LocalName="&quot;גני הדרים&quot;" />
+    <Record
+      Code="&quot;617&quot;"
+      SearchFields="&quot;617,יהוד&quot;"
+      Inactive="false"
+      LocalName="&quot;יהוד&quot;" />
+    <Record
+      Code="&quot;618&quot;"
+      SearchFields="&quot;618,רמלה&quot;"
+      Inactive="false"
+      LocalName="&quot;רמלה&quot;" />
+    <Record
+      Code="&quot;619&quot;"
+      SearchFields="&quot;619,לוד&quot;"
+      Inactive="false"
+      LocalName="&quot;לוד&quot;" />
+    <Record
+      Code="&quot;62&quot;"
+      SearchFields="&quot;62,שלוחת טבריה&quot;"
+      Inactive="false"
+      LocalName="&quot;שלוחת טבריה&quot;" />
+    <Record
+      Code="&quot;620&quot;"
+      SearchFields="&quot;620,שפרעם&quot;"
+      Inactive="false"
+      LocalName="&quot;שפרעם&quot;" />
+    <Record
+      Code="&quot;621&quot;"
+      SearchFields="&quot;621,רזיאל&quot;"
+      Inactive="false"
+      LocalName="&quot;רזיאל&quot;" />
+    <Record
+      Code="&quot;622&quot;"
+      SearchFields="&quot;622,צמרת&quot;"
+      Inactive="false"
+      LocalName="&quot;צמרת&quot;" />
+    <Record
+      Code="&quot;623&quot;"
+      SearchFields="&quot;623,כרכור&quot;"
+      Inactive="false"
+      LocalName="&quot;כרכור&quot;" />
+    <Record
+      Code="&quot;624&quot;"
+      SearchFields="&quot;624,הפניקס קופ&quot;ג&quot;"
+      Inactive="false"
+      LocalName="&quot;הפניקס קופ&quot;ג&quot;" />
+    <Record
+      Code="&quot;625&quot;"
+      SearchFields="&quot;625,אלטשולר שחם קופ&quot;ג&quot;"
+      Inactive="false"
+      LocalName="&quot;אלטשולר שחם קופ&quot;ג&quot;" />
+    <Record
+      Code="&quot;626&quot;"
+      SearchFields="&quot;626,&quot;ד&quot;&quot;ש 2 קופ&quot;&quot;ג&quot;&quot;"
+      Inactive="false"
+      LocalName="&quot;&quot;ד&quot;&quot;ש 2 קופ&quot;&quot;ג&quot;&quot;" />
+    <Record
+      Code="&quot;627&quot;"
+      SearchFields="&quot;627,אלטשולר שחם, קופ&quot;ג&quot;"
+      Inactive="false"
+      LocalName="&quot;אלטשולר שחם, קופ&quot;ג&quot;" />
+    <Record
+      Code="&quot;628&quot;"
+      SearchFields="&quot;628,חברות מנהלות שונות&quot;"
+      Inactive="false"
+      LocalName="&quot;חברות מנהלות שונות&quot;" />
+    <Record
+      Code="&quot;629&quot;"
+      SearchFields="&quot;629,&quot;אקסלנס 2 קופ&quot;&quot;ג&quot;&quot;"
+      Inactive="false"
+      LocalName="&quot;&quot;אקסלנס 2 קופ&quot;&quot;ג&quot;&quot;" />
+    <Record
+      Code="&quot;63&quot;"
+      SearchFields="&quot;63,קרית אתא&quot;"
+      Inactive="false"
+      LocalName="&quot;קרית אתא&quot;" />
+    <Record
+      Code="&quot;630&quot;"
+      SearchFields="&quot;630,&quot;אקסלנס 3 קופ&quot;&quot;ג&quot;&quot;"
+      Inactive="false"
+      LocalName="&quot;&quot;אקסלנס 3 קופ&quot;&quot;ג&quot;&quot;" />
+    <Record
+      Code="&quot;631&quot;"
+      SearchFields="&quot;631,&quot;ד&quot;&quot;ש 3 קופ&quot;&quot;ג&quot;&quot;"
+      Inactive="false"
+      LocalName="&quot;&quot;ד&quot;&quot;ש 3 קופ&quot;&quot;ג&quot;&quot;" />
+    <Record
+      Code="&quot;632&quot;"
+      SearchFields="&quot;632,רמות&quot;"
+      Inactive="false"
+      LocalName="&quot;רמות&quot;" />
+    <Record
+      Code="&quot;633&quot;"
+      SearchFields="&quot;633,כפר מכר&quot;"
+      Inactive="false"
+      LocalName="&quot;כפר מכר&quot;" />
+    <Record
+      Code="&quot;634&quot;"
+      SearchFields="&quot;634,עילבון&quot;"
+      Inactive="false"
+      LocalName="&quot;עילבון&quot;" />
+    <Record
+      Code="&quot;635&quot;"
+      SearchFields="&quot;635,גאולה&quot;"
+      Inactive="false"
+      LocalName="&quot;גאולה&quot;" />
+    <Record
+      Code="&quot;636&quot;"
+      SearchFields="&quot;636,נס ציונה&quot;"
+      Inactive="false"
+      LocalName="&quot;נס ציונה&quot;" />
+    <Record
+      Code="&quot;637&quot;"
+      SearchFields="&quot;637,ככר המולד&quot;"
+      Inactive="false"
+      LocalName="&quot;ככר המולד&quot;" />
+    <Record
+      Code="&quot;638&quot;"
+      SearchFields="&quot;638,סאלח א-דין&quot;"
+      Inactive="false"
+      LocalName="&quot;סאלח א-דין&quot;" />
+    <Record
+      Code="&quot;639&quot;"
+      SearchFields="&quot;639,נצרת ראשי&quot;"
+      Inactive="false"
+      LocalName="&quot;נצרת ראשי&quot;" />
+    <Record
+      Code="&quot;64&quot;"
+      SearchFields="&quot;64,בית שמש&quot;"
+      Inactive="false"
+      LocalName="&quot;בית שמש&quot;" />
+    <Record
+      Code="&quot;640&quot;"
+      SearchFields="&quot;640,אל ראם&quot;"
+      Inactive="false"
+      LocalName="&quot;אל ראם&quot;" />
+    <Record
+      Code="&quot;641&quot;"
+      SearchFields="&quot;641,שכר דירה תל אביב&quot;"
+      Inactive="false"
+      LocalName="&quot;שכר דירה תל אביב&quot;" />
+    <Record
+      Code="&quot;642&quot;"
+      SearchFields="&quot;642,ירושלים&quot;"
+      Inactive="false"
+      LocalName="&quot;ירושלים&quot;" />
+    <Record
+      Code="&quot;643&quot;"
+      SearchFields="&quot;643,שכר דירה חיפה&quot;"
+      Inactive="false"
+      LocalName="&quot;שכר דירה חיפה&quot;" />
+    <Record
+      Code="&quot;644&quot;"
+      SearchFields="&quot;644,&quot;קש&quot;&quot;ב&quot;&quot;"
+      Inactive="false"
+      LocalName="&quot;&quot;קש&quot;&quot;ב&quot;&quot;" />
+    <Record
+      Code="&quot;645&quot;"
+      SearchFields="&quot;645,באר שבע&quot;"
+      Inactive="false"
+      LocalName="&quot;באר שבע&quot;" />
+    <Record
+      Code="&quot;646&quot;"
+      SearchFields="&quot;646,שכר דירה ירושלים&quot;"
+      Inactive="false"
+      LocalName="&quot;שכר דירה ירושלים&quot;" />
+    <Record
+      Code="&quot;647&quot;"
+      SearchFields="&quot;647,נתניה&quot;"
+      Inactive="false"
+      LocalName="&quot;נתניה&quot;" />
+    <Record
+      Code="&quot;648&quot;"
+      SearchFields="&quot;648,ערד&quot;"
+      Inactive="false"
+      LocalName="&quot;ערד&quot;" />
+    <Record
+      Code="&quot;649&quot;"
+      SearchFields="&quot;649,דימונה&quot;"
+      Inactive="false"
+      LocalName="&quot;דימונה&quot;" />
+    <Record
+      Code="&quot;65&quot;"
+      SearchFields="&quot;65,אבן גבירול&quot;"
+      Inactive="false"
+      LocalName="&quot;אבן גבירול&quot;" />
+    <Record
+      Code="&quot;650&quot;"
+      SearchFields="&quot;650,עקיבא&quot;"
+      Inactive="false"
+      LocalName="&quot;עקיבא&quot;" />
+    <Record
+      Code="&quot;651&quot;"
+      SearchFields="&quot;651,פתח תקוה&quot;"
+      Inactive="false"
+      LocalName="&quot;פתח תקוה&quot;" />
+    <Record
+      Code="&quot;652&quot;"
+      SearchFields="&quot;652,התקוה&quot;"
+      Inactive="false"
+      LocalName="&quot;התקוה&quot;" />
+    <Record
+      Code="&quot;653&quot;"
+      SearchFields="&quot;653,יפו&quot;"
+      Inactive="false"
+      LocalName="&quot;יפו&quot;" />
+    <Record
+      Code="&quot;654&quot;"
+      SearchFields="&quot;654,תל אביב ראשי&quot;"
+      Inactive="false"
+      LocalName="&quot;תל אביב ראשי&quot;" />
+    <Record
+      Code="&quot;655&quot;"
+      SearchFields="&quot;655,דרך הים&quot;"
+      Inactive="false"
+      LocalName="&quot;דרך הים&quot;" />
+    <Record
+      Code="&quot;656&quot;"
+      SearchFields="&quot;656,יורדי הסירה&quot;"
+      Inactive="false"
+      LocalName="&quot;יורדי הסירה&quot;" />
+    <Record
+      Code="&quot;657&quot;"
+      SearchFields="&quot;657,בן יהודה&quot;"
+      Inactive="false"
+      LocalName="&quot;בן יהודה&quot;" />
+    <Record
+      Code="&quot;658&quot;"
+      SearchFields="&quot;658,האורגים&quot;"
+      Inactive="false"
+      LocalName="&quot;האורגים&quot;" />
+    <Record
+      Code="&quot;659&quot;"
+      SearchFields="&quot;659,חנקין&quot;"
+      Inactive="false"
+      LocalName="&quot;חנקין&quot;" />
+    <Record
+      Code="&quot;66&quot;"
+      SearchFields="&quot;66,ערד&quot;"
+      Inactive="false"
+      LocalName="&quot;ערד&quot;" />
+    <Record
+      Code="&quot;660&quot;"
+      SearchFields="&quot;660,מכון וייצמן&quot;"
+      Inactive="false"
+      LocalName="&quot;מכון וייצמן&quot;" />
+    <Record
+      Code="&quot;661&quot;"
+      SearchFields="&quot;661,קרן קימת&quot;"
+      Inactive="false"
+      LocalName="&quot;קרן קימת&quot;" />
+    <Record
+      Code="&quot;662&quot;"
+      SearchFields="&quot;662,טירת הכרמל&quot;"
+      Inactive="false"
+      LocalName="&quot;טירת הכרמל&quot;" />
+    <Record
+      Code="&quot;663&quot;"
+      SearchFields="&quot;663,יהלום&quot;"
+      Inactive="false"
+      LocalName="&quot;יהלום&quot;" />
+    <Record
+      Code="&quot;664&quot;"
+      SearchFields="&quot;664,אבן גבירול&quot;"
+      Inactive="false"
+      LocalName="&quot;אבן גבירול&quot;" />
+    <Record
+      Code="&quot;665&quot;"
+      SearchFields="&quot;665,הגליל&quot;"
+      Inactive="false"
+      LocalName="&quot;הגליל&quot;" />
+    <Record
+      Code="&quot;666&quot;"
+      SearchFields="&quot;666,גבעתיים&quot;"
+      Inactive="false"
+      LocalName="&quot;גבעתיים&quot;" />
+    <Record
+      Code="&quot;667&quot;"
+      SearchFields="&quot;667,יהלומים&quot;"
+      Inactive="false"
+      LocalName="&quot;יהלומים&quot;" />
+    <Record
+      Code="&quot;668&quot;"
+      SearchFields="&quot;668,קניון אילון&quot;"
+      Inactive="false"
+      LocalName="&quot;קניון אילון&quot;" />
+    <Record
+      Code="&quot;669&quot;"
+      SearchFields="&quot;669,רמלה&quot;"
+      Inactive="false"
+      LocalName="&quot;רמלה&quot;" />
+    <Record
+      Code="&quot;67&quot;"
+      SearchFields="&quot;67,חולון&quot;"
+      Inactive="false"
+      LocalName="&quot;חולון&quot;" />
+    <Record
+      Code="&quot;670&quot;"
+      SearchFields="&quot;670,נהורה&quot;"
+      Inactive="false"
+      LocalName="&quot;נהורה&quot;" />
+    <Record
+      Code="&quot;671&quot;"
+      SearchFields="&quot;671,אכסאל&quot;"
+      Inactive="false"
+      LocalName="&quot;אכסאל&quot;" />
+    <Record
+      Code="&quot;672&quot;"
+      SearchFields="&quot;672,תעשיה-נתניה&quot;"
+      Inactive="false"
+      LocalName="&quot;תעשיה-נתניה&quot;" />
+    <Record
+      Code="&quot;673&quot;"
+      SearchFields="&quot;673,פקדונות&quot;"
+      Inactive="false"
+      LocalName="&quot;פקדונות&quot;" />
+    <Record
+      Code="&quot;674&quot;"
+      SearchFields="&quot;674,רחובות&quot;"
+      Inactive="false"
+      LocalName="&quot;רחובות&quot;" />
+    <Record
+      Code="&quot;675&quot;"
+      SearchFields="&quot;675,מחנה יהודה&quot;"
+      Inactive="false"
+      LocalName="&quot;מחנה יהודה&quot;" />
+    <Record
+      Code="&quot;676&quot;"
+      SearchFields="&quot;676,אשדוד&quot;"
+      Inactive="false"
+      LocalName="&quot;אשדוד&quot;" />
+    <Record
+      Code="&quot;677&quot;"
+      SearchFields="&quot;677,סגולה&quot;"
+      Inactive="false"
+      LocalName="&quot;סגולה&quot;" />
+    <Record
+      Code="&quot;678&quot;"
+      SearchFields="&quot;678,טחכךט&quot;"
+      Inactive="false"
+      LocalName="&quot;טחכךט&quot;" />
+    <Record
+      Code="&quot;679&quot;"
+      SearchFields="&quot;679,מרכז הכרמל&quot;"
+      Inactive="false"
+      LocalName="&quot;מרכז הכרמל&quot;" />
+    <Record
+      Code="&quot;68&quot;"
+      SearchFields="&quot;68,אור יהודה&quot;"
+      Inactive="false"
+      LocalName="&quot;אור יהודה&quot;" />
+    <Record
+      Code="&quot;680&quot;"
+      SearchFields="&quot;680,קרית מוצקין&quot;"
+      Inactive="false"
+      LocalName="&quot;קרית מוצקין&quot;" />
+    <Record
+      Code="&quot;681&quot;"
+      SearchFields="&quot;681,ג'דידה-מכר&quot;"
+      Inactive="false"
+      LocalName="&quot;ג'דידה-מכר&quot;" />
+    <Record
+      Code="&quot;682&quot;"
+      SearchFields="&quot;682,בועיינה&quot;"
+      Inactive="false"
+      LocalName="&quot;בועיינה&quot;" />
+    <Record
+      Code="&quot;683&quot;"
+      SearchFields="&quot;683,אור יהודה&quot;"
+      Inactive="false"
+      LocalName="&quot;אור יהודה&quot;" />
+    <Record
+      Code="&quot;684&quot;"
+      SearchFields="&quot;684,פסוטה&quot;"
+      Inactive="false"
+      LocalName="&quot;פסוטה&quot;" />
+    <Record
+      Code="&quot;685&quot;"
+      SearchFields="&quot;685,הדס מרכנתיל קופות גמל&quot;"
+      Inactive="false"
+      LocalName="&quot;הדס מרכנתיל קופות גמל&quot;" />
+    <Record
+      Code="&quot;686&quot;"
+      SearchFields="&quot;686,חולון&quot;"
+      Inactive="false"
+      LocalName="&quot;חולון&quot;" />
+    <Record
+      Code="&quot;687&quot;"
+      SearchFields="&quot;687,היקב&quot;"
+      Inactive="false"
+      LocalName="&quot;היקב&quot;" />
+    <Record
+      Code="&quot;688&quot;"
+      SearchFields="&quot;688,מסלקה&quot;"
+      Inactive="false"
+      LocalName="&quot;מסלקה&quot;" />
+    <Record
+      Code="&quot;689&quot;"
+      SearchFields="&quot;689,נחף&quot;"
+      Inactive="false"
+      LocalName="&quot;נחף&quot;" />
+    <Record
+      Code="&quot;69&quot;"
+      SearchFields="&quot;69,גבעת הרצל&quot;"
+      Inactive="false"
+      LocalName="&quot;גבעת הרצל&quot;" />
+    <Record
+      Code="&quot;690&quot;"
+      SearchFields="&quot;690,מרכז ני&quot;ע&quot;"
+      Inactive="false"
+      LocalName="&quot;מרכז ני&quot;ע&quot;" />
+    <Record
+      Code="&quot;691&quot;"
+      SearchFields="&quot;691,כפר יאסיף&quot;"
+      Inactive="false"
+      LocalName="&quot;כפר יאסיף&quot;" />
+    <Record
+      Code="&quot;692&quot;"
+      SearchFields="&quot;692,תרשיחא&quot;"
+      Inactive="false"
+      LocalName="&quot;תרשיחא&quot;" />
+    <Record
+      Code="&quot;693&quot;"
+      SearchFields="&quot;693,אג'מי&quot;"
+      Inactive="false"
+      LocalName="&quot;אג'מי&quot;" />
+    <Record
+      Code="&quot;694&quot;"
+      SearchFields="&quot;694,ואדי ניסנאס&quot;"
+      Inactive="false"
+      LocalName="&quot;ואדי ניסנאס&quot;" />
+    <Record
+      Code="&quot;695&quot;"
+      SearchFields="&quot;695,לב הפארק&quot;"
+      Inactive="false"
+      LocalName="&quot;לב הפארק&quot;" />
+    <Record
+      Code="&quot;696&quot;"
+      SearchFields="&quot;696,רהט&quot;"
+      Inactive="false"
+      LocalName="&quot;רהט&quot;" />
+    <Record
+      Code="&quot;697&quot;"
+      SearchFields="&quot;697,אום אל פחם&quot;"
+      Inactive="false"
+      LocalName="&quot;אום אל פחם&quot;" />
+    <Record
+      Code="&quot;698&quot;"
+      SearchFields="&quot;698,יבניאל&quot;"
+      Inactive="false"
+      LocalName="&quot;יבניאל&quot;" />
+    <Record
+      Code="&quot;699&quot;"
+      SearchFields="&quot;699,כפר סבא&quot;"
+      Inactive="false"
+      LocalName="&quot;כפר סבא&quot;" />
+    <Record
+      Code="&quot;7&quot;"
+      SearchFields="&quot;7,אשדוד&quot;"
+      Inactive="false"
+      LocalName="&quot;אשדוד&quot;" />
+    <Record
+      Code="&quot;70&quot;"
+      SearchFields="&quot;70,שלוחת אילת&quot;"
+      Inactive="false"
+      LocalName="&quot;שלוחת אילת&quot;" />
+    <Record
+      Code="&quot;700&quot;"
+      SearchFields="&quot;700,חיפה ראשי&quot;"
+      Inactive="false"
+      LocalName="&quot;חיפה ראשי&quot;" />
+    <Record
+      Code="&quot;701&quot;"
+      SearchFields="&quot;701,ירושלים&quot;"
+      Inactive="false"
+      LocalName="&quot;ירושלים&quot;" />
+    <Record
+      Code="&quot;702&quot;"
+      SearchFields="&quot;702,מנהלת אזור ירושלים והדרום&quot;"
+      Inactive="false"
+      LocalName="&quot;מנהלת אזור ירושלים והדרום&quot;" />
+    <Record
+      Code="&quot;703&quot;"
+      SearchFields="&quot;703,כפר גנים&quot;"
+      Inactive="false"
+      LocalName="&quot;כפר גנים&quot;" />
+    <Record
+      Code="&quot;704&quot;"
+      SearchFields="&quot;704,באר יעקב&quot;"
+      Inactive="false"
+      LocalName="&quot;באר יעקב&quot;" />
+    <Record
+      Code="&quot;705&quot;"
+      SearchFields="&quot;705,מנהלת אזור נצרת&quot;"
+      Inactive="false"
+      LocalName="&quot;מנהלת אזור נצרת&quot;" />
+    <Record
+      Code="&quot;706&quot;"
+      SearchFields="&quot;706,פרדסיה&quot;"
+      Inactive="false"
+      LocalName="&quot;פרדסיה&quot;" />
+    <Record
+      Code="&quot;707&quot;"
+      SearchFields="&quot;707,קרית אליעזר&quot;"
+      Inactive="false"
+      LocalName="&quot;קרית אליעזר&quot;" />
+    <Record
+      Code="&quot;708&quot;"
+      SearchFields="&quot;708,קרית שפרינצק&quot;"
+      Inactive="false"
+      LocalName="&quot;קרית שפרינצק&quot;" />
+    <Record
+      Code="&quot;709&quot;"
+      SearchFields="&quot;709,התשבי&quot;"
+      Inactive="false"
+      LocalName="&quot;התשבי&quot;" />
+    <Record
+      Code="&quot;71&quot;"
+      SearchFields="&quot;71,הדר הכרמל&quot;"
+      Inactive="false"
+      LocalName="&quot;הדר הכרמל&quot;" />
+    <Record
+      Code="&quot;710&quot;"
+      SearchFields="&quot;710,בית הקרנות&quot;"
+      Inactive="false"
+      LocalName="&quot;בית הקרנות&quot;" />
+    <Record
+      Code="&quot;711&quot;"
+      SearchFields="&quot;711,&quot;מרכז השקעות אח&quot;&quot;מים מרכנתיל&quot;&quot;"
+      Inactive="false"
+      LocalName="&quot;&quot;מרכז השקעות אח&quot;&quot;מים מרכנתיל&quot;&quot;" />
+    <Record
+      Code="&quot;712&quot;"
+      SearchFields="&quot;712,נשר תל חנן&quot;"
+      Inactive="false"
+      LocalName="&quot;נשר תל חנן&quot;" />
+    <Record
+      Code="&quot;713&quot;"
+      SearchFields="&quot;713,אורן&quot;"
+      Inactive="false"
+      LocalName="&quot;אורן&quot;" />
+    <Record
+      Code="&quot;714&quot;"
+      SearchFields="&quot;714,צפת&quot;"
+      Inactive="false"
+      LocalName="&quot;צפת&quot;" />
+    <Record
+      Code="&quot;715&quot;"
+      SearchFields="&quot;715,חצור&quot;"
+      Inactive="false"
+      LocalName="&quot;חצור&quot;" />
+    <Record
+      Code="&quot;716&quot;"
+      SearchFields="&quot;716,נהריה&quot;"
+      Inactive="false"
+      LocalName="&quot;נהריה&quot;" />
+    <Record
+      Code="&quot;717&quot;"
+      SearchFields="&quot;717,בית שאן&quot;"
+      Inactive="false"
+      LocalName="&quot;בית שאן&quot;" />
+    <Record
+      Code="&quot;718&quot;"
+      SearchFields="&quot;718,קרית שמונה&quot;"
+      Inactive="false"
+      LocalName="&quot;קרית שמונה&quot;" />
+    <Record
+      Code="&quot;719&quot;"
+      SearchFields="&quot;719,קרית טבעון-הנשיא&quot;"
+      Inactive="false"
+      LocalName="&quot;קרית טבעון-הנשיא&quot;" />
+    <Record
+      Code="&quot;72&quot;"
+      SearchFields="&quot;72,הנהלה אזורית&quot;"
+      Inactive="false"
+      LocalName="&quot;הנהלה אזורית&quot;" />
+    <Record
+      Code="&quot;720&quot;"
+      SearchFields="&quot;720,קרית חיים&quot;"
+      Inactive="false"
+      LocalName="&quot;קרית חיים&quot;" />
+    <Record
+      Code="&quot;721&quot;"
+      SearchFields="&quot;721,קרית אתא&quot;"
+      Inactive="false"
+      LocalName="&quot;קרית אתא&quot;" />
+    <Record
+      Code="&quot;722&quot;"
+      SearchFields="&quot;722,יסוד המעלה&quot;"
+      Inactive="false"
+      LocalName="&quot;יסוד המעלה&quot;" />
+    <Record
+      Code="&quot;723&quot;"
+      SearchFields="&quot;723,טבריה&quot;"
+      Inactive="false"
+      LocalName="&quot;טבריה&quot;" />
+    <Record
+      Code="&quot;724&quot;"
+      SearchFields="&quot;724,טבריה עלית&quot;"
+      Inactive="false"
+      LocalName="&quot;טבריה עלית&quot;" />
+    <Record
+      Code="&quot;725&quot;"
+      SearchFields="&quot;725,יבנאל&quot;"
+      Inactive="false"
+      LocalName="&quot;יבנאל&quot;" />
+    <Record
+      Code="&quot;726&quot;"
+      SearchFields="&quot;726,נצרת&quot;"
+      Inactive="false"
+      LocalName="&quot;נצרת&quot;" />
+    <Record
+      Code="&quot;727&quot;"
+      SearchFields="&quot;727,מרכז סחר חוץ צפוני&quot;"
+      Inactive="false"
+      LocalName="&quot;מרכז סחר חוץ צפוני&quot;" />
+    <Record
+      Code="&quot;728&quot;"
+      SearchFields="&quot;728,מגדל העמק&quot;"
+      Inactive="false"
+      LocalName="&quot;מגדל העמק&quot;" />
+    <Record
+      Code="&quot;729&quot;"
+      SearchFields="&quot;729,קרית מוצקין&quot;"
+      Inactive="false"
+      LocalName="&quot;קרית מוצקין&quot;" />
+    <Record
+      Code="&quot;73&quot;"
+      SearchFields="&quot;73,תלפיות&quot;"
+      Inactive="false"
+      LocalName="&quot;תלפיות&quot;" />
+    <Record
+      Code="&quot;730&quot;"
+      SearchFields="&quot;730,קרית ים&quot;"
+      Inactive="false"
+      LocalName="&quot;קרית ים&quot;" />
+    <Record
+      Code="&quot;731&quot;"
+      SearchFields="&quot;731,חזון איש&quot;"
+      Inactive="false"
+      LocalName="&quot;חזון איש&quot;" />
+    <Record
+      Code="&quot;732&quot;"
+      SearchFields="&quot;732,בני ברק&quot;"
+      Inactive="false"
+      LocalName="&quot;בני ברק&quot;" />
+    <Record
+      Code="&quot;733&quot;"
+      SearchFields="&quot;733,רמת השרון&quot;"
+      Inactive="false"
+      LocalName="&quot;רמת השרון&quot;" />
+    <Record
+      Code="&quot;734&quot;"
+      SearchFields="&quot;734,צפת דרום&quot;"
+      Inactive="false"
+      LocalName="&quot;צפת דרום&quot;" />
+    <Record
+      Code="&quot;735&quot;"
+      SearchFields="&quot;735,רעננה&quot;"
+      Inactive="false"
+      LocalName="&quot;רעננה&quot;" />
+    <Record
+      Code="&quot;736&quot;"
+      SearchFields="&quot;736,סנהדריה&quot;"
+      Inactive="false"
+      LocalName="&quot;סנהדריה&quot;" />
+    <Record
+      Code="&quot;737&quot;"
+      SearchFields="&quot;737,ירושלים&quot;"
+      Inactive="false"
+      LocalName="&quot;ירושלים&quot;" />
+    <Record
+      Code="&quot;738&quot;"
+      SearchFields="&quot;738,כאבול&quot;"
+      Inactive="false"
+      LocalName="&quot;כאבול&quot;" />
+    <Record
+      Code="&quot;739&quot;"
+      SearchFields="&quot;739,החלוץ&quot;"
+      Inactive="false"
+      LocalName="&quot;החלוץ&quot;" />
+    <Record
+      Code="&quot;74&quot;"
+      SearchFields="&quot;74,תלפיות&quot;"
+      Inactive="false"
+      LocalName="&quot;תלפיות&quot;" />
+    <Record
+      Code="&quot;740&quot;"
+      SearchFields="&quot;740,גבעת המורה&quot;"
+      Inactive="false"
+      LocalName="&quot;גבעת המורה&quot;" />
+    <Record
+      Code="&quot;741&quot;"
+      SearchFields="&quot;741,קיסריה&quot;"
+      Inactive="false"
+      LocalName="&quot;קיסריה&quot;" />
+    <Record
+      Code="&quot;742&quot;"
+      SearchFields="&quot;742,רמות&quot;"
+      Inactive="false"
+      LocalName="&quot;רמות&quot;" />
+    <Record
+      Code="&quot;743&quot;"
+      SearchFields="&quot;743,דיר אל אסד - בענה&quot;"
+      Inactive="false"
+      LocalName="&quot;דיר אל אסד - בענה&quot;" />
+    <Record
+      Code="&quot;744&quot;"
+      SearchFields="&quot;744,דיר - חנא&quot;"
+      Inactive="false"
+      LocalName="&quot;דיר - חנא&quot;" />
+    <Record
+      Code="&quot;745&quot;"
+      SearchFields="&quot;745,רבי עקיבא&quot;"
+      Inactive="false"
+      LocalName="&quot;רבי עקיבא&quot;" />
+    <Record
+      Code="&quot;746&quot;"
+      SearchFields="&quot;746,הפרדס&quot;"
+      Inactive="false"
+      LocalName="&quot;הפרדס&quot;" />
+    <Record
+      Code="&quot;747&quot;"
+      SearchFields="&quot;747,כרמיאל&quot;"
+      Inactive="false"
+      LocalName="&quot;כרמיאל&quot;" />
+    <Record
+      Code="&quot;748&quot;"
+      SearchFields="&quot;748,חוצות המפרץ&quot;"
+      Inactive="false"
+      LocalName="&quot;חוצות המפרץ&quot;" />
+    <Record
+      Code="&quot;749&quot;"
+      SearchFields="&quot;749,קיון ירושלים&quot;"
+      Inactive="false"
+      LocalName="&quot;קיון ירושלים&quot;" />
+    <Record
+      Code="&quot;75&quot;"
+      SearchFields="&quot;75,רעננה&quot;"
+      Inactive="false"
+      LocalName="&quot;רעננה&quot;" />
+    <Record
+      Code="&quot;750&quot;"
+      SearchFields="&quot;750,הועד הפועל&quot;"
+      Inactive="false"
+      LocalName="&quot;הועד הפועל&quot;" />
+    <Record
+      Code="&quot;751&quot;"
+      SearchFields="&quot;751,עופר&quot;"
+      Inactive="false"
+      LocalName="&quot;עופר&quot;" />
+    <Record
+      Code="&quot;752&quot;"
+      SearchFields="&quot;752,זרזיר&quot;"
+      Inactive="false"
+      LocalName="&quot;זרזיר&quot;" />
+    <Record
+      Code="&quot;753&quot;"
+      SearchFields="&quot;753,מטרסדורף&quot;"
+      Inactive="false"
+      LocalName="&quot;מטרסדורף&quot;" />
+    <Record
+      Code="&quot;754&quot;"
+      SearchFields="&quot;754,פנקס&quot;"
+      Inactive="false"
+      LocalName="&quot;פנקס&quot;" />
+    <Record
+      Code="&quot;755&quot;"
+      SearchFields="&quot;755,המצודה&quot;"
+      Inactive="false"
+      LocalName="&quot;המצודה&quot;" />
+    <Record
+      Code="&quot;756&quot;"
+      SearchFields="&quot;756,אעבלין&quot;"
+      Inactive="false"
+      LocalName="&quot;אעבלין&quot;" />
+    <Record
+      Code="&quot;757&quot;"
+      SearchFields="&quot;757,הפארק&quot;"
+      Inactive="false"
+      LocalName="&quot;הפארק&quot;" />
+    <Record
+      Code="&quot;758&quot;"
+      SearchFields="&quot;758,ששת הימים&quot;"
+      Inactive="false"
+      LocalName="&quot;ששת הימים&quot;" />
+    <Record
+      Code="&quot;759&quot;"
+      SearchFields="&quot;759,נאות שושנים&quot;"
+      Inactive="false"
+      LocalName="&quot;נאות שושנים&quot;" />
+    <Record
+      Code="&quot;76&quot;"
+      SearchFields="&quot;76,העצמאות&quot;"
+      Inactive="false"
+      LocalName="&quot;העצמאות&quot;" />
+    <Record
+      Code="&quot;760&quot;"
+      SearchFields="&quot;760,פועלים בסופר&quot;"
+      Inactive="false"
+      LocalName="&quot;פועלים בסופר&quot;" />
+    <Record
+      Code="&quot;761&quot;"
+      SearchFields="&quot;761,חיים עוזר&quot;"
+      Inactive="false"
+      LocalName="&quot;חיים עוזר&quot;" />
+    <Record
+      Code="&quot;762&quot;"
+      SearchFields="&quot;762,עסקים הר חוצבים&quot;"
+      Inactive="false"
+      LocalName="&quot;עסקים הר חוצבים&quot;" />
+    <Record
+      Code="&quot;763&quot;"
+      SearchFields="&quot;763,ערד&quot;"
+      Inactive="false"
+      LocalName="&quot;ערד&quot;" />
+    <Record
+      Code="&quot;764&quot;"
+      SearchFields="&quot;764,התנאים&quot;"
+      Inactive="false"
+      LocalName="&quot;התנאים&quot;" />
+    <Record
+      Code="&quot;765&quot;"
+      SearchFields="&quot;765,עתידים עסקים&quot;"
+      Inactive="false"
+      LocalName="&quot;עתידים עסקים&quot;" />
+    <Record
+      Code="&quot;766&quot;"
+      SearchFields="&quot;766,גור&quot;"
+      Inactive="false"
+      LocalName="&quot;גור&quot;" />
+    <Record
+      Code="&quot;768&quot;"
+      SearchFields="&quot;768,נוה-ים&quot;"
+      Inactive="false"
+      LocalName="&quot;נוה-ים&quot;" />
+    <Record
+      Code="&quot;769&quot;"
+      SearchFields="&quot;769,נוה מגן&quot;"
+      Inactive="false"
+      LocalName="&quot;נוה מגן&quot;" />
+    <Record
+      Code="&quot;77&quot;"
+      SearchFields="&quot;77,כפר סבא&quot;"
+      Inactive="false"
+      LocalName="&quot;כפר סבא&quot;" />
+    <Record
+      Code="&quot;770&quot;"
+      SearchFields="&quot;770,האשל&quot;"
+      Inactive="false"
+      LocalName="&quot;האשל&quot;" />
+    <Record
+      Code="&quot;771&quot;"
+      SearchFields="&quot;771,פולג&quot;"
+      Inactive="false"
+      LocalName="&quot;פולג&quot;" />
+    <Record
+      Code="&quot;772&quot;"
+      SearchFields="&quot;772,הדסה ירושלים&quot;"
+      Inactive="false"
+      LocalName="&quot;הדסה ירושלים&quot;" />
+    <Record
+      Code="&quot;773&quot;"
+      SearchFields="&quot;773,ככר חרות&quot;"
+      Inactive="false"
+      LocalName="&quot;ככר חרות&quot;" />
+    <Record
+      Code="&quot;774&quot;"
+      SearchFields="&quot;774,נמל תעופה בן גוריון&quot;"
+      Inactive="false"
+      LocalName="&quot;נמל תעופה בן גוריון&quot;" />
+    <Record
+      Code="&quot;775&quot;"
+      SearchFields="&quot;775,היעלים&quot;"
+      Inactive="false"
+      LocalName="&quot;היעלים&quot;" />
+    <Record
+      Code="&quot;776&quot;"
+      SearchFields="&quot;776,מגדיאל&quot;"
+      Inactive="false"
+      LocalName="&quot;מגדיאל&quot;" />
+    <Record
+      Code="&quot;777&quot;"
+      SearchFields="&quot;777,נוה חן&quot;"
+      Inactive="false"
+      LocalName="&quot;נוה חן&quot;" />
+    <Record
+      Code="&quot;778&quot;"
+      SearchFields="&quot;778,אינשטיין&quot;"
+      Inactive="false"
+      LocalName="&quot;אינשטיין&quot;" />
+    <Record
+      Code="&quot;78&quot;"
+      SearchFields="&quot;78,רחוב הבנקים&quot;"
+      Inactive="false"
+      LocalName="&quot;רחוב הבנקים&quot;" />
+    <Record
+      Code="&quot;780&quot;"
+      SearchFields="&quot;780,קאסם&quot;"
+      Inactive="false"
+      LocalName="&quot;קאסם&quot;" />
+    <Record
+      Code="&quot;781&quot;"
+      SearchFields="&quot;781,מונטיפיורי&quot;"
+      Inactive="false"
+      LocalName="&quot;מונטיפיורי&quot;" />
+    <Record
+      Code="&quot;782&quot;"
+      SearchFields="&quot;782,רחביה&quot;"
+      Inactive="false"
+      LocalName="&quot;רחביה&quot;" />
+    <Record
+      Code="&quot;783&quot;"
+      SearchFields="&quot;783,ככר ציון&quot;"
+      Inactive="false"
+      LocalName="&quot;ככר ציון&quot;" />
+    <Record
+      Code="&quot;784&quot;"
+      SearchFields="&quot;784,הגבעה הצרפתית&quot;"
+      Inactive="false"
+      LocalName="&quot;הגבעה הצרפתית&quot;" />
+    <Record
+      Code="&quot;785&quot;"
+      SearchFields="&quot;785,נאות רחל&quot;"
+      Inactive="false"
+      LocalName="&quot;נאות רחל&quot;" />
+    <Record
+      Code="&quot;786&quot;"
+      SearchFields="&quot;786,כיכר השבטים&quot;"
+      Inactive="false"
+      LocalName="&quot;כיכר השבטים&quot;" />
+    <Record
+      Code="&quot;788&quot;"
+      SearchFields="&quot;788,למד&quot;"
+      Inactive="false"
+      LocalName="&quot;למד&quot;" />
+    <Record
+      Code="&quot;789&quot;"
+      SearchFields="&quot;789,אופקים&quot;"
+      Inactive="false"
+      LocalName="&quot;אופקים&quot;" />
+    <Record
+      Code="&quot;79&quot;"
+      SearchFields="&quot;79,אור יהודה&quot;"
+      Inactive="false"
+      LocalName="&quot;אור יהודה&quot;" />
+    <Record
+      Code="&quot;790&quot;"
+      SearchFields="&quot;790,מג'ד אל כרום&quot;"
+      Inactive="false"
+      LocalName="&quot;מג'ד אל כרום&quot;" />
+    <Record
+      Code="&quot;791&quot;"
+      SearchFields="&quot;791,קרית ספיר&quot;"
+      Inactive="false"
+      LocalName="&quot;קרית ספיר&quot;" />
+    <Record
+      Code="&quot;792&quot;"
+      SearchFields="&quot;792,&quot;שכונה י&quot;&quot;א&quot;&quot;"
+      Inactive="false"
+      LocalName="&quot;&quot;שכונה י&quot;&quot;א&quot;&quot;" />
+    <Record
+      Code="&quot;794&quot;"
+      SearchFields="&quot;794,מרכז תפעולי ארצי לסחר חוץ&quot;"
+      Inactive="false"
+      LocalName="&quot;מרכז תפעולי ארצי לסחר חוץ&quot;" />
+    <Record
+      Code="&quot;795&quot;"
+      SearchFields="&quot;795,כיכר ההגנה&quot;"
+      Inactive="false"
+      LocalName="&quot;כיכר ההגנה&quot;" />
+    <Record
+      Code="&quot;797&quot;"
+      SearchFields="&quot;797,ניירות ערך-תפעול&quot;"
+      Inactive="false"
+      LocalName="&quot;ניירות ערך-תפעול&quot;" />
+    <Record
+      Code="&quot;798&quot;"
+      SearchFields="&quot;798,רמות&quot;"
+      Inactive="false"
+      LocalName="&quot;רמות&quot;" />
+    <Record
+      Code="&quot;799&quot;"
+      SearchFields="&quot;799,הנהלה ראשית&quot;"
+      Inactive="false"
+      LocalName="&quot;הנהלה ראשית&quot;" />
+    <Record
+      Code="&quot;8&quot;"
+      SearchFields="&quot;8,נתניה&quot;"
+      Inactive="false"
+      LocalName="&quot;נתניה&quot;" />
+    <Record
+      Code="&quot;80&quot;"
+      SearchFields="&quot;80,בורסת היהלומים&quot;"
+      Inactive="false"
+      LocalName="&quot;בורסת היהלומים&quot;" />
+    <Record
+      Code="&quot;800&quot;"
+      SearchFields="&quot;800,אלמסיון&quot;"
+      Inactive="false"
+      LocalName="&quot;אלמסיון&quot;" />
+    <Record
+      Code="&quot;801&quot;"
+      SearchFields="&quot;801,סניף ראשי&quot;"
+      Inactive="false"
+      LocalName="&quot;סניף ראשי&quot;" />
+    <Record
+      Code="&quot;802&quot;"
+      SearchFields="&quot;802,רמאללה-אל כוליה&quot;"
+      Inactive="false"
+      LocalName="&quot;רמאללה-אל כוליה&quot;" />
+    <Record
+      Code="&quot;803&quot;"
+      SearchFields="&quot;803,חברון אל-שלאלה&quot;"
+      Inactive="false"
+      LocalName="&quot;חברון אל-שלאלה&quot;" />
+    <Record
+      Code="&quot;804&quot;"
+      SearchFields="&quot;804,ג'נין&quot;"
+      Inactive="false"
+      LocalName="&quot;ג'נין&quot;" />
+    <Record
+      Code="&quot;805&quot;"
+      SearchFields="&quot;805,אל-קודס&quot;"
+      Inactive="false"
+      LocalName="&quot;אל-קודס&quot;" />
+    <Record
+      Code="&quot;806&quot;"
+      SearchFields="&quot;806,טול-כרם&quot;"
+      Inactive="false"
+      LocalName="&quot;טול-כרם&quot;" />
+    <Record
+      Code="&quot;807&quot;"
+      SearchFields="&quot;807,בית לחם&quot;"
+      Inactive="false"
+      LocalName="&quot;בית לחם&quot;" />
+    <Record
+      Code="&quot;808&quot;"
+      SearchFields="&quot;808,קלקיליה&quot;"
+      Inactive="false"
+      LocalName="&quot;קלקיליה&quot;" />
+    <Record
+      Code="&quot;809&quot;"
+      SearchFields="&quot;809,יריחו&quot;"
+      Inactive="false"
+      LocalName="&quot;יריחו&quot;" />
+    <Record
+      Code="&quot;81&quot;"
+      SearchFields="&quot;81,שכונת שפירא&quot;"
+      Inactive="false"
+      LocalName="&quot;שכונת שפירא&quot;" />
+    <Record
+      Code="&quot;810&quot;"
+      SearchFields="&quot;810,המלך פייסל&quot;"
+      Inactive="false"
+      LocalName="&quot;המלך פייסל&quot;" />
+    <Record
+      Code="&quot;811&quot;"
+      SearchFields="&quot;811,מוניטפיורי&quot;"
+      Inactive="false"
+      LocalName="&quot;מוניטפיורי&quot;" />
+    <Record
+      Code="&quot;812&quot;"
+      SearchFields="&quot;812,שכם-איסלאמי&quot;"
+      Inactive="false"
+      LocalName="&quot;שכם-איסלאמי&quot;" />
+    <Record
+      Code="&quot;813&quot;"
+      SearchFields="&quot;813,חברון-איסלאמי&quot;"
+      Inactive="false"
+      LocalName="&quot;חברון-איסלאמי&quot;" />
+    <Record
+      Code="&quot;814&quot;"
+      SearchFields="&quot;814,עזה-איסלאמי&quot;"
+      Inactive="false"
+      LocalName="&quot;עזה-איסלאמי&quot;" />
+    <Record
+      Code="&quot;815&quot;"
+      SearchFields="&quot;815,חאן יונס&quot;"
+      Inactive="false"
+      LocalName="&quot;חאן יונס&quot;" />
+    <Record
+      Code="&quot;816&quot;"
+      SearchFields="&quot;816,סראיה&quot;"
+      Inactive="false"
+      LocalName="&quot;סראיה&quot;" />
+    <Record
+      Code="&quot;817&quot;"
+      SearchFields="&quot;817,דיר אלבלח&quot;"
+      Inactive="false"
+      LocalName="&quot;דיר אלבלח&quot;" />
+    <Record
+      Code="&quot;818&quot;"
+      SearchFields="&quot;818,רפיח&quot;"
+      Inactive="false"
+      LocalName="&quot;רפיח&quot;" />
+    <Record
+      Code="&quot;819&quot;"
+      SearchFields="&quot;819,אל-רימאל&quot;"
+      Inactive="false"
+      LocalName="&quot;אל-רימאל&quot;" />
+    <Record
+      Code="&quot;82&quot;"
+      SearchFields="&quot;82,הדר הכרמל&quot;"
+      Inactive="false"
+      LocalName="&quot;הדר הכרמל&quot;" />
+    <Record
+      Code="&quot;820&quot;"
+      SearchFields="&quot;820,בית לחם&quot;"
+      Inactive="false"
+      LocalName="&quot;בית לחם&quot;" />
+    <Record
+      Code="&quot;821&quot;"
+      SearchFields="&quot;821,עין שרה&quot;"
+      Inactive="false"
+      LocalName="&quot;עין שרה&quot;" />
+    <Record
+      Code="&quot;822&quot;"
+      SearchFields="&quot;822,שכם&quot;"
+      Inactive="false"
+      LocalName="&quot;שכם&quot;" />
+    <Record
+      Code="&quot;823&quot;"
+      SearchFields="&quot;823,פלורנטין&quot;"
+      Inactive="false"
+      LocalName="&quot;פלורנטין&quot;" />
+    <Record
+      Code="&quot;824&quot;"
+      SearchFields="&quot;824,שדרות נורדאו&quot;"
+      Inactive="false"
+      LocalName="&quot;שדרות נורדאו&quot;" />
+    <Record
+      Code="&quot;825&quot;"
+      SearchFields="&quot;825,אל ראם&quot;"
+      Inactive="false"
+      LocalName="&quot;אל ראם&quot;" />
+    <Record
+      Code="&quot;826&quot;"
+      SearchFields="&quot;826,אל עזריה (ביתוניה)&quot;"
+      Inactive="false"
+      LocalName="&quot;אל עזריה (ביתוניה)&quot;" />
+    <Record
+      Code="&quot;827&quot;"
+      SearchFields="&quot;827,רמאללה אזור תעשיה&quot;"
+      Inactive="false"
+      LocalName="&quot;רמאללה אזור תעשיה&quot;" />
+    <Record
+      Code="&quot;828&quot;"
+      SearchFields="&quot;828,צהלון&quot;"
+      Inactive="false"
+      LocalName="&quot;צהלון&quot;" />
+    <Record
+      Code="&quot;829&quot;"
+      SearchFields="&quot;829,טול כרם&quot;"
+      Inactive="false"
+      LocalName="&quot;טול כרם&quot;" />
+    <Record
+      Code="&quot;83&quot;"
+      SearchFields="&quot;83,הרצל&quot;"
+      Inactive="false"
+      LocalName="&quot;הרצל&quot;" />
+    <Record
+      Code="&quot;830&quot;"
+      SearchFields="&quot;830,עראבה&quot;"
+      Inactive="false"
+      LocalName="&quot;עראבה&quot;" />
+    <Record
+      Code="&quot;831&quot;"
+      SearchFields="&quot;831,עזה&quot;"
+      Inactive="false"
+      LocalName="&quot;עזה&quot;" />
+    <Record
+      Code="&quot;832&quot;"
+      SearchFields="&quot;832,חברון&quot;"
+      Inactive="false"
+      LocalName="&quot;חברון&quot;" />
+    <Record
+      Code="&quot;833&quot;"
+      SearchFields="&quot;833,שכם&quot;"
+      Inactive="false"
+      LocalName="&quot;שכם&quot;" />
+    <Record
+      Code="&quot;834&quot;"
+      SearchFields="&quot;834,חאן יונס&quot;"
+      Inactive="false"
+      LocalName="&quot;חאן יונס&quot;" />
+    <Record
+      Code="&quot;835&quot;"
+      SearchFields="&quot;835,נוסירת&quot;"
+      Inactive="false"
+      LocalName="&quot;נוסירת&quot;" />
+    <Record
+      Code="&quot;836&quot;"
+      SearchFields="&quot;836,רמאללה&quot;"
+      Inactive="false"
+      LocalName="&quot;רמאללה&quot;" />
+    <Record
+      Code="&quot;837&quot;"
+      SearchFields="&quot;837,יהוד&quot;"
+      Inactive="false"
+      LocalName="&quot;יהוד&quot;" />
+    <Record
+      Code="&quot;838&quot;"
+      SearchFields="&quot;838,בית לחם&quot;"
+      Inactive="false"
+      LocalName="&quot;בית לחם&quot;" />
+    <Record
+      Code="&quot;839&quot;"
+      SearchFields="&quot;839,ואדי אלתופאח&quot;"
+      Inactive="false"
+      LocalName="&quot;ואדי אלתופאח&quot;" />
+    <Record
+      Code="&quot;84&quot;"
+      SearchFields="&quot;84,ככר מגן דוד&quot;"
+      Inactive="false"
+      LocalName="&quot;ככר מגן דוד&quot;" />
+    <Record
+      Code="&quot;840&quot;"
+      SearchFields="&quot;840,אלעזריה&quot;"
+      Inactive="false"
+      LocalName="&quot;אלעזריה&quot;" />
+    <Record
+      Code="&quot;841&quot;"
+      SearchFields="&quot;841,הילטון&quot;"
+      Inactive="false"
+      LocalName="&quot;הילטון&quot;" />
+    <Record
+      Code="&quot;842&quot;"
+      SearchFields="&quot;842,המלאכה&quot;"
+      Inactive="false"
+      LocalName="&quot;המלאכה&quot;" />
+    <Record
+      Code="&quot;843&quot;"
+      SearchFields="&quot;843,רמאללה&quot;"
+      Inactive="false"
+      LocalName="&quot;רמאללה&quot;" />
+    <Record
+      Code="&quot;844&quot;"
+      SearchFields="&quot;844,בית לחם&quot;"
+      Inactive="false"
+      LocalName="&quot;בית לחם&quot;" />
+    <Record
+      Code="&quot;845&quot;"
+      SearchFields="&quot;845,אחוזת בית&quot;"
+      Inactive="false"
+      LocalName="&quot;אחוזת בית&quot;" />
+    <Record
+      Code="&quot;848&quot;"
+      SearchFields="&quot;848,מגדלור&quot;"
+      Inactive="false"
+      LocalName="&quot;מגדלור&quot;" />
+    <Record
+      Code="&quot;849&quot;"
+      SearchFields="&quot;849,המשרד המרכזי-החטיבה לכספים&quot;"
+      Inactive="false"
+      LocalName="&quot;המשרד המרכזי-החטיבה לכספים&quot;" />
+    <Record
+      Code="&quot;85&quot;"
+      SearchFields="&quot;85,ככר יצחק רבין&quot;"
+      Inactive="false"
+      LocalName="&quot;ככר יצחק רבין&quot;" />
+    <Record
+      Code="&quot;850&quot;"
+      SearchFields="&quot;850,דפנה&quot;"
+      Inactive="false"
+      LocalName="&quot;דפנה&quot;" />
+    <Record
+      Code="&quot;851&quot;"
+      SearchFields="&quot;851,שכם&quot;"
+      Inactive="false"
+      LocalName="&quot;שכם&quot;" />
+    <Record
+      Code="&quot;852&quot;"
+      SearchFields="&quot;852,רמאללה, אל-מנארה&quot;"
+      Inactive="false"
+      LocalName="&quot;רמאללה, אל-מנארה&quot;" />
+    <Record
+      Code="&quot;853&quot;"
+      SearchFields="&quot;853,בית לחם&quot;"
+      Inactive="false"
+      LocalName="&quot;בית לחם&quot;" />
+    <Record
+      Code="&quot;854&quot;"
+      SearchFields="&quot;854,ג'נין&quot;"
+      Inactive="false"
+      LocalName="&quot;ג'נין&quot;" />
+    <Record
+      Code="&quot;855&quot;"
+      SearchFields="&quot;855,טול-כרם&quot;"
+      Inactive="false"
+      LocalName="&quot;טול-כרם&quot;" />
+    <Record
+      Code="&quot;856&quot;"
+      SearchFields="&quot;856,קלקיליה&quot;"
+      Inactive="false"
+      LocalName="&quot;קלקיליה&quot;" />
+    <Record
+      Code="&quot;857&quot;"
+      SearchFields="&quot;857,רמאללה-העיר&quot;"
+      Inactive="false"
+      LocalName="&quot;רמאללה-העיר&quot;" />
+    <Record
+      Code="&quot;858&quot;"
+      SearchFields="&quot;858,חברון - אלסלאם&quot;"
+      Inactive="false"
+      LocalName="&quot;חברון - אלסלאם&quot;" />
+    <Record
+      Code="&quot;859&quot;"
+      SearchFields="&quot;859,חאן יונס&quot;"
+      Inactive="false"
+      LocalName="&quot;חאן יונס&quot;" />
+    <Record
+      Code="&quot;86&quot;"
+      SearchFields="&quot;86,רמת אביב&quot;"
+      Inactive="false"
+      LocalName="&quot;רמת אביב&quot;" />
+    <Record
+      Code="&quot;860&quot;"
+      SearchFields="&quot;860,פרדס כץ&quot;"
+      Inactive="false"
+      LocalName="&quot;פרדס כץ&quot;" />
+    <Record
+      Code="&quot;861&quot;"
+      SearchFields="&quot;861,אל-ראם&quot;"
+      Inactive="false"
+      LocalName="&quot;אל-ראם&quot;" />
+    <Record
+      Code="&quot;862&quot;"
+      SearchFields="&quot;862,הרמה&quot;"
+      Inactive="false"
+      LocalName="&quot;הרמה&quot;" />
+    <Record
+      Code="&quot;863&quot;"
+      SearchFields="&quot;863,הרחוב הראשי - ביר זית&quot;"
+      Inactive="false"
+      LocalName="&quot;הרחוב הראשי - ביר זית&quot;" />
+    <Record
+      Code="&quot;864&quot;"
+      SearchFields="&quot;864,רמאללה - אל בלד&quot;"
+      Inactive="false"
+      LocalName="&quot;רמאללה - אל בלד&quot;" />
+    <Record
+      Code="&quot;865&quot;"
+      SearchFields="&quot;865,סניף עסקים&quot;"
+      Inactive="false"
+      LocalName="&quot;סניף עסקים&quot;" />
+    <Record
+      Code="&quot;866&quot;"
+      SearchFields="&quot;866,אלכדר&quot;"
+      Inactive="false"
+      LocalName="&quot;אלכדר&quot;" />
+    <Record
+      Code="&quot;867&quot;"
+      SearchFields="&quot;867,נוה שרת&quot;"
+      Inactive="false"
+      LocalName="&quot;נוה שרת&quot;" />
+    <Record
+      Code="&quot;868&quot;"
+      SearchFields="&quot;868,שטמפפר&quot;"
+      Inactive="false"
+      LocalName="&quot;שטמפפר&quot;" />
+    <Record
+      Code="&quot;869&quot;"
+      SearchFields="&quot;869,עסקר - שכם&quot;"
+      Inactive="false"
+      LocalName="&quot;עסקר - שכם&quot;" />
+    <Record
+      Code="&quot;870&quot;"
+      SearchFields="&quot;870,רפידיה - שכם&quot;"
+      Inactive="false"
+      LocalName="&quot;רפידיה - שכם&quot;" />
+    <Record
+      Code="&quot;871&quot;"
+      SearchFields="&quot;871,טול כרם 2&quot;"
+      Inactive="false"
+      LocalName="&quot;טול כרם 2&quot;" />
+    <Record
+      Code="&quot;872&quot;"
+      SearchFields="&quot;872,בידיה - קלקיליה&quot;"
+      Inactive="false"
+      LocalName="&quot;בידיה - קלקיליה&quot;" />
+    <Record
+      Code="&quot;873&quot;"
+      SearchFields="&quot;873,סלפית&quot;"
+      Inactive="false"
+      LocalName="&quot;סלפית&quot;" />
+    <Record
+      Code="&quot;874&quot;"
+      SearchFields="&quot;874,טובאס&quot;"
+      Inactive="false"
+      LocalName="&quot;טובאס&quot;" />
+    <Record
+      Code="&quot;875&quot;"
+      SearchFields="&quot;875,אלארסאל&quot;"
+      Inactive="false"
+      LocalName="&quot;אלארסאל&quot;" />
+    <Record
+      Code="&quot;876&quot;"
+      SearchFields="&quot;876,ראשי חיפה&quot;"
+      Inactive="false"
+      LocalName="&quot;ראשי חיפה&quot;" />
+    <Record
+      Code="&quot;877&quot;"
+      SearchFields="&quot;877,פועלים בטלפון&quot;"
+      Inactive="false"
+      LocalName="&quot;פועלים בטלפון&quot;" />
+    <Record
+      Code="&quot;878&quot;"
+      SearchFields="&quot;878,אל-רימאל - עזה&quot;"
+      Inactive="false"
+      LocalName="&quot;אל-רימאל - עזה&quot;" />
+    <Record
+      Code="&quot;879&quot;"
+      SearchFields="&quot;879,יריחו&quot;"
+      Inactive="false"
+      LocalName="&quot;יריחו&quot;" />
+    <Record
+      Code="&quot;88&quot;"
+      SearchFields="&quot;88,המסגר&quot;"
+      Inactive="false"
+      LocalName="&quot;המסגר&quot;" />
+    <Record
+      Code="&quot;880&quot;"
+      SearchFields="&quot;880,עזה&quot;"
+      Inactive="false"
+      LocalName="&quot;עזה&quot;" />
+    <Record
+      Code="&quot;881&quot;"
+      SearchFields="&quot;881,אל-בירה&quot;"
+      Inactive="false"
+      LocalName="&quot;אל-בירה&quot;" />
+    <Record
+      Code="&quot;882&quot;"
+      SearchFields="&quot;882,שכם&quot;"
+      Inactive="false"
+      LocalName="&quot;שכם&quot;" />
+    <Record
+      Code="&quot;883&quot;"
+      SearchFields="&quot;883,חאן יונס&quot;"
+      Inactive="false"
+      LocalName="&quot;חאן יונס&quot;" />
+    <Record
+      Code="&quot;884&quot;"
+      SearchFields="&quot;884,קיבוץ גלויות&quot;"
+      Inactive="false"
+      LocalName="&quot;קיבוץ גלויות&quot;" />
+    <Record
+      Code="&quot;885&quot;"
+      SearchFields="&quot;885,טירת הכרמל&quot;"
+      Inactive="false"
+      LocalName="&quot;טירת הכרמל&quot;" />
+    <Record
+      Code="&quot;886&quot;"
+      SearchFields="&quot;886,מוריה&quot;"
+      Inactive="false"
+      LocalName="&quot;מוריה&quot;" />
+    <Record
+      Code="&quot;887&quot;"
+      SearchFields="&quot;887,נשר&quot;"
+      Inactive="false"
+      LocalName="&quot;נשר&quot;" />
+    <Record
+      Code="&quot;888&quot;"
+      SearchFields="&quot;888,עזה&quot;"
+      Inactive="false"
+      LocalName="&quot;עזה&quot;" />
+    <Record
+      Code="&quot;889&quot;"
+      SearchFields="&quot;889,עסקים חלוצי התעשיה&quot;"
+      Inactive="false"
+      LocalName="&quot;עסקים חלוצי התעשיה&quot;" />
+    <Record
+      Code="&quot;89&quot;"
+      SearchFields="&quot;89,רזיאל&quot;"
+      Inactive="false"
+      LocalName="&quot;רזיאל&quot;" />
+    <Record
+      Code="&quot;890&quot;"
+      SearchFields="&quot;890,החלוץ&quot;"
+      Inactive="false"
+      LocalName="&quot;החלוץ&quot;" />
+    <Record
+      Code="&quot;891&quot;"
+      SearchFields="&quot;891,שכם&quot;"
+      Inactive="false"
+      LocalName="&quot;שכם&quot;" />
+    <Record
+      Code="&quot;892&quot;"
+      SearchFields="&quot;892,טול כרם&quot;"
+      Inactive="false"
+      LocalName="&quot;טול כרם&quot;" />
+    <Record
+      Code="&quot;893&quot;"
+      SearchFields="&quot;893,הגבורים&quot;"
+      Inactive="false"
+      LocalName="&quot;הגבורים&quot;" />
+    <Record
+      Code="&quot;894&quot;"
+      SearchFields="&quot;894,בית לחם&quot;"
+      Inactive="false"
+      LocalName="&quot;בית לחם&quot;" />
+    <Record
+      Code="&quot;895&quot;"
+      SearchFields="&quot;895,קרית טבעון&quot;"
+      Inactive="false"
+      LocalName="&quot;קרית טבעון&quot;" />
+    <Record
+      Code="&quot;896&quot;"
+      SearchFields="&quot;896,סניף ראשי&quot;"
+      Inactive="false"
+      LocalName="&quot;סניף ראשי&quot;" />
+    <Record
+      Code="&quot;897&quot;"
+      SearchFields="&quot;897,יריחו&quot;"
+      Inactive="false"
+      LocalName="&quot;יריחו&quot;" />
+    <Record
+      Code="&quot;898&quot;"
+      SearchFields="&quot;898,שכם&quot;"
+      Inactive="false"
+      LocalName="&quot;שכם&quot;" />
+    <Record
+      Code="&quot;899&quot;"
+      SearchFields="&quot;899,סניף ראשי&quot;"
+      Inactive="false"
+      LocalName="&quot;סניף ראשי&quot;" />
+    <Record
+      Code="&quot;9&quot;"
+      SearchFields="&quot;9,נצרת עלית&quot;"
+      Inactive="false"
+      LocalName="&quot;נצרת עלית&quot;" />
+    <Record
+      Code="&quot;90&quot;"
+      SearchFields="&quot;90,ירכא&quot;"
+      Inactive="false"
+      LocalName="&quot;ירכא&quot;" />
+    <Record
+      Code="&quot;900&quot;"
+      SearchFields="&quot;900,ראש הנקרה&quot;"
+      Inactive="false"
+      LocalName="&quot;ראש הנקרה&quot;" />
+    <Record
+      Code="&quot;901&quot;"
+      SearchFields="&quot;901,ג'נין&quot;"
+      Inactive="false"
+      LocalName="&quot;ג'נין&quot;" />
+    <Record
+      Code="&quot;902&quot;"
+      SearchFields="&quot;902,רפיח מסוף הגבול&quot;"
+      Inactive="false"
+      LocalName="&quot;רפיח מסוף הגבול&quot;" />
+    <Record
+      Code="&quot;903&quot;"
+      SearchFields="&quot;903,בית המכס&quot;"
+      Inactive="false"
+      LocalName="&quot;בית המכס&quot;" />
+    <Record
+      Code="&quot;904&quot;"
+      SearchFields="&quot;904,מעלה אפרים&quot;"
+      Inactive="false"
+      LocalName="&quot;מעלה אפרים&quot;" />
+    <Record
+      Code="&quot;905&quot;"
+      SearchFields="&quot;905,רמות אשכול&quot;"
+      Inactive="false"
+      LocalName="&quot;רמות אשכול&quot;" />
+    <Record
+      Code="&quot;906&quot;"
+      SearchFields="&quot;906,שלוחת מת&quot;ם&quot;"
+      Inactive="false"
+      LocalName="&quot;שלוחת מת&quot;ם&quot;" />
+    <Record
+      Code="&quot;907&quot;"
+      SearchFields="&quot;907,חברון&quot;"
+      Inactive="false"
+      LocalName="&quot;חברון&quot;" />
+    <Record
+      Code="&quot;91&quot;"
+      SearchFields="&quot;91,וינגיט&quot;"
+      Inactive="false"
+      LocalName="&quot;וינגיט&quot;" />
+    <Record
+      Code="&quot;911&quot;"
+      SearchFields="&quot;911,גאולה&quot;"
+      Inactive="false"
+      LocalName="&quot;גאולה&quot;" />
+    <Record
+      Code="&quot;912&quot;"
+      SearchFields="&quot;912,רחביה&quot;"
+      Inactive="false"
+      LocalName="&quot;רחביה&quot;" />
+    <Record
+      Code="&quot;913&quot;"
+      SearchFields="&quot;913,מחנה יהודה&quot;"
+      Inactive="false"
+      LocalName="&quot;מחנה יהודה&quot;" />
+    <Record
+      Code="&quot;914&quot;"
+      SearchFields="&quot;914,קרית משה עסקים&quot;"
+      Inactive="false"
+      LocalName="&quot;קרית משה עסקים&quot;" />
+    <Record
+      Code="&quot;915&quot;"
+      SearchFields="&quot;915,שלוחת הגבעה הצרפתית&quot;"
+      Inactive="false"
+      LocalName="&quot;שלוחת הגבעה הצרפתית&quot;" />
+    <Record
+      Code="&quot;916&quot;"
+      SearchFields="&quot;916,המרכז לבנקאות פרטית - צפון&quot;"
+      Inactive="false"
+      LocalName="&quot;המרכז לבנקאות פרטית - צפון&quot;" />
+    <Record
+      Code="&quot;917&quot;"
+      SearchFields="&quot;917,בנק הפועלים&quot;"
+      Inactive="false"
+      LocalName="&quot;בנק הפועלים&quot;" />
+    <Record
+      Code="&quot;918&quot;"
+      SearchFields="&quot;918,מזרח ירושלים&quot;"
+      Inactive="false"
+      LocalName="&quot;מזרח ירושלים&quot;" />
+    <Record
+      Code="&quot;919&quot;"
+      SearchFields="&quot;919,ככר ציון&quot;"
+      Inactive="false"
+      LocalName="&quot;ככר ציון&quot;" />
+    <Record
+      Code="&quot;92&quot;"
+      SearchFields="&quot;92,נתניה&quot;"
+      Inactive="false"
+      LocalName="&quot;נתניה&quot;" />
+    <Record
+      Code="&quot;920&quot;"
+      SearchFields="&quot;920,ככר ציון&quot;"
+      Inactive="false"
+      LocalName="&quot;ככר ציון&quot;" />
+    <Record
+      Code="&quot;921&quot;"
+      SearchFields="&quot;921,באר שבע&quot;"
+      Inactive="false"
+      LocalName="&quot;באר שבע&quot;" />
+    <Record
+      Code="&quot;922&quot;"
+      SearchFields="&quot;922,מרכז הנגב&quot;"
+      Inactive="false"
+      LocalName="&quot;מרכז הנגב&quot;" />
+    <Record
+      Code="&quot;923&quot;"
+      SearchFields="&quot;923,דימונה&quot;"
+      Inactive="false"
+      LocalName="&quot;דימונה&quot;" />
+    <Record
+      Code="&quot;924&quot;"
+      SearchFields="&quot;924,שדרות הנשיאים&quot;"
+      Inactive="false"
+      LocalName="&quot;שדרות הנשיאים&quot;" />
+    <Record
+      Code="&quot;925&quot;"
+      SearchFields="&quot;925,אשקלון&quot;"
+      Inactive="false"
+      LocalName="&quot;אשקלון&quot;" />
+    <Record
+      Code="&quot;926&quot;"
+      SearchFields="&quot;926,אפרידר&quot;"
+      Inactive="false"
+      LocalName="&quot;אפרידר&quot;" />
+    <Record
+      Code="&quot;927&quot;"
+      SearchFields="&quot;927,קרית גת&quot;"
+      Inactive="false"
+      LocalName="&quot;קרית גת&quot;" />
+    <Record
+      Code="&quot;928&quot;"
+      SearchFields="&quot;928,גדרה&quot;"
+      Inactive="false"
+      LocalName="&quot;גדרה&quot;" />
+    <Record
+      Code="&quot;929&quot;"
+      SearchFields="&quot;929,בילו&quot;"
+      Inactive="false"
+      LocalName="&quot;בילו&quot;" />
+    <Record
+      Code="&quot;93&quot;"
+      SearchFields="&quot;93,פתח תקוה&quot;"
+      Inactive="false"
+      LocalName="&quot;פתח תקוה&quot;" />
+    <Record
+      Code="&quot;930&quot;"
+      SearchFields="&quot;930,רחובות&quot;"
+      Inactive="false"
+      LocalName="&quot;רחובות&quot;" />
+    <Record
+      Code="&quot;931&quot;"
+      SearchFields="&quot;931,שעריים&quot;"
+      Inactive="false"
+      LocalName="&quot;שעריים&quot;" />
+    <Record
+      Code="&quot;932&quot;"
+      SearchFields="&quot;932,אשדוד&quot;"
+      Inactive="false"
+      LocalName="&quot;אשדוד&quot;" />
+    <Record
+      Code="&quot;933&quot;"
+      SearchFields="&quot;933,נס ציונה&quot;"
+      Inactive="false"
+      LocalName="&quot;נס ציונה&quot;" />
+    <Record
+      Code="&quot;934&quot;"
+      SearchFields="&quot;934,ראשון לציון&quot;"
+      Inactive="false"
+      LocalName="&quot;ראשון לציון&quot;" />
+    <Record
+      Code="&quot;935&quot;"
+      SearchFields="&quot;935,כוכב יאיר&quot;"
+      Inactive="false"
+      LocalName="&quot;כוכב יאיר&quot;" />
+    <Record
+      Code="&quot;936&quot;"
+      SearchFields="&quot;936,רמלה&quot;"
+      Inactive="false"
+      LocalName="&quot;רמלה&quot;" />
+    <Record
+      Code="&quot;937&quot;"
+      SearchFields="&quot;937,לוד&quot;"
+      Inactive="false"
+      LocalName="&quot;לוד&quot;" />
+    <Record
+      Code="&quot;938&quot;"
+      SearchFields="&quot;938,נתב&quot;ג&quot;"
+      Inactive="false"
+      LocalName="&quot;נתב&quot;ג&quot;" />
+    <Record
+      Code="&quot;939&quot;"
+      SearchFields="&quot;939,יבנה&quot;"
+      Inactive="false"
+      LocalName="&quot;יבנה&quot;" />
+    <Record
+      Code="&quot;94&quot;"
+      SearchFields="&quot;94,כרמיאל&quot;"
+      Inactive="false"
+      LocalName="&quot;כרמיאל&quot;" />
+    <Record
+      Code="&quot;940&quot;"
+      SearchFields="&quot;940,פתח תקוה&quot;"
+      Inactive="false"
+      LocalName="&quot;פתח תקוה&quot;" />
+    <Record
+      Code="&quot;941&quot;"
+      SearchFields="&quot;941,שדרות&quot;"
+      Inactive="false"
+      LocalName="&quot;שדרות&quot;" />
+    <Record
+      Code="&quot;942&quot;"
+      SearchFields="&quot;942,רעננה&quot;"
+      Inactive="false"
+      LocalName="&quot;רעננה&quot;" />
+    <Record
+      Code="&quot;943&quot;"
+      SearchFields="&quot;943,הוד השרון&quot;"
+      Inactive="false"
+      LocalName="&quot;הוד השרון&quot;" />
+    <Record
+      Code="&quot;944&quot;"
+      SearchFields="&quot;944,שער ראשון&quot;"
+      Inactive="false"
+      LocalName="&quot;שער ראשון&quot;" />
+    <Record
+      Code="&quot;945&quot;"
+      SearchFields="&quot;945,מגדיאל הוד השרון&quot;"
+      Inactive="false"
+      LocalName="&quot;מגדיאל הוד השרון&quot;" />
+    <Record
+      Code="&quot;946&quot;"
+      SearchFields="&quot;946,כפר סבא&quot;"
+      Inactive="false"
+      LocalName="&quot;כפר סבא&quot;" />
+    <Record
+      Code="&quot;947&quot;"
+      SearchFields="&quot;947,אורלי&quot;"
+      Inactive="false"
+      LocalName="&quot;אורלי&quot;" />
+    <Record
+      Code="&quot;948&quot;"
+      SearchFields="&quot;948,הרצליה&quot;"
+      Inactive="false"
+      LocalName="&quot;הרצליה&quot;" />
+    <Record
+      Code="&quot;949&quot;"
+      SearchFields="&quot;949,רמת השרון&quot;"
+      Inactive="false"
+      LocalName="&quot;רמת השרון&quot;" />
+    <Record
+      Code="&quot;95&quot;"
+      SearchFields="&quot;95,גבעת שמואל&quot;"
+      Inactive="false"
+      LocalName="&quot;גבעת שמואל&quot;" />
+    <Record
+      Code="&quot;950&quot;"
+      SearchFields="&quot;950,נתניה&quot;"
+      Inactive="false"
+      LocalName="&quot;נתניה&quot;" />
+    <Record
+      Code="&quot;951&quot;"
+      SearchFields="&quot;951,המרכז לבנקאות פרטית -שרון&quot;"
+      Inactive="false"
+      LocalName="&quot;המרכז לבנקאות פרטית -שרון&quot;" />
+    <Record
+      Code="&quot;952&quot;"
+      SearchFields="&quot;952,שדרות בנימין&quot;"
+      Inactive="false"
+      LocalName="&quot;שדרות בנימין&quot;" />
+    <Record
+      Code="&quot;953&quot;"
+      SearchFields="&quot;953,חדרה&quot;"
+      Inactive="false"
+      LocalName="&quot;חדרה&quot;" />
+    <Record
+      Code="&quot;954&quot;"
+      SearchFields="&quot;954,פרדס חנה&quot;"
+      Inactive="false"
+      LocalName="&quot;פרדס חנה&quot;" />
+    <Record
+      Code="&quot;955&quot;"
+      SearchFields="&quot;955,בנימינה&quot;"
+      Inactive="false"
+      LocalName="&quot;בנימינה&quot;" />
+    <Record
+      Code="&quot;956&quot;"
+      SearchFields="&quot;956,זכרון יעקב&quot;"
+      Inactive="false"
+      LocalName="&quot;זכרון יעקב&quot;" />
+    <Record
+      Code="&quot;957&quot;"
+      SearchFields="&quot;957,אבן יהודה&quot;"
+      Inactive="false"
+      LocalName="&quot;אבן יהודה&quot;" />
+    <Record
+      Code="&quot;958&quot;"
+      SearchFields="&quot;958,הרצליה פתוח&quot;"
+      Inactive="false"
+      LocalName="&quot;הרצליה פתוח&quot;" />
+    <Record
+      Code="&quot;959&quot;"
+      SearchFields="&quot;959,גבעת אולגה&quot;"
+      Inactive="false"
+      LocalName="&quot;גבעת אולגה&quot;" />
+    <Record
+      Code="&quot;96&quot;"
+      SearchFields="&quot;96,עפולה&quot;"
+      Inactive="false"
+      LocalName="&quot;עפולה&quot;" />
+    <Record
+      Code="&quot;960&quot;"
+      SearchFields="&quot;960,עכו&quot;"
+      Inactive="false"
+      LocalName="&quot;עכו&quot;" />
+    <Record
+      Code="&quot;961&quot;"
+      SearchFields="&quot;961,כרמיאל&quot;"
+      Inactive="false"
+      LocalName="&quot;כרמיאל&quot;" />
+    <Record
+      Code="&quot;962&quot;"
+      SearchFields="&quot;962,נהריה&quot;"
+      Inactive="false"
+      LocalName="&quot;נהריה&quot;" />
+    <Record
+      Code="&quot;963&quot;"
+      SearchFields="&quot;963,רוגוזין&quot;"
+      Inactive="false"
+      LocalName="&quot;רוגוזין&quot;" />
+    <Record
+      Code="&quot;964&quot;"
+      SearchFields="&quot;964,נצרת&quot;"
+      Inactive="false"
+      LocalName="&quot;נצרת&quot;" />
+    <Record
+      Code="&quot;965&quot;"
+      SearchFields="&quot;965,עפולה&quot;"
+      Inactive="false"
+      LocalName="&quot;עפולה&quot;" />
+    <Record
+      Code="&quot;966&quot;"
+      SearchFields="&quot;966,בית שאן&quot;"
+      Inactive="false"
+      LocalName="&quot;בית שאן&quot;" />
+    <Record
+      Code="&quot;967&quot;"
+      SearchFields="&quot;967,רמת אליהו&quot;"
+      Inactive="false"
+      LocalName="&quot;רמת אליהו&quot;" />
+    <Record
+      Code="&quot;968&quot;"
+      SearchFields="&quot;968,עסקים הר חוצבים&quot;"
+      Inactive="false"
+      LocalName="&quot;עסקים הר חוצבים&quot;" />
+    <Record
+      Code="&quot;969&quot;"
+      SearchFields="&quot;969,מחסום ארז&quot;"
+      Inactive="false"
+      LocalName="&quot;מחסום ארז&quot;" />
+    <Record
+      Code="&quot;97&quot;"
+      SearchFields="&quot;97,נהריה&quot;"
+      Inactive="false"
+      LocalName="&quot;נהריה&quot;" />
+    <Record
+      Code="&quot;970&quot;"
+      SearchFields="&quot;970,טבריה&quot;"
+      Inactive="false"
+      LocalName="&quot;טבריה&quot;" />
+    <Record
+      Code="&quot;972&quot;"
+      SearchFields="&quot;972,נצרת עלית&quot;"
+      Inactive="false"
+      LocalName="&quot;נצרת עלית&quot;" />
+    <Record
+      Code="&quot;974&quot;"
+      SearchFields="&quot;974,שביט&quot;"
+      Inactive="false"
+      LocalName="&quot;שביט&quot;" />
+    <Record
+      Code="&quot;975&quot;"
+      SearchFields="&quot;975,צפת&quot;"
+      Inactive="false"
+      LocalName="&quot;צפת&quot;" />
+    <Record
+      Code="&quot;976&quot;"
+      SearchFields="&quot;976,קרית שמונה&quot;"
+      Inactive="false"
+      LocalName="&quot;קרית שמונה&quot;" />
+    <Record
+      Code="&quot;977&quot;"
+      SearchFields="&quot;977,בלפור&quot;"
+      Inactive="false"
+      LocalName="&quot;בלפור&quot;" />
+    <Record
+      Code="&quot;978&quot;"
+      SearchFields="&quot;978,עסקים רחובות&quot;"
+      Inactive="false"
+      LocalName="&quot;עסקים רחובות&quot;" />
+    <Record
+      Code="&quot;98&quot;"
+      SearchFields="&quot;98,טפחות ישיר&quot;"
+      Inactive="false"
+      LocalName="&quot;טפחות ישיר&quot;" />
+    <Record
+      Code="&quot;980&quot;"
+      SearchFields="&quot;980,רב שפע&quot;"
+      Inactive="false"
+      LocalName="&quot;רב שפע&quot;" />
+    <Record
+      Code="&quot;981&quot;"
+      SearchFields="&quot;981,שלוחת הדר גנים&quot;"
+      Inactive="false"
+      LocalName="&quot;שלוחת הדר גנים&quot;" />
+    <Record
+      Code="&quot;982&quot;"
+      SearchFields="&quot;982,עוספיה&quot;"
+      Inactive="false"
+      LocalName="&quot;עוספיה&quot;" />
+    <Record
+      Code="&quot;983&quot;"
+      SearchFields="&quot;983,רמת נוף&quot;"
+      Inactive="false"
+      LocalName="&quot;רמת נוף&quot;" />
+    <Record
+      Code="&quot;984&quot;"
+      SearchFields="&quot;984,ברכפלד&quot;"
+      Inactive="false"
+      LocalName="&quot;ברכפלד&quot;" />
+    <Record
+      Code="&quot;985&quot;"
+      SearchFields="&quot;985,קרית מלאכי&quot;"
+      Inactive="false"
+      LocalName="&quot;קרית מלאכי&quot;" />
+    <Record
+      Code="&quot;986&quot;"
+      SearchFields="&quot;986,לב הרובע&quot;"
+      Inactive="false"
+      LocalName="&quot;לב הרובע&quot;" />
+    <Record
+      Code="&quot;987&quot;"
+      SearchFields="&quot;987,מגדל העמק&quot;"
+      Inactive="false"
+      LocalName="&quot;מגדל העמק&quot;" />
+    <Record
+      Code="&quot;988&quot;"
+      SearchFields="&quot;988,מ.ש.י. כניסה לקבע&quot;"
+      Inactive="false"
+      LocalName="&quot;מ.ש.י. כניסה לקבע&quot;" />
+    <Record
+      Code="&quot;989&quot;"
+      SearchFields="&quot;989,שלוחת עורק&quot;"
+      Inactive="false"
+      LocalName="&quot;שלוחת עורק&quot;" />
+    <Record
+      Code="&quot;99&quot;"
+      SearchFields="&quot;99,עכו&quot;"
+      Inactive="false"
+      LocalName="&quot;עכו&quot;" />
+    <Record
+      Code="&quot;990&quot;"
+      SearchFields="&quot;990,מסוף קרני&quot;"
+      Inactive="false"
+      LocalName="&quot;מסוף קרני&quot;" />
+    <Record
+      Code="&quot;991&quot;"
+      SearchFields="&quot;991,השגרירות האמריקאית&quot;"
+      Inactive="false"
+      LocalName="&quot;השגרירות האמריקאית&quot;" />
+    <Record
+      Code="&quot;992&quot;"
+      SearchFields="&quot;992,&quot;מפח&quot;&quot;ש&quot;&quot;"
+      Inactive="false"
+      LocalName="&quot;&quot;מפח&quot;&quot;ש&quot;&quot;" />
+    <Record
+      Code="&quot;993&quot;"
+      SearchFields="&quot;993,מסוף נהר הירדן&quot;"
+      Inactive="false"
+      LocalName="&quot;מסוף נהר הירדן&quot;" />
+    <Record
+      Code="&quot;994&quot;"
+      SearchFields="&quot;994,שדה תעופה חיפה&quot;"
+      Inactive="false"
+      LocalName="&quot;שדה תעופה חיפה&quot;" />
+    <Record
+      Code="&quot;995&quot;"
+      SearchFields="&quot;995,&quot;מכס נת&quot;&quot;בג&quot;&quot;"
+      Inactive="false"
+      LocalName="&quot;&quot;מכס נת&quot;&quot;בג&quot;&quot;" />
+    <Record
+      Code="&quot;996&quot;"
+      SearchFields="&quot;996,שלוחת שפיר&quot;"
+      Inactive="false"
+      LocalName="&quot;שלוחת שפיר&quot;" />
+    <Record
+      Code="&quot;997&quot;"
+      SearchFields="&quot;997,גלילות&quot;"
+      Inactive="false"
+      LocalName="&quot;גלילות&quot;" />
+    <Record
+      Code="&quot;998&quot;"
+      SearchFields="&quot;998,שלוחת עסקית&quot;"
+      Inactive="false"
+      LocalName="&quot;שלוחת עסקית&quot;" />
+    <Record
+      Code="&quot;999&quot;"
+      SearchFields="&quot;999,אשל השומרון&quot;"
+      Inactive="false"
+      LocalName="&quot;אשל השומרון&quot;" />
+  </Records>
+  <AdditionalTextCodes />
+  <AdditionalFeatures></AdditionalFeatures>
+  <Query
+    Code="&quot;CustomsBranch&quot;"
+    ObjectTableName="&quot;Customs.CustomsBranch&quot;"
+    IsAddNewEntity="false"
+    SystemLevel="true"
+    QuerySection="&quot;Customs.CustomsBranch&quot;"
+    IndexOrder="0"
+    QueryGroupCode="&quot;CUBR&quot;"
+    QueryGroupName="&quot;Customs.CustomsBranch&quot;"
+    LocalTextCode="&quot;פרטי בנק וסניף&quot;"
+    TextCode="&quot;Customs Branches&quot;"
+    TextCodeCode="&quot;Customs.CustomsBranch.Q.CustomsBranchQuery&quot;"
+    IsSpellChecked="false"
+    FeatureCode="&quot;CUSTOMSBRANCH&quot;"
+    IsPackagable="true"
+    FeatureTextCodeCode="&quot;Customs.CustomsBranch.Features.CustomsBranches&quot;"
+    FeatureDefaultText="&quot;Customs Branches&quot;">
+    <QueryColumns>
+      <QueryColumn
+        IndexOrder="0"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;Code&quot;"
+        QueryCode="&quot;CustomsBranch&quot;" />
+      <QueryColumn
+        IndexOrder="1"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;EnglishName&quot;"
+        QueryCode="&quot;CustomsBranch&quot;" />
+      <QueryColumn
+        IndexOrder="2"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;LocalName&quot;"
+        QueryCode="&quot;CustomsBranch&quot;" />
+      <QueryColumn
+        IndexOrder="3"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;Inactive&quot;"
+        QueryCode="&quot;CustomsBranch&quot;" />
+    </QueryColumns>
+    <QueryFilters />
+  </Query>
   <EventTypes>
-    <EventType Code="&quot;CREV&quot;" ObjectTableName="&quot;Customs.CustomsBranch&quot;" EnglishName="&quot;Created&quot;" LocalName="&quot;Created&quot;" IsManualEntry="false" ShortView="true" />
-    <EventType Code="&quot;UPEV&quot;" ObjectTableName="&quot;Customs.CustomsBranch&quot;" EnglishName="&quot;Updated&quot;" LocalName="&quot;Updated&quot;" IsManualEntry="false" ShortView="false" />
+    <EventType
+      Code="&quot;CREV&quot;"
+      ObjectTableName="&quot;Customs.CustomsBranch&quot;"
+      ShortView="true"
+      IsManualEntry="false"
+      LocalName="&quot;Created&quot;"
+      EnglishName="&quot;Created&quot;"
+      EventTypeCategoryCode="&quot;OPE&quot;"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
+    <EventType
+      Code="&quot;UPEV&quot;"
+      ObjectTableName="&quot;Customs.CustomsBranch&quot;"
+      ShortView="false"
+      IsManualEntry="false"
+      LocalName="&quot;Updated&quot;"
+      EnglishName="&quot;Updated&quot;"
+      EventTypeCategoryCode="&quot;OPE&quot;"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
   </EventTypes>
-  <Records />
 </entity>

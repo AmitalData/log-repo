@@ -26,11 +26,11 @@ using Simplog.Data.ShipmentsModel;
    public partial class AirPackageQueryService
     {
    		
-		public List<AirPackage> AirPackageCustomDataMapping(ShipmentPM EntityPm, List<ShipmentPackagePM> MyEntityPMs,int Tenant)
+		public List<AirPackage> AirPackageCustomDataMapping(ShipmentPM EntityPm, List<ShipmentPackagePM> MyEntityPMs,int Tenant, string ComputingPartnerName = "")
         {
             if (EntityPm.TransportModeId == "A")
             {
-                return this.AirPackageDataMapping(MyEntityPMs, Tenant);
+                return this.AirPackageDataMapping(MyEntityPMs, Tenant, ComputingPartnerName);
             }
             else
             {

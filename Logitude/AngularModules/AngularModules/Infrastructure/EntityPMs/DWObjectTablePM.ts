@@ -85,11 +85,29 @@ export class DWObjectTablePM {
     public set AdditionalFactForeignKey(newValue: string) { if (this.additionalFactForeignKey != newValue) { this.additionalFactForeignKey = newValue; this.MarkAsDirty("AdditionalFactForeignKey"); } }
        
 	 
+    private parentFactCode: string;
+    public get ParentFactCode() { return this.parentFactCode; }
+    public set ParentFactCode(newValue: string) { if (this.parentFactCode != newValue) { this.parentFactCode = newValue; this.MarkAsDirty("ParentFactCode"); } }
+       
+	 
+    private recordType: string;
+    public get RecordType() { return this.recordType; }
+    public set RecordType(newValue: string) { if (this.recordType != newValue) { this.recordType = newValue; this.MarkAsDirty("RecordType"); } }
+       
+	 
+    private displayName: string;
+    public get DisplayName() { return this.displayName; }
+    public set DisplayName(newValue: string) { if (this.displayName != newValue) { this.displayName = newValue; this.MarkAsDirty("DisplayName"); } }
+       
+	 
 
     public OldEntityPM: DWObjectTablePM;
 		
     public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
+       if(!this.DisableMarkAsDirty)
+       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -97,6 +115,7 @@ export class DWObjectTablePM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "DWObjectTable");
            
         }
+	 }
     }
     private MyClone: DWObjectTablePM;
 

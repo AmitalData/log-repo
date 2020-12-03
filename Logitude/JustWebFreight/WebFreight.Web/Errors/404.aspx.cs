@@ -19,12 +19,19 @@ namespace WebFreight.Web
                 var IsAngularURL = Request.RawUrl.Contains("/index.html");//.QueryString["Menu"];
                 if (IsAngularURL)
                 {
-                    //IGlobalContext objectContext = GlobalContext.GetContext();
-                    //SettingRepository MySettingRepository = new SettingRepository(objectContext);
-                    //SettingQuery MySettingQuery = new SettingQuery(MySettingRepository);
-                    //var MySettings = MySettingQuery.GetSinglePM();
-                    //string RedirectUrl = "Angular" + MySettings.HtmlVersion + "/index.html";//?Menu=PREQ&SecurityKey=" + SecurityKey + "&Tenant=" + Tenant;
-                    Response.Redirect("~/");
+                    IGlobalContext objectContext = GlobalContext.GetContext();
+                    SettingRepository MySettingRepository = new SettingRepository(objectContext);
+                    SettingQuery MySettingQuery = new SettingQuery(MySettingRepository);
+                    var MySettings = MySettingQuery.GetSinglePM();
+                    if (MySettings.DeploymentStage == "logboxwe1")
+                    { 
+                        string RedirectUrl = "Angular" + MySettings.HtmlVersion + "/index.html";//?Menu=PREQ&SecurityKey=" + SecurityKey + "&Tenant=" + Tenant;
+                        Response.Redirect("~/" + RedirectUrl);
+                    }
+                    else {
+                        Response.Redirect("~/");
+                    }
+
                 }
                 else
                 {

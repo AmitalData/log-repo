@@ -45,6 +45,7 @@ export class HomeComponent
             document.documentElement.style.setProperty('--BGColor', CargoTrackingBrandingData.MainColor);
             document.documentElement.style.setProperty('--MainColor', CargoTrackingBrandingData.MainColor);
             document.documentElement.style.setProperty('--busyIndicatorColor', CargoTrackingBrandingData.MainColor);
+
             document.documentElement.style.setProperty('--secondaryColor', CargoTrackingBrandingData.SecondaryColor);
             this.Logo = response.Result.Logo != null ? response.Result.Logo:null;
             this.BackGroundImg=response.Result.BackgroundImg!=null? "url("+ response.Result.BackgroundImg+")":this.MapImgSRC;

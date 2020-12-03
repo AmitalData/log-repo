@@ -784,7 +784,10 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         {
             if (!string.IsNullOrEmpty(myInvoiceId))
             {
-                ARInvoice invoice = this.GetInvoice(myInvoiceId, tenant);
+                ARInvoiceQuery aRInvoiceQuery = new ARInvoiceQuery(this.invoiceRepository);
+                ARInvoicePM invoice = aRInvoiceQuery.GetSinglePM(myInvoiceId, tenant);
+
+                //ARInvoice invoice = this.GetInvoice(myInvoiceId, tenant);
 
                 if (invoice != null)
                 {
@@ -881,15 +884,18 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                             throw new Exception("The Amount due is not suitable to the total amount paid!!");
                         }
                         
-                        this.UpdateInvoicePaidDate(invoice, allConnectedItems);
-                        invoiceRepository.Update(invoice);
+                        this.UpdateInvoicePaidDate(invoice);
+
+
+                        //invoiceRepository.Update(invoice);
+                        ARInvoiceService aRInvoiceService = new ARInvoiceService(this.objectContext, this.tenant);
+                        aRInvoiceService.Update(invoice);
                         #endregion
                     }
                 }
             }
         }
-
-        private void UpdateInvoicePaidDate(ARInvoice invoice, List<ARInvoicePayment> allConnectedItems)
+        private void UpdateInvoicePaidDate(ARInvoicePM invoice)
         {
             if (invoice.AmountDue != 0)
             {
@@ -912,7 +918,10 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.StatusCode);
             MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.AccountingPaymentMethodCode);
             MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.ChequeOrPaymentRef);
+            MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.PrintNotes);
 
+
+           
             #region Card
             if (!string.IsNullOrEmpty(entityPM.BillToId))
             {
@@ -920,6 +929,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 if (myCard != null)
                 {
                     MethodHelper.AddToSearchFields(ref mySearchFields, myCard.EnglishName);
+                    MethodHelper.AddToSearchFields(ref mySearchFields, myCard.LocalName);
                 }
             }
             #endregion

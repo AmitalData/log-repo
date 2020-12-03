@@ -55,11 +55,19 @@ export class AutomationResultEmailRecipientPM {
     public set PartnerObjectFieldCode(newValue: string) { if (this.partnerObjectFieldCode != newValue) { this.partnerObjectFieldCode = newValue; this.MarkAsDirty("PartnerObjectFieldCode"); } }
        
 	 
+    private isNotifyBack: boolean;
+    public get IsNotifyBack() { return this.isNotifyBack; }
+    public set IsNotifyBack(newValue: boolean) { if (this.isNotifyBack != newValue) { this.isNotifyBack = newValue; this.MarkAsDirty("IsNotifyBack"); } }
+       
+	 
 
     public OldEntityPM: AutomationResultEmailRecipientPM;
 		
     public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
+       if(!this.DisableMarkAsDirty)
+       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -67,6 +75,7 @@ export class AutomationResultEmailRecipientPM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "AutomationResultEmailRecipient");
            
         }
+	 }
     }
     private MyClone: AutomationResultEmailRecipientPM;
 

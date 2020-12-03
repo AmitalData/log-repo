@@ -40,7 +40,7 @@ using Simplog.Data.QuoteModel;
         }
 
 		
-		public Quote GetQuoteById(string Id,int Tenant)
+		public Quote GetQuoteById(string Id,int Tenant,string ComputingPartnerName = "")
         { 
 		    try
             {
@@ -50,7 +50,7 @@ using Simplog.Data.QuoteModel;
 				 if (temp == null)
                     throw new ApplicationException("Quote with Id " + Id + " doesn't exist");
 
-				return QuoteDataMapping(temp,Tenant);
+				return QuoteDataMapping(temp,Tenant,ComputingPartnerName);
 			}
             catch (Exception ex)
             {
@@ -59,7 +59,7 @@ using Simplog.Data.QuoteModel;
             }
         }
 		
-		public Quote GetQuoteByQuoteNumber(string QuoteNumber,int Tenant)
+		public Quote GetQuoteByQuoteNumber(string QuoteNumber,int Tenant,string ComputingPartnerName = "")
         { 
 		    try
             {
@@ -69,7 +69,7 @@ using Simplog.Data.QuoteModel;
 				 if (temp == null)
                     throw new ApplicationException("Quote with QuoteNumber " + QuoteNumber + " doesn't exist");
 
-				return QuoteDataMapping(temp,Tenant);
+				return QuoteDataMapping(temp,Tenant,ComputingPartnerName);
 			}
             catch (Exception ex)
             {
@@ -130,7 +130,7 @@ using Simplog.Data.QuoteModel;
 				   if(MyEntityPM.AgentContactId != null)
 				   {
 					   ContactQueryService ContactService0 = new ContactQueryService(Tenant);
-					   					   temp.AgentContact = ContactService0.GetContactById(MyEntityPM.AgentContactId,Tenant); 
+					   					   temp.AgentContact = ContactService0.GetContactById(MyEntityPM.AgentContactId,Tenant,ComputingPartnerName); 
 			       
 					   				   }
 				    
@@ -139,7 +139,7 @@ using Simplog.Data.QuoteModel;
 				   if(MyEntityPM.AgentId != null)
 				   {
 					   CardQueryService CardService1 = new CardQueryService(Tenant);
-					   					   temp.Agent = CardService1.GetCardById(MyEntityPM.AgentId,Tenant); 
+					   					   temp.Agent = CardService1.GetCardById(MyEntityPM.AgentId,Tenant,ComputingPartnerName); 
 			       
 					   				   }
 				    
@@ -148,7 +148,7 @@ using Simplog.Data.QuoteModel;
 				   if(MyEntityPM.BranchId != null)
 				   {
 					   BranchQueryService BranchService2 = new BranchQueryService(Tenant);
-					   					   temp.Branch = BranchService2.GetBranchById(MyEntityPM.BranchId,Tenant); 
+					   					   temp.Branch = BranchService2.GetBranchById(MyEntityPM.BranchId,Tenant,ComputingPartnerName); 
 			       
 					   				   }
 				    
@@ -157,7 +157,7 @@ using Simplog.Data.QuoteModel;
 				   if(MyEntityPM.DepartmentId != null)
 				   {
 					   DepartmentQueryService DepartmentService3 = new DepartmentQueryService(Tenant);
-					   					   temp.Department = DepartmentService3.GetDepartmentById(MyEntityPM.DepartmentId,Tenant); 
+					   					   temp.Department = DepartmentService3.GetDepartmentById(MyEntityPM.DepartmentId,Tenant,ComputingPartnerName); 
 			       
 					   				   }
 				    
@@ -166,7 +166,7 @@ using Simplog.Data.QuoteModel;
 				   if(MyEntityPM.ChargeableWeightUnitCode != null)
 				   {
 					   WeightUnitQueryService WeightUnitService4 = new WeightUnitQueryService(Tenant);
-					   					   temp.ChargeableWeightUnit = WeightUnitService4.GetWeightUnitByCode(MyEntityPM.ChargeableWeightUnitCode,Tenant); 
+					   					   temp.ChargeableWeightUnit = WeightUnitService4.GetWeightUnitByCode(MyEntityPM.ChargeableWeightUnitCode,Tenant,ComputingPartnerName); 
 			       
 					   				   }
 				    
@@ -175,7 +175,7 @@ using Simplog.Data.QuoteModel;
 				   if(MyEntityPM.ShipperContactId != null)
 				   {
 					   ContactQueryService ContactService5 = new ContactQueryService(Tenant);
-					   					   temp.ShipperContact = ContactService5.GetContactById(MyEntityPM.ShipperContactId,Tenant); 
+					   					   temp.ShipperContact = ContactService5.GetContactById(MyEntityPM.ShipperContactId,Tenant,ComputingPartnerName); 
 			       
 					   				   }
 				    
@@ -184,7 +184,7 @@ using Simplog.Data.QuoteModel;
 				   if(MyEntityPM.ShipperId != null)
 				   {
 					   CardQueryService CardService6 = new CardQueryService(Tenant);
-					   					   temp.Shipper = CardService6.GetCardById(MyEntityPM.ShipperId,Tenant); 
+					   					   temp.Shipper = CardService6.GetCardById(MyEntityPM.ShipperId,Tenant,ComputingPartnerName); 
 			       
 					   				   }
 				    
@@ -193,7 +193,7 @@ using Simplog.Data.QuoteModel;
 				   if(MyEntityPM.ConsigneeContactId != null)
 				   {
 					   ContactQueryService ContactService7 = new ContactQueryService(Tenant);
-					   					   temp.ConsigneeContact = ContactService7.GetContactById(MyEntityPM.ConsigneeContactId,Tenant); 
+					   					   temp.ConsigneeContact = ContactService7.GetContactById(MyEntityPM.ConsigneeContactId,Tenant,ComputingPartnerName); 
 			       
 					   				   }
 				    
@@ -202,7 +202,7 @@ using Simplog.Data.QuoteModel;
 				   if(MyEntityPM.ConsigneeId != null)
 				   {
 					   CardQueryService CardService8 = new CardQueryService(Tenant);
-					   					   temp.Consignee = CardService8.GetCardById(MyEntityPM.ConsigneeId,Tenant); 
+					   					   temp.Consignee = CardService8.GetCardById(MyEntityPM.ConsigneeId,Tenant,ComputingPartnerName); 
 			       
 					   				   }
 				    
@@ -211,7 +211,7 @@ using Simplog.Data.QuoteModel;
 				   if(MyEntityPM.CreatedByUserId != null)
 				   {
 					   UserQueryService UserService9 = new UserQueryService(Tenant);
-					   					   temp.CreatedByUser = UserService9.GetUserById(MyEntityPM.CreatedByUserId,Tenant); 
+					   					   temp.CreatedByUser = UserService9.GetUserById(MyEntityPM.CreatedByUserId,Tenant,ComputingPartnerName); 
 			       
 					   				   }
 				    
@@ -220,7 +220,7 @@ using Simplog.Data.QuoteModel;
 				   if(MyEntityPM.UpdatedByUserId != null)
 				   {
 					   UserQueryService UserService10 = new UserQueryService(Tenant);
-					   					   temp.UpdatedByUser = UserService10.GetUserById(MyEntityPM.UpdatedByUserId,Tenant); 
+					   					   temp.UpdatedByUser = UserService10.GetUserById(MyEntityPM.UpdatedByUserId,Tenant,ComputingPartnerName); 
 			       
 					   				   }
 				    
@@ -229,7 +229,7 @@ using Simplog.Data.QuoteModel;
 				   if(MyEntityPM.CustomerContactId != null)
 				   {
 					   ContactQueryService ContactService11 = new ContactQueryService(Tenant);
-					   					   temp.CustomerContact = ContactService11.GetContactById(MyEntityPM.CustomerContactId,Tenant); 
+					   					   temp.CustomerContact = ContactService11.GetContactById(MyEntityPM.CustomerContactId,Tenant,ComputingPartnerName); 
 			       
 					   				   }
 				    
@@ -238,7 +238,7 @@ using Simplog.Data.QuoteModel;
 				   if(MyEntityPM.CustomerId != null)
 				   {
 					   CardQueryService CardService12 = new CardQueryService(Tenant);
-					   					   temp.Customer = CardService12.GetCardById(MyEntityPM.CustomerId,Tenant); 
+					   					   temp.Customer = CardService12.GetCardById(MyEntityPM.CustomerId,Tenant,ComputingPartnerName); 
 			       
 					   				   }
 				    
@@ -247,7 +247,7 @@ using Simplog.Data.QuoteModel;
 				   if(MyEntityPM.DeliveryAddressId != null)
 				   {
 					   AddressQueryService AddressService13 = new AddressQueryService(Tenant);
-					   					   temp.DeliveryAddress = AddressService13.GetAddressById(MyEntityPM.DeliveryAddressId,Tenant); 
+					   					   temp.DeliveryAddress = AddressService13.GetAddressById(MyEntityPM.DeliveryAddressId,Tenant,ComputingPartnerName); 
 			       
 					   				   }
 				    
@@ -256,7 +256,7 @@ using Simplog.Data.QuoteModel;
 				   if(MyEntityPM.DimensionsUnitCode != null)
 				   {
 					   DimensionsUnitQueryService DimensionsUnitService14 = new DimensionsUnitQueryService(Tenant);
-					   					   temp.DimensionsUnit = DimensionsUnitService14.GetDimensionsUnitByCode(MyEntityPM.DimensionsUnitCode,Tenant); 
+					   					   temp.DimensionsUnit = DimensionsUnitService14.GetDimensionsUnitByCode(MyEntityPM.DimensionsUnitCode,Tenant,ComputingPartnerName); 
 			       
 					   				   }
 				    
@@ -265,7 +265,7 @@ using Simplog.Data.QuoteModel;
 				   if(MyEntityPM.DirectionId != null)
 				   {
 					   DirectionQueryService DirectionService15 = new DirectionQueryService(Tenant);
-					   					   temp.Direction = DirectionService15.GetDirectionById(MyEntityPM.DirectionId,Tenant); 
+					   					   temp.Direction = DirectionService15.GetDirectionById(MyEntityPM.DirectionId,Tenant,ComputingPartnerName); 
 			       
 					   				   }
 				    
@@ -274,7 +274,7 @@ using Simplog.Data.QuoteModel;
 				   if(MyEntityPM.TransportModeId != null)
 				   {
 					   TransportModeQueryService TransportModeService16 = new TransportModeQueryService(Tenant);
-					   					   temp.TransportMode = TransportModeService16.GetTransportModeById(MyEntityPM.TransportModeId,Tenant); 
+					   					   temp.TransportMode = TransportModeService16.GetTransportModeById(MyEntityPM.TransportModeId,Tenant,ComputingPartnerName); 
 			       
 					   				   }
 				    
@@ -283,7 +283,7 @@ using Simplog.Data.QuoteModel;
 				   if(MyEntityPM.FromPortId != null)
 				   {
 					   PortQueryService PortService17 = new PortQueryService(Tenant);
-					   					   temp.FromPort = PortService17.GetPortById(MyEntityPM.FromPortId,Tenant); 
+					   					   temp.FromPort = PortService17.GetPortById(MyEntityPM.FromPortId,Tenant,ComputingPartnerName); 
 			       
 					   				   }
 				    
@@ -292,7 +292,7 @@ using Simplog.Data.QuoteModel;
 				   if(MyEntityPM.ToPortId != null)
 				   {
 					   PortQueryService PortService18 = new PortQueryService(Tenant);
-					   					   temp.ToPort = PortService18.GetPortById(MyEntityPM.ToPortId,Tenant); 
+					   					   temp.ToPort = PortService18.GetPortById(MyEntityPM.ToPortId,Tenant,ComputingPartnerName); 
 			       
 					   				   }
 				    
@@ -301,7 +301,7 @@ using Simplog.Data.QuoteModel;
 				   if(MyEntityPM.GrossWeightUnitCode != null)
 				   {
 					   WeightUnitQueryService WeightUnitService19 = new WeightUnitQueryService(Tenant);
-					   					   temp.GrossWeightUnit = WeightUnitService19.GetWeightUnitByCode(MyEntityPM.GrossWeightUnitCode,Tenant); 
+					   					   temp.GrossWeightUnit = WeightUnitService19.GetWeightUnitByCode(MyEntityPM.GrossWeightUnitCode,Tenant,ComputingPartnerName); 
 			       
 					   				   }
 				    
@@ -310,7 +310,7 @@ using Simplog.Data.QuoteModel;
 				   if(MyEntityPM.IncotermId != null)
 				   {
 					   IncotermQueryService IncotermService20 = new IncotermQueryService(Tenant);
-					   					   temp.Incoterm = IncotermService20.GetIncotermById(MyEntityPM.IncotermId,Tenant); 
+					   					   temp.Incoterm = IncotermService20.GetIncotermById(MyEntityPM.IncotermId,Tenant,ComputingPartnerName); 
 			       
 					   				   }
 				    
@@ -319,7 +319,7 @@ using Simplog.Data.QuoteModel;
 				   if(MyEntityPM.MainCarriageCarrierId != null)
 				   {
 					   CardQueryService CardService21 = new CardQueryService(Tenant);
-					   					   temp.MainCarriageCarrier = CardService21.GetCardById(MyEntityPM.MainCarriageCarrierId,Tenant); 
+					   					   temp.MainCarriageCarrier = CardService21.GetCardById(MyEntityPM.MainCarriageCarrierId,Tenant,ComputingPartnerName); 
 			       
 					   				   }
 				    
@@ -328,7 +328,7 @@ using Simplog.Data.QuoteModel;
 				   if(MyEntityPM.MoveTypeId != null)
 				   {
 					   MoveTypeQueryService MoveTypeService22 = new MoveTypeQueryService(Tenant);
-					   					   temp.MoveType = MoveTypeService22.GetMoveTypeById(MyEntityPM.MoveTypeId,Tenant); 
+					   					   temp.MoveType = MoveTypeService22.GetMoveTypeById(MyEntityPM.MoveTypeId,Tenant,ComputingPartnerName); 
 			       
 					   				   }
 				    
@@ -337,7 +337,7 @@ using Simplog.Data.QuoteModel;
 				   if(MyEntityPM.PickUpAddressId != null)
 				   {
 					   AddressQueryService AddressService23 = new AddressQueryService(Tenant);
-					   					   temp.PickUpAddress = AddressService23.GetAddressById(MyEntityPM.PickUpAddressId,Tenant); 
+					   					   temp.PickUpAddress = AddressService23.GetAddressById(MyEntityPM.PickUpAddressId,Tenant,ComputingPartnerName); 
 			       
 					   				   }
 				    
@@ -346,7 +346,7 @@ using Simplog.Data.QuoteModel;
 				   if(MyEntityPM.QuoteTypeCode != null)
 				   {
 					   QuoteTypeQueryService QuoteTypeService24 = new QuoteTypeQueryService(Tenant);
-					   					   temp.QuoteType = QuoteTypeService24.GetQuoteTypeByCode(MyEntityPM.QuoteTypeCode,Tenant); 
+					   					   temp.QuoteType = QuoteTypeService24.GetQuoteTypeByCode(MyEntityPM.QuoteTypeCode,Tenant,ComputingPartnerName); 
 			       
 					   				   }
 				    
@@ -355,7 +355,7 @@ using Simplog.Data.QuoteModel;
 				   if(MyEntityPM.SaleCurrencyId != null)
 				   {
 					   CurrencyQueryService CurrencyService25 = new CurrencyQueryService(Tenant);
-					   					   temp.SaleCurrency = CurrencyService25.GetCurrencyById(MyEntityPM.SaleCurrencyId,Tenant); 
+					   					   temp.SaleCurrency = CurrencyService25.GetCurrencyById(MyEntityPM.SaleCurrencyId,Tenant,ComputingPartnerName); 
 			       
 					   				   }
 				    
@@ -364,7 +364,7 @@ using Simplog.Data.QuoteModel;
 				   if(MyEntityPM.SalesmanUserId != null)
 				   {
 					   UserQueryService UserService26 = new UserQueryService(Tenant);
-					   					   temp.SalesmanUser = UserService26.GetUserById(MyEntityPM.SalesmanUserId,Tenant); 
+					   					   temp.SalesmanUser = UserService26.GetUserById(MyEntityPM.SalesmanUserId,Tenant,ComputingPartnerName); 
 			       
 					   				   }
 				    
@@ -373,7 +373,7 @@ using Simplog.Data.QuoteModel;
 				   if(MyEntityPM.ShipmentTypeId != null)
 				   {
 					   ShipmentTypeQueryService ShipmentTypeService27 = new ShipmentTypeQueryService(Tenant);
-					   					   temp.ShipmentType = ShipmentTypeService27.ShipmentTypeCustomDataMapping(MyEntityPM.ShipmentTypeId,Tenant); 
+					   					   temp.ShipmentType = ShipmentTypeService27.ShipmentTypeCustomDataMapping(MyEntityPM.ShipmentTypeId,Tenant,ComputingPartnerName); 
 			       
 					   				   }
 				    
@@ -382,7 +382,7 @@ using Simplog.Data.QuoteModel;
 				   if(MyEntityPM.StageId != null)
 				   {
 					   QuoteStageQueryService QuoteStageService28 = new QuoteStageQueryService(Tenant);
-					   					   temp.Stage = QuoteStageService28.GetQuoteStageById(MyEntityPM.StageId,Tenant); 
+					   					   temp.Stage = QuoteStageService28.GetQuoteStageById(MyEntityPM.StageId,Tenant,ComputingPartnerName); 
 			       
 					   				   }
 				    
@@ -391,7 +391,7 @@ using Simplog.Data.QuoteModel;
 				   if(MyEntityPM.ValueOfGoodsCurrencyId != null)
 				   {
 					   CurrencyQueryService CurrencyService29 = new CurrencyQueryService(Tenant);
-					   					   temp.ValueOfGoodsCurrency = CurrencyService29.GetCurrencyById(MyEntityPM.ValueOfGoodsCurrencyId,Tenant); 
+					   					   temp.ValueOfGoodsCurrency = CurrencyService29.GetCurrencyById(MyEntityPM.ValueOfGoodsCurrencyId,Tenant,ComputingPartnerName); 
 			       
 					   				   }
 				    
@@ -400,14 +400,14 @@ using Simplog.Data.QuoteModel;
 				   if(MyEntityPM.VolumeUnitCode != null)
 				   {
 					   VolumeUnitQueryService VolumeUnitService30 = new VolumeUnitQueryService(Tenant);
-					   					   temp.VolumeUnit = VolumeUnitService30.GetVolumeUnitByCode(MyEntityPM.VolumeUnitCode,Tenant); 
+					   					   temp.VolumeUnit = VolumeUnitService30.GetVolumeUnitByCode(MyEntityPM.VolumeUnitCode,Tenant,ComputingPartnerName); 
 			       
 					   				   }
 				   
 				if(MyEntityPM.QuoteCharges != null && MyEntityPM.QuoteCharges.Count > 0)
 				{
 					 QuoteChargeQueryService QuoteChargeService31 = new QuoteChargeQueryService(Tenant);
-					 temp.QuoteCharges = QuoteChargeService31.QuoteChargeDataMapping(MyEntityPM.QuoteCharges,Tenant);
+					 temp.QuoteCharges = QuoteChargeService31.QuoteChargeDataMapping(MyEntityPM.QuoteCharges,Tenant,ComputingPartnerName);
 				}
 
 							  
@@ -416,7 +416,7 @@ using Simplog.Data.QuoteModel;
 				   if(MyEntityPM.PackageType1Id != null)
 				   {
 					   PackageTypeQueryService PackageTypeService31 = new PackageTypeQueryService(Tenant);
-					   					   temp.PackageType1 = PackageTypeService31.GetPackageTypeById(MyEntityPM.PackageType1Id,Tenant); 
+					   					   temp.PackageType1 = PackageTypeService31.GetPackageTypeById(MyEntityPM.PackageType1Id,Tenant,ComputingPartnerName); 
 			       
 					   				   }
 				    
@@ -425,7 +425,7 @@ using Simplog.Data.QuoteModel;
 				   if(MyEntityPM.PackageType2Id != null)
 				   {
 					   PackageTypeQueryService PackageTypeService32 = new PackageTypeQueryService(Tenant);
-					   					   temp.PackageType2 = PackageTypeService32.GetPackageTypeById(MyEntityPM.PackageType2Id,Tenant); 
+					   					   temp.PackageType2 = PackageTypeService32.GetPackageTypeById(MyEntityPM.PackageType2Id,Tenant,ComputingPartnerName); 
 			       
 					   				   }
 				    
@@ -434,7 +434,7 @@ using Simplog.Data.QuoteModel;
 				   if(MyEntityPM.PackageType3Id != null)
 				   {
 					   PackageTypeQueryService PackageTypeService33 = new PackageTypeQueryService(Tenant);
-					   					   temp.PackageType3 = PackageTypeService33.GetPackageTypeById(MyEntityPM.PackageType3Id,Tenant); 
+					   					   temp.PackageType3 = PackageTypeService33.GetPackageTypeById(MyEntityPM.PackageType3Id,Tenant,ComputingPartnerName); 
 			       
 					   				   }
 				    
@@ -443,7 +443,7 @@ using Simplog.Data.QuoteModel;
 				   if(MyEntityPM.PackageType4Id != null)
 				   {
 					   PackageTypeQueryService PackageTypeService34 = new PackageTypeQueryService(Tenant);
-					   					   temp.PackageType4 = PackageTypeService34.GetPackageTypeById(MyEntityPM.PackageType4Id,Tenant); 
+					   					   temp.PackageType4 = PackageTypeService34.GetPackageTypeById(MyEntityPM.PackageType4Id,Tenant,ComputingPartnerName); 
 			       
 					   				   }
 				    
@@ -452,7 +452,7 @@ using Simplog.Data.QuoteModel;
 				   if(MyEntityPM.PackageType5Id != null)
 				   {
 					   PackageTypeQueryService PackageTypeService35 = new PackageTypeQueryService(Tenant);
-					   					   temp.PackageType5 = PackageTypeService35.GetPackageTypeById(MyEntityPM.PackageType5Id,Tenant); 
+					   					   temp.PackageType5 = PackageTypeService35.GetPackageTypeById(MyEntityPM.PackageType5Id,Tenant,ComputingPartnerName); 
 			       
 					   				   }
 				   
@@ -466,7 +466,7 @@ using Simplog.Data.QuoteModel;
 				if(MyEntityPM.QuotePackages != null && MyEntityPM.QuotePackages.Count > 0)
 				{
 					 QuotePackageQueryService QuotePackageService36 = new QuotePackageQueryService(Tenant);
-					 temp.QuotePackages = QuotePackageService36.QuotePackageDataMapping(MyEntityPM.QuotePackages,Tenant);
+					 temp.QuotePackages = QuotePackageService36.QuotePackageDataMapping(MyEntityPM.QuotePackages,Tenant,ComputingPartnerName);
 				}
 
 							 
@@ -478,7 +478,7 @@ using Simplog.Data.QuoteModel;
 				   if(MyEntityPM.PickupCountryId != null)
 				   {
 					   CountryQueryService CountryService36 = new CountryQueryService(Tenant);
-					   					   temp.PickupCountry = CountryService36.GetCountryById(MyEntityPM.PickupCountryId,Tenant); 
+					   					   temp.PickupCountry = CountryService36.GetCountryById(MyEntityPM.PickupCountryId,Tenant,ComputingPartnerName); 
 			       
 					   				   }
 				   
@@ -489,7 +489,7 @@ using Simplog.Data.QuoteModel;
 				   if(MyEntityPM.DeliveryCountryId != null)
 				   {
 					   CountryQueryService CountryService37 = new CountryQueryService(Tenant);
-					   					   temp.DeliveryCountry = CountryService37.GetCountryById(MyEntityPM.DeliveryCountryId,Tenant); 
+					   					   temp.DeliveryCountry = CountryService37.GetCountryById(MyEntityPM.DeliveryCountryId,Tenant,ComputingPartnerName); 
 			       
 					   				   }
 				   

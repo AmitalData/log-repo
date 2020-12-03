@@ -620,7 +620,7 @@ export class AutomationConditionViewModel extends BaseComponent implements OnIni
 
 }
 
-class Operator {
+export class Operator {
     Code: string;
     Name: string;
 

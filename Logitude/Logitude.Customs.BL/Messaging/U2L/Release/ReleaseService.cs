@@ -135,14 +135,14 @@ namespace Logitude.Customs.BL.Messaging.U2L.Release
             this._MyDeclarationPM.TaxationDateTime = AmitalConvertUtil.GetUnifreightFormatedDate(_LogitudeReleaseFile.TaxationDateTime, "LogitudeReleaseFile.TaxationDateTime"); // moran 22.1.17 - AMI-58777
             if (this._MyEntryDeclarationPM != null)
             {
-                if (this._MyEntryDeclarationPM.AutonomyRegionTypeCode != null) this._MyDeclarationPM.AutonomyRegionTypeCode = this._MyEntryDeclarationPM.AutonomyRegionTypeCode;
+                if (!string.IsNullOrWhiteSpace(this._MyEntryDeclarationPM.AutonomyRegionTypeCode)) this._MyDeclarationPM.AutonomyRegionTypeCode = this._MyEntryDeclarationPM.AutonomyRegionTypeCode;
             }
             if (!string.IsNullOrWhiteSpace(_LogitudeReleaseFile.EntryFile))
             {
                 this._MyEntryDeclarationPM = myQueryService.GetSingle(this._LogitudeReleaseFile.EntryFile, true, false);
                 if (this._MyEntryDeclarationPM != null)
                 {
-                    if (this._MyEntryDeclarationPM.AutonomyRegionTypeCode != null) this._MyDeclarationPM.AutonomyRegionTypeCode = this._MyEntryDeclarationPM.AutonomyRegionTypeCode;
+                    if (!string.IsNullOrWhiteSpace(this._MyEntryDeclarationPM.AutonomyRegionTypeCode)) this._MyDeclarationPM.AutonomyRegionTypeCode = this._MyEntryDeclarationPM.AutonomyRegionTypeCode;
                 }
             }
             if (!string.IsNullOrWhiteSpace(this._LogitudeReleaseFile.TransferImporterId)) // moran 22.3.17 - AMI-59830
@@ -231,9 +231,9 @@ namespace Logitude.Customs.BL.Messaging.U2L.Release
                 if (this._MyEntryDeclarationPM != null && this._MyEntryDeclarationPM.Consignments != null && this._MyEntryDeclarationPM.Consignments.Count > 0)
                 {
                     //this._MyDeclarationPM.Consignments[0].ManifestNumber = this._MyEntryDeclarationPM.DeclarationNumber; //Consignments[0].ManifestNumber; // moran 3.3.16 - AMI-56039 - change to Declaration Number // moran 24.3.16 - AMI-56039 - commented
-                    if (this._MyEntryDeclarationPM.Consignments[0].UnloadDate != null) this._MyDeclarationPM.Consignments[0].UnloadDate = this._MyEntryDeclarationPM.Consignments[0].UnloadDate;
-                    if (this._MyEntryDeclarationPM.Consignments[0].UnloadPortCode != null) this._MyDeclarationPM.Consignments[0].UnloadPortCode = this._MyEntryDeclarationPM.Consignments[0].UnloadPortCode;
-                    if (this._MyEntryDeclarationPM.Consignments[0].LoadingPortCode != null) this._MyDeclarationPM.Consignments[0].LoadingPortCode = this._MyEntryDeclarationPM.Consignments[0].LoadingPortCode;
+                    if (this._MyEntryDeclarationPM.Consignments[0].UnloadDate.HasValue) this._MyDeclarationPM.Consignments[0].UnloadDate = this._MyEntryDeclarationPM.Consignments[0].UnloadDate;
+                    if (!string.IsNullOrWhiteSpace(this._MyEntryDeclarationPM.Consignments[0].UnloadPortCode)) this._MyDeclarationPM.Consignments[0].UnloadPortCode = this._MyEntryDeclarationPM.Consignments[0].UnloadPortCode;
+                    if (!string.IsNullOrWhiteSpace(this._MyEntryDeclarationPM.Consignments[0].LoadingPortCode)) this._MyDeclarationPM.Consignments[0].LoadingPortCode = this._MyEntryDeclarationPM.Consignments[0].LoadingPortCode;
                 }
                 this._MyDeclarationPM.Consignments[0].IsLastReleaseFromWarehous = _LogitudeReleaseFile.ISLASTRELEASEFROMWAREHOUS;
                 if (!String.IsNullOrWhiteSpace(_LogitudeReleaseFile.OriginCountryId))
@@ -253,6 +253,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.Release
                 if (mode == "SecondaryEntry")
                 {
                     this._MyDeclarationPM.Consignments[0].ReceiverWarehouseCode = TranslateReceiverWarehouse(_LogitudeReleaseFile.WarehouseId);
+                    this._MyDeclarationPM.Consignments[0].StorageSiteCode = TranslateReceiverWarehouse(_LogitudeReleaseFile.StorageSiteCode);
                 }
                 else
                 {
@@ -895,11 +896,11 @@ namespace Logitude.Customs.BL.Messaging.U2L.Release
                     throw new BusinessErrorException("Error in parsing INVOICEAMOUNT (" + this._INVOICE.INVOICEAMOUNT + ") into integer");
                 }
             }
-            if (this._INVOICE.ISSUEDATE != null)
+            if (!string.IsNullOrWhiteSpace(this._INVOICE.ISSUEDATE))
             {
                 this._MySupplierInvoicePM.IssueDate = AmitalConvertUtil.GetUnifreightFormatedDate(this._INVOICE.ISSUEDATE, "INVOICE.ISSUEDATE");
             }
-            if (this._MySupplierInvoicePM.IssueCountryCode == null && this._INVOICE.ISSUECOUNTRYCODE != null)
+            if (string.IsNullOrWhiteSpace(this._MySupplierInvoicePM.IssueCountryCode) && !string.IsNullOrWhiteSpace(this._INVOICE.ISSUECOUNTRYCODE))
             {
                 string countryCode = "";
                 if (this._INVOICE.ISSUECOUNTRYCODE.Length > 2)
@@ -912,7 +913,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.Release
                 }
                 if (!string.IsNullOrWhiteSpace(countryCode)) this._MySupplierInvoicePM.IssueCountryCode = countryCode;
             }
-            if (this._INVOICE.INCOTERM_ID != null)
+            if (!string.IsNullOrWhiteSpace(this._INVOICE.INCOTERM_ID))
             {
                 this._MySupplierInvoicePM.IncotermCode = this._INVOICE.INCOTERM_ID;
             }
@@ -967,7 +968,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.Release
                     if (decimal.TryParse(this._INVOICE.INSURANCE_PERCENT, out decimal1))
                     {
                         this._MySupplierInvoicePM.InsruancePercentage = decimal1;
-                        if (this._MySupplierInvoicePM.InsruancePercentage != null)
+                        if (this._MySupplierInvoicePM.InsruancePercentage.HasValue)
                         {
                             CalculateInsuranceAmount(this._MySupplierInvoicePM.InsruancePercentage);
                         }
@@ -1028,14 +1029,14 @@ namespace Logitude.Customs.BL.Messaging.U2L.Release
         {
             if (insruancePercentage == null) return;
             decimal? value = null;
-            if (this._MySupplierInvoicePM.InvoiceAmount != null) value = this._MySupplierInvoicePM.InvoiceAmount;
+            if (this._MySupplierInvoicePM.InvoiceAmount.HasValue) value = this._MySupplierInvoicePM.InvoiceAmount;
             if (value == null)
             {
                 value = this._MySupplierInvoicePM.TotalFreightInFreightCurrency;
             }
             else
             {
-                if (this._MySupplierInvoicePM.TotalFreightInFreightCurrency != null) value = value + this._MySupplierInvoicePM.TotalFreightInFreightCurrency;
+                if (this._MySupplierInvoicePM.TotalFreightInFreightCurrency.HasValue) value = value + this._MySupplierInvoicePM.TotalFreightInFreightCurrency;
             }
             value = value * (insruancePercentage / 100);
             if (value != null)
@@ -1113,13 +1114,13 @@ namespace Logitude.Customs.BL.Messaging.U2L.Release
                     this._MySupplierInvoicePM.TotalFreightInNIS = this._MySupplierInvoicePM.TotalFreightInNIS + amountInNIS;
                 }
             }
-            if (this._MySupplierInvoicePM.TotalFreightInNIS != null) this._MySupplierInvoicePM.TotalFreightInNIS = Math.Round(this._MySupplierInvoicePM.TotalFreightInNIS.Value, 2);
+            if (this._MySupplierInvoicePM.TotalFreightInNIS.HasValue) this._MySupplierInvoicePM.TotalFreightInNIS = Math.Round(this._MySupplierInvoicePM.TotalFreightInNIS.Value, 2);
 
             if (this._MySupplierInvoicePM.FreightCurrencyTypeCode == "ILS")
             {
                 this._MySupplierInvoicePM.TotalFreightInFreightCurrency = this._MySupplierInvoicePM.TotalFreightInNIS;
             }
-            else if (!String.IsNullOrWhiteSpace(this._MySupplierInvoicePM.FreightCurrencyTypeCode) && this._MySupplierInvoicePM.TotalFreightInNIS != null)
+            else if (!String.IsNullOrWhiteSpace(this._MySupplierInvoicePM.FreightCurrencyTypeCode) && this._MySupplierInvoicePM.TotalFreightInNIS.HasValue)
             {
                 customsExchangeRates = CustomsExchangeRatequery.GetExchangeRateByCurrencyAndDate(this._MySupplierInvoicePM.FreightCurrencyTypeCode, System.DateTime.Now, ResolvedTenant());
                 CustomsExchangeRatePM freightRate = customsExchangeRates.Where(d => d.CurrencyTypeCode == this._MySupplierInvoicePM.FreightCurrencyTypeCode).FirstOrDefault();
@@ -1129,7 +1130,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.Release
                     this._MySupplierInvoicePM.TotalFreightInFreightCurrency = this._MySupplierInvoicePM.TotalFreightInNIS / freightRate.ExchangeRate;
                 }
             }
-            if (this._MySupplierInvoicePM.TotalFreightInFreightCurrency != null) this._MySupplierInvoicePM.TotalFreightInFreightCurrency = Math.Round(this._MySupplierInvoicePM.TotalFreightInFreightCurrency.Value, 2);
+            if (this._MySupplierInvoicePM.TotalFreightInFreightCurrency.HasValue) this._MySupplierInvoicePM.TotalFreightInFreightCurrency = Math.Round(this._MySupplierInvoicePM.TotalFreightInFreightCurrency.Value, 2);
 
             return SupplierInvoiceFreightAmountPMList;
         }
@@ -1189,39 +1190,42 @@ namespace Logitude.Customs.BL.Messaging.U2L.Release
                         SupplierInvoiceModificationPMList.Add(SupplierInvoiceModificationPM);
                     }
                 }
-                else if (!string.IsNullOrWhiteSpace(_LogitudeReleaseFile.agent_fee) && _LogitudeReleaseFile.agent_fee != "0")
+                if (SupplierInvoiceModificationPMList == null || SupplierInvoiceModificationPMList.Count() < 1 || SupplierInvoiceModificationPMList.Where(r => r.TypeCode == "160").FirstOrDefault() == null)
                 {
-                    var SupplierInvoiceModificationPM = new SupplierInvoiceModificationPM();
-                    if (decimal.TryParse(_LogitudeReleaseFile.agent_fee, out decimal1))
+                    if (!string.IsNullOrWhiteSpace(_LogitudeReleaseFile.agent_fee) && _LogitudeReleaseFile.agent_fee != "0")
                     {
-                        SupplierInvoiceModificationPM.Amount = decimal1;
-                    }
-                    else
-                    {
-                        throw new BusinessErrorException("Error in parsing agent_fee (" + _LogitudeReleaseFile.agent_fee + ") into integer");
-                    }
-                    if (!String.IsNullOrWhiteSpace(_LogitudeReleaseFile.agent_fee_currency))
-                    {
-                        var agentFeeCurrency = new CurrencyTypeRepository(ResolvedTenant());
-                        var myagentFeeCurrency = agentFeeCurrency.GetSingle(_LogitudeReleaseFile.agent_fee_currency);
-                        if (myagentFeeCurrency == null)
+                        var SupplierInvoiceModificationPM = new SupplierInvoiceModificationPM();
+                        if (decimal.TryParse(_LogitudeReleaseFile.agent_fee, out decimal1))
                         {
-                            string agentFeeCurrencyCode = "";
-                            agentFeeCurrencyCode = GetTranslationL2P("IIGC", "CTBCURRENCY", this._INVOICE.TRANSP_VALUE_CURR);
-                            if (!string.IsNullOrWhiteSpace(agentFeeCurrencyCode)) SupplierInvoiceModificationPM.CurrencyTypeCode = agentFeeCurrencyCode;
+                            SupplierInvoiceModificationPM.Amount = decimal1;
                         }
                         else
                         {
-                            SupplierInvoiceModificationPM.CurrencyTypeCode = myagentFeeCurrency.Code.ToString();
+                            throw new BusinessErrorException("Error in parsing agent_fee (" + _LogitudeReleaseFile.agent_fee + ") into integer");
                         }
-                    }
-                    SupplierInvoiceModificationPM.DeclarationId = this._MySupplierInvoicePM.DeclarationId;
-                    if (this._MySupplierInvoicePM.InvoiceCounterKey > 0) SupplierInvoiceModificationPM.InvoiceCounterKey = this._MySupplierInvoicePM.InvoiceCounterKey;
-                    SupplierInvoiceModificationPM.TypeCode = "160";
-                    SupplierInvoiceModificationPM.Tenant = (this._MyDeclarationPM.Tenant > 0) ? this._MyDeclarationPM.Tenant : ResolvedTenant();
-                    SupplierInvoiceModificationPM.ChangeSetOp = ChangeSetOperation.Insert;
+                        if (!String.IsNullOrWhiteSpace(_LogitudeReleaseFile.agent_fee_currency))
+                        {
+                            var agentFeeCurrency = new CurrencyTypeRepository(ResolvedTenant());
+                            var myagentFeeCurrency = agentFeeCurrency.GetSingle(_LogitudeReleaseFile.agent_fee_currency);
+                            if (myagentFeeCurrency == null)
+                            {
+                                string agentFeeCurrencyCode = "";
+                                agentFeeCurrencyCode = GetTranslationL2P("IIGC", "CTBCURRENCY", this._INVOICE.TRANSP_VALUE_CURR);
+                                if (!string.IsNullOrWhiteSpace(agentFeeCurrencyCode)) SupplierInvoiceModificationPM.CurrencyTypeCode = agentFeeCurrencyCode;
+                            }
+                            else
+                            {
+                                SupplierInvoiceModificationPM.CurrencyTypeCode = myagentFeeCurrency.Code.ToString();
+                            }
+                        }
+                        SupplierInvoiceModificationPM.DeclarationId = this._MySupplierInvoicePM.DeclarationId;
+                        if (this._MySupplierInvoicePM.InvoiceCounterKey > 0) SupplierInvoiceModificationPM.InvoiceCounterKey = this._MySupplierInvoicePM.InvoiceCounterKey;
+                        SupplierInvoiceModificationPM.TypeCode = "160";
+                        SupplierInvoiceModificationPM.Tenant = (this._MyDeclarationPM.Tenant > 0) ? this._MyDeclarationPM.Tenant : ResolvedTenant();
+                        SupplierInvoiceModificationPM.ChangeSetOp = ChangeSetOperation.Insert;
 
-                    SupplierInvoiceModificationPMList.Add(SupplierInvoiceModificationPM);
+                        SupplierInvoiceModificationPMList.Add(SupplierInvoiceModificationPM);
+                    }
                 }
 
                 return SupplierInvoiceModificationPMList;
@@ -1356,6 +1360,65 @@ namespace Logitude.Customs.BL.Messaging.U2L.Release
                     if (!string.IsNullOrWhiteSpace(countryCode)) SupplierInvoiceItemPM.OriginCountryCode = countryCode;
                 }
                 SupplierInvoiceItemPM.PreferenceDocumentNumber = invoiceItem.PREFERENCEDOCUMENTNUMBER;
+
+                if (!string.IsNullOrWhiteSpace(invoiceItem.COMMERCE_PRICE) && invoiceItem.COMMERCE_PRICE != "0")
+                {
+                    if (decimal.TryParse(invoiceItem.COMMERCE_PRICE, out decimal1))
+                    {
+                        SupplierInvoiceItemPM.WholeSaleItemPrice = decimal1;
+                    }
+                    else
+                    {
+                        throw new BusinessErrorException("Error in parsing COMMERCE PRICE (" + invoiceItem.COMMERCE_PRICE + ") into decimal");
+                    }
+
+                    if (String.IsNullOrWhiteSpace(invoiceItem.COMMERCE_PRICE_CURRENCY)) invoiceItem.COMMERCE_PRICE_CURRENCY = "ILS";
+                    if (!String.IsNullOrWhiteSpace(invoiceItem.COMMERCE_PRICE_CURRENCY))
+                    {
+                        var wholesaleCurrency = new CurrencyTypeRepository(ResolvedTenant());
+                        var mywholesaleCurrency = wholesaleCurrency.GetSingle(invoiceItem.COMMERCE_PRICE_CURRENCY);
+                        if (mywholesaleCurrency == null)
+                        {
+                            string wholesaleCurrencyCode = "";
+                            wholesaleCurrencyCode = GetTranslationL2P("IIGC", "CTBCURRENCY", invoiceItem.COMMERCE_PRICE_CURRENCY);
+
+                            if (!string.IsNullOrWhiteSpace(wholesaleCurrencyCode)) SupplierInvoiceItemPM.WholeSaleItemPriceCurrencyCode = wholesaleCurrencyCode;
+                        }
+                        else
+                        {
+                            SupplierInvoiceItemPM.WholeSaleItemPriceCurrencyCode = mywholesaleCurrency.Code.ToString();
+                        }
+                    }
+                }
+                if (!string.IsNullOrWhiteSpace(invoiceItem.ADDITIONAL_QUANTITY) && invoiceItem.ADDITIONAL_QUANTITY != "0")
+                {
+                    if (decimal.TryParse(invoiceItem.ADDITIONAL_QUANTITY, out decimal1))
+                    {
+                        SupplierInvoiceItemPM.AdditionalQuantity = decimal1;
+                    }
+                    else
+                    {
+                        throw new BusinessErrorException("Error in parsing ADDITIONAL QUANTITY (" + invoiceItem.ADDITIONAL_QUANTITY + ") into decimal");
+                    }
+                }
+                SupplierInvoiceItemPM.AdditionalQuantityType = TranslateMeasurmentUnit(invoiceItem.ADDITIONAL_QUANTITY_TYPE);
+                if (!string.IsNullOrWhiteSpace(invoiceItem.STATISTICAL_QUANTITY) && invoiceItem.STATISTICAL_QUANTITY != "0")
+                {
+                    if (decimal.TryParse(invoiceItem.STATISTICAL_QUANTITY, out decimal1))
+                    {
+                        SupplierInvoiceItemPM.StatisticQuantity = decimal1;
+                    }
+                    else
+                    {
+                        throw new BusinessErrorException("Error in parsing STATISTICAL QUANTITY (" + invoiceItem.STATISTICAL_QUANTITY + ") into decimal");
+                    }
+                }
+                SupplierInvoiceItemPM.StatisticQuantityType = TranslateMeasurmentUnit(invoiceItem.STATISTICAL_QUANTITY_TYPE);
+                if(SupplierInvoiceItemPM.WholeSaleItemPrice.HasValue || SupplierInvoiceItemPM.AdditionalQuantity.HasValue || SupplierInvoiceItemPM.StatisticQuantity.HasValue)
+                {
+                    SupplierInvoiceItemPM.ItemAdditionalStatus = true;
+                }
+
                 if (invoiceItem.CERTIFICATES != null && invoiceItem.CERTIFICATES.Count() > 0)
                 {
                     SupplierInvoiceItemPM.SupplierInvioceItemCertificats = GetSupplierInvoiceItemCertificatePM(invoiceItem, SupplierInvoiceItemPM);
@@ -1441,7 +1504,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.Release
                     {
                         SupplierInvoiceItemConDeclarPM.DeclarationNumber = this._MyEntryDeclarationPM.DeclarationNumber;
                     }
-                    else if (invoiceItemConDeclar.DECLARATIONID != null)
+                    else if (!string.IsNullOrWhiteSpace(invoiceItemConDeclar.DECLARATIONID))
                     {
                         DeclarationPM EntryDeclarationPM;
                         var myQueryService = new DeclarationQueryService(_context);
@@ -1581,11 +1644,11 @@ namespace Logitude.Customs.BL.Messaging.U2L.Release
                     }
                 }
                 SupplierInvoiceItemVehiclePM.SupplierInvoiceItemVehicleAdds = GetSupplierInvoiceItemVehiclesAddsPM(SupplierInvoiceItemVehiclePM, invoiceItemCar);
-                if (invoiceItemCar.CHASSIS != null && invoiceItemCar.VEHICLE_FILE == null)
+                if (!string.IsNullOrWhiteSpace(invoiceItemCar.CHASSIS) && string.IsNullOrWhiteSpace(invoiceItemCar.VEHICLE_FILE))
                 {
                     SupplierInvoiceItemVehiclePM.VehicleTypeCode = "CN";
                 }
-                else if (invoiceItemCar.VEHICLE_FILE != null)
+                else if (!string.IsNullOrWhiteSpace(invoiceItemCar.VEHICLE_FILE))
                 {
                     SupplierInvoiceItemVehiclePM.VehicleTypeCode = "ZZZ";
                 }

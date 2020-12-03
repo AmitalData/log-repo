@@ -1,5 +1,5 @@
-import {Injectable} from '@angular/core';
-import { HttpClient, HttpResponse } from '@angular/common/http';
+﻿import {Injectable} from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
 import { defer, of } from 'rxjs';
 import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
@@ -12,7 +12,7 @@ import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
 @Injectable()
 
 export class CustDocMetaDataValuesWebService {
-  private _http: HttpClient;
+    private _http: HttpClient
     private _apiUrl: string;
     constructor() {
         this._http = ServiceHelper.HttpClient;

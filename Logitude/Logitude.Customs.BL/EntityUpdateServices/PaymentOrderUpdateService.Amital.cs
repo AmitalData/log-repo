@@ -84,6 +84,12 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 {
                     UpdateUnifreightPaymentOrderBLD(dirtyEntityPM, connectedDeclarationPM, loggingUserId);
                 }
+                LogMessagingUtil.Instance.AppendLine("eventContextTagModel.UnifreighTaskCode = " + eventContextTagModel.UnifreighTaskCode ?? "NULL");
+                if (eventContextTagModel.UnifreighTaskCode == "LE2U" && connectedDeclarationPM.CustomFileNo != null)
+                {
+                    string remarks = "מספר הוראת תשלום " + dirtyEntityPM.PaymentNumber;
+                    SendPPT(connectedDeclarationPM.Tenant,connectedDeclarationPM.CustomFileNo, loggingUserId, remarks);
+                }
             }
 
             toLoadDeclarationPM = (toSendStatusPOP);           
@@ -287,7 +293,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             {
                 myFile.LogitudePaymentOrder.FirstOrDefault().AccountingCard = null;
                 var xml = XmlGenericUtil<LOGIPAYORD>.SerializeObject(myFile, true);
-                OpenUnifreighTask(dirtyEntityPM.AccountingCustomFile,connectedDeclarationPM, "LA2U", "POP", true, xml);
+                OpenUnifreighTask(dirtyEntityPM.AccountingCustomFile,connectedDeclarationPM, "LA2U", "POP", true, xml, dirtyEntityPM.Tenant);
                 LogMessagingUtil.Instance.AppendLine("UpdateUnifreightPaymentOrder->OpenUnifreighTask->LA2U= " + Environment.NewLine + xml);
             }
             else
@@ -296,14 +302,14 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 {
                     myFile.LogitudePaymentOrder.FirstOrDefault().Primary = null;
                     var xml = XmlGenericUtil<LOGIPAYORD>.SerializeObject(myFile, true);
-                    OpenUnifreighTask(dirtyEntityPM.AccountingCustomFile,connectedDeclarationPM, "LA2U", "POP", false, xml);
+                    OpenUnifreighTask(dirtyEntityPM.AccountingCustomFile,connectedDeclarationPM, "LA2U", "POP", false, xml, dirtyEntityPM.Tenant);
                     LogMessagingUtil.Instance.AppendLine("UpdateUnifreightPaymentOrder->OpenUnifreighTask->LA2U= " + Environment.NewLine + xml);
                 }
                 else // moran 18.7.16 - Task 21934
                 {
                     myFile.LogitudePaymentOrder.FirstOrDefault().AccountingCard = null;
                     var xml = XmlGenericUtil<LOGIPAYORD>.SerializeObject(myFile, true);
-                    OpenUnifreighTask(dirtyEntityPM.AccountingCustomFile,connectedDeclarationPM, "LA2U", "POP", true, xml);
+                    OpenUnifreighTask(dirtyEntityPM.AccountingCustomFile,connectedDeclarationPM, "LA2U", "POP", true, xml, dirtyEntityPM.Tenant);
                     LogMessagingUtil.Instance.AppendLine("UpdateUnifreightPaymentOrder->OpenUnifreighTask->LA2U= " + Environment.NewLine + xml);
                 }
             }
@@ -401,7 +407,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             {
                 eventContextTagModel.UnifreighTaskCode = "";
                 dirtyEntityPM.CurrentContextTag = eventContextTagModel;
-                OpenUnifreighTask(dirtyEntityPM.AccountingCustomFile, connectedDeclarationPM, "LP2UB", "RSH", true, "");
+                OpenUnifreighTask(dirtyEntityPM.AccountingCustomFile, connectedDeclarationPM, "LP2UB", "RSH", true, "", dirtyEntityPM.Tenant);
                 LogMessagingUtil.Instance.AppendLine("UpdateUnifreightPaymentOrder->OpenUnifreighTask->LP2UB");
             }
 
@@ -470,7 +476,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
         // moran 3.11.14 - Task 8327 <--
 
         // moran 4.6.15 - Task 12424 -->
-        private void OpenUnifreighTask(string accountingCustomFile,DeclarationPM dirtyDeclarationPM, string taskType, string status, bool raiseStatus, string xmlReq)
+        private void OpenUnifreighTask(string accountingCustomFile,DeclarationPM dirtyDeclarationPM, string taskType, string status, bool raiseStatus, string xmlReq,int  tenant)
         {
             var sw = Stopwatch.StartNew();
 
@@ -481,7 +487,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             }
             try
             {
-                using (_AmitalContext = AmitalContext.GetContext(dirtyDeclarationPM.Tenant))
+                using (_AmitalContext = AmitalContext.GetContext(tenant))
                 {
                     var myGGGQUpdateService = new GGGQUpdateService(_AmitalContext);
                     myGGGQUpdateService.DontAddTransaction = true;//we cant add a transaction with isolation level snap shot inside a read committed one so you have to assign this prop to true mohammad.
@@ -489,21 +495,21 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     myYCULTASKUpdateService.DontAddTransaction = true;//we cant add a transaction with isolation level snap shot inside a read committed one so you have to assign this prop to true mohammad.
                     var requestData = "";
 
-                    var unifreightUser = AuthenticationUtil.ResolveUnifreightUserId(dirtyDeclarationPM.Tenant);
+                    var unifreightUser = AuthenticationUtil.ResolveUnifreightUserId(tenant);
                     if (raiseStatus == true)
                     {
                         //var myDeclarationUpdateService = new UnifrightDeclarationUpdateService(dirtyDeclarationPM, null, null);
                         //requestData = myDeclarationUpdateService.GetMyFUStatusXML(status, status, "", "new", DateTime.Now, true);
                         // moran 22.7.15 - Task 14521 - all statuses for tasks should have user MEHES -->
-                        ICommonDataContext dbContext = CommonDataContext.GetContext(dirtyDeclarationPM.Tenant);
+                        ICommonDataContext dbContext = CommonDataContext.GetContext(tenant);
                         UserRepository userRepository = new UserRepository(dbContext);
-                        var user = userRepository.GetSingleUserByCode("MEHES", dirtyDeclarationPM.Tenant, true);
+                        var user = userRepository.GetSingleUserByCode("MEHES", tenant, true);
                         if (user != null)
                         {
                             _LoggingUserId = user.Id;
                         }
                         // moran 22.7.15 - Task 14521 - all statuses for tasks should have user MEHES <--
-                        requestData = GetMyFUStatusXML(status, status, "", "new", DateTime.Now, true);
+                        requestData = GetMyFUStatusXML(status, status, "", "new", DateTime.Now, tenant, true);
                     }
                     if (xmlReq != null)
                     {
@@ -572,7 +578,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
         // moran 4.6.15 - Task 12424 -->
         private string GetMyFUStatusXML//(string entname, string primary_number, string status_id, string status_place, string comments, string xmlStatus)
-            (string event_id, string status_id, string comments, string xmlStatus, DateTime statusDateTime, bool isRaiseEvent = false) 
+            (string event_id, string status_id, string comments, string xmlStatus, DateTime statusDateTime, int tenant, bool isRaiseEvent = false) 
         {
 
             string loggingUserId = this._LoggingUserId;
@@ -582,7 +588,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             }
              if (string.IsNullOrWhiteSpace(loggingUserId))
             {
-                loggingUserId = AuthenticationUtil.ResolveUserId(this._DirtyDeclarationPM.Tenant);
+                loggingUserId = AuthenticationUtil.ResolveUserId(tenant);
             }
 
             if (isRaiseEvent)
@@ -649,5 +655,36 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             }
         }
         // moran 4.6.15 - Task 12424 <--
+
+        private static void SendPPT(int Tenant, string CustomFileNo, string loggedContactId, string remarks)
+        {
+            if (string.IsNullOrWhiteSpace(loggedContactId))
+            {
+                ContactRepository contactRepository = new ContactRepository(Tenant);
+                var loggedContact = contactRepository.GetSingleContactByEmail(AuthenticationUtil.ResolveLoggingUserId(Tenant), Tenant);
+                if (loggedContact != null)
+                {
+                    loggedContactId = loggedContact.Id;
+                }
+            }
+            string unifrieghtEvent = "PPT";
+            string eventRemarks = remarks;
+            var MyUnifreightEventParam = new UnifreightEventParam()
+            {
+                Code = unifrieghtEvent,
+                Mode = UnifreightEventMode.@new,
+                EventDateTime = DateTime.Now,
+                Entname = "CFIFILEM",
+                PrimaryNum = CustomFileNo,
+                EventRemarks = eventRemarks,
+            };
+            LogMessagingUtil.Instance.AppendLine("MyUnifreightEventParam = " + MyUnifreightEventParam ?? "NULL");
+            var myOpenUnifreighTask = new UnifreightEventTaskService();
+            myOpenUnifreighTask.UpsertEventLE2U(
+                Tenant,
+                loggedContactId,
+                MyUnifreightEventParam);
+        }
+
     }
 }

@@ -690,11 +690,24 @@ export class TenantPM {
     public set VatUniquePartnerTypeCode(newValue: string) { if (this.vatUniquePartnerTypeCode != newValue) { this.vatUniquePartnerTypeCode = newValue; this.MarkAsDirty("VatUniquePartnerTypeCode"); } }
        
 	 
+    private transferQuotationsToUnifreightTrigger: string;
+    public get TransferQuotationsToUnifreightTrigger() { return this.transferQuotationsToUnifreightTrigger; }
+    public set TransferQuotationsToUnifreightTrigger(newValue: string) { if (this.transferQuotationsToUnifreightTrigger != newValue) { this.transferQuotationsToUnifreightTrigger = newValue; this.MarkAsDirty("TransferQuotationsToUnifreightTrigger"); } }
+
+    private sharedLogisMasterMessageLink: boolean;
+    public get SharedLogisMasterMessageLink() { return this.sharedLogisMasterMessageLink; }
+    public set SharedLogisMasterMessageLink(newValue: boolean) { if (this.sharedLogisMasterMessageLink != newValue) { this.sharedLogisMasterMessageLink = newValue; this.MarkAsDirty("SharedLogisMasterMessageLink"); } }
+
+       
+	 
 
     public OldEntityPM: TenantPM;
 		
     public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
+       if(!this.DisableMarkAsDirty)
+       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -702,6 +715,7 @@ export class TenantPM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "Tenant");
            
         }
+	 }
     }
     private MyClone: TenantPM;
 
@@ -713,4 +727,4 @@ export class TenantPM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}

@@ -73,7 +73,9 @@
     <None Include="DBOthers\Views\CardGLAccountDataView.dxml" />
     <None Include="DBScripts\202008241136_EventTypesConverteLocalNameToEnglishName.sxml" />
     <None Include="DBScripts\202009231117_UpdateActiveForInterestFieldOnGLAccount.sxml" />
+    <None Include="DBScripts\202012021000_UpdateNullableGLAccountFields.sxml" />
     <None Include="DBScripts\202009041551_UpdateDisplayNumberFieldOnCards.sxml" />
+    <None Include="DBScripts\202011101133_AvailableForScheduling.sxml" />
     <None Include="DBTables\AccountingCompanyType.dxml" />
     <None Include="DBTables\AccountingEntity.dxml" />
     <None Include="DBTables\AccountingIntegrityCheck.dxml" />
@@ -89,6 +91,9 @@
     <None Include="DBTables\BankDeposit.dxml" />
     <None Include="DBTables\BankDepositLine.dxml" />
     <None Include="DBTables\BankPageEntryType.dxml" />
+    <None Include="DBTables\CalculatedChartsOfAccount.dxml" />
+    <None Include="DBTables\CalculatedChartsOfAccountsLine.dxml" />
+    <None Include="DBTables\CalculatedChartsOfAccountsLineType.dxml" />
     <None Include="DBTables\CashBook.dxml" />
     <None Include="DBTables\CashBookLine.dxml" />
     <None Include="DBTables\CashBookType.dxml" />
@@ -162,6 +167,9 @@
     <None Include="DBTables\WithholdingTaxDeductionType.dxml" />
     <None Include="EntityFiles\AccountingCompanyType.lxml" />
     <None Include="EntityFiles\AccountingNote.lxml" />
+    <None Include="EntityFiles\CalculatedChartsOfAccount.lxml" />
+    <None Include="EntityFiles\CalculatedChartsOfAccountsLine.lxml" />
+    <None Include="EntityFiles\CalculatedChartsLineType.lxml" />
     <None Include="EntityFiles\GLAccountCounter.lxml" />
     <None Include="EntityFiles\GLAccountInterestPeriod.lxml" />
     <None Include="EntityFiles\IntegrityCheckStatus.lxml">
@@ -226,6 +234,7 @@
     <None Include="EntityFiles\TaxReportLineStatus.lxml" />
     <None Include="EntityFiles\TaxReportLineTransmitStatus.lxml" />
     <None Include="EntityFiles\TaxReportLineType.lxml" />
+    <None Include="EntityFiles\UserDefinedReport.lxml" />
     <None Include="EntityFiles\VatReportStatus.lxml" />
     <None Include="EntityFiles\TaxReportStatus.lxml" />
     <None Include="EntityFiles\WithholdingTaxDeductionType.lxml" />

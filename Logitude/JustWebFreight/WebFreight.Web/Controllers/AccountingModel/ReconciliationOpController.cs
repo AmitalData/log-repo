@@ -412,7 +412,7 @@ tenant);
                         string valuestring1 = filter.FieldValue != null ? filter.FieldValue.ToString() : null;
                         object value1 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring1);
 
-                        if (field.FieldName == "DueDate")
+                        if(value1 == "#today")
                         {
                             var today = TenantServerConfigration.GetCurrentDateTime(tenant);
                             value1 = new DateTime(today.Year, today.Month, today.Day, 0, 0, 0, 0);
@@ -490,7 +490,7 @@ tenant);
         }
 
         [HttpGet]
-        public HttpResponseMessage GetFirst100LedgerForReconciliation(string gLAccountId, [FromUri] ApiQueryFilters filters)
+        public HttpResponseMessage GetFirst500LedgerForReconciliation(string gLAccountId, [FromUri] ApiQueryFilters filters)
         {
             try
             {
@@ -511,7 +511,7 @@ tenant);
                     response.Count = count;
                 }
 
-                response.Result = openTransactions.Take(100);
+                response.Result = openTransactions.Take(500);
                 HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, response);
 
                 return reponseMessage;

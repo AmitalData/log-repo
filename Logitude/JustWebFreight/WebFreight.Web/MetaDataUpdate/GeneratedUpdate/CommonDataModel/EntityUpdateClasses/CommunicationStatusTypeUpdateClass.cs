@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 {
    public class CommunicationStatusTypeUpdateClass
    {  		
-		public const string HashString = "9a749b7c8eaa422d012ad213e859d3ff";
+		public const string HashString = "d60899dff995e9671cc7ba0820b13249";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -89,7 +89,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	             				    ObjectTableName =  "CommunicationStatusType",
 			      				    IsNew =  false,
 			      				    DBTableName =  "CommunicationStatusTypes",
-			      				    OldDBTableName =  "CommunicationStatusTypes",
 			      				    ObjectTableSingular =  "Communication Status Type",
 			      				    ObjectTablePlural =  "Communication Status Types",
 			      				    HasCustomFilter =  false,
@@ -120,7 +119,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Communication Status Type",
-			      				    Code =  "6103",
+			      				    Code =  "b92a",
 			      				    Name =  "CommunicationStatusType",
 			      				    CloseTableCode =  "Code",
 			      				    CloseTableName =  "Name",
@@ -147,7 +146,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "Code",
-					  						OldFieldName =  "Code",
 					  						ObjectTableName =  "CommunicationStatusType",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -209,7 +207,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "Name",
-					  						OldFieldName =  "Name",
 					  						ObjectTableName =  "CommunicationStatusType",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -274,7 +271,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "SearchFields",
-					  						OldFieldName =  "SearchFields",
 					  						ObjectTableName =  "CommunicationStatusType",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,

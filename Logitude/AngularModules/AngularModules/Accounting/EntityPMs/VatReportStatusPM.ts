@@ -53,7 +53,10 @@ export class VatReportStatusPM {
     public OldEntityPM: VatReportStatusPM;
 		
     public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
+       if(!this.DisableMarkAsDirty)
+       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -61,6 +64,7 @@ export class VatReportStatusPM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "VatReportStatus");
            
         }
+       }
     }
 
     private MyClone: VatReportStatusPM;

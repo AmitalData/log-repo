@@ -126,17 +126,34 @@
                                             <td style="width: 120px;">
                                                 <LogLabel [ObjectFieldName]="'ClientId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                             </td>
-                                            <td style="width: 160px;">
-                                                <LogLov [ObjectFieldName]="'ClientId'"
-                                                        [ObjectTableName]="ObjectTableName"
-                                                        [DataContext]="DataContext"
-                                                        [LookUpTableName]="'Customs.Client'"
-                                                        [DisplayMemberPath]="'FullName'"
-                                                        [SelectedValue]="ClientId">
-                                                </LogLov>
+                                            <td style="width: 200px;">
+                                                <div style="width: 200px;">
+                                                    <table style="width: 200px;">
+                                                        <tr style="width: 200px;">
+                                                            <td style="width: 160px;">
+                                                                <LogLov [ObjectFieldName]="'ClientId'"
+                                                                        [ObjectTableName]="ObjectTableName"
+                                                                        [DataContext]="DataContext"
+                                                                        [LookUpTableName]="'Customs.Client'"
+                                                                        [DisplayMemberPath]="'FullName'"
+                                                                        [HideColumns]="true"
+                                                                        [SelectedValue]="ClientId">
+                                                                </LogLov>
+                                                            </td>
+                                                            <td style="width: 25px;">
+                                                                <div style="float: right; padding-top:3px;  border-radius: 3px;">
+                                                                    <button [disabled]="ClientId != null" class="Button" style="height:18px; width: 21px;right:8px" (click)="EditClient()" tabindex="-1">
+                                                                        <img style="left: 1px; position:absolute;top:1px; width:17px;height:15px" src="./Images/Buttons/Edit.png" />
+                                                                        <img *ngIf="IsClientPassportEnabled" class="certOkImg" style="position: absolute;top:1px;left:3px; opacity: 0.8;" src="./Images/Buttons/EditWithGreenTick.png" />
+                                                                    </button>
+                                                                </div>
+                                                            </td>
+                                                            <td><div></div></td>
+                                                        </tr>
+                                                    </table>
+                                                </div>
                                             </td>
 
-                                            <!--<td><div style="width:20px"></div></td>-->
                                             <td><div style="width:10px"></div></td>
 
                                             <td style="width: 120px;">
@@ -511,95 +528,117 @@
                                                         <!-- ClaimEntityType -->
                                                         <log-column [header]="'Customs.ClaimsRelatedEntity.F.ClaimEntityTypeCode' | TextCodeTranslationPipe"
                                                                     [binding]="'ClaimEntityTypeName'" [width]="'120'" [Alignment]="'right'">
-                                                            <log-cell-template template="let item" #logcelltemplate>
+                                                            <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                                                 <div class="TextTrimming" style="text-align:right">
                                                                     <span>{{item.ClaimEntityTypeName}}</span>
                                                                 </div>
                                                             </log-cell-template>
+</ng-template>
                                                         </log-column>
 
                                                         <!-- ClaimEntityNumber -->
                                                         <log-column [header]="'Customs.ClaimsRelatedEntity.F.ClaimEntityNumber' | TextCodeTranslationPipe"
                                                                     [binding]="'ClaimEntityNumber'" [width]="'120'" [Alignment]="'right'">
-                                                            <log-cell-template template="let item" #logcelltemplate>
+                                                            <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                                                 <div class="TextTrimming" style="text-align:right">
                                                                     <span>{{item.ClaimEntityNumber}}</span>
                                                                 </div>
                                                             </log-cell-template>
+</ng-template>
                                                         </log-column>
 
                                                         <!-- TapagNumberAndNumeral -->
                                                         <log-column [header]="'Customs.ClaimsRelatedEntity.O.TapagNumberAndNumeral' | TextCodeTranslationPipe"
                                                                     [binding]="'TapagNumberAndNumeral'" [width]="'130'" [Alignment]="'right'">
-                                                            <log-cell-template template="let item" #logcelltemplate>
+                                                            <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                                                 <div class="TextTrimming" style="text-align:right">
                                                                     <span>{{item.TapagNumberAndNumeral}}</span>
                                                                 </div>
                                                             </log-cell-template>
+</ng-template>
                                                         </log-column>
 
                                                         <!-- IsFinancialRefundDemand -->
                                                         <log-column [header]="'Customs.ClaimsRelatedEntity.F.IsFinancialRefundDemand' | TextCodeTranslationPipe"
                                                                     [width]="'100'" [Alignment]="'right'" [binding]="'IsFinancialRefundDemand'">
-                                                            <log-cell-template template="let item" #logcelltemplate>
+                                                            <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                                                 <div div class="TextTrimming" style="text-align:center">
                                                                     <img *ngIf="item.IsFinancialRefundDemand" title="IsFinancialRefundDemand" src="./Images/CheckBoxIcon.png" />
                                                                 </div>
                                                             </log-cell-template>
+</ng-template>
                                                         </log-column>
 
                                                         <!-- ClaimAmount -->
                                                         <log-column [header]="'Customs.ClaimsRelatedEntity.F.ClaimAmount' | TextCodeTranslationPipe"
                                                                     [binding]="'ClaimAmount'" [width]="'100'" [Alignment]="'right'">
-                                                            <log-cell-template template="let item" #logcelltemplate>
+                                                            <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                                                 <div class="TextTrimming" style="text-align:right">
                                                                     <span>{{item.ClaimAmount | NumbersPipe:'n0'}}</span>
                                                                 </div>
                                                             </log-cell-template>
+</ng-template>
                                                         </log-column>
 
                                                         <!-- ContinuousMessagesType -->
                                                         <log-column [header]="'Customs.ClaimsRelatedEntity.F.ContinuousMessagesTypeCode' | TextCodeTranslationPipe"
                                                                     [binding]="'ContinuousMessagesTypeName'" [width]="'300'" [Alignment]="'right'">
-                                                            <log-cell-template template="let item" #logcelltemplate>
+                                                            <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                                                 <div class="TextTrimming" style="text-align:right">
                                                                     <span>{{item.ContinuousMessagesTypeName}}</span>
                                                                 </div>
                                                             </log-cell-template>
+</ng-template>
                                                         </log-column>
 
                                                         <!-- DecisionCode -->
                                                         <log-column [header]="'Customs.ClaimsRelatedEntity.F.DecisionCode' | TextCodeTranslationPipe"
                                                                     [binding]="'DecisionName'" [width]="'150'" [Alignment]="'right'">
-                                                            <log-cell-template template="let item" #logcelltemplate>
+                                                            <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                                                 <div class="TextTrimming" style="text-align:right">
                                                                     <span>{{item.DecisionName}}</span>
                                                                 </div>
                                                             </log-cell-template>
+</ng-template>
                                                         </log-column>
 
                                                         <!-- Delete Button-->
-                                                        <log-column [width]="'50'" [Alignment]="'right'">
-                                                            <log-cell-template template="let item" [TabIndex]="-1" [IgnoreMods]="true">
+                                                        <log-column [width]="'70'" [Alignment]="'right'">
+                                                            <ng-template let-item>
+<log-cell-template  [TabIndex]="-1" [IgnoreMods]="true">
                                                                 <IconButton [Name]="'Edit'" [IsSmall]="true" (click)="EditButtonClicked(item)"
                                                                             style="display: block; float: right; margin-right:3px; margin-top:2px;"></IconButton>
 
                                                                 <IconButton [Name]="'Delete'" [IsSmall]="true" (click)="DeleteButtonClicked(item)"
                                                                             [IsEnabled]="!IsDisplayOnly"
                                                                             style="display: block; float: right; margin-right:3px; margin-top:2px;"></IconButton>
+
+                                                                <IconButton [Name]="'connect'" [IsSmall]="true" (click)="CancelOrObjectionButtonClicked(item)"
+                                                                            [IsEnabled]="!IsDisplayOnly"
+                                                                            style="display: block; float: right; margin-right:3px; margin-top:2px;"></IconButton>
                                                             </log-cell-template>
+</ng-template>
                                                         </log-column>
 
                                                         <!-- IsSendEnabled -->
                                                         <log-column [header]="'Customs.Declaration.O.Send' | TextCodeTranslationPipe"
                                                                     [binding]="'IsSendClaimsRelatedEntity'" [width]="'50'" [Alignment]="'right'">
-                                                            <log-cell-template template="let item" #logcelltemplate>
+                                                            <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                                                 <div class="TextTrimming" style="text-align:right">
                                                                     <LogCheckBox style="display: block; float: right; margin-right:3px; margin-top:2px;"
                                                                                  [ObjectFieldName]="'IsSendClaimsRelatedEntity'" [ObjectTableName]="ObjectTableName"
                                                                                  [DataContext]="item" [HideColumns]="true"></LogCheckBox>
                                                                 </div>
                                                             </log-cell-template>
+</ng-template>
                                                         </log-column>
 
                                                     </logitude-edit-grid>

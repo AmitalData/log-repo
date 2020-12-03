@@ -11,7 +11,7 @@ import { ChildDirective } from '../../Directives/ChildDirective';
 
   templateUrl: "./ObjectFieldTemplate.html",
   selector: 'ObjectFieldTemplate',
-    inputs: ['ObjectTable', 'ObjectField', 'FieldName', 'Entity', 'IsHeaderScreenTemplate', 'IsListColumnCellTemplate', 'IsListColumnHeaderTemplate', 'IsSpotLightTemplate', 'SpotlightDataTemplate', 'EntityChangedData'],
+    inputs: ['ObjectTable', 'ObjectField', 'FieldName', 'Entity', 'IsHeaderScreenTemplate', 'IsListColumnCellTemplate', 'IsListColumnHeaderTemplate', 'IsSpotLightTemplate', 'SpotlightDataTemplate', 'EntityChangedData','RowIndex'],
 })
 
 // https://github.com/angular/angular/issues/10762
@@ -43,6 +43,7 @@ export class ObjectFieldTemplate implements OnInit, AfterViewInit, OnDestroy {
     @ViewChild(ChildDirective) Child: ChildDirective;
     //public test: boolean = false;
     public ShowChildTemplate: boolean = false;
+    public RowIndex: string;
     public get EntityChangedData() {
         return;// this.test;
     }
@@ -281,7 +282,7 @@ export class ObjectFieldTemplate implements OnInit, AfterViewInit, OnDestroy {
 
       SessionLocator.DynamicLoader.Load(myComponentPath, this.Child.Location)
         .then(cmpRef => {
-          cmpRef.instance.Run({ Entity: this.Entity, FieldName: this.FieldName, ObjectTableName: this.ObjectTable.Name, IsHeaderScreenTemplate: this.IsHeaderScreenTemplate, IsSpotLightTemplate: this.IsSpotLightTemplate, SpotlightDataTemplate: this.SpotlightDataTemplate });
+            cmpRef.instance.Run({ Entity: this.Entity, FieldName: this.FieldName, ObjectTableName: this.ObjectTable.Name, IsHeaderScreenTemplate: this.IsHeaderScreenTemplate, IsSpotLightTemplate: this.IsSpotLightTemplate, SpotlightDataTemplate: this.SpotlightDataTemplate, RowIndex: this.RowIndex});
 
           this.DetectChanges();
 

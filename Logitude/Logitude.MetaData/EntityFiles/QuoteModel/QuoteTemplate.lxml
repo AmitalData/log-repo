@@ -54,6 +54,7 @@
   ApplyOnPropertyChangedCode="false"
   HasApiHelper="false"
   AllowedForComputingPartners="false"
+  IsBusinessUnitEnabled="false"
   Code1="&quot;db63&quot;"
   Name1="&quot; Query Group&quot;"
   CustomFieldsCount="0"
@@ -2639,6 +2640,27 @@
     <TextCode
       Code="&quot;QuoteTemplate.S.ShowVATPercentage&quot;"
       DefaultText="&quot;Show VAT Percentage&quot;"
+      TextCodeTypeCode="&quot;S&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;QuoteTemplate.S.Design&quot;"
+      DefaultText="&quot;Design&quot;"
+      TextCodeTypeCode="&quot;S&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;QuoteTemplate.S.ColumnsSettings&quot;"
+      DefaultText="&quot;Columns Settings&quot;"
+      TextCodeTypeCode="&quot;S&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;QuoteTemplate.S.PageNumbering&quot;"
+      DefaultText="&quot;Page Numbering&quot;"
+      TextCodeTypeCode="&quot;S&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;QuoteTemplate.S.ShowRegionalTax&quot;"
+      DefaultText="&quot;Show Regional Tax&quot;"
+      LocalDefaultText="&quot;Show Regional Tax&quot;"
       TextCodeTypeCode="&quot;S&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>

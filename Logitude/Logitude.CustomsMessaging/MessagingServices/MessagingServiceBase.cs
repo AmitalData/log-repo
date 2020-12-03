@@ -88,7 +88,12 @@ namespace Logitude.CustomsMessaging.MessagingServices
 
         public MessagingServiceBase()
         {
-            LogMessagingUtil.Instance.Clear();
+            string cmd= Environment.CommandLine ?? "";
+            if (!cmd.Contains("AmitalCustomsWindowsService"))
+            //if (CurrentCustomsCommandWR == null)
+            {
+                LogMessagingUtil.Instance.Clear();
+            }
             _swMessagingServiceBase = Stopwatch.StartNew(); 
             MessagingServiceFactoryHelper.InitContainer();
             var interfaceCode = this.MainInterfaceCode;//may raise NotImplementedException
@@ -312,8 +317,9 @@ namespace Logitude.CustomsMessaging.MessagingServices
             {
                 var timeout = TimeSpan.FromMinutes(1);
                 var transactionScopeOption = TransactionScopeOption.Required;
-                if (this.MainInterfaceCode == "9000")
+                if (this.MainInterfaceCode == "9000" || this.MainInterfaceCode == "8302" || this.MainInterfaceCode == "2715")
                 {
+                    LogMessagingUtil.Instance.AppendLine("GetTransaction(timeout)=TimeSpan.FromMinutes(5)");
                     timeout = TimeSpan.FromMinutes(5);
                     //transactionScopeOption = TransactionScopeOption.Suppress;
                 }

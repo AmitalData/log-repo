@@ -47,7 +47,7 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
             }
             return interestReportLinesByDatePMs;
         }
-
+        // Mutaz
         private bool CheckRecentCustomerReportForLine(InterestReportPM InterestReportPM, DateTime fromDate)
         {
             InterestReportQueryService ReportQueryService = new InterestReportQueryService(tenant);
@@ -280,19 +280,25 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
             switch (interestRateBaseType) {
                 case "standard": 
                     {
-                        string message = TextCodesTranslator.TranslateText("InterestReport.O.NoStandardBasePeriod", tenant, true);
-                        throw new ApplicationException(message);
+                        ThrowValidationError("InterestReport.O.NoStandardBasePeriod", tenant, true);
+                        break;
+                        //string message = TextCodesTranslator.TranslateText("InterestReport.O.NoStandardBasePeriod", tenant, true);
+                        //throw new ApplicationException(message);
                         
                     }
                 case "exceptional":
                     {
-                        string message = TextCodesTranslator.TranslateText("InterestReport.O.NoExceptionalBasePeriod&quot", tenant, true);
-                        throw new ApplicationException(message);
+                        ThrowValidationError("InterestReport.O.NoExceptionalBasePeriod&quot", tenant, true);
+                        break;
+                        //string message = TextCodesTranslator.TranslateText("InterestReport.O.NoExceptionalBasePeriod&quot", tenant, true);
+                        //throw new ApplicationException(message);
                     }
                 case "credit":
                     {
-                        string message = TextCodesTranslator.TranslateText("InterestReport.O.NoCreditBasePeriod", tenant, true);
-                        throw new ApplicationException(message);
+                        ThrowValidationError("InterestReport.O.NoCreditBasePeriod", tenant, true);
+                        break;
+                        //string message = TextCodesTranslator.TranslateText("InterestReport.O.NoCreditBasePeriod", tenant, true);
+                        //throw new ApplicationException(message);
                     }
             }
         }
@@ -320,12 +326,25 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
 
             if (gLAccountInterestPeriodPM == null)
             {
-                string message = TextCodesTranslator.TranslateText("InterestReport.O.NoGlAccountPeriod", tenant, true);
-                throw new ApplicationException(message);
+                ThrowValidationError("InterestReport.O.NoGlAccountPeriod", tenant, true);
+                //string message = TextCodesTranslator.TranslateText("InterestReport.O.NoGlAccountPeriod", tenant, true);
+                //throw new ApplicationException(message);
             }
 
             return gLAccountInterestPeriodPM;
         }
+
+        public virtual void ThrowValidationError(string textCodeCode,int tenant,bool showLocal)
+        {
+            string message = TextCodesTranslator.TranslateText(textCodeCode, tenant, showLocal);
+            throw new ApplicationException(message);
+        }
+    }
+    public interface IInterestReportLinesByDateCreationService
+    {
+        List<InterestReportLinesByDatePM> CreateInterestReportLinesByDate(InterestReportLinesByDateCreationParams interestReportLinesByDateCreationParams);
+        List<InterestTransactionsGroupedByDate> GetInterestTransactionsGroupedByDate(List<InterestTransactionPM> interestTransactionPMs);
+        void ThrowValidationError(string textCodeCode, int tenant, bool showLocal);
     }
 
 }

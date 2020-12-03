@@ -1,0 +1,45 @@
+ 
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Logitude.Customs.Data.EntityPOCOs;
+using Logitude.Customs.Data.EntityKeys;
+using Simplog.Server.Infrastructure;
+
+namespace Logitude.Customs.Data.Repsitories
+{
+   public partial class DBMigrationRepository:IRepository<DBMigration>
+   {
+        
+		public List<DBMigration> GetMulti(EntityKeyFields entityKeys)
+        {
+            
+			throw new NotImplementedException();
+        }
+
+        public DBMigration GetLastClosed()
+        {
+             return this.GetAll()
+                .Where(r=>r.IsClose==true)
+                .OrderByDescending(r => r.MajorVersion)
+                .ThenByDescending(r=>r.MinorVersion)
+                .FirstOrDefault();
+        }
+
+        public DBMigration GetLast()
+        {
+            return this.GetAll()
+               .OrderByDescending(r => r.MajorVersion)
+               .ThenByDescending(r => r.MinorVersion)
+               .FirstOrDefault();
+        }
+
+
+    }
+
+}
+   

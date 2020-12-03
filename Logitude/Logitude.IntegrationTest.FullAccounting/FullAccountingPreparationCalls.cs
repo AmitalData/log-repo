@@ -6,6 +6,7 @@ using Logitude.BL.InvoiceModel.EntityLists;
 using Logitude.BL.InvoiceModel.EntityPMs;
 using Logitude.IntegrationTest.Core;
 using Logitude.IntegrationTest.Core.Login;
+using Simplog.Server.Infrastructure.DataContracts;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
@@ -18,7 +19,9 @@ namespace Logitude.IntegrationTest.FullAccounting
         public static async Task PrepareVariables()
         {
             await GetFullAccountingSettingsTenant();
-            await GetAccounntingPeriods();
+            await GetAccounntingPeriods("1");
+            await GetAccounntingPeriods("2");
+            await GetAccounntingPeriods("3");
             await OpenCurrentMonth();
             await GetAccountingCurriencyTenant();
             await GetCountryAX();
@@ -27,16 +30,21 @@ namespace Logitude.IntegrationTest.FullAccounting
             await GetPaymnetMethodCash();
             await GetBranchMainOffice();
             await GetChargeTypesAirFreight();
-            await GetCustomerTestGlCustomer12PMCS();
-            await GetVendorTestGlVendor1s5PMV2();
             await GetChartOfAccountVendor1PMCF();
             await GetGlAccountCustomer54l4CSPM();
             await GetGlAccountVendor458GLPM();
-            await GetAddressCustomer12PMCS();
-            await GetAddressVendor1s5PMV2();
             await GetChartOfAccountBankBK771();
             await CreateGlAccountBank1414BKPM();
             await CreateBranchCashBookBK14();
+            await GetCustomerTestGlCustomer12PMCS();
+            await GetVendorTestGlVendor1s5PMV2();
+            await GetAddressCustomer12PMCS();
+            await GetAddressVendor1s5PMV2();
+            await GetJournalPrepration();
+            await GetARInvoice12PMCS();
+            await GetAPInvoice1205();
+            await GetCashBook1421Test();
+            await GetARPayment12PMCS();
         }
 
         private static async Task GetFullAccountingSettingsTenant()
@@ -46,17 +54,70 @@ namespace Logitude.IntegrationTest.FullAccounting
             FullAccountingVariables.VendorControlAccountTenantId = fullAccountingSettingPM.VendorControlAccountId;
             FullAccountingVariables.AccountingActivatedTenant = fullAccountingSettingPM.AccountingActivated;
         }
-        private static async Task GetAccounntingPeriods()
+        private static async Task GetAccounntingPeriods(string PeriodTypeCode)
         {
-            HttpResponseMessage response = await RestClientService.GetAsync("AccountingPeriodViews"+ QueryFiltersPreparation.GetUrlParameters());
+            ApiQueryFilters filters = new ApiQueryFilters();
+            filters.Filter1Name = "PeriodTypeCode";
+            filters.Filter2Name = "Year";
+            filters.Filter1Operator = "Equal";
+            filters.PageSize = 23;
+            filters.Filter1Value = PeriodTypeCode;
+            filters.Filter2Value = DateTime.Now.Year + "";
+
+            HttpResponseMessage response = await RestClientService.GetAsync("AccountingPeriodViews"+ QueryFiltersPreparation.GetUrlParameters(DateTime.Now.Year + "", filters));
             AccountingPeriodList accountingPeriodList = RestClientService.ParseResponse<AccountingPeriodList>(response);
-            FullAccountingVariables.AcocuntingPeriodsId = accountingPeriodList.Id;
-            FullAccountingVariables.AcocuntingPeriodsTenant = accountingPeriodList.Tenant;
-            FullAccountingVariables.AcocuntingPeriodsYear = accountingPeriodList.Year;
-            FullAccountingVariables.AcocuntingPeriodsPeriodTypeCode = accountingPeriodList.PeriodTypeCode;
-            FullAccountingVariables.AcocuntingPeriodsPeriodTypeName = accountingPeriodList.PeriodTypeName;
-            FullAccountingVariables.AcocuntingPeriodsClosedMonth = accountingPeriodList.ClosedMonth;
+            if (accountingPeriodList == null)
+                await CreateaccountingPeriod(PeriodTypeCode);
+            else
+            {
+                FullAccountingVariables.AcocuntingPeriodsId = accountingPeriodList.Id;
+                FullAccountingVariables.AcocuntingPeriodsTenant = accountingPeriodList.Tenant;
+                FullAccountingVariables.AcocuntingPeriodsYear = accountingPeriodList.Year;
+                FullAccountingVariables.AcocuntingPeriodsPeriodTypeCode = accountingPeriodList.PeriodTypeCode;
+                FullAccountingVariables.AcocuntingPeriodsPeriodTypeName = accountingPeriodList.PeriodTypeName;
+                FullAccountingVariables.AcocuntingPeriodsClosedMonth = accountingPeriodList.ClosedMonth;
+
+                if (accountingPeriodList.OpenMonth < DateTime.Now.Month || accountingPeriodList.ClosedMonth >= DateTime.Now.Month   )
+                {
+                   await UpdateAccounntingPeriodsOpenMonth( new AccountingPeriodPM()
+                    {
+                        Id = accountingPeriodList.Id,
+                        ClosedMonth = null,
+                        OpenMonth = DateTime.Now.Month,
+                        PeriodTypeCode = accountingPeriodList.PeriodTypeCode,
+                        Tenant = accountingPeriodList.Tenant,
+                        Year = accountingPeriodList.Year,
+
+                    }); 
+                }
+            }
+          
         }
+        private static async Task UpdateAccounntingPeriodsOpenMonth(AccountingPeriodPM accountingPeriodPM)
+        {
+            HttpResponseMessage response = await RestClientService.PutAsync(accountingPeriodPM, "AccountingPeriods");
+            AccountingPeriodPM AccountingPeriodPM = RestClientService.ParseResponse<AccountingPeriodPM>(response);
+            FullAccountingVariables.AcocuntingPeriodsId = AccountingPeriodPM.Id;
+            FullAccountingVariables.AcocuntingPeriodsTenant = AccountingPeriodPM.Tenant;
+            FullAccountingVariables.AcocuntingPeriodsYear = AccountingPeriodPM.Year;
+            FullAccountingVariables.AcocuntingPeriodsPeriodTypeCode = AccountingPeriodPM.PeriodTypeCode;
+            FullAccountingVariables.AcocuntingPeriodsPeriodTypeName = AccountingPeriodPM.PeriodTypeName;
+            FullAccountingVariables.AcocuntingPeriodsClosedMonth = AccountingPeriodPM.ClosedMonth;
+        }
+
+        private static async Task CreateaccountingPeriod(string PeriodTypeCode)
+        {
+            AccountingPeriodPM accountingPeriodPM = GetNewAccountingPeriodPM(PeriodTypeCode);
+            HttpResponseMessage response = await RestClientService.PostAsync(accountingPeriodPM, "AccountingPeriods");
+            AccountingPeriodPM AccountingPeriodPM = RestClientService.ParseResponse<AccountingPeriodPM>(response);
+            FullAccountingVariables.AcocuntingPeriodsId = AccountingPeriodPM.Id;
+            FullAccountingVariables.AcocuntingPeriodsTenant = AccountingPeriodPM.Tenant;
+            FullAccountingVariables.AcocuntingPeriodsYear = AccountingPeriodPM.Year;
+            FullAccountingVariables.AcocuntingPeriodsPeriodTypeCode = AccountingPeriodPM.PeriodTypeCode;
+            FullAccountingVariables.AcocuntingPeriodsPeriodTypeName = AccountingPeriodPM.PeriodTypeName;
+            FullAccountingVariables.AcocuntingPeriodsClosedMonth = AccountingPeriodPM.ClosedMonth;
+        }
+
         private static async Task OpenCurrentMonth()
         {
             AccountingPeriodPM accountingPeriodPM = await GetSingleAccountingPeriods();
@@ -70,6 +131,19 @@ namespace Logitude.IntegrationTest.FullAccounting
             HttpResponseMessage response = await RestClientService.GetAsync("AccountingPeriods/GetSingle?id=" + FullAccountingVariables.AcocuntingPeriodsId);
             AccountingPeriodPM accountingPeriodPM = RestClientService.ParseResponse<AccountingPeriodPM>(response);
             return accountingPeriodPM;
+        }
+
+        public static async Task<CashBookPM> GetSingleCashBook1421Test()
+        {
+            HttpResponseMessage response = await RestClientService.GetAsync("CashBooks/GetSingle?id=" + FullAccountingVariables.CashBook1421TestId);
+            CashBookPM CashBookPM = RestClientService.ParseResponse<CashBookPM>(response);
+            return CashBookPM;
+        }
+        public static async Task<ARPaymentPM> GetSingleARPayment12PMCS()
+        {
+            HttpResponseMessage response = await RestClientService.GetAsync("ARPayments/GetSingle?id=" + FullAccountingVariables.ARPayment12PMCSId);
+            ARPaymentPM ARPaymentPM = RestClientService.ParseResponse<ARPaymentPM>(response);
+            return ARPaymentPM;
         }
         private static async Task GetAccountingCurriencyTenant()
         {
@@ -103,12 +177,123 @@ namespace Logitude.IntegrationTest.FullAccounting
                 FullAccountingVariables.VatEXEMPTId = vatTypeList.Id;
             }
         }
+
+        private static async Task GetCashBook1421Test()
+        {
+            HttpResponseMessage response = await RestClientService.GetAsync("CashBookViews" + QueryFiltersPreparation.GetUrlParameters("CashBook1421"));
+            CashBookList CashBookList = RestClientService.ParseResponse<CashBookList>(response);
+            if (CashBookList == null)
+                await CreateCashBook1421();
+            else
+            {
+                FullAccountingVariables.CashBook1421TestId = CashBookList.Id;
+                await UpdateCashBook1421();
+            }
+        }
+
+        private static async Task GetARInvoice12PMCS()
+        {
+            HttpResponseMessage response = await RestClientService.GetAsync("ARInvoiceViews" + QueryFiltersPreparation.GetUrlParameters("GE:Customer"));
+            ARInvoiceList aRInvoice = RestClientService.ParseResponse<ARInvoiceList>(response);
+            if (aRInvoice == null)
+                await CreateARInvoice12PMCS();
+            else
+            {
+                FullAccountingVariables.InvoiceNumber12PMCSId = aRInvoice.Id;
+                FullAccountingVariables.InvoiceNumber12PMCSNumber = aRInvoice.InvoiceNumber;
+            }
+        }
+
+        private static async Task GetARPayment12PMCS()
+        {
+            HttpResponseMessage response = await RestClientService.GetAsync("ARPaymentViews" + QueryFiltersPreparation.GetUrlParameters("GE:Customer"));
+            ARPaymentList ARPaymentList = RestClientService.ParseResponse<ARPaymentList>(response);
+            if (ARPaymentList == null)
+                await CreateARPayment12PMCS();
+            else
+            {
+                FullAccountingVariables.ARPayment12PMCSId = ARPaymentList.Id;
+                FullAccountingVariables.ARPayment12PMCSNumber = ARPaymentList.PaymentNo;
+                //await UpdateARPayment12PMCS();
+            }
+        }
+ 
+
+        private static async Task GetAPInvoice1205()
+        {
+            HttpResponseMessage response = await RestClientService.GetAsync("APInvoiceViews" + QueryFiltersPreparation.GetUrlParameters("GE:Vendor"));
+            APInvoiceList aPInvoice = RestClientService.ParseResponse<APInvoiceList>(response);
+            if (aPInvoice == null)
+                await CreateAPInvoice1205();
+            else
+            {
+                FullAccountingVariables.APInvoice1205Id = aPInvoice.Id;
+                FullAccountingVariables.APInvoice1205Number = aPInvoice.InvoiceNumber;
+            }
+        }
         private static async Task CreateVatTypeExempt()
         {
             VatTypePM vatTypeExemptPM = GetNewVatTypeExemptPM();
-            HttpResponseMessage response = await RestClientService.PostAsync(vatTypeExemptPM,"VatType");
+            HttpResponseMessage response = await RestClientService.PostAsync(vatTypeExemptPM,"VatTypes");
             VatTypePM vatTypePM = RestClientService.ParseResponse<VatTypePM>(response);
             FullAccountingVariables.VatEXEMPTId = vatTypePM.Id;
+        }
+        private static async Task CreateCashBook1421()
+        {
+            CashBookPM CashBookPM = GetNewCashBook1421PM();
+            HttpResponseMessage response = await RestClientService.PostAsync(CashBookPM, "CashBooks");
+            CashBookPM cashBookPM = RestClientService.ParseResponse<CashBookPM>(response);
+            FullAccountingVariables.CashBook1421TestId = cashBookPM.Id;
+        }
+        private static async Task UpdateCashBook1421()
+        {
+            CashBookPM CashBookPM = await GetSingleCashBook1421Test();
+            FullAccountingVariables.BranchCashBookBK14Id = CashBookPM.BranchId;
+            CashBookPM.TotalAmount = 50000;
+            HttpResponseMessage response = await RestClientService.PutAsync(CashBookPM, "CashBooks");
+            CashBookPM cashBookPM = RestClientService.ParseResponse<CashBookPM>(response);
+            FullAccountingVariables.CashBook1421TestId = cashBookPM.Id;
+        }
+        private static async Task UpdateARPayment12PMCS()
+        {
+            ARPaymentPM ARPaymentPM = await GetSingleARPayment12PMCS();
+            ARPaymentPM.BranchId = FullAccountingVariables.BranchCashBookBK14Id;
+            HttpResponseMessage response = await RestClientService.PutAsync(ARPaymentPM, "ARPayments");
+            ARPaymentPM aRPaymentPM = RestClientService.ParseResponse<ARPaymentPM>(response);
+            FullAccountingVariables.ARPayment12PMCSId = aRPaymentPM.Id;
+        }
+        private static CashBookPM GetNewCashBook1421PM()
+        {
+            CashBookPM CashBookPM = new CashBookPM();
+            CashBookPM.Tenant = IntegrationTestLoginParameters.Tenant;
+            CashBookPM.EnglishName = "CashBook1421";
+            CashBookPM.LocalName = "CashBook1421";
+            CashBookPM.CurrencyId = FullAccountingVariables.AccountingCurrencyTenantId;
+            CashBookPM.CashBookTypeCode = "1";
+            CashBookPM.BranchId = FullAccountingVariables.BranchCashBookBK14Id;
+            CashBookPM.AccountId = FullAccountingVariables.GLAccountBank1414BKPMId;
+            CashBookPM.TotalAmount = 50000;
+            CashBookPM.UpdateDate = DateTime.UtcNow;
+            CashBookPM.UpdatedByUserId = IntegrationTestLoginParameters.LoginUserId;
+            CashBookPM.CreateDate = DateTime.UtcNow;
+            CashBookPM.CreatedByUserId = IntegrationTestLoginParameters.LoginUserId;
+
+            return CashBookPM;
+        }
+        
+        private static AddressPM GetNewAddressPM()
+        {
+            AddressPM AddressPM = new AddressPM();
+            AddressPM.Tenant = IntegrationTestLoginParameters.Tenant;
+            AddressPM.Description = "Main Address";
+            AddressPM.City = "Main Address";
+            AddressPM.Name = "Main Address";
+            AddressPM.SearchFields = "Main Address";
+            AddressPM.AddressTypeId = "M";
+            AddressPM.ZipCode = "Address";
+            AddressPM.CountryId = FullAccountingVariables.CountryAXId;
+
+            return AddressPM;
         }
         private static VatTypePM GetNewVatTypeExemptPM()
         {
@@ -118,13 +303,13 @@ namespace Logitude.IntegrationTest.FullAccounting
             vatTypePM.EnglishName = "Exempt";
             vatTypePM.LocalName = "Exempt";
             vatTypePM.SearchFields = "EPT,Exempt";
-            vatTypePM.NewEntityPercentage = 0.0;
-            vatTypePM.NewEntityPercentageDate = new DateTime();
+            vatTypePM.NewEntityPercentage = 3.5;
+            vatTypePM.NewEntityPercentageDate = DateTime.UtcNow;
             vatTypePM.VatTypePercentages = new List<VatTypePercentagePM>();
             VatTypePercentagePM vatTypePercentagePM = new VatTypePercentagePM();
             vatTypePercentagePM.Tenant = IntegrationTestLoginParameters.Tenant;
-            vatTypePercentagePM.FromDate = new DateTime();
-            vatTypePercentagePM.Percentage = 0.0;
+            vatTypePercentagePM.FromDate = DateTime.UtcNow;
+            vatTypePercentagePM.Percentage = 3.5;
             vatTypePM.VatTypePercentages.Add(vatTypePercentagePM);
             return vatTypePM;
         }
@@ -258,7 +443,7 @@ namespace Logitude.IntegrationTest.FullAccounting
         }
         private static async Task GetCustomerTestGlCustomer12PMCS()
         {
-            HttpResponseMessage response = await RestClientService.GetAsync("CustomerViews"+ QueryFiltersPreparation.GetUrlParameters("12PMCS"));
+            HttpResponseMessage response = await RestClientService.GetAsync("CustomerViews"+ QueryFiltersPreparation.GetUrlParameters("1122PMCS"));
             CustomerList customerTestGlCustomerList = RestClientService.ParseResponse<CustomerList>(response);
             if (customerTestGlCustomerList == null)
                 await CreateCustomerTestGlCustomer12PMCS();
@@ -273,6 +458,16 @@ namespace Logitude.IntegrationTest.FullAccounting
             HttpResponseMessage response = await RestClientService.PostAsync(CustomerTestGlCustomerPM, "Customers");
             CustomerPM customerPM = RestClientService.ParseResponse<CustomerPM>(response);
             FullAccountingVariables.CustomerTestGlCust12PMCSId = customerPM.Id;
+            if(customerPM!= null)
+                await UpdateCustomerTestGlCustomer12PMCS(customerPM);
+        }
+
+        private static async Task UpdateCustomerTestGlCustomer12PMCS(CustomerPM CustomerTestGlCustomerPM)
+        {
+            
+            CustomerTestGlCustomerPM.GLAccountId = FullAccountingVariables.GLAccountCustomer54l4CSPMId;
+            await RestClientService.GetAsync("GLAccounts/GetConnectCardToGLAccount?accountId=" + FullAccountingVariables.GLAccountCustomer54l4CSPMId + "&cardId=" + CustomerTestGlCustomerPM.Id + "&skipConnectedCardsValidation=true");
+            FullAccountingVariables.CustomerTestGlCust12PMCSId = CustomerTestGlCustomerPM.Id;
         }
         private static CustomerPM GetNewCustomerTestGlCustomer12PMCS()
         {
@@ -280,8 +475,9 @@ namespace Logitude.IntegrationTest.FullAccounting
             customerPM.Tenant = IntegrationTestLoginParameters.Tenant;
             customerPM.EnglishName = "GE:Customer";
             customerPM.LocalName = "GE:Customer";
-            customerPM.SearchFields = "12PMCS,GE:Customer";
-            customerPM.Code = "12PMCS";
+            customerPM.SearchFields = "1122PMCS,GE:Customer";
+            customerPM.GLAccountId = FullAccountingVariables.GLAccountCustomer54l4CSPMId;
+            customerPM.Code = "1122PMCS";
             customerPM.PartnerTypeId = "CS";
             customerPM.CityName = "TEST";
             customerPM.CountryId = FullAccountingVariables.CountryAXId;
@@ -289,11 +485,13 @@ namespace Logitude.IntegrationTest.FullAccounting
             customerPM.CountryName = "palestine";
             customerPM.IsCustomer = true;
             customerPM.CustomerStatusCode = "ACT";
+            customerPM.Addresses = new List<AddressPM>();
+            customerPM.Addresses.Add(GetNewAddressPM());
             return customerPM;
         }
         private static async Task GetVendorTestGlVendor1s5PMV2()
         {
-            HttpResponseMessage response = await RestClientService.GetAsync("VendorViews"+QueryFiltersPreparation.GetUrlParameters("1s5PMV2"));
+            HttpResponseMessage response = await RestClientService.GetAsync("VendorViews"+QueryFiltersPreparation.GetUrlParameters("11ss5PMV2"));
             VendorList VendorTestGlVendorList = RestClientService.ParseResponse<VendorList>(response);
             if (VendorTestGlVendorList == null)
                 await CreateVendorTestGlVend1s5PMV2();
@@ -308,6 +506,15 @@ namespace Logitude.IntegrationTest.FullAccounting
             HttpResponseMessage response = await RestClientService.PostAsync(VendorTestGlVendPM, "Vendors");
             VendorPM vendorPM = RestClientService.ParseResponse<VendorPM>(response);
             FullAccountingVariables.VendorTestGlVendor1s5PMV2Id = vendorPM.Id;
+            if (vendorPM != null)
+                await UpdateVendorTestGlVendPM(vendorPM);
+        }
+
+        private static async Task UpdateVendorTestGlVendPM(VendorPM VendorTestGlVendPM)
+        {
+            VendorTestGlVendPM.GLAccountId = FullAccountingVariables.GLAccountVendor458GLPMId;
+            await RestClientService.GetAsync("GLAccounts/GetConnectCardToGLAccount?accountId=" + FullAccountingVariables.GLAccountVendor458GLPMId + "&cardId=" + VendorTestGlVendPM.Id + "&skipConnectedCardsValidation=true");
+            FullAccountingVariables.VendorTestGlVendor1s5PMV2Id = VendorTestGlVendPM.Id;
         }
         private static VendorPM GetNewVendorTestGlVen1s5PMV2()
         {
@@ -315,13 +522,16 @@ namespace Logitude.IntegrationTest.FullAccounting
             vendorPM.Tenant = IntegrationTestLoginParameters.Tenant;
             vendorPM.EnglishName = "GE:Vendor";
             vendorPM.LocalName = "GE:Vendor";
-            vendorPM.SearchFields = "1s5PMV2,GE:Vendor";
-            vendorPM.Code = "1s5PMV2";
+            vendorPM.GLAccountId = FullAccountingVariables.GLAccountVendor458GLPMId;
+            vendorPM.SearchFields = "11ss5PMV2,GE:Vendor";
+            vendorPM.Code = "11ss5PMV2";
             vendorPM.PartnerTypeId = "VD";
             vendorPM.CityName = "TEST";
             vendorPM.CountryId = FullAccountingVariables.CountryAXId;
             vendorPM.CountryCode = "1";
             vendorPM.CountryName = "palestine";
+            vendorPM.Addresses = new List<AddressPM>();
+            vendorPM.Addresses.Add(GetNewAddressPM());
             return vendorPM;
         }
         private static async Task GetGlAccountCustomer54l4CSPM()
@@ -388,7 +598,7 @@ namespace Logitude.IntegrationTest.FullAccounting
             gLAccountPM.ChartOfAccountsId = FullAccountingVariables.ChartOfAccountCustomer15CFCId;
             gLAccountPM.ChartOfAccountsTypeCode = "3";
             gLAccountPM.ReconcileMethodCode = "0";
-            gLAccountPM.NewGLAccountCardId = FullAccountingVariables.CustomerTestGlCust12PMCSId;
+           // gLAccountPM.NewGLAccountCardId = FullAccountingVariables.CustomerTestGlCust12PMCSId;
             return gLAccountPM;
         }
         private static async Task GetGlAccountVendor458GLPM()
@@ -453,7 +663,7 @@ namespace Logitude.IntegrationTest.FullAccounting
             gLAccountPM.ChartOfAccountsId = FullAccountingVariables.ChartOfAccountVendor1PMCFId;
             gLAccountPM.ChartOfAccountsTypeCode = "4";
             gLAccountPM.ReconcileMethodCode = "0";
-            gLAccountPM.NewGLAccountCardId = FullAccountingVariables.VendorTestGlVendor1s5PMV2Id;
+            //gLAccountPM.NewGLAccountCardId = FullAccountingVariables.VendorTestGlVendor1s5PMV2Id;
             return gLAccountPM;
         }
         public static async Task GetAddressCustomer12PMCS()
@@ -468,7 +678,6 @@ namespace Logitude.IntegrationTest.FullAccounting
             HttpResponseMessage response = await RestClientService.GetAsync("CardViews/GetSingle?id=" + FullAccountingVariables.VendorTestGlVendor1s5PMV2Id);
             CardList cardList = RestClientService.ParseResponse<CardList>(response);
             FullAccountingVariables.AddressVendor1s5PMV2Id = cardList.MainAddressId;
-
         }
         private static async Task GetChartOfAccountBankBK771()
         {
@@ -564,7 +773,8 @@ namespace Logitude.IntegrationTest.FullAccounting
             HttpResponseMessage response = await RestClientService.PostAsync(BranchBK14PM, "Branches");
             BranchPM branchPM = RestClientService.ParseResponse<BranchPM>(response);
             FullAccountingVariables.BranchCashBookBK14Id = branchPM.Id;
- 
+            FullAccountingVariables.NewBranchCashBookBK14Id = branchPM.Id;
+
         }
         private static BranchPM GetNewBranchCashBookBK14()
         {
@@ -576,7 +786,338 @@ namespace Logitude.IntegrationTest.FullAccounting
             BranchPM.Code = "BK14";
             return BranchPM;
         }
+        private static AccountingPeriodPM GetNewAccountingPeriodPM(string PeriodTypeCode)
+        {
+            AccountingPeriodPM AccountingPeriodPM = new AccountingPeriodPM();
+            AccountingPeriodPM.Tenant = IntegrationTestLoginParameters.Tenant;
+            AccountingPeriodPM.PeriodTypeCode = PeriodTypeCode;
+            AccountingPeriodPM.OpenMonth = DateTime.Now.Month;
+            AccountingPeriodPM.Year = DateTime.Now.Year;
+            AccountingPeriodPM.ClosedMonth = null;
+           
+            return AccountingPeriodPM;
+        }
+        private static async Task GetJournalPrepration()
+        {
+            ApiQueryFilters filters = new ApiQueryFilters();
+            filters.Filter1Name = "AccountingEntityReference";
+            filters.Filter1Operator = "Contains";
+            filters.PageSize = 23;
+            filters.Filter1Value = "GE:JO";
+
+            HttpResponseMessage response = await RestClientService.GetAsync("JournalViews" + QueryFiltersPreparation.GetUrlParameters("GE:JO", filters));
+            JournalList journalList = RestClientService.ParseResponse<JournalList>(response);
+            if (journalList == null)
+                await CreateJournalPreperation();
+            else
+            {
+                FullAccountingVariables.JournalPreprationId = journalList.Id;
+            }
+
+        }
+        public static async Task CreateJournalPreperation()
+        {
+            JournalPM entityPM = GetNewJournal();
+            HttpResponseMessage response = await RestClientService.PostAsync(entityPM, "Journals");
+            JournalPM JournalPM = RestClientService.ParseResponse<JournalPM>(response);
+            FullAccountingVariables.JournalPreprationId = JournalPM.Id;
+        }
+        private static JournalPM GetNewJournal()
+        {
+            JournalPM JournalPM = new JournalPM();
+            JournalPM.Tenant = IntegrationTestLoginParameters.Tenant;
+            JournalPM.CreateDate = DateTime.UtcNow;
+            JournalPM.AccountingDate = DateTime.UtcNow;
+            JournalPM.TypeCode = "0";
+            JournalPM.StatusCode = "1";
+            JournalPM.CreatedByUserId = IntegrationTestLoginParameters.LoginUserId;
+            JournalPM.CreatedByUserName = IntegrationTestLoginParameters.LoginUserName;
+            JournalPM.AccountingEntityCode = "1";
+            JournalPM.UpdateDate = DateTime.UtcNow;
+            JournalPM.UpdatedByUserId = IntegrationTestLoginParameters.LoginUserId;
+            JournalPM.UpdatedByUserName = IntegrationTestLoginParameters.LoginUserName;
+            JournalPM.ApproveDate = DateTime.UtcNow;
+            JournalPM.ApprovedByUserId = IntegrationTestLoginParameters.LoginUserId;
+            var RandomString = VariablesGenerater.GetRandomString(5);
+            JournalPM.SearchFields = "GE:Prepration:" + RandomString;
+            JournalPM.AccountingEntityReference = "GE:JO" + RandomString;
+            JournalPM.IsVoided = false;
+            JournalPM.IsLedgerCreated = true;
+            JournalPM.JournalLines = new List<JournalLinePM>();
+
+            JournalLinePM CreditLine = new JournalLinePM();
+            CreditLine.Tenant = IntegrationTestLoginParameters.Tenant;
+            CreditLine.Line = 1;
+            CreditLine.ActionCode = "1";
+            CreditLine.CreditAccountId = FullAccountingVariables.GLAccountCustomer54l4CSPMId;
+            CreditLine.DocumentDate = DateTime.UtcNow;
+            CreditLine.AccountingDate = DateTime.UtcNow;
+            CreditLine.DueDate = DateTime.UtcNow;
+            CreditLine.LocalAmount = 100;
+            CreditLine.CurrencyId = FullAccountingVariables.AccountingCurrencyTenantId;
+            CreditLine.ForeignAmount = 100;
+            CreditLine.ExchangeRate = 1;
+            CreditLine.ActionTypeCode = null;
+
+            JournalPM.JournalLines.Add(CreditLine);
+
+            JournalLinePM DebitLine = new JournalLinePM();
+            DebitLine.Tenant = IntegrationTestLoginParameters.Tenant;
+            DebitLine.Line = 1;
+            DebitLine.ActionCode = "2";
+            DebitLine.DebitAccountId = FullAccountingVariables.GLAccountVendor458GLPMId;
+            DebitLine.DocumentDate = DateTime.UtcNow;
+            DebitLine.AccountingDate = DateTime.UtcNow;
+            DebitLine.DueDate = DateTime.UtcNow;
+            DebitLine.LocalAmount = 100;
+            DebitLine.CurrencyId = FullAccountingVariables.AccountingCurrencyTenantId;
+            DebitLine.ForeignAmount = 100;
+            DebitLine.ExchangeRate = 1;
+            DebitLine.ActionTypeCode = null;
+
+            JournalPM.JournalLines.Add(DebitLine);
+
+            return JournalPM;
+        }
 
 
+        public static async Task CreateARInvoice12PMCS()
+        {
+            ARInvoicePM entityPM = GetNewARInvoice();
+            HttpResponseMessage response = await RestClientService.PostAsync(entityPM, "ARInvoices");
+            ARInvoicePM ARInvoicePM = RestClientService.ParseResponse<ARInvoicePM>(response);
+            FullAccountingVariables.InvoiceNumber12PMCSId = ARInvoicePM.Id;
+            FullAccountingVariables.InvoiceNumber12PMCSNumber = ARInvoicePM.InvoiceNumber;
+        }
+
+        public static async Task CreateARPayment12PMCS()
+        {
+            ARPaymentPM entityPM = GetNewARPayment();
+            HttpResponseMessage response = await RestClientService.PostAsync(entityPM, "ARPayments");
+            ARPaymentPM ARPaymentPM = RestClientService.ParseResponse<ARPaymentPM>(response);
+            FullAccountingVariables.ARPayment12PMCSId = ARPaymentPM.Id;
+            FullAccountingVariables.ARPayment12PMCSNumber = ARPaymentPM.PaymentNo;
+        }
+
+        private static ARInvoicePM GetNewARInvoice()
+        {
+            ARInvoicePM ARInvoicePM = new ARInvoicePM();
+            ARInvoicePM.Tenant = IntegrationTestLoginParameters.Tenant;
+            ARInvoicePM.InvoiceNumber = VariablesGenerater.GetUniqueIdByDate();
+            ARInvoicePM.ARInvoiceTypeCode = "IN";
+            ARInvoicePM.BillToId = FullAccountingVariables.CustomerTestGlCust12PMCSId;
+            ARInvoicePM.BillToPartnerTypeId = "CS";
+            ARInvoicePM.CreatedByUserId = IntegrationTestLoginParameters.LoginUserId;
+            ARInvoicePM.InvoiceDate = DateTime.UtcNow;
+            ARInvoicePM.DueDate = DateTime.UtcNow;
+            ARInvoicePM.UpdateDate = DateTime.UtcNow;
+            ARInvoicePM.UpdatedByUserId = IntegrationTestLoginParameters.LoginUserId;
+            ARInvoicePM.IssuedByUserId = IntegrationTestLoginParameters.LoginUserId;
+            ARInvoicePM.InvoiceCurrencyId = FullAccountingVariables.AccountingCurrencyTenantId;
+            ARInvoicePM.ApprovedByUserId = IntegrationTestLoginParameters.LoginUserId;
+            ARInvoicePM.LocalCurrencyId = FullAccountingVariables.AccountingCurrencyTenantId;
+            ARInvoicePM.SubTotalInLocalCurrency = 400;
+            ARInvoicePM.SubTotalInInvoiceCurrency = 400;
+            ARInvoicePM.AmountInLocalCurrency = 400;
+            ARInvoicePM.AmountInInvoiceCurrency = 400;
+            ARInvoicePM.StatusCode = "AD";
+            ARInvoicePM.StatusName = "Unpaid";
+            ARInvoicePM.InvoiceCurrencyExchangeRate = 1;
+            ARInvoicePM.PaymentTermId = FullAccountingVariables.PaymentTermCashId;
+            ARInvoicePM.CreateDate = DateTime.UtcNow;
+            ARInvoicePM.SearchFields = "1122PMCS,AccountingCustomer2";
+            ARInvoicePM.IsGeneralInvoice = true;
+            ARInvoicePM.ProfitCurrencyId = FullAccountingVariables.AccountingCurrencyTenantId;
+            ARInvoicePM.ProfitCurrencyExchangeRate = 2;
+            ARInvoicePM.AmountDueInLocalCurrency = 40000;
+            ARInvoicePM.AmountDueInProfitCurrency = 2000;
+            ARInvoicePM.BranchId = FullAccountingVariables.BranchMainOfficeId;
+            ARInvoicePM.SetApproved = false;
+            ARInvoicePM.TotalAmountForTaxReport = 4000;
+            ARInvoicePM.TotaVatableAmountForTaxReport = 0;
+            ARInvoicePM.TotalVAT = 0;
+            ARInvoicePM.IsFullAccounting = true;
+            ARInvoicePM.AmountDue = 4000;
+            ARInvoicePM.InvoiceLines = new List<ARInvoiceLinePM>();
+            ARInvoicePM.InvoiceLines.Add(GetNewARInvoiceLine());
+            return ARInvoicePM;
+        }
+
+        private static ARPaymentPM GetNewARPayment()
+        {
+            ARPaymentPM ARPaymentPM = new ARPaymentPM();
+            ARPaymentPM.Tenant = IntegrationTestLoginParameters.Tenant;
+            ARPaymentPM.InvoiceNumber = VariablesGenerater.GetUniqueIdByDate();
+            ARPaymentPM.PaymentNo = VariablesGenerater.GetUniqueIdByDate();
+            ARPaymentPM.IsSecured = false;
+            ARPaymentPM.BillToId = FullAccountingVariables.CustomerTestGlCust12PMCSId;
+            ARPaymentPM.BillToPartnerTypeId = "CS";
+            ARPaymentPM.CreatedByUserId = IntegrationTestLoginParameters.LoginUserId;
+            ARPaymentPM.BranchId = FullAccountingVariables.BranchCashBookBK14Id;
+            ARPaymentPM.PaymentCurrencyId = FullAccountingVariables.AccountingCurrencyTenantId;
+            ARPaymentPM.UpdateDate = DateTime.UtcNow;
+            ARPaymentPM.UpdatedByUserId = IntegrationTestLoginParameters.LoginUserId;
+            ARPaymentPM.AccountingPaymentMethodId = FullAccountingVariables.PaymentMethodCashId;
+            ARPaymentPM.AccountingPaymentMethodCode = "CA";
+            ARPaymentPM.ApprovedByUserId = IntegrationTestLoginParameters.LoginUserId;
+            ARPaymentPM.LocalCurrencyId = FullAccountingVariables.AccountingCurrencyTenantId;
+            ARPaymentPM.AmountInPaymentCurrency = 12000;
+            ARPaymentPM.AmountInLocalCurrency = 12000;
+            ARPaymentPM.PaymentCurrencyExchangeRate = 1;
+            ARPaymentPM.StatusCode = "DR";
+            ARPaymentPM.StatusName = "Unpaid";
+            ARPaymentPM.CashbookId = FullAccountingVariables.CashBook1421TestId;
+            ARPaymentPM.BillToAddressId = FullAccountingVariables.AddressCustomer12PMCS;
+            ARPaymentPM.OpenAmount =12000;
+            ARPaymentPM.CreateDate = DateTime.UtcNow;
+            ARPaymentPM.SearchFields = "ARP2059,AD,CA,Accounting Customer 2 ,NIS";
+            ARPaymentPM.ValueDate = DateTime.UtcNow;
+            ARPaymentPM.RegisterDate = DateTime.UtcNow;
+            ARPaymentPM.ProfitCurrencyExchangeRate = 2;
+            ARPaymentPM.SetApproved = false;
+            ARPaymentPM.SetApproved = true;
+            ARPaymentPM.IsFullAccounting = true;
+
+            return ARPaymentPM;
+
+
+        }
+        private static ARInvoiceLinePM GetNewARInvoiceLine()
+        {
+            ARInvoiceLinePM Line = new ARInvoiceLinePM
+            {
+                Tenant = IntegrationTestLoginParameters.Tenant,
+                ChargesTypeId = FullAccountingVariables.ChargeTypesAirFreightId,
+                ForiegnCurrencyId = FullAccountingVariables.AccountingCurrencyTenantId,
+                ForiegnCurrencyAmount = 400,
+                LocalCurrencyAmount = 400,
+                InvoiceCurrencyAmount = 400,
+                VatTypeId = FullAccountingVariables.VatEXEMPTId,
+                VatPercentage = 0.0,
+                VatTypeName = "Exempt",
+                ForiegnExchangeRate = 1,
+                LineNumber = 1,
+                Quantity = 20,
+                UnitPrice = 200,
+                ViewOrder = 0,
+                ProfitCurrencyAmount = 200,
+                CreditAccount = FullAccountingVariables.GLAccountCustomer54l4CSPMId,
+                Description = "Air Freight",
+                LocalDescription = "Air Freight",
+                GLAccountId = FullAccountingVariables.GLAccountCustomer54l4CSPMId,
+                LineActionCode = "1"
+            };
+
+            return Line;
+        }
+
+        public static async Task CreateAPInvoice1205()
+        {
+
+            APInvoicePM entityPM = GetNewAPInvoice();
+            HttpResponseMessage response = await RestClientService.PostAsync(entityPM, "APInvoices");
+            APInvoicePM APInvoicePM = RestClientService.ParseResponse<APInvoicePM>(response);
+            FullAccountingVariables.APInvoice1205Id = APInvoicePM.Id;
+            FullAccountingVariables.APInvoice1205Number = APInvoicePM.InvoiceNumber;
+        }
+
+
+        private static APInvoicePM GetNewAPInvoice()
+        {
+            APInvoicePM APInvoicePM = new APInvoicePM();
+            APInvoicePM.Tenant = IntegrationTestLoginParameters.Tenant;
+            APInvoicePM.InvoiceNumber = VariablesGenerater.GetUniqueIdByDate();
+            APInvoicePM.IsSecured = false;
+            APInvoicePM.InternalNumber = VariablesGenerater.GetRandomString(5);
+            APInvoicePM.VendorId = FullAccountingVariables.VendorTestGlVendor1s5PMV2Id;
+            APInvoicePM.CreatedByUserId = IntegrationTestLoginParameters.LoginUserId;
+            APInvoicePM.InvoiceDate = DateTime.UtcNow;
+            APInvoicePM.PaymentTermId = FullAccountingVariables.PaymentTermCashId;
+            APInvoicePM.DueDate = DateTime.UtcNow;
+            APInvoicePM.InvoiceCurrencyExchangeRate = 1;
+            APInvoicePM.UpdateDate = DateTime.UtcNow;
+            APInvoicePM.UpdatedByUserId = IntegrationTestLoginParameters.LoginUserId;
+            APInvoicePM.InvoiceCurrencyId = FullAccountingVariables.AccountingCurrencyTenantId;
+            APInvoicePM.ApprovedByUserId = IntegrationTestLoginParameters.LoginUserId;
+            APInvoicePM.LocalCurrencyId = FullAccountingVariables.AccountingCurrencyTenantId;
+            APInvoicePM.SubTotalInLocalCurrency = 200;
+            APInvoicePM.SubTotalInInvoiceCurrency = 200;
+            APInvoicePM.AmountInLocalCurrency = 200;
+            APInvoicePM.AmountInInvoiceCurrency = 200;
+            APInvoicePM.StatusCode = "AD";
+            APInvoicePM.StatusName = "Unpaid";
+            APInvoicePM.VendorPartnerTypeId = "VD";
+            APInvoicePM.AmountInProfitCurrency = 100;
+            APInvoicePM.InvoiceExpectedAmount = 400;
+            APInvoicePM.IsClosed = false;
+            APInvoicePM.JournalNumber = "1230";
+            APInvoicePM.CreateDate = DateTime.UtcNow;
+            APInvoicePM.SearchFields = "12205,test";
+            APInvoicePM.IsGeneralInvoice = true;
+            APInvoicePM.ProfitCurrencyId = FullAccountingVariables.AccountingCurrencyTenantId;
+            APInvoicePM.ProfitCurrencyExchangeRate = 2;
+            APInvoicePM.AmountDueInLocalCurrency = 1200;
+            APInvoicePM.AmountDueInProfitCurrency = 600;
+            APInvoicePM.BranchId = FullAccountingVariables.BranchMainOfficeId;
+            APInvoicePM.SetApproved = true;
+            APInvoicePM.VATNumber = "5145599";
+            APInvoicePM.AccountingDate = DateTime.UtcNow;
+            APInvoicePM.IsExternalEntity = false;
+            APInvoicePM.IsGeneralInvoice = true;
+            APInvoicePM.AmountDue = 200;
+            APInvoicePM.InvoiceLines = new List<APInvoiceLinePM>();
+            APInvoicePM.InvoiceLines.Add(GetNewAPInvoiceLine());
+            APInvoicePM.TotalVATs = new List<APInvoiceTotalVATPM>();
+            APInvoicePM.TotalVATs.Add(GetNewAPInvoiceTotalVATs());
+            return APInvoicePM;
+        }
+
+        private static APInvoiceLinePM GetNewAPInvoiceLine()
+        {
+            APInvoiceLinePM Line = new APInvoiceLinePM
+            {
+                Tenant = IntegrationTestLoginParameters.Tenant,
+                ChargesTypeId = FullAccountingVariables.ChargeTypesAirFreightId,
+                ForiegnCurrencyId = FullAccountingVariables.AccountingCurrencyTenantId,
+                ForiegnCurrencyAmount = 400,
+                LocalCurrencyAmount = 400,
+                InvoiceCurrencyAmount = 400,
+                VatTypeId = FullAccountingVariables.VatEXEMPTId,
+                VatPercentage = 0.0,
+                VatTypeName = "Exempt",
+                ForiegnExchangeRate = 1,
+                LineNumber = 1,
+                Quantity = 20,
+                AmountTypeCode = "NEXP",
+                ProfitCurrencyAmount = 400,
+                ChargeTypeGLAccountId = FullAccountingVariables.GLAccountCustomer54l4CSPMId,
+                Description = "Air Freight",
+                LocalDescription = "Air Freight",
+
+            };
+
+            return Line;
+        }
+
+        private static APInvoiceTotalVATPM GetNewAPInvoiceTotalVATs()
+        {
+            APInvoiceTotalVATPM Line = new APInvoiceTotalVATPM
+            {
+                Tenant = IntegrationTestLoginParameters.Tenant,
+                VatTypeId = FullAccountingVariables.VatEXEMPTId,
+                VatPercent = 0.0,
+                VatTypeName = "Exempt",
+                VatTypeCell = "Exempt (0%)",
+                InvoiceCurrencyVatableAmount = 200,
+                LocalVatableAmount = 200,
+                ProfitVatableAmount = 100,
+                LocalVATAmount = 0,
+                ProfitCurrencyVATAmount = 0,
+
+
+            };
+
+            return Line;
+        }
     }
 }

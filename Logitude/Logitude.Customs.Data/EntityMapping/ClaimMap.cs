@@ -27,7 +27,7 @@ namespace Logitude.Customs.Data.EntityMapping
 
             this.Property(t => t.Tenant).HasColumnName("Tenant").IsRequired();
 
-            this.Property(t => t.ImporterClaimTypeCode).HasColumnName("ImporterClaimTypeCode").HasMaxLength(2).IsUnicode(false);
+            this.Property(t => t.ImporterClaimTypeCode).HasColumnName("ImporterClaimTypeCode").HasMaxLength(3).IsUnicode(false);
 
             this.Property(t => t.SoldierPersonalNumber).HasColumnName("SoldierPersonalNumber").HasMaxLength(9).IsUnicode(false);
 

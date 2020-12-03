@@ -4,7 +4,7 @@
   ObjectTableName="&quot;CommunicationStatusType&quot;"
   IsNew="false"
   DBTableName="&quot;CommunicationStatusTypes&quot;"
-  OldDBTableName="&quot;CommunicationStatusTypes&quot;"
+  DBTableOldNames="CommunicationStatusTypes"
   ObjectTableSingular="&quot;Communication Status Type&quot;"
   ObjectTablePlural="&quot;Communication Status Types&quot;"
   HasCustomFilter="false"
@@ -36,7 +36,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Communication Status Type&quot;"
-  Code="&quot;6103&quot;"
+  Code="&quot;b92a&quot;"
   Name="&quot;CommunicationStatusType&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;Name&quot;"
@@ -52,6 +52,7 @@
   ApplyOnPropertyChangedCode="false"
   HasApiHelper="false"
   AllowedForComputingPartners="false"
+  IsBusinessUnitEnabled="false"
   Code1="&quot;8b86&quot;"
   Name1="&quot; Query Group&quot;"
   CustomFieldsCount="0"
@@ -65,7 +66,7 @@
   <field
     Id="&quot;5b03cc8f-56e4-4c31-8c8c-864a233adb39&quot;"
     FieldName="&quot;Code&quot;"
-    OldFieldName="&quot;Code&quot;"
+    OldNames="Code"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -113,6 +114,7 @@
     DefaultText="&quot;Code&quot;"
     IsNullable="false"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="true"
     HasDataBaseField="true"
     HasPMField="true"
@@ -138,7 +140,7 @@
   <field
     Id="&quot;8ac20812-565a-43dc-9941-969927f801b2&quot;"
     FieldName="&quot;Name&quot;"
-    OldFieldName="&quot;Name&quot;"
+    OldNames="Name"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -189,6 +191,7 @@
     ListLableDefaultText="&quot;Name&quot;"
     IsNullable="false"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -214,7 +217,7 @@
   <field
     Id="&quot;45f61ba2-fdcf-4809-979c-57e10537c9d0&quot;"
     FieldName="&quot;SearchFields&quot;"
-    OldFieldName="&quot;SearchFields&quot;"
+    OldNames="SearchFields"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -263,6 +266,7 @@
     HelpTextDefaultText="&quot;Searching by :&#xA;1: codes Tables&#xA;2: names&quot;"
     IsNullable="false"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -342,6 +346,14 @@
       Code="&quot;T&quot;"
       Name="&quot;Time out&quot;"
       SearchFields="&quot;T,Time out&quot;" />
+    <Record
+      Code="&quot;C&quot;"
+      Name="&quot;Processing&quot;"
+      SearchFields="&quot;C,Processing,&quot;" />
+    <Record
+      Code="&quot;E&quot;"
+      Name="&quot;Demo&quot;"
+      SearchFields="&quot;E,Demo,&quot;" />
   </Records>
   <DataContracts />
   <AdditionalTextCodes />

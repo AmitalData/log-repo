@@ -583,6 +583,14 @@ export class LogGridComponentV2 implements OnInit, AfterViewInit, OnChanges, OnD
     //        this.rowSelectedEvent.next({ colDef, colIndex, rowData, rowIndex });
     //    }
     //}
+
+    public BackFromEditAction(res: any) {
+        if (this.rows.filter(a => a.rowIndex == res.rowIndex).length > 0) {
+            //this.rows.filter(a => a.rowIndex == res.rowIndex)[0].rowData = res.Data;
+            this.controller.cachedData[res.rowIndex] = res.Data;
+            //this.updateDisplayList();
+        }
+    }
     AdvanceFilters: ApiQueryFilters;
     processQueryFilter(filters) {
         this.SearchFieldChanged = false;

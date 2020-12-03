@@ -54,7 +54,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 }
                 return;
             }
-            
+
             if (requestParams.Pseudo)
             {
                 return;
@@ -65,7 +65,12 @@ namespace Logitude.CustomsMessaging.ResponseServices
             //    return;
             //}
             var listOf9001TDExt = ManipulateCustomResponse(requestParams.TableId, customResponse);
+            if ((requestParams.TableId == "1344" || requestParams.TableId == "2653") && listOf9001TDExt.Count == 0)
+            {
+                LogMessagingUtil.Instance.AppendLine("1344 dataset is null>> no update");
+                return;
 
+            }
             var done = false;
 
             if (
@@ -114,7 +119,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
 
                     }
-                    
+                    table.LastUpdateDate = DateTime.Now;
                     table.StatusCode = "3";
                     closedTableRep.Update(table);
                     closedTableRep.SubmitChanges();
@@ -126,7 +131,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 LoadCustomClosedTables.UpdateSingleClosedTable(requestParams.TableId, requestParams, customResponse);
             }
             bool allways_try_To_Build_Custom_Zip_File = true;
-            if (allways_try_To_Build_Custom_Zip_File )
+            if (allways_try_To_Build_Custom_Zip_File)
             {
                 UpdateCustomZipFile(requestParams.Tenant, requestParams.LoggingUserId);//allways try To Build Custom Zip File !!! 
             }
@@ -140,7 +145,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             }
         }
 
-        private void UpdateCustomZipFile(int tenant,string LoggingUserId)
+        private void UpdateCustomZipFile(int tenant, string LoggingUserId)
         {
             var objectTableId = ObjectTableRepository.GetObjectTableByName("Customs.CustomsClosedTable");
             var customsRequestsSheetQS = new CustomsRequestsSheetQueryService(tenant);
@@ -212,11 +217,11 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
 
         }
-    
 
 
 
-    
+
+
 
         private List<SYSTBL_NG_9001_MSG_SystemTablesResponseTableDataExt> ManipulateCustomResponse(string tableId, SYSTBL_NG_9001_MSG_SystemTablesResponse customResponse)
         {
@@ -231,7 +236,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         customResponse.TableData = RemoveMoreThen(customResponse.TableData, 3);
                     }
                     break;
-                
+
                 case "1339": //כמו כן , יש נפילה בשל אורך שדות , יש לשים טיפול שיתעלם משדות באורך גדול מ 17 (ייתכן שזה גם הגורם לכך שלא מתעדכן שדה SiteTypeCode )
                     {
                         customResponse.TableData = RemoveMoreThen(customResponse.TableData, 17);
@@ -241,20 +246,22 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 case "1344": //EnglishName must be a string or array type with a maximum length of '40'.
                     {
                         //customResponse.TableData = TruncateNameTo(customResponse.TableData, 40);
-
                         var extList = new List<SYSTBL_NG_9001_MSG_SystemTablesResponseTableDataExt>();
-                        Logitude.CustomsMessaging.Helpers.ClosedTable.
-                                                    ManipulateCustomResponse.
-                                                DataSetToTableData(customResponse,
-                                                (newResponseTableData, dr) =>
-                                                {
-                                                    var newExt =
-                                                        SYSTBL_NG_9001_MSG_SystemTablesResponseTableDataExt.CreateNew(newResponseTableData);
-                                                    newExt.MyInternationalSite = new Helpers.ClosedTable.InternationalSiteP();
-                                                    if (!writeHighlight)
+                        if (!String.IsNullOrWhiteSpace(customResponse.TableAsDataSetTableData))
+                        {
+
+                            Logitude.CustomsMessaging.Helpers.ClosedTable.
+                                                        ManipulateCustomResponse.
+                                                    DataSetToTableData(customResponse,
+                                                    (newResponseTableData, dr) =>
                                                     {
-                                                        LogMessagingUtil.Instance.Append(
-                        @"1344:InternationalSite:Calc=
+                                                        var newExt =
+                                                            SYSTBL_NG_9001_MSG_SystemTablesResponseTableDataExt.CreateNew(newResponseTableData);
+                                                        newExt.MyInternationalSite = new Helpers.ClosedTable.InternationalSiteP();
+                                                        if (!writeHighlight)
+                                                        {
+                                                            LogMessagingUtil.Instance.Append(
+                            @"1344:InternationalSite:Calc=
  if (!string.IsNullOrWhiteSpace(dr[""extraNumericData""].ToString()))
      CustomsCountryQueryService customsCountryQueryService = new CustomsCountryQueryService(CustomContext.GetContext(0));
         var myCountry = customsCountryQueryService.GetSingleByMalamID(newResponseTableData.extraNumericData.ToString());
@@ -264,47 +271,48 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
 ID List :
 ");
-                                                        writeHighlight = true;
-                                                    }
-                                                    /*
-                                                    if (!string.IsNullOrWhiteSpace(dr["ExtraNumericData"].ToString()))
-                                                    {
-                                                        LogMessagingUtil.Instance.Append(newResponseTableData.id + ",");
-                                                        CustomsCountryQueryService customsCountryQueryService = new CustomsCountryQueryService(CustomContext.GetContext(0));
-                                                        if (!string.IsNullOrWhiteSpace(newResponseTableData.extraNumericData.ToString()))
+                                                            writeHighlight = true;
+                                                        }
+                                                        /*
+                                                        if (!string.IsNullOrWhiteSpace(dr["ExtraNumericData"].ToString()))
                                                         {
-                                                            var myCountry = customsCountryQueryService.GetSingleByMalamID(newResponseTableData.extraNumericData.ToString());
-
-                                                            if (myCountry != null && !string.IsNullOrWhiteSpace(myCountry.Code))
+                                                            LogMessagingUtil.Instance.Append(newResponseTableData.id + ",");
+                                                            CustomsCountryQueryService customsCountryQueryService = new CustomsCountryQueryService(CustomContext.GetContext(0));
+                                                            if (!string.IsNullOrWhiteSpace(newResponseTableData.extraNumericData.ToString()))
                                                             {
-                                                                LogMessagingUtil.Instance.Append("amitalCountryMalamID = " + newResponseTableData.extraNumericData.ToString() + " Translated to " + myCountry.Code);
-                                                                newExt.MyInternationalSite.CountryTypeCode = myCountry.Code;
+                                                                var myCountry = customsCountryQueryService.GetSingleByMalamID(newResponseTableData.extraNumericData.ToString());
+
+                                                                if (myCountry != null && !string.IsNullOrWhiteSpace(myCountry.Code))
+                                                                {
+                                                                    LogMessagingUtil.Instance.Append("amitalCountryMalamID = " + newResponseTableData.extraNumericData.ToString() + " Translated to " + myCountry.Code);
+                                                                    newExt.MyInternationalSite.CountryTypeCode = myCountry.Code;
+                                                                }
+                                                            }
+                                                        }*/
+
+                                                        if (!string.IsNullOrWhiteSpace(dr["ID"].ToString()))
+                                                        {
+                                                            LogMessagingUtil.Instance.Append(newResponseTableData.id + ",");
+                                                            CustomsCountryQueryService customsCountryQueryService = new CustomsCountryQueryService(CustomContext.GetContext(0));
+                                                            if (!string.IsNullOrWhiteSpace(newResponseTableData.id))
+                                                            {
+                                                                var myCountry = customsCountryQueryService.GetSingle(newResponseTableData.id.Substring(0, 2), false, true);
+
+                                                                if (myCountry != null && !string.IsNullOrWhiteSpace(myCountry.Code))
+                                                                {
+                                                                    LogMessagingUtil.Instance.Append("Country ID = " + myCountry.Code);
+                                                                    newExt.MyInternationalSite.CountryTypeCode = myCountry.Code;
+                                                                }
                                                             }
                                                         }
-                                                    }*/
 
-                                                    if (!string.IsNullOrWhiteSpace(dr["ID"].ToString()))
-                                                    {
-                                                        LogMessagingUtil.Instance.Append(newResponseTableData.id + ",");
-                                                        CustomsCountryQueryService customsCountryQueryService = new CustomsCountryQueryService(CustomContext.GetContext(0));
-                                                        if (!string.IsNullOrWhiteSpace(newResponseTableData.id))
+                                                        if (newResponseTableData.name.Length > 40)
                                                         {
-                                                            var myCountry = customsCountryQueryService.GetSingle(newResponseTableData.id.Substring(0,2),false,true);
-
-                                                            if (myCountry != null && !string.IsNullOrWhiteSpace(myCountry.Code))
-                                                            {
-                                                                LogMessagingUtil.Instance.Append("Country ID = " + myCountry.Code);
-                                                                newExt.MyInternationalSite.CountryTypeCode = myCountry.Code;
-                                                            }
+                                                            newExt.name = newResponseTableData.name.Substring(0, 40);
                                                         }
-                                                    }
-
-                                                    if (newResponseTableData.name.Length > 40)
-                                                    {
-                                                        newExt.name = newResponseTableData.name.Substring(0, 40);
-                                                    }
-                                                    extList.Add(newExt);
-                                                });
+                                                        extList.Add(newExt);
+                                                    });
+                        }
                         return extList;
                     }
                     break;
@@ -403,12 +411,57 @@ ID List :
                                                         LogMessagingUtil.Instance.Append(newResponseTableData.id + ",");
                                                         newExt.MyGovernmentProcedureType.IsImport = true;
                                                     }
+                                                    if (dr["InUseByExportDeclaration"].ToString().Equals(true.ToString(), StringComparison.OrdinalIgnoreCase))
+                                                    {
+                                                        LogMessagingUtil.Instance.Append(newResponseTableData.id + ",");
+                                                        newExt.MyGovernmentProcedureType.IsExport = true;
+                                                    }
                                                     extList.Add(newExt);
                                                 });
                         return extList;
                         break;
                     }
 
+                case "1416":
+                case "ModificationAndDiscountType":
+                    {
+                        var extList = new List<SYSTBL_NG_9001_MSG_SystemTablesResponseTableDataExt>();
+                        Logitude.CustomsMessaging.Helpers.ClosedTable.
+                                                    ManipulateCustomResponse.
+                                                DataSetToTableData(customResponse,
+                                                (newResponseTableData, dr) =>
+                                                {
+                                                    var newExt =
+                                                        SYSTBL_NG_9001_MSG_SystemTablesResponseTableDataExt.CreateNew(newResponseTableData);
+                                                    newExt.MyModificationAndDiscountType = new Helpers.ClosedTable.ModificationAndDiscountType();
+                                                    if (!writeHighlight)
+                                                    {
+                                                        LogMessagingUtil.Instance.Append(
+                        @"1416:ModificationAndDiscountType:Calc=
+ if (dr[""IsRelevantInvoice""].ToString().Equals(true.ToString(), StringComparison.OrdinalIgnoreCase))
+        newExt.MyModificationAndDiscountType.IsRelevantInvoice = true;
+if (dr[""IsRelevantGoodsItem""].ToString().Equals(true.ToString(), StringComparison.OrdinalIgnoreCase))
+        newExt.MyModificationAndDiscountType.IsRelevantGoodsItem = true;
+ID List :
+");
+                                                        writeHighlight = true;
+                                                    }
+                                                    if (dr["IsRelevantInvoice"].ToString().Equals(true.ToString(), StringComparison.OrdinalIgnoreCase))
+                                                    {
+                                                        LogMessagingUtil.Instance.Append(newResponseTableData.id + ",");
+                                                        newExt.MyModificationAndDiscountType.IsRelevantInvoice = true;
+                                                    }
+                                                    if (dr["IsRelevantGoodsItem"].ToString().Equals(true.ToString(), StringComparison.OrdinalIgnoreCase))
+                                                    {
+                                                        LogMessagingUtil.Instance.Append(newResponseTableData.id + ",");
+                                                        newExt.MyModificationAndDiscountType.IsRelevantGoodsItem = true;
+                                                    }
+                                                    extList.Add(newExt);
+                                                });
+                        return extList;
+                        break;
+
+                    }
                 default:
                     break;
             }
@@ -515,11 +568,11 @@ ID List :
                         throw new System.Exception(@"(name,state,id is must !!) Line no " + i + @"
 " + line);
                     }
-                    if ( name.StartsWith(id, StringComparison.OrdinalIgnoreCase))
+                    if (name.StartsWith(id, StringComparison.OrdinalIgnoreCase))
                     {
                         name = name.Substring(id.Length);
                         name = name.Trim();
- 
+
                     }
 
 

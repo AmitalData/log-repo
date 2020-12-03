@@ -11,6 +11,8 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
 {
     public class AddTextCodes
     {
+        
+        private static Dictionary<string, TextCode> AddedTextCodes = new Dictionary<string, TextCode>();
         public static TextCode AddTextCode(TextCodeDetails textCodeDetails, TextCodeRepository textCodeRepository, Dictionary<string, TextCode> textCodes)
         {
             if (textCodes.Keys.Contains(textCodeDetails.Code + textCodeDetails.Tenant + textCodeDetails.ObjectTableId))
@@ -30,20 +32,26 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
             }
             else
             {
-                TextCode newTextCode = new TextCode()
+                if (!AddedTextCodes.ContainsKey(textCodeDetails.Code))
                 {
-                    TextCodeTypeCode = textCodeDetails.TextCodeTypeCode,
-                    DefaultTextPlural = textCodeDetails.DefaultTextPlural,
-                    DefaultText = textCodeDetails.DefaultText,
-                    Code = textCodeDetails.Code,
-                    Id = IdCounter.GetIdWithIdsRange("TextCode", 100, textCodeDetails.Tenant).ToString(),//IdCounter.GetNumber("TextCode",textCodeDetails.Tenant).ToString(),
-                    ObjectTableId = textCodeDetails.ObjectTableId,
-                    Tenant = textCodeDetails.Tenant,
-                    LocalDefaultText = textCodeDetails.LocalDefaultText,
-                    IsSpellChecked = textCodeDetails.IsSpellChecked,
-                };
-                textCodeRepository.Add(newTextCode);
-                return newTextCode;
+                    TextCode newTextCode = new TextCode()
+                    {
+                        TextCodeTypeCode = textCodeDetails.TextCodeTypeCode,
+                        DefaultTextPlural = textCodeDetails.DefaultTextPlural,
+                        DefaultText = textCodeDetails.DefaultText,
+                        Code = textCodeDetails.Code,
+                        Id = IdCounter.GetNumber("TextCode", textCodeDetails.Tenant).ToString(),
+                        ObjectTableId = textCodeDetails.ObjectTableId,
+                        Tenant = textCodeDetails.Tenant,
+                        LocalDefaultText = textCodeDetails.LocalDefaultText,
+                        IsSpellChecked = textCodeDetails.IsSpellChecked,
+                    };
+                    textCodeRepository.Add(newTextCode);
+                    AddedTextCodes.Add(textCodeDetails.Code, newTextCode);
+                    return newTextCode;
+                }
+                else
+                    return AddedTextCodes[textCodeDetails.Code];
             }
         }
 

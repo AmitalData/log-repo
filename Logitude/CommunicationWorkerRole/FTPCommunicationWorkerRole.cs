@@ -42,9 +42,10 @@ namespace CommunicationWorkerRole
         {
             if (!General.IsUpdating())
             {
-                try
+                try 
                 {
                     int tenant = 0;
+                    int d = 0;
                     queueservice = new DbQueueService();
                     queueservice.InitializeQueue("FTPCommunicationLogQueue", 0);
 

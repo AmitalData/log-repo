@@ -217,6 +217,41 @@ export class ConsignmentPM {
     public set DeliveryPlaceName(newValue: string) { if (this.deliveryPlaceName != newValue) { this.deliveryPlaceName = newValue; this.MarkAsDirty("DeliveryPlaceName"); } }
        
 	 
+    private isDangerousGoods: boolean;
+    public get IsDangerousGoods() { return this.isDangerousGoods; }
+    public set IsDangerousGoods(newValue: boolean) { if (this.isDangerousGoods != newValue) { this.isDangerousGoods = newValue; this.MarkAsDirty("IsDangerousGoods"); } }
+       
+	 
+    private finalDestinationPortCode: string;
+    public get FinalDestinationPortCode() { return this.finalDestinationPortCode; }
+    public set FinalDestinationPortCode(newValue: string) { if (this.finalDestinationPortCode != newValue) { this.finalDestinationPortCode = newValue; this.MarkAsDirty("FinalDestinationPortCode"); } }
+       
+	 
+    private finalDestinationPortName: string;
+    public get FinalDestinationPortName() { return this.finalDestinationPortName; }
+    public set FinalDestinationPortName(newValue: string) { if (this.finalDestinationPortName != newValue) { this.finalDestinationPortName = newValue; this.MarkAsDirty("FinalDestinationPortName"); } }
+       
+	 
+    private exportRecieverWareHouseCode: string;
+    public get ExportRecieverWareHouseCode() { return this.exportRecieverWareHouseCode; }
+    public set ExportRecieverWareHouseCode(newValue: string) { if (this.exportRecieverWareHouseCode != newValue) { this.exportRecieverWareHouseCode = newValue; this.MarkAsDirty("ExportRecieverWareHouseCode"); } }
+       
+	 
+    private exportRecieverWareHouseName: string;
+    public get ExportRecieverWareHouseName() { return this.exportRecieverWareHouseName; }
+    public set ExportRecieverWareHouseName(newValue: string) { if (this.exportRecieverWareHouseName != newValue) { this.exportRecieverWareHouseName = newValue; this.MarkAsDirty("ExportRecieverWareHouseName"); } }
+       
+	 
+    private exportUnloadingPortCode: string;
+    public get ExportUnloadingPortCode() { return this.exportUnloadingPortCode; }
+    public set ExportUnloadingPortCode(newValue: string) { if (this.exportUnloadingPortCode != newValue) { this.exportUnloadingPortCode = newValue; this.MarkAsDirty("ExportUnloadingPortCode"); } }
+       
+	 
+    private exportLoadingPortCode: string;
+    public get ExportLoadingPortCode() { return this.exportLoadingPortCode; }
+    public set ExportLoadingPortCode(newValue: string) { if (this.exportLoadingPortCode != newValue) { this.exportLoadingPortCode = newValue; this.MarkAsDirty("ExportLoadingPortCode"); } }
+       
+	 
 
     public OldEntityPM: ConsignmentPM;
 	

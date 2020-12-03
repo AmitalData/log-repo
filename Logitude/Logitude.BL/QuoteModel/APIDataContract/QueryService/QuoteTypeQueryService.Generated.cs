@@ -36,7 +36,7 @@ using Simplog.Data.QuoteModel;
         }
 
 		
-		public QuoteType GetQuoteTypeByCode(string Code,int Tenant)
+		public QuoteType GetQuoteTypeByCode(string Code,int Tenant,string ComputingPartnerName = "")
         { 
 		    try
             {
@@ -46,7 +46,7 @@ using Simplog.Data.QuoteModel;
 				 if (temp == null)
                     throw new ApplicationException("QuoteType with Code " + Code + " doesn't exist");
 
-				return QuoteTypeDataMapping(temp,Tenant);
+				return QuoteTypeDataMapping(temp,Tenant,ComputingPartnerName);
 			}
             catch (Exception ex)
             {

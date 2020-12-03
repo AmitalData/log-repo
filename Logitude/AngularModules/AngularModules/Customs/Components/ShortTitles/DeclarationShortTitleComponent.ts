@@ -2,7 +2,7 @@
 import { Component, ChangeDetectorRef } from '@angular/core';
 import {EntityArgs} from '../../../Infrastructure/DataContracts/EntityArgs';
 import {DeclarationPM} from '../../EntityPMs/DeclarationPM';
-import {AmitalGatewayUtil} from '../../../Infrastructure/Utilities/AmitalGatewayUtil';
+import {AmitalGatewayUtil, UnifreightMessageM} from '../../../Infrastructure/Utilities/AmitalGatewayUtil';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 //C:\LW\Customs\AngularModules\AngularModules\Customs\Controller\DeclarationEditComponentController.ts
 import {DeclarationEditComponentController} from '../../Controller/DeclarationEditComponentController';
@@ -60,7 +60,8 @@ export class DeclarationShortTitleComponent {
     public set CourierImporterName(newValue: string) { this._CourierImporterName = newValue; }
 
     private BuildComponent() {
-
+        this._EntityNumber = null;
+        this.EntityNumber = null;
         if (this.EntityPM.IsCourierDeclaration) {
 
             if (this.EntityPM.CustomFileNo && (this.EntityPM.CalculatedImporterName || this.EntityPM.ImporterName)) {
@@ -119,10 +120,28 @@ export class DeclarationShortTitleComponent {
 
         var declarationEditComponentController: DeclarationEditComponentController = (this.CurrentSession.CurrentEditComponent.EditComponentController as DeclarationEditComponentController)
         declarationEditComponentController.ForceCheckIfLockWhileReload();
-         
+
+        let myViewModelName = "DeclarationShortTitleComponent";
+
+        SessionLocator.SelectedSession.StopBusyIndicator();
+        let sub = AmitalGatewayUtil.Instance.UnifaceRequestArrived
+            .subscribe(
+                (mess: UnifreightMessageM) => {
+                    var IsMatchUnifreightCallbackCommand = (
+                        mess.LogitudeEntity == AmitalGatewayUtil.Instance.DeclarationMessaging.LogitudeEntityDeclaration &&
+                        mess.LogitudeEntityNumber == this.EntityPM.Id &&
+                        mess.LogitudeViewModel == myViewModelName);
+                    if (IsMatchUnifreightCallbackCommand) {
+                        sub.unsubscribe();
+                        SessionLocator.SelectedSession.StopBusyIndicator();
+                        SessionLocator.SelectedSession.CurrentEditComponent.ReloadEntityPM();
+                    }
+                }
+            );
+
         var unifreightMessageM =
             AmitalGatewayUtil.Instance.
-                DeclarationMessaging.GetMessage(this.EntityPM.CustomFileNo, this.EntityPM.Id, "DeclarationShortTitleComponent");
+                DeclarationMessaging.GetMessage(this.EntityPM.CustomFileNo, this.EntityPM.Id, myViewModelName);
 
 
         AmitalGatewayUtil.Instance.SendRequestToUnifreightAsync(

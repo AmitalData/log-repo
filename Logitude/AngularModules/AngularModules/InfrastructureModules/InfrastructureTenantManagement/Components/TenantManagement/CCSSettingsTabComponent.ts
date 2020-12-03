@@ -272,7 +272,7 @@ export class CCSSettingsTabComponent extends BaseComponent {
     }
 
     private myCurrentTenantAirlines: AirlineList[];
-    private LoadCurrentTenantAirlines() {
+    public LoadCurrentTenantAirlines() {
         this.myCurrentTenantAirlines = [];
 
         this.myService.GetAirlinesForRequestedTenant(this.EntityPM.Id).subscribe((myResponse: ServiceResponse) => {
@@ -292,8 +292,8 @@ export class CCSSettingsTabComponent extends BaseComponent {
         var list: TenantManagementAirlineItem[] = [];
 
         this.myZeroTenantAirlines.forEach(tenantZeroItem => {
-            var myTenantItem: AirlineList = this.myCurrentTenantAirlines.filter(d => d.Code == tenantZeroItem.Code)[0];
-            list.push(new TenantManagementAirlineItem(myTenantItem, tenantZeroItem, this.EntityPM));
+            var myTenantItem: AirlineList = this.myCurrentTenantAirlines.filter(d => d.Code.toLowerCase() == tenantZeroItem.Code.toLowerCase())[0];
+            list.push(new TenantManagementAirlineItem(myTenantItem, tenantZeroItem, this.EntityPM, this));
         });
 
         list.sort((a, b) => { return (a.IsRegistered === b.IsRegistered) ? 0 : (a.IsRegistered > b.IsRegistered) ? -1 : 1 }).forEach(item => {
@@ -362,7 +362,7 @@ export class TenantManagementAirlineItem extends BaseComponent {
     private partnersService: PartnersDomainService;
     public DataContext: TenantManagementAirlineItem = this;
     private CurrentSession = SessionLocator.SelectedSession;
-    constructor(myTenantItem: AirlineList, tenantZeroItem: AirlineList, entityPM: TenantManagementPM) {
+    constructor(myTenantItem: AirlineList, tenantZeroItem: AirlineList, entityPM: TenantManagementPM, public fatherComponent: CCSSettingsTabComponent) {
         super();
         this.currenctAirline = myTenantItem;
         this.zeroAirline = tenantZeroItem;
@@ -466,6 +466,7 @@ export class TenantManagementAirlineItem extends BaseComponent {
             this.CurrentSession.StartBusyIndicator("Request Airline...");
             this.partnersService.RegistrationRequested(newValue, this.tenantAirlineId, this.zeroAirline.Id, this.entityPM.Id, this.entityPM.AWBMessagesCCSTypeCode).subscribe((myResponse: ServiceResponse) => {
                 if (!myResponse.HasError) {
+                    this.fatherComponent.LoadCurrentTenantAirlines();
                     this.CurrentSession.StopBusyIndicator();
                 }
                 else {

@@ -16,7 +16,16 @@ namespace Simplog.Data.CommonDataModel.Mapping
         {
             // Primary Key
             this.HasKey(t => t.Tenant);
-            this.Property(t => t.Tenant).HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
+            var dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
+            if (dbms == "oracle")
+            {
+                this.Property(t => t.Tenant).HasDatabaseGeneratedOption(null);
+            }
+            else
+            {
+                this.Property(t => t.Tenant).HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
+            }
+                
 
             this.Property(t => t.Server)
                 .HasMaxLength(200)
@@ -44,7 +53,16 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.ParentTenant).HasColumnName("ParentTenant");
             this.Property(t => t.Server).HasColumnName("Server");
             this.Property(t => t.UserName).HasColumnName("UserName");
-            this.Property(t => t.Password).HasColumnName("Password");
+            
+            if (dbms == "oracle")
+            {
+                this.Property(t => t.Password).HasColumnName("Password_");
+            }
+            else
+            {
+                this.Property(t => t.Password).HasColumnName("Password");
+            }
+            
             this.Property(t => t.Catalog).HasColumnName("Catalog");
             this.Property(t => t.IsParentTenant).HasColumnName("IsParentTenant");
             this.Property(t => t.PrivateUserName).HasColumnName("PrivateUserName");

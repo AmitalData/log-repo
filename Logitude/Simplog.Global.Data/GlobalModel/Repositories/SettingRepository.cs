@@ -98,7 +98,7 @@ namespace Simplog.Global.Data.GlobalModel.Repositories
                     select a).FirstOrDefault();
 
 
-            return Array.IndexOf(sitting.LogitudeDemoTenants.Split(','), tenant) != -1;
+            return sitting.LogitudeDemoTenants!=null? Array.IndexOf(sitting.LogitudeDemoTenants.Split(','), tenant) != -1:false;
         }
     }
 }

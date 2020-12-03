@@ -20,17 +20,69 @@ namespace Logitude.Customs.BL
    {
        public List<PaymentOrderTypeDetails> GetAll()
        {
-		    var all = new List<PaymentOrderTypeDetails>(); 
+		    var all = new List<PaymentOrderTypeDetails>();  
+            all.Add(new PaymentOrderTypeDetails()
+            {    
+                Code = "1", 
+                SearchFields = "1,מיסים", 
+                Inactive = false, 
+                LocalName = "מיסים", 
+			});
+			 
+            all.Add(new PaymentOrderTypeDetails()
+            {    
+                Code = "2", 
+                SearchFields = "2,פיקדון", 
+                Inactive = false, 
+                LocalName = "פיקדון", 
+			});
+			 
+            all.Add(new PaymentOrderTypeDetails()
+            {    
+                Code = "3", 
+                SearchFields = "3,חילוט פיקדון", 
+                Inactive = false, 
+                LocalName = "חילוט פיקדון", 
+			});
+			 
+            all.Add(new PaymentOrderTypeDetails()
+            {    
+                Code = "4", 
+                SearchFields = "4,אגרות ורישיונות", 
+                Inactive = false, 
+                LocalName = "אגרות ורישיונות", 
+			});
+			 
+            all.Add(new PaymentOrderTypeDetails()
+            {    
+                Code = "5", 
+                SearchFields = "5,פיקדון ספציפי", 
+                Inactive = false, 
+                LocalName = "פיקדון ספציפי", 
+			});
+			 
+            all.Add(new PaymentOrderTypeDetails()
+            {    
+                Code = "6", 
+                SearchFields = "6,החזר הלוואת נכה", 
+                Inactive = false, 
+                LocalName = "החזר הלוואת נכה", 
+			});
+			
             return all;
        }
 
 	    public void MapPoco(PaymentOrderType newPoco)
-        {    
+        {   
+		    newPoco.Code = this.Code;  
+			newPoco.SearchFields = GetSearchFields(this);   
+		    newPoco.Inactive = this.Inactive;  
+		    newPoco.LocalName = this.LocalName;   
         }
 
 		public string GetSearchFields(PaymentOrderType rec)
         {   
-           return string.Empty;
+           return String.Concat(rec.Code,",",rec.Inactive,",",rec.LocalName,",");
         }
    }
 }

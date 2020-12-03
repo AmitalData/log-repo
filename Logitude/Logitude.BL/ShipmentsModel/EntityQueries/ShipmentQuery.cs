@@ -1359,6 +1359,9 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             shipmentPM.AgentSharedManifestRef = shipment.AgentSharedManifestRef;
             shipmentPM.ManifestLastSharingDate = shipment.ManifestLastSharingDate;
 
+            shipmentPM.IsAccrualsApproved = shipment.IsAccrualsApproved;
+            shipmentPM.AccrualsApprovalDate = shipment.AccrualsApprovalDate;
+
             if (!string.IsNullOrEmpty(shipmentPM.SalesmanUserId))
             {
                 Contact myContact = ContactRepository.GetSingleContact(shipmentPM.SalesmanUserId, tenant, true);
@@ -3950,6 +3953,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                         shipmentPM.SendUpdatesToAgentEnabled = CLoudData.SendUpdatesToAgentEnabled;
                         shipmentPM.DocsSentToAgent = CLoudData.DocsSentToAgent;
                         shipmentPM.ApprovedBy = CLoudData.ApprovedByUserName;
+                        shipmentPM.DocumentsApprovedByUserName = CLoudData.DocumentsApprovedByUserName;
                     }
                     return shipmentPM;
                 }
@@ -4002,6 +4006,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                         shipmentPM.SendUpdatesToAgentEnabled = CLoudData.SendUpdatesToAgentEnabled;
                         shipmentPM.DocsSentToAgent = CLoudData.DocsSentToAgent;
                         shipmentPM.ApprovedBy = CLoudData.ApprovedByUserName;
+                        shipmentPM.DocumentsApprovedByUserName = CLoudData.DocumentsApprovedByUserName;
                     }
                     return shipmentPM;
                 }
@@ -4047,6 +4052,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 returnShipment.SendUpdatesToAgentEnabled = CLoudData.SendUpdatesToAgentEnabled;
                 returnShipment.DocsSentToAgent = CLoudData.DocsSentToAgent;
                 returnShipment.ApprovedBy = CLoudData.ApprovedByUserName;
+                returnShipment.DocumentsApprovedByUserName = CLoudData.DocumentsApprovedByUserName;
             }
             return returnShipment;
         }
@@ -12731,6 +12737,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                         shipmentPM.UserIdNumberUpdateDate = CLoudData.UserIdNumberUpdateDate;
                         shipmentPM.IsUserIDNumberRequired = CLoudData.IsUserIDNumberRequired;
                         shipmentPM.UserIdNumber = CLoudData.UserIdNumber;
+                        shipmentPM.DocumentsApprovedByUserName = CLoudData.DocumentsApprovedByUserName;
 
                     }
                     return shipmentPM;
@@ -12762,6 +12769,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                 DenyReason = b.DenyReason,
                                 DeclarationXmlData = b.DeclarationXmlData,
                                 PaymentRequestXML = b.PaymentRequestXML,
+                                DocumentsApprovedByUserName = b.DocumentsApprovedByUserName,
                             }).FirstOrDefault();
 
                 return data;
@@ -13066,11 +13074,11 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
         public bool CheckIsCFSShipmentById(string shipmentId, int tenant)
         {
-            bool isBonded = (from a in repository.context.Shipments
+            bool isCFS = (from a in repository.context.Shipments
                              where a.Tenant == tenant && a.Id == shipmentId
                              select a.IsCFSWarehouse).FirstOrDefault();
 
-            return isBonded;
+            return isCFS;
         }
 
         public string GetMasterNumberFromHouseShipmentByShipmentNumber(string shipmentNumber, int tenant)
