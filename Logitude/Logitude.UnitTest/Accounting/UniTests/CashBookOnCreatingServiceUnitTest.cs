@@ -37,7 +37,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
             // entityPM.SearchFields = entityPM.EnglishName + "," + entityPM.LocalName + "," + entityPM.AccountNumber + "," + entityPM.AccountName + "," + entityPM.CashBookTypeName;
             string expectedSearchFields= entityPM.EnglishName + "," + entityPM.LocalName + "," + entityPM.AccountNumber + "," + entityPM.AccountName + "," + entityPM.CashBookTypeName;
 
-            var fakeCashBookOnCreatingUpdateService = A.Fake<CashBookOnCreatingService>(option=>option.CallsBaseMethods());
+            var fakeCashBookOnCreatingUpdateService = A.Fake<CashBookOnCreatingService>(option=>option.Implements<ICashBookOnCreatingUpdateService>());
 
             A.CallTo(() => fakeCashBookOnCreatingUpdateService.GetLogContactId(entityPM)).Returns(expectedLoggedUserId);
             A.CallTo(() => fakeCashBookOnCreatingUpdateService.GetCurrentDateTime(entityPM)).Returns(DateTime.Now);

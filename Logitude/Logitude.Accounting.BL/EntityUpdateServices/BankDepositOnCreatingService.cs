@@ -43,13 +43,11 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             CashBookPM cashBookPM = GetCashbookById(depositPM.Tenant, depositPM.CashBookId);
             CheckCashbookAmount(depositPM, depositPM.Tenant, cashBookPM);
 
-            BankDepositJournalCreator depositJournalCreator = new BankDepositJournalCreator(depositPM);
-            depositJournalCreator.CreateJounal();
+            CreateJournalForBankDeposit(depositPM);
 
             if (!depositPM.IsCashDeposit)
             {
-                BankDepositingService depositor = new BankDepositingService(depositPM);
-                depositor.DepositCheques();
+                DepositChequesForBankDeposit(depositPM);
             }
 
             UpdateCashbookTotals(depositPM, cashBookPM);
@@ -58,12 +56,23 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             LogActivity(depositPM);
 
         }
+        public virtual void CreateJournalForBankDeposit(BankDepositPM depositPM)
+        {
+            BankDepositJournalCreator depositJournalCreator = new BankDepositJournalCreator(depositPM);
+            depositJournalCreator.CreateJounal();
+        }
+
+        public virtual void DepositChequesForBankDeposit(BankDepositPM depositPM)
+        {
+            BankDepositingService depositor = new BankDepositingService(depositPM);
+            depositor.DepositCheques();
+        }
         private static void UpdateCashbookTotals(BankDepositPM depositPM, CashBookPM cashBookPM)
         {
             cashBookPM.TotalAmount = cashBookPM.TotalAmount - Math.Round(depositPM.ForeignAmount, 2);
         }
 
-        private void SubmitCashbook(int tenant, CashBookPM cashBookPM)
+        public virtual void SubmitCashbook(int tenant, CashBookPM cashBookPM)
         {
             cashBookPM.ChangeSetOp = ChangeSetOperation.Update;
 

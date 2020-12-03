@@ -23,7 +23,10 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
         {
             return TenantServerConfigration.GetCurrentDateTime(entityPM.Tenant);
         }
+        public CashBookOnUpdatingService()
+        {
 
+        }
         public virtual string GetLogContactId(CashBookPM entityPM)
         {
             //ICommonDataContext commonContext = CommonDataContext.GetContext(entityPM.Tenant);
