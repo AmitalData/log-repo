@@ -49,7 +49,7 @@
             // btnSendXml
             // 
             this.btnSendXml.Location = new System.Drawing.Point(81, 342);
-            this.btnSendXml.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnSendXml.Margin = new System.Windows.Forms.Padding(4);
             this.btnSendXml.Name = "btnSendXml";
             this.btnSendXml.Size = new System.Drawing.Size(192, 42);
             this.btnSendXml.TabIndex = 0;
@@ -61,7 +61,7 @@
             // button1
             // 
             this.button1.Location = new System.Drawing.Point(81, 295);
-            this.button1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.button1.Margin = new System.Windows.Forms.Padding(4);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(192, 39);
             this.button1.TabIndex = 1;
@@ -72,7 +72,7 @@
             // btnThreads
             // 
             this.btnThreads.Location = new System.Drawing.Point(81, 404);
-            this.btnThreads.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnThreads.Margin = new System.Windows.Forms.Padding(4);
             this.btnThreads.Name = "btnThreads";
             this.btnThreads.Size = new System.Drawing.Size(192, 41);
             this.btnThreads.TabIndex = 2;
@@ -83,7 +83,7 @@
             // btnUploadQuoteDocument
             // 
             this.btnUploadQuoteDocument.Location = new System.Drawing.Point(81, 246);
-            this.btnUploadQuoteDocument.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnUploadQuoteDocument.Margin = new System.Windows.Forms.Padding(4);
             this.btnUploadQuoteDocument.Name = "btnUploadQuoteDocument";
             this.btnUploadQuoteDocument.Size = new System.Drawing.Size(192, 42);
             this.btnUploadQuoteDocument.TabIndex = 3;
@@ -94,7 +94,7 @@
             // btnDocsIn
             // 
             this.btnDocsIn.Location = new System.Drawing.Point(367, 246);
-            this.btnDocsIn.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnDocsIn.Margin = new System.Windows.Forms.Padding(4);
             this.btnDocsIn.Name = "btnDocsIn";
             this.btnDocsIn.Size = new System.Drawing.Size(215, 41);
             this.btnDocsIn.TabIndex = 4;
@@ -105,7 +105,7 @@
             // btnTest
             // 
             this.btnTest.Location = new System.Drawing.Point(367, 294);
-            this.btnTest.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnTest.Margin = new System.Windows.Forms.Padding(4);
             this.btnTest.Name = "btnTest";
             this.btnTest.Size = new System.Drawing.Size(215, 41);
             this.btnTest.TabIndex = 5;
@@ -116,7 +116,7 @@
             // button2
             // 
             this.button2.Location = new System.Drawing.Point(331, 526);
-            this.button2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.button2.Margin = new System.Windows.Forms.Padding(4);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(251, 92);
             this.button2.TabIndex = 6;
@@ -128,7 +128,7 @@
             // btnTestCloud
             // 
             this.btnTestCloud.Location = new System.Drawing.Point(367, 354);
-            this.btnTestCloud.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnTestCloud.Margin = new System.Windows.Forms.Padding(4);
             this.btnTestCloud.Name = "btnTestCloud";
             this.btnTestCloud.Size = new System.Drawing.Size(215, 52);
             this.btnTestCloud.TabIndex = 7;
@@ -139,7 +139,7 @@
             // button3
             // 
             this.button3.Location = new System.Drawing.Point(687, 245);
-            this.button3.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.button3.Margin = new System.Windows.Forms.Padding(4);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(216, 90);
             this.button3.TabIndex = 8;
@@ -150,7 +150,7 @@
             // btnMultiTaskQueueTest
             // 
             this.btnMultiTaskQueueTest.Location = new System.Drawing.Point(687, 354);
-            this.btnMultiTaskQueueTest.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnMultiTaskQueueTest.Margin = new System.Windows.Forms.Padding(4);
             this.btnMultiTaskQueueTest.Name = "btnMultiTaskQueueTest";
             this.btnMultiTaskQueueTest.Size = new System.Drawing.Size(216, 90);
             this.btnMultiTaskQueueTest.TabIndex = 9;
@@ -161,7 +161,7 @@
             // button4
             // 
             this.button4.Location = new System.Drawing.Point(737, 581);
-            this.button4.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.button4.Margin = new System.Windows.Forms.Padding(4);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(267, 37);
             this.button4.TabIndex = 10;
@@ -172,7 +172,7 @@
             // btnCustomerWD
             // 
             this.btnCustomerWD.Location = new System.Drawing.Point(49, 543);
-            this.btnCustomerWD.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnCustomerWD.Margin = new System.Windows.Forms.Padding(4);
             this.btnCustomerWD.Name = "btnCustomerWD";
             this.btnCustomerWD.Size = new System.Drawing.Size(224, 75);
             this.btnCustomerWD.TabIndex = 11;
@@ -183,7 +183,7 @@
             // button5
             // 
             this.button5.Location = new System.Drawing.Point(687, 478);
-            this.button5.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.button5.Margin = new System.Windows.Forms.Padding(4);
             this.button5.Name = "button5";
             this.button5.Size = new System.Drawing.Size(255, 48);
             this.button5.TabIndex = 12;
@@ -194,7 +194,7 @@
             // btnRunTest
             // 
             this.btnRunTest.Location = new System.Drawing.Point(480, 43);
-            this.btnRunTest.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnRunTest.Margin = new System.Windows.Forms.Padding(4);
             this.btnRunTest.Name = "btnRunTest";
             this.btnRunTest.Size = new System.Drawing.Size(204, 37);
             this.btnRunTest.TabIndex = 13;
@@ -207,9 +207,10 @@
             this.cmdServices.FormattingEnabled = true;
             this.cmdServices.Items.AddRange(new object[] {
             "Warehouse",
-            "Customer"});
+            "Customer",
+            "Vendor"});
             this.cmdServices.Location = new System.Drawing.Point(49, 50);
-            this.cmdServices.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.cmdServices.Margin = new System.Windows.Forms.Padding(4);
             this.cmdServices.Name = "cmdServices";
             this.cmdServices.Size = new System.Drawing.Size(396, 24);
             this.cmdServices.TabIndex = 14;
@@ -218,7 +219,7 @@
             // btnPaymentTerms
             // 
             this.btnPaymentTerms.Location = new System.Drawing.Point(481, 103);
-            this.btnPaymentTerms.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnPaymentTerms.Margin = new System.Windows.Forms.Padding(4);
             this.btnPaymentTerms.Name = "btnPaymentTerms";
             this.btnPaymentTerms.Size = new System.Drawing.Size(203, 37);
             this.btnPaymentTerms.TabIndex = 15;
@@ -247,7 +248,7 @@
             this.Controls.Add(this.btnThreads);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.btnSendXml);
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "Form1";
             this.Text = "Form1";
             this.ResumeLayout(false);

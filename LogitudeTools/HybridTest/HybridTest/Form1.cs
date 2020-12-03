@@ -36,6 +36,7 @@ using System.Net.Http;
 using Json2KeyValue;
 using HypredTest.CurrencyProxy;
 using Logitude.Server.Tools;
+using HypredTest.VendorProxy;
 
 namespace HypredTest
 {
@@ -2347,7 +2348,7 @@ namespace HypredTest
 
                 Response resultResponse = new Response();
                 // CustomerPM pm = customerservice.GetCustomerPM(new CustomerApiFilters() { ByCode = true, SearchCode = "10107933" }, 8, ref resultResponse);
-                CustomerPM newCustomer = new CustomerPM()
+                CustomerProxy.CustomerPM newCustomer = new CustomerProxy.CustomerPM()
                 {
                     Code = "HBRDTSTCustE",
                     EnglishName = "hybrid customer E",
@@ -2395,6 +2396,59 @@ namespace HypredTest
         //public string SalesmanUserName { get; set; }
         }
 
+        public Response TestVendorService(string token)
+        {
+
+            VendorProxy.VendorWcfServiceClient vendorService = new VendorWcfServiceClient();
+
+            using (new System.ServiceModel.OperationContextScope((System.ServiceModel.IClientChannel)vendorService.InnerChannel))
+            {
+
+                System.ServiceModel.Web.WebOperationContext.Current.OutgoingRequest.Headers.Add("Token", token);
+
+                Response resultResponse = new Response();
+                // CustomerPM pm = customerservice.GetCustomerPM(new CustomerApiFilters() { ByCode = true, SearchCode = "10107933" }, 8, ref resultResponse);
+                VendorProxy.VendorPM newEntity = new VendorProxy.VendorPM()
+                {
+                    Code = "HBRDVNDR",
+                    EnglishName = "hybrid Vendor",
+                    Tenant = 1,
+                    PartnerTypeId = "VD",
+                     
+                    VatNumber = "98956454",
+                    CountryCode = "IL",
+                };
+
+              
+                //};
+
+                //newCustomer.CustomerSalesmanByProducts = salesmanbyproducts;
+
+                var response = vendorService.Upsert(newEntity, false);
+
+
+                var result = vendorService.GetVendorPM("HBRDVNDR", 1,ref response);
+
+                var response2 = vendorService.Upsert(result, false);
+
+                return response;
+                //  var customer = customerservice.GetCustomerPM(new CustomerApiFilters() { ByVatNumber = true, SearchCode = "1234562322222" }, 1);
+                //  var customer2 = customerservice.GetCustomerPM(new CustomerApiFilters() { ByCode = true, SearchCode = "470690c4-8f9a-4-121212" }, 1);
+                // var contacts = customerservice.GetCustomerContacts(new CustomerApiFilters() { ByCode = true, SearchCode = "70002-1212" }, 1);
+                //var addresses = customerservice.GetCustomerAddresses(new CustomerApiFilters() { ByCode = true, SearchCode = "10110529" }, 10, ref resultResponse);
+
+            }
+
+            //      [Key]
+            //public string ProductTypeCode { get; set; }
+
+            //public string SalesmanUserId { get; set; }
+            //[Key]
+            //public string CustomerId { get; set; }
+
+            //public int Tenant { get; set; }
+            //public string SalesmanUserName { get; set; }
+        }
         private void TestQuoteEvents()
         {
             QuoteProxy.QuoteWcfServiceClient quoteservice = new QuoteWcfServiceClient();
@@ -3146,6 +3200,9 @@ namespace HypredTest
                     break;
                 case "Customer":
                     TestCustomerService(Token);
+                    break;
+                case "Vendor":
+                    TestVendorService(Token);
                     break;
                 default:
                     MessageBox.Show("select a service to test");
