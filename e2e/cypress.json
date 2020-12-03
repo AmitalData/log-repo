@@ -40,7 +40,8 @@
     "TestStagingEmailTIQ4": "ahmadb@fnarsoft.co.il",
     "TestStagingPasswordTIQ4": "!A123a456",
     
-    "Mode": "Development"
+    "Mode": "Development",
+    "Env":"ResetPWDData"
 
   },
 

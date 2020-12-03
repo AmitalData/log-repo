@@ -33,6 +33,7 @@ Cypress.Commands.add("OpenAndFillChangePasswordPage", (newPassword,confirmNewPas
 })
 
 // -------------------------------- functions
+
 function CompleteLoginProcess(Email:string,Password:string,URL : string,Tenant?:number){
     cy.visit(URL)
     cy.get("#Email").clear().type(Email)
