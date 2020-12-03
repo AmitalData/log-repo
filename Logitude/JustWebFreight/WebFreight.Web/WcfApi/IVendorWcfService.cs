@@ -15,5 +15,8 @@ namespace WebFreight.Web.WcfApi
     {
         [OperationContract]
         Response Upsert(VendorPM entityPM, bool batch);
+
+        [OperationContract]
+        VendorPM GetVendorPM(string code, int tenant, ref Response response);
     }
 }

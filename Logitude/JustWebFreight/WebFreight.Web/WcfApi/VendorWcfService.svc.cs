@@ -15,6 +15,8 @@ using WebFreight.Web.Security;
 using Logitude.Server.Tools;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.Tools.EntityService;
+using Logitude.BL.CommonDataModel.EntityQueries;
+using Simplog.Data.InfrastructureModel.Repositories;
 
 namespace WebFreight.Web.WcfApi
 {
@@ -49,7 +51,41 @@ namespace WebFreight.Web.WcfApi
                     ICommonDataContext objectContext = CommonDataContext.GetContext(entityPM.Tenant);
 
                     VendorRepository VendorRepository = new VendorRepository(objectContext);
+                    PaymentTermRepository paymentTermRepository = new PaymentTermRepository(entityPM.Tenant);
+                    CurrencyRepository currencyRepository = new CurrencyRepository(entityPM.Tenant);
+
                     VendorService service = new VendorService(objectContext, entityPM.Tenant);
+
+                    //if (entityPM.InvoiceCurrencyId != null)
+                    //{
+                    //    var currency = currencyRepository.GetSingleCurrencyByCode(entityPM.InvoiceCurrencyId, entityPM.Tenant);
+                    //    if (currency != null)
+                    //    {
+                    //        entityPM.InvoiceCurrencyId = currency.Id;
+                    //    }
+                    //    else
+                    //    {
+                    //        response.HasError = true;
+                    //        response.ErrorMessage = "InvoiceCurrencyId field doesn't exist in the database,Upsert this entity before using it.";
+                    //        return response;
+                    //    }
+                    //}
+
+                    if (entityPM.PaymentTermId != null)
+                    {
+                        var paymentTerm = paymentTermRepository.GetSinglePaymentTermByCode(entityPM.PaymentTermId, entityPM.Tenant);
+                        if (paymentTerm != null)
+                        {
+                            entityPM.PaymentTermId = paymentTerm.Id;
+                        }
+                        else
+                        {
+                            response.HasError = true;
+                            response.ErrorMessage = "PaymentTermId field doesn't exist in the database,Upsert this entity before using it.";
+                            return response;
+                        }
+                    }
+
 
                     if (entityPM.PrimaryContactId != null)
                     {
@@ -116,6 +152,93 @@ namespace WebFreight.Web.WcfApi
                     response.ErrorMessage += Environment.NewLine + ex.StackTrace;
                 }
                 return response;
+            }
+        }
+
+        public VendorPM GetVendorPM(string code, int tenant, ref Response response)
+        {
+           
+            try
+            {
+                VendorPM entityPM = null;
+                SecurityUtility.AuthenticationOnTenant(tenant);
+                SecurityUtility.CheckContactFeature("Vendor", "READ", tenant);//UPDATE//READ
+                if (CacheManager.CacheWrapper == null)
+                {
+                    CacheManager.CacheWrapper = new MockCacheWrapper();
+                }
+
+                ICommonDataContext objectContext = CommonDataContext.GetContext(tenant);
+
+                UserRepository userReporistory = new UserRepository(objectContext);
+                CardRepository cardRepository = new CardRepository(objectContext);
+                ContactRepository contactRepository = new ContactRepository(objectContext);
+                CountryRepository countryRepository = new CountryRepository(objectContext);
+                RankRepository rankRepository = new RankRepository(objectContext);
+                PaymentTermRepository paymentTermRepository = new PaymentTermRepository(objectContext);
+                CurrencyRepository currencyRepository = new CurrencyRepository(objectContext);
+                VendorQuery query = new VendorQuery(tenant);
+
+                entityPM = query.GetSingleVendorPMByCode(code, tenant);
+
+                if (entityPM != null)
+                {
+                    //if (entityPM.InvoiceCurrencyId != null)
+                    //{
+                    //    Currency currency = currencyRepository.GetSingleCurrencyById(entityPM.InvoiceCurrencyId, entityPM.Tenant, false);
+                    //    if (currency != null)
+                    //    {
+                    //        entityPM.InvoiceCurrencyId = currency.Code;
+                          
+                    //    }
+                    //}
+
+
+                    
+
+                    if (entityPM.PrimaryContactId != null)
+                    {
+                        Contact contact = contactRepository.GetSingleContact(entityPM.PrimaryContactId, entityPM.Tenant);
+                        if (contact != null && !string.IsNullOrEmpty(contact.ExternalId))
+                        {
+                            entityPM.PrimaryContactId = contact.ExternalId;
+                            entityPM.PrimaryContactEmail = contact.Email;
+                            entityPM.PrimaryContactName = contact.EnglishName;
+                            entityPM.PrimaryContactPhone = contact.BusinessPhone;
+
+                        }
+                    }
+
+                     
+
+                    if (entityPM.PaymentTermId != null)
+                    {
+                        PaymentTerm paymentTerm = paymentTermRepository.GetSinglePaymentTerm(entityPM.PaymentTermId, entityPM.Tenant);
+                        if (paymentTerm != null)
+                        {
+                            entityPM.PaymentTermId = paymentTerm.Code;
+
+                        }
+                    }
+
+                 
+                }
+
+                return entityPM;
+            }
+            catch (Exception ex)
+            {
+                response.IsAuthenticationError = ex.GetType() == typeof(AutenticationException);
+                response.HasError = true;
+                response.ErrorMessage = ex.Message;
+                response.InnerErrorMessage = ex.InnerException != null ? ex.InnerException.Message : null;
+                if (!string.IsNullOrEmpty(ex.StackTrace))
+                {
+                    response.ErrorMessage += Environment.NewLine + ex.StackTrace;
+                }
+
+                return null;
+
             }
         }
     }
