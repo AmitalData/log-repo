@@ -22,7 +22,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
                     bulkDataPreperation.dataTable2 = bulkDataPreperation.dataTable.Clone();
                 }
 
-                AddNewRecord(TableRow, bulkDataPreperation.dataTable2, "ShipmentNumber");
+                AddShipmentNumberReference(TableRow, bulkDataPreperation.dataTable2);
                 AddSplittedData(TableRow, bulkDataPreperation.dataTable2, "CustomerReference1");
                 AddSplittedData(TableRow, bulkDataPreperation.dataTable2, "CustomerReference2");
                 AddNewRecord(TableRow, bulkDataPreperation.dataTable2, "Master");
@@ -39,7 +39,19 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
 
 
         }
-
+        private static void AddShipmentNumberReference(DataRow TableRow, DataTable dataTable)
+        {
+            string CoulmnName = "ShipmentNumber";
+            AddNewRecord(TableRow, dataTable, CoulmnName);
+            var Value = TableRow[CoulmnName];
+            string SearchField = (string)Value;
+            if (!string.IsNullOrEmpty(SearchField) && SearchField.Contains("/"))
+            {
+                string SearchArr = SearchField.Split('/')[1];
+                AddNewReference(TableRow, dataTable, SearchArr);
+            }
+            
+        }
 
         private static void AddSplittedData(DataRow TableRow, DataTable dataTable,string CoulmnName)
         { 
@@ -50,11 +62,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
                 string[] SearchArr = SearchField.Split(',');
                 for (int i = 0; i < SearchArr.Length; i++)
                 {
-                    DataRow TableRow1 = dataTable.NewRow();
-                    TableRow1.ItemArray = TableRow.ItemArray.Clone() as object[];
-                    TableRow1.SetField("SearchFields", SearchArr[i].Trim());
-                    if (!IsNullOrEmpty(TableRow1, "SearchFields"))
-                        dataTable.Rows.Add(TableRow1);
+                    AddNewReference(TableRow, dataTable, SearchArr[i]);
                 }
             } 
         }
@@ -67,17 +75,19 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
             {
                     var Value = TableRow[CoulmnName];
                     string SearchField = (string)Value;
-                    DataRow TableRow1 = dataTable.NewRow();
-                    TableRow1.ItemArray = TableRow.ItemArray.Clone() as object[];
-                    TableRow1.SetField("SearchFields", SearchField.Trim());
-                    if (!IsNullOrEmpty(TableRow1, "SearchFields"))
-                        dataTable.Rows.Add(TableRow1);
- 
+                    AddNewReference(TableRow, dataTable, SearchField);
             }
         }
 
 
-
+        private static void AddNewReference(DataRow TableRow, DataTable dataTable, string SearchField)
+        {
+            DataRow TableRow1 = dataTable.NewRow();
+            TableRow1.ItemArray = TableRow.ItemArray.Clone() as object[];
+            TableRow1.SetField("SearchFields", SearchField.Trim());
+            if (!IsNullOrEmpty(TableRow1, "SearchFields"))
+                dataTable.Rows.Add(TableRow1);
+        }
         private static bool IsNullOrEmpty(DataRow TableRow,  string CoulmnName)
         {
             bool IsNull = false;
