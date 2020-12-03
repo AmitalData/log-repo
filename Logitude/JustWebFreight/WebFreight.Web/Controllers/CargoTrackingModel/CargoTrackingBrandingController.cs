@@ -35,8 +35,32 @@ namespace WebFreight.Web.Controllers.CargoTrackingModel
             }
         }
 
-      
-       
+        public HttpResponseMessage GetCargoTrackingBrandingDataForPrivateSite(string domain)
+        {
+
+            try
+            {
+                TenantManagementQuery tenantManagementQuery = new TenantManagementQuery();
+                TenantManagementPM tenantManagementPM = tenantManagementQuery.GetSinglePMByDomain(domain);
+                ServiceResponse response = new ServiceResponse();
+                if (tenantManagementPM != null)
+                {
+                    CargoTrackingBrandingData data = new CargoTrackingBrandingData()
+                    {
+                        Tenant = tenantManagementPM.Id,
+                        MainColor = tenantManagementPM.MainColor,
+                        SecondaryColor = tenantManagementPM.SecondaryColor,
+                    };
+                    response.Result = data;
+                }
+                return Request.CreateResponse(HttpStatusCode.OK, response);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
         public HttpResponseMessage GetCargoTrackingBrandingTenantByDomain(string domain)
         {
             try
@@ -44,11 +68,11 @@ namespace WebFreight.Web.Controllers.CargoTrackingModel
                 TenantManagementQuery tenantManagementQuery = new TenantManagementQuery();
                 ServiceResponse response = new ServiceResponse();
                 int? tenant = tenantManagementQuery.GetTenantSinglePMByDomain(domain);
-                if (tenant != null && tenant!=0)
+                if (tenant != null && tenant != 0)
                 {
                     response.Result = tenant;
                 }
-             
+
                 return Request.CreateResponse(HttpStatusCode.OK, response);
             }
             catch (Exception ex)

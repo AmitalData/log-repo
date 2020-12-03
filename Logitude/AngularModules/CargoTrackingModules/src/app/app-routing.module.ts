@@ -27,6 +27,7 @@ const routes: Routes = [
             { path: "shipments", component: ShipmentsListComponent }, 
             { path: "shipment/:SecurityKey", component: ShipmentDetailsComponent }, 
             { path: "favorites", component: FavoritesPageComponent  }, 
+            {path: '**', redirectTo: 'Cargo-Tracking', pathMatch: 'full' }, 
            
         ]
     },

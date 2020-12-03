@@ -26,12 +26,11 @@ export class Error401Component
     }
     private GetDomainName(baseUrl:string)
     {     this.SiteUrl=baseUrl;
+          this.SiteUrl = this.SiteUrl.toLocaleLowerCase().replace("http://", '').replace("https://", '').replace("WWW.", '');  
           if(this.SiteUrl && this.SiteUrl.endsWith("/")){
-            this.SiteUrl.toLocaleLowerCase();
             this.SiteUrl = this.SiteUrl.substring(0,this.SiteUrl.length-2);
-            this.SiteUrl = this.SiteUrl.replace("http://", ''); 
-            this.SiteUrl = this.SiteUrl.replace("https://", ''); 
           }
+          
     }
     private GetTenantByDomain(baseUrl:string)
     {   
