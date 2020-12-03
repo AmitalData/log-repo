@@ -42,7 +42,7 @@
   NewWizardControlName="&quot;&quot;"
   LocalDefaultText="&quot;טבלת מצטברים &quot;"
   DefaultText="&quot;GLAccountMoreData&quot;"
-  Code="&quot;49f9&quot;"
+  Code="&quot;30ff&quot;"
   Name="&quot;GLAccountMoreData Query Group&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Accounting&quot;"
