@@ -3341,7 +3341,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                                        && d.Id == entityPM.BranchId
                                        select d).FirstOrDefault();
 
-                    if (myBranch != null && !string.IsNullOrEmpty(myBranch.CounterCode))
+                    if (myBranch != null 
+                        && !string.IsNullOrEmpty(myBranch.CounterCode))
                     {
                         counterAdditionalParameters["[B]"] = myBranch.CounterCode;
                     }
