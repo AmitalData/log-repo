@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 {
    public class AutomationUpdateClass
    {  		
-		public const string HashString = "70c1d852e23b8ef1b7a3cb8394ffa8dc";
+		public const string HashString = "50c970dc172e89ae310eb1e1343b7efc";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -119,7 +119,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Automation",
-			      				    Code =  "31bb",
+			      				    Code =  "aedf",
 			      				    Name =  "Automation",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Common",
@@ -355,7 +355,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 		   Feature AutomationFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = false, ObjectTableId = AutomationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Automation.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,AutomationObjectTable);
 		   Feature AutomationFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = false, ObjectTableId = AutomationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Automation.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,AutomationObjectTable);
 		   Feature AutomationFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = false, ObjectTableId = AutomationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Automation.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,AutomationObjectTable);
-		   Feature AutomationFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = false, ObjectTableId = AutomationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Automation.Features.PackageFeature", NameTextCodeDefaultText = "Automation Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,AutomationObjectTable);    
+		   Feature AutomationFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = false, ObjectTableId = AutomationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Automation.Features.PackageFeature", NameTextCodeDefaultText = "Automation Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,AutomationObjectTable); 
+
+		   		   //--------------> Additional Features <--------------\\
+
+		   Feature AutomationFeature_SENDINTERFACERESULT = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SENDINTERFACERESULT", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = AutomationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Automation.Features.SENDINTERFACERESULT", NameTextCodeDefaultText = @"Send Interface Result" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,AutomationObjectTable);
+
+   
 	    
 		}
 
