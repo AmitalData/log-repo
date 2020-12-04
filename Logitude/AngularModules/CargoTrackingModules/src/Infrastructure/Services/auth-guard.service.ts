@@ -21,9 +21,9 @@ export class AuthGuardService implements CanActivate {
     if(!tenant)
       tenant = this.activatedRoute.snapshot.children[0]?.queryParams.tenant;
     if(tenant)
-      this.router.navigate(["login"],{ queryParams: {tenant: tenant}});
+      this.router.navigate(["Cargo-Tracking/login"],{ queryParams: {tenant: tenant}});
     else
-      this.router.navigate(["login"]);
+      this.router.navigate(["Cargo-Tracking/login"]);
     
     return false;
   }

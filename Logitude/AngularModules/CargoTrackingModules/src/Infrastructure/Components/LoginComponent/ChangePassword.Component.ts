@@ -254,9 +254,9 @@ export class ChangePasswordComponent implements OnInit {
             if (res) {
                 this.Tenant = this.route.snapshot.queryParams?.tenant;
                 if(this.Tenant)
-                    this.router.navigate(["login"],{ queryParams: {tenant: this.Tenant}});
+                    this.router.navigate(["Cargo-Tracking/login"],{ queryParams: {tenant: this.Tenant}});
                 else
-                    this.router.navigate(["login"]);
+                    this.router.navigate(["Cargo-Tracking/login"]);
             }
             else {
                 this.ErrorMessage = "Changing password failed!"

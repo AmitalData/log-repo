@@ -43,7 +43,10 @@ export class ActivityTypePM {
     public OldEntityPM: ActivityTypePM;
 		
     public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
+       if(!this.DisableMarkAsDirty)
+       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -51,6 +54,7 @@ export class ActivityTypePM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "ActivityType");
            
         }
+       }
     }
 
     private MyClone: ActivityTypePM;
