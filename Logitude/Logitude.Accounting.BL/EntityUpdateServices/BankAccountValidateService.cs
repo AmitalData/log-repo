@@ -94,7 +94,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
         }
 
-        private static void CheckBankAndGLAccountsCurrency(BankAccountPM bankAccountPM, bool useLocal)
+        public virtual void CheckBankAndGLAccountsCurrency(BankAccountPM bankAccountPM, bool useLocal)
         {
             //get glaccounts
             GLAccountQueryService gLAccountQueryService = new GLAccountQueryService(bankAccountPM.Tenant);
@@ -293,6 +293,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
         void CheckDeferredGLAccountAlreadyConnectedToBankAccountOnInsert(BankAccountPM entityPM);
         void CheckGLAccountAlreadyConnectedToBankAccountOnUpdate(BankAccountPM entityPM, BankAccount poco, bool useLocal);
         void CheckDeferredGLAccountAlreadyConnectedToBankAccountOnUpdate(BankAccountPM entityPM, BankAccount poco);
+        void CheckBankAndGLAccountsCurrency(BankAccountPM bankAccountPM, bool useLocal);
 
     }
 

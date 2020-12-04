@@ -34,7 +34,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
 
             // users:
-            ContactPM user = GetLoggedContact(entityPM.Tenant);
+            ContactPM user = LoggedContactResolver.GetLoggedContact(entityPM.Tenant);//GetLoggedContact(entityPM.Tenant);
             if (user != null)
             {
 
