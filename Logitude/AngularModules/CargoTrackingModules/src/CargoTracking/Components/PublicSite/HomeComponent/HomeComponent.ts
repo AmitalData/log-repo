@@ -45,10 +45,9 @@ export class HomeComponent
             document.documentElement.style.setProperty('--BGColor', CargoTrackingBrandingData.MainColor);
             document.documentElement.style.setProperty('--MainColor', CargoTrackingBrandingData.MainColor);
             document.documentElement.style.setProperty('--busyIndicatorColor', CargoTrackingBrandingData.MainColor);
-
             document.documentElement.style.setProperty('--secondaryColor', CargoTrackingBrandingData.SecondaryColor);
             this.Logo = response.Result.Logo != null ? response.Result.Logo:null;
-            this.BackGroundImg=response.Result.BackgroundImg!=null? "url("+ response.Result.BackgroundImg+")":this.MapImgSRC;
+            this.BackGroundImg=response.Result.BackgroundURL!=null? "url("+ ServiceHelper.GetAppURL(this.baseUrl)+response.Result.BackgroundURL+")":this.MapImgSRC;
             this.IsBrandingDataLoaded = true;
             this.listenToRouterEvents();
         }

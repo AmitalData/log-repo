@@ -21,6 +21,7 @@ using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -32,18 +33,23 @@ namespace Logitude.BL.GlobalModel.Tools.EntityService
     {
         bool isNewEntity;
         int tenant;
+        const string CargoTrackingImageFolder = "CargoTrackingImages";
+        const string CargoTrackingImageExtensionType = "jpg";
         private TenantManagementPM entityPM;
         public TenantManagement entityPoco { get; set; }
         private IGlobalContext objectContext;
+        private ICommonDataContext CommonContext;
         private TenantManagementRepository entityRepository;
         private TenantManagementLicenseRepository tenantManagementLicenseRepository;
         private TenantAddOnRepository tenantAddOnRepository;
-        public TenantManagementService(IGlobalContext objectContext, int tenant = 0)
+        public TenantManagementService(IGlobalContext objectContext, int tenant = 0, ICommonDataContext CommonContext=null)
         {
             this.objectContext = objectContext;
+            this.CommonContext = CommonContext;
             this.entityRepository = new TenantManagementRepository(objectContext);
             this.tenantManagementLicenseRepository = new TenantManagementLicenseRepository(objectContext);
             this.tenantAddOnRepository = new TenantAddOnRepository(objectContext);
+           
         }
 
         private List<TenantManagementLicensePM> licensesChangeSet;
@@ -100,6 +106,7 @@ namespace Logitude.BL.GlobalModel.Tools.EntityService
             this.BrandingEvent();
             this.CheckParentTenants();         
             this.UpdateCargoTrackingColors();
+            this.DeleteOldImages();
             if (entityPM.Id == 341)
             {
                 this.UpdateCustomer();
@@ -109,6 +116,36 @@ namespace Logitude.BL.GlobalModel.Tools.EntityService
             TenantManagementMapping.MapEntity(entityPM, entityPoco, isNewEntity);
             entityRepository.Update(entityPoco);
             entityRepository.SubmitChanges();
+        }
+
+
+        private void DeleteOldImages()
+        {
+             
+            if (this.entityPM.BackgroundId != this.entityPoco.BackgroundId)
+            {
+              DeleteImageFromCargoTrackingImages(entityPoco.BackgroundId);
+            }
+        }
+        public void DeleteImageFromCargoTrackingImages(string imgId)
+        {
+            string imagePath = GetFilePath(GetFileNameWithExtension(imgId));
+            if (File.Exists(imagePath))
+            {
+                File.Delete(imagePath);
+            }
+
+        }
+        private string GetFilePath(string fileName)
+        {
+            string folderPath = System.Web.HttpContext.Current.Server.MapPath("~/" + CargoTrackingImageFolder + "/");
+            string filePath = folderPath + fileName;
+            return filePath;
+        }
+
+        private string GetFileNameWithExtension(string imgName)
+        {
+            return imgName + "." + CargoTrackingImageExtensionType;
         }
         private void  UpdateCargoTrackingColors()
         {
