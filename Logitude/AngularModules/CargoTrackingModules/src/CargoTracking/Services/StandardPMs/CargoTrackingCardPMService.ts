@@ -153,6 +153,7 @@ export class CargoTrackingCardPMService {
         if (!entityPM) {
             
             entityPM = new CargoTrackingCardPM();
+			entityPM.DisableMarkAsDirty = true;
         }
 
 		var customFields: Array<string> = [];
@@ -193,6 +194,8 @@ export class CargoTrackingCardPMService {
             entityPM.OldEntityPM = null;
         }
 		entityPM.IsDirty = false;
+	    entityPM.DisableMarkAsDirty = false;
+
         return entityPM;
     }
 

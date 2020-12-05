@@ -70,6 +70,8 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
                          "[DeclarationDate] DATETIME NULL," +
                          "[CustomsClearanceDate] DATETIME NULL," +
                          "[Id] INT IDENTITY(1,1) NOT NULL," +
+                         "[ContainersNumbers] NVARCHAR(MAX) NULL,"+
+                         "[PackagesQuantity] INT NULL," +
                          "CONSTRAINT[PK_" + TableName + "] PRIMARY KEY([Id])" +
                          ")   \n";
 

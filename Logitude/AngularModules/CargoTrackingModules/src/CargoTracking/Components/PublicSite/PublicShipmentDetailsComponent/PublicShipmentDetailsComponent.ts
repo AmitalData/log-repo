@@ -21,7 +21,8 @@ export class PublicShipmentDetailsComponent implements OnInit
     isLoading: boolean = false;
     isMobileView: boolean = false;
     isTabletView: boolean = false;
-  
+    ShipmentQuantity:number=0;
+    ShipmentContainers:string[]=[];
     previousUrl: string;
 
     constructor(private route: ActivatedRoute,
@@ -194,6 +195,7 @@ export class PublicShipmentDetailsComponent implements OnInit
             this.isLoading = false;
             console.log("[getShipment]", result);
             this.ShipmentWithMilestones = result;
+            this.SetCargoTrackingContainers(result);
             if (this.ShipmentWithMilestones) {
                 this.Shipment = result.ShipmentList;
                 if (this.Shipment.CurrentMilestoneCode == "11") {
@@ -215,7 +217,15 @@ export class PublicShipmentDetailsComponent implements OnInit
 
         });
     }
+    SetCargoTrackingContainers(result: CargoTrackingShipmentWithMilestones){
+         var Containers:string[] = [];
+         if(result.ShipmentList && result.ShipmentList.ContainersNumbers){
+            Containers = result.ShipmentList.ContainersNumbers.split(',');
+            this.ShipmentQuantity = Containers.length;
+            this.ShipmentContainers = Containers;
 
+         }
+    }
     SetMilestonesFields(result: CargoTrackingShipmentWithMilestones)
     {
 
@@ -260,6 +270,7 @@ export class PublicShipmentDetailsComponent implements OnInit
     ShipmentReferences: string[] = [];
     IsLoadingReferences = false;
     showMoreReferences: boolean  = false;
+    showMoreContainers: boolean  = false;
 
     GetPublicShipmentReferences()
     {
