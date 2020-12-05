@@ -25,18 +25,7 @@ namespace WebFreight.Web.Helpers
 
             return BrandingData;
         }
-
-        public string SetBrandingLogo(TenantManagementPM tenantManagement)
-        {
-            Uploader uploaderService = new Uploader();
-            byte[] logodata = uploaderService.DownloadFile("sharedLogtsitcslogo" + tenantManagement.Id, "png", "logos", tenantManagement.Id);
-            if (logodata != null)
-            {
-                return "data:image/" + "jpg" + ";base64," + Convert.ToBase64String(logodata);
-            }
-            else return null;
-        }
-
+ 
         private CargoTrackingBrandingData MapBrandingDataByTenantManagement(TenantManagementPM tenantManagementPM)
         {
             CargoTrackingBrandingData cargoTrackingBrandingData = null;
@@ -48,14 +37,20 @@ namespace WebFreight.Web.Helpers
                     MainColor = tenantManagementPM.MainColor,
                     SecondaryColor = tenantManagementPM.SecondaryColor,
                     BackgroundId = tenantManagementPM.BackgroundId,
-                    Logo = SetBrandingLogo(tenantManagementPM)
+                    BrowserIconId = tenantManagementPM.BrowserIconId,
+                    ComapnylogoId = tenantManagementPM.ComapnylogoId,
                 };
-                SetBackgroundImageBase64(cargoTrackingBrandingData);
+                SetCargoTrackingImages(cargoTrackingBrandingData);
             }
 
             return cargoTrackingBrandingData;
         }
-
+        private void SetCargoTrackingImages(CargoTrackingBrandingData cargoTrackingBrandingData)
+        {
+            SetBackgroundImageBase64(cargoTrackingBrandingData);
+            SetComapnyLogoBase64(cargoTrackingBrandingData);
+            SetBrowserIconBase64(cargoTrackingBrandingData);
+        }
         private void SetBackgroundImageBase64(CargoTrackingBrandingData cargoTrackingBrandingData)
         {
             if (!string.IsNullOrEmpty(cargoTrackingBrandingData.BackgroundId))
@@ -65,9 +60,40 @@ namespace WebFreight.Web.Helpers
                 {
                     string base64StringData = Convert.ToBase64String(filedata);
                     //cargoTrackingBrandingData.BackgroundImg = "data:image/" + CargoTrackingImageExtensionType + ";base64," + base64StringData;
-                    string imagePath = GetFilePath(GetFileNameWithExtension(cargoTrackingBrandingData.BackgroundId));
-                    SaveImageOnCargoTrackingImagesIfNotExisit(base64StringData, imagePath);
+                    SaveImageOnCargoTrackingImagesIfNotExisit(base64StringData, cargoTrackingBrandingData.BackgroundId);
                     cargoTrackingBrandingData.BackgroundURL = GetFileURL(cargoTrackingBrandingData.BackgroundId);
+                }
+            }
+
+        }
+
+        private void SetComapnyLogoBase64(CargoTrackingBrandingData cargoTrackingBrandingData)
+        {
+            if (!string.IsNullOrEmpty(cargoTrackingBrandingData.ComapnylogoId))
+            {
+                byte[] filedata = GeImageBytesById(cargoTrackingBrandingData.ComapnylogoId);
+                if (filedata != null)
+                {
+                    string base64StringData = Convert.ToBase64String(filedata);
+                    //cargoTrackingBrandingData.ComapnylogoImg = "data:image/" + CargoTrackingImageExtensionType + ";base64," + base64StringData;
+                    SaveImageOnCargoTrackingImagesIfNotExisit(base64StringData, cargoTrackingBrandingData.ComapnylogoId);
+                    cargoTrackingBrandingData.ComapnylogoURL = GetFileURL(cargoTrackingBrandingData.ComapnylogoId);
+                }
+            }
+
+        }
+
+        private void SetBrowserIconBase64(CargoTrackingBrandingData cargoTrackingBrandingData)
+        {
+            if (!string.IsNullOrEmpty(cargoTrackingBrandingData.BrowserIconId))
+            {
+                byte[] filedata = GeImageBytesById(cargoTrackingBrandingData.BrowserIconId);
+                if (filedata != null)
+                {
+                    string base64StringData = Convert.ToBase64String(filedata);
+                    //cargoTrackingBrandingData.BrowserIconURL = "data:image/" + CargoTrackingImageExtensionType + ";base64," + base64StringData;
+                    SaveImageOnCargoTrackingImagesIfNotExisit(base64StringData, cargoTrackingBrandingData.BrowserIconId);
+                    cargoTrackingBrandingData.BrowserIconURL = GetFileURL(cargoTrackingBrandingData.BrowserIconId);
                 }
             }
 
@@ -96,8 +122,9 @@ namespace WebFreight.Web.Helpers
             return imageBytes;
         }
 
-        private void SaveImageOnCargoTrackingImagesIfNotExisit(string base64StringData, string imagePath)
+        private void SaveImageOnCargoTrackingImagesIfNotExisit(string base64StringData, string imgId)
         {
+            string imagePath = GetFilePath(GetFileNameWithExtension(imgId));
             if (!File.Exists(imagePath))
             {
                 byte[] daata = System.Convert.FromBase64String(base64StringData);

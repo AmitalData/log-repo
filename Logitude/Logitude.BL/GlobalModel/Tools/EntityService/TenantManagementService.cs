@@ -121,10 +121,17 @@ namespace Logitude.BL.GlobalModel.Tools.EntityService
 
         private void DeleteOldImages()
         {
-             
             if (this.entityPM.BackgroundId != this.entityPoco.BackgroundId)
             {
               DeleteImageFromCargoTrackingImages(entityPoco.BackgroundId);
+            }
+            if (this.entityPM.ComapnylogoId != this.entityPoco.ComapnylogoId)
+            {
+                DeleteImageFromCargoTrackingImages(entityPoco.ComapnylogoId);
+            }
+            if (this.entityPM.BrowserIconId != this.entityPoco.BrowserIconId)
+            {
+                DeleteImageFromCargoTrackingImages(entityPoco.BrowserIconId);
             }
         }
         public void DeleteImageFromCargoTrackingImages(string imgId)

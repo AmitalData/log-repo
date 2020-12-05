@@ -1,6 +1,8 @@
 import { HttpHeaders } from '@angular/common/http';
+import { CargoTrackingBrandingData } from '../DataContracts/CargoTrackingBrandingData';
 
 export  class ServiceHelper{
+   public static favIcon: HTMLLinkElement = document.querySelector('#appIcon');
 
     constructor(){
         
@@ -26,8 +28,55 @@ export  class ServiceHelper{
         return baseUrl 
     }
      
-        
+    public static SetCargoTrackingDate(BrandingData:any,baseUrl:string){
 
+        CargoTrackingBrandingData.Tenant = BrandingData.Tenant;
+        CargoTrackingBrandingData.MainColor = BrandingData.MainColor != null ? this.ConvertHexaToRGBA(BrandingData.MainColor) :"#000000";
+        CargoTrackingBrandingData.SecondaryColor = BrandingData.SecondaryColor ? this.ConvertHexaToRGBA(BrandingData.SecondaryColor) : "#002664";
+        document.documentElement.style.setProperty('--BGColor', CargoTrackingBrandingData.MainColor);
+        document.documentElement.style.setProperty('--MainColor', CargoTrackingBrandingData.MainColor);
+        document.documentElement.style.setProperty('--busyIndicatorColor', CargoTrackingBrandingData.MainColor);
+        document.documentElement.style.setProperty('--secondaryColor', CargoTrackingBrandingData.SecondaryColor);
+        ServiceHelper.SetCarogTrackingImages(BrandingData,baseUrl);
+    }
+     
+    private static ConvertHexaToRGBA(color: string)
+    {
+        if (color) {
+            var alpha = parseInt(color.slice(1, 3), 16) / 255;
+            return 'rgba(' + parseInt(color.slice(-6, -4), 16) + ',' + parseInt(color.slice(-4, -2), 16) + ',' + parseInt(color.slice(-2), 16) + ',' + alpha + ')';
+        }
+    }
+    private static SetCarogTrackingImages(BrandingData:any,baseUrl:string)
+    {
+        this.SetBackGroundImg(BrandingData,baseUrl);
+        this.SetComapnyLogo(BrandingData,baseUrl);
+        this.SetBrowserIcon(BrandingData,baseUrl);
+    }
+    private static SetBackGroundImg(BrandingData:any,baseUrl:string)
+    {
+        if(BrandingData.BackgroundURL){
+            CargoTrackingBrandingData.BackgroundURL = "url("+ ServiceHelper.GetAppURL(baseUrl)+BrandingData.BackgroundURL+")";
+        }
+        else{
+            CargoTrackingBrandingData.BackgroundURL ="url('"+baseUrl+"assets/images/misc/map-bg.svg')"
+        } 
+    }
+
+    private static SetComapnyLogo(BrandingData:any,baseUrl:string)
+    {
+        if(BrandingData.ComapnylogoURL){
+            CargoTrackingBrandingData.ComapnylogoURL =   ServiceHelper.GetAppURL(baseUrl)+BrandingData.ComapnylogoURL;
+        }
+    }
+
+    private static SetBrowserIcon(BrandingData:any,baseUrl:string)
+    {
+        if(BrandingData.BrowserIconURL){
+            CargoTrackingBrandingData.BrowserIconURL =   ServiceHelper.GetAppURL(baseUrl)+BrandingData.BrowserIconURL ;
+            ServiceHelper.favIcon.href =CargoTrackingBrandingData.BrowserIconURL;
+        }
+    }
     public static GetHeaders(){
 
         var authHeader = new HttpHeaders();

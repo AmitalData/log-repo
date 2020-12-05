@@ -136,6 +136,8 @@ export class TenantManagementList {
 		SecondaryColor: string;
 		Opacity: number;
 		BackgroundId: string;
+		ComapnylogoId: string;
+		BrowserIconId: string;
 		TotalNumberOfUsers: number;
 		TotalFreeUsers: number;
 		AveragePrice: number;
