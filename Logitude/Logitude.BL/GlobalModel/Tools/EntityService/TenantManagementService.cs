@@ -34,7 +34,7 @@ namespace Logitude.BL.GlobalModel.Tools.EntityService
         bool isNewEntity;
         int tenant;
         const string CargoTrackingImageFolder = "CargoTrackingImages";
-        const string CargoTrackingImageExtensionType = "jpg";
+        const string CargoTrackingImageExtensionType = "png";
         private TenantManagementPM entityPM;
         public TenantManagement entityPoco { get; set; }
         private IGlobalContext objectContext;

@@ -40,19 +40,10 @@ namespace WebFreight.Web.Controllers.CargoTrackingModel
 
             try
             {
-                TenantManagementQuery tenantManagementQuery = new TenantManagementQuery();
-                TenantManagementPM tenantManagementPM = tenantManagementQuery.GetSinglePMByDomain(domain);
+                CargoTrackingHelper cargoTrackingHelper = new CargoTrackingHelper();
+                CargoTrackingBrandingData BrandingData = cargoTrackingHelper.GetCargoTrackingBrandingDataByDomain(domain,true);
                 ServiceResponse response = new ServiceResponse();
-                if (tenantManagementPM != null)
-                {
-                    CargoTrackingBrandingData data = new CargoTrackingBrandingData()
-                    {
-                        Tenant = tenantManagementPM.Id,
-                        MainColor = tenantManagementPM.MainColor,
-                        SecondaryColor = tenantManagementPM.SecondaryColor,
-                    };
-                    response.Result = data;
-                }
+                response.Result = BrandingData;
                 return Request.CreateResponse(HttpStatusCode.OK, response);
             }
             catch (Exception ex)
