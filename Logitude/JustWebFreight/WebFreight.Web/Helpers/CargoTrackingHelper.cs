@@ -60,7 +60,7 @@ namespace WebFreight.Web.Helpers
         {
             if (!string.IsNullOrEmpty(cargoTrackingBrandingData.BackgroundId))
             {
-                byte[] filedata = GetBackgroundImageBytes(cargoTrackingBrandingData.BackgroundId);
+                byte[] filedata = GeImageBytesById(cargoTrackingBrandingData.BackgroundId);
                 if (filedata != null)
                 {
                     string base64StringData = Convert.ToBase64String(filedata);
@@ -85,13 +85,13 @@ namespace WebFreight.Web.Helpers
             if (!Directory.Exists(folderPath))
                 Directory.CreateDirectory(folderPath);
         }
-        private byte[] GetBackgroundImageBytes(string backgroundId)
+        private byte[] GeImageBytesById(string ImageId)
         {
-            byte[] imageBytes = GetImageBytesFromCargoTrackingImages(backgroundId);
+            byte[] imageBytes = GetImageBytesFromCargoTrackingImages(ImageId);
             if (imageBytes == null || imageBytes.Length == 0)
             {
                 Uploader uploaderService = new Uploader();
-                imageBytes = uploaderService.DownloadFile(backgroundId, CargoTrackingImageExtensionType, "images", 0);
+                imageBytes = uploaderService.DownloadFile(ImageId, CargoTrackingImageExtensionType, "images", 0);
             }
             return imageBytes;
         }
