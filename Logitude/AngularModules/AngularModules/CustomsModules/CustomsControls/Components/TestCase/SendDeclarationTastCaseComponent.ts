@@ -34,6 +34,11 @@ export class SendDeclarationTastCaseComponent extends BaseComponent{
         this._Param2 = newValue;
     }
 
+    private _Test: string;
+    public get Test() { return this._Test; }
+    public set Test(newValue: string) {
+        this._Test = newValue;
+    }
 
     constructor() {
         super();
@@ -62,11 +67,13 @@ export class SendDeclarationTastCaseComponent extends BaseComponent{
 
     OkButtonClicked() {
         debugger;
+        this.Test = "{";
         if (!AppTool.IsNullOrEmpty(this.parametres))
             this.Param1 = "{";
         this.parametres.forEach(x => {
             this.Param1 += "'" + x.Code + "' : '" + x.Value + "',";
         });
+        this.Param1 = this.Param1.slice(0, this.Param1.length - 1);
         this.Param1 += "}";
 
        // this.Param1 = this.Param1.slice(1, this.Param1.length - 1);
@@ -88,7 +95,7 @@ export class SendDeclarationTastCaseComponent extends BaseComponent{
         this.CurrentSession.CloseCurrentWindowEmit("Ok");
     }
 
-    
+ 
 
     CancelButtonClicked() {
         this.CurrentSession.CloseCurrentWindowEmit("");
