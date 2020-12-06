@@ -211,18 +211,8 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
     vendor: CardList;
     VendorChanged(vednor:CardList){
         this.vendor = vednor;
-        this.UIProperties.SetEnabled("PaymentCurrencyId", this.ObjectTableName, true);
-        this.PaymentCurrencyId = null;
-        if (AppTool.IsNullOrEmpty(this.EntityPM.VendorId)) {
-            this.UIProperties.SetEnabled("VendorAddressId", this.ObjectTableName, false);
-        }
-        else {
-            this.UIProperties.SetEnabled("VendorAddressId", this.ObjectTableName, true);
-        }
-        this.GetCardProperties();
-        this.LoadData();
-        this.IsTaxUpdated = true;
         this.LoadTaxPercentage();
+        
     }
     private IsTaxUpdated = false;
     private LoadTaxPercentage() {
@@ -726,7 +716,18 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
         if (this.EntityPM != null) {
             if (this.EntityPM.VendorId != value) {
                 this.EntityPM.VendorId = value;
-                
+                this.UIProperties.SetEnabled("PaymentCurrencyId", this.ObjectTableName, true);
+                this.PaymentCurrencyId = null;
+                if (AppTool.IsNullOrEmpty(this.EntityPM.VendorId)) {
+                    this.UIProperties.SetEnabled("VendorAddressId", this.ObjectTableName, false);
+                }
+                else {
+                    this.UIProperties.SetEnabled("VendorAddressId", this.ObjectTableName, true);
+                }
+                this.GetCardProperties();
+                this.LoadData();
+                this.IsTaxUpdated = true;
+
             }
         }
     }
