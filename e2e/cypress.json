@@ -12,6 +12,9 @@
 
   },
   "env": {
+    "UserName" : "ahmada@logitudeworld.com",
+    "Password" : "",
+    "Tenant"   : 951,
     "TestURL": "https://test.logitudeworld.com/test/",
     "TestEmail": "protractor2@test.com",
     "TestPassword": "!P123p456",

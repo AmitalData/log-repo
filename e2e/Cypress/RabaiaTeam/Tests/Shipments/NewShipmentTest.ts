@@ -79,15 +79,10 @@ describe("Create Shipment Tests", () => {
 
     it("Create Direct Export Ocean LCL Shipment", () => {
 
-        cy.Click("#HelperNotesButton_0_0")
-        cy.Click(".LogitudeToggleButtonItem", "Direct")
-        cy.ClickRadio("#DirectionRadio_0E")
-        cy.ClickRadio("#TransportModeRadio_0O")
-        cy.ClickRadio("#ShipmentTypeRadio_0LCLD")
+        cy.OpenNewShipmentWizard("Direct");
+        cy.FillShipmentDefaultFields("E","O","LCLD"); 
         cy.ValidateValue("#Shipment_ShipmentCustomerTypeCode", "Shipper")
-        cy.SelectLogLovFirstElement("#Shipment_CustomerId")
-        cy.SelectLogLovFirstElement("#Shipment_MainCarriageFromPortId")
-        cy.SelectLogLovFirstElement("#Shipment_MainCarriageToPortId")
+        
         //cy.SaveClick("**/shipment", "#ShipmentCreatebtn", "Shipment Saved Successfully")
 
     })
