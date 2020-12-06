@@ -2111,13 +2111,13 @@ namespace MeatadataGeneratorTool
                         {
                             if (fieldOldNames.Contains(","))
                             {
-                                var oldNamesExceptName = fieldOldNames.Split(',').Where(x => x != fieldName && x != fieldShortName);
+                                var oldNamesExceptName = fieldOldNames.Split(',').Where(x => x.ToLower() != fieldName.ToLower() && x.ToLower() != fieldShortName.ToLower());
 
-                                oldNames = oldNamesExceptName.Count() == 1 ? oldNamesExceptName.First() : string.Join(",", oldNamesExceptName.ToArray());
+                                oldNames = oldNamesExceptName.Count() == 1 ? oldNamesExceptName.First() : string.Join(",", oldNamesExceptName.Reverse().Distinct(StringComparer.OrdinalIgnoreCase).ToArray());
                             }
                             else
                             {
-                                oldNames = (fieldName == fieldOldNames) ? null : fieldOldNames;
+                                oldNames = (fieldName.ToLower() == fieldOldNames.ToLower()) ? null : fieldOldNames;
                             }
                         }
 
