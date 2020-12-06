@@ -82,7 +82,8 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
                 this.InitAndValidateTotalVATsOnly();
                 this.InitAndValidateInvoiceLines();
                 this.FillVATTransferExternalCodes(accountingSysytemCode, payableVATCard);
-                this.InitAndValidateTransferStatus();
+                if(RestClientAPIAPInvoice==null)
+                   this.InitAndValidateTransferStatus();
                 this.ComputeInvoiceAmounts();
 
                 return aPInvoicePM;
