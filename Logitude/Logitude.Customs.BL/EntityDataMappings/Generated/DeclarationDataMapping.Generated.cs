@@ -383,8 +383,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         FOBValueNIS, 
 	         FOBValueDollar, 
 	         AmendmentRejectionReasonName, 
-	         PalestinianCode, 
-	         PalestinianCodeId,
+	         PalestinianCode,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -2599,6 +2598,10 @@ namespace Logitude.Customs.BL.EntityDataMappings
             if (!String.IsNullOrWhiteSpace(entityPM.AmendmentErrorXml)) //T4 find type == nText 
             {
                 entityPM.AmendmentErrorXml = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.AmendmentErrorXml));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.PalestinianCode)) //T4 find type == nText 
+            {
+                entityPM.PalestinianCode = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.PalestinianCode));
             }
             entityPM.EncodeBase64NVARCHARFieldsBy=null;
 		}
