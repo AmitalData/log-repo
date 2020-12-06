@@ -76,7 +76,8 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 	         WarehouseLegRemarks, 
 	         DeclarationDate, 
 	         CustomsClearanceDate, 
-	         Id,
+	         Id, 
+	         DirectionId,
 	      }
 
 
@@ -144,7 +145,9 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 	         CurrentMilestoneName, 
 	         TransportModeName, 
 	         FromPortCountryCode, 
-	         ToPortCountryCode,
+	         ToPortCountryCode, 
+	         IsFavorite, 
+	         DirectionId,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -421,6 +424,11 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CustomsClearanceDate))
             {
 				entityPOCO.CustomsClearanceDate = entityPM.CustomsClearanceDate;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DirectionId))
+            {
+				entityPOCO.DirectionId = entityPM.DirectionId;
 			}
 			}
 
@@ -702,6 +710,11 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 					entityPM.Id = entityPOCO.Id;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.DirectionId))
+            {
+					entityPM.DirectionId = entityPOCO.DirectionId;
+            }
+
 		}
 
 		public void PMToOldPM(CargoTrackingShipmentPM entityPM, CargoTrackingShipmentPM oldEntityPM)
@@ -976,6 +989,11 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CustomsClearanceDate))
             {
                 oldEntityPM.CustomsClearanceDate = entityPM.CustomsClearanceDate;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DirectionId))
+            {
+                oldEntityPM.DirectionId = entityPM.DirectionId;
             }
 			
 		}

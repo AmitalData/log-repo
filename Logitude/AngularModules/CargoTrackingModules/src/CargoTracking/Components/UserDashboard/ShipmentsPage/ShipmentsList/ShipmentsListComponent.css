@@ -786,3 +786,9 @@ h1{
   
 
 
+
+  .direction-icon{
+    position: relative;
+    bottom: -30px;
+    transform: rotate(45deg);
+}

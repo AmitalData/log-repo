@@ -24,6 +24,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
                          "[CurrentMilestoneDate] DATETIME NULL," +
                          "[CustomerId] VARCHAR(15) NULL," +
                          "[TransportModeId] VARCHAR(15) NULL," +
+                         "[DirectionId] VARCHAR(1) NOT NULL," +
                          "[Master] VARCHAR(20) NULL," +
                          "[House] VARCHAR(20) NULL," +
                          "[ShipmentNumber] VARCHAR(20) NULL," +

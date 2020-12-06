@@ -58,7 +58,10 @@ export class CargoTrackingPortPM {
     public OldEntityPM: CargoTrackingPortPM;
 		
     public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
+       if(!this.DisableMarkAsDirty)
+       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -66,6 +69,7 @@ export class CargoTrackingPortPM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "CargoTrackingPort");
            
         }
+       }
     }
 
     private MyClone: CargoTrackingPortPM;

@@ -92,6 +92,7 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
                                                                
                                                                ClearanceDate = a.ClearanceDate,
                                                                CreateDate = a.CreateDate,
+                                                               DirectionId = a.DirectionId,
 
                                                            });
             return query;
@@ -281,6 +282,14 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
 
             return shipmentsLists;
         }
+        public IQueryable<CargoTrackingShipmentList> GetShipments(List<string> ShipmentIds, CargoTrackingShipmentFilters shipmentFilters)
+        {
+            IQueryable<CargoTrackingShipmentList> shipments = GetShipmentsQuerableByIds(ShipmentIds, shipmentFilters.Tenant);
+
+            shipments = FilterShipments(shipmentFilters, shipments);
+
+            return shipments;
+        }
 
         private List<CargoTrackingShipmentList> GetPageOfShipmentsLists(int pageIndex, int pageSize, IQueryable<CargoTrackingShipmentList> shipments)
         {
@@ -302,7 +311,6 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
             IQueryable<CargoTrackingShipmentList> shipments = GetShipmentsQuerableByIds(ShipmentIds, shipmentFilters.Tenant);
 
             shipments = FilterShipments(shipmentFilters, shipments);
-            var xxx = shipments.ToList();
             return shipments.Count();
         }
 
@@ -330,12 +338,37 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
 
         private IQueryable<CargoTrackingShipmentList> FilterShipments(CargoTrackingShipmentFilters shipmentFilters, IQueryable<CargoTrackingShipmentList> shipments)
         {
-            List<string> modes = GetTransportModesToFilterBy(shipmentFilters);
+            shipments = FilterByCustomers(shipmentFilters, shipments);
+            shipments = FilterTransportMode(shipmentFilters, shipments);
+            shipments = FilterDirections(shipmentFilters, shipments);
 
+            return shipments;
+        }
+
+        private IQueryable<CargoTrackingShipmentList> FilterDirections(CargoTrackingShipmentFilters shipmentFilters, IQueryable<CargoTrackingShipmentList> shipments)
+        {
+            List<string> directions = GetDirectionsToFilterBy(shipmentFilters);
             shipments = shipments.Where(d =>
-                shipmentFilters.CustomersIds.Contains(d.CustomerId)
-                && modes.Contains(d.TransportModeId)
+                directions.Contains(d.DirectionId)
             );
+            return shipments;
+        }
+
+        private IQueryable<CargoTrackingShipmentList> FilterTransportMode(CargoTrackingShipmentFilters shipmentFilters, IQueryable<CargoTrackingShipmentList> shipments)
+        {
+            List<string> modes = GetTransportModesToFilterBy(shipmentFilters);
+            shipments = shipments.Where(d =>
+                modes.Contains(d.TransportModeId)
+            );
+            return shipments;
+        }
+
+        private static IQueryable<CargoTrackingShipmentList> FilterByCustomers(CargoTrackingShipmentFilters shipmentFilters, IQueryable<CargoTrackingShipmentList> shipments)
+        {
+            if(shipmentFilters.CustomersIds.Count > 0)
+                shipments = shipments.Where(d =>
+                            shipmentFilters.CustomersIds.Contains(d.CustomerId)
+                        );
             return shipments;
         }
 
@@ -346,7 +379,13 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
                 modes = shipmentFilters.TransportModeCodes.Split(',').ToList();
             return modes;
         }
-
+        private List<string> GetDirectionsToFilterBy(CargoTrackingShipmentFilters shipmentFilters)
+        {
+            List<string> modes = new List<string>() { "I", "E" };
+            if (!string.IsNullOrEmpty(shipmentFilters.DirectionCodes))
+                modes = shipmentFilters.DirectionCodes.Replace("IM", "I").Replace("EX", "E").Split(',').ToList();
+            return modes;
+        }
         private IQueryable<CargoTrackingShipmentList> GetShipmentsQuerableByIds(List<string> ShipmentIds, int tenant)
         {
             CargoTrackingShipmentRepository repo = new CargoTrackingShipmentRepository(context);

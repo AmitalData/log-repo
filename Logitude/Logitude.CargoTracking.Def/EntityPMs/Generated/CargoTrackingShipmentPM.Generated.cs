@@ -1446,6 +1446,52 @@ namespace Logitude.CargoTracking.Def.EntityPMs
 			
 		 }
 	   }
+	  private bool isFavorite ;
+	  	  
+       
+	   [CustomValidation(typeof(CargoTrackingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsFavorite  
+	   {
+	    
+	     get
+		{
+		   return isFavorite;
+		 }
+		 set
+		 {
+		   if(isFavorite != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsFavorite",OldValue=isFavorite,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   isFavorite=value;
+		   }
+			
+		 }
+	   }
+	  private string directionId ;
+	  	  
+       
+	   [CustomValidation(typeof(CargoTrackingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string DirectionId  
+	   {
+	    
+	     get
+		{
+		   return directionId;
+		 }
+		 set
+		 {
+		   if(directionId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DirectionId",OldValue=directionId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   directionId=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

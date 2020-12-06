@@ -135,6 +135,8 @@ namespace Logitude.CargoTracking.Data.EntityPOCOs
      [Key]
         [Column("Id")]
 	    public int Id { get; set; }
+        [Column("DirectionId")]
+	    public string DirectionId { get; set; }
     }
 }
 	 
