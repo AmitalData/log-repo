@@ -1,22 +1,95 @@
-describe('New Shipment Tests', () => {
+describe("Create Shipment Tests", () => {
 
-    beforeEach(() => {
-        cy.Login();
-        cy.NavigateToMainMenu('#GeneralMHOperations');
-        cy.NavigateToWorkSpaceTab('#SHIP');
-    });
+    before(() => {
+        cy.Login()
+        cy.NavigateToMainMenu("#GeneralMHOperations")
+        cy.NavigateToWorkSpaceTab("#SHIP")
+    })
 
-    it('Create New D/Ex/I/FTL Shipment', () => {
-        cy.SelectToggleByLabel('Direct');//LogitudeToggleButton
-        cy.ClickRadio('#DirectionRadio_0E');
-        cy.ClickRadio('#TransportModeRadio_0I')
-        cy.ClickRadio('#ShipmentTypeRadio_0FTL');
-        //levelCode='D'
-        //direction = 'E';
-        //transportMode = 'I';
-        //shipmentType = 'FTL';
-        //scenarios.RunScenario(levelCode, transportMode, direction, shipmentType);
-        //editScenarios.RunEditTabsScenarios(levelCode, transportMode, direction, shipmentType);
-        //quoteActions.RunQuoteActions();
-    });  
-});
+    // it("Create Direct Export Air Shipment", () => {
+
+    //     cy.Click("#HelperNotesButton_0_0")
+    //     cy.Click(".LogitudeToggleButtonItem", "Direct")
+    //     cy.ClickRadio("#DirectionRadio_0E")
+    //     cy.ClickRadio("#TransportModeRadio_0A")
+    //     cy.ValidateValue("#Shipment_ShipmentCustomerTypeCode", "Shipper")
+    //     cy.SelectLogLovFirstElement("#Shipment_CustomerId")
+    //     cy.SelectLogLovFirstElement("#Shipment_MainCarriageFromPortId")
+    //     cy.SelectLogLovFirstElement("#Shipment_MainCarriageToPortId")
+    //     //cy.SaveClick("**/shipment", "#ShipmentCreatebtn", "Shipment Saved Successfully")
+
+    // })
+
+    // it("Create Direct Import Air Shipment", () => {
+
+    //     cy.Click("#HelperNotesButton_0_0")
+    //     cy.Click(".LogitudeToggleButtonItem", "Direct")
+    //     cy.ClickRadio("#DirectionRadio_0I")
+    //     cy.ClickRadio("#TransportModeRadio_0A")
+    //     cy.ValidateValue("#Shipment_ShipmentCustomerTypeCode", "Consignee")
+    //     cy.SelectLogLovFirstElement("#Shipment_CustomerId")
+    //     cy.SelectLogLovFirstElement("#Shipment_MainCarriageFromPortId")
+    //     cy.SelectLogLovFirstElement("#Shipment_MainCarriageToPortId")
+    //     //cy.SaveClick("**/shipment", "#ShipmentCreatebtn", "Shipment Saved Successfully")
+
+    // })
+
+    // it("Create Direct Domestic Air Shipment", () => {
+
+    //     cy.Click("#HelperNotesButton_0_0")
+    //     cy.Click(".LogitudeToggleButtonItem", "Direct")
+    //     cy.ClickRadio("#DirectionRadio_0D")
+    //     cy.ClickRadio("#TransportModeRadio_0A")
+    //     cy.ValidateValue("#Shipment_ShipmentCustomerTypeCode", "Shipper")
+    //     cy.SelectLogLovFirstElement("#Shipment_CustomerId")
+    //     cy.SelectLogLovFirstElement("#Shipment_MainCarriageFromPortId")
+    //     cy.SelectLogLovFirstElement("#Shipment_MainCarriageToPortId")
+    //     //cy.SaveClick("**/shipment", "#ShipmentCreatebtn", "Shipment Saved Successfully")
+
+    // })
+
+    // it("Create Direct Drop Air Shipment", () => {
+
+    //     cy.Click("#HelperNotesButton_0_0")
+    //     cy.Click(".LogitudeToggleButtonItem", "Direct")
+    //     cy.ClickRadio("#DirectionRadio_0R")
+    //     cy.ClickRadio("#TransportModeRadio_0A")
+    //     cy.ValidateValue("#Shipment_ShipmentCustomerTypeCode", "Shipper")
+    //     cy.SelectLogLovFirstElement("#Shipment_CustomerId")
+    //     cy.SelectLogLovFirstElement("#Shipment_MainCarriageFromPortId")
+    //     cy.SelectLogLovFirstElement("#Shipment_MainCarriageToPortId")
+    //     //cy.SaveClick("**/shipment", "#ShipmentCreatebtn", "Shipment Saved Successfully")
+
+    // })
+
+    // it("Create Direct Export Ocean FCL Shipment", () => {
+
+    //     cy.Click("#HelperNotesButton_0_0")
+    //     cy.Click(".LogitudeToggleButtonItem", "Direct")
+    //     cy.ClickRadio("#DirectionRadio_0E")
+    //     cy.ClickRadio("#TransportModeRadio_0O")
+    //     cy.ClickRadio("#ShipmentTypeRadio_0FCLD")
+    //     cy.ValidateValue("#Shipment_ShipmentCustomerTypeCode", "Shipper")
+    //     cy.SelectLogLovFirstElement("#Shipment_CustomerId")
+    //     cy.SelectLogLovFirstElement("#Shipment_MainCarriageFromPortId")
+    //     cy.SelectLogLovFirstElement("#Shipment_MainCarriageToPortId")
+    //     //cy.SaveClick("**/shipment", "#ShipmentCreatebtn", "Shipment Saved Successfully")
+
+    // })
+
+    it("Create Direct Export Ocean LCL Shipment", () => {
+
+        cy.Click("#HelperNotesButton_0_0")
+        cy.Click(".LogitudeToggleButtonItem", "Direct")
+        cy.ClickRadio("#DirectionRadio_0E")
+        cy.ClickRadio("#TransportModeRadio_0O")
+        cy.ClickRadio("#ShipmentTypeRadio_0LCLD")
+        cy.ValidateValue("#Shipment_ShipmentCustomerTypeCode", "Shipper")
+        cy.SelectLogLovFirstElement("#Shipment_CustomerId")
+        cy.SelectLogLovFirstElement("#Shipment_MainCarriageFromPortId")
+        cy.SelectLogLovFirstElement("#Shipment_MainCarriageToPortId")
+        //cy.SaveClick("**/shipment", "#ShipmentCreatebtn", "Shipment Saved Successfully")
+
+    })
+
+})

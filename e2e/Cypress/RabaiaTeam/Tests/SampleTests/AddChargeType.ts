@@ -23,7 +23,7 @@ describe("Add New Charge Type", () => {
 
         cy.Click("button", "Next")
         cy.Click("button", "Next")
-        cy.SaveClick("**/chargestypes", "button", "Finish")
+        //cy.SaveClick("**/chargestypes", "button", "Charge Type Saved Successfully", "Finish")
 
     })
 })
