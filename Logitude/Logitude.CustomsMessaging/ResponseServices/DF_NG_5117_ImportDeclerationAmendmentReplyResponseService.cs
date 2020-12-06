@@ -213,7 +213,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             case "27":
                                 {
                                     if (additionalInformation.Content != null)
-                                        _MyDeclarationPM.AmendmentRejectionReason += '\n' + additionalInformation.Content.Value;
+                                        _MyDeclarationPM.AmendmentRejectionReason =  additionalInformation.Content.Value;
                                     break;
 
                                 }
