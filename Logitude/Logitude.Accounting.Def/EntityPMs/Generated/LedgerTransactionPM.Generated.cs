@@ -1469,6 +1469,52 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
+	  private decimal calculatedLocalAmount ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public decimal CalculatedLocalAmount  
+	   {
+	    
+	     get
+		{
+		   return calculatedLocalAmount;
+		 }
+		 set
+		 {
+		   if(calculatedLocalAmount != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CalculatedLocalAmount",OldValue=calculatedLocalAmount,NewValue=value,PropertyType="decimal"};
+		    NotifyPropertyChanged(values);
+		   calculatedLocalAmount=value;
+		   }
+			
+		 }
+	   }
+	  private decimal calculatedForeignAmount ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public decimal CalculatedForeignAmount  
+	   {
+	    
+	     get
+		{
+		   return calculatedForeignAmount;
+		 }
+		 set
+		 {
+		   if(calculatedForeignAmount != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CalculatedForeignAmount",OldValue=calculatedForeignAmount,NewValue=value,PropertyType="decimal"};
+		    NotifyPropertyChanged(values);
+		   calculatedForeignAmount=value;
+		   }
+			
+		 }
+	   }
    }
    
 }
