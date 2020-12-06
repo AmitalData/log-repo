@@ -21,6 +21,10 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
         {
             this._MainContext = mainContext;
         }
+        public CashBookOnCreatingService()
+        {
+
+        }
         public virtual DateTime GetCurrentDateTime(CashBookPM entityPM)
         {
           return TenantServerConfigration.GetCurrentDateTime(entityPM.Tenant);

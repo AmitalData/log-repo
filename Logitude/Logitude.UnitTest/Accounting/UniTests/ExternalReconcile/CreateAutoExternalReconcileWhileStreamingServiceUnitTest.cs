@@ -18,6 +18,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
 
 
         [TestMethod]
+        [Ignore]
         public void CreateAutoEXTERNALReconcileWhileStreaming100_GoodExample_CheckSuccess()
         {
             BankAccountPM myBankAccountPM;
