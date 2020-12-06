@@ -283,7 +283,7 @@ namespace Logitude.Accounting.BL.CoreBL
     {
         public string AccountId { get; set; }
 
-        public decimal? BalanceInLocalCurrency { get; set; }
+        public decimal BalanceInLocalCurrency { get; set; }
 
         public string CHANGE_TYPE { get; set; }
     }
