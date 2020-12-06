@@ -113,5 +113,7 @@ namespace Simplog.Data.InvoiceModel.EntityPOCOs
         public string CreatedByPartner { get; set; }
 
         public bool TotalVATOnly { get; set; }
+
+        public DateTime? PaidDate { get; set; }
     }
 }

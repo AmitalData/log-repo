@@ -122,7 +122,7 @@ namespace Logitude.BL.InvoiceModel.Tools.DataMapping
             entity.Field10 = entityPM.Field10 != null ? entityPM.Field10.Value : null;
 
             entity.TotalVATOnly = entityPM.TotalVATOnly;
-
+            entity.PaidDate = entityPM.PaidDate;
 
             if (entityPM.SetApproved)
             {
