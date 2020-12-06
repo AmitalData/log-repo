@@ -19,9 +19,8 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
             List<InterestReportLinesByDatePM> interestReportLinesByDatePMs = new List<InterestReportLinesByDatePM>();
             int sequence = 1;
             decimal accumulatedAmount = interestReportLinesByDateCreationParams.InterestReportPM.OpenBalance != null ? interestReportLinesByDateCreationParams.InterestReportPM.OpenBalance.Value : 0;
-            decimal OpenBalance = accumulatedAmount;          
-            InterestReportQueryService ReportQueryService = new InterestReportQueryService(tenant);
-            DateTime? RecentCalculationDate = ReportQueryService.GetRecentCustomerReports(interestReportLinesByDateCreationParams.InterestReportPM);
+            decimal OpenBalance = accumulatedAmount;
+            DateTime? recentCalculationDate = interestReportLinesByDateCreationParams.RecentCalculationDate;
             for (int i = 0; i < interestTransactionsGroupedByDates.Count; i++)
             {
                 InterestTransactionsGroupedByDate currentInterestTransactionGroupedByDate = interestTransactionsGroupedByDates[i];
@@ -30,7 +29,7 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
                 {
                     nextInterestTransactionGroupedByDate = interestTransactionsGroupedByDates[i + 1];
                 }
-                bool isLinehasRecent = CheckRecentCustomerReportForLine(RecentCalculationDate,currentInterestTransactionGroupedByDate.GroupInterestValueDate);
+                bool isLinehasRecent = CheckRecentCustomerReportForLine(recentCalculationDate,currentInterestTransactionGroupedByDate.GroupInterestValueDate);
                 accumulatedAmount =  accumulatedAmount + currentInterestTransactionGroupedByDate.TotalLocalAmount;
                 decimal LineAccumulatedAmount = isLinehasRecent ? accumulatedAmount - OpenBalance: accumulatedAmount;
                 InterestReportLinesByDateMappingParams interestReportLinesByDateMappingParams = new InterestReportLinesByDateMappingParams(
