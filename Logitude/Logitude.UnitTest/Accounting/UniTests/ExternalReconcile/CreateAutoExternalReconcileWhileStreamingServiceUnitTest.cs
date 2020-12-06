@@ -17,8 +17,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
         int _Tenant = 1;
 
 
-        [TestMethod]
-        [Ignore]
+        ///[TestMethod]
         public void CreateAutoEXTERNALReconcileWhileStreaming100_GoodExample_CheckSuccess()
         {
             BankAccountPM myBankAccountPM;
