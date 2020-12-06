@@ -339,6 +339,16 @@ export class LedgerTransactionPM {
     public set CumulativeForeignAmountSign(newValue: string) { if (this.cumulativeForeignAmountSign != newValue) { this.cumulativeForeignAmountSign = newValue; this.MarkAsDirty("CumulativeForeignAmountSign"); } }
        
 	 
+    private calculatedLocalAmount: number;
+    public get CalculatedLocalAmount() { return this.calculatedLocalAmount; }
+    public set CalculatedLocalAmount(newValue: number) { if (this.calculatedLocalAmount != newValue) { this.calculatedLocalAmount = newValue; this.MarkAsDirty("CalculatedLocalAmount"); } }
+       
+	 
+    private calculatedForeignAmount: number;
+    public get CalculatedForeignAmount() { return this.calculatedForeignAmount; }
+    public set CalculatedForeignAmount(newValue: number) { if (this.calculatedForeignAmount != newValue) { this.calculatedForeignAmount = newValue; this.MarkAsDirty("CalculatedForeignAmount"); } }
+       
+	 
 
     public OldEntityPM: LedgerTransactionPM;
 		
