@@ -204,6 +204,26 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     {
                         switch (additionalInformation.StatementTypeCode.Value)
                         {
+                            case "16":
+                                {
+                                    if (additionalInformation.Content != null)
+                                    {
+                                      //  additionalInformation.Content.Value = "11";
+                                         var paymentOrderQueryService = new PaymentOrderQueryService(context);
+                                        var paymentOrderId = paymentOrderQueryService.GetIdByPaymentNumber(additionalInformation.Content.Value, requestParams.Tenant);
+                                        if(!string.IsNullOrEmpty(paymentOrderId))
+                                        {
+                                            PaymentOrderPM paymentOrder = paymentOrderQueryService.GetSingle(paymentOrderId, false, false);
+
+                                            paymentOrder.FirstEntityID =  _MyDeclarationPM.Id;
+                                            paymentOrder.ChangeSetOp = ChangeSetOperation.Update;
+                                            PaymentOrderUpdateService pOUpdateservice = new PaymentOrderUpdateService(context, new Dictionary<string, IContext>(), requestParams.Tenant);
+                                            pOUpdateservice.Update(paymentOrder, true);
+                                        }
+
+                                    }
+                                    break;
+                                }
                             case "29":
                                 {
                                     if (additionalInformation.Content != null)
