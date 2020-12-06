@@ -172,14 +172,16 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
             rec.IconCode = ledgerTransactionHelper.getEntityIcon(rec.SourceTypeCode);
             rec.Source = rec.IconCode + " " + rec.SourceNumber;
             rec.IsLocalAmountCreditPos = rec.LocalAmountCredit != 0;
-            rec.LocalAmountCredit = rec.LocalAmountCredit != 0 ? rec.LocalAmountCredit : rec.LocalAmountDebit;
+            rec.CalculatedLocalAmount = rec.LocalAmountCredit != 0 ? rec.LocalAmountCredit : rec.LocalAmountDebit;
+            //rec.LocalAmountCredit = rec.LocalAmountCredit != 0 ? rec.LocalAmountCredit : rec.LocalAmountDebit;
             rec.IsCumulativeLocalAmountPos = rec.CumulativeLocalAmount < 0;
             rec.IsForeignAmountCreditPos = rec.ForeignAmountCredit != 0;
-            rec.ForeignAmountCredit = rec.ForeignAmountCredit != 0 ? rec.ForeignAmountCredit : rec.ForeignAmountDebit;
+            rec.CalculatedForeignAmount = rec.ForeignAmountCredit != 0 ? rec.ForeignAmountCredit : rec.ForeignAmountDebit;
+            //rec.ForeignAmountCredit = rec.ForeignAmountCredit != 0 ? rec.ForeignAmountCredit : rec.ForeignAmountDebit;
             rec.IsCumulativeForeignAmountPos = rec.CumulativeForeignAmount < 0;
             rec.IsOriginalAmountPos = rec.OpenAmount < 0;
             rec.IsForeignAmountPos = rec.ForeignAmountCredit != 0;
-            rec.ForeignAmountCreditWithSign = rec.ForeignAmountCredit + " " + rec.CurrencySign;
+            rec.ForeignAmountCreditWithSign = rec.CalculatedForeignAmount + " " + rec.CurrencySign;
             rec.CumulativeForeignAmountSign = rec.CumulativeForeignAmount + " " + rec.CurrencySign;
             if (isFromExcelGenerater)
             {
