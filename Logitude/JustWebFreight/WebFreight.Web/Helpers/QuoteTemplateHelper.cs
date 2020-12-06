@@ -841,6 +841,18 @@ namespace WebFreight.Web.Helpers
                     GetNewFromTotalByContainer(copySetting);
                 }
 
+                if (string.IsNullOrEmpty(copySetting.PageNumberingTextDesignId))
+                {
+                    QuoteTemplateTextDesignRepository quoteTemplateTextDesignRepository = new QuoteTemplateTextDesignRepository(Tenant);
+                    QuoteTemplateTextDesign pageNumberingTextDesign = GetNewQuoteTemplateTextDesign();
+                    if (pageNumberingTextDesign != null)
+                    {
+                        quoteTemplateTextDesignRepository.Add(pageNumberingTextDesign);
+                        quoteTemplateTextDesignRepository.SubmitChanges();
+                        copySetting.PageNumberingTextDesignId = pageNumberingTextDesign.Id;
+                    }
+                }
+
                 #endregion
 
                 quoteTemplateSettingRepository.Add(copySetting);
