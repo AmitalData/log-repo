@@ -5,12 +5,12 @@ declare namespace Cypress {
         FillRandomString(selector: string, length: number, upperCase: boolean, assertRequired?: boolean): Chainable<Element>
         FillRandomNumber(selector: string, minimum: number, maximum: number, assertRequired?: boolean): Chainable<Element>
         Click(selector: string, contains?: string): Chainable<Element>
-        SaveClick(Url: string, selector: string, contains?: string): Chainable<Element>
+        SaveClick(Url: string, selector: string, successMessage: string, contains?: string): Chainable<Element>
         ClickCheckBox(selector: string): Chainable<Element>
         ClickRadio(selector: string): Chainable<Element>
         SelectLogLovFirstElement(selector: string): Chainable<Element>
-        ValidateElementColor(selector: string,expectedcolor): Chainable<Element>
-
+        ValidateElementColor(selector: string, expectedcolor: string): Chainable<Element>
+        ValidateValue(selector: string, value: string): Chainable<Element>
     }
 }
  
@@ -35,6 +35,12 @@ Cypress.Commands.add("FillLogLov", (selector, value, assertRequired = false) => 
     cy.get(".DropDownListItem").find("div[title='" + value + "']").click()
 
  
+})
+
+Cypress.Commands.add("ValidateValue", (selector, value) => {
+
+    cy.get(selector).should("have.value", value)
+
 })
 
 Cypress.Commands.add("SelectLogLovFirstElement", (selector) => {
@@ -93,15 +99,11 @@ Cypress.Commands.add("Click", (selector, contains = null) => {
 
 })
 
-Cypress.Commands.add("SaveClick", (url, selector, contains = null) => {
+Cypress.Commands.add("SaveClick", (url, selector, successMessage, contains = null) => {
 
-    cy.server()
-    cy.route({
+    cy.intercept({
         method: "POST",
-        url: url,
-        onResponse: (xhr) => {
-            assert.equal(xhr.status, 200, "Saved Success")
-        }
+        url: url
     }).as("WaitRequest")
 
     let element = cy.get(selector)
@@ -112,7 +114,9 @@ Cypress.Commands.add("SaveClick", (url, selector, contains = null) => {
 
     element.click()
 
-    cy.wait("@WaitRequest")
+    cy.wait("@WaitRequest").then((interception) => {
+        assert.equal(interception.response.statusCode, 200, successMessage)
+    })
 
 })
 
@@ -127,8 +131,8 @@ Cypress.Commands.add("ClickRadio", (selector) => {
 
 })
 
-Cypress.Commands.add("ValidateElementColor", (selector,expectedcolor) => {
+Cypress.Commands.add("ValidateElementColor", (selector, expectedcolor) => {
 
-    cy.get(selector).should('have.css', 'color').and('equal', expectedcolor);
+    cy.get(selector).should("have.css", "color").and("equal", expectedcolor);
 
 })
