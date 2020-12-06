@@ -40,7 +40,7 @@ namespace Logitude.UnitTest.Accounting.UniTests.InterestReport
 
             InterestReportLinesByDateCreationService interestReportLinesByDateCreationService = new InterestReportLinesByDateCreationService();
             InterestReportLinesByDateCreationParams interestReportLinesByDateCreationParams = new InterestReportLinesByDateCreationParams(interestReportPM, 
-                interestTransactionPMs, gLAccountInterestPeriodPMs, interestBasesPeriodPMs);
+                interestTransactionPMs, gLAccountInterestPeriodPMs, interestBasesPeriodPMs,null);
             List<InterestReportLinesByDatePM> interestReportLinesByDatePMs = interestReportLinesByDateCreationService.CreateInterestReportLinesByDate(interestReportLinesByDateCreationParams);
 
             AssertResults(resultInterestReportLinesByDatePMs, interestReportLinesByDatePMs);
@@ -62,7 +62,7 @@ namespace Logitude.UnitTest.Accounting.UniTests.InterestReport
 
             InterestReportLinesByDateCreationService interestReportLinesByDateCreationService = new InterestReportLinesByDateCreationService();
             InterestReportLinesByDateCreationParams interestReportLinesByDateCreationParams = new InterestReportLinesByDateCreationParams(interestReportPM,
-                interestTransactionPMs, gLAccountInterestPeriodPMs, interestBasesPeriodPMs);
+                interestTransactionPMs, gLAccountInterestPeriodPMs, interestBasesPeriodPMs,null);
             List<InterestReportLinesByDatePM> interestReportLinesByDatePMs = interestReportLinesByDateCreationService.CreateInterestReportLinesByDate(interestReportLinesByDateCreationParams);
 
             Assert.AreEqual(0, interestReportLinesByDatePMs.Count);
@@ -92,7 +92,7 @@ namespace Logitude.UnitTest.Accounting.UniTests.InterestReport
             , A<int>.Ignored, A<bool>.Ignored)).Throws(new ApplicationException("InterestReport.O.NoGlAccountPeriod"));
 
             InterestReportLinesByDateCreationParams interestReportLinesByDateCreationParams = new InterestReportLinesByDateCreationParams(interestReportPM,
-                interestTransactionPMs, gLAccountInterestPeriodPMs, interestBasesPeriodPMs);
+                interestTransactionPMs, gLAccountInterestPeriodPMs, interestBasesPeriodPMs,null);
             List<InterestReportLinesByDatePM> interestReportLinesByDatePMs = interestReportLinesByDateCreationService.CreateInterestReportLinesByDate(interestReportLinesByDateCreationParams);
 
             //AssertResults(resultInterestReportLinesByDatePMs, interestReportLinesByDatePMs);

@@ -12,17 +12,19 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
         public InterestReportLinesByDateCreationParams(InterestReportPM interestReportPM,
             List<InterestTransactionPM> interestTransactionPMs,
             List<GLAccountInterestPeriodPM> gLAccountInterestPeriodPMs,
-            List<InterestBasesPeriodPM> interestBasesPeriodPMs)
+            List<InterestBasesPeriodPM> interestBasesPeriodPMs, DateTime? recentCalculationDate)
         {
             this.InterestReportPM = interestReportPM;
             this.InterestTransactionPMs = interestTransactionPMs;
             this.GLAccountInterestPeriodPMs = gLAccountInterestPeriodPMs;
             this.InterestBasesPeriodPMs = interestBasesPeriodPMs;
+            this.RecentCalculationDate = recentCalculationDate;
         }
         public InterestReportPM InterestReportPM { get; private set; }
         public List<InterestTransactionPM> InterestTransactionPMs { get; private set; }
         public List<GLAccountInterestPeriodPM> GLAccountInterestPeriodPMs { get; private set; }
         public List<InterestBasesPeriodPM> InterestBasesPeriodPMs { get; private set; }
+        public DateTime? RecentCalculationDate { get; private set; }
 
 
     }
