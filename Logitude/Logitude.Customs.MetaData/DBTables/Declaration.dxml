@@ -971,7 +971,7 @@
   </Column>
   <Column
     Name="PalestinianCode"
-    Type="varchar"
+    Type="nvarchar"
     Size="15">
     <Constraints
       Nullable="true" />
@@ -1175,11 +1175,6 @@
     ForeignKeyColumn="FinalLoadingSite"
     ReferencedTable="LoadingSiteTypes"
     ReferencedColumn="Code"
-    ReferencedTableSchema="Customs" />
-  <Relation
-    ForeignKeyColumn="PalestinianCode"
-    ReferencedTable="Clients"
-    ReferencedColumn="Id"
     ReferencedTableSchema="Customs" />
   <Index
     Columns="AmendmentOriginalDeclartation" />

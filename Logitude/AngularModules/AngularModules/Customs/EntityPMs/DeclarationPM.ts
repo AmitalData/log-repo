@@ -1334,11 +1334,6 @@ export class DeclarationPM {
     public set PalestinianCode(newValue: string) { if (this.palestinianCode != newValue) { this.palestinianCode = newValue; this.MarkAsDirty("PalestinianCode"); } }
        
 	 
-    private palestinianCodeId: string;
-    public get PalestinianCodeId() { return this.palestinianCodeId; }
-    public set PalestinianCodeId(newValue: string) { if (this.palestinianCodeId != newValue) { this.palestinianCodeId = newValue; this.MarkAsDirty("PalestinianCodeId"); } }
-       
-	 
 
     public OldEntityPM: DeclarationPM;
 		
