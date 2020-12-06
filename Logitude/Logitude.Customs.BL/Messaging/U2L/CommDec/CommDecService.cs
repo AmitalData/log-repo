@@ -440,7 +440,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommDec
                 }
             }
 
-            UpdateTrucker();
+            //UpdateTrucker();
 
             _MyDeclarationPM.CurrentContextTag = UpsertActionConst; // moran 28.7.16 - Task 22249
 
@@ -728,12 +728,25 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommDec
                 DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(_context);
                 currentDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(_MyDeclarationPM.Id, true, false);
             }
+
+            if (currentDeclarationCourierStatusPM == null)
+            {
+                DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(_context);
+                currentDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(_MyDeclarationPM.Id, true, false);
+            }
+
             if (currentDeclarationCourierStatusPM != null && currentDeclarationCourierStatusPM.TotalInvoiceAmountInUSD != null && currentDeclarationCourierStatusPM.TotalInvoiceAmountInUSD <= 150)
             {
                 if (!String.IsNullOrWhiteSpace(this._MyDeclarationPM.ImporterId))
                 {
                     this._MyDeclarationPM.PalestinianCode = this._MyDeclarationPM.ImporterId;
+                    this._MyDeclarationPM.ImporterCode = null;
                     this._MyDeclarationPM.ImporterId = null;
+                }
+                else if(!String.IsNullOrWhiteSpace(this._MyDeclarationPM.ImporterCode))
+                {
+                    this._MyDeclarationPM.PalestinianCode = this._MyDeclarationPM.ImporterCode;
+                    this._MyDeclarationPM.ImporterCode = null;
                 }
             }
         }
