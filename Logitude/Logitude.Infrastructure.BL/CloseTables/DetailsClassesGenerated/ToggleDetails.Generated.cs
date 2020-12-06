@@ -169,6 +169,7 @@ namespace Logitude.Infrastructure.BL
                 SearchFields = "LIC,License Management", 
 			});
 			 
+
             all.Add(new ToggleDetails()
             {    
                 Name = "CRM Customer Quick Search", 
@@ -176,7 +177,7 @@ namespace Logitude.Infrastructure.BL
                 SearchFields = "CQS,CRM Customer Quick Search", 
                 Description = "CRM Customer Quick Search", 
 			});
-			 
+
             all.Add(new ToggleDetails()
             {    
                 Name = "Charges Types Direction Restrictions", 
@@ -184,14 +185,7 @@ namespace Logitude.Infrastructure.BL
                 SearchFields = "CTR,Charges Types Direction Restrictions", 
                 Description = "Charges Types Direction Restrictions", 
 			});
-			 
-            all.Add(new ToggleDetails()
-            {    
-                Code = "ACP", 
-                SearchFields = "ACP,Accruals Approvement", 
-                Name = "Accruals Approvement", 
-                Description = "Accruals Approvement Toggle", 
-			});
+
 			
             return all;
        }

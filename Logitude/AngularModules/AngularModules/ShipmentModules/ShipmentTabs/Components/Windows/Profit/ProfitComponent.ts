@@ -29,7 +29,6 @@ export class ProfitComponent {
     private myDomainService: ShipmentDomainService;
     private chargesTypeListService: ChargesTypeListService;
     private CurrentSession = SessionLocator.SelectedSession;
-    accrualsApprovementToggle: any;
     constructor() {
         this.myDomainService = new ShipmentDomainService();
         this.chargesTypeListService = new ChargesTypeListService();
@@ -42,8 +41,8 @@ export class ProfitComponent {
         this.LocalCurrencyCode = SessionLocator.LocalCurrencyCode;
         this.ProfitCurrencyCode = this.EntityPM.ProfitCurrencyCode;
         this.SelectedCurrencyCode = this.IsByLocalCurrency ? this.LocalCurrencyCode : this.ProfitCurrencyCode;
-        this.accrualsApprovementToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "ACP" && d.TenantNumber == SessionLocator.Tenant)[0];
-        if (FeatureLocator.HasFeaturePermession("Shipment", "Shipment.Action.AccrualsApprovement") && this.accrualsApprovementToggle ) {
+
+        if (FeatureLocator.HasFeaturePermession("Shipment", "Shipment.Action.AccrualsApprovement")) {
             this.IsAccrualsApprovingVisible = true;
         }
 

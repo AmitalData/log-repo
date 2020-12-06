@@ -84811,7 +84811,6 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;ViewSharedDocuments&quot;"
     ListPropertyPath="&quot;ViewSharedDocuments&quot;"
-    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -95908,7 +95907,7 @@
       FeatureTypeCode="&quot;ACT&quot;"
       FeatureTextCodeCode="&quot;Shipment.Features.Shipment.Action.AccrualsApprovement&quot;"
       FeatureDefaultText="&quot;Accruals Approvement&quot;"
-      IsPackagable="true"
+      IsPackagable="false"
       IsOld="false"
       IsCoreFeature="false"
       IsBusinessUnitEnabled="false" />
