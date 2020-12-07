@@ -45,6 +45,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                                        BackgroundId = a.BackgroundId,
                                                        ComapnylogoId = a.ComapnylogoId,
                                                        BrowserIconId = a.BrowserIconId,
+                                                       CustomerURL = a.CustomerURL,
 
                                                    }).FirstOrDefault();
 

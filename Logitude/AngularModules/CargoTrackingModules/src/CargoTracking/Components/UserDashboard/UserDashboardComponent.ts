@@ -90,7 +90,7 @@ export class UserDashboardComponent implements AfterViewInit
         this.tenant = +sessionStorage.getItem("LoggedUserTenant");
         sessionStorage.clear();
         if(this.tenant)
-            this.router.navigate(["Cargo-Tracking/login"],{ queryParams: {tenant: this.tenant}});
+            this.router.navigate(["Cargo-Tracking/login"]);//,{ queryParams: {tenant: this.tenant}}
         else
             this.router.navigate(["Cargo-Tracking/login"]);
     }

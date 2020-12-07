@@ -40,7 +40,7 @@ export  class ServiceHelper{
         ServiceHelper.SetCarogTrackingImages(brandingData,baseUrl);
     }
      
-    private static ConvertHexaToRGBA(color: string)
+    public static ConvertHexaToRGBA(color: string)
     {
         if (color) {
             var alpha = parseInt(color.slice(1, 3), 16) / 255;

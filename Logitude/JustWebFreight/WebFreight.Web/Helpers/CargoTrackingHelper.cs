@@ -39,6 +39,7 @@ namespace WebFreight.Web.Helpers
                     BackgroundId = tenantManagementPM.BackgroundId,
                     BrowserIconId = tenantManagementPM.BrowserIconId,
                     ComapnylogoId = tenantManagementPM.ComapnylogoId,
+                    CustomerURL = tenantManagementPM.CustomerURL,
                 };
                 SetCargoTrackingImages(cargoTrackingBrandingData, isFromPrivateSite);
             }
