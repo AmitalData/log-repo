@@ -16,17 +16,17 @@ namespace WebFreight.Web.Helpers
         const string CargoTrackingImageExtensionType = "png";
 
 
-        public CargoTrackingBrandingData GetCargoTrackingBrandingDataByDomain(string domain,bool IsFromPrivateSite=false)
+        public CargoTrackingBrandingData GetCargoTrackingBrandingDataByDomain(string domain,bool isFromPrivateSite=false)
         {
 
             TenantManagementQuery tenantManagementQuery = new TenantManagementQuery();
             TenantManagementPM tenantManagementPM = tenantManagementQuery.GetSinglePMByDomain(domain);
-            CargoTrackingBrandingData BrandingData = MapBrandingDataByTenantManagement(tenantManagementPM,IsFromPrivateSite);
+            CargoTrackingBrandingData BrandingData = MapBrandingDataByTenantManagement(tenantManagementPM, isFromPrivateSite);
 
             return BrandingData;
         }
  
-        private CargoTrackingBrandingData MapBrandingDataByTenantManagement(TenantManagementPM tenantManagementPM,bool IsFromPrivateSite)
+        private CargoTrackingBrandingData MapBrandingDataByTenantManagement(TenantManagementPM tenantManagementPM,bool isFromPrivateSite)
         {
             CargoTrackingBrandingData cargoTrackingBrandingData = null;
             if (tenantManagementPM != null)
@@ -40,20 +40,20 @@ namespace WebFreight.Web.Helpers
                     BrowserIconId = tenantManagementPM.BrowserIconId,
                     ComapnylogoId = tenantManagementPM.ComapnylogoId,
                 };
-                SetCargoTrackingImages(cargoTrackingBrandingData, IsFromPrivateSite);
+                SetCargoTrackingImages(cargoTrackingBrandingData, isFromPrivateSite);
             }
 
             return cargoTrackingBrandingData;
         }
-        private void SetCargoTrackingImages(CargoTrackingBrandingData cargoTrackingBrandingData, bool IsFromPrivateSite)
+        private void SetCargoTrackingImages(CargoTrackingBrandingData cargoTrackingBrandingData, bool isFromPrivateSite)
         {
-            SetBackgroundImageBase64(cargoTrackingBrandingData, IsFromPrivateSite);
+            SetBackgroundImageBase64(cargoTrackingBrandingData, isFromPrivateSite);
             SetComapnyLogoBase64(cargoTrackingBrandingData);
             SetBrowserIconBase64(cargoTrackingBrandingData);
         }
-        private void SetBackgroundImageBase64(CargoTrackingBrandingData cargoTrackingBrandingData, bool IsFromPrivateSite)
+        private void SetBackgroundImageBase64(CargoTrackingBrandingData cargoTrackingBrandingData, bool isFromPrivateSite)
         {
-            if (!string.IsNullOrEmpty(cargoTrackingBrandingData.BackgroundId) && !IsFromPrivateSite)
+            if (!string.IsNullOrEmpty(cargoTrackingBrandingData.BackgroundId) && !isFromPrivateSite)
             {
                 byte[] filedata = GeImageBytesById(cargoTrackingBrandingData.BackgroundId);
                 if (filedata != null)
@@ -127,8 +127,8 @@ namespace WebFreight.Web.Helpers
             string imagePath = GetFilePath(GetFileNameWithExtension(imgId));
             if (!File.Exists(imagePath))
             {
-                byte[] daata = System.Convert.FromBase64String(base64StringData);
-                MemoryStream ms = new MemoryStream(daata);
+                byte[] data = System.Convert.FromBase64String(base64StringData);
+                MemoryStream ms = new MemoryStream(data);
                 System.Drawing.Image img = System.Drawing.Image.FromStream(ms);
                 img.Save(imagePath, System.Drawing.Imaging.ImageFormat.Png);
             }

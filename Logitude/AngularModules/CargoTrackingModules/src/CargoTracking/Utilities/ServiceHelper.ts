@@ -28,16 +28,16 @@ export  class ServiceHelper{
         return baseUrl 
     }
      
-    public static SetCargoTrackingDate(BrandingData:any,baseUrl:string){
+    public static SetCargoTrackingDate(brandingData:any,baseUrl:string){
 
-        CargoTrackingBrandingData.Tenant = BrandingData.Tenant;
-        CargoTrackingBrandingData.MainColor = BrandingData.MainColor != null ? this.ConvertHexaToRGBA(BrandingData.MainColor) :"#000000";
-        CargoTrackingBrandingData.SecondaryColor = BrandingData.SecondaryColor ? this.ConvertHexaToRGBA(BrandingData.SecondaryColor) : "#002664";
+        CargoTrackingBrandingData.Tenant = brandingData.Tenant;
+        CargoTrackingBrandingData.MainColor = brandingData.MainColor != null ? this.ConvertHexaToRGBA(brandingData.MainColor) :"#000000";
+        CargoTrackingBrandingData.SecondaryColor = brandingData.SecondaryColor ? this.ConvertHexaToRGBA(brandingData.SecondaryColor) : "#002664";
         document.documentElement.style.setProperty('--BGColor', CargoTrackingBrandingData.MainColor);
         document.documentElement.style.setProperty('--MainColor', CargoTrackingBrandingData.MainColor);
         document.documentElement.style.setProperty('--busyIndicatorColor', CargoTrackingBrandingData.MainColor);
         document.documentElement.style.setProperty('--secondaryColor', CargoTrackingBrandingData.SecondaryColor);
-        ServiceHelper.SetCarogTrackingImages(BrandingData,baseUrl);
+        ServiceHelper.SetCarogTrackingImages(brandingData,baseUrl);
     }
      
     private static ConvertHexaToRGBA(color: string)

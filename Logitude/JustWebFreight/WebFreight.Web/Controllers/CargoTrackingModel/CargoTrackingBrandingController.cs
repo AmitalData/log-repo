@@ -24,9 +24,9 @@ namespace WebFreight.Web.Controllers.CargoTrackingModel
             try
             {
                 CargoTrackingHelper cargoTrackingHelper = new CargoTrackingHelper();
-                CargoTrackingBrandingData BrandingData = cargoTrackingHelper.GetCargoTrackingBrandingDataByDomain(domain);
+                CargoTrackingBrandingData brandingData = cargoTrackingHelper.GetCargoTrackingBrandingDataByDomain(domain);
                 ServiceResponse response = new ServiceResponse();
-                response.Result = BrandingData;
+                response.Result = brandingData;
                 return Request.CreateResponse(HttpStatusCode.OK, response);
                 }
             catch (Exception ex)
@@ -41,9 +41,9 @@ namespace WebFreight.Web.Controllers.CargoTrackingModel
             try
             {
                 CargoTrackingHelper cargoTrackingHelper = new CargoTrackingHelper();
-                CargoTrackingBrandingData BrandingData = cargoTrackingHelper.GetCargoTrackingBrandingDataByDomain(domain,true);
+                CargoTrackingBrandingData brandingData = cargoTrackingHelper.GetCargoTrackingBrandingDataByDomain(domain,true);
                 ServiceResponse response = new ServiceResponse();
-                response.Result = BrandingData;
+                response.Result = brandingData;
                 return Request.CreateResponse(HttpStatusCode.OK, response);
             }
             catch (Exception ex)

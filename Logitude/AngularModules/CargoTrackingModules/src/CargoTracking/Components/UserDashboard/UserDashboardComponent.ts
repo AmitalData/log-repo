@@ -38,7 +38,7 @@ export class UserDashboardComponent implements AfterViewInit
     {
          
          document.documentElement.style.setProperty('--BGColor', 'RGB(250,251,252)');
-         this.getcargoTrackingData(baseUrl);
+         this.GetcargoTrackingData(baseUrl);
          this.InitComponent();
 
     }
@@ -101,7 +101,7 @@ export class UserDashboardComponent implements AfterViewInit
     }
 
  
-    private getcargoTrackingData(baseUrl:string)
+    private GetcargoTrackingData(baseUrl:string)
     {   if(this.tenant) 
         this.IsBrandingDataLoaded = true;
         this.cargoTrackingDataExtendedService.GetCargoTrackingBrandingDataForPrivateSite(ServiceHelper.GetCurrentDomain(ServiceHelper.GetCurrentDomain(baseUrl))).subscribe((response: ServiceResponse) =>
