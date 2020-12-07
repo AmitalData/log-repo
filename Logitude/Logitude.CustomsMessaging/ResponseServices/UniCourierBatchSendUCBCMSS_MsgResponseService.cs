@@ -220,7 +220,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             LogMessagingUtil.Instance.AppendLine("DeclarationUpdateService.Update for declaration: " + declarationPM.CustomFileNo + "\n");
                             declarationPM.ChangeSetOp = ChangeSetOperation.Update;
                             declarationPM.Consignments.FirstOrDefault().ChangeSetOp = ChangeSetOperation.Update;
-                            declarationPM.Consignments.FirstOrDefault().UnloadPortCode = /*customResponse.*/StorageSiteCode;
+                            //declarationPM.Consignments.FirstOrDefault().UnloadPortCode = /*customResponse.*/StorageSiteCode;
                             declarationPM.Consignments.FirstOrDefault().StorageSiteCode = /*customResponse.*/StorageSiteCode;
                             myDeclarationUpdateService.CourierStorageSiteChanged = true;
                             myDeclarationUpdateService.Update(declarationPM, true);
