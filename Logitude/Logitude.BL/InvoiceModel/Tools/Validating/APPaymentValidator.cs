@@ -73,16 +73,6 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                     if (paymentMethodCode.ToUpper() == "FS")
                     {
                         isAllowed = true;
-
-                        //if (entityPM.PaymentInvoices.Count == 0)
-                        //{
-                        //    throw new ApplicationException("You should have 1 Invoice line at least");
-                        //}
-
-                        //else
-                        //{
-                        //    isAllowed = true;
-                        //}
                     }
                 }
 
@@ -141,7 +131,10 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
 
             if (entityPM.PaymentInvoices.Where(a => a.ChangeSetOp != Simplog.Server.Infrastructure.ChangeSetOperation.Delete && (a.ForeignAmount == null || a.ForeignAmount == 0)).Any())
             {
-                throw new ApplicationException("Can't connect lines with zero Amount to Pay");
+                if (paymentMethodCode.ToUpper() != "FS")
+                {
+                    throw new ApplicationException("Can't connect lines with zero Amount to Pay");
+                }
             }
 
             ValidateAirlineRestriction(entityPM.VendorId, tenant);

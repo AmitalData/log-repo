@@ -1033,9 +1033,18 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
             if (this.EntityPM.PaymentMethodCode != value) {
                 this.EntityPM.PaymentMethodCode = value;
                 this.SetAutomaticPaymentCheque(value);
-
-
                 this.SetUIProperties_FullAccounting(); // for BankAccountId
+
+                this.ItemsSource.Collection.forEach((item: APPaymentInvoiceArgs) => {
+
+                    if (item.IsConnected && item.Invoice.AmountDue == 0 && item.AmountPaid == 0) {
+                        if (value != "FS") {
+                            item.IsConnected = false;
+                        }
+                    }
+
+                    item.SetUIProperties();
+                });
             }
         }
     }
@@ -1656,15 +1665,8 @@ export class APPaymentInvoiceArgs extends BaseComponent {
         this.IsAdvancedButtonVisible = false;
         this.CheckBoxEnabled = true;
 
-
-
-
-
         this.SetUIProperties_CurrencyMatched();
         this.SetUIProperties_AllowedToConnect();
-
-
-
 
         if (this.isAllowedToConnect) {
             this.isControlEnabled = true;
@@ -1689,7 +1691,14 @@ export class APPaymentInvoiceArgs extends BaseComponent {
 
             else
                 if (this.trigger.EntityPM.OpenAmount <= 0) {
-                    this.NotMatchedVisibility = false;
+
+                    if (this.trigger.EntityPM.OpenAmount == 0 && this.PaymentPM.PaymentMethodCode == "FS") {
+                        this.CheckBoxVisibility = true;
+                    }
+
+                    else {
+                        this.NotMatchedVisibility = false;
+                    }
                 }
 
                 else {
@@ -1761,19 +1770,24 @@ export class APPaymentInvoiceArgs extends BaseComponent {
         }
     }
     SetUIProperties_AllowedToConnect() {
+
         this.isAllowedToConnect = true;
 
         if (this.IsConnected == false) {
-            if (this.Invoice.StatusCode == "WA") {
+
+            if (this.Invoice.StatusCode == "WA" || this.isCurrencyMatched == false) {
                 this.isAllowedToConnect = false;
             }
 
-            if (this.isCurrencyMatched == false) {
-                this.isAllowedToConnect = false;
-            }
+            else if (AppTool.IsNullOrZero(this.AmountDue)) {
 
-            if (AppTool.IsNullOrZero(this.AmountDue)) {
-                this.isAllowedToConnect = false;
+                if (this.AmountDue == 0 && this.Invoice.StatusCode == "AD" && this.PaymentPM.PaymentMethodCode == "FS") {
+                    this.isAllowedToConnect = true;
+                }
+
+                else {
+                    this.isAllowedToConnect = false;
+                }
             }
         }
     }
