@@ -45,8 +45,10 @@ Cypress.Commands.add("ValidateValue", (selector, value) => {
 
 Cypress.Commands.add("SelectLogLovFirstElement", (selector) => {
 
-    cy.get(selector).focus().clear().type('{downarrow}');
-
+    cy.intercept("**/GetByCompactFilters?**").as("LOVDataLoaded"); 
+    cy.get(selector).focus().type('{downarrow}'); 
+    cy.wait("@LOVDataLoaded")
+    //GetByCompactFilters
     cy.get(".DropDownListItem").children().eq(0).click();
 
 })
