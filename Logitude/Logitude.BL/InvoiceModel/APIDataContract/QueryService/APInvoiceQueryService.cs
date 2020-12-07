@@ -78,12 +78,16 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
                 this.InitAndValidateInvoiceCurrency();
                 this.InitAndValidateCurrencyRateData();
                 this.InitAndValidateShipmentReference();
-                this.InitAndValidatePaymentTerm_DueDate(RestClientAPIAPInvoice);
+               
                 this.InitAndValidateTotalVATsOnly();
                 this.InitAndValidateInvoiceLines();
                 this.FillVATTransferExternalCodes(accountingSysytemCode, payableVATCard);
-                if(RestClientAPIAPInvoice==null)
-                   this.InitAndValidateTransferStatus();
+                if (RestClientAPIAPInvoice == null)
+                {
+                    this.InitAndValidatePaymentTerm_DueDate();
+                    this.InitAndValidateTransferStatus();
+                }
+                 
                 this.ComputeInvoiceAmounts();
 
                 return aPInvoicePM;
@@ -323,7 +327,7 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
                 }
             }
         }
-        private void InitAndValidatePaymentTerm_DueDate(APInvoicePM restClientAPIAPInvoice)
+        private void InitAndValidatePaymentTerm_DueDate()
         {
             bool calculateDueDate = true;
 
@@ -331,8 +335,7 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
             {
                 if (this.aPInvoicePM.DueDate != null)
                 {
-                    Simplog.Data.CommonDataModel.EntityPOCOs.PaymentTerm manuallySetPaymentTerm = SetManuallyPaymentTerm(restClientAPIAPInvoice);
-
+                    Simplog.Data.CommonDataModel.EntityPOCOs.PaymentTerm manuallySetPaymentTerm = paymentTermRepository.GetSinglemanuallySetPaymentTerm(tenant);
                     if (manuallySetPaymentTerm != null)
                     {
                         this.aPInvoicePM.PaymentTermId = manuallySetPaymentTerm.Id;
@@ -342,11 +345,11 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
 
                 else
                 {
-                    this.aPInvoicePM.PaymentTermId = this.defaultPaymentTermId;                   
+                    this.aPInvoicePM.PaymentTermId = this.defaultPaymentTermId;
                 }
             }
-            
-            if(calculateDueDate)
+
+            if (calculateDueDate)
             {
                 DateTime? expectedDueDate = this.ComputeAPInvoiceDueDate(this.aPInvoicePM, paymentTermRepository);
 
@@ -369,21 +372,7 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
                 throw new ApplicationException("Payment Term is required");
             }
         }
-
-        private Simplog.Data.CommonDataModel.EntityPOCOs.PaymentTerm SetManuallyPaymentTerm(APInvoicePM restClientAPIAPInvoice)
-        {
-            Simplog.Data.CommonDataModel.EntityPOCOs.PaymentTerm manuallySetPaymentTerm = null;
-            if (restClientAPIAPInvoice == null)
-                manuallySetPaymentTerm = paymentTermRepository.GetSinglemanuallySetPaymentTerm(tenant);
-            else
-            {
-                manuallySetPaymentTerm = paymentTermRepository.GetSinglePaymentTermByExternalId("MS", tenant);
-                if (manuallySetPaymentTerm == null)
-                    throw new ApplicationException("No 'Manually Set' payment term with ExternalId='MS', tenant=" + tenant);
-            }
-
-            return manuallySetPaymentTerm;
-        }
+ 
         public void InitAndValidateTotalVATsOnly()
         {
 

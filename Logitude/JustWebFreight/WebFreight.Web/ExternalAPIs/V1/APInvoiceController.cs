@@ -162,7 +162,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
                             apinvoiceQuery.CustomeValidateAPInvoice(apinvoice);
                             apinvoicePM = apinvoiceQuery.APInvoiceDataMappingAndValidatin(apinvoice, tenant);
                             apinvoiceQuery.APInvoiceCustomDataMapping(apinvoice, tenant);
-                            //apinvoiceQuery.PaymentTermMapAndValidate(apinvoice, apinvoicePM, tenant);
+                            apinvoiceQuery.PaymentTermMapAndValidate(apinvoice, apinvoicePM, tenant);
                             CalculateTotalsIfEmpty(apinvoicePM);
                             // SET approved
                             apinvoicePM.SetVoided = false;
