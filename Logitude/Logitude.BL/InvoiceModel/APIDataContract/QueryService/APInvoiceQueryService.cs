@@ -78,11 +78,16 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
                 this.InitAndValidateInvoiceCurrency();
                 this.InitAndValidateCurrencyRateData();
                 this.InitAndValidateShipmentReference();
-                this.InitAndValidatePaymentTerm_DueDate();
+               
                 this.InitAndValidateTotalVATsOnly();
                 this.InitAndValidateInvoiceLines();
                 this.FillVATTransferExternalCodes(accountingSysytemCode, payableVATCard);
-                this.InitAndValidateTransferStatus();
+                if (RestClientAPIAPInvoice == null)
+                {
+                    this.InitAndValidatePaymentTerm_DueDate();
+                    this.InitAndValidateTransferStatus();
+                }
+                 
                 this.ComputeInvoiceAmounts();
 
                 return aPInvoicePM;
@@ -340,11 +345,11 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
 
                 else
                 {
-                    this.aPInvoicePM.PaymentTermId = this.defaultPaymentTermId;                   
+                    this.aPInvoicePM.PaymentTermId = this.defaultPaymentTermId;
                 }
             }
-            
-            if(calculateDueDate)
+
+            if (calculateDueDate)
             {
                 DateTime? expectedDueDate = this.ComputeAPInvoiceDueDate(this.aPInvoicePM, paymentTermRepository);
 
@@ -367,6 +372,7 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
                 throw new ApplicationException("Payment Term is required");
             }
         }
+ 
         public void InitAndValidateTotalVATsOnly()
         {
 
