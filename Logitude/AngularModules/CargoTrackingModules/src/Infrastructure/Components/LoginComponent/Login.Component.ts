@@ -171,16 +171,16 @@ export class LoginComponent implements OnInit {
             this.authService.redirectUrl = null;
           }
         else if (sessionStorage.getItem("Token")) {
-            this.router.navigate([sessionStorage.getItem("LoggedUserTenant"), this.authService.DefaultPageCargoTracking])
+            this.router.navigate([this.authService.DefaultPageCargoTracking])
         }
     }
 
     public ForgotPasswordClicked() {
         this.Tenant = this.route.snapshot.queryParams?.tenant;
         if(this.Tenant)
-            this.router.navigate(["resetpassword"],{ queryParams: {tenant: this.Tenant}});
+            this.router.navigate(["Cargo-Tracking/resetpassword"],{ queryParams: {tenant: this.Tenant}});
         else
-            this.router.navigate(["resetpassword"]);
+            this.router.navigate(["Cargo-Tracking/resetpassword"]);
     }
 
 }
