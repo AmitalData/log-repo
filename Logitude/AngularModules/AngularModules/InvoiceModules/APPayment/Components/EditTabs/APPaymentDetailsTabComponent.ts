@@ -124,26 +124,26 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
     }
     entityId: string;
     ViewPaymentCheque() {
-
-        this.PaymentChequePMService.GetPaymentChequeByPaymentIdAndChequeNumber(this.EntityPM.ChequeOrPaymentRef, this.EntityPM.Id).subscribe((myResult:ServiceResponse) => {
-            var myResponse: ServiceResponse = myResult;
-            if (myResponse != null) {
-
-                var res = myResponse.Result;
-                var entityId = res.Id;
-                SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
-                    .then(cmpRef => {
-                        cmpRef.instance.ComponentRef = cmpRef;
-                        cmpRef.instance.Run({ EntityId: entityId, ObjectTableName: "PaymentCheque", BackButtonLabel: "PaymentCheque" });
-                        cmpRef.instance.BackCompleted.subscribe(($event: any) => {
-                            this.BuildScreenData();
+        if(this.IsFullAccounting){
+            this.PaymentChequePMService.GetPaymentChequeByPaymentIdAndChequeNumber(this.EntityPM.ChequeOrPaymentRef, this.EntityPM.Id).subscribe((myResult:ServiceResponse) => {
+                var myResponse: ServiceResponse = myResult;
+                if (myResponse != null) {
+        
+                    var res = myResponse.Result;
+                    var entityId = res.Id;
+                    SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
+                        .then(cmpRef => {
+                            cmpRef.instance.ComponentRef = cmpRef;
+                            cmpRef.instance.Run({ EntityId: entityId, ObjectTableName: "PaymentCheque", BackButtonLabel: "PaymentCheque" });
+                            cmpRef.instance.BackCompleted.subscribe(($event: any) => {
+                                this.BuildScreenData();
+                            });
                         });
-                    });
-            }
-
-        });
-
-
+                }
+        
+            });
+        
+        }
     }
 
     private FullAccountingSetting: FullAccountingSettingPM = new FullAccountingSettingPM();
