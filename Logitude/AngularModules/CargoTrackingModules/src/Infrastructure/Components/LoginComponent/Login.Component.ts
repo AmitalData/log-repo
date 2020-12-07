@@ -171,7 +171,7 @@ export class LoginComponent implements OnInit {
             this.authService.redirectUrl = null;
           }
         else if (sessionStorage.getItem("Token")) {
-            this.router.navigate([sessionStorage.getItem("LoggedUserTenant"), this.authService.DefaultPageCargoTracking])
+            this.router.navigate([this.authService.DefaultPageCargoTracking])
         }
     }
 

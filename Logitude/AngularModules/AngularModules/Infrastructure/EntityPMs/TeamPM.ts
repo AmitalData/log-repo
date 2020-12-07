@@ -133,7 +133,10 @@ export class TeamPM {
     public OldEntityPM: TeamPM;
 		
     public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
+       if(!this.DisableMarkAsDirty)
+       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -141,6 +144,7 @@ export class TeamPM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "Team");
            
         }
+       }
     }
 
     private MyClone: TeamPM;

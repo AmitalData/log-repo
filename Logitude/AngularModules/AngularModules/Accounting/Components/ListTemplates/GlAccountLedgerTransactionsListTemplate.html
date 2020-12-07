@@ -65,7 +65,7 @@
 
     <!-- LocalAmountCredit -->
     <div class="TextTrimming" *ngIf="fieldName == 'LocalAmountCredit'" style="color:#00a24d; text-align: right; padding: 0px 2px;direction: ltr;" [class.red]='rowData["IsLocalAmountCreditPos"]'>
-        {{  rowData["LocalAmountCredit"]   | NumbersPipe:'N2' }}
+        {{  rowData["CalculatedLocalAmount"]   | NumbersPipe:'N2' }}
     </div>
 
     <!-- CumulativeLocalAmount -->
@@ -80,7 +80,7 @@
 
     <!-- ForeignAmountCredit -->
     <div class="TextTrimming" *ngIf="fieldName == 'ForeignAmountCredit'" style="color:#00a24d; text-align: right; padding: 0px 2px;direction: ltr;" [class.red]='rowData["IsForeignAmountCreditPos"]'>
-        {{  rowData["ForeignAmountCredit"]   | NumbersPipe:'N2' }} {{rowData['CurrencySign']}}
+        {{  rowData["CalculatedForeignAmount"]   | NumbersPipe:'N2' }} {{rowData['CurrencySign']}}
     </div>
 
     <!-- CumulativeForeignAmount -->

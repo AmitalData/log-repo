@@ -202,7 +202,7 @@ namespace WebFreight.Web.AccountingWebServices.Testers
                 Tenant = 989,
                 accoutingDate = DateTime.Now.AddMonths(-1),
                 GLAccountId = "1-1",
-                verbose = true
+                verbose = true,
             };
             try
             {

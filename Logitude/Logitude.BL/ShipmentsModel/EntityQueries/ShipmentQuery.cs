@@ -11793,6 +11793,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                MainCarriageToPortCode = f.MainCarriageToPortCode,
                                MainCarriageToPortCountryName = f.MainCarriageToPortCountryName,
                                MainCarriageToPortName = f.MainCarriageToPortName,
+                               MainHarmonize = f.MainHarmonize,
                                StatusId = f.StatusId,
                                StatusDate = f.StatusDate,
                                StatusName = f.StatusName,
