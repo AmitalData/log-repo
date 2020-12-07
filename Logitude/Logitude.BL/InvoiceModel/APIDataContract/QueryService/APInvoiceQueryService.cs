@@ -78,7 +78,7 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
                 this.InitAndValidateInvoiceCurrency();
                 this.InitAndValidateCurrencyRateData();
                 this.InitAndValidateShipmentReference();
-                this.InitAndValidatePaymentTerm_DueDate();
+                this.InitAndValidatePaymentTerm_DueDate(RestClientAPIAPInvoice);
                 this.InitAndValidateTotalVATsOnly();
                 this.InitAndValidateInvoiceLines();
                 this.FillVATTransferExternalCodes(accountingSysytemCode, payableVATCard);
