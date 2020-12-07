@@ -6,7 +6,7 @@ declare namespace Cypress {
         FillShipmentTransportMod(transportModCode:string): Chainable<Element> 
         FillShipmentType(shipmentTypeCode:string): Chainable<Element> 
         OpenNewShipmentWizard(type:string): Chainable<Element> 
-        FillShipmentDefaultFields(directionCode:string,transportModCode:string,shipmentTypeCode:string): Chainable<Element> 
+        FillShipmentDefaultFields(directionCode:string,transportModCode:string,shipmentTypeCode?:string): Chainable<Element> 
 
 
     } 
@@ -31,10 +31,12 @@ Cypress.Commands.add("OpenNewShipmentWizard", (type) => {
     cy.Click("#HelperNotesButton_0_0")
         cy.Click(".LogitudeToggleButtonItem", type)
 })
-Cypress.Commands.add("FillShipmentDefaultFields", (directionCode,transportModCode,shipmentTypeCode) => {
+Cypress.Commands.add("FillShipmentDefaultFields", (directionCode,transportModCode,shipmentTypeCode = null) => {
     cy.FillShipmentDirection(directionCode);
     cy.FillShipmentTransportMod(transportModCode);
+    if(shipmentTypeCode){
     cy.FillShipmentType(shipmentTypeCode);
+    }
     cy.SelectLogLovFirstElement("#Shipment_CustomerId")
     cy.SelectLogLovFirstElement("#Shipment_MainCarriageFromPortId")
     cy.SelectLogLovFirstElement("#Shipment_MainCarriageToPortId")

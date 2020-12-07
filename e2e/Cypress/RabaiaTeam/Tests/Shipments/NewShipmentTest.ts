@@ -8,71 +8,51 @@ describe("Create Direct Shipment Tests", () => {
 
     it("Create Direct Export Air Shipment", () => {
 
-        cy.Click("#HelperNotesButton_0_0")
-        cy.Click(".LogitudeToggleButtonItem", "Direct")
-        cy.ClickRadio("#DirectionRadio_0E")
-        cy.ClickRadio("#TransportModeRadio_0A")
+        cy.OpenNewShipmentWizard("Direct");
+        cy.FillShipmentDefaultFields("E","A");   
         cy.ValidateValue("#Shipment_ShipmentCustomerTypeCode", "Shipper")
-        cy.SelectLogLovFirstElement("#Shipment_CustomerId")
-        cy.SelectLogLovFirstElement("#Shipment_MainCarriageFromPortId")
-        cy.SelectLogLovFirstElement("#Shipment_MainCarriageToPortId")
+        
         cy.SaveClick("**/shipment", "#ShipmentCreatebtn", "Shipment Saved Successfully")
 
     })
 
     it("Create Direct Import Air Shipment", () => {
 
-        cy.Click("#HelperNotesButton_0_0")
-        cy.Click(".LogitudeToggleButtonItem", "Direct")
-        cy.ClickRadio("#DirectionRadio_0I")
-        cy.ClickRadio("#TransportModeRadio_0A")
+        cy.OpenNewShipmentWizard("Direct");
+        cy.FillShipmentDefaultFields("I","A");  
         cy.ValidateValue("#Shipment_ShipmentCustomerTypeCode", "Consignee")
-        cy.SelectLogLovFirstElement("#Shipment_CustomerId")
-        cy.SelectLogLovFirstElement("#Shipment_MainCarriageFromPortId")
-        cy.SelectLogLovFirstElement("#Shipment_MainCarriageToPortId")
+        
         cy.SaveClick("**/shipment", "#ShipmentCreatebtn", "Shipment Saved Successfully")
 
     })
 
     it("Create Direct Domestic Air Shipment", () => {
-
-        cy.Click("#HelperNotesButton_0_0")
-        cy.Click(".LogitudeToggleButtonItem", "Direct")
-        cy.ClickRadio("#DirectionRadio_0D")
-        cy.ClickRadio("#TransportModeRadio_0A")
+        
+        cy.OpenNewShipmentWizard("Direct");
+        cy.FillShipmentDefaultFields("D","A"); 
         cy.ValidateValue("#Shipment_ShipmentCustomerTypeCode", "Shipper")
-        cy.SelectLogLovFirstElement("#Shipment_CustomerId")
-        cy.SelectLogLovFirstElement("#Shipment_MainCarriageFromPortId")
-        cy.SelectLogLovFirstElement("#Shipment_MainCarriageToPortId")
+   
         cy.SaveClick("**/shipment", "#ShipmentCreatebtn", "Shipment Saved Successfully")
 
     })
 
     it("Create Direct Drop Air Shipment", () => {
 
-        cy.Click("#HelperNotesButton_0_0")
-        cy.Click(".LogitudeToggleButtonItem", "Direct")
-        cy.ClickRadio("#DirectionRadio_0R")
-        cy.ClickRadio("#TransportModeRadio_0A")
+        cy.OpenNewShipmentWizard("Direct");
+        cy.FillShipmentDefaultFields("R","A"); 
         cy.ValidateValue("#Shipment_ShipmentCustomerTypeCode", "Shipper")
-        cy.SelectLogLovFirstElement("#Shipment_CustomerId")
-        cy.SelectLogLovFirstElement("#Shipment_MainCarriageFromPortId")
-        cy.SelectLogLovFirstElement("#Shipment_MainCarriageToPortId")
+ 
         cy.SaveClick("**/shipment", "#ShipmentCreatebtn", "Shipment Saved Successfully")
 
     })
 
     it("Create Direct Export Ocean FCL Shipment", () => {
 
-        cy.Click("#HelperNotesButton_0_0")
-        cy.Click(".LogitudeToggleButtonItem", "Direct")
-        cy.ClickRadio("#DirectionRadio_0E")
-        cy.ClickRadio("#TransportModeRadio_0O")
-        cy.ClickRadio("#ShipmentTypeRadio_0FCLD")
+        cy.OpenNewShipmentWizard("Direct");
+        cy.FillShipmentDefaultFields("E","O","FCLD"); 
         cy.ValidateValue("#Shipment_ShipmentCustomerTypeCode", "Shipper")
-        cy.SelectLogLovFirstElement("#Shipment_CustomerId")
-        cy.SelectLogLovFirstElement("#Shipment_MainCarriageFromPortId")
-        cy.SelectLogLovFirstElement("#Shipment_MainCarriageToPortId")
+
+       
         cy.SaveClick("**/shipment", "#ShipmentCreatebtn", "Shipment Saved Successfully")
 
     })
@@ -88,3 +68,4 @@ describe("Create Direct Shipment Tests", () => {
     })
 
 })
+
