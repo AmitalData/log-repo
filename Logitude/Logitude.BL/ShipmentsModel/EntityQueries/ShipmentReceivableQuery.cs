@@ -80,6 +80,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                        ChargesTypeCode = a.ChargesType == null ? null : a.ChargesType.Code,
                                                        ChargesTypeName = a.ChargesType == null ? null : a.ChargesType.EnglishName,
                                                        ChargesGroupCode = a.ChargesType == null ? null : a.ChargesType.ChargesGroupCode,
+                                                       IsExpenseCharge = a.ChargesType == null ? null : (bool?)a.ChargesType.IsExpense,
                                                        ViewOrder = a.ChargesType == null ? 0 : a.ChargesType.ViewOrder,
                                                        DueTypeCode = a.DueTypeCode,
                                                        DueTypeName = a.DueType == null ? null : a.DueType.Name,
