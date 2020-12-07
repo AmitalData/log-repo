@@ -22,7 +22,6 @@ import './commands'
 
 import './Authentication/Authentication'
 import './Elements/Elements'
-import './Shipments/ShipmentsCommand'
 import './Common/GeneralCommands'
 import './Elements/ToggleButtonCommands'
 

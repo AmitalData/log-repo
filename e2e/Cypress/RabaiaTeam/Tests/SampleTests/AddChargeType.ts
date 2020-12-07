@@ -6,15 +6,15 @@ describe("Add New Charge Type", () => {
     
     it('navigate to charge types', function () {
         cy.Login()    
-        cy.Click("#GeneralMHMaintenance");
-        cy.Click("#BIL");
-        cy.Click("#MaintenanceItemMTCT");
+        cy.Click("#GeneralMHMaintenance", null);
+        cy.Click("#BIL", null);
+        cy.Click("#MaintenanceItemMTCT", null);
 
     }); 
 
     it("add new charge type", () => {
   
-        cy.Click("#NewButton_ChargesType");
+        cy.Click("#NewButton_ChargesType", null);
 
         cy.FillRandomString("#ChargesType_Code", 4, true, true)
         cy.FillLogTextBox("#ChargesType_EnglishName", "RabaiaTest", true)

@@ -3,7 +3,6 @@ declare namespace Cypress {
         Login(): Chainable<Element>
         OpenAndFillChangePasswordPage(newPassword:string,confirmNewPassword:string): Chainable<Element>
     } 
-    
 }
 
 Cypress.Commands.add("Login", () => {
@@ -26,26 +25,25 @@ Cypress.Commands.add("OpenAndFillChangePasswordPage", (newPassword,confirmNewPas
     cy.fixture("Data/" + Env + ".json").then((LoginData) => {
         var ResetURL = LoginData.url + "/PasswordChangePage.aspx?email=" + LoginData.email;
         cy.visit(ResetURL);
-        cy.FillLogTextBox("#CurrentPassword",LoginData.password); 
-        cy.FillLogTextBox('#Password',newPassword);
-        cy.FillLogTextBox('#ConfirmPassword',confirmNewPassword);
+        cy.get("#CurrentPassword").clear().type(LoginData.password).should("have.value", LoginData.password)
+        cy.get("#Password").clear().type(newPassword).should("have.value", newPassword)
+        cy.get("#ConfirmPassword").clear().type(confirmNewPassword).should("have.value", confirmNewPassword)
     }) 
 })
 
-// -------------------------------- functions
 
-function CompleteLoginProcess(Email:string,Password:string,URL : string,Tenant?:number){
+function CompleteLoginProcess(Email:string, Password:string, URL: string, Tenant?:number){
     cy.visit(URL)
-    cy.get("#Email").clear().type(Email)
-    cy.get("#Password").clear().type(Password)
+    cy.get("#Email").clear().type(Email).should("have.value", Email)
+    cy.get("#Password").clear().type(Password).should("have.value", Password)
     cy.get("#cmdLogin").click()
+
     if (Tenant !== null) {
         cy.get("input[name='cmbTenants_input']").clear().type('(' + Tenant + ')') 
         cy.get("#cmbTenants_listbox").children().contains('(' + Tenant + ')').eq(0).click({force:true})
     }
+
     cy.get("#cmdContinue").click()
-    //cy.server()
-    //cy.route("**/ObjectTableLastUpdate/**").as("LoadDataCompleted")
     cy.intercept("**/ObjectTableLastUpdate/**").as("LoadDataCompleted")
     cy.window().then(win => { win.sessionStorage.setItem("ControlledByCypress", "true") })
     cy.wait("@LoadDataCompleted")

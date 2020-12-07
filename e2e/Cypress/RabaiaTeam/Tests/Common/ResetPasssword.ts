@@ -20,7 +20,7 @@ describe("Reset Password Scenario", () => {
     it('Enter Password and mismatch password confirmation', function () {
         cy.OpenAndFillChangePasswordPage('!Aa121sde','!Aa121sda'); 
         cy.wait(500);
-        cy.Click("#cmdSubmit");   
+        cy.Click("#cmdSubmit", null);   
         cy.wait(500); 
         cy.get('#errorsList').should('have.html','The passwords you entered do not match.'); 
     }); 
@@ -35,7 +35,7 @@ describe("Reset Password Scenario", () => {
             },[true] 
           ) 
           
-        cy.Click("#cmdSubmit");  
+        cy.Click("#cmdSubmit", null);  
         cy.Login();
     }); 
 })

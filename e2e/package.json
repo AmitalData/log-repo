@@ -1,11 +1,11 @@
 {
-  "name": "cypress", 
-  "scripts": { 
+  "name": "cypress",
+  "scripts": {
     "cypressRun": "node_modules\\.bin\\cypress run",
     "runtests": "npm run cypressRun",
     "cypressopen": "node_modules\\.bin\\cypress open",
-    "clean:reports": "rm -R -f cypress/reports && mkdir cypress/reports && mkdir cypress/reports/mochareports", 
-    "cypress:report": "generate-mochawesome-report", 
+    "clean:reports": "rm -R -f cypress/reports && mkdir cypress/reports && mkdir cypress/reports/mochareports",
+    "cypress:report": "generate-mochawesome-report",
     "report:merge": "mochawesome-merge --reportDir cypress/results/json > cypress/results/mochawesome-bundle.json",
     "report:generate": "marge cypress/results/mochawesome-bundle.json -o cypress/reports/html",
     "report:copyScreenshots": "cp -r cypress/screenshots cypress/results/html/screenshots",
@@ -28,6 +28,7 @@
     "ag-grid-angular": "^20.0.0",
     "ag-grid-community": "^20.0.0",
     "ag-grid-enterprise": "^20.0.0",
+    "cypress-log-to-output": "^1.1.2",
     "mochawesome-report-generator": "^5.1.0",
     "rxjs": "~6.5.4",
     "selenium-webdriver": "^4.0.0-alpha.5",
