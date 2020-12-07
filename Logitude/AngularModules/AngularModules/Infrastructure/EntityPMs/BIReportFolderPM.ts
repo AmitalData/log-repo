@@ -133,7 +133,10 @@ export class BIReportFolderPM {
     public OldEntityPM: BIReportFolderPM;
 		
     public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
+       if(!this.DisableMarkAsDirty)
+       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -141,6 +144,7 @@ export class BIReportFolderPM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "BIReportFolder");
            
         }
+       }
     }
 
     private MyClone: BIReportFolderPM;

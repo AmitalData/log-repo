@@ -153,6 +153,7 @@ export class BatchTaskExecutionPMService {
         if (!entityPM) {
             
             entityPM = new BatchTaskExecutionPM();
+			entityPM.DisableMarkAsDirty = true;
         }
 
 		var customFields: Array<string> = [];
@@ -193,6 +194,8 @@ export class BatchTaskExecutionPMService {
             entityPM.OldEntityPM = null;
         }
 		entityPM.IsDirty = false;
+	    entityPM.DisableMarkAsDirty = false;
+
         return entityPM;
     }
 

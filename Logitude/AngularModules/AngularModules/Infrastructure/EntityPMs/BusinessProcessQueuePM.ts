@@ -104,7 +104,10 @@ export class BusinessProcessQueuePM {
     public OldEntityPM: BusinessProcessQueuePM;
 		
     public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
+       if(!this.DisableMarkAsDirty)
+       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -113,6 +116,7 @@ export class BusinessProcessQueuePM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "BusinessProcessQueue");
            
         }
+       }
     }
 
     private MyClone: BusinessProcessQueuePM;
