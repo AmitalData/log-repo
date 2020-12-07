@@ -1058,6 +1058,8 @@ namespace WebFreight.Web.Security
         {
             HttpContext context = HttpContext.Current;
             string Url = context.Request.Url.ToString().Split('/')[2];//("http://", "");
+            Url = Url.Split(':')[0];
+
             return Url;
         }
 
