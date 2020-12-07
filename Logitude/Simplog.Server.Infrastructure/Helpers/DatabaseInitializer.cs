@@ -89,7 +89,7 @@ namespace Simplog.Server.Infrastructure
             }
             else
             {
-                return GetSQLServerConnecttion(dbConnectionInfo);
+                return GetSQLServerConnecttion(dbConnectionInfo, connectionLifetime);
 
             }
 
@@ -144,7 +144,7 @@ namespace Simplog.Server.Infrastructure
             return connString;
         }
 
-        private static DbConnection GetSQLServerConnecttion(string dbConnectionInfo)
+        private static DbConnection GetSQLServerConnecttion(string dbConnectionInfo,int? connectionLifetime = null)
         {
             string[] information = dbConnectionInfo.Split(',');
             string databaseName = information[0];
@@ -165,7 +165,14 @@ namespace Simplog.Server.Infrastructure
             sqlBuilder.Password = pass;
             sqlBuilder.UserID = userName;
             sqlBuilder.MultipleActiveResultSets = true;
-            sqlBuilder.ConnectTimeout = 60;
+            if (connectionLifetime.HasValue && connectionLifetime.Value > 0)
+            {
+                sqlBuilder.ConnectTimeout = connectionLifetime.Value;
+            }
+            else
+            {
+                sqlBuilder.ConnectTimeout = 60;
+            }
             sqlBuilder.MaxPoolSize = 200;
             //sqlBuilder.ConnectTimeout = 240;
             // Build the SqlConnection connection string.
