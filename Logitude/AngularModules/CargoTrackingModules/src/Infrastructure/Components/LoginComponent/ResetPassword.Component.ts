@@ -130,8 +130,8 @@ export class ResetPasswordComponent implements OnInit {
     public BackToLoginClicked() {
         this.Tenant = this.route.snapshot.queryParams?.tenant;
         if(this.Tenant)
-            this.router.navigate(["login"],{ queryParams: {tenant: this.Tenant}});
+            this.router.navigate(["Cargo-Tracking/login"],{ queryParams: {tenant: this.Tenant}});
         else
-            this.router.navigate(["login"]);
+            this.router.navigate(["Cargo-Tracking/login"]);
     }
 }

@@ -26,7 +26,13 @@ export  class ServiceHelper{
         return baseUrl 
     }
      
-        
+    public static ConvertHexaToRGBA(color: string)
+    {
+        if (color) {
+            var alpha = parseInt(color.slice(1, 3), 16) / 255;
+            return 'rgba(' + parseInt(color.slice(-6, -4), 16) + ',' + parseInt(color.slice(-4, -2), 16) + ',' + parseInt(color.slice(-2), 16) + ',' + alpha + ')';
+        }
+    }    
 
     public static GetHeaders(){
 
