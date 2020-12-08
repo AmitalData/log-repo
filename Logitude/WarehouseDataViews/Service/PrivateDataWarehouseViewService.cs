@@ -80,10 +80,9 @@ namespace WarehouseDataViews.Service
 
         private void DeleteDataWarehouseViews(PrivateViewArgs privateViewArgs)
         {
-            string deleteViewsSql = "DECLARE @sql VARCHAR(MAX) = '', @crlf VARCHAR(2) = CHAR(13) + CHAR(10); SELECT @sql = @sql + 'DROP VIEW ' + QUOTENAME(SCHEMA_NAME(schema_id)) + '.' + QUOTENAME(v.name) + ';' + @crlf FROM sys.views v PRINT @sql;EXEC(@sql); ";
+            string deleteViewsSql = "DECLARE @sql VARCHAR(MAX) = '', @crlf VARCHAR(2) = CHAR(13) + CHAR(10); SELECT @sql = @sql + 'DROP VIEW ' + QUOTENAME(SCHEMA_NAME(schema_id)) + '.' + QUOTENAME(v.name) + ';' + @crlf FROM sys.views v where  v.name !='database_firewall_rules'  PRINT @sql;EXEC(@sql);";
             RunSql(privateViewArgs.ConnectionString, deleteViewsSql);
         }
-
     }
 
 
