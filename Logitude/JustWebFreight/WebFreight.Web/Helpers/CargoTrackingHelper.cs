@@ -12,7 +12,7 @@ namespace WebFreight.Web.Helpers
 {
     public class CargoTrackingHelper
     {
-        const string CargoTrackingImageFolder = "CargoTrackingImages";
+        const string CargoTrackingImageFolder = "images/CargoTrackingImages";
         const string CargoTrackingImageExtensionType = "png";
 
 
