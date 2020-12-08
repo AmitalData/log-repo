@@ -1,0 +1,110 @@
+﻿<Script DBType="Main" Module="Common" TargetTableName="Cards">
+  <Sql Version="1">
+    <![CDATA[
+
+
+delete CardSearches WHERE Weight = 30
+
+If(OBJECT_ID('tempdb..#temp_CardSearches') Is Not Null)
+Begin
+    Drop Table #temp_CardSearches
+End
+
+ 
+CREATE TABLE #temp_CardSearches
+(
+	[Tenant] [int] NOT NULL,
+	[RecordDate] [datetime] NOT NULL,
+	[Keyword] [nvarchar](100) NULL,
+	[Weight] [int] NOT NULL,
+	[CardId] [varchar](15) NULL,
+	[PartnerTypeId] [varchar](2) not NULL,
+    [InActive] bit,
+	[IsCustomer] bit
+)
+
+
+
+
+declare  @Tenant int
+declare @Count as int
+set @Count = 0;
+
+declare  @CardId varchar(15)
+declare  @EnglishName varchar(70)
+declare  @CreateDate datetime
+declare  @UpdateDate datetime
+declare  @Weight int
+declare  @PartnerTypeId varchar(2)
+declare  @InActive bit
+declare  @ContactName varchar(70)
+declare  @ContactEmail varchar(70)
+declare  @IsCustomer bit
+
+
+     DECLARE ContactsCursor CURSOR READ_ONLY
+     FOR
+     select Cards.Id ,Cards.Tenant , Cards.InActive,Cards.CreateDate , Cards.UpdateDate ,Cards.IsCustomer , Cards.PartnerTypeId,Contacts.EnglishName,Contacts.Email
+     from Contacts
+     INNER JOIN CardContacts ON CardContacts.ContactId = Contacts.Id
+     INNER JOIN Cards ON Cards.Id = CardContacts.CardId
+     where Contacts.Id in (select ContactId from CardContacts where CardId = Cards.Id and Tenant = Cards.Tenant) and Cards.IsCustomer = 1
+     OPEN ContactsCursor FETCH NEXT FROM ContactsCursor INTO  @CardId,@Tenant, @InActive,  @CreateDate , @UpdateDate ,@IsCustomer,  @PartnerTypeId , @ContactName , @ContactEmail
+     WHILE @@FETCH_STATUS = 0
+     BEGIN
+
+ 
+        begin
+		          set @Weight = 0
+	            DECLARE  @newId varchar(100) ;
+	            declare  @RecordDate datetime
+		          set @RecordDate = @UpdateDate;
+	          	 if(@RecordDate is null) set @RecordDate = @CreateDate
+
+			       BEGIN TRY  
+
+		        	    if (@ContactName is not null)	begin 		 insert into CardSearches (Tenant, CardId  , RecordDate  , PartnerTypeId,InActive ,IsCustomer, Keyword , Weight) select  @Tenant, @CardId , @RecordDate  , @PartnerTypeId,@InActive , @IsCustomer, t.Keyword  , t.weight from dbo.BuildSearchKeywordFunction(@ContactName , 30 , 30) t where KeyWord !=' ' end
+		              if (@ContactEmail is not null)	begin 		 insert into CardSearches (Tenant, CardId  , RecordDate  , PartnerTypeId,InActive ,IsCustomer, Keyword , Weight) select  @Tenant, @CardId , @RecordDate  , @PartnerTypeId,@InActive , @IsCustomer, t.Keyword  , t.weight from dbo.BuildSearchKeywordFunction(@ContactEmail , 30 , 30) t where KeyWord !=' ' end
+
+
+	                set @Count = @Count + 1;
+                  if(@Count = 500000)
+                   begin    
+
+		                  insert into CardSearches (Tenant, CardId , Keyword , RecordDate , Weight , PartnerTypeId,InActive, IsCustomer) select  Tenant, CardId , Keyword , RecordDate , Weight , PartnerTypeId,InActive,IsCustomer from #temp_CardSearches
+                       truncate table #temp_CardSearches
+                       set @Count = 0
+                    end
+              
+		  	     END TRY 
+		     	  BEGIN CATCH  
+
+            declare @Exception as varchar(4000)
+            set @Exception = (SELECT   ERROR_MESSAGE() AS ErrorMessage);  
+            set @Exception = @Exception + ' (@CardId: ' + @CardId +') '+ ' (@Tenant: ' + CAST(@Tenant as varchar(100)) + ' )'
+             RAISERROR(@Exception, 16, 3);
+
+           RETURN;
+            END CATCH  
+
+    
+
+        end
+
+ 
+    FETCH NEXT FROM ContactsCursor INTO  @CardId,@Tenant, @InActive,  @CreateDate , @UpdateDate ,@IsCustomer,  @PartnerTypeId , @ContactName , @ContactEmail
+    END
+    CLOSE ContactsCursor
+    DEALLOCATE ContactsCursor
+
+ 
+        if (@Count > 0) begin  insert into CardSearches (Tenant, CardId , Keyword , RecordDate , Weight , PartnerTypeId,InActive , IsCustomer) select  Tenant, CardId , Keyword , RecordDate , Weight , PartnerTypeId,InActive , IsCustomer from #temp_CardSearches end
+ 
+	 
+             drop table #temp_CardSearches
+
+    
+    ]]>
+  </Sql>
+  <Oracle Version="1"></Oracle>
+</Script>

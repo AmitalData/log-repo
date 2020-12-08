@@ -8,6 +8,7 @@
     <![CDATA[
 
 
+
 Create PROCEDURE [dbo].[usp_UpdateCardSearchFunction]
 (
 	@CardId varchar(15)
@@ -72,6 +73,34 @@ where Id = @CardId
 		if (@ReceivablesAccountingCard is not null)	begin 		 insert into CardSearches (Tenant, CardId  , RecordDate  , PartnerTypeId,InActive ,IsCustomer, Keyword , Weight) select  @Tenant, @CardId , @RecordDate  , @PartnerTypeId,@InActive ,  @IsCustomer,t.Keyword  , t.weight from dbo.BuildSearchKeywordFunction(@ReceivablesAccountingCard , 80 , 80) t where KeyWord !=' ' end
 		if (@PayablesAccountingCard is not null)	begin 		 insert into CardSearches (Tenant, CardId  , RecordDate  , PartnerTypeId,InActive ,IsCustomer, Keyword , Weight) select  @Tenant, @CardId , @RecordDate  , @PartnerTypeId,@InActive ,  @IsCustomer,t.Keyword  , t.weight from dbo.BuildSearchKeywordFunction(@PayablesAccountingCard , 80 , 80) t where KeyWord !=' ' end
 
+		if(@IsCustomer = 1)
+		begin
+         	declare  @ContactName varchar(60)
+        	declare  @ContactEmail varchar(70)
+          DECLARE ContactsCursor CURSOR READ_ONLY
+          FOR
+          SELECT EnglishName , Email
+          From Contacts 
+	        where Id in (select ContactId from CardContacts where CardId = @CardId and Tenant = @Tenant)
+          OPEN ContactsCursor FETCH NEXT FROM ContactsCursor INTO  @ContactName ,@ContactEmail 
+          WHILE @@FETCH_STATUS = 0
+          BEGIN
+
+          begin
+
+		     if (@ContactName is not null)	begin 		 insert into CardSearches (Tenant, CardId  , RecordDate  , PartnerTypeId,InActive ,IsCustomer, Keyword , Weight) select  @Tenant, @CardId , @RecordDate  , @PartnerTypeId,@InActive , @IsCustomer, t.Keyword  , t.weight from dbo.BuildSearchKeywordFunction(@ContactName , 30 , 30) t where KeyWord !=' ' end
+		     if (@ContactEmail is not null)	begin 		 insert into CardSearches (Tenant, CardId  , RecordDate  , PartnerTypeId,InActive ,IsCustomer, Keyword , Weight) select  @Tenant, @CardId , @RecordDate  , @PartnerTypeId,@InActive , @IsCustomer, t.Keyword  , t.weight from dbo.BuildSearchKeywordFunction(@ContactEmail , 30 , 30) t where KeyWord !=' ' end
+
+		     end
+
+
+        FETCH NEXT FROM ContactsCursor INTO  @ContactName ,@ContactEmail 
+        END
+        CLOSE ContactsCursor
+        DEALLOCATE ContactsCursor
+
+	
+		   end
 
 
 
