@@ -6865,6 +6865,7 @@
     <Folder Include="CargoTrackingModel\" />
     <Folder Include="CRMModel\Controllers\Generated\" />
     <Folder Include="CustomModel\Tools\TraceEvents\" />
+    <Folder Include="images\CargoTrackingImages\" />
     <Folder Include="images\ToolBar\" />
     <Folder Include="Logitude\BL\InfrastructureModel\" />
     <Folder Include="MessageModel\" />
