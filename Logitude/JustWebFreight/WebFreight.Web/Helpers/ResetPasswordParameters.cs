@@ -23,5 +23,6 @@ namespace WebFreight.Web.Helpers
         public string PageName { get; set; }
         public string AppEnvironment { get; set; }
         public string BrandingTenant { get; set; }
+        public string Domain { get; set; }
     }
 }

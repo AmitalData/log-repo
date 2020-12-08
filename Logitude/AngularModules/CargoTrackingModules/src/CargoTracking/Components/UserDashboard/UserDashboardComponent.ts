@@ -38,11 +38,11 @@ export class UserDashboardComponent implements AfterViewInit
     {
          
          document.documentElement.style.setProperty('--BGColor', 'RGB(250,251,252)');
-         this.getcargoTrackingData(baseUrl);
+         this.GetcargoTrackingData(baseUrl);
          this.InitComponent();
 
     }
-
+ 
     private InitComponent()
     {
 
@@ -90,7 +90,8 @@ export class UserDashboardComponent implements AfterViewInit
         this.tenant = +sessionStorage.getItem("LoggedUserTenant");
         sessionStorage.clear();
         if(this.tenant)
-            this.router.navigate(["Cargo-Tracking/login"],{ queryParams: {tenant: this.tenant}});
+
+            this.router.navigate(["Cargo-Tracking/login"]);//,{ queryParams: {tenant: this.tenant}}
         else
             this.router.navigate(["Cargo-Tracking/login"]);
     }
@@ -100,30 +101,14 @@ export class UserDashboardComponent implements AfterViewInit
         this.router.navigate(['Error401']);
     }
 
-    private GetTenantByDomain(baseUrl:string)
-    {
-        this.cargoTrackingDataExtendedService.GetTenantByDomain(ServiceHelper.GetCurrentDomain(baseUrl)).subscribe((response: ServiceResponse) =>
-        { if(response.Result){
-            CargoTrackingBrandingData.Tenant = response.Result;
-            this.IsBrandingDataLoaded =true;
-          }
-          else{
-              this.GoToError401();
-          }
-        });
-    }
-
-    private getcargoTrackingData(baseUrl:string)
-    {   
+ 
+    private GetcargoTrackingData(baseUrl:string)
+    {   if(this.tenant) 
+        this.IsBrandingDataLoaded = true;
         this.cargoTrackingDataExtendedService.GetCargoTrackingBrandingDataForPrivateSite(ServiceHelper.GetCurrentDomain(ServiceHelper.GetCurrentDomain(baseUrl))).subscribe((response: ServiceResponse) =>
         { if(response.Result){
-            CargoTrackingBrandingData.Tenant = response.Result.Tenant;
-            CargoTrackingBrandingData.MainColor = response.Result.MainColor != null ? ServiceHelper.ConvertHexaToRGBA(response.Result.MainColor) :"#000000";
-            CargoTrackingBrandingData.SecondaryColor = response.Result.SecondaryColor ? ServiceHelper.ConvertHexaToRGBA(response.Result.SecondaryColor) : "#002664";
-            document.documentElement.style.setProperty('--BGColor', CargoTrackingBrandingData.MainColor);
-            document.documentElement.style.setProperty('--MainColor', CargoTrackingBrandingData.MainColor);
-            document.documentElement.style.setProperty('--busyIndicatorColor', CargoTrackingBrandingData.MainColor);
-            document.documentElement.style.setProperty('--secondaryColor', CargoTrackingBrandingData.SecondaryColor);
+
+            ServiceHelper.SetCargoTrackingDate(response.Result,baseUrl);
             this.IsBrandingDataLoaded = true;
         }
         else{
@@ -137,6 +122,15 @@ export class UserDashboardComponent implements AfterViewInit
     { 
 
     }
-
+    get ComapnyLogo(){
+        return CargoTrackingBrandingData.ComapnylogoURL;
+    } 
+    get BrowserIcon(){
+        return CargoTrackingBrandingData.BrowserIconURL;
+    } 
+    get BackGroundImg(){
+        return CargoTrackingBrandingData.BackgroundURL;
+    } 
+  
     
 }
