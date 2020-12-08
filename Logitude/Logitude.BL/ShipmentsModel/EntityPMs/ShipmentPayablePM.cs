@@ -23,6 +23,7 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public string ChargesTypeCode { get; set; }
         public string ChargesTypeName { get; set; }
         public string ChargesGroupCode { get; set; }
+        public bool? IsExpenseCharge { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string ShipmentPayableLineStatusCode { get; set; }

@@ -148,5 +148,7 @@ namespace WebFreight.Web.DataProviders
         public double? ACCTPayablesInProfit { get; set; }
 
         public string Vendor { get; set; }
+
+        public bool? IsExpenseCharge { get; set; }
     }
 }
