@@ -4291,6 +4291,12 @@ User/Pass",
 
         private void uploadMexicoCitiesBtn_Click(object sender, EventArgs e)
         {
+            if (string.IsNullOrWhiteSpace(citiesTextBox.Text))
+            {
+                MessageBox.Show("Enter the tenant !!!!!");
+                return;
+            }
+
             OpenFileDialog openFileDialog = new OpenFileDialog();
             openFileDialog.Multiselect = false;
             openFileDialog.Filter = "csv|*.csv";
@@ -4298,13 +4304,13 @@ User/Pass",
             {
                 Stream stream = openFileDialog.OpenFile();
                 StreamReader streamReader = new StreamReader(stream);
-                this.UploadMexicoCitiesMethod(streamReader);
+                this.UploadCitiesMethod(streamReader, Convert.ToInt16(citiesTextBox.Text));
             }
         }
 
-        private void UploadMexicoCitiesMethod(StreamReader streamReader)
+        private void UploadCitiesMethod(StreamReader streamReader,int tenant)
         {
-            List<MexicoCityDataItem> AllDataLines = new List<MexicoCityDataItem>();
+            List<CityDataItem> AllDataLines = new List<CityDataItem>();
 
             string line = "";
             string[] lineParts = null;
@@ -4312,15 +4318,17 @@ User/Pass",
             {
                 lineParts = line.Split(',');
 
-                if (lineParts.Count() == 3)
+                if (lineParts.Count() == 4)
                 {
                     string cityCode = this.GetText(lineParts, 0);
                     string cityName = this.GetText(lineParts, 1);
-                    string stateCode = this.GetText(lineParts, 2);
+                    string countryCode = this.GetText(lineParts, 2);
+                    string stateCode = this.GetText(lineParts, 3);
                    
                     if (cityCode != null)
                     {
                         cityCode = cityCode.ToUpper();
+                        countryCode = countryCode.ToUpper();
                         stateCode = stateCode.ToUpper();
 
                         if (cityName.Length >= 40)
@@ -4328,25 +4336,25 @@ User/Pass",
                             cityName = cityName.Substring(0, 40);
                         }
 
-                        MexicoCityDataItem mexicoCity = new MexicoCityDataItem();
-                        mexicoCity.StateCode = stateCode;
-                        mexicoCity.CityCode = cityCode;
-                        mexicoCity.CityName = cityName;
-                        mexicoCity.CountryCode = "MX";
-                        AllDataLines.Add(mexicoCity);
+                        CityDataItem city = new CityDataItem();
+                        city.StateCode = stateCode;
+                        city.CityCode = cityCode;
+                        city.CountryCode = countryCode;
+                        city.CityName = cityName;
+                        AllDataLines.Add(city);
                     }
                 }
             }
-
-            List<MexicoCityDataItem> distinctItems = AllDataLines.GroupBy(p => new { p.CityCode }).Select(g => g.First()).ToList();
-            Thread thread = new Thread(() => this.RunUploadMexicoCities(distinctItems));
+            AllDataLines.Remove(AllDataLines[0]);
+            List<CityDataItem> distinctItems = AllDataLines.GroupBy(p => new { p.CityCode }).Select(g => g.First()).ToList();
+            Thread thread = new Thread(() => this.RunUploadCities(distinctItems, tenant));
             thread.IsBackground = true;
             thread.Start();
         }
 
-        string missedStates = "";
-
-        private void RunUploadMexicoCities(List<MexicoCityDataItem> allDataLines)
+        string missedCountriesState = "";
+        int countryCityCount = 0;
+        private void RunUploadCities(List<CityDataItem> allDataLines , int tenant)
         {
             if (allDataLines.Count > 0)
             {
@@ -4355,98 +4363,108 @@ User/Pass",
                 Stopwatch stopWatch = new Stopwatch();
                 stopWatch.Start();
 
-                TenantRepository tenantRep = new TenantRepository(0);
-                List<Tenant> tenants = tenantRep.GetTenants().ToList();
-
-               
-                foreach (Tenant tenant in tenants)
-                {
-                    this.AddMexicoCitiesByTenant(allDataLines, tenant);
-                }
+                //TenantRepository tenantRep = new TenantRepository(0);
+               // Tenant tenant = tenantRep.GetSingleByTenant(tenantNumber);
+                this.AddCitiesByTenant(allDataLines, tenant);
+              
 
                 stopWatch.Stop();
-                if (!string.IsNullOrEmpty(missedStates))
+                if (!string.IsNullOrEmpty(missedCountriesState))
                 {
-                    MessageBox.Show("All missing States are: " + missedStates, "Missing States", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    MessageBox.Show("All missing countries are: " + missedCountriesState, "Missing Countries", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 }
                 TimeSpan ts = stopWatch.Elapsed;
                 SetControlPropertyValue(UpdatePortslbl, "Text", "Done in " + ts.ToString());
             }
         }
 
-        private void AddMexicoCitiesByTenant(List<MexicoCityDataItem> allDataLines, Tenant tenantPOCO)
+        private void AddCitiesByTenant(List<CityDataItem> allDataLines, int tenant)
         {
-            int tenant = tenantPOCO.Id;
-            string addressId = tenantPOCO.AddressId;
             ICommonDataContext myCommonContext = CommonDataContext.GetContext(tenant);
-            Address address = myCommonContext.Addresses.Where(a => a.Id == addressId && a.AddressTypeId == "M" && a.Tenant == tenant).FirstOrDefault();
-
-            if (address != null || tenant == 0)
+            List<string> statesCodes = allDataLines.GroupBy(p => p.StateCode).Select(g => g.First().StateCode).ToList();
+            List<State> allStates = (from d in myCommonContext.States
+                                     where d.Tenant == tenant
+                                     && statesCodes.Contains(d.Code)
+                                     select d).ToList();
+            List<string> test = allDataLines.GroupBy(e => e.CountryCode).Select(e => e.Key).ToList();
+            List<string> countriesCode = allDataLines.GroupBy(e => e.CountryCode).Select(e => e.First().CountryCode).ToList();
+            List<Country> allCountries = (from c in myCommonContext.Countries
+                                          where c.Tenant == tenant && countriesCode.Contains(c.Code)
+                                          select c
+                                          ).ToList();
+            countryCityCount = 0;
+            foreach (CityDataItem item in allDataLines)
             {
-                Country mexicoCountry;
-                if (tenant == 0)
+                Country country = allCountries.Where(e => e.Code == item.CountryCode).FirstOrDefault();
+                if (country != null)
                 {
-                    mexicoCountry = myCommonContext.Countries.Where(a => a.Code == "MX" && a.Tenant == tenant).FirstOrDefault();
-                }
-                else
-                {
-                    mexicoCountry = myCommonContext.Countries.Where(a => a.Code == "MX" && a.Id == address.CountryId && a.Tenant == tenant).FirstOrDefault();
-                }
-
-                if (mexicoCountry != null)
-                {
-                    List<string> statesCodes = allDataLines.GroupBy(p => p.StateCode).Select(g => g.First().StateCode).ToList();
-                    List<State> allStates = (from d in myCommonContext.States
-                                             where d.Tenant == tenant
-                                             && statesCodes.Contains(d.Code)
-                                             select d).ToList();
-                    var myCount = 0;
-                    foreach (MexicoCityDataItem item in allDataLines)
+                    if(country.IsStateRequired && string.IsNullOrEmpty(item.StateCode))
+                    {
+                        missedCountriesState = missedCountriesState + "State required for this country :" + "/ " + item.CountryCode + "/ " + item.StateCode + ", ";
+                        continue;
+                    }
+                    if (country.HasStates)
                     {
                         State state = allStates.Where(a => a.Code == item.StateCode).FirstOrDefault();
-
-                        if (state != null)
+                        if(state != null && state.CountryId == country.Id)
                         {
-                            CountryCity newCity = myCommonContext.CountryCities.Where(p => p.Code == item.CityCode && p.Tenant == tenant && p.CountryId == mexicoCountry.Id).FirstOrDefault();
-                            if (newCity == null)
-                            {
-                                newCity = new CountryCity()
-                                {
-                                    Id = IdCounter.GetNumber("CountryCity", 0).ToString(),
-                                    Tenant = tenant,
-                                    Code = item.CityCode,
-                                    EnglishName = item.CityName,
-                                    LocalName = item.CityName,
-                                    StateId = state.Id,
-                                    CountryId = mexicoCountry.Id,
-                                };
-
-                                newCity.SearchFields = BuildCityCountrySearchFields(newCity);
-                                myCommonContext.CountryCities.Add(newCity);
-                                myCount++;
-                            }
-                           else
-                            {
-                                newCity.EnglishName = item.CityName;
-                                newCity.LocalName = item.CityName;
-                            }
-                            if (myCount == 1000)
-                            {
-                                myCommonContext.SaveChanges();
-                                myCount = 0;
-                            }
+                            AddEditCounrtyCity(myCommonContext, item, tenant, country.Id, state.Id);
                         }
                         else
                         {
-                            missedStates = missedStates + "Code/Tenant:" + item.StateCode + "/ " + tenant + ", ";
+                            missedCountriesState = missedCountriesState + "State does not belong for this country :" + "/ " + item.CountryCode + "/ " + item.StateCode + ", ";
                         }
                     }
+                    else
+                    {
+                        AddEditCounrtyCity(myCommonContext, item, tenant, country.Id, null);
+                    }
+                    if (countryCityCount == 1000)
+                    {
+                        myCommonContext.SaveChanges();
+                        countryCityCount = 0;
+                    }
 
-                    myCommonContext.SaveChanges();
+                }
+                else
+                {
+                    missedCountriesState = missedCountriesState + "Code/Tenant:" + "/ " + item.CountryCode + "/ " + tenant + ", ";
                 }
             }
-        }
 
+            myCommonContext.SaveChanges();
+        }
+        
+        private void AddEditCounrtyCity(ICommonDataContext myCommonContext ,CityDataItem item, int tenant , string countryId , string stateId)
+        {
+            CountryCity newCity = new CountryCity();
+            if (stateId == null)
+               newCity = myCommonContext.CountryCities.Where(p => p.Code == item.CityCode && p.Tenant == tenant && p.CountryId == countryId).FirstOrDefault();
+            else
+                newCity = myCommonContext.CountryCities.Where(p => p.Code == item.CityCode && p.Tenant == tenant && p.CountryId == countryId && p.StateId == stateId).FirstOrDefault();
+            if (newCity == null)
+            {
+                newCity = new CountryCity()
+                {
+                    Id = IdCounter.GetNumber("CountryCity", 0).ToString(),
+                    Tenant = tenant,
+                    Code = item.CityCode,
+                    EnglishName = item.CityName,
+                    LocalName = item.CityName,
+                    StateId = stateId,
+                    CountryId = countryId,
+                };
+
+                newCity.SearchFields = BuildCityCountrySearchFields(newCity);
+                myCommonContext.CountryCities.Add(newCity);
+                countryCityCount++;
+            }
+            else
+            {
+                newCity.EnglishName = item.CityName;
+                newCity.LocalName = item.CityName;
+            }
+        }
         private void AddMexicoStates(ICommonDataContext myCommonContext, string countryId, int tenant)
         {
 
@@ -4545,6 +4563,11 @@ User/Pass",
             ICargoTrackingContext cargoTrackingContext = CargoTrackingContext.GetContext(1);
          }
 
+        private void citiesTextBox_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
         //private void button50_Click(object sender, EventArgs e)
         //{
         //    Thread thread = new Thread(() => UpdateModule(0, "CargoTracking", UpdateCargoTrackingLabel));
@@ -4616,11 +4639,12 @@ User/Pass",
         public string PartnerCode { get; set; }
     }
 
-    public class MexicoCityDataItem
+    public class CityDataItem
     {
         public string CityCode { get; set; }
         public string CityName { get; set; }
-        public string StateCode { get; set; }
         public string CountryCode { get; set; }
+        public string StateCode { get; set; }
+        
     }
 }
