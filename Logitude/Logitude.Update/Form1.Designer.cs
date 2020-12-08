@@ -1883,7 +1883,7 @@
             this.uploadCitiesBtn.TabIndex = 98;
             this.uploadCitiesBtn.Text = "Upload Cities";
             this.uploadCitiesBtn.UseVisualStyleBackColor = true;
-            this.uploadCitiesBtn.Click += new System.EventHandler(this.uploadMexicoCitiesBtn_Click);
+            this.uploadCitiesBtn.Click += new System.EventHandler(this.uploadCitiesBtn_Click);
             // 
             // label8
             // 
