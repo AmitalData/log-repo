@@ -7,12 +7,14 @@ using System.Linq;
 using System.Web;
 using WebFreight.Web.DataContracts;
 using WebFreight.Web.WebServices;
+using System.Security.AccessControl;
 
 namespace WebFreight.Web.Helpers
 {
     public class CargoTrackingHelper
     {
         const string CargoTrackingImageFolder = "images/CargoTrackingImages";
+        const string CargoTrackingImageSubFolder = "/CargoTrackingImages";
         const string CargoTrackingImageExtensionType = "png";
 
 
@@ -109,8 +111,27 @@ namespace WebFreight.Web.Helpers
         }
         private void CreateDirectoryIfNotExist(string folderPath)
         {
+            SetImagesFolderPermission(folderPath);
             if (!Directory.Exists(folderPath))
-                Directory.CreateDirectory(folderPath);
+            {
+                DirectorySecurity securityRules = new DirectorySecurity();
+                securityRules.AddAccessRule(new FileSystemAccessRule(@"Domain\AdminAccount1", FileSystemRights.Read, AccessControlType.Allow));
+                securityRules.AddAccessRule(new FileSystemAccessRule(@"Domain\YourAppAllowedGroup", FileSystemRights.FullControl, AccessControlType.Allow));
+                Directory.CreateDirectory(folderPath, securityRules);
+            }
+        }
+
+        private void SetImagesFolderPermission(string folderPath)
+        {
+            folderPath = folderPath.Replace(CargoTrackingImageSubFolder,"");
+            string userName = Environment.UserName;
+            FileSystemAccessRule accessRule = new FileSystemAccessRule(userName, FileSystemRights.FullControl, InheritanceFlags.ContainerInherit
+                        | InheritanceFlags.ObjectInherit, PropagationFlags.None, AccessControlType.Allow);
+            DirectoryInfo directoryInfo = new DirectoryInfo(folderPath);
+            directoryInfo.Attributes &= ~FileAttributes.ReadOnly;
+            DirectorySecurity directorySec = directoryInfo.GetAccessControl();
+            directorySec.AddAccessRule(accessRule);
+            directoryInfo.SetAccessControl(directorySec);
         }
         private byte[] GeImageBytesById(string ImageId)
         {
