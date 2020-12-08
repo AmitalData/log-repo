@@ -116,6 +116,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                 DeclarationReferantDataCustomFilters filters = new DeclarationReferantDataCustomFilters();
 
                 iQueryable = filters.GetFilteredQuery(iQueryable);
+                iQueryable = filters.GetFreelancerDeclarationReferantDatas(queryOperations, iQueryable, tenant);
             }
             return iQueryable;
 
