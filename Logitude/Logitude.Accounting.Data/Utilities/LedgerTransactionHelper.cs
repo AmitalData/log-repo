@@ -35,8 +35,12 @@ namespace Logitude.Accounting.Data.Utilities
         }
         public   string getEntityIcon(string _sourceTypeCode)
         {
-            var iconTxt = EntityIconsDictionary[_sourceTypeCode];
-           
+            string iconTxt = null;
+            if (!string.IsNullOrEmpty(_sourceTypeCode))
+            {
+                iconTxt = EntityIconsDictionary[_sourceTypeCode];
+            }
+
             return iconTxt;
         }
 

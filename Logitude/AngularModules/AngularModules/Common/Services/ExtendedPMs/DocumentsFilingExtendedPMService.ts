@@ -126,7 +126,7 @@ export class DocumentsFilingExtendedPMService {
     getDocumentsFilingsById(Id: string) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-        return this._http.get(this._apiUrl + "/GetDocumentsFilingsById" + '?Id=' + Id, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+        return this._http.get(this._apiUrl + "/GetDocumentsFilingsById" + '?Id=' + encodeURIComponent(Id), ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
 
             var result :any = response;
