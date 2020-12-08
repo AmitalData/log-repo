@@ -70,8 +70,20 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                         CommunicationLoggingEntityReference = eventContextTagModel.StatusEntityId,
                         EntityId = declaration.Id,
                         UserId = loggingUserId,
+                        CommunicationSubject = "FU Status from logitude ",
+                        MyFUStatus = new AmitalEventTracerModel.FUStatus()
+                        {
+                            entname = "CFIFILEM",
+                            primary_number = eventContextTagModel.StatusCustomFileNo,
+                            status = "new",
+                            xml_status = "new",
+                            status_id = unifrieghtStatus,
+                            status_DateTime = DateTime.Now,
+                            //status_place = "FRA",
+                            //status_save = "no_fail",
+                            comments = eventContextTagModel.FUStatusRemarks,
+                        }
 
-                    
                     };
                 }
                 else
@@ -95,6 +107,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                             xml_status = "new",
                             status_id = unifrieghtStatus,
                             status_DateTime = DateTime.Now,
+                           
                             //status_place = "FRA",
                             //status_save = "no_fail",
                             comments = eventContextTagModel.FUStatusRemarks,
@@ -102,7 +115,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     };
                 }
              
-                AmitalEventTracer.CreateTraceEvent(myAmitalEventTracerModel);
+                AmitalEventTracer.CreateTraceEvent(myAmitalEventTracerModel,true,true);
             }
             catch (Exception)
             {
