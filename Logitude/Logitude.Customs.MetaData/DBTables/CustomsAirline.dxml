@@ -66,4 +66,16 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="UnloadPortCode"
+    Type="varchar"
+    Size="17">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Relation
+    ForeignKeyColumn="UnloadPortCode"
+    ReferencedTable="UnloadingSiteType"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="Customs" />
 </Table>

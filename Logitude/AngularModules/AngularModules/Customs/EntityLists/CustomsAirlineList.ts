@@ -17,6 +17,7 @@ export class CustomsAirlineList {
 	SearchFields: string;
 	AirlinePrefix: string;
 	ICAO: string;
+	UnloadPortCode: string;
 	
 }
  
