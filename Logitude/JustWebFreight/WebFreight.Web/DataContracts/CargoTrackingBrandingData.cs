@@ -20,5 +20,6 @@ namespace WebFreight.Web.DataContracts
         public string BrowserIconId { get; set; }
         public string BrowserIconImg { get; set; }
         public string BrowserIconURL { get; set; }
-     }
+        public string CustomerURL { get; set; }
+    }
 }
