@@ -87,7 +87,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             {
                 var firstRelatedEntity = customResponse.RelatedEntity.FirstOrDefault();
                 if (customResponse.RelatedEntity != null &&
-                    (firstRelatedEntity.entityType == 1055 || firstRelatedEntity.entityType == 11157 || firstRelatedEntity.entityType == 11184 || firstRelatedEntity.entityType == 11185)) //1055 or 11157 = Declaration //11184 = SupplierInvoice //11185 = SupplierInvoiceItem
+                    (firstRelatedEntity.entityType == 1055 || firstRelatedEntity.entityType == 11157 || firstRelatedEntity.entityType == 11184 || firstRelatedEntity.entityType == 11185 || firstRelatedEntity.entityType == 12414 || firstRelatedEntity.entityType == 11188 || firstRelatedEntity.entityType == 12397 || firstRelatedEntity.entityType == 12396)) //1055 or 11157 = Declaration //11184 = SupplierInvoice //11185 = SupplierInvoiceItem
                 {
                     //Search Declaration by entityIdKey1
                     if (customResponse.RequiredDocumentDetails.requiredDocumentMessageType == 1)
@@ -248,7 +248,18 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 {
                     myInsertEventContextTagModel.CallProccessID = EventContextTagModel.ProccessEnum.VAL_NG_8227_MSG_520_RequiredDocumentMessageInsert;
                     myInsertEventContextTagModel.EventCode = "CRD";
-                    myInsertEventContextTagModel.EventRemarks = "Document Request By Customs" + DeclarationConvertionText;
+
+                   if(myDeclarationPM.Direction=="E")
+                    {
+                        myInsertEventContextTagModel.EventRemarks = "DocumentID: " + customResponse.RequiredDocumentDetails.documentID + '\n' + "TypeID: " + customResponse.RequiredDocumentDetails.typeID + '\n' +   "RequiredDocumentMessageType: New";
+
+                    }
+                    else
+
+                    {
+                        myInsertEventContextTagModel.EventRemarks = "Document Request By Customs" + DeclarationConvertionText;
+
+                    }
 
 
                 }
@@ -280,7 +291,18 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             //Create Notification
                             myInsertEventContextTagModel.CallProccessID = EventContextTagModel.ProccessEnum.VAL_NG_8227_MSG_520_RequiredDocumentMessageDelete;
                             myInsertEventContextTagModel.EventCode = "CRC";
-                            myInsertEventContextTagModel.EventRemarks = "Document requested Cancelled" + DeclarationConvertionText;
+
+
+                            if (myDeclarationPM.Direction == "E")
+                            {
+                                myInsertEventContextTagModel.EventRemarks = "DocumentID: " + customResponse.RequiredDocumentDetails.documentID + '\n' + "TypeID: " + customResponse.RequiredDocumentDetails.typeID + '\n' + "RequiredDocumentMessageType: Delete";
+
+                            }
+                            else
+                            {
+                                myInsertEventContextTagModel.EventRemarks = "Document requested Cancelled" + DeclarationConvertionText;
+
+                            }
                             break;
                         }
                     }

@@ -89,6 +89,20 @@ MainInterfaceCode ="5002"
 
                     MainInterfaceCode="5118",
                 },
+
+                    new SincroTestCaseDetail()
+                {
+                    Code = "8227",
+                    Name = "(מסמך נדרש (8227 ",
+                    IsDCA= true,
+                    Entity="Declaration",
+                    Param1= @"{ ""documentId"" :"""" ,  ""requiredDocumentMessageType"" :""1"" , 
+                              ""typeId"" :""380"" , ""entityType"" :""12414"" , ""entityIdKey2"" :"""",
+                                 ""entityIdKey3"" :""""  }",
+
+
+                    MainInterfaceCode="8227",
+                },
                 new SincroTestCaseDetail()
                 {
                     Code = "190",
