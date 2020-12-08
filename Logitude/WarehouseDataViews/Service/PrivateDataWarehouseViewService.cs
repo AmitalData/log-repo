@@ -19,9 +19,9 @@ namespace WarehouseDataViews.Service
         public void GeneratePrivateViews(PrivateViewArgs privateViewArgs)
         {
             var dataWarehouseViews = GetDataWarehouseViewsListsByTenant(privateViewArgs.Tenant);
-
             string customFieldScript = string.Empty;
-            if (dataWarehouseViews.Where(d => d.IsHaveCustomFields).FirstOrDefault() != null)
+
+            if (dataWarehouseViews.Where(d => d.IsHaveCustomFields).FirstOrDefault() != null && !privateViewArgs.IsParentTenant)
             {
                 var customFieldViewDataWarehouseService = new CustomFieldDataWarehouseViewService(sourceConnectionString, DwObjectFieldLists, privateViewArgs.Tenant);
                 List<WarehouseView> customFieldViewLists = customFieldViewDataWarehouseService.GetCustomFieldViewLists();
@@ -43,7 +43,6 @@ namespace WarehouseDataViews.Service
             }
 
         }
-
 
 
         private List<WarehouseView> GetDataWarehouseViewsListsByTenant(int tenant)
@@ -94,8 +93,10 @@ namespace WarehouseDataViews.Service
         public string UserName { get; set; }
         public string Catalog { get; set; }
         public bool ApplyGrantOnViews { get; set; }
+        public bool IsParentTenant { get; set; }
 
         
+
     }
 
 }
