@@ -95910,7 +95910,7 @@
       FeatureTypeCode="&quot;ACT&quot;"
       FeatureTextCodeCode="&quot;Shipment.Features.Shipment.Action.AccrualsApprovement&quot;"
       FeatureDefaultText="&quot;Accruals Approvement&quot;"
-      IsPackagable="false"
+      IsPackagable="true"
       IsOld="false"
       IsCoreFeature="false"
       IsBusinessUnitEnabled="false" />
