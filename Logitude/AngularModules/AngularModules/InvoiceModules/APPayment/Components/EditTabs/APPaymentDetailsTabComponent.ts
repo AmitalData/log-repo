@@ -124,26 +124,26 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
     }
     entityId: string;
     ViewPaymentCheque() {
-
-        this.PaymentChequePMService.GetPaymentChequeByPaymentIdAndChequeNumber(this.EntityPM.ChequeOrPaymentRef, this.EntityPM.Id).subscribe((myResult:ServiceResponse) => {
-            var myResponse: ServiceResponse = myResult;
-            if (myResponse != null) {
-
-                var res = myResponse.Result;
-                var entityId = res.Id;
-                SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
-                    .then(cmpRef => {
-                        cmpRef.instance.ComponentRef = cmpRef;
-                        cmpRef.instance.Run({ EntityId: entityId, ObjectTableName: "PaymentCheque", BackButtonLabel: "PaymentCheque" });
-                        cmpRef.instance.BackCompleted.subscribe(($event: any) => {
-                            this.BuildScreenData();
+        if(this.IsFullAccounting){
+            this.PaymentChequePMService.GetPaymentChequeByPaymentIdAndChequeNumber(this.EntityPM.ChequeOrPaymentRef, this.EntityPM.Id).subscribe((myResult:ServiceResponse) => {
+                var myResponse: ServiceResponse = myResult;
+                if (myResponse != null) {
+        
+                    var res = myResponse.Result;
+                    var entityId = res.Id;
+                    SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
+                        .then(cmpRef => {
+                            cmpRef.instance.ComponentRef = cmpRef;
+                            cmpRef.instance.Run({ EntityId: entityId, ObjectTableName: "PaymentCheque", BackButtonLabel: "PaymentCheque" });
+                            cmpRef.instance.BackCompleted.subscribe(($event: any) => {
+                                this.BuildScreenData();
+                            });
                         });
-                    });
-            }
-
-        });
-
-
+                }
+        
+            });
+        
+        }
     }
 
     private FullAccountingSetting: FullAccountingSettingPM = new FullAccountingSettingPM();
@@ -211,18 +211,8 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
     vendor: CardList;
     VendorChanged(vednor:CardList){
         this.vendor = vednor;
-        this.UIProperties.SetEnabled("PaymentCurrencyId", this.ObjectTableName, true);
-        this.PaymentCurrencyId = null;
-        if (AppTool.IsNullOrEmpty(this.EntityPM.VendorId)) {
-            this.UIProperties.SetEnabled("VendorAddressId", this.ObjectTableName, false);
-        }
-        else {
-            this.UIProperties.SetEnabled("VendorAddressId", this.ObjectTableName, true);
-        }
-        this.GetCardProperties();
-        this.LoadData();
-        this.IsTaxUpdated = true;
         this.LoadTaxPercentage();
+        
     }
     private IsTaxUpdated = false;
     private LoadTaxPercentage() {
@@ -726,7 +716,18 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
         if (this.EntityPM != null) {
             if (this.EntityPM.VendorId != value) {
                 this.EntityPM.VendorId = value;
-                
+                this.UIProperties.SetEnabled("PaymentCurrencyId", this.ObjectTableName, true);
+                this.PaymentCurrencyId = null;
+                if (AppTool.IsNullOrEmpty(this.EntityPM.VendorId)) {
+                    this.UIProperties.SetEnabled("VendorAddressId", this.ObjectTableName, false);
+                }
+                else {
+                    this.UIProperties.SetEnabled("VendorAddressId", this.ObjectTableName, true);
+                }
+                this.GetCardProperties();
+                this.LoadData();
+                this.IsTaxUpdated = true;
+
             }
         }
     }

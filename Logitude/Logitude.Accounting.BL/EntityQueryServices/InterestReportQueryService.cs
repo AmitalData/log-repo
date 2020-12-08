@@ -62,6 +62,14 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                     select a).Any();
         }
 
+        public DateTime? GetRecentCustomerReports(InterestReportPM InterestReportPM)
+        {
+            List<string> RecentStatuesAreNotAllowed = GetStatusesExcludedFromRecentInterestReports();
+            return (from a in context.InterestReports
+                    where a.Tenant == InterestReportPM.Tenant && !RecentStatuesAreNotAllowed.Contains(a.InterestReportStatusCode) && a.CustomerId == InterestReportPM.CustomerId && a.Id != InterestReportPM.Id
+                    select a).OrderByDescending(s=>s.InterestCalculationDate).Select(s=>s.InterestCalculationDate).FirstOrDefault();
+        }
+
         public List<string> GetInterestReprtsWithInvocies(int tenant, List<string> ARInvoiceIds)
         {
             return (from a in context.InterestReports

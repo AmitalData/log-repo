@@ -166,7 +166,7 @@ export class ShipmentsListComponent implements AfterViewInit
         var SecurityKey = item.SecurityKey;
         SessionInfo.ShipmentsFilters = this.BuildShipmentFilters();
 
-        this.router.navigate(['dashboard', 'shipment', SecurityKey]);
+        this.router.navigate(['Cargo-Tracking', 'shipment', SecurityKey]);
 
     }
 

@@ -186,7 +186,7 @@ export class ShipmentDetailsComponent implements AfterViewInit
         if (selection.toString().length === 0) {
             var SecurityKey = item.SecurityKey;
 
-            this.router.navigate(['dashboard', 'shipment', SecurityKey]);
+        this.router.navigate(['Cargo-Tracking','shipment', SecurityKey]);
         }
     }
 

@@ -156,6 +156,7 @@ export class TeamPMService {
         if (!entityPM) {
             
             entityPM = new TeamPM();
+			entityPM.DisableMarkAsDirty = true;
         }
 
 		var customFields: Array<string> = [];
@@ -213,6 +214,8 @@ export class TeamPMService {
             entityPM.OldEntityPM = null;
         }
 		entityPM.IsDirty = false;
+	    entityPM.DisableMarkAsDirty = false;
+
         return entityPM;
     }
 
@@ -238,7 +241,8 @@ export class TeamPMService {
             {
                 newLBPTeamMemberPM = new LBPTeamMemberPM(null);
             }
-                
+ 			newLBPTeamMemberPM.DisableMarkAsDirty = true;
+               
             var pmKeysArray = Object.keys(jItem);
             for (var pmKey in pmKeysArray) {
                 if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
@@ -281,7 +285,7 @@ export class TeamPMService {
                 newLBPTeamMemberPM.OldEntityPM = null;
                 newLBPTeamMemberPM.EntityParentPM = null;
             }
-			
+			 newLBPTeamMemberPM.DisableMarkAsDirty = false;
 			 newLBPTeamMemberPM.IsDirty = false;
             entityPM.MemberLines.push(newLBPTeamMemberPM);
         }
@@ -295,6 +299,7 @@ export class TeamPMService {
                         //entityPM.MemberLines.push(oldMemberLines[itemKey]);
 						var oldItemJson = oldMemberLines[itemKey];
                         var deletedPM: LBPTeamMemberPM = new LBPTeamMemberPM(null);
+						deletedPM.DisableMarkAsDirty = true;
                         var pmKeys = Object.keys(oldItemJson);
                         for (var key in pmKeys) {
 
@@ -306,7 +311,7 @@ export class TeamPMService {
                             deletedPM[property] = oldItemJson[property];
                         }
 
-                      
+					    deletedPM.DisableMarkAsDirty = false;
                         deletedPM.IsDirty = false;
                         deletedPM.ChangeSetOp = "Delete";
                         
@@ -342,7 +347,8 @@ export class TeamPMService {
             {
                 newTeamMemberBusinessRolePM = new TeamMemberBusinessRolePM(null);
             }
-                
+ 			newTeamMemberBusinessRolePM.DisableMarkAsDirty = true;
+               
             var pmKeysArray = Object.keys(jItem);
             for (var pmKey in pmKeysArray) {
                 if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
@@ -379,7 +385,7 @@ export class TeamPMService {
                 newTeamMemberBusinessRolePM.OldEntityPM = null;
                 newTeamMemberBusinessRolePM.EntityParentPM = null;
             }
-			
+			 newTeamMemberBusinessRolePM.DisableMarkAsDirty = false;
 			 newTeamMemberBusinessRolePM.IsDirty = false;
             entityPM.BusinessRolesList.push(newTeamMemberBusinessRolePM);
         }
@@ -393,6 +399,7 @@ export class TeamPMService {
                         //entityPM.BusinessRolesList.push(oldBusinessRolesList[itemKey]);
 						var oldItemJson = oldBusinessRolesList[itemKey];
                         var deletedPM: TeamMemberBusinessRolePM = new TeamMemberBusinessRolePM(null);
+						deletedPM.DisableMarkAsDirty = true;
                         var pmKeys = Object.keys(oldItemJson);
                         for (var key in pmKeys) {
 
@@ -404,7 +411,7 @@ export class TeamPMService {
                             deletedPM[property] = oldItemJson[property];
                         }
 
-                      
+					    deletedPM.DisableMarkAsDirty = false;
                         deletedPM.IsDirty = false;
                         deletedPM.ChangeSetOp = "Delete";
                         

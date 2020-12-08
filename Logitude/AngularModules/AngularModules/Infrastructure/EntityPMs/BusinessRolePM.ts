@@ -83,7 +83,10 @@ export class BusinessRolePM {
     public OldEntityPM: BusinessRolePM;
 		
     public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
+       if(!this.DisableMarkAsDirty)
+       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -91,6 +94,7 @@ export class BusinessRolePM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "BusinessRole");
            
         }
+       }
     }
 
     private MyClone: BusinessRolePM;

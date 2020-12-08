@@ -30,7 +30,18 @@ export class CargoTrackingBrandingDataExtendedService {
             }),
             catchError(null));
     }
+    GetCargoTrackingBrandingDataForPrivateSite(domain:string) {
+        var url = '/GetCargoTrackingBrandingDataForPrivateSite?domain='+domain;
+        var callUrl = this._apiUrl.concat(url);
 
+        return this._http.get(callUrl, { headers: this.httpHeaders}).pipe(
+            map((response: ServiceResponse) => {
+                var serviceResponse: ServiceResponse = new ServiceResponse();
+                serviceResponse = response;
+                return serviceResponse;
+            }),
+            catchError(null));
+    }
     GetTenantByDomain(domain:string) {
         var url = '/GetCargoTrackingBrandingTenantByDomain?domain='+domain;
         var callUrl = this._apiUrl.concat(url);

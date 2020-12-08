@@ -23,7 +23,8 @@ it('Create New Shipper', () => {
    // cy.wait(100)
     cy.get("#GeneralMHMaintenance").click()
     cy.get('#null_Search').type('Shipper')
-    cy.get('#MaintenanceItemMTCL').click()
+    cy.get('#MaintenanceItemMTCL').should('be.visible')
+    cy.get('#MaintenanceItemMTCL').click({ force: true })
     cy.get('#NewButton_Customer').click()
 
     cy.get('#Address_Name').type("CypressShipper" + timeStamp )

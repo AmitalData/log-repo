@@ -19,9 +19,9 @@ namespace Logitude.Accounting.Data.EntityLists
        [DataMember]
        public int Tenant  { get; set; }
        [DataMember]
-       public decimal? BalanceInLocalCurrency  { get; set; }
+       public decimal BalanceInLocalCurrency  { get; set; }
        [DataMember]
-       public decimal? LocalBalanceInDue  { get; set; }
+       public decimal LocalBalanceInDue  { get; set; }
        [DataMember]
        public DateTime? NextDueDate  { get; set; }
        [DataMember]

@@ -71,6 +71,8 @@ export class LedgerTransactionList {
 	IconCode: string;
 	ForeignAmountCreditWithSign: string;
 	CumulativeForeignAmountSign: string;
+	CalculatedLocalAmount: number;
+	CalculatedForeignAmount: number;
 	
 }
  
