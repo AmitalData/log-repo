@@ -30,7 +30,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         InActive, 
 	         SearchFields, 
 	         AirlinePrefix, 
-	         ICAO,
+	         ICAO, 
+	         UnloadPortCode,
 	      }
 
 
@@ -45,7 +46,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         InActive, 
 	         SearchFields, 
 	         AirlinePrefix, 
-	         ICAO,
+	         ICAO, 
+	         UnloadPortCode,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -92,6 +94,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ICAO))
             {
 				entityPOCO.ICAO = entityPM.ICAO;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.UnloadPortCode))
+            {
+				entityPOCO.UnloadPortCode = entityPM.UnloadPortCode;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -145,6 +152,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.ICAO = entityPOCO.ICAO;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.UnloadPortCode))
+            {
+					entityPM.UnloadPortCode = entityPOCO.UnloadPortCode;
+            }
+
 		}
 
 		public void PMToOldPM(CustomsAirlinePM entityPM, CustomsAirlinePM oldEntityPM)
@@ -189,6 +201,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ICAO))
             {
                 oldEntityPM.ICAO = entityPM.ICAO;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.UnloadPortCode))
+            {
+                oldEntityPM.UnloadPortCode = entityPM.UnloadPortCode;
             }
 			
 		}

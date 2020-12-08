@@ -69,6 +69,11 @@ export class CustomsAirlinePM {
     public set ICAO(newValue: string) { if (this.iCAO != newValue) { this.iCAO = newValue; this.MarkAsDirty("ICAO"); } }
        
 	 
+    private unloadPortCode: string;
+    public get UnloadPortCode() { return this.unloadPortCode; }
+    public set UnloadPortCode(newValue: string) { if (this.unloadPortCode != newValue) { this.unloadPortCode = newValue; this.MarkAsDirty("UnloadPortCode"); } }
+       
+	 
 
     public OldEntityPM: CustomsAirlinePM;
 		
