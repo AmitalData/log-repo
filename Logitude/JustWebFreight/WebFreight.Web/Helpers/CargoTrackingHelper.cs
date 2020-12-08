@@ -14,7 +14,7 @@ namespace WebFreight.Web.Helpers
     public class CargoTrackingHelper
     {
         const string CargoTrackingImageFolder = "images/CargoTrackingImages";
-        const string CargoTrackingImageSubFolder = "/CargoTrackingImages";
+        const string CargoTrackingImageSubFolder = "CargoTrackingImages\\";
         const string CargoTrackingImageExtensionType = "png";
 
 
@@ -114,16 +114,17 @@ namespace WebFreight.Web.Helpers
             SetImagesFolderPermission(folderPath);
             if (!Directory.Exists(folderPath))
             {
-                DirectorySecurity securityRules = new DirectorySecurity();
-                securityRules.AddAccessRule(new FileSystemAccessRule(@"Domain\AdminAccount1", FileSystemRights.Read, AccessControlType.Allow));
-                securityRules.AddAccessRule(new FileSystemAccessRule(@"Domain\YourAppAllowedGroup", FileSystemRights.FullControl, AccessControlType.Allow));
-                Directory.CreateDirectory(folderPath, securityRules);
+                Directory.CreateDirectory(folderPath);
+                SetFolderPermission(folderPath);
             }
         }
-
         private void SetImagesFolderPermission(string folderPath)
         {
-            folderPath = folderPath.Replace(CargoTrackingImageSubFolder,"");
+            folderPath = folderPath.Replace(CargoTrackingImageSubFolder, "");
+            SetFolderPermission(folderPath);
+        }
+        private void SetFolderPermission(string folderPath)
+        {
             string userName = Environment.UserName;
             FileSystemAccessRule accessRule = new FileSystemAccessRule(userName, FileSystemRights.FullControl, InheritanceFlags.ContainerInherit
                         | InheritanceFlags.ObjectInherit, PropagationFlags.None, AccessControlType.Allow);
