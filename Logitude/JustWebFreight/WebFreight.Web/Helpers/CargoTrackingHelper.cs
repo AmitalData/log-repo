@@ -60,9 +60,9 @@ namespace WebFreight.Web.Helpers
                 if (filedata != null)
                 {
                     string base64StringData = Convert.ToBase64String(filedata);
-                    //cargoTrackingBrandingData.BackgroundImg = "data:image/" + CargoTrackingImageExtensionType + ";base64," + base64StringData;
-                    SaveImageOnCargoTrackingImagesIfNotExisit(base64StringData, cargoTrackingBrandingData.BackgroundId);
-                    cargoTrackingBrandingData.BackgroundURL = GetFileURL(cargoTrackingBrandingData.BackgroundId);
+                    cargoTrackingBrandingData.BackgroundImg = "data:image/" + CargoTrackingImageExtensionType + ";base64," + base64StringData;
+                    //SaveImageOnCargoTrackingImagesIfNotExisit(base64StringData, cargoTrackingBrandingData.BackgroundId);
+                    //cargoTrackingBrandingData.BackgroundURL = GetFileURL(cargoTrackingBrandingData.BackgroundId);
                 }
             }
 
@@ -76,9 +76,9 @@ namespace WebFreight.Web.Helpers
                 if (filedata != null)
                 {
                     string base64StringData = Convert.ToBase64String(filedata);
-                    //cargoTrackingBrandingData.ComapnylogoImg = "data:image/" + CargoTrackingImageExtensionType + ";base64," + base64StringData;
-                    SaveImageOnCargoTrackingImagesIfNotExisit(base64StringData, cargoTrackingBrandingData.ComapnylogoId);
-                    cargoTrackingBrandingData.ComapnylogoURL = GetFileURL(cargoTrackingBrandingData.ComapnylogoId);
+                    cargoTrackingBrandingData.ComapnylogoImg = "data:image/" + CargoTrackingImageExtensionType + ";base64," + base64StringData;
+                    //SaveImageOnCargoTrackingImagesIfNotExisit(base64StringData, cargoTrackingBrandingData.ComapnylogoId);
+                    //cargoTrackingBrandingData.ComapnylogoURL = GetFileURL(cargoTrackingBrandingData.ComapnylogoId);
                 }
             }
 
@@ -92,9 +92,9 @@ namespace WebFreight.Web.Helpers
                 if (filedata != null)
                 {
                     string base64StringData = Convert.ToBase64String(filedata);
-                    //cargoTrackingBrandingData.BrowserIconURL = "data:image/" + CargoTrackingImageExtensionType + ";base64," + base64StringData;
-                    SaveImageOnCargoTrackingImagesIfNotExisit(base64StringData, cargoTrackingBrandingData.BrowserIconId);
-                    cargoTrackingBrandingData.BrowserIconURL = GetFileURL(cargoTrackingBrandingData.BrowserIconId);
+                    cargoTrackingBrandingData.BrowserIconImg = "data:image/" + CargoTrackingImageExtensionType + ";base64," + base64StringData;
+                    //SaveImageOnCargoTrackingImagesIfNotExisit(base64StringData, cargoTrackingBrandingData.BrowserIconId);
+                    //cargoTrackingBrandingData.BrowserIconURL = GetFileURL(cargoTrackingBrandingData.BrowserIconId);
                 }
             }
 
