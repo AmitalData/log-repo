@@ -28,7 +28,7 @@ export class Error401Component
     {     this.SiteUrl=baseUrl;
           this.SiteUrl = this.SiteUrl.toLocaleLowerCase().replace("http://", '').replace("https://", '').replace("WWW.", '');  
           if(this.SiteUrl && this.SiteUrl.endsWith("/")){
-            this.SiteUrl = this.SiteUrl.substring(0,this.SiteUrl.length-2);
+            this.SiteUrl = this.SiteUrl.substring(0,this.SiteUrl.length-1);
           }
           
     }

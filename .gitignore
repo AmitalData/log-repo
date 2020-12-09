@@ -433,4 +433,7 @@ __pycache__/
 /e2e/Cypress/IslamsTeam/ReleaseTestsQ4/Quotation/CreateEditQuote.ts
 /Logitude/AngularModules/.vscode/AngularModules
 /Logitude/JustWebFreight/WebFreight.Web/CargoTrackingImages
+/Logitude/JustWebFreight/WebFreight.Web/CargoTracking
+/Logitude/JustWebFreight/WebFreight.Web/CargoTracking/CargoTrackingImages/*
+/Logitude/JustWebFreight/WebFreight.Web/CargoTracking/CargoTrackingImages
 *.png

@@ -12,7 +12,7 @@ namespace WebFreight.Web.Helpers
 {
     public class CargoTrackingHelper
     {
-        const string CargoTrackingImageFolder = "images";
+        const string CargoTrackingImageFolderPath = "CargoTracking/CargoTrackingImages";
         const string CargoTrackingImageExtensionType = "png";
 
 
@@ -102,10 +102,22 @@ namespace WebFreight.Web.Helpers
 
         private string GetFilePath(string fileName)
         {
-            string folderPath = System.Web.HttpContext.Current.Server.MapPath("~/" + CargoTrackingImageFolder + "/");
-            CreateDirectoryIfNotExist(folderPath);
+            string folderPath = CreateFoldersFromPathIfNotExist();
             string filePath = folderPath + fileName;
             return filePath;
+        }
+
+        private string CreateFoldersFromPathIfNotExist()
+        {
+            string[] AllFolders = CargoTrackingImageFolderPath.Split('/');
+            string FullPath = null;
+            foreach (string Folder  in AllFolders)
+            {
+                string folderPath = CargoTrackingImageFolderPath.Substring(0, CargoTrackingImageFolderPath.IndexOf(Folder) + Folder.Length);
+                FullPath = System.Web.HttpContext.Current.Server.MapPath("~/" + folderPath + "/");
+                CreateDirectoryIfNotExist(FullPath);
+            }
+            return FullPath;
         }
         private void CreateDirectoryIfNotExist(string folderPath)
         {
@@ -155,7 +167,7 @@ namespace WebFreight.Web.Helpers
         }
         private string GetFileURL(string imgName)
         {
-            String FileURL = CargoTrackingImageFolder + "/" + GetFileNameWithExtension(imgName);
+            String FileURL = CargoTrackingImageFolderPath + "/" + GetFileNameWithExtension(imgName);
             return FileURL;
         }
 
