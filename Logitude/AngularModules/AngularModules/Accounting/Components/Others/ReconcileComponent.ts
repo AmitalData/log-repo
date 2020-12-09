@@ -1250,6 +1250,9 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
     public GetAPIFilters()
     {
         var filters = new ApiQueryFilters;
+        if (this.dateFilter) {
+            filters.AdditionalFilters.push(this.dateFilter);
+        }
         if (this.currencyFilter) {
             filters.AdditionalFilters.push(this.currencyFilter);
         }
