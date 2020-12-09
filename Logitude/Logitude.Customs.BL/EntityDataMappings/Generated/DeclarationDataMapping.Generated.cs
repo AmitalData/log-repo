@@ -2633,6 +2633,10 @@ namespace Logitude.Customs.BL.EntityDataMappings
             {
                 entityPM.AmendmentErrorXml = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.AmendmentErrorXml));
             }
+            if (!String.IsNullOrWhiteSpace(entityPM.PalestinianCode)) //T4 find type == nText 
+            {
+                entityPM.PalestinianCode = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.PalestinianCode));
+            }
             entityPM.EncodeBase64NVARCHARFieldsBy=null;
 		}
 

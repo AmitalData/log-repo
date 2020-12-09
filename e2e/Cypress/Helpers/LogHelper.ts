@@ -2,11 +2,14 @@ export class LogHelper
 {
     public static LOVSearchAndSelectFirst(code: string, searchText: string)
     {
-        cy.get("input[id='" + code + "']").clear();
-        cy.get("input[id='" + code + "']").type(searchText);
-        cy.get("ul[id='mydatalist_" + code + "']").contains(searchText).then(a =>
+        cy.get('input[id="' + code + '"]').should('be.visible').then(a =>
         {
-            a[0].click();
+           cy.get('input[id="' + code + '"]').clear();
+           cy.get('input[id="' + code + '"]').type(searchText,{ force: true }).should("have.value", searchText);
+           cy.get('ul[id="mydatalist_' + code + '"]').contains(searchText).then(a =>
+           {
+                a[0].click();
+            });
         });
     }
     public static ClickButton(buttonId: string)

@@ -17023,7 +17023,6 @@
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
-
   <field
     Id="&quot;ce0089c9-4569-4c1b-823d-158c1079815f&quot;"
     FieldName="&quot;TransshipmentApprovalDateTime&quot;"
@@ -17178,7 +17177,6 @@
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
-
   <field
     Id="&quot;f2ed09ae-c92b-4bc9-8010-f9879fadeb46&quot;"
     FieldName="&quot;PalestinianCode&quot;"
@@ -17187,7 +17185,7 @@
     IsChecked="true"
     IsDeleted="false"
     ObjectTableName="&quot;Customs.Declaration&quot;"
-    FieldsDataType="&quot;LookUp&quot;"
+    FieldsDataType="&quot;nText&quot;"
     MinLength="0"
     MaxLength="15"
     IsRequired="false"
@@ -17228,10 +17226,8 @@
     DefaultText="&quot;Palestinian Code&quot;"
     FullLocalDefaultText="&quot;מס' יבואן פלסטינאי&quot;"
     IsNullable="true"
-    IsForeignKey="true"
-    ForeignEntity="Client"
+    IsForeignKey="false"
     DontBuildRelationOnDB="false"
-    NavigationPropertyName="PalestinianImporter"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"

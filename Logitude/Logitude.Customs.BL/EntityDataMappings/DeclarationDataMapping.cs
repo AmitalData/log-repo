@@ -107,7 +107,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
 
             }
 
-
+          
            if(entityPOCO.IsAmendment == true)
             {
                 AmendRequestRejectReasonTypeRepository amendRequestRejectReasonTypeRepository = new AmendRequestRejectReasonTypeRepository(entityPOCO.Tenant);
@@ -158,7 +158,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
                     declaration = declarations.FirstOrDefault(x => new string[] { "2", "4", }.Contains(x.AmendmentStatus));
                     if (declaration != null)
                     {
-                        entityPM.AmendmentMessage = TranslateTextsClass.Translate("Customs.Declaration.O.ExistsAmendments", entityPOCO.Tenant, true);
+                        entityPM.AmendmentMessage = TranslateTextsClass.Translate("Customs.Declaration.O.ExistsAmendments", entityPOCO.Tenant, true) + ' ' + declaration.AmendmentStatusName; ;
                     }
                 }
                 //else

@@ -176,6 +176,13 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="DistributionArea"
+    Type="nvarchar"
+    Size="30">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="DeclarationId"
     ReferencedTable="Declarations"

@@ -81,6 +81,8 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public string TruckerId { get; set; }
 	      
         public virtual Trucker Trucker { get; set; }
+        [Column("DistributionArea")]
+	    public string DistributionArea { get; set; }
     }
 }
 	 

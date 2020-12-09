@@ -32,6 +32,8 @@ namespace Logitude.Customs.Data.EntityLists
        public string AirlinePrefix  { get; set; }
        [DataMember]
        public string ICAO  { get; set; }
+       [DataMember]
+       public string UnloadPortCode  { get; set; }
    }
 
 }
