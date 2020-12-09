@@ -92,7 +92,6 @@ body, html {
     vertical-align: middle;
     border-style: none;
     margin-bottom: 1.25em;
-    height: 10em;
     object-fit: cover;
     object-position: 50% 50%;
 }
