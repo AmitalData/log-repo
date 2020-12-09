@@ -12,7 +12,7 @@ describe("Edit Direct Shipment Tests", () => {
         sh.OpenShipment("DEAShipment")
         sh.FillGeneralTab()
         sh.FillOrdersTab()
-        
+        sh.FillPartnersTab("E","A")
     })
 
 })

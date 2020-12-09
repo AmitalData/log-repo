@@ -25,3 +25,7 @@ export function FillShipmentDefaultFields(directionCode: string, transportModCod
         cy.SelectLogLovFirstElement("#Shipment_MainCarriageToPortId")
     }
 }
+
+export function SaveShipment(resultFile:string) {
+    cy.SaveClick("#ShipmentCreatebtn", null, "**/shipment", null)
+}

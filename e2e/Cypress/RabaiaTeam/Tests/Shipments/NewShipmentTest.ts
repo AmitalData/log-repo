@@ -11,121 +11,121 @@ describe("Create Direct Shipment Tests", () => {
     it("Create Direct Export Air Shipment", () => {
         sh.OpenNewShipmentWizard("Direct")
         sh.FillShipmentDefaultFields("E","A")
-        cy.SaveClick("#ShipmentCreatebtn", null, "**/shipment", null)
+        sh.SaveShipment("DEAShipment")
     })
 
     it("Create Direct Import Air Shipment", () => {
         sh.OpenNewShipmentWizard("Direct")
         sh.FillShipmentDefaultFields("I","A")
-        cy.SaveClick("#ShipmentCreatebtn", null, "**/shipment", "DIAShipment")
+        sh.SaveShipment("DIAShipment")
     })
 
     it("Create Direct Domestic Air Shipment", () => {
         sh.OpenNewShipmentWizard("Direct")
         sh.FillShipmentDefaultFields("D","A")
-        cy.SaveClick("#ShipmentCreatebtn", null, "**/shipment", "DDAShipment")
+        sh.SaveShipment("DDAShipment")
     })
 
     it("Create Direct Drop Air Shipment", () => {
         sh.OpenNewShipmentWizard("Direct")
         sh.FillShipmentDefaultFields("R","A")
-        cy.SaveClick("#ShipmentCreatebtn", null, "**/shipment", "DRAShipment")
+        sh.SaveShipment("DRAShipment")
     })
 
     it("Create Direct Export Ocean FCL Shipment", () => {
         sh.OpenNewShipmentWizard("Direct")
         sh.FillShipmentDefaultFields("E","O","FCLD")
-        cy.SaveClick("#ShipmentCreatebtn", null, "**/shipment", "DEOFCLShipment")
+        sh.SaveShipment("DEOFCLShipment")
     })
 
     it("Create Direct Export Ocean LCL Shipment", () => {
         sh.OpenNewShipmentWizard("Direct")
         sh.FillShipmentDefaultFields("E","O","LCLD")
-        cy.SaveClick("#ShipmentCreatebtn", null, "**/shipment", "DEOLCLShipment")
+        sh.SaveShipment("DEOLCLShipment")
     })
 
     it("Create Direct Import Ocean FCL Shipment", () => {
         sh.OpenNewShipmentWizard("Direct")
         sh.FillShipmentDefaultFields("I","O","FCLD")
-        cy.SaveClick("#ShipmentCreatebtn", null, "**/shipment", "DIOFCLShipment")
+        sh.SaveShipment("DIOFCLShipment")
     })
 
     it("Create Direct Import Ocean LCL Shipment", () => {
         sh.OpenNewShipmentWizard("Direct")
         sh.FillShipmentDefaultFields("I","O","LCLD")
-        cy.SaveClick("#ShipmentCreatebtn", null, "**/shipment", "DIOLCLShipment")
+        sh.SaveShipment("DIOLCLShipment")
     })
 
     it("Create Direct Domestic Ocean FCL Shipment", () => {
         sh.OpenNewShipmentWizard("Direct")
         sh.FillShipmentDefaultFields("D","O","FCLD")
-        cy.SaveClick("#ShipmentCreatebtn", null, "**/shipment", "DDOFCLShipment")
+        sh.SaveShipment("DDOFCLShipment")
     })
 
     it("Create Direct Domestic Ocean LCL Shipment", () => {
         sh.OpenNewShipmentWizard("Direct")
         sh.FillShipmentDefaultFields("D","O","LCLD")
-        cy.SaveClick("#ShipmentCreatebtn", null, "**/shipment", "DDOLCLShipment")
+        sh.SaveShipment("DDOLCLShipment")
     })
 
     it("Create Direct Drop Ocean FCL Shipment", () => {
         sh.OpenNewShipmentWizard("Direct")
         sh.FillShipmentDefaultFields("R","O","FCLD")
-        cy.SaveClick("#ShipmentCreatebtn", null, "**/shipment", "DROFCLShipment")
+        sh.SaveShipment("DROFCLShipment")
     })
 
     it("Create Direct Drop Ocean LCL Shipment", () => {
         sh.OpenNewShipmentWizard("Direct")
         sh.FillShipmentDefaultFields("R","O","LCLD")
-        cy.SaveClick("#ShipmentCreatebtn", null, "**/shipment", "DROLCLShipment")
+        sh.SaveShipment("DROLCLShipment")
     })
 
     it("Create Direct Export Inland FTL Shipment", () => {
         sh.OpenNewShipmentWizard("Direct")
         sh.FillShipmentDefaultFields("E","I","FTL")
-        cy.SaveClick("#ShipmentCreatebtn", null, "**/shipment", "DEIFTLShipment")
+        sh.SaveShipment("DEIFTLShipment")
     })
 
     it("Create Direct Export Inland LTL Shipment", () => {
         sh.OpenNewShipmentWizard("Direct")
         sh.FillShipmentDefaultFields("E","I","LTL")
-        cy.SaveClick("#ShipmentCreatebtn", null, "**/shipment", "DEILTLShipment")
+        sh.SaveShipment("DEILTLShipment")
     })
 
     it("Create Direct Import Inland FTL Shipment", () => {
         sh.OpenNewShipmentWizard("Direct")
         sh.FillShipmentDefaultFields("I","I","FTL")
-        cy.SaveClick("#ShipmentCreatebtn", null, "**/shipment", "DIIFTLShipment")
+        sh.SaveShipment("DIIFTLShipment")
     })
 
     it("Create Direct Import Inland LTL Shipment", () => {
         sh.OpenNewShipmentWizard("Direct")
         sh.FillShipmentDefaultFields("I","I","LTL")
-        cy.SaveClick("#ShipmentCreatebtn", null, "**/shipment", "DIILTLShipment")
+        sh.SaveShipment("DIILTLShipment")
     })
 
     it("Create Direct Domestic Inland FTL Shipment", () => {
         sh.OpenNewShipmentWizard("Direct")
         sh.FillShipmentDefaultFields("D","I","FTL")
-        cy.SaveClick("#ShipmentCreatebtn", null, "**/shipment", "DDIFTLShipment")
+        sh.SaveShipment("DDIFTLShipment")
     })
 
     it("Create Direct Domestic Inland LTL Shipment", () => {
         sh.OpenNewShipmentWizard("Direct")
         sh.FillShipmentDefaultFields("D","I","LTL")
-        cy.SaveClick("#ShipmentCreatebtn", null, "**/shipment", "DDILTLShipment")
+        sh.SaveShipment("DDILTLShipment")
     })
 
     it("Create Direct Drop Inland FTL Shipment", () => {
         sh.OpenNewShipmentWizard("Direct")
         sh.FillShipmentDefaultFields("R","I","FTL")
-        cy.SaveClick("#ShipmentCreatebtn", null, "**/shipment", "DRIFTLShipment")
+        sh.SaveShipment("DRIFTLShipment")
     })
 
     it("Create Direct Drop Inland LTL Shipment", () => {
         sh.OpenNewShipmentWizard("Direct")
         sh.FillShipmentDefaultFields("R","I","LTL")
-        cy.SaveClick("#ShipmentCreatebtn", null, "**/shipment", "DRILTLShipment")
+        sh.SaveShipment("DRILTLShipment")
     })
 
 })

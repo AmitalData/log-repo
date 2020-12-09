@@ -39,7 +39,7 @@ function CompleteLoginProcess(Email:string, Password:string, URL: string, Tenant
     cy.get("#cmdLogin").click()
 
     if (Tenant !== null) {
-        cy.get("input[name='cmbTenants_input']").clear().type('(' + Tenant + ')') 
+        cy.get("input[name='cmbTenants_input']").clear().type('(' + Tenant + ')')
         cy.get("#cmbTenants_listbox").children().contains('(' + Tenant + ')').eq(0).click({force:true})
     }
 

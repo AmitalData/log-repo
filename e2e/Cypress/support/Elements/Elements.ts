@@ -14,7 +14,7 @@ declare namespace Cypress {
         SelectSearchBoxFirstElement(selector: string, value: string): Chainable<Element>
     }
 }
- 
+
 Cypress.Commands.add("FillLogTextBox", (selector, value, assertRequired) => {
 
     if (assertRequired) {
@@ -45,11 +45,11 @@ Cypress.Commands.add("ValidateValue", (selector, value) => {
 
 Cypress.Commands.add("SelectLogLovFirstElement", (selector) => {
 
-    cy.intercept("**/GetByCompactFilters?**").as("LOVDataLoaded"); 
-    cy.get(selector).focus().type('{downarrow}'); 
-    cy.wait("@LOVDataLoaded")
+    //cy.intercept("**/GetByCompactFilters?**").as("LOVDataLoaded")
+    cy.get(selector).type("{downarrow}")
+    //cy.wait("@LOVDataLoaded")
     //GetByCompactFilters
-    cy.get(".DropDownListItem").children().eq(0).click();
+    cy.get(".DropDownListItem").children().eq(0).click()
 
 })
 
@@ -75,8 +75,8 @@ Cypress.Commands.add("FillRandomString", (selector, length, upperCase, assertReq
 
 Cypress.Commands.add("FillRandomNumber", (selector, minimum, maximum, assertRequired) => {
 
-    minimum = Math.ceil(minimum);
-    maximum = Math.floor(maximum);
+    minimum = Math.ceil(minimum)
+    maximum = Math.floor(maximum)
 
     let randomNumber = (Math.floor(Math.random() * (maximum - minimum + 1) + minimum)).toString()
 
@@ -138,7 +138,7 @@ Cypress.Commands.add("ClickRadio", (selector) => {
 
 Cypress.Commands.add("ValidateElementColor", (selector, expectedcolor) => {
 
-    cy.get(selector).should("have.css", "color").and("equal", expectedcolor);
+    cy.get(selector).should("have.css", "color").and("equal", expectedcolor)
 
 })
 
