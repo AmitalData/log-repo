@@ -584,12 +584,24 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
 
                     if (string.IsNullOrWhiteSpace(_AmitalCustomsFile.IsCourierDeclaration) || (!string.IsNullOrWhiteSpace(_AmitalCustomsFile.IsCourierDeclaration) && _AmitalCustomsFile.IsCourierDeclaration.ToLower() != "true"))
                     {
-                        string unloadportId = null;
-                        if (!String.IsNullOrWhiteSpace(_AmitalCustomsFile.UnloadportId))
+                        if (String.IsNullOrWhiteSpace(this._MyDeclarationPM.Consignments[0].UnloadPortCode))
                         {
-                            unloadportId = TranslateUnloadPort(_AmitalCustomsFile.UnloadportId);
+                            if (_CourierMasterPM == null)
+                            {
+                                var myCourierMasterQueryService = new CourierMasterQueryService(_context);
+                                _CourierMasterPM = myCourierMasterQueryService.GetByDeclarationId(this._MyDeclarationPM.Id, ResolvedTenant());
+                            }
+                            if (_CourierMasterPM != null)
+                            {
+                                CustomsAirlineQueryService customsAirlineQueryService = new CustomsAirlineQueryService(_CourierMasterPM.Tenant);
+                                CustomsAirlinePM customsAirline = customsAirlineQueryService.GetSingle(_CourierMasterPM.AirlineId, false, true);
+                                if (customsAirline != null)
+                                {
+                                    if (!String.IsNullOrWhiteSpace(customsAirline.UnloadPortCode))this._MyDeclarationPM.Consignments[0].UnloadPortCode = customsAirline.UnloadPortCode;
+                                }
+                            }
                         }
-                        this._MyDeclarationPM.Consignments[0].UnloadPortCode = unloadportId;
+
                         if (!string.IsNullOrWhiteSpace(_AmitalCustomsFile.HAWBDATE))
                         {
                             this._MyDeclarationPM.Consignments[0].ManifestDate = AmitalConvertUtil.GetUnifreightFormatedDate(_AmitalCustomsFile.HAWBDATE, "AmitalCustomsFile.HAWBDATE");
