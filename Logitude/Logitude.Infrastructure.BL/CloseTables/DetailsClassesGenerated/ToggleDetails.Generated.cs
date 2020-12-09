@@ -185,7 +185,7 @@ namespace Logitude.Infrastructure.BL
                 Description = "Charges Types Direction Restrictions", 
 			});
 			 
-<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< master
+
             all.Add(new ToggleDetails()
             {    
                 Name = "Branch Code in Counters", 
@@ -194,7 +194,7 @@ namespace Logitude.Infrastructure.BL
                 Code = "BCC", 
 			});
 			
-========================================================================
+
             all.Add(new ToggleDetails()
             {    
                 Code = "ACP", 
@@ -203,7 +203,7 @@ namespace Logitude.Infrastructure.BL
                 Description = "Accruals Approvement Toggle", 
 			});
 			
->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> 2020.R5.75500
+
 			
             return all;
        }
