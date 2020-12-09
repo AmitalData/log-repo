@@ -24,14 +24,28 @@ export class LogitudeHotKeysComponent{
     CounterId:number;
     public ComponentIndex:number;
     CurrentSession=SessionLocator.SelectedSession;
-    @HostListener('document:keydown.control.s') hotKeySaveChanges(){
-        
-        if(this.ComponentId == SessionLocator.SelectedSession.CurrentLogitudeHotKeysComponent.ComponentId){
-        console.log('Saving......from '+this.ComponentId);
-        this.SaveHotKey.emit();
+
+    @HostListener('document:keydown',['$event']) 
+    hotKeySaveChanges(event:any){
+        let saveKey=83;
+        let isCTRSSHotkey=(event.ctrlKey && event.which == saveKey);
+        let isCTRLShiftSHotkey=(event.ctrlKey && event.shiftKey && event.which == saveKey);
+
+        if(isCTRLShiftSHotkey){
+            if(this.ComponentId == SessionLocator.SelectedSession.CurrentLogitudeHotKeysComponent.ComponentId){
+                console.log('shift + s  '+this.ComponentId);
+                this.ShiftSHotKey.emit();
+            }
+            return false;
         }
-      
-        return false;
+        else if(isCTRSSHotkey){
+            if(this.ComponentId == SessionLocator.SelectedSession.CurrentLogitudeHotKeysComponent.ComponentId){
+                console.log('Saving......from '+this.ComponentId);
+                this.SaveHotKey.emit();
+             }
+           return false;
+        }
+        
     }
     
     @HostListener('document:keydown.arrowright') hotKeyNext(){
@@ -63,15 +77,7 @@ export class LogitudeHotKeysComponent{
         return false;
     }
 
-    @HostListener('document:keydown.control.shift.s') hotKeyShiftSave(){
-        
-        if(this.ComponentId == SessionLocator.SelectedSession.CurrentLogitudeHotKeysComponent.ComponentId){
-        console.log('shift + s  '+this.ComponentId);
-        this.ShiftSHotKey.emit();
-        }
-        
-        return false;
-    }
+   
     
     constructor(){
 
@@ -86,9 +92,16 @@ export class LogitudeHotKeysComponent{
 
     DestroyLogitudeHotKeysControl(){
         this.CurrentSession.RemoveLogitudeHotKeysComponent(this);
+        this.CurrentSession=null;
+        this.SaveHotKey=null;
+        this.ShiftSHotKey=null;
+        this.LeftArrowHotKey=null;
+        this.RightArrowHotKey=null;
+        this.ESCHotKey=null;
     }
     ngOnDestroy(){
         this.DestroyLogitudeHotKeysControl();
+        
     }
     
 }
