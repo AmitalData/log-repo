@@ -216,6 +216,13 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="To"
+    Type="varchar"
+    Size="4000">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="LastUpdatedByUserId"
     ReferencedTable="Users"

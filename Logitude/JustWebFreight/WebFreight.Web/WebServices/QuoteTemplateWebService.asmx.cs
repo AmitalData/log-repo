@@ -177,9 +177,24 @@ namespace WebFreight.Web.WebServices
             ObjectTable objectTable = objectTabelRepository.GetObjectTableByName("Quote", tenant, true);
 
             HtmlEditorHelper htmlEditorHelper = new HtmlEditorHelper();
-            bodyHtmlString = htmlEditorHelper.ResolveHtmlData("", objectTable.Id, template.CreatedByUserId, tenant, bodyHtmlString, ref subject, ref from, ref replyTo,ref cc, ref bcc, quotePM);
+            HtmlEditorResolveArgs htmlEditorResolveArgs = new HtmlEditorResolveArgs()
+            {
+                Subject = subject,
+                From = from,
+                ReplyTo = replyTo,
+                Cc = cc,
+                Bcc = bcc,
+                UserId = template.CreatedByUserId,
+                ObjectTableId = objectTable.Id,
+                Tenant = tenant,
+                HtmlString = bodyHtmlString,
 
-            return helper.HtmlToPdf(bodyHtmlString, setting);
+            };
+
+
+            var htmlEditorResolveResult = htmlEditorHelper.ResolveHtmlData(htmlEditorResolveArgs, quotePM);
+
+            return helper.HtmlToPdf(htmlEditorResolveResult.HtmlString, setting);
         }
 
 

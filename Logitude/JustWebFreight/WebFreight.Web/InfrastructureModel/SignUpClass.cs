@@ -2042,7 +2042,7 @@ namespace WebFreight.Web.InfrastructureModel
                 From = documentTypeTemplatePM.From,
                 CC = documentTypeTemplatePM.CC,
                 ReplyTo = documentTypeTemplatePM.ReplyTo,
-
+                To = documentTypeTemplatePM.To,
             };
         }
 

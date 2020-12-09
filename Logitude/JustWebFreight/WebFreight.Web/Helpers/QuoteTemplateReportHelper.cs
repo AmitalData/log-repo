@@ -54,11 +54,7 @@ namespace Logitude.BL.Helpers
         bool IsShowlanguage = new bool();
         string NameTextCode;
         TenantPM tenantPm = null;
-        string subject = "";
-        string from = "";
-        string replyTo = "";
-        string cc = "";
-        string bcc = ""; 
+
         public byte[] BuildQuoteTemplatePdfReport(string quoteId, string quoteTemplateId, string userId, int tenant, List<QuoteTemplateSectionPM> templateSections, int? userTenant = null, QuotePM quotePM = null, int? versionNumber = null)
         {
 
@@ -384,7 +380,19 @@ namespace Logitude.BL.Helpers
                     objectTable = objectTabelRepository.GetObjectTableByName("Quote", tenant, true);
                 }
 
-                htmlString = htmlEditorHelper.ResolveHtmlData("", objectTable.Id, userId, tenant, htmlString, ref subject, ref from, ref replyTo , ref cc, ref bcc, quotePM);
+                HtmlEditorResolveArgs htmlEditorResolveArgs = new HtmlEditorResolveArgs()
+                {
+                   
+                    UserId = userId,
+                    ObjectTableId = objectTable.Id,
+                    DocumentTemplateId = template.Id,
+                    Tenant = tenant,
+                    HtmlString = htmlString,
+                };
+
+
+                var htmlEditorResolveResult = htmlEditorHelper.ResolveHtmlData(htmlEditorResolveArgs, quotePM);
+                htmlString = htmlEditorResolveResult.HtmlString;
             }
             return htmlString;
         }

@@ -26,7 +26,7 @@ namespace WebFreight.Web.App_Code
     public class HtmlEditorController : ApiController
     {
 
-        public HttpResponseMessage GetEditorHtmlData(string docOutId, string entityId, string objectTableId, string childEntityId, string childEntityObjectTableId, int tenant, string userId, bool theIsSendMail, string documentTemplateId, string subject , string Mode=null ,string from = null, string replyTo = null, string cc = null,string bcc = null)
+        public HttpResponseMessage PostGetEditorHtmlData(HtmlEditorResolveArgs htmlEditorResolveArgs)
         {
             try
             {
@@ -34,28 +34,28 @@ namespace WebFreight.Web.App_Code
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
 
-                if (tenant != authToken.Tenant)
+                if (htmlEditorResolveArgs.Tenant != authToken.Tenant)
                 {
                     throw new Exception("Sorry you’re not authenticated");
                 }
 
                 HtmlEditorHelper htmlEditorHelper = new HtmlEditorHelper();
 
-            string htmlstring = htmlEditorHelper.GetEditorHtmlData(docOutId, entityId, objectTableId, childEntityId, childEntityObjectTableId, tenant, userId, theIsSendMail, documentTemplateId, ref subject, ref from, ref replyTo,ref cc,ref bcc, Mode);
-            SendHtmlFilter reslutFilter = new SendHtmlFilter();
+               var  htmlEditorResult = htmlEditorHelper.GetEditorHtmlData(htmlEditorResolveArgs);
+               SendHtmlFilter reslutFilter = new SendHtmlFilter();
 
-            if (!string.IsNullOrEmpty(htmlstring) && Mode == "Edit")
+            if (!string.IsNullOrEmpty(htmlEditorResult.HtmlString) && htmlEditorResolveArgs.Mode == "Edit")
             {
 
-                string header = htmlEditorHelper.getBetween(htmlstring, "<header>", "</header>");
+                string header = htmlEditorHelper.getBetween(htmlEditorResult.HtmlString, "<header>", "</header>");
                 string headerheight = htmlEditorHelper.getBetween(header, "<height>", "</height>");
 
-                string footer = htmlEditorHelper.getBetween(htmlstring, "<footer>", "</footer>");
+                string footer = htmlEditorHelper.getBetween(htmlEditorResult.HtmlString, "<footer>", "</footer>");
                 string footerheight = htmlEditorHelper.getBetween(footer, "<height>", "</height>");
 
-                if (Mode == "Edit")
+                if (htmlEditorResolveArgs.Mode == "Edit")
                 {
-                    htmlstring = htmlstring.Replace("<header>" + header + "</header>", "").Replace("<footer>" + footer + "</footer>", "");
+                        htmlEditorResult.HtmlString = htmlEditorResult.HtmlString.Replace("<header>" + header + "</header>", "").Replace("<footer>" + footer + "</footer>", "");
                     header = header.Replace("<height>" + headerheight + "</height>", "");
 
 
@@ -84,14 +84,14 @@ namespace WebFreight.Web.App_Code
      
 
  
-            reslutFilter.Htmlstring = htmlstring;
-            reslutFilter.Subject = subject;
-            reslutFilter.From = from;
-            reslutFilter.ReplyTo =replyTo;
-            reslutFilter.Cc = cc;
-            reslutFilter.Bcc = bcc;
-
-                return Request.CreateResponse(HttpStatusCode.OK, reslutFilter);
+            reslutFilter.Htmlstring = htmlEditorResult.HtmlString;
+            reslutFilter.Subject = htmlEditorResult.Subject;
+            reslutFilter.From = htmlEditorResult.From;
+            reslutFilter.ReplyTo = htmlEditorResult.ReplyTo;
+            reslutFilter.Cc = htmlEditorResult.Cc;
+            reslutFilter.Bcc = htmlEditorResult.Bcc;
+            reslutFilter.ToEmail = htmlEditorResult.To;
+                return Request.CreateResponse(HttpStatusCode.OK, htmlEditorResult);
             }
 
             catch (Exception ex)
