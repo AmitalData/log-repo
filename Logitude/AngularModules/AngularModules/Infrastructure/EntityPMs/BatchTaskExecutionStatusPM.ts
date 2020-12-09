@@ -43,7 +43,10 @@ export class BatchTaskExecutionStatusPM {
     public OldEntityPM: BatchTaskExecutionStatusPM;
 		
     public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
+       if(!this.DisableMarkAsDirty)
+       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -51,6 +54,7 @@ export class BatchTaskExecutionStatusPM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "BatchTaskExecutionStatus");
            
         }
+       }
     }
 
     private MyClone: BatchTaskExecutionStatusPM;

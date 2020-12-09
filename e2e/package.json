@@ -12,7 +12,7 @@
     "buildAOT": "node --max_old_space_size=9000 node_modules/@angular/cli/bin/ng build --prod --aot --optimization=false --show-circular-dependencies=false",
     "do-e2e": "protractor e2e/protractor.conf.js",
     "start-e2e": "node --max_old_space_size=3000 node_modules/@angular/cli/bin/ng e2e",
-    "cypressRun": "cypress run",
+    "cypressRun": "node_modules\\.bin\\cypress run",
     "runtests": "npm run cypressRun",
     "cypressopen": "node_modules\\.bin\\cypress open",
     "clean:reports": "rm -R -f cypress/reports && mkdir cypress/reports && mkdir cypress/reports/mochareports",

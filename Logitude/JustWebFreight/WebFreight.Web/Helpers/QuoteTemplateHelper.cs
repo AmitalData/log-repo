@@ -830,7 +830,7 @@ namespace WebFreight.Web.Helpers
                     ShowVATPercentagePackages = setting.ShowVATPercentagePackages,
                     ShowVATTypeContainers = setting.ShowVATTypeContainers,
                     ShowVATTypePackages = setting.ShowVATTypePackages,
-                    PageNumberingTextDesignId = !string.IsNullOrEmpty(setting.PageNumberingTextDesignId) ? CopyQuoteTemplateTableDesignPM(setting.PageNumberingTextDesignId, (int)orginalTenant) : "",
+                    PageNumberingTextDesignId = !string.IsNullOrEmpty(setting.PageNumberingTextDesignId) ? CopyQuoteTemplateTableDesignPM(setting.PageNumberingTextDesignId, (int)orginalTenant) : null,
                     HidePageNumber = setting.HidePageNumber,
                     ShowRegionalTAXPackages = setting.ShowRegionalTAXPackages,
                     ShowRegionalTAXContainers = setting.ShowRegionalTAXContainers,
@@ -839,6 +839,18 @@ namespace WebFreight.Web.Helpers
                 if (string.IsNullOrEmpty(copySetting.TotalPerContainersTableDesignId))
                 {
                     GetNewFromTotalByContainer(copySetting);
+                }
+
+                if (string.IsNullOrEmpty(copySetting.PageNumberingTextDesignId))
+                {
+                    QuoteTemplateTextDesignRepository quoteTemplateTextDesignRepository = new QuoteTemplateTextDesignRepository(Tenant);
+                    QuoteTemplateTextDesign pageNumberingTextDesign = GetNewQuoteTemplateTextDesign();
+                    if (pageNumberingTextDesign != null)
+                    {
+                        quoteTemplateTextDesignRepository.Add(pageNumberingTextDesign);
+                        quoteTemplateTextDesignRepository.SubmitChanges();
+                        copySetting.PageNumberingTextDesignId = pageNumberingTextDesign.Id;
+                    }
                 }
 
                 #endregion

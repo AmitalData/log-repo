@@ -30,7 +30,7 @@ a:focus {
     /* border-bottom: 1px solid #ececec; */
     max-width: 1300px;
     margin: 0 auto;
-    height: 60px;
+    height: 93px;
     user-select: none;
     background: white;
 }
@@ -46,18 +46,19 @@ a:focus {
 }
 
     .web-header .logo img {
-        padding: 15px 10px;
-        width: 80px;
-        height: 30px;
+        padding: 5px 10px;
+        width: 327px;
+        height: 83px;
         border: 0;
         outline:none;
     }
 
 .web-header .nav {
+  float:right;
   display: inline-block;
-  width: calc(100% - 150px);
   height: 100%;
   overflow: hidden;
+ 
 }
 
 .web-header .nav ul>li {

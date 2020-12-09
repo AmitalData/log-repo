@@ -5,7 +5,6 @@ export class RadioButtonResolver extends AbstractResolver implements IResolver {
 
 
     public Select() {
-
         if (this.selector) {
             cy.get(this.GetContainer())
                 .find(this.selector)
@@ -16,13 +15,5 @@ export class RadioButtonResolver extends AbstractResolver implements IResolver {
                     cy.get('input').click({ force: true });
                 });
         }
-
-
-
-        //cy.get('radiobutton')
-        //    .find('.LogitudeRadioButton')
-        //    .within(() =>
-        //        cy.get(this.selector).click({ force: true })
-        //    )
     }
 }

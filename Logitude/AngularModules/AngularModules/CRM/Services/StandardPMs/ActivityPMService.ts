@@ -174,6 +174,7 @@ export class ActivityPMService {
         if (!entityPM) {
             
             entityPM = new ActivityPM();
+			entityPM.DisableMarkAsDirty = true;
         }
 
 		var customFields: Array<string> = [];
@@ -254,6 +255,8 @@ export class ActivityPMService {
             entityPM.OldEntityPM = null;
         }
 		entityPM.IsDirty = false;
+	    entityPM.DisableMarkAsDirty = false;
+
         return entityPM;
     }
 
@@ -279,7 +282,8 @@ export class ActivityPMService {
             {
                 newActivityInviteePM = new ActivityInviteePM(null);
             }
-                
+ 			newActivityInviteePM.DisableMarkAsDirty = true;
+               
             var pmKeysArray = Object.keys(jItem);
             for (var pmKey in pmKeysArray) {
                 if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
@@ -311,7 +315,7 @@ export class ActivityPMService {
                 newActivityInviteePM.OldEntityPM = null;
                 newActivityInviteePM.EntityParentPM = null;
             }
-			
+			 newActivityInviteePM.DisableMarkAsDirty = false;
 			 newActivityInviteePM.IsDirty = false;
             entityPM.ActivityInvitees.push(newActivityInviteePM);
         }
@@ -325,6 +329,7 @@ export class ActivityPMService {
                         //entityPM.ActivityInvitees.push(oldActivityInvitees[itemKey]);
 						var oldItemJson = oldActivityInvitees[itemKey];
                         var deletedPM: ActivityInviteePM = new ActivityInviteePM(null);
+						deletedPM.DisableMarkAsDirty = true;
                         var pmKeys = Object.keys(oldItemJson);
                         for (var key in pmKeys) {
 
@@ -336,7 +341,7 @@ export class ActivityPMService {
                             deletedPM[property] = oldItemJson[property];
                         }
 
-                      
+					    deletedPM.DisableMarkAsDirty = false;
                         deletedPM.IsDirty = false;
                         deletedPM.ChangeSetOp = "Delete";
                         
@@ -369,7 +374,8 @@ export class ActivityPMService {
             {
                 newActivityEmailRecipientPM = new ActivityEmailRecipientPM(null);
             }
-                
+ 			newActivityEmailRecipientPM.DisableMarkAsDirty = true;
+               
             var pmKeysArray = Object.keys(jItem);
             for (var pmKey in pmKeysArray) {
                 if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
@@ -401,7 +407,7 @@ export class ActivityPMService {
                 newActivityEmailRecipientPM.OldEntityPM = null;
                 newActivityEmailRecipientPM.EntityParentPM = null;
             }
-			
+			 newActivityEmailRecipientPM.DisableMarkAsDirty = false;
 			 newActivityEmailRecipientPM.IsDirty = false;
             entityPM.ActivityEmailRecipients.push(newActivityEmailRecipientPM);
         }
@@ -415,6 +421,7 @@ export class ActivityPMService {
                         //entityPM.ActivityEmailRecipients.push(oldActivityEmailRecipients[itemKey]);
 						var oldItemJson = oldActivityEmailRecipients[itemKey];
                         var deletedPM: ActivityEmailRecipientPM = new ActivityEmailRecipientPM(null);
+						deletedPM.DisableMarkAsDirty = true;
                         var pmKeys = Object.keys(oldItemJson);
                         for (var key in pmKeys) {
 
@@ -426,7 +433,7 @@ export class ActivityPMService {
                             deletedPM[property] = oldItemJson[property];
                         }
 
-                      
+					    deletedPM.DisableMarkAsDirty = false;
                         deletedPM.IsDirty = false;
                         deletedPM.ChangeSetOp = "Delete";
                         
@@ -459,7 +466,8 @@ export class ActivityPMService {
             {
                 newActivityNotePM = new ActivityNotePM(null);
             }
-                
+ 			newActivityNotePM.DisableMarkAsDirty = true;
+               
             var pmKeysArray = Object.keys(jItem);
             for (var pmKey in pmKeysArray) {
                 if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
@@ -491,7 +499,7 @@ export class ActivityPMService {
                 newActivityNotePM.OldEntityPM = null;
                 newActivityNotePM.EntityParentPM = null;
             }
-			
+			 newActivityNotePM.DisableMarkAsDirty = false;
 			 newActivityNotePM.IsDirty = false;
             entityPM.ActivityNotes.push(newActivityNotePM);
         }
@@ -505,6 +513,7 @@ export class ActivityPMService {
                         //entityPM.ActivityNotes.push(oldActivityNotes[itemKey]);
 						var oldItemJson = oldActivityNotes[itemKey];
                         var deletedPM: ActivityNotePM = new ActivityNotePM(null);
+						deletedPM.DisableMarkAsDirty = true;
                         var pmKeys = Object.keys(oldItemJson);
                         for (var key in pmKeys) {
 
@@ -516,7 +525,7 @@ export class ActivityPMService {
                             deletedPM[property] = oldItemJson[property];
                         }
 
-                      
+					    deletedPM.DisableMarkAsDirty = false;
                         deletedPM.IsDirty = false;
                         deletedPM.ChangeSetOp = "Delete";
                         
@@ -538,7 +547,7 @@ export class ActivityPMService {
             }
             var newDocumentDataPM: DocumentDataPM;
             newDocumentDataPM = new DocumentDataPM();
-				                
+		    newDocumentDataPM.DisableMarkAsDirty = true;                
             var pmKeysArray = Object.keys(jItem);
             for (var pmKey in pmKeysArray) {
 			
@@ -548,6 +557,7 @@ export class ActivityPMService {
                 var pmProperty = pmKeysArray[pmKey];
                 newDocumentDataPM[pmProperty] = jItem[pmProperty];
             }
+			newDocumentDataPM.DisableMarkAsDirty = false;
             newDocumentDataPM.IsDirty = false;
             entityPM.ActivityDocumentDatas.push(newDocumentDataPM);
         }

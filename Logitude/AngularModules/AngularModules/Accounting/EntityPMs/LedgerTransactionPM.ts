@@ -289,6 +289,66 @@ export class LedgerTransactionPM {
     public set OriginalAmount(newValue: number) { if (this.originalAmount != newValue) { this.originalAmount = newValue; this.MarkAsDirty("OriginalAmount"); } }
        
 	 
+    private reconcileMethodCode: string;
+    public get ReconcileMethodCode() { return this.reconcileMethodCode; }
+    public set ReconcileMethodCode(newValue: string) { if (this.reconcileMethodCode != newValue) { this.reconcileMethodCode = newValue; this.MarkAsDirty("ReconcileMethodCode"); } }
+       
+	 
+    private isCumulativeForeignAmountPos: boolean;
+    public get IsCumulativeForeignAmountPos() { return this.isCumulativeForeignAmountPos; }
+    public set IsCumulativeForeignAmountPos(newValue: boolean) { if (this.isCumulativeForeignAmountPos != newValue) { this.isCumulativeForeignAmountPos = newValue; this.MarkAsDirty("IsCumulativeForeignAmountPos"); } }
+       
+	 
+    private isForeignAmountCreditPos: boolean;
+    public get IsForeignAmountCreditPos() { return this.isForeignAmountCreditPos; }
+    public set IsForeignAmountCreditPos(newValue: boolean) { if (this.isForeignAmountCreditPos != newValue) { this.isForeignAmountCreditPos = newValue; this.MarkAsDirty("IsForeignAmountCreditPos"); } }
+       
+	 
+    private isCumulativeLocalAmountPos: boolean;
+    public get IsCumulativeLocalAmountPos() { return this.isCumulativeLocalAmountPos; }
+    public set IsCumulativeLocalAmountPos(newValue: boolean) { if (this.isCumulativeLocalAmountPos != newValue) { this.isCumulativeLocalAmountPos = newValue; this.MarkAsDirty("IsCumulativeLocalAmountPos"); } }
+       
+	 
+    private isLocalAmountCreditPos: boolean;
+    public get IsLocalAmountCreditPos() { return this.isLocalAmountCreditPos; }
+    public set IsLocalAmountCreditPos(newValue: boolean) { if (this.isLocalAmountCreditPos != newValue) { this.isLocalAmountCreditPos = newValue; this.MarkAsDirty("IsLocalAmountCreditPos"); } }
+       
+	 
+    private isForeignAmountPos: boolean;
+    public get IsForeignAmountPos() { return this.isForeignAmountPos; }
+    public set IsForeignAmountPos(newValue: boolean) { if (this.isForeignAmountPos != newValue) { this.isForeignAmountPos = newValue; this.MarkAsDirty("IsForeignAmountPos"); } }
+       
+	 
+    private isOriginalAmountPos: boolean;
+    public get IsOriginalAmountPos() { return this.isOriginalAmountPos; }
+    public set IsOriginalAmountPos(newValue: boolean) { if (this.isOriginalAmountPos != newValue) { this.isOriginalAmountPos = newValue; this.MarkAsDirty("IsOriginalAmountPos"); } }
+       
+	 
+    private iconCode: string;
+    public get IconCode() { return this.iconCode; }
+    public set IconCode(newValue: string) { if (this.iconCode != newValue) { this.iconCode = newValue; this.MarkAsDirty("IconCode"); } }
+       
+	 
+    private foreignAmountCreditWithSign: string;
+    public get ForeignAmountCreditWithSign() { return this.foreignAmountCreditWithSign; }
+    public set ForeignAmountCreditWithSign(newValue: string) { if (this.foreignAmountCreditWithSign != newValue) { this.foreignAmountCreditWithSign = newValue; this.MarkAsDirty("ForeignAmountCreditWithSign"); } }
+       
+	 
+    private cumulativeForeignAmountSign: string;
+    public get CumulativeForeignAmountSign() { return this.cumulativeForeignAmountSign; }
+    public set CumulativeForeignAmountSign(newValue: string) { if (this.cumulativeForeignAmountSign != newValue) { this.cumulativeForeignAmountSign = newValue; this.MarkAsDirty("CumulativeForeignAmountSign"); } }
+       
+	 
+    private calculatedLocalAmount: number;
+    public get CalculatedLocalAmount() { return this.calculatedLocalAmount; }
+    public set CalculatedLocalAmount(newValue: number) { if (this.calculatedLocalAmount != newValue) { this.calculatedLocalAmount = newValue; this.MarkAsDirty("CalculatedLocalAmount"); } }
+       
+	 
+    private calculatedForeignAmount: number;
+    public get CalculatedForeignAmount() { return this.calculatedForeignAmount; }
+    public set CalculatedForeignAmount(newValue: number) { if (this.calculatedForeignAmount != newValue) { this.calculatedForeignAmount = newValue; this.MarkAsDirty("CalculatedForeignAmount"); } }
+       
+	 
 
     public OldEntityPM: LedgerTransactionPM;
 		

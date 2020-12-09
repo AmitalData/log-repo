@@ -224,18 +224,21 @@ namespace Logitude.Server.Tools.Helpers
 			string YYYY = date.ToString("yyyy");
 
 			counterPrefix = counterPrefix.Replace("[MM]", MM).Replace("[YY]", YY).Replace("[YYYY]", YYYY);
-			if (additionalParameters != null)
+            counterSuffix = counterSuffix.Replace("[MM]", MM).Replace("[YY]", YY).Replace("[YYYY]", YYYY);
+            if (additionalParameters != null)
 			{
-				foreach (var k in additionalParameters.Keys)
-					counterPrefix = counterPrefix.Replace(k, additionalParameters[k]);
-			}
+                foreach (var k in additionalParameters.Keys)
+                {
+                    if (k == "[B]" && !FeatureToggleHelper.HasFeatureToggle("BCC", tenant))
+                    {
+                        continue;
+                    }
 
-			counterSuffix = counterSuffix.Replace("[MM]", MM).Replace("[YY]", YY).Replace("[YYYY]", YYYY);
-			if (additionalParameters != null)
-			{
-				foreach (var k in additionalParameters.Keys)
-					counterSuffix = counterSuffix.Replace(k, additionalParameters[k]);
+                    counterPrefix = counterPrefix.Replace(k, additionalParameters[k]);
+                    counterSuffix = counterSuffix.Replace(k, additionalParameters[k]);
+                }
 			}
+             
 		}
 
 		public static string GetCounterPrefix(int tenant, string counterCode, string parameter1, string parameter2, Dictionary<string, string> additionalParameters = null)

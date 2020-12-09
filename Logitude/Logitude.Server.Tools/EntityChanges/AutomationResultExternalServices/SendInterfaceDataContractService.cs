@@ -5,6 +5,7 @@ using Microsoft.Practices.Unity;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
+using Simplog.Data.ShipmentsModel.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -89,12 +90,13 @@ namespace Logitude.Server.Tools.EntityChanges.Service
             string shipmentNumber = GetPropertyValueFromObject("ShipmentNumber", entityPM);
             string transportModeId = GetPropertyValueFromObject("TransportModeId", entityPM);
             string directionId = GetPropertyValueFromObject("DirectionId", entityPM);
-            return GetShipmentLevelName(entityPM) + " " + transportModeId+ directionId +" "+ shipmentNumber;
+            return GetShipmentLevelName(entityPM).ToLower() + "_" + transportModeId.ToLower()+ directionId.ToLower() +"_"+ shipmentNumber.ToLower();
         }
         private string GetShipmentLevelName(object entityPM)
         {
-            string shipmentLevelName = GetPropertyValueFromObject("ShipmentLevelName", entityPM);
-
+            ShipmentLevelRepository shipmentLevelRepository = new ShipmentLevelRepository(tenant);
+            string shipmentLevelCode = GetPropertyValueFromObject("ShipmentLevelCode", entityPM);
+            string shipmentLevelName = shipmentLevelRepository.GetSingleShipmentLevelNameByCode(shipmentLevelCode);
             return (shipmentLevelName == "Consol" ? "Master" : shipmentLevelName);
         }
 

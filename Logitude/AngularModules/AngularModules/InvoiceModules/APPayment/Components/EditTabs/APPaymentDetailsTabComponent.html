@@ -134,7 +134,8 @@
                                                             [ObjectTableName]="ObjectTableName"
                                                             [DataContext]="DataContext"
                                                             [SelectedValue]="VendorId"
-                                                            [LookUpTableName]="'Card'"
+                                                            [LookUpTableName]="'Card'" 
+                                                            (SelectedItemChanged)="VendorChanged($event)"
                                                             [HideLastColumn]="true"
                                                             [DependencyFilter1Value]="'AC,CS,AG,AL,CG,SG,SL,TR,VD,WH'"
                                                             [DependencyFilter1IsList]="true">
@@ -587,8 +588,8 @@
                                                     <table>
                                                         <tr>
 
-                                                            <td style="width:50px;text-align:center">
-                                                                <a style="font-size:12px; color:green" (click)="ViewPaymentCheque()">{{EntityPM.ChequeOrPaymentRef}}</a>
+                                                            <td  style="width:50px;text-align:center">
+                                                                <a  *ngIf="IsFullAccounting" style="font-size:12px; color:green" (click)="ViewPaymentCheque()">{{EntityPM.ChequeOrPaymentRef}}</a>
                                                             </td>
 
                                                             <td><div></div></td>

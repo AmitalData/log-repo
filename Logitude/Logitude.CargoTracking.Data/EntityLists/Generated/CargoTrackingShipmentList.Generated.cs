@@ -144,6 +144,10 @@ namespace Logitude.CargoTracking.Data.EntityLists
        public DateTime? FutureMilstoneDate  { get; set; }
        [DataMember]
        public string FutureMilstoneName  { get; set; }
+       [DataMember]
+       public string ContainersNumbers  { get; set; }
+       [DataMember]
+       public int? PackagesQuantity  { get; set; }
    }
 
 }

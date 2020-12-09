@@ -259,11 +259,12 @@ namespace Logitude.UnitTest.Accounting.UniTests.BankAccountTests
                 CreatedByUserId = expectedLoggedUserId,
             };
 
-            var bankAccountValidateService = A.Fake<BankAccountValidateService>(option => option.CallsBaseMethods());
+            var bankAccountValidateService = A.Fake<BankAccountValidateService>(option => option.Implements<IBankAccountValidateService>().CallsBaseMethods());
             //A.CallTo(() => bankAccountValidateService.GetLoggedContact(entityPM.Tenant)).Returns(loggedcontact);
             A.CallTo(() => bankAccountValidateService.GetByGLAccount(entityPM.GLAccountId, entityPM.Tenant)).Returns(null);
             A.CallTo(() => bankAccountValidateService.GetUniqueAccount(entityPM.AccountNumber, entityPM.BranchNumber, entityPM.BankId, entityPM.Tenant)).Returns(null);
             A.CallTo(() => bankAccountValidateService.GetByDeferedGLAccount(entityPM.DeferredGLAccountId, entityPM.Tenant)).Returns(list);
+            A.CallTo(() => bankAccountValidateService.CheckBankAndGLAccountsCurrency(entityPM, false)).DoesNothing();
             bankAccountValidateService.Validate(entityPM);
             if (bankAccountValidateService.ErrorsList.Count > 0)
             {
@@ -1039,6 +1040,7 @@ namespace Logitude.UnitTest.Accounting.UniTests.BankAccountTests
             A.CallTo(() => bankAccountValidateService.GetUniqueAccount(entityPM.AccountNumber, entityPM.BranchNumber, entityPM.BankId, entityPM.Tenant)).Returns(null);
             A.CallTo(() => bankAccountValidateService.GetByDeferedGLAccount(entityPM.DeferredGLAccountId, entityPM.Tenant)).Returns(null);
             A.CallTo(() => bankAccountValidateService.GetLedgerTransactions(A<string>.Ignored, A<int>.Ignored)).Returns(transactions);
+            A.CallTo(() => bankAccountValidateService.CheckBankAndGLAccountsCurrency(entityPM, false)).DoesNothing();
             bankAccountValidateService.Validate(entityPM);
 
             A.CallTo(() => bankAccountValidateService.CheckBankAccountExists(entityPM)).MustHaveHappened();
@@ -1107,6 +1109,7 @@ namespace Logitude.UnitTest.Accounting.UniTests.BankAccountTests
             A.CallTo(() => bankAccountValidateService.GetByDeferedGLAccount(entityPM.DeferredGLAccountId, entityPM.Tenant)).Returns(null);
             A.CallTo(() => bankAccountValidateService.GetSingleBankAccount(entityPM.Id, entityPM.Tenant)).Returns(poco);
             A.CallTo(() => bankAccountValidateService.GetLedgerTransactions(A<string>.Ignored, A<int>.Ignored)).Returns(transactions);
+            A.CallTo(() => bankAccountValidateService.CheckBankAndGLAccountsCurrency(entityPM, false)).DoesNothing();
             bankAccountValidateService.Validate(entityPM);
 
             A.CallTo(() => bankAccountValidateService.CheckBankAccountExists(entityPM)).MustNotHaveHappened();

@@ -1,4 +1,2 @@
-Warning: Missing Index In DXML File CardSearch.dxml, The Found Index On DB Is IX_CardSearches_Tenant_InActive_Keyword_PartnerTypeId_Weight, The Index Should Added To The DXML File
 Warning: Missing Index In DXML File CardSearch.dxml, The Found Index On DB Is IX_CardSearches_Tenant_InActive_Keyword_PartnerTypeId, The Index Should Added To The DXML File
-Warning: Missing Index In DXML File Report.dxml, The Found Index On DB Is IX_FeatureId, The Index Should Added To The DXML File
-Warning: Missing Index In DXML File Vessel.dxml, The Found Index On DB Is IX_Vessels_AutomaticLastUpdateDate, The Index Should Added To The DXML File
+Warning: Missing Index In DXML File CardSearch.dxml, The Found Index On DB Is IX_CardSearches_Tenant_InActive_Keyword_PartnerTypeId_Weight, The Index Should Added To The DXML File

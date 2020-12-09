@@ -154,6 +154,7 @@ export class QuestionnaireAnswerPMService {
         if (!entityPM) {
             
             entityPM = new QuestionnaireAnswerPM();
+			entityPM.DisableMarkAsDirty = true;
         }
 
 		var customFields: Array<string> = [];
@@ -204,6 +205,8 @@ export class QuestionnaireAnswerPMService {
             entityPM.OldEntityPM = null;
         }
 		entityPM.IsDirty = false;
+	    entityPM.DisableMarkAsDirty = false;
+
         return entityPM;
     }
 
@@ -229,7 +232,8 @@ export class QuestionnaireAnswerPMService {
             {
                 newQuestionnaireAnswerLinePM = new QuestionnaireAnswerLinePM(null);
             }
-                
+ 			newQuestionnaireAnswerLinePM.DisableMarkAsDirty = true;
+               
             var pmKeysArray = Object.keys(jItem);
             for (var pmKey in pmKeysArray) {
                 if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
@@ -261,7 +265,7 @@ export class QuestionnaireAnswerPMService {
                 newQuestionnaireAnswerLinePM.OldEntityPM = null;
                 newQuestionnaireAnswerLinePM.EntityParentPM = null;
             }
-			
+			 newQuestionnaireAnswerLinePM.DisableMarkAsDirty = false;
 			 newQuestionnaireAnswerLinePM.IsDirty = false;
             entityPM.QuestionnaireAnswerLines.push(newQuestionnaireAnswerLinePM);
         }
@@ -275,6 +279,7 @@ export class QuestionnaireAnswerPMService {
                         //entityPM.QuestionnaireAnswerLines.push(oldQuestionnaireAnswerLines[itemKey]);
 						var oldItemJson = oldQuestionnaireAnswerLines[itemKey];
                         var deletedPM: QuestionnaireAnswerLinePM = new QuestionnaireAnswerLinePM(null);
+						deletedPM.DisableMarkAsDirty = true;
                         var pmKeys = Object.keys(oldItemJson);
                         for (var key in pmKeys) {
 
@@ -286,7 +291,7 @@ export class QuestionnaireAnswerPMService {
                             deletedPM[property] = oldItemJson[property];
                         }
 
-                      
+					    deletedPM.DisableMarkAsDirty = false;
                         deletedPM.IsDirty = false;
                         deletedPM.ChangeSetOp = "Delete";
                         

@@ -153,6 +153,7 @@ export class TicketClassificationPMService {
         if (!entityPM) {
             
             entityPM = new TicketClassificationPM();
+			entityPM.DisableMarkAsDirty = true;
         }
 
 		var customFields: Array<string> = [];
@@ -193,6 +194,8 @@ export class TicketClassificationPMService {
             entityPM.OldEntityPM = null;
         }
 		entityPM.IsDirty = false;
+	    entityPM.DisableMarkAsDirty = false;
+
         return entityPM;
     }
 

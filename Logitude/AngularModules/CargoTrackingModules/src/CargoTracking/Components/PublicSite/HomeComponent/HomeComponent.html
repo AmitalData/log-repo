@@ -7,7 +7,7 @@
                 <ul class="nav-mobile">
                     <li (click)="displayMenu = false" routerLink="/search">Home</li>
                     <li (click)="displayMenu = false" routerLink="/pageb">Page B</li>
-                    <li (click)="displayMenu = false" routerLink="/login" style="float: right;">Login</li>
+                    <li (click)="displayMenu = false" routerLink="/Cargo-Tracking/login" style="float: right;">Login</li>
                 </ul>
             </div>
         <div style="width: 40%; float: right;" (click)="displayMenu = false"></div>
@@ -20,7 +20,7 @@
             <img src="./assets/images/icons/left-arrow.png" (click)="back()" />
         </div>
         <!-- <div class="title">Cargo Tracking</div> -->
-        <img *ngIf="Logo"  style="width:76px;height:26px" [attr.src]="Logo" routerLink="/search" alt="" />
+        <img *ngIf="ComapnyLogo"  style="width:76px;height:26px" [attr.src]="ComapnyLogo" routerLink="/search" alt="" />
   
   
     </div>
@@ -29,14 +29,14 @@
     <div class="web-header-wrapper">
         <div class="web-header hide-mobile">
             <div class="logo">
-                <img *ngIf="Logo" style="border:0;outline:none" [attr.src]="Logo"  />
+                <img *ngIf="ComapnyLogo" style="border:0;outline:none" [attr.src]="ComapnyLogo"  />
             </div>
            
 
-            <div class="nav">
+            <div  class="nav">
                 <ul class="left-nav" [class.show]="displayMenu" style="margin-top: 11px;">
 
-                    <li  (click)="GoToPrivateSite()" style="float: right;">User Dashboard</li>
+                    <li  (click)="GoToPrivateSite()" style="float: right;">Cargo-Tracking</li>
 
                 </ul>
             </div>

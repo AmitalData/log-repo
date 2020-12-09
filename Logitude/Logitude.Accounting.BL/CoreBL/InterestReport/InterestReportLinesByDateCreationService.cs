@@ -20,6 +20,7 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
             int sequence = 1;
             decimal accumulatedAmount = interestReportLinesByDateCreationParams.InterestReportPM.OpenBalance != null ? interestReportLinesByDateCreationParams.InterestReportPM.OpenBalance.Value : 0;
             decimal OpenBalance = accumulatedAmount;
+            DateTime? recentCalculationDate = interestReportLinesByDateCreationParams.RecentCalculationDate;
             for (int i = 0; i < interestTransactionsGroupedByDates.Count; i++)
             {
                 InterestTransactionsGroupedByDate currentInterestTransactionGroupedByDate = interestTransactionsGroupedByDates[i];
@@ -28,8 +29,7 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
                 {
                     nextInterestTransactionGroupedByDate = interestTransactionsGroupedByDates[i + 1];
                 }
-                bool isLinehasRecent = CheckRecentCustomerReportForLine(interestReportLinesByDateCreationParams.InterestReportPM,
-                                                                        currentInterestTransactionGroupedByDate.GroupInterestValueDate);
+                bool isLinehasRecent = CheckRecentCustomerReportForLine(recentCalculationDate,currentInterestTransactionGroupedByDate.GroupInterestValueDate);
                 accumulatedAmount =  accumulatedAmount + currentInterestTransactionGroupedByDate.TotalLocalAmount;
                 decimal LineAccumulatedAmount = isLinehasRecent ? accumulatedAmount - OpenBalance: accumulatedAmount;
                 InterestReportLinesByDateMappingParams interestReportLinesByDateMappingParams = new InterestReportLinesByDateMappingParams(
@@ -47,11 +47,17 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
             }
             return interestReportLinesByDatePMs;
         }
-        // Mutaz
-        private bool CheckRecentCustomerReportForLine(InterestReportPM InterestReportPM, DateTime fromDate)
+   
+        private bool CheckRecentCustomerReportForLine(DateTime? RecentCalculationDate, DateTime fromDate)
         {
-            InterestReportQueryService ReportQueryService = new InterestReportQueryService(tenant);
-            bool hasRecent =  ReportQueryService.CheckRecentCustomerReports(fromDate, InterestReportPM);
+            bool hasRecent = false;
+            if (RecentCalculationDate!=null && RecentCalculationDate.Value.Date > fromDate)
+            {
+                hasRecent = true;
+                //InterestReportQueryService ReportQueryService = new InterestReportQueryService(tenant);
+                //hasRecent = ReportQueryService.CheckRecentCustomerReports(fromDate, InterestReportPM);
+            }
+          
             return hasRecent;
         }
 

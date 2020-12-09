@@ -180,6 +180,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
+    <Compile Include="Service References\VendorProxy\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
     <Compile Include="ThreadCpuCalculator.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
@@ -637,6 +642,34 @@
     <None Include="Service References\UserProxy\UserWcfService6.xsd">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Service References\VendorProxy\HypredTest.VendorProxy.GetVendorPMResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\VendorProxy\HypredTest.VendorProxy.VendorPM.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\VendorProxy\VendorWcfService.wsdl" />
+    <None Include="Service References\VendorProxy\VendorWcfService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\VendorProxy\VendorWcfService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\VendorProxy\VendorWcfService2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\VendorProxy\VendorWcfService3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\VendorProxy\VendorWcfService4.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\VendorProxy\VendorWcfService5.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\VendorProxy\VendorWcfService6.xsd">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config">
@@ -648,6 +681,13 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="HTMLPage1.html" />
+    <None Include="Service References\VendorProxy\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Service References\VendorProxy\configuration.svcinfo" />
+    <None Include="Service References\VendorProxy\configuration91.svcinfo" />
+    <None Include="Service References\VendorProxy\VendorWcfService.disco" />
     <None Include="Service References\PaymentTermProxy\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
@@ -778,6 +818,7 @@
     <WCFMetadataStorage Include="Service References\QuoteProxy\" />
     <WCFMetadataStorage Include="Service References\ShipmentProxy\" />
     <WCFMetadataStorage Include="Service References\UserProxy\" />
+    <WCFMetadataStorage Include="Service References\VendorProxy\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

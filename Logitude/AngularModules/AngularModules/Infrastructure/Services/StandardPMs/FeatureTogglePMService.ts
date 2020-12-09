@@ -156,6 +156,7 @@ export class FeatureTogglePMService {
         if (!entityPM) {
             
             entityPM = new FeatureTogglePM();
+			entityPM.DisableMarkAsDirty = true;
         }
 
 		var customFields: Array<string> = [];
@@ -196,6 +197,8 @@ export class FeatureTogglePMService {
             entityPM.OldEntityPM = null;
         }
 		entityPM.IsDirty = false;
+	    entityPM.DisableMarkAsDirty = false;
+
         return entityPM;
     }
 

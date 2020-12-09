@@ -124,26 +124,26 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
     }
     entityId: string;
     ViewPaymentCheque() {
-
-        this.PaymentChequePMService.GetPaymentChequeByPaymentIdAndChequeNumber(this.EntityPM.ChequeOrPaymentRef, this.EntityPM.Id).subscribe((myResult:ServiceResponse) => {
-            var myResponse: ServiceResponse = myResult;
-            if (myResponse != null) {
-
-                var res = myResponse.Result;
-                var entityId = res.Id;
-                SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
-                    .then(cmpRef => {
-                        cmpRef.instance.ComponentRef = cmpRef;
-                        cmpRef.instance.Run({ EntityId: entityId, ObjectTableName: "PaymentCheque", BackButtonLabel: "PaymentCheque" });
-                        cmpRef.instance.BackCompleted.subscribe(($event: any) => {
-                            this.BuildScreenData();
+        if(this.IsFullAccounting){
+            this.PaymentChequePMService.GetPaymentChequeByPaymentIdAndChequeNumber(this.EntityPM.ChequeOrPaymentRef, this.EntityPM.Id).subscribe((myResult:ServiceResponse) => {
+                var myResponse: ServiceResponse = myResult;
+                if (myResponse != null) {
+        
+                    var res = myResponse.Result;
+                    var entityId = res.Id;
+                    SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
+                        .then(cmpRef => {
+                            cmpRef.instance.ComponentRef = cmpRef;
+                            cmpRef.instance.Run({ EntityId: entityId, ObjectTableName: "PaymentCheque", BackButtonLabel: "PaymentCheque" });
+                            cmpRef.instance.BackCompleted.subscribe(($event: any) => {
+                                this.BuildScreenData();
+                            });
                         });
-                    });
-            }
-
-        });
-
-
+                }
+        
+            });
+        
+        }
     }
 
     private FullAccountingSetting: FullAccountingSettingPM = new FullAccountingSettingPM();
@@ -208,24 +208,38 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
         AppTool.KillEventEmitter(this.LoadCompletedEvent);
     }
 
+    vendor: CardList;
+    VendorChanged(vednor:CardList){
+        this.vendor = vednor;
+        this.LoadTaxPercentage();
+        
+    }
     private IsTaxUpdated = false;
     private LoadTaxPercentage() {
-        if (this.IsFullAccounting) {
-            this.GLAccountWithholdingService.GetDeductionPercentage(this.VendorId, this.EntityPM.RegisterDate).subscribe((myResult:any) => {
-                var myResponse: ServiceResponse = myResult;
-                if (!myResponse.HasError) {
-                    if (AppTool.IsNullOrEmpty(this.EntityPM.Id) || this.IsTaxUpdated) {
-                        this.IsNoVendorTax = myResponse.Result.IsDefault;
-                        this.TaxDeductionPercentage = myResponse.Result.Percentage;
+        if (this.IsFullAccounting) 
+        {
+            const nonIsraeliVendor = this.vendor ? this.vendor.CountryCode != "IL" : false;
+            if(nonIsraeliVendor) {
+                this.TaxDeductionPercentage = 0;
+            } else {
+
+                this.GLAccountWithholdingService.GetDeductionPercentage(this.VendorId, this.EntityPM.RegisterDate).subscribe((myResult:any) => {
+                    var myResponse: ServiceResponse = myResult;
+                    if (!myResponse.HasError) {
+                        if (AppTool.IsNullOrEmpty(this.EntityPM.Id) || this.IsTaxUpdated) {
+                            this.IsNoVendorTax = myResponse.Result.IsDefault;
+                            this.TaxDeductionPercentage = myResponse.Result.Percentage;
+                        }
+                        else {
+                            this.IsNoVendorTax = myResponse.Result.IsDefault;
+                        }
                     }
                     else {
-                        this.IsNoVendorTax = myResponse.Result.IsDefault;
+                        this.CurrentSession.CurrentEditComponent.ValidationErrorsList = myResponse.ErrorsArray;
                     }
-                }
-                else {
-                    this.CurrentSession.CurrentEditComponent.ValidationErrorsList = myResponse.ErrorsArray;
-                }
-            });
+                });
+            }
+
         }
     }
 
@@ -713,7 +727,7 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
                 this.GetCardProperties();
                 this.LoadData();
                 this.IsTaxUpdated = true;
-                this.LoadTaxPercentage();
+
             }
         }
     }
@@ -945,8 +959,12 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
     set TaxDeductionPercentage(value: number) {
         if (this.EntityPM != null) {
             if (this.EntityPM.TaxDeductionPercentage != value) {
-                this.EntityPM.TaxDeductionPercentage = value;
-                this.CalculateTaxDeductionLocalAmount();
+
+            const nonIsraeliVendor = this.vendor ? this.vendor.CountryCode != "IL" : false;
+            if(nonIsraeliVendor)
+                value = 0;
+            this.EntityPM.TaxDeductionPercentage = value;
+            this.CalculateTaxDeductionLocalAmount();
             }
         }
     }

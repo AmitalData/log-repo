@@ -39,7 +39,7 @@ ELSE if(@DataTypeCode = ''Boolean'')
 begin
 Set @MyValueOut = 0;
 if(@FieldValue is not null)
-begin SET @MyValueOut =  CAST(@FieldValue AS bit);   end
+begin SET @MyValueOut =  Try_CAST(@FieldValue AS bit);   end
 end
 
 
@@ -54,7 +54,7 @@ begin
 
  set @FieldValue = dbo.SplitString(@FieldValue,''.'', 1) 
 end
-SET @MyValueOut =  CAST(@FieldValue AS bigint); 
+SET @MyValueOut =  Try_CAST(@FieldValue AS bigint); 
 
 end
 
@@ -66,7 +66,7 @@ begin   set @FieldValue = REPLACE(@FieldValue, '' '', '''')
 end 
 
 if(len(@FieldValue)>=15)begin  set @FieldValue = STUFF(@FieldValue, len(@FieldValue)-2, 0, ''.'') end
-SET @MyValueOut = CAST(@FieldValue AS DECIMAL(38, 3));
+SET @MyValueOut = Try_CAST(@FieldValue AS DECIMAL(38, 3));
 end
 
 ELSE if(@DataTypeCode = ''Double'' or @DataTypeCode = ''SigDouble'') 

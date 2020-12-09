@@ -32,14 +32,14 @@
                     <div class="container-login-form-btn">
                         <div class="wrap-login-form-btn">
                             <div class="login-form-bgbtn"></div>
-                            <button (click)="LogInClicked()" class="login-form-btn">
+                            <button (click)="LogInClicked()" class="login-form-btn" [ngStyle]="SecondaryColor != null ? {'background': SecondaryColor} : {}">
                                 Log In
                             </button>
                         </div>
                     </div>
 
                     <div class="text-center" style="margin:20px;margin-bottom:10px;">
-                        <a class="txt1" (click)="ForgotPasswordClicked()" style="cursor: pointer;">
+                        <a class="txt1" [ngStyle]="MainColor != null ? {'color': MainColor} : {}" (click)="ForgotPasswordClicked()" style="cursor: pointer;">
                             Forgot Password?
                         </a>
                     </div>

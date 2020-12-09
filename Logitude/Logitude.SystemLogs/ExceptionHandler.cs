@@ -71,12 +71,13 @@ namespace Logitude.SystemLogs
 
                 //}
 
-                if (!string.IsNullOrEmpty(ExtraMessage))
-                {
+                //if (!string.IsNullOrEmpty(ExtraMessage))
+                //{
+                //    ErrorMessage = ExtraMessage + Environment.NewLine;
+                //}
+                //else
+                //{
                     ErrorMessage = ExtraMessage + Environment.NewLine;
-                }
-                else
-                {
                     ErrorMessage += exception.Message;
 
                     if (exception.InnerException != null)
@@ -98,7 +99,7 @@ namespace Logitude.SystemLogs
                         //    SqlConnection.ClearAllPools();
                         //}
                     }
-                }
+                //}
                 
 
                 if (clientDate == null)

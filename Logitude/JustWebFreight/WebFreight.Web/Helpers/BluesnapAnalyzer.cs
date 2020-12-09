@@ -23,6 +23,8 @@ namespace WebFreight.Web.Helpers
         private AnalyzeQueueRepository analyzeQueueRepository;
         CommunicationLogRepository myCommunicationLogRepository;
         int Tenant;
+        private DateTime? transactionDate;
+        private string analyzeQueueSubject;
 
         public BluesnapAnalyzer(AnalyzeQueue analyzeQueue, AnalyzeQueueRepository analyzeQueueRepository)
         {
@@ -74,23 +76,16 @@ namespace WebFreight.Web.Helpers
                     {
                         TenantManagement tenantManagement = tenantManagementRepository.GetSingleTenantManagementByBluesnapAccountId(queryParameters["accountId"]);
                         bluesnapExecutionService.Tenant = tenantManagement != null ? tenantManagement.Id : 0;
-                        string subject = myAnalyzeQueue.Subject == "Bluesnap Payment - Amital" ? "Amital" : "Logitude";
-
-                        if (queryParameters.ContainsKey("transactionDate"))
+                        bool isSaveToBluesnapTransaction = IsSaveToBluesnapTransaction(queryParameters);
+                        MapReuiredFieldsOfQueryParameters(queryParameters);
+                        if (isSaveToBluesnapTransaction)
                         {
-                            DateTime? transactionDate = null;
-                            if (!string.IsNullOrEmpty(queryParameters["transactionDate"]))
-                            {
-                                transactionDate = DateTime.Parse(queryParameters["transactionDate"]);
-                            }
-
-                            bluesnapExecutionService.SaveBluesnapTransaction(Stringdetails, subject, transactionDate);
+                            bluesnapExecutionService.SaveBluesnapTransaction(Stringdetails, analyzeQueueSubject, transactionDate);
                         }
                     }
                 }
                 this.AnalyzeData(myAnalyzeQueue.From);
             }
-
             catch (Exception ex)
             {
                 myAnalyzeQueue.Status = "F";
@@ -100,6 +95,41 @@ namespace WebFreight.Web.Helpers
                 analyzeQueueRepository.SubmitChanges();
                 return;
             }
+        }
+
+        private void MapReuiredFieldsOfQueryParameters(Dictionary<string, string> queryParameters)
+        {
+            if (queryParameters.ContainsKey("transactionDate"))
+            {
+                if (!string.IsNullOrEmpty(queryParameters["transactionDate"]))
+                {
+                    this.transactionDate = DateTime.Parse(queryParameters["transactionDate"]);
+                }
+            }
+            this.analyzeQueueSubject = myAnalyzeQueue.Subject == "Bluesnap Payment - Amital" ? "Amital" : "Logitude";
+        }
+
+        private bool IsSaveToBluesnapTransaction(Dictionary<string, string> queryParameters)
+        {
+            bool isSaveToBluesnapTransaction = true;
+            if (!queryParameters.ContainsKey("transactionDate"))
+            {
+                isSaveToBluesnapTransaction = false;
+            }
+
+            if (queryParameters.ContainsKey("transactionType"))
+            {
+                string transactionType = null;
+                if (!string.IsNullOrEmpty(queryParameters["transactionType"]))
+                {
+                    transactionType = (queryParameters["transactionType"]).ToString();
+                }
+                if (transactionType.Equals("CONTRACT_CHANGE"))
+                {
+                    isSaveToBluesnapTransaction = false;
+                }
+            }
+            return isSaveToBluesnapTransaction;
         }
 
         private void AnalyzeData(string from)
@@ -137,7 +167,7 @@ namespace WebFreight.Web.Helpers
             }
         }
 
-   
+
 
         private void OnCatchAnalyzingError(Exception ex)
         {

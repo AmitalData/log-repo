@@ -204,10 +204,11 @@ namespace Logitude.XSD.CW_API.ABM
 
             #region Measure
             List<ApplicationUnitsOfMeasure> measures = new List<ApplicationUnitsOfMeasure>();
+            var uomValue = this.Context.Shipment.NumberOfInsidePackages > 0 ? this.Context.Shipment.NumberOfInsidePackages.ToString() : this.Context.NumberOfPackages;
             measures.Add(new ApplicationUnitsOfMeasure()
             {
                 UOMCode = "DocumentPieces",
-                UOMValue = new UOMValue() { Value = this.Context.NumberOfPackages },
+                UOMValue = new UOMValue() { Value = uomValue },
             });
 
             measures.Add(new ApplicationUnitsOfMeasure()

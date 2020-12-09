@@ -331,7 +331,7 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
             HtmlListComponentUrl: './Accounting/Components/ListTemplates/GlAccountLedgerTransactionsListTemplate',
             IsCustomTemplate: true
         });
-        this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("LocalAmountCredit",'Text',TextCodeTranslator.Translate("LedgerTransaction.F.LocalAmountCredit")));
+        this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("CalculatedLocalAmount",'Text',TextCodeTranslator.Translate("LedgerTransaction.F.LocalAmountCredit")));
 
         this.columns.push({
             FieldName: 'CumulativeLocalAmount',
@@ -361,7 +361,7 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
                 HtmlListComponentUrl: './Accounting/Components/ListTemplates/GlAccountLedgerTransactionsListTemplate',
                 IsCustomTemplate: true
             });
-            this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("ForeignAmountCredit",'Text',TextCodeTranslator.Translate("LedgerTransaction.F.ForeignAmountCredit")));
+            this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("ForeignAmountCreditWithSign",'Text',TextCodeTranslator.Translate("LedgerTransaction.F.ForeignAmountCredit")));
 
 
             if (this.EntityPM.IsMultiCurrency != true) {
@@ -374,7 +374,7 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
                     HtmlListComponentUrl: './Accounting/Components/ListTemplates/GlAccountLedgerTransactionsListTemplate',
                     IsCustomTemplate: true
                 });
-                this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("CumulativeForeignAmount",'Text',TextCodeTranslator.Translate("LedgerTransaction.F.CumulativeForeignAmount")));
+                this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("CumulativeForeignAmountSign",'Text',TextCodeTranslator.Translate("LedgerTransaction.F.CumulativeForeignAmount")));
 
             }
         }

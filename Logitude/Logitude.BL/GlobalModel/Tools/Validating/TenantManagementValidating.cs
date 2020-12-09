@@ -61,6 +61,7 @@ namespace Logitude.BL.GlobalModel.Tools.Validating
 
         private static string TrimDomainByRegex(string domain)
         {
+            domain = domain.EndsWith("/") ? domain.Substring(0, domain.Length - 1) : domain;
             domain = Regex.Replace(domain, @"^(?:http(?:s)?://)?(?:www(?:[0-9]+)?\.)?", string.Empty, RegexOptions.IgnoreCase);
             return domain;
         }

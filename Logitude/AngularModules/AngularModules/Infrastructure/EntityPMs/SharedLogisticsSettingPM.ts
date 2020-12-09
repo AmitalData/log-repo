@@ -138,7 +138,10 @@ export class SharedLogisticsSettingPM {
     public OldEntityPM: SharedLogisticsSettingPM;
 		
     public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
+       if(!this.DisableMarkAsDirty)
+       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -146,6 +149,7 @@ export class SharedLogisticsSettingPM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "SharedLogisticsSetting");
            
         }
+       }
     }
 
     private MyClone: SharedLogisticsSettingPM;

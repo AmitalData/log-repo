@@ -575,8 +575,15 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                 List<PeriodMExtended> namedPeriods = MapExtended(reportList, periodMExtendeds, currencies);
                 //
 
+                var allAccountingDateBalance = GetBalance(myaccountsList.Select(r => r.Id).AsQueryable(), GLAccountTotalDateTypeValues.Accountingdate);
+                var allDueDateBalance = GetBalance(myaccountsList.Select(r => r.Id).AsQueryable(), GLAccountTotalDateTypeValues.DueDate);
+
+
                 namedPeriods =
-                    namedPeriods.Select(r =>
+                    ( from r in namedPeriods
+                    join a in allAccountingDateBalance on (r.AccountId /*, r.CurrencyId*/) equals (a.AccountId/*, a.CurrencyId*/) //into a
+                      join d in allDueDateBalance on (r.AccountId/*, r.CurrencyId*/) equals (d.AccountId/*,d.CurrencyId*/)
+                    select
                     new PeriodMExtended()
                     {
                         OrderDate = r.OrderDate,
@@ -616,6 +623,8 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                         GLAccountStandardInterestRate=r.GLAccountStandardInterestRate,
                         AccountTermLocalName = r.AccountTermLocalName,
                         CustomerVatNumber = r.CustomerVatNumber,
+                        BalanceInLocalAccountingDate =a.LocalAmountDebit-a.LocalAmountCredit,
+                        BalanceInLocalDueDate = d.LocalAmountDebit - d.LocalAmountCredit,
                         
                     }
                     ).ToList();
@@ -636,7 +645,64 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                 return xml;
             }
         }
+        private List<CurrencySum> GetBalance(IQueryable<string> listOfAccountId,string dateTypeCode)
+        {
+            if (listOfAccountId is null)
+            {
+                throw new ArgumentNullException(nameof(listOfAccountId));
+            }
 
+            if (string.IsNullOrWhiteSpace(dateTypeCode))
+            {
+                throw new ArgumentException("message", nameof(dateTypeCode));
+            }
+
+            int tenant = _Param.Tenant;
+            //DateTime endOfYearUserInput = _Param.AgingForDate.Date;
+            var endAccountBalanceService = new AccountBalanceByDateCodeService(_AccountingContext, tenant, listOfAccountId.First(),
+                 listOfAccountId
+                );
+
+            //var CalculateBalanceIsNotIncludeSo_endOfYearUserInputPlus1 = endOfYearUserInput.AddDays(1);
+            bool openBalancePlease_ReCalcYearTransfer = true;//yaron :irrlavant end of year
+
+            endAccountBalanceService.CalculateBalance(
+true,
+dateTypeCode /*GLAccountTotalDateTypeValues.Accountingdate*/,
+_Param.AgingForDate.Date, false, true, true);
+
+            
+            var totals = (from rec in endAccountBalanceService.AccountBalance.verbose.CurrencySumUntillMounth.Union(endAccountBalanceService.AccountBalance.verbose.TheMounthCurrencySum)
+                          group rec by new
+                          { rec.AccountId
+                          //, rec.CurrencyId
+                          }
+                          into gCurrency
+                          select new CurrencySum()
+                          {
+                              AccountId = gCurrency.Key.AccountId,
+                              //CurrencyId = gCurrency.Key.CurrencyId,
+                              LocalAmountCredit = gCurrency.Sum(rec => rec.LocalAmountCredit),
+                              LocalAmountDebit = gCurrency.Sum(rec => rec.LocalAmountDebit),
+                              ForeignAmountCredit = gCurrency.Sum(rec => rec.ForeignAmountCredit),
+                              ForeignAmountDebit = gCurrency.Sum(rec => rec.ForeignAmountDebit)
+                          }
+                    ).ToList();
+
+
+            //totals = (from rec in totals
+            //          where
+            //              (
+            //              (rec.LocalAmountDebit - rec.LocalAmountCredit) != 0
+            //              ||
+            //              (rec.ForeignAmountDebit - rec.ForeignAmountCredit) != 0
+            //              )
+            //          select rec)
+            //          .ToList();
+
+
+            return totals;
+        }
         private void RemoveDummies(ref List<PeriodM> reportList, List<GLAccountList> myaccountsList, Logitude.BL.CommonDataModel.EntityPMs.TenantPM tenant)
         {
             if (!this._Param.AggregateByGLAccountCurrencies)
@@ -1520,6 +1586,8 @@ Period	Acc	Currency	Total
         public decimal? BalanceInLocalCurrency { get;  set; }
         public decimal? LocalBalanceInDue { get;  set; }
         public string SplitAccountId { get;  set; }
+        public decimal BalanceInLocalAccountingDate { get; set; }
+        public decimal BalanceInLocalDueDate { get; set; }
     }
 
     public class AgingReportParam

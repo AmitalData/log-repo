@@ -21,5 +21,6 @@ namespace Logitude.DBMigrations.Models
         public const string EXCLUDEMODULES = "-excludemodules";
         public const string ALLOWDROP = "-allowdrop";
         public const string DEV = "-dev";
+        public const string SCRIPTS = "-scripts";
     }
 }
