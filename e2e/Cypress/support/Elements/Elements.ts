@@ -1,96 +1,98 @@
-declare namespace Cypress {
+import * as sr from '../../RabaiaTeam/General/Selector'
+import * as gr from '../../RabaiaTeam/General/Generator'
+
+declare global{
+namespace Cypress {
     interface Chainable {
         FillLogTextBox(selector: string, value: string, assertRequired: boolean): Chainable<Element>
-        FillLogLov(selector: string, value: string, assertRequired: boolean): Chainable<Element>
+        FillLogLov(selector: string, value: string, assertRequired: boolean, fromCache: boolean): Chainable<Element>
         FillRandomString(selector: string, length: number, upperCase: boolean, assertRequired: boolean): Chainable<Element>
         FillRandomNumber(selector: string, minimum: number, maximum: number, assertRequired: boolean): Chainable<Element>
         Click(selector: string, contains: string): Chainable<Element>
         SaveClick(selector: string, contains: string, Url: string, resultFile: string): Chainable<Element>
         ClickCheckBox(selector: string): Chainable<Element>
         ClickRadio(selector: string): Chainable<Element>
-        SelectLogLovFirstElement(selector: string): Chainable<Element>
+        SelectLogLovFirstElement(selector: string, fromCache: boolean): Chainable<Element>
         ValidateElementColor(selector: string, expectedcolor: string): Chainable<Element>
-        ValidateValue(selector: string, value: string): Chainable<Element>
-        SelectSearchBoxFirstElement(selector: string, value: string): Chainable<Element>
+        ValidateInputValue(selector: string, value: string): Chainable<Element>
+        SelectQuickSearchFirstElement(selector: string, value: string): Chainable<Element>
     }
+}
 }
 
 Cypress.Commands.add("FillLogTextBox", (selector, value, assertRequired) => {
 
     if (assertRequired) {
-        cy.get(selector).clear().type(value).should("have.value", value)
+        sr.SelectElement(selector).focus().clear().type(value).should("have.value", value)
     } else {
-        cy.get(selector).clear().type(value)
+        sr.SelectElement(selector).focus().clear().type(value)
     }
 
 })
 
-Cypress.Commands.add("FillLogLov", (selector, value, assertRequired) => {
+Cypress.Commands.add("FillLogLov", (selector, value, assertRequired, fromCache) => {
 
+    if(!fromCache){
+        cy.intercept("**/GetByCompactFilters?**").as("LOVDataLoaded")
+    }
     if (assertRequired) {
-        cy.get(selector).clear().type(value).should("have.value", value)
+        sr.SelectElement(selector).focus().clear().type(value).should("have.value", value)
     } else {
-        cy.get(selector).clear().type(value)
+        sr.SelectElement(selector).focus().clear().type(value)
     }
- 
-    cy.get(".DropDownListItem").find("div[title='" + value + "']").click()
+    if(!fromCache){
+        cy.wait("@LOVDataLoaded")
+    }
+    cy.get(".DropDownListItem").children().eq(0).click()
 
 })
 
-Cypress.Commands.add("ValidateValue", (selector, value) => {
+Cypress.Commands.add("ValidateInputValue", (selector, value) => {
 
-    cy.get(selector).should("have.value", value)
+    sr.SelectElement(selector).should("have.value", value)
 
 })
 
-Cypress.Commands.add("SelectLogLovFirstElement", (selector) => {
+Cypress.Commands.add("SelectLogLovFirstElement", (selector, fromCache) => {
 
-    //cy.intercept("**/GetByCompactFilters?**").as("LOVDataLoaded")
-    cy.get(selector).type("{downarrow}")
-    //cy.wait("@LOVDataLoaded")
-    //GetByCompactFilters
+    if(!fromCache){
+        cy.intercept("**/GetByCompactFilters?**").as("LOVDataLoaded")
+    }
+    sr.SelectElement(selector).focus().clear().type("{downarrow}")
+    if(!fromCache){
+        cy.wait("@LOVDataLoaded")
+    }
     cy.get(".DropDownListItem").children().eq(0).click()
 
 })
 
 Cypress.Commands.add("FillRandomString", (selector, length, upperCase, assertRequired) => {
 
-    let randomString = ""
-    let possible = "abcdefghijklmnopqrstuvwxyz"
-
-    for (let i = 0; i < length; i++)
-        randomString += possible.charAt(Math.floor(Math.random() * possible.length))
-
-    if (upperCase) {
-        randomString = randomString.toUpperCase()
-    }
+    let randomString = gr.GenerateRandomString(length, upperCase)
 
     if (assertRequired) {
-        cy.get(selector).clear().type(randomString).should("have.value", randomString)
+        sr.SelectElement(selector).focus().clear().type(randomString).should("have.value", randomString)
     } else {
-        cy.get(selector).clear().type(randomString)
+        sr.SelectElement(selector).focus().clear().type(randomString)
     }
 
 })
 
 Cypress.Commands.add("FillRandomNumber", (selector, minimum, maximum, assertRequired) => {
 
-    minimum = Math.ceil(minimum)
-    maximum = Math.floor(maximum)
-
-    let randomNumber = (Math.floor(Math.random() * (maximum - minimum + 1) + minimum)).toString()
+    let randomNumber = gr.GenerateRandomNumber(minimum, maximum).toString()
 
     if (assertRequired) {
-        cy.get(selector).clear().type(randomNumber).should("have.value", randomNumber)
+        sr.SelectElement(selector).focus().clear().type(randomNumber).should("have.value", randomNumber)
     } else {
-        cy.get(selector).clear().type(randomNumber)
+        sr.SelectElement(selector).focus().clear().type(randomNumber)
     }
 
 })
 
 Cypress.Commands.add("Click", (selector, contains) => {
 
-    let element = cy.get(selector)
+    let element = sr.SelectElement(selector)
 
     if (contains !== null) {
         element = element.contains(contains, {matchCase: false})
@@ -108,7 +110,7 @@ Cypress.Commands.add("SaveClick", (selector, contains, url, resultFile) => {
         url: url
     }).as("WaitRequest")
 
-    let element = cy.get(selector)
+    let element = sr.SelectElement(selector)
 
     if (contains !== null) {
         element = element.contains(contains, {matchCase: false})
@@ -127,26 +129,29 @@ Cypress.Commands.add("SaveClick", (selector, contains, url, resultFile) => {
 
 Cypress.Commands.add("ClickCheckBox", (selector) => {
 
-    cy.get(selector).next("label").click()
+    sr.SelectElement(selector).next("label").click()
 
 })
 
 Cypress.Commands.add("ClickRadio", (selector) => {
-     cy.get(selector).next("label").click()
+
+    sr.SelectElement(selector).next("label").click()
 
 })
 
 Cypress.Commands.add("ValidateElementColor", (selector, expectedcolor) => {
 
-    cy.get(selector).should("have.css", "color").and("equal", expectedcolor)
+    sr.SelectElement(selector).should("have.css", "color").and("equal", expectedcolor)
 
 })
 
-Cypress.Commands.add("SelectSearchBoxFirstElement", (selector, value) => {
+Cypress.Commands.add("SelectQuickSearchFirstElement", (selector, value) => {
 
-    cy.get(selector).parents("searchbox").eq(0).find(".SearchBox")
+    cy.intercept("**/GetQuickSearch?**").as("QuickSearchDataLoaded")
+    sr.SelectElement(selector).parents("searchbox").eq(0).find(".SearchBox")
     .within(() => {
-        cy.get(selector).type(value).then(() => {
+        sr.SelectElement(selector).focus().clear().type(value).then(() => {
+            cy.wait("@QuickSearchDataLoaded")
             cy.get("ul > li").eq(0).click({ force: true })
         })
     })
