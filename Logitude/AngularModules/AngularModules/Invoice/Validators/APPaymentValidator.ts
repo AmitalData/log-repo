@@ -27,16 +27,7 @@ export class APPaymentValidator {
 
             if (entityPm.PaymentMethodCode != null) {
                 if (entityPm.PaymentMethodCode.toUpperCase() == "FS") {
-
                     isAllowed = true;
-
-                    //if (entityPm.PaymentInvoices.length == 0) {
-                    //    validationResults.push("You should have 1 Invoice line at least");
-                    //}
-
-                    //else {
-                    //    isAllowed = true;
-                    //}
                 }
             }
 
@@ -50,13 +41,6 @@ export class APPaymentValidator {
                 validationResults.push(msg.replace("%FieldName", "Cheque Ref"));
             }
         }
-        //else {
-        //    if (entityPm.PaymentMethodCode == "CH" && !entityPm.AutomaticPaymentCheque) {
-        //        if (AppTool.IsNullOrEmpty(entityPm.ChequeOrPaymentRef)) {
-        //            validationResults.push(msg.replace("%FieldName", "Cheque Ref"));
-        //        }
-        //    }
-        //}
 
         if ((entityPm.PaymentMethodCode == "CH" || entityPm.PaymentMethodCode == "BT" || entityPm.PaymentMethodCode == "CC") && entityPm.ValueDate == null) {
             validationResults.push(msg.replace("%FieldName", "Value Date"));
@@ -87,7 +71,9 @@ export class APPaymentValidator {
         }
 
         if (isNoPaidAmount == true) {
-            validationResults.push("Can't connect lines with zero Amount to Pay");
+            if (entityPm.PaymentMethodCode.toUpperCase() != "FS") {
+                validationResults.push("Can't connect lines with zero Amount to Pay");
+            }
         }
 
         if (isNegativeAmountEnabled == false) {

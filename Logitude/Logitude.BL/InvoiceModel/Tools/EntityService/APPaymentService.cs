@@ -957,10 +957,15 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                             invoice.AmountDue = invoiceAmountDue;
                             invoice.AmountDueInLocalCurrency = MethodHelper.Round((invoice.AmountDue * invoice.InvoiceCurrencyExchangeRate), 2);
                             invoice.AmountDueInProfitCurrency = MethodHelper.Round((invoice.AmountDueInLocalCurrency / invoice.ProfitCurrencyExchangeRate), 2);
+                            
                             if (invoiceAmountDue == 0)
                             {
-                                invoice.IsClosed = true;
-                                invoice.StatusCode = "PD";
+                                // it is allowed to have invoice with 0 amount and 0 amount due
+                                if (allConnectedItems.Count > 0)
+                                {
+                                    invoice.IsClosed = true;
+                                    invoice.StatusCode = "PD";
+                                }
                             }
 
                             else if (invoiceAmountDue > 0 && invoiceAmountDue < invoiceAmount)
