@@ -410,13 +410,20 @@ tenant);
 
 
                         string valuestring1 = filter.FieldValue != null ? filter.FieldValue.ToString() : null;
-                        object value1 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring1);
 
-                        if(value1 == "#today")
+                        object value1;
+                        if (valuestring1 == "#today")
                         {
                             var today = TenantServerConfigration.GetCurrentDateTime(tenant);
                             value1 = new DateTime(today.Year, today.Month, today.Day, 0, 0, 0, 0);
                         }
+                        else
+                        {
+                            value1 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring1);
+
+                        }
+
+
 
                         string valuestring2 = filter.FieldValue2 != null ? filter.FieldValue2.ToString() : null;
                         object value2 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring2);
