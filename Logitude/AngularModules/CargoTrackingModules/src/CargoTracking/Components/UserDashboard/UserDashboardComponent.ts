@@ -115,7 +115,7 @@ export class UserDashboardComponent implements AfterViewInit
 
     private getcargoTrackingData(baseUrl:string)
     {   
-        this.cargoTrackingDataExtendedService.GetCargoTrackingBrandingDataForPrivateSite(ServiceHelper.GetCurrentDomain(ServiceHelper.GetCurrentDomain(baseUrl))).subscribe((response: ServiceResponse) =>
+        this.cargoTrackingDataExtendedService.GetCargoTrackingBrandingDataForPrivateSite(ServiceHelper.GetCurrentDomain(baseUrl)).subscribe((response: ServiceResponse) =>
         { if(response.Result){
             CargoTrackingBrandingData.Tenant = response.Result.Tenant;
             CargoTrackingBrandingData.MainColor = response.Result.MainColor != null ? ServiceHelper.ConvertHexaToRGBA(response.Result.MainColor) :"#000000";

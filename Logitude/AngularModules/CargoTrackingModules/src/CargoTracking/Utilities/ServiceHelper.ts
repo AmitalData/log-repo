@@ -19,10 +19,9 @@ export  class ServiceHelper{
     }
 
     public static GetCurrentDomain(baseUrl:string){
-
-        if(baseUrl.includes('/CargoTracking')){
-            baseUrl = baseUrl.replace("/CargoTracking","");
-        }
+        // if(baseUrl.includes('/CargoTracking')){
+        //     baseUrl = baseUrl.replace("/CargoTracking","");
+        // }
         return baseUrl 
     }
      
