@@ -301,7 +301,7 @@ namespace Logitude.Customs.Data.EntityMapping
 
             this.Property(t => t.FOBValueDollar).HasColumnName("FOBValueDollar").HasPrecision(16, 2);
 
-            this.Property(t => t.PalestinianCode).HasColumnName("PalestinianCode").HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.PalestinianCode).HasColumnName("PalestinianCode").HasMaxLength(15).IsUnicode(true);
         }
     }
 }

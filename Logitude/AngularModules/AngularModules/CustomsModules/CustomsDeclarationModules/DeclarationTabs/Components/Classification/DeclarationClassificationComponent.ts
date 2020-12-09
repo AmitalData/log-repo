@@ -275,10 +275,10 @@ export class DeclarationClassificationComponent extends BaseComponent implements
 
     public DrawMe: boolean = true;
 
-    public get PalestinianCode() { return this.EntityPM.PalestinianCodeId; }
+    public get PalestinianCode() { return this.EntityPM.PalestinianCode; }
     public set PalestinianCode(newValue: string) {
-        if (this.EntityPM.PalestinianCodeId != newValue) {
-            this.EntityPM.PalestinianCodeId = newValue;
+        if (this.EntityPM.PalestinianCode != newValue) {
+            this.EntityPM.PalestinianCode = newValue;
         }
     }
 
