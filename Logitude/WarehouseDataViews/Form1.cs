@@ -56,8 +56,10 @@ namespace WarehouseDataViews
                     string password = row["Password"].ToString();
                     string server = row["Server"].ToString();
                     string privateUserName = row["PrivateUserName"].ToString();
+                    bool isParentTenant =bool.Parse( row["IsParentTenant"].ToString());
+
                     string destinationConnectionString = BuildConnectionString(catalog, userName, password, server);
-                    privateDataWarehouseViewService.GeneratePrivateViews(new PrivateViewArgs() { ConnectionString = destinationConnectionString, UserName = privateUserName, Tenant = tenant, Catalog = catalog, ApplyGrantOnViews = (!string.IsNullOrEmpty(privateUserName)?true:false) });
+                    privateDataWarehouseViewService.GeneratePrivateViews(new PrivateViewArgs() { ConnectionString = destinationConnectionString, UserName = privateUserName, Tenant = tenant, Catalog = catalog, ApplyGrantOnViews = (!string.IsNullOrEmpty(privateUserName)?true:false) , IsParentTenant = isParentTenant });
                     
                 }
                 SetResultLable(true);
