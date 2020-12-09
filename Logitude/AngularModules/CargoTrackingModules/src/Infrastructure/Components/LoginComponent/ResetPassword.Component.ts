@@ -1,5 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { AuthService } from 'src/app/auth.service';
 import { CargoTrackingBrandingData } from 'src/CargoTracking/DataContracts/CargoTrackingBrandingData';
 import { ServiceResponse } from 'src/CargoTracking/DataContracts/ServiceResponse';
 import { CargoTrackingBrandingDataExtendedService } from 'src/CargoTracking/Services/Others/CargoTrackingBrandingDataExtendedService';
@@ -30,11 +31,13 @@ export class ResetPasswordComponent implements OnInit {
     constructor(private router: Router,
         private route: ActivatedRoute,
         private loginExtendedService: LoginExtendedService,
+        private authService: AuthService,
         private commonDataExtendedService: CommonDataExtendedService,
         private cargoTrackingBrandingDataExtendedService: CargoTrackingBrandingDataExtendedService,
         private loginServiceHelper: LoginServiceHelper,
         @Inject('BASE_URL') baseUrl: string) {
-        this.GetcargoTrackingData(baseUrl);
+            this.CustomerURL = baseUrl;
+            this.GetcargoTrackingData(baseUrl);
     }
 
     private GetcargoTrackingData(baseUrl:string) {
@@ -42,7 +45,6 @@ export class ResetPasswordComponent implements OnInit {
         this.cargoTrackingBrandingDataExtendedService.GetCargoTrackingBrandingDataForPrivateSite(ServiceHelper.GetCurrentDomain(baseUrl)).subscribe((response: ServiceResponse) => { 
             if(response.Result){
                 this.Tenant = response.Result.Tenant;
-                this.CustomerURL = response.Result.CustomerURL;
                 ServiceHelper.SetCargoTrackingDate(response.Result,baseUrl);
                 this.LogoImgSrc = this.loginServiceHelper.GetLoginLogoImg();
                 this.MainColor = response.Result.MainColor != null ? ServiceHelper.ConvertHexaToRGBA(response.Result.MainColor) : null;
@@ -102,7 +104,7 @@ export class ResetPasswordComponent implements OnInit {
                 CaptchaCode: this.CaptchaCode,
                 CaptchaKey: this.CaptchaKey,
                 PageName: "changepassword",
-                Domain: this.CustomerURL + "/Cargo-Tracking",
+                Domain: this.CustomerURL + this.authService.DefaultPageCargoTracking,
                 BrandingTenant: this.Tenant ? this.Tenant.toString() : "",
             }
 
