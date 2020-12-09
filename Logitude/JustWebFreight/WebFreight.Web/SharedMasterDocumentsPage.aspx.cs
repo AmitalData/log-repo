@@ -1,9 +1,12 @@
-﻿using Logitude.BL.ShipmentsModel.EntityPMs;
+﻿using Logitude.BL.GlobalModel.EntityPMs;
+using Logitude.BL.GlobalModel.EntityQueries;
+using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.BL.ShipmentsModel.EntityQueries;
 using Simplog.Data.ShipmentsModel;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Web;
 
 namespace WebFreight.Web
@@ -13,14 +16,19 @@ namespace WebFreight.Web
         public string CurrentEntityId;
         public int? Tenant = null;
         public List<Shipment> ConnectedHousesShipments = new List<Shipment>();
+        public string Domain = "";
+        public string MainColor = "#000000";
+        public string SecondaryColor = "#000000";
         protected void Page_Load(object sender, EventArgs e)
         {
             string userdata = Request.QueryString["securitykey"];
-
+            
             if (userdata == null)
                 CheckIfUserAuthenticated();
-            else
-                InitPage(userdata);
+            else {
+                this.Domain = Request?.Url?.Host;
+                InitPage(userdata); 
+            }
         }
 
         private static void CheckIfUserAuthenticated()
@@ -43,6 +51,7 @@ namespace WebFreight.Web
         private void HandlePage(string[] linkParameters)
         {
             SetCurrentEntityVariables(linkParameters);
+            SetCargoTrackingBrandingData();
             SetAllConnectedHousesShipments();
         }
 
@@ -55,6 +64,17 @@ namespace WebFreight.Web
             }
         }
 
+        private void SetCargoTrackingBrandingData()
+        {
+            TenantManagementQuery tenantManagementQuery = new TenantManagementQuery((int)Tenant);
+            TenantManagementPM tenantManagementPM = tenantManagementQuery.GetSinglePMByDomain(this.Domain);
+            if (tenantManagementPM != null)
+            {
+                this.MainColor = tenantManagementPM.MainColor == null ? this.MainColor : ConvertHexaToRGBA(tenantManagementPM.MainColor);
+                this.SecondaryColor = tenantManagementPM.SecondaryColor == null ? this.SecondaryColor : ConvertHexaToRGBA(tenantManagementPM.SecondaryColor);
+            }
+        }
+
         private void SetAllConnectedHousesShipments()
         {
             if (Tenant != null)
@@ -64,6 +84,22 @@ namespace WebFreight.Web
                 List<Shipment> connectedHousesShipments = shipmentConsoleShipmentQuery.GetMasterConnectedHouseShipments(CurrentEntityId, (int)Tenant);
                 if (connectedHousesShipments != null) ConnectedHousesShipments = connectedHousesShipments;
             }
+        }
+
+        private string ConvertHexaToRGBA(string hexString)
+        {
+            //replace # occurences
+            if (hexString.IndexOf('#') != -1)
+                hexString = hexString.Replace("#", "");
+
+            int r, g, b = 0;
+            double a = 0.0;
+            a = int.Parse(hexString.Substring(0, 2), System.Globalization.NumberStyles.AllowHexSpecifier) / 255.0;
+            r = int.Parse(hexString.Substring(2, 2), System.Globalization.NumberStyles.AllowHexSpecifier);
+            g = int.Parse(hexString.Substring(4, 2), System.Globalization.NumberStyles.AllowHexSpecifier);
+            b = int.Parse(hexString.Substring(6, 2), System.Globalization.NumberStyles.AllowHexSpecifier);
+
+            return "rgba(" + r + "," + g + "," + b + "," + a + ")";
         }
     }
 }

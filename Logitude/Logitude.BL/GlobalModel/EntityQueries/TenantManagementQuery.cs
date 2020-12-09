@@ -36,13 +36,14 @@ namespace Logitude.BL.GlobalModel.EntityQueries
 
             domain = TrimDomainByRegex(domain);
             TenantManagementPM TenantManagement = (from a in repository.context.TenantManagements
-                                                   where  a.CustomerURL == domain && a.Id !=0 && a.GlobalTenant.IsActive
+                                                   where a.EnableBranding && a.CustomerURL == domain && a.Id !=0 && a.GlobalTenant.IsActive
                                                    select new TenantManagementPM()
                                                    {
                                                        Id = a.Id,
                                                        MainColor = a.MainColor, 
                                                        SecondaryColor = a.SecondaryColor, 
                                                        BackgroundId = a.BackgroundId,
+                                                       CustomerURL = a.CustomerURL,
 
                                                    }).FirstOrDefault();
 
