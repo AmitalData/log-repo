@@ -55,8 +55,8 @@ export  class ServiceHelper{
     }
     private static SetBackGroundImg(BrandingData:any,baseUrl:string)
     {
-        if(BrandingData.BackgroundURL){
-            CargoTrackingBrandingData.BackgroundURL = "url("+ ServiceHelper.GetAppURL(baseUrl)+BrandingData.BackgroundURL+")";
+        if(BrandingData.BackgroundImg){
+            CargoTrackingBrandingData.BackgroundURL = "url("+BrandingData.BackgroundImg+")";
         }
         else{
             CargoTrackingBrandingData.BackgroundURL ="url('"+baseUrl+"assets/images/misc/map-bg.svg')"
@@ -65,15 +65,15 @@ export  class ServiceHelper{
 
     private static SetComapnyLogo(BrandingData:any,baseUrl:string)
     {
-        if(BrandingData.ComapnylogoURL){
-            CargoTrackingBrandingData.ComapnylogoURL =   ServiceHelper.GetAppURL(baseUrl)+BrandingData.ComapnylogoURL;
+        if(BrandingData.ComapnylogoImg){
+            CargoTrackingBrandingData.ComapnylogoURL =  BrandingData.ComapnylogoImg;
         }
     }
 
     private static SetBrowserIcon(BrandingData:any,baseUrl:string)
     {
-        if(BrandingData.BrowserIconURL){
-            CargoTrackingBrandingData.BrowserIconURL =   ServiceHelper.GetAppURL(baseUrl)+BrandingData.BrowserIconURL ;
+        if(BrandingData.BrowserIconImg){
+            CargoTrackingBrandingData.BrowserIconURL =BrandingData.BrowserIconImg ;
             ServiceHelper.favIcon.href =CargoTrackingBrandingData.BrowserIconURL;
         }
     }
