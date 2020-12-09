@@ -21,6 +21,7 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
     {
 
 	    
+	[XmlAttribute]
     public string Id { get; set; }
     
     public ChargesType ChargesType { get; set; }
