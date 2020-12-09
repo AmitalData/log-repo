@@ -1,16 +1,15 @@
-import {Component} from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import {AppTool} from '../../../Infrastructure/Tools';
 import {EntityArgs} from '../../../Infrastructure/DataContracts/EntityArgs';
 import {ARInvoicePM} from '../../EntityPMs/ARInvoicePM';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 import {ObjectsLocator} from '../../../Infrastructure/Locators/ObjectsLocator';
 
-@Component({
-    
+@Component({    
     templateUrl: "./ARInvoiceShortTitleComponent.html",
 })
 
-export class ARInvoiceShortTitleComponent {
+export class ARInvoiceShortTitleComponent implements OnDestroy {
     public EntityPM: ARInvoicePM;
     public DisplaySATSettings: boolean = false;
     public isRTL: boolean = false;
@@ -18,9 +17,12 @@ export class ARInvoiceShortTitleComponent {
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(public entityArgs: EntityArgs) {
         this.EntityPM = this.entityArgs.EntityPM;
+
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
         this.showLocal = !SessionLocator.LoggedUserPM.DontShowLocal;
+
         this.BuildComponent();
+
         this.Listen();
 
         if (SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF33") {
@@ -28,18 +30,26 @@ export class ARInvoiceShortTitleComponent {
         }
     }
 
+    private SaveCompletedEvent: any = null;
+    private LoadCompletedEvent: any = null;
+    ngOnDestroy() {
+        AppTool.KillEventEmitter(this.SaveCompletedEvent);
+        AppTool.KillEventEmitter(this.LoadCompletedEvent);
+    }
+
     private Listen() {
-        if (this.entityArgs.EditComponent != null) {
-            this.entityArgs.EditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
+        if (this.entityArgs.EditComponent) {
+
+            this.SaveCompletedEvent = this.entityArgs.EditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                 if (isSaveSuccess) {
-                    this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
+                    this.EntityPM = this.entityArgs.EditComponent.EntityPM;
                     this.BuildComponent();
                 }
             });
 
-            this.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
+            this.LoadCompletedEvent = this.entityArgs.EditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
                 if (isLoadSuccess) {
-                    this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
+                    this.EntityPM = this.entityArgs.EditComponent.EntityPM;
                     this.BuildComponent();
                 }
             });
