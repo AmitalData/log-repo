@@ -221,6 +221,7 @@ export class PublicShipmentDetailsComponent implements OnInit
          var Containers:string[] = [];
          if(result.ShipmentList && result.ShipmentList.ContainersNumbers){
             Containers = result.ShipmentList.ContainersNumbers.split(',');
+            Containers = Containers.filter(S=>S!=null&&S!="");
             this.ShipmentQuantity = Containers.length;
             this.ShipmentContainers = Containers;
 
