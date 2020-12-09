@@ -1282,7 +1282,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
 
 
                             AmendCancellRequestInitiatorQueryService amendCancellRequestInitiatorQueryService = new AmendCancellRequestInitiatorQueryService(tenant);
-                            AmendCancellRequestInitiatorPM amendCancellRequestInitiatorPM = amendCancellRequestInitiatorQueryService.GetSingle(amendment.AmendmentRequestInitiatorType, false, true);
+                            AmendCancellRequestInitiatorPM amendCancellRequestInitiatorPM = amendCancellRequestInitiatorQueryService.GetSingle(field.AmendmentRequestInitiatorType, false, true);
                             if (amendCancellRequestInitiatorPM != null)
                             {
                                 amendment.AmendmentRequestInitiatorType = amendCancellRequestInitiatorPM.LocalName;
