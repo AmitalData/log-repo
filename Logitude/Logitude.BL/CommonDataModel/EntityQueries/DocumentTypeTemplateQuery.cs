@@ -83,6 +83,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                                             CC = a.CC,
                                                                             BCC = a.BCC,
                                                                             DefultAttachmentsXML = a.DefultAttachmentsXML,
+                                                                            To = a.To,
 
                                                                         }).ToList();
 
@@ -132,6 +133,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                                         TemplateTechnologyCode = a.TemplateTechnologyCode,
                                                                         CC = a.CC,
                                                                         BCC = a.BCC,
+                                                                        To = a.To,
 
                                                                     }).ToList();
 
@@ -165,6 +167,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                               TemplateTechnologyCode = entity.TemplateTechnologyCode,
                                                               CC = entity.CC,
                                                               BCC = entity.BCC,
+                                                              To = entity.To,
 
                                                           };
             return result;
@@ -255,6 +258,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                         TemplateTechnologyCode = a.TemplateTechnologyCode,
                         CC = a.CC,
                         BCC = a.BCC,
+                        To = a.To,
                     }).FirstOrDefault();
 
 
@@ -312,6 +316,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                                       CC = a.CC,
                                                                       BCC = a.BCC,
                                                                       DefultAttachmentsXML = a.DefultAttachmentsXML,
+                                                                      To = a.To,
                                                                   }).ToList();
 
             foreach (DocumentTypeTemplatePM item in documentTypeTemplates.Where(d => d.TemplateType == "M").ToList())
@@ -378,6 +383,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                         CC = a.CC,
                         BCC = a.BCC,
                         DefultAttachmentsXML = a.DefultAttachmentsXML,
+                        To = a.To,
 
                     }).FirstOrDefault();
 
@@ -521,6 +527,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                                TemplateTechnologyCode = a.TemplateTechnologyCode,
                                                                CC = a.CC,
                                                                BCC = a.BCC,
+                                                               To = a.To,
 
                                                            });
 
@@ -605,6 +612,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                                                       TemplateTechnologyCode = a.TemplateTechnologyCode,
                                                                                       CC = a.CC,
                                                                                       BCC = a.BCC,
+                                                                                      To = a.To,
 
                                                                                   });
                 if (withFilter)
@@ -721,7 +729,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                        IsCopiedAtSignup = a.IsCopiedAtSignup,
                        IsEnabledForCustomers = a.IsEnabledForCustomers,
                        CountryCode = a.CountryCode,
-                 
 
                    };
         }
@@ -764,7 +771,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                        IsCopiedAtSignup = a.IsCopiedAtSignup,
                        IsEnabledForCustomers = a.IsEnabledForCustomers,
                        CountryCode = a.CountryCode,
-               
 
 
                    };

@@ -424,7 +424,7 @@ namespace WebFreight.Web.Helpers
 
         private static string ResolveDocumentFileNameFromMainObjectTable(DocumentFileNameParameter documentFileNameParameter, HtmlEditorHelper htmlEditorHelper)
         {
-            HtmlResolveArgs htmlResolveArgs = new HtmlResolveArgs();
+            HtmlEditorResolveArgs htmlResolveArgs = new HtmlEditorResolveArgs();
 
             string id = documentFileNameParameter.EntityId;
             if (!string.IsNullOrEmpty(documentFileNameParameter.ChildEntityId))
@@ -442,7 +442,7 @@ namespace WebFreight.Web.Helpers
 
         private static string GetDocumentFileNameFromDataFieldsByObjectTableName(DocumentFileNameFromObjectTableParameter documentFileNameFromObjectTableParameter)
         {
-            HtmlResolveArgs htmlResolveArgs = new HtmlResolveArgs();
+            HtmlEditorResolveArgs htmlResolveArgs = new HtmlEditorResolveArgs();
 
             htmlResolveArgs.EntityId = documentFileNameFromObjectTableParameter.EntityId;
             htmlResolveArgs.ObjectTableId = "";
@@ -1979,7 +1979,7 @@ xmlns:soap=""http://www.w3.org/2003/05/soap-envelope"">
                     {
                         string id = entityId;
                         if (!string.IsNullOrEmpty(childEntityId)) id = childEntityId;
-                        HtmlResolveArgs htmlResolveArgs = new HtmlResolveArgs
+                        HtmlEditorResolveArgs htmlResolveArgs = new HtmlEditorResolveArgs
                         {
                             EntityId = id,
                             ObjectTableId = documentType.ObjectTableId,

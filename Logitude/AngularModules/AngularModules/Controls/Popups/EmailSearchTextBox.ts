@@ -133,6 +133,7 @@ export class EmailSearchTextBox implements OnInit, AfterViewInit {
                     }
                 }
             }
+            else this.SelectedItems = [];
         }
     }
     ngAfterViewInit() {

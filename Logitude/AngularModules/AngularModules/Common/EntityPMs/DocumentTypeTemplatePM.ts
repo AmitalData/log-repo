@@ -220,6 +220,10 @@ export class DocumentTypeTemplatePM {
     public set BCC(newValue: string) { if (this.bCC != newValue) { this.bCC = newValue; this.MarkAsDirty("BCC"); } }
 
 
+    private to: string;
+    public get To() { return this.to; }
+    public set To(newValue: string) { if (this.to != newValue) { this.to = newValue; this.MarkAsDirty("To"); } }
+
 
 
 
@@ -272,4 +276,4 @@ export class DocumentTypeTemplatePM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}
