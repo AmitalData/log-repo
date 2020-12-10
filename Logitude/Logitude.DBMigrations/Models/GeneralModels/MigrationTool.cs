@@ -1371,6 +1371,11 @@ namespace Logitude.DBMigrations.Models
                 }
             }
 
+            if(ToolConfigurations.DatabaseType.ToLower() == "oracle")
+            {
+                scriptDefinitions = scriptDefinitions.Where(s => !s.AOT).ToList();
+            }
+
             return scriptDefinitions;
         }
 
@@ -2034,7 +2039,7 @@ namespace Logitude.DBMigrations.Models
                 ExitTool("Error: Cannot Find SystemLogsConnectionString in Configuration File");
             }
 
-            if (databaseType.ToLower() == "oracle" && ToolArguments.IsArgumentProvided(Arguments.ZERODOWNTIME))
+            if (databaseType.ToLower() == "oracle" && (ToolArguments.IsArgumentProvided(Arguments.ZERODOWNTIME) || ToolArguments.IsArgumentProvided(Arguments.DEV)))
             {
                 ExitTool("Error: Zero Down Time Mode For Oracle Not Ready To Use");
             }
