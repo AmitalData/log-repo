@@ -26,11 +26,30 @@ namespace WebFreight.Web
             if (userdata == null)
                 CheckIfUserAuthenticated();
             else {
-                this.Domain = Request?.Url?.Host;
+                string absoluteUri = Request?.Url?.AbsoluteUri;
+                SetSystemDomain(absoluteUri);
                 InitPage(userdata); 
             }
         }
 
+        private void SetSystemDomain(string absoluteUri)
+        {
+            string link = absoluteUri.ToLower();
+            link = SplitString(link, "/sharedmasterdocumentspage", 0);
+            link = SplitString(link, "https://", 1);
+            link = SplitString(link, "http://", 1);
+            link = SplitString(link, ":", 0);
+
+            this.Domain = link;
+        }
+
+        private string SplitString(string allString, string splitString, int index)
+        {
+            string myString = allString;
+            if (myString.IndexOf(splitString) != -1)
+                myString = myString.Split(new string[] { splitString }, StringSplitOptions.None)[index];
+            return myString;
+        }
         private static void CheckIfUserAuthenticated()
         {
             if (!HttpContext.Current.Request.IsAuthenticated)
@@ -94,12 +113,13 @@ namespace WebFreight.Web
 
             int r, g, b = 0;
             double a = 0.0;
-            a = int.Parse(hexString.Substring(0, 2), System.Globalization.NumberStyles.AllowHexSpecifier) / 255.0;
-            r = int.Parse(hexString.Substring(2, 2), System.Globalization.NumberStyles.AllowHexSpecifier);
-            g = int.Parse(hexString.Substring(4, 2), System.Globalization.NumberStyles.AllowHexSpecifier);
-            b = int.Parse(hexString.Substring(6, 2), System.Globalization.NumberStyles.AllowHexSpecifier);
+            if (hexString.Length > 7)
+                a = int.Parse(hexString.Substring(0, 2), System.Globalization.NumberStyles.AllowHexSpecifier) / 255.0;
+            r = hexString.Length > 5 ? int.Parse(hexString.Substring(hexString.Length-6, 2), System.Globalization.NumberStyles.AllowHexSpecifier) : 0;
+            g = hexString.Length > 3 ? int.Parse(hexString.Substring(hexString.Length-4, 2), System.Globalization.NumberStyles.AllowHexSpecifier) : 0;
+            b = hexString.Length > 1 ? int.Parse(hexString.Substring(hexString.Length-2, 2), System.Globalization.NumberStyles.AllowHexSpecifier) : 0;
 
-            return "rgba(" + r + "," + g + "," + b + "," + a + ")";
+            return "rgb" + (a > 0 ? "a" : "") + "(" + r + "," + g + "," + b + (a > 0 ? "," + a : "")  + ")";
         }
     }
 }
