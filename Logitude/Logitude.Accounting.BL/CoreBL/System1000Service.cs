@@ -85,8 +85,17 @@ namespace Logitude.Accounting.BL.CoreBL
                 int count = 0;
                 foreach (var obj in listOfAccountsMax1000)
                 {
+                    string deductionFileNumber = "";
+                    if (!String.IsNullOrWhiteSpace(obj.ConsolidationVat))
+                    {
+                        deductionFileNumber = obj.ConsolidationVat;
+                    }
+                    else
+                    {
+                        obj.ConsolidationVat = obj.VatNumber;
+                    }
                     string line = "B" + obj.DisplayNumber.Replace(" ", "").PadLeft(15, '0').Substring(0, 15)
-                        + obj.DeductionFileNumber.Replace(" ", "").PadLeft(9, '0').Substring(0, 9)
+                        + deductionFileNumber.Replace(" ", "").PadLeft(9, '0').Substring(0, 9)
                         + obj.VatNumber.Replace(" ", "").PadLeft(9, '0').Substring(0, 9);
                     flatFile.AppendLine(line);
                     count++;
