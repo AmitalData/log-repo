@@ -114,7 +114,7 @@ MainInterfaceCode ="5002"
                                  ""entityIdKey3"" :""""  }",
 
 
-                    MainInterfaceCode="8227",
+                    MainInterfaceCode="8228",
                 },
                 new SincroTestCaseDetail()
                 {

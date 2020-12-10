@@ -48,11 +48,11 @@ namespace Logitude.CustomsMessaging.FakeMessagingServices
 
             response.VerificationDecision = new VAL_NG_8228_MSG550_RequiredDocumentVerificationDecisionMessageVerificationDecision();
 
-          if(  data.rejectVerificationReason != null)
-            {
-                response.VerificationDecision.rejectVerificationReason = data.rejectVerificationReason;
-                response.VerificationDecision.rejectVerificationReasonSpecified = true;
-            }
+          //if(  data.rejectVerificationReason != null)
+          //  {
+          //      response.VerificationDecision.rejectVerificationReason = data.rejectVerificationReason;
+          //      response.VerificationDecision.rejectVerificationReasonSpecified = true;
+          //  }
 
             response.VerificationDecision.rejectVerificationRemark = data.rejectVerificationRemark;
             response.VerificationDecision.verificationDecisionType = data.verificationDecisionType;
