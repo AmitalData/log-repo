@@ -178,6 +178,8 @@ public partial class LogitudeCustomsFile
 
     private string truckerIdField;
 
+    private string distributionAreaField;
+
     /// <remarks/>
     public string CustomFileNo
     {
@@ -994,6 +996,19 @@ public partial class LogitudeCustomsFile
         set
         {
             this.truckerIdField = value;
+        }
+    }
+
+    /// <remarks/>
+    public string DistributionArea
+    {
+        get
+        {
+            return this.distributionAreaField;
+        }
+        set
+        {
+            this.distributionAreaField = value;
         }
     }
 }
