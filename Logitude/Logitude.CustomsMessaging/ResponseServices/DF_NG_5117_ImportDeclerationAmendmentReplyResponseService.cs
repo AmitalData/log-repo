@@ -215,7 +215,20 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                         {
                                             PaymentOrderPM paymentOrder = paymentOrderQueryService.GetSingle(paymentOrderId, false, false);
 
-                                            paymentOrder.FirstEntityID =  _MyDeclarationPM.Id;
+                                        if(   paymentOrder.PaymentOrderConnectionTables!= null && paymentOrder.PaymentOrderConnectionTables.Count>0)
+                                            {
+                                                foreach (var item in paymentOrder.PaymentOrderConnectionTables)
+                                                {
+                                                    if(item.ConnectedEntityId == _MyDeclarationPMOrg.Id && item.ConnectedEntityCode=="D" )
+                                                    {
+                                                        item.ChangeSetOp = ChangeSetOperation.Update;
+                                                        item.ConnectedEntityId = _MyDeclarationPM.Id;
+                                                    }
+                                             
+                                                }
+                                          
+                                            }
+                                          //  paymentOrder.FirstEntityID =  _MyDeclarationPM.Id;
                                             paymentOrder.ChangeSetOp = ChangeSetOperation.Update;
                                             PaymentOrderUpdateService pOUpdateservice = new PaymentOrderUpdateService(context, new Dictionary<string, IContext>(), requestParams.Tenant);
                                             pOUpdateservice.Update(paymentOrder, true);
