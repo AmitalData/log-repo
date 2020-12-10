@@ -1,9 +1,6 @@
  
 import { LoginComp } from "../../login/Login.po";
 import { LogHelper } from '../../Helpers/LogHelper';
-import { APILoginHelper } from '../../login/APIHelperMethode/APILoginHelper.po';
-import { APICustomerHelper } from './API/APIHelperMethode/APICustomerHelper';
-import { APIImportDeclarationHelper } from './API/APIHelperMethode/APIImportDeclarationHelper.spec';
 import {NewAPIImportDeclaration} from './API/NewAPIImportDeclaration.spec';
 export class SupplierInvoice {
     public login: LoginComp = new LoginComp();
