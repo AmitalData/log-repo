@@ -211,9 +211,8 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
 
                    ConsigneeName = poco.ConsigneeName,
 
-                   
-                    
-
+                   ContainersNumbers= poco.ContainersNumbers,
+                   PackagesQuantity = poco.PackagesQuantity
                 };
             if(list != null)
             {

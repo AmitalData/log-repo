@@ -210,7 +210,21 @@ namespace WebFreight.Web.Controllers.QuoteModel.Generated.PMControllers
 
                     if (objectTable != null)
                     {
-                        bodyHtmlString = htmlEditorHelper.ResolveHtmlData("", objectTable.Id, userId, tenant, bodyHtmlString, ref subject, ref from, ref replyTo,ref cc,ref bcc, quoteTemplateBuildArges.QuotePM);
+                        HtmlEditorResolveArgs htmlEditorResolveArgs = new HtmlEditorResolveArgs()
+                        {
+                            Subject = subject,
+                            From = from,
+                            ReplyTo = replyTo,
+                            Cc = cc,
+                            Bcc = bcc,
+                            UserId = userId,
+                            ObjectTableId = objectTable.Id,
+                            Tenant = tenant,
+                            HtmlString = bodyHtmlString,
+
+                        };
+                        var htmlEditorResolveResult = htmlEditorHelper.ResolveHtmlData(htmlEditorResolveArgs, quoteTemplateBuildArges.QuotePM);
+                        bodyHtmlString = htmlEditorResolveResult.HtmlString;
                     }
 
                 }

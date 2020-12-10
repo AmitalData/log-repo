@@ -117,7 +117,6 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Bluesnap
             IQueryable<TenantManagement> iQueryable_Tenantmanagements = (from a in globalObjectContext.TenantManagements.Include("GlobalTenant")
                                                                          where a.GlobalTenant.IsActive && a.IsRecurring == true && a.RecurringPeriodCode == "MO" && a.PaymentChannelCode == "PL"
                                                                          select a);
-            //IQueryable<TenantManagement> iQueryable_Tenantmanagements = globalObjectContext.TenantManagements.Where(a => a.IsRecurring == true && a.RecurringPeriodCode == "MO" && a.PaymentChannelCode == "PL");
             iQueryable_BluesnapTransactions = globalObjectContext.BluesnapTransactions;
             iQueryable_BluesnapTransactions = iQueryable_BluesnapTransactions.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.TransactionDate) >= System.Data.Entity.DbFunctions.TruncateTime(fromDate) && System.Data.Entity.DbFunctions.TruncateTime(d.TransactionDate) <= System.Data.Entity.DbFunctions.TruncateTime(toDate));
 
@@ -143,7 +142,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Bluesnap
 
         }
 
-       
+
 
         private void BuildReportData()
         {
@@ -159,10 +158,10 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Bluesnap
             foreach (var item in otherTenantTransactions_List)
             {
                 bool isAddingTenant = true;
-                if(item.ParentTenantId != null)
+                if (item.ParentTenantId != null)
                 {
                     var parentTenant = (from a in iQueryable_JoinTenantBluesnapTransaction where a.Tenant == item.ParentTenantId select a).FirstOrDefault();
-                    if(parentTenant != null)
+                    if (parentTenant != null)
                     {
                         if (parentTenant.NoPaymentForChildTenants)
                         {
@@ -237,7 +236,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Bluesnap
                             {
                                 ShopperId = shopperId,
                                 DocumentId = transaction.DocumentId,
-                                Tenant = transaction.Tenant, 
+                                Tenant = transaction.Tenant,
                                 TransactionDate = transaction.TransactionDate,
                             });
                         }
@@ -273,6 +272,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Bluesnap
             List<string> Contracts = new List<string>();
             foreach (var transaction in transactions)
             {
+                double invoiceAmountUSD = 0;
                 var queryParameters = DeserializeDocumentBody(transaction.DocumentId, transaction.Tenant);
                 if (queryParameters != null && queryParameters.Count > 0)
                 {
@@ -283,11 +283,10 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Bluesnap
 
                     if (queryParameters.ContainsKey("invoiceAmountUSD"))
                     {
-                        if(queryParameters["invoiceAmountUSD"] != null)
+                        if (queryParameters["invoiceAmountUSD"] != null)
                         {
-                            double result = 0;
-                            Double.TryParse(queryParameters["invoiceAmountUSD"], out result);
-                            totalPayments += result;
+                            Double.TryParse(queryParameters["invoiceAmountUSD"], out invoiceAmountUSD);
+                            totalPayments += invoiceAmountUSD;
                         }
                     }
 
@@ -297,7 +296,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Bluesnap
                         {
                             double result = 0;
                             Double.TryParse(queryParameters["taxAmountUSD"], out result);
-                            totalPayments -= result;
+                            totalPayments = invoiceAmountUSD < 0 ? totalPayments + result : totalPayments - result;
                         }
                     }
                 }
