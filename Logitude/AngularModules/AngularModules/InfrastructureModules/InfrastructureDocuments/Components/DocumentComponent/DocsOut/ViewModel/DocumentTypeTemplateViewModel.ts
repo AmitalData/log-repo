@@ -1,4 +1,4 @@
-﻿import {EntityArgs} from '../../../../../../Infrastructure/DataContracts/EntityArgs';
+import {EntityArgs} from '../../../../../../Infrastructure/DataContracts/EntityArgs';
 import {DocumentTypeTemplateList} from '../../../../../../Common/EntityLists/DocumentTypeTemplateList';
 
 
@@ -19,7 +19,7 @@ export class DocumentTypeTemplateViewModel {
     TemplateSubject: string = "";
     TemplateCc: string = "";
     TemplateBcc: string = "";
-
+    To: string = "";
     
     public Id: string;
     public  Tenant: number;
@@ -146,7 +146,8 @@ export class DocumentTypeTemplateViewModel {
 
 				this.From = documentTypeTemplate.From;
 			    this.ReplyTo = documentTypeTemplate.ReplyTo;
-				this.CC = documentTypeTemplate.CC;
+        this.CC = documentTypeTemplate.CC;
+        this.To = documentTypeTemplate.To;
 
                 if (documentTypeTemplate.InActive) {
                     this.LableSetactive = "Mark as active";

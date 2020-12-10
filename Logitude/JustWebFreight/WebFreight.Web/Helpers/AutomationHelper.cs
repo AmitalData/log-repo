@@ -45,13 +45,8 @@ namespace WebFreight.Web.Helpers
           
             var automatedBackup = LogitudeXmlSerializer.DeserializeObject<AutomatedBackup>(automation.AutomationXML);
             bool allActiveUsers = automatedBackup.IsAutomationResultEmailAllActiveUsers;
-            string subject = string.Empty ;
-            string from = string.Empty;
-            string replyTo = string.Empty;
-            string cc = string.Empty;
-            string bcc = string.Empty;
             string userId = string.Empty;
-            string htmlTemplateBody = string.Empty;
+            var htmlEditorResolveResult = new HtmlEditorResolveResult();
 
             //  #region Send Email Prosess
 
@@ -65,17 +60,32 @@ namespace WebFreight.Web.Helpers
                     DocumentTypeTemplate template = documentTypeTemplateRepository.GetSingleDocumentTypeTemplateWithOutInClude(automation.TemplateId, automation.Tenant);
                     if (template != null)
                     {
-                        subject = template.Subject;
-                        from = template.From;
-                        replyTo = template.ReplyTo;
-                        cc = template.CC;
-                        bcc = template.BCC;
+                 
                         userId = template.LastUpdatedByUserId;
                         if (!string.IsNullOrEmpty(automationSendEmailArgs.CreateByUserId)) userId = automationSendEmailArgs.CreateByUserId;
                         try
                         {
-                            htmlTemplateBody = htmlEditorHelper.GetEditorHtmlData("", automationSendEmailArgs.EntityId, automationSendEmailArgs.ObjectTableId, "", "", automationSendEmailArgs.Tenant, userId, true, template.Id, ref subject, ref from, ref replyTo, ref cc, ref bcc, "", template);
-                            if (!string.IsNullOrEmpty(htmlTemplateBody)) htmlTemplateBody = htmlEditorHelper.GetLogoHtmlString(htmlTemplateBody);
+                            HtmlEditorResolveArgs htmlEditorResolveArgs = new HtmlEditorResolveArgs()
+                            {
+                                Subject = template.Subject,
+                                From = template.From,
+                                ReplyTo = template.ReplyTo,
+                                Cc = template.CC,
+                                Bcc = template.BCC,
+                                UserId = userId,
+                                EntityId  = automationSendEmailArgs.EntityId,
+                                ObjectTableId = automationSendEmailArgs.ObjectTableId,
+                                DocumentTemplateId = template.Id,
+                                Tenant = automationSendEmailArgs.Tenant,
+                                IsSendMail = true,
+                                DocumentTypeTemplate = template,
+                            };
+
+
+
+
+                            htmlEditorResolveResult = htmlEditorHelper.GetEditorHtmlData(htmlEditorResolveArgs);
+                            if (!string.IsNullOrEmpty(htmlEditorResolveResult.HtmlString)) htmlEditorResolveResult.HtmlString = htmlEditorHelper.GetLogoHtmlString(htmlEditorResolveResult.HtmlString);
                         }
                         catch (Exception ex)
                         {
@@ -180,8 +190,8 @@ namespace WebFreight.Web.Helpers
 
                     if (!string.IsNullOrEmpty(Emails))
                     {
-                        var emailBodyData = GetEmailBodyData(htmlTemplateBody);
-                        string communicationLog = AddAutomationToQueue(automation, automationSendEmailArgs, emailBodyData, Emails, from, replyTo, cc, bcc, subject, automationSendEmailArgs.ExternalAttachmentDocumentId, objectTableName);
+                        var emailBodyData = GetEmailBodyData(htmlEditorResolveResult.HtmlString);
+                        string communicationLog = AddAutomationToQueue(automation, automationSendEmailArgs, emailBodyData, Emails, htmlEditorResolveResult.From, htmlEditorResolveResult.ReplyTo, htmlEditorResolveResult.Cc, htmlEditorResolveResult.Bcc, htmlEditorResolveResult.Subject, automationSendEmailArgs.ExternalAttachmentDocumentId, objectTableName);
                         comunicationLogId = communicationLog;
                     }
 

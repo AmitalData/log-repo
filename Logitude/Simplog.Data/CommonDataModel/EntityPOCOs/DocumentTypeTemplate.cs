@@ -46,6 +46,10 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public string ReplyTo { get; set; }
         public string CC { get; set; }
         public string BCC { get; set; }
+        public string To { get; set; }
+
+
+
 
         public string DefultAttachmentsXML { get; set; }
         //public bool IsDuplex { get; set; }

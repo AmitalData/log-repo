@@ -2143,8 +2143,8 @@ namespace WebFreight.Web.MetaDataUpdate
                                        CC  = a.CC,
                                        From = a.From,
                                        ReplyTo = a.ReplyTo,
-                                       
-                                       
+                                       To =  a.To,
+
 
                                     };
                                     if (isDefault)
