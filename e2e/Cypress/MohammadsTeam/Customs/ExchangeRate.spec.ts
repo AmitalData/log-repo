@@ -12,7 +12,7 @@ describe('Exchange Rate Queried', () => {
 
         LogHelper.ClickListItem('GeneralMHCustoms');
         cy.get('#RequestSheet_8347').click(); // 8347 - customs request interface code
-        LogHelper.TypeInput('date_Customs.Declaration_FromDate','-9999');
+        LogHelper.TypeInput('date_Customs.Declaration_FromDate','-999');
         LogHelper.TypeInput('date_Customs.Declaration_ToDate','.');
         LogHelper.LOVSearchAndSelectFirst("Customs.Declaration_CurrencyTypeCode", 'USD'); 
         LogHelper.ClickButton('CustomSendOptionsComponent_3');
