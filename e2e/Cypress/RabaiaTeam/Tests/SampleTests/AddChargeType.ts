@@ -1,5 +1,3 @@
-/// <reference types="cypress" />
-
 describe("Add New Charge Type", () => {
 
     
@@ -18,8 +16,8 @@ describe("Add New Charge Type", () => {
 
         cy.FillRandomString("#ChargesType_Code", 4, true, true)
         cy.FillLogTextBox("#ChargesType_EnglishName", "RabaiaTest", true)
-        cy.SelectLogLovFirstElement("#ChargesType_ChargesGroupId")
-        cy.SelectLogLovFirstElement("#ChargesType_MeasurementId")
+        cy.SelectLogLovFirstElement("#ChargesType_ChargesGroupId", true)
+        cy.SelectLogLovFirstElement("#ChargesType_MeasurementId", true)
 
         cy.Click("button", "Next")
         cy.Click("button", "Next")

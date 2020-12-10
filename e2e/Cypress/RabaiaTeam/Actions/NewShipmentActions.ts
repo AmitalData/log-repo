@@ -12,17 +12,17 @@ export function FillShipmentDefaultFields(directionCode: string, transportModCod
     }
 
     if(directionCode === "D" && transportModCode === "I"){
-        cy.SelectLogLovFirstElement("#Shipment_ShipperId", false)
-        cy.SelectLogLovFirstElement("#Shipment_ConsigneeId", false)
+        cy.SelectLogLovRandomElement("#Shipment_ShipperId", false, 5)
+        cy.SelectLogLovRandomElement("#Shipment_ConsigneeId", false, 5)
     }else{
         if(directionCode === "I"){
-            cy.SelectLogLovFirstElement("#Shipment_ConsigneeId", false)
+            cy.SelectLogLovRandomElement("#Shipment_ConsigneeId", false, 5)
         }else{
-            cy.SelectLogLovFirstElement("#Shipment_ShipperId", false)
+            cy.SelectLogLovRandomElement("#Shipment_ShipperId", false, 5)
         }
 
-        cy.SelectLogLovFirstElement("#Shipment_MainCarriageFromPortId", false)
-        cy.SelectLogLovFirstElement("#Shipment_MainCarriageToPortId", false)
+        cy.SelectLogLovRandomElement("#Shipment_MainCarriageFromPortId", false, 5)
+        cy.SelectLogLovRandomElement("#Shipment_MainCarriageToPortId", false, 5)
     }
 }
 

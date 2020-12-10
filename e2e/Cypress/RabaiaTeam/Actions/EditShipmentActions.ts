@@ -9,7 +9,7 @@ export function OpenShipment(dataFile: string){
 export function FillGeneralTab(){
     cy.Click("#ShipmentTHGeneral", null)
     cy.FillRandomNumber("#Shipment_GrossWeightInKG", 100, 1000, false)
-    cy.SelectLogLovFirstElement("#Shipment_MoveTypeId", true)
+    cy.SelectLogLovRandomElement("#Shipment_MoveTypeId", true, 5)
 }
 
 export function FillOrdersTab(shipmentTypeCode?:string){
@@ -44,12 +44,12 @@ export function FillPartnersTab(directionCode:string, transportModeCode:string){
 
 
 function AddPackagesOrContainers(shipmentTypeCode:string){
-    let numberOfPackages = gr.GenerateRandomNumber(1, 5)
+    let numberOfPackages = gr.GenerateRandomNumber(1, 3)
     for (let i = 0; i < numberOfPackages; i++){
         cy.Click("#Orders-AddPackage", null)
         cy.FillRandomNumber("#ShipmentOrderPackage_Quantity", 1, 10, true)
         if (shipmentTypeCode === "FCLD" || shipmentTypeCode === "FTL" || shipmentTypeCode === "LCLD" || shipmentTypeCode === "LTL"){
-            cy.SelectLogLovFirstElement("#ShipmentOrderPackage_PackageTypeId", true)
+            cy.SelectLogLovRandomElement("#ShipmentOrderPackage_PackageTypeId", true, 5)
             cy.FillRandomNumber("#ShipmentOrderPackage_GrossWeight", 1, 50, true)
         }
         cy.Click("#OrderOKbtn", null)
@@ -59,6 +59,7 @@ function AddPackagesOrContainers(shipmentTypeCode:string){
 function AddPartner(partnerTypeId: string, partnerFieldId: string) {
     cy.Click("label", "Add Partners")
     cy.Click(("#" + partnerTypeId), null)
-    cy.SelectLogLovFirstElement(("#" + partnerFieldId), false)
+    let partnerFieldSelector = "addeditpartnercomponent input[id^='" + partnerFieldId + "']"
+    cy.SelectLogLovRandomElement(partnerFieldSelector, false, 10)
     cy.Click("#PartnerOKbtn", null)
 }
