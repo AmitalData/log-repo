@@ -144,6 +144,7 @@ namespace Simplog.Data.CommonDataModel.Mapping
                 this.Property(t => t.AllowAgentInCustomersLOV).HasColumnName("AllowAgentInShipCustomersLOV");
                 this.Property(t => t.IsCorrespondenceRightToLeftEnabled).HasColumnName("IsCorrespondenceRTLEnabled");
                 this.Property(t => t.ExportQuotationsToIntegratedSystem).HasColumnName("ExportQuotationsToIntegrated");
+                this.Property(t => t.TransferQuotationsToUnifreightTrigger).HasColumnName("TransferQuotationsToUNFTrigger");
             }
             //#else
 
@@ -157,6 +158,7 @@ namespace Simplog.Data.CommonDataModel.Mapping
                 this.Property(t => t.AllowAgentInCustomersLOV).HasColumnName("AllowAgentInCustomersLOV");
                 this.Property(t => t.IsCorrespondenceRightToLeftEnabled).HasColumnName("IsCorrespondenceRightToLeftEnabled");
                 this.Property(t => t.ExportQuotationsToIntegratedSystem).HasColumnName("ExportQuotationsToIntegratedSystem");
+                this.Property(t => t.TransferQuotationsToUnifreightTrigger).HasColumnName("TransferQuotationsToUnifreightTrigger");
             }
 
             //#endif
@@ -199,7 +201,7 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.RegulatedAgentRegimeActivated).HasColumnName("RegulatedAgentRegimeActivated");
             this.Property(t => t.TenantEmailSendingQuota).HasColumnName("TenantEmailSendingQuota");
             this.Property(t => t.VatUniquePartnerTypeCode).HasColumnName("VatUniquePartnerTypeCode");
-            this.Property(t => t.TransferQuotationsToUnifreightTrigger).HasColumnName("TransferQuotationsToUnifreightTrigger");
+            
             this.Property(t => t.SharedLogisMasterMessageLink).HasColumnName("SharedLogisMasterMessageLink");
 
             this.HasRequired(t => t.LogBoxTenantSetting).WithRequiredPrincipal(d => d.Tenant);
