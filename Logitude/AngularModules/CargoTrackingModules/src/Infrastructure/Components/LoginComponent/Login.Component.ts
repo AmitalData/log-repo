@@ -56,7 +56,7 @@ export class LoginComponent implements OnInit {
                 this.SecondaryColor = response.Result.SecondaryColor != null ? ServiceHelper.ConvertHexaToRGBA(response.Result.SecondaryColor) : null;
             }
             else{
-                this.loginServiceHelper.GoToError401();
+                this.GoToError401();
             }
         });
     }
@@ -144,10 +144,14 @@ export class LoginComponent implements OnInit {
         else this.errorMessage = "Login failed! invalid user name or password.";
     }
 
+     private GoToError401(){
+        this.router.navigate(['Error401']);
+    }
+
     private LoginSucceeded(LoginParams: any, userData: any) {
         let tenantList = userData.CompanyLogins;
         let LogInToTenant  = tenantList.filter(tenan => tenan.Tenant == this.Tenant)[0];
-        if(!LogInToTenant) this.loginServiceHelper.GoToError401();
+        if(!LogInToTenant) this.GoToError401();
 
         SessionInfo.LoggedUserCompanyLogins = userData.CompanyLogins;
         sessionStorage.setItem("LoggedUserCompanyLogins", JSON.stringify(userData.CompanyLogins));
