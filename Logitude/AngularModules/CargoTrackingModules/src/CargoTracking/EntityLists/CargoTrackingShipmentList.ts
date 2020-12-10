@@ -73,6 +73,8 @@ export class CargoTrackingShipmentList {
 	FutureMilstoneCode: string;
 	FutureMilstoneDate: Date;
 	FutureMilstoneName: string;
+	ContainersNumbers: string;
+	PackagesQuantity: number;
 	
 }
  
