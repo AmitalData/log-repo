@@ -272,7 +272,7 @@ export class ServiceHelper {
                     this.CurrentSession.StopBusyIndicator();
 
                     if (!this.CurrentSession.IsShowErrorWindow) {
-                        if (!exception.startsWith("Sorry! you have no permission to do this operation")) {
+                        if (exception && !exception.startsWith("Sorry! you have no permission to do this operation")) {
                             this.CurrentSession.IsShowErrorWindow = true;
                             var mywindow = new MessageWindow();
                             mywindow.Show(exception);
