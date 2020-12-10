@@ -14,7 +14,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Text; 
+using System.Text;
 using System.Web;
 using System.Web.Http;
 using WebFreight.Web.Helpers;
@@ -41,57 +41,57 @@ namespace WebFreight.Web.App_Code
 
                 HtmlEditorHelper htmlEditorHelper = new HtmlEditorHelper();
 
-               var  htmlEditorResult = htmlEditorHelper.GetEditorHtmlData(htmlEditorResolveArgs);
-               SendHtmlFilter reslutFilter = new SendHtmlFilter();
+                var htmlEditorResult = htmlEditorHelper.GetEditorHtmlData(htmlEditorResolveArgs);
+                SendHtmlFilter reslutFilter = new SendHtmlFilter();
 
-            if (!string.IsNullOrEmpty(htmlEditorResult.HtmlString) && htmlEditorResolveArgs.Mode == "Edit")
-            {
-
-                string header = htmlEditorHelper.getBetween(htmlEditorResult.HtmlString, "<header>", "</header>");
-                string headerheight = htmlEditorHelper.getBetween(header, "<height>", "</height>");
-
-                string footer = htmlEditorHelper.getBetween(htmlEditorResult.HtmlString, "<footer>", "</footer>");
-                string footerheight = htmlEditorHelper.getBetween(footer, "<height>", "</height>");
-
-                if (htmlEditorResolveArgs.Mode == "Edit")
+                if (!string.IsNullOrEmpty(htmlEditorResult.HtmlString) && htmlEditorResolveArgs.Mode == "Edit")
                 {
+
+                    string header = htmlEditorHelper.getBetween(htmlEditorResult.HtmlString, "<header>", "</header>");
+                    string headerheight = htmlEditorHelper.getBetween(header, "<height>", "</height>");
+
+                    string footer = htmlEditorHelper.getBetween(htmlEditorResult.HtmlString, "<footer>", "</footer>");
+                    string footerheight = htmlEditorHelper.getBetween(footer, "<height>", "</height>");
+
+                    if (htmlEditorResolveArgs.Mode == "Edit")
+                    {
                         htmlEditorResult.HtmlString = htmlEditorResult.HtmlString.Replace("<header>" + header + "</header>", "").Replace("<footer>" + footer + "</footer>", "");
-                    header = header.Replace("<height>" + headerheight + "</height>", "");
+                        header = header.Replace("<height>" + headerheight + "</height>", "");
 
 
-                    footer += "</footer>";
-                    footer = footer.Replace("<div style = 'bottom:0;'>", "").Replace("</div></footer>", "");
+                        footer += "</footer>";
+                        footer = footer.Replace("<div style = 'bottom:0;'>", "").Replace("</div></footer>", "");
 
-                    footer = footer.Replace("<height>" + footerheight + "</height>", "");
-
-
-                    reslutFilter.HeaderHtml = header;
-                    reslutFilter.FooterHtml = footer;
+                        footer = footer.Replace("<height>" + footerheight + "</height>", "");
 
 
-
-                    headerheight = htmlEditorHelper.getBetween(headerheight, "<div style='display:none'>", "</div>");
-                    footerheight = htmlEditorHelper.getBetween(footerheight, "<div style='display:none'>", "</div>");
-
-                    if (!string.IsNullOrEmpty(headerheight)) reslutFilter.HeaderHeight = Int32.Parse(headerheight);
-                    if (!string.IsNullOrEmpty(footerheight)) reslutFilter.FooterHeight = Int32.Parse(footerheight);
+                        reslutFilter.HeaderHtml = header;
+                        reslutFilter.FooterHtml = footer;
 
 
+
+                        headerheight = htmlEditorHelper.getBetween(headerheight, "<div style='display:none'>", "</div>");
+                        footerheight = htmlEditorHelper.getBetween(footerheight, "<div style='display:none'>", "</div>");
+
+                        if (!string.IsNullOrEmpty(headerheight)) reslutFilter.HeaderHeight = Int32.Parse(headerheight);
+                        if (!string.IsNullOrEmpty(footerheight)) reslutFilter.FooterHeight = Int32.Parse(footerheight);
+
+
+                    }
                 }
-            }
 
 
-     
 
- 
-            reslutFilter.Htmlstring = htmlEditorResult.HtmlString;
-            reslutFilter.Subject = htmlEditorResult.Subject;
-            reslutFilter.From = htmlEditorResult.From;
-            reslutFilter.ReplyTo = htmlEditorResult.ReplyTo;
-            reslutFilter.Cc = htmlEditorResult.Cc;
-            reslutFilter.Bcc = htmlEditorResult.Bcc;
-            reslutFilter.ToEmail = htmlEditorResult.To;
-                return Request.CreateResponse(HttpStatusCode.OK, htmlEditorResult);
+
+
+                reslutFilter.Htmlstring = htmlEditorResult.HtmlString;
+                reslutFilter.Subject = htmlEditorResult.Subject;
+                reslutFilter.From = htmlEditorResult.From;
+                reslutFilter.ReplyTo = htmlEditorResult.ReplyTo;
+                reslutFilter.Cc = htmlEditorResult.Cc;
+                reslutFilter.Bcc = htmlEditorResult.Bcc;
+                reslutFilter.ToEmail = htmlEditorResult.To;
+                return Request.CreateResponse(HttpStatusCode.OK, reslutFilter);
             }
 
             catch (Exception ex)
@@ -118,14 +118,14 @@ namespace WebFreight.Web.App_Code
                 }
 
                 HtmlEditorHelper htmlEditorHelper = new HtmlEditorHelper();
-               System.Text.UTF8Encoding enc = new System.Text.UTF8Encoding();
-              byte[] htmlbyte = htmlEditorHelper.GetSentMessageHtmlBody(documentId, tenant);
+                System.Text.UTF8Encoding enc = new System.Text.UTF8Encoding();
+                byte[] htmlbyte = htmlEditorHelper.GetSentMessageHtmlBody(documentId, tenant);
 
-             if (htmlbyte != null)
-             {
-                 html = enc.GetString(htmlbyte);
-             }
-             return Request.CreateResponse(HttpStatusCode.OK, html);
+                if (htmlbyte != null)
+                {
+                    html = enc.GetString(htmlbyte);
+                }
+                return Request.CreateResponse(HttpStatusCode.OK, html);
 
 
             }
@@ -136,7 +136,7 @@ namespace WebFreight.Web.App_Code
             }
         }
 
- 
+
         //  SendHtmlFilter
         public HttpResponseMessage PostSendHtmlDocument(SendHtmlFilter filter)
         {
@@ -156,7 +156,7 @@ namespace WebFreight.Web.App_Code
 
                 if (filter.Tenant == authToken.Tenant)
                 {
-                    
+
                     UserQuery userQuery = new UserQuery(authToken.Tenant);
                     bool isExist = userQuery.CheckIfUserExistInTenant(filter.UserId, authToken.Tenant);
                     if (!isExist)
@@ -165,15 +165,15 @@ namespace WebFreight.Web.App_Code
                     }
                     if (!string.IsNullOrEmpty(filter.Attachments))
                     {
-                        List<string> attachmentDocumentId = filter.Attachments.Split(',').Where(d=>!string.IsNullOrEmpty(d)).ToList();
+                        List<string> attachmentDocumentId = filter.Attachments.Split(',').Where(d => !string.IsNullOrEmpty(d)).ToList();
                         DocumentRepository documentRepository = new DocumentRepository(authToken.Tenant);
 
-                        if(!documentRepository.CheckIfDocumentsExistOnTenant(attachmentDocumentId, authToken.Tenant))
+                        if (!documentRepository.CheckIfDocumentsExistOnTenant(attachmentDocumentId, authToken.Tenant))
                         {
                             throw new Exception("Sorry you’re not authenticated to send these attachments");
                         }
                     }
-             
+
 
                     System.Text.UTF8Encoding enc = new System.Text.UTF8Encoding();
                     HtmlEditorHelper htmlEditorHelper = new HtmlEditorHelper();
@@ -186,7 +186,7 @@ namespace WebFreight.Web.App_Code
                         htmlstring = encodedHtmlHelper.EncodedHtmlScript(htmlstring);
                     }
 
-                   
+
                     byte[] bytedata = enc.GetBytes(htmlstring);
                     if (!filter.IsCRM)
                     {
@@ -194,7 +194,7 @@ namespace WebFreight.Web.App_Code
                     }
                     else
                     {
-                        
+
                         string htmlPlainString = "";
                         if (!string.IsNullOrEmpty(filter.HtmlPlainString))
                         {
@@ -226,7 +226,8 @@ namespace WebFreight.Web.App_Code
         //Pdf Document Template Html
         public HttpResponseMessage PutSaveEditedReportToServer(FroalaEditorFilters filter)
         {
-            try {
+            try
+            {
 
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
@@ -238,25 +239,25 @@ namespace WebFreight.Web.App_Code
                 }
 
                 HtmlEditorHelper htmlEditorHelper = new HtmlEditorHelper();
-           
-            string reslut = "";
-            string htmlString = filter.HtmlString;
-            if (string.IsNullOrEmpty(htmlString)) htmlString = "";
-            htmlString = htmlString.Replace("\"", "'");
 
-            byte[] htmlDataFile = GetBytes(htmlString);
-            byte[] pdfDataFile = htmlEditorHelper.BuildPdfDocumentHtml(htmlString);
-            ExportDocumentHelper exportDocumentHelper = new ExportDocumentHelper();
-            reslut = exportDocumentHelper.SaveEditedReportToServer(filter.DocumentOutId, pdfDataFile, htmlDataFile, filter.Tenant, filter.DocumentTypeCopyId, filter.DocumentTypeId, filter.EntityId , filter.ChildEntityId);
+                string reslut = "";
+                string htmlString = filter.HtmlString;
+                if (string.IsNullOrEmpty(htmlString)) htmlString = "";
+                htmlString = htmlString.Replace("\"", "'");
 
-            return Request.CreateResponse(HttpStatusCode.OK, reslut);
+                byte[] htmlDataFile = GetBytes(htmlString);
+                byte[] pdfDataFile = htmlEditorHelper.BuildPdfDocumentHtml(htmlString);
+                ExportDocumentHelper exportDocumentHelper = new ExportDocumentHelper();
+                reslut = exportDocumentHelper.SaveEditedReportToServer(filter.DocumentOutId, pdfDataFile, htmlDataFile, filter.Tenant, filter.DocumentTypeCopyId, filter.DocumentTypeId, filter.EntityId, filter.ChildEntityId);
+
+                return Request.CreateResponse(HttpStatusCode.OK, reslut);
             }
             catch (Exception ex)
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
-        
+
 
         private byte[] GetBytes(string str)
         {
