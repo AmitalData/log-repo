@@ -366,6 +366,7 @@ namespace Simplog.Data.InfrastructureModel
             //modelBuilder.Configurations.Add(new SchedulerLogsMap());
             modelBuilder.Configurations.Add(new SchedulerProcedureMap());
             modelBuilder.Configurations.Add(new WorkerRoleNameMap());
+            modelBuilder.Configurations.Add(new QueryExportExecutionLogMap());
 
             modelBuilder.Entity<ObjectTable>().HasOptional(p => p.MainTip).WithMany();
             modelBuilder.Entity<Tip>().HasRequired(p => p.ObjectTable).WithMany();
@@ -1005,6 +1006,12 @@ namespace Simplog.Data.InfrastructureModel
         }
 
         public IDbSet<WorkerRoleName> WorkerRoleNames
+        {
+            get;
+            set;
+        }
+
+        public IDbSet<QueryExportExecutionLog> QueryExportExecutionLogs
         {
             get;
             set;

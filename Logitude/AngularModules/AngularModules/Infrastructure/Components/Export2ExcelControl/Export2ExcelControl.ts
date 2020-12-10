@@ -14,6 +14,10 @@ import { ServiceResponse } from '../../DataContracts/ServiceResponse';
 import { HttpClient } from '@angular/common/http';
 import {LogboxShipmentExportExcelService} from '../../../Shipment/Services/Others/LogboxShipmentExportExcelService';
 import { LogitudeGridExportToExcelExtendedPMService } from 'Common/Services/ExtendedPMs/LogitudeGridExportToExcelExtendedPMService';
+import { interval, Observable, TimeInterval, timer } from 'rxjs';
+import { takeUntil, timeInterval } from 'rxjs/operators';
+import { MessageWindow } from '../../../Controls/Windows/MessageWindow';
+
 
 @Component({
     
@@ -43,6 +47,7 @@ export class Export2ExcelControl {
     userid: string;
     QueryType: string;
     ExportExcelArgs: any;
+    WebFreightDomainService: WebFreightDomainService;
     SetWindowArgs(args: any) {
 
         this.QueryType = args.QueryType ? args.QueryType : "";
@@ -67,7 +72,7 @@ export class Export2ExcelControl {
         }
 
         else {
-            var myService: WebFreightDomainService = new WebFreightDomainService();
+            this.WebFreightDomainService = new WebFreightDomainService();
             this.ObjectTableName = args.currentObjectTable;
             this.tenant = args.tenant;
             this.queryName = TextCodeTranslator.Translate(args.query.NameTextCodeCode);
@@ -76,14 +81,115 @@ export class Export2ExcelControl {
 
             this.userid = args.userid;
             this.Filters = args.Filters;
-            myService.getExcelData(this.Filters, this.queryCode, args.tenant, args.userid, args.currentObjectTable).subscribe((myResult: any) => {
-                this.CompleteExcelData(myResult.body);
-            });
+            this.WebFreightDomainService.getExcelData(this.Filters, this.queryCode, args.tenant, args.userid, args.currentObjectTable).subscribe((myResult: ExportResult) => {
+               this.HandleExportResult(myResult);
+           }, error => { this.OnError(error)});
         }
          
     }
 
-    CompleteExcelData(myResult:any) {
+    OnError(error) {
+
+        this.btnRetryVisibile = true;
+        this.busyExportingVisibile = false;
+        this.btnSaveToFileVisibile = false;
+
+        console.error(error);
+    }
+
+    HandleExportResult(myResult: ExportResult) {
+        this.FileName = myResult.FileName;
+        if (!myResult.IsWorkerRole) {
+            this.btnRetryVisibile = false;
+            this.busyExportingVisibile = false;
+            this.btnSaveToFileVisibile = true;
+        }
+        else {
+            this.StartExecutionLogCheckTimer(myResult.ExecutionLogId);
+        }
+    }
+
+    initializeStartExecutionLogCheckTimer() {
+        const timer$ = timer(30000); //complete after
+        return interval(2000).pipe(timeInterval(), takeUntil(timer$));
+
+    }
+    private StartExecutionLogCheckTimerSub: any= null;
+    IsStartExecutionLogCheckTimer = false;
+    IsSucceeded = false;
+    StartExecutionLogCheckTimer(logId: string) {
+        if (this.IsStartExecutionLogCheckTimer) {
+            this.StartExecutionLogCheckTimerSub.unsubscribe();
+        }
+
+        this.IsStartExecutionLogCheckTimer = true;
+        this.StartExecutionLogCheckTimerSub = this.initializeStartExecutionLogCheckTimer().subscribe(() => {
+
+            if ((this.CurrentSession && this.CurrentSession.isDestroingSession)
+                || !this.IsStartExecutionLogCheckTimer) {
+                this.StopQueryLogCheckTimer();
+                return;
+            }
+
+            if (this.IsStartExecutionLogCheckTimer) {
+                
+                this.WebFreightDomainService ?? new WebFreightDomainService();
+                
+
+                this.WebFreightDomainService.GetQueryExportExecutionLogStatus(logId).subscribe(
+                    (res: ServiceResponse) => {
+                    const pmResponse: ServiceResponse = res;
+                    if (this.IsStartExecutionLogCheckTimer) {
+                        if (pmResponse.HasError
+                            || (pmResponse.Result && pmResponse.Result.ExceptionMessage)
+                            || (pmResponse.Result && pmResponse.Result.StatusCode === "D")) {
+                            
+                            this.StopQueryLogCheckTimer();
+
+                            this.CompleteExcelData(this.FileName);
+                        }
+                        if (!pmResponse.HasError) {
+                            const result = pmResponse.Result;
+                            if (result) {
+                                if (result.ExceptionMessage) {
+                                    this.ShowRetryOption();
+                                }
+                            }
+                        }
+                        else {
+                            if (pmResponse.ErrorsArray && pmResponse.ErrorsArray.length > 0) {
+                                this.ShowRetryOption();
+                            }
+                        }
+                    }
+                    },
+                    error => {console.log(error)},
+                    () => {
+                        //this.LogCheckTimerCompletedUnsuccessfully();
+                });
+            }
+        });
+    }
+
+    private LogCheckTimerCompletedUnsuccessfully() {
+        console.log("ExecutionLogCheckTimer Completed");
+        this.StopQueryLogCheckTimer();
+        this.ShowRetryOption();
+    }
+
+    private StopQueryLogCheckTimer() {
+        this.StartExecutionLogCheckTimerSub?.unsubscribe();
+        this.IsStartExecutionLogCheckTimer = false;
+
+    }
+
+    private ShowRetryOption() {
+        this.btnRetryVisibile = true;
+        this.busyExportingVisibile = false;
+        this.btnSaveToFileVisibile = false;
+    }
+
+    CompleteExcelData(myResult: string) {
         if (myResult == "Faild") {
             this.btnRetryVisibile = true;
             this.busyExportingVisibile = false;
@@ -127,9 +233,9 @@ export class Export2ExcelControl {
 
         if (this.QueryType != "LogBox") {
 
-            var myService: WebFreightDomainService = new WebFreightDomainService();
-            myService.getExcelData(this.Filters, this.queryCode, this.tenant, this.userid, this.ObjectTableName).subscribe((myResult: any) => {
-                this.CompleteExcelData(myResult);
+            this.WebFreightDomainService ?? new WebFreightDomainService();
+            this.WebFreightDomainService.getExcelData(this.Filters, this.queryCode, this.tenant, this.userid, this.ObjectTableName).subscribe((myResult: ExportResult) => {
+                this.HandleExportResult(myResult);
 
             });
         } else if (this.QueryType == "LogBox") {
@@ -143,6 +249,8 @@ export class Export2ExcelControl {
     }
 
     CancelButtonClicked() {
+
+        this.StopQueryLogCheckTimer();
         /* I need to abort the process */
         //if (exportExcelService != null) {
         //    exportExcelService.CloseAsync();
@@ -152,4 +260,13 @@ export class Export2ExcelControl {
         this.CurrentSession.CloseCurrentWindow();
     }
 
+    
+
+}
+
+interface ExportResult {
+
+    ExecutionLogId: string;
+    FileName: string;
+    IsWorkerRole: boolean;
 }

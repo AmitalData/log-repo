@@ -251,6 +251,7 @@
     <None Include="DBOthers\CommonDataModel\Triggers\Trigger_AutomaticLastUpdateDateVessels.dxml" />
     <None Include="DBScripts\CommonModel\202009152200_FixHorseEventTypes.sxml" />
     <None Include="DBScripts\CommonModel\202011190832_UpdateEORInumberInCustomerToField1Value.sxml" />
+    <None Include="DBScripts\CommonModel\202012100811_QueryExportExecutionLogWorkerRole.sxml" />
     <None Include="DBScripts\CommonModel\UpdateAutomationWorkerRoleName.sxml" />
     <None Include="DBScripts\CommonModel\UpdateIsCustomerOnCardSearchField.sxml" />
     <None Include="DBScripts\GlobalModel\202010151325_InsertDocumentApprovalQueue.sxml" />
@@ -746,6 +747,7 @@
     <None Include="DBTables\InfrastructureModel\PrepaidCollect.dxml" />
     <None Include="DBTables\InfrastructureModel\Query.dxml" />
     <None Include="DBTables\InfrastructureModel\QueryColumn.dxml" />
+    <None Include="DBTables\InfrastructureModel\QueryExportExecutionLog.dxml" />
     <None Include="DBTables\InfrastructureModel\QueryGroup.dxml" />
     <None Include="DBTables\InfrastructureModel\QueueDefinition.dxml" />
     <None Include="DBTables\InfrastructureModel\QueueMessage.dxml" />
@@ -936,6 +938,7 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="EntityFiles\InfrastructureModel\DescriptionOfGoods.lxml" />
+    <None Include="EntityFiles\InfrastructureModel\QueryExportExecutionLog.lxml" />
     <None Include="EntityFiles\InfrastructureModel\WorkerRoleName.lxml" />
     <None Include="EntityFiles\QuoteModel\QuoteSalesTotal.lxml" />
     <None Include="EntityFiles\QuoteModel\QuoteTemplateSectionType.lxml" />
