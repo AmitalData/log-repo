@@ -1403,7 +1403,7 @@ namespace WebFreight.Web.Helpers
 
             return new HtmlEditorResolveResult()
             {
-                HtmlString = htmlString , 
+                HtmlString = result, 
                 Subject = subject,
                 From = from,
                 To= to,
