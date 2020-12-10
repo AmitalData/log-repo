@@ -759,6 +759,17 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.IsAccrualsApproved).HasColumnName("IsAccrualsApproved");
             this.Property(t => t.AccrualsApprovalDate).HasColumnName("AccrualsApprovalDate");
 
+            this.Property(t => t.HousesOpenPayablesInLocal).HasColumnName("HousesOpenPayablesInLocal");
+            this.Property(t => t.HousesOpenPayablesInProfit).HasColumnName("HousesOpenPayablesInProfit");
+            this.Property(t => t.HousesACCTPayablesInLocal).HasColumnName("HousesACCTPayablesInLocal");
+            this.Property(t => t.HousesACCTPayablesInProfit).HasColumnName("HousesACCTPayablesInProfit");
+
+            this.Property(t => t.HousesOpenReceivablesInLocal).HasColumnName("HousesOpenReceivablesInLocal");
+            this.Property(t => t.HousesOpenReceivablesInProfit).HasColumnName("HousesOpenReceivablesInProfit");
+            this.Property(t => t.HousesACCTReceivablesInLocal).HasColumnName("HousesACCTReceivablesInLocal");
+            this.Property(t => t.HousesACCTReceivablesInProfit).HasColumnName("HousesACCTReceivablesInProfit");
+
+
             if (dbms == "oracle")
             {
                 this.Property(t => t.AccountedReceivablesInLocalCurrency).HasColumnName("AccountedReceivablesInLocal").IsRequired();

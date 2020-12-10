@@ -1658,6 +1658,15 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             shipmentPM.ProfitInProfitCurrency = shipment.ProfitInProfitCurrency;
             shipmentPM.NotInvoicedReceivablesAmount = shipment.NotInvoicedReceivablesAmount;
 
+            shipmentPM.HousesOpenPayablesInLocal = shipment.HousesOpenPayablesInLocal;
+            shipmentPM.HousesOpenPayablesInProfit = shipment.HousesOpenPayablesInProfit;
+            shipmentPM.HousesACCTPayablesInLocal = shipment.HousesACCTPayablesInLocal;
+            shipmentPM.HousesACCTPayablesInProfit = shipment.HousesACCTPayablesInProfit;
+            shipmentPM.HousesOpenReceivablesInLocal = shipment.HousesOpenReceivablesInLocal;
+            shipmentPM.HousesOpenReceivablesInProfit = shipment.HousesOpenReceivablesInProfit;
+            shipmentPM.HousesACCTReceivablesInLocal = shipment.HousesACCTReceivablesInLocal;
+            shipmentPM.HousesACCTReceivablesInProfit = shipment.HousesACCTReceivablesInProfit;
+
             #endregion
 
             #region Routings
