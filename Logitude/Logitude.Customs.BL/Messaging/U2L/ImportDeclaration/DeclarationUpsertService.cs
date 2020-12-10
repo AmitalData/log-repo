@@ -1525,11 +1525,12 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
                     }
                 }
 
-                if (truckerId != currentDeclarationCourierStatusPM.TruckerId)
+                if (truckerId != currentDeclarationCourierStatusPM.TruckerId || _AmitalCustomsFile.DistributionArea != currentDeclarationCourierStatusPM.DistributionArea)
                 {
                     DeclarationCourierStatusUpdateService declarationCourierStatusUpdateService = new DeclarationCourierStatusUpdateService(_context, new Dictionary<string, IContext>(), _MyDeclarationPM.Tenant);
                     currentDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
                     currentDeclarationCourierStatusPM.TruckerId = truckerId;
+                    currentDeclarationCourierStatusPM.DistributionArea = _AmitalCustomsFile.DistributionArea;
                     AppendLogLine("try to update trucker " + truckerId + " to declarationCourierStatus for DeclarationPM.Id: " + _MyDeclarationPM.Id);
                     try
                     {
