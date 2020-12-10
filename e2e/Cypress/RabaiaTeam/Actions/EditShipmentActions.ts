@@ -14,7 +14,7 @@ export function FillGeneralTab(){
 
 export function FillOrdersTab(shipmentTypeCode?:string){
     cy.Click("#ShipmentTHOrders", null)
-    AddPackagesOrContainers(shipmentTypeCode)
+    AddPackagesOrContainersForOrdersTab(shipmentTypeCode)
 }
 
 export function FillPartnersTab(directionCode:string, transportModeCode:string){
@@ -42,8 +42,13 @@ export function FillPartnersTab(directionCode:string, transportModeCode:string){
     AddPartner("REAGT", "Shipment_ReleasingAgentId")
 }
 
+export function FillPackagesTab(transportModeCode:string, shipmentTypeCode?:string){
+    cy.Click("#ShipmentTHPackages", null)
+    AddPackagesOrContainersForPackagesTab(transportModeCode, shipmentTypeCode)
+}
 
-function AddPackagesOrContainers(shipmentTypeCode:string){
+
+function AddPackagesOrContainersForOrdersTab(shipmentTypeCode:string){
     let numberOfPackages = gr.GenerateRandomNumber(1, 3)
     for (let i = 0; i < numberOfPackages; i++){
         cy.Click("#Orders-AddPackage", null)
@@ -62,4 +67,25 @@ function AddPartner(partnerTypeId: string, partnerFieldId: string) {
     let partnerFieldSelector = "addeditpartnercomponent input[id^='" + partnerFieldId + "']"
     cy.SelectLogLovRandomElement(partnerFieldSelector, false, 10)
     cy.Click("#PartnerOKbtn", null)
+}
+
+function AddPackagesOrContainersForPackagesTab(transportModeCode:string, shipmentTypeCode:string){
+    let numberOfPackages = gr.GenerateRandomNumber(1, 3)
+    for (let i = 0; i < numberOfPackages; i++){
+        cy.Click("#AddPackage", null)
+        if(transportModeCode !== "A"){
+            cy.SelectLogLovRandomElement("#ShipmentPackage_PackageTypeId", true, 5)
+        }
+        if(shipmentTypeCode !== "FCLD" && shipmentTypeCode !== "FTL"){
+            cy.FillRandomNumber("#ShipmentPackage_Quantity", 1, 10, true)
+        }
+        if(transportModeCode !== "A"){
+            cy.FillRandomNumber("#ShipmentPackage_Weight", 1, 10, true)
+        }
+        if(transportModeCode === "A"){
+            cy.Click("#OkAirPackage", null)
+        }else{
+            cy.Click("#OkOceanPackage", null)
+        }
+    }
 }

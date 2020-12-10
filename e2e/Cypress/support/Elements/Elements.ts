@@ -76,7 +76,7 @@ Cypress.Commands.add("SelectLogLovRandomElement", (selector, fromCache, maxIndex
         cy.wait("@LOVDataLoaded")
     }
 
-    let randomIndex = gr.GenerateRandomNumber(0, maxIndex)
+    let randomIndex = gr.GenerateRandomNumber(0, (maxIndex - 1))
     cy.get(".DropDownListItem").children().eq(randomIndex).click()
 
 })
