@@ -14,7 +14,15 @@ namespace WebFreight.Web.Helpers
     {
         const string CargoTrackingImageFolderPath = "CargoTracking/CargoTrackingImages";
         const string CargoTrackingImageExtensionType = "png";
+        public static Dictionary<string, byte[]> CargTrakingImagesDictionary;
 
+        public CargoTrackingHelper()
+        {
+            if (CargTrakingImagesDictionary==null)
+            {
+                CargTrakingImagesDictionary = new Dictionary<string, byte[]>();
+            }
+        }
 
         public CargoTrackingBrandingData GetCargoTrackingBrandingDataByDomain(string domain,bool isFromPrivateSite=false)
         {
@@ -59,8 +67,9 @@ namespace WebFreight.Web.Helpers
                 byte[] filedata = GeImageBytesById(cargoTrackingBrandingData.BackgroundId);
                 if (filedata != null)
                 {
-                    string base64StringData = Convert.ToBase64String(filedata);
-                    cargoTrackingBrandingData.BackgroundImg = "data:image/" + CargoTrackingImageExtensionType + ";base64," + base64StringData;
+                    cargoTrackingBrandingData.BackgroundBytes = filedata;
+                    //string base64StringData = Convert.ToBase64String(filedata);
+                    //cargoTrackingBrandingData.BackgroundImg = "data:image/" + CargoTrackingImageExtensionType + ";base64," + base64StringData;
                     //SaveImageOnCargoTrackingImagesIfNotExisit(base64StringData, cargoTrackingBrandingData.BackgroundId);
                     //cargoTrackingBrandingData.BackgroundURL = GetFileURL(cargoTrackingBrandingData.BackgroundId);
                 }
@@ -75,8 +84,9 @@ namespace WebFreight.Web.Helpers
                 byte[] filedata = GeImageBytesById(cargoTrackingBrandingData.ComapnylogoId);
                 if (filedata != null)
                 {
-                    string base64StringData = Convert.ToBase64String(filedata);
-                    cargoTrackingBrandingData.ComapnylogoImg = "data:image/" + CargoTrackingImageExtensionType + ";base64," + base64StringData;
+                    cargoTrackingBrandingData.ComapnylogoBytes = filedata;
+                    //string base64StringData = Convert.ToBase64String(filedata);
+                    //cargoTrackingBrandingData.ComapnylogoImg = "data:image/" + CargoTrackingImageExtensionType + ";base64," + base64StringData;
                     //SaveImageOnCargoTrackingImagesIfNotExisit(base64StringData, cargoTrackingBrandingData.ComapnylogoId);
                     //cargoTrackingBrandingData.ComapnylogoURL = GetFileURL(cargoTrackingBrandingData.ComapnylogoId);
                 }
@@ -91,8 +101,9 @@ namespace WebFreight.Web.Helpers
                 byte[] filedata = GeImageBytesById(cargoTrackingBrandingData.BrowserIconId);
                 if (filedata != null)
                 {
-                    string base64StringData = Convert.ToBase64String(filedata);
-                    cargoTrackingBrandingData.BrowserIconImg = "data:image/" + CargoTrackingImageExtensionType + ";base64," + base64StringData;
+                    cargoTrackingBrandingData.BrowserIconBytes = filedata;
+                    //string base64StringData = Convert.ToBase64String(filedata);
+                    //cargoTrackingBrandingData.BrowserIconImg = "data:image/" + CargoTrackingImageExtensionType + ";base64," + base64StringData;
                     //SaveImageOnCargoTrackingImagesIfNotExisit(base64StringData, cargoTrackingBrandingData.BrowserIconId);
                     //cargoTrackingBrandingData.BrowserIconURL = GetFileURL(cargoTrackingBrandingData.BrowserIconId);
                 }
@@ -126,11 +137,12 @@ namespace WebFreight.Web.Helpers
         }
         private byte[] GeImageBytesById(string ImageId)
         {
-            byte[] imageBytes = GetImageBytesFromCargoTrackingImages(ImageId);
+            byte[] imageBytes = CargTrakingImagesDictionary.ContainsKey(ImageId) ? CargTrakingImagesDictionary[ImageId] : null;// GetImageBytesFromCargoTrackingImages(ImageId);
             if (imageBytes == null || imageBytes.Length == 0)
             {
                 Uploader uploaderService = new Uploader();
                 imageBytes = uploaderService.DownloadFile(ImageId, CargoTrackingImageExtensionType, "images", 0);
+                CargTrakingImagesDictionary.Add(ImageId,imageBytes);
             }
             return imageBytes;
         }

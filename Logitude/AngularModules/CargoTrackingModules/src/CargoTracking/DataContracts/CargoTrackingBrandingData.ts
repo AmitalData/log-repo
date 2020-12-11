@@ -12,4 +12,8 @@ export class CargoTrackingBrandingData {
     public static BrowserIconId: string;
     public static BrowserIconImg:string;
     public static BrowserIconURL:string;
+    public static BrowserIconBytes:any;
+    public static ComapnylogoBytes:any;
+    public static BackgroundBytes:any;
+
 }

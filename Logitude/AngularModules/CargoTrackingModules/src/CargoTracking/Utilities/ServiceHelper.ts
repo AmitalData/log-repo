@@ -2,6 +2,8 @@ import { HttpHeaders } from '@angular/common/http';
 import { CargoTrackingBrandingData } from '../DataContracts/CargoTrackingBrandingData';
 
 export  class ServiceHelper{
+
+ 
    public static favIcon: HTMLLinkElement = document.querySelector('#appIcon');
 
     constructor(){
@@ -53,9 +55,9 @@ export  class ServiceHelper{
         this.SetBrowserIcon(BrandingData,baseUrl);
     }
     private static SetBackGroundImg(BrandingData:any,baseUrl:string)
-    {
-        if(BrandingData.BackgroundImg){
-            CargoTrackingBrandingData.BackgroundURL = "url("+BrandingData.BackgroundImg+")";
+    {   
+        if(BrandingData.BackgroundBytes){
+            CargoTrackingBrandingData.BackgroundURL = "url("+this.GetImageFromBytes(BrandingData.BackgroundBytes)+")";
         }
         else{
             CargoTrackingBrandingData.BackgroundURL ="url('"+baseUrl+"assets/images/misc/map-bg.svg')"
@@ -64,20 +66,22 @@ export  class ServiceHelper{
 
     private static SetComapnyLogo(BrandingData:any,baseUrl:string)
     {
-        if(BrandingData.ComapnylogoImg){
-            CargoTrackingBrandingData.ComapnylogoURL =  BrandingData.ComapnylogoImg;
+        if(BrandingData.ComapnylogoBytes){
+            CargoTrackingBrandingData.ComapnylogoURL = this.GetImageFromBytes(BrandingData.ComapnylogoBytes);
         }
     }
 
     private static SetBrowserIcon(BrandingData:any,baseUrl:string)
     {
-        if(BrandingData.BrowserIconImg){
-            CargoTrackingBrandingData.BrowserIconURL =BrandingData.BrowserIconImg ;
+        if(BrandingData.BrowserIconBytes){
+            CargoTrackingBrandingData.BrowserIconURL =this.GetImageFromBytes(BrandingData.BrowserIconBytes);
             ServiceHelper.favIcon.href =CargoTrackingBrandingData.BrowserIconURL;
         }
     }
      
-
+    private static GetImageFromBytes(ImageByte:any){
+        return "data:image/png;base64,"+ImageByte;
+    }
 
     public static GetHeaders(){
 
