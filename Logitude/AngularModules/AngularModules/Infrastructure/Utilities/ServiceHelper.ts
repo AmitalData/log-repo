@@ -272,24 +272,27 @@ export class ServiceHelper {
                     this.CurrentSession.StopBusyIndicator();
 
                     if (!this.CurrentSession.IsShowErrorWindow) {
-                        this.CurrentSession.IsShowErrorWindow = true;
-                        var mywindow = new MessageWindow();
-                        mywindow.Show(exception);
+                        if (exception && !exception.startsWith("Sorry! you have no permission to do this operation")) {
+                            this.CurrentSession.IsShowErrorWindow = true;
+                            var mywindow = new MessageWindow();
+                            mywindow.Show(exception);
 
-                        mywindow.WindowClosed.subscribe(($event: any) => {
-                            this.CurrentSession.IsShowErrorWindow = false;
-                            if (exception) {
-                                if (exception.indexOf("Internet Connection Problem") > -1) {
-                                    var loginService: LoginService = new LoginService();
-                                    loginService.GetDocumentDownloadToken().subscribe((myResult:any) => {
-                                        if (myResult) {
-                                            SessionInfo.DocumentDownloadToken = myResult;
-                                        }
-                                    });
 
+                            mywindow.WindowClosed.subscribe(($event: any) => {
+                                this.CurrentSession.IsShowErrorWindow = false;
+                                if (exception) {
+                                    if (exception.indexOf("Internet Connection Problem") > -1) {
+                                        var loginService: LoginService = new LoginService();
+                                        loginService.GetDocumentDownloadToken().subscribe((myResult: any) => {
+                                            if (myResult) {
+                                                SessionInfo.DocumentDownloadToken = myResult;
+                                            }
+                                        });
+
+                                    }
                                 }
-                            }
-                        });
+                            });
+                        }
                     }
                 }
             }

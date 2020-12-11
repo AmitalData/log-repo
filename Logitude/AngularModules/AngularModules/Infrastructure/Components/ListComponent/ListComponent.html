@@ -184,11 +184,13 @@
 
                         <td>
                             <div *ngIf="HasActionBar()" style="width: 5px;"></div>
-                            <div *ngIf="HasActionBar()" id="ActionBar"  LocationDirective Code="MNA" ></div>
-                            <div *ngIf="!HasActionBar()" ></div>
+                            <div *ngIf="HasActionBar()" id="ActionBar" LocationDirective Code="MNA"></div>
+                            <div *ngIf="!HasActionBar()"></div>
                         </td>
 
-                       
+                        <td style="width: 480px;">
+                            <div LocationDirective Code="MNH"></div>
+                        </td>
                     </tr>
                 </table>
             </td>
@@ -300,9 +302,7 @@
                             <div></div>
                         </td>
 
-                        <td style="width: 650px; left:50PX;"> 
-                            <div LocationDirective Code="MNH"></div>
-                        </td>
+                        
                         <td style="width: 1px;" *ngIf="IsNavigateButtonVisible">
                             <button *ngIf="IsNavigateButtonVisible" style="min-width: 95px; padding-left: 5px; padding-right: 5px;" class="Button" (click)="Navigate()">Navigate</button>
                         </td>

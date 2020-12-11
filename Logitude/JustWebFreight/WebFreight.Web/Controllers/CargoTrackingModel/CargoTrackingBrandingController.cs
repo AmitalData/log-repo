@@ -51,6 +51,7 @@ namespace WebFreight.Web.Controllers.CargoTrackingModel
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
+ 
 
         public HttpResponseMessage GetCargoTrackingBrandingTenantByDomain(string domain)
         {

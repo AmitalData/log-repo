@@ -249,7 +249,6 @@
     <None Include="DBOthers\CommonDataModel\Triggers\Trigger_AutomaticLastUpdateDateTenants.dxml" />
     <None Include="DBOthers\CommonDataModel\Triggers\Trigger_AutomaticLastUpdateDateUsers.dxml" />
     <None Include="DBOthers\CommonDataModel\Triggers\Trigger_AutomaticLastUpdateDateVessels.dxml" />
-    <None Include="DBScripts\CommonModel\202009152200_FixHorseEventTypes.sxml" />
     <None Include="DBScripts\CommonModel\202011190832_UpdateEORInumberInCustomerToField1Value.sxml" />
 
     <None Include="DBScripts\CommonModel\202012080421_UpdatePortsSearchFields.sxml" />

@@ -23,6 +23,7 @@ export class Error401Component
              this.GetDomainName(baseUrl);
              this.GetTenantByDomain(baseUrl);
               
+
     }
     private GetDomainName(baseUrl:string)
     {     this.SiteUrl=baseUrl;
@@ -30,6 +31,8 @@ export class Error401Component
           if(this.SiteUrl && this.SiteUrl.endsWith("/")){
             this.SiteUrl = this.SiteUrl.substring(0,this.SiteUrl.length-1);
           }
+          
+
           
     }
     private GetTenantByDomain(baseUrl:string)
