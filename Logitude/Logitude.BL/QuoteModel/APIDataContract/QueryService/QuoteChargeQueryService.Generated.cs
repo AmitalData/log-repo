@@ -114,7 +114,9 @@ using Simplog.Data.QuoteModel;
 
 							 
 				   temp.VendorName = item.VendorName;
-				   temp.VendorCode = item.VendorCode;					
+				   temp.VendorCode = item.VendorCode;
+				   temp.CostRatio = item.CostRatio;
+				   temp.SaleRatio = item.SaleRatio;					
 					MyList.Add(temp);
 				}
 					
@@ -461,6 +463,22 @@ using Simplog.Data.QuoteModel;
 
 										}  
 
+					
+                    
+					if(!IsUpdate)// && item.CostRatio != null)
+					{							//throw new ApplicationException("CostRatio Can't be update"); 
+							temp.CostRatio = item.CostRatio;
+
+										}  
+
+					
+                    
+					if(!IsUpdate)// && item.SaleRatio != null)
+					{							//throw new ApplicationException("SaleRatio Can't be update"); 
+							temp.SaleRatio = item.SaleRatio;
+
+										}  
+
 										   
 						MyList.Add(temp);
 					}
@@ -475,4 +493,4 @@ using Simplog.Data.QuoteModel;
         }
 		 
    }
-}
+}
