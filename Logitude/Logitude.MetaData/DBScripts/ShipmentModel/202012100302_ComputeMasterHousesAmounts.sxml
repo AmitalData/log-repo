@@ -1,8 +1,8 @@
 ﻿<Script DBType="Main" Module="Shipment" >
-  <Sql Version="3">
+  <Sql Version="4">
     <![CDATA[
     
-
+	-- Updated Version from 3 to 4
 	declare @Counter as int
 	declare @Tenant as int
 	declare @MasterId as varchar(15)

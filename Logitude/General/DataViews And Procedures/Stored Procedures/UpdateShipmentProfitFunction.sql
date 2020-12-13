@@ -89,6 +89,18 @@ BEGIN
 			begin
 				if exists (select * from Shipments where Tenant = @Tenant AND ShipmentLevelCode = 'H' AND MasterShipmentDataId = @ShipmentId)
 				begin
+
+					select
+					@HousesOpenPayablesInLocal = sum(isnull(OpenAmountInLocalCurrency,0)),
+					@HousesOpenPayablesInProfit = sum(isnull(OpenAmountInProfitCurrency,0)),
+					@HousesACCTPayablesInLocal = sum(isnull(AccountedAmountInLocalCurrency,0)),
+					@HousesACCTPayablesInProfit = sum(isnull(AccountedAmountInProfitCurrency,0))
+					from ShipmentPayables
+					where
+					Tenant = @Tenant
+					AND (ShipmentId in (select Id from Shipments where ShipmentLevelCode = 'H' AND MasterShipmentDataId = @ShipmentId))
+					AND ShipmentPayableParentId is null
+
 					select
 					@OpenPayablesInLocalCurrency = sum(isnull(OpenAmountInLocalCurrency,0)),
 					@OpenPayablesInProfitCurrency = sum(isnull(OpenAmountInProfitCurrency,0)),
@@ -98,11 +110,6 @@ BEGIN
 					where
 					Tenant = @Tenant
 					AND (ShipmentId in (select Id from Shipments where ShipmentLevelCode = 'H' AND MasterShipmentDataId = @ShipmentId))
-
-					set @HousesOpenPayablesInLocal = @OpenPayablesInLocalCurrency;
-					set @HousesOpenPayablesInProfit = @OpenPayablesInProfitCurrency;
-					set @HousesACCTPayablesInLocal = @AccountedPayablesInLocalCurrency;
-					set @HousesACCTPayablesInProfit = @AccountedPayablesInProfitCurrency;
 				end
 
 				else
@@ -146,6 +153,7 @@ BEGIN
 				Tenant = @Tenant
 				AND ShipmentId in (select Id from Shipments where ShipmentLevelCode = 'H' AND MasterShipmentDataId = @ShipmentId)
 				AND (ShipmentReceivableLineStatusCode = 'OAMT' OR ShipmentReceivableLineStatusCode = 'DRFT')
+				AND ShipmentReceivableParentId is null
 	
 				select
 				@HousesACCTReceivablesInLocal = sum(isnull(TotalAmountLocal,0)),
@@ -155,6 +163,7 @@ BEGIN
 				Tenant = @Tenant
 				AND ShipmentId in (select Id from Shipments where ShipmentLevelCode = 'H' AND MasterShipmentDataId = @ShipmentId)
 				AND ShipmentReceivableLineStatusCode = 'ACCT'
+				AND ShipmentReceivableParentId is null
 
 				if (@ProrateReceivables = 1)
 				BEGIN
