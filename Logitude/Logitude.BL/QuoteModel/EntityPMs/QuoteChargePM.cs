@@ -26,6 +26,12 @@ namespace Logitude.BL.QuoteModel.EntityPMs
         public bool IsAllIN { get; set; }
         public int ViewOrder { get; set; }
 
+        public double? SaleRatio { get; set; }
+        public double? CostRatio { get; set; }
+
+
+
+
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string QuoteTypeCode { get; set; }
 

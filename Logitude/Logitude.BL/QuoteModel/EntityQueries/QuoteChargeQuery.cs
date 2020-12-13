@@ -124,6 +124,8 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                                           TariffNumber = a.TariffNumber,
                                           TariffVersion = a.TariffVersion,
                                           IsRegionalTax = a.IsRegionalTax,
+                                          SaleRatio = (a.SaleMeasurement!=null && a.SaleMeasurement.Code == "PDCW") ? a.Quote.PickupDeliveryRatio : a.Quote.Ratio,
+                                          CostRatio   = (a.CostMeasurement != null && a.CostMeasurement.Code == "PDCW")  ? a.Quote.PickupDeliveryRatio : a.Quote.Ratio,
                                       }).FirstOrDefault();
 
             return myResult;
@@ -222,6 +224,8 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                                                 TariffNumber = a.TariffNumber,
                                                 TariffVersion = a.TariffVersion,
                                                 IsRegionalTax = a.IsRegionalTax,
+                                                SaleRatio = (a.SaleMeasurement != null && a.SaleMeasurement.Code == "PDCW") ? a.Quote.PickupDeliveryRatio : a.Quote.Ratio,
+                                                CostRatio = (a.CostMeasurement != null && a.CostMeasurement.Code == "PDCW") ? a.Quote.PickupDeliveryRatio : a.Quote.Ratio,
                                             }).ToList();
 
             QuotePriceStepsRepository quotePriceStepsRepository = new QuotePriceStepsRepository(this.repository.context);

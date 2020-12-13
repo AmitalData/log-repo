@@ -83,6 +83,10 @@ namespace Logitude.BL.QuoteModel.APIDataContract.ApiV1
     public string VendorName { get; set; }
     
     public string VendorCode { get; set; }
+    
+    public double? CostRatio { get; set; }
+    
+    public double? SaleRatio { get; set; }
 
     public  string  ComputingPartnerCode { get; set; }
 
