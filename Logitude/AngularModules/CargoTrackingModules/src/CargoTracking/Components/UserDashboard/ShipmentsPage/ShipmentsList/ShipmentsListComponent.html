@@ -14,7 +14,7 @@
     <div class="toolbar">
 
         <div class="search-bar">
-            <form [formGroup]="searchForm" (ngSubmit)="LoadShipments()">
+            <form [formGroup]="searchForm" (ngSubmit)="LoadScreenData()">
 
                 <div class="search-text ">
                     <input #input type="text " class="gray " [(ngModel)]="SearchText" placeholder="Free search ..."
@@ -31,7 +31,7 @@
                 </div>
 
                 <button class="search-button" type="submit"
-                    (onsubmit)="LoadShipments()">{{isLoading?'Loading...': 'Search'}}</button>
+                    (onsubmit)="LoadScreenData()">{{isLoading?'Loading...': 'Search'}}</button>
             </form>
         </div>
 
@@ -90,10 +90,10 @@
     <div class="scrollable-table" *ngIf="!noResult" style="height: calc(100vh - 274px)">
         <div class="table" style="height: calc(100vh - 274px)">
             
-            <cdk-virtual-scroll-viewport *ngIf="ShipmentsDS" class="shipment-cards-holder" [itemSize]="170" style="height: calc(100vh - 274px)">
+            <cdk-virtual-scroll-viewport *ngIf="ShipmentsDataSource" class="shipment-cards-holder" [itemSize]="170" style="height: calc(100vh - 274px)">
             
             
-                <div *cdkVirtualFor="let shipment of ShipmentsDS" class="row record-row" (click)="ItemClicked(shipment)"
+                <div *cdkVirtualFor="let shipment of ShipmentsDataSource" class="row record-row" (click)="ItemClicked(shipment)"
                     style="cursor: pointer;">
             
                     <!-- Shipment Skelton -->
