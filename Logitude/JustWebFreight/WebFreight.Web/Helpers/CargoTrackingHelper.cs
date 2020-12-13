@@ -142,6 +142,10 @@ namespace WebFreight.Web.Helpers
             {
                 Uploader uploaderService = new Uploader();
                 imageBytes = uploaderService.DownloadFile(ImageId, CargoTrackingImageExtensionType, "images", 0);
+                if (CargTrakingImagesDictionary.ContainsKey(ImageId))
+                {
+                    CargTrakingImagesDictionary.Remove(ImageId);
+                }
                 CargTrakingImagesDictionary.Add(ImageId,imageBytes);
             }
             return imageBytes;
