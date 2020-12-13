@@ -708,7 +708,7 @@ namespace WebFreight.Web.WcfApi
                         }
 
                         QuoteChargeQuery quoteChargeQuery = new QuoteChargeQuery(new QuoteChargeRepository(objectContext));
-                        List<QuoteChargePM> quoteCharges = quoteChargeQuery.GetQuoteChargesPMsByQuoteId(entity.Id, entity.Tenant);
+                        List<QuoteChargePM> quoteCharges = quoteChargeQuery.GetQuoteChargesForDeleting(entity.Id, entity.Tenant);
                         foreach (QuoteChargePM charge in quoteCharges)
                         {
                             charge.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Delete;
