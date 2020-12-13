@@ -2,6 +2,9 @@
     .FlipImgVert {
         transform: rotate(180deg);
     }
+    .FlipImgDiagonal {
+        transform: rotate(225deg) !important;
+    }
 </style>
 <div class="dashboard-container">
 
@@ -27,7 +30,7 @@
 
                 </div>
 
-                <button class="search-button hide-mobile" type="submit"
+                <button class="search-button" type="submit"
                     (onsubmit)="LoadShipments()">{{isLoading?'Loading...': 'Search'}}</button>
             </form>
         </div>
@@ -36,13 +39,6 @@
             <ul class="toolbar-filters">
                 <li *ngFor="let filter of ToggleFilters" (click)="SelectFilter(filter)">{{filter.Name}}
                     ({{filter.Count}})</li>
-                <!-- <li class="toggle-menu">
-                    Company
-                    <ul class="menu-drawer">
-                        <li>Company 1</li>
-                        <li>Company 2</li>
-                    </ul>
-                </li> -->
             </ul>
         </div>
 
@@ -91,7 +87,7 @@
     </div>
 
     <!-- Shipments List -->
-    <div class="scrollable-table" style="height: calc(100vh - 274px)">
+    <div class="scrollable-table" *ngIf="!noResult" style="height: calc(100vh - 274px)">
         <div class="table" style="height: calc(100vh - 274px)">
             
             <cdk-virtual-scroll-viewport *ngIf="ShipmentsDS" class="shipment-cards-holder" [itemSize]="170" style="height: calc(100vh - 274px)">
@@ -118,6 +114,15 @@
                         <div class="column mode-icon" style="width: 8%;">
                             <div class="circle-image">
                                 <img class="path " [attr.src]="GetModeIcon(shipment.TransportModeId)" alt=" " />
+                                <svg [class.FlipImgDiagonal]="shipment.DirectionId=='E'" width="14" height="14" version="1.1" viewBox="0 0 512.17 512.17"
+                                 xml:space="preserve" xmlns="http://www.w3.org/2000/svg"
+                                 class="direction-icon">
+                                    <g xmlns="http://www.w3.org/2000/svg">
+                                            <path class="" d="m479.05 283.92c-1.664-3.989-5.547-6.592-9.856-6.592h-116.88v-266.67c0-5.888-4.779-10.667-10.667-10.667h-170.67c-5.888 0-10.667 4.779-10.667 10.667v266.67h-117.33c-4.309 0-8.192 2.603-9.856 6.571-1.643 3.989-0.747 8.576 2.304 11.627l212.8 213.5c2.005 2.005 4.715 3.136 7.552 3.136s5.547-1.131 7.552-3.115l213.42-213.5c3.051-3.052 3.968-7.638 2.304-11.628z" 
+                                            fill="var(--MainColor)" data-original="#000000"/>
+                                    </g>
+                                </svg>
+
                             </div>
                         </div>
                         <!-- References -->
@@ -231,7 +236,7 @@
             <div class="close-btn hide-mobile" (click)="isFiltersSideBarOpened = false">×</div>
         </div>
         <ul>
-            <li [class.expanded]="isFilter1Expanded">
+            <!-- <li [class.expanded]="isFilter1Expanded">
                 <div class="filter-title" (click)="isFilter1Expanded = !isFilter1Expanded">Filter 1</div>
                 <div class="expand-icon" (click)="isFilter1Expanded = !isFilter1Expanded"><img
                         src="./assets/images/icons/down-arrow.png" alt=" " [class.expanded]="isFilter1Expanded" /></div>
@@ -240,44 +245,25 @@
                     <br>
                     <div class="chesjkd checked"></div>
                 </div>
-            </li>
+            </li> -->
             <li [class.expanded]="isFilter2Expanded">
-                <div class="filter-title" (click)="isFilter2Expanded = !isFilter2Expanded">Company</div>
+                <div class="filter-title" (click)="isFilter2Expanded = !isFilter2Expanded">Customers</div>
                 <div class="expand-icon" (click)="isFilter2Expanded = !isFilter2Expanded"><img
                         src="./assets/images/icons/down-arrow.png" alt=" " [class.expanded]="isFilter2Expanded" /></div>
                 <div class="expanded-list" [class.show]="isFilter2Expanded">
 
 
-                    <div class="checkbox-filteritem">
-                        <CheckBox [Bind]="'isAbdullahCompanyChecked'" [Value]="isAbdullahCompanyChecked"
-                            [Text]="'Abdullah Ltd.'" [DataContext]="this"></CheckBox>
-                        <div style="float: right;" class="counter"> 56 </div>
+                    <div class="checkbox-filteritem" *ngFor="let customer of InvitedCustomers">
+                        <CheckBox [Bind]="'IsSelected'" [Value]="customer.IsSelected"
+                            [Text]="customer.CompanyName" [DataContext]="customer"></CheckBox>
+                        <!-- <div style="float: right;" class="counter">0</div> -->
                     </div>
-
-                    <div class="checkbox-filteritem">
-                        <CheckBox [Bind]="'isAbdullahCompanyChecked'" [Value]="isAbdullahCompanyChecked"
-                            [Text]="'Ahmad Plastics'" [DataContext]="this"></CheckBox>
-                        <div style="float: right;" class="counter"> 15 </div>
-                    </div>
-
-                    <div class="checkbox-filteritem">
-                        <CheckBox [Bind]="'isAbdullahCompanyChecked'" [Value]="isAbdullahCompanyChecked"
-                            [Text]="'Arageeks'" [DataContext]="this"></CheckBox>
-                        <div style="float: right;" class="counter"> 07 </div>
-                    </div>
-
-                    <div class="checkbox-filteritem">
-                        <CheckBox [Bind]="'isAbdullahCompanyChecked'" [Value]="isAbdullahCompanyChecked"
-                            [Text]="'Stars And Bucks.'" [DataContext]="this"></CheckBox>
-                        <div style="float: right;" class="counter"> 105 </div>
-                    </div>
-
 
                 </div>
             </li>
 
             <li class="filters-footer">
-                <a href="#">Clear Selection</a>
+                <a href="javascript:;" (click)="ClearAdvancedFilters()">Clear Selection</a>
                 <button (click)="ApplyFilterButtonClicked()">Apply Filters</button>
             </li>
         </ul>
@@ -309,7 +295,7 @@
  <div class="floating-bar mobile-only">
     <ul>
         <li ><img src="./assets/images/icons/star@1x.png" alt=""></li>
-        <li><img src="./assets/images/icons/search@1x.png" alt=""></li>
+        <li (click)="FocusOnSearchInput()"><img src="./assets/images/icons/search@1x.png" alt=""></li>
         <li (click)="isFiltersSideBarOpened = !isFiltersSideBarOpened"><img src="./assets/images/icons/filter@1x-white.png" alt=""></li>
         <li (click)="showSortDetailsMenu = !showSortDetailsMenu"><img src="./assets/images/icons/sort@1x-white.png" [class.FlipImgVert]="!isSortDescending" alt=""></li>
     </ul>

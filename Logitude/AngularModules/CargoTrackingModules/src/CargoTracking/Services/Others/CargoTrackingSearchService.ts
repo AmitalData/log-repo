@@ -66,6 +66,37 @@ export class CargoTrackingSearchService {
 						return error;
 					})));
 		});
+    }
+    GetUserShipmentsCounter(shipmentFilters: CargoTrackingShipmentFilters) {
+        var authHeaders = ServiceHelper.GetHeaders();
+
+        var urlparameters = '';
+		var mykeys = Object.keys(shipmentFilters);
+		var addtionalFiltersValues = null;
+
+		for (var i in mykeys) {
+			var propName = mykeys[i];
+			var propValue = shipmentFilters[propName];
+
+            propValue = encodeURIComponent(propValue);
+            urlparameters = urlparameters.concat(propName.concat('=').concat(propValue)).concat('&');
+
+        }
+
+
+		return defer(() => {
+            return this._http.get(this._apiUrl + '/GetUserShipmentsCount/?' + urlparameters,
+             {headers: authHeaders})
+				.pipe(
+					map((response: HttpResponse<any>) => {
+
+						var list = response;
+
+						return list;
+					},catchError(error=>{
+						return error;
+					})));
+		});
 	}
     getShipment(SecurityKey: string, tenant: number) {
         var authHeaders = ServiceHelper.GetHeaders();
