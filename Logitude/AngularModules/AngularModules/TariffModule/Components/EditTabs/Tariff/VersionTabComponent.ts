@@ -29,7 +29,7 @@ declare var ResultAsArray: any;
     templateUrl: './VersionTabComponent.html',
 })
 
-export class VersionTabComponent extends BaseComponent implements OnDestroy {
+export class VersionTabComponent extends BaseComponent implements OnDestroy  {
     public EntityPM: TariffPM;
     public ObjectTableName: string = "Tariff";
     public TariffsLinesSource: ObservableCollection;
@@ -55,8 +55,9 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
     public selectedRow: any;
     public changeScrollPosition: EventEmitter<any> = new EventEmitter();
 
-    constructor(public entityArgs: EntityArgs) {
+    constructor(public entityArgs: EntityArgs ) {    
         super();
+        
         this.EntityPM = entityArgs.EntityPM;
         this.GetTariffType();
         this.Listen();

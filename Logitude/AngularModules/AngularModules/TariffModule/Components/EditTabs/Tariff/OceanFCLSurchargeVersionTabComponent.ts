@@ -50,6 +50,8 @@ export class OceanFCLSurchargeVersionTabComponent extends BaseComponent implemen
     public IsFirstDraft: boolean = false;
     public SelectedVersionNumber: number;    
     private deletedLinesExpirationDates: TariffLineExpirationDatePM[];
+    public selectedRow: any;
+    public changeScrollPosition: EventEmitter<any> = new EventEmitter();
   @Output() ReloadDetails = new EventEmitter();
   public LinesCount: number;
 
@@ -58,7 +60,7 @@ export class OceanFCLSurchargeVersionTabComponent extends BaseComponent implemen
         this.EntityPM = entityArgs.EntityPM;
         this.Listen();
     }
-    
+   
     public AllChargesTypes: ChargesTypeList[];
     public AllMeasurements: MeasurementList[];
     public AllPackageTypes: PackageTypeList[];
@@ -67,7 +69,6 @@ export class OceanFCLSurchargeVersionTabComponent extends BaseComponent implemen
         this.TariffsLinesSource = new ObservableCollection([]);
         this.TariffDomainService = new TariffDomainService();
         this.deletedLinesExpirationDates = [];
-
         this.CurrentVersion = args['CurrentVersion'];
         this.SelectedVersionNumber = args['SelectedVersionNumber'];
         this.LineIdFromPriceCheck = args['LineIdFromPriceCheck'];
@@ -394,14 +395,26 @@ export class OceanFCLSurchargeVersionTabComponent extends BaseComponent implemen
         }
 
         this.ItemsCollection = [];
-
+        var count = 0; var selectRowIndex = 0; var isSelectRowExist = false;
         tariffLines.sort((a, b) => a.Index - b.Index).forEach(item => {
-            this.ItemsCollection.push(new OceanFCLSurchargeTariffLineData(false, item, this));
+            var itemhistory = new OceanFCLSurchargeTariffLineData(false, item, this);
+            count++;
+            this.ItemsCollection.push(itemhistory);
+            if (!AppTool.IsNullOrEmpty(this.LineIdFromPriceCheck) && itemhistory.EntityPM.Id == this.LineIdFromPriceCheck) {
+                this.selectedRow = itemhistory;
+                selectRowIndex = count;
+                isSelectRowExist = true;
+            }
         });
 
       this.TariffsLinesSource.InsertCollection(this.ItemsCollection);
       this.LinesCount = this.TariffsLinesSource.Length;
         this.DoCompare();
+        if (isSelectRowExist) {
+            this.changeScrollPosition.emit({
+                RowIndex: selectRowIndex
+            });
+        }
     }
 
     private DoCompare() {
@@ -867,7 +880,7 @@ export class OceanFCLSurchargeTariffLineData extends BaseComponent {
     public CellColor: string = "transparent";
     private SetCellColorsForPriceCheck() {
         if (!AppTool.IsNullOrEmpty(this.FatherComponent.LineIdFromPriceCheck) && this.FatherComponent.LineIdFromPriceCheck == this.EntityPM.Id) {
-            this.CellColor = "#FFFBDA";
+            this.CellColor = "#f7dc6e";
         }
 
         else {
