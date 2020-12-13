@@ -2350,13 +2350,13 @@ namespace HypredTest
                 // CustomerPM pm = customerservice.GetCustomerPM(new CustomerApiFilters() { ByCode = true, SearchCode = "10107933" }, 8, ref resultResponse);
                 CustomerProxy.CustomerPM newCustomer = new CustomerProxy.CustomerPM()
                 {
-                    Code = "HBRDTSTCustE",
+                    Code = "HBRDTST888",
                     EnglishName = "hybrid customer E",
                     Tenant = 1,
                     PartnerTypeId = "CS",
                     SalesmanUserId = "HybridU1",
-                    VatNumber = "98956454",
-                    CustomerStatusCode = "ACT",
+                    VatNumber = "123456",
+                    CustomerStatusCode = "POT",
                     //SetActivated = true,
                     CreditLimitAmount = 50.65,
                     CountryCode = "IL",
