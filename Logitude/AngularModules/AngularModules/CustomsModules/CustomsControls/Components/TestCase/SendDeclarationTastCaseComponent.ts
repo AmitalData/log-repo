@@ -66,8 +66,7 @@ export class SendDeclarationTastCaseComponent extends BaseComponent{
     }
 
     OkButtonClicked() {
-        debugger;
-        this.Test = "{";
+         this.Test = "{";
         if (!AppTool.IsNullOrEmpty(this.parametres))
             this.Param1 = "{";
         this.parametres.forEach(x => {
@@ -106,8 +105,7 @@ export class SendDeclarationTastCaseComponent extends BaseComponent{
     ScenarioCodeClicked(evKey) {
         this._ScenarioCode = evKey;
         let detail = this.SincroTestCaseDetailList.filter(r => r.Code == this._ScenarioCode)[0];
-        debugger;
-        var list = JSON.parse(detail.Param1);
+         var list = JSON.parse(detail.Param1);
         var jsonListKeys = Object.keys(list);
         this.parametres = [];
         for (var key in jsonListKeys) {
@@ -133,7 +131,8 @@ export class SincroTestCaseDetail {
     Param2: string
 }
 
-export class Parameter {
+export class Parameter extends BaseComponent  {
+    public DataContext: any = this;
 
     private _Code: string;
     public get Code() { return this._Code; }

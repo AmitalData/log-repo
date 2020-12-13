@@ -73,13 +73,13 @@
                 <tr  class="FormFieldRow" *ngFor="let paramter of parametres">
                     <td>
                         <LogLabel [ObjectFieldName]="'Code'" [ObjectTableName]="ObjectTableName" [Text]="paramter.Code"
-                                  [DataContext]="DataContext"></LogLabel>
+                                  [DataContext]="paramter.DataContext"></LogLabel>
                     </td>
                     <td>
                         <!--<LogLabel [ObjectFieldName]="'Value'" [ObjectTableName]="ObjectTableName" [Text]="paramter.Value"
                                   [DataContext]="DataContext"></LogLabel>-->
-                        <LogTextBox [ObjectFieldName]="'Value'" [ObjectTableName]="ObjectTableName" [Text]="Test"   
-                                    [DataContext]="DataContext" [HideColumns]="true" [InputType]="'nText'"></LogTextBox>
+                        <LogTextBox [ObjectFieldName]="'Value'" [ObjectTableName]="ObjectTableName" [Text]="paramter.Value"  [FocusOnMe]="'true'" 
+                                    [DataContext]="paramter.DataContext" [HideColumns]="true" [InputType]="'nText'"></LogTextBox>
                     </td>
 
                     <td></td>
