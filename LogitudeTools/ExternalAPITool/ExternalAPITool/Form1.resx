@@ -126,20 +126,4 @@
   <metadata name="folderBrowserDialog2.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>931, 17</value>
   </metadata>
-  <data name="txtRequestBody.Text" xml:space="preserve">
-    <value>&lt;ShipmentNumbers&gt;
-	                               &lt;FromDate&gt;2020-10-24T00:00:00&lt;/FromDate&gt;
-	                               &lt;ToDate&gt;2020-11-24T00:00:00&lt;/ToDate&gt;
-	                               &lt;Direction Code='E' /&gt;
-	                               &lt;TransportMode Code='A' /&gt;
-	                               &lt;ShipmentType Code='D' /&gt;
-	                               &lt;Master&gt;UQWE3284234&lt;/Master&gt;
-	                               &lt;House&gt;&lt;/House&gt;
-	                               &lt;Carrier&gt;&lt;/Carrier&gt;
-	                               &lt;Containers&gt;
-				                            &lt;Container Number = 'AAAA2348234'/&gt;
-				                            &lt;Container Number = 'BBBB2348234'/&gt;
-	                               &lt;/Containers&gt;                                     
-                                 &lt;/ShipmentNumbers&gt;</value>
-  </data>
 </root>
