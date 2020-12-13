@@ -1153,14 +1153,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                     this.GenerateInvoiceNumber();
                 }
 
-                DocumentOutRepository documentOutRepository = new DocumentOutRepository(myCommonContext);
-                DocumentOut docOut = documentOutRepository.GetDocumentOutByEntityAndChildEntity(invoice.MainEntityId, invoice.Id);
-                if (docOut != null)
-                {
-                    docOut.NeedsRebuild = true;
-                    documentOutRepository.Update(docOut);
-                    documentOutRepository.SubmitChanges();
-                }
+                this.UpdateNeedRebuild();
             }
 
             if (!isNewEntity)
@@ -1224,6 +1217,31 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                         entityPM.InvoiceNumber = entityPM.Id;
                     }
                 }
+            }
+        }
+
+        private void UpdateNeedRebuild()
+        {
+            DocumentOut docOut = null;
+            DocumentOutRepository documentOutRepository = new DocumentOutRepository(myCommonContext);
+
+            if (entityPM.IsConsolidationInvoice)
+            {
+                string objectTableId = new ObjectTableRepository(entityPM.Tenant).GetObjectTableIdByName("ARInvoice");
+
+                docOut = documentOutRepository.GetDocumentOutByEntityId(invoice.Id, objectTableId, this.tenant);
+            }
+
+            else
+            {
+                docOut = documentOutRepository.GetDocumentOutByEntityAndChildEntity(invoice.MainEntityId, invoice.Id);
+            }
+
+            if (docOut != null)
+            {
+                docOut.NeedsRebuild = true;
+                documentOutRepository.Update(docOut);
+                documentOutRepository.SubmitChanges();
             }
         }
 
