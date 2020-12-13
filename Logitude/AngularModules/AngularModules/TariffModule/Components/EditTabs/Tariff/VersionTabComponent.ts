@@ -349,7 +349,7 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
             var itemAir = new AirCostTariffLineData(item, this)
             count++;
             this.ItemsCollection.push(itemAir);
-            if (itemAir.CellColor == "#f7dc6e") {
+            if (!AppTool.IsNullOrEmpty(this.LineIdFromPriceCheck) && itemAir.EntityPM.Id == this.LineIdFromPriceCheck) {
                 this.selectedRow = itemAir;
                 selectedIndexRow = count;
                 isItemSelectExist = true;
