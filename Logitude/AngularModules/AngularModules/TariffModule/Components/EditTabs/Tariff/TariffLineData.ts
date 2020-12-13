@@ -28,7 +28,7 @@ export class AirCostTariffLineData extends BaseComponent {
     public CellColor: string = "transparent";
     private SetCellColorsForPriceCheck() {
         if (!AppTool.IsNullOrEmpty(this.FatherComponent.LineIdFromPriceCheck) && this.FatherComponent.LineIdFromPriceCheck == this.EntityPM.Id) {
-            this.CellColor = "#FFFBDA";
+            this.CellColor = "#f7dc6e";
         }
 
         else {

@@ -295,7 +295,8 @@ export class TariffTabsContentComponent implements OnDestroy {
                     }
 
                     else {
-                        this.SelectionChanged(this.Tabs[index]);
+                        SelectedTab = this.Tabs.filter(p => p.Code == "VH")[0];
+                        this.SelectionChanged(SelectedTab);
                     }
 
                     this.entityArgs.EditComponent.PreSelectedTabCode = null;
