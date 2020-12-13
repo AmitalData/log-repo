@@ -419,8 +419,8 @@
                                                                                                     <p style="font-size:11px;margin-top:1px;color:Gray;margin-left:10px">Email Body</p>
 
                                                                                                 </div>
-                                                                                                <div [style.border]="ResultCodeSelected.Code !='EMAIL' ?'2px solid #E4E3E1':''" [style.padding-top]="ResultCodeSelected.Code !='EMAIL' ?'7px':''" [style.padding-bottom]="ResultCodeSelected.Code !='EMAIL' ?'7px':''" style="border-radius: 5px" >
-                                                                                                    <table >
+                                                                                                <div [style.border]="ResultCodeSelected.Code !='EMAIL' ?'2px solid #E4E3E1':''" [style.padding-top]="ResultCodeSelected.Code !='EMAIL' ?'7px':''" [style.padding-bottom]="ResultCodeSelected.Code !='EMAIL' ?'7px':''" style="border-radius: 5px">
+                                                                                                    <table>
                                                                                                         <tr>
                                                                                                             <td style="width:10px">
                                                                                                                 <div></div>
@@ -488,10 +488,72 @@
                                                                                                 </div>
                                                                                             </td>
 
-                                                                                  
+
                                                                                         </tr>
 
+                                                                                        <tr *ngIf="ResultCodeSelected.Code =='EMAIL'" style="height:25px">
+                                                                                            <td colspan="4">
+                       
+                                                                                                <div>
 
+                                                                                                    <table>
+
+                                                                                                        <tr style="height: 3px;">
+                                                                                                            <td style="height: 3px
+">
+
+                                                                                                                <div style="height:3px"></div>
+                                                                                                            </td>
+                                                                                                        </tr>
+
+                                                                                                        <tr>
+
+                                                                                                            <td>
+                                                                                                                <div>
+                                                                                                                    <table>
+                                                                                                                        <tr>
+                                                                                                                            <td class="CellStretched" style="width:80px;vertical-align:central">
+                                                                                                                                <p style="font-size:12px;color:#6E7172">Email Template</p>
+                                                                                                                            </td>
+
+                                                                                                                            <td style="vertical-align:central;width:203px">
+                                                                                                                                <div style="text-align:left;width:203px;vertical-align:central">
+                                                                                                                                    <ComboBox style="width:203px;" (SelectedItemChanged)="DocumentTypeTemplateListValueChanged($event)" [ItemsSource]="DocumentTypeTemplateLists" [SelectedItem]="DocumentTypetTemplateSelected" [Binding]="'Description'"></ComboBox>
+                                                                                                                                </div>
+                                                                                                                            </td>
+
+
+
+                                                                                                                            <td class="CellStretched" style="width:30px; min-width:30px; max-width:30px; position: relative;vertical-align:central">
+                                                                                                                                <div class="EditButton" (click)="EditDocumentTemplate(DocumentTypetTemplateSelected)" style="display:inline;width:18px;">
+                                                                                                                                    <IconButton [disabled]="!IsEnableEditTemplate" [Name]="'Edit'" [IsSmall]="true" style="display: block;margin-left:7px"></IconButton>
+                                                                                                                                </div>
+
+                                                                                                                            </td>
+
+                                                                                                                            <td class="CellStretched" style="width:25px; min-width:25px; max-width:25px; position: relative;vertical-align:central">
+
+                                                                                                                                <IconButton [disabled]="!IsEnableAddTemplate" [Name]="'Add'" [IsSmall]="true" (click)="AddDocumentTypeTemplate()"></IconButton>
+
+                                                                                                                            </td>
+
+                                                                                                                            <td>
+                                                                                                                                <div></div>
+                                                                                                                            </td>
+                                                                                                                        </tr>
+                                                                                                                    </table>
+                                                                                                                </div>
+                                                                                                            </td>
+                                                                                                        </tr>
+                                                                                                    </table>
+
+
+
+                                                                                                </div>
+                                                                                            </td>
+
+
+                                                                                        </tr>
 
 
 

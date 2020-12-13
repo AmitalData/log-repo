@@ -272,12 +272,12 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
 
 
-        public List<DocumentTypeTemplatePM> GetDocumentTypeTemplatesByDocumentTypeIdForAutomation(string documentTypeId, int tenant)
+        public List<DocumentTypeTemplatePM> GetDocumentTypeTemplatesByDocumentTypeIdForAutomation(string documentTypeId,string editorToolCode, int tenant)
         {
 
 
             List<DocumentTypeTemplatePM> documentTypeTemplates = (from a in repository.context.DocumentTypeTemplates.Include("LastUpdatedByUser.Contact").Include("DocumentType")
-                                                                  where a.DocumentTypeId == documentTypeId && a.Tenant == tenant && a.InActive == false && a.TemplateType != "S"
+                                                                  where a.DocumentTypeId == documentTypeId && a.Tenant == tenant && a.InActive == false && a.EditorTool == editorToolCode
                                                                   select new DocumentTypeTemplatePM()
                                                                   {
                                                                       Description = a.Description,
