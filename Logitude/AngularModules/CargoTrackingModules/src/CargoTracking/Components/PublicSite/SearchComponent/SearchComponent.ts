@@ -181,7 +181,9 @@ export class SearchComponent implements AfterViewInit,OnInit, OnDestroy
     Clear()
     {
         this.SearchText = '';
-        this.Search();
+        this.noResult = false;
+        this.Shipments = [];
+        this.location.go( 'public-tracking/search/' );
     }
     Search()
     {
