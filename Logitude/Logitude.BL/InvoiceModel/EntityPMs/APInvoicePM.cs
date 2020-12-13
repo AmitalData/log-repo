@@ -336,5 +336,7 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
         public string CreatedByPartner { get; set; }
         public bool TotalVATOnly { get; set; }
         public string VendorVatNumber { get; set; }
+
+        public DateTime? PaidDate { get; set; }
     }
 }

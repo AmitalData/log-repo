@@ -453,6 +453,12 @@
     <Constraints
       Nullable="false" />
   </Column>
+  <Column
+    Name="PaidDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="VendorId"
     ReferencedTable="Cards"
