@@ -347,7 +347,7 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
 
         private IQueryable<CargoTrackingShipmentList> FilterDirections(CargoTrackingShipmentFilters shipmentFilters, IQueryable<CargoTrackingShipmentList> shipments)
         {
-            List<string> directions = GetDirectionsToFilterBy(shipmentFilters);
+            List<string> directions = GetDirectionsFilterValues(shipmentFilters);
             shipments = shipments.Where(d =>
                 directions.Contains(d.DirectionId)
             );
@@ -379,12 +379,20 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
                 modes = shipmentFilters.TransportModeCodes.Split(',').ToList();
             return modes;
         }
-        private List<string> GetDirectionsToFilterBy(CargoTrackingShipmentFilters shipmentFilters)
+        private List<string> GetDirectionsFilterValues(CargoTrackingShipmentFilters shipmentFilters)
         {
-            List<string> modes = new List<string>() { "I", "E" };
+            string toggleFilterImportValue = "IM";
+            string toggleFilterExportValue = "EX";
+
+            string filterImportValue = "I";
+            string filterExportValue = "E";
+            List<string> directions = new List<string>() { filterImportValue, filterExportValue };
+
             if (!string.IsNullOrEmpty(shipmentFilters.DirectionCodes))
-                modes = shipmentFilters.DirectionCodes.Replace("IM", "I").Replace("EX", "E").Split(',').ToList();
-            return modes;
+                directions = shipmentFilters.DirectionCodes
+                                            .Replace(toggleFilterImportValue, filterImportValue)
+                                            .Replace(toggleFilterExportValue, filterExportValue).Split(',').ToList();
+            return directions;
         }
         private IQueryable<CargoTrackingShipmentList> GetShipmentsQuerableByIds(List<string> ShipmentIds, int tenant)
         {
