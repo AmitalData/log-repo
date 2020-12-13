@@ -371,6 +371,11 @@ export class TariffTabsContentComponent implements OnDestroy {
                                     LineIdFromPriceCheck: this.lineIdFromPriceCheck
                                 });
                             }
+                            if (this.SelectedTabItem.Code == "VH") {
+                                cmpRef.instance.Intialize({
+                                LineIdFromPriceCheck: this.lineIdFromPriceCheck
+                                });
+                            }
                         });
                     }
                 }
