@@ -1446,11 +1446,18 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 entityPM.ShipmentReceivableStatusCode = updatedPOCO.ShipmentReceivableStatusCode;
                 entityPM.ARInvoiceIssued = updatedPOCO.ARInvoiceIssued;
                 entityPM.CreditNoteIssued = updatedPOCO.CreditNoteIssued;
-
                 entityPM.OperationalDate = updatedPOCO.OperationalDate;
-
                 entityPM.RegistryDate = updatedPOCO.RegistryDate;
                 entityPM.FirstARInvoiceApprovalDate = updatedPOCO.FirstARInvoiceApprovalDate;
+
+                entityPM.HousesOpenPayablesInLocal = updatedPOCO.HousesOpenPayablesInLocal;
+                entityPM.HousesOpenPayablesInProfit = updatedPOCO.HousesOpenPayablesInProfit;
+                entityPM.HousesACCTPayablesInLocal = updatedPOCO.HousesACCTPayablesInLocal;
+                entityPM.HousesACCTPayablesInProfit = updatedPOCO.HousesACCTPayablesInProfit;
+                entityPM.HousesOpenReceivablesInLocal = updatedPOCO.HousesOpenReceivablesInLocal;
+                entityPM.HousesOpenReceivablesInProfit = updatedPOCO.HousesOpenReceivablesInProfit;
+                entityPM.HousesACCTReceivablesInLocal = updatedPOCO.HousesACCTReceivablesInLocal;
+                entityPM.HousesACCTReceivablesInProfit = updatedPOCO.HousesACCTReceivablesInProfit;
             }
 
             if (isReloadingConsoles)

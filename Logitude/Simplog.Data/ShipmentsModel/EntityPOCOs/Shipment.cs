@@ -812,5 +812,13 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public bool IsAccrualsApproved { get; set; }
         public DateTime? AccrualsApprovalDate { get; set; }
 
+        public double? HousesOpenPayablesInLocal { get; set; }
+        public double? HousesOpenPayablesInProfit { get; set; }
+        public double? HousesACCTPayablesInLocal { get; set; }
+        public double? HousesACCTPayablesInProfit { get; set; }
+        public double? HousesOpenReceivablesInLocal { get; set; }
+        public double? HousesOpenReceivablesInProfit { get; set; }
+        public double? HousesACCTReceivablesInLocal { get; set; }
+        public double? HousesACCTReceivablesInProfit { get; set; }
     }
 }
