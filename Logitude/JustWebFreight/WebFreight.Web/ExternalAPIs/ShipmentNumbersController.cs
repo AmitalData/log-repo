@@ -36,6 +36,9 @@ namespace WebFreight.Web.ExternalAPIs
                     entity = RemoveSpaces(entity);
                     ShipmentNumbersXML.ShipmentDataMappingValidating(entity, tenant);
                     var response = ShipmentNumbersXML.GetShipmentNumbersXMLMessage(entity, tenant);
+
+                    APIHelper.AddCommunicationLog("D", entity, response, "Shipment", null, "Shipment Numbers API", authToken.Tenant);
+
                     return Request.CreateResponse(HttpStatusCode.OK, response);
                 }
                 catch (Exception ex)
