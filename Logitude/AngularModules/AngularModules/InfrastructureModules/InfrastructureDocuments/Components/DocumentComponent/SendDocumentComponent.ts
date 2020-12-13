@@ -755,7 +755,7 @@ export class SendDocumentComponent implements OnInit, AfterViewInit {
                             this.SelectedDocumentTypeTemplateViewModel.ReplyTo = !AppTool.IsNullOrEmpty(myResult.ReplyTo) ? myResult.ReplyTo : "";
                             this.SelectedDocumentTypeTemplateViewModel.TemplateCc = !AppTool.IsNullOrEmpty(myResult.Cc) ? myResult.Cc : "";
                             this.SelectedDocumentTypeTemplateViewModel.TemplateBcc = !AppTool.IsNullOrEmpty(myResult.Bcc) ? myResult.Bcc : "";
-                            this.SelectedDocumentTypeTemplateViewModel.To = !AppTool.IsNullOrEmpty(myResult.To) ? myResult.To : "";
+                            this.SelectedDocumentTypeTemplateViewModel.To = !AppTool.IsNullOrEmpty(myResult.ToEmail) ? myResult.ToEmail : "";
 
                             if (!AppTool.IsNullOrEmpty(myResult.Subject)) {
                                 this.SelectedDocumentTypeTemplateViewModel.TemplateSubject = myResult.Subject;
@@ -771,7 +771,7 @@ export class SendDocumentComponent implements OnInit, AfterViewInit {
                         this.ReplyTo = !AppTool.IsNullOrEmpty(myResult.ReplyTo) ? myResult.ReplyTo : "";
                         this.Cc = !AppTool.IsNullOrEmpty(myResult.Cc) ? myResult.Cc : "";
                         this.Bcc = !AppTool.IsNullOrEmpty(myResult.Bcc) ? myResult.Bcc : "";
-                        this.ToEmail = !AppTool.IsNullOrEmpty(myResult.To) ? myResult.To : "";
+                        this.ToEmail = !AppTool.IsNullOrEmpty(myResult.ToEmail) ? myResult.ToEmail : "";
 
                         if (!AppTool.IsNullOrEmpty(this.Cc)) this.AddCcClick();
                         if (!AppTool.IsNullOrEmpty(this.Bcc)) this.AddBccClick();
