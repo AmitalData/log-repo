@@ -193,6 +193,15 @@ namespace Logitude.Infrastructure.BL
                 Code = "BCC", 
 			});
 			
+            all.Add(new ToggleDetails()
+            {    
+                Code = "ACP", 
+                SearchFields = "ACP,Accruals Approvement", 
+                Name = "Accruals Approvement", 
+                Description = "Accruals Approvement Toggle", 
+			});
+			
+			
             return all;
        }
 
