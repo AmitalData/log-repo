@@ -54,6 +54,8 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy  {
     public LinesCount: number;
     public selectedRow: any;
     public changeScrollPosition: EventEmitter<any> = new EventEmitter();
+    public darkerColler: string = "#f8ca12";
+    public chargeableWeightInKG: number;
 
     constructor(public entityArgs: EntityArgs ) {    
         super();
@@ -77,6 +79,7 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy  {
         this.CurrentVersion = args['CurrentVersion'];
         this.SelectedVersionNumber = args['SelectedVersionNumber'];
         this.LineIdFromPriceCheck = args['LineIdFromPriceCheck'];
+        this.chargeableWeightInKG = args['ChargeableWeightInKG'];
         this.LoadVersions();
         this.SetOriginDependencyFilterValue();
     }

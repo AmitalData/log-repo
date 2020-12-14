@@ -44,8 +44,11 @@ export class VersionHistoryTabComponent implements OnDestroy {
     public IsDownloadExcelTemplateVisible: boolean = false;
     public IsAllInChargesVisible: boolean = false;
     public LineIdFromPriceCheck: string;
+    public chargeableWeightInKG: number;
     public selectedRow: any;
     public changeScrollPosition: EventEmitter<any> = new EventEmitter();
+    public darkerColler: string = "#f8ca12";
+
     constructor(public entityArgs: EntityArgs) {
         this.EntityPM = entityArgs.EntityPM;
         this.VersionLinesSource = new ObservableCollection([]);
@@ -68,6 +71,7 @@ export class VersionHistoryTabComponent implements OnDestroy {
     }
     Intialize(args: any) {
         this.LineIdFromPriceCheck = args['LineIdFromPriceCheck'];
+        this.chargeableWeightInKG = args['ChargeableWeightInKG'];
     }
 
     private AllChargesTypes: ChargesTypeList[];

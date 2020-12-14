@@ -50,8 +50,8 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
     public IsAir: boolean = false;
     public selectedRow: any;
     public changeScrollPosition: EventEmitter<any> = new EventEmitter();
-  private deletedLinesExpirationDates: TariffLineExpirationDatePM[];
-  public LinesCount: number;
+    private deletedLinesExpirationDates: TariffLineExpirationDatePM[];
+    public LinesCount: number;
 
     constructor(public entityArgs: EntityArgs) {
         super();
@@ -88,7 +88,6 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
         this.CurrentVersion = args['CurrentVersion'];
         this.SelectedVersionNumber = args['SelectedVersionNumber'];
         this.LineIdFromPriceCheck = args['LineIdFromPriceCheck'];
-
         if (this.CurrentVersion != null) {
             this.IsDraftVersion = this.CurrentVersion.IsDraft;
         }

@@ -265,6 +265,7 @@ export class TariffTabsContentComponent implements OnDestroy {
     private Retries: number = 0;
     private timerToken: any;
     private lineIdFromPriceCheck: string;
+    private chargeableWeightInKG: number;
     RunComponent(IsNext: boolean = true) {
         var index = 0;
         if (!IsNext) {
@@ -277,16 +278,17 @@ export class TariffTabsContentComponent implements OnDestroy {
             }
 
             else {
-                if (!AppTool.IsNullOrEmpty(this.entityArgs.EditComponent.PreSelectedTabCode)) {
+                if (!AppTool.IsNullOrEmpty(this.entityArgs.EditComponentArgument)) {
 
-                    var versionId = null;
+                    var versionId = this.entityArgs.EditComponentArgument['VersionId'];
+                    this.lineIdFromPriceCheck = this.entityArgs.EditComponentArgument['LineId'];
+                    this.chargeableWeightInKG = this.entityArgs.EditComponentArgument['ChargeableWeightInKG'];
+                    //if (this.entityArgs.EditComponent.PreSelectedTabCode.indexOf(',') > -1) {
+                    //    var codeArray: string[] = this.entityArgs.EditComponent.PreSelectedTabCode.split(',');
 
-                    if (this.entityArgs.EditComponent.PreSelectedTabCode.indexOf(',') > -1) {
-                        var codeArray: string[] = this.entityArgs.EditComponent.PreSelectedTabCode.split(',');
-
-                        versionId = codeArray[0];
-                        this.lineIdFromPriceCheck = codeArray[1];
-                    }
+                    //    versionId = codeArray[0];
+                    //    this.lineIdFromPriceCheck = codeArray[1];
+                    //}
                     
                     var SelectedTab: TariffDetailsTab = this.Tabs.filter(p => p.VersionPM != null ? (p.VersionPM.Version == + versionId) : 0)[0];
 
@@ -368,12 +370,14 @@ export class TariffTabsContentComponent implements OnDestroy {
                                 cmpRef.instance.Intialize({
                                     CurrentVersion: this.SelectedTabItem.VersionPM,
                                     SelectedVersionNumber: this.SelectedTabItem.VersionPM.Version,
-                                    LineIdFromPriceCheck: this.lineIdFromPriceCheck
+                                    LineIdFromPriceCheck: this.lineIdFromPriceCheck,
+                                    ChargeableWeightInKG: this.chargeableWeightInKG
                                 });
                             }
                             if (this.SelectedTabItem.Code == "VH") {
                                 cmpRef.instance.Intialize({
-                                LineIdFromPriceCheck: this.lineIdFromPriceCheck
+                                    LineIdFromPriceCheck: this.lineIdFromPriceCheck,
+                                    ChargeableWeightInKG: this.chargeableWeightInKG
                                 });
                             }
                         });
