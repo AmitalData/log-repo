@@ -5858,11 +5858,20 @@ namespace WebFreight.Web.Helpers
         {
             string entityId = GetEntityPropertyValue(sharedLinkHTMLArgs.Entity, "Id");
             string shipmentLevelCode = GetEntityPropertyValue(sharedLinkHTMLArgs.Entity, "ShipmentLevelCode");
-
+            string myUrl = url;
             string pagePath = @"/SharedLogistic/ShipmentPage.aspx";
-            if (shipmentLevelCode == "C") pagePath = @"/SharedMasterDocumentsPage.aspx";
+            if (shipmentLevelCode == "C")
+            {
+                TenantManagementQuery tenantManagementQuery = new TenantManagementQuery(sharedLinkHTMLArgs.Tenant);
+                TenantManagementPM tenantManagementPM = tenantManagementQuery.GetSinglePMByDomain(url);
+                if (tenantManagementPM != null && !string.IsNullOrEmpty(tenantManagementPM.CustomerURL))
+                {
+                    myUrl = tenantManagementPM.CustomerURL;
+                }
+                pagePath = @"/SharedMasterDocumentsPage.aspx";
+            }
 
-            string pageLink = (url + pagePath).ToLower() + "?securitykey=" + sharedLinkHTMLArgs.Key + ":" + entityId + ":" +
+            string pageLink = (myUrl + pagePath).ToLower() + "?securitykey=" + sharedLinkHTMLArgs.Key + ":" + entityId + ":" +
                               sharedLinkHTMLArgs.Tenant + ":" + sharedLinkHTMLArgs.HideSharedlogistics;
             return pageLink;
         }

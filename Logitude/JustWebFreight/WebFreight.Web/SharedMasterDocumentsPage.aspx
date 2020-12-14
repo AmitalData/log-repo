@@ -42,7 +42,7 @@
         .DocumentEntityArea {
             margin: 0 5px;
             background: #FFFFFF;
-            border: 2px solid #639527;
+            border: 2px solid <%=SecondaryColor%>;
             padding-top: 3px;
             margin: 0 50px;
         }
@@ -110,7 +110,7 @@
     <div id="Container" style="position: absolute; top: 0px; z-index: 3; width: 100%; display: normal">
         <table style="height: 100%;">
 
-            <thead style="background-color: #639527">
+            <thead style="background-color: <%= MainColor %>">
                 <tr style="height: 50px;">
                     <td style="vertical-align: top;">
                         <table style="margin: 5px 0 0 0;">
