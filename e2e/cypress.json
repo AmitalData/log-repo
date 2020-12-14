@@ -11,44 +11,39 @@
     "cypressopen": "node_modules\\.bin\\cypress open"
 
   },
-  "env": {
+    "env": {
 
-    "CustomsAPIURL": "http://192.116.221.103:593/customs593/",
-    "CustomsEmail": "mohammad@fnarsoft.com",
+    "CustomsAPIURL":"https://test.logitudeworld.com/customs/",
+	"CustomsEmail": "mohammad@fnarsoft.com",
     "CustomsPassword": "1",
-    "_comment_CustomsAPIURL": "https://test.logitudeworld.com/customs/api/",
+	"_comment_CustomsAPIURL": "http://192.116.221.103:593/customs593/",
     "TestURL": "https://test.logitudeworld.com/test/",
     "TestEmail": "protractor2@test.com",
     "TestPassword": "!P123p456",
     "TestStagingURL": "https://test.logitudeworld.com/staging/",
-    "TestStagingCargoTrackingURL": "https://test.logitudeworld.com/staging/CargoTracking/948/",
     "TestStagingEmail": "protractor2@test.com",
     "TestStagingPassword": "!P123p456",
     "ProdStagingURL": "https://staging.logitudeworld.com/",
     "ProdStagingEmail": "protractor@test.com",
     "ProdStagingPassword": "!P123t456",
     "CloudStagingURL": "https://staging.amital.co.il/",
-    "CloudStagingCargoTrackingURL": "https://staging.amital.co.il/CargoTracking",
     "CloudStagingEmail": "protractor@test.com",
     "CloudStagingPassword": "!P123t456",
     "LocalURL": "http://localhost:4200/",
     "LocalEmail": "angular@fnarsoft.com",
     "LocalPassword": "1",
     "_TestCustomsURL": "https://test.logitudeworld.com/customs/",
-    "TestCustomsURL": "http://192.116.221.103:593/customs593/",
+    "TestCustomsURL": "https://test.logitudeworld.com/customs/",
     "TestCustomsEmail": "abdullahT6@customs103.com",
     "TestCustomsPassword": "!Abood12",
     "FATestEmail": "sg1209@test.com",
     "FATestPassword": "!Sg13579",
     "FACloudEmail": "sumaya@cloud.com",
     "FACloudPassword": "Sg0592463934!",
-    "ProdStagingTIURL": "https://staging.logitudeworld.com/",
-    "ProdStagingTIEmail": "protractor2@test.com",
-    "ProdStagingTIPassword": "!P123p123",
-    "TestStagingURLTIQ4": "https://test.logitudeworld.com/staging",
-    "TestStagingEmailTIQ4": "ahmadb@fnarsoft.co.il",
-    "TestStagingPasswordTIQ4": "!A123a456",
-    "CustomsTenant": 1
+    "ProdStagingTIURL":"https://staging.logitudeworld.com/",
+    "ProdStagingTIEmail":"protractor2@test.com",
+    "ProdStagingTIPassword":"!P123p123",
+	"CustomsTenant":1
 
 
   },

@@ -2176,8 +2176,16 @@ namespace Logitude.DBMigrations.Models
             {
                 Console.WriteLine("\nZero Down Time Migrations Started");
                 ZeroDownTimeMigrations zeroDownTimeMigrations  = CreateZeroDownTimeMigrations();
-                zeroDownTimeMigrations.Start();
-                Console.WriteLine("Zero Down Time Migrations Finished");
+                if (zeroDownTimeMigrations != null)
+                {
+                    zeroDownTimeMigrations.Start();
+                    Console.WriteLine("Zero Down Time Migrations Finished");
+                }
+                else
+                {
+                    Console.WriteLine("Zero Down Time Migrations Not Implemented");
+                }
+                
             }
         }
 
