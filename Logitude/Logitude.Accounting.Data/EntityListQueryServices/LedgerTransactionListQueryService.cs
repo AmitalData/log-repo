@@ -1172,7 +1172,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                 .Take(queryOperations.PageSize);
 
             var mylist = resultedList.ToList();
-
+            MapLedgerTransactionnList(mylist, false);
 
             return mylist;
         }
