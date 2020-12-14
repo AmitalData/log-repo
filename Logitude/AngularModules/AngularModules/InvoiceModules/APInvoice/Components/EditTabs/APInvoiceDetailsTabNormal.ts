@@ -1471,13 +1471,18 @@ export class APInvoiceLineItem extends BaseComponent {
     }
 
     private exists: boolean = false;
+    private UpdateExists() {
+        this.exists = false;
+        if (this.invoicePM.InvoiceLines.indexOf(this.invoiceLinePM) > -1) {
+            this.exists = true;
+        }
+    }
+
     get Exists() {
         var exists = false;
-
         if (this.invoicePM.InvoiceLines.indexOf(this.invoiceLinePM) > -1) {
             exists = true;
         }
-
         return exists;
     }
 
@@ -1494,9 +1499,10 @@ export class APInvoiceLineItem extends BaseComponent {
         if (this.exists == true) {
 
             if (this.invoiceLinePM.AmountTypeCode != "NEXP") {
-                this.ForiegnCurrencyAmount = this.OpenAmount;
+                if (AppTool.IsNullOrZero(this.ForiegnCurrencyAmount) && !AppTool.IsNullOrZero(this.OpenAmount)) {
+                    this.ForiegnCurrencyAmount = this.OpenAmount;
+                }
             }
-
             this.invoicePM.AddAPInvoiceLinePM(this.invoiceLinePM);
         }
 
