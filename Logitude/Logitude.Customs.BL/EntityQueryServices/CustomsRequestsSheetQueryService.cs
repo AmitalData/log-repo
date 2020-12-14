@@ -187,6 +187,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
                 this.repository.GetAll(Tenant)
                 .Where(rec => rec.Tenant == Tenant)
                 .Where(rec => listSheetStatusInProcess.Contains(rec.RequestStatusCode)
+                
                     //rec.RequestStatusCode == "1" /*EnglishName	LocalName Created	בקשה נרשמה */
                     //||
                     //rec.RequestStatusCode == "2" /*EnglishName	LocalName In Process	באמצע טיפול*/
@@ -196,7 +197,8 @@ namespace Logitude.Customs.BL.EntityQueryServices
                     //rec.RequestStatusCode == "20" /* Sent	נשלח */ //Yuval Chalup 06.08.2015 TASK-15156
                     //||
                     //rec.RequestStatusCode == "21" /* Received	התקבלה תשובה */ //Yuval Chalup 06.08.2015 TASK-15156
-                    );
+                    )
+                .Where(rec=>rec.RequestCreateDate > DateTime.Now.AddHours(-24) );
             if (displayOnlyMode)
             {
                 q = q.Where(rec => intrefaceTypeListDisplayOnly.Contains(rec.InterfaceTypeCode));
