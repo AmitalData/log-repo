@@ -87,7 +87,7 @@ export class ShipmentsListComponent implements AfterViewInit
     private GetInvitedCustomers()
     {
 
-        this.AddDemoCustomersForTest();
+        // this.AddDemoCustomersForTest();
 
         this.InvitedCustomersIds = SessionInfo.LoggedUserCompanyLogins
             .filter(d => d.CardType == 'CS' && d.CardId != null && d.Tenant == this.tenant)
