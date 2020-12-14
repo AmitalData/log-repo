@@ -5322,7 +5322,7 @@ namespace WebFreight.Web.Helpers
                                 if ((propertyName == "SecurityKey" || (propertyName == "ShipmentNumber" && ObjectTableName == "Shipment")) && CurrentTenant != null)
                                 {
                                     string shipmentLevelCode = GetEntityPropertyValue(theEntity, "ShipmentLevelCode");
-                                    if ((CurrentTenant.SharedLogisticsMessageLink && shipmentLevelCode != "C") || (CurrentTenant.SharedLogisMasterMessageLink && shipmentLevelCode == "C"))
+                                    if ((CurrentTenant.SharedLogisticsMessageLink) || (CurrentTenant.SharedLogisMasterMessageLink && shipmentLevelCode == "C"))
                                     {
                                         if (propertyName == "SecurityKey")
                                         {
@@ -5860,7 +5860,8 @@ namespace WebFreight.Web.Helpers
             string shipmentLevelCode = GetEntityPropertyValue(sharedLinkHTMLArgs.Entity, "ShipmentLevelCode");
             string myUrl = url;
             string pagePath = @"/SharedLogistic/ShipmentPage.aspx";
-            if (shipmentLevelCode == "C")
+            Tenant sharedTenant = GetCurrentTenant(sharedLinkHTMLArgs.Tenant);
+            if (sharedTenant != null && sharedTenant.SharedLogisMasterMessageLink && shipmentLevelCode == "C")
             {
                 TenantManagementQuery tenantManagementQuery = new TenantManagementQuery(sharedLinkHTMLArgs.Tenant);
                 TenantManagementPM tenantManagementPM = tenantManagementQuery.GetSinglePMByDomain(url);

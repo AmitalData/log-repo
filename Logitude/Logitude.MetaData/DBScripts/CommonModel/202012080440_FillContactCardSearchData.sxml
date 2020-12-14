@@ -1,5 +1,5 @@
 ﻿<Script DBType="Main" Module="Common" TargetTableName="Cards">
-  <Sql Version="2">
+  <Sql Version="4">
     <![CDATA[
 
 delete CardSearches WHERE Weight = 30
