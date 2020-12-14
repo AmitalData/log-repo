@@ -46,7 +46,7 @@ export class ChangePasswordComponent implements OnInit {
 
     private GetcargoTrackingData(baseUrl:string) {
         this.LogoImgSrc = "./assets/images/logo/White.jpg";
-        this.cargoTrackingBrandingDataExtendedService.GetCargoTrackingBrandingDataForPrivateSite(ServiceHelper.GetCurrentDomain(baseUrl)).subscribe((response: ServiceResponse) => { 
+        this.cargoTrackingBrandingDataExtendedService.GetCargoTrackingBrandingDataForPrivateSite(ServiceHelper.GetcargoTrackingDataRequest(baseUrl)).subscribe((response: ServiceResponse) => { 
             if(response.Result){
                 this.Tenant = response.Result.Tenant;
                 ServiceHelper.SetCargoTrackingDate(response.Result,baseUrl);

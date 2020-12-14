@@ -6,6 +6,7 @@ import { Location } from '@angular/common';
 import { AppHelper } from '../../../Utilities/AppHelper';
 import { CargoTrackingBrandingData } from '../../../DataContracts/CargoTrackingBrandingData';
 import { ServiceHelper } from 'src/CargoTracking/Utilities/ServiceHelper';
+import { CargoTrackingBrandingDataRequest } from 'src/CargoTracking/DataContracts/CargoTrackingBrandingDataRequest';
 
 
 @Component({
@@ -37,7 +38,7 @@ export class HomeComponent
 
     private getcargoTrackingData()
     {   
-        this.cargoTrackingDataExtendedService.get(ServiceHelper.GetCurrentDomain(this.baseUrl)).subscribe((response: ServiceResponse) =>
+        this.cargoTrackingDataExtendedService.get(ServiceHelper.GetcargoTrackingDataRequest(this.baseUrl)).subscribe((response: ServiceResponse) =>
         { if(response.Result){
 
             ServiceHelper.SetCargoTrackingDate(response.Result,this.baseUrl);
@@ -50,6 +51,8 @@ export class HomeComponent
          
         });
     }
+
+ 
 
     get ComapnyLogo(){
         return CargoTrackingBrandingData.ComapnylogoURL;

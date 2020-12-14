@@ -138,6 +138,7 @@ namespace Logitude.CargoTracking.Data.EntityMapping
             this.Property(t => t.PackagesQuantity).HasColumnName("PackagesQuantity");
 
             this.Property(t => t.DirectionId).HasColumnName("DirectionId").IsRequired().HasMaxLength(1).IsUnicode(false);
+
         }
     }
 }
