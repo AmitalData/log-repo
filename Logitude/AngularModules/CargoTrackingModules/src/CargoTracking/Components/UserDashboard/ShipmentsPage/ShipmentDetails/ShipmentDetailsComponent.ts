@@ -198,6 +198,6 @@ export class ShipmentDetailsComponent implements AfterViewInit
 
     BackLinkClicked()
     {
-        this.router.navigate(['dashboard', 'shipments']);
+        this.router.navigate(['Cargo-Tracking', 'shipments']);
     }
 }
