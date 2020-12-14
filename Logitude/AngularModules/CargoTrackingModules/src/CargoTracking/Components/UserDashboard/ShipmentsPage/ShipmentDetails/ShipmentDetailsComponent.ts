@@ -201,3 +201,4 @@ export class ShipmentDetailsComponent implements AfterViewInit
         this.router.navigate(['Cargo-Tracking', 'shipments']);
     }
 }
+ 
