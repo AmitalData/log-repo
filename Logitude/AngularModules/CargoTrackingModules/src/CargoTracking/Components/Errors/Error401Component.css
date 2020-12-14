@@ -56,12 +56,16 @@
   
   .notfound p {
     font-family: 'Montserrat', sans-serif;
-    font-size: 14px;
+    font-size: 16px;
     font-weight: 500;
     margin-bottom: 0px;
-    text-transform: uppercase;
   }
   
+  .notfound p > .Domain{
+    color: #ce6363; 
+    font-size: 16px;
+    text-shadow: 0px 1px 0px black;
+  }
   .notfound a {
     font-family: 'Titillium Web', sans-serif;
     display: inline-block;

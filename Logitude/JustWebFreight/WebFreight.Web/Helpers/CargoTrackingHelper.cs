@@ -14,27 +14,20 @@ namespace WebFreight.Web.Helpers
     {
         const string CargoTrackingImageFolderPath = "CargoTracking/CargoTrackingImages";
         const string CargoTrackingImageExtensionType = "png";
-        public static Dictionary<string, byte[]> CargTrakingImagesDictionary;
+ 
+        
 
-        public CargoTrackingHelper()
-        {
-            if (CargTrakingImagesDictionary==null)
-            {
-                CargTrakingImagesDictionary = new Dictionary<string, byte[]>();
-            }
-        }
-
-        public CargoTrackingBrandingData GetCargoTrackingBrandingDataByDomain(string domain,bool isFromPrivateSite=false)
+        public CargoTrackingBrandingData GetCargoTrackingBrandingDataByDomain(CargoTrackingBrandingDataRequest BrandingDataRequest, bool isFromPrivateSite=false)
         {
 
             TenantManagementQuery tenantManagementQuery = new TenantManagementQuery();
-            TenantManagementPM tenantManagementPM = tenantManagementQuery.GetSinglePMByDomain(domain);
-            CargoTrackingBrandingData BrandingData = MapBrandingDataByTenantManagement(tenantManagementPM, isFromPrivateSite);
+            TenantManagementPM tenantManagementPM = tenantManagementQuery.GetSinglePMByDomain(BrandingDataRequest.Domain);
+            CargoTrackingBrandingData BrandingData = MapBrandingDataByTenantManagement(tenantManagementPM, BrandingDataRequest, isFromPrivateSite);
 
             return BrandingData;
         }
  
-        private CargoTrackingBrandingData MapBrandingDataByTenantManagement(TenantManagementPM tenantManagementPM,bool isFromPrivateSite)
+        private CargoTrackingBrandingData MapBrandingDataByTenantManagement(TenantManagementPM tenantManagementPM, CargoTrackingBrandingDataRequest BrandingDataRequest, bool isFromPrivateSite)
         {
             CargoTrackingBrandingData cargoTrackingBrandingData = null;
             if (tenantManagementPM != null)
@@ -49,63 +42,61 @@ namespace WebFreight.Web.Helpers
                     ComapnylogoId = tenantManagementPM.ComapnylogoId,
                     CustomerURL = tenantManagementPM.CustomerURL,
                 };
-                SetCargoTrackingImages(cargoTrackingBrandingData, isFromPrivateSite);
+                SetCargoTrackingImages(cargoTrackingBrandingData, BrandingDataRequest, isFromPrivateSite);
             }
 
             return cargoTrackingBrandingData;
         }
-        private void SetCargoTrackingImages(CargoTrackingBrandingData cargoTrackingBrandingData, bool isFromPrivateSite)
+        private void SetCargoTrackingImages(CargoTrackingBrandingData cargoTrackingBrandingData, 
+                                            CargoTrackingBrandingDataRequest BrandingDataRequest, 
+                                            bool isFromPrivateSite)
         {
-            SetBackgroundImageBase64(cargoTrackingBrandingData, isFromPrivateSite);
-            SetComapnyLogoBase64(cargoTrackingBrandingData);
-            SetBrowserIconBase64(cargoTrackingBrandingData);
+            SetBackgroundImageBase64(cargoTrackingBrandingData, BrandingDataRequest, isFromPrivateSite);
+            SetComapnyLogoBase64(cargoTrackingBrandingData, BrandingDataRequest);
+            SetBrowserIconBase64(cargoTrackingBrandingData, BrandingDataRequest);
         }
-        private void SetBackgroundImageBase64(CargoTrackingBrandingData cargoTrackingBrandingData, bool isFromPrivateSite)
+        private void SetBackgroundImageBase64(CargoTrackingBrandingData cargoTrackingBrandingData, 
+                                              CargoTrackingBrandingDataRequest BrandingDataRequest,
+                                              bool isFromPrivateSite)
         {
-            if (!string.IsNullOrEmpty(cargoTrackingBrandingData.BackgroundId) && !isFromPrivateSite)
+            if (!string.IsNullOrEmpty(cargoTrackingBrandingData.BackgroundId)&& 
+                                      BrandingDataRequest.BackgroundId!= cargoTrackingBrandingData.BackgroundId && 
+                                      !isFromPrivateSite)
             {
                 byte[] filedata = GeImageBytesById(cargoTrackingBrandingData.BackgroundId);
                 if (filedata != null)
                 {
                     cargoTrackingBrandingData.BackgroundBytes = filedata;
-                    //string base64StringData = Convert.ToBase64String(filedata);
-                    //cargoTrackingBrandingData.BackgroundImg = "data:image/" + CargoTrackingImageExtensionType + ";base64," + base64StringData;
-                    //SaveImageOnCargoTrackingImagesIfNotExisit(base64StringData, cargoTrackingBrandingData.BackgroundId);
-                    //cargoTrackingBrandingData.BackgroundURL = GetFileURL(cargoTrackingBrandingData.BackgroundId);
                 }
             }
 
         }
 
-        private void SetComapnyLogoBase64(CargoTrackingBrandingData cargoTrackingBrandingData)
+        private void SetComapnyLogoBase64(CargoTrackingBrandingData cargoTrackingBrandingData, 
+                                          CargoTrackingBrandingDataRequest BrandingDataRequest)
         {
-            if (!string.IsNullOrEmpty(cargoTrackingBrandingData.ComapnylogoId))
+            if (!string.IsNullOrEmpty(cargoTrackingBrandingData.ComapnylogoId) && 
+                                      BrandingDataRequest.ComapnylogoId != cargoTrackingBrandingData.ComapnylogoId)
             {
                 byte[] filedata = GeImageBytesById(cargoTrackingBrandingData.ComapnylogoId);
                 if (filedata != null)
                 {
                     cargoTrackingBrandingData.ComapnylogoBytes = filedata;
-                    //string base64StringData = Convert.ToBase64String(filedata);
-                    //cargoTrackingBrandingData.ComapnylogoImg = "data:image/" + CargoTrackingImageExtensionType + ";base64," + base64StringData;
-                    //SaveImageOnCargoTrackingImagesIfNotExisit(base64StringData, cargoTrackingBrandingData.ComapnylogoId);
-                    //cargoTrackingBrandingData.ComapnylogoURL = GetFileURL(cargoTrackingBrandingData.ComapnylogoId);
                 }
             }
 
         }
 
-        private void SetBrowserIconBase64(CargoTrackingBrandingData cargoTrackingBrandingData)
+        private void SetBrowserIconBase64(CargoTrackingBrandingData cargoTrackingBrandingData, 
+                                          CargoTrackingBrandingDataRequest BrandingDataRequest)
         {
-            if (!string.IsNullOrEmpty(cargoTrackingBrandingData.BrowserIconId))
+            if (!string.IsNullOrEmpty(cargoTrackingBrandingData.BrowserIconId) && 
+                                      BrandingDataRequest.BrowserIconId != cargoTrackingBrandingData.BrowserIconId)
             {
                 byte[] filedata = GeImageBytesById(cargoTrackingBrandingData.BrowserIconId);
                 if (filedata != null)
                 {
                     cargoTrackingBrandingData.BrowserIconBytes = filedata;
-                    //string base64StringData = Convert.ToBase64String(filedata);
-                    //cargoTrackingBrandingData.BrowserIconImg = "data:image/" + CargoTrackingImageExtensionType + ";base64," + base64StringData;
-                    //SaveImageOnCargoTrackingImagesIfNotExisit(base64StringData, cargoTrackingBrandingData.BrowserIconId);
-                    //cargoTrackingBrandingData.BrowserIconURL = GetFileURL(cargoTrackingBrandingData.BrowserIconId);
                 }
             }
 
@@ -137,16 +128,11 @@ namespace WebFreight.Web.Helpers
         }
         private byte[] GeImageBytesById(string ImageId)
         {
-            byte[] imageBytes = CargTrakingImagesDictionary.ContainsKey(ImageId) ? CargTrakingImagesDictionary[ImageId] : null;// GetImageBytesFromCargoTrackingImages(ImageId);
+            byte[] imageBytes =   null;// GetImageBytesFromCargoTrackingImages(ImageId);
             if (imageBytes == null || imageBytes.Length == 0)
             {
                 Uploader uploaderService = new Uploader();
                 imageBytes = uploaderService.DownloadFile(ImageId, CargoTrackingImageExtensionType, "images", 0);
-                if (CargTrakingImagesDictionary.ContainsKey(ImageId))
-                {
-                    CargTrakingImagesDictionary.Remove(ImageId);
-                }
-                CargTrakingImagesDictionary.Add(ImageId,imageBytes);
             }
             return imageBytes;
         }
