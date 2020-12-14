@@ -84,16 +84,24 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
     public ValidationErrorsList: string[];
     ResultCodeList: ResultCode[];
     DocumentTypeLists: DocumentTypeList[];
-    DocumentTypeSelected: DocumentTypeList;
     AllDocumentTypeLists: DocumentTypeList[] = [];
+
     DocumentTypeTemplateLists: DocumentTypeTemplateViewModel[];
-    DocumentTypetTemplateSelected: DocumentTypeTemplateViewModel;
+
+    DocumentTypeTemplateReportLists: DocumentTypeTemplateViewModel[];
+
 
     DelayTime: number;
     DelayTimeOp: string;
     SelectedDelaytimeFieldCode: string;
     IsEnableAddTemplate: boolean = false;
     IsEnableEditTemplate: boolean = false;
+
+    IsEnableEditReportTemplate: boolean = false;
+    IsEnableAddReportTemplate: boolean = false;
+
+    
+
     CountDocumentSelection: string;
 
     AutomationCondationOrList: AutomationConditionViewModel[] = [];
@@ -346,6 +354,64 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
         }
     }
 
+
+    private documentTypeTemplateReportSelected: DocumentTypeTemplateViewModel;
+    get DocumentTypeTemplateReportSelected() { return this.documentTypeTemplateReportSelected; }
+    set DocumentTypeTemplateReportSelected(value: DocumentTypeTemplateViewModel) {
+        if (this.documentTypeTemplateReportSelected != value) {
+            this.documentTypeTemplateReportSelected = value;
+
+            if (this.AutomatedBackupClass && this.AutomatedBackupClass.ReportTemplateId != value.Id) {
+                this.AutomatedBackupClass.ReportTemplateId = value.Id;
+                this.IsChangeAutomation = true;
+            }
+        }
+    }
+
+
+    private documentTypeTemplateSelected: DocumentTypeTemplateViewModel;
+    get DocumentTypeTemplateSelected() { return this.documentTypeTemplateSelected; }
+    set DocumentTypeTemplateSelected(value: DocumentTypeTemplateViewModel) {
+        if (this.documentTypeTemplateSelected != value) {
+            this.documentTypeTemplateSelected = value;
+
+            if (this.CurrentEntityPM && this.CurrentEntityPM.TemplateId != value.Id) {
+                this.CurrentEntityPM.TemplateId = value.Id;
+                this.IsChangeAutomation = true;
+            }
+        }
+    }
+
+
+
+
+    private documentTypeSelected: DocumentTypeList;
+    get DocumentTypeSelected() { return this.documentTypeSelected; }
+    set DocumentTypeSelected(value: DocumentTypeList) {
+        if (this.documentTypeSelected != value) {
+            this.documentTypeSelected = value;
+            if (this.CurrentEntityPM && this.CurrentEntityPM.DocumentTypeId != value.Id) {
+                this.CurrentEntityPM.DocumentTypeId = value.Id;
+                this.IsChangeAutomation = true;
+                this.LoadDocumentTypeTemplate(value);
+            }
+            this.IsEnableAddTemplate = true;
+
+            if (this.documentTypeSelected.TemplateFormatCode == "P") {
+                this.IsEnableAddReportTemplate = true;
+            }
+        }
+    }
+
+
+
+
+
+
+
+
+
+
     MyChoosenSpecificUsers: string = "";
     ChooseUsers() {
         var args = new ChooseUserArgs();
@@ -406,7 +472,6 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
             }
 
             else this.CurrentSession.CurrentWindow.StopBusyIndicator();
-            this.IsEnableAddTemplate = true;
         }
         else {
             this.IsEnableAddTemplate = false;
@@ -446,15 +511,27 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
             else {
                 this.IsEnableAddTemplate = false;
                 this.IsEnableEditTemplate = false;
+
+                this.IsEnableAddReportTemplate = false;
+                this.IsEnableEditReportTemplate = false;
+
+
                 this.CurrentSession.CurrentWindow.StopBusyIndicator();
             }
         });
     }
 
     LoadDocumentTypeTemplate(documentTypeList: DocumentTypeList) {
-        this.DocumentTypeTemplateLists = [];
+        this.LoadDocumentTypeHTMLTemplate(documentTypeList);
+
         var isMessage: boolean = documentTypeList.TemplateFormatCode == "M" ? true : false;
-        this._documentTypeTemplatePMExtendedService.getDocumentTypeTemplatesByDocumentTypeIdForAutomations(documentTypeList.Id, isMessage ? "R":"S" , SessionLocator.Tenant).subscribe((res: any) => {
+        if (!isMessage) this.LoadDocumentTypeReportTemplate(documentTypeList);
+    }
+
+
+    LoadDocumentTypeHTMLTemplate(documentTypeList: DocumentTypeList) {
+        this.DocumentTypeTemplateLists = [];
+        this._documentTypeTemplatePMExtendedService.getDocumentTypeTemplatesByDocumentTypeIdForAutomations(documentTypeList.Id, "R" , SessionLocator.Tenant).subscribe((res: any) => {
             var pmResponse: ServiceResponse = res;
             this.CurrentSession.CurrentWindow.StopBusyIndicator();
             if (!pmResponse.HasError) {
@@ -464,85 +541,95 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
                     this.DocumentTypeTemplateLists.push(new DocumentTypeTemplateViewModel(item));
                 });
 
+                var selectedTemplate: any;
+
+
                 if (this.DocumentTypeTemplateLists && this.DocumentTypeTemplateLists.length > 0) {
                     if (this.CurrentEntityPM.TemplateId) {
-                        this.DocumentTypetTemplateSelected = this.DocumentTypeTemplateLists.filter(d => d.Id == this.CurrentEntityPM.TemplateId)[0];
+                        selectedTemplate = this.DocumentTypeTemplateLists.filter(d => d.Id == this.CurrentEntityPM.TemplateId)[0];
                     }
 
-                    if (!this.DocumentTypetTemplateSelected) {
-                        if (isMessage) {
-                            this.DocumentTypetTemplateSelected = this.DocumentTypeTemplateLists.filter(d => d.Id == documentTypeList.DocumentTypeDefaultHTMLTemplateId)[0];
-
-                        } else {
-                            this.DocumentTypetTemplateSelected = this.DocumentTypeTemplateLists.filter(d => d.Id == documentTypeList.DocumentTypeDefaultReportTemplateId)[0];
-
-                        }
-
-
-                        if (!this.DocumentTypetTemplateSelected) {
-                            this.DocumentTypetTemplateSelected = this.DocumentTypeTemplateLists[0];
-                        }
-
-                        if (this.DocumentTypetTemplateSelected) {
-                            this.CurrentEntityPM.TemplateId = this.DocumentTypetTemplateSelected.Id;
+                    if (!selectedTemplate) {
+                        selectedTemplate = this.DocumentTypeTemplateLists.filter(d => d.Id == documentTypeList.DocumentTypeDefaultHTMLTemplateId)[0];
+                        if (!selectedTemplate) {
+                            selectedTemplate = this.DocumentTypeTemplateLists[0];
                         }
                     }
+
+                    this.DocumentTypeTemplateSelected = selectedTemplate;
+
 
                     this.IsEnableEditTemplate = true;
                 }
                 else {
                     this.IsEnableEditTemplate = false;
-                    this.DocumentTypetTemplateSelected = null;
+                    this.DocumentTypeTemplateSelected = null;
                 }
             }
         });
     }
 
-    DocumentTypeListsValueChanged(item: DocumentTypeList) {
-        if (item != null) {
-            this.DocumentTypeSelected = item;
-            this.CurrentEntityPM.DocumentTypeId = item.Id;
-            this.LoadDocumentTypeTemplate(item);
-            this.IsChangeAutomation = true;
-        }
-    }
 
-    DocumentTypeTemplateListValueChanged(item: DocumentTypeTemplateViewModel) {
-        if (item != null) {
-            this.DocumentTypetTemplateSelected = item;
-            this.CurrentEntityPM.TemplateId = item.Id;
-            this.IsChangeAutomation = true;
-        }
-    }
 
-    EditDocumentTemplate(item: DocumentTypeTemplateViewModel) {
-        if (item) {
-            if (this.DocumentTypetTemplateSelected) {
-                if (item.Id != this.DocumentTypetTemplateSelected.Id) {
-                    this.DocumentTypetTemplateSelected = item;
-                    this.CurrentEntityPM.TemplateId = item.Id;
+    LoadDocumentTypeReportTemplate(documentTypeList: DocumentTypeList , reportTemplateId:string = null) {
+        this.DocumentTypeTemplateReportLists = [];
+        this._documentTypeTemplatePMExtendedService.getDocumentTypeTemplatesByDocumentTypeIdForAutomations(documentTypeList.Id, "S", SessionLocator.Tenant).subscribe((res: any) => {
+            var pmResponse: ServiceResponse = res;
+            this.CurrentSession.CurrentWindow.StopBusyIndicator();
+            if (!pmResponse.HasError) {
+                var myResult = pmResponse.Result;
+
+                myResult.forEach((item) => {
+                    this.DocumentTypeTemplateReportLists.push(new DocumentTypeTemplateViewModel(item));
+                });
+
+
+
+
+                if (this.DocumentTypeTemplateReportLists && this.DocumentTypeTemplateReportLists.length > 0) {
+                    var selectedTemplate: any;
+
+
+                      var templateId = reportTemplateId ? reportTemplateId : (this.AutomatedBackupClass && this.AutomatedBackupClass.ReportTemplateId) ? this.AutomatedBackupClass.ReportTemplateId : "";
+
+                    selectedTemplate = this.DocumentTypeTemplateReportLists.filter(d => d.Id == templateId)[0];
+                    if (!selectedTemplate) selectedTemplate = this.DocumentTypeTemplateReportLists[0];
+
+                    this.DocumentTypeTemplateReportSelected = selectedTemplate;
+
+                    this.IsEnableEditReportTemplate = true;
+                }
+                else {
+                    this.IsEnableEditReportTemplate = false;
+                    this.DocumentTypeTemplateReportSelected = null;
                 }
             }
-            else {
-                this.DocumentTypetTemplateSelected = item;
-                this.CurrentEntityPM.TemplateId = item.Id;
-            }
-        }
+        });
+    }
 
-        if (this.DocumentTypetTemplateSelected) {
+
+
+
+
+
+
+
+    EditDocumentTemplate(documentTypeTemplateViewModel: DocumentTypeTemplateViewModel) {
+        
+        if (documentTypeTemplateViewModel) {
 
             var windowArgs: any = {};
             windowArgs.DataViewModel = this;
-            windowArgs.TemplateId = this.DocumentTypetTemplateSelected.Id;
-            windowArgs.Tenant = this.DocumentTypetTemplateSelected.Tenant;
-            windowArgs.DocumentTypeTemplatePMLists = this.DocumentTypeTemplateLists;
+            windowArgs.TemplateId = documentTypeTemplateViewModel.Id;
+            windowArgs.Tenant = documentTypeTemplateViewModel.Tenant;
             windowArgs.ObjectType = "DocumentTypeTemplateViewModel";
             windowArgs.ObjectTableId = this.ObjectTableId;
             windowArgs.EntityId = this.CurrentEntityPM.Id;
             windowArgs.ChildObjectTableId = "";
 
-            if (this.DocumentTypetTemplateSelected && this.DocumentTypetTemplateSelected.EditorTool == "R") {
-                var windowArgs: any = {};
+            if (documentTypeTemplateViewModel && documentTypeTemplateViewModel.EditorTool == "R") {
+
+                windowArgs.DocumentTypeTemplatePMLists = this.DocumentTypeTemplateLists;
                 windowArgs.DataViewModel = this;
                 windowArgs.PageType = "Maintenance";
                 windowArgs.DontShowToField = true;
@@ -558,6 +645,8 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
                 logWindow.Show("./InfrastructureModules/InfrastructureDocuments/Components/DocumentComponent/HtmlDocumentPreviewComponent");
             }
             else {
+
+                windowArgs.DocumentTypeTemplatePMLists = this.DocumentTypeTemplateReportLists;
                 var widthwindow = window.innerWidth;
                 var heighthwindow = window.innerHeight;
                 var logWindow = new LogitudeWindow();
@@ -602,6 +691,47 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
             }
         });
     }
+
+
+    AddReportDocumentTypeTemplateButtonClicked() {
+
+        var windowArgs: any = {};
+        windowArgs.DataViewModel = this;
+        windowArgs.PageType = "Maintenance";
+        windowArgs.ObjectTableId = this.DocumentTypeSelected.ObjectTableId;;
+        windowArgs.CurrentEntityPM = this.DocumentTypeSelected;
+        windowArgs.DocumentTypeTemplateLists = this.DocumentTypeTemplateLists;
+        windowArgs.TypeTab = "Document";
+        windowArgs.RequestAreaName = "Automtaion";
+        var logitudeWindow = new LogitudeWindow();
+        logitudeWindow.Width = 800;
+        logitudeWindow.Height = 550;
+        logitudeWindow.Title = "New Print Template";
+
+        logitudeWindow.WindowArgs = windowArgs;
+        logitudeWindow.Show('./InfrastructureModules/InfrastructureDocuments/Components/DocumentType/NewReportTemplateComponent');
+
+        logitudeWindow.WindowClosed.subscribe(($event: any) => {
+            if ($event) {
+                this.LoadDocumentTypeReportTemplate(this.DocumentTypeSelected, $event);
+            }
+        });
+
+
+
+
+
+
+
+    }
+
+
+
+
+
+
+
+
 
     VeiwAutomationHositoryButtonClicked(item: AutomationHistoryPM) {
         var windowArgs: any = {};
