@@ -1,5 +1,5 @@
 ﻿<Script DBType="Main" Module="Invoice" AOT="true" TargetTableName="APInvoices">
-  <Sql Version="1">
+  <Sql Version="2">
     <![CDATA[
 		If(OBJECT_ID('tempdb..#temp') Is Not Null)
 		Begin
@@ -53,7 +53,7 @@
 					set @PaymentNo = REPLACE (@Notes, 'Connected with Payment: ','');
 					set @PaymentNo = REPLACE(@PaymentNo, ' with Amount Due equals to: 0','')
 
-					set @PaidDate = (select ValueDate from ARPayments where PaymentNo = @PaymentNo and  Tenant = @Tenant)
+					set @PaidDate = (select ValueDate from APPayments where PaymentNo = @PaymentNo and  Tenant = @Tenant)
        				insert into #temp_Invoices(APInvoiceId, PaidDate) values (@APInvoiceId, @PaidDate)
        			
 					set @Count = @Count + 1;
