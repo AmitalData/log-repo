@@ -81,41 +81,7 @@ export class EditComponent implements OnDestroy {
     public CurrentSession = SessionLocator.SelectedSession;
     public IsReloadNeeded: boolean = false;
     
-    // @HostListener('document:keydown.control.s') hotKeySaveChanges(){
-        
-    //     if(this.ComponentId == SessionLocator.SelectedSession.CurrentEditComponent.ComponentId){
-    //     console.log('Saving......');
-    //     this.SaveChangesAndClose();
-    //     }
-    //     return false;
-    // }
     
-    // @HostListener('document:keydown.arrowright') hotKeyNext(){
-    //     if(this.NextButtonDisabled==false
-    //         && this.NextPreviousVisible==true
-    //         && this.ComponentId == SessionLocator.SelectedSession.CurrentEditComponent.ComponentId){
-    //     console.log('Next');
-    //     this.Next();
-    // }
-    //     return false;
-    // }
-    
-    // @HostListener('document:keydown.arrowleft') hotKeyPrevious(){
-    //     if(this.PreviousButtonDisabled==false 
-    //         && this.NextPreviousVisible==true
-    //         && this.ComponentId == SessionLocator.SelectedSession.CurrentEditComponent.ComponentId){
-    //     console.log('Previous');
-    //     this.Previous();
-    //     }
-    //     return false;
-    // }
-    // @HostListener('document:keydown.escape') hotKeyBack(){
-    //     if(this.ComponentId == SessionLocator.SelectedSession.CurrentEditComponent.ComponentId){
-    //     console.log('Back button clicked method');
-    //     this.BackButtonClicked();
-    //     }
-    //     return false;
-    // }
 
     constructor(private entityPMService: EntityPMService, private entityArgs: EntityArgs, private _entityResourceService: EntityResourceService, private _totangoService: TotangoService, private cd: ChangeDetectorRef) {
         this.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Loading"));
@@ -134,7 +100,9 @@ export class EditComponent implements OnDestroy {
 
     OnSaveHotKeyPressed(){
         console.log("saving the edit component ");
+        if(this.EntityPM && this.EntityPM.IsDirty){
         this.SaveChanges();
+        }
     }
 
     OnArrowLeftHotKeyPressed(){

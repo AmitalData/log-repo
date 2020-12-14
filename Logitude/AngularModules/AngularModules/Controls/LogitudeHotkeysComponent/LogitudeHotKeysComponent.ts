@@ -28,57 +28,71 @@ export class LogitudeHotKeysComponent{
     @HostListener('document:keydown',['$event']) 
     hotKeySaveChanges(event:any){
         let saveKey=83;
+        let rightKey=39;
+        let leftKey=37;
+        let escKey=27;
         let isCTRSSHotkey=(event.ctrlKey && event.which == saveKey);
         let isCTRLShiftSHotkey=(event.ctrlKey && event.shiftKey && event.which == saveKey);
-
+        let isRightHotKey=(event.ctrlKey&&event.altKey&& event.which==rightKey);
+        let isLeftHotKey=(event.ctrlKey&&event.altKey&& event.which==leftKey);
+        let isEscHotkey=(event.which==escKey);
         if(isCTRLShiftSHotkey){
-            if(this.ComponentId == SessionLocator.SelectedSession.CurrentLogitudeHotKeysComponent.ComponentId){
-                console.log('shift + s  '+this.ComponentId);
-                this.ShiftSHotKey.emit();
-            }
+            this.EmitCtrlShiftSHotkey();
             return false;
         }
         else if(isCTRSSHotkey){
-            if(this.ComponentId == SessionLocator.SelectedSession.CurrentLogitudeHotKeysComponent.ComponentId){
-                console.log('Saving......from '+this.ComponentId);
-                this.SaveHotKey.emit();
-             }
+            this.EmitCtrlSHotkey();
            return false;
         }
+        else if(isRightHotKey){
+            this.EmitRightHotKey();
+            return false;
+        }
+        else if(isLeftHotKey){
+            this.EmitLeftHotKey();
+            return false;
+        }
+        else if(isEscHotkey){
+            this.EmitEscHotkey();
+            return false;
+        }
         
     }
     
-    @HostListener('document:keydown.arrowright') hotKeyNext(){
-        
+   
+
+    EmitCtrlShiftSHotkey(){
         if(this.ComponentId == SessionLocator.SelectedSession.CurrentLogitudeHotKeysComponent.ComponentId){
-        console.log('Next from '+this.ComponentId);
-        this.RightArrowHotKey.emit();
+            console.log('shift + s  '+this.ComponentId);
+            this.ShiftSHotKey.emit();
         }
-        
-        return false;
-    }
-    
-    @HostListener('document:keydown.arrowleft') hotKeyPrevious(){
-      
-        if(this.ComponentId == SessionLocator.SelectedSession.CurrentLogitudeHotKeysComponent.ComponentId){
-        console.log('Previous from '+this.ComponentId);
-        this.LeftArrowHotKey.emit();
-        }
-        
-        return false;
-    }
-    @HostListener('document:keydown.escape') hotKeyBack(){
-        
-        if(this.ComponentId == SessionLocator.SelectedSession.CurrentLogitudeHotKeysComponent.ComponentId){
-        console.log('Back button clicked method from '+this.ComponentId);
-        this.ESCHotKey.emit();
-        }
-        
-        return false;
     }
 
-   
-    
+    EmitCtrlSHotkey(){
+        if(this.ComponentId == SessionLocator.SelectedSession.CurrentLogitudeHotKeysComponent.ComponentId){
+            console.log('Saving......from '+this.ComponentId);
+            this.SaveHotKey.emit();
+         }
+    }
+
+    EmitRightHotKey(){
+        if(this.ComponentId == SessionLocator.SelectedSession.CurrentLogitudeHotKeysComponent.ComponentId){
+            console.log('Next from '+this.ComponentId);
+            this.RightArrowHotKey.emit();
+        }
+    }
+    EmitLeftHotKey(){
+        if(this.ComponentId == SessionLocator.SelectedSession.CurrentLogitudeHotKeysComponent.ComponentId){
+            console.log('Previous from '+this.ComponentId);
+            this.LeftArrowHotKey.emit();
+            }
+    }
+    EmitEscHotkey(){
+        if(this.ComponentId == SessionLocator.SelectedSession.CurrentLogitudeHotKeysComponent.ComponentId){
+            console.log('Back button clicked method from '+this.ComponentId);
+            this.ESCHotKey.emit();
+            }
+    }
     constructor(){
 
     }
