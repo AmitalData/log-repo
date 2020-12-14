@@ -173,6 +173,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                         FirstApproveDate = a.FirstApproveDate,
                         CreatedByPartner = a.CreatedByPartner,
                         TotalVATOnly = a.TotalVATOnly,
+                        PaidDate = a.PaidDate,
                     });
             
 
@@ -591,6 +592,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                         BranchName = a.Branch == null ? null : a.Branch.EnglishName,
                                         CreatedByPartner = a.CreatedByPartner,
                                         TotalVATOnly = a.TotalVATOnly,
+                                        PaidDate = a.PaidDate,
                                     }).FirstOrDefault();
 
 
@@ -679,6 +681,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                         BranchName = a.Branch == null ? null : a.Branch.EnglishName,
                                         CreatedByPartner = a.CreatedByPartner,
                                         TotalVATOnly = a.TotalVATOnly,
+                                        PaidDate = a.PaidDate,
                                     }).FirstOrDefault();
 
             if(entityPM != null)
@@ -1087,6 +1090,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                              Field9 = a.Field9,
                              Field10 = a.Field10,
                              TotalVATOnly = a.TotalVATOnly,
+                             PaidDate = a.PaidDate,
                          };
 
             return result;
@@ -1162,6 +1166,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                             BranchName = a.Branch == null ? null : a.Branch.EnglishName,
                             CreatedByPartner = a.CreatedByPartner,
                             TotalVATOnly = a.TotalVATOnly,
+                            PaidDate = a.PaidDate,
                         };
 
             return query;
@@ -1285,6 +1290,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                              Field9 = a.Field9,
                              Field10 = a.Field10,
                              TotalVATOnly = a.TotalVATOnly,
+                             PaidDate = a.PaidDate,
                          };
 
             return result;
@@ -1375,6 +1381,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                                 BranchName = a.Branch == null ? null : a.Branch.EnglishName,
                                                 CreatedByPartner = a.CreatedByPartner,
                                                 TotalVATOnly = a.TotalVATOnly,
+                                                PaidDate = a.PaidDate,
                                             }).ToList();
 
 
