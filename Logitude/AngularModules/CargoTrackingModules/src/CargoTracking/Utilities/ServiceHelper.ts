@@ -1,5 +1,7 @@
 import { HttpHeaders } from '@angular/common/http';
 import { CargoTrackingBrandingData } from '../DataContracts/CargoTrackingBrandingData';
+import { CargoTrackingBrandingDataRequest } from '../DataContracts/CargoTrackingBrandingDataRequest';
+import { CargoTrackingImage } from '../DataContracts/CargoTrackingImage';
 
 export  class ServiceHelper{
 
@@ -21,14 +23,18 @@ export  class ServiceHelper{
         }
             
     }
-
-    public static GetCurrentDomain(baseUrl:string){
-        // if(baseUrl.includes('/CargoTracking')){
-        //     baseUrl = baseUrl.replace("/CargoTracking","");
-        // }
-        return baseUrl 
+ 
+    public static GetcargoTrackingDataRequest(baseUrl:string)
+    {   var BackgroundId:string = this.GetImageIdFromStorage("BackgroundImg");
+        var CompanyLogoId:string = this.GetImageIdFromStorage("CompanyLogoImg");
+        var BrowserIconId:string = this.GetImageIdFromStorage("BrowserIconImg");
+        var BrandingDataRequest:CargoTrackingBrandingDataRequest = new CargoTrackingBrandingDataRequest();
+        BrandingDataRequest.BackgroundId = BackgroundId;
+        BrandingDataRequest.ComapnylogoId = CompanyLogoId;
+        BrandingDataRequest.BrowserIconId = BrowserIconId;
+        BrandingDataRequest.Domain = baseUrl;
+        return BrandingDataRequest;
     }
-     
     public static SetCargoTrackingDate(brandingData:any,baseUrl:string){
 
         CargoTrackingBrandingData.Tenant = brandingData.Tenant;
@@ -52,30 +58,52 @@ export  class ServiceHelper{
     {
         this.SetBackGroundImg(BrandingData,baseUrl);
         this.SetComapnyLogo(BrandingData,baseUrl);
-        this.SetBrowserIcon(BrandingData,baseUrl);
+        this.SetBrowserIcon(BrandingData);
     }
     private static SetBackGroundImg(BrandingData:any,baseUrl:string)
     {   
         if(BrandingData.BackgroundBytes){
-            CargoTrackingBrandingData.BackgroundURL = "url("+this.GetImageFromBytes(BrandingData.BackgroundBytes)+")";
+            CargoTrackingBrandingData.BackgroundURL = "url("+ServiceHelper.GetImageFromBytes(BrandingData.BackgroundBytes)+")";
+            this.StoreImageInStorage("BackgroundImg",BrandingData.BackgroundId,BrandingData.BackgroundBytes);
         }
         else{
-            CargoTrackingBrandingData.BackgroundURL ="url('"+baseUrl+"assets/images/misc/map-bg.svg')"
+            var StorageBackground:CargoTrackingImage = ServiceHelper.GetImageFromStorage("BackgroundImg");
+                if(StorageBackground && StorageBackground.Id!=null && StorageBackground.Id == BrandingData.BackgroundId){
+                    CargoTrackingBrandingData.BackgroundURL ="url("+ServiceHelper.GetImageFromBytes(StorageBackground.Data)+")";
+                }
+                else{
+                    CargoTrackingBrandingData.BackgroundURL ="url('"+baseUrl+"assets/images/misc/map-bg.svg')"
+                }
         } 
     }
 
     private static SetComapnyLogo(BrandingData:any,baseUrl:string)
     {
         if(BrandingData.ComapnylogoBytes){
-            CargoTrackingBrandingData.ComapnylogoURL = this.GetImageFromBytes(BrandingData.ComapnylogoBytes);
+            CargoTrackingBrandingData.ComapnylogoURL = ServiceHelper.GetImageFromBytes(BrandingData.ComapnylogoBytes);
+            this.StoreImageInStorage("CompanyLogoImg",BrandingData.ComapnylogoId,BrandingData.ComapnylogoBytes);
+        }
+        else{
+            var StorageCompanyLogo:CargoTrackingImage = ServiceHelper.GetImageFromStorage("CompanyLogoImg");
+                if(StorageCompanyLogo && StorageCompanyLogo.Id!=null && StorageCompanyLogo.Id == BrandingData.ComapnylogoId){
+                    CargoTrackingBrandingData.ComapnylogoURL =ServiceHelper.GetImageFromBytes(StorageCompanyLogo.Data);
+                }
         }
     }
 
-    private static SetBrowserIcon(BrandingData:any,baseUrl:string)
+    private static SetBrowserIcon(BrandingData:any)
     {
         if(BrandingData.BrowserIconBytes){
-            CargoTrackingBrandingData.BrowserIconURL =this.GetImageFromBytes(BrandingData.BrowserIconBytes);
+            CargoTrackingBrandingData.BrowserIconURL =ServiceHelper.GetImageFromBytes(BrandingData.BrowserIconBytes);
             ServiceHelper.favIcon.href =CargoTrackingBrandingData.BrowserIconURL;
+            this.StoreImageInStorage("BrowserIconImg",BrandingData.BrowserIconId,BrandingData.BrowserIconBytes);
+        }
+        else{
+            var StorageBrowserIcon:CargoTrackingImage = ServiceHelper.GetImageFromStorage("BrowserIconImg");
+                if(StorageBrowserIcon && StorageBrowserIcon.Id!=null && StorageBrowserIcon.Id == BrandingData.BrowserIconId){
+                    CargoTrackingBrandingData.BrowserIconURL =ServiceHelper.GetImageFromBytes(StorageBrowserIcon.Data);
+                    ServiceHelper.favIcon.href =CargoTrackingBrandingData.BrowserIconURL;
+                }
         }
     }
      
@@ -83,10 +111,27 @@ export  class ServiceHelper{
         return "data:image/png;base64,"+ImageByte;
     }
 
+    private static StoreImageInStorage(ImgStorageKey:string,ImgId:string,ImgData:any){
+        localStorage.setItem(ImgStorageKey,JSON.stringify(new CargoTrackingImage(ImgId,ImgData)));
+    }
+
+    private static GetImageFromStorage(ImgStorageKey:string){
+        return JSON.parse(localStorage.getItem(ImgStorageKey));
+    }
+
+
+    private static GetImageIdFromStorage(ImgStorageKey:string){
+        var ImgId:string=null;
+        var StorageImage:CargoTrackingImage = JSON.parse(localStorage.getItem(ImgStorageKey));
+        if(StorageImage && StorageImage.Id){
+            ImgId=StorageImage.Id;
+        }
+        return ImgId;
+    }
+
     public static GetHeaders(){
 
         var authHeader = new HttpHeaders();
-        // authHeader.append('token', AppLocator.token);
         authHeader.append('Access-Control-Allow-Origin', '*');
 
         return authHeader;
