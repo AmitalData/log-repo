@@ -180,28 +180,24 @@ export class ShipmentDetailsComponent implements AfterViewInit
     }
 
 
-    ItemClicked(item)
-    {
-        var selection = window.getSelection();
-        if (selection.toString().length === 0) {
-            var SecurityKey = item.SecurityKey;
-
-        this.router.navigate(['Cargo-Tracking','shipment', SecurityKey]);
-        }
-    }
 
     selectedNavButton: string = "Overview";
     PanelsNavigatorClicked(panelName: string)
     {
-        this.selectedNavButton = panelName;
-        var element = document.getElementById(panelName) as HTMLElement;
-        if (element)
-            element.scrollIntoView();
+        this.ScrollToPanel(panelName);
     }
 
 
+    private ScrollToPanel(panelName: string)
+    {
+        this.selectedNavButton = panelName;
+        var panelElement = document.getElementById(panelName) as HTMLElement;
+        if (panelElement)
+            panelElement.scrollIntoView();
+    }
+
     BackLinkClicked()
     {
-        this.router.navigate(['dashboard', 'shipments']);
+        this.router.navigate(['Cargo-Tracking', 'shipments']);
     }
 }
