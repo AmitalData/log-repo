@@ -95,7 +95,9 @@ export class EditComponent implements OnDestroy {
     }
 
     OnSaveAndCloseHotKey(){
+        if(!this.IsSaveBtnDisable){
         this.SaveChangesAndClose();
+        }
     }
 
     OnSaveHotKeyPressed(){
