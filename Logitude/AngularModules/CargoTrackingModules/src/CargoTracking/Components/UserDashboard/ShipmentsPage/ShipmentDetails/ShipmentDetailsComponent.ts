@@ -190,3 +190,4 @@ export class ShipmentDetailsComponent implements AfterViewInit
             element.scrollIntoView();
     }
 }
+ 

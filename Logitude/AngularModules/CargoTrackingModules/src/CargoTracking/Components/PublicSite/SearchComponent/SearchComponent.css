@@ -472,7 +472,7 @@ li a {
 @media screen and (max-width: 479px) {
     .search-text {
         /* margin: 0 20px; */
-        width: 100%;
+        /* width: 100%; */
     }
     .seperator {
         display: none !important;
