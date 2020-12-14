@@ -1515,6 +1515,30 @@ namespace Logitude.CargoTracking.Def.EntityPMs
 			
 		 }
 	   }
+
+	  private string directionId ;
+	  	  
+       
+	   [CustomValidation(typeof(CargoTrackingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string DirectionId  
+	   {
+	    
+	     get
+		{
+		   return directionId;
+		 }
+		 set
+		 {
+		   if(directionId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DirectionId",OldValue=directionId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   directionId=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

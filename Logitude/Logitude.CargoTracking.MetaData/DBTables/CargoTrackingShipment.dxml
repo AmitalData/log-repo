@@ -370,6 +370,13 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="DirectionId"
+    Type="varchar"
+    Size="1">
+    <Constraints
+      Nullable="false" />
+  </Column>
   <Relation
     ForeignKeyColumn="EntityType"
     ReferencedTable="CargoTrackingHeaderEntityTypes"
