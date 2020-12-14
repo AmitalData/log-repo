@@ -536,7 +536,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 {
                     Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.AppendLine("8250 RequestInProgress stop create a new one !! ");
                 }
-                throw;
+              //  throw;
             }
             this.IsDelayedDeclarationStatusRequestSent = true;
         }
