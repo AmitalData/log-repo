@@ -5319,7 +5319,7 @@ namespace WebFreight.Web.Helpers
 
                                 string resultValue = GetEntityFieldValue(theEntity, propertyName, theEntityObjectFields, tenant);
                                 string shipmentLevelCode = GetEntityPropertyValue(theEntity, "ShipmentLevelCode");
-                                bool enableSharedLogisticsMessageLink = (CurrentTenant.SharedLogisticsMessageLink) || (CurrentTenant.SharedLogisMasterMessageLink && shipmentLevelCode == "C");
+                                bool enableSharedLogisticsMessageLink = CurrentTenant != null && ((CurrentTenant.SharedLogisticsMessageLink) || (CurrentTenant.SharedLogisMasterMessageLink && shipmentLevelCode == "C"));
                                 if ((propertyName == "SecurityKey" || (propertyName == "ShipmentNumber" && ObjectTableName == "Shipment")) && CurrentTenant != null && enableSharedLogisticsMessageLink)
                                 {
                                     if (propertyName == "SecurityKey")
@@ -5877,7 +5877,11 @@ namespace WebFreight.Web.Helpers
         private string GetEntityPropertyValue(object entity, string property)
         {
             PropertyInfo propertyInfo = entity.GetType().GetProperty(property);
-            string value = propertyInfo.GetValue(entity)?.ToString();
+            string value = "";
+            if (propertyInfo != null)
+            {
+                value = propertyInfo.GetValue(entity)?.ToString();
+            }
 
             return value;
         }
