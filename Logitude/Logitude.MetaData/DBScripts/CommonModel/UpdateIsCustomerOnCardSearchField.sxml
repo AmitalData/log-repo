@@ -1,5 +1,5 @@
 ﻿<Script DBType="Main" Module="Common"  TargetTableName="CardSearches">
-  <Sql Version="1">
+  <Sql Version="3">
     <![CDATA[
     
 update  CardSearches set IsCustomer = (select IsCustomer From Cards where id =CardSearches.CardId) 
