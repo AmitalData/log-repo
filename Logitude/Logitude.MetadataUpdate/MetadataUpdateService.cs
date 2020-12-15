@@ -41,9 +41,10 @@ namespace Logitude.MetadataUpdate
         private void InitializeSettings()
         {
             string dbms = ConfigurationManager.AppSettings.Get("DBMS");
+            LogitudeSettings.DatabaseManagementSystem = dbms;
             Console.WriteLine("Connected to " + dbms);
             Console.WriteLine(GetConnectionString());
-            LogitudeSettings.DatabaseManagementSystem = dbms;
+            
             SettingRepository settingRepository = new SettingRepository();
             Setting setting = settingRepository.GetSingleSetting("1");
             LogitudeSettings.Id = setting.Id;
