@@ -1971,7 +1971,7 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                 }
             }
 
-            entityPM.QuoteCharges = quoteChargeQuery.GetQuoteChargesPMsByQuoteId(entityId, tenant);
+            entityPM.QuoteCharges = quoteChargeQuery.GetQuoteChargesPMsByQuoteId(entityId, tenant, entityPM.QuoteTypeCode);
 
             entityPM.TotalVATs = myTotalVATQuery.GetTotalVATs(entityId, tenant);
 
