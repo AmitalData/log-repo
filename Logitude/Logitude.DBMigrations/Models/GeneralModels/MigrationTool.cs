@@ -1477,7 +1477,7 @@ namespace Logitude.DBMigrations.Models
                     }
                     else
                     {
-                        UpdateIntoDBMigrationsDataScripts(scriptDefinition);
+                        UpdateDBMigrationsDataScripts(scriptDefinition);
                     }
                 }
             }
@@ -2280,9 +2280,12 @@ namespace Logitude.DBMigrations.Models
                 }
             }
         }
-
-        protected void UpdateIntoDBMigrationsDataScripts(ScriptDefinition scriptDefinition)
+        
+        protected void UpdateDBMigrationsDataScripts(ScriptDefinition scriptDefinition)
         {
+            UpdateDataScriptCounter(scriptDefinition.TargetTableName);
+            int scriptExecutionNumber = GetDataScriptCounter(scriptDefinition.TargetTableName);
+
             if (ToolConfigurations.DatabaseType.ToLower() == "oracle")
             {
 
@@ -2293,7 +2296,7 @@ namespace Logitude.DBMigrations.Models
                 int sxmlVersion = scriptDefinition.Sql.Version;
                 string sxmlScriptHashValue = GenerateHashString(scriptDefinition.Sql.Script);
 
-                string queryString = "UPDATE [dbo].[DBMigrationsDataScripts] SET [SxmlScript] = '" + sxmlScript + "', [Status] = 'Waiting', [StartDate] = NULL, [EndDate] = NULL, " +
+                string queryString = "UPDATE [dbo].[DBMigrationsDataScripts] SET [SxmlScript] = '" + sxmlScript + "', [Status] = 'Waiting', [ScriptExecutionNumber] = " + scriptExecutionNumber + ", [StartDate] = NULL, [EndDate] = NULL, " +
                     "[LastBatchElapsedTime] = 0, [ScriptVersion] = " + sxmlVersion + ", [ScriptHashValue] = '" + sxmlScriptHashValue + "', " +
                     "[ScriptHistoryAction] = '" + scriptDefinition.ScriptHistoryAction + "' WHERE [SxmlFileName] = '" + scriptDefinition.SxmlFileName + "'";
 
