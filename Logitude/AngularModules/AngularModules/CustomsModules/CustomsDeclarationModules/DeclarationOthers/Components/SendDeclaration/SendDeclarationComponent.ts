@@ -123,7 +123,7 @@ export class SendDeclarationComponent implements OnDestroy {
             
             var logWindow = new LogitudeWindow();
             logWindow.Width = 600;
-            logWindow.Height = 400;
+            logWindow.Height = 600;
             logWindow.Title = "תרחשי הצהרה";
             logWindow.ShowCloseButton = false;
             logWindow.WindowArgs = windowArgs;

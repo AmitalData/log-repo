@@ -105,6 +105,19 @@ MainInterfaceCode ="5002"
                 },
                 new SincroTestCaseDetail()
                 {
+                    Code = "8228",
+                    Name = "(אימות מסמך נדרש (8228",
+                    IsDCA= true,
+                    Entity="Declaration",
+                    Param1= @"{ ""documentId"" :"""" ,  ""rejectVerificationReason"" :"""" , ""verificationDecisionType"" :""2"" , ""rejectVerificationRemark"" :""FAKE"" , 
+                              ""typeId"" :""380"" , ""entityType"" :""12414"" , ""entityIdKey2"" :"""",
+                                 ""entityIdKey3"" :""""  }",
+
+
+                    MainInterfaceCode="8228",
+                },
+                new SincroTestCaseDetail()
+                {
                     Code = "190",
                     Name = "בדיקות פיזיות	",
                     IsDCA = true,

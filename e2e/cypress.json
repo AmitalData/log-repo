@@ -13,10 +13,10 @@
   },
   "env": {
 
-    "CustomsAPIURL":"http://192.116.221.103:593/customs593/",
+    "CustomsAPIURL":"https://test.logitudeworld.com/customs/",
 	"CustomsEmail": "mohammad@fnarsoft.com",
     "CustomsPassword": "1",
-	"_comment_CustomsAPIURL": "https://test.logitudeworld.com/customs/api/",
+	"_comment_CustomsAPIURL": "http://192.116.221.103:593/customs593/",
     "TestURL": "https://test.logitudeworld.com/test/",
     "TestEmail": "protractor2@test.com",
     "TestPassword": "!P123p456",
@@ -33,7 +33,7 @@
     "LocalEmail": "angular@fnarsoft.com",
     "LocalPassword": "1",
     "_TestCustomsURL": "https://test.logitudeworld.com/customs/",
-    "TestCustomsURL": "http://192.116.221.103:593/customs593/",
+    "TestCustomsURL": "https://test.logitudeworld.com/customs/",
     "TestCustomsEmail": "abdullahT6@customs103.com",
     "TestCustomsPassword": "!Abood12",
     "FATestEmail": "sg1209@test.com",
