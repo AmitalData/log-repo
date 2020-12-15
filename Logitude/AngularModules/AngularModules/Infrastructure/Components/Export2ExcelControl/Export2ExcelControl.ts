@@ -110,8 +110,11 @@ export class Export2ExcelControl {
     }
 
     initializeStartExecutionLogCheckTimer() {
-        const timer$ = timer(30000); //complete after
-        return interval(2000).pipe(timeInterval(), takeUntil(timer$));
+        const source = interval(2000);
+        const timer$ = timer(300000); //complete after
+        //return interval(2000).pipe(takeUntil(timer$));
+
+        return source.pipe(takeUntil(timer$));
 
     }
     private StartExecutionLogCheckTimerSub: any= null;
@@ -143,7 +146,8 @@ export class Export2ExcelControl {
                         if (pmResponse.HasError
                             || (pmResponse.Result && pmResponse.Result.ExceptionMessage)
                             || (pmResponse.Result && pmResponse.Result.StatusCode === "D")) {
-                            
+
+                            this.IsSucceeded = true;
                             this.StopQueryLogCheckTimer();
 
                             this.CompleteExcelData(this.FileName);
@@ -163,12 +167,16 @@ export class Export2ExcelControl {
                         }
                     }
                     },
-                    error => {console.log(error)},
-                    () => {
-                        //this.LogCheckTimerCompletedUnsuccessfully();
-                });
+                    error => {console.log(error)}
+                    );
             }
-        });
+        },
+            error => { console.log(error) },
+            () => {
+                if (!this.IsSucceeded)
+                    this.LogCheckTimerCompletedUnsuccessfully();
+            }
+        );
     }
 
     private LogCheckTimerCompletedUnsuccessfully() {

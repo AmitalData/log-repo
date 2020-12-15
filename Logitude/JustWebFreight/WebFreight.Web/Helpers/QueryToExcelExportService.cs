@@ -1,5 +1,6 @@
 ﻿using Logitude.BL.InfrastructureModel.EntityPMs;
 using Logitude.BL.InfrastructureModel.EntityQueries;
+ 
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.Helpers;
@@ -15,6 +16,7 @@ using System.Linq;
 using System.Reflection;
 using System.Web;
 using System.Web.Script.Serialization;
+using WebFreight.Web.Security;
 
 namespace WebFreight.Web.Helpers
 {
@@ -29,7 +31,7 @@ namespace WebFreight.Web.Helpers
             }
             else
             {
-                return ExportQueryDataToStorage(queryFilters);
+                return ExportQueryDataToStorage(new ExportQueryToExcelArgs() { QueryFilters = queryFilters });
             }
         }
 
@@ -56,15 +58,18 @@ namespace WebFreight.Web.Helpers
             reportExecutionLogRepository.Add(executionLog);
             reportExecutionLogRepository.SubmitChanges();
 
+            string ObjectTableName = queryFilters.ObjectTableName.Replace("Customs.", "");
+            string fileName = GetOutpuFileName(queryFilters, ObjectTableName);
+
             IQueueService queueservice = new DbQueueService();
             queueservice.InitializeQueue("QueryExportExecutionLogQueue", executionLog.Tenant);
             queueservice.Send(new Dictionary<string, string>() {
                     { "LogId", executionLog.Id },
-                    { "Tenant", executionLog.Tenant.ToString() }
+                    { "Tenant", executionLog.Tenant.ToString() },
+                    { "FileName", fileName }
                 }, tenant, null, null, null, null);
 
-            string ObjectTableName = queryFilters.ObjectTableName.Replace("Customs.", "");
-            string fileName = GetOutpuFileName(queryFilters, ObjectTableName);
+
 
             return new ExportResult() { ExecutionLogId = logId, FileName = fileName, IsWorkerRole = true };
         }
@@ -74,8 +79,9 @@ namespace WebFreight.Web.Helpers
             return ObjectTableName + "_" + queryFilters.queryCode + DateTime.Now.ToString("yyyy-dd-M--HH-mm-ss");
         }
 
-        public ExportResult ExportQueryDataToStorage(CustomApiQueryFilters queryFilters)
+        public ExportResult ExportQueryDataToStorage(ExportQueryToExcelArgs args)
         {
+            var queryFilters = args.QueryFilters;
             var queryOperations = this.GetQueryOperations(queryFilters);
             FilterSerializer serializer = new FilterSerializer();
             byte[] arrayOfBytes = serializer.SerializeFilterItems(queryOperations);
@@ -86,6 +92,7 @@ namespace WebFreight.Web.Helpers
             string userid = queryFilters.userid;
             string ObjectTableName = queryFilters.ObjectTableName.Replace("Customs.", "");
 
+            SecurityUtility.IsWorkerRole = args.IsWorkerRoleCall;
 
             var data = new ExportToExcelHelper().ExportQueryToExcel(new ExportToExcelArgs()
             {
@@ -103,7 +110,7 @@ namespace WebFreight.Web.Helpers
             //    ObjectTableName = ObjectTableName.Replace("Customs.", "");
             //}
 
-            string fileName = GetOutpuFileName(queryFilters, ObjectTableName);
+            string fileName = !string.IsNullOrEmpty(args.OutputFileName) ? args.OutputFileName : GetOutpuFileName(queryFilters, ObjectTableName);
             BlobFileInfo fileInfo = new BlobFileInfo()
             {
                 FileName = fileName,//ObjectTableName + DateTime.Now.ToShortDateString(),//fileparams[0],
@@ -217,9 +224,15 @@ namespace WebFreight.Web.Helpers
         }
 
 
-      
+
     }
 
+    public class ExportQueryToExcelArgs {
+        public CustomApiQueryFilters QueryFilters { get; set; }
+        public bool IsWorkerRoleCall { get; set; }
+        CustomApiQueryFilters queryFilters;
+        public string OutputFileName { get; set; }
+    }
     public class ExportResult
     {
         public string FileName { get; set; }

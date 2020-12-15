@@ -215,8 +215,14 @@ namespace WebFreight.Web.Security
             }
         }
 
+        public static bool IsWorkerRole = false;
         public static void CheckContactFeature(string objectTableName, string featureCode, int tenant,string overrideEmail=null)
         {
+            if (IsWorkerRole && HttpContext.Current == null) //for calling the excel export data from WR 
+            {
+                return;
+            }
+
             bool exists = false;
 
             if (objectTableName.Contains("Customs."))
@@ -359,6 +365,11 @@ namespace WebFreight.Web.Security
 	 
 		public static bool CheckTableContactFeature(string objectTableName, string featureCode, int tenant)
         {
+            if (IsWorkerRole && HttpContext.Current == null) //for calling the excel export data from WR 
+            {
+                return true;
+            }
+
             bool exists = false;
 
             if (tenant == 0)

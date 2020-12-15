@@ -35,10 +35,11 @@ namespace CommunicationWorkerRole.Services
 
                 var logId = queueResponse.MessageValues.Keys.Contains("LogId") ? queueResponse.MessageValues["LogId"].ToString() : "";
                 var tenant = int.Parse(queueResponse.MessageValues["Tenant"].ToString());
+                var fileName = queueResponse.MessageValues["FileName"].ToString();
 
-                var loggedContact = LoggedContactResolver.GetLoggedContact(tenant);
-                HttpContext.Current.User = new System.Security.Principal.GenericPrincipal(new System.Security.Principal.GenericIdentity(loggedContact?.Email), new string[0]);
-                
+                //var loggedContact = LoggedContactResolver.GetLoggedContact(tenant);
+                //HttpContext.Current.User = new System.Security.Principal.GenericPrincipal(new System.Security.Principal.GenericIdentity(loggedContact?.Email), new string[0]);
+
                 queryExecutionLogRepository = new QueryExportExecutionLogRepository(tenant);
                 executionLog = queryExecutionLogRepository.GetSingle(logId, tenant);
                 if (executionLog != null && executionLog.StatusCode == "W")
@@ -46,7 +47,14 @@ namespace CommunicationWorkerRole.Services
                     UpdateExecutionLogStatus("P");
                     var queryFilters = LogitudeXmlSerializer.DeserializeObject<CustomApiQueryFilters>(executionLog.QueryFilterXML);
                     var queryToExcelExportService = new QueryToExcelExportService();
-                    queryToExcelExportService.ExportQueryDataToStorage(queryFilters);
+                    var queryArgs = new ExportQueryToExcelArgs()
+                    {
+                        QueryFilters = queryFilters,
+                        IsWorkerRoleCall = true, 
+                        OutputFileName = fileName,
+                    };
+
+                    queryToExcelExportService.ExportQueryDataToStorage(queryArgs);
                     UpdateExecutionLogStatus("D");
                 }
             }
