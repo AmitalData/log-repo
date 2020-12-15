@@ -19,7 +19,7 @@ import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
 import {PerformanceLogger} from '../../../Infrastructure/Utilities/PerformanceLogger';
 import {LocalStorageManager} from '../../../Infrastructure/Utilities/LocalStorageManager';
-import {AmendRequestRejectReasonTypeList} from '../../EntityLists/AmendmentRequestRejectReasonTypeList';
+import {AmendRequestRejectReasonTypeList} from '../../EntityLists/AmendRequestRejectReasonTypeList';
 
 @Injectable()
 
