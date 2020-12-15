@@ -1385,6 +1385,7 @@ namespace WebFreight.Web
 
                                 string encryptedTicket = FormsAuthentication.Encrypt(ticket);
                                 HttpCookie authCookie = new HttpCookie(FormsAuthentication.FormsCookieName, encryptedTicket);
+                                authCookie.SameSite = SameSiteMode.None;
                                 HttpContext.Current.Response.Cookies.Add(authCookie);
 
                             }
