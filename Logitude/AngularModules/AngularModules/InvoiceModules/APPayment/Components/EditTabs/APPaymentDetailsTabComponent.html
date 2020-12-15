@@ -588,8 +588,8 @@
                                                     <table>
                                                         <tr>
 
-                                                            <td style="width:50px;text-align:center">
-                                                                <a style="font-size:12px; color:green" (click)="ViewPaymentCheque()">{{EntityPM.ChequeOrPaymentRef}}</a>
+                                                            <td  style="width:50px;text-align:center">
+                                                                <a  *ngIf="IsFullAccounting" style="font-size:12px; color:green" (click)="ViewPaymentCheque()">{{EntityPM.ChequeOrPaymentRef}}</a>
                                                             </td>
 
                                                             <td><div></div></td>

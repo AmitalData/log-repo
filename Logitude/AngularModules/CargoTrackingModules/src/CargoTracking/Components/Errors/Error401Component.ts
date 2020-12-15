@@ -23,18 +23,21 @@ export class Error401Component
              this.GetDomainName(baseUrl);
              this.GetTenantByDomain(baseUrl);
               
+
     }
     private GetDomainName(baseUrl:string)
     {     this.SiteUrl=baseUrl;
           this.SiteUrl = this.SiteUrl.toLocaleLowerCase().replace("http://", '').replace("https://", '').replace("WWW.", '');  
           if(this.SiteUrl && this.SiteUrl.endsWith("/")){
-            this.SiteUrl = this.SiteUrl.substring(0,this.SiteUrl.length-2);
+            this.SiteUrl = this.SiteUrl.substring(0,this.SiteUrl.length-1);
           }
+          
+
           
     }
     private GetTenantByDomain(baseUrl:string)
     {   
-        this.cargoTrackingDataExtendedService.GetTenantByDomain(ServiceHelper.GetCurrentDomain(baseUrl)).subscribe((response: ServiceResponse) =>
+        this.cargoTrackingDataExtendedService.GetTenantByDomain(baseUrl).subscribe((response: ServiceResponse) =>
         {   this.isTenantLoaded =true;
             if(response.Result!=null){
             CargoTrackingBrandingData.Tenant = response.Result;

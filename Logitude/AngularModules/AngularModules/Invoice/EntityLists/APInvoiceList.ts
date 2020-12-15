@@ -93,5 +93,6 @@ export class APInvoiceList {
 		Field9: string;
 		Field10: string;
 		TotalVATOnly: boolean;
+		PaidDate: Date;
 	
 }

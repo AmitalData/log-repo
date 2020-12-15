@@ -3,6 +3,10 @@
 <div *ngIf="!isLoading" class="shipment-details-container">
     <!-- <h1>Shipment Details</h1> -->
 
+    <div style="padding: 16px 76px 0px 90px;background: RGB(242,244,247);color: var(--MainColor);">
+        <a href="javascript:;" (click)="BackLinkClicked()">Back to shipments</a>
+    </div>
+
     <div style="order: 0;" *ngIf="Shipment" class="shipment-header hide-mobile">
 
         <!-- icon -->
@@ -12,7 +16,7 @@
                     <img class="path " [attr.src]="GetModeIcon()" alt=" " />
                 </div>
             </div>
-        </div>
+        </div> 
 
         <!-- References -->
         <div>

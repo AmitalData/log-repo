@@ -260,6 +260,7 @@ namespace WarehouseData.Helper
                     string password = row["Password"].ToString();
                     string server = row["Server"].ToString();
                     string privateUserName = row["PrivateUserName"].ToString();
+                    bool isParentTenant = bool.Parse(row["IsParentTenant"].ToString());
 
                     if (featureDataWarehouseService.CheckFeature("PrivateDB", tenant))
                     {
@@ -270,7 +271,7 @@ namespace WarehouseData.Helper
                         if (type == "Build")
                         {
                             BuildDataWarehouse(sourceConnectionString, destinationConnectionString, tenant, tenants);
-                            privateDataWarehouseViewService.GeneratePrivateViews(new PrivateViewArgs() { ConnectionString = destinationConnectionString, UserName = privateUserName, Tenant = tenant, Catalog = catalog, ApplyGrantOnViews = !string.IsNullOrEmpty(privateUserName) ? true : false });
+                            privateDataWarehouseViewService.GeneratePrivateViews(new PrivateViewArgs() { ConnectionString = destinationConnectionString, UserName = privateUserName, Tenant = tenant, Catalog = catalog, ApplyGrantOnViews = !string.IsNullOrEmpty(privateUserName) ? true : false , IsParentTenant = isParentTenant });
 
                         }
                         else UpdateDataWarehouse(sourceConnectionString, destinationConnectionString, tenant, tenants);

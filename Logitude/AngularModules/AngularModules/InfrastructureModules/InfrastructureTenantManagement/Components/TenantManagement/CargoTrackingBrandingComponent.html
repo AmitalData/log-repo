@@ -133,10 +133,72 @@
 
                         <td style="vertical-align:top">
                             <div style="width:200px;height:100px">
-                                <ImageComponent [KeepOriginalSize]="'true'" [WidthImage]="'200px'" [class.disabled]="!EnableBranding" [HeightImage]="'95px'" [ImageId]="ImageId" [EntityId]="EntityId" [EntityName]="'TenantManagement'" (UploadCompleted)="ImageUploadedCompleted($event)" style="height:72px;width:72px"> </ImageComponent>
+                                <ImageComponent [KeepOriginalSize]="'true'" 
+                                                [WidthImage]="'200px'" 
+                                                [class.disabled]="!EnableBranding" 
+                                                [HeightImage]="'95px'" 
+                                                [ImageId]="BackgroundId" 
+                                                [EntityId]="EntityId" 
+                                                [EntityName]="'TenantManagement'"
+                                                [Extension]="'png'" 
+                                                (UploadCompleted)="BackgroundImageUploadedCompleted($event)" 
+                                                style="height:72px;width:72px"> 
+                                </ImageComponent>
                             </div>
                         </td><td><div></div></td>
                     </tr>
+                    <tr style="height:10px"><td colspan="3"><div></div></td></tr>
+                    <tr>
+                        <td style="width:8px"><div></div></td>
+                        <td style="width:180px;height:22px; vertical-align:top">
+                            <LogLabel [ObjectFieldName]="'ComapnylogoId'" [ObjectTableName]="'TenantManagement'"
+                                      [DataContext]="DataContext"></LogLabel>
+                        </td>
+
+                        <td style="vertical-align:top">
+                            <div style="width:200px;height:100px">
+                                <ImageComponent  [ImageResizeWidth]="327" 
+                                                 [ImageResizeHeight]="83" 
+                                                 [WidthImage]="'200px'" 
+                                                 [class.disabled]="!EnableBranding" 
+                                                 [HeightImage]="'95px'" 
+                                                 [ImageId]="ComapnylogoId" 
+                                                 [EntityId]="EntityId" 
+                                                 [EntityName]="'TenantManagement'" 
+                                                 [Extension]="'png'"
+                                                 (UploadCompleted)="ComapnylogoUploadedCompleted($event)" 
+                                                 style="height:72px;width:72px"> 
+                                </ImageComponent>
+                            </div>
+                        </td><td><div></div></td>
+                    </tr>
+                    <tr style="height:10px"><td colspan="3"><div></div></td></tr>
+                    <tr>
+                        <td style="width:8px"><div></div></td>
+                        <td style="width:180px;height:22px; vertical-align:top">
+                            <LogLabel [ObjectFieldName]="'BrowserIconId'" [ObjectTableName]="'TenantManagement'"
+                                      [DataContext]="DataContext"></LogLabel>
+                        </td>
+
+                        <td style="vertical-align:top">
+                            <div style="width:200px;height:100px">
+                                <ImageComponent [ImageResizeWidth]="28" 
+                                                [ImageResizeHeight]="30"
+                                                [WidthImage]="'200px'" 
+                                                [class.disabled]="!EnableBranding" 
+                                                [HeightImage]="'95px'" 
+                                                [ImageId]="BrowserIconId" 
+                                                [EntityId]="EntityId" 
+                                                [EntityName]="'TenantManagement'" 
+                                                [Extension]="'png'"
+                                                (UploadCompleted)="BrowserIconUploadedCompleted($event)" 
+                                                style="height:72px;width:72px"> 
+                                </ImageComponent>
+                            </div>
+                        </td><td><div></div></td>
+                    </tr>
+
+
                     <tr><td colspan="4"></td></tr>
                 </table>
 

@@ -583,6 +583,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             this.UpdateInvoicePayments(invoicePaymentsChangeSet);
             this.UpdateInvoiceAmountDue();
             this.BuildSearchFields();
+            this.UpdatePaidDate();
 
             initializer.Repository.Update(invoice);
             initializer.Repository.SubmitChanges();
@@ -608,6 +609,24 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             {
                 this.RunStoredProcedures();
             }
+        }
+
+        private void UpdatePaidDate()
+        {
+            if (entityPM.AmountDue != 0)
+            {
+                entityPM.PaidDate = null;
+            }
+            else
+            {
+                APInvoicePaymentPM itemPM = invoicePaymentsChangeSet.Where(d => d.ChangeSetOp == ChangeSetOperation.Insert).FirstOrDefault();
+                if (itemPM != null)
+                {
+                    entityPM.PaidDate = (from d in initializer.Context.APPayments where d.Id == itemPM.APPaymentId select d.ValueDate).FirstOrDefault();
+                }
+            }
+
+            invoice.PaidDate = entityPM.PaidDate;
         }
 
         private void ValidateHigherStatus()

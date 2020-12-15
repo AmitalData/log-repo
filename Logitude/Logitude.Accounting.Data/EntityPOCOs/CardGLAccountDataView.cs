@@ -77,6 +77,8 @@ namespace Logitude.Accounting.Data.EntityPOCOs
         public string ChartOfAccountsLocalName { get; set; }
         public string ChartOfAccountsEnglishName { get; set; }
         public string ChartOfAccountsCode { get; set; }
+        public string ConsolidationVat { get; set; }
+
 
     }
 }

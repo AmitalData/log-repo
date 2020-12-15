@@ -357,6 +357,26 @@
       PrimaryKey="true"
       Nullable="false" />
   </Column>
+  <Column
+    Name="ContainersNumbers"
+    Type="nvarchar"
+    Size="-1">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="PackagesQuantity"
+    Type="int">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="DirectionId"
+    Type="varchar"
+    Size="1">
+    <Constraints
+      Nullable="false" />
+  </Column>
   <Relation
     ForeignKeyColumn="EntityType"
     ReferencedTable="CargoTrackingHeaderEntityTypes"
@@ -370,7 +390,7 @@
   <Index
     Columns="EntityId" />
   <Index
-  Columns="Tenant,SecurityKey" />
+    Columns="Tenant,SecurityKey" />
   <UniqueConstraint
     Columns="EntityType,EntityId,Tenant" />
 </Table>

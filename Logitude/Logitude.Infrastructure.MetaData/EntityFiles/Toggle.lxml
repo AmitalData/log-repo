@@ -487,11 +487,18 @@
       Code="&quot;CTR&quot;"
       SearchFields="&quot;CTR,Charges Types Direction Restrictions&quot;"
       Description="&quot;Charges Types Direction Restrictions&quot;" />
+
     <Record
       Name="&quot;Branch Code in Counters&quot;"
       SearchFields="&quot;Branch Code in Counters&quot;"
       Description="&quot;Branch Code in Counters&quot;"
       Code="&quot;BCC&quot;" />
+    <Record
+      Code="&quot;ACP&quot;"
+      SearchFields="&quot;ACP,Accruals Approvement&quot;"
+      Name="&quot;Accruals Approvement&quot;"
+      Description="&quot;Accruals Approvement Toggle&quot;" />
+
     <Record
       Code="&quot;EQW&quot;"
       Name="&quot;Export Query Data Via WorkerRole&quot;"

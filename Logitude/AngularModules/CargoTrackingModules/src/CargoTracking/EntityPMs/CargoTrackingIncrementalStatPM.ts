@@ -83,7 +83,10 @@ export class CargoTrackingIncrementalStatPM {
     public OldEntityPM: CargoTrackingIncrementalStatPM;
 		
     public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
+       if(!this.DisableMarkAsDirty)
+       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -91,6 +94,7 @@ export class CargoTrackingIncrementalStatPM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "CargoTrackingIncrementalStat");
            
         }
+       }
     }
 
     private MyClone: CargoTrackingIncrementalStatPM;

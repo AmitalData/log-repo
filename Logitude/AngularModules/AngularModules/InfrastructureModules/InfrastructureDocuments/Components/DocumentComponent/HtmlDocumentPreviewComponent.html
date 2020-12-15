@@ -19,14 +19,14 @@
 
                         <tr style="height:10px"><td colspan="7"><div></div></td></tr>
 
-                        <tr *ngIf="!IsShowFromInputBox || !IsShowReplyToInputBox || !IsShowCCInputBox ||  !IsShowBCCInputBox" style="margin-bottom:3px;height:15px;" >
+                        <tr *ngIf="!IsShowFromInputBox || !IsShowReplyToInputBox || !IsShowCCInputBox ||  !IsShowBCCInputBox ||  (!IsShowToInputBox && !DontShowToField)" style="margin-bottom:3px;height:15px;">
                             <td colspan="7" style="text-align:left">
                                 <div style="margin-left:63px;margin-top:-10px">
-                                    <a *ngIf="!IsShowFromInputBox"  style="font-size:11px;color:#0094ff" (click)="AddFromLinkClick()">Add From</a>
-
-                                    <a *ngIf="!IsShowReplyToInputBox"  style="margin-left:5px;color:#0094ff;font-size:11px;" (click)="AddReplyToLinkClick()">Add ReplyTo</a>
-                                    <a *ngIf="!IsShowCCInputBox"  style="margin-left:5px;color:#0094ff;font-size:11px;" (click)="AddCCLinkClick()">Add CC</a>
-                                    <a *ngIf="!IsShowBCCInputBox"  style="margin-left:5px;color:#0094ff;font-size:11px" (click)="AddBCCLinkClick()">Add BCC</a>
+                                    <a *ngIf="!IsShowFromInputBox" style="font-size:11px;color:#0094ff" (click)="AddFromLinkClick()">Add From</a>
+                                    <a *ngIf="!IsShowReplyToInputBox" style="margin-left:5px;color:#0094ff;font-size:11px;" (click)="AddReplyToLinkClick()">Add ReplyTo</a>
+                                    <a *ngIf="!IsShowCCInputBox" style="margin-left:5px;color:#0094ff;font-size:11px;" (click)="AddCCLinkClick()">Add CC</a>
+                                    <a *ngIf="!IsShowBCCInputBox" style="margin-left:5px;color:#0094ff;font-size:11px" (click)="AddBCCLinkClick()">Add BCC</a>
+                                    <a *ngIf="!IsShowToInputBox && !DontShowToField" style="margin-left:5px;color:#0094ff;font-size:11px" (click)="AddToLinkClick()">Add To</a>
 
                                 </div>
                             </td>
@@ -34,12 +34,12 @@
 
 
                         <tr>
-                            <td style="width:8px"><div></div></td>  
+                            <td style="width:8px"><div></div></td>
 
                             <td style="width:50px"><div>Subject:</div></td>
                             <td style="width:5px"><div></div></td>
                             <!--[(ngModel)]="Subject"-->
-                            <td><input [attr.id] = "SubjectId" type="text" [(ngModel)]="Subject"  style="height:22px;border-radius:3px;border:1px solid #ccc9c9;width:100%;" /></td>
+                            <td><input [attr.id]="SubjectId" type="text" [(ngModel)]="Subject" style="height:22px;border-radius:3px;border:1px solid #ccc9c9;width:100%;" /></td>
 
                             <td style="width:5px"><div></div></td>
                             <td style="width:50px;height:22px;text-align:left"><button (click)="AddDataField('Subject')" style="width:100px;background-color:#E6E6E6;height:22px;" class="Button">Add Data Field</button></td>
@@ -47,7 +47,7 @@
                         </tr>
 
 
-                        <tr *ngIf="IsShowFromInputBox || IsShowReplyToInputBox || IsShowCCInputBox || IsShowBCCInputBox" style="height:7px"><td colspan="7"><div></div></td></tr>
+                        <tr *ngIf="IsShowFromInputBox || IsShowReplyToInputBox || IsShowCCInputBox || IsShowBCCInputBox ||  IsShowToInputBox" style="height:7px"><td colspan="7"><div></div></td></tr>
                         <tr *ngIf="IsShowFromInputBox">
                             <td style="width:8px"><div></div></td>
 
@@ -108,6 +108,19 @@
                         <tr *ngIf="IsShowBCCInputBox" style="height:7px"><td colspan="7"><div></div></td></tr>
 
 
+                        <tr *ngIf="IsShowToInputBox && !DontShowToField">
+                            <td style="width:8px"><div></div></td>
+
+                            <td style="width:50px"><div>To:</div></td>
+                            <td style="width:5px"><div></div></td>
+
+                            <td><input [attr.id]="TOId" type="text" [(ngModel)]="To" style="height:22px;border-radius:3px;border:1px solid #ccc9c9;width:100%;" /></td>
+
+                            <td style="width:5px"><div></div></td>
+                            <td style="width:50px;height:22px;text-align:left"><button (click)="AddDataField('To')" style="width:100px;background-color:#E6E6E6;height:22px;" class="Button">Add Data Field</button></td>
+                            <td style="width:10px"><div></div></td>
+                        </tr>
+                        <tr *ngIf="IsShowToInputBox && !DontShowToField" style="height:7px"><td colspan="7"><div></div></td></tr>
 
                     </table>
 

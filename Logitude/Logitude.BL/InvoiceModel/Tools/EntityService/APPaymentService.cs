@@ -32,6 +32,7 @@ using System.Xml.Serialization;
 using Logitude.Accounting.Data.Repositories;
 using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.BL.InvoiceModel.EntityOtherServices;
+using Logitude.BL.InvoiceModel.EntityQueries;
 
 namespace Logitude.BL.InvoiceModel.Tools.EntityService
 {
@@ -896,7 +897,9 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         {
             if (!string.IsNullOrEmpty(myInvoiceId))
             {
-                APInvoice invoice = this.GetInvoice(myInvoiceId, tenant);
+                //APInvoice invoice = this.GetInvoice(myInvoiceId, tenant);
+                APInvoiceQuery aPInvoiceQuery = new APInvoiceQuery(this.invoiceRepository);
+                APInvoicePM invoice = aPInvoiceQuery.GetSinglePM(myInvoiceId, tenant);
 
                 if (invoice != null)
                 {
@@ -957,10 +960,15 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                             invoice.AmountDue = invoiceAmountDue;
                             invoice.AmountDueInLocalCurrency = MethodHelper.Round((invoice.AmountDue * invoice.InvoiceCurrencyExchangeRate), 2);
                             invoice.AmountDueInProfitCurrency = MethodHelper.Round((invoice.AmountDueInLocalCurrency / invoice.ProfitCurrencyExchangeRate), 2);
+                            
                             if (invoiceAmountDue == 0)
                             {
-                                invoice.IsClosed = true;
-                                invoice.StatusCode = "PD";
+                                // it is allowed to have invoice with 0 amount and 0 amount due
+                                if (allConnectedItems.Count > 0)
+                                {
+                                    invoice.IsClosed = true;
+                                    invoice.StatusCode = "PD";
+                                }
                             }
 
                             else if (invoiceAmountDue > 0 && invoiceAmountDue < invoiceAmount)
@@ -986,13 +994,29 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                             throw new Exception("The Amount due is not suitable to the total amount paid!!");
                         }
 
-                        invoiceRepository.Update(invoice);
+
+                        this.UpdateInvoicePaidDate(invoice);
+                        APInvoiceService aRInvoiceService = new APInvoiceService(this.objectContext, this.tenant);
+                        aRInvoiceService.Update(invoice, true);
+                        //invoiceRepository.Update(invoice);
                         #endregion
                     }
                 }
             }
         }
 
+        private void UpdateInvoicePaidDate(APInvoicePM invoice)
+        {
+            if (invoice.AmountDue != 0)
+            {
+                invoice.PaidDate = null;
+            }
+
+            else
+            {
+                invoice.PaidDate = this.entityPM.ValueDate;
+            }
+        }
         private void UpdateInvoiceAmounts_Old(APPaymentInvoicePM paymentInvoice)
         {
             APInvoice invoice = this.GetInvoice(paymentInvoice.APInvoiceId, tenant);

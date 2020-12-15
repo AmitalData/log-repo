@@ -215,8 +215,8 @@
                 </div>
 
                 <div class="field">
-                    <div class="label">Sender</div>
-                    <div class="value">{{ Shipment.FromPortName }}</div>
+                    <div class="label">Gross Weight</div>
+                    <div class="value">{{ Shipment.GrossWeight }}</div>
                 </div>
 
                 <div class="field">
@@ -225,21 +225,33 @@
                 </div>
 
                 <div class="field">
-                    <div class="label">Receiver</div>
-                    <div class="value">{{ Shipment.ToPortName }}</div>
+                    <div class="label">Quantity</div>
+                    <div class="value">{{Shipment.PackagesQuantity!=null?Shipment.PackagesQuantity:0}}</div>
                 </div>
 
 
                 <div class="field">
-                    <div class="label">Transport By</div>
-                    <div class="value">{{ Shipment.TransportModeName }}</div>
+                    <div class="label">
+                        Containers
+                    </div>
+                    <div class="value">
+                        <ul style="padding-left: 18px; margin: 0;" *ngIf="showMoreContainers">
+                            <li *ngFor="let ref of ShipmentContainers, let i = index">{{ref}}</li>
+                        </ul>
+                        <ul style="padding-left: 18px; margin: 0;" *ngIf="!showMoreContainers">
+                            <li *ngFor="let ref of ShipmentContainers.slice(0,2), let i = index">{{ref}}</li>
+                        </ul>
+                        &nbsp;
+                        <a *ngIf="ShipmentContainers.length > 2" 
+                            (click)="showMoreContainers=!showMoreContainers" 
+                            style="cursor: pointer;text-decoration: underline; font-size: 11px;">
+                            {{showMoreContainers?'Show Less':'See all'}}
+                        </a> 
+                    </div>
+
                 </div>
 
-
-                <div class="field">     
-                    <div class="label">Delivery</div>
-                    <div class="value">{{ Shipment.FromPortName }}</div>
-                </div>
+ 
             </div>
 
         </div>

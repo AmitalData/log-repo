@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.label1 = new System.Windows.Forms.Label();
             this.txtRequestContentType = new System.Windows.Forms.TextBox();
@@ -229,7 +228,7 @@
             this.txtCredentialsPrimary.Name = "txtCredentialsPrimary";
             this.txtCredentialsPrimary.Size = new System.Drawing.Size(292, 23);
             this.txtCredentialsPrimary.TabIndex = 21;
-            this.txtCredentialsPrimary.Text = "cf39fbd5-7929-4bb0-9c74-96a47195cdab";
+            this.txtCredentialsPrimary.Text = "8099fa61-fe6f-4a04-815e-66f4c2d5834a";
             // 
             // lblMessage
             // 
@@ -341,7 +340,6 @@
             this.txtRequestBody.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.txtRequestBody.Size = new System.Drawing.Size(1021, 190);
             this.txtRequestBody.TabIndex = 65;
-            this.txtRequestBody.Text = resources.GetString("txtRequestBody.Text");
             // 
             // xmlBrowser1
             // 

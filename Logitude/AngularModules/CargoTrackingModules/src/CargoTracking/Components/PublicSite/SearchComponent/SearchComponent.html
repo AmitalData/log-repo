@@ -21,19 +21,42 @@
 
                     </div>
 
-                    <button id="Button_Search" class="search-button hide-mobile" type="submit">{{isLoading?'Loading...': 'Search'}}</button>
+                    <button id="Button_Search" class="search-button" type="submit">{{isLoading?'Loading...': 'Search'}}</button>
                 </form>
             </div>
         </div>
 
         <div class="container ">
 
-            <div class="info-text " *ngIf="Shipments.length==0 && !noResult  && !hasError">
-                <p>
+            <div class="info-text " *ngIf="Shipments.length==0  && !noResult && !hasError">
+               
+                <p *ngIf="1">
                     Keep track of the location and all details of your cargo and shipments using our Cargo Tracking site. You can search using the shipment number or reference, cargo identifiers or container number.
-                 
                 </p>
+
+              
             </div>
+
+            <!-- No Result -->
+            <div class="no-result-div" *ngIf="noResult">
+                <h1>We couldn't find the shipment you were looking for...</h1>
+                <p>
+                    Please check your input or use a different reference. Make sure to enter the entire reference - or choose your shipment from the search suggesions we provide.
+                </p>
+                <p style="font-weight: bold;">
+
+                    <span>
+                        <img width="12" src="data:image/svg+xml;base64,PHN2ZyBpZD0iTGF5ZXJfMSIgZW5hYmxlLWJhY2tncm91bmQ9Im5ldyAwIDAgNTEyIDUxMiIgaGVpZ2h0PSI1MTIiIHZpZXdCb3g9IjAgMCA1MTIgNTEyIiB3aWR0aD0iNTEyIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxnPjxwYXRoIGQ9Im00NDYgNDBoLTQ2di0yNGMwLTguODM2LTcuMTYzLTE2LTE2LTE2cy0xNiA3LjE2NC0xNiAxNnYyNGgtMjI0di0yNGMwLTguODM2LTcuMTYzLTE2LTE2LTE2cy0xNiA3LjE2NC0xNiAxNnYyNGgtNDZjLTM2LjM5MyAwLTY2IDI5LjYwNy02NiA2NnYzNDBjMCAzNi4zOTMgMjkuNjA3IDY2IDY2IDY2aDM4MGMzNi4zOTMgMCA2Ni0yOS42MDcgNjYtNjZ2LTM0MGMwLTM2LjM5My0yOS42MDctNjYtNjYtNjZ6bTM0IDQwNmMwIDE4Ljc3OC0xNS4yMjIgMzQtMzQgMzRoLTM4MGMtMTguNzc4IDAtMzQtMTUuMjIyLTM0LTM0di0yNjVjMC0yLjc2MSAyLjIzOS01IDUtNWg0MzhjMi43NjEgMCA1IDIuMjM5IDUgNXoiLz48L2c+PC9zdmc+" />
+                    </span>
+
+                    Please note that our public tracking site only allows you to search for shipments created within the last 6 months.
+                </p>
+
+                <p>Just start typing to start your new search.</p>
+
+            </div>
+
+
             <div class="path-image hide-mobile " *ngIf="Shipments.length==0  && !noResult  && !hasError">
 
                 <svg class="path "  viewBox="0 0 469 236" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -85,14 +108,6 @@
             </div>
 
 
-
-            <div class="result-count dark-gray" *ngIf="Shipments.length>0">
-                {{Shipments.length}} 
-                <span *ngIf="Shipments.length==1">result</span>
-                <span *ngIf="Shipments.length>1">results</span>       
-            </div>
-
-
             <!-- Has Error -->
             <div class="no-result-div" *ngIf="hasError">
                 <h1 style="color: rgb(211, 0, 0) ;">Oops!</h1>
@@ -106,15 +121,25 @@
             </div>
 
             <!-- No Result -->
-            <div class="no-result-div" *ngIf="noResult">
+            <!-- <div class="no-result-div" *ngIf="noResult">
                 <h1>We couldn't find the shipment you were looking for...</h1>
                 <p>
                     Please check your input or use a different reference. Make sure to enter the entire reference - or choose your shipment from the search suggesions we provide.
                 </p>
+                <p style="font-weight: bold;">
+
+                    <span>
+                        <img width="12" src="data:image/svg+xml;base64,PHN2ZyBpZD0iTGF5ZXJfMSIgZW5hYmxlLWJhY2tncm91bmQ9Im5ldyAwIDAgNTEyIDUxMiIgaGVpZ2h0PSI1MTIiIHZpZXdCb3g9IjAgMCA1MTIgNTEyIiB3aWR0aD0iNTEyIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxnPjxwYXRoIGQ9Im00NDYgNDBoLTQ2di0yNGMwLTguODM2LTcuMTYzLTE2LTE2LTE2cy0xNiA3LjE2NC0xNiAxNnYyNGgtMjI0di0yNGMwLTguODM2LTcuMTYzLTE2LTE2LTE2cy0xNiA3LjE2NC0xNiAxNnYyNGgtNDZjLTM2LjM5MyAwLTY2IDI5LjYwNy02NiA2NnYzNDBjMCAzNi4zOTMgMjkuNjA3IDY2IDY2IDY2aDM4MGMzNi4zOTMgMCA2Ni0yOS42MDcgNjYtNjZ2LTM0MGMwLTM2LjM5My0yOS42MDctNjYtNjYtNjZ6bTM0IDQwNmMwIDE4Ljc3OC0xNS4yMjIgMzQtMzQgMzRoLTM4MGMtMTguNzc4IDAtMzQtMTUuMjIyLTM0LTM0di0yNjVjMC0yLjc2MSAyLjIzOS01IDUtNWg0MzhjMi43NjEgMCA1IDIuMjM5IDUgNXoiLz48L2c+PC9zdmc+" />
+                    </span>
+
+                    Please note that our public tracking site only allows you to search for shipments created within the last 6 months.
+                </p>
+
                 <p>Just start typing to start your new search.</p>
 
-            </div>
+            </div> -->
 
+            <!-- Map image -->
             <div class="path-image hide-mobile " *ngIf="noResult">
 
                 <svg class="path " viewBox="0 0 469 236" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -166,7 +191,14 @@
 
             </div>
 
+            <!-- Row count -->
+            <div class="result-count dark-gray" *ngIf="Shipments.length>0">
+                {{Shipments.length}} 
+                <span *ngIf="Shipments.length==1">result</span>
+                <span *ngIf="Shipments.length>1">results</span>       
+            </div>
 
+            <!-- Cards -->
             <div *ngIf="Shipments.length>0" class="scrollable-table">
 
                 <div class="table">

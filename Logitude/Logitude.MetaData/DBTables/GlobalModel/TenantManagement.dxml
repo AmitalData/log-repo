@@ -863,6 +863,20 @@
     <Constraints
       Nullable="false" />
   </Column>
+  <Column
+    Name="ComapnylogoId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="BrowserIconId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="Id"
     ReferencedTable="GlobalTenants"

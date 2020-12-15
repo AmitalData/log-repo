@@ -516,6 +516,7 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
                 var windowArgs: any = {};
                 windowArgs.DataViewModel = this;
                 windowArgs.PageType = "Maintenance";
+                windowArgs.DontShowToField = true;
                 windowArgs.TemplateId = this.DocumentTypetTemplateSelected.Id;
                 windowArgs.Tenant = this.DocumentTypetTemplateSelected.Tenant;
                 windowArgs.ObjectType = "DocumentTypeTemplateViewModel";

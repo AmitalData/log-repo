@@ -201,6 +201,15 @@ namespace Logitude.Infrastructure.BL
                 SearchFields = "Export Query Data Via WorkerRole", 
 			});
 			
+            all.Add(new ToggleDetails()
+            {    
+                Code = "ACP", 
+                SearchFields = "ACP,Accruals Approvement", 
+                Name = "Accruals Approvement", 
+                Description = "Accruals Approvement Toggle", 
+			});
+			
+			
             return all;
        }
 

@@ -3,6 +3,7 @@ using Logitude.BL.GlobalModel.EntityQueries;
 using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -16,35 +17,15 @@ namespace WebFreight.Web.Controllers.CargoTrackingModel
 {
     public class CargoTrackingBrandingController: ApiController
     {
-        [HttpGet]
-        public HttpResponseMessage GetCargoTrackingBrandingData(string domain)
+ 
+        public HttpResponseMessage PutGetCargoTrackingBrandingData(CargoTrackingBrandingDataRequest BrandingDataRequest)
         {
             try
             {
-                TenantManagementQuery tenantManagementQuery = new TenantManagementQuery();
-                TenantManagementPM tenantManagementPM = tenantManagementQuery.GetSinglePMByDomain(domain);
+                CargoTrackingHelper cargoTrackingHelper = new CargoTrackingHelper();
+                CargoTrackingBrandingData brandingData = cargoTrackingHelper.GetCargoTrackingBrandingDataByDomain(BrandingDataRequest);
                 ServiceResponse response = new ServiceResponse();
-                if (tenantManagementPM != null)
-                {
-                    Uploader uploaderService = new Uploader();
-                    byte[] filedata = uploaderService.DownloadFile(tenantManagementPM.BackgroundId, "jpg", "images", 0);
-                    CargoTrackingBrandingData data = new CargoTrackingBrandingData()
-                    {
-                        Tenant = tenantManagementPM.Id,
-                        MainColor = tenantManagementPM.MainColor,
-                        SecondaryColor = tenantManagementPM.SecondaryColor,
-                        BackgroundId = tenantManagementPM.BackgroundId,
-                        Logo = CargoTrackingHelper.SetBrandingLogo(tenantManagementPM)
-                    };
-                    if (filedata != null)
-                    {
-                        data.BackgroundImg = "data:image/" + "jpg" + ";base64," + Convert.ToBase64String(filedata);
-                    }
-                    response.Result = data;
-                }
-              
-                
-               
+                response.Result = brandingData;
                 return Request.CreateResponse(HttpStatusCode.OK, response);
                 }
             catch (Exception ex)
@@ -53,24 +34,15 @@ namespace WebFreight.Web.Controllers.CargoTrackingModel
             }
         }
 
-        public HttpResponseMessage GetCargoTrackingBrandingDataForPrivateSite(string domain)
+        public HttpResponseMessage PutGetCargoTrackingBrandingDataForPrivateSite(CargoTrackingBrandingDataRequest BrandingDataRequest)
         {
 
             try
             {
-                TenantManagementQuery tenantManagementQuery = new TenantManagementQuery();
-                TenantManagementPM tenantManagementPM = tenantManagementQuery.GetSinglePMByDomain(domain);
+                CargoTrackingHelper cargoTrackingHelper = new CargoTrackingHelper();
+                CargoTrackingBrandingData brandingData = cargoTrackingHelper.GetCargoTrackingBrandingDataByDomain(BrandingDataRequest, true);
                 ServiceResponse response = new ServiceResponse();
-                if (tenantManagementPM != null)
-                {
-                    CargoTrackingBrandingData data = new CargoTrackingBrandingData()
-                    {
-                        Tenant = tenantManagementPM.Id,
-                        MainColor = tenantManagementPM.MainColor,
-                        SecondaryColor = tenantManagementPM.SecondaryColor,
-                    };
-                    response.Result = data;
-                }
+                response.Result = brandingData;
                 return Request.CreateResponse(HttpStatusCode.OK, response);
             }
             catch (Exception ex)
@@ -78,6 +50,7 @@ namespace WebFreight.Web.Controllers.CargoTrackingModel
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
+ 
 
         public HttpResponseMessage GetCargoTrackingBrandingTenantByDomain(string domain)
         {

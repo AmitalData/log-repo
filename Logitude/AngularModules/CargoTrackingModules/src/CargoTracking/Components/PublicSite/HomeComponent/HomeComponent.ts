@@ -6,6 +6,7 @@ import { Location } from '@angular/common';
 import { AppHelper } from '../../../Utilities/AppHelper';
 import { CargoTrackingBrandingData } from '../../../DataContracts/CargoTrackingBrandingData';
 import { ServiceHelper } from 'src/CargoTracking/Utilities/ServiceHelper';
+import { CargoTrackingBrandingDataRequest } from 'src/CargoTracking/DataContracts/CargoTrackingBrandingDataRequest';
 
 
 @Component({
@@ -15,40 +16,32 @@ import { ServiceHelper } from 'src/CargoTracking/Utilities/ServiceHelper';
 })
 export class HomeComponent
 {
-
+ 
     IsBrandingDataLoaded: boolean = false;
     displayMenu: boolean = false;
     showBackButton: boolean = false;
     currentDate: Date = new Date();
     companyLabel: string = "DSV";
     companyName: string = "Unifreight Cloud Services";
-    BackGroundImg:string;
     Domain:string;
-    MapImgSRC:string ="";
     public baseUrl:string;
+  
+
     constructor(private cargoTrackingDataExtendedService: CargoTrackingBrandingDataExtendedService, @Inject('BASE_URL') baseUrl: string, private router: Router, 
         private location: Location)
     {
-
-        this.GetDataFromURL(baseUrl);
+        this.baseUrl =baseUrl;
+        this.getcargoTrackingData();
         
     }
 
 
     private getcargoTrackingData()
     {   
-        this.cargoTrackingDataExtendedService.get(ServiceHelper.GetCurrentDomain(this.baseUrl)).subscribe((response: ServiceResponse) =>
+        this.cargoTrackingDataExtendedService.get(ServiceHelper.GetcargoTrackingDataRequest(this.baseUrl)).subscribe((response: ServiceResponse) =>
         { if(response.Result){
-            CargoTrackingBrandingData.Tenant = response.Result.Tenant;
-            CargoTrackingBrandingData.MainColor = response.Result.MainColor != null ? ServiceHelper.ConvertHexaToRGBA(response.Result.MainColor) :"#000000";
-            CargoTrackingBrandingData.SecondaryColor = response.Result.SecondaryColor ? ServiceHelper.ConvertHexaToRGBA(response.Result.SecondaryColor) : "#002664";
-            document.documentElement.style.setProperty('--BGColor', CargoTrackingBrandingData.MainColor);
-            document.documentElement.style.setProperty('--MainColor', CargoTrackingBrandingData.MainColor);
-            document.documentElement.style.setProperty('--busyIndicatorColor', CargoTrackingBrandingData.MainColor);
 
-            document.documentElement.style.setProperty('--secondaryColor', CargoTrackingBrandingData.SecondaryColor);
-            this.Logo = response.Result.Logo != null ? response.Result.Logo:null;
-            this.BackGroundImg=response.Result.BackgroundImg!=null? "url("+ response.Result.BackgroundImg+")":this.MapImgSRC;
+            ServiceHelper.SetCargoTrackingDate(response.Result,this.baseUrl);
             this.IsBrandingDataLoaded = true;
             this.listenToRouterEvents();
         }
@@ -58,22 +51,26 @@ export class HomeComponent
          
         });
     }
-    public Logo: string; 
-    private GetDataFromURL(baseUrl: string)
-    {
-        this.baseUrl =baseUrl;
-        this.MapImgSRC  = "url('"+this.baseUrl+"assets/images/misc/map-bg.svg')"
-        this.getcargoTrackingData();
-          
-    }
 
+ 
+
+    get ComapnyLogo(){
+        return CargoTrackingBrandingData.ComapnylogoURL;
+    } 
+    get BrowserIcon(){
+        return CargoTrackingBrandingData.BrowserIconURL;
+    } 
+    get BackGroundImg(){
+        return CargoTrackingBrandingData.BackgroundURL;
+    } 
+  
     public GoToPrivateSite(){
         this.router.navigate(['Cargo-Tracking']);
     }
     public GoToError401(){
         this.router.navigate(['Error401']);
     }
- 
+
     private listenToRouterEvents()
     {
         this.router.events.subscribe((event: Event) =>

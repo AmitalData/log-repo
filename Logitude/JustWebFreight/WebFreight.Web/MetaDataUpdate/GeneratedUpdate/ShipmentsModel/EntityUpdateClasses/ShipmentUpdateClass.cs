@@ -41437,6 +41437,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "ViewSharedDocuments",
 					  						ListPropertyPath =  "ViewSharedDocuments",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -42648,7 +42649,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 
 		   Feature ShipmentFeature_INTTRASimulator = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "INTTRASimulator", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.INTTRASimulator", NameTextCodeDefaultText = @"INTTRA Simulator" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,ShipmentObjectTable);
 
-		   Feature ShipmentFeature_Shipment_Action_AccrualsApprovement = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Shipment.Action.AccrualsApprovement", FeatureTypeCode = "ACT", Packagable = false, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.Shipment.Action.AccrualsApprovement", NameTextCodeDefaultText = @"Accruals Approvement" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,ShipmentObjectTable);
+		   Feature ShipmentFeature_Shipment_Action_AccrualsApprovement = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Shipment.Action.AccrualsApprovement", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.Shipment.Action.AccrualsApprovement", NameTextCodeDefaultText = @"Accruals Approvement" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,ShipmentObjectTable);
 
    
 	    
