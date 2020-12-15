@@ -58,7 +58,7 @@ cy.get('#Add_2').click({force: true} );
         cy.get('input[id="Customs.SupplierInvoice_InvoiceAmount"]').type('100')
        // LogHelper.LOVSearchAndSelectFirst("Customs.SupplierInvoice_IssueCountryCode", 'AD');
 
-        LogHelper.LOVSearchAndSelectFirst("Customs.SupplierInvoice_PreferenceDocumentTypeCode", '15');
+        LogHelper.LOVSearchAndSelectFirst("Customs.SupplierInvoice_PreferenceDocumentTypeCode", '14');
 
     })
 
