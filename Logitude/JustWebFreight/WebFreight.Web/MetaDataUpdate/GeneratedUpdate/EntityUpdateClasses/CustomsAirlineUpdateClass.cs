@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CustomsAirlineUpdateClass
    {  		
-		public const string HashString = "9e5235c7e5fbdc78a64103f2e5218e6c";
+		public const string HashString = "be7267c10507e7f332b02a4920890445";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -712,7 +712,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	   		  
 	      
 
-	         Screen CustomsAirlineGeneralTabScreenScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "CustomsAirline.GeneralTabScreen", Name = "GeneralTabScreen", ObjectTableId = CustomsAirlineObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 6, IsReadOnly = false }, screensRepository, tenantScreens);
+	         Screen CustomsAirlineGeneralTabScreenScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "CustomsAirline.GeneralTabScreen", Name = "GeneralTabScreen", ObjectTableId = CustomsAirlineObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 5, IsReadOnly = false }, screensRepository, tenantScreens);
       
              ScreenField CustomsCustomsAirlineCustomsAirlineGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = CustomsAirlineGeneralTabScreenScreen1.Id,ScreenCode = CustomsAirlineGeneralTabScreenScreen1.Code, ObjectFieldCode = "Customs.CustomsAirline.AirlineCode", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
 	          
@@ -723,8 +723,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
              ScreenField CustomsCustomsAirlineCustomsAirlineGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ScreenId = CustomsAirlineGeneralTabScreenScreen1.Id,ScreenCode = CustomsAirlineGeneralTabScreenScreen1.Code, ObjectFieldCode = "Customs.CustomsAirline.EnglishName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
 	          
              ScreenField CustomsCustomsAirlineCustomsAirlineGeneralTabScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 4, ScreenId = CustomsAirlineGeneralTabScreenScreen1.Id,ScreenCode = CustomsAirlineGeneralTabScreenScreen1.Code, ObjectFieldCode = "Customs.CustomsAirline.InActive", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-	          
-             ScreenField CustomsCustomsAirlineCustomsAirlineGeneralTabScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 5, ScreenId = CustomsAirlineGeneralTabScreenScreen1.Id,ScreenCode = CustomsAirlineGeneralTabScreenScreen1.Code, ObjectFieldCode = "Customs.CustomsAirline.UnloadPortCode", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
 	            
 
 	    }

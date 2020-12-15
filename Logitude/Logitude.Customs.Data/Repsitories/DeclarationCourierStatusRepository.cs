@@ -237,7 +237,11 @@ namespace Logitude.Customs.Data.Repsitories
 
             return succ;
         }
-
+        public int CountOpenDeclarations(string couriermasterid, int tenant)
+        {
+            var courierDecs = context.CourierDeclarations.Where(y => y.CourierMasterId == couriermasterid).Select(y=>y.DeclarationId); 
+            return (context.DeclarationCourierStatuses.Count(x => x.IsClosedForFollowUp==false && courierDecs.Contains(x.DeclarationId)));
+        }
     }
 
 }

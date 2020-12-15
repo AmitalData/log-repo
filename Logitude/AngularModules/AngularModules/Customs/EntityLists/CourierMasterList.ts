@@ -65,6 +65,7 @@ export class CourierMasterList {
 	LandingDateDateOnly: Date;
 	LandingDateTimeOnly: Date;
 	CourierMasterRemarks: string;
+	OpenDeclarations: number;
 	
 }
  

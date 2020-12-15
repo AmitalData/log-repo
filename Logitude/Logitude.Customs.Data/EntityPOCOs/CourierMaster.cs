@@ -112,6 +112,8 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public string UnifreightLeadingFile { get; set; }
         [Column("CourierMasterRemarks")]
 	    public string CourierMasterRemarks { get; set; }
+        [Column("OpenDeclarations")]
+	    public int OpenDeclarations { get; set; }
     }
 }
 	 

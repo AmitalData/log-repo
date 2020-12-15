@@ -225,6 +225,13 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="OpenDeclarations"
+    Type="int"
+    DefaultValue="0">
+    <Constraints
+      Nullable="false" />
+  </Column>
   <Relation
     ForeignKeyColumn="CreatedByUserId"
     ReferencedTable="Users"

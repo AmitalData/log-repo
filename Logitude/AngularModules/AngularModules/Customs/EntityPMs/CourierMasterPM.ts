@@ -314,6 +314,11 @@ export class CourierMasterPM {
     public set CourierMasterRemarks(newValue: string) { if (this.courierMasterRemarks != newValue) { this.courierMasterRemarks = newValue; this.MarkAsDirty("CourierMasterRemarks"); } }
        
 	 
+    private openDeclarations: number;
+    public get OpenDeclarations() { return this.openDeclarations; }
+    public set OpenDeclarations(newValue: number) { if (this.openDeclarations != newValue) { this.openDeclarations = newValue; this.MarkAsDirty("OpenDeclarations"); } }
+       
+	 
 
     public OldEntityPM: CourierMasterPM;
 		

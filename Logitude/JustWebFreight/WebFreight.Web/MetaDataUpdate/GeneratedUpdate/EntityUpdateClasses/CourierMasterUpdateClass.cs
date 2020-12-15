@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CourierMasterUpdateClass
    {  		
-		public const string HashString = "a7dbc90b5d7e8648fd8448ee3716fdb6";
+		public const string HashString = "c12179ab8ba5c1df143cdcacf390477c";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -3668,6 +3668,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "CourierMasterRemarks",
 					  						ListPropertyPath =  "CourierMasterRemarks",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -3690,6 +3691,68 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						ListFieldLable =  "CourierMasterRemarksListLable",
 					  						ListLableDefaultText =  "Remarks",
 					  						ListLocalDefaultText =  "הערות",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "OpenDeclarations",
+					  						ObjectTableName =  "Customs.CourierMaster",
+					  						FieldsDataType =  "Integer",
+					  						MinLength =  0,
+					  						MaxLength =  0,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  true,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						Operator =  "Equals",
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "OpenDeclarations",
+					  						ListPropertyPath =  "OpenDeclarations",
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "Customs.CourierMaster",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						DigitsAfterPoint =  0,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "OpenDeclarations",
+					  						DefaultText =  "Open Declarations",
+					  						FullLocalDefaultText =  "הצהרות פתוחות",
+					  						ListFieldLable =  "OpenDeclarationsListLable",
+					  						ListLableDefaultText =  "Open Declarations",
+					  						ListLocalDefaultText =  "הצהרות פתוחות",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -3763,6 +3826,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			 QueryColumn OPENCOURIERMASTERSQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OPENCOURIERMASTERSQuery.Id,QueryCode = OPENCOURIERMASTERSQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "Customs.CourierMaster.IsOpen" , ColumnWidth = 100 }, addedQueryColumns);
 
 			 QueryColumn OPENCOURIERMASTERSQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OPENCOURIERMASTERSQuery.Id,QueryCode = OPENCOURIERMASTERSQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "Customs.CourierMaster.IsCancelled" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn OPENCOURIERMASTERSQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OPENCOURIERMASTERSQuery.Id,QueryCode = OPENCOURIERMASTERSQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "Customs.CourierMaster.OpenDeclarations" , ColumnWidth = 100 }, addedQueryColumns);
 
              AdvancedQueryFilter OPENCOURIERMASTERSQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customs.CourierMaster.IsOpen", PredefinedValue = "true",PredefinedValue2 = null, QueryId = OPENCOURIERMASTERSQuery.Id,QueryCode = OPENCOURIERMASTERSQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 

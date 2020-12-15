@@ -1354,6 +1354,29 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private int openDeclarations ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int OpenDeclarations  
+	   {
+	    
+	     get
+		{
+		   return openDeclarations;
+		 }
+		 set
+		 {
+		   if(openDeclarations != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="OpenDeclarations",OldValue=openDeclarations,NewValue=value,PropertyType="int"};
+		    NotifyPropertyChanged(values);
+		   openDeclarations=value;
+		   }
+			
+		 }
+	   }
    }
    
 }
