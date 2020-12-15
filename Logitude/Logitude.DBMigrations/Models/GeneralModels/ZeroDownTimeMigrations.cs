@@ -90,7 +90,8 @@ namespace Logitude.DBMigrations.Models
         protected void SendEmailsForDataScriptTimeout(DBMigrationsDataScript dbMigrationsDataScript)
         {
             string subject = "Timeout Exception While Executing Script By DBMigrations Tool";
-            string messageBody = "Timeout Exception Occured On " + dbMigrationsDataScript.DatabaseType + " Database While Executing Script From SXML File: " + dbMigrationsDataScript.SxmlFileName + "\nDBMigrationsDataScript Id: " + dbMigrationsDataScript.Id;
+            string messageBody = "Timeout Exception Occured On " + dbMigrationsDataScript.DatabaseType + " Database While Executing Script From SXML File: " +
+                                 dbMigrationsDataScript.SxmlFileName + "\nDBMigrationsDataScript Id: " + dbMigrationsDataScript.Id;
 
             EmailSender emailSender = new EmailSender(subject, messageBody);
             emailSender.Send();
