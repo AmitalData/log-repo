@@ -38,6 +38,7 @@ using Logitude.Customs.BL.Messaging.LogitudeClient.DeclarationErrorPointer.DBWCO
 using Logitude.Customs.BL.BL;
 using Logitude.Customs.BL.Messaging.Customs;
 using Simplog.Server.Infrastructure.Helpers;
+using Logitude.BL.CommonDataModel.EntityQueries;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {
@@ -371,9 +372,19 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 {
                     DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(context);
                     DeclarationCourierStatusPM declarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(requestParams.DeclarationId, true, false);
-                    if (declarationCourierStatusPM != null && declarationCourierStatusPM.CourierDeclarationStatusCode == "V" && declarationCourierStatusPM.CourierPaymentStatusCode != "P" && declarationCourierStatusPM.CourierPaymentStatusCode != "O")
+
+
+
+                    FeatureQuery featureQuery = new FeatureQuery();
+
+                    var features = featureQuery.GetAllowedFeaturesForLoggedUser(requestParams.LoggingUserId, requestParams.Tenant);
+
+                    var feature = features.Features.FirstOrDefault(x => x.Code == "SendDeclaration");
+                   
+
+                        if ((declarationCourierStatusPM != null && declarationCourierStatusPM.CourierDeclarationStatusCode == "R" && feature != null) || (declarationCourierStatusPM != null && declarationCourierStatusPM.CourierDeclarationStatusCode == "V" && declarationCourierStatusPM.CourierPaymentStatusCode != "P" && declarationCourierStatusPM.CourierPaymentStatusCode != "O"))
                     {
-                        LogMessagingUtil.Instance.AppendLine($" if (declarationCourierStatusPM != null && declarationCourierStatusPM.CourierDeclarationStatusCode == V && declarationCourierStatusPM.CourierPaymentStatusCode != P && declarationCourierStatusPM.CourierPaymentStatusCode != O)");
+                        LogMessagingUtil.Instance.AppendLine($"  if ((declarationCourierStatusPM != null && declarationCourierStatusPM.CourierDeclarationStatusCode == 'R' && feature != null) || (declarationCourierStatusPM != null && declarationCourierStatusPM.CourierDeclarationStatusCode == 'V' && declarationCourierStatusPM.CourierPaymentStatusCode != 'P' && declarationCourierStatusPM.CourierPaymentStatusCode != 'O'))");
                         if (_MyDeclarationPM.TaxationDateTime < DateTime.Now.Date)
                         {
                             _MyDeclarationPM.TaxationDateTime = DateTime.Now.Date;//לפני השליחה יש לעדכן את תאריך חישוב המיסים לתאריך נוכחי על מנת להמנע מטיוטה שגויה
@@ -384,6 +395,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             trans.Complete();
                         }
                     }
+
+                   
                 }
 
                 string loggingUserId = AuthenticationUtil.ResolveUserId(_MyDeclarationPM.Tenant);
