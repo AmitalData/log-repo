@@ -379,9 +379,10 @@ export class SpotLightDateComponent extends BaseComponent implements OnInit, Aft
         var item = document.getElementById(this.ControlId);
         if (item != null) {
             var itemRect = item.getBoundingClientRect();
+
             document.getElementById(this.DropdownId).style.position = "fixed";
-            document.getElementById(this.DropdownId).style.top = (itemRect.top + 22) + 'px';
-            document.getElementById(this.DropdownId).style.left = itemRect.left + 'px';
+            document.getElementById(this.DropdownId).style.top = (itemRect.top - 151 - 22 + 22) + 'px';
+            document.getElementById(this.DropdownId).style.left = (itemRect.left - 151 - 15) + 'px';
         }
     }
 
@@ -401,18 +402,27 @@ export class SpotLightDateComponent extends BaseComponent implements OnInit, Aft
 
     }
     ValidationErrorsList: string[];
-    onOKBtnClick() {
-        this.ValidationErrorsList = [];
 
-        this._ShipmentPMService.update(this.EntityPM).subscribe((myResult:any) => {
-            if (!myResult.HasError) {
-                this.OnLostFocus();
-                this.PopupClosed.emit(this);
-            }
-            else {
-                this.ValidationErrorsList = myResult.ErrorsArray;
-            }
-        });
+    private isClicked: boolean = false;
+    onOKBtnClick() {
+
+        if (!this.isClicked) {
+            this.isClicked = true;
+
+            this.ValidationErrorsList = [];
+
+            this._ShipmentPMService.update(this.EntityPM).subscribe((myResult: any) => {
+                if (!myResult.HasError) {
+                    this.OnLostFocus();
+                    this.PopupClosed.emit(this);
+                }
+                else {
+                    this.ValidationErrorsList = myResult.ErrorsArray;
+                }
+
+                this.isClicked = false;
+            });
+        }
     }
 
     onCancelBtnClick() {

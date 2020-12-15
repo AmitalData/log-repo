@@ -31,6 +31,8 @@ export class ShipmentDataSource extends DataSource<any | undefined> {
         this.parent.noResult = false;
         this.cachedShipments = Array.from<any>({ length: this.ShipmentsCount || 1 });
         this.fetchedPages = new Set<number>();
+
+        this.ChangeDetector.detectChanges();
     }
 
     ReloadData(filters)

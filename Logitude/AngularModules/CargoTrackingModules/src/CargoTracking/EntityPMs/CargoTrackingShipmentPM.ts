@@ -347,7 +347,7 @@ export class CargoTrackingShipmentPM {
     private packagesQuantity: number;
     public get PackagesQuantity() { return this.packagesQuantity; }
     public set PackagesQuantity(newValue: number) { if (this.packagesQuantity != newValue) { this.packagesQuantity = newValue; this.MarkAsDirty("PackagesQuantity"); } }
-       
+
 	 
     private directionId: string;
     public get DirectionId() { return this.directionId; }
@@ -382,4 +382,4 @@ export class CargoTrackingShipmentPM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}

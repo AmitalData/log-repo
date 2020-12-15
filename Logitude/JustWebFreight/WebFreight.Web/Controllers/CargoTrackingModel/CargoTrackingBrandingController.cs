@@ -17,14 +17,13 @@ namespace WebFreight.Web.Controllers.CargoTrackingModel
 {
     public class CargoTrackingBrandingController: ApiController
     {
-
-        [HttpGet]
-        public HttpResponseMessage GetCargoTrackingBrandingData(string domain)
+ 
+        public HttpResponseMessage PutGetCargoTrackingBrandingData(CargoTrackingBrandingDataRequest BrandingDataRequest)
         {
             try
             {
                 CargoTrackingHelper cargoTrackingHelper = new CargoTrackingHelper();
-                CargoTrackingBrandingData brandingData = cargoTrackingHelper.GetCargoTrackingBrandingDataByDomain(domain);
+                CargoTrackingBrandingData brandingData = cargoTrackingHelper.GetCargoTrackingBrandingDataByDomain(BrandingDataRequest);
                 ServiceResponse response = new ServiceResponse();
                 response.Result = brandingData;
                 return Request.CreateResponse(HttpStatusCode.OK, response);
@@ -35,13 +34,13 @@ namespace WebFreight.Web.Controllers.CargoTrackingModel
             }
         }
 
-        public HttpResponseMessage GetCargoTrackingBrandingDataForPrivateSite(string domain)
+        public HttpResponseMessage PutGetCargoTrackingBrandingDataForPrivateSite(CargoTrackingBrandingDataRequest BrandingDataRequest)
         {
 
             try
             {
                 CargoTrackingHelper cargoTrackingHelper = new CargoTrackingHelper();
-                CargoTrackingBrandingData brandingData = cargoTrackingHelper.GetCargoTrackingBrandingDataByDomain(domain,true);
+                CargoTrackingBrandingData brandingData = cargoTrackingHelper.GetCargoTrackingBrandingDataByDomain(BrandingDataRequest, true);
                 ServiceResponse response = new ServiceResponse();
                 response.Result = brandingData;
                 return Request.CreateResponse(HttpStatusCode.OK, response);

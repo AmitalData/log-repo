@@ -18,7 +18,7 @@ declare var UploadLogoFile, HideImage, SetImage, ShowHideProgressDownload, Array
   inputs: ['EntityId', 'ImageId', "EntityName", 
   'ImageId', 'WidthImage', 'HeightImage', 'ImageResizeWidth',
    'ImageResizeHeight', 'HideBorder', 'DisplayOnly', 
-   'ConversationHeaderId','KeepOriginalSize'],
+   'ConversationHeaderId','KeepOriginalSize','Extension'],
   providers: [ImageLibraryService],
 })
 
@@ -31,6 +31,7 @@ export class ImageComponent implements AfterViewInit, OnInit {
   IsLoadingImage: boolean = false;
   ImageResizeWidth: number;
   ImageResizeHeight: number;
+  Extension:string;
   DefultImageHeight: string = "auto";
   ImageKey: string = Guid.newGuid();
   ImageFileHtmlId: string = Guid.NewRandomString();
@@ -117,6 +118,7 @@ export class ImageComponent implements AfterViewInit, OnInit {
 
 
   ShowLogosIfExist(imageId: string, extension: string = "jpg", isUseCach = true) {
+    extension = this.Extension?this.Extension:extension;
     if (!imageId) imageId = this.ImageId;
 
     if (isUseCach) {
@@ -143,7 +145,7 @@ export class ImageComponent implements AfterViewInit, OnInit {
   }
 
   GetImageFile(imageId: string, extension: string, isFirEvent: boolean = false) {
-
+    extension = this.Extension?this.Extension:extension;
     var type = "Base64";
     if (this.EntityName == "Quotation" || this.EntityName == "Airline") {
       type += ("^ImageDetail");
@@ -206,13 +208,15 @@ export class ImageComponent implements AfterViewInit, OnInit {
 
     if (file) {
       var reader: FileReader = new FileReader();
-      var extension: string = "";
+      var extension: string =extension = this.Extension?this.Extension:"";
       var fileInfo = file.name.split('.');
 
-      if (fileInfo.length > 1) {
+      if (fileInfo.length > 1 && !extension) {
         extension = fileInfo[fileInfo.length - 1];
       }
-      else extension = fileInfo[1];
+      else if(!extension) extension = fileInfo[1];
+      else
+        extension = this.Extension?this.Extension:extension;
 
       if (extension) {
         extension = extension.toLowerCase();
@@ -422,9 +426,9 @@ export class ImageComponent implements AfterViewInit, OnInit {
   }
 
   GetSocialMessageImageFile(imageId: string, imageNumber: number) {
-
+    var extension = this.Extension?this.Extension:"jpg";
     ShowHideProgressDownload(true, this.ProgressDownloadId);
-    this._imageLibraryService.DownloadFile(imageId, "jpg", "images", SessionInfo.LoggedUserTenant, "Base64").subscribe((res: any) => {
+    this._imageLibraryService.DownloadFile(imageId, extension, "images", SessionInfo.LoggedUserTenant, "Base64").subscribe((res: any) => {
       var pmResponse: ServiceResponse = res;
 
       ShowHideProgressDownload(false, this.ProgressDownloadId);

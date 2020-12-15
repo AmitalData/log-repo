@@ -68,36 +68,31 @@ export class CargoTrackingSearchService {
 		});
     }
     GetUserShipmentsCounter(shipmentFilters: CargoTrackingShipmentFilters) {
-        var authHeaders = ServiceHelper.GetHeaders();
-
-        var urlparameters = '';
-		var mykeys = Object.keys(shipmentFilters);
-		var addtionalFiltersValues = null;
-
-		for (var i in mykeys) {
-			var propName = mykeys[i];
-			var propValue = shipmentFilters[propName];
-
-            propValue = encodeURIComponent(propValue);
-            urlparameters = urlparameters.concat(propName.concat('=').concat(propValue)).concat('&');
-
-        }
-
-
 		return defer(() => {
-            return this._http.get(this._apiUrl + '/GetUserShipmentsCount/?' + urlparameters,
-             {headers: authHeaders})
+            return this._http.get(this._apiUrl + '/GetUserShipmentsCount/?' + this.ParseFiltersIntoURL(shipmentFilters),
+             {headers: ServiceHelper.GetHeaders()})
 				.pipe(
 					map((response: HttpResponse<any>) => {
-
-						var list = response;
-
-						return list;
+						return response;
 					},catchError(error=>{
 						return error;
 					})));
 		});
 	}
+    private ParseFiltersIntoURL(shipmentFilters: CargoTrackingShipmentFilters)
+    {
+        var urlparameters = '';
+        var keys = Object.keys(shipmentFilters);
+
+        for (var i in keys) {
+            var propertyName = keys[i];
+            var propertyValue = shipmentFilters[propertyName];
+            propertyValue = encodeURIComponent(propertyValue);
+            urlparameters = urlparameters.concat(propertyName.concat('=').concat(propertyValue)).concat('&');
+        }
+        return urlparameters;
+    }
+
     getShipment(SecurityKey: string, tenant: number) {
         var authHeaders = ServiceHelper.GetHeaders();
 

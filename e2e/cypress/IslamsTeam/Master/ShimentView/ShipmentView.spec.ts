@@ -48,14 +48,15 @@ it('CreateNewView ', () => {
 })
 
 it('EditShipmentView', () => {
-    // cy.wait(100)
+  cy.wait(100)
 
     //cy.get('#QueryList_0_0').should('be.visible')
 
     cy.get('#QueryList_0_0').click({ force: true })
     cy.get('#SearchFieldsId_0_0').click({ force: true })
-    //cy.wait(100)
+    cy.wait(100)
     cy.get('#QueryList_0_0').click({ force: true })
+    cy.wait(100)
     cy.get('.ActionButtonsParent').should('be.visible')
     let lastShipment = cy.get('.ActionButtonsParent').last()
     lastShipment.trigger('mouseover')

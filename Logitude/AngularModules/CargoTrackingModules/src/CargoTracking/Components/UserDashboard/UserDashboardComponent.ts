@@ -105,7 +105,7 @@ export class UserDashboardComponent implements AfterViewInit
     private GetcargoTrackingData(baseUrl:string)
     {   if(this.tenant) 
         this.IsBrandingDataLoaded = true;
-        this.cargoTrackingDataExtendedService.GetCargoTrackingBrandingDataForPrivateSite(ServiceHelper.GetCurrentDomain(baseUrl)).subscribe((response: ServiceResponse) =>
+        this.cargoTrackingDataExtendedService.GetCargoTrackingBrandingDataForPrivateSite(ServiceHelper.GetcargoTrackingDataRequest(baseUrl)).subscribe((response: ServiceResponse) =>
         { if(response.Result){
 
             ServiceHelper.SetCargoTrackingDate(response.Result,baseUrl);

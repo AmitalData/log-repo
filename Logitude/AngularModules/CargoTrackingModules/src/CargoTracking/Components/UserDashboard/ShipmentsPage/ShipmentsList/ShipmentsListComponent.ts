@@ -39,7 +39,7 @@ export class ShipmentsListComponent implements AfterViewInit
     showShipmentDetailsMenu: boolean = false;
     InvitedCustomersIds: string[];
     InvitedCustomers: any[] = [];
-    ShipmentsDS;
+    ShipmentsDataSource;
     @ViewChild(CdkVirtualScrollViewport) virtualScroll: CdkVirtualScrollViewport;
     @ViewChild('input') searchInput: ElementRef;
 
@@ -61,13 +61,17 @@ export class ShipmentsListComponent implements AfterViewInit
     }
     ngAfterViewInit(): void
     {
-        if(SessionInfo.ShipmentsFilters){
+        this.GetPreservedToggleFiltersFromSessionInfo();
+        this.GetCompanyLoginsFromCache();
+    }
+
+    private GetPreservedToggleFiltersFromSessionInfo()
+    {
+        if (SessionInfo.ShipmentsFilters) {
             this.SearchText = SessionInfo.ShipmentsFilters.SearchText;
             this.SelectToggleFilters(SessionInfo.ShipmentsFilters.TransportModeCodes);
             this.SelectToggleFilters(SessionInfo.ShipmentsFilters.DirectionCodes);
         }
-
-        this.GetCompanyLoginsFromCache();
     }
 
     private InitComponent()
@@ -87,7 +91,7 @@ export class ShipmentsListComponent implements AfterViewInit
     private GetInvitedCustomers()
     {
 
-        this.AddDemoCustomersForTest();
+        // this.AddDemoCustomersForTest();
 
         this.InvitedCustomersIds = SessionInfo.LoggedUserCompanyLogins
             .filter(d => d.CardType == 'CS' && d.CardId != null && d.Tenant == this.tenant)
@@ -100,7 +104,7 @@ export class ShipmentsListComponent implements AfterViewInit
  
         console.log("[Invited Customers]", this.InvitedCustomersIds);
 
-        this.LoadShipments();
+        this.LoadScreenData();
     }
 
   
@@ -149,14 +153,14 @@ export class ShipmentsListComponent implements AfterViewInit
     Clear()
     {
         this.SearchText = '';
-        this.LoadShipments();
+        this.LoadScreenData();
     }
 
     Search()
     {
         if (this.tenant!=null && this.SearchText) {
             this.Shipments = [];
-            this.LoadShipments();
+            this.LoadScreenData();
         }
 
     }
@@ -171,31 +175,55 @@ export class ShipmentsListComponent implements AfterViewInit
     }
 
     ShipmentsCounter: CargoTrackingShipmentsCounter = new CargoTrackingShipmentsCounter();
-    LoadShipments()
+    LoadScreenData()
     {
-        if (this.tenant) {
+        if (this.tenant) 
+        {
             var shipmentFilters = this.BuildShipmentFilters();
-            if (this.ShipmentsDS) {
-                this.ShipmentsDS.ReloadData(shipmentFilters);
-                this.virtualScroll.scrollToIndex(0);
-            } else {
-                this.ShipmentsDS = new ShipmentDataSource(this.changeDetector, this.searchService, shipmentFilters, this);
-                this.changeDetector.detectChanges();
-            }
-
-            this.searchService.GetUserShipmentsCounter(shipmentFilters).subscribe((counter:any)=>{
-                console.log("[GetUserShipmentsCounter]", counter);  
-                
-                this.ShipmentsCounter = counter;
-                this.BuildToggleFilters();
-            })
+            this.LoadShipments(shipmentFilters);
+            this.LoadShipmentsCounter(shipmentFilters);
         }
     }
     references: string[];
     isSortDescending: boolean = true;
+    private LoadShipments(shipmentFilters: CargoTrackingShipmentFilters)
+    {
+        if (this.ShipmentsDataSource)
+            this.ReloadShipments(shipmentFilters);
+
+        else
+            this.InitiateShipmentDataSource(shipmentFilters);
+    }
+
+    private LoadShipmentsCounter(shipmentFilters: CargoTrackingShipmentFilters)
+    {
+        this.searchService.GetUserShipmentsCounter(shipmentFilters).subscribe((counter: any) =>
+        {
+            console.log("[GetUserShipmentsCounter]", counter);
+            this.ShipmentsCounter = counter;
+            this.BuildToggleFilters();
+        });
+    }
+
+    private InitiateShipmentDataSource(shipmentFilters: CargoTrackingShipmentFilters)
+    {
+        this.ShipmentsDataSource = new ShipmentDataSource(this.changeDetector, this.searchService, shipmentFilters, this);
+    }
+
+    private ReloadShipments(shipmentFilters: CargoTrackingShipmentFilters)
+    {
+        this.ShipmentsDataSource.ReloadData(shipmentFilters);
+        this.ResetShipmentsScrollbarPosition();
+    }
+
+    private ResetShipmentsScrollbarPosition()
+    {
+        this.virtualScroll.scrollToIndex(0);
+    }
+
     SortClicked(){
         this.isSortDescending = !this.isSortDescending;
-        this.LoadShipments();
+        this.LoadScreenData();
     }
     private BuildShipmentFilters()
     {
@@ -309,7 +337,7 @@ export class ShipmentsListComponent implements AfterViewInit
         if (!item)
             this.SelectedFilters.push(filter);
 
-        this.LoadShipments();
+        this.LoadScreenData();
     }
     SelectFilterByCode(filterCode: string)
     {
@@ -321,29 +349,29 @@ export class ShipmentsListComponent implements AfterViewInit
         var index = this.SelectedFilters.findIndex(d => d.Name == filter.Name);
         this.SelectedFilters.splice(index, 1);
 
-        this.LoadShipments();
+        this.LoadScreenData();
 
     }
     ClearFilters()
     {
         this.SelectedFilters = [];
-        this.LoadShipments();
+        this.LoadScreenData();
     }
 
     ApplyFilterButtonClicked()
     {
         this.isFiltersSideBarOpened = false;
-        this.LoadShipments();
+        this.LoadScreenData();
     }
     ClearAdvancedFilters(){
         this.isFiltersSideBarOpened = false;
         this.InvitedCustomers.forEach(d=>{d.IsSelected=false});
-        this.LoadShipments();
+        this.LoadScreenData();
     }
     SortMenuClicked(buttonCode: string)
     {
         this.isSortDescending = buttonCode == "desc";
-        this.LoadShipments();
+        this.LoadScreenData();
     }
 
     lastClickedShipment: any;

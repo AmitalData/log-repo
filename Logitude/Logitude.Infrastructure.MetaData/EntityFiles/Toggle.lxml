@@ -39,11 +39,9 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Toggle&quot;"
-<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< master
-  Code="&quot;f26c&quot;"
-========================================================================
+
   Code="&quot;026d&quot;"
->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> 2020.R5.75500
+
   Name="&quot; Query Group&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;Name&quot;"
@@ -491,19 +489,18 @@
       Code="&quot;CTR&quot;"
       SearchFields="&quot;CTR,Charges Types Direction Restrictions&quot;"
       Description="&quot;Charges Types Direction Restrictions&quot;" />
-<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< master
     <Record
       Name="&quot;Branch Code in Counters&quot;"
       SearchFields="&quot;Branch Code in Counters&quot;"
       Description="&quot;Branch Code in Counters&quot;"
       Code="&quot;BCC&quot;" />
-========================================================================
+
     <Record
       Code="&quot;ACP&quot;"
       SearchFields="&quot;ACP,Accruals Approvement&quot;"
       Name="&quot;Accruals Approvement&quot;"
       Description="&quot;Accruals Approvement Toggle&quot;" />
->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> 2020.R5.75500
+
   </Records>
   <DataContracts />
   <AdditionalTextCodes />

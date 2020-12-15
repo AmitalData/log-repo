@@ -37,7 +37,7 @@ export class Error401Component
     }
     private GetTenantByDomain(baseUrl:string)
     {   
-        this.cargoTrackingDataExtendedService.GetTenantByDomain(ServiceHelper.GetCurrentDomain(baseUrl)).subscribe((response: ServiceResponse) =>
+        this.cargoTrackingDataExtendedService.GetTenantByDomain(baseUrl).subscribe((response: ServiceResponse) =>
         {   this.isTenantLoaded =true;
             if(response.Result!=null){
             CargoTrackingBrandingData.Tenant = response.Result;
