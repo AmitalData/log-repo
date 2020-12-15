@@ -41,6 +41,8 @@ namespace Logitude.MetadataUpdate
         private void InitializeSettings()
         {
             string dbms = ConfigurationManager.AppSettings.Get("DBMS");
+            Console.WriteLine("Connected to " + dbms);
+            Console.WriteLine(GetConnectionString());
             LogitudeSettings.DatabaseManagementSystem = dbms;
             SettingRepository settingRepository = new SettingRepository();
             Setting setting = settingRepository.GetSingleSetting("1");
@@ -80,6 +82,20 @@ namespace Logitude.MetadataUpdate
             InjectionUtil.Init(null, null, null, () => (new ByteCompressorUtil()) as IByteCompressorUtil, null, null,null);
 
             CacheManager.CacheWrapper = new CacheWrapper(WorkerEntryPoint.Cache);
+        }
+
+        private string GetConnectionString()
+        {
+            string dbConnectionInfo = "";
+            if (LogitudeSettings.DatabaseManagementSystem == "oracle")
+            {
+                dbConnectionInfo = ConfigurationManager.ConnectionStrings["Oracle_Globalstr"].ConnectionString;
+            }
+            else
+            {
+                dbConnectionInfo = ConfigurationManager.ConnectionStrings["Globalstr"].ConnectionString;
+            }
+            return dbConnectionInfo;
         }
     }
 }
