@@ -1,6 +1,9 @@
 ﻿using CommunicationWorkerRole.Tasks;
+using Logitude.Accounting.BL.EntityQueryServices;
+using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.BL.CommonDataModel.CustomFilters;
 using Logitude.BL.CommonDataModel.EntityLists;
+using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.InfrastructureModel.DataContracts;
 using Logitude.BL.InfrastructureModel.EntityPMs;
@@ -147,8 +150,8 @@ namespace CommunicationWorkerRole.Services
             this.currentTask.LogInfo(FTPLogBuilder.BuildLogLine("Preparing report data"));
             
             List<ContactList> allPermittedContacts = GetAllPermittedContacts(reportTask.Tenant, null);
-            string cardId = GetcardIdValueField(schedulerDetails);
-            List<ContactList> allPermittedCards = GetAllPermittedContacts(reportTask.Tenant, cardId);
+            string gLAccountId = GetGLAccountIdValueField(schedulerDetails);
+            List<ContactList> allPermittedCards = GetAllPermittedContacts(reportTask.Tenant, gLAccountId);
             allPermittedContacts = allPermittedContacts.Concat(allPermittedCards).ToList();
             schedulerDetails.ReportDetails.Recepients = RemoveNonPermittedContacts(schedulerDetails.ReportDetails.Recepients, allPermittedContacts);
             if (schedulerDetails.ReportDetails.Recepients != null)
@@ -156,8 +159,8 @@ namespace CommunicationWorkerRole.Services
                 StiReport stiReport = GetStimulReportByReportFilter(reportFilter);
                 this.currentTask.LogInfo(FTPLogBuilder.BuildLogLine("Exporting report to pdf file"));
                 string documentId = GetDocumentIdAfterExport(stiReport, reportTask.Name, reportTask.Tenant);
-                schedulerDetails.ReportDetails.Recepients = GetRecepientsAfterRemoveInActiveCustomer(cardId, reportTask.Tenant, schedulerDetails.ReportDetails.Recepients);
-                if (schedulerDetails.ReportDetails.Recepients != null)
+                bool inActiveSelectedPartners = CheckIfOneOrMoreInactiveSelectedPartners(reportTask, schedulerDetails);
+                if (!inActiveSelectedPartners)
                 {
                     this.currentTask.LogInfo(FTPLogBuilder.BuildLogLine("Sending report to reciepents"));
                     SendHtmlDocument(documentId, schedulerDetails.ReportDetails.Recepients, reportTask);
@@ -165,11 +168,10 @@ namespace CommunicationWorkerRole.Services
                 }
                 else
                 {
-                    currentTask.LogWarning("The E-mail was not sent, the customer status is inactive.");
+                    currentTask.LogWarning("The E-mail was not sent, one or more selected filters partners are inactive");
                 }
             }
         }
-
 
         private SchedulerDetails GetSchedulerDetails(TasksSchedulerPM reportTask)
         {
@@ -182,17 +184,17 @@ namespace CommunicationWorkerRole.Services
             return schedulerDetails;
         }
         
-        private string GetcardIdValueField(SchedulerDetails schedulerDetails)
+        private string GetGLAccountIdValueField(SchedulerDetails schedulerDetails)
         {
-            string cardId = null;
+            string gLAccountId = null;
             schedulerDetails.ReportDetails.ReportFilterItems.ForEach(item => {
                 if (item.FieldName == "GLAccountId")
                 {
                     if(item.FieldValue != null)
-                        cardId = item.FieldValue.ToString();
+                        gLAccountId = item.FieldValue.ToString();
                 }
             });
-            return cardId;
+            return gLAccountId;
         }
 
         private ReportSchedulerRecepients RemoveNonPermittedContacts(ReportSchedulerRecepients recepients, List<ContactList> allPermittedContacts)
@@ -430,11 +432,11 @@ namespace CommunicationWorkerRole.Services
             storageservice.Write(ByteData, fileInfo);
         }
 
-        private ReportSchedulerRecepients GetRecepientsAfterRemoveInActiveCustomer(string cardId, int tenant, ReportSchedulerRecepients recepients)
+        private ReportSchedulerRecepients GetRecepientsAfterRemoveInActiveCustomer(string gLAccountId, int tenant, ReportSchedulerRecepients recepients)
         {
-            if (string.IsNullOrEmpty(cardId)) return recepients;
+            if (string.IsNullOrEmpty(gLAccountId)) return recepients;
             CardQuery cardQuery = new CardQuery(tenant);
-            List<ShortPartnersDetails> connectedPartners = cardQuery.GetConnectedPartnerIdsByGLAccountId(cardId, tenant);
+            List<ShortPartnersDetails> connectedPartners = cardQuery.GetConnectedPartnerIdsByGLAccountId(gLAccountId, tenant);
 
             if (connectedPartners.Count() == 0) return recepients;
             else if (GetInactivePartnerCounts(connectedPartners) == 0) return recepients;
@@ -447,6 +449,37 @@ namespace CommunicationWorkerRole.Services
             }
 
             return recepients;
+        }
+
+        private bool CheckIfOneOrMoreInactiveSelectedPartners(TasksSchedulerPM reportTask, SchedulerDetails schedulerDetails)
+        {
+            string gLAccountId = GetGLAccountIdValueField(schedulerDetails);
+            if (!string.IsNullOrEmpty(gLAccountId)) //glaccount report
+            {
+                bool inactiveGLAccountSelectedPartners = CheckIfOneOrMoreInactiveGLAccountSelectedPartners(gLAccountId, reportTask, schedulerDetails);
+                return inactiveGLAccountSelectedPartners;
+            }
+            else
+                return true; //other reports
+
+        }
+        private bool CheckIfOneOrMoreInactiveGLAccountSelectedPartners(string gLAccountId, TasksSchedulerPM reportTask, SchedulerDetails schedulerDetails)
+        {
+            bool inActiveGlAccount = CheckIfInactiveSelectedGLAccount(gLAccountId, reportTask.Tenant);
+            schedulerDetails.ReportDetails.Recepients = GetRecepientsAfterRemoveInActiveCustomer(gLAccountId, reportTask.Tenant, schedulerDetails.ReportDetails.Recepients);
+            if (inActiveGlAccount || schedulerDetails.ReportDetails.Recepients == null)
+                return true;
+            else
+                return false;
+        }
+
+        private bool CheckIfInactiveSelectedGLAccount(string gLAccountId, int tenant)
+        {
+            GLAccountQueryService gLAccountQueryService = new GLAccountQueryService(tenant);
+            GLAccount gLAccount  = gLAccountQueryService.GetSingleByAccountId(gLAccountId, tenant);
+            if (gLAccount != null && gLAccount.Inactive != null)
+                return (bool)gLAccount.Inactive;
+            return false;
         }
 
         private ReportSchedulerRecepients RemoveInActiveCustomerRecepients(ReportSchedulerRecepients recepients, List<ShortPartnersDetails> connectedPartners, int tenant)
