@@ -92,8 +92,10 @@ namespace Logitude.Customs.Data.Repsitories
         {
             var decList = (from a in context.CourierDeclarations 
                            where a.CourierMasterId == courierMasterId && a.Tenant == tenant && a.Declaration.CourierCustomStatus== null
+                           && a.Declaration.PaymentDate != null 
                            select a.DeclarationId).ToList();
             return decList;
+
         }
     }
 
