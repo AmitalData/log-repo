@@ -451,8 +451,8 @@ export class CustomsDocumentTicketViewModel {
                                     var customsDocumentPM: CustomsDocumentPM = new CustomsDocumentPM();
                                     customsDocumentPM.DocumentsFilingId = relatedDocumentViewModel.Id;
                                     customsDocumentPM.Tenant = SessionLocator.Tenant;
-                                     isExport = relatedDocumentViewModel.DocumentCategoryCode=='E' ?true :false;
-                                    if (isExport) {
+                                    isExport = relatedDocumentViewModel.DocumentCategoryCode == 'E' ? true : false;
+                                    if (isExport && AppTool.IsNullOrEmpty(this.customsDocumentsTicketPM.RequestedCustomsDocId)) {
                                         if (!AppTool.IsNullOrEmpty(res.Result)) {
                                             customsDocumentPM.DocumentTypeCode = res.Result.CustomsDoucumentTypeCode;// relatedDocumentViewModel.DocumentTypeCode;
                                             this.customsDocumentsTicketPM.DocumentTypeCode = res.Result.CustomsDoucumentTypeCode;// relatedDocumentViewModel.DocumentTypeCode;
