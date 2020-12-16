@@ -17,6 +17,8 @@ using System.Xml.Serialization;
 using WebFreight.Web.DataProviders;
 using System.Net;
 using System.Data.Entity;
+using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.BL.CommonDataModel.EntityPMs;
 
 namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Bluesnap
 {
@@ -29,6 +31,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Bluesnap
         private BluesnapPaymentsDataProvider iDataProvider;
         private IQueryable<TenantJoinBluesnapTransactionList> iQueryable_JoinTenantBluesnapTransaction;
         private IQueryable<BluesnapTransaction> iQueryable_BluesnapTransactions;
+        ICommonDataContext commonDataContext;
         IBlobService storageservice;
         DocumentRepository documentRepository;
         private List<BlusnapTransactionsList> otherTenantsTransactions;
@@ -43,6 +46,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Bluesnap
             QueryOperations iQueryOperations = (QueryOperations)xmlSerializer.Deserialize(memoryStream);
             this.FilterByDates(iQueryOperations);
             this.FilterByShowAllRecurringTenants(iQueryOperations);
+            commonDataContext = CommonDataContext.GetContext(tenant); 
         }
 
         private void FilterByDates(QueryOperations iQueryOperations)
@@ -120,7 +124,15 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Bluesnap
             //IQueryable<TenantManagement> iQueryable_Tenantmanagements = globalObjectContext.TenantManagements.Where(a => a.IsRecurring == true && a.RecurringPeriodCode == "MO" && a.PaymentChannelCode == "PL");
             iQueryable_BluesnapTransactions = globalObjectContext.BluesnapTransactions;
             iQueryable_BluesnapTransactions = iQueryable_BluesnapTransactions.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.TransactionDate) >= System.Data.Entity.DbFunctions.TruncateTime(fromDate) && System.Data.Entity.DbFunctions.TruncateTime(d.TransactionDate) <= System.Data.Entity.DbFunctions.TruncateTime(toDate));
-
+            List<int> tenantsIds = iQueryable_Tenantmanagements.ToList().Select(e => e.Id).ToList();
+            var customers = (from a in commonDataContext.Cards.Include("Customer")
+                             where tenantsIds.Contains(a.Tenant) && !string.IsNullOrEmpty(a.ReceivablesAccountingCard)
+                             select new CardPM()
+                             {
+                                 Tenant = a.Tenant,
+                                 ReceivablesAccountingCard = a.ReceivablesAccountingCard
+                             }).ToList();
+                         
             this.iQueryable_JoinTenantBluesnapTransaction = (from tenantmanagements in iQueryable_Tenantmanagements
                                                              select new TenantJoinBluesnapTransactionList()
                                                              {
@@ -131,6 +143,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Bluesnap
                                                                  IsParentTenant = tenantmanagements.IsParentTenant,
                                                                  ParentTenantId = tenantmanagements.ParentTenantId,
                                                                  NoPaymentForChildTenants = tenantmanagements.NoPaymentForChildTenants,
+                                                                 CRMcustomer = customers.Where(e => e.Tenant == tenantmanagements.Id).FirstOrDefault().ReceivablesAccountingCard,
                                                                  Transactions = (from a in iQueryable_BluesnapTransactions
                                                                                  where a.Tenant == tenantmanagements.Id
                                                                                  select new BluesnapTransactionItem()
@@ -356,6 +369,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Bluesnap
 
         public int Tenant { get; set; }
         public string TenantName { get; set; }
+        public string CRMcustomer { get; set; }
         public string ShopperId { get; set; }
         public double? AmountToPay { get; set; }
         public bool IsParentTenant { get; set; }
