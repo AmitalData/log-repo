@@ -381,9 +381,11 @@
     <Compile Include="LogBoxMailgunAnalyzerWorkerRole.cs" />
     <Compile Include="LogMessagesWorkerRole.cs" />
     <Compile Include="DocumentApprovalWorkerRole.cs" />
+    <Compile Include="QueryExportExecutionLogWR.cs" />
     <Compile Include="Services\FTPSchedulerTaskService.cs" />
     <Compile Include="ImporterApprovalReceivedWorkerRole.cs" />
     <Compile Include="Services\FTPSchedulerTaskServiceBase.cs" />
+    <Compile Include="Services\QueryExportLogExecutionService.cs" />
     <Compile Include="Services\ReportSchedulerTaskService.cs" />
     <Compile Include="Services\SFTPSchedulerTaskService.cs" />
     <Compile Include="Tasks\CustomsSendManifestTask.cs" />

@@ -2631,6 +2631,7 @@
     <Compile Include="Helpers\LogBox\LogBoxMailgunAnalyzer.cs" />
     <Compile Include="Helpers\LogitudeLeadHelper.cs" />
     <Compile Include="Helpers\MetadataUpdateUtility.cs" />
+    <Compile Include="Helpers\QueryToExcelExportService.cs" />
     <Compile Include="Helpers\ReferentPartnerService.cs" />
     <Compile Include="Helpers\NumbersConverterToWords.cs" />
     <Compile Include="Helpers\PasswordChangeHelper.cs" />
@@ -3156,6 +3157,7 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\InfrastructureModel\EntityUpdateClasses\ObjectFieldUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\InfrastructureModel\EntityUpdateClasses\ObjectTableUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\InfrastructureModel\EntityUpdateClasses\PrepaidCollectUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\InfrastructureModel\EntityUpdateClasses\QueryExportExecutionLogUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\InfrastructureModel\EntityUpdateClasses\QueueMessageMoreDetailsUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\InfrastructureModel\EntityUpdateClasses\RatesTableUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\InfrastructureModel\EntityUpdateClasses\RuleUpdateHistoryUpdateClass.cs" />
