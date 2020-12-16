@@ -149,20 +149,25 @@ export class LoginComponent implements OnInit {
     }
 
     private LoginSucceeded(LoginParams: any, userData: any) {
+        this.errorMessage = "";
         let tenantList = userData.CompanyLogins;
         let LogInToTenant  = tenantList.filter(tenan => tenan.Tenant == this.Tenant)[0];
-        if(!LogInToTenant) this.GoToError401();
-
-        SessionInfo.LoggedUserCompanyLogins = userData.CompanyLogins;
-        sessionStorage.setItem("LoggedUserCompanyLogins", JSON.stringify(userData.CompanyLogins));
-
-        this.loginExtendedService.PostLoginData(LoginParams, LogInToTenant.Tenant).subscribe((userData: any) => {
+        if(!LogInToTenant) {
+            this.errorMessage = "Login failed! unauthorised user.";
             this.ShowbusyIndicator = false;
-            if (userData) {
-                this.FillSessionInfoData(userData);
-                this.RouteToMainPage();
-            }
-        });
+        }
+        else {
+            SessionInfo.LoggedUserCompanyLogins = userData.CompanyLogins;
+            sessionStorage.setItem("LoggedUserCompanyLogins", JSON.stringify(userData.CompanyLogins));
+
+            this.loginExtendedService.PostLoginData(LoginParams, LogInToTenant.Tenant).subscribe((userData: any) => {
+                this.ShowbusyIndicator = false;
+                if (userData) {
+                    this.FillSessionInfoData(userData);
+                    this.RouteToMainPage();
+                }
+            });
+        }
     }
 
     private FillSessionInfoData(userData: any) {
