@@ -317,10 +317,10 @@ export class LogSearchWindowComponent extends BaseComponent implements OnInit, O
     IsUseCardSearchMechanism() {
         var result: boolean = false;
         if (this.ObjectTableName == "Card") {
-            var featureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "CST" && d.TenantNumber == SessionLocator.Tenant)[0];
-            if (featureToggle) {
+            //var featureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "CST" && d.TenantNumber == SessionLocator.Tenant)[0];
+            //if (featureToggle) {
                 result = true;
-            }
+            //}
         }
         return result;
 
