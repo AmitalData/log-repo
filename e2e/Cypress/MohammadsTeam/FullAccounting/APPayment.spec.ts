@@ -27,7 +27,7 @@ let R: CreateRandom= new CreateRandom();
           
       cy.get('li[id=FAVND]').click();
       cy.get('button[id=NewAPPayment]').click();
-      cy.get('input[id=APPayment_VendorId]').type("Test Vendor GLAccount").should("have.value", "Test Vendor GLAccount")
+      cy.get('input[id=APPayment_VendorId]').type("Test Vendor GLAccount1542").should("have.value", "Test Vendor GLAccount1542")
       cy.get('ul[id=mydatalist_APPayment_VendorId]').contains("Test Vendor GLAccount").then(a => {
           a[0].click();
       })
