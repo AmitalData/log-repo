@@ -105,6 +105,10 @@ namespace Simplog.Data.Helpers
         [DataMember]
         public AutomationSendInterface AutomationSendInterface { get; set; }
 
+        [DataMember]
+        public string ReportTemplateId { get; set; }
+        
+
     }
 
 

@@ -227,9 +227,9 @@ namespace CommunicationWorkerRole
                                 entityChangesAutomation.IsConditionTrue = validateResult.IsAutomationValid;
                                 ObjectTableRepository objectTabelRepository = new ObjectTableRepository(Tenant);
                                 ObjectTable objectTable = objectTabelRepository.GetSingleObjectTable(entityChange.ObjectTableId, Tenant, true);
-
+                                AutomatedBackup automatedBackup = generalAutomationResultService.GetAutomatedBackupClass(automation, entityChange, automationLastUpdateDate);
                                 #region Send Interface
-                             
+
 
                                 if (automation.ResultCode == "SENDINTERFACE")
                                 {
@@ -237,7 +237,7 @@ namespace CommunicationWorkerRole
                                     if (validateResult.IsAutomationValid)
                                     {
 
-                                        AutomationSendInterface automationSendInterface = GetAutomationSendInterface(automation, automationLastUpdateDate);
+                                        AutomationSendInterface automationSendInterface = automatedBackup.AutomationSendInterface;
                                         string documentId = GetSendInterfaceDataContractDocumentId(entityChange, automationSendInterface);
                                         if (automationSendInterface.SendVia == "EMAIL")
                                         {
@@ -271,7 +271,7 @@ namespace CommunicationWorkerRole
                                     {
                                         string objectTableName = objectTable != null ? objectTable.Name : "";
                                         AutomationHelper automationHelper = new AutomationHelper();
-                                        string comunicationLogId = automationHelper.ExecuteEmailAutomation(new AutomationSendEmailArgs() { EntityId = entityChange.EntityId, CreateByUserId = entityChange.CreateByUserId, ObjectTableId = entityChange.ObjectTableId, Tenant = entityChange.Tenant, AutomationConditionFieldLists = AutomationConditionFieldLists, Automation = automation, ObjectTableName = objectTableName});
+                                        string comunicationLogId = automationHelper.ExecuteEmailAutomation(new AutomationSendEmailArgs() { EntityId = entityChange.EntityId, CreateByUserId = entityChange.CreateByUserId, ObjectTableId = entityChange.ObjectTableId, Tenant = entityChange.Tenant, AutomationConditionFieldLists = AutomationConditionFieldLists, Automation = automation, ObjectTableName = objectTableName, ReportTemplateId = automatedBackup.ReportTemplateId });
                                         MarkEntityChangeExecutedRecord(entityChange, entityChangesAutomation, entityChangesAutomationsLists);
                                     }
                                     else
@@ -531,39 +531,6 @@ namespace CommunicationWorkerRole
             entityChangesAutomationsLists.Add(entityChangesAutomation);
         }
 
-        private  AutomationSendInterface GetAutomationSendInterface(Automation automation, string automationLastUpdateDate)
-        {
-            string automationSendInterfaceName = "AutomationSendInterface" + automationLastUpdateDate + automation.Id + automation.Tenant;
-
-            AutomationSendInterface automationSendInterface = null;
-            if (CacheManager.CacheWrapper != null)
-            {
-                if (CacheManager.CacheWrapper.Get(automationSendInterfaceName) == null)
-                {
-                    if (!string.IsNullOrEmpty(automation.AutomationXML))
-                    {
-                        AutomatedBackup AutomatedBackup = LogitudeXmlSerializer.DeserializeObject<AutomatedBackup>(automation.AutomationXML);
-                        automationSendInterface = AutomatedBackup.AutomationSendInterface;
-
-                        CacheManager.CacheWrapper.Insert(automationSendInterfaceName, automationSendInterface, null, System.DateTime.UtcNow.AddHours(12), TimeSpan.Zero);
-                    }
-                }
-                else
-                {
-                    automationSendInterface = (AutomationSendInterface)CacheManager.CacheWrapper.Get(automationSendInterfaceName);
-                }
-            }
-            else
-            {
-                if (!string.IsNullOrEmpty(automation.AutomationXML))
-                {
-                    AutomatedBackup AutomatedBackup = LogitudeXmlSerializer.DeserializeObject<AutomatedBackup>(automation.AutomationXML);
-                    automationSendInterface = AutomatedBackup.AutomationSendInterface;
-                }
-            }
-
-            return automationSendInterface;
-        }
 
         private void ConnectClient()
         {
