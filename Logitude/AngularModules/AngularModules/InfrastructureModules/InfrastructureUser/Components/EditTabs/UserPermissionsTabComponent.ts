@@ -171,6 +171,7 @@ export class UserPermissionsTabComponent extends BaseComponent implements OnDest
                 var allItems: BranchList[] = myResponse.Result;
 
                 allItems = allItems.sort(function (a, b) { return a.Id.toLowerCase() == b.Id.toLowerCase() ? 0 : a.Id.toLowerCase() < b.Id.toLowerCase() ? -1 : 1; });
+                allItems = allItems.filter(bra => bra.InActive == false);
 
                 allItems.forEach(item => {
                     var newBranch = new UserBranchClass(item, this);
