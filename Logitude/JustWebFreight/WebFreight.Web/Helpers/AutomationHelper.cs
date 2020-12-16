@@ -26,6 +26,7 @@ using System.Linq;
 using System.Text;
 using System.Transactions;
 using System.Web;
+using WebFreight.Web.Helpers.AutomationModel;
 
 namespace WebFreight.Web.Helpers
 {
@@ -303,8 +304,8 @@ namespace WebFreight.Web.Helpers
                 ObjectTable objectTable = objectTabelRepository.GetObjectTableById(objectTableId, tenant);
                 if (objectTable != null) objectTableName = objectTable.Name;
             }
-  
-            if(objectTableName == "Shipment")
+
+            if (objectTableName == "Shipment")
             {
                 #region Document Out
                 DocumentOutRepository documentOutRepository = new DocumentOutRepository(automation.Tenant);
@@ -370,7 +371,7 @@ namespace WebFreight.Web.Helpers
                 LastStatusDate = TenantServerConfigration.GetCurrentDateTime(tenant),
                 CommunicationLogTypeCode = "E",
                 CommunicationStatusTypeCode = "W",
-                
+
             };
 
 
@@ -386,7 +387,7 @@ namespace WebFreight.Web.Helpers
             context.CommunicationLogs.Add(log);
 
             DocumentTypeTemplateDefultAttachmentService documentTypeTemplateDefultAttachmentService = new DocumentTypeTemplateDefultAttachmentService();
-            var attachments = documentTypeTemplateDefultAttachmentService.GetDefultAttachmentList(new DocumentTypeTemplateDefultAttachmentArgs() {DocumentTypeTemplateId = automation.TemplateId , EntityId = entityId, ObjectTableId = objectTableId , Tenant = tenant });
+            var attachments = documentTypeTemplateDefultAttachmentService.GetDefultAttachmentList(new DocumentTypeTemplateDefultAttachmentArgs() { DocumentTypeTemplateId = automation.TemplateId, EntityId = entityId, ObjectTableId = objectTableId, Tenant = tenant });
             if (attachments.Count() > 0)
             {
                 foreach (var item in attachments)
@@ -398,6 +399,8 @@ namespace WebFreight.Web.Helpers
 
             }
 
+            AddReportTemplateDocOutAttachment(automationSendEmailArgs, context, log);
+
             if (!string.IsNullOrEmpty(externalAttachmentDocumentId))
             {
                 context.CommunicationAttachments.Add(GetNewCommunicationAttachment(tenant, log, externalAttachmentDocumentId));
@@ -407,9 +410,22 @@ namespace WebFreight.Web.Helpers
 
             //IQueueService queueservice = QueueServiceManager.GetQueueService("EmailQueue", tenant);
             DbQueueService queueservice = new DbQueueService("EmailQueue", tenant);
-			queueservice.Send(new Dictionary<string, string>() { { "CommunicationLogId", log.Id }, { "Tenant", tenant.ToString() } }, tenant);
+            queueservice.Send(new Dictionary<string, string>() { { "CommunicationLogId", log.Id }, { "Tenant", tenant.ToString() } }, tenant);
 
             return log.Id;
+        }
+
+        private  void AddReportTemplateDocOutAttachment(AutomationSendEmailArgs automationSendEmailArgs, ICommonDataContext context, CommunicationLog log)
+        {
+            if (!string.IsNullOrEmpty(automationSendEmailArgs.ReportTemplateId))
+            {
+                string documentId = new ReportTemplateDocOutService().GetDocOutDocumentId(automationSendEmailArgs.Automation.DocumentTypeId, automationSendEmailArgs);
+                if (!string.IsNullOrEmpty(documentId))
+                {
+                    CommunicationAttachment attachment = GetNewCommunicationAttachment(automationSendEmailArgs.Tenant, log, documentId);
+                    context.CommunicationAttachments.Add(attachment);
+                }
+            }
         }
 
         private static CommunicationAttachment GetNewCommunicationAttachment(int tenant, CommunicationLog log, string documentId)
@@ -745,8 +761,9 @@ namespace WebFreight.Web.Helpers
 
         public string CreateByUserId { get; set; }
         public int Tenant { get; set; }
+        public string ReportTemplateId { get; set; }
 
-
+        
 
     }
 

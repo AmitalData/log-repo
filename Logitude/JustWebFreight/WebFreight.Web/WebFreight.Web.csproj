@@ -2580,6 +2580,7 @@
     <Compile Include="Helpers\APIHelpers\TMMBProjectsHelper.cs" />
     <Compile Include="Helpers\APIHelpers\TMProjectsHelper.cs" />
     <Compile Include="Helpers\AutomationModel\AutomationMetaDataUpdateService.cs" />
+    <Compile Include="Helpers\AutomationModel\ReportTemplateDocOutService.cs" />
     <Compile Include="Helpers\AutomationModel\FTPAutomationService.cs" />
     <Compile Include="Helpers\BIReportsSecurityIntegrationService.cs" />
     <Compile Include="Helpers\BluesnapAnalyzer.cs" />

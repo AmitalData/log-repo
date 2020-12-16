@@ -361,8 +361,11 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
         if (this.documentTypeTemplateReportSelected != value) {
             this.documentTypeTemplateReportSelected = value;
 
-            if (this.AutomatedBackupClass && this.AutomatedBackupClass.ReportTemplateId != value.Id) {
-                this.AutomatedBackupClass.ReportTemplateId = value.Id;
+            var reportTemplateId = value ? value.Id : null;
+
+
+            if (this.AutomatedBackupClass && this.AutomatedBackupClass.ReportTemplateId != reportTemplateId) {
+                this.AutomatedBackupClass.ReportTemplateId = reportTemplateId;
                 this.IsChangeAutomation = true;
             }
         }
@@ -374,9 +377,10 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
     set DocumentTypeTemplateSelected(value: DocumentTypeTemplateViewModel) {
         if (this.documentTypeTemplateSelected != value) {
             this.documentTypeTemplateSelected = value;
+            var templateId = value ? value.Id : null;
 
-            if (this.CurrentEntityPM && this.CurrentEntityPM.TemplateId != value.Id) {
-                this.CurrentEntityPM.TemplateId = value.Id;
+            if (this.CurrentEntityPM && this.CurrentEntityPM.TemplateId != templateId) {
+                this.CurrentEntityPM.TemplateId = templateId;
                 this.IsChangeAutomation = true;
             }
         }
@@ -526,6 +530,7 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
 
         var isMessage: boolean = documentTypeList.TemplateFormatCode == "M" ? true : false;
         if (!isMessage) this.LoadDocumentTypeReportTemplate(documentTypeList);
+        else this.DocumentTypeTemplateReportSelected = null;
     }
 
 
@@ -1845,6 +1850,7 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
         automatedBackup.AutomationSetSLAValue = this.CurrentEntityPM.ResultCode == "SETSLA" ? this.AutomationSetSLAValue : null;
         automatedBackup.AutomationQueuedTask = this.CurrentEntityPM.ResultCode == "QUEUE" ? this.AutomationQueuedTask : null;
         automatedBackup.AutomationSendInterface = this.CurrentEntityPM.ResultCode == "SENDINTERFACE" ? this.AutomationSendInterface : null;
+        automatedBackup.ReportTemplateId = this.CurrentEntityPM.ResultCode == "EMAIL" ? this.AutomatedBackupClass.ReportTemplateId : null;
 
 
 
