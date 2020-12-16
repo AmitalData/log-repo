@@ -63,7 +63,11 @@ it('Login Successfully', () => {
         Password = Cypress.env("TestStagingPasswordTIQ4");
       }
        
-   
+          else if ( Env == 'FAPreCloud'){
+         URL = Cypress.env("CloudPreURL");
+         Email = Cypress.env("FACloudEmail");
+         Password = Cypress.env("FACloudPassword");
+       }
    
 
     else //test_staging
