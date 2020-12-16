@@ -51,9 +51,9 @@
     <!-- SourceType -->
     <div style="padding: 0px 7px;text-align: left;" class="TextTrimming" *ngIf="fieldName == 'Source'">
 
-        <span title="{{rowData['SourceType']}}" *ngIf="IconCode"
+        <span title="{{rowData['SourceType']}}" *ngIf="rowData['IconCode']"
               [class]="'SourceTypeIcon color-' + rowData['SourceTypeCode']"
-              (click)="OpenSource(rowData['SourceId'])">{{IconCode}}</span>
+              (click)="OpenSource(rowData['SourceId'])">{{rowData['IconCode']}}</span>
 
         <a href="javascript:;" (click)="OpenSource(rowData['SourceId'])">
             {{rowData['SourceNumber']}}
