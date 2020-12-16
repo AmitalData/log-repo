@@ -59,7 +59,7 @@ namespace CommunicationWorkerRole
                         try
                         {
 
-                            if (lead.LeadSource == "Atlas" && (lead.Email != null && lead.Email.Contains("RaghadTest"))) lead.LeadSource = null;
+                            if (lead.LeadSource == "Atlas") lead.LeadSource = null;
 
                             int crmTenant = LogitudeSettings.LogitudeCRMTenantNumber;
 
