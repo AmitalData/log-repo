@@ -40,6 +40,11 @@ export class ResetPasswordComponent implements OnInit {
             this.GetcargoTrackingData(baseUrl);
     }
 
+    
+    private GoToError401(){
+        this.router.navigate(['Error401']);
+    }
+
     private GetcargoTrackingData(baseUrl:string) {
         this.LogoImgSrc = "./assets/images/logo/White.jpg";
         this.cargoTrackingBrandingDataExtendedService.GetCargoTrackingBrandingDataForPrivateSite(ServiceHelper.GetcargoTrackingDataRequest(baseUrl)).subscribe((response: ServiceResponse) => { 
@@ -51,7 +56,7 @@ export class ResetPasswordComponent implements OnInit {
                 this.SecondaryColor = response.Result.SecondaryColor != null ? ServiceHelper.ConvertHexaToRGBA(response.Result.SecondaryColor) : null;
             }
             else{
-                this.loginServiceHelper.GoToError401();
+                this.GoToError401();
             }
         });
     }
