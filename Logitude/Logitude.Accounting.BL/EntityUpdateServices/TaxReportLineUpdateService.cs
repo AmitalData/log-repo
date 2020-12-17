@@ -92,6 +92,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             entityPM.VatNumber = ModifyVatNumberToValidLength(entityPM.VatNumber);
             string trimmedZeros = entityPM.VatNumber != null ? entityPM.VatNumber.Trim('0') : null;
             bool zerosVatNumber;
+            CheckIfInvoiceNumberIsNotValid(entityPM);
             if (entityPM.OutputOrInput == "O")
             {
                
@@ -141,7 +142,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                                 entityPM.StatusCode = "2";
                             }
 
-                            CheckIfInvoiceNumberIsNotValid(entityPM);
+                           
 
                         }
 
@@ -224,7 +225,6 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                                 entityPM.StatusCode = "2";
                             }
 
-                            CheckIfInvoiceNumberIsNotValid(entityPM);
                         }
 
                     }
