@@ -22,7 +22,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 {
     public partial class TaxReportLineUpdateService
     {
-        const string StatusCode_InvoiceNumberIsNotValid = "2";
+        const string StatusCode_InvoiceNumberIsNotValid = "3";
         const string LineTypeCode_StandardFromIsraeliSupplier = "T";
         const string LineTypeCode_RegularTransactions = "S";
         const string LineType_RegularTransactionTransactions = "S";
