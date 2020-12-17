@@ -38,7 +38,7 @@ namespace WebFreight.Web.WcfApi
                 SecurityUtility.CheckContactFeature("ShippingAgent", "UPDATE", entityPM.Tenant);//UPDATE//READ
                 using (TransactionScope scope = TransactionFactory.GetTransaction())
                 {
-                   
+                    entityPM.PartnerTypeId = "SG";
                     ClassLevelValidator validationClass = new ClassLevelValidator("ShippingAgent", entityPM.Tenant) { IsHybrid = true };
                     if (!validationClass.IsValid(entityPM, entityPM, null))
                     {

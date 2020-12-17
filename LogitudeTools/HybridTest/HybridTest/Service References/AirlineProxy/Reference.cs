@@ -1776,6 +1776,57 @@ namespace HypredTest.AirlineProxy {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAirlineWcfService/Upsert", ReplyAction="http://tempuri.org/IAirlineWcfService/UpsertResponse")]
         System.Threading.Tasks.Task<Logitude.Server.Tools.Response> UpsertAsync(HypredTest.AirlineProxy.AirlinePM entityPM, bool batch);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAirlineWcfService/GetAirlinePM", ReplyAction="http://tempuri.org/IAirlineWcfService/GetAirlinePMResponse")]
+        HypredTest.AirlineProxy.GetAirlinePMResponse GetAirlinePM(HypredTest.AirlineProxy.GetAirlinePMRequest request);
+        
+        // CODEGEN: Generating message contract since the operation has multiple return values.
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAirlineWcfService/GetAirlinePM", ReplyAction="http://tempuri.org/IAirlineWcfService/GetAirlinePMResponse")]
+        System.Threading.Tasks.Task<HypredTest.AirlineProxy.GetAirlinePMResponse> GetAirlinePMAsync(HypredTest.AirlineProxy.GetAirlinePMRequest request);
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="GetAirlinePM", WrapperNamespace="http://tempuri.org/", IsWrapped=true)]
+    public partial class GetAirlinePMRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://tempuri.org/", Order=0)]
+        public string code;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://tempuri.org/", Order=1)]
+        public int tenant;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://tempuri.org/", Order=2)]
+        public Logitude.Server.Tools.Response response;
+        
+        public GetAirlinePMRequest() {
+        }
+        
+        public GetAirlinePMRequest(string code, int tenant, Logitude.Server.Tools.Response response) {
+            this.code = code;
+            this.tenant = tenant;
+            this.response = response;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="GetAirlinePMResponse", WrapperNamespace="http://tempuri.org/", IsWrapped=true)]
+    public partial class GetAirlinePMResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://tempuri.org/", Order=0)]
+        public HypredTest.AirlineProxy.AirlinePM GetAirlinePMResult;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://tempuri.org/", Order=1)]
+        public Logitude.Server.Tools.Response response;
+        
+        public GetAirlinePMResponse() {
+        }
+        
+        public GetAirlinePMResponse(HypredTest.AirlineProxy.AirlinePM GetAirlinePMResult, Logitude.Server.Tools.Response response) {
+            this.GetAirlinePMResult = GetAirlinePMResult;
+            this.response = response;
+        }
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -1811,6 +1862,25 @@ namespace HypredTest.AirlineProxy {
         
         public System.Threading.Tasks.Task<Logitude.Server.Tools.Response> UpsertAsync(HypredTest.AirlineProxy.AirlinePM entityPM, bool batch) {
             return base.Channel.UpsertAsync(entityPM, batch);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        HypredTest.AirlineProxy.GetAirlinePMResponse HypredTest.AirlineProxy.IAirlineWcfService.GetAirlinePM(HypredTest.AirlineProxy.GetAirlinePMRequest request) {
+            return base.Channel.GetAirlinePM(request);
+        }
+        
+        public HypredTest.AirlineProxy.AirlinePM GetAirlinePM(string code, int tenant, ref Logitude.Server.Tools.Response response) {
+            HypredTest.AirlineProxy.GetAirlinePMRequest inValue = new HypredTest.AirlineProxy.GetAirlinePMRequest();
+            inValue.code = code;
+            inValue.tenant = tenant;
+            inValue.response = response;
+            HypredTest.AirlineProxy.GetAirlinePMResponse retVal = ((HypredTest.AirlineProxy.IAirlineWcfService)(this)).GetAirlinePM(inValue);
+            response = retVal.response;
+            return retVal.GetAirlinePMResult;
+        }
+        
+        public System.Threading.Tasks.Task<HypredTest.AirlineProxy.GetAirlinePMResponse> GetAirlinePMAsync(HypredTest.AirlineProxy.GetAirlinePMRequest request) {
+            return base.Channel.GetAirlinePMAsync(request);
         }
     }
 }

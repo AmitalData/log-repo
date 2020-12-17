@@ -34,11 +34,12 @@ namespace WebFreight.Web.WcfApi
             Response response = new Response();
             try
             {
+                entityPM.CarrierTypeId = "SL";
                 SecurityUtility.AuthenticationOnTenant(entityPM.Tenant);
                 SecurityUtility.CheckContactFeature("ShippingLine", "UPDATE", entityPM.Tenant);//UPDATE//READ
                 using (TransactionScope scope = TransactionFactory.GetTransaction())
                 {
-                    
+                     
                     ClassLevelValidator validationClass = new ClassLevelValidator("ShippingLine", entityPM.Tenant) { IsHybrid = true };
                     if (!validationClass.IsValid(entityPM, entityPM, null))
                     {

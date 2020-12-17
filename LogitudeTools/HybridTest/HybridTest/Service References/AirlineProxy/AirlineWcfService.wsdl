@@ -16,16 +16,35 @@
   <wsdl:message name="IAirlineWcfService_Upsert_OutputMessage">
     <wsdl:part name="parameters" element="tns:UpsertResponse" />
   </wsdl:message>
+  <wsdl:message name="IAirlineWcfService_GetAirlinePM_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetAirlinePM" />
+  </wsdl:message>
+  <wsdl:message name="IAirlineWcfService_GetAirlinePM_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetAirlinePMResponse" />
+  </wsdl:message>
   <wsdl:portType name="IAirlineWcfService">
     <wsdl:operation name="Upsert">
       <wsdl:input wsaw:Action="http://tempuri.org/IAirlineWcfService/Upsert" message="tns:IAirlineWcfService_Upsert_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IAirlineWcfService/UpsertResponse" message="tns:IAirlineWcfService_Upsert_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAirlinePM">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAirlineWcfService/GetAirlinePM" message="tns:IAirlineWcfService_GetAirlinePM_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAirlineWcfService/GetAirlinePMResponse" message="tns:IAirlineWcfService_GetAirlinePM_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="BasicHttpBinding_IAirlineWcfService" type="tns:IAirlineWcfService">
     <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
     <wsdl:operation name="Upsert">
       <soap:operation soapAction="http://tempuri.org/IAirlineWcfService/Upsert" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAirlinePM">
+      <soap:operation soapAction="http://tempuri.org/IAirlineWcfService/GetAirlinePM" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

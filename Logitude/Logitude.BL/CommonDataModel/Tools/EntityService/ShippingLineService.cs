@@ -85,7 +85,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 PartnerTypeId = "SL",
                 UploadingUniqueKey = entityPM.UploadingUniqueKey,
             };
-
+            
             this.entityPOCO = new ShippingLine()
             {
                 Id = entityPM.Id,

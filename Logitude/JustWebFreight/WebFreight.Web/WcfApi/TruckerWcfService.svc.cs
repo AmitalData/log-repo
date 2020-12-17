@@ -38,7 +38,7 @@ namespace WebFreight.Web.WcfApi
                 SecurityUtility.CheckContactFeature("Trucker", "UPDATE", entityPM.Tenant);//UPDATE//READ
                 using (TransactionScope scope = TransactionFactory.GetTransaction())
                 {
-                   
+                    entityPM.CarrierTypeId = "TR";
                     ClassLevelValidator validationClass = new ClassLevelValidator("Trucker", entityPM.Tenant) { IsHybrid = true };
                     if (!validationClass.IsValid(entityPM, entityPM, null))
                     {
