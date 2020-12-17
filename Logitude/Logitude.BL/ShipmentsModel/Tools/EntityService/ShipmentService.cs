@@ -192,10 +192,12 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     ShipmentValidating.ValidateRoutingDates(entityPM, entityPM.ShipmentPickUps, entityPM.ShipmentDeliveries);
                 }
 
-                foreach (ShipmentOrderPackagePM itemPM in entityPM.ShipmentOrderPackages)
-                {
-                    this.CreateShipmentOrderPackage(itemPM);
-                }
+                this.initializer.HandleComposition();
+
+                //foreach (ShipmentOrderPackagePM itemPM in entityPM.ShipmentOrderPackages)
+                //{
+                //    this.CreateShipmentOrderPackage(itemPM);
+                //}
 
                 foreach (ShipmentPackagePM itemPM in entityPM.ShipmentPackages)
                 {
@@ -369,7 +371,9 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                         ShipmentValidating.ValidateRoutingDates(entityPM, initializer.ShipmentPickUpsChangeSet, initializer.ShipmentDeliveriesChangeSet);
                     }
 
-                    this.UpdateShipmentOrderPackagesCollection();
+                    this.initializer.HandleComposition();
+
+                    //this.UpdateShipmentOrderPackagesCollection();
                     this.UpdateShipmentPackagesCollection();
 
                     this.UpdateShipmentPickUpsCollection();
@@ -1310,37 +1314,37 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             }
         }
 
-        private void UpdateShipmentOrderPackagesCollection()
-        {
-            if (initializer.ShipmentOrderPackagesChangeSet != null)
-            {
-                foreach (ShipmentOrderPackagePM itemPM in initializer.ShipmentOrderPackagesChangeSet)
-                {
-                    switch (itemPM.ChangeSetOp)
-                    {
-                        case ChangeSetOperation.Insert:
-                            {
-                                this.CreateShipmentOrderPackage(itemPM);
-                                break;
-                            }
+        //private void UpdateShipmentOrderPackagesCollection()
+        //{
+        //    if (initializer.ShipmentOrderPackagesChangeSet != null)
+        //    {
+        //        foreach (ShipmentOrderPackagePM itemPM in initializer.ShipmentOrderPackagesChangeSet)
+        //        {
+        //            switch (itemPM.ChangeSetOp)
+        //            {
+        //                case ChangeSetOperation.Insert:
+        //                    {
+        //                        this.CreateShipmentOrderPackage(itemPM);
+        //                        break;
+        //                    }
 
-                        case ChangeSetOperation.Update:
-                            {
-                                this.UpdateShipmentOrderPackage(itemPM);
-                                break;
-                            }
+        //                case ChangeSetOperation.Update:
+        //                    {
+        //                        this.UpdateShipmentOrderPackage(itemPM);
+        //                        break;
+        //                    }
 
-                        case ChangeSetOperation.Delete:
-                            {
-                                this.DeleteShipmentOrderPackage(itemPM);
-                                break;
-                            }
+        //                case ChangeSetOperation.Delete:
+        //                    {
+        //                        this.DeleteShipmentOrderPackage(itemPM);
+        //                        break;
+        //                    }
 
-                        default: { break; }
-                    }
-                }
-            }
-        }
+        //                default: { break; }
+        //            }
+        //        }
+        //    }
+        //}
         private void UpdateShipmentPackagesCollection()
         {
             if (initializer.ShipmentPackagesChangeSet != null)
@@ -2397,6 +2401,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 #region
                 if (!entityPoco.IsCancelled || !entityPM.IsCancelled)
                 {
+
                     if (entityPM.ConvertShipmentToLCL || entityPM.ConvertShipmentToFCL)
                     {
                         foreach (ShipmentPackagePM pm in entityPM.ShipmentPackages)
@@ -4186,30 +4191,30 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             }
         }
 
-        private void CreateShipmentOrderPackage(ShipmentOrderPackagePM itemPM)
-        {
-            itemPM.Id = IdCounter.GetNumber("ShipmentOrderPackage", tenant).ToString();
-            itemPM.ShipmentId = entityPM.Id;
-            itemPM.Tenant = tenant;
+        //private void CreateShipmentOrderPackage(ShipmentOrderPackagePM itemPM)
+        //{
+        //    itemPM.Id = IdCounter.GetNumber("ShipmentOrderPackage", tenant).ToString();
+        //    itemPM.ShipmentId = entityPM.Id;
+        //    itemPM.Tenant = tenant;
 
-            ShipmentOrderPackage itemPoco = new ShipmentOrderPackage()
-            {
-                Id = itemPM.Id,
-            };
+        //    ShipmentOrderPackage itemPoco = new ShipmentOrderPackage()
+        //    {
+        //        Id = itemPM.Id,
+        //    };
 
-            ShipmentMapping.MapOrderPackage(itemPM, itemPoco, true);
-            shipmentOrderPackageRepository.Add(itemPoco);
-        }
-        private void UpdateShipmentOrderPackage(ShipmentOrderPackagePM itemPM)
-        {
-            ShipmentOrderPackage itemPoco = shipmentOrderPackageRepository.GetSingleShipmentOrderPackage(itemPM.Id);
+        //    ShipmentMapping.MapOrderPackage(itemPM, itemPoco, true);
+        //    shipmentOrderPackageRepository.Add(itemPoco);
+        //}
+        //private void UpdateShipmentOrderPackage(ShipmentOrderPackagePM itemPM)
+        //{
+        //    ShipmentOrderPackage itemPoco = shipmentOrderPackageRepository.GetSingleShipmentOrderPackage(itemPM.Id);
 
-            if (itemPoco != null)
-            {
-                ShipmentMapping.MapOrderPackage(itemPM, itemPoco, false);
-                shipmentOrderPackageRepository.Update(itemPoco);
-            }
-        }
+        //    if (itemPoco != null)
+        //    {
+        //        ShipmentMapping.MapOrderPackage(itemPM, itemPoco, false);
+        //        shipmentOrderPackageRepository.Update(itemPoco);
+        //    }
+        //}
         private void DeleteShipmentOrderPackage(ShipmentOrderPackagePM itemPM)
         {
             ShipmentOrderPackage itemPoco = shipmentOrderPackageRepository.GetSingleShipmentOrderPackage(itemPM.Id);
