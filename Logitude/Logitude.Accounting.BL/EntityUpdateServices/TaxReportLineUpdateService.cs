@@ -22,7 +22,9 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 {
     public partial class TaxReportLineUpdateService
     {
-
+        const string StatusCode_InvoiceNumberIsNotValid = "2";
+        const string LineTypeCode_StandardFromIsraeliSupplier = "T";
+        const string LineTypeCode_RegularTransactions = "S";
         protected override void OnCreating(TaxReportLinePM entityPM, EntityPM entityParentPM)
         {
             entityPM.IsManuallyChanged = true;
@@ -138,6 +140,9 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                             {
                                 entityPM.StatusCode = "2";
                             }
+
+                            CheckIfInvoiceNumberIsNotValid(entityPM);
+
                         }
 
                     }
@@ -218,6 +223,8 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                             {
                                 entityPM.StatusCode = "2";
                             }
+
+                            CheckIfInvoiceNumberIsNotValid(entityPM);
                         }
 
                     }
@@ -266,6 +273,26 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                         taxReportLinePM.StatusCode = "6";
                     }
                 
+            }
+        }
+        private bool AreAllDigits(string s) => s.All(char.IsDigit);
+        private bool AreAllDigitsZero(string s) => s.All(c=>c=='0');
+        private void CheckIfInvoiceNumberIsNotValid(TaxReportLinePM entityPM)
+        {
+            if (string.IsNullOrEmpty(entityPM.Reference))
+            {
+                entityPM.StatusCode = StatusCode_InvoiceNumberIsNotValid;
+            }
+            else if (!AreAllDigits(entityPM.Reference))
+            {
+                entityPM.StatusCode = StatusCode_InvoiceNumberIsNotValid;
+            }
+            else if ((entityPM.LineTypeCode == LineTypeCode_StandardFromIsraeliSupplier ||
+                      entityPM.LineTypeCode == LineTypeCode_RegularTransactions) &&
+                      AreAllDigitsZero(entityPM.Reference))
+            {
+                entityPM.StatusCode = StatusCode_InvoiceNumberIsNotValid;
+
             }
         }
         private double? GetSTDPercentage(int tenant)
