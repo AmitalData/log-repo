@@ -59,7 +59,6 @@ namespace CommunicationWorkerRole
                         try
                         {
 
-                            if (lead.LeadSource == "Atlas") lead.LeadSource = null;
 
                             int crmTenant = LogitudeSettings.LogitudeCRMTenantNumber;
 
@@ -212,7 +211,7 @@ namespace CommunicationWorkerRole
                                         Code = CodeCounter.GetNumber("Customer", crmTenant).ToString(),
                                         PartnerTypeId = "PO",
                                         Tenant = crmTenant,
-                                        EnglishName = (lead.Email!=null && lead.Email.Contains("RaghadTest")) ? lead.CompanyName : TruncateLongString(lead.CompanyName, 70),
+                                        EnglishName =TruncateLongString(lead.CompanyName, 70),
                                         LocalName = TruncateLongString(lead.CompanyName, 100),
                                         CustomerStatusCode = "POT",
                                         IsCustomer = true,
