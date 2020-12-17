@@ -159,8 +159,8 @@ namespace WebFreight.Web
             {
                 LogitudeCacheManager.ServerCache = new LocalHttpCache();
             }
-            
-            InjectionContainer.Container.RegisterType<IObjectTablePropertyGetter, ObjectTablePropertyGetter>("ObjectTablePropertyGetter", new InjectionFactory(c => new ObjectTablePropertyGetter()));
+
+            InfraRegistrationHelper.Register();
 
 
             //AreaRegistration.RegisterAllAreas();
