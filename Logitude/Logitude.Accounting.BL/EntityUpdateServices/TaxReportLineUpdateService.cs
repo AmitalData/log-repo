@@ -22,6 +22,9 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 {
     public partial class TaxReportLineUpdateService
     {
+        const string LineType_RegularTransactionTransactions = "S";
+        const string LineType_UnidentifiedCustomerTransactions = "L";
+        const string LineType_SelfInvoiceTransactions = "M";
 
         protected override void OnCreating(TaxReportLinePM entityPM, EntityPM entityParentPM)
         {
@@ -243,16 +246,23 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                     }
 
                 }
-                if (entityPM.VatAmount > 16 && entityPM.VatableInvoiceAmount != null && entityPM.VatableInvoiceAmount != 0 )
-                {
-                    var percentage = entityPM.VatAmount / entityPM.VatableInvoiceAmount;
-                    var STDvatTypePercentage = GetSTDPercentage(entityPM.Tenant);
-                    if ((double?)percentage > STDvatTypePercentage + 0.5)
-                    {
-                        entityPM.StatusCode = "9";
-                    }
 
+                if (entityPM.LineTypeCode == LineType_RegularTransactionTransactions ||
+                    entityPM.LineTypeCode == LineType_UnidentifiedCustomerTransactions ||
+                    entityPM.LineTypeCode == LineType_SelfInvoiceTransactions)
+                {
+                    if (entityPM.VatAmount > 17 && entityPM.VatableInvoiceAmount != null && entityPM.VatableInvoiceAmount != 0)
+                    {
+                        var percentage = entityPM.VatAmount / entityPM.VatableInvoiceAmount;
+                        var STDvatTypePercentage = GetSTDPercentage(entityPM.Tenant);
+                        if ((double?)percentage > STDvatTypePercentage + 0.5)
+                        {
+                            entityPM.StatusCode = "9";
+                        }
+
+                    }
                 }
+                
             }
 
 
