@@ -55,6 +55,9 @@ export class EditStandardFieldComponent extends BaseComponent {
     public IsListHeaderLabelEnabled: boolean = false;
     public IsHelpTextEnabled: boolean = false;
     public IsRequieredEnabled: boolean = true;
+    public IsShowMaxLength: boolean = true;
+
+
     private SetUIProperties() {
         var isMaxLengthEnabled: boolean = true;
         var isControlFieldsVisible: boolean = false;
@@ -63,10 +66,16 @@ export class EditStandardFieldComponent extends BaseComponent {
         var isListHeaderLabelEnabled: boolean = false;
         var isHelpTextEnabled: boolean = false;
         var isRequieredEnabled: boolean = true;
+        var isShowMaxLength: boolean = false;
 
         if (this.EntityPM.DataTypeCode == "LookUp" || this.EntityPM.DataTypeCode == "DateTime") {
             isMaxLengthEnabled = false;
         }
+
+        if (this.EntityPM.DataTypeCode == "Text" || this.EntityPM.DataTypeCode == "nText") {
+            isShowMaxLength = true;
+        }
+
 
         if (this.EntityPM.DataTypeCode == "LookUp") {
             isControlFieldsVisible = true;
@@ -91,7 +100,7 @@ export class EditStandardFieldComponent extends BaseComponent {
         if (this.EntityPM.TenantZeroIsRequired) {
             isRequieredEnabled = false;
         }
-
+        this.IsShowMaxLength = isShowMaxLength;
         this.IsMaxLengthEnabled = isMaxLengthEnabled;
         this.IsControlFieldsVisible = isControlFieldsVisible;
         this.IsFullLabelEnabled = isFullLabelEnabled;
