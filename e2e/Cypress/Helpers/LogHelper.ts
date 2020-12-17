@@ -8,7 +8,7 @@ export class LogHelper
            cy.get('input[id="' + code + '"]').type(searchText,{ force: true }).should("have.value", searchText);
            cy.get('ul[id="mydatalist_' + code + '"]').contains(searchText).then(a =>
            {
-                a[0].click();
+                a[0].click({ force: true });
             });
         });
     }

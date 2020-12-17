@@ -53,7 +53,7 @@ cy.get('#Add_2').click({force: true} );
         cy.get('input[id="Customs.SupplierInvoice_IsPreference"]').check({ force: true }).should('be.checked')
        // LogHelper.LOVSearchAndSelectFirst("Customs.SupplierInvoice_AccumalationStateCode", '3');       
         cy.get('input[id="Customs.SupplierInvoice_InvoiceNumber"]').type('2020')
-        LogHelper.LOVSearchAndSelectFirst("Customs.SupplierInvoice_VendorId", '31');
+       // LogHelper.LOVSearchAndSelectFirst("Customs.SupplierInvoice_VendorId", '31');
 
         cy.get('input[id="Customs.SupplierInvoice_InvoiceAmount"]').type('100')
        // LogHelper.LOVSearchAndSelectFirst("Customs.SupplierInvoice_IssueCountryCode", 'AD');
