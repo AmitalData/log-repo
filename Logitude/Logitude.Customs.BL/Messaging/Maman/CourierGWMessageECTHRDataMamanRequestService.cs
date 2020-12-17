@@ -122,6 +122,18 @@ namespace Logitude.Customs.BL.Messaging.Maman
         private GWMessageECTHRData CreateCourierHawbMamanMessage(
             DeclarationPM myDeclarationPM, CourierMasterPM myCourierMasterPM)
         {
+            var context = CustomContext.GetContext(myDeclarationPM.Tenant);
+
+            bool isDelay = false;
+            var declarationMamanSpecialActionQueryService = new DeclarationMamanSpecialActionQueryService(context);
+            var pmDeclarationMamanSpecialAction = declarationMamanSpecialActionQueryService.GetSingle(myDeclarationPM.Id, ((int)MamanSpecialCode.ReceivingDelayCertificate_DelayIt).ToString(), false, false);
+
+            if(pmDeclarationMamanSpecialAction!= null)
+            {
+                isDelay = true;
+            }
+
+
             var ConsignmentPackageQualifierCode2 = myDeclarationPM.Consignments.SelectMany(r => r.ConsignmentPackages)
                 .Where(r1 => r1.PackageMeasureQualifierCode == "2")
                 .ToList();
@@ -202,7 +214,7 @@ namespace Logitude.Customs.BL.Messaging.Maman
                 //Task 46455
                 DistributorHP = distributorHP,
                 DistributorName = distributorName,
-
+                 IsDelay = isDelay
 
             };
 
@@ -303,7 +315,8 @@ namespace Logitude.Customs.BL.Messaging.Maman
 
         public int ResponseStatusCode { get; set; }
         public string ResponseStatusMsg { get; set; }
-        
+        public bool IsDelay { get; set; }
+
 
 
     }
