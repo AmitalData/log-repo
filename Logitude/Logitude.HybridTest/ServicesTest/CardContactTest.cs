@@ -9,6 +9,7 @@ namespace Logitude.HybridTest.ServicesTest
     [TestClass]
     public class CardContactTest
     {
+        private static EntityWcfCaller entityWcfCaller = new EntityWcfCaller();
         [TestMethod]
         public void Test_CardContact_UPSERT()
         {
@@ -19,7 +20,7 @@ namespace Logitude.HybridTest.ServicesTest
                 CardId = HybridData.AgentCodeHAgent,
                 Tenant = EnvironmentGlobalParams.MainTenant,
             };
-            ServiceOutcome serviceOutcome = EntityWcfCaller.CallEntityUpsert(cardContactPM);
+            ServiceOutcome serviceOutcome = entityWcfCaller.CallEntityUpsert(cardContactPM);
             Assert.IsFalse(serviceOutcome.Response.HasError, "Upsert Failed! " + serviceOutcome.Response.ErrorMessage);
             Assert.IsNotNull(serviceOutcome.Response.Result, "Upsert Failed! " + serviceOutcome.Response.ErrorMessage);
         }

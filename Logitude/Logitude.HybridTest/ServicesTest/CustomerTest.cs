@@ -11,11 +11,12 @@ namespace Logitude.HybridTest.ServicesTest
     [TestClass]
     public class CustomerTest
     {
+        private static EntityWcfCaller entityWcfCaller = new EntityWcfCaller();
         [TestMethod]
         public void Test_CustomerExport_UPSERT()
         {
             CustomerPM customerPM = CustomerWcfFactory.GetCustomerPM();
-            ServiceOutcome serviceOutcome = EntityWcfCaller.CallEntityUpsert(customerPM);
+            ServiceOutcome serviceOutcome = entityWcfCaller.CallEntityUpsert(customerPM);
             Assert.IsFalse(serviceOutcome.Response.HasError, "Upsert Failed! " + serviceOutcome.Response.ErrorMessage);
             Assert.IsNotNull(serviceOutcome.Response.Result, "Upsert Failed! " + serviceOutcome.Response.ErrorMessage);
         }
@@ -198,12 +199,6 @@ namespace Logitude.HybridTest.ServicesTest
 
         [TestMethod]
         public void Test_Customer_RemoveFromCustomersQueue()
-        {
-            Assert.Inconclusive("Not Implemented !");
-        }
-
-        [TestMethod]
-        public void Test_Customer_GetActivationQuestionnaireAnswers()
         {
             Assert.Inconclusive("Not Implemented !");
         }
