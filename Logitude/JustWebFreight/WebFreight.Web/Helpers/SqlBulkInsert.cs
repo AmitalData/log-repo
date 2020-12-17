@@ -1,7 +1,10 @@
 ﻿using Devart.Data.Oracle;
 using Intuit.Ipp.Data;
+using Microsoft.Practices.Unity;
 using Simplog.Data.Helpers;
 using Simplog.Server.Infrastructure;
+using Simplog.Server.Infrastructure.Helpers;
+using Simplog.Server.Infrastructure.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -123,9 +126,27 @@ namespace WebFreight.Web.Helpers
             string insertCommand = tableName + "(";
             foreach (var propertyInfo in entityProperties)
             {
-                insertCommand += propertyInfo.Name + ",";
+                insertCommand = AppendFieldToInsertCommand(tableName,insertCommand, propertyInfo);
             }
             insertCommand = insertCommand.TrimEnd(',') + ")";
+            return insertCommand;
+        }
+
+        private static string AppendFieldToInsertCommand(string tableName, string insertCommand, PropertyDescriptor propertyInfo)
+        {
+            if (LogitudeSettings.DatabaseManagementSystem == "oracle")
+            {
+                string fieldName = propertyInfo.Name;
+                if (fieldName.Length > 30) 
+                {
+                    fieldName = GetFieldShortName(tableName, fieldName);
+                }
+                insertCommand += fieldName + ",";
+            }
+            else
+            {
+                insertCommand += propertyInfo.Name + ",";
+            }
             return insertCommand;
         }
 
@@ -155,7 +176,29 @@ namespace WebFreight.Web.Helpers
             return valuesString;
         }
 
-
+        private static string GetFieldShortName(string tableName,string fieldName)
+        {
+            string shortfieldName = "";
+            if (LogitudeSettings.DatabaseManagementSystem == "oracle")
+            {
+                string fieldShortNameGetterName = tableName + "ShortNamesGetter";
+                FieldShortNameGetter fieldShortNameGetter = InjectionContainer.Container.Resolve(typeof(FieldShortNameGetter), fieldShortNameGetterName, new ParameterOverride("", 1)) as FieldShortNameGetter;
+                if (fieldShortNameGetter != null)
+                {
+                    shortfieldName = fieldShortNameGetter.GetFieldShortName(fieldName);
+                }
+                else
+                {
+                    string exceptionMessage = "Table " + tableName + " has no short names getter ,"
+                        + Environment.NewLine +
+                        "please add a class with the name (your tableName)+ShortNamesGetter implements IFieldShortNameGetter"
+                        + Environment.NewLine + 
+                        "please look at ObjectFieldsShortNamesGetter as an example and register it in InfraRegistrationHelper";
+                    throw new Exception(exceptionMessage);
+                }
+            }
+            return shortfieldName;
+        }
 
         //public static void BulkInsert<T>(string connection, string tableName, IList<T> list)
         //{

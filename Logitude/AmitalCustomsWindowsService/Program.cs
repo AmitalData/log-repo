@@ -160,7 +160,7 @@ namespace AmitalCustomsWindowsService
                 Simplog.Server.Infrastructure.LogitudeSettings.HandleLogMe?.Invoke("StartStatic", false, "", DateTime.MaxValue);//problem in the amial windows service debug mode after merge
 
                 CustomsRegistrations.Register();
-                InjectionContainer.Container.RegisterType<IObjectTablePropertyGetter, ObjectTablePropertyGetter>("ObjectTablePropertyGetter", new InjectionFactory(c => new ObjectTablePropertyGetter()));
+                InfraRegistrationHelper.Register();
 
                 _ThreadStartStaticLoaded = true;
                 

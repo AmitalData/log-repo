@@ -39,7 +39,7 @@ namespace Logitude.Update
 
 
             AccountingRegistrations.Register();
-            InjectionContainer.Container.RegisterType<IObjectTablePropertyGetter, ObjectTablePropertyGetter>("ObjectTablePropertyGetter", new InjectionFactory(c => new ObjectTablePropertyGetter()));
+            InfraRegistrationHelper.Register();
 
         }
 

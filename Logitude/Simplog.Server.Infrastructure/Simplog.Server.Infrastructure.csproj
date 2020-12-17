@@ -223,6 +223,7 @@
     <Compile Include="Helpers\XLSUtil.cs" />
     <Compile Include="IContext.cs" />
     <Compile Include="Interfaces\IDateTimeUtil.cs" />
+    <Compile Include="Interfaces\FieldShortNameGetter.cs" />
     <Compile Include="Interfaces\IObjectTablePropertyGetter.cs" />
     <Compile Include="Interfaces\IServiceBehaviour.cs" />
     <Compile Include="Interfaces\IServiceInitializer.cs" />
