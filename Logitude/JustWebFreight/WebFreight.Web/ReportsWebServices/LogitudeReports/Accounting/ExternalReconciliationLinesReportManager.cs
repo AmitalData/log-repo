@@ -8,6 +8,7 @@ using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.Resolvers;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Data.CommonDataModel.Repositories;
+using Simplog.Data.Helpers;
 using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Server.Infrastructure.Helpers;
 using System;
@@ -386,7 +387,9 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                     ledgerTransactions = ledgerTransactions.Where(s => s.IsExternalReconcile == false);
                 }
             }
-           
+
+            DateTime CurrentDate = TenantServerConfigration.GetCurrentDateTime(tenant);
+            ledgerTransactions = ledgerTransactions.Where(s => DbFunctions.TruncateTime(s.DueDate) < DbFunctions.TruncateTime(CurrentDate));
 
             return ledgerTransactions;
         }

@@ -16,7 +16,4 @@ export class LoginServiceHelper {
             return "./assets/images/logo/UnifreightLogo.jpg";
     }
 
-    public GoToError401(){
-        this.router.navigate(['Error401']);
-    }
 }

@@ -295,10 +295,10 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             if (isNewEntity)
             {
                 allInvoiceShipments = entityPM.InvoiceMultipleShipments;
-                allActiveInvoiceShipments = allInvoiceShipments.Where(d => d.ChangeSetOp != ChangeSetOperation.Delete).ToList();
+                allActiveInvoiceShipments = allInvoiceShipments?.Where(d => d.ChangeSetOp != ChangeSetOperation.Delete).ToList();
 
-                allShipmentIds = allInvoiceShipments.Select(s => s.ShipmentId).ToList();                
-                allActiveShipmentIds = allActiveInvoiceShipments.Select(s => s.ShipmentId).ToList();
+                allShipmentIds = allInvoiceShipments?.Select(s => s.ShipmentId).ToList();                
+                allActiveShipmentIds = allActiveInvoiceShipments?.Select(s => s.ShipmentId).ToList();
 
                 allInvoiceLines = new List<APInvoiceLine>();
                 allActiveInvoiceLines = new List<APInvoiceLine>();
@@ -311,13 +311,13 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             else
             {
                 allInvoiceShipments = invoiceShipmentsChangeSet;
-                allActiveInvoiceShipments = allInvoiceShipments.Where(d => d.ChangeSetOp != ChangeSetOperation.Delete).ToList();
+                allActiveInvoiceShipments = allInvoiceShipments?.Where(d => d.ChangeSetOp != ChangeSetOperation.Delete).ToList();
 
-                allShipmentIds = allInvoiceShipments.Select(s => s.ShipmentId).ToList();
-                allActiveShipmentIds = allActiveInvoiceShipments.Select(s => s.ShipmentId).ToList();
+                allShipmentIds = allInvoiceShipments?.Select(s => s.ShipmentId).ToList();
+                allActiveShipmentIds = allActiveInvoiceShipments?.Select(s => s.ShipmentId).ToList();
 
                 allInvoiceLines = invoiceLineRepository.GetInvoiceLinesByInvoiceId(entityPM.Id, tenant).ToList();
-                allActiveInvoiceLines = allInvoiceLines.Where(d => allActiveShipmentIds.Contains(d.EntityId)).ToList();
+                allActiveInvoiceLines = allInvoiceLines?.Where(d => allActiveShipmentIds.Contains(d.EntityId)).ToList();
 
                 allInvoiceVATs = invoiceTotalVatRepository.GetInvoiceTotalVatsByInvoiceId(entityPM.Id, tenant).ToList();
                 allInvoiceEntities = invoiceEntityRepository.GetInvoiceEntitiesForInvoice(entityPM.Id, entityPM.Tenant).ToList();                
@@ -1182,7 +1182,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             #endregion
 
             #region Entity References
-            List<string> allActiveShipmentNumbers = allInvoiceShipments.Where(d => d.ChangeSetOp != ChangeSetOperation.Delete).Select(s => s.ShipmentNumber).ToList();
+            List<string> allActiveShipmentNumbers = allInvoiceShipments?.Where(d => d.ChangeSetOp != ChangeSetOperation.Delete).Select(s => s.ShipmentNumber).ToList();
 
             foreach (string shipmentNumbers in allActiveShipmentNumbers)
             {

@@ -23,6 +23,7 @@
     "ProdStagingEmail": "protractor@test.com",
     "ProdStagingPassword": "!P123t456",
     "CloudStagingURL": "https://staging.amital.co.il/",
+	"CloudPreURL": "https://pre.amital.co.il/",	
 	"CloudStagingCargoTrackingURL": "https://staging.amital.co.il/CargoTracking",
     "CloudStagingEmail": "protractor@test.com",
     "CloudStagingPassword": "!P123t456",
@@ -39,6 +40,7 @@
     "TestStagingURLTIQ4": "https://test.logitudeworld.com/staging",
     "TestStagingEmailTIQ4": "ahmadb@fnarsoft.co.il",
     "TestStagingPasswordTIQ4": "!A123a456"
+	
 
     
 
