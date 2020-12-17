@@ -1254,7 +1254,7 @@ namespace Logitude.DBMigrations.Models
         {
             bool isBasicArgumentProvided = ToolArguments.IsArgumentProvided(Arguments.BASIC);
             bool isZeroDownTimeArgumentProvided = ToolArguments.IsArgumentProvided(Arguments.ZERODOWNTIME);
-            bool isColumnDataTypeChanged = ((dbColumn.Constraints.Nullable && !dxmlColumn.Constraints.Nullable && !isBasicArgumentProvided) ||
+            bool isColumnDataTypeChanged = ((dbColumn.Constraints.Nullable && !dxmlColumn.Constraints.Nullable && !dbColumn.Constraints.HasNotNullCheckConstraint && !isBasicArgumentProvided) ||
                                             (dbColumn.Type != dxmlColumn.Type) ||
                                             (dbColumn.Size != FormatColumnSize(dxmlColumn.Size, dxmlColumn.Type) && dxmlColumn.Size != 0) ||
                                             (dbColumn.Type == "decimal" && dxmlColumn.Type == "decimal" && (dbColumn.Precision != dxmlColumn.Precision || dbColumn.Scale != dxmlColumn.Scale)));
