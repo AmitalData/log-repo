@@ -580,11 +580,27 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 this.UpdateAllPayablesAccountedAmountAndStatus();
             }
 
-            this.UpdateInvoicePayments(invoicePaymentsChangeSet);
-            this.UpdateInvoiceAmountDue();
-            this.BuildSearchFields();
-            this.UpdatePaidDate();
+            if (invoicePaymentsChangeSet != null)
+            {
+                if (invoicePaymentsChangeSet.Count > 0)
+                {
+                    bool isUpdatingPayments = true;
 
+                    if (invoicePaymentsChangeSet.Where(d => d.ChangeSetOp == ChangeSetOperation.Insert || d.ChangeSetOp == ChangeSetOperation.Delete).Count() == 0)
+                    {
+                        isUpdatingPayments = false;
+                    }
+
+                    if (isUpdatingPayments)
+                    {
+                        this.UpdateInvoicePayments(invoicePaymentsChangeSet);
+                        this.UpdateInvoiceAmountDue();
+                        this.UpdatePaidDate();
+                    }
+                }
+            }
+
+            this.BuildSearchFields();
             initializer.Repository.Update(invoice);
             initializer.Repository.SubmitChanges();
 
