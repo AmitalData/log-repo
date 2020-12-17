@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CourierMasterUpdateClass
    {  		
-		public const string HashString = "c12179ab8ba5c1df143cdcacf390477c";
+		public const string HashString = "bf495f4919825bb6dbd417875c415d44";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -3730,6 +3730,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "OpenDeclarations",
 					  						ListPropertyPath =  "OpenDeclarations",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -3969,6 +3970,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 		   		   //--------------> Additional Features <--------------\\
 
 		   Feature CourierMasterFeature_AllowAccounting = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "AllowAccounting", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = CourierMasterObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.CourierMaster.Features.Allow Accounting", NameTextCodeDefaultText = @"Allow Accounting" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CourierMasterObjectTable);
+
+		   Feature CourierMasterFeature_SendManifest = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SendManifest", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = CourierMasterObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.CourierMaster.Features.SendManifest", NameTextCodeDefaultText = @"SendAutoManifest" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CourierMasterObjectTable);
+
+		   Feature CourierMasterFeature_SendDeclaration = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SendDeclaration", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = CourierMasterObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.CourierMaster.Features.SendDeclaration", NameTextCodeDefaultText = @"SendAutoDeclaration" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CourierMasterObjectTable);
 
    
 	    
