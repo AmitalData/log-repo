@@ -9,6 +9,7 @@ namespace Logitude.HybridTest.ServicesTest
     [TestClass]
     public class SpecialServicesTypeTest
     {
+        private static EntityWcfCaller entityWcfCaller = new EntityWcfCaller();
         [TestMethod]
         public void Test_SpecialServicesType_UPSERT()
         {
@@ -19,7 +20,7 @@ namespace Logitude.HybridTest.ServicesTest
                 LocalName = "Hybrid SpecialServicesType",
                 Tenant = EnvironmentGlobalParams.MainTenant,
             };
-            ServiceOutcome serviceOutcome = EntityWcfCaller.CallEntityUpsert(specialServicesTypePM);
+            ServiceOutcome serviceOutcome = entityWcfCaller.CallEntityUpsert(specialServicesTypePM);
             Assert.IsFalse(serviceOutcome.Response.HasError, "Upsert Failed! " + serviceOutcome.Response.ErrorMessage);
             Assert.IsNotNull(serviceOutcome.Response.Result, "Upsert Failed! " + serviceOutcome.Response.ErrorMessage);
         }

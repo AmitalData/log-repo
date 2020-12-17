@@ -10,6 +10,7 @@ namespace Logitude.HybridTest.ServicesTest
     [TestClass]
     public class IncotermTest
     {
+        private static EntityWcfCaller entityWcfCaller = new EntityWcfCaller();
         [TestMethod]
         public void Test_Incoterm_UPSERT()
         {
@@ -22,7 +23,7 @@ namespace Logitude.HybridTest.ServicesTest
                 OtherCharges = "C",
                 Tenant = EnvironmentGlobalParams.MainTenant
             };
-            ServiceOutcome serviceOutcome = EntityWcfCaller.CallEntityUpsert(incotermPM);
+            ServiceOutcome serviceOutcome = entityWcfCaller.CallEntityUpsert(incotermPM);
             Assert.IsFalse(serviceOutcome.Response.HasError, "Upsert Failed! " + serviceOutcome.Response.ErrorMessage);
             Assert.IsNotNull(serviceOutcome.Response.Result, "Upsert Failed! " + serviceOutcome.Response.ErrorMessage);
         }
