@@ -105,6 +105,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
             {
                 TableName = "Shipment",
                 FieldsDBName = "Id,Tenant,CustomFileNumber,ForwarderShipmentNumber,CustomsDeclarationNumber,ShipperName,CustomerId,TransportModeId,DirectionId,MasterShipmentDataId,House,ShipmentNumber,FromPortId,ToPortId,ShipperId,ConsigneeId,GrossWeight,Volume,CustomConnectToShipment,AutomaticLastUpdateDate,ShipmentPickUpIndex,FirstPickupETA,ShipmentLevelCode,CustomsClearanceDate,CustomFileId,CreateDateTime,SecurityKey,ConsigneeName,CustomerReference1,CustomerReference2,FirstPickupETD,WarehouseLegActualEntryDate,WarehouseLegExpectedEntryDate,WarehouseLegRemarks,DeclarationDate,IsCancelled,SearchFields,PackagesQuantity",
+                FieldsDummyName ="IsPublic",
                 KeyName = "Id",
                 KeyName2 = "Id",
                 ConditionKey = "EntityId",

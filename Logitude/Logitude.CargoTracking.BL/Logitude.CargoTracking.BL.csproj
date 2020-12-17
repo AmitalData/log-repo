@@ -54,6 +54,7 @@
   <ItemGroup>
     <Compile Include="CargoTrackingServices\HelperClasses\BuildWhereConditionArgs.cs" />
     <Compile Include="CargoTrackingServices\HelperClasses\BulkDataPreperation.cs" />
+    <Compile Include="CargoTrackingServices\HelperClasses\ReferencecArgs.cs" />
     <Compile Include="CargoTrackingServices\HelperClasses\CargoTrackingArguments.cs" />
     <Compile Include="CargoTrackingServices\HelperClasses\CargoTrackingUpdateDataBaseArgs.cs" />
     <Compile Include="CargoTrackingServices\HelperClasses\CargoArgs.cs" />
