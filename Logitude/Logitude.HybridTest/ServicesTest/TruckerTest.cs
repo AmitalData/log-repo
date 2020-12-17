@@ -8,6 +8,7 @@ namespace Logitude.HybridTest.ServicesTest
     [TestClass]
     public class TruckerTest
     {
+        private static EntityWcfCaller entityWcfCaller = new EntityWcfCaller();
         [TestMethod]
         public void Test_Trucker_UPSERT()
         {
@@ -33,7 +34,7 @@ namespace Logitude.HybridTest.ServicesTest
                 CountryCode = HybridData.CountryCodeGB,
                 StateCode = HybridData.StateCodeAK,
             });
-            ServiceOutcome serviceOutcome = EntityWcfCaller.CallEntityUpsert(truckerPM);
+            ServiceOutcome serviceOutcome = entityWcfCaller.CallEntityUpsert(truckerPM);
             Assert.IsFalse(serviceOutcome.Response.HasError, "Upsert Failed! " + serviceOutcome.Response.ErrorMessage);
             Assert.IsNotNull(serviceOutcome.Response.Result, "Upsert Failed! " + serviceOutcome.Response.ErrorMessage);
         }

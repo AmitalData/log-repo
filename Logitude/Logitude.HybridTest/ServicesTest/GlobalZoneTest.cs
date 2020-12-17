@@ -9,6 +9,7 @@ namespace Logitude.HybridTest.ServicesTest
     [TestClass]
     public class GlobalZoneTest
     {
+        private static EntityWcfCaller entityWcfCaller = new EntityWcfCaller();
         [TestMethod]
         public void Test_GlobalZone_UPSERT()
         {
@@ -19,7 +20,7 @@ namespace Logitude.HybridTest.ServicesTest
                 LocalName = "Hybrid GlobalZone",
                 Tenant = EnvironmentGlobalParams.MainTenant,
             };
-            ServiceOutcome serviceOutcome = EntityWcfCaller.CallEntityUpsert(globalZonePM);
+            ServiceOutcome serviceOutcome = entityWcfCaller.CallEntityUpsert(globalZonePM);
             Assert.IsFalse(serviceOutcome.Response.HasError, "Upsert Failed! " + serviceOutcome.Response.ErrorMessage);
             Assert.IsNotNull(serviceOutcome.Response.Result, "Upsert Failed! " + serviceOutcome.Response.ErrorMessage);
         }

@@ -9,6 +9,7 @@ namespace Logitude.HybridTest.ServicesTest
     [TestClass]
     public class AccountingPartnerTest
     {
+        private static EntityWcfCaller entityWcfCaller = new EntityWcfCaller();
         [TestMethod]
         public void Test_AccountingPartner_UPSERT()
         {
@@ -22,7 +23,7 @@ namespace Logitude.HybridTest.ServicesTest
                 PartnerTypeId = "AC",
                 Tenant = EnvironmentGlobalParams.MainTenant,
             };
-            ServiceOutcome serviceOutcome = EntityWcfCaller.CallEntityUpsert(accountingPartnerPM);
+            ServiceOutcome serviceOutcome = entityWcfCaller.CallEntityUpsert(accountingPartnerPM);
             Assert.IsFalse(serviceOutcome.Response.HasError, "Upsert Failed! " + serviceOutcome.Response.ErrorMessage);
             Assert.IsNotNull(serviceOutcome.Response.Result, "Upsert Failed! " + serviceOutcome.Response.ErrorMessage);
         }

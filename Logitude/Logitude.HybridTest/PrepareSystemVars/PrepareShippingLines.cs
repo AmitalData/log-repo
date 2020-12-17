@@ -10,6 +10,7 @@ namespace Logitude.HybridTest.WcfCallers
 
     class PrepareShippingLines
     {
+        private static EntityWcfCaller entityWcfCaller = new EntityWcfCaller();
         public static void PrepareShippingLinesVars()
         {
             UpsertShippingLineCodeHSL();
@@ -43,7 +44,7 @@ namespace Logitude.HybridTest.WcfCallers
         }
         private static Response AssertResponse<T>(T entityPM)
         {
-            ServiceOutcome serviceOutcome = EntityWcfCaller.CallEntityUpsert(entityPM);
+            ServiceOutcome serviceOutcome = entityWcfCaller.CallEntityUpsert(entityPM);
             Assert.IsFalse(serviceOutcome.Response.HasError, "Prepare ShippingLines Vars Failed! " + serviceOutcome.Response.ErrorMessage);
             Assert.IsNotNull(serviceOutcome.Response.Result, "Prepare ShippingLines Vars Failed! " + serviceOutcome.Response.ErrorMessage);
             return serviceOutcome.Response;
