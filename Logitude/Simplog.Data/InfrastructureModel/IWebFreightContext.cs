@@ -109,6 +109,8 @@ namespace Simplog.Data.InfrastructureModel
         IDbSet<SchedulerProcedure> SchedulerProcedures { get; }
         IDbSet<WorkerRoleName> WorkerRoleNames { get; }
 
+        IDbSet<QueryExportExecutionLog> QueryExportExecutionLogs { get; }
+
         void SetAsModified(object entity);
         void DetectChanges();
         int SaveChanges();
