@@ -381,6 +381,9 @@
     <Compile Include="LogBoxMailgunAnalyzerWorkerRole.cs" />
     <Compile Include="LogMessagesWorkerRole.cs" />
     <Compile Include="DocumentApprovalWorkerRole.cs" />
+    <Compile Include="ReportScheduler\GLAccountValidator.cs" />
+    <Compile Include="ReportScheduler\IReportSchedulerValidator.cs" />
+    <Compile Include="ReportScheduler\ReportSchedulerValidator.cs" />
     <Compile Include="QueryExportExecutionLogWR.cs" />
     <Compile Include="Services\FTPSchedulerTaskService.cs" />
     <Compile Include="ImporterApprovalReceivedWorkerRole.cs" />
