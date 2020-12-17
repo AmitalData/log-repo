@@ -100,7 +100,7 @@ namespace Logitude.Accounting.BL.CoreBL
             bool Same_glaccount_for_debit_and_credit = true;
             if (Same_glaccount_for_debit_and_credit && _NewLedgerTransactionsWithCounters[0].AccountId == _NewLedgerTransactionsWithCounters[1].AccountId)
             {
-                totalNewLedgerOpenAmount = MoveAdjustSum2SameAccountButDiffDate(ref newLTranListOfAccountID);
+                totalNewLedgerOpenAmount = MoveAdjustSum2SameAccountButDiffDate_useOnly1NewTransaction(ref newLTranListOfAccountID);
             }
             else
             {
@@ -169,7 +169,7 @@ namespace Logitude.Accounting.BL.CoreBL
             return myReconciliationPM;
         }
 
-        private decimal MoveAdjustSum2SameAccountButDiffDate(ref List<LedgerTransactionPM> newLTranListOfAccountID)
+        private decimal MoveAdjustSum2SameAccountButDiffDate_useOnly1NewTransaction(ref List<LedgerTransactionPM> newLTranListOfAccountID)
         {
             decimal totalNewLedgerOpenAmount;
             Debug.WriteLine(
