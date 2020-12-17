@@ -1320,12 +1320,12 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
             return documentTypeTemplateQuery.GetDocumentTypeTemplatesByDocumentTypeId(documentTypeId, tenant).ToList();
         }
 
-        public List<DocumentTypeTemplatePM> GetDocumentTypeTemplatesByDocumentTypeIdForAutomations(string documentTypeId, int tenant)
-        {
-            SecurityUtility.AuthenticationOnTenant(tenant);
-            DocumentTypeTemplateQuery documentTypeTemplateQuery = new DocumentTypeTemplateQuery(tenant);
-            return documentTypeTemplateQuery.GetDocumentTypeTemplatesByDocumentTypeIdForAutomation(documentTypeId, tenant);
-        }
+        //public List<DocumentTypeTemplatePM> GetDocumentTypeTemplatesByDocumentTypeIdForAutomations(string documentTypeId, int tenant)
+        //{
+        //    SecurityUtility.AuthenticationOnTenant(tenant);
+        //    DocumentTypeTemplateQuery documentTypeTemplateQuery = new DocumentTypeTemplateQuery(tenant);
+        //    return documentTypeTemplateQuery.GetDocumentTypeTemplatesByDocumentTypeIdForAutomation(documentTypeId, tenant);
+        //}
 
         public List<DocumentTypeTemplateList> GetDocumentTypeTemplateListsForDocumentType(string documentTypeId, int tenant)
         {

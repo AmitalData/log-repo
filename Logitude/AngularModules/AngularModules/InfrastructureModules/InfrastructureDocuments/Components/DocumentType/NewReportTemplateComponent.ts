@@ -80,6 +80,8 @@ export class NewReportTemplateComponent extends BaseComponent implements OnInit 
 
     }
 
+
+    RequestAreaName: string;
     ObjectTableId: string;
     IsLoadPage: boolean = false;
     SetWindowArgs(args: any) {
@@ -97,10 +99,14 @@ export class NewReportTemplateComponent extends BaseComponent implements OnInit 
             this.DocumentType = args.CurrentEntityPM;
             this.TypeTab = args.TypeTab;
             this.FullDocumentTypeTemplateLists = args.DocumentTypeTemplateLists;
+            this.RequestAreaName = args.RequestAreaName;
 
+            
             if (this.TypeTab == "Document") {
                 this.ValueEditorRadio = "StimulSoft";
-                this.EditorTypeVisibility = true;
+                if (this.RequestAreaName == "Automation") {
+                    this.EditorTypeVisibility = true;
+                }
             }
             else {
                 this.EditorTypeVisibility = false;

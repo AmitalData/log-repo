@@ -209,7 +209,9 @@ export class DocumentTypeTemplateComponent extends BaseComponent implements OnIn
             logWindow.WindowArgs = windowArgs;
             logWindow.Show("./InfrastructureModules/InfrastructureDocuments/Components/DocumentComponent/HtmlDocumentPreviewComponent");
 
-        } else {
+        }
+
+        else {
             var windowArgs: any = {};
             windowArgs.DataViewModel = this;
             windowArgs.TemplateId = item.Id;
@@ -235,16 +237,6 @@ export class DocumentTypeTemplateComponent extends BaseComponent implements OnIn
 
             logWindow.WindowArgs = windowArgs;
             window.designerClosed = false;
-
-
-            //FileLoader.LoadStimulSoftResources().then((isLoaded: boolean) => {
-            
-            // logWindow.Show("./Infrastructure/Components/StimulsoftComponent/StimulsoftDesignerComponent");
-
-           
-            //});
-
-            
                 logWindow.Show("./Infrastructure/Components/StimulsoftDesigner/StimulsoftDesigner");
               
                 var pollTimer = window.setInterval(function () {

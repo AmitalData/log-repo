@@ -23,6 +23,8 @@ export class AutomatedBackup {
     public DelaytimeIndicator: string;
     public Type: string;
     public IsAutomationResultEmailAllActiveUsers: boolean;
+    public ReportTemplateId: string;
+
     AautomationConditionLists: AutomationCondition[];
     AutomationSetValueLists: AutomationSetValue[];
     DelayAautomationConditionLists: AutomationCondition[];
@@ -30,7 +32,6 @@ export class AutomatedBackup {
     AutomationQueuedTask: AutomationQueuedTask;
     AutomationSetSLAValue: AutomationSetSLAValue;
     AutomationSendInterface: AutomationSendInterface;
-
 
 }
 
