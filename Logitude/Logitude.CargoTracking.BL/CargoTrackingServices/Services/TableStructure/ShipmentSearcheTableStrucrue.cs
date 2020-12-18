@@ -20,6 +20,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
                             "[Id] INT IDENTITY(1,1) NOT NULL," +
                             "[ShipmentId] VARCHAR(15) NULL," +
                             "[IsPublic] BIT DEFAULT(0) NULL," +
+                            "[ReferenceType] VARCHAR(30) NOT NULL,"+
                             "CONSTRAINT[PK_" + TableName + "] PRIMARY KEY([Id])" +
                             ") ";
             return cmd;

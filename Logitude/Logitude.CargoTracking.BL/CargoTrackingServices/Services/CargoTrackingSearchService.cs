@@ -6,6 +6,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
@@ -112,6 +113,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
             DataRow TableRow1 = referencecArgs.DataTable.NewRow();
             TableRow1.ItemArray = referencecArgs.TableRow.ItemArray.Clone() as object[];
             TableRow1.SetField("SearchFields", referencecArgs.SearchField.Trim());
+            TableRow1.SetField("ReferenceType", GetReferenceTypeFromCoulmnName(referencecArgs.CoulmnName));
             SetIsPublicForCoulmn(TableRow1, referencecArgs.CoulmnName);
             if (!IsNullOrEmpty(TableRow1, "SearchFields"))
                 referencecArgs.DataTable.Rows.Add(TableRow1);
@@ -136,7 +138,13 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
             TableRow.SetField("IsPublic", IsPublic);
 
         }
- 
+
+        private static string GetReferenceTypeFromCoulmnName(string CoulmnName)
+        {
+            string ReferenceType = Regex.Replace(CoulmnName, "([a-z])([A-Z])", "$1 $2");
+            return ReferenceType;
+        }
+
     }
 
 }
