@@ -38,13 +38,13 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
                 case "Pre_CargoTrackingShipments":
                     {
                         SQL = ShipmentTableStrucrue.CreateTable_Pre_Shipments(TableName);
-                        SQL += ShipmentTableStrucrue.CreateIndexAndRelations_Pre_Shipments(TableName);
+                        //SQL += ShipmentTableStrucrue.CreateIndexAndRelations_Pre_Shipments(TableName);
                         break;
                     }
                 case "Pre_CargoTrackingShipmentSearches":
                     {
                         SQL = ShipmentSearcheTableStrucrue.CreateTable_Pre_ShipmentSearchs(TableName);
-                        SQL += ShipmentSearcheTableStrucrue.CreateIndex_Pre_ShipmentSearchs(TableName);
+                        //SQL += ShipmentSearcheTableStrucrue.CreateIndex_Pre_ShipmentSearchs(TableName);
                         break;
                     }
                 case "Pre_CargoTrackingShipmentMasters":

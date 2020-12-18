@@ -76,6 +76,7 @@
     <Compile Include="CargoTrackingServices\Services\CargoTrackingTableLogicService.cs" />
     <Compile Include="CargoTrackingServices\Services\ServicesHelper\ServiceHelper.cs" />
     <Compile Include="CargoTrackingServices\Services\TableConditions\ShipmentTableCondtions.cs" />
+    <Compile Include="CargoTrackingServices\Services\TableStructure\Helper\TableStructureHelper.cs" />
     <Compile Include="CargoTrackingServices\Services\TableStructure\TransportModeTableStrucrue.cs" />
     <Compile Include="CargoTrackingServices\Services\TableStructure\CountriesTableStrucrue.cs" />
     <Compile Include="CargoTrackingServices\Services\TableStructure\ShipmentComputedTableStrucrue.cs" />
