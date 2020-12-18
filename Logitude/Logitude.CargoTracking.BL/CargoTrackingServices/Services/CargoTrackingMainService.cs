@@ -390,9 +390,9 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
             ServiceHelper.ExecuteSql(cmd, buildCargoArgs.DestinationConnectionString);
             if (buildCargoArgs.Table.Main_CT2_TableName != null)
             {
-                cmd  = ShipmentTableStrucrue.ChaneNameScript(buildCargoArgs.Table.Main_CT2_TableName, buildCargoArgs.Table.Main_CT2_TableName + "_SW") + "\n";
-                cmd += ShipmentTableStrucrue.ChaneNameScript(buildCargoArgs.Table.Pre2_TableName, buildCargoArgs.Table.Main_CT2_TableName) + "\n";
-                cmd += ShipmentTableStrucrue.ChaneNameScript(buildCargoArgs.Table.Main_CT2_TableName + "_SW", buildCargoArgs.Table.Pre2_TableName) + "\n";
+                cmd  = ShipmentSearcheTableStrucrue.ChaneNameScript(buildCargoArgs.Table.Main_CT2_TableName, buildCargoArgs.Table.Main_CT2_TableName + "_SW") + "\n";
+                cmd += ShipmentSearcheTableStrucrue.ChaneNameScript(buildCargoArgs.Table.Pre2_TableName, buildCargoArgs.Table.Main_CT2_TableName) + "\n";
+                cmd += ShipmentSearcheTableStrucrue.ChaneNameScript(buildCargoArgs.Table.Main_CT2_TableName + "_SW", buildCargoArgs.Table.Pre2_TableName) + "\n";
                 ServiceHelper.ExecuteSql(cmd, buildCargoArgs.DestinationConnectionString);
             }
         }

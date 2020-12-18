@@ -4,6 +4,7 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml;
 
 namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructure.Helper
 {
@@ -19,6 +20,15 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
         private string primarykeyColumn;
         public TableStructureHelper(string filePth)
         {
+            XmlDocument doc = new XmlDocument();
+            doc.Load(filePth);
+
+            string XML = doc.OuterXml;
+            string XML2 = doc.InnerXml;
+            string XML3 = doc.Value;
+            string XML4 = doc.InnerText;
+            string XML5 = doc.ToString();
+
             xmlDataSet = new DataSet();
             xmlDataSet.ReadXml(filePth);
             table = xmlDataSet.Tables["Table"];
@@ -55,11 +65,11 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
             string TableStructure = "";
             for (int i = 0; i < tableCoulmns.Rows.Count; i++)
             {
-                TableStructure += "[" + tableCoulmns.Rows[i].ItemArray[1] + "] " + tableCoulmns.Rows[i].ItemArray[2];
-                TableStructure += GetCoulmnSize(tableCoulmns.Rows[i].ItemArray[3]);
-                TableStructure += GetIsCoulmnIdentity(tableCoulmns.Rows[i].ItemArray[4]);
-                TableStructure += GetIsCoulmnNullable(tableCoulmnsConstraint.Rows[i].ItemArray[0]);
-                SetPrimartKeyCoulmn(tableCoulmnsConstraint.Rows[i].ItemArray[1], (string)tableCoulmns.Rows[i].ItemArray[1]);
+                TableStructure += "[" + tableCoulmns.Rows[i]["Name"] + "] " + tableCoulmns.Rows[i]["Type"];
+                TableStructure += GetCoulmnSize(tableCoulmns.Rows[i]["Size"]);
+                TableStructure += GetIsCoulmnIdentity(tableCoulmns.Rows[i]["Identity"]);
+                TableStructure += GetIsCoulmnNullable(tableCoulmnsConstraint.Rows[i]["Nullable"]);
+                SetPrimartKeyCoulmn(tableCoulmnsConstraint.Rows[i]["PrimaryKey"], (string)tableCoulmns.Rows[i]["Name"]);
                 TableStructure += ",\n";
             }
             return TableStructure;
@@ -127,7 +137,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
             {
                 for (int j = 0; j < tableIndexs.Rows.Count; j++)
                 {
-                    string CoulmnIndexs = (string)tableIndexs.Rows[j].ItemArray[0];
+                    string CoulmnIndexs = (string)tableIndexs.Rows[j]["Columns"];
                     TableIndexs += "CREATE NONCLUSTERED INDEX [IX_" + tableName + "_" + CoulmnIndexs.Replace(',', '_') + "] ON [dbo].[" + tableName + "](" + CoulmnIndexs + ")\n";
                     TableIndexs += "ALTER INDEX [IX_" + tableName + "_" + CoulmnIndexs.Replace(',', '_') + "] ON [dbo].[" + tableName + "] DISABLE \n";
                 }
@@ -143,7 +153,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
             {
                 for (int j = 0; j < tableIndexs.Rows.Count; j++)
                 {
-                    string CoulmnIndexs = (string)tableIndexs.Rows[j].ItemArray[0];
+                    string CoulmnIndexs = (string)tableIndexs.Rows[j]["Columns"];
                     TableIndexs += "ALTER INDEX [IX_" + tableName + "_" + CoulmnIndexs.Replace(',', '_') + "] ON [dbo].[" + tableName + "] REBUILD \n";
                 }
 
@@ -159,9 +169,9 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
             {
                 for (int j = 0; j < tableCoulmnsRelation.Rows.Count; j++)
                 {
-                    string ForeignKeyColumn = (string)tableCoulmnsRelation.Rows[j].ItemArray[0];
-                    string ReferencedTable = (string)tableCoulmnsRelation.Rows[j].ItemArray[1];
-                    string ReferencedColumn = (string)tableCoulmnsRelation.Rows[j].ItemArray[2];
+                    string ForeignKeyColumn = (string)tableCoulmnsRelation.Rows[j]["ForeignKeyColumn"];
+                    string ReferencedTable = (string)tableCoulmnsRelation.Rows[j]["ReferencedTable"];
+                    string ReferencedColumn = (string)tableCoulmnsRelation.Rows[j]["ReferencedColumn"];
                     TableStructureRelations += "ALTER TABLE [dbo].[" + tableName + "] ADD CONSTRAINT [FK_" + tableName + "_" + ReferencedTable + "_" + ForeignKeyColumn + "] FOREIGN KEY([" + ForeignKeyColumn + "]) REFERENCES [dbo].[" + ReferencedTable + "]([" + ReferencedColumn + "])\n";
                     TableStructureRelations += "CREATE NONCLUSTERED INDEX [IX_" + tableName + "_" + ForeignKeyColumn + "] ON [dbo].[" + tableName + "]([" + ForeignKeyColumn + "])\n";
                 }
@@ -189,7 +199,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
             {
                 for (int j = 0; j < tableUniqueConstraints.Rows.Count; j++)
                 {
-                    string UniqeConstraintFields = (string)tableUniqueConstraints.Rows[j].ItemArray[0];
+                    string UniqeConstraintFields = (string)tableUniqueConstraints.Rows[j]["Columns"];
                     TableStructureChaneNameScriptFromUniqueConstraints += " exec sp_rename 'UQ_" + oldTableName + "_"+ UniqeConstraintFields.Replace(',', '_') +"', 'UQ_" + newTableName + "_"+ UniqeConstraintFields.Replace(',', '_') + "', 'object' \n ";
 
                 }
@@ -205,8 +215,8 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
 
                 for (int j = 0; j < tableCoulmnsRelation.Rows.Count; j++)
                 {
-                    string ForeignKeyColumn = (string)tableCoulmnsRelation.Rows[j].ItemArray[0];
-                    string ReferencedTable = (string)tableCoulmnsRelation.Rows[j].ItemArray[1];
+                    string ForeignKeyColumn = (string)tableCoulmnsRelation.Rows[j]["ForeignKeyColumn"];
+                    string ReferencedTable = (string)tableCoulmnsRelation.Rows[j]["ReferencedTable"];
                     TableStructureChaneNameScriptFromRelations += " exec sp_rename 'FK_" + oldTableName + "_" + ReferencedTable + "_" + ForeignKeyColumn + "', 'FK_" + newTableName + "_" + ReferencedTable + "_" + ForeignKeyColumn + "', 'object' \n ";
                 }
             }
@@ -221,7 +231,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
             {
                 for (int j = 0; j < tableUniqueConstraints.Rows.Count; j++)
                 {
-                    string UniqeConstraintFields = (string)tableUniqueConstraints.Rows[j].ItemArray[0];
+                    string UniqeConstraintFields = (string)tableUniqueConstraints.Rows[j]["Columns"];
                     UniqueConstraints += "ALTER TABLE [dbo].[" + tableName + "] ADD CONSTRAINT [UQ_" + tableName + "_" + UniqeConstraintFields.Replace(',', '_') + "] UNIQUE(" + UniqeConstraintFields + ")\n";
                 }
             }
