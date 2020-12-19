@@ -2,6 +2,7 @@
 using Logitude.CargoTracking.BL.CargoTrackingServices.HelperClasses;
 using Logitude.CargoTracking.BL.CargoTrackingServices.Services.ServicesHelper;
 using Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructure;
+using Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructure.Helper;
 using Logitude.CargoTracking.Data;
 using Logitude.CargoTracking.Data.EntityListQueryServices;
 using Logitude.CargoTracking.Data.EntityLists;
@@ -32,16 +33,29 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
         private List<string> KeysForRecoredsNotValidated;
 
         //private static readonly Semaphore WorkLimiter = new Semaphore(100, 100);
+        private void SetTablesStructureHelper(CargoTrackingUpdateDataBaseArgs cargoTrackingDataBaseArgs)
+        {
+            TableStructureHelper MainTableStructureHelper = new TableStructureHelper(ServiceHelper.GetInvokeDBTableByTableName(cargoTrackingDataBaseArgs.buildCargoArgs.Table.ObjectTableName));
+            TableStructureHelper InnerTableStructureHelper = null;
+            cargoTrackingDataBaseArgs.buildCargoArgs.MainTableStructureHelper = MainTableStructureHelper;
+            if (!string.IsNullOrEmpty(cargoTrackingDataBaseArgs.buildCargoArgs.Table.Pre2_TableName))
+            {
+                InnerTableStructureHelper = new TableStructureHelper(ServiceHelper.GetInvokeDBTableByTableName(cargoTrackingDataBaseArgs.buildCargoArgs.Table.InnerObjectTableName));
+                cargoTrackingDataBaseArgs.buildCargoArgs.InnerTableStructureHelper = InnerTableStructureHelper;
+            }
 
+        }
         public RecordUpdated UpdateCargoTrackingDataBase(CargoTrackingUpdateDataBaseArgs cargoTrackingDataBaseArgs)
         {
 
-
+            SetTablesStructureHelper(cargoTrackingDataBaseArgs);
             recordUpdated = new RecordUpdated();
             if (cargoTrackingDataBaseArgs.CargoTrackingArguments != null)
             {
                 ServiceHelper.DropTable(cargoTrackingDataBaseArgs.buildCargoArgs);
-                ServiceHelper.CreateCargoTrackingTable(cargoTrackingDataBaseArgs.buildCargoArgs);
+                ServiceHelper.CreateCargoTrackingTable(cargoTrackingDataBaseArgs.buildCargoArgs,
+                                                       cargoTrackingDataBaseArgs.buildCargoArgs.MainTableStructureHelper,
+                                                       cargoTrackingDataBaseArgs.buildCargoArgs.InnerTableStructureHelper);
                 cargoTrackingDataBaseArgs.buildCargoArgs.Table.CT_TableName = cargoTrackingDataBaseArgs.buildCargoArgs.Table.Pre_TableName;
                 cargoTrackingDataBaseArgs.buildCargoArgs.Table.CT2_TableName = cargoTrackingDataBaseArgs.buildCargoArgs.Table.Pre2_TableName;
                // this.MainThreadNumbers = (int)cargoTrackingDataBaseArgs.CargoTrackingArguments.ThreadNumber;
@@ -208,16 +222,18 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
         {
             if (buildCargoArgs.Table.CT_TableName == "Pre_CargoTrackingShipments" && buildCargoArgs.Table.CurrentCondition == 2)
             {
-                string cmd2 = ShipmentTableStrucrue.CreateConstraientWithRelations_Pre_Shipments(buildCargoArgs.Table.CT_TableName);
+                string cmd2 = buildCargoArgs.MainTableStructureHelper.GetTableStructureRelations(buildCargoArgs.Table.CT_TableName);
                 ServiceHelper.ExecuteSql(cmd2, buildCargoArgs.DestinationConnectionString);
-                cmd2 = ShipmentTableStrucrue.ReBuildIndexes_Pre_Shipments(buildCargoArgs.Table.CT_TableName);
+                cmd2 = buildCargoArgs.MainTableStructureHelper.GetTableStructureUniqueConstraints(buildCargoArgs.Table.CT_TableName);
+                ServiceHelper.ExecuteSql(cmd2, buildCargoArgs.DestinationConnectionString);  
+                cmd2 = buildCargoArgs.MainTableStructureHelper.GetTableStructureReBuildIndexs(buildCargoArgs.Table.CT_TableName);
                 ServiceHelper.ExecuteSql(cmd2, buildCargoArgs.DestinationConnectionString);
             }
 
 
             if (buildCargoArgs.Table.CT2_TableName == "Pre_CargoTrackingShipmentSearches" && buildCargoArgs.Table.CurrentCondition == 2)
             {
-                string cmd = ShipmentSearcheTableStrucrue.ReBuildIndexes_Pre_ShipmentSearchs(buildCargoArgs.Table.CT2_TableName);
+                string cmd = buildCargoArgs.InnerTableStructureHelper.GetTableStructureReBuildIndexs(buildCargoArgs.Table.CT2_TableName);
                 ServiceHelper.ExecuteSql(cmd, buildCargoArgs.DestinationConnectionString);
             }
 
@@ -384,15 +400,15 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
 
         private void StartRenameCargoTables(CargoArgs buildCargoArgs)
         {
-            string cmd = ShipmentTableStrucrue.ChaneNameScript(buildCargoArgs.Table.Main_CT_TableName, buildCargoArgs.Table.Main_CT_TableName + "_SW") + "\n";
-            cmd += ShipmentTableStrucrue.ChaneNameScript(buildCargoArgs.Table.Pre_TableName, buildCargoArgs.Table.Main_CT_TableName) + "\n";
-            cmd += ShipmentTableStrucrue.ChaneNameScript(buildCargoArgs.Table.Main_CT_TableName + "_SW", buildCargoArgs.Table.Pre_TableName) + "\n";
+            string cmd = buildCargoArgs.MainTableStructureHelper.GetTableStructureChangeNameScript(buildCargoArgs.Table.Main_CT_TableName, buildCargoArgs.Table.Main_CT_TableName + "_SW") + "\n";
+            cmd += buildCargoArgs.MainTableStructureHelper.GetTableStructureChangeNameScript(buildCargoArgs.Table.Pre_TableName, buildCargoArgs.Table.Main_CT_TableName) + "\n";
+            cmd += buildCargoArgs.MainTableStructureHelper.GetTableStructureChangeNameScript(buildCargoArgs.Table.Main_CT_TableName + "_SW", buildCargoArgs.Table.Pre_TableName) + "\n";
             ServiceHelper.ExecuteSql(cmd, buildCargoArgs.DestinationConnectionString);
             if (buildCargoArgs.Table.Main_CT2_TableName != null)
             {
-                cmd  = ShipmentSearcheTableStrucrue.ChaneNameScript(buildCargoArgs.Table.Main_CT2_TableName, buildCargoArgs.Table.Main_CT2_TableName + "_SW") + "\n";
-                cmd += ShipmentSearcheTableStrucrue.ChaneNameScript(buildCargoArgs.Table.Pre2_TableName, buildCargoArgs.Table.Main_CT2_TableName) + "\n";
-                cmd += ShipmentSearcheTableStrucrue.ChaneNameScript(buildCargoArgs.Table.Main_CT2_TableName + "_SW", buildCargoArgs.Table.Pre2_TableName) + "\n";
+                cmd  = buildCargoArgs.InnerTableStructureHelper.GetTableStructureChangeNameScript(buildCargoArgs.Table.Main_CT2_TableName, buildCargoArgs.Table.Main_CT2_TableName + "_SW") + "\n";
+                cmd += buildCargoArgs.InnerTableStructureHelper.GetTableStructureChangeNameScript(buildCargoArgs.Table.Pre2_TableName, buildCargoArgs.Table.Main_CT2_TableName) + "\n";
+                cmd += buildCargoArgs.InnerTableStructureHelper.GetTableStructureChangeNameScript(buildCargoArgs.Table.Main_CT2_TableName + "_SW", buildCargoArgs.Table.Pre2_TableName) + "\n";
                 ServiceHelper.ExecuteSql(cmd, buildCargoArgs.DestinationConnectionString);
             }
         }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructure.Helper;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,5 +13,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.HelperClasses
         public string SourceConnectionString { get; set; }
         public string DestinationConnectionString { get; set; }
         public string Condition { get; set; }
-     }
+        public TableStructureHelper InnerTableStructureHelper { get; set; }
+        public TableStructureHelper MainTableStructureHelper { get; set; }
+    }
 }

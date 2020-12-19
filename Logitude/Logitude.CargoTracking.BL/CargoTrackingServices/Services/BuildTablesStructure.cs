@@ -1,7 +1,9 @@
 ﻿using Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructure;
+using Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructure.Helper;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -12,7 +14,8 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
 
         public static string GetTableStructure(string TableName)
         {
-            string SQL = null;
+          
+        string SQL = null;
             switch (TableName)
             {
                 case "Pre_CargoTrackingPorts":

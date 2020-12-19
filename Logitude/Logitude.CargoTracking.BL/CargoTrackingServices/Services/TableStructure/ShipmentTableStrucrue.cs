@@ -1,4 +1,5 @@
-﻿using Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructure.Helper;
+﻿using Logitude.CargoTracking.BL.CargoTrackingServices.DBTablesCopy.Generated;
+using Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructure.Helper;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -12,7 +13,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
 {
     public static class ShipmentTableStrucrue
     {
-        public static TableStructureHelper tableStructureHelper = new TableStructureHelper("C:\\Source\\log-repo\\Logitude\\Logitude.CargoTracking.MetaData\\DBTables\\CargoTrackingShipment.dxml");
+        public static TableStructureHelper tableStructureHelper = new TableStructureHelper("");
 
         public static string CreateTable_Pre_Shipments(string TableName)
         {

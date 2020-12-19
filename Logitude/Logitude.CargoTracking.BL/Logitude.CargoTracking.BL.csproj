@@ -52,6 +52,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CargoTrackingServices\DBTablesCopy\Generated\CargoTrackingCardDxml.Generated.cs" />
+    <Compile Include="CargoTrackingServices\DBTablesCopy\Generated\CargoTrackingCountryDxml.Generated.cs" />
+    <Compile Include="CargoTrackingServices\DBTablesCopy\Generated\CargoTrackingHeaderEntityTypeDxml.Generated.cs" />
+    <Compile Include="CargoTrackingServices\DBTablesCopy\Generated\CargoTrackingIncrementalStatDxml.Generated.cs" />
+    <Compile Include="CargoTrackingServices\DBTablesCopy\Generated\CargoTrackingMilestoneDxml.Generated.cs" />
+    <Compile Include="CargoTrackingServices\DBTablesCopy\Generated\CargoTrackingPortDxml.Generated.cs" />
+    <Compile Include="CargoTrackingServices\DBTablesCopy\Generated\CargoTrackingShipmentComputedDxml.Generated.cs" />
+    <Compile Include="CargoTrackingServices\DBTablesCopy\Generated\CargoTrackingShipmentDxml.Generated.cs" />
+    <Compile Include="CargoTrackingServices\DBTablesCopy\Generated\CargoTrackingShipmentMasterDxml.Generated.cs" />
+    <Compile Include="CargoTrackingServices\DBTablesCopy\Generated\CargoTrackingShipmentSearchDxml.Generated.cs" />
+    <Compile Include="CargoTrackingServices\DBTablesCopy\Generated\CargoTrackingTransportModeDxml.Generated.cs" />
+    <Compile Include="CargoTrackingServices\DBTablesCopy\Generated\CargoTrackingWatermarkDxml.Generated.cs" />
     <Compile Include="CargoTrackingServices\HelperClasses\BuildWhereConditionArgs.cs" />
     <Compile Include="CargoTrackingServices\HelperClasses\BulkDataPreperation.cs" />
     <Compile Include="CargoTrackingServices\HelperClasses\CargoTrackingArguments.cs" />
