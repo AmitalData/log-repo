@@ -232,13 +232,16 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                         remarksChas += " שורת שלדה: " + vehicle.LineNumber;
                         remarksChas += " מס' שלדה/ריכבית ישן: " + vehicle.VehicleChassisNumberSource + vehicle.RichbitFileNumberSource;
                         remarksChas += " מס' שלדה/ריכבית חדש: " + vehicle.VehicleChassisNumber + vehicle.RichbitFileNumber;
-
                     }
                 }
             }
             if (remarksClass != "")
             {
                 SendClass(entityPM.Tenant, _DeclarationPM.CustomFileNo, AuthenticationUtil.ResolveUserId(entityPM.Tenant), remarksClass);
+            }
+            if(remarksChas != "")
+            {
+                SendCHAS(entityPM.Tenant,_DeclarationPM.CustomFileNo, AuthenticationUtil.ResolveUserId(entityPM.Tenant), remarksChas);
             }
             base.OnUpdating(entityPM, entityPOCO);
         }
