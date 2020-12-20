@@ -105,7 +105,7 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
                             }
                         default:
                             {
-                                query2 = query2.OrderBy(d => d.Id);
+                                query2 = query2.OrderByDescending(d => d.Code);
                                 break;
                             }
                     }
@@ -114,7 +114,7 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
             }
 		    else
             {
-                query2 = query2.OrderBy(d => d.Id);
+                query2 = query2.OrderByDescending(d => d.Code);
             }
 			if(!queryOperations.GetAll)
 			{
