@@ -66,6 +66,20 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                  select a.Id);
             return q;
         }
+        internal IQueryable<string> GetQByChartOfAccountsTypeCode(int tenant, string chartOfAccountsTypeCode)
+        {
+            var q = (
+                  from a in this.repository.GetbychartOfAccountsTypeCode(tenant, chartOfAccountsTypeCode)
+                  select a.Id);
+            return q;
+        }
+        public IQueryable<string> GetQGLAccIdByChartOfAccountsId(int tenant, string ChartOfAccountsId)
+        {
+            var q = (
+                from a in this.repository.GetbyChartOfAccountsId(tenant, ChartOfAccountsId)
+                select a.Id);
+            return q;
+        }
         public IQueryable<string> GetQGLAccIdBySalesmanId(int tenant, string SalesmanId, string AccountTypeCode)
         {
             var q = (
@@ -1168,6 +1182,8 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             DateTime? interestCalculationStartDate = gLAccountRepository.GetInterestCalculationStartDate(glaccountId, tenant);
             return interestCalculationStartDate;
         }
+
+   
 
         public List<InterestReportCustomerPM> GetEligibleCustomersForInterestReports(int tenant)
         {
