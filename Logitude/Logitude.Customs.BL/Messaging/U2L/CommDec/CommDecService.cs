@@ -740,16 +740,14 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommDec
 
             if (currentDeclarationCourierStatusPM != null && currentDeclarationCourierStatusPM.TotalInvoiceAmountInUSD != null && currentDeclarationCourierStatusPM.TotalInvoiceAmountInUSD <= 150)
             {
-                if (!String.IsNullOrWhiteSpace(this._MyDeclarationPM.ImporterId))
-                {
-                    this._MyDeclarationPM.PalestinianCode = this._MyDeclarationPM.ImporterId;
-                    this._MyDeclarationPM.ImporterCode = null;
-                    this._MyDeclarationPM.ImporterId = null;
-                }
-                else if(!String.IsNullOrWhiteSpace(this._MyDeclarationPM.ImporterCode))
+                if(!String.IsNullOrWhiteSpace(this._MyDeclarationPM.ImporterCode))
                 {
                     this._MyDeclarationPM.PalestinianCode = this._MyDeclarationPM.ImporterCode;
                     this._MyDeclarationPM.ImporterCode = null;
+                }
+                if (!String.IsNullOrWhiteSpace(this._MyDeclarationPM.ImporterId))
+                {
+                    this._MyDeclarationPM.ImporterId = null;
                 }
             }
         }
