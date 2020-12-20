@@ -396,9 +396,9 @@
                                         <span>העברת חשבונות ספק ל-OCR</span>
                                     </li>
                                     <li>
-                                        <span *ngIf="Entity['CollectionOfMoneyStatus']== " (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose(); ShowCFIFILEMMoveToCollector();">העברה לגובה</span>
-                                        <span *ngIf="Entity['CollectionOfMoneyStatus']== P" class="DimLI">העברה לגובה</span>
-                                        <span *ngIf="Entity['CollectionOfMoneyStatus']== V" (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose(); ShowCFIFILEMMoveToCollector();">העברה חוזרת לגובה</span>
+                                        <span *ngIf="Entity['CollectionOfMoneyStatus']==''" (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose(); ShowCFIFILEMMoveToCollector();">העברה לגובה</span>
+                                        <span *ngIf="Entity['CollectionOfMoneyStatus']=='P'" class="DimLI">העברה לגובה</span>
+                                        <span *ngIf="Entity['CollectionOfMoneyStatus']=='V'" (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose(); ShowCFIFILEMMoveToCollector();">העברה חוזרת לגובה</span>
                                     </li>
                                     <li (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose(); ShowCFIFILEMEnterRemarks();">
                                         <span>הזנת הערות לתור</span>
