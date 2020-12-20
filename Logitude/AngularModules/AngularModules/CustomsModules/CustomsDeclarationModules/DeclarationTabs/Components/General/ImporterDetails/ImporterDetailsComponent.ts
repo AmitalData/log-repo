@@ -823,8 +823,10 @@ export class ImporterDetailsComponent extends BaseComponent {
       
     }
 
-    OnSaveHotKeyPressed(){
+    OnCTRL_S_HotKeyPressed(){
+        if(!this.IsDisplayOnly){
         this.OkButtonClicked();
+        }
     }
 
     OnEscHotKeyPressed(){

@@ -1056,7 +1056,7 @@ export class EditSupplierInvoiceItem extends BaseComponent{
         this.CancelButtonClicked();
     }
 
-    OnSaveHotKeyPressed(){
+    OnCTRL_S_HotKeyPressed(){
         this.OkButtonClicked();
     }
 }

@@ -1047,7 +1047,7 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
     }
 
     
-    OnSaveHotKeyPressed(){
+    OnCTRL_S_HotKeyPressed(){
         this.OkButtonClicked();
     }
 
@@ -1055,7 +1055,7 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
         this.CancelButtonClicked();
     }
 
-    OnSaveAndNewHotKeyPressed(){
+    OnCTRL_Shift_S_HotKeyPressed(){
         this.SaveAndNewButtonClicked();
     }
 

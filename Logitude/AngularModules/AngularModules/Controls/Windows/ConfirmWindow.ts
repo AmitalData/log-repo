@@ -276,7 +276,7 @@ export class ConfirmWindowTemplateComponent implements AfterViewInit {
         this.CancelButtonClicked();
     }
 
-    OnSaveHotKeyPressed(){
+    OnCTRL_S_HotKeyPressed(){
         this.YesButtonClicked();
     }
 }

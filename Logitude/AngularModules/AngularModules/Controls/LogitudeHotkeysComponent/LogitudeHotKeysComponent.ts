@@ -15,11 +15,11 @@ import { SessionLocator } from 'Infrastructure/Utilities/SessionLocator';
 
 export class LogitudeHotKeysComponent{
 
-    @Output() SaveHotKey: EventEmitter<boolean> = new EventEmitter<boolean>();
+    @Output() CTRL_S_HotKey: EventEmitter<boolean> = new EventEmitter<boolean>();
     @Output() LeftArrowHotKey: EventEmitter<boolean> = new EventEmitter<boolean>();
     @Output() RightArrowHotKey: EventEmitter<boolean> = new EventEmitter<boolean>();
     @Output() ESCHotKey: EventEmitter<boolean> = new EventEmitter<boolean>();
-    @Output() ShiftSHotKey: EventEmitter<boolean> = new EventEmitter<boolean>();
+    @Output() CTRL_Shift_S_HotKey: EventEmitter<boolean> = new EventEmitter<boolean>();
     ComponentId:string;
     CounterId:number;
     public ComponentIndex:number;
@@ -64,14 +64,14 @@ export class LogitudeHotKeysComponent{
     EmitCtrlShiftSHotkey(){
         if(this.ComponentId == SessionLocator.SelectedSession.CurrentLogitudeHotKeysComponent.ComponentId){
             console.log('shift + s  '+this.ComponentId);
-            this.ShiftSHotKey.emit();
+            this.CTRL_Shift_S_HotKey.emit();
         }
     }
 
     EmitCtrlSHotkey(){
         if(this.ComponentId == SessionLocator.SelectedSession.CurrentLogitudeHotKeysComponent.ComponentId){
             console.log('Saving......from '+this.ComponentId);
-            this.SaveHotKey.emit();
+            this.CTRL_S_HotKey.emit();
          }
     }
 
@@ -107,8 +107,8 @@ export class LogitudeHotKeysComponent{
     DestroyLogitudeHotKeysControl(){
         this.CurrentSession.RemoveLogitudeHotKeysComponent(this);
         this.CurrentSession=null;
-        this.SaveHotKey=null;
-        this.ShiftSHotKey=null;
+        this.CTRL_S_HotKey=null;
+        this.Shift_S_HotKey=null;
         this.LeftArrowHotKey=null;
         this.RightArrowHotKey=null;
         this.ESCHotKey=null;
