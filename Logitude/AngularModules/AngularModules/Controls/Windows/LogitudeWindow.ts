@@ -588,19 +588,19 @@ export class LogitudeWindowTemplateComponent implements AfterViewInit {
     }
 
     OnCTRL_Shift_S_HotKeyPressed(){
-        if (this.ComponentInstance) {
+        if (this.ComponentInstance && this.ComponentInstance.OnCTRL_Shift_S_HotKeyPressed) {
             this.ComponentInstance.OnCTRL_Shift_S_HotKeyPressed();
         }
     }
 
     OnEscHotKeyPressed(){
-        if (this.ComponentInstance) {
+        if (this.ComponentInstance && this.ComponentInstance.OnEscHotKeyPressed) {
             this.ComponentInstance.OnEscHotKeyPressed();
         }
     }
 
     OnCTRL_S_HotKeyPressed(){
-        if (this.ComponentInstance) {
+        if (this.ComponentInstance && this.ComponentInstance.OnCTRL_S_HotKeyPressed) {
             this.ComponentInstance.OnCTRL_S_HotKeyPressed();
         }
     }
