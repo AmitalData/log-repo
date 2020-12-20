@@ -667,7 +667,12 @@
                 if ($.DownloadAll) {
                     $.DownloadAll = false;
                     $.SendContactsActivity($.CurrentEmail, "Shipment", "Document Download", $.CurrentTenant, $.CurrentCardId);
-                    window.open("../WebPages/SharedDownloadPage.aspx?id=" + $.CurrentTenant + ":" + null + ":ship:" + $.CurrentEntityId + ":" + $.CurrentCardType);
+                    var sharedDownloadURL = "../WebPages/SharedDownloadPage.aspx?id=" + $.CurrentTenant + ":" + null + ":ship:" + $.CurrentEntityId + ":" + $.CurrentCardType;
+                    if ($.IsExternalURL) {
+                        sharedDownloadURL += ":securitykey:" + $.CurrentEntityKey;
+                    }
+
+                    window.open(sharedDownloadURL);
                 }
                 else {
                     $.SendContactActivity($.CurrentEmail, "Shipment", "Document Download", $.CurrentTenant, $.CurrentCardId);
@@ -683,7 +688,12 @@
             }
             else {
                 $.SendContactsActivity($.CurrentEmail, "Shipment", "Document Download", $.CurrentTenant, $.CurrentCardId);
-                window.open("../WebPages/SharedDownloadPage.aspx?id=" + $.CurrentTenant + ":" + null + ":ship:" + $.CurrentEntityId + ":" + $.CurrentCardType);
+                var sharedDownloadURL = "../WebPages/SharedDownloadPage.aspx?id=" + $.CurrentTenant + ":" + null + ":ship:" + $.CurrentEntityId + ":" + $.CurrentCardType;
+                if ($.IsExternalURL) {
+                    sharedDownloadURL += ":securitykey:" + $.CurrentEntityKey;
+                }
+
+                window.open(sharedDownloadURL);
             }
         }
 

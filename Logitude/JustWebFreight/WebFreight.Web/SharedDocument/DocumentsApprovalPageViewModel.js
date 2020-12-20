@@ -348,6 +348,7 @@
             $.CurrentEntityId = linkParameters[1];
             $.CurrentTenant = linkParameters[2];
             $.IsBrandingEnabled = linkParameters[3];
+            $.CurrentCardType = "CS";
 
             $.IsExternalURL = true;
             if ($.IsBrandingEnabled == "true" || $.IsBrandingEnabled == "True") {
