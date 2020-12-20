@@ -95,6 +95,25 @@ namespace Logitude.Accounting.Data.Repositories
                     where a.IsControlAccount == true
                     select a);
         }
+
+        public IQueryable<GLAccount> GetbychartOfAccountsTypeCode(int tenant, string chartOfAccountsTypeCode)
+        {
+            return (from a in context.GLAccounts
+                    where a.Tenant == tenant
+                    where a.ChartOfAccountsTypeCode == chartOfAccountsTypeCode
+                    select a);
+
+        }
+
+        public IQueryable<GLAccount> GetbyChartOfAccountsId(int tenant, string chartOfAccountsId)
+        {
+            return (from a in context.GLAccounts
+                    where a.Tenant == tenant
+                    where a.ChartOfAccountsId == chartOfAccountsId
+                    select a);
+
+        }
+
         public List<GLAccount> GetChildAccountsByChartOfAccountIdList(List<String> chartOfAccountIdList, int tenant)
         {
             return GetQChildAccountsByChartOfAccountIdList(chartOfAccountIdList, tenant).ToList();
