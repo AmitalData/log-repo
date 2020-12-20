@@ -455,15 +455,27 @@
 
         function OnDownloadAllDocument() {
             $.SendContactsActivity($.CurrentEmail, "Shipment", "Document Download", $.CurrentTenant, $.CurrentCardId);
-            window.open("WebPages/SharedDownloadPage.aspx?id=" + $.CurrentTenant + ":" + null + ":ship:" + $.CurrentEntityId + ":" + $.CurrentCardType);
+            var sharedDownloadURL = "WebPages/SharedDownloadPage.aspx?id=" + $.CurrentTenant + ":" + null + ":ship:" + $.CurrentEntityId + ":" + $.CurrentCardType;
+            if ($.IsExternalURL) {
+                sharedDownloadURL += ":securitykey:" + $.CurrentEntityKey;
+            }
+            window.open(sharedDownloadURL);
         }
 
         function OnDownloadAllConnectedDocuments() {
-            window.open("WebPages/SharedDownloadPage.aspx?id=" + $.CurrentTenant + ":" + null + ":master:" + $.CurrentEntityId + ":" + $.CurrentCardType);
+            var sharedDownloadURL = "WebPages/SharedDownloadPage.aspx?id=" + $.CurrentTenant + ":" + null + ":master:" + $.CurrentEntityId + ":" + $.CurrentCardType;
+            if ($.IsExternalURL) {
+                sharedDownloadURL += ":securitykey:" + $.CurrentEntityKey;
+            }
+            window.open(sharedDownloadURL);
         }
 
         function GetURL() {
-            return "WebPages/SharedDownloadPage.aspx?id=" + $.CurrentTenant + ":" + null + ":ship:" + $.CurrentEntityId + ":" + $.CurrentCardType;
+            var sharedDownloadURL = "WebPages/SharedDownloadPage.aspx?id=" + $.CurrentTenant + ":" + null + ":ship:" + $.CurrentEntityId + ":" + $.CurrentCardType;
+            if ($.IsExternalURL) {
+                sharedDownloadURL += ":securitykey:" + $.CurrentEntityKey;
+            }
+            return sharedDownloadURL;
         }
     </script>
 
