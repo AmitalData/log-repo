@@ -17,8 +17,7 @@
  */
 module.exports = (on, config) => {
 
-  require('cypress-log-to-output').install(on)
-
+ 
    on('before:browser:launch', (browser, launchOptions) => {
     if (browser.name === 'chrome' && browser.isHeadless) {
       launchOptions.args.push('--disable-gpu');
