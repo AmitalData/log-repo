@@ -478,7 +478,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
             if (this.entityPM.SetVoided)
             {
-                this.sATInterfaceHelper.SendSATCancellationRequest(entityPM, invoice);
+                this.sATInterfaceHelper.HandleInvoiceSATCancellation(entityPM, invoice);
             }
 
             this.ValidateHigherStatus();

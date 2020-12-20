@@ -59,10 +59,7 @@ export class ARInvoiceDetailsTabConsolidation extends BaseComponent implements O
         this.BuildScreenData();
         this.Listen()
 
-        if (!AppTool.IsNullOrEmpty(this.EntityPM.TransmissionError)) {
-            this.EntityWarningsList.push(this.EntityPM.TransmissionError);
-            this.EntityWarning = this.EntityPM.TransmissionError;
-        }
+        this.BuildEntityWarnings();
 
         if (FeatureLocator.HasFeaturePermession("General", "General.Features.SystemCurrencies")) {
             this.IsEditExchangeRateVisible = true;
@@ -79,6 +76,15 @@ export class ARInvoiceDetailsTabConsolidation extends BaseComponent implements O
         this.BuildInvoiceNumberFilters();
     }
 
+    private BuildEntityWarnings() {
+        this.EntityWarning = "";
+        this.EntityWarningsList = [];
+        if (!AppTool.IsNullOrEmpty(this.EntityPM.TransmissionError)) {
+            this.EntityWarningsList.push(this.EntityPM.TransmissionError);
+            this.EntityWarning = this.EntityPM.TransmissionError;
+        }
+    }
+
     private SaveCompletedEvent: any = null;
     private LoadCompletedEvent: any = null;  
     private Listen() {
@@ -89,6 +95,7 @@ export class ARInvoiceDetailsTabConsolidation extends BaseComponent implements O
                     this.EntityPM = this.entityArgs.EditComponent.EntityPM;
                     this.SetUIProperties();
                     this.LoadInvoices();
+                    this.BuildEntityWarnings();
                 }
 
                 else {
@@ -105,6 +112,7 @@ export class ARInvoiceDetailsTabConsolidation extends BaseComponent implements O
                     this.EntityPM = this.entityArgs.EditComponent.EntityPM;
                     this.SetUIProperties();
                     this.LoadInvoices();
+                    this.BuildEntityWarnings();
                 }
             });
         }

@@ -63,10 +63,7 @@ export class ARPaymentDetailsTabComponent extends BaseComponent implements OnIni
         }
 
         this.EntityPM = entityArgs.EntityPM;
-        if (this.EntityPM && !AppTool.IsNullOrEmpty(this.EntityPM.TransmissionError)) {
-            this.EntityWarningsList.push(this.EntityPM.TransmissionError);
-            
-        }
+        this.BuildEntityWarnings();
 
         this.FullAccounting = SessionLocator.TenantPM.AccountingActivated;
         this.ItemsSource = new ObservableCollection([]);
@@ -106,6 +103,14 @@ export class ARPaymentDetailsTabComponent extends BaseComponent implements OnIni
 
     }
 
+    private BuildEntityWarnings() {
+        this.EntityWarningsList = [];
+        if (this.EntityPM && !AppTool.IsNullOrEmpty(this.EntityPM.TransmissionError)) {
+            this.EntityWarningsList.push(this.EntityPM.TransmissionError);
+
+        }
+    }
+
     ngOnInit() {
         this.LoadPaymentMethods();
     }  
@@ -130,6 +135,7 @@ export class ARPaymentDetailsTabComponent extends BaseComponent implements OnIni
                     this.EntityPM = this.entityArgs.EditComponent.EntityPM;
                     this.SetUIProperties();
                     this.LoadData();
+                    this.BuildEntityWarnings();
                 }
 
                 if (this.RequestedCommandCode) {
@@ -142,6 +148,7 @@ export class ARPaymentDetailsTabComponent extends BaseComponent implements OnIni
                     this.EntityPM = this.entityArgs.EditComponent.EntityPM;
                     this.SetUIProperties();
                     this.LoadData();
+                    this.BuildEntityWarnings();
                 }
             });
         }
