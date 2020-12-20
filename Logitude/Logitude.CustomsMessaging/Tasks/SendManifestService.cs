@@ -45,6 +45,7 @@ namespace Logitude.Customs.CustomsMessaging.Tasks
 
                 foreach (var courierMaster in courierMasters)
                 {
+
                     var messagingService = new DCAInUCB1170_MsgMessagingService();
                     var sts = messagingService.CreateCRS(t.Tenant, null,
                         new SendALLCorrectRequestParams()
@@ -56,6 +57,9 @@ namespace Logitude.Customs.CustomsMessaging.Tasks
 
                         );
                 }
+            } else
+            {
+                LogMessagingUtil.Instance.AppendLine("אין הרשאות למתזמן");
             }
 
 
