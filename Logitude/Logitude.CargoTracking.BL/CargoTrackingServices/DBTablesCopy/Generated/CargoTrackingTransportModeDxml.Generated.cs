@@ -4,7 +4,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.DBTablesCopy.Generated
    public partial class CargoTrackingTransportModeDxml  
    {    
         public string  GetCargoTrackingTransportModeDxml (){
-		    string DxmlFile = "<Table Name='CargoTrackingTransportModes' Schema='dbo' DBType='CargoTracking' Module='CargoTracking'>"+
+		    string DxmlFile = "<Table Name='CargoTrackingTransportModes' Schema='dbo' DBType='CargoTracking'>"+
 "  <Column Name='Id' Type='char' Size='1'>"+
 "    <Constraints PrimaryKey='true' Nullable='false' />"+
 "  </Column>"+
