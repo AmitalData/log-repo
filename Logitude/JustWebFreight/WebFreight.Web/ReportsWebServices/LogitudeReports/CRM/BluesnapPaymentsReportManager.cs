@@ -123,7 +123,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Bluesnap
                                                                          select a);
             //IQueryable<TenantManagement> iQueryable_Tenantmanagements = globalObjectContext.TenantManagements.Where(a => a.IsRecurring == true && a.RecurringPeriodCode == "MO" && a.PaymentChannelCode == "PL");
             iQueryable_BluesnapTransactions = globalObjectContext.BluesnapTransactions;
-            iQueryable_BluesnapTransactions = iQueryable_BluesnapTransactions.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.TransactionDate) >= System.Data.Entity.DbFunctions.TruncateTime(fromDate) && System.Data.Entity.DbFunctions.TruncateTime(d.TransactionDate) <= System.Data.Entity.DbFunctions.TruncateTime(toDate));
+            iQueryable_BluesnapTransactions = iQueryable_BluesnapTransactions.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.TransactionDate) >= System.Data.Entity.DbFunctions.TruncateTime(fromDate) && System.Data.Entity.DbFunctions.TruncateTime(d.TransactionDate) <= System.Data.Entity.DbFunctions.TruncateTime(toDate));            
             List<int> tenantsIds = iQueryable_Tenantmanagements.ToList().Select(e => e.Id).ToList();
             var customers = (from a in commonDataContext.Cards.Include("Customer")
                              where tenantsIds.Contains(a.Tenant) && !string.IsNullOrEmpty(a.ReceivablesAccountingCard)
@@ -143,7 +143,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Bluesnap
                                                                  IsParentTenant = tenantmanagements.IsParentTenant,
                                                                  ParentTenantId = tenantmanagements.ParentTenantId,
                                                                  NoPaymentForChildTenants = tenantmanagements.NoPaymentForChildTenants,
-                                                                 CRMcustomer = customers.Where(e => e.Tenant == tenantmanagements.Id).FirstOrDefault().ReceivablesAccountingCard,
+                                                                 CRMcustomer = (customers.Count==0)? null : customers.Where(e => e.Tenant == tenantmanagements.Id).FirstOrDefault().ReceivablesAccountingCard,
                                                                  Transactions = (from a in iQueryable_BluesnapTransactions
                                                                                  where a.Tenant == tenantmanagements.Id
                                                                                  select new BluesnapTransactionItem()
