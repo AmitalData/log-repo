@@ -71,7 +71,7 @@
 </style>
 
 <div class="MessageWindowLayout" tabindex="-1" contenteditable="false" *ngIf="ShowModal"></div>
-<LogitudeHotKeysComponent  (CTRL_S_HotKey)="OnSaveHotKeyPressed()" ></LogitudeHotKeysComponent>
+<LogitudeHotKeysComponent  (CTRL_S_HotKey)="OnCTRL_S_HotKeyPressed()" ></LogitudeHotKeysComponent>
 <div class="MediaFillAbsolute">
     <div class="MediaFillRelative">
         <div [attr.id]="WindowId" class="MessageWindow" [ngStyle]="{left: Left, top: Top, width: Width, height: Height}" [style.zIndex]="ZIndex">
