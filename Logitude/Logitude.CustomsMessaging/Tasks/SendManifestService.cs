@@ -1,4 +1,5 @@
-﻿using Logitude.Customs.BL.EntityQueryServices;
+﻿using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.Customs.BL.EntityQueryServices;
 using Logitude.Customs.BL.EntityUpdateServices;
 using Logitude.Customs.Data;
 using Logitude.Customs.Data.EntityPOCOs;
@@ -22,34 +23,42 @@ namespace Logitude.Customs.CustomsMessaging.Tasks
         public void StartRun(string taskId, int seedDefaultTenant)
         {
 
-             var customsSettingQueryService = new CustomsSettingQueryService(seedDefaultTenant);
+            var customsSettingQueryService = new CustomsSettingQueryService(seedDefaultTenant);
             var allCustomsSetting = customsSettingQueryService.GetAll();
             allCustomsSetting.ForEach(t => RunPerTenant(t));
-  
+
 
         }
 
         private void RunPerTenant(CustomsSettingPM t)
         {
-            LogMessagingUtil.Instance.AppendLine($"RunPerTenant({t.Tenant})");
-
-            CourierMasterQueryService courierMasterQueryService = new CourierMasterQueryService(t.Tenant);
-            List<CourierMaster> courierMasters = courierMasterQueryService.GetAllCourierMastersToSendAutoManifest(t.Tenant);
-
-            foreach (var courierMaster in courierMasters)
+            FeatureQuery featureQuery = new FeatureQuery();
+            var usrid = AuthenticationUtil.ResolveUserId(t.Tenant);
+            var features = featureQuery.GetAllowedFeaturesForLoggedUser(usrid, t.Tenant);
+            var feature = features.Features.FirstOrDefault(x => x.Code == "SendManifest");
+            if (feature != null)
             {
-             var messagingService = new DCAInUCB1170_MsgMessagingService();
-            var sts = messagingService.CreateCRS(t.Tenant, null,
-                new SendALLCorrectRequestParams()
+                LogMessagingUtil.Instance.AppendLine($"RunPerTenant({t.Tenant})");
+
+                CourierMasterQueryService courierMasterQueryService = new CourierMasterQueryService(t.Tenant);
+                List<CourierMaster> courierMasters = courierMasterQueryService.GetAllCourierMastersToSendAutoManifest(t.Tenant);
+
+                foreach (var courierMaster in courierMasters)
                 {
-                    CourierMasterId = courierMaster.Id,
-                    HAWB = courierMaster.HAWB,
-                   // CourierDeclarationStatusCode = courierMaster.
+                    var messagingService = new DCAInUCB1170_MsgMessagingService();
+                    var sts = messagingService.CreateCRS(t.Tenant, null,
+                        new SendALLCorrectRequestParams()
+                        {
+                            CourierMasterId = courierMaster.Id,
+                            HAWB = courierMaster.HAWB,
+                            // CourierDeclarationStatusCode = courierMaster.
+                        }
+
+                        );
                 }
- 
-                );
             }
-     
+
+
             //CourierMasterQueryService courierMasterQueryService = new CourierMasterQueryService(t.Tenant);
             //List<CourierMasterPM> courierMasterPMList = courierMasterQueryService.GetAllCourierMastersForClosing(t.Tenant);
             //if(courierMasterPMList != null)
@@ -78,5 +87,5 @@ namespace Logitude.Customs.CustomsMessaging.Tasks
             //}
         }
     }
-    
+
 }
