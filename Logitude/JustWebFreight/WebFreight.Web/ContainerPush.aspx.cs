@@ -341,7 +341,7 @@ namespace WebFreight.Web
                     Subject = "Ocean Insights Status",
                     Tenant = tenant,
                     CommunicationLogTypeCode = "Q",
-                    CommunicationStatusTypeCode = "W",
+                    CommunicationStatusTypeCode = (tenant == 0 ? "F":"W"),
                     CreateDate = TenantServerConfigration.GetCurrentDateTime(tenant),
                     DocumentId = document.Id,
                     CreateDateUTC = DateTime.UtcNow,
