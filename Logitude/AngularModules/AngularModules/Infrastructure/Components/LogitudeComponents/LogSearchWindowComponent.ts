@@ -357,9 +357,9 @@ export class LogSearchWindowComponent extends BaseComponent implements OnInit, O
         filters.Tenant = this.TenantPM.Id;
 
    
-        if (filters.AdditionalFilters.filter(a => a.FieldName == "SearchFields").length > 0 || filters.AdditionalFilters.filter(a => a.FieldName == "CompactSearchField").length > 0) {
+        if (filters.AdditionalFilters.filter(a => a.FieldName == "SearchFields").length > 0 || filters.AdditionalFilters.filter(a => a.FieldName == "CardSearchField").length > 0) {
             filters.AdditionalFilters = filters.AdditionalFilters.filter(a => a.FieldName != "SearchFields");
-            filters.AdditionalFilters = filters.AdditionalFilters.filter(a => a.FieldName != "CompactSearchField");
+            filters.AdditionalFilters = filters.AdditionalFilters.filter(a => a.FieldName != "CardSearchField");
 
         }
 
@@ -373,7 +373,7 @@ export class LogSearchWindowComponent extends BaseComponent implements OnInit, O
 
         if (searchfields) {//&& !this.UseCompactSearch
             if (this.IsUseCardSearchMechanism()) {
-              filters.addAdditionalFilter("CompactSearchField", searchfields, null, null, "Contains", false, false, false, null);
+              filters.addAdditionalFilter("CardSearchField", searchfields, null, null, "Contains", false, false, false, null);
             } else filters.addAdditionalFilter("SearchFields", searchfields, null, null, "Contains", false, true, false, "String");
 
         }
