@@ -116,14 +116,33 @@ namespace WebFreight.Web.WebPages
         {
             try
             {
+                Shipment shipment = null;
+                ShipmentRepository rep = new ShipmentRepository(downloadAllDocumentsArgs.Tenant);
 
+                if (downloadAllDocumentsArgs.Securitykey != null)
+                {
+                    shipment = rep.getSingleShipmentBySecurityIdAndId(downloadAllDocumentsArgs.EntityId, downloadAllDocumentsArgs.Securitykey, downloadAllDocumentsArgs.Tenant);
+                }
+
+                else
+                {
+                    shipment = rep.GetSingleShipment(downloadAllDocumentsArgs.EntityId, downloadAllDocumentsArgs.Tenant);
+                }
+
+                if (shipment == null)
+                {
+                    throw new ApplicationException("Sorry! you are not authorized to read shipment data");
+                }
+
+                bool isAuothenticatedRequest = true;
+                bool CheckForTenantAvailability = true;
 
                 string email = this.Context.User.Identity.Name;
 
-                ShipmentRepository rep = new ShipmentRepository(downloadAllDocumentsArgs.Tenant);
-                Shipment shipment = rep.GetSingleShipment(downloadAllDocumentsArgs.EntityId, downloadAllDocumentsArgs.Tenant);
-                bool isAuothenticatedRequest=true;
-                bool CheckForTenantAvailability = true;
+                if (string.IsNullOrEmpty(downloadAllDocumentsArgs.PartnerType))
+                {
+                    downloadAllDocumentsArgs.PartnerType = "CS";
+                }
 
                 if (!string.IsNullOrEmpty(downloadAllDocumentsArgs.Token))
                 {
@@ -135,8 +154,13 @@ namespace WebFreight.Web.WebPages
                         SecurityUtility.AuthenticationOnTenant((int)downloadAllDocumentsArgs.Tenant);
                         SecurityUtility.CheckContactFeature("Shipment", "READ", (int)downloadAllDocumentsArgs.Tenant);
                     }
-
                 }
+
+                else if (downloadAllDocumentsArgs.Securitykey != null)
+                {
+                    // security maybe needed
+                }
+
                 else
                 {
 
@@ -237,17 +261,14 @@ namespace WebFreight.Web.WebPages
 
                         }
                     }
-                }
-                
-
+                }               
             }
+
             catch(Exception e)
             {
-
+                throw e;
             }
         }
-
-
 
         public static byte[] CompressionData(string listKey, Dictionary<string, byte[]> dataBackList, bool saveetodisk = false)
         {
@@ -300,9 +321,6 @@ namespace WebFreight.Web.WebPages
 
         }
 
-
-
-
         protected void Page_Load(object sender, EventArgs e)
         {
             try
@@ -336,10 +354,15 @@ namespace WebFreight.Web.WebPages
                         PartnerType = filestrings[4],
                         Token = filestrings.Length == 6 ? filestrings[5] : null,
                     };
-                    
-                    DownloadAllDocuments(downloadAllDocumentsArgs);
-                    
+
+                    if (headerRequest.Contains("securitykey"))
+                    {
+                        downloadAllDocumentsArgs.Securitykey = filestrings[6];
+                    }
+
+                    DownloadAllDocuments(downloadAllDocumentsArgs);                    
                 }
+
                 else
                 {
                     filename = filestrings[1].ToString();
@@ -521,5 +544,6 @@ namespace WebFreight.Web.WebPages
         public int Tenant { get; set; }
         public string PartnerType { get; set; }
         public string Token { get; set; }
+        public string Securitykey { get; set; }
     }
 }
