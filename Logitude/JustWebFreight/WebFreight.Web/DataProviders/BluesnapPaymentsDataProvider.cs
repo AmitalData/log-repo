@@ -18,6 +18,7 @@ namespace WebFreight.Web.DataProviders
     {
         public int? Tenant { get; set; }
         public string TenantName { get; set; }
+        public string CRMcustomer { get; set; }
         public string ShopperId { get; set; }
         public double? AmountToPay { get; set; }
         public int TransactionCount { get; set; }

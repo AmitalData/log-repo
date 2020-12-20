@@ -264,6 +264,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Bluesnap
             var itemRecord = new BlusnapTransactionsList();
             itemRecord.Tenant = item.Tenant;
             itemRecord.TenantName = item.TenantName;
+            itemRecord.CRMcustomer = item.CRMcustomer;
             itemRecord.ShopperId = item.ShopperId;
             itemRecord.AmountToPay = item.AmountToPay;
             itemRecord.TransactionCount = item.Transactions != null ? item.Transactions.Count() : 0;
