@@ -138,7 +138,7 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
                 {
                     if(latestInterestReport.InterestReportStatusCode == InterestReportStatusCodes.ClosedWithoutInvoice)
                     {
-                        CreateNewInterestTransactionPM(openBalanceInterestValueDate);
+                        CreateNewInterestTransactionPM(openBalanceInterestValueDate, latestInterestReport.Id);
                     }
                 }
                 else
@@ -163,14 +163,14 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
             return openBalanceInterestValueDate;
         }
 
-        private void CreateNewInterestTransactionPM(DateTime openBalanceInterestValueDate)
+        private void CreateNewInterestTransactionPM(DateTime openBalanceInterestValueDate , string latestInterestReportId=null)
         {
             TenantQuery tenantQuery = new TenantQuery(tenant);
             string localCurrencyId = tenantQuery.GetLocalCurrencyFromTenant(tenant);
 
             InterestTransactionPM openBalanceInterestTransaction = new InterestTransactionPM()
             {
-                EntityId = interestReportId,
+                EntityId = latestInterestReportId!=null?latestInterestReportId:interestReportId,
                 InterestEntityTypeCode = InterestEntities.OpenBalance,
                 InterestValueDate = openBalanceInterestValueDate,
                 GLAccountId = interestReportPM.GLAccountId,
