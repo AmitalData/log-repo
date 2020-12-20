@@ -35,7 +35,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Bluesnap
         IBlobService storageservice;
         DocumentRepository documentRepository;
         private List<BlusnapTransactionsList> otherTenantsTransactions;
-
+        private List<CustomerCRMData> customers_CRM;
         public BluesnapPaymentsReportManager(byte[] xmlFilters, int tenant)
         {
             this.tenant = tenant;
@@ -117,17 +117,15 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Bluesnap
         private void BuildSourceData()
         {
             IGlobalContext globalObjectContext = GlobalContext.GetContext();
-            ICommonDataContext iContext = CommonDataContext.GetContext(tenant);
             IQueryable<TenantManagement> iQueryable_Tenantmanagements = (from a in globalObjectContext.TenantManagements.Include("GlobalTenant")
                                                                          where a.GlobalTenant.IsActive && a.IsRecurring == true && a.RecurringPeriodCode == "MO" && a.PaymentChannelCode == "PL"
                                                                          select a);
-            //IQueryable<TenantManagement> iQueryable_Tenantmanagements = globalObjectContext.TenantManagements.Where(a => a.IsRecurring == true && a.RecurringPeriodCode == "MO" && a.PaymentChannelCode == "PL");
             iQueryable_BluesnapTransactions = globalObjectContext.BluesnapTransactions;
             iQueryable_BluesnapTransactions = iQueryable_BluesnapTransactions.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.TransactionDate) >= System.Data.Entity.DbFunctions.TruncateTime(fromDate) && System.Data.Entity.DbFunctions.TruncateTime(d.TransactionDate) <= System.Data.Entity.DbFunctions.TruncateTime(toDate));            
             List<int> tenantsIds = iQueryable_Tenantmanagements.ToList().Select(e => e.Id).ToList();
-            var customers = (from a in commonDataContext.Cards.Include("Customer")
+            this.customers_CRM = (from a in commonDataContext.Cards.Include("Customer")
                              where tenantsIds.Contains(a.Tenant) && !string.IsNullOrEmpty(a.ReceivablesAccountingCard)
-                             select new CardPM()
+                             select new CustomerCRMData
                              {
                                  Tenant = a.Tenant,
                                  ReceivablesAccountingCard = a.ReceivablesAccountingCard
@@ -143,7 +141,6 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Bluesnap
                                                                  IsParentTenant = tenantmanagements.IsParentTenant,
                                                                  ParentTenantId = tenantmanagements.ParentTenantId,
                                                                  NoPaymentForChildTenants = tenantmanagements.NoPaymentForChildTenants,
-                                                                 CRMcustomer = (customers.Count==0)? null : customers.Where(e => e.Tenant == tenantmanagements.Id).FirstOrDefault().ReceivablesAccountingCard,
                                                                  Transactions = (from a in iQueryable_BluesnapTransactions
                                                                                  where a.Tenant == tenantmanagements.Id
                                                                                  select new BluesnapTransactionItem()
@@ -219,7 +216,6 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Bluesnap
                 itemRecord.Notes = "unmatched transaction";
                 tenantZeroTransactions.Add(itemRecord);
             }
-
             this.iDataProvider.BlusnapTransactionsList.AddRange(tenantZeroTransactions);
         }
 
@@ -264,7 +260,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Bluesnap
             var itemRecord = new BlusnapTransactionsList();
             itemRecord.Tenant = item.Tenant;
             itemRecord.TenantName = item.TenantName;
-            itemRecord.CRMcustomer = item.CRMcustomer;
+
             itemRecord.ShopperId = item.ShopperId;
             itemRecord.AmountToPay = item.AmountToPay;
             itemRecord.TransactionCount = item.Transactions != null ? item.Transactions.Count() : 0;
@@ -279,6 +275,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Bluesnap
             {
                 otherTenantsTransactions.Add(itemRecord);
             }
+            itemRecord.CRMCustomer = this.customers_CRM.Where(e => e.Tenant == item.Tenant).Select(a=>a.ReceivablesAccountingCard).FirstOrDefault();
         }
 
         private void CalculateContractCountAndTotalPayments(BlusnapTransactionsList itemRecord, List<BluesnapTransactionItem> transactions)
@@ -370,7 +367,6 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Bluesnap
 
         public int Tenant { get; set; }
         public string TenantName { get; set; }
-        public string CRMcustomer { get; set; }
         public string ShopperId { get; set; }
         public double? AmountToPay { get; set; }
         public bool IsParentTenant { get; set; }
@@ -385,5 +381,11 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Bluesnap
         public string DocumentId { get; set; }
         public DateTime? TransactionDate { get; set; }
         public string ShopperId { get; set; }
+    }
+
+    public class CustomerCRMData
+    {
+        public int Tenant { get; set; }
+        public string ReceivablesAccountingCard { get; set; }
     }
 }
