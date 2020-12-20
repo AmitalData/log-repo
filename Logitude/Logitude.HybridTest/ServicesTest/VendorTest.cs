@@ -8,6 +8,7 @@ namespace Logitude.HybridTest.ServicesTest
     [TestClass]
     public class VendorTest
     {
+        private static EntityWcfCaller entityWcfCaller = new EntityWcfCaller();
         [TestMethod]
         public void Test_Vendor_UPSERT()
         {
@@ -30,7 +31,7 @@ namespace Logitude.HybridTest.ServicesTest
                 CountryCode = HybridData.CountryCodeUS,
                 CardCode = "new",
             });
-            ServiceOutcome serviceOutcome = EntityWcfCaller.CallEntityUpsert(vendorPM);
+            ServiceOutcome serviceOutcome = entityWcfCaller.CallEntityUpsert(vendorPM);
             Assert.IsFalse(serviceOutcome.Response.HasError, "Upsert Failed! " + serviceOutcome.Response.ErrorMessage);
             Assert.IsNotNull(serviceOutcome.Response.Result, "Upsert Failed! " + serviceOutcome.Response.ErrorMessage);
         }

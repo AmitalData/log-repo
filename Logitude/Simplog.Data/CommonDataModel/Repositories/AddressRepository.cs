@@ -121,5 +121,14 @@ namespace Simplog.Data.CommonDataModel.Repositories
         {
             throw new System.NotImplementedException();
         }
+
+        public string GetMainAddressId(string cardId, int tenent)
+        {
+            return (from a in context.Addresses
+                    where a.Tenant == tenent && a.CardId == cardId
+                    && a.AddressTypeId.ToUpper() == "M"
+                    select a.Id).FirstOrDefault();
+        }
+
     }
 }

@@ -9,6 +9,7 @@ namespace Logitude.HybridTest.ServicesTest
     [TestClass]
     public class EventTypeTest
     {
+        private static EntityWcfCaller entityWcfCaller = new EntityWcfCaller();
         [TestMethod]
         public void Test_EventType_UPSERT()
         {
@@ -20,7 +21,7 @@ namespace Logitude.HybridTest.ServicesTest
                 ObjectTableName = "Shipment",
                 Tenant = EnvironmentGlobalParams.MainTenant,
             };
-            ServiceOutcome serviceOutcome = EntityWcfCaller.CallEntityUpsert(eventTypePM);
+            ServiceOutcome serviceOutcome = entityWcfCaller.CallEntityUpsert(eventTypePM);
             Assert.IsFalse(serviceOutcome.Response.HasError, "Upsert Failed! " + serviceOutcome.Response.ErrorMessage);
             Assert.IsNotNull(serviceOutcome.Response.Result, "Upsert Failed! " + serviceOutcome.Response.ErrorMessage);
         }

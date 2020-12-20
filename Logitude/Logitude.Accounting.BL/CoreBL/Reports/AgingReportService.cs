@@ -321,6 +321,8 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                      
                      CurrencyId = left_TotDB.CurrencyId,
                      Total = left_TotDB.Total,
+                     OpenCredit = left_TotDB.OpenCredit,
+                     OpenDebit = left_TotDB.OpenDebit,
 
                  }).ToList();
 

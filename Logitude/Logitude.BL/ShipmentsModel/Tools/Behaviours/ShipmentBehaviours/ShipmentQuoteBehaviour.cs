@@ -1,5 +1,5 @@
-﻿using Logitude.BL.ShipmentsModel.Tools.Initializers;
-using Simplog.Data.Helpers;
+﻿using Logitude.BL.ShipmentsModel.EntityPMs;
+using Logitude.BL.ShipmentsModel.Tools.Initializers;
 using Simplog.Data.QuoteModel.EntityPOCOs;
 using Simplog.Data.QuoteModel.Repositories;
 using Simplog.Server.Infrastructure.Interfaces;
@@ -9,15 +9,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Logitude.BL.ShipmentsModel.Tools.Behaviours
+namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
 {
-    public class ShipmentQuoteUsageBehaviour : IServiceBehaviour
+    public class ShipmentQuoteBehaviour : IServiceBehaviour
     {
+        private ShipmentPM entityPM;
         private ShipmentServiceInitializer initializer;
 
         public void Handle(IServiceInitializer initializer)
         {
             this.initializer = (ShipmentServiceInitializer)initializer;
+            this.entityPM = this.initializer.EntityPM;
 
             this.HandleBehaviour();
         }
@@ -73,7 +75,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours
                             quote.UsageCount += 1;
                         }
 
-                        quote.LastUsageDate = TenantServerConfigration.GetCurrentDateTime(initializer.Tenant);
+                        quote.LastUsageDate = initializer.TodayDateTime;
                     }
 
                     if (isDisconnectingQoute)
@@ -94,6 +96,5 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours
                 }
             }
         }
-
     }
 }

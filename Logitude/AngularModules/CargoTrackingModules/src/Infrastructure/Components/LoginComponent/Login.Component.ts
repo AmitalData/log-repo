@@ -47,7 +47,7 @@ export class LoginComponent implements OnInit {
  
     private GetcargoTrackingData(baseUrl:string) {
         this.LogoImgSrc = "./assets/images/logo/White.jpg";
-        this.cargoTrackingBrandingDataExtendedService.GetCargoTrackingBrandingDataForPrivateSite(ServiceHelper.GetCurrentDomain(baseUrl)).subscribe((response: ServiceResponse) => { 
+        this.cargoTrackingBrandingDataExtendedService.GetCargoTrackingBrandingDataForPrivateSite(ServiceHelper.GetcargoTrackingDataRequest(baseUrl)).subscribe((response: ServiceResponse) => { 
             if(response.Result){
                 this.Tenant = response.Result.Tenant;
                 ServiceHelper.SetCargoTrackingDate(response.Result,baseUrl);
@@ -56,7 +56,7 @@ export class LoginComponent implements OnInit {
                 this.SecondaryColor = response.Result.SecondaryColor != null ? ServiceHelper.ConvertHexaToRGBA(response.Result.SecondaryColor) : null;
             }
             else{
-                this.loginServiceHelper.GoToError401();
+                this.GoToError401();
             }
         });
     }
@@ -144,21 +144,30 @@ export class LoginComponent implements OnInit {
         else this.errorMessage = "Login failed! invalid user name or password.";
     }
 
+     private GoToError401(){
+        this.router.navigate(['Error401']);
+    }
+
     private LoginSucceeded(LoginParams: any, userData: any) {
+        this.errorMessage = "";
         let tenantList = userData.CompanyLogins;
         let LogInToTenant  = tenantList.filter(tenan => tenan.Tenant == this.Tenant)[0];
-        if(!LogInToTenant) this.loginServiceHelper.GoToError401();
-
-        SessionInfo.LoggedUserCompanyLogins = userData.CompanyLogins;
-        sessionStorage.setItem("LoggedUserCompanyLogins", JSON.stringify(userData.CompanyLogins));
-
-        this.loginExtendedService.PostLoginData(LoginParams, LogInToTenant.Tenant).subscribe((userData: any) => {
+        if(!LogInToTenant) {
+            this.errorMessage = "Login failed! unauthorized user.";
             this.ShowbusyIndicator = false;
-            if (userData) {
-                this.FillSessionInfoData(userData);
-                this.RouteToMainPage();
-            }
-        });
+        }
+        else {
+            SessionInfo.LoggedUserCompanyLogins = userData.CompanyLogins;
+            sessionStorage.setItem("LoggedUserCompanyLogins", JSON.stringify(userData.CompanyLogins));
+
+            this.loginExtendedService.PostLoginData(LoginParams, LogInToTenant.Tenant).subscribe((userData: any) => {
+                this.ShowbusyIndicator = false;
+                if (userData) {
+                    this.FillSessionInfoData(userData);
+                    this.RouteToMainPage();
+                }
+            });
+        }
     }
 
     private FillSessionInfoData(userData: any) {

@@ -482,6 +482,7 @@
     <Compile Include="InvoiceModel\Tools\Behaviours\APInvoiceLinesBehavior.cs" />
     <Compile Include="InvoiceModel\Tools\Behaviours\APInvoiceTotalVatsBehavior.cs" />
     <Compile Include="ExternalService\EntityAutomationService.cs" />
+    <Compile Include="InvoiceModel\Tools\Behaviours\ARInvoiceBehaviours\ARInvoiceApproveBehaviour.cs" />
     <Compile Include="InvoiceModel\Tools\Behaviours\ARInvoiceBehaviours\ARInvoiceFieldsBehaviour.cs" />
     <Compile Include="InvoiceModel\Tools\Initializers\APInvoiceServiceInitializer.cs" />
     <Compile Include="InvoiceModel\Tools\Initializers\ARInvoiceServiceInitializer.cs" />
@@ -2685,9 +2686,16 @@
     <Compile Include="ShipmentsModel\Testing\General.cs" />
     <Compile Include="ShipmentsModel\Tools\Behaviours\IShipmentBehaviour.cs" />
     <Compile Include="ShipmentsModel\Tools\Behaviours\ShipmentBehaviourFacade.cs" />
+    <Compile Include="ShipmentsModel\Tools\Behaviours\ShipmentBehaviours\CompositionBehaviours\OrderPackagesBehaviour.cs" />
+    <Compile Include="ShipmentsModel\Tools\Behaviours\ShipmentBehaviours\MapCompositionBehaviour.cs" />
+    <Compile Include="ShipmentsModel\Tools\Behaviours\ShipmentBehaviours\ShipmentCustomerBehaviour.cs" />
+    <Compile Include="ShipmentsModel\Tools\Behaviours\ShipmentBehaviours\ShipmentCustomerUsersBehaviour.cs" />
+    <Compile Include="ShipmentsModel\Tools\Behaviours\ShipmentBehaviours\ShipmentCustomerWorkingDaysBehaviour.cs" />
+    <Compile Include="ShipmentsModel\Tools\Behaviours\ShipmentBehaviours\ShipmentFieldsBehaviour.cs" />
+    <Compile Include="ShipmentsModel\Tools\Behaviours\ShipmentBehaviours\ShipmentPartnersBehaviour.cs" />
+    <Compile Include="ShipmentsModel\Tools\Behaviours\ShipmentBehaviours\ShipmentQuoteBehaviour.cs" />
     <Compile Include="ShipmentsModel\Tools\Behaviours\ShipmentFinalArrivalDateBehaviour.cs" />
     <Compile Include="ShipmentsModel\Tools\Behaviours\UpdateCrossDockBehaviour.cs" />
-    <Compile Include="ShipmentsModel\Tools\Behaviours\UpdateMasterHousesBehaviour.cs" />
     <Compile Include="ShipmentsModel\Tools\Behaviours\UpdateShipmentComputedFieldsBehaviour.cs" />
     <Compile Include="ShipmentsModel\Tools\DataMapping\AWBSpecialHandlingCodeMapping.cs" />
     <Compile Include="ShipmentsModel\Tools\DataMapping\CustomsTransferHeaderMapping.cs" />
@@ -2729,9 +2737,6 @@
     <Compile Include="ShipmentsModel\Tools\EntityService\OceanInsightsRequestService.cs" />
     <Compile Include="ShipmentsModel\Tools\EntityService\ShipmentCarrierStatusService.cs" />
     <Compile Include="ShipmentsModel\Tools\EntityService\ShipmentService.cs" />
-    <Compile Include="ShipmentsModel\Tools\Behaviours\ShipmentFieldsBehaviour.cs" />
-    <Compile Include="ShipmentsModel\Tools\Behaviours\ShipmentNumberCounterBehaviour.cs" />
-    <Compile Include="ShipmentsModel\Tools\Behaviours\ShipmentQuoteUsageBehaviour.cs" />
     <Compile Include="ShipmentsModel\Tools\Initializers\ShipmentServiceInitializer.cs" />
     <Compile Include="ShipmentsModel\Tools\TraceEvents\CustomsTransferHeaderTracing.cs" />
     <Compile Include="ShipmentsModel\Tools\TraceEvents\MessagingStockTracing.cs" />

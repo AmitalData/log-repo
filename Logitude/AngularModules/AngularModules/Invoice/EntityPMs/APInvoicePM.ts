@@ -789,6 +789,11 @@ export class APInvoicePM {
     public set VendorVatNumber(newValue: string) { if (this.vendorVatNumber != newValue) { this.vendorVatNumber = newValue; this.MarkAsDirty("VendorVatNumber"); } }
        
 	 
+    private paidDate: Date;
+    public get PaidDate() { return this.paidDate; }
+    public set PaidDate(newValue: Date) { if (this.paidDate != newValue) { this.paidDate = newValue; this.MarkAsDirty("PaidDate"); } }
+       
+	 
 
     public OldEntityPM: APInvoicePM;
 		

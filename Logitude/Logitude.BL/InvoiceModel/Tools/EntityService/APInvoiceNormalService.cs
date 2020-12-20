@@ -263,7 +263,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                     }
                     else
                     {
-                        lines = invoiceLinesChangeSet.Where(d => d.ChangeSetOp != ChangeSetOperation.Delete).ToList();
+                        lines = invoiceLinesChangeSet?.Where(d => d.ChangeSetOp != ChangeSetOperation.Delete).ToList();
                     }
                     this.BuildUnexpectedPayables(lines);
                     this.GetShipmentsData(entityPM.InvoiceLines);
@@ -538,7 +538,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
             if (!entityPM.IsGeneralInvoice)
             {
-                List<APInvoiceLinePM> lines = invoiceLinesChangeSet.Where(d => d.ChangeSetOp != ChangeSetOperation.Delete).ToList();
+                List<APInvoiceLinePM> lines = invoiceLinesChangeSet?.Where(d => d.ChangeSetOp != ChangeSetOperation.Delete).ToList();
                 this.BuildUnexpectedPayables(lines);
                 this.GetShipmentsData(invoiceLinesChangeSet);
                 this.UpdateInvoiceEntities();
@@ -580,10 +580,27 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 this.UpdateAllPayablesAccountedAmountAndStatus();
             }
 
-            this.UpdateInvoicePayments(invoicePaymentsChangeSet);
-            this.UpdateInvoiceAmountDue();
-            this.BuildSearchFields();
+            if (invoicePaymentsChangeSet != null)
+            {
+                if (invoicePaymentsChangeSet.Count > 0)
+                {
+                    bool isUpdatingPayments = true;
 
+                    if (invoicePaymentsChangeSet.Where(d => d.ChangeSetOp == ChangeSetOperation.Insert || d.ChangeSetOp == ChangeSetOperation.Delete).Count() == 0)
+                    {
+                        isUpdatingPayments = false;
+                    }
+
+                    if (isUpdatingPayments)
+                    {
+                        this.UpdateInvoicePayments(invoicePaymentsChangeSet);
+                        this.UpdateInvoiceAmountDue();
+                        this.UpdatePaidDate();
+                    }
+                }
+            }
+
+            this.BuildSearchFields();
             initializer.Repository.Update(invoice);
             initializer.Repository.SubmitChanges();
 
@@ -608,6 +625,24 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             {
                 this.RunStoredProcedures();
             }
+        }
+
+        private void UpdatePaidDate()
+        {
+            if (entityPM.AmountDue != 0)
+            {
+                entityPM.PaidDate = null;
+            }
+            else
+            {
+                APInvoicePaymentPM itemPM = invoicePaymentsChangeSet.Where(d => d.ChangeSetOp == ChangeSetOperation.Insert).FirstOrDefault();
+                if (itemPM != null)
+                {
+                    entityPM.PaidDate = (from d in initializer.Context.APPayments where d.Id == itemPM.APPaymentId select d.ValueDate).FirstOrDefault();
+                }
+            }
+
+            invoice.PaidDate = entityPM.PaidDate;
         }
 
         private void ValidateHigherStatus()
@@ -962,61 +997,62 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
                 else
                 {
-                    lines = invoiceLinesChangeSet.Where(d => d.ChangeSetOp != ChangeSetOperation.Delete).ToList();
+                    lines = invoiceLinesChangeSet?.Where(d => d.ChangeSetOp != ChangeSetOperation.Delete).ToList();
                 }
-
-                foreach (APInvoiceLinePM line in lines)
-                {
-                    if (FieldIsEmpty(line.DebitAccount))
+                if (lines != null) {
+                    foreach (APInvoiceLinePM line in lines)
                     {
-                        ChargesType myChargesType = ChargesTypeRepository.GetSingleChargesType(line.ChargesTypeId, tenant, true);
-
-                        if (isJournal)
+                        if (FieldIsEmpty(line.DebitAccount))
                         {
-                            if (myChargesType.AccountingVATSplit)
+                            ChargesType myChargesType = ChargesTypeRepository.GetSingleChargesType(line.ChargesTypeId, tenant, true);
+
+                            if (isJournal)
                             {
-                                ChargeTypeAccounting myChargeTypeAccounting = (from d in iQueryable_ChargeTypeAccounting where d.ChargeTypeId == line.ChargesTypeId && d.VatTypeId == line.VatTypeId select d).FirstOrDefault();
-                                if (myChargeTypeAccounting != null)
+                                if (myChargesType.AccountingVATSplit)
                                 {
-                                    line.DebitAccount = myChargeTypeAccounting.PayableDebitAccount;
+                                    ChargeTypeAccounting myChargeTypeAccounting = (from d in iQueryable_ChargeTypeAccounting where d.ChargeTypeId == line.ChargesTypeId && d.VatTypeId == line.VatTypeId select d).FirstOrDefault();
+                                    if (myChargeTypeAccounting != null)
+                                    {
+                                        line.DebitAccount = myChargeTypeAccounting.PayableDebitAccount;
+                                    }
+                                }
+
+                                else
+                                {
+                                    line.DebitAccount = myChargesType.PayableDebitAccount;
                                 }
                             }
 
                             else
                             {
-                                line.DebitAccount = myChargesType.PayableDebitAccount;
+                                line.DebitAccount = myChargesType.PayablesChargesTypeExternalCode;
                             }
                         }
 
-                        else
+                        if (FieldIsEmpty(line.ExternalVATCard))
                         {
-                            line.DebitAccount = myChargesType.PayablesChargesTypeExternalCode;
-                        }
-                    }
-
-                    if (FieldIsEmpty(line.ExternalVATCard))
-                    {
-                        if (this.accountingSetting.AccountingSystemCode == "HV" || this.accountingSetting.AccountingSystemCode == "RH")
-                        {
-                            line.ExternalVATCard = this.accountingSetting.PayableVATCard;
-                        }
-
-                        else
-                        {
-                            VatType vatType = VatTypeRepository.GetSingleVatType(line.VatTypeId, tenant, true);
-
-                            if (vatType != null)
+                            if (this.accountingSetting.AccountingSystemCode == "HV" || this.accountingSetting.AccountingSystemCode == "RH")
                             {
-                                line.ExternalVATCard = vatType.PayablesExternalId;
+                                line.ExternalVATCard = this.accountingSetting.PayableVATCard;
+                            }
+
+                            else
+                            {
+                                VatType vatType = VatTypeRepository.GetSingleVatType(line.VatTypeId, tenant, true);
+
+                                if (vatType != null)
+                                {
+                                    line.ExternalVATCard = vatType.PayablesExternalId;
+                                }
                             }
                         }
-                    }
 
-                    if (!initializer.IsNewEntity)
-                    {
-                        if (line.ChangeSetOp == ChangeSetOperation.None)
+                        if (!initializer.IsNewEntity)
                         {
-                            UpdateInvoiceLine(line);
+                            if (line.ChangeSetOp == ChangeSetOperation.None)
+                            {
+                                UpdateInvoiceLine(line);
+                            }
                         }
                     }
                 }
@@ -1114,10 +1150,10 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
                 else
                 {
-                    myLines = invoiceLinesChangeSet.Where(d => d.ChangeSetOp != ChangeSetOperation.Delete).ToList();
+                    myLines = invoiceLinesChangeSet?.Where(d => d.ChangeSetOp != ChangeSetOperation.Delete).ToList();
                 }
 
-                if (myLines.Count == 0)
+                if (myLines == null || (myLines != null && myLines.Count == 0))
                 {
                     isReady = false;
                     myError = string.IsNullOrEmpty(myError) ? linesError : myError + "," + linesError;
@@ -1192,66 +1228,69 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         #region Get Shipments Data
         private void GetShipmentsData(List<APInvoiceLinePM> lines)
         {
-            this.allShipmentIds = (from d in lines group d by d.EntityId into g select g.Key).ToList();
-            this.allPayablesIds = (from d in lines group d by d.EntityPayableId into g select g.Key).ToList();
-            this.allShipments = shipmentRepository.GetShipmentsListFromIdList(allShipmentIds, tenant);
-            this.allPayables = shipmentPayableRepository.GetShipmentPayablesFromIdList(allPayablesIds, tenant);
-
-            // Ayman
-            // Open shipment Payables screen: issue new invoice or update draft invoice with new lines
-            // keeps the invoice screen opened without saving
-            // Open same shipment in new session and delete those payables and save the shipment
-            // return to the invoice screen session and save this invoice
-            if (!this.entityPM.IsMultipleEntities)
+            if (lines != null)
             {
-                List<APInvoiceLinePM> newLines = new List<APInvoiceLinePM>();
+                this.allShipmentIds = (from d in lines group d by d.EntityId into g select g.Key).ToList();
+                this.allPayablesIds = (from d in lines group d by d.EntityPayableId into g select g.Key).ToList();
+                this.allShipments = shipmentRepository.GetShipmentsListFromIdList(allShipmentIds, tenant);
+                this.allPayables = shipmentPayableRepository.GetShipmentPayablesFromIdList(allPayablesIds, tenant);
 
-                if (initializer.IsNewEntity)
+                // Ayman
+                // Open shipment Payables screen: issue new invoice or update draft invoice with new lines
+                // keeps the invoice screen opened without saving
+                // Open same shipment in new session and delete those payables and save the shipment
+                // return to the invoice screen session and save this invoice
+                if (!this.entityPM.IsMultipleEntities)
                 {
-                    newLines = lines.Where(d => d.EntityPayableId != null).ToList();
-                }
+                    List<APInvoiceLinePM> newLines = new List<APInvoiceLinePM>();
 
-                else
-                {
-                    newLines = lines.Where(d => d.ChangeSetOp == ChangeSetOperation.Insert && d.EntityPayableId != null).ToList();
-                }
-
-                if (newLines.Count > 0)
-                {
-                    foreach (APInvoiceLinePM item in newLines)
+                    if (initializer.IsNewEntity)
                     {
-                        ShipmentPayable myPayable = this.allPayables.Where(d => d.Id == item.EntityPayableId).FirstOrDefault();
-                        if (myPayable == null)
+                        newLines = lines.Where(d => d.EntityPayableId != null).ToList();
+                    }
+
+                    else
+                    {
+                        newLines = lines.Where(d => d.ChangeSetOp == ChangeSetOperation.Insert && d.EntityPayableId != null).ToList();
+                    }
+
+                    if (newLines.Count > 0)
+                    {
+                        foreach (APInvoiceLinePM item in newLines)
                         {
-                            throw new ApplicationException("Some of invoice lines are missing payables");
+                            ShipmentPayable myPayable = this.allPayables.Where(d => d.Id == item.EntityPayableId).FirstOrDefault();
+                            if (myPayable == null)
+                            {
+                                throw new ApplicationException("Some of invoice lines are missing payables");
+                            }
                         }
                     }
                 }
-            }
 
-            Shipment shipment = allShipments.Where(d => d.Id == entityPM.MainEntityId).FirstOrDefault();
+                Shipment shipment = allShipments.Where(d => d.Id == entityPM.MainEntityId).FirstOrDefault();
 
-            if (shipment != null)
-            {
-                shipment.ConcurrencyGUID = Guid.NewGuid().ToString();
-
-                if (string.IsNullOrEmpty(entityPM.MainEntityReference))
+                if (shipment != null)
                 {
-                    entityPM.MainEntityReference = shipment.ShipmentNumber;
-                }
+                    shipment.ConcurrencyGUID = Guid.NewGuid().ToString();
 
-                shipmentRepository.Update(shipment);
-                shipmentRepository.SubmitChanges();
-
-                if (initializer.IsNewEntity)
-                {
-                    ShipmentDataView f = shipmentRepository.GetSingleShipmentDataView(shipment.Id, tenant);
-
-                    switch (shipment.DirectionId)
+                    if (string.IsNullOrEmpty(entityPM.MainEntityReference))
                     {
-                        case "E": { this.entityPM.Description = "Export to " + f.MainCarriageFinalDestinationPortCode; break; }
-                        case "I": { this.entityPM.Description = "Import from " + f.MainCarriageFromPortCode; break; }
-                        case "D": { this.entityPM.Description = "Ship to " + f.MainCarriageToCity; break; }
+                        entityPM.MainEntityReference = shipment.ShipmentNumber;
+                    }
+
+                    shipmentRepository.Update(shipment);
+                    shipmentRepository.SubmitChanges();
+
+                    if (initializer.IsNewEntity)
+                    {
+                        ShipmentDataView f = shipmentRepository.GetSingleShipmentDataView(shipment.Id, tenant);
+
+                        switch (shipment.DirectionId)
+                        {
+                            case "E": { this.entityPM.Description = "Export to " + f.MainCarriageFinalDestinationPortCode; break; }
+                            case "I": { this.entityPM.Description = "Import from " + f.MainCarriageFromPortCode; break; }
+                            case "D": { this.entityPM.Description = "Ship to " + f.MainCarriageToCity; break; }
+                        }
                     }
                 }
             }
@@ -1385,7 +1424,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         {
             if (!initializer.IsAlreadyVoided)
             {
-                if (lines.Where(d => d.EntityPayableId == null).Any())
+                if (lines != null && lines.Where(d => d.EntityPayableId == null).Any())
                 {
                     foreach (APInvoiceLinePM invoicelinePM in entityPM.InvoiceLines.Where(d => d.EntityPayableId == null))
                     {
@@ -1991,7 +2030,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
             else
             {
-                if (invoiceLinesChangeSet.Count > 0)
+                if (invoiceLinesChangeSet != null && invoiceLinesChangeSet.Count > 0)
                 {
                     int lastLineNumber = (from a in invoiceLinesChangeSet select a.LineNumber).Max();
                     foreach (APInvoiceLinePM item in invoiceLinesChangeSet)
@@ -2073,34 +2112,37 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         #region Payments
         private void UpdateInvoicePayments(List<APInvoicePaymentPM> invoicePaymentsChangeSet)
         {
-            foreach (APInvoicePaymentPM item in invoicePaymentsChangeSet)
+            if (invoicePaymentsChangeSet != null)
             {
-                switch (item.ChangeSetOp)
+                foreach (APInvoicePaymentPM item in invoicePaymentsChangeSet)
                 {
-                    case ChangeSetOperation.Insert:
-                        {
-                            this.CreateInvoicePayment(item);
-                            break;
-                        }
+                    switch (item.ChangeSetOp)
+                    {
+                        case ChangeSetOperation.Insert:
+                            {
+                                this.CreateInvoicePayment(item);
+                                break;
+                            }
 
-                    case ChangeSetOperation.Update:
-                        {
-                            this.UpdateInvoicePayment(item);
-                            break;
-                        }
+                        case ChangeSetOperation.Update:
+                            {
+                                this.UpdateInvoicePayment(item);
+                                break;
+                            }
 
-                    case ChangeSetOperation.Delete:
-                        {
-                            this.DeleteInvoicePayment(item);
-                            break;
-                        }
+                        case ChangeSetOperation.Delete:
+                            {
+                                this.DeleteInvoicePayment(item);
+                                break;
+                            }
 
-                    case ChangeSetOperation.None: { break; }
-                    default: { break; }
+                        case ChangeSetOperation.None: { break; }
+                        default: { break; }
+                    }
                 }
-            }
 
-            invoicePaymentRepository.SubmitChanges();
+                invoicePaymentRepository.SubmitChanges();
+            }
         }
 
         private void CreateInvoicePayment(APInvoicePaymentPM itemPM)
@@ -2360,21 +2402,23 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
             else
             {
-                myLines = invoiceLinesChangeSet.Where(d => d.ChangeSetOp != ChangeSetOperation.Delete).ToList();
+                myLines = invoiceLinesChangeSet?.Where(d => d.ChangeSetOp != ChangeSetOperation.Delete).ToList();
             }
-
-            var entityIdAndObjectTables = (from a in myLines
-                                           group a by new { a.EntityId, a.ObjectTableId, a.EntityReference } into gr
-                                           select new
-                                           {
-                                               EntityId = gr.Key.EntityId,
-                                               ObjectTableId = gr.Key.ObjectTableId,
-                                               EntityReference = gr.Key.EntityReference
-                                           }).ToList();
-
-            foreach (var item in entityIdAndObjectTables)
+            if (myLines != null)
             {
-                MethodHelper.AddToSearchFields(ref mySearchFields, item.EntityReference);
+                var entityIdAndObjectTables = (from a in myLines
+                                               group a by new { a.EntityId, a.ObjectTableId, a.EntityReference } into gr
+                                               select new
+                                               {
+                                                   EntityId = gr.Key.EntityId,
+                                                   ObjectTableId = gr.Key.ObjectTableId,
+                                                   EntityReference = gr.Key.EntityReference
+                                               }).ToList();
+
+                foreach (var item in entityIdAndObjectTables)
+                {
+                    MethodHelper.AddToSearchFields(ref mySearchFields, item.EntityReference);
+                }
             }
             #endregion
 

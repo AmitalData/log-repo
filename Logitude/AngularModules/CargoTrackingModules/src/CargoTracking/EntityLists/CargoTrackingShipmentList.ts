@@ -75,6 +75,7 @@ export class CargoTrackingShipmentList {
 	FutureMilstoneName: string;
 	ContainersNumbers: string;
 	PackagesQuantity: number;
+	DirectionId: string;
 	
 }
  

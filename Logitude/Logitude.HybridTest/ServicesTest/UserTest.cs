@@ -11,6 +11,7 @@ namespace Logitude.HybridTest.ServicesTest
     [TestClass]
     public class UserTest
     {
+        private static EntityWcfCaller entityWcfCaller = new EntityWcfCaller();
         [TestMethod]
         public void Test_User_UPSERT()
         {
@@ -28,7 +29,7 @@ namespace Logitude.HybridTest.ServicesTest
                 Tenant = EnvironmentGlobalParams.MainTenant,
                 DocumentFilingInbox = "HybridInbox"
             };
-            ServiceOutcome serviceOutcome = EntityWcfCaller.CallEntityUpsert(userPM);
+            ServiceOutcome serviceOutcome = entityWcfCaller.CallEntityUpsert(userPM);
             if (serviceOutcome.Response.HasError && serviceOutcome.Response.ErrorMessage.Contains("Sorry You reached the maximum number of users!"))
             {
                 Assert.Inconclusive("Sorry You reached the maximum number of users!");

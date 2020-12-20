@@ -82,7 +82,13 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
 
             List<CargoTrackingShipmentList> shipments = GetFilteredShipmentsByIds(pageIndex, pageSize, shipmentFilters, shipmentsIds);
 
-            SortShipments(shipmentFilters, shipments);
+            return shipments;
+        }
+        public IQueryable<CargoTrackingShipmentList> GetShipmentsByFilters(CargoTrackingShipmentFilters shipmentFilters)
+        {
+            List<string> shipmentsIds = GetTenantShipmentsIdsBySearchKey(shipmentFilters.SearchText, shipmentFilters.Tenant);
+
+            IQueryable<CargoTrackingShipmentList> shipments = GetFilteredShipmentsByIds(shipmentFilters, shipmentsIds);
 
             return shipments;
         }
@@ -100,6 +106,12 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
         {
             CargoTrackingShipmentListQueryService shipmentsQuery = new CargoTrackingShipmentListQueryService(context);
             List<CargoTrackingShipmentList> shipments = shipmentsQuery.GetShipments(pageIndex, pageSize,shipmentsIds.ToList(), shipmentFilters);
+            return shipments;
+        }
+        private IQueryable<CargoTrackingShipmentList> GetFilteredShipmentsByIds(CargoTrackingShipmentFilters shipmentFilters, List<string> shipmentsIds)
+        {
+            CargoTrackingShipmentListQueryService shipmentsQuery = new CargoTrackingShipmentListQueryService(context);
+            IQueryable<CargoTrackingShipmentList> shipments = shipmentsQuery.GetShipments(shipmentsIds.ToList(), shipmentFilters);
             return shipments;
         }
 

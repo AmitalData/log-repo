@@ -65,8 +65,10 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 SecurityUtility.AuthenticationOnTenant(tenant);
                 SecurityUtility.CheckContactFeature("Journal", "READ", tenant);
 
-                ContactQuery contactQuery = new ContactQuery(tenant);
-                ContactPM contact = contactQuery.GetSingleByEmail(loggedUserEmail, tenant);
+                Logitude.BL.Security.LoggedContactUtil loggedUtil = new Logitude.BL.Security.LoggedContactUtil();
+                ContactPM contact = loggedUtil.GetLoggedContact(tenant);
+                //ContactQuery contactQuery = new ContactQuery(tenant);
+                //ContactPM contact = contactQuery.GetSingleByEmail(loggedUserEmail, tenant);
 
                 ObjectTableRepository objectTabelRepository = new ObjectTableRepository(tenant);
                 ObjectTable objectTable = objectTabelRepository.GetObjectTableByName("Journal", 0, true);

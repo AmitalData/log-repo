@@ -95,12 +95,19 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             this.myAccountingSetting = rep.GetSingleAccountingSetting(tenant);
         }
 
-        private List<APInvoicePaymentPM> invoicePaymentsChangeSet;
-        private List<APInvoiceMultipleShipmentPM> invoiceShipmentsChangeSet;
+        private List<APInvoicePaymentPM> invoicePaymentsChangeSet = new List<APInvoicePaymentPM>();
+        private List<APInvoiceMultipleShipmentPM> invoiceShipmentsChangeSet = new List<APInvoiceMultipleShipmentPM>();
         public void SetChangeSets(List<APInvoiceMultipleShipmentPM> invoiceMultipleShipmentsChangeSet, List<APInvoicePaymentPM> invoicePaymentsChangeSet)
         {
-            this.invoicePaymentsChangeSet = invoicePaymentsChangeSet;
-            this.invoiceShipmentsChangeSet = invoiceMultipleShipmentsChangeSet;
+            if (invoicePaymentsChangeSet != null)
+            {
+                this.invoicePaymentsChangeSet = invoicePaymentsChangeSet;
+            }
+
+            if (invoiceMultipleShipmentsChangeSet != null)
+            {
+                this.invoiceShipmentsChangeSet = invoiceMultipleShipmentsChangeSet;
+            }
         }
 
         public void Create()
@@ -177,14 +184,29 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             invoiceRepository.Update(invoice);
             invoiceRepository.SubmitChanges();
 
-            if (invoicePaymentsChangeSet.Count > 0)
+            if (invoicePaymentsChangeSet != null)
             {
-                this.UpdateInvoicePayments(invoicePaymentsChangeSet);
-                this.UpdateInvoiceAmountDue();
-                this.BuildSearchFields();
-                invoiceRepository.Update(invoice);
-                invoiceRepository.SubmitChanges();
+                if (invoicePaymentsChangeSet.Count > 0)
+                {
+                    bool isUpdatingPayments = true;
+
+                    if (invoicePaymentsChangeSet.Where(d => d.ChangeSetOp == ChangeSetOperation.Insert || d.ChangeSetOp == ChangeSetOperation.Delete).Count() == 0)
+                    {
+                        isUpdatingPayments = false;
+                    }
+
+                    if (isUpdatingPayments)
+                    {
+                        this.UpdateInvoicePayments(invoicePaymentsChangeSet);
+                        this.UpdateInvoiceAmountDue();
+                        this.UpdatePaidDate();
+                    }
+                }
             }
+
+            this.BuildSearchFields();
+            invoiceRepository.Update(invoice);
+            invoiceRepository.SubmitChanges();
 
             if (!String.IsNullOrEmpty(QBOAPPaymentId))
             {
@@ -295,10 +317,10 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             if (isNewEntity)
             {
                 allInvoiceShipments = entityPM.InvoiceMultipleShipments;
-                allActiveInvoiceShipments = allInvoiceShipments.Where(d => d.ChangeSetOp != ChangeSetOperation.Delete).ToList();
+                allActiveInvoiceShipments = allInvoiceShipments?.Where(d => d.ChangeSetOp != ChangeSetOperation.Delete).ToList();
 
-                allShipmentIds = allInvoiceShipments.Select(s => s.ShipmentId).ToList();                
-                allActiveShipmentIds = allActiveInvoiceShipments.Select(s => s.ShipmentId).ToList();
+                allShipmentIds = allInvoiceShipments?.Select(s => s.ShipmentId).ToList();                
+                allActiveShipmentIds = allActiveInvoiceShipments?.Select(s => s.ShipmentId).ToList();
 
                 allInvoiceLines = new List<APInvoiceLine>();
                 allActiveInvoiceLines = new List<APInvoiceLine>();
@@ -311,13 +333,13 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             else
             {
                 allInvoiceShipments = invoiceShipmentsChangeSet;
-                allActiveInvoiceShipments = allInvoiceShipments.Where(d => d.ChangeSetOp != ChangeSetOperation.Delete).ToList();
+                allActiveInvoiceShipments = allInvoiceShipments?.Where(d => d.ChangeSetOp != ChangeSetOperation.Delete).ToList();
 
-                allShipmentIds = allInvoiceShipments.Select(s => s.ShipmentId).ToList();
-                allActiveShipmentIds = allActiveInvoiceShipments.Select(s => s.ShipmentId).ToList();
+                allShipmentIds = allInvoiceShipments?.Select(s => s.ShipmentId).ToList();
+                allActiveShipmentIds = allActiveInvoiceShipments?.Select(s => s.ShipmentId).ToList();
 
                 allInvoiceLines = invoiceLineRepository.GetInvoiceLinesByInvoiceId(entityPM.Id, tenant).ToList();
-                allActiveInvoiceLines = allInvoiceLines.Where(d => allActiveShipmentIds.Contains(d.EntityId)).ToList();
+                allActiveInvoiceLines = allInvoiceLines?.Where(d => allActiveShipmentIds.Contains(d.EntityId)).ToList();
 
                 allInvoiceVATs = invoiceTotalVatRepository.GetInvoiceTotalVatsByInvoiceId(entityPM.Id, tenant).ToList();
                 allInvoiceEntities = invoiceEntityRepository.GetInvoiceEntitiesForInvoice(entityPM.Id, entityPM.Tenant).ToList();                
@@ -1158,6 +1180,24 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 }
             }
         }
+
+        private void UpdatePaidDate()
+        {
+            if (entityPM.AmountDue != 0)
+            {
+                entityPM.PaidDate = null;
+            }
+            else
+            {
+                APInvoicePaymentPM itemPM = invoicePaymentsChangeSet.Where(d => d.ChangeSetOp == ChangeSetOperation.Insert).FirstOrDefault();
+                if (itemPM != null)
+                {
+                    entityPM.PaidDate = (from d in objectContext.APPayments where d.Id == itemPM.APPaymentId select d.ValueDate).FirstOrDefault();
+                }
+            }
+
+            invoice.PaidDate = entityPM.PaidDate;
+        }
         #endregion
 
         #region SearchField
@@ -1182,7 +1222,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             #endregion
 
             #region Entity References
-            List<string> allActiveShipmentNumbers = allInvoiceShipments.Where(d => d.ChangeSetOp != ChangeSetOperation.Delete).Select(s => s.ShipmentNumber).ToList();
+            List<string> allActiveShipmentNumbers = allInvoiceShipments?.Where(d => d.ChangeSetOp != ChangeSetOperation.Delete).Select(s => s.ShipmentNumber).ToList();
 
             foreach (string shipmentNumbers in allActiveShipmentNumbers)
             {

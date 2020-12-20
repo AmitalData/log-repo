@@ -148,6 +148,8 @@ namespace Logitude.CargoTracking.Data.EntityLists
        public string ContainersNumbers  { get; set; }
        [DataMember]
        public int? PackagesQuantity  { get; set; }
+       [DataMember]
+       public string DirectionId  { get; set; }
    }
 
 }

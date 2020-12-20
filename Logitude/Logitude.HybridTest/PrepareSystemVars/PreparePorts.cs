@@ -9,6 +9,7 @@ namespace Logitude.HybridTest.WcfCallers
 
     class PreparePorts
     {
+        private static EntityWcfCaller entityWcfCaller = new EntityWcfCaller();
         public static void PreparePortsVars()
         {
             GetPortCode(HybridData.PortCodeLHR);
@@ -74,7 +75,7 @@ namespace Logitude.HybridTest.WcfCallers
         }
         private static void AssertResponse<T>(T entityPM)
         {
-            ServiceOutcome serviceOutcome = EntityWcfCaller.CallEntityUpsert(entityPM);
+            ServiceOutcome serviceOutcome = entityWcfCaller.CallEntityUpsert(entityPM);
             Assert.IsFalse(serviceOutcome.Response.HasError, "Prepare Port Vars Failed! " + serviceOutcome.Response.ErrorMessage);
             Assert.IsNotNull(serviceOutcome.Response.Result, "Prepare Port Vars Failed! " + serviceOutcome.Response.ErrorMessage);
         }

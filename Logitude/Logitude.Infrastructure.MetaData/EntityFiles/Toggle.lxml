@@ -39,7 +39,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Toggle&quot;"
-  Code="&quot;f26c&quot;"
+  Code="&quot;317f&quot;"
   Name="&quot; Query Group&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;Name&quot;"
@@ -487,11 +487,23 @@
       Code="&quot;CTR&quot;"
       SearchFields="&quot;CTR,Charges Types Direction Restrictions&quot;"
       Description="&quot;Charges Types Direction Restrictions&quot;" />
+
     <Record
       Name="&quot;Branch Code in Counters&quot;"
       SearchFields="&quot;Branch Code in Counters&quot;"
       Description="&quot;Branch Code in Counters&quot;"
       Code="&quot;BCC&quot;" />
+    <Record
+      Code="&quot;ACP&quot;"
+      SearchFields="&quot;ACP,Accruals Approvement&quot;"
+      Name="&quot;Accruals Approvement&quot;"
+      Description="&quot;Accruals Approvement Toggle&quot;" />
+
+    <Record
+      Code="&quot;EQW&quot;"
+      Name="&quot;Export Query Data Via WorkerRole&quot;"
+      Description="&quot;Export Query Data to Excel Via WorkerRole&quot;"
+      SearchFields="&quot;Export Query Data Via WorkerRole&quot;" />
   </Records>
   <DataContracts />
   <AdditionalTextCodes />

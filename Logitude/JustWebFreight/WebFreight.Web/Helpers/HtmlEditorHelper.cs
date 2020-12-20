@@ -5318,31 +5318,28 @@ namespace WebFreight.Web.Helpers
                             {
 
                                 string resultValue = GetEntityFieldValue(theEntity, propertyName, theEntityObjectFields, tenant);
-
-                                if ((propertyName == "SecurityKey" || (propertyName == "ShipmentNumber" && ObjectTableName == "Shipment")) && CurrentTenant != null)
+                                string shipmentLevelCode = GetEntityPropertyValue(theEntity, "ShipmentLevelCode");
+                                bool enableSharedLogisticsMessageLink = CurrentTenant != null && ((CurrentTenant.SharedLogisticsMessageLink) || (CurrentTenant.SharedLogisMasterMessageLink && shipmentLevelCode == "C"));
+                                if ((propertyName == "SecurityKey" || (propertyName == "ShipmentNumber" && ObjectTableName == "Shipment")) && CurrentTenant != null && enableSharedLogisticsMessageLink)
                                 {
-                                    string shipmentLevelCode = GetEntityPropertyValue(theEntity, "ShipmentLevelCode");
-                                    if ((CurrentTenant.SharedLogisticsMessageLink && shipmentLevelCode != "C") || (CurrentTenant.SharedLogisMasterMessageLink && shipmentLevelCode == "C"))
+                                    if (propertyName == "SecurityKey")
                                     {
-                                        if (propertyName == "SecurityKey")
-                                        {
-                                            this.securityKey = resultValue;
-                                            shipmentNumbersNodesHtml.Add(node);
-                                            node.InnerHtml = node.InnerHtml.Replace("[" + propertyName + "]", "");
+                                        this.securityKey = resultValue;
+                                        shipmentNumbersNodesHtml.Add(node);
+                                        node.InnerHtml = node.InnerHtml.Replace("[" + propertyName + "]", "");
 
-                                        }
-                                        else
-                                        {
-                                            this.securityKey = GetEntityFieldValue(theEntity, "SecurityKey", theEntityObjectFields, tenant);
-                                            // node.Attributes["Text"].Value = node.Attributes["Text"].Value.Replace("[" + propertyName + "]", resultValue + " ");
+                                    }
+                                    else
+                                    {
+                                        this.securityKey = GetEntityFieldValue(theEntity, "SecurityKey", theEntityObjectFields, tenant);
+                                        // node.Attributes["Text"].Value = node.Attributes["Text"].Value.Replace("[" + propertyName + "]", resultValue + " ");
 
-                                            node.InnerHtml = node.InnerHtml.Replace("[" + propertyName + "]", resultValue + " ");
+                                        node.InnerHtml = node.InnerHtml.Replace("[" + propertyName + "]", resultValue + " ");
 
 
 
-                                            //this.securityKeyNode = node;
-                                            shipmentNumbersNodesHtml.Add(node);
-                                        }
+                                        //this.securityKeyNode = node;
+                                        shipmentNumbersNodesHtml.Add(node);
                                     }
                                 }
 
@@ -5858,11 +5855,21 @@ namespace WebFreight.Web.Helpers
         {
             string entityId = GetEntityPropertyValue(sharedLinkHTMLArgs.Entity, "Id");
             string shipmentLevelCode = GetEntityPropertyValue(sharedLinkHTMLArgs.Entity, "ShipmentLevelCode");
-
+            string myUrl = url;
             string pagePath = @"/SharedLogistic/ShipmentPage.aspx";
-            if (shipmentLevelCode == "C") pagePath = @"/SharedMasterDocumentsPage.aspx";
+            Tenant sharedTenant = GetCurrentTenant(sharedLinkHTMLArgs.Tenant);
+            if (sharedTenant != null && sharedTenant.SharedLogisMasterMessageLink && shipmentLevelCode == "C")
+            {
+                TenantManagementQuery tenantManagementQuery = new TenantManagementQuery(sharedLinkHTMLArgs.Tenant);
+                TenantManagementPM tenantManagementPM = tenantManagementQuery.GetSinglePMByDomain(url);
+                if (tenantManagementPM != null && !string.IsNullOrEmpty(tenantManagementPM.CustomerURL))
+                {
+                    myUrl = tenantManagementPM.CustomerURL;
+                }
+                pagePath = @"/SharedMasterDocumentsPage.aspx";
+            }
 
-            string pageLink = (url + pagePath).ToLower() + "?securitykey=" + sharedLinkHTMLArgs.Key + ":" + entityId + ":" +
+            string pageLink = (myUrl + pagePath).ToLower() + "?securitykey=" + sharedLinkHTMLArgs.Key + ":" + entityId + ":" +
                               sharedLinkHTMLArgs.Tenant + ":" + sharedLinkHTMLArgs.HideSharedlogistics;
             return pageLink;
         }
@@ -5870,7 +5877,11 @@ namespace WebFreight.Web.Helpers
         private string GetEntityPropertyValue(object entity, string property)
         {
             PropertyInfo propertyInfo = entity.GetType().GetProperty(property);
-            string value = propertyInfo.GetValue(entity)?.ToString();
+            string value = "";
+            if (propertyInfo != null)
+            {
+                value = propertyInfo.GetValue(entity)?.ToString();
+            }
 
             return value;
         }
