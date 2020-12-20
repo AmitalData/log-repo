@@ -386,6 +386,52 @@ export class FieldTemplateComponent {
     }
 
 
+    ShowCFIFILEMMoveToCollector() {
+        this._ListComponentArgs.SuppressOnRowSelectedField = true;
+        
+
+        let myDeclarationReferantDataList: DeclarationReferantDataList = this.Entity;
+        let myViewModelName = "FieldTemplateComponent.ts-ShowCFIFILEMMoveToCollector";
+        if (AmitalGatewayUtil.Instance.AmitalBrowserInUse) {
+            SessionLocator.SelectedSession.StartBusyIndicatorLoading();
+            let sub = AmitalGatewayUtil.Instance.UnifaceRequestArrived
+                .subscribe(
+                    (mess: UnifreightMessageM) => {
+                        var IsMatchUnifreightCallbackCommand = (
+                            mess.LogitudeEntity == AmitalGatewayUtil.Instance.DeclarationMessaging.LogitudeEntityDeclaration &&
+                            mess.LogitudeEntityNumber == myDeclarationReferantDataList.DeclarationId &&
+                            mess.LogitudeViewModel == myViewModelName);
+                        if (IsMatchUnifreightCallbackCommand) {
+                            sub.unsubscribe();
+                            SessionLocator.SelectedSession.StopBusyIndicator();
+                            let sBool = UnifreightMessageM.GetStringValue(mess, AmitalGatewayUtil.Instance.DeclarationMessaging.UnifreightResponseStatus);
+                            SessionLocator.SelectedSession.CurrentListComponent.OnBackFromEdit(this.Entity.DeclarationId, { rowIndex: this.RowIndex });
+                            this.CD.detectChanges();
+                        }
+                    }
+                );
+
+            SessionLocator.SelectedSession.StartBusyIndicator("");
+            var unifreightMessageM =
+                AmitalGatewayUtil.Instance.
+                    DeclarationMessaging.GetMessage(myDeclarationReferantDataList.CustomFileNo, myDeclarationReferantDataList.DeclarationId,
+                        myViewModelName);
+
+
+            AmitalGatewayUtil.Instance.SendRequestToUnifreightAsync(
+                "ScriptableGatewayUtil.ShowCFIFILEMMoveToCollector",
+                "CFIHMAIN.LogitudeTask",
+                "ShowCFIFILEMMoveToCollector",
+                unifreightMessageM,
+                " הצגת מסך : העברה לגובה");
+
+        }
+        else {
+            alert("ShowCFIFILEMMoveToCollector");
+        }
+    }
+
+
     ShowCFIFILEMEnterRemarks() {
         /*
         if (AmitalGatewayUtil.Instance.AmitalBrowserInUse) {
