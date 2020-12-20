@@ -53,7 +53,9 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         RichbitFileStatus, 
 	         ExcludeFromInterface, 
 	         IdentifierID, 
-	         VehicleTypeName,
+	         VehicleTypeName, 
+	         VehicleChassisNumberSource, 
+	         RichbitFileNumberSource,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();

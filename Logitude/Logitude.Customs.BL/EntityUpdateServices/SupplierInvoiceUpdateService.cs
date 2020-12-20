@@ -202,24 +202,43 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     this.openTaskForUnifreight = true;
                 }
             }
-            string remarks = "";
+            string remarksClass = ""; string remarksChas = "";
+
             foreach (SupplierInvoiceItemPM itemPM in entityPM.SupplierInvoiceItems)
             {
                 if (itemPM.ClassificationCode != itemPM.ClassificationCodeSource && itemPM.ClassificationCodeSource != null)
                 {
-                    if(remarks != "")
+                    if (remarksClass != "")
                     {
-                        remarks += "\r";
+                        remarksClass += "\r";
                     }
-                    remarks += "מס' חשבון ספק: " + entityPM.InvoiceNumber;
-                    remarks += " שורת פרט מכס: " + itemPM.LineNumber;
-                    remarks += " פרט מכס ישן: " + itemPM.ClassificationCodeSource;
-                    remarks += " פרט מכס חדש: " + itemPM.ClassificationCode;
+                    remarksClass += "מס' חשבון ספק: " + entityPM.InvoiceNumber;
+                    remarksClass += " שורת פרט מכס: " + itemPM.LineNumber;
+                    remarksClass += " פרט מכס ישן: " + itemPM.ClassificationCodeSource;
+                    remarksClass += " פרט מכס חדש: " + itemPM.ClassificationCode;
+                }
+                foreach (SupplierInvoiceItemVehiclePM vehicle in itemPM.SupplierInvoiceItemVehicles)
+                {
+                    if ((vehicle.RichbitFileNumberSource != null || vehicle.VehicleChassisNumberSource != null)
+                        && ((vehicle.RichbitFileNumber != vehicle.RichbitFileNumberSource && vehicle.RichbitFileNumberSource != null)
+                        || (vehicle.VehicleChassisNumber != vehicle.VehicleChassisNumberSource && vehicle.VehicleChassisNumberSource != null)))
+                    {
+                        if (remarksChas != "")
+                        {
+                            remarksChas += "\r";
+                        }
+                        remarksChas += "מס' חשבון ספק: " + entityPM.InvoiceNumber;
+                        remarksChas += " שורת פרט מכס: " + itemPM.LineNumber;
+                        remarksChas += " שורת שלדה: " + vehicle.LineNumber;
+                        remarksChas += " מס' שלדה/ריכבית ישן: " + vehicle.VehicleChassisNumberSource + vehicle.RichbitFileNumberSource;
+                        remarksChas += " מס' שלדה/ריכבית חדש: " + vehicle.VehicleChassisNumber + vehicle.RichbitFileNumber;
+
+                    }
                 }
             }
-            if (remarks != "")
+            if (remarksClass != "")
             {
-                SendClass(entityPM.Tenant, _DeclarationPM.CustomFileNo, AuthenticationUtil.ResolveUserId(entityPM.Tenant), remarks);
+                SendClass(entityPM.Tenant, _DeclarationPM.CustomFileNo, AuthenticationUtil.ResolveUserId(entityPM.Tenant), remarksClass);
             }
             base.OnUpdating(entityPM, entityPOCO);
         }
@@ -341,6 +360,35 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 }
             }
             string unifrieghtEvent = "CLASS";
+            string eventRemarks = remarks;
+            var MyUnifreightEventParam = new UnifreightEventParam()
+            {
+                Code = unifrieghtEvent,
+                Mode = UnifreightEventMode.@new,
+                EventDateTime = DateTime.Now,
+                Entname = "CFIFILEM",
+                PrimaryNum = CustomFileNo,
+                EventRemarks = eventRemarks,
+            };
+            LogMessagingUtil.Instance.AppendLine("MyUnifreightEventParam = " + MyUnifreightEventParam ?? "NULL");
+            var myOpenUnifreighTask = new UnifreightEventTaskService();
+            myOpenUnifreighTask.UpsertEventLE2U(
+                Tenant,
+                loggedContactId,
+                MyUnifreightEventParam);
+        }
+        public void SendCHAS(int Tenant, string CustomFileNo, string loggedContactId, string remarks)
+        {
+            if (string.IsNullOrWhiteSpace(loggedContactId))
+            {
+                ContactRepository contactRepository = new ContactRepository(Tenant);
+                var loggedContact = contactRepository.GetSingleContactByEmail(AuthenticationUtil.ResolveLoggingUserId(Tenant), Tenant);
+                if (loggedContact != null)
+                {
+                    loggedContactId = loggedContact.Id;
+                }
+            }
+            string unifrieghtEvent = "CHAS";
             string eventRemarks = remarks;
             var MyUnifreightEventParam = new UnifreightEventParam()
             {
