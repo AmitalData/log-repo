@@ -108,7 +108,7 @@ export class LogitudeHotKeysComponent{
         this.CurrentSession.RemoveLogitudeHotKeysComponent(this);
         this.CurrentSession=null;
         this.CTRL_S_HotKey=null;
-        this.Shift_S_HotKey=null;
+        this.CTRL_Shift_S_HotKey=null;
         this.LeftArrowHotKey=null;
         this.RightArrowHotKey=null;
         this.ESCHotKey=null;
