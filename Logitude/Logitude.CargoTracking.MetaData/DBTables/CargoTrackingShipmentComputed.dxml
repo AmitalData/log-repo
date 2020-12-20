@@ -2,8 +2,7 @@
 <Table
   Name="CargoTrackingShipmentComputeds"
   Schema="dbo"
-  DBType="CargoTracking"
-  Module="CargoTracking">
+  DBType="CargoTracking">
   <Column
     Name="Id"
     Type="varchar"
