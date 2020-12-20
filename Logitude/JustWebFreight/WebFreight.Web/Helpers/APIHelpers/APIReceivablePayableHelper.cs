@@ -291,7 +291,14 @@ namespace WebFreight.Web.Helpers.APIHelpers
 
                         else
                         {
-                            price = item.TotalAmount / item.Quantity;
+                            if (measurementCode == "PRVL" || measurementCode == "PRFR")
+                            {
+                                price = (item.TotalAmount / item.Quantity) * 100;
+                            }
+                            else
+                            {
+                                price = item.TotalAmount / item.Quantity;
+                            }
                         }
                     }
 
@@ -567,7 +574,14 @@ namespace WebFreight.Web.Helpers.APIHelpers
 
                         else
                         {
-                            price = item.ExpectedAmount / item.Quantity;
+                            if (measurementCode == "PRVL" || measurementCode == "PRFR")
+                            {
+                                price = (item.ExpectedAmount / item.Quantity) * 100;
+                            }
+                            else
+                            {
+                                price = item.ExpectedAmount / item.Quantity;
+                            }
                         }
                     }
 
