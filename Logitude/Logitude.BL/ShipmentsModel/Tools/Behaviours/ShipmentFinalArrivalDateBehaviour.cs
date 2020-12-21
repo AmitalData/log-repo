@@ -1,6 +1,8 @@
 ﻿using Logitude.BL.ShipmentsModel.EntityPMs;
+using Logitude.BL.ShipmentsModel.Tools.DataMapping;
 using Simplog.Data.ShipmentsModel;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
+using Simplog.Server.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,16 +22,20 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours
         private List<ShipmentDeliveryPM> Deliveries;
         private IShipmentsContext Context;
         public bool IsUpdatingHouses { get; private set; }
-        public ShipmentFinalArrivalDateBehaviour(ShipmentPM entityPM, ShipmentMasterData entityMasterData, IShipmentsContext context)
+        public ShipmentFinalArrivalDateBehaviour(ShipmentPM entityPM, IShipmentsContext context, bool isNewEntity)
         {
             this.Tenant = entityPM.Tenant;
             this.entityPM = entityPM;
             this.Context = context;
-            this.EntityMasterData = entityMasterData;
             this.FinalArrivalDate = null;
             this.ActualFinalArrivalDate = null;
             this.EstimatedFinalArrivalDate = null;
             this.Deliveries = entityPM.ShipmentDeliveries.Where(d => d.ChangeSetOp != Simplog.Server.Infrastructure.ChangeSetOperation.Delete).ToList();
+
+            EntityMasterData = new ShipmentMasterData();
+            List<ShipmentPackagePM> myPackagesList = entityPM.ShipmentPackages.Where(d => d.ChangeSetOp != ChangeSetOperation.Delete).ToList();
+
+            ShipmentMapping.MapConcurrencyFields(entityPM, new Shipment(), EntityMasterData, myPackagesList.Count, isNewEntity, false);
         }
 
         public void Handle()
