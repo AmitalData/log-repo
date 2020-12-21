@@ -54,8 +54,7 @@ import { UserDefinedReportPM } from 'Accounting/EntityPMs/UserDefinedReportPM';
     providers: [ListComponentArgs , EntityListService, EntityResourceService, PubSubService, PubSubService1, EntityPMService, TotangoService],
 })
 
-export class ListComponent implements OnInit, AfterViewInit {
-    public DontApplyVirtualization: boolean = false;
+export class ListComponent implements OnInit, AfterViewInit { 
     public IsDemoTenant: boolean = false;
     public ComponentIndex: number = null;
     private myQueryColumnsPMService: QueryColumnsPMService;
