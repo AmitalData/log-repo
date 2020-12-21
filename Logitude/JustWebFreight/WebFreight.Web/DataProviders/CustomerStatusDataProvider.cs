@@ -22,6 +22,7 @@ namespace WebFreight.Web.DataProviders
             Periods = new List<StatusPeriod>();
         }
         public string CustomerName { get; set; }
+        public string CustomerLocalName { get; set; }
         public string CustomerDisplayNumber { get; set; }
         public string CustomerPhone{ get; set; }
         public string CustomerPaymentTerm { get; set; }
