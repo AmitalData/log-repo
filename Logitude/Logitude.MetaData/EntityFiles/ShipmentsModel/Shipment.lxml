@@ -88948,6 +88948,32 @@
       AllowedInAutomation="false"
       ManualActivatedFollowUp="false"
       IsFollowUp="false" />
+    <EventType
+      Code="&quot;DEAR&quot;"
+      ObjectTableName="&quot;Shipment&quot;"
+      EnglishName="&quot;Delivery Arrived&quot;"
+      LocalName="&quot;Delivery Arrived&quot;"
+      IsManualEntry="true"
+      ShortView="true"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
+    <EventType
+      Code="&quot;PIAR&quot;"
+      ObjectTableName="&quot;Shipment&quot;"
+      EnglishName="&quot;Pickup Arrived&quot;"
+      LocalName="&quot;Pickup Arrived&quot;"
+      IsManualEntry="true"
+      ShortView="true"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
   </EventTypes>
   <Records />
   <MenuButtons
