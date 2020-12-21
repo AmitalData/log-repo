@@ -268,21 +268,25 @@ export class ServiceHelper {
     private static LogServiceError(exception: string, stackTrace: string, logException = true) {
         try {
             if (exception) {
+
+                if (exception.startsWith("Sorry! you have no permission to do this operation"))
+                    return;
+
                 if (this.CurrentSession) {
                     this.CurrentSession.StopBusyIndicator();
 
                     if (!this.CurrentSession.IsShowErrorWindow) {
-                        if (exception && !exception.startsWith("Sorry! you have no permission to do this operation")) {
+                         
                             this.CurrentSession.IsShowErrorWindow = true;
-                            var mywindow = new MessageWindow();
+                            const mywindow = new MessageWindow();
                             mywindow.Show(exception);
 
 
-                            mywindow.WindowClosed.subscribe(($event: any) => {
+                            mywindow.WindowClosed.subscribe(() => {
                                 this.CurrentSession.IsShowErrorWindow = false;
                                 if (exception) {
                                     if (exception.indexOf("Internet Connection Problem") > -1) {
-                                        var loginService: LoginService = new LoginService();
+                                        const loginService: LoginService = new LoginService();
                                         loginService.GetDocumentDownloadToken().subscribe((myResult: any) => {
                                             if (myResult) {
                                                 SessionInfo.DocumentDownloadToken = myResult;
@@ -292,24 +296,25 @@ export class ServiceHelper {
                                     }
                                 }
                             });
-                        }
+                        
                     }
                 }
-            }
 
-            if (exception && stackTrace && logException  === true) {
 
-                var errorLog: ErrorLogPM = new ErrorLogPM();
-                errorLog.Id = Guid.newGuid();
-                errorLog.ClientDate = new Date();
-                errorLog.Tenant = SessionInfo.LoggedUserTenant;
-                errorLog.Tier = "Client";
-                errorLog.UserName = SessionInfo.LoggedUserEmail;
-                errorLog.Exception = exception;
-                errorLog.StackTrace = stackTrace;
-                window.sessionStorage.setItem(["ErrorLogs", errorLog.Id], JSON.stringify(errorLog));
+                if (stackTrace && logException === true) {
 
-                console.error(exception);
+                    var errorLog: ErrorLogPM = new ErrorLogPM();
+                    errorLog.Id = Guid.newGuid();
+                    errorLog.ClientDate = new Date();
+                    errorLog.Tenant = SessionInfo.LoggedUserTenant;
+                    errorLog.Tier = "Client";
+                    errorLog.UserName = SessionInfo.LoggedUserEmail;
+                    errorLog.Exception = exception;
+                    errorLog.StackTrace = stackTrace;
+                    window.sessionStorage.setItem(["ErrorLogs", errorLog.Id], JSON.stringify(errorLog));
+
+                    console.error(exception);
+                }
             }
         }
 
