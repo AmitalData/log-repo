@@ -56,7 +56,7 @@ export class AdvanceSearchComponent implements OnInit {
     private serviceArgs: ServiceArgs;
     public BooleanValues = ["True", "False", "No Filter"];
     LayoutDirection: string = 'ltr';
-    public TopImageRed: string = (ObjectsLocator.GlobalSetting.WorkEnvironment == "customs") ? '0px' : '7px';
+    public TopImageRedX: string = (ObjectsLocator.GlobalSetting.WorkEnvironment == "customs") ? '0px' : '7px';
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(fb: FormBuilder, private pubSubService: PubSubService, private CD: ChangeDetectorRef) {
         this.serviceArgs = new ServiceArgs();
