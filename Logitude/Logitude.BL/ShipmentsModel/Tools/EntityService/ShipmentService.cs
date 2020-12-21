@@ -2651,7 +2651,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 this.ComputeTEU();
                 this.FillDefaultSubType();
 
-                ShipmentFinalArrivalDateBehaviour behaviour = new ShipmentFinalArrivalDateBehaviour(this.entityPM, this.entityMasterData, this.objectContext);
+                ShipmentFinalArrivalDateBehaviour behaviour = new ShipmentFinalArrivalDateBehaviour(this.entityPM, this.objectContext, isNewEntity);
                 behaviour.Handle();
                 this.isUpdatingHousesFinalArrivalDate = behaviour.IsUpdatingHouses;
             }
