@@ -37,6 +37,9 @@ using Json2KeyValue;
 using HypredTest.CurrencyProxy;
 using Logitude.Server.Tools;
 using HypredTest.VendorProxy;
+using HypredTest.AirlineProxy;
+using HypredTest.ShippingAgentProxy;
+using HypredTest.ShippingLineProxy;
 
 namespace HypredTest
 {
@@ -2396,59 +2399,7 @@ namespace HypredTest
         //public string SalesmanUserName { get; set; }
         }
 
-        public Response TestVendorService(string token)
-        {
-
-            VendorProxy.VendorWcfServiceClient vendorService = new VendorWcfServiceClient();
-
-            using (new System.ServiceModel.OperationContextScope((System.ServiceModel.IClientChannel)vendorService.InnerChannel))
-            {
-
-                System.ServiceModel.Web.WebOperationContext.Current.OutgoingRequest.Headers.Add("Token", token);
-
-                Response resultResponse = new Response();
-                // CustomerPM pm = customerservice.GetCustomerPM(new CustomerApiFilters() { ByCode = true, SearchCode = "10107933" }, 8, ref resultResponse);
-                VendorProxy.VendorPM newEntity = new VendorProxy.VendorPM()
-                {
-                    Code = "HBRDVNDR",
-                    EnglishName = "hybrid Vendor",
-                    Tenant = 1,
-                    PartnerTypeId = "VD",
-                     
-                    VatNumber = "98956454",
-                    CountryCode = "IL",
-                };
-
-              
-                //};
-
-                //newCustomer.CustomerSalesmanByProducts = salesmanbyproducts;
-
-                var response = vendorService.Upsert(newEntity, false);
-
-
-                var result = vendorService.GetVendorPM("HBRDVNDR", 1,ref response);
-
-                var response2 = vendorService.Upsert(result, false);
-
-                return response;
-                //  var customer = customerservice.GetCustomerPM(new CustomerApiFilters() { ByVatNumber = true, SearchCode = "1234562322222" }, 1);
-                //  var customer2 = customerservice.GetCustomerPM(new CustomerApiFilters() { ByCode = true, SearchCode = "470690c4-8f9a-4-121212" }, 1);
-                // var contacts = customerservice.GetCustomerContacts(new CustomerApiFilters() { ByCode = true, SearchCode = "70002-1212" }, 1);
-                //var addresses = customerservice.GetCustomerAddresses(new CustomerApiFilters() { ByCode = true, SearchCode = "10110529" }, 10, ref resultResponse);
-
-            }
-
-            //      [Key]
-            //public string ProductTypeCode { get; set; }
-
-            //public string SalesmanUserId { get; set; }
-            //[Key]
-            //public string CustomerId { get; set; }
-
-            //public int Tenant { get; set; }
-            //public string SalesmanUserName { get; set; }
-        }
+      
         private void TestQuoteEvents()
         {
             QuoteProxy.QuoteWcfServiceClient quoteservice = new QuoteWcfServiceClient();
@@ -3192,25 +3143,53 @@ namespace HypredTest
         private void btnRunTest_Click(object sender, EventArgs e)
         {
             Login();
-
-            switch(cmdServices.SelectedItem)
+            var response = new Response();
+            var partnersTester = new PartnersTester();
+            switch (cmdServices.SelectedItem)
             {
                 case "Warehouse":
-                    TestWarehouseService(Token);
+                    response = partnersTester.TestWarehouseService(Token);
                     break;
                 case "Customer":
-                    TestCustomerService(Token);
+                    response = TestCustomerService(Token);
                     break;
                 case "Vendor":
-                    TestVendorService(Token);
+                    response = partnersTester.TestVendorService(Token);
+                    break;
+                case "Agent":
+                    response = partnersTester.TestAgentService(Token);
+                    break;
+                case "Airline":
+                    response = partnersTester.TestAirlineService(Token);
+                    break;
+                case "ShippingAgent":
+                    response = partnersTester.TestShippingAgentService(Token);
+                    break;
+                case "Trucker":
+                    response = partnersTester.TestTruckerService(Token);
+                    break;
+                case "Vessel":
+                    response = partnersTester.TestVesselService(Token);
+                    break;
+                case "ShippingLine":
+                    response = partnersTester.TestShippingLineService(Token);
                     break;
                 default:
                     MessageBox.Show("select a service to test");
                     break;
             }
-            
+
+            if(response != null && response.HasError)
+            {
+                var errorMessage = response.ErrorMessage + (response.InnerErrorMessage ?? "");
+                MessageBox.Show(errorMessage);
+            }
+
+            MessageBox.Show("Success " + response?.Result);
+
         }
 
+      
         private void btnPaymentTerms_Click(object sender, EventArgs e)
         {
             Login();
