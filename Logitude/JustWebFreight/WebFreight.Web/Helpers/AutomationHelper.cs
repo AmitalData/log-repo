@@ -419,7 +419,16 @@ namespace WebFreight.Web.Helpers
         {
             if (!string.IsNullOrEmpty(automationSendEmailArgs.ReportTemplateId))
             {
-                string documentId = new ReportTemplateDocOutService().GetDocOutDocumentId(automationSendEmailArgs.Automation.DocumentTypeId, automationSendEmailArgs);
+                ReportTemplateDocOutArgs reportTemplateDocOutArgs = new ReportTemplateDocOutArgs()
+                {
+                    Tenant = automationSendEmailArgs.Tenant,
+                    ReportTemplateId = automationSendEmailArgs.ReportTemplateId,
+                    DocumentTypeId = automationSendEmailArgs.Automation.DocumentTypeId,
+                    EntityId = automationSendEmailArgs.EntityId, 
+                    ObjectTableId = automationSendEmailArgs.ObjectTableId,
+                };
+
+                string documentId = new ReportTemplateDocOutService(reportTemplateDocOutArgs).GetDocOutDocumentId();
                 if (!string.IsNullOrEmpty(documentId))
                 {
                     CommunicationAttachment attachment = GetNewCommunicationAttachment(automationSendEmailArgs.Tenant, log, documentId);
