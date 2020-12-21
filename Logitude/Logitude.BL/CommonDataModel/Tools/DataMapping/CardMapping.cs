@@ -44,6 +44,8 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             entityPOCO.IsCustomer = entityPM.IsCustomer;
             entityPOCO.EnableConsolidationInvoices = entityPM.EnableConsolidationInvoices;
             entityPOCO.CityName = entityPM.CityName;
+            entityPOCO.Address1 = entityPM.Address1;
+            entityPOCO.Address2 = entityPM.Address2;
             entityPOCO.CountryId = entityPM.CountryId;
             entityPOCO.CountryName = entityPM.CountryName;
             entityPOCO.IsActiveForMobile = entityPM.IsActiveForMobile;

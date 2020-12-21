@@ -1116,6 +1116,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                 PrimaryContactId = card.PrimaryContactId,
                                                 EnableConsolidationInvoices = card.EnableConsolidationInvoices,
                                                 CityName = card.CityName,
+                                                Address1 = card.Address1,
+                                                Address2 = card.Address2,
                                                 CountryId = card.CountryId,
                                                 CountryCode = card.CountryCode,
                                                 CountryName = card.CountryName,
