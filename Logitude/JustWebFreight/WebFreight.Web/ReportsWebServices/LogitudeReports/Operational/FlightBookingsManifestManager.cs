@@ -114,7 +114,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Operational
         public byte[] GetData()
         {
             FlightBookingsManifestDataProvider myDataProvider = this.LoadDataProvider();
-
+                
             XmlSerializer xmlSerializer = new XmlSerializer(typeof(FlightBookingsManifestDataProvider));
             MemoryStream memoryStream = new MemoryStream();
             xmlSerializer.Serialize(memoryStream, myDataProvider);
@@ -147,6 +147,8 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Operational
                     myDataRecord.Master = shipmentPackage.MasterNumber;
                     myDataRecord.Shipper = shipmentPackage.ShipperName;
                     myDataRecord.Consignee = shipmentPackage.ConsigneeName;
+                    myDataRecord.ShipperId = shipmentPackage.ShipperId;
+                    myDataRecord.ConsigneeId = shipmentPackage.ConsigneeId;
                     myDataRecord.Quantity = shipmentPackage.PackageQuantity;
                     myDataRecord.Weight = shipmentPackage.PackagesGrossWeight;
                     myDataRecord.Volume = shipmentPackage.PackageVolume;
@@ -157,14 +159,15 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Operational
                     myDataRecord.MasterLong = shipmentPackage.AirlinePrefix + "-" + shipmentPackage.MasterNumber;
                     myDataRecord.ATD = shipmentPackage.MainCarriageATD;
                     myDataRecord.ETD = shipmentPackage.MainCarriageETD;
+                    myDataRecord.ETA = shipmentPackage.MainCarriageETA;
                     myDataRecord.CustomAgentImportName = shipmentPackage.CustomAgentImportName;
                     myDataRecord.PackageReference1 = shipmentPackage.ShipmentPackageReference1;
                     myDataRecord.PackageReference2 = shipmentPackage.ShipmentPackageReference2;
                     myDataRecord.PackageReference3 = shipmentPackage.ShipmentPackageReference3;
                     myDataRecord.PackageReference4 = shipmentPackage.ShipmentPackageReference4;
+                    myDataRecord.Routing = shipmentPackage.Routing;
 
-
-                    if(shipmentPackage.PackageWidth != null && shipmentPackage.PackageWidth != 0
+                    if (shipmentPackage.PackageWidth != null && shipmentPackage.PackageWidth != 0
                         && shipmentPackage.PackageLength != null && shipmentPackage.PackageLength != 0
                         && shipmentPackage.PackageHeight != null && shipmentPackage.PackageHeight != 0)
                     {
@@ -191,7 +194,9 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Operational
                                                                }).ToList();
 
                     List<ReportGroup> masterCommodityAgentResults = (from p in myDataList
-                                                                     group p by new { p.Master, p.CommodityNumber ,p.CustomAgentImportId, p.CustomAgentImportName ,p.CommodityName ,p.MasterLong , p.ATD , p.ETD } 
+                                                                     group p by new { p.Master, p.CommodityNumber, p.CustomAgentImportId, p.CustomAgentImportName,
+                                                                     p.CommodityName ,p.MasterLong, p.ATD, p.ETD, p.ETA, 
+                                                                     p.Shipper, p.ShipperId,p.ConsigneeId, p.Consignee,p.Routing} 
                                                                      into g
                                                                      orderby g.Key.Master
                                                                      select new ReportGroup()
@@ -204,6 +209,12 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Operational
                                                                          MasterLong = g.Key.MasterLong,
                                                                          ATD = g.Key.ATD,
                                                                          ETD = g.Key.ETD,
+                                                                         ETA = g.Key.ETA,
+                                                                         Shipper = g.Key.Shipper,
+                                                                         ShipperId = g.Key.ShipperId,
+                                                                         ConsigneeId = g.Key.ConsigneeId,
+                                                                         Consignee = g.Key.Consignee,
+                                                                         Routing = g.Key.Routing,
                                                                          ReportGroupDataList = g.ToList(),
                                                                      }).ToList();
 
@@ -279,6 +290,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Operational
                      ShipmentNumber = shipment.ShipmentNumber,
                      CreateDateTime = shipment.CreateDateTime,
                      ShipperName = shipment.ShipperName,
+                     ShipperId = shipment.ShipperId,
                      ConsigneeId = shipment.ConsigneeId,
                      ConsigneeName = shipment.ConsigneeName,
                      CustomAgentImportId = shipment.CustomAgentImportId,
@@ -325,7 +337,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Operational
                      Field38 = shipment.Field38,
                      Field39 = shipment.Field39,
                      Field40 = shipment.Field40,
-
+                     Routing = shipment.Routing,
                      //Master
                      MainCarriageFromPortId = master.MainCarriageFromPortId,
                      MainCarriageFromPortName = master.MainCarriageFromPort != null ? master.MainCarriageFromPort.EnglishName : null,
@@ -336,6 +348,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Operational
                      MainCarriageCarrierNumber = master.MainCarriageCarrierNumber,
                      MainCarriageETD = master.MainCarriageETD,
                      MainCarriageATD = master.MainCarriageATD,
+                     MainCarriageETA = master.MainCarriageETA,
                      MainCarriageDateFilter = master.MainCarriageATD != null ? master.MainCarriageATD : master.MainCarriageETD,
                      AirlinePrefix = master.AirlinePrefix,
                      //Package
@@ -354,7 +367,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Operational
                      PackageWidth = package.Width,
                      PackageLength = package.Length,
                      PackageHeight = package.Height,
-
+                     
                  });
 
             return dataList;
