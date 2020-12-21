@@ -54,6 +54,11 @@ export class CargoTrackingShipmentSearchPM {
     public set IsPublic(newValue: boolean) { if (this.isPublic != newValue) { this.isPublic = newValue; this.MarkAsDirty("IsPublic"); } }
        
 	 
+    private referenceType: string;
+    public get ReferenceType() { return this.referenceType; }
+    public set ReferenceType(newValue: string) { if (this.referenceType != newValue) { this.referenceType = newValue; this.MarkAsDirty("ReferenceType"); } }
+       
+	 
 
     public OldEntityPM: CargoTrackingShipmentSearchPM;
 		

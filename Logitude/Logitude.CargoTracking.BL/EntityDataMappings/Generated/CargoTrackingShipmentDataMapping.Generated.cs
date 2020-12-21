@@ -430,10 +430,6 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 				entityPOCO.CustomsClearanceDate = entityPM.CustomsClearanceDate;
 			}
 			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DirectionId))
-            {
-				entityPOCO.DirectionId = entityPM.DirectionId;
-			}
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ContainersNumbers))
             {
 				entityPOCO.ContainersNumbers = entityPM.ContainersNumbers;
@@ -732,10 +728,6 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
             {
 					entityPM.ContainersNumbers = entityPOCO.ContainersNumbers;
             }
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.DirectionId))
-            {
-					entityPM.DirectionId = entityPOCO.DirectionId;
-            }
 
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.PackagesQuantity))
             {
@@ -1032,7 +1024,7 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
             {
                 oldEntityPM.PackagesQuantity = entityPM.PackagesQuantity;
             }
-
+			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DirectionId))
             {
                 oldEntityPM.DirectionId = entityPM.DirectionId;
