@@ -21,7 +21,7 @@ export class CopyJournalComponent extends BaseComponent implements OnInit  {
     private _entityResourceService: EntityResourceService = new EntityResourceService();
     private CurrentSession = SessionLocator.SelectedSession;
 
-    disableDates: boolean = false;
+    disableDates: boolean = true;
     constructor() {
         super();
 
@@ -154,7 +154,7 @@ export class CopyJournalComponent extends BaseComponent implements OnInit  {
         if (this.dates != value) {
             this.dates = value;
             
-            this.disableDates = !value;
+            this.disableDates = value;
             
             if(this.disableDates)
                 this.ResetDates();

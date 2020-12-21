@@ -16,7 +16,7 @@
 <table>
     <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
         <td colspan="2">
-            <ValidationSummary [ItemsSource]="ValidationErrorsList" [SingleLine]="true"></ValidationSummary>
+            <ValidationSummary [ItemsSource]="ValidationErrorsList" ></ValidationSummary>
         </td>
     </tr>
     <tr style="height: 110px;">
@@ -48,21 +48,21 @@
                 <div float-start style="width: 160px;">{{'Accounting.General.O.AccountingDate' | TextCodeTranslationPipe}}</div>
                 <div [class.force-disable]="disableDates" float-start style="width: 120px">
                     <LogDatePicker  [ObjectFieldName]="'AccountingDate'" [ObjectTableName]="'cheese'"
-                        [DataContext]="DataContext" [HideColumns]="true" [ForceFocus]="forceFocus" [SelectedDateValue]="AccountingDate"></LogDatePicker>
+                        [DataContext]="DataContext" [HideColumns]="true"  [SelectedDateValue]="AccountingDate"></LogDatePicker>
                 </div>
             </div>
             <div>
                 <div float-start style="width: 160px;">{{'Journal.F.DocumentDate' | TextCodeTranslationPipe}}</div>
                 <div [class.force-disable]="disableDates" float-start style="width: 120px">
                     <LogDatePicker [ObjectFieldName]="'DocumentDate'" [ObjectTableName]="ObjectTableName"
-                        [DataContext]="DataContext" [HideColumns]="true" [ForceFocus]="forceFocus" [SelectedDateValue]="DocumentDate"></LogDatePicker>
+                        [DataContext]="DataContext" [HideColumns]="true"  [SelectedDateValue]="DocumentDate"></LogDatePicker>
                 </div>
             </div>
             <div>
                 <div float-start style="width: 160px;">{{'Journal.F.DueDate' | TextCodeTranslationPipe}}</div>
                 <div [class.force-disable]="disableDates" float-start style="width: 120px">
                     <LogDatePicker [ObjectFieldName]="'DueDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"
-                        [HideColumns]="true" [ForceFocus]="forceFocus" [SelectedDateValue]="DueDate"></LogDatePicker>
+                        [HideColumns]="true"  [SelectedDateValue]="DueDate"></LogDatePicker>
                 </div>
             </div>
         </td>
