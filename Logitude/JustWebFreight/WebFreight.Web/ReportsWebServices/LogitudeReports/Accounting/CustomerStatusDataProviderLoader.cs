@@ -126,7 +126,8 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                 TotalOpenCheques = customer.First().TotalOpenCheques ?? 0,
                 TotalOpenShipments = customer.First().TotalOpenShipments ?? 0,
 
-                AccountingBalance = customer.First().BalanceInLocalCurrency ?? 0,
+                AccountingBalance = customer.Sum(d=>d.BalanceInLocalCurrency) ?? 0,
+                //AccountingBalance = customer.First().BalanceInLocalCurrency ?? 0,
                 //AccountingBalance = customer.Sum(d => d.Total),
                 Periods = GetStatusPeriods(periodsByDate)
             };
