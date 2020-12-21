@@ -252,6 +252,8 @@ namespace WebFreight.Web.DataProviders
 
     public class NewManifestDetailsClass
     {
+        public string OnCarriageToPort { get; set; }
+        public string OnCarriageFromPort{get; set;}
         public string AMSBL { get; set; }
         public string FileNumber { get; set; }
         public string HAWB { get; set; }
