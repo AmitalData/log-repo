@@ -163,6 +163,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             {
                 interestTransaction.ChangeSetOp = ChangeSetOperation.Update;
                 interestTransaction.IsCancelled = true;
+                interestTransaction.EntityId = interestReport.Id;
                 InterestTransactionUpdateService interestTransactionUpdateService = new InterestTransactionUpdateService(MainContext, new Dictionary<string, IContext>(), interestReport.Tenant);
                 interestTransactionUpdateService.Update(interestTransaction, true);
             }
