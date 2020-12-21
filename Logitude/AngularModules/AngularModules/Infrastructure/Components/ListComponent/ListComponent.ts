@@ -86,6 +86,8 @@ export class ListComponent implements OnInit, AfterViewInit {
     public IsShowTipIcon: boolean = false;
     public IsFirstTipLoad: boolean = false;
 
+    ConstantPageSize: number = 100;
+    DontApplyVirtualization: boolean = false;
 
     //public Title: string;
     private title: string;//= "";
@@ -150,7 +152,11 @@ export class ListComponent implements OnInit, AfterViewInit {
 
     SearchMethod() {
         //this.ApplyPreDefinedFilters();
-        this.CurrentQueryFilters.AdditionalFilters = this.CurrentQueryFilters.AdditionalFilters.filter(a => a.FieldName != "SearchFields");
+
+        var searchFieldName: string = this.IsUseCardSearchMechanism() ? "CardSearchField" : "SearchFields";
+
+
+        this.CurrentQueryFilters.AdditionalFilters = this.CurrentQueryFilters.AdditionalFilters.filter(a => a.FieldName != searchFieldName);
         //if (this.searchFields && this.searchFields != "") {
         //    this.searchFields = this.searchFields.replace(/"/g, '');
         //    //this.searchFields = this.searchFields.replace(/\//g, '');//("\\", "\\");
@@ -159,7 +165,7 @@ export class ListComponent implements OnInit, AfterViewInit {
         //    //this.searchFields = this.searchFields.trim();
         //}
         //if (this.ClearMySearch == false) {
-        this.CurrentQueryFilters.addAdditionalFilter("SearchFields", this.searchFields, null, null, "Contains", false, true, false, "String");
+        this.CurrentQueryFilters.addAdditionalFilter(searchFieldName, this.searchFields, null, null, "Contains", false, true, false, "String");
         this.onQueryChangeEvent.emit({ QueryCode: this.SelectedQueryCode, Filters: this.CurrentQueryFilters, SearchFieldChanged: true, Reload: true });
         //}
         //else {
@@ -615,6 +621,10 @@ export class ListComponent implements OnInit, AfterViewInit {
     NewButtonId: string;
 
     ngOnInit() {
+
+        if (this.IsUseCardSearchMechanism()) {
+            this.DontApplyVirtualization = true;
+        }
 
         if (ObjectsLocator.IsDemoTenant(SessionLocator.Tenant.toString()) && !SessionLocator.LoggedUserPM.IsCustomerCare && this.ObjectTableName == "Contact") {
             this.IsDemoTenant = true;
@@ -1614,7 +1624,7 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
             MyFilters.AdditionalFilters.push(filter);
         });
         //console.log(searchfields);
-        if (searchfields) {
+        if (searchfields && !this.IsUseCardSearchMechanism()) {
             //filters.addAdditionalFilter("SearchFields", searchfields, null, null, "Contains", null, null, null, "Text");
             MyFilters.Filter1Name = "SearchFields";
             MyFilters.Filter1Operator = "Contains";
@@ -1627,7 +1637,13 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
         //this.firstCall = false;
         //}
         MyFilters.PageIndex = skip;
-        MyFilters.PageSize = take;
+
+        if (this.IsUseCardSearchMechanism()) {
+            MyFilters.PageSize = this.ConstantPageSize;
+            MyFilters.DontApplyVirtualization = this.DontApplyVirtualization;
+        } else MyFilters.PageSize = take;
+
+       
         MyFilters.SortBy = sortingCol;
         MyFilters.SortDirection = sortingDir;
         this.CurrentQueryFilters = MyFilters;
@@ -3493,6 +3509,17 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
     }
 
 
+    IsUseCardSearchMechanism() {
+        var result: boolean = false;
+        if (this.ObjectTableName == "Customer") {
+            var featureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "SCV" && d.TenantNumber == SessionLocator.Tenant)[0];
+            if (featureToggle) {
+            result = true;
+            }
+        }
+        return result;
+
+    }
 
     private currentFilters: ApiQueryFilters;
     private currentSearchFields: string;

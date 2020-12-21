@@ -209,9 +209,9 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
                 GenericSort sortClass = new GenericSort();
 
 								                
-                QueryFilterItem item = queryOperations.QueryFilterItems.Where(f => f.FieldName == "CompactSearchField").FirstOrDefault();
+                QueryFilterItem item = queryOperations.QueryFilterItems.Where(f => f.FieldName == "CardSearchField").FirstOrDefault();
                 queryOperations.QueryFilterItems.Remove(item);
-                string seachvalue = item != null ? item.FieldValue!=null ? !string.IsNullOrEmpty(item.FieldValue.ToString()) ? item.FieldValue.ToString() :null :null : null;
+                string searchvalue = item != null ? item.FieldValue!=null ? !string.IsNullOrEmpty(item.FieldValue.ToString()) ? item.FieldValue.ToString() :null :null : null;
 				
 				
                 ICommonDataContext MyContext = CommonDataContext.GetContext(tenant);
@@ -236,13 +236,13 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 
 		      
 			  								             
-			 if (!string.IsNullOrEmpty(seachvalue))
+			 if (!string.IsNullOrEmpty(searchvalue))
                 {
-                    CardSearchFilter cardSearchFilter = new CardSearchFilter();
-                    entityLists = cardSearchFilter.GetFilteredQuery(new CardSearchFilterArgs() { SeachText = seachvalue, Tenant = tenant, QueryOperations = queryOperations, EntityLists = entityLists, Filter = genericFilter });
+				    CardDataSearchService cardDataSearchService = new CardDataSearchService();
+                    entityLists = cardDataSearchService.Run( new CardSearchArgs() { SearchText = searchvalue, Tenant = tenant, EntityLists = entityLists, SortByColumnName = queryOperations.SortByColumnName, SortDirectin = queryOperations.SortDirectin, PageSize = queryOperations.PageSize, FilterItems = queryOperations.QueryFilterItems }).AsQueryable();
                 }
 		     
- 
+ else
  
                 if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
                  {
