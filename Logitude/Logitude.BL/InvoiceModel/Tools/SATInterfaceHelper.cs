@@ -1372,7 +1372,7 @@ namespace Logitude.BL.InvoiceModel.Tools
 
 
 
-        public void SendSATCancellationRequest(ARInvoicePM entityPM, ARInvoice entityPoco)
+        public void HandleInvoiceSATCancellation(ARInvoicePM entityPM, ARInvoice entityPoco)
         {
             SATInterfaceSettingRepository sATInterfaceSettingRepository = new SATInterfaceSettingRepository(entityPM.Tenant);
             SATInterfaceSetting satSetting = sATInterfaceSettingRepository.GetSingleSATInterfaceSetting(entityPM.Tenant);
@@ -1382,7 +1382,7 @@ namespace Logitude.BL.InvoiceModel.Tools
                 {
                     case "PROF":
                     case "PROF33":
-                        SendProfactoCancellationRequest33(entityPM, entityPoco);
+                        HandleProfactInvoiceCancellation(entityPM, entityPoco);
                         break;
                     case "CONT":
                         //SendContpaqCancellation(entityPM);
@@ -1394,23 +1394,31 @@ namespace Logitude.BL.InvoiceModel.Tools
         }
 
 
-        private void SendProfactoCancellationRequest33(ARInvoicePM entityPM, ARInvoice entityPoco)
+        private void HandleProfactInvoiceCancellation(ARInvoicePM entityPM, ARInvoice entityPoco)
         {
             if (entityPoco.SATTransferStatusCode == "TG")
                 throw new ApplicationException("You are not allowed to void the invoice while its status is Transferring to SAT");
 
             if (!string.IsNullOrEmpty(entityPoco.SATXML))
             {
-                Encoding encoding = Encoding.UTF8;
-                byte[] profactoXMLData = encoding.GetBytes(entityPoco.SATXML);
-
-                Profact.TimbraCFDI33.Comprobante comprobante = LogitudeXmlSerializer.DeserializeObject<Profact.TimbraCFDI33.Comprobante>(profactoXMLData);
-
-                this.BuildProfactCommunicationLog33(comprobante, entityPM.Tenant, entityPM.Id, entityPM.InvoiceNumber.ToString(), true);
-
+                SendARInvoiceSATCancellationRequest(entityPM, entityPoco);
                 entityPoco.SATTransferStatusCode = entityPM.SATTransferStatusCode = "TG";
-
             }
+            else
+            {
+                entityPoco.SATTransferStatusCode = entityPM.SATTransferStatusCode = "NT";
+                entityPoco.TransmissionError = entityPM.TransmissionError = null;
+            }
+        }
+
+        private void SendARInvoiceSATCancellationRequest(ARInvoicePM entityPM, ARInvoice entityPoco)
+        {
+            Encoding encoding = Encoding.UTF8;
+            byte[] profactoXMLData = encoding.GetBytes(entityPoco.SATXML);
+
+            Profact.TimbraCFDI33.Comprobante comprobante = LogitudeXmlSerializer.DeserializeObject<Profact.TimbraCFDI33.Comprobante>(profactoXMLData);
+
+            this.BuildProfactCommunicationLog33(comprobante, entityPM.Tenant, entityPM.Id, entityPM.InvoiceNumber.ToString(), true);
         }
 
         private void BuildProfactCommunicationLog33(Profact.TimbraCFDI33.Comprobante comprobante, int tenant, string entityId, string entityReference, bool isCancellation = false, bool isPayment = false)
@@ -2105,7 +2113,7 @@ namespace Logitude.BL.InvoiceModel.Tools
 
         }
 
-        public void SendPaymentSATCancellationRequest(ARPaymentPM entityPM, ARPayment entityPoco)
+        public void HandlePaymentSATCancellation(ARPaymentPM entityPM, ARPayment entityPoco)
         {
             SATInterfaceSettingRepository sATInterfaceSettingRepository = new SATInterfaceSettingRepository(entityPM.Tenant);
             SATInterfaceSetting satSetting = sATInterfaceSettingRepository.GetSingleSATInterfaceSetting(entityPM.Tenant);
@@ -2115,7 +2123,7 @@ namespace Logitude.BL.InvoiceModel.Tools
                 {
                     case "PROF":
                     case "PROF33":
-                        SendPaymetProfactCancellationRequest(entityPM, entityPoco);
+                        HandleProfactPaymentCancellation(entityPM, entityPoco);
                         break;
                     case "CONT":
                         //SendContpaqCancellation(entityPM);
@@ -2126,7 +2134,7 @@ namespace Logitude.BL.InvoiceModel.Tools
             }
         }
 
-        private void SendPaymetProfactCancellationRequest(ARPaymentPM entityPM, ARPayment entityPoco)
+        private void HandleProfactPaymentCancellation(ARPaymentPM entityPM, ARPayment entityPoco)
         {
             if (!string.IsNullOrEmpty(entityPoco.SATXML))
             {

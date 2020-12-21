@@ -77,10 +77,7 @@ export class ARInvoiceDetailsTabNormal extends BaseComponent implements OnDestro
         this.ShowFixMe();
         this.Listen();
 
-        if (!AppTool.IsNullOrEmpty(this.EntityPM.TransmissionError)) {
-            this.EntityWarningsList.push(this.EntityPM.TransmissionError);
-            this.EntityWarning = this.EntityPM.TransmissionError;
-        }
+        this.BuildEntityWarnings();
 
         if (FeatureLocator.HasFeaturePermession("General", "General.Features.SystemCurrencies")) {
             this.IsEditExchangeRateVisible = true;
@@ -101,6 +98,15 @@ export class ARInvoiceDetailsTabNormal extends BaseComponent implements OnDestro
     }
 
     public IsFixMeButtonVisible: boolean = false;
+    private BuildEntityWarnings() {
+        this.EntityWarning = "";
+        this.EntityWarningsList = [];
+        if (!AppTool.IsNullOrEmpty(this.EntityPM.TransmissionError)) {
+            this.EntityWarningsList.push(this.EntityPM.TransmissionError);
+            this.EntityWarning = this.EntityPM.TransmissionError;
+        }
+    }
+
     ShowFixMe() {
         this.IsFixMeButtonVisible = false;
 
@@ -127,6 +133,7 @@ export class ARInvoiceDetailsTabNormal extends BaseComponent implements OnDestro
                     this.EntityPM = this.entityArgs.EditComponent.EntityPM;
                     this.SetUIProperties();
                     this.BuildInvoiceLines();
+                    this.BuildEntityWarnings();
                 }
 
                 else {
@@ -143,6 +150,7 @@ export class ARInvoiceDetailsTabNormal extends BaseComponent implements OnDestro
                     this.EntityPM = this.entityArgs.EditComponent.EntityPM;
                     this.SetUIProperties();
                     this.BuildInvoiceLines();
+                    this.BuildEntityWarnings();
                 }
             });
         }
