@@ -656,6 +656,14 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
                 logWindow.Width = widthwindow - 100;
                 logWindow.Height = heighthwindow - 100;
                 logWindow.Title = "Edit Html Template";
+
+
+
+                if (this.AutomationDocumentTypeTemplateIds.filter(d => d == documentTypeTemplateViewModel.Id)[0]) {
+                    windowArgs.RequsetPageName = "";
+
+                }
+
                 logWindow.WindowArgs = windowArgs;
                 logWindow.Show("./InfrastructureModules/InfrastructureDocuments/Components/DocumentComponent/HtmlDocumentPreviewComponent");
                 logWindow.WindowClosed.subscribe(($event: any) => {
@@ -1666,6 +1674,8 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
 
 
             if (this.IsNewEntity) {
+
+                this.SaveDocumentTypeTemplates();
                 this._automationExtendedPMService.insert(this.CurrentEntityPM).subscribe((res:any) => {
                     var pmResponse: ServiceResponse = res;
                     if (!pmResponse.HasError) {
@@ -1725,6 +1735,11 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
         if (this.IsResultEmail) { this.CurrentEntityPM.AutomationResultEmailRecipientLists = this.BuildAutomationResultEmailRecipient(); }
     }
 
+
+    SaveDocumentTypeTemplates() {
+
+        if (this.ResultCodeSelected.Code == "EMAIL") { this.CurrentEntityPM.DocumentTypeTemplateIds = this.AutomationDocumentTypeTemplateIds }
+    }
 
     IsFollowUp() {
 

@@ -101,7 +101,7 @@ export class NewReportTemplateComponent extends BaseComponent implements OnInit 
             this.TypeTab = args.TypeTab;
             this.FullDocumentTypeTemplateLists = args.DocumentTypeTemplateLists;
             this.RequestAreaName = args.RequestAreaName;
-            this.AutomationId = args.AutomationId;
+            this.AutomationId = !args.AutomationId ? null : args.AutomationId;
 
             
             if (this.TypeTab == "Document") {
