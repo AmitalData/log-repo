@@ -370,6 +370,7 @@ namespace Logitude.BL.QuoteModel.EntityPMs
         #endregion
 
         public bool IsSaleCurrencySameAsCost { get; set; }
+        public bool IsMultiCurrency { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string NotifyId { get; set; }
