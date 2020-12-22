@@ -592,7 +592,7 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
             if (!pmResponse.HasError) {
                 var myResult = pmResponse.Result;
 
-                myResult.filter(d => d.AutomationId == this.CurrentEntityPM.Id || !d.AutomationId).forEach((item) => {
+                myResult.forEach((item) => {
                     this.DocumentTypeTemplateReportLists.push(new DocumentTypeTemplateViewModel(item));
                 });
 
@@ -625,7 +625,7 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
 
 
 
-
+    AutomationDocumentTypeTemplateIds: string[] = [];
 
     EditDocumentTemplate(documentTypeTemplateViewModel: DocumentTypeTemplateViewModel) {
         
@@ -660,7 +660,15 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
                 logWindow.Show("./InfrastructureModules/InfrastructureDocuments/Components/DocumentComponent/HtmlDocumentPreviewComponent");
                 logWindow.WindowClosed.subscribe(($event: any) => {
                     if ($event) {
+
+                        var documentTypeTemplate: any = this.DocumentTypeTemplateLists.filter(d => d.Id == $event)[0];
+                        if (!documentTypeTemplate) {
+                            this.AutomationDocumentTypeTemplateIds.push($event);
+                        }
+
+
                         this.LoadDocumentTypeHTMLTemplate(this.DocumentTypeSelected, $event);
+                        
                     }
                 });
 
@@ -710,6 +718,11 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
         logitudeWindow.WindowClosed.subscribe(($event: any) => {
             if ($event && this.DocumentTypeTemplateLists && this.DocumentTypeTemplateLists.length > 0) {
                 this.IsEnableEditTemplate = true;
+            }
+
+            if ($event) {
+                this.AutomationDocumentTypeTemplateIds.push($event);
+
             }
         });
     }

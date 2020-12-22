@@ -130,7 +130,7 @@ export class SaveAsTemplateComponent implements OnInit {
                 newTemplatePM.TemplateHeaderHtml = this.SelectedTemplate.TemplateHeaderHtml;
                 newTemplatePM.TemplateFooterHeight = this.SelectedTemplate.TemplateFooterHeight;
                 newTemplatePM.TemplateFooterHtml = this.SelectedTemplate.TemplateFooterHtml;
-                newTemplatePM.AutomationId = this.DataContext.AutomationId;
+                newTemplatePM.AutomationId = !this.DataContext.AutomationId ? null : this.DataContext.AutomationId;
 
                 if (this.DataContext) {
                     newTemplatePM.TemplateBodyHtml = StringToBase64(this.DataContext.froalaEditorSetting.froalaEditorComponent.getHtml());
