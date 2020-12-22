@@ -311,7 +311,10 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             VatTypeQuery vatTypeQuery = new VatTypeQuery(tenant);
             VatTypePM vatType = vatTypeQuery.GetSinglePMByCode("STD", tenant);
             VatTypePercentageQuery vatTypePercentageQuery = new VatTypePercentageQuery(tenant);
-             return vatTypePercentageQuery.GetVatTypePercentagesForVatType( tenant, vatType.Id).First().Percentage;
+            double? STDPercentage = vatTypePercentageQuery.GetVatTypePercentagesForVatType(tenant, vatType.Id).First().Percentage;
+            if (STDPercentage != null && STDPercentage != 0)
+                STDPercentage = STDPercentage / 100;
+            return STDPercentage;
         }
 
         private string ModifyVatNumberToValidLength(string vatnumber)
