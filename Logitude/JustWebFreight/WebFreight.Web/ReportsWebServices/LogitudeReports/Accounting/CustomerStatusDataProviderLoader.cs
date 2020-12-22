@@ -119,8 +119,10 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
             {
                 // account details
                 CustomerName = customer.First().AccountEnglishName,
+                CustomerLocalName = customer.First().AccountLocalName,
                 CustomerDisplayNumber = customer.First().AccountDisplayNumber,
                 CustomerPaymentTerm = customer.First().AccountTermName,
+                CustomerLocalPaymentTerm = customer.First().AccountTermLocalName,
                 CustomerPhone = customer.First().AccountPhone,
 
                 //credit details
