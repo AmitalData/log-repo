@@ -104,6 +104,7 @@
     <None Include="DBTables\CargoTrackingTransportMode.dxml" />
     <None Include="DBTables\CargoTrackingWatermark.dxml" />
     <None Include="EntityFiles\CargoTrackingCard.lxml" />
+    <None Include="EntityFiles\CargoTrackingCountry.lxml" />
     <None Include="EntityFiles\CargoTrackingHeaderEntityType.lxml" />
     <None Include="EntityFiles\CargoTrackingIncrementalStat.lxml" />
     <None Include="EntityFiles\CargoTrackingMilestone.lxml" />
@@ -116,9 +117,6 @@
     </None>
     <None Include="EntityFiles\CargoTrackingWatermark.lxml" />
     <None Include="EntityFiles\CargoTrackingTransportMode.lxml">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="EntityFiles\CargoTrackingCountry.lxml">
       <SubType>Designer</SubType>
     </None>
     <None Include="packages.config" />

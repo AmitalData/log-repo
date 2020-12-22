@@ -9,10 +9,10 @@
 export class CargoTrackingCountryList {
    
 	Id: string;
-	LocalName: string;
+	Tenant: number;
 	Code: string;
 	EnglishName: string;
-	Tenant: number;
+	LocalName: string;
 	
 }
  

@@ -23,15 +23,15 @@ namespace Logitude.CargoTracking.Data.EntityMapping
 		
 		    this.HasKey(t => new { t.Id });
 	 
-            this.Property(t => t.Id).HasColumnName("Id").HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.Id).HasColumnName("Id").IsRequired().HasMaxLength(15).IsUnicode(false);
 
-            this.Property(t => t.LocalName).HasColumnName("LocalName").HasMaxLength(120).IsUnicode(true);
+            this.Property(t => t.Tenant).HasColumnName("Tenant").IsRequired();
 
             this.Property(t => t.Code).HasColumnName("Code").IsRequired().HasMaxLength(2).IsFixedLength();
 
             this.Property(t => t.EnglishName).HasColumnName("EnglishName").IsRequired().HasMaxLength(120).IsUnicode(false);
 
-            this.Property(t => t.Tenant).HasColumnName("Tenant");
+            this.Property(t => t.LocalName).HasColumnName("LocalName").HasMaxLength(120).IsUnicode(true);
         }
     }
 }

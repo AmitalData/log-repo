@@ -48,6 +48,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>APIDataContractGenerator.tt</DependentUpon>
     </Compile>
+    <Compile Include="AutoGeneratorsMetaData\CopyDXMLGenerator.cs">
+      <DependentUpon>CopyDXMLGenerator.tt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
     <Compile Include="AutoGeneratorsMetaData\NewModelsAPIDataContractGenerator.cs">
       <DependentUpon>NewModelsAPIDataContractGenerator.tt</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -256,6 +261,10 @@
     <None Include="AutoGeneratorsMetaData\APIDataContractGenerator.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>APIDataContractGenerator2.cs</LastGenOutput>
+    </None>
+    <None Include="AutoGeneratorsMetaData\CopyDXMLGenerator.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>CopyDXMLGenerator.cs</LastGenOutput>
     </None>
     <Content Include="AutoGeneratorsMetaData\MetadataClassesGenerator.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
