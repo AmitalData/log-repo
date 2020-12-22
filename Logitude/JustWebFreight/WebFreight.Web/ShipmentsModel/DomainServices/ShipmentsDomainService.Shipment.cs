@@ -46,6 +46,7 @@ using WebFreight.Web.WcfApi;
 using System.Data.SqlClient;
 using Logitude.XSD.FSR;
 using System.Text.RegularExpressions;
+using Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours.Validators;
 
 namespace WebFreight.Web.ShipmentsModel.DomainServices
 {
@@ -2466,20 +2467,43 @@ namespace WebFreight.Web.ShipmentsModel.DomainServices
         {
             string myResult = null;
 
-            bool isFieldExists = ShipmentValidating.IsMasterFieldUsedByAnotherShipment(entityId, myMasterField, myAirlinePrefixField, myDirectionId, myTransportModeId, myShipmentLevelCode, isCancelled, myTenant);
-            if (isFieldExists)
+            try
             {
-                myResult = "Master field already used in another Shipment";
+                ShipmentMasterIsUsedValidator validator = new ShipmentMasterIsUsedValidator();
+
+                validator.Validate(new ShipmentMasterIsUsedValidatorArgs()
+                {
+                    Tenant = myTenant,
+                    ShipmentId = entityId,
+                    BookingId = myBookingId,
+                    DirectionId = myDirectionId,
+                    TransportModeId = myTransportModeId,
+                    ShipmentLevelCode = myShipmentLevelCode,
+                    Master = myMasterField,
+                    AirlinePrefix = myAirlinePrefixField,
+                    IsCancelled = isCancelled,
+                });
             }
 
-            else
+            catch (Exception ex)
             {
-                isFieldExists = ShipmentValidating.IsMasterFieldUsedByAnotherBooking(myBookingId, myMasterField, myAirlinePrefixField, myDirectionId, myTransportModeId, myShipmentLevelCode, isCancelled, myTenant);
-                if (isFieldExists)
-                {
-                    myResult = "Master field already used in another Booking";
-                }
+                myResult = ex.Message;
             }
+
+            //bool isFieldExists = ShipmentValidating.IsMasterFieldUsedByAnotherShipment(entityId, myMasterField, myAirlinePrefixField, myDirectionId, myTransportModeId, myShipmentLevelCode, isCancelled, myTenant);
+            //if (isFieldExists)
+            //{
+            //    myResult = "Master field already used in another Shipment";
+            //}
+
+            //else
+            //{
+            //    isFieldExists = ShipmentValidating.IsMasterFieldUsedByAnotherBooking(myBookingId, myMasterField, myAirlinePrefixField, myDirectionId, myTransportModeId, myShipmentLevelCode, isCancelled, myTenant);
+            //    if (isFieldExists)
+            //    {
+            //        myResult = "Master field already used in another Booking";
+            //    }
+            //}
 
             return myResult;
         }

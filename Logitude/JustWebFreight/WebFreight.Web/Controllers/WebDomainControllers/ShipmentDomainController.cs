@@ -8,6 +8,7 @@ using Logitude.BL.ShipmentsModel.EntityLists;
 using Logitude.BL.ShipmentsModel.EntityOtherServices;
 using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.BL.ShipmentsModel.EntityQueries;
+using Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours.Validators;
 using Logitude.BL.ShipmentsModel.Tools.EntityService;
 using Logitude.BL.ShipmentsModel.Tools.Validating;
 using Logitude.CRM.Data;
@@ -356,22 +357,47 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int myTenant = authToken.Tenant;
 
-                bool isFieldExists = ShipmentValidating.IsMasterFieldUsedByAnotherShipment(args.ShipmentId, args.Master, args.AirlinePrefix, args.DirectionId, args.TransportModeId, args.ShipmentLevelCode, args.IsCancelled, myTenant);
-                if (isFieldExists)
+                try
                 {
-                    myResult = "Master field already used in another Shipment";
+                    ShipmentMasterIsUsedValidator validator = new ShipmentMasterIsUsedValidator();
+
+                    validator.Validate(new ShipmentMasterIsUsedValidatorArgs()
+                    {
+                        Tenant = myTenant,
+                        ShipmentId = args.ShipmentId,
+                        BookingId = args.BookingId,
+                        DirectionId = args.DirectionId,
+                        TransportModeId = args.TransportModeId,
+                        ShipmentLevelCode = args.ShipmentLevelCode,
+                        Master = args.Master,
+                        AirlinePrefix = args.AirlinePrefix,
+                        IsCancelled = args.IsCancelled,                        
+                    });
                 }
 
-                else
+                catch (Exception ex)
                 {
-                    isFieldExists = ShipmentValidating.IsMasterFieldUsedByAnotherBooking(args.BookingId, args.Master, args.AirlinePrefix, args.DirectionId, args.TransportModeId, args.ShipmentLevelCode, args.IsCancelled, myTenant);
-                    if (isFieldExists)
-                    {
-                        myResult = "Master field already used in another Booking";
-                    }
+                    myResult = ex.Message;
                 }
 
                 return Request.CreateResponse(HttpStatusCode.OK, myResult);
+                
+                //bool isFieldExists = ShipmentValidating.IsMasterFieldUsedByAnotherShipment(args.ShipmentId, args.Master, args.AirlinePrefix, args.DirectionId, args.TransportModeId, args.ShipmentLevelCode, args.IsCancelled, myTenant);
+                //if (isFieldExists)
+                //{
+                //    myResult = "Master field already used in another Shipment";
+                //}
+
+                //else
+                //{
+                //    isFieldExists = ShipmentValidating.IsMasterFieldUsedByAnotherBooking(args.BookingId, args.Master, args.AirlinePrefix, args.DirectionId, args.TransportModeId, args.ShipmentLevelCode, args.IsCancelled, myTenant);
+                //    if (isFieldExists)
+                //    {
+                //        myResult = "Master field already used in another Booking";
+                //    }
+                //}
+
+                //return Request.CreateResponse(HttpStatusCode.OK, myResult);
             }
 
             catch (Exception ex)
