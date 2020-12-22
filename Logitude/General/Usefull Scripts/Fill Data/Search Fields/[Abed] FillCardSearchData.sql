@@ -39,6 +39,7 @@ declare  @Weight int
 
 declare  @PartnerTypeId varchar(2)
 declare  @InActive bit
+declare  @IsCustomer bit
 
 
 
@@ -47,9 +48,9 @@ declare  @InActive bit
 
     DECLARE CardCursor CURSOR READ_ONLY
     FOR
-    SELECT Id,Tenant, Code,EnglishName , LocalName , VatNumber ,CityName , CountryName , ReceivablesAccountingCard , PayablesAccountingCard , CreateDate ,UpdateDate , PartnerTypeId , InActive
+    SELECT Id,Tenant, Code,EnglishName , LocalName , VatNumber ,CityName , CountryName , ReceivablesAccountingCard , PayablesAccountingCard , CreateDate ,UpdateDate , PartnerTypeId , InActive , IsCustomer
     From Cards  where Id not in (select CardId from CardSearches )
-    OPEN CardCursor FETCH NEXT FROM CardCursor INTO  @CardId,@Tenant, @Code,@EnglishName , @LocalName , @VatNumber , @CityName , @CountryName , @ReceivablesAccountingCard , @PayablesAccountingCard , @CreateDate , @UpdateDate , @PartnerTypeId,@InActive
+    OPEN CardCursor FETCH NEXT FROM CardCursor INTO  @CardId,@Tenant, @Code,@EnglishName , @LocalName , @VatNumber , @CityName , @CountryName , @ReceivablesAccountingCard , @PayablesAccountingCard , @CreateDate , @UpdateDate , @PartnerTypeId,@InActive , @IsCustomer
     WHILE @@FETCH_STATUS = 0
     BEGIN
 
@@ -64,20 +65,20 @@ declare  @InActive bit
 
 			 BEGIN TRY  
 
-		if (@Code is not null)	begin 		 insert into #temp_CardSearches (Tenant, CardId  , RecordDate  , PartnerTypeId,InActive , Keyword , Weight) select  @Tenant, @CardId , @RecordDate  , @PartnerTypeId,@InActive ,  t.Keyword  , t.weight from dbo.BuildSearchKeywordFunction(@Code , 90 , 90) t where KeyWord !=' ' end
-		if (@EnglishName is not null)	begin 		 insert into #temp_CardSearches (Tenant, CardId  , RecordDate  , PartnerTypeId,InActive , Keyword , Weight) select  @Tenant, @CardId , @RecordDate  , @PartnerTypeId,@InActive ,  t.Keyword  , t.weight from dbo.BuildSearchKeywordFunction(@EnglishName , 100 , 90) t where KeyWord !=' ' end
-		if (@LocalName is not null)	begin 		 insert into #temp_CardSearches (Tenant, CardId  , RecordDate  , PartnerTypeId,InActive , Keyword , Weight) select  @Tenant, @CardId , @RecordDate  , @PartnerTypeId,@InActive ,  t.Keyword  , t.weight from dbo.BuildSearchKeywordFunction(@LocalName , 100 , 90) t where KeyWord !=' ' end
-		if (@VatNumber is not null)	begin 		 insert into #temp_CardSearches (Tenant, CardId  , RecordDate  , PartnerTypeId,InActive , Keyword , Weight) select  @Tenant, @CardId , @RecordDate  , @PartnerTypeId,@InActive ,  t.Keyword  , t.weight from dbo.BuildSearchKeywordFunction(@VatNumber , 100 , 100) t where KeyWord !=' ' end
-		if (@CountryName is not null)	begin 		 insert into #temp_CardSearches (Tenant, CardId  , RecordDate  , PartnerTypeId,InActive , Keyword , Weight) select  @Tenant, @CardId , @RecordDate  , @PartnerTypeId,@InActive ,  t.Keyword  , t.weight from dbo.BuildSearchKeywordFunction(@CountryName , 50 , 50) t where KeyWord !=' ' end
-		if (@CityName is not null)	begin 		 insert into #temp_CardSearches (Tenant, CardId  , RecordDate  , PartnerTypeId,InActive , Keyword , Weight) select  @Tenant, @CardId , @RecordDate  , @PartnerTypeId,@InActive ,  t.Keyword  , t.weight from dbo.BuildSearchKeywordFunction(@CityName , 40 , 40) t where KeyWord !=' ' end
-		if (@ReceivablesAccountingCard is not null)	begin 		 insert into #temp_CardSearches (Tenant, CardId  , RecordDate  , PartnerTypeId,InActive , Keyword , Weight) select  @Tenant, @CardId , @RecordDate  , @PartnerTypeId,@InActive ,  t.Keyword  , t.weight from dbo.BuildSearchKeywordFunction(@ReceivablesAccountingCard , 80 , 80) t where KeyWord !=' ' end
-		if (@PayablesAccountingCard is not null)	begin 		 insert into #temp_CardSearches (Tenant, CardId  , RecordDate  , PartnerTypeId,InActive , Keyword , Weight) select  @Tenant, @CardId , @RecordDate  , @PartnerTypeId,@InActive ,  t.Keyword  , t.weight from dbo.BuildSearchKeywordFunction(@PayablesAccountingCard , 80 , 80) t where KeyWord !=' ' end
+		if (@Code is not null)	begin 		 insert into #temp_CardSearches (Tenant, CardId  , RecordDate  , PartnerTypeId,InActive ,IsCustomer, Keyword , Weight) select  @Tenant, @CardId , @RecordDate  , @PartnerTypeId,@InActive ,@IsCustomer,  t.Keyword  , t.weight from dbo.BuildSearchKeywordFunction(@Code , 90 , 90) t where KeyWord !=' ' end
+		if (@EnglishName is not null)	begin 		 insert into #temp_CardSearches (Tenant, CardId  , RecordDate  , PartnerTypeId,InActive ,IsCustomer, Keyword , Weight) select  @Tenant, @CardId , @RecordDate  , @PartnerTypeId,@InActive ,@IsCustomer,  t.Keyword  , t.weight from dbo.BuildSearchKeywordFunction(@EnglishName , 100 , 90) t where KeyWord !=' ' end
+		if (@LocalName is not null)	begin 		 insert into #temp_CardSearches (Tenant, CardId  , RecordDate  , PartnerTypeId,InActive ,IsCustomer, Keyword , Weight) select  @Tenant, @CardId , @RecordDate  , @PartnerTypeId,@InActive ,@IsCustomer,  t.Keyword  , t.weight from dbo.BuildSearchKeywordFunction(@LocalName , 100 , 90) t where KeyWord !=' ' end
+		if (@VatNumber is not null)	begin 		 insert into #temp_CardSearches (Tenant, CardId  , RecordDate  , PartnerTypeId,InActive ,IsCustomer, Keyword , Weight) select  @Tenant, @CardId , @RecordDate  , @PartnerTypeId,@InActive , @IsCustomer ,  t.Keyword  , t.weight from dbo.BuildSearchKeywordFunction(@VatNumber , 100 , 100) t where KeyWord !=' ' end
+		if (@CountryName is not null)	begin 		 insert into #temp_CardSearches (Tenant, CardId  , RecordDate  , PartnerTypeId,InActive ,IsCustomer, Keyword , Weight) select  @Tenant, @CardId , @RecordDate  , @PartnerTypeId,@InActive ,@IsCustomer ,   t.Keyword  , t.weight from dbo.BuildSearchKeywordFunction(@CountryName , 50 , 50) t where KeyWord !=' ' end
+		if (@CityName is not null)	begin 		 insert into #temp_CardSearches (Tenant, CardId  , RecordDate  , PartnerTypeId,InActive ,IsCustomer, Keyword , Weight) select  @Tenant, @CardId , @RecordDate  , @PartnerTypeId,@InActive , @IsCustomer ,  t.Keyword  , t.weight from dbo.BuildSearchKeywordFunction(@CityName , 40 , 40) t where KeyWord !=' ' end
+		if (@ReceivablesAccountingCard is not null)	begin 		 insert into #temp_CardSearches (Tenant, CardId  , RecordDate  , PartnerTypeId,InActive ,IsCustomer, Keyword , Weight) select  @Tenant, @CardId , @RecordDate  , @PartnerTypeId,@InActive ,@IsCustomer,  t.Keyword  , t.weight from dbo.BuildSearchKeywordFunction(@ReceivablesAccountingCard , 80 , 80) t where KeyWord !=' ' end
+		if (@PayablesAccountingCard is not null)	begin 		 insert into #temp_CardSearches (Tenant, CardId  , RecordDate  , PartnerTypeId,InActive ,IsCustomer, Keyword , Weight) select  @Tenant, @CardId , @RecordDate  , @PartnerTypeId,@InActive , @IsCustomer ,  t.Keyword  , t.weight from dbo.BuildSearchKeywordFunction(@PayablesAccountingCard , 80 , 80) t where KeyWord !=' ' end
 
 	  set @Count = @Count + 1;
         if(@Count = 500000)
         begin    
 
-		    insert into CardSearches (Tenant, CardId , Keyword , RecordDate , Weight , PartnerTypeId,InActive) select  Tenant, CardId , Keyword , RecordDate , Weight , PartnerTypeId,InActive from #temp_CardSearches
+		    insert into CardSearches (Tenant, CardId , Keyword , RecordDate , Weight , PartnerTypeId,InActive , IsCustomer) select  Tenant, CardId , Keyword , RecordDate , Weight , PartnerTypeId,InActive , IsCustomer from #temp_CardSearches
             truncate table #temp_CardSearches
             set @Count = 0
         end
@@ -103,13 +104,13 @@ END CATCH
  
 
 
-    FETCH NEXT FROM CardCursor INTO @CardId,@Tenant, @Code,@EnglishName , @LocalName , @VatNumber , @CityName , @CountryName , @ReceivablesAccountingCard , @PayablesAccountingCard , @CreateDate , @UpdateDate , @PartnerTypeId,@InActive
+    FETCH NEXT FROM CardCursor INTO @CardId,@Tenant, @Code,@EnglishName , @LocalName , @VatNumber , @CityName , @CountryName , @ReceivablesAccountingCard , @PayablesAccountingCard , @CreateDate , @UpdateDate , @PartnerTypeId,@InActive , @IsCustomer
     END
     CLOSE CardCursor
     DEALLOCATE CardCursor
 
  
-        if (@Count > 0) begin  insert into CardSearches (Tenant, CardId , Keyword , RecordDate , Weight , PartnerTypeId,InActive) select  Tenant, CardId , Keyword , RecordDate , Weight , PartnerTypeId,InActive from #temp_CardSearches end
+        if (@Count > 0) begin  insert into CardSearches (Tenant, CardId , Keyword , RecordDate , Weight , PartnerTypeId,InActive ,IsCustomer) select  Tenant, CardId , Keyword , RecordDate , Weight , PartnerTypeId,InActive,IsCustomer from #temp_CardSearches end
  
 	 
              drop table #temp_CardSearches
