@@ -26,6 +26,7 @@ namespace WebFreight.Web.DataProviders
         public string CustomerDisplayNumber { get; set; }
         public string CustomerPhone{ get; set; }
         public string CustomerPaymentTerm { get; set; }
+        public string CustomerLocalPaymentTerm { get; set; }
         public decimal CreditStatus { get; set; }
         public decimal TotalOpenShipments { get; set; }
         public decimal TotalFutureOpenCheques { get; set; }
