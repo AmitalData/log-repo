@@ -220,15 +220,15 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             //}
         }
 
-        private List<APInvoiceLinePM> invoiceLinesChangeSet;
-        private List<APInvoicePaymentPM> invoicePaymentsChangeSet;
+        private List<APInvoiceLinePM> invoiceLinesChangeSet = new List<APInvoiceLinePM>();
+        private List<APInvoicePaymentPM> invoicePaymentsChangeSet = new List<APInvoicePaymentPM>();
         //private bool IsSetVoided = false;
         //private bool IsSetApproved = false;
         //private bool IsAlreadyVoided = false;
         public void SetChangeSets(List<APInvoiceLinePM> invoiceLinesChangeSet, List<APInvoicePaymentPM> invoicePaymentsChangeSet)
         {
-            this.invoiceLinesChangeSet = invoiceLinesChangeSet;
-            this.invoicePaymentsChangeSet = invoicePaymentsChangeSet;
+            
+            
         }
 
         public void Create()
@@ -517,6 +517,19 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             {
                 this.invoiceLinesChangeSet = entityPM.InvoiceLines;
                 this.invoicePaymentsChangeSet = entityPM.InvoicePayments;
+            }
+
+            else
+            {
+                if (this.invoiceLinesChangeSet == null)
+                {
+                    this.invoiceLinesChangeSet = new List<APInvoiceLinePM>();
+                }
+
+                if (invoicePaymentsChangeSet == null)
+                {
+                    invoicePaymentsChangeSet = new List<APInvoicePaymentPM>();
+                }
             }
 
             //this.isNewEntity = false;
@@ -830,10 +843,39 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
         private void InitializeAmountDueFields()
         {
-            entityPM.AmountDue = entityPM.AmountInInvoiceCurrency == null ? 0 : entityPM.AmountInInvoiceCurrency.Value;
-            entityPM.AmountDueInLocalCurrency = entityPM.AmountInLocalCurrency == null ? 0 : entityPM.AmountInLocalCurrency.Value;
-            entityPM.AmountDueInProfitCurrency = entityPM.AmountInProfitCurrency == null ? 0 : entityPM.AmountInProfitCurrency.Value;
+            if (initializer.IsNewEntity)
+            {
+                entityPM.AmountDue = entityPM.AmountInInvoiceCurrency == null ? 0 : entityPM.AmountInInvoiceCurrency.Value;
+                entityPM.AmountDueInLocalCurrency = entityPM.AmountDueInLocalCurrency == null ? 0 : entityPM.AmountDueInLocalCurrency.Value;
+                entityPM.AmountDueInProfitCurrency = entityPM.AmountDueInProfitCurrency == null ? 0 : entityPM.AmountDueInProfitCurrency.Value;
+            }
+
+            else
+            {
+                bool isPaymentsChanged = false;
+
+                if (invoicePaymentsChangeSet.Where(d => d.ChangeSetOp == ChangeSetOperation.Insert || d.ChangeSetOp == ChangeSetOperation.Delete).Count() > 0)
+                {
+                    isPaymentsChanged = true;
+                }
+
+                if (!isPaymentsChanged)
+                {
+                    if (entityPM.StatusCode == "PP" || entityPM.StatusCode == "PD")
+                    {
+
+                    }
+
+                    else
+                    {
+                        entityPM.AmountDue = entityPM.AmountInInvoiceCurrency == null ? 0 : entityPM.AmountInInvoiceCurrency.Value;
+                        entityPM.AmountDueInLocalCurrency = entityPM.AmountDueInLocalCurrency == null ? 0 : entityPM.AmountDueInLocalCurrency.Value;
+                        entityPM.AmountDueInProfitCurrency = entityPM.AmountDueInProfitCurrency == null ? 0 : entityPM.AmountDueInProfitCurrency.Value;
+                    }
+                }
+            }
         }
+
         private void InitializeGLAccountFields()
         {
             if (entityPM.SetApproved)
