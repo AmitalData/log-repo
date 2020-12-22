@@ -1,6 +1,4 @@
 
-TRUNCATE table CardSearches
-
 If(OBJECT_ID('tempdb..#temp_CardSearches') Is Not Null)
 Begin
     Drop Table #temp_CardSearches
@@ -50,7 +48,7 @@ declare  @InActive bit
     DECLARE CardCursor CURSOR READ_ONLY
     FOR
     SELECT Id,Tenant, Code,EnglishName , LocalName , VatNumber ,CityName , CountryName , ReceivablesAccountingCard , PayablesAccountingCard , CreateDate ,UpdateDate , PartnerTypeId , InActive
-    From Cards 
+    From Cards  where Id not in (select CardId from CardSearches )
     OPEN CardCursor FETCH NEXT FROM CardCursor INTO  @CardId,@Tenant, @Code,@EnglishName , @LocalName , @VatNumber , @CityName , @CountryName , @ReceivablesAccountingCard , @PayablesAccountingCard , @CreateDate , @UpdateDate , @PartnerTypeId,@InActive
     WHILE @@FETCH_STATUS = 0
     BEGIN
@@ -117,10 +115,3 @@ END CATCH
              drop table #temp_CardSearches
 
 			 
-			
-
-     
-
- 
-
-    
