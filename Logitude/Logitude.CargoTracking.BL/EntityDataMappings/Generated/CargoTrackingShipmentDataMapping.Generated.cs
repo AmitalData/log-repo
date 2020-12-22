@@ -729,10 +729,14 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 					entityPM.ContainersNumbers = entityPOCO.ContainersNumbers;
             }
 
+
+
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.PackagesQuantity))
             {
 					entityPM.PackagesQuantity = entityPOCO.PackagesQuantity;
             }
+
+
 
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.DirectionId))
             {

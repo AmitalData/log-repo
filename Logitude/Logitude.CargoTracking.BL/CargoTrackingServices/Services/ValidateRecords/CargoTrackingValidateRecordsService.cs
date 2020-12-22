@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
+namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.ValidateRecords
 {
     public class CargoTrackingValidateRecordsService
     {
