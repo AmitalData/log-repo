@@ -71,28 +71,30 @@ cy.get('#Add_2').click({force: true} );
     //})
 
     it('Add Supplier invoice item', () => {
+      const edit_log_grid_Existent = Cypress.$('#edit-log-grid_0_3');
+      if (edit_log_grid_Existent && edit_log_grid_Existent.length) {
         cy.get('#Add_4').click({force: true} );
-        cy.get('input[id="Customs.SupplierInvoice_ItemCode"]').type('10', { force: true });
-        cy.get('input[id="Customs.SupplierInvoice_ItemCode"]').tab();
-        //cy.get('#edit-log-grid_0_30_2_0').click({force: true} );
-        cy.get('input[id="Customs.SupplierInvoice_ItemDescription"]').type('1A', { force: true });
-	      cy.get('input[id="Customs.SupplierInvoice_ItemDescription"]').tab();
-        //cy.get('#edit-log-grid_0_30_3_0').click({force: true} );
-        cy.get('input[id="Customs.SupplierInvoiceItem_ClassificationCode"]').type('123456782', { force: true });
-	    	cy.get('input[id="Customs.SupplierInvoiceItem_ClassificationCode"]').tab();
-        //cy.get('#edit-log-grid_0_30_4_0').click({force: true} );
+        cy.get('input[id="Customs.SupplierInvoice_ItemCode"]').type('10')
+        cy.get('#edit-log-grid_0_30_2_0').click({force: true} );
+        cy.get('input[id="Customs.SupplierInvoice_ItemDescription"]').type('1A');
+        cy.get('#edit-log-grid_0_30_3_0').click({force: true} );
+        cy.get('input[id="Customs.SupplierInvoiceItem_ClassificationCode"]').type('123456782');
+        cy.get('#edit-log-grid_0_30_4_0').click({force: true} );
         LogHelper.LOVSearchAndSelectFirst("Customs.SupplierInvoice_TradeAgreementCode", '10');
-        cy.get('input[id="Customs.SupplierInvoiceItem_ClassificationCode"]').tab();
-        //cy.get('#edit-log-grid_0_30_5_0').click({force: true} );
-        cy.get('input[id="Customs.SupplierInvoice_InvoiceQuantity"]').type('500', { force: true });
-	    	cy.get('input[id="Customs.SupplierInvoice_InvoiceQuantity"]').tab();
-        //cy.get('#edit-log-grid_0_30_6_0').click({force: true} );
+  
+        cy.get('#edit-log-grid_0_30_5_0').click({force: true} );
+        cy.get('input[id="Customs.SupplierInvoice_InvoiceQuantity"]').type('500');
+        cy.get('#edit-log-grid_0_30_6_0').click({force: true} );
         LogHelper.LOVSearchAndSelectFirst("Customs.SupplierInvoice_InvoiceQuantityType", 'C26');
-        cy.get('input[id="Customs.SupplierInvoice_InvoiceQuantityType"]').tab();
-        //cy.get('#edit-log-grid_0_30_7_0').click({force: true} );
-        cy.get('input[id="Customs.SupplierInvoice_ItemPrice"]').type('300', { force: true });
+   
+        cy.get('#edit-log-grid_0_30_7_0').click({force: true} );
+        cy.get('input[id="Customs.SupplierInvoice_ItemPrice"]').type('300');
 
-    })
+
+        }
+    
+  
+  })
 
     //it('Edit Supplier invoice item', () => {
     //    cy.get('#edit-log-grid_0_30_9_0').click({force: true} );

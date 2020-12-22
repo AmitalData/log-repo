@@ -13,12 +13,7 @@
 // https://on.cypress.io/configuration
 // ***********************************************************
 
-
-// Import Tab Key 
-require('cypress-plugin-tab');
-
-
-
+ 
 import 'cypress-mochawesome-reporter/register';
 
 
