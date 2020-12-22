@@ -85,16 +85,26 @@ namespace Logitude.CustomsMessaging.ResponseServices
             }
 
 
-            
+
             foreach (DeclarationCourierStatusPM itemPM in listPM)
             {
-                
+
                 using (var scopeNewCRS = TransactionFactory.GetNewTransaction())
                 {
                     var context1 = CustomContext.GetContext(requestParams.Tenant);//context each CRS TRANS
                     LogMessagingUtil.Instance.AppendLine("ChangeStorgeSite for declaration: " + itemPM.DeclarationId + "\n");
                     var changeStorgeSiteService = new ChangeStorgeSiteService(context1);
-                    changeStorgeSiteService.ChangeStorgeSite(customResponse.StorageSiteCode, requestParams, mess, objectTableId, objectTableIdCourierMaster, lockedDeclarations, itemPM);
+                    if (customResponse.StorageSiteCode != null)
+                    {
+                        changeStorgeSiteService.ChangeSite(customResponse.StorageSiteCode, requestParams, mess, objectTableId, objectTableIdCourierMaster, lockedDeclarations, itemPM,false);
+                    }
+                    else
+                    {
+                        if(customResponse.UnLoadPortCode != null)
+                        {
+                            changeStorgeSiteService.ChangeSite(customResponse.UnLoadPortCode, requestParams, mess, objectTableId, objectTableIdCourierMaster, lockedDeclarations, itemPM,true);
+                        }
+                    }
 
                     scopeNewCRS.Complete();
                 }
@@ -107,13 +117,24 @@ namespace Logitude.CustomsMessaging.ResponseServices
             {
                 List<string> declarationsList = new List<string>();
                 string message = string.Concat("אתר אחסון בטיסה השתנה ל ", customResponse.StorageSiteCode, ", אך ההצהרה לא ניתנת לעידכון. נא לעדכן ידנית");
+                if (customResponse.UnLoadPortCode != null)
+                {
+                     message = string.Concat("אתר פריקה בטיסה השתנה ל ", customResponse.UnLoadPortCode, ", אך ההצהרה לא ניתנת לעידכון. נא לעדכן ידנית");
+                }
                 mess.AppendLine("\n" + "Locked Declarations: " + "\n");
                 foreach (DeclarationPM itemDeclaration in lockedDeclarations)
                 {
                     declarationsList.Add(itemDeclaration.CustomFileNo);
                     mess.AppendLine($" ( {itemDeclaration.Id} ),");
                 }
-                RaiseEvent(lockedDeclarations.FirstOrDefault(), declarationsList, "U-FSE", message);
+                if (customResponse.StorageSiteCode != null)
+                {
+                    RaiseEvent(lockedDeclarations.FirstOrDefault(), declarationsList, "U-FSE", message);
+                }
+                if(customResponse.UnLoadPortCode != null)
+                {
+                    RaiseEvent(lockedDeclarations.FirstOrDefault(), declarationsList, "FSE", message);
+                }
             }
 
             this.MyRequestSheetParam = this.MyRequestSheetParam ?? new RequestSheetParam();
@@ -122,7 +143,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             this.MyResponseData.Succeeded = true;
         }
 
-      
+
         private void RaiseEvent(DeclarationPM declarationPM, List<string> declarationsList, string eventCode, string remarks)
         {
             try
@@ -175,10 +196,10 @@ namespace Logitude.CustomsMessaging.ResponseServices
             this.context = context;
         }
 
-        public void ChangeStorgeSite(string StorageSiteCode, GenericRequestParams requestParams, StringBuilder mess, string objectTableId, string objectTableIdCourierMaster, List<DeclarationPM> lockedDeclarations, DeclarationCourierStatusPM itemPM)
+        public void ChangeSite(string SiteCode, GenericRequestParams requestParams, StringBuilder mess, string objectTableId, string objectTableIdCourierMaster, List<DeclarationPM> lockedDeclarations, DeclarationCourierStatusPM itemPM, Boolean isUnLoadPort)
         {
 
-            
+
             var myDeclarationUpdateService = new DeclarationUpdateService(context, new Dictionary<string, IContext>(), requestParams.Tenant);
 
             try
@@ -220,8 +241,14 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             LogMessagingUtil.Instance.AppendLine("DeclarationUpdateService.Update for declaration: " + declarationPM.CustomFileNo + "\n");
                             declarationPM.ChangeSetOp = ChangeSetOperation.Update;
                             declarationPM.Consignments.FirstOrDefault().ChangeSetOp = ChangeSetOperation.Update;
-                            //declarationPM.Consignments.FirstOrDefault().UnloadPortCode = /*customResponse.*/StorageSiteCode;
-                            declarationPM.Consignments.FirstOrDefault().StorageSiteCode = /*customResponse.*/StorageSiteCode;
+                            if (isUnLoadPort)
+                            {
+                                declarationPM.Consignments.FirstOrDefault().UnloadPortCode = SiteCode;
+                            }
+                            else
+                            {
+                                declarationPM.Consignments.FirstOrDefault().StorageSiteCode = SiteCode;
+                            }
                             myDeclarationUpdateService.CourierStorageSiteChanged = true;
                             myDeclarationUpdateService.Update(declarationPM, true);
 
