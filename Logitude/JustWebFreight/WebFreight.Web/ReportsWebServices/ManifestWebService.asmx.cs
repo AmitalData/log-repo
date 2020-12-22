@@ -762,6 +762,9 @@ namespace WebFreight.Web.ReportsWebServices
                     }
                     #endregion
 
+                    newDetail.OnCarriageFromPort = shipmentView.OnCarriageFromPortName;
+                    newDetail.OnCarriageToPort = shipmentView.OnCarriageToPortName;
+
                     ShipmentPickUpDelivery myLineFirstDelivery = (from d in shipmentsContext.ShipmentPickUpDeliveries
                                                                   where d.ShipmentId == shipmentView.Id && d.PickUpDeliveryTypeCode == "DELV"
                                                                   select d).OrderBy(s => s.PickUpDeliveryNumber).FirstOrDefault();
