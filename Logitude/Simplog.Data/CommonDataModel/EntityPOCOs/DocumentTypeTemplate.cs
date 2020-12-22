@@ -48,6 +48,7 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public string BCC { get; set; }
         public string To { get; set; }
 
+        public string AutomationId { get; set; }
 
 
 
@@ -60,6 +61,15 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
 
         [ForeignKey("OriginalTemplateId")]
         public virtual DocumentTypeTemplate OriginalTemplate { get; set; }
+
+
+
+        [ForeignKey("AutomationId")]
+        public virtual Automation Automation { get; set; }
+
+
+
+
 
     }
 }

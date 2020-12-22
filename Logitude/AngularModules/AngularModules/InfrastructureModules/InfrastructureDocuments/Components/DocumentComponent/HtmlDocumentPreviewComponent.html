@@ -184,14 +184,14 @@
             <td  style="vertical-align: bottom">
                 <table style="height: 22px;">
                     <tr>
-                        
-                        <td *ngIf="IsShowUploadAndDownloadButtons"  style="width: 80px;">
+
+                        <td *ngIf="IsShowUploadAndDownloadButtons" style="width: 80px;">
                             <button class="Button" (click)="DownloadButtonClicked()">Export Template</button>
                         </td>
-                        <td  *ngIf="IsShowUploadAndDownloadButtons"  style="width: 7px;"></td>
+                        <td *ngIf="IsShowUploadAndDownloadButtons" style="width: 7px;"></td>
 
-                        <td  *ngIf="IsShowUploadAndDownloadButtons"  style="width: 80px;">
-                            <input  [attr.id] = "DocumentTemplateFileId" accept=".xml,.XML" type="file" (change)="UpLoadTemplateFileMethod($event)" style="display:none" class="upload" />
+                        <td *ngIf="IsShowUploadAndDownloadButtons" style="width: 80px;">
+                            <input [attr.id]="DocumentTemplateFileId" accept=".xml,.XML" type="file" (change)="UpLoadTemplateFileMethod($event)" style="display:none" class="upload" />
                             <button class="Button" (click)="UploadButtonClicked()">Import Template</button>
                         </td>
 
@@ -206,14 +206,22 @@
                         </td>
                         <td *ngIf="IsShowButtonCancel" style="width: 7px;"></td>
 
-                        <td *ngIf="IsShowButtonSaveAs" style="width: 57px;">
+
+
+                        <td  class="RedButton" *ngIf="IsShowSaveAsButtonOnly" style="width: 57px;">
 
                             <button class="Button" (click)="SavaAsButtonClicked()">Save as</button>
                         </td>
 
-                        <td  *ngIf="IsShowButtonSaveAs" style="width: 7px;"></td>
 
-                        <td  style="width: 57px;">
+                        <td *ngIf="IsShowButtonSaveAs && !IsShowSaveAsButtonOnly" style="width: 57px;">
+
+                            <button class="Button" (click)="SavaAsButtonClicked()">Save as</button>
+                        </td>
+
+                        <td *ngIf="IsShowButtonSaveAs || IsShowSaveAsButtonOnly" style="width: 7px;"></td>
+
+                        <td *ngIf="!IsShowSaveAsButtonOnly" style="width: 57px;">
                             <button class="RedButton" (click)="SaveButtonClicked()">{{LableSaveButton}}</button>
                         </td>
                     </tr>

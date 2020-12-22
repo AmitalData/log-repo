@@ -85,6 +85,7 @@ export class SaveAsTemplateComponent implements OnInit {
                 newTemplatePM.TemplateType = "M";
                 newTemplatePM.ReportId = this.SelectedTemplate.ReportId;
 
+                
 
                 var reportsTemplatePMExtendedService: ReportsTemplatePMExtendedService = new ReportsTemplatePMExtendedService();
                 reportsTemplatePMExtendedService.CreateReportTemplate(newTemplatePM).subscribe((res: any) => {
@@ -129,6 +130,7 @@ export class SaveAsTemplateComponent implements OnInit {
                 newTemplatePM.TemplateHeaderHtml = this.SelectedTemplate.TemplateHeaderHtml;
                 newTemplatePM.TemplateFooterHeight = this.SelectedTemplate.TemplateFooterHeight;
                 newTemplatePM.TemplateFooterHtml = this.SelectedTemplate.TemplateFooterHtml;
+                newTemplatePM.AutomationId = this.DataContext.AutomationId;
 
                 if (this.DataContext) {
                     newTemplatePM.TemplateBodyHtml = StringToBase64(this.DataContext.froalaEditorSetting.froalaEditorComponent.getHtml());

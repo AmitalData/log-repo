@@ -84,7 +84,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                                             BCC = a.BCC,
                                                                             DefultAttachmentsXML = a.DefultAttachmentsXML,
                                                                             To = a.To,
-
+                                                                            AutomationId = a.AutomationId,
                                                                         }).ToList();
 
 
@@ -134,6 +134,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                                         CC = a.CC,
                                                                         BCC = a.BCC,
                                                                         To = a.To,
+                                                                        AutomationId = a.AutomationId,
 
                                                                     }).ToList();
 
@@ -168,6 +169,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                               CC = entity.CC,
                                                               BCC = entity.BCC,
                                                               To = entity.To,
+                                                              AutomationId = entity.AutomationId,
 
                                                           };
             return result;
@@ -215,6 +217,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                        CC = a.CC,
                        BCC = a.BCC,
                        DefultAttachmentsXML = a.DefultAttachmentsXML,
+                       AutomationId = a.AutomationId,
 
                    };
         }
@@ -259,6 +262,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                         CC = a.CC,
                         BCC = a.BCC,
                         To = a.To,
+                        AutomationId = a.AutomationId,
+
                     }).FirstOrDefault();
 
 
@@ -317,6 +322,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                                       BCC = a.BCC,
                                                                       DefultAttachmentsXML = a.DefultAttachmentsXML,
                                                                       To = a.To,
+                                                                      AutomationId = a.AutomationId,
+
                                                                   }).ToList();
 
             foreach (DocumentTypeTemplatePM item in documentTypeTemplates.Where(d => d.TemplateType == "M").ToList())
@@ -384,6 +391,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                         BCC = a.BCC,
                         DefultAttachmentsXML = a.DefultAttachmentsXML,
                         To = a.To,
+                        AutomationId = a.AutomationId,
+
 
                     }).FirstOrDefault();
 
@@ -528,6 +537,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                                CC = a.CC,
                                                                BCC = a.BCC,
                                                                To = a.To,
+                                                               AutomationId = a.AutomationId,
 
                                                            });
 
@@ -613,6 +623,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                                                       CC = a.CC,
                                                                                       BCC = a.BCC,
                                                                                       To = a.To,
+                                                                                      AutomationId = a.AutomationId,
 
                                                                                   });
                 if (withFilter)

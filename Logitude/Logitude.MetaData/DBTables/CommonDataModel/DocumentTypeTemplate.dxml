@@ -223,6 +223,13 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="AutomationId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="LastUpdatedByUserId"
     ReferencedTable="Users"
@@ -236,6 +243,11 @@
   <Relation
     ForeignKeyColumn="OriginalTemplateId"
     ReferencedTable="DocumentTypeTemplates"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="AutomationId"
+    ReferencedTable="Automations"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
 </Table>

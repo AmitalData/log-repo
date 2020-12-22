@@ -95,7 +95,8 @@ export class HtmlDocumentPreviewComponent implements OnInit, AfterViewInit {
     TemplateFooterHtml: any;
     TemplateFooterHeight: number;
 
-
+    RequsetPageName: string;
+    public AutomationId: string;
 
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(public _documentTypeTemplatePMExtendedService: DocumentTypeTemplatePMExtendedService, private cd: ChangeDetectorRef, public _htmlEditorService: HtmlEditorService) {
@@ -135,8 +136,9 @@ export class HtmlDocumentPreviewComponent implements OnInit, AfterViewInit {
         this.ChildEntityId = args.ChildEntityId ? args.ChildEntityId : "";
         this.ChildObjectTableId = args.ChildObjectTableId ? args.ChildObjectTableId : "";
         this.DontShowToField = args.DontShowToField;
+        this.RequsetPageName = args.RequsetPageName;
+        this.AutomationId = args.AutomationId;
 
-       
         if (args.ObjectType) this.ObjectType = args.ObjectType;
        
         this.TemplatePMLists = args.DocumentTypeTemplatePMLists;
@@ -245,7 +247,6 @@ export class HtmlDocumentPreviewComponent implements OnInit, AfterViewInit {
        
         this.froalaEditorSetting.Height = this.froalaEditorSetting.Height - 20;
 
-        
 
         this.CurrentSession.CurrentWindow.StartBusyIndicator("Loading...");
 
@@ -379,10 +380,19 @@ export class HtmlDocumentPreviewComponent implements OnInit, AfterViewInit {
     }
 
 
-
+    IsShowSaveAsButtonOnly: boolean = false;
     FillData() {
 
         if (this.template) {
+
+            if (this.RequsetPageName == "Automation") {
+
+                if (!this.template.AutomationId) {
+                    this.IsShowSaveAsButtonOnly = true;
+                } 
+
+            }
+
 
 
             if (this.template.TemplateType == "M") {
