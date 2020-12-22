@@ -7,10 +7,10 @@ import { SessionLocator } from '../../../../../Infrastructure/Utilities/SessionL
 
 @Component({
     
-    templateUrl: './AirlineGeneralTabComponent.html',
+    templateUrl: './ShippinglineGeneralTabComponent.html',
 })
 
-export class ShippingLineGeneralTabComponent extends BaseComponent {
+export class ShippinglineGeneralTabComponent extends BaseComponent {
     public EntityPM: ShippingLinePM;
     public ObjectTableName: string = "ShippingLine";
     @ViewChild('Child', { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
