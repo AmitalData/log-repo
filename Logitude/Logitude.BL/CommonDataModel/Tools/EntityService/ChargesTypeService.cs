@@ -57,7 +57,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 this.CreateChargeTypeAccounting(item);
             }
 
-            ChargesTypeTracing.Trace(entityPM, Poco, isNewEntity);
+            //ChargesTypeTracing.Trace(entityPM, Poco, isNewEntity);
             ChargesTypeMapping.MapEntity(entityPM, Poco, isNewEntity);
             entityRepository.Add(Poco);
             entityRepository.SubmitChanges();
