@@ -26,6 +26,8 @@ export class WarehouseList {
 		VatTypeId: string;
 		EnableConsolidationInvoices: boolean;
 		CityName: string;
+		Address1: string;
+		Address2: string;
 		CountryId: string;
 		CountryCode: string;
 		CountryName: string;
