@@ -127,7 +127,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Bluesnap
                              where tenantsIds.Contains(a.Tenant) && !string.IsNullOrEmpty(a.ReceivablesAccountingCard)
                              select new CustomerCRMData
                              {
-                                 Tenant = a.Tenant,
+                                 EnglishName = a.EnglishName,
                                  ReceivablesAccountingCard = a.ReceivablesAccountingCard
                              }).ToList();
                          
@@ -275,7 +275,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Bluesnap
             {
                 otherTenantsTransactions.Add(itemRecord);
             }
-            itemRecord.CRMCustomer = this.customers_CRM.Where(e => e.Tenant == item.Tenant).Select(a=>a.ReceivablesAccountingCard).FirstOrDefault();
+            itemRecord.CRMCustomer = this.customers_CRM.Where(e => e.ReceivablesAccountingCard == item.Tenant.ToString()).Select(a=>a.EnglishName).FirstOrDefault();
         }
 
         private void CalculateContractCountAndTotalPayments(BlusnapTransactionsList itemRecord, List<BluesnapTransactionItem> transactions)
@@ -385,7 +385,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Bluesnap
 
     public class CustomerCRMData
     {
-        public int Tenant { get; set; }
+        public string EnglishName { get; set; }
         public string ReceivablesAccountingCard { get; set; }
     }
 }
