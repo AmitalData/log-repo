@@ -2,6 +2,7 @@
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.InvoiceModel.EntityPMs;
 using Logitude.BL.InvoiceModel.Tools.Behaviours;
+using Logitude.BL.InvoiceModel.Tools.Behaviours.APInvoiceBehaviours;
 using Logitude.BL.Security;
 using Logitude.Server.Tools.Counters;
 using Simplog.Data.CommonDataModel;
@@ -37,24 +38,23 @@ namespace Logitude.BL.InvoiceModel.Tools.Initializers
         public string LoggedContactId { get; private set; }
         public DateTime? TodayDate { get; private set; }
         public DateTime? TodayDateTime { get; private set; }
-        public bool IsSetVoided { get; private set; }
-        public bool IsSetApproved { get; private set; }
-        public bool IsAlreadyVoided { get; private set; }
-        public bool IsInvoiceLinesChanged { get; private set; }
-        public bool IsInvoiceTotalVATsChanged { get; private set; }
+
         public List<APInvoiceLinePM> ActiveLines { get; private set; }
         public List<VatType> AllVatTypes { get; private set; }
         public List<VatTypePercentagePM> AllVatPercentages { get; private set; }
+
+        public APInvoiceServiceInitializerFlags Flags { get; private set; }
+
         public APInvoiceServiceInitializer(IInvoiceContext objectContext, APInvoicePM entityPM)
         {
             this.EntityPM = entityPM;
             this.Tenant = entityPM.Tenant;
             this.IsNewEntity = entityPM.Id == null ? true : false;
-            this.Context = objectContext; // InvoiceContext.GetContext(Tenant);
+            this.Context = objectContext;
             this.CommonContext = CommonDataContext.GetContext(Tenant);
             this.Repository = new APInvoiceRepository(Context);
             this.TodayDateTime = TenantServerConfigration.GetCurrentDateTime(Tenant);
-            this.TodayDate = this.TodayDateTime.Value.Date;
+            this.TodayDate = this.TodayDateTime.Value.Date;            
         }
 
         public void Initialize()
@@ -75,6 +75,8 @@ namespace Logitude.BL.InvoiceModel.Tools.Initializers
             List<IServiceBehaviour> serviceBehaviours = new List<IServiceBehaviour>();
 
             serviceBehaviours.Add(new APInvoiceFieldsBehaviour());
+            serviceBehaviours.Add(new APInvoiceAmountDueBehaviour());
+
             serviceBehaviours.Add(new APInvoiceLinesBehavior());
             serviceBehaviours.Add(new APInvoiceTotalVatsBehavior());
 
@@ -117,7 +119,7 @@ namespace Logitude.BL.InvoiceModel.Tools.Initializers
         private void InitializeAccountingSetting()
         {
             AccountingSettingRepository accountingSettingRepository = new AccountingSettingRepository(CommonContext);
-            AccountingSetting = accountingSettingRepository.GetSingleAccountSetting(Tenant);
+            AccountingSetting = accountingSettingRepository.GetSingleAccountSetting(Tenant);            
         }
         private void InitializeAccountingSystem()
         {
@@ -146,69 +148,7 @@ namespace Logitude.BL.InvoiceModel.Tools.Initializers
         }
         private void InitializeFlags()
         {
-            IsSetVoided = EntityPM.SetVoided;
-            IsSetApproved = EntityPM.SetApproved;
-            IsAlreadyVoided = EntityPOCO.StatusCode == "VD" ? true : false;
-            InitializeFlag_IsInvoiceLinesChanged();
-            InitializeFlag_IsInvoiceTotalVATsChanged();
-        }
-        private void InitializeFlag_IsInvoiceLinesChanged()
-        {
-            bool isChanged = false;
-
-            if (IsNewEntity)
-            {
-                isChanged = true;
-            }
-
-            else
-            {
-                if (EntityPM.InvoiceLines.Where(d => d.ChangeSetOp == ChangeSetOperation.Insert).Any())
-                {
-                    isChanged = true;
-                }
-
-                else if (EntityPM.InvoiceLines.Where(d => d.ChangeSetOp == ChangeSetOperation.Update).Any())
-                {
-                    isChanged = true;
-                }
-
-                else if (EntityPM.InvoiceLines.Where(d => d.ChangeSetOp == ChangeSetOperation.Delete).Any())
-                {
-                    isChanged = true;
-                }
-            }
-
-            IsInvoiceLinesChanged = isChanged;
-        }
-        private void InitializeFlag_IsInvoiceTotalVATsChanged()
-        {
-            bool isChanged = false;
-
-            if (IsNewEntity)
-            {
-                isChanged = true;
-            }
-
-            else
-            {
-                if (EntityPM.TotalVATs.Where(d => d.ChangeSetOp == ChangeSetOperation.Insert).Any())
-                {
-                    isChanged = true;
-                }
-
-                else if (EntityPM.TotalVATs.Where(d => d.ChangeSetOp == ChangeSetOperation.Update).Any())
-                {
-                    isChanged = true;
-                }
-
-                else if (EntityPM.TotalVATs.Where(d => d.ChangeSetOp == ChangeSetOperation.Delete).Any())
-                {
-                    isChanged = true;
-                }
-            }
-
-            IsInvoiceTotalVATsChanged = isChanged;
+            this.Flags = new APInvoiceServiceInitializerFlags(this);
         }
         private void InitializeVATs()
         {
@@ -228,6 +168,111 @@ namespace Logitude.BL.InvoiceModel.Tools.Initializers
             else
             {
                 ActiveLines = EntityPM.InvoiceLines.Where(d => d.ChangeSetOp != ChangeSetOperation.Delete).ToList();
+            }
+        }
+    }
+
+    public class APInvoiceServiceInitializerFlags
+    {
+        public bool IsJournal { get; private set; }
+        public bool IsExternal { get; private set; }
+        public bool IsTaxItemManaged { get; private set; }
+        public bool CanTransferToFTP { get; private set; }
+        public bool CanTransferToDropbox { get; private set; }
+        public bool TransferToFTPActivated { get; private set; }
+        public bool TransferToDropboxActivated { get; private set; }
+        public bool IsTransferEnabled { get; private set; }
+        public bool IsSetVoided { get; private set; }
+        public bool IsSetApproved { get; private set; }
+        public bool IsAlreadyVoided { get; private set; }
+        public bool IsInvoiceLinesChanged { get; private set; }
+        public bool IsInvoiceTotalVATsChanged { get; private set; }
+
+        private APInvoiceServiceInitializer initializer;
+        public APInvoiceServiceInitializerFlags(APInvoiceServiceInitializer initializer)
+        {
+            this.initializer = initializer;
+
+            this.SetEntityFlags();
+            this.SetAccountingFlags();
+        }
+
+        private void SetEntityFlags()
+        {
+            IsSetVoided = initializer.EntityPM.SetVoided;
+            IsSetApproved = initializer.EntityPM.SetApproved;
+            IsAlreadyVoided = initializer.EntityPOCO.StatusCode == "VD" ? true : false;
+            InitializeFlag_IsInvoiceLinesChanged();
+            InitializeFlag_IsInvoiceTotalVATsChanged();
+        }
+
+        private void SetAccountingFlags()
+        {
+            if (initializer.AccountingSetting != null)
+            {
+                this.TransferToFTPActivated = initializer.AccountingSetting.TransferToFTPActivated;
+                this.TransferToDropboxActivated = initializer.AccountingSetting.TransferToDropboxActivated;
+
+                if (initializer.AccountingSystem != null)
+                {
+                    this.IsJournal = initializer.AccountingSystem.IsJournalMode;
+                    this.IsExternal = initializer.AccountingSystem.IsExternalCodesFromTable;
+                    this.IsTaxItemManaged = initializer.AccountingSystem.IsTaxItemManaged;
+                    this.CanTransferToFTP = initializer.AccountingSystem.CanTransferToFTP;
+                    this.CanTransferToDropbox = initializer.AccountingSystem.CanTransferToDropbox;
+
+                    if (initializer.AccountingSetting.IsAPInvoicesTransferEnabled && initializer.AccountingSystem.AllowAPInvoicesTransfer)
+                    {
+                        this.IsTransferEnabled = true;
+                    }
+                }
+            }
+        }
+
+        private void InitializeFlag_IsInvoiceLinesChanged()
+        {
+            if (initializer.IsNewEntity)
+            {
+                IsInvoiceLinesChanged = true;
+            }
+
+            else
+            {
+                if (initializer.EntityPM.InvoiceLines.Where
+                    (
+                    d =>                        
+                    d.ChangeSetOp == ChangeSetOperation.Insert                
+                    ||                
+                    d.ChangeSetOp == ChangeSetOperation.Update
+                    ||
+                    d.ChangeSetOp == ChangeSetOperation.Delete
+                    ).Any())                
+                {
+                    IsInvoiceLinesChanged = true;
+                }
+            }
+        }
+        private void InitializeFlag_IsInvoiceTotalVATsChanged()
+        {
+            if (initializer.IsNewEntity)
+            {
+                IsInvoiceTotalVATsChanged = true;
+            }
+
+            else
+            {
+                if (initializer.EntityPM.TotalVATs.Where
+                    (
+                    d => 
+                    d.ChangeSetOp == ChangeSetOperation.Insert
+                    ||
+                    d.ChangeSetOp == ChangeSetOperation.Update
+                    ||
+                    d.ChangeSetOp == ChangeSetOperation.Delete
+                    ).Any())
+                {
+                    IsInvoiceTotalVATsChanged = true;
+                }
             }
         }
     }

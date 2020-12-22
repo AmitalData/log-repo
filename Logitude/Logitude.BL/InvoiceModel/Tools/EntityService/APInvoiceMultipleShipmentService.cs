@@ -29,6 +29,7 @@ using Logitude.BL.InvoiceModel.EntityQueries;
 using Logitude.BL.Helpers;
 using Logitude.BL.ExternalService;
 using Logitude.BL.InvoiceModel.Tools.Behaviours;
+using Logitude.BL.InvoiceModel.Tools.Behaviours.APInvoiceBehaviours;
 
 namespace Logitude.BL.InvoiceModel.Tools.EntityService
 {
