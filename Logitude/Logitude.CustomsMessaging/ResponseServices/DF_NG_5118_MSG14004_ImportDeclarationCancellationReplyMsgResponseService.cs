@@ -36,9 +36,9 @@ using Unifreight.BL.EntityQueryServices;
 using ResponseError = UnifreightIIG.Common.MessageLib.ID.ResponseError;
 using DeclarationGoodsShipment = UnifreightIIG.Common.MessageLib.ID.DeclarationGoodsShipment;
 using DeclarationGoodsShipmentCustomsValuation = UnifreightIIG.Common.MessageLib.ID.DeclarationGoodsShipmentCustomsValuation;
-using UnifreightIIG.Common.MessageLib.Ransom;
+using UnifreightIIG.Common.MessageLib.ID;
 using Logitude.BL.CommonDataModel.EntityQueries;
-using UnifreightIIG.Common.MessageLib.DeclarationCancel;
+using UnifreightIIG.Common.MessageLib.Ransom;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {
@@ -228,7 +228,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                 if (customResponse.ProceduralFaultMsg != null)
                 {
-                    var ProceduralFaultDetailsXml_5118 = XmlGenericUtil<UnifreightIIG.Common.MessageLib.DeclarationCancel.ProceduralFaultDetails[]>
+                    var ProceduralFaultDetailsXml_5118 = XmlGenericUtil<UnifreightIIG.Common.MessageLib.ID.ProceduralFaultDetails[]>
                        .SerializeObject(customResponse.ProceduralFaultMsg);
 
                     var customResponse_8218 = new EV_NG_8218_MSG14100_ProceduralFaultMsg() { };
@@ -240,11 +240,11 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 }
 
 
-                if (customResponse.AmendmentDocumentDetails != null) // Create Document 
+                if (customResponse.CanceledDocumentDetails != null) // Create Document 
                 {
                     LogMessagingUtil.Instance.AppendLine("ConstraintApprovalDecision: Create Document");
 
-                    foreach (var documentItem in customResponse.AmendmentDocumentDetails)
+                    foreach (var documentItem in customResponse.CanceledDocumentDetails)
                     {
 
                         //Get Document Detail
