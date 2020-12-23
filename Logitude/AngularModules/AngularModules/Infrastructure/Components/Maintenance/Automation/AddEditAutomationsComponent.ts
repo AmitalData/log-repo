@@ -648,7 +648,7 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
                 windowArgs.DataViewModel = this;
                 windowArgs.PageType = "Maintenance";
                 windowArgs.DontShowToField = true;
-             
+
                 var widthwindow = window.innerWidth;
                 var heighthwindow = window.innerHeight;
 

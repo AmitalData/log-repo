@@ -283,8 +283,9 @@ export class NewReportTemplateComponent extends BaseComponent implements OnInit 
                     }
 
                     this.DataViewModel.DocumentTypeTemplateLists.push(templateViewModel);
-                    this.DataViewModel.EditDocumentTemplate(templateViewModel);
                     this.CurrentSession.CurrentWindow.Close(myResult.Result.Id);
+                    this.DataViewModel.EditDocumentTemplate(templateViewModel);
+
                 }
 
 
