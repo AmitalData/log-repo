@@ -22,8 +22,8 @@ describe('Operations', () => {
     it('Test New Shipment Wizard', () => {
         levelCode='D'
         direction = 'E';
-        transportMode = 'I';
-        shipmentType = 'FTL';
+        transportMode = 'A';
+        shipmentType = '';
         scenarios.RunScenario(levelCode, transportMode, direction, shipmentType);
         editScenarios.RunEditTabsScenarios(levelCode, transportMode, direction, shipmentType);
         //quoteActions.RunQuoteActions();
