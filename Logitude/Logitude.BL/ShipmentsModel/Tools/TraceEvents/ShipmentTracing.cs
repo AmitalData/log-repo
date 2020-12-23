@@ -614,7 +614,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
                 else if (RoutingDate.IsDateRemoved(itemPM.ATA, itemPOCO.ATA))
                 {
                     this.DeleteTraceEvent(ArrivedCode);
-                    this.DeleteTraceEvent(ArrivedCode_New);
+                    this.DeleteTraceEvent(ArrivedCode_New, itemPM.PickUpDeliveryNumber);
                 }
 
                 else
@@ -664,6 +664,11 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
                                 }
                             }
                         }
+                    }
+
+                    else
+                    {
+                        this.DeleteTraceEvent(ArrivedCode);
                     }
                 }
             }
@@ -743,14 +748,18 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
                     string ArrivedCode_New = "DEAR";
                     if (RoutingDate.IsDateAddedOrModified(itemPM.ATA, itemPOCO.ATA))
                     {
-                        //this.CreateTraceEvent(ArrivedCode, itemPM.ATA, itemPM);
+                        if (RoutingDate.IsAllDeliveriesHaveDates(entityPM))
+                        {
+                            this.CreateTraceEvent(ArrivedCode, itemPM.ATA, itemPM);
+                        }
+
                         this.CreateTraceEvent(ArrivedCode_New, itemPM.ATA, itemPM);
                     }
 
                     else if (RoutingDate.IsDateRemoved(itemPM.ATA, itemPOCO.ATA))
                     {
-                        //this.DeleteTraceEvent(ArrivedCode);
-                        this.CreateTraceEvent(ArrivedCode_New, itemPM.ATA, itemPM);
+                        this.DeleteTraceEvent(ArrivedCode);
+                        this.DeleteTraceEvent(ArrivedCode_New, itemPM.PickUpDeliveryNumber);
                     }
 
                     else
@@ -800,6 +809,11 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
                                     }
                                 }
                             }
+                        }
+
+                        else
+                        {
+                            this.DeleteTraceEvent(ArrivedCode);
                         }
                     }
                 }
@@ -1095,7 +1109,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
 
                         else
                         {
-                            if (eventType.EntityStatusId != null)
+                            if (eventType.EntityStatusId != null || args.EventTypeCode == "PIAR" || args.EventTypeCode == "DEAR")
                             {
                                 ComputeEventStatus(args);
                             }
@@ -1141,7 +1155,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
                 }
             }
         }
-        private void DeleteTraceEvent(string eventTypeCode)
+        private void DeleteTraceEvent(string eventTypeCode, string pickupDeliveryIndex = null)
         {
             if (!string.IsNullOrEmpty(eventTypeCode))
             {
@@ -1150,6 +1164,11 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
                 if (eventType != null)
                 {
                     List<TraceEvent> AllEventTraces = this.traceEventRepository.GetAllTraceEventsByEventType(entityPM.Id, eventType.Id, tenant).ToList();
+
+                    if(!string.IsNullOrEmpty(pickupDeliveryIndex) && (eventTypeCode == "PIAR" || eventTypeCode == "DEAR"))
+                    {
+                        AllEventTraces = AllEventTraces.Where(d => d.Notes == pickupDeliveryIndex).ToList();
+                    }
 
                     if (AllEventTraces.Count > 0)
                     {
@@ -1301,6 +1320,14 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
                             entityMasterData.StatusLocation = entityPM.StatusLocation;
                         }
                     }
+                }
+            }
+
+            else
+            {
+                if(args.EventTypeCode == "PIAR" || args.EventTypeCode == "DEAR")
+                {
+                    args.StatusLocation = GetStatusLocation(args);
                 }
             }
         }
@@ -2052,6 +2079,18 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
             bool output = true;
 
             if(shipmentPM.ShipmentPickUps.Where(d => d.ATA == null).Any())
+            {
+                output = false;
+            }
+
+            return output;
+        }
+
+        public static bool IsAllDeliveriesHaveDates(ShipmentPM shipmentPM)
+        {
+            bool output = true;
+
+            if (shipmentPM.ShipmentDeliveries.Where(d => d.ATA == null).Any())
             {
                 output = false;
             }
