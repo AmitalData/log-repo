@@ -288,6 +288,29 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
             entityPM.SubTotalInLocalCurrency = (double?)MethodHelper.Round(allActiveInvoiceLines.Sum(s => s.LocalCurrencyAmount), 2);
             entityPM.SubTotalInInvoiceCurrency = (double?)MethodHelper.Round(allActiveInvoiceLines.Sum(s => s.InvoiceCurrencyAmount), 2);
+            SetAmountDue();
+           
+        }
+        private void SetAmountDue()
+        {
+            if (isNewEntity)
+            {
+                this.MapAmountToAmountDue();
+            }
+
+            else
+            {
+                if (entityPM.StatusCode != "PP" && entityPM.StatusCode != "PD")
+                {
+                    if (entityPM.InvoicePayments.Where(d => d.ChangeSetOp == ChangeSetOperation.Insert || d.ChangeSetOp == ChangeSetOperation.Delete).Count() == 0)
+                    {
+                        this.MapAmountToAmountDue();
+                    }
+                }
+            }
+        }
+        private void MapAmountToAmountDue()
+        {
             entityPM.AmountDue = entityPM.AmountInInvoiceCurrency == null ? 0 : entityPM.AmountInInvoiceCurrency.Value;
             entityPM.AmountDueInLocalCurrency = entityPM.AmountDueInLocalCurrency == null ? 0 : entityPM.AmountDueInLocalCurrency.Value;
             entityPM.AmountDueInProfitCurrency = entityPM.AmountDueInProfitCurrency == null ? 0 : entityPM.AmountDueInProfitCurrency.Value;
