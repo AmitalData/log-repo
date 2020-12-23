@@ -27,7 +27,8 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 	         ShipmentDate, 
 	         Id, 
 	         ShipmentId, 
-	         IsPublic,
+	         IsPublic, 
+	         ReferenceType,
 	      }
 
 
@@ -39,7 +40,8 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 	         ShipmentDate, 
 	         Id, 
 	         ShipmentId, 
-	         IsPublic,
+	         IsPublic, 
+	         ReferenceType,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -71,6 +73,11 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsPublic))
             {
 				entityPOCO.IsPublic = entityPM.IsPublic;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ReferenceType))
+            {
+				entityPOCO.ReferenceType = entityPM.ReferenceType;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -109,6 +116,11 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 					entityPM.IsPublic = entityPOCO.IsPublic;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ReferenceType))
+            {
+					entityPM.ReferenceType = entityPOCO.ReferenceType;
+            }
+
 		}
 
 		public void PMToOldPM(CargoTrackingShipmentSearchPM entityPM, CargoTrackingShipmentSearchPM oldEntityPM)
@@ -138,6 +150,11 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsPublic))
             {
                 oldEntityPM.IsPublic = entityPM.IsPublic;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ReferenceType))
+            {
+                oldEntityPM.ReferenceType = entityPM.ReferenceType;
             }
 			
 		}

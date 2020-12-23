@@ -27,12 +27,9 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
             IQueryable<CargoTrackingPortList> ports = GetPorts();
             IQueryable<CargoTrackingShipmentList> query = (from a in iQueryable join fp in ports on a.FromPortId equals fp.Id
                                                            join tp in ports on a.ToPortId equals tp.Id
-                                                           join s in context.CargoTrackingShipmentSearches  on a.EntityId equals s.ShipmentId 
                                                            join m in context.CargoTrackingMilestones on a.CurrentMilestoneCode equals m.Code into lm
                                                            from m in lm.DefaultIfEmpty()
                                                            join t in context.CargoTrackingTransportModes on a.TransportModeId equals t.Id
-                                                         
-                                                               //  group g by new {a.SecurityKey , g.FirstOrDefault().SearchFields} into gp
                                                            select new CargoTrackingShipmentList()
                                                            {
 
@@ -55,7 +52,6 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
                                                                CurrentMilestoneName = m.EnglishName,
                                                                CurrentMilestoneDate = a.CurrentMilestoneDate,
                                                                
-                                                               SearchReferences = s.SearchFields ,
                                                                CustomerId = a.CustomerId,
                                                                TransportModeName = t.Name,
                                                                TransportModeId = a.TransportModeId,
@@ -93,6 +89,8 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
                                                                ClearanceDate = a.ClearanceDate,
                                                                CreateDate = a.CreateDate,
                                                                DirectionId = a.DirectionId,
+
+                                                               CustomerReference = a.CustomerReference,
 
                                                            });
             return query;
@@ -213,7 +211,10 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
                    ConsigneeName = poco.ConsigneeName,
 
                    ContainersNumbers= poco.ContainersNumbers,
-                   PackagesQuantity = poco.PackagesQuantity
+
+                   PackagesQuantity = poco.PackagesQuantity,
+
+                   CustomerReference = poco.CustomerReference,
                 };
             if(list != null)
             {
@@ -247,26 +248,16 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
         {
             CargoTrackingShipmentRepository repo = new CargoTrackingShipmentRepository(context);
             IQueryable<CargoTrackingShipment> shipments = repo.GetByShipmentIds(ShipmentIds, tenant);
-
             List<CargoTrackingShipmentList> shipmetsLists = GetIqueryableList(shipments).ToList();
-
-            foreach (var Id in ShipmentIds)
+            foreach (CargoTrackingShipmentList shipment in shipmetsLists)
             {
-                string[] references = shipmetsLists.Where(d => d.EntityId == Id).Select(d => d.SearchReferences).ToArray();
-                shipmetsLists = shipmetsLists.GroupBy(p => p.SecurityKey).Select(g => g.Last()).ToList();
-                foreach (CargoTrackingShipmentList shipment in shipmetsLists)
+                if (shipment.CurrentMilestoneCode == null)
                 {
-                    if (shipment.EntityId == Id)
-                    {
-                        shipment.SearchReferences = String.Join(",", references);
-                        if(shipment.CurrentMilestoneCode == null)
-                        {
-                            GetCargoTrackingShipmentMilestones(shipment);
-                            
-                        }
-                    }
-                }            
+                    GetCargoTrackingShipmentMilestones(shipment);
+                }
+
             }
+
             return shipmetsLists;
         }
         public List<CargoTrackingShipmentList> GetShipments(int pageIndex, int pageSize, List<string> ShipmentIds, CargoTrackingShipmentFilters shipmentFilters)
@@ -277,7 +268,7 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
             shipments = SortShipments(shipmentFilters, shipments);
             List<CargoTrackingShipmentList> shipmentsLists = GetPageOfShipmentsLists(pageIndex, pageSize, shipments);
 
-            shipmentsLists = AddMilstonesToShipments(ShipmentIds, shipmentsLists);
+            shipmentsLists = AddMilstonesToShipments(shipmentsLists);
 
             return shipmentsLists;
         }
@@ -313,23 +304,16 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
             return shipments.Count();
         }
 
-        private List<CargoTrackingShipmentList> AddMilstonesToShipments(List<string> ShipmentIds, List<CargoTrackingShipmentList> shipmetsLists)
+        private List<CargoTrackingShipmentList> AddMilstonesToShipments(List<CargoTrackingShipmentList> shipmetsLists)
         {
-            foreach (var Id in ShipmentIds)
+
+            foreach (CargoTrackingShipmentList shipment in shipmetsLists)
             {
-                string[] references = shipmetsLists.Where(d => d.EntityId == Id).Select(d => d.SearchReferences).ToArray();
-                shipmetsLists = shipmetsLists.GroupBy(p => p.SecurityKey).Select(g => g.Last()).ToList();
-                foreach (CargoTrackingShipmentList shipment in shipmetsLists)
+                if (shipment.CurrentMilestoneCode == null)
                 {
-                    if (shipment.EntityId == Id)
-                    {
-                        shipment.SearchReferences = String.Join(",", references);
-                        if (shipment.CurrentMilestoneCode == null)
-                        {
-                            GetCargoTrackingShipmentMilestones(shipment);
-                        }
-                    }
+                    GetCargoTrackingShipmentMilestones(shipment);
                 }
+
             }
 
             return shipmetsLists;
@@ -400,8 +384,7 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
             //var xx = shipments.Count();
 
             IQueryable<CargoTrackingShipmentList> shipmentsListQuerable = GetIqueryableList(shipments);
-            shipmentsListQuerable = shipmentsListQuerable.GroupBy(p => p.SecurityKey).Select(d => d.FirstOrDefault());
-
+ 
             //var xsx = shipmentsListQuerable.Count();
 
             return shipmentsListQuerable;

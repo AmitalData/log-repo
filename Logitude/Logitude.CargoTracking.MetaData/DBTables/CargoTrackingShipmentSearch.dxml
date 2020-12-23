@@ -43,6 +43,13 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="ReferenceType"
+    Type="varchar"
+    Size="30">
+    <Constraints
+      Nullable="false" />
+  </Column>
   <Index
     Columns="Tenant,SearchFields,IsPublic" />
   <Index

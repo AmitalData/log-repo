@@ -101,6 +101,8 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
                             listCols.Add(column);
                             bulkDataPreperation.dataTable.Columns.Add(column);
                         }
+
+                        AddDummyCoulmnsToDatatTable(bulkDataPreperation);
                     }
 
                     while (bulkDataPreperation.sqlDataReader.Read())
@@ -172,6 +174,13 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
 
         }
 
+        private void AddDummyCoulmnsToDatatTable(BulkDataPreperation bulkDataPreperation)
+        {
+            foreach (string ColumnName in bulkDataPreperation.cargoTable.FieldsDummyName.Split(','))
+            {
+                bulkDataPreperation.dataTable.Columns.Add(ColumnName);
+            }
+        }
 
         private void BuildAllIndexesWithConstraient(CargoArgs buildCargoArgs)
         {

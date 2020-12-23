@@ -21,6 +21,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.HelperClasses
         public string ConditionKey { get; set; }
         public string ConditionKey2 { get; set; }
         public string FieldsDBName { get; set; }
+        public string FieldsDummyName { get; set; }
         public string CT_FieldsDBName { get; set; }
         public string CT2_FieldsDBName { get; set; }
         public string RefreshIds { get; set; }
