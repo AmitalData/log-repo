@@ -154,6 +154,16 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
                         this.CreateTraceEvent("CNLF", entityPM.EventNote);
                     }
 
+                    if (entityPM.ConvertShipmentToLTL)
+                    {
+                        this.CreateTraceEvent("CNFT", entityPM.EventNote);
+                    }
+
+                    else if (entityPM.ConvertShipmentToFTL)
+                    {
+                        this.CreateTraceEvent("CNLT", entityPM.EventNote);
+                    }
+
                     if (!entityPM.MarkFollowUpsAsDone)
                     {
                         this.CreateTraceEvent("USHI");

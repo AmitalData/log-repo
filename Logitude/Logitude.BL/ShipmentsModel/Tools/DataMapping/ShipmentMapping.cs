@@ -114,12 +114,14 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
                 entityPoco.ShipmentTypeId = entityPM.ShipmentTypeId;
             }
 
-            if (entityPM.ConvertShipmentToLCL || entityPM.ConvertShipmentToFCL)
+            if (entityPM.ConvertShipmentToLCL || entityPM.ConvertShipmentToFCL || entityPM.ConvertShipmentToLTL || entityPM.ConvertShipmentToFTL)
             {
                 entityPoco.ShipmentTypeId = entityPM.ShipmentTypeId;
 
                 entityPM.ConvertShipmentToLCL = false;
                 entityPM.ConvertShipmentToFCL = false;
+                entityPM.ConvertShipmentToLTL = false;
+                entityPM.ConvertShipmentToFTL = false;
             }
 
             entityPoco.NoFreightFile = entityPM.NoFreightFile;
