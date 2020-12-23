@@ -22,7 +22,10 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 {
     public partial class TaxReportLineUpdateService
     {
-        const string LineType_RegularTransactionTransactions = "S";
+        const string StatusCode_InvoiceNumberIsNotValid = "3";
+        const string LineTypeCode_StandardFromIsraeliSupplier = "T";
+        const string LineTypeCode_RegularTransactions = "S";
+        
         const string LineType_UnidentifiedCustomerTransactions = "L";
         const string LineType_SelfInvoiceTransactions = "M";
         const string StatusCode_VATAmountInTheRecordIsHigherThanThePercentageOfVATAllowed = "9";
@@ -94,6 +97,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             entityPM.VatNumber = ModifyVatNumberToValidLength(entityPM.VatNumber);
             string trimmedZeros = entityPM.VatNumber != null ? entityPM.VatNumber.Trim('0') : null;
             bool zerosVatNumber;
+            CheckIfInvoiceNumberIsNotValid(entityPM);
             if (entityPM.OutputOrInput == "O")
             {
                
@@ -142,6 +146,9 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                             {
                                 entityPM.StatusCode = "2";
                             }
+
+                           
+
                         }
 
                     }
@@ -213,6 +220,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                             {
                                 entityPM.StatusCode = "2";
                             }
+
                         }
 
                     }
@@ -250,7 +258,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
         private void CheckVATAmountInTheRecordIsHigherThanThePercentageOfVATAllowed(TaxReportLinePM entityPM)
         {
-            if (entityPM.LineTypeCode == LineType_RegularTransactionTransactions ||
+            if (entityPM.LineTypeCode == LineTypeCode_RegularTransactions ||
                    entityPM.LineTypeCode == LineType_UnidentifiedCustomerTransactions ||
                    entityPM.LineTypeCode == LineType_SelfInvoiceTransactions)
             {
@@ -276,6 +284,26 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                         taxReportLinePM.StatusCode = "6";
                     }
                 
+            }
+        }
+        private bool AreAllDigits(string s) => s.All(char.IsDigit);
+        private bool AreAllDigitsZero(string s) => s.All(c=>c=='0');
+        private void CheckIfInvoiceNumberIsNotValid(TaxReportLinePM entityPM)
+        {
+            if (string.IsNullOrEmpty(entityPM.Reference))
+            {
+                entityPM.StatusCode = StatusCode_InvoiceNumberIsNotValid;
+            }
+            else if (!AreAllDigits(entityPM.Reference))
+            {
+                entityPM.StatusCode = StatusCode_InvoiceNumberIsNotValid;
+            }
+            else if ((entityPM.LineTypeCode == LineTypeCode_StandardFromIsraeliSupplier ||
+                      entityPM.LineTypeCode == LineTypeCode_RegularTransactions) &&
+                      AreAllDigitsZero(entityPM.Reference))
+            {
+                entityPM.StatusCode = StatusCode_InvoiceNumberIsNotValid;
+
             }
         }
         private double? GetSTDPercentage(int tenant)
