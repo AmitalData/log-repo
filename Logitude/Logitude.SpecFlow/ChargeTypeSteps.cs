@@ -10,62 +10,67 @@ namespace Logitude.SpecFlow
     [Binding]
     public class ChargeTypeSteps
     {
-        private readonly int _tenant = 0;
-        private string _newchargeTypeId;
-        private string _chargeTypeCode;
-        private string _chargeTypeName;
-        private string _chargeTypeGroupCode;
-        private string _chargeTypeMeasurementId;
-        
+        private readonly ChargeTypeStepsContext _context;
+        private readonly MeasurementQuery _measurementQuery;
+        private readonly ChargesTypeQuery _chargesTypeQuery;
+        private readonly ChargesTypeService _chargesTypeService;
+
+        public ChargeTypeSteps(ChargeTypeStepsContext context)
+        {
+            _context = context;
+            _context.Tenant = 0;
+
+            ICommonDataContext commonDataContext = CommonDataContext.GetContext(_context.Tenant);
+            _measurementQuery = new MeasurementQuery(_context.Tenant);
+            _chargesTypeQuery = new ChargesTypeQuery(_context.Tenant);
+            _chargesTypeService = new ChargesTypeService(commonDataContext, _context.Tenant);
+        }
+
         [Given(@"The charge type code is (.*)")]
         public void GivenTheChargeTypeCodeIs(string chargeTypeCode)
         {
-            _chargeTypeCode = chargeTypeCode;
+            _context.Code = chargeTypeCode;
         }
         
         [Given(@"The charge type name is (.*)")]
         public void GivenTheChargeTypeNameIs(string chargeTypeName)
         {
-            _chargeTypeName = chargeTypeName;
+            _context.Name = chargeTypeName;
         }
         
         [Given(@"The charge type group code is (.*)")]
         public void GivenTheChargeTypeGroupCodeIs(string chargeTypeGroupCode)
         {
-            _chargeTypeGroupCode = chargeTypeGroupCode;
+            _context.GroupCode = chargeTypeGroupCode;
         }
         
         [Given(@"The charge type measurement code is (.*)")]
         public void GivenTheChargeTypeMeasurementCodeIs(string chargeTypeMeasurementCode)
         {
-            MeasurementQuery measurementQuery = new MeasurementQuery(_tenant);
-            MeasurementPM measurementPM = measurementQuery.GetSinglePMByCode(chargeTypeMeasurementCode, _tenant);
-            _chargeTypeMeasurementId = measurementPM?.Id;
+            MeasurementPM measurementPM = _measurementQuery.GetSinglePMByCode(chargeTypeMeasurementCode, _context.Tenant);
+            _context.MeasurementId = measurementPM?.Id;
         }
         
         [When(@"Try to create the charge type")]
         public void WhenTryToCreateTheChargeType()
         {
-            ICommonDataContext commonDataContext = CommonDataContext.GetContext(_tenant);
-            ChargesTypeService chargesTypeService = new ChargesTypeService(commonDataContext, _tenant);
             ChargesTypePM chargesTypePM = new ChargesTypePM
             {
-                Tenant = _tenant,
-                Code = _chargeTypeCode,
-                EnglishName = _chargeTypeName,
-                ChargesGroupCode = _chargeTypeGroupCode,
-                MeasurementId = _chargeTypeMeasurementId
+                Tenant = _context.Tenant,
+                Code = _context.Code,
+                EnglishName = _context.Name,
+                ChargesGroupCode = _context.GroupCode,
+                MeasurementId = _context.MeasurementId
             };
-            chargesTypeService.Create(chargesTypePM);
-            _newchargeTypeId = chargesTypePM.Id;
+            _chargesTypeService.Create(chargesTypePM);
+            _context.Id = chargesTypePM.Id;
         }
         
         [Then(@"The charge type will created successfully")]
         public void ThenTheChargeTypeWillCreatedSuccessfully()
         {
-            ChargesTypeQuery chargesTypeQuery = new ChargesTypeQuery(_tenant);
-            ChargesTypePM chargesTypePM = chargesTypeQuery.GetSinglePM(_newchargeTypeId, _tenant);
-            Assert.Equal(_newchargeTypeId, chargesTypePM?.Id);
+            ChargesTypePM chargesTypePM = _chargesTypeQuery.GetSinglePM(_context.Id, _context.Tenant);
+            Assert.Equal(_context.Id, chargesTypePM?.Id);
         }
     }
 }
