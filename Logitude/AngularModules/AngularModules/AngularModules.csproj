@@ -287,13 +287,10 @@
     <Content Include="CustomsModules\CustomsDeclarationModules\DeclarationTabs\Components\Classification\CasualSupplierDetailsComponent.html" />
     <Content Include="CustomsModules\CustomsDeclarationModules\DeclarationTabs\Components\DeclarationAmendment\DeclarationAmendmentComponent.html" />
     <Content Include="CustomsModules\CustomsDeclarationModules\DeclarationTabs\Components\General\ConsigmentTabContent\ExportConsigmentContentComponent.html" />
-
     <TypeScriptCompile Include="App\DynamicLoader\LazyWidgetsLogitude.ts" />
     <TypeScriptCompile Include="Accounting\Components\Others\CopyJournalComponent.ts" />
-
     <TypeScriptCompile Include="Common\CustomFilters\ChargesTypeCustomFilter.ts" />
     <TypeScriptCompile Include="Common\Tools.ts" />
-
     <TypeScriptCompile Include="CustomsModules\CustomsDeclarationModules\DeclarationOthers\Components\DeclarationCancellation\DeclarationCancellationComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsDeclarationModules\DeclarationOthers\Components\DeclarationCancellation\Documents\DeclarationCancellationCustomsDocumentsController.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsDeclarationModules\DeclarationOthers\Components\NewEntity\NewExportDeclarationComponent.ts" />
@@ -1947,6 +1944,7 @@
     <Content Include="Invoice\Components\Workspaces\Windows\ExternalTransmissionSettingsComponent.html" />
     <Content Include="QuoteModules\QuoteCharges\Components\SelectBreaksComponent.html" />
     <Content Include="QuoteModules\QuoteOthers\Components\Quotation\AttachmentQuotationComponent.html" />
+    <Content Include="Quote\Components\Shared\QuoteSaleCurrencyTypeComponent.html" />
     <Content Include="Report\Components\FilterReportComponent\AutomationTestReportFilterComponent.html" />
     <Content Include="Report\Components\FilterReportComponent\TasksOfNoProjectsFilterComponent.html" />
     <Content Include="Report\Components\FilterReportComponent\VDKFilterComponent.html" />
@@ -4413,6 +4411,7 @@
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureComputingPartner\Components\QueryColumnsComponents\btnComponentComputingPartnerEdit.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureDocuments\Components\SharedDocument\SharedDocumentComponent.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureDocuments\Components\SharedDocument\SharedDocumentsPermissionsComponent.ts" />
+    <TypeScriptCompile Include="Quote\Components\Shared\QuoteSaleCurrencyTypeComponent.ts" />
     <TypeScriptCompile Include="Quote\DataContracts\QuoteDashboardArguments.ts" />
     <TypeScriptCompile Include="Quote\EntityPMs\QuoteClosingReasonPM.ts" />
     <TypeScriptCompile Include="Quote\Services\ExtendedPMs\QuoteDocumentVersionExtendedPMService.ts" />

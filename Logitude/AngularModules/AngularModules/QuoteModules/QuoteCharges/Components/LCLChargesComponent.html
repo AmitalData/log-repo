@@ -860,7 +860,8 @@
                                     </td>
 
                                     <td>
-                                        <table>
+                                        <QuoteSaleCurrencyTypeComponent [EntityPM]="EntityPM" (SelectedValueChanged)="OnSaleCurrencyModeChanged($event)"></QuoteSaleCurrencyTypeComponent>
+                                        <!--<table>
                                             <tr>
                                                 <td style="width:1px;">
                                                     <RadioButton [Name]="'SalesCurrencyRadio'" [IsEnabled]="IsEditingEnabled" [IsChecked]="IsFixedCurrency" (Checked)="SetFixedSameCurrency('F')" [Text]="'Quote.O.Charges.Fixed' | TextCodeTranslationPipe"></RadioButton>
@@ -874,7 +875,7 @@
                                                     <RadioButton [Name]="'SalesCurrencyRadio'" [IsEnabled]="IsEditingEnabled" [IsChecked]="IsSameCostCurrency" (Checked)="SetFixedSameCurrency('S')" [Text]="'Quote.O.Charges.SameAsCost' | TextCodeTranslationPipe"></RadioButton>
                                                 </td>
                                             </tr>
-                                        </table>
+                                        </table>-->
                                     </td>
                                 </tr>
 

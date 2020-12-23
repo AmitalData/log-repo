@@ -543,6 +543,11 @@ export class LCLChargesComponent extends BaseComponent implements OnDestroy {
 
         this.BuildProfitData();
     }
+
+    OnSaleCurrencyModeChanged(mode: string) {
+        this.SetFixedSameCurrency(mode);
+    }
+
     SetFixedSameCurrency(setType: string) {
         this.IsFixedCurrency = null;
         this.IsSameCostCurrency = null;
@@ -1405,13 +1410,7 @@ export class QuoteChargeItem extends BaseComponent {
             var itemFrieght: QuoteChargePM = this.QuotePM.QuoteCharges.filter(d => d.ChargesGroupCode == "FRT")[0];
 
             if (itemFrieght) {
-                if (this.QuotePM.IsSaleCurrencySameAsCost) {
-                    if (this.CostCurrencyId == itemFrieght.CostCurrencyId) {
-                        isAllInCheckBoxVisible = true;
-                    }
-                }
-
-                else {
+                if (this.SaleCurrencyId == itemFrieght.SaleCurrencyId) {
                     isAllInCheckBoxVisible = true;
                 }
             }
