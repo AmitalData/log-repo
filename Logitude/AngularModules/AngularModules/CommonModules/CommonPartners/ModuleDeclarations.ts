@@ -10,7 +10,8 @@ import {AddEditAddressComponent} from './Components/AddEdit/AddEditAddressCompon
 import {ContactGeneralTabComponent} from './Components/EditTabs/Contact/ContactGeneralTabComponent';
 import {PartnersTabComponent} from './Components/EditTabs/Contact/PartnersTabComponent';
 import {WarehouseGeneralTabComponent} from './Components/EditTabs/Warehouse/WarehouseGeneralTabComponent';
-import {ShippingLineInttraTabComponent} from './Components/EditTabs/ShippingLine/ShippingLineInttraTabComponent';
+import { ShippingLineInttraTabComponent } from './Components/EditTabs/ShippingLine/ShippingLineInttraTabComponent';
+import { ShippinglineGeneralTabComponent } from './Components/EditTabs/ShippingLine/ShippinglineGeneralTabComponent';
 import {NewCustomAgentComponent} from './Components/NewEntity/NewCustomAgentComponent';
 import {NewShippingLineComponent} from './Components/NewEntity/NewShippingLineComponent';
 import {NewTruckerComponent} from './Components/NewEntity/NewTruckerComponent';
@@ -56,6 +57,7 @@ export const Components =
         PartnersTabComponent, 
         WarehouseGeneralTabComponent,
         ShippingLineInttraTabComponent,
+        ShippinglineGeneralTabComponent,
         NewCustomAgentComponent,
         NewShippingLineComponent,
         NewTruckerComponent,
@@ -105,7 +107,8 @@ export class ModuleDeclarations {
             case "ContactGeneralTabComponent": { myResult = ContactGeneralTabComponent; break; }
             case "PartnersTabComponent": { myResult = PartnersTabComponent; break; }  
             case "WarehouseGeneralTabComponent": { myResult = WarehouseGeneralTabComponent; break; }
-            case "ShippingLineInttraTabComponent": { myResult = ShippingLineInttraTabComponent; break; }   
+            case "ShippingLineInttraTabComponent": { myResult = ShippingLineInttraTabComponent; break; }
+            case "ShippinglineGeneralTabComponent": { myResult = ShippinglineGeneralTabComponent; break; }   
             case "NewCustomAgentComponent": { myResult = NewCustomAgentComponent; break; }
             case "NewShippingLineComponent": { myResult = NewShippingLineComponent; break; }
             case "NewTruckerComponent": { myResult = NewTruckerComponent; break; }
