@@ -846,8 +846,13 @@ namespace Logitude.TariffModule.BL.Helpers
                     tariffsSummary.Remarks = result.Notes;
                     if(CurrentSurcharge != null)
                     {
-                        tariffsSummary.Remarks = tariffsSummary.Remarks + ", " + CurrentSurcharge.Notes;
-                    }
+                        if (!string.IsNullOrEmpty(tariffsSummary.Remarks) && !string.IsNullOrEmpty(CurrentSurcharge.Notes))
+                            tariffsSummary.Remarks = tariffsSummary.Remarks + " , " + CurrentSurcharge.Notes;
+                        else if (!string.IsNullOrEmpty(CurrentSurcharge.Notes))
+                            tariffsSummary.Remarks = CurrentSurcharge.Notes;
+                        else if (!string.IsNullOrEmpty(tariffsSummary.Remarks))
+                            tariffsSummary.Remarks = tariffsSummary.Remarks;
+                    }   
 
                     var calculatedLocalAmount = item.Price != null ? CalculateLocalAmount((item.Price).Value, currencyId, result.CurrencyId) : 0;
                     tariffsSummary.decimalprice = (decimal?)Sum + calculatedLocalAmount;
