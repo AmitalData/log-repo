@@ -29,7 +29,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
         public IQueryable<DocumentTypeTemplate> GetDocumentTypeTemplatesByTenant(int tenant)
         {
             return from a in context.DocumentTypeTemplates.Include("LastUpdatedByUser.Contact").Include("DocumentType")
-                   where a.Tenant == tenant
+                   where a.Tenant == tenant && string.IsNullOrEmpty(a.AutomationId)
                    select a;
         }
 
@@ -37,7 +37,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
         public IQueryable<DocumentTypeTemplate> GetDocumentTypeTemplates(int tenant)
         {
             return from a in context.DocumentTypeTemplates.Include("LastUpdatedByUser.Contact").Include("DocumentType")
-                   where a.Tenant == tenant
+                   where a.Tenant == tenant && string.IsNullOrEmpty(a.AutomationId)
                    select a;
         }
 
@@ -45,7 +45,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
         public IQueryable<DocumentTypeTemplate> GetHtmDocumentTypeTemplates(int tenant)
         {
             return from a in context.DocumentTypeTemplates
-                   where a.Tenant == tenant && a.EditorTool !="S" 
+                   where a.Tenant == tenant && a.EditorTool !="S" && string.IsNullOrEmpty(a.AutomationId)
                    select a;
         }
 
@@ -135,7 +135,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
         public IQueryable<DocumentTypeTemplate> GetDocumentTypeTemplatesBydocumentTypeTemplateIds(List<string>documentTypeTemplateIds,int tenant)
         {
             return from a in context.DocumentTypeTemplates
-                   where a.Tenant == tenant && documentTypeTemplateIds.Contains(a.Id)
+                   where a.Tenant == tenant && documentTypeTemplateIds.Contains(a.Id) && string.IsNullOrEmpty(a.AutomationId)
                    select a;
         }
     }
