@@ -58,6 +58,9 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
     public fullAccountingSettingPMService: FullAccountingSettingPMService = new FullAccountingSettingPMService();
     PaymentChequePMService: PaymentChequeExtendedPMService = new PaymentChequeExtendedPMService();
     IsChequeLinkVisibile: boolean = false;
+    DisplayFieldsFromList:string;
+    DisplayLocalFieldsFromList:string;
+    VendorLovSizeForFullAccounting:number;
     constructor(private entityArgs: EntityArgs, private _entityResourceService: EntityResourceService, private cd: ChangeDetectorRef) {
         super();
 
@@ -67,6 +70,7 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
 
         }
         this.IsFullAccounting = SessionLocator.TenantPM.AccountingActivated;
+        //this.InitializeBillToLov()
         this.EntityPM = entityArgs.EntityPM;
         this.ItemsSource = new ObservableCollection([]);
         this.EnableNegativeOffsetAPPayments = ObjectsLocator.AccountingSettingPM.EnableNegativeOffsetAPPayments;
@@ -92,6 +96,13 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
         }
 
         this.LocalCurrencyCode = SessionLocator.LocalCurrencyCode;
+    }
+    private InitializeBillToLov() {
+        if (this.IsFullAccounting) {
+            this.DisplayFieldsFromList = "Code,CalculatedEnglishName,GLAccountDisplayNumber,CityName,CountryCode,PartnerTypeName";
+            this.DisplayLocalFieldsFromList = "Code,CalculatedLocalName,GLAccountDisplayNumber,CityName,CountryCode,PartnerTypeName";
+            this.VendorLovSizeForFullAccounting = 550;
+        }
     }
     public ShowSplitButton: boolean = false;
     IsSplitComponentOpened: boolean;
