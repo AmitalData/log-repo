@@ -9,7 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Logitude.BL.InvoiceModel.Tools.Behaviours
+namespace Logitude.BL.InvoiceModel.Tools.Behaviours.APInvoiceBehaviours
 {
     public class APInvoiceLinesBehavior : IServiceBehaviour
     {
