@@ -10,7 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UnifreightIIG.Common.ImportDeclarationServiceReference;
-using UnifreightIIG.Common.MessageLib.DeclarationCancel;
+using UnifreightIIG.Common.MessageLib.ID;
 
 namespace Logitude.CustomsMessaging.MessagingServices
 {
