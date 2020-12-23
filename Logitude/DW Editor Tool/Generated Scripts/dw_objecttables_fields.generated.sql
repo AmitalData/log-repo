@@ -887,6 +887,9 @@ insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,Is
 declare @Fact_ChargesRegistryDateNewId varchar(15)
 execute usp_GetNextTableIdValue @Fact_ChargesRegistryDateNewId OUTPUT,'DWObjectField' 
 insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,DimensionTableCode,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom,OriginalObjectFieldCode,DontDisplayInView,IsMultipleSelection) Values(@Fact_ChargesRegistryDateNewId,0,'Fact_Charges','[Registry Date]','Registry Date','Dimension','false',0,0,'DIM_Dates','false','false','true','Dates','false','false','false','Shipment.RegistryDate','false','false')  
+declare @Fact_ChargesInvoiceDateNewId varchar(15)
+execute usp_GetNextTableIdValue @Fact_ChargesInvoiceDateNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,DimensionTableCode,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom,OriginalObjectFieldCode,DontDisplayInView,IsMultipleSelection) Values(@Fact_ChargesInvoiceDateNewId,0,'Fact_Charges','[Invoice Date]','Invoice Date','Dimension','false',0,0,'DIM_Dates','false','false','true','Charges','false','false','false','APInvoice.InvoiceDate','true','false')  
 ------------------------------------------------------------------------------------
 declare @Fact_MasterChargesNewId varchar(15)
 execute usp_GetNextTableIdValue @Fact_MasterChargesNewId OUTPUT,'DWObjectTable' 

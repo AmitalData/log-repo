@@ -1177,6 +1177,18 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
 
             }
             
+            if (!string.IsNullOrWhiteSpace(_Param.ChartOfAccountsTypeCode))
+            {
+                var qChartOfAccountsTypeCode = _myGLAccountQueryService.GetQByChartOfAccountsTypeCode(_Param.Tenant, _Param.ChartOfAccountsTypeCode);
+                Join_AccountIdList(qChartOfAccountsTypeCode);
+
+            }
+            if (!string.IsNullOrWhiteSpace(_Param.ChartOfAccountsId))
+            {
+                var qChartOfAccountsId = _myGLAccountQueryService.GetQGLAccIdByChartOfAccountsId(_Param.Tenant, _Param.ChartOfAccountsId);
+                Join_AccountIdList(qChartOfAccountsId);
+
+            }
 
             if (_MainAccountIdList_ToFetchThenAggragrate == null)//Bug 42372: Reco - Problem with Code (MaxAmount)
             {
@@ -1582,6 +1594,13 @@ TRUE= כאשר מבקשים עם ריכוז לפי כרטיס אב (פיצול �
 
         public string CollectorId { get; set; }
         public string SalesmanId { get; set; }
+
+        public string ChartOfAccountsTypeCode { get; set; }
+
+        public string ChartOfAccountsId { get; set; }
+
+        
+        
 
 
 

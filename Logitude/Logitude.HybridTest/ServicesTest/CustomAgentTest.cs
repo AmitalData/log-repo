@@ -9,6 +9,7 @@ namespace Logitude.HybridTest.ServicesTest
     [TestClass]
     public class CustomAgentTest
     {
+        private static EntityWcfCaller entityWcfCaller = new EntityWcfCaller();
         [TestMethod]
         public void Test_CustomAgent_UPSERT()
         {
@@ -22,7 +23,7 @@ namespace Logitude.HybridTest.ServicesTest
                 PartnerTypeId = "CG",
                 Tenant = EnvironmentGlobalParams.MainTenant,
             };
-            ServiceOutcome serviceOutcome = EntityWcfCaller.CallEntityUpsert(customAgentPM);
+            ServiceOutcome serviceOutcome = entityWcfCaller.CallEntityUpsert(customAgentPM);
             Assert.IsFalse(serviceOutcome.Response.HasError, "Upsert Failed! " + serviceOutcome.Response.ErrorMessage);
             Assert.IsNotNull(serviceOutcome.Response.Result, "Upsert Failed! " + serviceOutcome.Response.ErrorMessage);
         }

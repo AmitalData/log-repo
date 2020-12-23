@@ -122,6 +122,95 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             return securedPm;
         }
 
+
+
+        public AgentPM GetSinglePMByCode(string code, int tenant)
+        {
+            AgentPM agent = (from a in repository.context.Agents.Include("Card").Include("Card.SharedLogisticsInvitationStatus ")
+                             where a.Card.Code == code && a.Tenant == tenant
+                             select new AgentPM()
+                             {
+                                 Id = a.Id,
+                                 Tenant = a.Tenant,
+                                 Code = a.Card.Code,
+                                 EnglishName = a.Card.EnglishName,
+                                 LocalName = a.Card.LocalName,
+                                 CardPMId = a.Id,
+                                 ReceivablesAccountingCard = a.Card.ReceivablesAccountingCard,
+                                 PayablesAccountingCard = a.Card.PayablesAccountingCard,
+                                 AccountingVATSplit = a.Card.AccountingVATSplit,
+                                 CreateDate = a.Card.CreateDate,
+                                 InActive = a.Card.InActive,
+                                 Notes = a.Card.Notes,
+                                 PartnerTypeId = a.Card.PartnerTypeId,
+                                 PaymentTermId = a.Card.PaymentTermId,
+                                 VatNumber = a.Card.VatNumber,
+                                 ComputedLocalName = string.IsNullOrEmpty(a.Card.LocalName) ? a.Card.EnglishName : a.Card.LocalName,
+                                 Website = a.Card.Website,
+                                 InvoiceCurrencyId = a.Card.InvoiceCurrencyId,
+                                 VatTypeId = a.Card.VatTypeId,
+                                 BankName = a.Card.BankName,
+                                 BankAddress = a.Card.BankAddress,
+                                 IBANNumber = a.Card.IBANNumber,
+                                 Swift = a.Card.Swift,
+                                 AccountNumber = a.Card.AccountNumber,
+                                 SharedLogisticsInvitationStatusName = a.Card.SharedLogisticsInvitationStatus != null ? a.Card.SharedLogisticsInvitationStatus.Name : null,
+                                 LastLoginDate = a.Card.LastLoginDate,
+                                 PrimaryContactId = a.Card.PrimaryContactId,
+                                 EnableConsolidationInvoices = a.Card.EnableConsolidationInvoices,
+                                 CASSCode = a.CASSCode,
+                                 IATACode = a.IATACode,
+                                 RegulatedAgentCode = a.RegulatedAgentCode,
+                                 IRSNumber = a.Card.IRSNumber,
+                                 IRSPlace = a.Card.IRSPlace,
+                                 AgentSharedLogisticsKey = a.AgentSharedLogisticsKey,
+                                 ExternalAccountingBusinessArea = a.Card.ExternalAccountingBusinessArea,
+                                 PaymentMethodCode = a.Card.SATPaymentMethodCode,
+                                 IsCreditLimitEnabled = a.IsCreditLimitEnabled,
+                                 BlockNewInvoiceCreation = a.BlockNewInvoiceCreation,
+                                 BlockNewShipmentCreation = a.BlockNewShipmentCreation,
+                                 ExternalId2 = a.Card.ExternalId2,
+                                 SATForeignRFC = a.Card.SATForeignRFC,
+                                 MetodoPagoCode = a.Card.MetodoPagoCode,
+                                 UsoCFDICode = a.Card.UsoCFDICode,
+                                 GLAccountId = a.Card.GLAccountId,
+                                 StorageFreeDays = a.Card.StorageFreeDays,
+                                 GLAccountNumber = a.Card.GLAccountDisplayNumber,
+                                 Card = new CardPM()
+                                 {
+                                     Id = a.Id,
+                                     Tenant = a.Tenant,
+                                     EnglishName = a.Card.EnglishName,
+                                     PrimaryContactId = a.Card.PrimaryContactId,
+                                     GLAccountDisplayNumber = a.Card.GLAccountDisplayNumber,
+                                 },
+
+                             }).FirstOrDefault();
+
+            CardExternalCodeByCurrencyRepository cardExternalCodeByCurrencyRepository = new CardExternalCodeByCurrencyRepository(repository.context);
+            CardExternalCodeByCurrencyQuery cardExternalCodeByCurrencyQuery = new CardExternalCodeByCurrencyQuery(cardExternalCodeByCurrencyRepository);
+            agent.CardExternalCodeByCurrencies = cardExternalCodeByCurrencyQuery.GetCardExternalCodeByCurrencyPMsForCustomer(agent.Id, agent.Tenant);
+
+            if (agent != null)
+            {
+                agent.IsExternal = false;
+
+                AccountingSystemHelper accountingSystemHelper = new AccountingSystemHelper();
+                AccountingSystemPM accountingSystem = accountingSystemHelper.GetAccountingSystem(tenant);
+                if (accountingSystem != null)
+                {
+                    if (accountingSystem.IsExternalCodesFromTable)
+                    {
+                        agent.IsExternal = true;
+                    }
+                }
+            }
+
+            AgentPM securedPm = new AgentPM();
+            SecuredMapping.GetMappedPM(agent, securedPm, "Agent", tenant);
+
+            return securedPm;
+        }
         public IQueryable<AgentPM> GetAgentPMsByTenant(int tenant)
         {
             IQueryable<AgentPM> agents = from a in repository.context.Agents.Include("Card").Include("Card.SharedLogisticsInvitationStatus")

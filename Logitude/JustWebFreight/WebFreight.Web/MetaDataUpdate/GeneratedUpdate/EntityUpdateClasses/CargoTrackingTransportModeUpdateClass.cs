@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CargoTrackingTransportModeUpdateClass
    {  		
-		public const string HashString = "00f5ce2ec9f741c289fa19236d8bc229";
+		public const string HashString = "c83341f9be3238c2952ee8b00b97747d";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -119,11 +119,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "CargoTracking Transport Mode",
-			      				    Code =  "7452",
+			      				    Code =  "5cc2",
 			      				    Name =  "TransportMode",
 			      				    CloseTableName =  "Name",
 			      				    GenerateDomainService =  false,
-			      				    ClientModuleName =  "CargoTracking",
+			      				    ClientModuleName =  "",
 			      				    NoTS =  false,
 			      				    HasMenuButtons =  false,
 			      				    AllowedForComputingPartners =  false,

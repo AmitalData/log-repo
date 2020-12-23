@@ -87,6 +87,7 @@ namespace WebFreight.Web.Helpers
                             if (NextRunTime < task.NextRunTime)
                             {
                                 task.NextRunTime = NextRunTime;
+                                task.NextRunTimeUTC = NextRunTime;
                             }
                         }
                         if (task.Monday)
@@ -95,6 +96,7 @@ namespace WebFreight.Web.Helpers
                             if (NextRunTime < task.NextRunTime)
                             {
                                 task.NextRunTime = NextRunTime;
+                                task.NextRunTimeUTC = NextRunTime;
                             }
                         }
                         if (task.Tuesday)
@@ -103,6 +105,7 @@ namespace WebFreight.Web.Helpers
                             if (NextRunTime < task.NextRunTime)
                             {
                                 task.NextRunTime = NextRunTime;
+                                task.NextRunTimeUTC = NextRunTime;
                             }
                         }
                         if (task.Wednesday)
@@ -111,6 +114,7 @@ namespace WebFreight.Web.Helpers
                             if (NextRunTime < task.NextRunTime)
                             {
                                 task.NextRunTime = NextRunTime;
+                                task.NextRunTimeUTC = NextRunTime;
                             }
                         }
                         if (task.Thursday)
@@ -119,6 +123,7 @@ namespace WebFreight.Web.Helpers
                             if (NextRunTime < task.NextRunTime)
                             {
                                 task.NextRunTime = NextRunTime;
+                                task.NextRunTimeUTC = NextRunTime;
                             }
                         }
                         if (task.Friday)
@@ -127,6 +132,7 @@ namespace WebFreight.Web.Helpers
                             if (NextRunTime < task.NextRunTime)
                             {
                                 task.NextRunTime = NextRunTime;
+                                task.NextRunTimeUTC = NextRunTime;
                             }
                         }
                         if (task.Satarday)
@@ -135,6 +141,7 @@ namespace WebFreight.Web.Helpers
                             if (NextRunTime < task.NextRunTime)
                             {
                                 task.NextRunTime = NextRunTime;
+                                task.NextRunTimeUTC = NextRunTime;
                             }
                         }
                        break;
@@ -143,6 +150,7 @@ namespace WebFreight.Web.Helpers
                     {
                         //DateTime NextRunTime;
                         task.NextRunTime = task.NextRunTime.Value.AddMonths(1);
+                        task.NextRunTimeUTC = task.NextRunTimeUTC.Value.AddMonths(1);
                         break;
                     }
                 default: // Once

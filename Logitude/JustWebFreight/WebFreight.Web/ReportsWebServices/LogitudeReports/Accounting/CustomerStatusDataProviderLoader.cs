@@ -111,12 +111,18 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
 
         private CustomerStatus CreateNewCustomerStatus(IGrouping<string, PeriodMExtended> customer, List<IGrouping<string, PeriodMExtended>> periodsByDate)
         {
+            decimal? splitBalanceSummation = customer
+                .GroupBy(d =>  new { d.CurrencyId , d.SplitAccountId})
+                .Sum(d => d.First().BalanceInLocalCurrency);
+
             CustomerStatus customerStatus = new CustomerStatus()
             {
                 // account details
                 CustomerName = customer.First().AccountEnglishName,
+                CustomerLocalName = customer.First().AccountLocalName,
                 CustomerDisplayNumber = customer.First().AccountDisplayNumber,
                 CustomerPaymentTerm = customer.First().AccountTermName,
+                CustomerLocalPaymentTerm = customer.First().AccountTermLocalName,
                 CustomerPhone = customer.First().AccountPhone,
 
                 //credit details
@@ -126,7 +132,8 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                 TotalOpenCheques = customer.First().TotalOpenCheques ?? 0,
                 TotalOpenShipments = customer.First().TotalOpenShipments ?? 0,
 
-                AccountingBalance = customer.First().BalanceInLocalCurrency ?? 0,
+                AccountingBalance = splitBalanceSummation ?? 0,
+                //AccountingBalance = customer.First().BalanceInLocalCurrency ?? 0,
                 //AccountingBalance = customer.Sum(d => d.Total),
                 Periods = GetStatusPeriods(periodsByDate)
             };

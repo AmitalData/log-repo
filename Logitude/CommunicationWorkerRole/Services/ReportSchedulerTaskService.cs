@@ -1,4 +1,5 @@
-﻿using CommunicationWorkerRole.Tasks;
+﻿using CommunicationWorkerRole.ReportScheduler;
+using CommunicationWorkerRole.Tasks;
 using Logitude.Accounting.BL.EntityQueryServices;
 using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.BL.CommonDataModel.CustomFilters;
@@ -148,28 +149,48 @@ namespace CommunicationWorkerRole.Services
         private void SendPdfReportToReceipent(TasksSchedulerPM reportTask, SchedulerDetails schedulerDetails, ReportFliter reportFilter)
         {
             this.currentTask.LogInfo(FTPLogBuilder.BuildLogLine("Preparing report data"));
-            
-            List<ContactList> allPermittedContacts = GetAllPermittedContacts(reportTask.Tenant, null);
-            string gLAccountId = GetGLAccountIdValueField(schedulerDetails);
-            List<ContactList> allPermittedCards = GetAllPermittedContacts(reportTask.Tenant, gLAccountId);
-            allPermittedContacts = allPermittedContacts.Concat(allPermittedCards).ToList();
-            schedulerDetails.ReportDetails.Recepients = RemoveNonPermittedContacts(schedulerDetails.ReportDetails.Recepients, allPermittedContacts);
+            schedulerDetails.ReportDetails.Recepients = GetReportPermittedContacts(reportTask, schedulerDetails);
             if (schedulerDetails.ReportDetails.Recepients != null)
             {
                 StiReport stiReport = GetStimulReportByReportFilter(reportFilter);
                 this.currentTask.LogInfo(FTPLogBuilder.BuildLogLine("Exporting report to pdf file"));
                 string documentId = GetDocumentIdAfterExport(stiReport, reportTask.Name, reportTask.Tenant);
-                bool inActiveSelectedPartners = CheckIfOneOrMoreInactiveSelectedPartners(reportTask, schedulerDetails);
-                if (!inActiveSelectedPartners)
-                {
-                    this.currentTask.LogInfo(FTPLogBuilder.BuildLogLine("Sending report to reciepents"));
-                    SendHtmlDocument(documentId, schedulerDetails.ReportDetails.Recepients, reportTask);
-                    this.currentTask.LogInfo(FTPLogBuilder.BuildLogLine("Sending report to reciepents finished successfully"));
-                }
-                else
-                {
-                    currentTask.LogWarning("The E-mail was not sent, one or more selected filters partners are inactive");
-                }
+                SendPdfReportIfIsValid(reportTask, schedulerDetails, documentId);
+            }
+        }
+
+        private ReportSchedulerRecepients GetReportPermittedContacts(TasksSchedulerPM reportTask, SchedulerDetails schedulerDetails)
+        {
+            List<ContactList> allPermittedContacts = GetAllPermittedContacts(reportTask.Tenant, null);
+            string gLAccountId = GetFilterFieldValueByName(schedulerDetails.ReportDetails.ReportFilterItems, "GLAccountId");
+            List<ContactList> allPermittedCards = GetAllPermittedContacts(reportTask.Tenant, gLAccountId);
+            allPermittedContacts = allPermittedContacts.Concat(allPermittedCards).ToList();
+            ReportSchedulerRecepients recepients =  RemoveNonPermittedContacts(schedulerDetails.ReportDetails.Recepients, allPermittedContacts);
+            return recepients;
+        }
+
+        private void SendPdfReportIfIsValid(TasksSchedulerPM reportTask, SchedulerDetails schedulerDetails, string documentId)
+        {
+            AdditionalValidate additionalValidate = new AdditionalValidate();
+            ReportSchedulerRecepients reportRecepients = schedulerDetails.ReportDetails.Recepients;
+            string gLAccountId = GetFilterFieldValueByName(schedulerDetails.ReportDetails.ReportFilterItems, "GLAccountId");
+            if (!string.IsNullOrEmpty(gLAccountId))
+            {
+                reportRecepients = GetActiveRecepientsForGLAccount(gLAccountId, reportTask.Tenant, reportRecepients);
+                additionalValidate.recepients = reportRecepients;
+            }
+            this.currentTask.LogInfo(FTPLogBuilder.BuildLogLine("Validate Selected Partners"));
+            ValidateResult result = ValidateSelectedPartners(schedulerDetails.ReportDetails.ReportFilterItems, reportTask.Tenant, additionalValidate);
+
+            if (result.IsValid)
+            {
+                this.currentTask.LogInfo(FTPLogBuilder.BuildLogLine("Sending report to reciepents"));
+                SendHtmlDocument(documentId, reportRecepients, reportTask);
+                this.currentTask.LogInfo(FTPLogBuilder.BuildLogLine("Sending report to reciepents finished successfully"));
+            }
+            else
+            {
+                currentTask.LogWarning(result.ErrorMessage);
             }
         }
 
@@ -183,18 +204,18 @@ namespace CommunicationWorkerRole.Services
             this.trackerCounter += 1;
             return schedulerDetails;
         }
-        
-        private string GetGLAccountIdValueField(SchedulerDetails schedulerDetails)
+
+        private string GetFilterFieldValueByName(List<QueryFilterItem> reportFilterItems, string fieldName)
         {
-            string gLAccountId = null;
-            schedulerDetails.ReportDetails.ReportFilterItems.ForEach(item => {
-                if (item.FieldName == "GLAccountId")
+            string fieldValue = null;
+            reportFilterItems.ForEach(item => {
+                if (item.FieldName == fieldName)
                 {
-                    if(item.FieldValue != null)
-                        gLAccountId = item.FieldValue.ToString();
+                    if (item.FieldValue != null)
+                        fieldValue = item.FieldValue.ToString();
                 }
             });
-            return gLAccountId;
+            return fieldValue;
         }
 
         private ReportSchedulerRecepients RemoveNonPermittedContacts(ReportSchedulerRecepients recepients, List<ContactList> allPermittedContacts)
@@ -432,62 +453,40 @@ namespace CommunicationWorkerRole.Services
             storageservice.Write(ByteData, fileInfo);
         }
 
-        private ReportSchedulerRecepients GetRecepientsAfterRemoveInActiveCustomer(string gLAccountId, int tenant, ReportSchedulerRecepients recepients)
+        private ReportSchedulerRecepients GetActiveRecepientsForGLAccount(string gLAccountId, int tenant, ReportSchedulerRecepients recepients)
         {
-            if (string.IsNullOrEmpty(gLAccountId)) return recepients;
+            ReportSchedulerRecepients myRecepients = recepients;
+            if (string.IsNullOrEmpty(gLAccountId)) return myRecepients;
             CardQuery cardQuery = new CardQuery(tenant);
             List<ShortPartnersDetails> connectedPartners = cardQuery.GetConnectedPartnerIdsByGLAccountId(gLAccountId, tenant);
 
-            if (connectedPartners.Count() == 0) return recepients;
-            else if (GetInactivePartnerCounts(connectedPartners) == 0) return recepients;
+            if (connectedPartners.Count() == 0) return myRecepients;
+            else if (GetInactivePartnerCounts(connectedPartners) == 0) return myRecepients;
             else if (GetInactivePartnerCounts(connectedPartners) == connectedPartners.Count()) return null;
             else
             {
-                recepients = RemoveInActiveCustomerRecepients(recepients, connectedPartners, tenant);
-                if (string.IsNullOrEmpty(recepients.To))
+                myRecepients = RemoveInActiveCustomerRecepients(myRecepients, connectedPartners, tenant);
+                if (string.IsNullOrEmpty(myRecepients.To))
                     return null;
             }
 
-            return recepients;
+            return myRecepients;
         }
 
-        private bool CheckIfOneOrMoreInactiveSelectedPartners(TasksSchedulerPM reportTask, SchedulerDetails schedulerDetails)
+        private ValidateResult ValidateSelectedPartners(List<QueryFilterItem> reportFilterItems, int tenant, AdditionalValidate additionalValidate)
         {
-            string gLAccountId = GetGLAccountIdValueField(schedulerDetails);
-            if (!string.IsNullOrEmpty(gLAccountId)) //glaccount report
-            {
-                bool inactiveGLAccountSelectedPartners = CheckIfOneOrMoreInactiveGLAccountSelectedPartners(gLAccountId, reportTask, schedulerDetails);
-                return inactiveGLAccountSelectedPartners;
-            }
-            else
-                return true; //other reports
-
-        }
-        private bool CheckIfOneOrMoreInactiveGLAccountSelectedPartners(string gLAccountId, TasksSchedulerPM reportTask, SchedulerDetails schedulerDetails)
-        {
-            bool inActiveGlAccount = CheckIfInactiveSelectedGLAccount(gLAccountId, reportTask.Tenant);
-            schedulerDetails.ReportDetails.Recepients = GetRecepientsAfterRemoveInActiveCustomer(gLAccountId, reportTask.Tenant, schedulerDetails.ReportDetails.Recepients);
-            if (inActiveGlAccount || schedulerDetails.ReportDetails.Recepients == null)
-                return true;
-            else
-                return false;
-        }
-
-        private bool CheckIfInactiveSelectedGLAccount(string gLAccountId, int tenant)
-        {
-            GLAccountQueryService gLAccountQueryService = new GLAccountQueryService(tenant);
-            GLAccount gLAccount  = gLAccountQueryService.GetSingleByAccountId(gLAccountId, tenant);
-            if (gLAccount != null && gLAccount.Inactive != null)
-                return (bool)gLAccount.Inactive;
-            return false;
+            ReportSchedulerValidator reportSchedulerValidator = new ReportSchedulerValidator(reportFilterItems, tenant, additionalValidate);
+            ValidateResult result = reportSchedulerValidator.validate();
+            return result;
         }
 
         private ReportSchedulerRecepients RemoveInActiveCustomerRecepients(ReportSchedulerRecepients recepients, List<ShortPartnersDetails> connectedPartners, int tenant)
         {
+            ReportSchedulerRecepients myRecepients = recepients;
             CardContactRepository repositry = new CardContactRepository(tenant);
-            List<ActivatedEmail> toEmails = FillAllRecepients(recepients.To, true);
-            List<ActivatedEmail> ccEmails = FillAllRecepients(recepients.Cc, true);
-            List<ActivatedEmail> bccEmails = FillAllRecepients(recepients.Bcc, true);
+            List<ActivatedEmail> toEmails = FillAllRecepients(myRecepients.To, true);
+            List<ActivatedEmail> ccEmails = FillAllRecepients(myRecepients.Cc, true);
+            List<ActivatedEmail> bccEmails = FillAllRecepients(myRecepients.Bcc, true);
             string inActiveRecipients = "";
             connectedPartners.ForEach(connectedPartner =>
             {
@@ -525,11 +524,11 @@ namespace CommunicationWorkerRole.Services
             });
 
 
-            recepients.To = FillOnlyActiveRecepients(toEmails);
-            recepients.Cc = FillOnlyActiveRecepients(ccEmails);
-            recepients.Bcc = FillOnlyActiveRecepients(bccEmails);
+            myRecepients.To = FillOnlyActiveRecepients(toEmails);
+            myRecepients.Cc = FillOnlyActiveRecepients(ccEmails);
+            myRecepients.Bcc = FillOnlyActiveRecepients(bccEmails);
 
-            if (!string.IsNullOrEmpty(inActiveRecipients) && !string.IsNullOrEmpty(recepients.To))
+            if (!string.IsNullOrEmpty(inActiveRecipients) && !string.IsNullOrEmpty(myRecepients.To))
             {
                 inActiveRecipients = this.RemoveDuplicateEmails(inActiveRecipients);
                 string warningMessage = "The E-mail was not sent to " + inActiveRecipients;
@@ -537,7 +536,7 @@ namespace CommunicationWorkerRole.Services
                 currentTask.LogWarning(warningMessage);
             }
 
-            return recepients;
+            return myRecepients;
         }
 
         private int GetInactivePartnerCounts(List<ShortPartnersDetails> connectedPartners)

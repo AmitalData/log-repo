@@ -29,6 +29,7 @@ using Logitude.BL.InvoiceModel.EntityQueries;
 using Logitude.BL.Helpers;
 using Logitude.BL.ExternalService;
 using Logitude.BL.InvoiceModel.Tools.Behaviours;
+using Logitude.BL.InvoiceModel.Tools.Behaviours.APInvoiceBehaviours;
 
 namespace Logitude.BL.InvoiceModel.Tools.EntityService
 {
@@ -95,12 +96,19 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             this.myAccountingSetting = rep.GetSingleAccountingSetting(tenant);
         }
 
-        private List<APInvoicePaymentPM> invoicePaymentsChangeSet;
-        private List<APInvoiceMultipleShipmentPM> invoiceShipmentsChangeSet;
+        private List<APInvoicePaymentPM> invoicePaymentsChangeSet = new List<APInvoicePaymentPM>();
+        private List<APInvoiceMultipleShipmentPM> invoiceShipmentsChangeSet = new List<APInvoiceMultipleShipmentPM>();
         public void SetChangeSets(List<APInvoiceMultipleShipmentPM> invoiceMultipleShipmentsChangeSet, List<APInvoicePaymentPM> invoicePaymentsChangeSet)
         {
-            this.invoicePaymentsChangeSet = invoicePaymentsChangeSet;
-            this.invoiceShipmentsChangeSet = invoiceMultipleShipmentsChangeSet;
+            if (invoicePaymentsChangeSet != null)
+            {
+                this.invoicePaymentsChangeSet = invoicePaymentsChangeSet;
+            }
+
+            if (invoiceMultipleShipmentsChangeSet != null)
+            {
+                this.invoiceShipmentsChangeSet = invoiceMultipleShipmentsChangeSet;
+            }
         }
 
         public void Create()
@@ -177,14 +185,29 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             invoiceRepository.Update(invoice);
             invoiceRepository.SubmitChanges();
 
-            if (invoicePaymentsChangeSet.Count > 0)
+            if (invoicePaymentsChangeSet != null)
             {
-                this.UpdateInvoicePayments(invoicePaymentsChangeSet);
-                this.UpdateInvoiceAmountDue();
-                this.BuildSearchFields();
-                invoiceRepository.Update(invoice);
-                invoiceRepository.SubmitChanges();
+                if (invoicePaymentsChangeSet.Count > 0)
+                {
+                    bool isUpdatingPayments = true;
+
+                    if (invoicePaymentsChangeSet.Where(d => d.ChangeSetOp == ChangeSetOperation.Insert || d.ChangeSetOp == ChangeSetOperation.Delete).Count() == 0)
+                    {
+                        isUpdatingPayments = false;
+                    }
+
+                    if (isUpdatingPayments)
+                    {
+                        this.UpdateInvoicePayments(invoicePaymentsChangeSet);
+                        this.UpdateInvoiceAmountDue();
+                        this.UpdatePaidDate();
+                    }
+                }
             }
+
+            this.BuildSearchFields();
+            invoiceRepository.Update(invoice);
+            invoiceRepository.SubmitChanges();
 
             if (!String.IsNullOrEmpty(QBOAPPaymentId))
             {
@@ -265,6 +288,29 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
             entityPM.SubTotalInLocalCurrency = (double?)MethodHelper.Round(allActiveInvoiceLines.Sum(s => s.LocalCurrencyAmount), 2);
             entityPM.SubTotalInInvoiceCurrency = (double?)MethodHelper.Round(allActiveInvoiceLines.Sum(s => s.InvoiceCurrencyAmount), 2);
+            SetAmountDue();
+           
+        }
+        private void SetAmountDue()
+        {
+            if (isNewEntity)
+            {
+                this.MapAmountToAmountDue();
+            }
+
+            else
+            {
+                if (entityPM.StatusCode != "PP" && entityPM.StatusCode != "PD")
+                {
+                    if (entityPM.InvoicePayments.Where(d => d.ChangeSetOp == ChangeSetOperation.Insert || d.ChangeSetOp == ChangeSetOperation.Delete).Count() == 0)
+                    {
+                        this.MapAmountToAmountDue();
+                    }
+                }
+            }
+        }
+        private void MapAmountToAmountDue()
+        {
             entityPM.AmountDue = entityPM.AmountInInvoiceCurrency == null ? 0 : entityPM.AmountInInvoiceCurrency.Value;
             entityPM.AmountDueInLocalCurrency = entityPM.AmountDueInLocalCurrency == null ? 0 : entityPM.AmountDueInLocalCurrency.Value;
             entityPM.AmountDueInProfitCurrency = entityPM.AmountDueInProfitCurrency == null ? 0 : entityPM.AmountDueInProfitCurrency.Value;
@@ -1157,6 +1203,24 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                     }
                 }
             }
+        }
+
+        private void UpdatePaidDate()
+        {
+            if (entityPM.AmountDue != 0)
+            {
+                entityPM.PaidDate = null;
+            }
+            else
+            {
+                APInvoicePaymentPM itemPM = invoicePaymentsChangeSet.Where(d => d.ChangeSetOp == ChangeSetOperation.Insert).FirstOrDefault();
+                if (itemPM != null)
+                {
+                    entityPM.PaidDate = (from d in objectContext.APPayments where d.Id == itemPM.APPaymentId select d.ValueDate).FirstOrDefault();
+                }
+            }
+
+            invoice.PaidDate = entityPM.PaidDate;
         }
         #endregion
 

@@ -30,40 +30,29 @@ using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using Simplog.Data.ShipmentsModel.Repositories;
 using Simplog.Server.Infrastructure;
 using Logitude.BL.CommonDataModel.Tools.EntityService;
-using Logitude.BL.GlobalModel.EntityPMs;
 using Logitude.SystemLogs;
 using System.Web;
 using System.Transactions;
 using Simplog.Server.Infrastructure.Helpers;
 using Logitude.Server.Tools.QueueService;
 using Logitude.BL.Helpers;
-using Logitude.Accounting.Def.EntityPMs;
-using Logitude.Accounting.Def.EntityUpdateServicesExt;
 using Logitude.Server.Tools;
 using Microsoft.Practices.Unity;
-using Logitude.BL.CommonDataModel.Tools.DataMapping;
 using System.Text;
-using Simplog.Global.Data.GlobalModel.Repositories;
-using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Logitude.BL.CommonDataModel.DataContracts;
 using Simplog.Data.InfrastructureModel;
 using System.Reflection;
-using Logitude.WarehouseLib.Data.Repositories;
-using Logitude.WarehouseLib.Data.EntityPOCOs;
 using Logitude.Server.Tools.StorageService;
 using Simplog.Server.Infrastructure.Azure;
 using Logitude.CRM.Data.Repsitories;
 using Logitude.CRM.Data.EntityPOCOs;
-using System.Data.Common;
-using System.Data.SqlClient;
 using System.Data;
 using System.Text.RegularExpressions;
-using Logitude.BL.ShipmentsModel.Tools.Behaviour;
 using Logitude.BL.ShipmentsModel.Tools.Behaviours;
 using Logitude.TariffModule.Data.Repositories;
-using Logitude.TariffModule.Data;
 using Logitude.TariffModule.Data.EntityPOCOs;
 using Logitude.Server.Tools.EntityChanges;
+using Logitude.BL.ShipmentsModel.Tools.Initializers;
 
 namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 {
@@ -74,9 +63,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
         private bool calculateProfit;
         private bool calculatePayables;
         private bool calculateReceivables;
-        private bool isUpdatingRegistryDate;
-        private bool isUpdatingFirstApprovalDate;
-        private string serviceContextUser;
         public Shipment entityPoco { get; set; }
         private ShipmentPM entityPM;
         private ShipmentMasterData entityMasterData;
@@ -106,8 +92,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
         private ShipmentAdditionalCloudDataRepository shipmentAdditionalCloudDataRepository;
         private ShipmentAdditionalCloudData shipmentAdditionalCloudData;
         private DocumentsFilingRepository documentsFilingRepository;
-        private DocumentRepository documentRepository;
-        private DocumentsFilingQuery documentsFilingQuery;
         private DocumentTypeRepository DocTypeReposioty;
         private ShipmentTracing shipmentTracing;
         private Tenant loggedTenant;
@@ -117,21 +101,28 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
         List<ShipmentPM> housesList = new List<ShipmentPM>();
         private ShipmentBehaviourFacade shipmentBehaviourFacade;
-        private bool IsLCLEntity;
-        private bool IsFCLEntity;
         private ShipmentContainerStatusRepository shipmentContainerStatusRepository;
         HybridPartnerPM CurrentHybridPartner;
         public ShipmentComputedFields UpdatedShipmentComputedFields;
+
+        private ShipmentServiceInitializer initializer;
+
         public ShipmentService(IShipmentsContext objectContext, ShipmentPM entityPM, string serviceContextUser)
         {
-            this.entityPM = entityPM;
-            this.tenant = entityPM.Tenant;
-            this.objectContext = objectContext;
-            this.serviceContextUser = serviceContextUser;
-            this.myCommonContext = CommonDataContext.GetContext(entityPM.Tenant);
+            this.initializer = new ShipmentServiceInitializer(objectContext, entityPM, serviceContextUser);
+            this.initializer.Initialize();
 
-            this.entityRepository = new ShipmentRepository(objectContext);
-            this.shipmentMasterDataRepository = new ShipmentMasterDataRepository(objectContext);
+            this.tenant = initializer.Tenant;
+            this.entityPM = initializer.EntityPM;
+            this.entityPoco = initializer.EntityPOCO;
+            this.loggedTenant = initializer.LoggedTenant;
+            this.loggedContact = initializer.LoggedContact;
+            this.entityRepository = initializer.Repository;
+            this.objectContext = initializer.ShipmentContext;
+            this.myCommonContext = initializer.CommonContext;
+            this.entityMasterData = initializer.EntityMasterData;
+            this.shipmentMasterDataRepository = initializer.MasterDataRepository;
+
             this.shipmentPickUpDeliveryRepository = new ShipmentPickUpDeliveryRepository(objectContext);
             this.shipmentPickUpDeliveryPackageRepository = new ShipmentPickUpDeliveryPackageRepository(objectContext);
             this.shipmentOrderPackageRepository = new ShipmentOrderPackageRepository(objectContext);
@@ -156,58 +147,19 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             this.shipmentContainerStatusRepository = new ShipmentContainerStatusRepository(objectContext);
             this.shipmentStoragePricingRepository = new ShipmentStoragePricingRepository(objectContext);
 
-            this.GetLoggedData();
             this.SetHybridPartner(this.tenant);
         }
-        private void GetLoggedData()
-        {
-            ContactQuery contactQuery = new ContactQuery(tenant);
-            this.loggedContact = contactQuery.GetContactByNameAndTenant(serviceContextUser, tenant, true);
 
-            if (this.loggedContact == null)
-            {
-                loggedContact = contactQuery.GetContactByEmailOnly(serviceContextUser, tenant);
-            }
-
-            this.loggedTenant = TenantRepository.GetSingleTenant(tenant, true);
-            this.loggedTenant.LogBoxTenantSetting = LogBoxTenantSettingRepository.GetSingleLBTenantSetting(tenant);
-        }
         private void SetHybridPartner(int myTenant)
         {
             HybridPartnerQuery HybridPartnerQuery = new HybridPartnerQuery(myTenant);
             CurrentHybridPartner = HybridPartnerQuery.GetSinglePMByPartnerTenant(myTenant);
         }
-        private List<ShipmentPackagePM> shipmentPackagesChangeSet;
-        private List<ShipmentOrderPackagePM> shipmentOrderPackagesChangeSet;
-        private List<ShipmentPickUpPM> shipmentPickUpsChangeSet;
-        private List<ShipmentDeliveryPM> shipmentDeliveriesChangeSet;
-        private List<ShipmentReceivablePM> shipmentReceivablesChangeSet;
-        private List<ShipmentPayablePM> shipmentPayablesChangeSet;
-        private List<ShipmentFollowUpPM> shipmentFollowUpsChangeSet;
-        private List<ShipmentAWBPrintOnlyPM> shipmentAWBPrintOnliesChangeSet;
-        private List<ConsoleShipmentPM> shipmentConsoleShipmentsChangeSet;
-        private List<ShipmentCarrierStatusPM> shipmentCarrierStatusesChangeSet;
-        private List<AWBOCIPM> aWBOCIPMChangeSet;
-        private List<ShipmentCommodityPM> shipmentCommoditiesChangeSet;
-        private List<ShipmentAssemblyPM> shipmentAssembliesChangeSet;
-        private List<ShipmentStoragePricingPM> shipmentStoragePricingsChangeSet;
+
 
         public void SetChangeSet(List<ShipmentPackagePM> shipmentPackagesChangeSet, List<ShipmentOrderPackagePM> shipmentOrderPackagesChangeSet, List<ShipmentPickUpPM> shipmentPickUpsChangeSet, List<ShipmentDeliveryPM> shipmentDeliveriesChangeSet, List<ShipmentReceivablePM> shipmentReceivablesChangeSet, List<ShipmentPayablePM> shipmentPayablesChangeSet, List<ShipmentFollowUpPM> shipmentFollowUpsChangeSet, List<ShipmentAWBPrintOnlyPM> shipmentAWBPrintOnliesChangeSet, List<ConsoleShipmentPM> shipmentConsoleShipmentsChangeSet, List<ShipmentCarrierStatusPM> shipmentCarrierStatusesChangeSet, List<AWBOCIPM> aWBOCIPMChangeSet, List<ShipmentCommodityPM> shipmentCommoditiesChangeSet, List<ShipmentAssemblyPM> shipmentAssembliesChangeSet, List<ShipmentStoragePricingPM> shipmentStoragePricingsChangeSet)
         {
-            this.shipmentPackagesChangeSet = shipmentPackagesChangeSet;
-            this.shipmentOrderPackagesChangeSet = shipmentOrderPackagesChangeSet;
-            this.shipmentPickUpsChangeSet = shipmentPickUpsChangeSet;
-            this.shipmentDeliveriesChangeSet = shipmentDeliveriesChangeSet;
-            this.shipmentReceivablesChangeSet = shipmentReceivablesChangeSet;
-            this.shipmentPayablesChangeSet = shipmentPayablesChangeSet;
-            this.shipmentFollowUpsChangeSet = shipmentFollowUpsChangeSet;
-            this.shipmentAWBPrintOnliesChangeSet = shipmentAWBPrintOnliesChangeSet;
-            this.shipmentConsoleShipmentsChangeSet = shipmentConsoleShipmentsChangeSet;
-            this.shipmentCarrierStatusesChangeSet = shipmentCarrierStatusesChangeSet;
-            this.aWBOCIPMChangeSet = aWBOCIPMChangeSet;
-            this.shipmentCommoditiesChangeSet = shipmentCommoditiesChangeSet;
-            this.shipmentAssembliesChangeSet = shipmentAssembliesChangeSet;
-            this.shipmentStoragePricingsChangeSet = shipmentStoragePricingsChangeSet;
+            // this was for the old silverlight system
         }
 
         public void Create()
@@ -229,28 +181,23 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 this.calculateProfit = false;
                 this.calculatePayables = false;
                 this.calculateReceivables = false;
-                this.entityPM.Id = IdCounter.GetNumber("Shipment", tenant).ToString();
-                this.entityPM.SecurityKey = Guid.NewGuid().ToString("N");
-                this.entityPoco = new Shipment() { Id = this.entityPM.Id, SecurityKey = this.entityPM.SecurityKey };
 
-                if (this.entityPM.ShipmentLevelCode == "C")
-                {
-                    this.entityPM.ProrateReceivables = loggedTenant.ProrateMasterReceivables;
-                }
+                this.initializer.HandleBehaviours();
 
                 this.InitializeComponent();
 
-                //this.HandleBackToBack();
                 if (!loggedTenant.LogBoxTenantSetting.IsDocumentsArchive)
                 {
                     ShipmentValidating.Validate(entityPM, entityPoco, isNewEntity, myCommonContext, loggedTenant);
                     ShipmentValidating.ValidateRoutingDates(entityPM, entityPM.ShipmentPickUps, entityPM.ShipmentDeliveries);
                 }
 
-                foreach (ShipmentOrderPackagePM itemPM in entityPM.ShipmentOrderPackages)
-                {
-                    this.CreateShipmentOrderPackage(itemPM);
-                }
+                this.initializer.HandleComposition();
+
+                //foreach (ShipmentOrderPackagePM itemPM in entityPM.ShipmentOrderPackages)
+                //{
+                //    this.CreateShipmentOrderPackage(itemPM);
+                //}
 
                 foreach (ShipmentPackagePM itemPM in entityPM.ShipmentPackages)
                 {
@@ -390,74 +337,19 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
         }
         
         string CustomerChanged = "false";
-        private bool isProrateReceivablesPM = false;
-        private bool isProrateReceivablesPOCO = false;
         public void Update(bool mapComposition = false)
         {
             using (TransactionScope scope = TransactionFactory.GetTransaction())
             {
+                initializer.IsMappingComposition = mapComposition;
+
                 #region
-                if (mapComposition)
-                {
-                    foreach (var itemPM in this.entityPM.ShipmentPackages)
-                    {
-                        itemPM.InsideShipmentPackagesChangeSet = itemPM.InsideShipmentPackages;
-                        itemPM.ShipmentPackageItemsChangeSet = itemPM.ShipmentPackageItems;
-                        itemPM.ShipmentPackageHarmonizesChangeSet = itemPM.ShipmentPackageHarmonizes;
-
-                        foreach (var item in itemPM.InsideShipmentPackages)
-                        {
-                            item.InsidePackageHarmonizesChangeSet = item.InsidePackageHarmonizes;
-                        }
-                    }
-
-                    foreach (var itemPM in this.entityPM.ShipmentPickUps)
-                    {
-                        itemPM.ShipmentPickUpPackagesChangeSet = itemPM.ShipmentPickUpDeliveryPackages;
-
-                        foreach (var item in itemPM.ShipmentPickUpDeliveryPackages)
-                        {
-                            item.PickUpDeliveryPackageHarmonizesChangeSet = item.PickUpDeliveryPackageHarmonizes;
-                        }
-                    }
-
-                    foreach (var itemPM in this.entityPM.ShipmentDeliveries)
-                    {
-                        itemPM.ShipmentDeliveryPackagesChangeSet = itemPM.ShipmentPickUpDeliveryPackages;
-                    }
-
-                    this.shipmentPackagesChangeSet = this.entityPM.ShipmentPackages;
-                    this.shipmentOrderPackagesChangeSet = this.entityPM.ShipmentOrderPackages;
-                    this.shipmentPickUpsChangeSet = this.entityPM.ShipmentPickUps;
-                    this.shipmentDeliveriesChangeSet = this.entityPM.ShipmentDeliveries;
-                    this.shipmentReceivablesChangeSet = this.entityPM.ShipmentReceivables;
-                    this.shipmentPayablesChangeSet = this.entityPM.ShipmentPayables;
-                    this.shipmentFollowUpsChangeSet = this.entityPM.FollowUps;
-                    this.shipmentAWBPrintOnliesChangeSet = this.entityPM.ShipmentAWBPrintOnlies;
-                    this.shipmentConsoleShipmentsChangeSet = this.entityPM.ShipmentConsoleShipments;
-                    this.shipmentCarrierStatusesChangeSet = this.entityPM.ShipmentCarrierStatuses;
-                    this.aWBOCIPMChangeSet = this.entityPM.AWBOCIPMs;
-                    this.shipmentCommoditiesChangeSet = this.entityPM.ShipmentCommodities;
-                    this.shipmentAssembliesChangeSet = this.entityPM.ShipmentAssemblies;
-                    this.shipmentStoragePricingsChangeSet = this.entityPM.ShipmentStoragePricings;
-                }
 
                 this.isNewEntity = false;
                 this.calculateProfit = false;
                 this.calculatePayables = false;
                 this.calculateReceivables = false;
-                this.entityPoco = entityRepository.GetSingleShipment(entityPM.Id, tenant);
-                entityPM.OldStatusValue = entityPoco.StatusId;
-                this.entityMasterData = GetShipmentMasterData();
-
-                if (this.entityPM.ShipmentLevelCode == "C")
-                {
-                    this.isProrateReceivablesPM = this.entityPM.ProrateReceivables;
-                    this.isProrateReceivablesPOCO = this.entityMasterData.ProrateReceivables;
-                }
-
-
-
+                
                 if (!entityPoco.IsCancelled || !entityPM.IsCancelled)
                 {
                     #region
@@ -469,17 +361,19 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     }
                     this.OldCustomerId = myOldCustomerId;
 
-                    this.InitializeComponent();
+                    this.initializer.HandleBehaviours();
 
-                    //this.HandleBackToBack();
+                    this.InitializeComponent();
 
                     if (!loggedTenant.LogBoxTenantSetting.IsDocumentsArchive)
                     {
                         ShipmentValidating.Validate(entityPM, entityPoco, isNewEntity, myCommonContext, loggedTenant);
-                        ShipmentValidating.ValidateRoutingDates(entityPM, this.shipmentPickUpsChangeSet, this.shipmentDeliveriesChangeSet);
+                        ShipmentValidating.ValidateRoutingDates(entityPM, initializer.ShipmentPickUpsChangeSet, initializer.ShipmentDeliveriesChangeSet);
                     }
 
-                    this.UpdateShipmentOrderPackagesCollection();
+                    this.initializer.HandleComposition();
+
+                    //this.UpdateShipmentOrderPackagesCollection();
                     this.UpdateShipmentPackagesCollection();
 
                     this.UpdateShipmentPickUpsCollection();
@@ -517,9 +411,9 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     }
 
                     List<ShipmentPackagePM> myPackagesList = new List<ShipmentPackagePM>();
-                    if (shipmentPackagesChangeSet != null)
+                    if (initializer.ShipmentPackagesChangeSet != null)
                     {
-                        myPackagesList = shipmentPackagesChangeSet.Where(d => d.ChangeSetOp != ChangeSetOperation.Delete).ToList();
+                        myPackagesList = initializer.ShipmentPackagesChangeSet.Where(d => d.ChangeSetOp != ChangeSetOperation.Delete).ToList();
                     }
 
                     this.BuildShipmentExternalUpdate();
@@ -591,9 +485,9 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     // in case follow ups added
                     // from client
                     int indexComp = 0;
-                    if (shipmentFollowUpsChangeSet != null)
+                    if (initializer.ShipmentFollowUpsChangeSet != null)
                     {
-                        foreach (ShipmentFollowUpPM item in shipmentFollowUpsChangeSet)
+                        foreach (ShipmentFollowUpPM item in initializer.ShipmentFollowUpsChangeSet)
                         {
                             if (string.IsNullOrEmpty(item.Id))
                             {
@@ -624,41 +518,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 scope.Complete();
                 #endregion
             }
-
-            //if (this.deletedHousesIds.Count > 0)
-            //{
-            //    foreach (string myShipmentId in this.deletedHousesIds)
-            //    {
-            //        this.RunRegistryDateProcedure(myShipmentId);
-            //        this.RunFirstApprovalDateProcedure(myShipmentId);
-
-            //        RunStoredProcedureClass.UpdateShipmentFinalArrivalDate(myShipmentId, tenant);
-
-            //        if (entityPM != null && !entityPM.IsHybrid)
-            //        {
-            //            UpdateShipmentProfitClass.UpdateProfitFunction(myShipmentId, tenant, false);
-            //        }
-            //    }
-            //}
-        }
-
-        private ShipmentMasterData GetShipmentMasterData()
-        {
-            var entityMasterData = (entityPM.ShipmentLevelCode == "H") ? shipmentMasterDataRepository.GetSingleMasterData(entityPM.MasterShipmentDataId) : shipmentMasterDataRepository.GetSingleMasterData(entityPoco.MasterShipmentDataId);
-
-            if (entityPM.IsHybrid)//31-Mar fix for old consoles in hybrid without masterdata id
-            {
-                if (entityMasterData == null && entityPoco.ShipmentLevelCode != "H" && !entityPM.ConvertFromDirectToHouse && !entityPM.ConvertFromHouseToDirect)
-                {
-                    entityMasterData = new ShipmentMasterData();
-                    entityMasterData.Id = entityPM.Id;
-                    entityPM.MasterShipmentDataId = entityPM.Id;
-                    entityMasterData.MasterShipmentNumber = entityPM.ShipmentNumber;
-                    shipmentMasterDataRepository.Add(entityMasterData);
-                }
-            }
-
-            return entityMasterData;
         }
 
         private void ComputeAgentComputed(ShipmentPM entityPM, Shipment entityPoco)
@@ -1098,7 +957,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
             else
             {
-                if (serviceContextUser.Contains("system@tenant"))
+                if (initializer.LoggedContactEmail.Contains("system@tenant"))
                 {
                     EntityLastUpdateRepository entityLastUpdateRepository = new EntityLastUpdateRepository(entityPoco.Tenant);
                     EntityLastUpdate update = entityLastUpdateRepository.GetSingleEntityLastUpdateByEntityId(entityPoco.Id);
@@ -1365,15 +1224,10 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
             bool isReloadingConsoles = false;
 
-            if (this.entityPM.ShipmentLevelCode == "C")
+            if (initializer.IsProratingChanged)
             {
-                if (this.isProrateReceivablesPM != this.isProrateReceivablesPOCO)
-                {
-                    this.entityPM.CalculateProfit = true;
-                    this.entityPM.CalculateReceivables = true;
-                    this.isUpdatingRegistryDate = true;
-                    this.isUpdatingFirstApprovalDate = true;
-                }
+                this.entityPM.CalculateProfit = true;
+                this.entityPM.CalculateReceivables = true;
             }
 
             if (entityPM.CalculatePayables)
@@ -1410,12 +1264,12 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 }
             }
 
-            if (this.isUpdatingRegistryDate)
+            if (initializer.IsUpdatingRegistryDate)
             {
                 this.RunRegistryDateProcedure(this.entityPM.Id);
             }
 
-            if (this.isUpdatingFirstApprovalDate)
+            if (initializer.IsUpdatingFirstApprovalDate)
             {
                 this.RunFirstApprovalDateProcedure(this.entityPM.Id);
             }
@@ -1460,259 +1314,42 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             }
         }
 
-        //private string GetForeignPartnerCountryCode(ShipmentPM entityPM)
+        //private void UpdateShipmentOrderPackagesCollection()
         //{
-        //    CardRepository cardRepository = new CardRepository(entityPM.Tenant);
-        //    Card card = null;
-        //    string foreignPartnerCountryCode = "";
-        //    if (entityPM.DirectionId == "I" || entityPM.DirectionId == "C")
+        //    if (initializer.ShipmentOrderPackagesChangeSet != null)
         //    {
-        //        card = cardRepository.GetSingleCardWithoutInclude(entityPM.ShipperId, entityPM.Tenant);
-        //        foreignPartnerCountryCode = card != null ? card.CountryCode : "";
-        //    }
-        //    else
-        //    {
-        //        card = cardRepository.GetSingleCardWithoutInclude(entityPM.ConsigneeId, entityPM.Tenant);
-        //        foreignPartnerCountryCode = card != null ? card.CountryCode : "";
-        //    }
+        //        foreach (ShipmentOrderPackagePM itemPM in initializer.ShipmentOrderPackagesChangeSet)
+        //        {
+        //            switch (itemPM.ChangeSetOp)
+        //            {
+        //                case ChangeSetOperation.Insert:
+        //                    {
+        //                        this.CreateShipmentOrderPackage(itemPM);
+        //                        break;
+        //                    }
 
-        //    return foreignPartnerCountryCode;
+        //                case ChangeSetOperation.Update:
+        //                    {
+        //                        this.UpdateShipmentOrderPackage(itemPM);
+        //                        break;
+        //                    }
+
+        //                case ChangeSetOperation.Delete:
+        //                    {
+        //                        this.DeleteShipmentOrderPackage(itemPM);
+        //                        break;
+        //                    }
+
+        //                default: { break; }
+        //            }
+        //        }
+        //    }
         //}
-
-        private void InitializeShipmentDocument()
-        {
-            if (loggedTenant.LogBoxTenantSetting.IsDocumentsArchive == true)
-            {
-
-                try
-                {
-                    if (myCommonContext == null)
-                    {
-                        myCommonContext = CommonDataContext.GetContext(entityPM.Tenant);
-                    }
-
-                    documentsFilingRepository = new DocumentsFilingRepository(myCommonContext);
-                    documentRepository = new DocumentRepository(myCommonContext);
-                    documentsFilingQuery = new DocumentsFilingQuery(documentsFilingRepository);
-                    DocTypeReposioty = new DocumentTypeRepository(myCommonContext);
-                    ObjectTableRepository tableRep = new ObjectTableRepository(entityPM.Tenant);
-                    ObjectTable table = tableRep.GetObjectTableByName("Shipment", 0, true);
-                    DocumentType invoiceDocType = DocTypeReposioty.GetSingleDocumentTypeByCode("380", tenant);
-                    DocumentType CustomsInvoiceDocType = DocTypeReposioty.GetSingleDocumentTypeByCode("CINV", tenant);
-                    DocumentType DeclerationDocType = DocTypeReposioty.GetSingleDocumentTypeByCode("DEC", tenant);
-
-                    string loggedUserEmail = serviceContextUser;
-                    if (string.IsNullOrEmpty(serviceContextUser))
-                    {
-                        loggedUserEmail = AuthenticationUtil.GetAuthenticatedUser();
-                    }
-                    UserRepository userRepository = new UserRepository(entityPM.Tenant);
-                    User loggedUser = userRepository.GetSingleUserByCodeOrEmail(null, loggedUserEmail, entityPM.Tenant, true);
-                    if (loggedUser == null)
-                    {
-                        loggedUser = userRepository.GetSingleUserByCodeOrEmail(null, "system@tenant" + entityPM.Tenant + ".com", entityPM.Tenant, true);
-                    }
-                    DocumentsFilingService service = new DocumentsFilingService(myCommonContext, entityPM.Tenant);
-                    DocumentsFilingPM newDocument;
-                    // After New Customs’s Production
-                    //DocumentsFilingPM newDocument = new DocumentsFilingPM()
-                    //{
-                    //    Description = "Supplier Invoice",
-                    //    DocumentTypeId = invoiceDocType.Id,
-                    //    Tenant = entityPM.Tenant,
-                    //    DirectionCode = "I",
-                    //    EntityId = entityPM.Id,
-                    //    EntityNumber = entityPM.ShipmentNumber,
-                    //    ObjectTableId = table.Id,
-                    //};
-
-                    //newDocument.Code = CodeCounter.GetNumber("DocumentsFiling", newDocument.Tenant).ToString();
-                    //newDocument.CreatedByUserId = loggedUser.Id;
-                    //newDocument.OwnerId = loggedUser.Id;
-                    //newDocument.CreateDate = TenantServerConfigration.GetCurrentDateTime(newDocument.Tenant);
-                    //newDocument.UpdatedByUserId = loggedUser.Id;
-                    //newDocument.UpdateDate = TenantServerConfigration.GetCurrentDateTime(newDocument.Tenant); 
-                    //service.Create(newDocument, null);
-                    if (CustomsInvoiceDocType != null)
-                    {
-                        newDocument = new DocumentsFilingPM()
-                        {
-                            Description = "Customs Invoice",
-                            DocumentTypeId = CustomsInvoiceDocType.Id,
-                            Tenant = entityPM.Tenant,
-                            DirectionCode = "I",
-                            EntityId = entityPM.Id,
-                            EntityNumber = entityPM.ShipmentNumber,
-                            ObjectTableId = table.Id,
-                        };
-
-                        newDocument.Code = CodeCounter.GetNumber("DocumentsFiling", newDocument.Tenant).ToString();
-                        newDocument.CreatedByUserId = loggedUser.Id;
-                        newDocument.OwnerId = loggedUser.Id;
-                        newDocument.CreateDate = TenantServerConfigration.GetCurrentDateTime(newDocument.Tenant);
-                        newDocument.UpdatedByUserId = loggedUser.Id;
-                        newDocument.UpdateDate = TenantServerConfigration.GetCurrentDateTime(newDocument.Tenant);
-                        service.Create(newDocument, null);
-                    }
-                    if (DeclerationDocType != null)
-                    {
-                        newDocument = new DocumentsFilingPM()
-                        {
-                            Description = "Declaration Form",
-                            DocumentTypeId = DeclerationDocType.Id,
-                            Tenant = entityPM.Tenant,
-                            DirectionCode = "I",
-                            EntityId = entityPM.Id,
-                            EntityNumber = entityPM.ShipmentNumber,
-                            ObjectTableId = table.Id,
-                        };
-
-                        newDocument.Code = CodeCounter.GetNumber("DocumentsFiling", newDocument.Tenant).ToString();
-                        newDocument.CreatedByUserId = loggedUser.Id;
-                        newDocument.OwnerId = loggedUser.Id;
-                        newDocument.CreateDate = TenantServerConfigration.GetCurrentDateTime(newDocument.Tenant);
-                        newDocument.UpdatedByUserId = loggedUser.Id;
-                        newDocument.UpdateDate = TenantServerConfigration.GetCurrentDateTime(newDocument.Tenant);
-                        service.Create(newDocument, null);
-                    }
-
-                    //After New Customs’s Production
-                    //if (entityPM.TransportModeId == "A")
-                    //{
-                    //    DocumentType airDocType = DocTypeReposioty.GetSingleDocumentTypeByCode("714", tenant);
-
-                    //    DocumentsFilingPM Air = new DocumentsFilingPM()
-                    //    {
-                    //        Description = "HAWB",
-                    //        DocumentTypeId = airDocType.Id,
-                    //        Tenant = entityPM.Tenant,
-                    //        DirectionCode = "I",
-                    //        EntityId = entityPM.Id,
-                    //        EntityNumber = entityPM.ShipmentNumber,
-                    //        ObjectTableId = table.Id,
-                    //    };
-
-                    //    Air.Code = CodeCounter.GetNumber("DocumentsFiling", Air.Tenant).ToString();
-                    //    Air.CreatedByUserId = loggedUser.Id;
-                    //    Air.OwnerId = loggedUser.Id;
-                    //    Air.CreateDate = TenantServerConfigration.GetCurrentDateTime(Air.Tenant);
-                    //    Air.UpdatedByUserId = loggedUser.Id;
-                    //    Air.UpdateDate = TenantServerConfigration.GetCurrentDateTime(Air.Tenant);
-
-
-                    //    service.Create(Air, null);
-                    //}
-                    //else if (entityPM.TransportModeId == "O")
-                    //{
-                    //    DocumentType OceanDocType = DocTypeReposioty.GetSingleDocumentTypeByCode("706", tenant);
-
-                    //    DocumentsFilingPM Ocean = new DocumentsFilingPM()
-                    //    {
-                    //        Description = "Sea WayBill",
-                    //        DocumentTypeId = OceanDocType.Id,
-                    //        Tenant = entityPM.Tenant,
-                    //        DirectionCode = "I",
-                    //        EntityId = entityPM.Id,
-                    //        EntityNumber = entityPM.ShipmentNumber,
-                    //        ObjectTableId = table.Id,
-                    //    };
-
-                    //    Ocean.Code = CodeCounter.GetNumber("DocumentsFiling", Ocean.Tenant).ToString();
-                    //    Ocean.CreatedByUserId = loggedUser.Id;
-                    //    Ocean.OwnerId = loggedUser.Id;
-                    //    Ocean.CreateDate = TenantServerConfigration.GetCurrentDateTime(Ocean.Tenant);
-                    //    Ocean.UpdatedByUserId = loggedUser.Id;
-                    //    Ocean.UpdateDate = TenantServerConfigration.GetCurrentDateTime(Ocean.Tenant);
-
-
-                    //    service.Create(Ocean, null);
-                    //}
-
-                    myCommonContext.SaveChanges();
-                }
-
-                catch (System.Data.Entity.Validation.DbEntityValidationException e)
-                {
-                    string Error = "";
-                    foreach (var eve in e.EntityValidationErrors)
-                    {
-                        Error += "Entity of type " + eve.Entry.Entity.GetType().Name + " in state " + eve.Entry.State + " has the following validation errors:";
-                        foreach (var ve in eve.ValidationErrors)
-                        {
-                            //Console.WriteLine("- Property: \"{0}\", Error: \"{1}\"",
-                            //ve.PropertyName, ve.ErrorMessage);
-
-                            Error += "- Property:" + ve.PropertyName + ", Error:" + ve.ErrorMessage + Environment.NewLine;
-                        }
-                    }
-
-
-                    string authenticateduser = "";
-
-                    try
-                    {
-                        authenticateduser = Security.SecurityUtility.GetAuthenticatedUser();
-                    }
-
-                    catch
-                    {
-                        authenticateduser = "UnKnown";
-                    }
-                    string ip = "";
-                    if (HttpContext.Current != null && HttpContext.Current.Request != null)
-                    {
-                        string currentIP = HttpContext.Current.Request.Headers["X-Real-IP"];
-                        if (string.IsNullOrEmpty(currentIP))
-                        {
-                            currentIP = HttpContext.Current.Request.UserHostAddress;
-                        }
-                        ip = currentIP;
-                    }
-                    ExceptionHandler.HandleException(new Exception(Error), DateTime.Now, 0, "", authenticateduser, "", ip);
-                    throw new Exception(Error);
-                }
-
-
-            }
-
-        }
-
-        private void UpdateShipmentOrderPackagesCollection()
-        {
-            if (shipmentOrderPackagesChangeSet != null)
-            {
-                foreach (ShipmentOrderPackagePM itemPM in shipmentOrderPackagesChangeSet)
-                {
-                    switch (itemPM.ChangeSetOp)
-                    {
-                        case ChangeSetOperation.Insert:
-                            {
-                                this.CreateShipmentOrderPackage(itemPM);
-                                break;
-                            }
-
-                        case ChangeSetOperation.Update:
-                            {
-                                this.UpdateShipmentOrderPackage(itemPM);
-                                break;
-                            }
-
-                        case ChangeSetOperation.Delete:
-                            {
-                                this.DeleteShipmentOrderPackage(itemPM);
-                                break;
-                            }
-
-                        default: { break; }
-                    }
-                }
-            }
-        }
         private void UpdateShipmentPackagesCollection()
         {
-            if (shipmentPackagesChangeSet != null)
+            if (initializer.ShipmentPackagesChangeSet != null)
             {
-                foreach (ShipmentPackagePM itemPM in shipmentPackagesChangeSet)
+                foreach (ShipmentPackagePM itemPM in initializer.ShipmentPackagesChangeSet)
                 {
                     switch (itemPM.ChangeSetOp)
                     {
@@ -1741,9 +1378,9 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
         }
         private void UpdateShipmentPickUpsCollection()
         {
-            if (shipmentPickUpsChangeSet != null)
+            if (initializer.ShipmentPickUpsChangeSet != null)
             {
-                foreach (ShipmentPickUpPM itemPM in shipmentPickUpsChangeSet)
+                foreach (ShipmentPickUpPM itemPM in initializer.ShipmentPickUpsChangeSet)
                 {
                     switch (itemPM.ChangeSetOp)
                     {
@@ -1772,9 +1409,9 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
         }
         private void UpdateShipmentDeliveriesCollection()
         {
-            if (shipmentDeliveriesChangeSet != null)
+            if (initializer.ShipmentDeliveriesChangeSet != null)
             {
-                foreach (ShipmentDeliveryPM itemPM in shipmentDeliveriesChangeSet)
+                foreach (ShipmentDeliveryPM itemPM in initializer.ShipmentDeliveriesChangeSet)
                 {
                     switch (itemPM.ChangeSetOp)
                     {
@@ -1803,9 +1440,9 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
         }
         private void UpdateShipmentPayablesCollection()
         {
-            if (shipmentPayablesChangeSet != null)
+            if (initializer.ShipmentPayablesChangeSet != null)
             {
-                foreach (ShipmentPayablePM itemPM in shipmentPayablesChangeSet)
+                foreach (ShipmentPayablePM itemPM in initializer.ShipmentPayablesChangeSet)
                 {
                     switch (itemPM.ChangeSetOp)
                     {
@@ -1834,9 +1471,9 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
         }
         private void UpdateShipmentReceivablesCollection()
         {
-            if (shipmentReceivablesChangeSet != null)
+            if (initializer.ShipmentReceivablesChangeSet != null)
             {
-                foreach (ShipmentReceivablePM itemPM in shipmentReceivablesChangeSet)
+                foreach (ShipmentReceivablePM itemPM in initializer.ShipmentReceivablesChangeSet)
                 {
                     this.CheckReceivableStatus(itemPM);
 
@@ -1867,9 +1504,9 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
         }
         private void UpdateShipmentAWBPrintOnliesCollection()
         {
-            if (shipmentAWBPrintOnliesChangeSet != null)
+            if (initializer.ShipmentAWBPrintOnliesChangeSet != null)
             {
-                foreach (ShipmentAWBPrintOnlyPM itemPM in shipmentAWBPrintOnliesChangeSet)
+                foreach (ShipmentAWBPrintOnlyPM itemPM in initializer.ShipmentAWBPrintOnliesChangeSet)
                 {
                     switch (itemPM.ChangeSetOp)
                     {
@@ -1898,9 +1535,9 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
         }
         private void UpdateShipmentConsoleShipmentsCollection()
         {
-            if (shipmentConsoleShipmentsChangeSet != null)
+            if (initializer.ShipmentConsoleShipmentsChangeSet != null)
             {
-                foreach (ConsoleShipmentPM itemPM in shipmentConsoleShipmentsChangeSet)
+                foreach (ConsoleShipmentPM itemPM in initializer.ShipmentConsoleShipmentsChangeSet)
                 {
                     switch (itemPM.ChangeSetOp)
                     {
@@ -1930,7 +1567,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
         private void UpdateShipmentFollowUpsCollection(string changeSet = "Update")
         {
-            if (shipmentFollowUpsChangeSet != null)
+            if (initializer.ShipmentFollowUpsChangeSet != null)
             {
                 bool isChange = false;
 
@@ -1938,7 +1575,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 {
                     #region Insert FollowUp
                     List<FollowUp> doneFollowUps = new List<FollowUp>();
-                    foreach (ShipmentFollowUpPM itemPM in shipmentFollowUpsChangeSet.Where(d => d.ChangeSetOp == ChangeSetOperation.Insert))
+                    foreach (ShipmentFollowUpPM itemPM in initializer.ShipmentFollowUpsChangeSet.Where(d => d.ChangeSetOp == ChangeSetOperation.Insert))
                     {
                         isChange = true;
                         if (itemPM.Done) itemPM.Deleted = true;
@@ -1959,7 +1596,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     #endregion
 
                     #region Done FollowUp
-                    foreach (ShipmentFollowUpPM itemPM in shipmentFollowUpsChangeSet.Where(d => d.ChangeSetOp == ChangeSetOperation.Insert && d.Done))
+                    foreach (ShipmentFollowUpPM itemPM in initializer.ShipmentFollowUpsChangeSet.Where(d => d.ChangeSetOp == ChangeSetOperation.Insert && d.Done))
                     {
                         FollowUp follow = followUpRepository.GetSingleFollowUp(itemPM.Id, tenant);
                         doneFollowUps.Add(follow);
@@ -1999,13 +1636,13 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 {
                     #region Delete & Update FollowUp
                     isChange = false;
-                    foreach (ShipmentFollowUpPM itemPM in shipmentFollowUpsChangeSet.Where(d => d.ChangeSetOp == ChangeSetOperation.Delete))
+                    foreach (ShipmentFollowUpPM itemPM in initializer.ShipmentFollowUpsChangeSet.Where(d => d.ChangeSetOp == ChangeSetOperation.Delete))
                     {
                         this.DeleteShipmentFollowUp(itemPM);
                         isChange = true;
                     }
 
-                    foreach (ShipmentFollowUpPM itemPM in shipmentFollowUpsChangeSet.Where(d => d.ChangeSetOp == ChangeSetOperation.Update))
+                    foreach (ShipmentFollowUpPM itemPM in initializer.ShipmentFollowUpsChangeSet.Where(d => d.ChangeSetOp == ChangeSetOperation.Update))
                     {
                         if (itemPM.Done)
                         {
@@ -2051,9 +1688,9 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
         private void UpdateShipmentCarrierStatusesCollection()
         {
-            if (shipmentCarrierStatusesChangeSet != null)
+            if (initializer.ShipmentCarrierStatusesChangeSet != null)
             {
-                foreach (ShipmentCarrierStatusPM itemPM in shipmentCarrierStatusesChangeSet)
+                foreach (ShipmentCarrierStatusPM itemPM in initializer.ShipmentCarrierStatusesChangeSet)
                 {
                     switch (itemPM.ChangeSetOp)
                     {
@@ -2082,9 +1719,9 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
         }
         private void UpdateShipmentAWBOCIsCollection()
         {
-            if (aWBOCIPMChangeSet != null)
+            if (initializer.AWBOCIPMChangeSet != null)
             {
-                foreach (AWBOCIPM itemPM in aWBOCIPMChangeSet)
+                foreach (AWBOCIPM itemPM in initializer.AWBOCIPMChangeSet)
                 {
                     switch (itemPM.ChangeSetOp)
                     {
@@ -2113,9 +1750,9 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
         }
         private void UpdateShipmentCommoditiesCollection()
         {
-            if (shipmentCommoditiesChangeSet != null)
+            if (initializer.ShipmentCommoditiesChangeSet != null)
             {
-                foreach (ShipmentCommodityPM itemPM in shipmentCommoditiesChangeSet)
+                foreach (ShipmentCommodityPM itemPM in initializer.ShipmentCommoditiesChangeSet)
                 {
                     switch (itemPM.ChangeSetOp)
                     {
@@ -2144,9 +1781,9 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
         }
         private void UpdateShipmentAssembliesCollection()
         {
-            if (shipmentAssembliesChangeSet != null)
+            if (initializer.ShipmentAssembliesChangeSet != null)
             {
-                foreach (ShipmentAssemblyPM itemPM in shipmentAssembliesChangeSet)
+                foreach (ShipmentAssemblyPM itemPM in initializer.ShipmentAssembliesChangeSet)
                 {
                     switch (itemPM.ChangeSetOp)
                     {
@@ -2175,9 +1812,9 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
         }
         private void UpdateShipmentStoragePricingsCollection()
         {
-            if (shipmentStoragePricingsChangeSet != null)
+            if (initializer.ShipmentStoragePricingsChangeSet != null)
             {
-                foreach (ShipmentStoragePricingPM itemPM in shipmentStoragePricingsChangeSet)
+                foreach (ShipmentStoragePricingPM itemPM in initializer.ShipmentStoragePricingsChangeSet)
                 {
                     switch (itemPM.ChangeSetOp)
                     {
@@ -2502,100 +2139,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             }
 
         }
-        private void HandleBackToBack()
-        {
-            foreach (ShipmentPayablePM item in this.entityPM.ShipmentPayables.Where(d => d.IsBackToBack))
-            {
-                ShipmentReceivablePM myBackToBackReceivable = null;
-
-                if (item.Id != null && item.ReceivableId != null)
-                {
-                    myBackToBackReceivable = entityPM.ShipmentReceivables.Where(d => d.Id == item.ReceivableId).FirstOrDefault();
-                }
-                switch (item.ChangeSetOp)
-                {
-                    case ChangeSetOperation.Delete:
-                        {
-                            if (myBackToBackReceivable != null)
-                            {
-                                if (myBackToBackReceivable.ARInvoiceId == null)
-                                {
-                                    myBackToBackReceivable.ChangeSetOp = ChangeSetOperation.Delete;
-                                }
-                            }
-                            break;
-                        }
-
-                    case ChangeSetOperation.Update:
-                        {
-                            if (myBackToBackReceivable != null)
-                            {
-                                if (myBackToBackReceivable.ARInvoiceId == null)
-                                {
-                                    myBackToBackReceivable.ChangeSetOp = ChangeSetOperation.Update;
-                                    // map payable to receivable
-                                    this.MapReceivable(item, myBackToBackReceivable);
-                                }
-                            }
-
-                            break;
-                        }
-
-                    case ChangeSetOperation.Insert:
-                        {
-                            if (myBackToBackReceivable == null)
-                            {
-                                // create new
-                                myBackToBackReceivable = new ShipmentReceivablePM();
-                                myBackToBackReceivable.ChangeSetOp = ChangeSetOperation.Insert;
-                                myBackToBackReceivable.Id = IdCounter.GetNumber("ShipmentReceivable", tenant).ToString();
-                                myBackToBackReceivable.IsBackToBack = true;
-
-                                item.ReceivableId = myBackToBackReceivable.Id;
-                                item.IsBackToBack = true;
-                                // map payable to receivable
-                                this.MapReceivable(item, myBackToBackReceivable);
-                                this.entityPM.ShipmentReceivables.Add(myBackToBackReceivable);
-                            }
-
-                            break;
-                        }
-                }
-            }
-        }
-        private void MapReceivable(ShipmentPayablePM payable, ShipmentReceivablePM receivable)
-        {
-            receivable.Tenant = payable.Tenant;
-            receivable.ShipmentId = payable.ShipmentId;
-            receivable.ShipmentNumber = payable.ShipmentNumber;
-            receivable.ChargesTypeId = payable.ChargesTypeId;
-            receivable.ChargesTypeName = payable.ChargesTypeName;
-            receivable.MeasurementId = payable.MeasurementId;
-            receivable.Quantity = payable.Quantity;
-            receivable.CurrencyId = payable.CurrencyId;
-            receivable.CurrencyCode = payable.CurrencyCode;
-            receivable.UnitPrice = payable.UnitPrice;
-            receivable.TotalAmount = payable.ExpectedAmount;
-            receivable.Rate = payable.Rate;
-            receivable.TotalAmountLocal = payable.ExpectedAmountLocal;
-            receivable.Notes = payable.Notes;
-            receivable.UpdateByUserId = payable.UpdateByUserId;
-            receivable.UpdateDate = payable.UpdateDate;
-            receivable.PrepaidCollectId = payable.PrepaidCollectId;
-            receivable.AWBPrint = payable.AWBPrint;
-            receivable.DueTypeCode = payable.DueTypeCode;
-            receivable.AmountInProfitCurrency = payable.ExpectedAmountInProfitCurrency;
-            receivable.ProfitCurrencyExchangeRate = payable.ProfitCurrencyExchangeRate;
-            receivable.CreateDate = payable.CreateDate;
-            receivable.CreatedByUserId = payable.CreatedByUserId;
-            receivable.IATACodeId = payable.IATACodeId;
-            receivable.IsFromQuote = payable.IsFromQuote;
-            receivable.QuoteChargeId = payable.QuoteChargeId;
-            receivable.IsChargeBySteps = payable.IsChargeBySteps;
-            receivable.VatTypeId = payable.VatTypeId;
-            receivable.IsBackToBack = payable.IsBackToBack;
-            receivable.ShipmentReceivableLineStatusCode = SetReceivableLineStatus(receivable);
-        }
         public string SetReceivableLineStatus(ShipmentReceivablePM receivable)
         {
             var status = receivable.ShipmentReceivableLineStatusCode;
@@ -2710,8 +2253,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
         
         private void InitializeComponent()
         {
-            entityPM.House = MethodHelper.Trim(entityPM.House);
-
             entityPM.CalculateProfit = false;
             entityPM.CalculatePayables = false;
             entityPM.CalculateReceivables = false;
@@ -2721,96 +2262,10 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             entityPM.CalculateStatus = false;
 
             this.ComputeShipmentStatus();
-            this.UpdateCustomerWorkingDates();            
-
-            if(string.IsNullOrEmpty(entityPM.ShipmentTypeId) && entityPM.TransportModeId == "A")
-            {
-                entityPM.ShipmentTypeId = "Air";
-            }
 
             if (isNewEntity)
             {
                 #region
-
-                if (string.IsNullOrEmpty(entityPM.CreatedByUserId))
-                {
-                    entityPM.CreatedByUserId = loggedContact.Id;
-                }
-
-                entityPM.FWBStatusCode = "NSEN";
-                entityPM.FHLStatusCode = "NSEN";
-                entityPM.CargonautFHLStatusCode = "NSEN";
-                entityPM.CargonautFWBStatusCode = "NSEN";
-                entityPM.ShipmentReceivableStatusCode = "NORE";
-                entityPM.ShipmentPayableStatusCode = "NOPA";
-
-                entityPM.INTTRASIStatusCode = "NSEN";
-                entityPM.INTTRABookingStatusCode = "NS";
-                entityPM.INTTRABookingTransStatusCode = "NST";
-
-                if (entityPM.ProfitExchangeRate == null)
-                {
-                    if (!string.IsNullOrEmpty(entityPM.ProfitCurrencyId))
-                    {
-                        if (entityPM.ProfitCurrencyId == loggedTenant.CurrencyId)
-                        {
-                            entityPM.ProfitExchangeRate = 1;
-                        }
-
-                        else
-                        {
-                            RatesTableQuery lastRateQuery = new RatesTableQuery(tenant);
-                            LastRate lastRate = lastRateQuery.GetLastRecordByValueDate(tenant, entityPM.ProfitCurrencyId, loggedTenant.CurrencyId, entityPM.CreateDateTime);
-                            if (lastRate != null)
-                            {
-                                entityPM.ProfitExchangeRate = lastRate.Rate;
-                            }
-                        }
-                    }
-                }
-
-                //if (!string.IsNullOrEmpty(entityPM.CustomerId))
-                //{
-                //    this.UpdateCustomerWorkingDates();
-                //}
-
-                if (!entityPM.IsHybrid)
-                {
-                    entityPM.CreateDateTime = TenantServerConfigration.GetCurrentDateTime(tenant);
-
-                    this.GetCounterShipmentNumber();
-                }
-
-                if (entityPM.ShipmentLevelCode != "H")
-                {
-                    entityMasterData = new ShipmentMasterData();
-                    entityMasterData.Id = entityPM.Id;
-                    entityPM.MasterShipmentDataId = entityPM.Id;
-                    entityMasterData.MasterShipmentNumber = entityPM.ShipmentNumber;
-                    shipmentMasterDataRepository.Add(entityMasterData);
-                }
-
-                else
-                {
-                    if (entityPM.MasterShipmentDataId != null)
-                    {
-                        // this case is when create house from master sceen
-                        // need to get the master, some fields need to be calculated from the master
-                        // but we dont want to map the master it self
-                        entityMasterData = shipmentMasterDataRepository.GetSingleMasterData(entityPM.MasterShipmentDataId);
-                        if (entityMasterData != null)
-                        {
-                            entityPM.ComputedShipmentNumber = entityMasterData.MasterShipmentNumber;
-
-                            if (entityMasterData.ProrateReceivables)
-                            {
-                                this.isUpdatingRegistryDate = true;
-                                this.isUpdatingFirstApprovalDate = true;
-                            }
-                        }
-                    }
-                }
-
                 shipmentAdditionalCloudData = new ShipmentAdditionalCloudData();
                 shipmentAdditionalCloudData.Id = entityPM.Id;
                 shipmentAdditionalCloudData.Tenant = entityPM.Tenant;
@@ -2889,9 +2344,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     }
                 }
 
-                this.InitializeSalesman();
-                this.InitializeAccountManager();
-                this.InitializeAgentAddress();
                 this.InitializeOCIs();
                 this.InitializeIssuingCarrier();
 
@@ -2949,6 +2401,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 #region
                 if (!entityPoco.IsCancelled || !entityPM.IsCancelled)
                 {
+
                     if (entityPM.ConvertShipmentToLCL || entityPM.ConvertShipmentToFCL)
                     {
                         foreach (ShipmentPackagePM pm in entityPM.ShipmentPackages)
@@ -3078,14 +2531,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                             this.InitializeFBLStock();
                         }
                     }
-
-                    if (entityPM.ShipmentDirectionConverted)
-                    {
-                        if (entityPM.ShipmentConvertedNewNumber)
-                        {
-                            this.GetCounterShipmentNumber();
-                        }
-                    }
                 }
 
                 bool IsImporterApprovalRequiredOldValue = false;
@@ -3189,34 +2634,9 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
             if (!entityPoco.IsCancelled || !entityPM.IsCancelled)
             {
-                entityPM.UpdatedByUserId = loggedContact.Id;
-                entityPM.UpdatedByUserName = loggedContact.EnglishName;
-                entityPM.LastUpdateDate = TenantServerConfigration.GetCurrentDateTime(tenant);
-
-                if (entityPM.IsUpdatedByChampAnalyzer)
-                {
-                    entityPM.UpdatedByPartner = "Airline Transmission";
-                }
-
-                else if (entityPM.IsUpdatedByGLSHKAnalyzer)
-                {
-                    entityPM.UpdatedByPartner = "Airline Transmission";
-                }
-
-                else if (entityPM.IsUpdatedByINTTRAAnalyzer)
-                {
-                    entityPM.UpdatedByPartner = "INTTRA";
-                }
-
-                else
-                {
-                    entityPM.UpdatedByPartner = loggedContact.EnglishName;
-                }
-
                 this.InitializeFCL_LCL();
                 this.InitializeClosingFields();
                 this.InitializeStatus();
-                this.InitializePartners();
                 this.InitializeInlandDomestic();
                 this.InitializeAWBFields();
 
@@ -3225,15 +2645,13 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     this.InitializeMAWBStack();
                 }
                 this.InitializeNumberOfInsidePackages();
-                this.InitializeAccountManager();
                 this.InitializeCarrierPrefix();
                 this.InitializeKnownConsignor();
                 this.InitializePrintingFields();
                 this.ComputeTEU();
-                this.UpdateQuoteUsage();
                 this.FillDefaultSubType();
 
-                ShipmentFinalArrivalDateBehaviour behaviour = new ShipmentFinalArrivalDateBehaviour(this.entityPM, this.entityMasterData, this.objectContext);
+                ShipmentFinalArrivalDateBehaviour behaviour = new ShipmentFinalArrivalDateBehaviour(this.entityPM, this.objectContext, isNewEntity);
                 behaviour.Handle();
                 this.isUpdatingHousesFinalArrivalDate = behaviour.IsUpdatingHouses;
             }
@@ -3301,71 +2719,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
         {
             Card consigneeCard = CardRepository.GetSingleCard(entityPM.ConsigneeId, tenant, true);
             entityPM.WarehouseStorageFreeDays = consigneeCard != null ? consigneeCard.StorageFreeDays : null;
-        }
-
-        private void GetCounterShipmentNumber()
-        {
-            bool isTakenCounter = false;
-
-            if (this.isNewEntity && entityPM.ShipmentNumber == null)
-            {
-                isTakenCounter = true;
-            }
-
-            else if (entityPM.ShipmentDirectionConverted && entityPM.ShipmentConvertedNewNumber)
-            {
-                isTakenCounter = true;
-
-                EventTracer.CreateTraceEvent(new EventTracerArgs()
-                {
-                    Tenant = tenant,
-                    EventTypeCode = "SNOC",
-                    UserId = loggedContact.Id,
-                    EntityId = entityPM.Id,
-                    ObjectTableName = "Shipment",
-                    Notes = "Old Number: " + entityPM.ShipmentNumber,
-                    Entity = entityPM,
-
-
-
-                });
-            }
-
-            if (isTakenCounter)
-            {
-                Dictionary<string, string> counterAdditionalParameters = new Dictionary<string, string>() { { "[B]", "" } };
-                if (!string.IsNullOrEmpty(entityPM.BranchId))
-                {
-                    Branch myBranch = (from d in myCommonContext.Branches
-                                       where d.Tenant == tenant
-                                       && d.Id == entityPM.BranchId
-                                       select d).FirstOrDefault();
-
-                    if (myBranch != null 
-                        && !string.IsNullOrEmpty(myBranch.CounterCode))
-                    {
-                        counterAdditionalParameters["[B]"] = myBranch.CounterCode;
-                    }
-                }
-
-                if (entityPM.ShipmentLevelCode == "C")
-                {
-                    entityPM.ShipmentNumber = TableCounter.GetNumber(tenant, "MAST", entityPM.DirectionId, entityPM.TransportModeId, counterAdditionalParameters);
-                }
-
-                else
-                {
-                    if (entityPM.DirectionId.ToUpper() == "C")
-                    {
-                        entityPM.ShipmentNumber = TableCounter.GetNumber(tenant, "SHIP", "I", entityPM.TransportModeId, counterAdditionalParameters);
-                    }
-
-                    else
-                    {
-                        entityPM.ShipmentNumber = TableCounter.GetNumber(tenant, "SHIP", entityPM.DirectionId, entityPM.TransportModeId, counterAdditionalParameters);
-                    }
-                }
-            }
         }
 
         private void AddImporterApprovalReceivedQueue()
@@ -3460,36 +2813,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             }
         }
 
-
         private void InitializeFCL_LCL()
         {
-            var isFCL = false;
-            string myShipmentTypeId = this.entityPM.ShipmentTypeId;
-            string myTransportModeId = this.entityPM.TransportModeId;
-
-            if (myTransportModeId != null)
-            {
-                myTransportModeId = myTransportModeId.ToUpper();
-            }
-
-            if (myShipmentTypeId != null)
-            {
-                myShipmentTypeId = myShipmentTypeId.ToUpper();
-            }
-
-            if (myTransportModeId == "O" && (myShipmentTypeId == "FCLD" || myShipmentTypeId == "MYGO"))
-            {
-                isFCL = true;
-            }
-
-            if (myTransportModeId == "I" && (myShipmentTypeId == "FTL" || myShipmentTypeId == "MYGI"))
-            {
-                isFCL = true;
-            }
-
-            this.IsFCLEntity = isFCL;
-            this.IsLCLEntity = !isFCL;
-
             if (this.isNewEntity)
             {
                 foreach (ShipmentPackagePM itemPM in this.entityPM.ShipmentPackages)
@@ -3617,254 +2942,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 }
             }
         }
-        private void InitializePartners()
-        {
-            if (string.IsNullOrEmpty(entityPM.CustomerId))
-            {
-                entityPM.CustomerName = null;
-                entityPM.CustomerNote = null;
-                entityPM.CustomerContactId = null;
-                entityPM.CustomerAddressId = null;
-                entityPM.CustomerReference1 = null;
-                entityPM.CustomerReference2 = null;
-            }
-
-            if (string.IsNullOrEmpty(entityPM.ShipperId))
-            {
-                //entityPM.ShipperName = null;
-                entityPM.ShipperNote = null;
-                entityPM.ShipperContactId = null;
-                entityPM.ShipperAddressId = null;
-                entityPM.ShipperMainAddressId = null;
-                entityPM.ShipperAddressText = null;
-                entityPM.ShipperReference1 = null;
-                entityPM.ShipperReference2 = null;
-            }
-
-            if (string.IsNullOrEmpty(entityPM.ConsigneeId))
-            {
-                //entityPM.ConsigneeName = null;
-                entityPM.ConsigneeNote = null;
-                entityPM.ConsigneeContactId = null;
-                entityPM.ConsigneeAddressId = null;
-                entityPM.ConsigneeMainAddressId = null;
-                entityPM.ConsigneeAddressText = null;
-                entityPM.ConsigneeReference1 = null;
-                entityPM.ConsigneeReference2 = null;
-            }
-
-            if (string.IsNullOrEmpty(entityPM.AgentId))
-            {
-                entityPM.AgentName = null;
-                entityPM.AgentNote = null;
-                entityPM.AgentContactId = null;
-                entityPM.AgentAddressId = null;
-                entityPM.AgentAddressText = null;
-                entityPM.AgentReference1 = null;
-                entityPM.AgentReference2 = null;
-            }
-
-            if (entityPM.ShipmentLevelCode == "C")
-            {
-                entityPM.CustomerId = null;
-                entityPM.CustomerName = null;
-                entityPM.CustomerReference1 = null;
-                entityPM.CustomerReference2 = null;
-                entityPM.CustomerAddressId = null;
-                entityPM.CustomerContactId = null;
-                entityPM.ShipmentCustomerTypeCode = null;
-            }
-
-            else
-            {
-                if (string.IsNullOrEmpty(entityPM.ShipmentCustomerTypeCode))
-                {
-                    if (entityPM.DirectionId == "I")
-                    {
-                        entityPM.ShipmentCustomerTypeCode = "CON";
-                    }
-
-                    else
-                    {
-                        entityPM.ShipmentCustomerTypeCode = "SHI";
-                    }
-                }
-
-                if (entityPM.ShipmentCustomerTypeCode == "SHI")
-                {
-                    if (!entityPM.IsImporterShipment)
-                    {
-                        if (string.IsNullOrEmpty(entityPM.CustomerId))
-                        {
-                            entityPM.CustomerId = entityPM.ShipperId;
-                        }
-
-                        entityPM.CustomerName = entityPM.ShipperName;
-                        entityPM.CustomerNote = entityPM.ShipperNote;
-                        entityPM.CustomerContactId = entityPM.ShipperContactId;
-                        entityPM.CustomerAddressId = entityPM.ShipperAddressId;
-                        entityPM.CustomerReference1 = entityPM.ShipperReference1;
-                        entityPM.CustomerReference2 = entityPM.ShipperReference2;
-                    }
-
-                }
-
-                else if (entityPM.ShipmentCustomerTypeCode == "CON")
-                {
-                    if (string.IsNullOrEmpty(entityPM.CustomerId))
-                    {
-                        entityPM.CustomerId = entityPM.ConsigneeId;
-                    }
-
-                    entityPM.CustomerName = entityPM.ConsigneeName;
-                    entityPM.CustomerNote = entityPM.ConsigneeNote;
-                    entityPM.CustomerContactId = entityPM.ConsigneeContactId;
-                    entityPM.CustomerAddressId = entityPM.ConsigneeAddressId;
-                    entityPM.CustomerReference1 = entityPM.ConsigneeReference1;
-                    entityPM.CustomerReference2 = entityPM.ConsigneeReference2;
-                }
-
-                else
-                {
-                    if (!string.IsNullOrEmpty(entityPM.CustomerId))
-                    {
-                        if (entityPM.CustomerId == entityPM.AgentId)
-                        {
-                            entityPM.CustomerName = entityPM.AgentName;
-                            entityPM.CustomerNote = entityPM.AgentNote;
-                            entityPM.CustomerContactId = entityPM.AgentContactId;
-                            entityPM.CustomerAddressId = entityPM.AgentAddressId;
-                            entityPM.CustomerReference1 = entityPM.AgentReference1;
-                            entityPM.CustomerReference2 = entityPM.AgentReference2;
-                        }
-
-                        else if (entityPM.CustomerId == entityPM.IssuingCarrierAgentId)
-                        {
-                            entityPM.CustomerName = entityPM.IssuingCarrierAgentName;
-                            entityPM.CustomerNote = entityPM.IssuingCarrierAgentNote;
-                            entityPM.CustomerContactId = null;
-                            entityPM.CustomerAddressId = entityPM.IssuingCarrierAddressId;
-                            entityPM.CustomerReference1 = null;
-                            entityPM.CustomerReference2 = null;
-                        }
-
-                        else if (entityPM.CustomerId == entityPM.CustomAgentExportId)
-                        {
-                            entityPM.CustomerName = entityPM.CustomAgentExportName;
-                            entityPM.CustomerNote = entityPM.CustomAgentExportNote;
-                            entityPM.CustomerContactId = entityPM.CustomAgentExportContactId;
-                            entityPM.CustomerAddressId = entityPM.CustomAgentExportAddressId;
-                            entityPM.CustomerReference1 = entityPM.CustomAgentExportReference;
-                            entityPM.CustomerReference2 = null;
-                        }
-
-                        else if (entityPM.CustomerId == entityPM.CustomAgentImportId)
-                        {
-                            entityPM.CustomerName = entityPM.CustomAgentImportName;
-                            entityPM.CustomerNote = entityPM.CustomAgentImportNote;
-                            entityPM.CustomerContactId = entityPM.CustomAgentImportContactId;
-                            entityPM.CustomerAddressId = entityPM.CustomAgentImportAddressId;
-                            entityPM.CustomerReference1 = entityPM.CustomAgentImportReference;
-                            entityPM.CustomerReference2 = null;
-                        }
-
-                        else if (entityPM.CustomerId == entityPM.Notify1Id)
-                        {
-                            entityPM.CustomerName = entityPM.Notify1Name;
-                            entityPM.CustomerNote = entityPM.Notify1Note;
-                            entityPM.CustomerContactId = entityPM.Notify1ContactId;
-                            entityPM.CustomerAddressId = entityPM.Notify1AddressId;
-                            entityPM.CustomerReference1 = entityPM.Notify1Reference;
-                            entityPM.CustomerReference2 = null;
-                        }
-
-                        else if (entityPM.CustomerId == entityPM.Notify2Id)
-                        {
-                            entityPM.CustomerName = entityPM.Notify2Name;
-                            entityPM.CustomerNote = entityPM.Notify2Note;
-                            entityPM.CustomerContactId = entityPM.Notify2ContactId;
-                            entityPM.CustomerAddressId = entityPM.Notify2AddressId;
-                            entityPM.CustomerReference1 = entityPM.Notify2Reference;
-                            entityPM.CustomerReference2 = null;
-                        }
-
-                        else if (entityPM.CustomerId == entityPM.ShipperNotExporterId)
-                        {
-                            entityPM.CustomerName = entityPM.ShipperNotExporterName;
-                            entityPM.CustomerNote = entityPM.ShipperNotExporterNote;
-                            entityPM.CustomerContactId = entityPM.ShipperNotExporterContactId;
-                            entityPM.CustomerAddressId = entityPM.ShipperNotExporterAddressId;
-                            entityPM.CustomerReference1 = entityPM.ShipperNotExporterReference;
-                            entityPM.CustomerReference2 = null;
-                        }
-
-                        else if (entityPM.CustomerId == entityPM.ConsigneeNotImporterId)
-                        {
-                            entityPM.CustomerName = entityPM.ConsigneeNotImporterName;
-                            entityPM.CustomerNote = entityPM.ConsigneeNotImporterNote;
-                            entityPM.CustomerContactId = entityPM.ConsigneeNotImporterContactId;
-                            entityPM.CustomerAddressId = entityPM.ConsigneeNotImporterAddressId;
-                            entityPM.CustomerReference1 = entityPM.ConsigneeNotImporterReference;
-                            entityPM.CustomerReference2 = null;
-                        }
-
-                        else if (entityPM.CustomerId == entityPM.FreightForwarderId)
-                        {
-                            entityPM.CustomerName = entityPM.FreightForwarderName;
-                            entityPM.CustomerNote = entityPM.FreightForwarderNote;
-                            entityPM.CustomerContactId = entityPM.FreightForwarderContactId;
-                            entityPM.CustomerAddressId = entityPM.FreightForwarderAddressId;
-                            entityPM.CustomerReference1 = entityPM.FreightForwarderReference;
-                            entityPM.CustomerReference2 = null;
-                        }
-
-                        else if (entityPM.CustomerId == entityPM.ColoaderId)
-                        {
-                            entityPM.CustomerName = entityPM.ColoaderName;
-                            entityPM.CustomerNote = entityPM.ColoaderNote;
-                            entityPM.CustomerContactId = entityPM.ColoaderContactId;
-                            entityPM.CustomerAddressId = entityPM.ColoaderAddressId;
-                            entityPM.CustomerReference1 = entityPM.ColoaderReference1;
-                            entityPM.CustomerReference2 = null;
-                        }
-
-                        else if (entityPM.CustomerId == entityPM.CustomClearancePointId)
-                        {
-                            entityPM.CustomerName = entityPM.CustomClearancePointName;
-                            entityPM.CustomerNote = entityPM.CustomClearancePointNote;
-                            entityPM.CustomerContactId = entityPM.CustomClearancePointContactId;
-                            entityPM.CustomerAddressId = entityPM.CustomClearancePointAddressId;
-                            entityPM.CustomerReference1 = entityPM.CustomClearancePointReference1;
-                            entityPM.CustomerReference2 = null;
-                        }
-                    }
-                }
-            }
-        }
-        private void InitializeAgentAddress()
-        {
-            if (!string.IsNullOrEmpty(entityPM.AgentId))
-            {
-                if (string.IsNullOrEmpty(entityPM.AgentName))
-                {
-                    Card agent = CardRepository.GetSingleCard(entityPM.AgentId, entityPM.Tenant, true);
-                    if (agent != null)
-                    {
-                        entityPM.AgentName = agent.EnglishName;
-                        entityPM.AgentNote = agent.Notes;
-                    }
-                }
-
-                if (string.IsNullOrEmpty(entityPM.AgentAddressId))
-                {
-                    Address address = myAddressRepository.GetSingleAddressByCardIdAndTypeId(entityPM.AgentId, "M", entityPM.Tenant);
-                    if (address != null)
-                    {
-                        entityPM.AgentAddressId = address.Id;
-                    }
-                }
-            }
-        }
         private void InitializeCarrierPrefix()
         {
             if (entityPM.TransportModeId == "A")
@@ -3942,37 +3019,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 entityPM.MainCarriageToPortId = null;
                 entityPM.MainCarriageFinalDestinationPortId = null;
                 entityPM.ShipmentLevelCode = "D";
-            }
-        }
-        private void InitializeSalesman()
-        {
-            if (string.IsNullOrEmpty(entityPM.SalesmanUserId))
-            {
-                CustomerRepository customerRepository = new CustomerRepository(tenant);
-                Customer customer = customerRepository.GetSingleCustomer(entityPM.CustomerId, tenant, true);
-
-                if (customer != null)
-                {
-                    entityPM.SalesmanUserId = customer.SalesmanUserId;
-                }
-
-                if (string.IsNullOrEmpty(entityPM.SalesmanUserId))
-                {
-                    entityPM.SalesmanUserId = entityPM.CreatedByUserId;
-                }
-            }
-        }
-        private void InitializeAccountManager()
-        {
-            if (!entityPM.IsHybrid)
-            {
-                CustomerRepository customerRepository = new CustomerRepository(tenant);
-                Customer customer = customerRepository.GetSingleCustomer(entityPM.CustomerId, tenant, true);
-
-                if (customer != null && string.IsNullOrEmpty(entityPM.AccountManagerUserId))
-                {
-                    entityPM.AccountManagerUserId = customer.AccountManagerUserId;
-                }
             }
         }
         private void InitializeAWBFields()
@@ -4738,9 +3784,9 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
                 else
                 {
-                    if (shipmentPackagesChangeSet != null)
+                    if (initializer.ShipmentPackagesChangeSet != null)
                     {
-                        foreach (ShipmentPackagePM item in shipmentPackagesChangeSet)
+                        foreach (ShipmentPackagePM item in initializer.ShipmentPackagesChangeSet)
                         {
                             item.NumberOfInsidePackages = 0;
                             item.NumberOfInsidePackagesDetails = "";
@@ -4777,9 +3823,9 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
                 else
                 {
-                    if (shipmentPackagesChangeSet != null)
+                    if (initializer.ShipmentPackagesChangeSet != null)
                     {
-                        List<ShipmentPackagePM> allPackages = shipmentPackagesChangeSet.Where(d => d.ChangeSetOp != ChangeSetOperation.Delete).ToList();
+                        List<ShipmentPackagePM> allPackages = initializer.ShipmentPackagesChangeSet.Where(d => d.ChangeSetOp != ChangeSetOperation.Delete).ToList();
                         List<InsideShipmentPackagePM> insidePackages = new List<InsideShipmentPackagePM>();
 
                         foreach (ShipmentPackagePM item in allPackages)
@@ -5046,9 +4092,9 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
                 if (isUpdatingHouses || isUpdatingHousesFinalArrivalDate)
                 {
-                    if (shipmentConsoleShipmentsChangeSet != null)
+                    if (initializer.ShipmentConsoleShipmentsChangeSet != null)
                     {
-                        List<string> ids = shipmentConsoleShipmentsChangeSet.Where(d => d.ChangeSetOp != ChangeSetOperation.Delete).Select(s => s.Id).ToList();
+                        List<string> ids = initializer.ShipmentConsoleShipmentsChangeSet.Where(d => d.ChangeSetOp != ChangeSetOperation.Delete).Select(s => s.Id).ToList();
 
                         if (ids.Count > 0)
                         {
@@ -5093,7 +4139,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                                         }
                                     }
 
-                                    ShipmentService iShipmentService = new ShipmentService(this.objectContext, iHousePM, this.serviceContextUser);
+                                    ShipmentService iShipmentService = new ShipmentService(this.objectContext, iHousePM, initializer.LoggedContactEmail);
                                     iShipmentService.Update();
                                 }
                             }
@@ -5138,37 +4184,37 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
                     if (iHousePM != null)
                     {
-                        ShipmentService iShipmentService = new ShipmentService(this.objectContext, iHousePM, this.serviceContextUser);
+                        ShipmentService iShipmentService = new ShipmentService(this.objectContext, iHousePM, this.initializer.LoggedContactEmail);
                         iShipmentService.Update();
                     }
                 }
             }
         }
 
-        private void CreateShipmentOrderPackage(ShipmentOrderPackagePM itemPM)
-        {
-            itemPM.Id = IdCounter.GetNumber("ShipmentOrderPackage", tenant).ToString();
-            itemPM.ShipmentId = entityPM.Id;
-            itemPM.Tenant = tenant;
+        //private void CreateShipmentOrderPackage(ShipmentOrderPackagePM itemPM)
+        //{
+        //    itemPM.Id = IdCounter.GetNumber("ShipmentOrderPackage", tenant).ToString();
+        //    itemPM.ShipmentId = entityPM.Id;
+        //    itemPM.Tenant = tenant;
 
-            ShipmentOrderPackage itemPoco = new ShipmentOrderPackage()
-            {
-                Id = itemPM.Id,
-            };
+        //    ShipmentOrderPackage itemPoco = new ShipmentOrderPackage()
+        //    {
+        //        Id = itemPM.Id,
+        //    };
 
-            ShipmentMapping.MapOrderPackage(itemPM, itemPoco, true);
-            shipmentOrderPackageRepository.Add(itemPoco);
-        }
-        private void UpdateShipmentOrderPackage(ShipmentOrderPackagePM itemPM)
-        {
-            ShipmentOrderPackage itemPoco = shipmentOrderPackageRepository.GetSingleShipmentOrderPackage(itemPM.Id);
+        //    ShipmentMapping.MapOrderPackage(itemPM, itemPoco, true);
+        //    shipmentOrderPackageRepository.Add(itemPoco);
+        //}
+        //private void UpdateShipmentOrderPackage(ShipmentOrderPackagePM itemPM)
+        //{
+        //    ShipmentOrderPackage itemPoco = shipmentOrderPackageRepository.GetSingleShipmentOrderPackage(itemPM.Id);
 
-            if (itemPoco != null)
-            {
-                ShipmentMapping.MapOrderPackage(itemPM, itemPoco, false);
-                shipmentOrderPackageRepository.Update(itemPoco);
-            }
-        }
+        //    if (itemPoco != null)
+        //    {
+        //        ShipmentMapping.MapOrderPackage(itemPM, itemPoco, false);
+        //        shipmentOrderPackageRepository.Update(itemPoco);
+        //    }
+        //}
         private void DeleteShipmentOrderPackage(ShipmentOrderPackagePM itemPM)
         {
             ShipmentOrderPackage itemPoco = shipmentOrderPackageRepository.GetSingleShipmentOrderPackage(itemPM.Id);
@@ -5186,7 +4232,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             itemPM.ShipmentId = entityPM.Id;
             itemPM.Tenant = tenant;
 
-            if(this.IsFCLEntity && itemPM.Quantity == null)
+            if(initializer.IsFCLEntity && itemPM.Quantity == null)
             {
                 itemPM.Quantity = 1;
             }
@@ -6902,186 +5948,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             }
         }
 
-        private void UpdateQuoteUsage()
-        {
-            bool isUpdatingUsage = false;
-            bool isDisconnectingQoute = false;
-            string quoteId = null;
-
-            if (isNewEntity)
-            {
-                if (!string.IsNullOrEmpty(entityPM.QuoteId))
-                {
-                    isUpdatingUsage = true;
-                    quoteId = entityPM.QuoteId;
-                }
-            }
-
-            else if (!string.IsNullOrEmpty(entityPM.QuoteId) && string.IsNullOrEmpty(entityPoco.QuoteId))
-            {
-                isUpdatingUsage = true;
-                quoteId = entityPM.QuoteId;
-            }
-
-            else if (string.IsNullOrEmpty(entityPM.QuoteId) && !string.IsNullOrEmpty(entityPoco.QuoteId))
-            {
-                isDisconnectingQoute = true;
-                quoteId = entityPoco.QuoteId;
-            }
-
-            if (isUpdatingUsage || isDisconnectingQoute)
-            {
-                QuoteRepository quoteRepository = new QuoteRepository(tenant);
-                Quote quote = quoteRepository.GetSingleQuote(quoteId, tenant);
-
-                if (quote != null)
-                {
-                    if (isUpdatingUsage)
-                    {
-                        if (quote.UsageCount == null)
-                        {
-                            quote.UsageCount = 1;
-                        }
-
-                        else
-                        {
-                            quote.UsageCount += 1;
-                        }
-
-                        quote.LastUsageDate = TenantServerConfigration.GetCurrentDateTime(tenant);
-                    }
-
-                    if (isDisconnectingQoute)
-                    {
-                        if (quote.UsageCount == 1)
-                        {
-                            quote.UsageCount = null;
-                        }
-
-                        else
-                        {
-                            quote.UsageCount -= 1;
-                        }
-                    }
-
-                    quoteRepository.Update(quote);
-                    quoteRepository.SubmitChanges();
-                }
-            }
-        }
-        private void UpdateCustomerWorkingDates()
-        {
-            if (isNewEntity)
-            {
-                if (!string.IsNullOrEmpty(entityPM.CustomerId))
-                {
-                    TenantRepository tenantRepository = new TenantRepository(entityPM.Tenant);
-                    Tenant currentTenant = tenantRepository.GetSingleTenant(entityPM.Tenant);
-
-                    CustomerRepository customerRepository = new CustomerRepository(tenant);
-                    Customer customer = customerRepository.GetSingleCustomerWithCardOnly(entityPM.CustomerId, tenant, false); // islam: no includes even for the card!
-
-                    if (customer != null)
-                    {
-                        DateTime todayDate = TenantServerConfigration.GetCurrentDateTime(tenant).Date;
-
-                        if (customer.StartWorkingDate == null && !entityPM.IsHybrid && !currentTenant.IsHybrid)
-                        {
-                            customer.StartWorkingDate = todayDate;
-                        }
-
-                        if (customer.FirstShipmentDate == null)
-                        {
-                            customer.FirstShipmentDate = currentTenant.IsHybrid ? entityPM.CreateDateTime : todayDate;
-
-                            CustomerQuery customerQuery = new CustomerQuery(customerRepository);
-                            CustomerPM customerpm = new CustomerPM()
-                            {
-                                Id = customer.Id,
-                                Code = customer.Card.Code,
-                                EnglishName = customer.Card.EnglishName,
-                                VatNumber = customer.Card.VatNumber,
-                                SalesmanUserId = customer.Card.SalesmanUserId,
-                                CreatedByUserId = customer.Card.CreatedByUserId,
-                                RankId = customer.RankId,
-                                AccountManagerUserId = customer.AccountManagerUserId,
-                                RegionId = customer.RegionId,
-
-                                CustomerSizeId = customer.CustomerSizeId,
-                                LastCallDate = customer.LastCallDate,
-                                LastMeetingDate = customer.LastMeetingDate,
-                                LastOpportunityDate = customer.LastOpportunityDate,
-                                FirstInvoiceDate = customer.FirstInvoiceDate,
-                                FirstShipmentDate = customer.FirstShipmentDate,
-                                LastShipmentDate = customer.LastShipmentDate,
-                                StartWorkingDate = customer.StartWorkingDate,
-                                StartWorkingManuallySet = customer.StartWorkingManuallySet,
-                                LastQuoteDate = customer.LastQuoteDate,
-                                LastInteractionDate = customer.LastInteractionDate,
-                            };
-                            //CustomerMapping.GetMappedPMFromPoco(customer);//customerQuery.GetSinglePM(customer.Id, entityPM.Tenant);
-                            if ((DateTime.Today.Date - customer.FirstShipmentDate.Value.Date).Days <= 10)
-                            {
-                                CustomerEmailAlert customerEmailAlert = new CustomerEmailAlert();
-                                customerEmailAlert.SendEmailAlert(customerpm, entityPM.Tenant, "GCFS", false);
-                            }
-                        }
-
-                        if (currentTenant.IsHybrid)
-                        {
-                            if (entityPM.CreateDateTime > customer.LastShipmentDate)
-                            {
-                                customer.LastShipmentDate = entityPM.CreateDateTime;
-                            }
-                        }
-                        else
-                        {
-                            customer.LastShipmentDate = todayDate;
-                        }
-
-                        customerRepository.Update(customer);
-                        customerRepository.SubmitChanges();
-                    }
-                }
-            }
-
-            else
-            {
-                if (!entityPM.IsHybrid)
-                {
-                    if (this.entityPM.CustomerId != this.entityPoco.CustomerId)
-                    {
-                        CustomerRepository customerRepository = new CustomerRepository(tenant);
-
-                        if (!string.IsNullOrEmpty(this.entityPM.CustomerId))
-                        {
-                            Customer customer = customerRepository.GetSingleCustomerWithCardOnly(entityPM.CustomerId, tenant, false);
-                            if (customer != null)
-                            {
-                                customer.LastShipmentDate = this.entityPM.CreateDateTime;
-                                customerRepository.Update(customer);
-                                customerRepository.SubmitChanges();
-                            }
-                        }
-
-                        if (!string.IsNullOrEmpty(this.entityPoco.CustomerId))
-                        {
-                            Customer customer = customerRepository.GetSingleCustomerWithCardOnly(this.entityPoco.CustomerId, tenant, false);
-                            if (customer != null)
-                            {
-                                Shipment shipment = this.objectContext.Shipments.Where(d => d.CustomerId == customer.Id && d.Id != this.entityPoco.Id).OrderByDescending(s => s.CreateDateTime).FirstOrDefault();
-                                if (shipment != null)
-                                {
-                                    customer.LastShipmentDate = shipment.CreateDateTime;
-                                    customerRepository.Update(customer);
-                                    customerRepository.SubmitChanges();
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
         private void ComputeShipmentStatus()
         {
             if (isNewEntity)
@@ -7680,7 +6546,4 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
         public string EntityChangeFieldXml { get; set; }
         public List<NotifyPropertyChangeValues> NotifyPropertyChangeValuesLists { get; set; }
     }
-
-
-
 }

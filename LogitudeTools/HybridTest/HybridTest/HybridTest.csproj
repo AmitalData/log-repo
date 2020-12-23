@@ -98,6 +98,7 @@
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
     <Compile Include="ObjectXmlSerializer.cs" />
+    <Compile Include="PartnersTester.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service References\ActivityProxy\Reference.cs">
@@ -106,6 +107,11 @@
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
     <Compile Include="Service References\AgentProxy\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\AirlineProxy\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
@@ -175,12 +181,37 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
+    <Compile Include="Service References\ShippingAgentProxy\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\ShippingLineProxy\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\TruckerProxy\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
     <Compile Include="Service References\UserProxy\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
     <Compile Include="Service References\VendorProxy\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\VesselProxy\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\WarehouseProxy\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
@@ -261,6 +292,37 @@
     </None>
     <None Include="Service References\AgentProxy\AgentWcfService5.xsd">
       <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\AgentProxy\HypredTest.AgentProxy.AgentPM.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\AgentProxy\HypredTest.AgentProxy.GetAgentPMResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\AirlineProxy\AirlineWcfService.wsdl" />
+    <None Include="Service References\AirlineProxy\AirlineWcfService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\AirlineProxy\AirlineWcfService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\AirlineProxy\AirlineWcfService2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\AirlineProxy\AirlineWcfService3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\AirlineProxy\AirlineWcfService4.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\AirlineProxy\AirlineWcfService5.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\AirlineProxy\HypredTest.AirlineProxy.AirlinePM.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\AirlineProxy\HypredTest.AirlineProxy.GetAirlinePMResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Service References\BranchProxy\BranchWcfService.wsdl" />
     <None Include="Service References\BranchProxy\BranchWcfService.xsd">
@@ -614,6 +676,81 @@
     <None Include="Service References\ShipmentProxy\ShipmentWcfService9.xsd">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Service References\ShippingAgentProxy\HypredTest.ShippingAgentProxy.GetShippingAgentPMResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ShippingAgentProxy\HypredTest.ShippingAgentProxy.ShippingAgentPM.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ShippingAgentProxy\ShippingAgentWcfService.wsdl" />
+    <None Include="Service References\ShippingAgentProxy\ShippingAgentWcfService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ShippingAgentProxy\ShippingAgentWcfService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ShippingAgentProxy\ShippingAgentWcfService2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ShippingAgentProxy\ShippingAgentWcfService3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ShippingAgentProxy\ShippingAgentWcfService4.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ShippingAgentProxy\ShippingAgentWcfService5.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ShippingLineProxy\HypredTest.ShippingLineProxy.GetShippingLinePMResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ShippingLineProxy\HypredTest.ShippingLineProxy.ShippingLinePM.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ShippingLineProxy\ShippingLineWcfService.wsdl" />
+    <None Include="Service References\ShippingLineProxy\ShippingLineWcfService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ShippingLineProxy\ShippingLineWcfService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ShippingLineProxy\ShippingLineWcfService2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ShippingLineProxy\ShippingLineWcfService3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ShippingLineProxy\ShippingLineWcfService4.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ShippingLineProxy\ShippingLineWcfService5.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\TruckerProxy\HypredTest.TruckerProxy.GetTruckerPMResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\TruckerProxy\HypredTest.TruckerProxy.TruckerPM.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\TruckerProxy\TruckerWcfService.wsdl" />
+    <None Include="Service References\TruckerProxy\TruckerWcfService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\TruckerProxy\TruckerWcfService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\TruckerProxy\TruckerWcfService2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\TruckerProxy\TruckerWcfService3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\TruckerProxy\TruckerWcfService4.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\TruckerProxy\TruckerWcfService5.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Service References\UserProxy\HypredTest.UserProxy.GetUserResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
@@ -670,6 +807,56 @@
     <None Include="Service References\VendorProxy\VendorWcfService6.xsd">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Service References\VesselProxy\HypredTest.VesselProxy.GetVesselPMResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\VesselProxy\HypredTest.VesselProxy.VesselPM.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\VesselProxy\VesselWcfServcie.wsdl" />
+    <None Include="Service References\VesselProxy\VesselWcfServcie.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\VesselProxy\VesselWcfServcie1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\VesselProxy\VesselWcfServcie2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\VesselProxy\VesselWcfServcie3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\VesselProxy\VesselWcfServcie4.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\WarehouseProxy\HypredTest.WarehouseProxy.GetWarehousePMResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WarehouseProxy\HypredTest.WarehouseProxy.WarehousePM.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WarehouseProxy\WarehouseWcfService.wsdl" />
+    <None Include="Service References\WarehouseProxy\WarehouseWcfService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\WarehouseProxy\WarehouseWcfService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\WarehouseProxy\WarehouseWcfService2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\WarehouseProxy\WarehouseWcfService3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\WarehouseProxy\WarehouseWcfService4.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\WarehouseProxy\WarehouseWcfService5.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\WarehouseProxy\WarehouseWcfService6.xsd">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config">
@@ -681,6 +868,48 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="HTMLPage1.html" />
+    <None Include="Service References\WarehouseProxy\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Service References\WarehouseProxy\configuration.svcinfo" />
+    <None Include="Service References\WarehouseProxy\configuration91.svcinfo" />
+    <None Include="Service References\WarehouseProxy\WarehouseWcfService.disco" />
+    <None Include="Service References\VesselProxy\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Service References\VesselProxy\configuration.svcinfo" />
+    <None Include="Service References\VesselProxy\configuration91.svcinfo" />
+    <None Include="Service References\VesselProxy\VesselWcfServcie.disco" />
+    <None Include="Service References\TruckerProxy\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Service References\TruckerProxy\configuration.svcinfo" />
+    <None Include="Service References\TruckerProxy\configuration91.svcinfo" />
+    <None Include="Service References\TruckerProxy\TruckerWcfService.disco" />
+    <None Include="Service References\ShippingLineProxy\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Service References\ShippingLineProxy\configuration.svcinfo" />
+    <None Include="Service References\ShippingLineProxy\configuration91.svcinfo" />
+    <None Include="Service References\ShippingLineProxy\ShippingLineWcfService.disco" />
+    <None Include="Service References\AirlineProxy\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Service References\AirlineProxy\configuration.svcinfo" />
+    <None Include="Service References\AirlineProxy\configuration91.svcinfo" />
+    <None Include="Service References\AirlineProxy\AirlineWcfService.disco" />
+    <None Include="Service References\ShippingAgentProxy\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Service References\ShippingAgentProxy\configuration.svcinfo" />
+    <None Include="Service References\ShippingAgentProxy\configuration91.svcinfo" />
+    <None Include="Service References\ShippingAgentProxy\ShippingAgentWcfService.disco" />
     <None Include="Service References\VendorProxy\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
@@ -804,6 +1033,7 @@
   <ItemGroup>
     <WCFMetadataStorage Include="Service References\ActivityProxy\" />
     <WCFMetadataStorage Include="Service References\AgentProxy\" />
+    <WCFMetadataStorage Include="Service References\AirlineProxy\" />
     <WCFMetadataStorage Include="Service References\BranchProxy\" />
     <WCFMetadataStorage Include="Service References\CountryProxy\" />
     <WCFMetadataStorage Include="Service References\CurrencyProxy\" />
@@ -817,8 +1047,13 @@
     <WCFMetadataStorage Include="Service References\PortProxy\" />
     <WCFMetadataStorage Include="Service References\QuoteProxy\" />
     <WCFMetadataStorage Include="Service References\ShipmentProxy\" />
+    <WCFMetadataStorage Include="Service References\ShippingAgentProxy\" />
+    <WCFMetadataStorage Include="Service References\ShippingLineProxy\" />
+    <WCFMetadataStorage Include="Service References\TruckerProxy\" />
     <WCFMetadataStorage Include="Service References\UserProxy\" />
     <WCFMetadataStorage Include="Service References\VendorProxy\" />
+    <WCFMetadataStorage Include="Service References\VesselProxy\" />
+    <WCFMetadataStorage Include="Service References\WarehouseProxy\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

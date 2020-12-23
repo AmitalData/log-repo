@@ -17,6 +17,7 @@ namespace Logitude.HybridTest.ServicesTest
     [TestClass]
     public class BranchTest
     {
+        private static EntityWcfCaller entityWcfCaller = new EntityWcfCaller();
         [TestMethod]
         public void Test_Branch_UPSERT()
         {
@@ -27,7 +28,7 @@ namespace Logitude.HybridTest.ServicesTest
                 LocalName = "Hybrid Branch",
                 Tenant = EnvironmentGlobalParams.MainTenant,
             };
-            ServiceOutcome serviceOutcome = EntityWcfCaller.CallEntityUpsert(branchPM);
+            ServiceOutcome serviceOutcome = entityWcfCaller.CallEntityUpsert(branchPM);
             Assert.IsFalse(serviceOutcome.Response.HasError, "Upsert Failed! " + serviceOutcome.Response.ErrorMessage);
             Assert.IsNotNull(serviceOutcome.Response.Result, "Upsert Failed! " + serviceOutcome.Response.ErrorMessage);
         }

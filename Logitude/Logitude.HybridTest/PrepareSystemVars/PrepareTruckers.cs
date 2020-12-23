@@ -10,6 +10,7 @@ namespace Logitude.HybridTest.WcfCallers
 
     class PrepareTruckers
     {
+        private static EntityWcfCaller entityWcfCaller = new EntityWcfCaller();
         public static void PrepareTruckersVars()
         {
             UpsertTruckerCodeHT();
@@ -69,7 +70,7 @@ namespace Logitude.HybridTest.WcfCallers
         }
         private static Response AssertResponse<T>(T entityPM)
         {
-            ServiceOutcome serviceOutcome = EntityWcfCaller.CallEntityUpsert(entityPM);
+            ServiceOutcome serviceOutcome = entityWcfCaller.CallEntityUpsert(entityPM);
             Assert.IsFalse(serviceOutcome.Response.HasError, "Prepare Truckers Vars Failed! " + serviceOutcome.Response.ErrorMessage);
             Assert.IsNotNull(serviceOutcome.Response.Result, "Prepare Truckers Vars Failed! " + serviceOutcome.Response.ErrorMessage);
             return serviceOutcome.Response;

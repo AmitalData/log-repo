@@ -1,0 +1,33 @@
+﻿<Script DBType="Global" Module="Common">
+  <Sql Version="2">
+    <![CDATA[
+    
+delete BatchServicesDefinitionMods where Code ='QueryExportExecutionLogWR'
+delete BatchServicesDefinitions where Code ='QueryExportExecutionLogWR'
+
+    INSERT INTO [dbo].[BatchServicesDefinitions]
+           ([Code]
+           ,[ClassName]
+           ,[Parameter1]
+           ,[Parameter2] ,
+           [QueueDefinitionCode])
+     VALUES
+           ('QueryExportExecutionLogWR'
+           ,'QueryExportExecutionLogWR'
+           ,NULL
+           ,NULL
+           ,'QueryExportExecutionLogQueue')
+
+INSERT INTO [dbo].[BatchServicesDefinitionMods]
+           ([Code]
+           ,[InActive]
+           ,[NumberOfThreads])
+     VALUES
+           ('QueryExportExecutionLogWR'
+           ,0
+           ,1)
+  
+    ]]>
+  </Sql>
+</Script>
+

@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CargoTrackingShipmentComputedUpdateClass
    {  		
-		public const string HashString = "2e414a178b9cfabcf14231379f9702b4";
+		public const string HashString = "5807ce93e8f422adeb7d9f3635b5ab34";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -119,10 +119,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Shipment Computed",
-			      				    Code =  "4129",
+			      				    Code =  "90d2",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
-			      				    ClientModuleName =  "CargoTracking",
+			      				    ClientModuleName =  "",
 			      				    NoTS =  false,
 			      				    HasMenuButtons =  false,
 			      				    AllowedForComputingPartners =  false,
@@ -330,6 +330,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "Tenant",
 					  						ListPropertyPath =  "Tenant",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,

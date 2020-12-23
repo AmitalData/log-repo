@@ -1,10 +1,12 @@
 ﻿using Logitude.CargoTracking.BL.CargoTrackingServices.HelperClasses;
+using Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructure.Helper;
 using Simplog.Data.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -147,21 +149,35 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.ServicesHelpe
             return result;
         }
 
-        public static void CreateCargoTrackingTable(CargoArgs buildCargoArgs)
+        public static void CreateCargoTrackingTable(CargoArgs buildCargoArgs, TableStructureHelper MainTableStructureHelper, TableStructureHelper InnerTableStructureHelper)
         {
             string TableName = buildCargoArgs.Table.Pre_TableName;
             string TableName2 = buildCargoArgs.Table.Pre2_TableName;
-            string SQL = BuildTablesStructure.GetTableStructure(TableName);
+            string SQL = MainTableStructureHelper.GetTableStructure(TableName);
             ExecuteSql(SQL, buildCargoArgs.DestinationConnectionString);
             if (!string.IsNullOrEmpty(TableName2))
             {
-                SQL = BuildTablesStructure.GetTableStructure(TableName2);
+                SQL = InnerTableStructureHelper.GetTableStructure(TableName2);
                 ExecuteSql(SQL, buildCargoArgs.DestinationConnectionString);
             }
 
         }
 
 
+        public static string GetInvokeDBTableByTableName(string TableName)
+        {
+            string DxmlFile = null;
+            if (!string.IsNullOrEmpty(TableName))
+            {
+                string DataBaseTableName = TableName;
+                Type type = Type.GetType("Logitude.CargoTracking.BL.CargoTrackingServices.DBTablesCopy.Generated." + DataBaseTableName + "Dxml");
+                Object obj = Activator.CreateInstance(type);
+                MethodInfo methodInfo = type.GetMethod("Get" + DataBaseTableName + "Dxml");
+                DxmlFile = (string)methodInfo.Invoke(obj, null);
+            }
+            return DxmlFile;
+        }
+ 
         public static void UpdateWaterMarksTable(CargoTable table, string date, string connectionString)
         {
             var TodayDate = TenantServerConfigration.GetCurrentDateTime(0);

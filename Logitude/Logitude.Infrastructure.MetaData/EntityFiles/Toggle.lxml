@@ -39,7 +39,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Toggle&quot;"
-  Code="&quot;026d&quot;"
+  Code="&quot;317f&quot;"
   Name="&quot; Query Group&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;Name&quot;"
@@ -499,6 +499,11 @@
       Name="&quot;Accruals Approvement&quot;"
       Description="&quot;Accruals Approvement Toggle&quot;" />
 
+    <Record
+      Code="&quot;EQW&quot;"
+      Name="&quot;Export Query Data Via WorkerRole&quot;"
+      Description="&quot;Export Query Data to Excel Via WorkerRole&quot;"
+      SearchFields="&quot;Export Query Data Via WorkerRole&quot;" />
   </Records>
   <DataContracts />
   <AdditionalTextCodes />
