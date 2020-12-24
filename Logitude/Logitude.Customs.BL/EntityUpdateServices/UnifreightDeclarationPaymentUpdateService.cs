@@ -56,7 +56,9 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             try
             {
                 //if ((!Environment.MachineName.Equals("itzik-7-new", StringComparison.OrdinalIgnoreCase)) && (!Environment.MachineName.Equals("yuval-7-new", StringComparison.OrdinalIgnoreCase))) return;
-                if (String.IsNullOrWhiteSpace(_DirtyDeclarationPaymentPM.DeclarationId))
+                ///if (String.IsNullOrWhiteSpace(_DirtyDeclarationPaymentPM.DeclarationId))
+                ///all ref 2 _DirtyDeclarationPaymentPM check if null !!!!!!!!
+                if (_DirtyDeclarationPaymentPM== null || String.IsNullOrWhiteSpace(_DirtyDeclarationPaymentPM.DeclarationId))
                 {
                     return;
                 }
