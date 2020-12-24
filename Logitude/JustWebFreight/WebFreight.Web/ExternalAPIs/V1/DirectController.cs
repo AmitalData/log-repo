@@ -684,6 +684,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
                         if (directPM != null)
                         {
                             directPM.ConcurrencyGUID = entity.ConcurrencyGUID;
+                            directPM.IsExternalAPI = true;
 
                             if (directPM.IsOperationalClosed)
                             {
