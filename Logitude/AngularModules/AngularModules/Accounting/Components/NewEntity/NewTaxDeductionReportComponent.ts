@@ -1,5 +1,5 @@
 
-import { Component } from '@angular/core';
+import { Component, DoCheck } from '@angular/core';
 import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator';
 import { BaseComponent } from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { TaxDeductionReportPM } from '../../EntityPMs/TaxDeductionReportPM';
@@ -10,21 +10,18 @@ import { Validator } from '../../../Infrastructure/Validators/Validator';
 import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
 import { TextCodeTranslator } from '../../../Infrastructure/Utilities/TextCodeTranslator';
 import { AppTool } from '../../../Infrastructure/Tools';
-import { UIProperties } from '../../../Infrastructure/Components/LogitudeComponents/UIProperties';
-
 
 @Component({
     selector: 'NewTaxDeductionReportComponent',
-    
-
     templateUrl: './NewTaxDeductionReportComponent.html',
 })
 
-export class NewTaxDeductionReportComponent extends BaseComponent{
+export class NewTaxDeductionReportComponent extends BaseComponent implements DoCheck{
 
 
     ObjectTableName: string = "TaxDeductionReport";
     DataContext: any = this;
+    FilterSelectedOldValue: string;
     entityPM: TaxDeductionReportPM = new TaxDeductionReportPM();
     TaxDeductionReportPMService: TaxDeductionReportPMService = new TaxDeductionReportPMService();
     public TenantPM: TenantPM;
@@ -37,8 +34,22 @@ export class NewTaxDeductionReportComponent extends BaseComponent{
         this.entityPM.Tenant = SessionLocator.Tenant;
         this.entityPM.Email = SessionLocator.LoggedUserPM.Email;
         this.BuildMonthList();
+        this.FilterSelectedOldValue = this.FilterSelectedValue;
 
     }
+
+    ngDoCheck(): void {
+        if (this.FilterSelectedOldValue != this.FilterSelectedValue) {
+            this.entityPM.Email = this.FilterSelectedValue == "Month" ? " " : SessionLocator.LoggedUserPM.Email;
+            this.FilterSelectedOldValue = this.FilterSelectedValue;
+            this.SetUIProperties();
+        }
+    }
+
+    SetUIProperties() {
+        this.UIProperties.SetEnabled("Email", this.ObjectTableName, this.ByMonth ? false : true);
+    }
+   
  public MonthsList: CodeNameClass[];
     BuildMonthList() {
 
@@ -82,18 +93,13 @@ private selectedMonth: CodeNameClass;
   FilterItemClicked(itemValue: string) {
     if (this.FilterSelectedValue != itemValue) {
       this.FilterSelectedValue = itemValue;
-    if(itemValue =="Month"){
-        this.ByMonth = true;
-      }
-    else
-        this.ByMonth = false;
-
-     this.SetUIProperties();
+        if (itemValue == "Month") {
+            this.ByMonth = true;
+        }
+        else {
+            this.ByMonth = false;
+        }
     }
-    }
-
-    SetUIProperties() {
-        this.UIProperties.SetEnabled("Email", this.ObjectTableName, this.ByMonth ? false : true);
     }
 
     get Email() { return this.entityPM.Email; }
@@ -132,7 +138,6 @@ private selectedMonth: CodeNameClass;
         }
     }
 
-
     FIELD_IS_REQUIERD: string = null;
     ValidationErrorsList: string[] = [];
     OkButtonClicked() {
@@ -154,11 +159,7 @@ private selectedMonth: CodeNameClass;
 
             errors.push(s);
         }
-        if (AppTool.IsNullOrEmpty(this.entityPM.Email)) {
-            var s: string = this.FIELD_IS_REQUIERD.replace("%FieldName", TextCodeTranslator.Translate("TaxDeductionReport.F.Email"));
-
-            errors.push(s);
-        }
+       
 
         this.ValidationErrorsList = errors;
 
@@ -189,19 +190,12 @@ private selectedMonth: CodeNameClass;
                     this.CurrentSession.StopBusyIndicator();
                 }
             });
-
-
         }
-
-
-
     }
-
 
     CancelButtonClicked() {
         this.CurrentSession.CloseCurrentWindow();
 
     }
-
 
 }
