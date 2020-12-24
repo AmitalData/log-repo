@@ -182,11 +182,11 @@
 
         <div class="EditableGridHeader" *ngIf="cols && ShowFooter == true && rows.length > 0" [ngStyle]="headerStyle" [style.top]="FooterTop > 0 ? (FooterTop + 'px') : 'calc(100%-27px)'" style="position:absolute;">
             <div class="ag-header-cell"
-                 *ngFor="let col of customcolumns; let i = index" [attr.ColId]="col.ColId"
+                 *ngFor="let col of customcolumns; let i = index" [attr.ColId]="col.ColId" [attr.LogGridId]="LogGridId"
                  [id]="ColumnId + 'resizable-column-,' + i"
                  [ngStyle]="col.HeaderStyle"
                  style="position: absolute;display: inline-block;min-width:25px;">
-                <div [id]="'FooterTemplateDiv' + i" [style.float]="RTL == true ? 'right' : 'left'" style="display: inline-block; width: calc(100% - 5px);">
+                <div [id]="'FooterTemplateDiv' + i" [style.float]="RTL == true ? 'right' : 'left'" style="display: inline-block; width: calc(100% - 5px);" >
                     <ng-template *ngIf="col.hasFootertemplate" ngFor [ngForOf]="[col.footer]"
                               [ngForTemplate]="col.FooterContentTemplate">
                     </ng-template>
