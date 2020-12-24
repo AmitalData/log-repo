@@ -20,7 +20,7 @@ import { UIProperties } from '../../../Infrastructure/Components/LogitudeCompone
     templateUrl: './NewTaxDeductionReportComponent.html',
 })
 
-export class NewTaxDeductionReportComponent extends BaseComponent {
+export class NewTaxDeductionReportComponent extends BaseComponent{
 
 
     ObjectTableName: string = "TaxDeductionReport";
@@ -76,17 +76,26 @@ private selectedMonth: CodeNameClass;
 
         }
     }
+
+    
  public FilterSelectedValue: string = 'Year';
   FilterItemClicked(itemValue: string) {
     if (this.FilterSelectedValue != itemValue) {
       this.FilterSelectedValue = itemValue;
     if(itemValue =="Month"){
-     this.ByMonth=true;
+        this.ByMonth = true;
       }
-  else  this.ByMonth=false;;
+    else
+        this.ByMonth = false;
 
+     this.SetUIProperties();
     }
-  }
+    }
+
+    SetUIProperties() {
+        this.UIProperties.SetEnabled("Email", this.ObjectTableName, this.ByMonth ? false : true);
+    }
+
     get Email() { return this.entityPM.Email; }
     set Email(value: string) {
         if (this.entityPM.Email != value) {
@@ -100,6 +109,8 @@ private selectedMonth: CodeNameClass;
             this.entityPM.Month = value;
         }
     }
+
+
  get ByMonth() { return this.entityPM.ByMonth; }
     set ByMonth(value: boolean) {
         if (this.entityPM.ByMonth != value) {
