@@ -2234,7 +2234,7 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string INTTRABookingStatusCode { get; set; }
-        public string INTTRABookingStatusName{ get; set; }
+        public string INTTRABookingStatusName { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string INTTRABookingError { get; set; }
@@ -2534,6 +2534,7 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public string ViewSharedDocuments { get; set; }
         public bool IsAccrualsApproved { get; set; }
         public DateTime? AccrualsApprovalDate { get; set; }
+        public bool IsExternalAPI { get; set; }
     }
 
     public class TransshipmentLeg
@@ -2549,6 +2550,6 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public DateTime? ETD { get; set; }
         public DateTime? ETA { get; set; }
         public DateTime? ATD { get; set; }
-        public DateTime? ATA { get; set; }
+        public DateTime? ATA { get; set; }        
     }
 }
