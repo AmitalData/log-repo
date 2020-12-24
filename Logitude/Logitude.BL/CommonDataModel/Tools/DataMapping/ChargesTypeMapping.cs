@@ -103,7 +103,7 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.Code);
             MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.EnglishName);
             MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.LocalName);
-           //ChargesTypePM chargesType = SetChargesTypetGLAccountFields(entityPM);
+           ChargesTypePM chargesType = SetChargesTypetGLAccountFields(entityPM);
             MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.ReceivableCreditGLAcountLocalName);
             MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.ReceivableCreditGLAcountNumber);
             MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.PayableDebitGLAcountLocalName);
