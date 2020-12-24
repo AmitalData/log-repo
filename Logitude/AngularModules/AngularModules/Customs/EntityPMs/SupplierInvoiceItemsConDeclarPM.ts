@@ -106,7 +106,10 @@ export class SupplierInvoiceItemsConDeclarPM {
     public UniqueKey: string;
 	 	
     public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
+       if(!this.DisableMarkAsDirty)
+       {
         this.IsDirty = true;
 		  if (this.EntityParentPM) {
             this.EntityParentPM.MarkAsDirty();
@@ -116,6 +119,7 @@ export class SupplierInvoiceItemsConDeclarPM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "Customs.SupplierInvoiceItemsConDeclar");
            
         }
+       }
     }
 
     private MyClone: SupplierInvoiceItemsConDeclarPM;

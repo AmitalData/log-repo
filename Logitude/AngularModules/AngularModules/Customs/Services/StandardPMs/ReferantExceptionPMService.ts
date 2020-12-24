@@ -153,6 +153,7 @@ export class ReferantExceptionPMService {
         if (!entityPM) {
             
             entityPM = new ReferantExceptionPM();
+			entityPM.DisableMarkAsDirty = true;
         }
 
 		var customFields: Array<string> = [];
@@ -193,6 +194,8 @@ export class ReferantExceptionPMService {
             entityPM.OldEntityPM = null;
         }
 		entityPM.IsDirty = false;
+	    entityPM.DisableMarkAsDirty = false;
+
         return entityPM;
     }
 

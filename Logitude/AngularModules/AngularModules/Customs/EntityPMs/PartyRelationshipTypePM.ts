@@ -53,7 +53,10 @@ export class PartyRelationshipTypePM {
     public OldEntityPM: PartyRelationshipTypePM;
 		
     public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
+       if(!this.DisableMarkAsDirty)
+       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -61,6 +64,7 @@ export class PartyRelationshipTypePM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "Customs.PartyRelationshipType");
            
         }
+       }
     }
 
     private MyClone: PartyRelationshipTypePM;

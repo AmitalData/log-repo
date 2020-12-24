@@ -48,7 +48,10 @@ export class CustomsVerificationStatusTypePM {
     public OldEntityPM: CustomsVerificationStatusTypePM;
 		
     public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
+       if(!this.DisableMarkAsDirty)
+       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -56,6 +59,7 @@ export class CustomsVerificationStatusTypePM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "Customs.CustomsVerificationStatusType");
            
         }
+       }
     }
 
     private MyClone: CustomsVerificationStatusTypePM;

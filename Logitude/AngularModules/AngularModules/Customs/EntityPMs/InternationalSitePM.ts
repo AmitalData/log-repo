@@ -63,7 +63,10 @@ export class InternationalSitePM {
     public OldEntityPM: InternationalSitePM;
 		
     public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
+       if(!this.DisableMarkAsDirty)
+       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -71,6 +74,7 @@ export class InternationalSitePM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "Customs.InternationalSite");
            
         }
+       }
     }
 
     private MyClone: InternationalSitePM;

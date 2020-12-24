@@ -159,6 +159,7 @@ export class ClientPMService {
         if (!entityPM) {
             
             entityPM = new ClientPM();
+			entityPM.DisableMarkAsDirty = true;
         }
 
 		var customFields: Array<string> = [];
@@ -233,6 +234,8 @@ export class ClientPMService {
             entityPM.OldEntityPM = null;
         }
 		entityPM.IsDirty = false;
+	    entityPM.DisableMarkAsDirty = false;
+
         return entityPM;
     }
 
@@ -258,7 +261,8 @@ export class ClientPMService {
             {
                 newClientAddressPM = new ClientAddressPM(null);
             }
-                
+ 			newClientAddressPM.DisableMarkAsDirty = true;
+               
             var pmKeysArray = Object.keys(jItem);
             for (var pmKey in pmKeysArray) {
                 if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
@@ -301,7 +305,7 @@ export class ClientPMService {
                 newClientAddressPM.OldEntityPM = null;
                 newClientAddressPM.EntityParentPM = null;
             }
-			
+			 newClientAddressPM.DisableMarkAsDirty = false;
 			 newClientAddressPM.IsDirty = false;
             entityPM.ClientAddresses.push(newClientAddressPM);
         }
@@ -315,6 +319,7 @@ export class ClientPMService {
                         //entityPM.ClientAddresses.push(oldClientAddresses[itemKey]);
 						var oldItemJson = oldClientAddresses[itemKey];
                         var deletedPM: ClientAddressPM = new ClientAddressPM(null);
+						deletedPM.DisableMarkAsDirty = true;
                         var pmKeys = Object.keys(oldItemJson);
                         for (var key in pmKeys) {
 
@@ -326,7 +331,7 @@ export class ClientPMService {
                             deletedPM[property] = oldItemJson[property];
                         }
 
-                      
+					    deletedPM.DisableMarkAsDirty = false;
                         deletedPM.IsDirty = false;
                         deletedPM.ChangeSetOp = "Delete";
                         
@@ -362,7 +367,8 @@ export class ClientPMService {
             {
                 newClientsAddressCommTypePM = new ClientsAddressCommTypePM(null);
             }
-                
+ 			newClientsAddressCommTypePM.DisableMarkAsDirty = true;
+               
             var pmKeysArray = Object.keys(jItem);
             for (var pmKey in pmKeysArray) {
                 if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
@@ -399,7 +405,7 @@ export class ClientPMService {
                 newClientsAddressCommTypePM.OldEntityPM = null;
                 newClientsAddressCommTypePM.EntityParentPM = null;
             }
-			
+			 newClientsAddressCommTypePM.DisableMarkAsDirty = false;
 			 newClientsAddressCommTypePM.IsDirty = false;
             entityPM.ClientsAddressCommTypes.push(newClientsAddressCommTypePM);
         }
@@ -413,6 +419,7 @@ export class ClientPMService {
                         //entityPM.ClientsAddressCommTypes.push(oldClientsAddressCommTypes[itemKey]);
 						var oldItemJson = oldClientsAddressCommTypes[itemKey];
                         var deletedPM: ClientsAddressCommTypePM = new ClientsAddressCommTypePM(null);
+						deletedPM.DisableMarkAsDirty = true;
                         var pmKeys = Object.keys(oldItemJson);
                         for (var key in pmKeys) {
 
@@ -424,7 +431,7 @@ export class ClientPMService {
                             deletedPM[property] = oldItemJson[property];
                         }
 
-                      
+					    deletedPM.DisableMarkAsDirty = false;
                         deletedPM.IsDirty = false;
                         deletedPM.ChangeSetOp = "Delete";
                         
@@ -458,7 +465,8 @@ export class ClientPMService {
             {
                 newClientDrivingLicensePM = new ClientDrivingLicensePM(null);
             }
-                
+ 			newClientDrivingLicensePM.DisableMarkAsDirty = true;
+               
             var pmKeysArray = Object.keys(jItem);
             for (var pmKey in pmKeysArray) {
                 if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
@@ -501,7 +509,7 @@ export class ClientPMService {
                 newClientDrivingLicensePM.OldEntityPM = null;
                 newClientDrivingLicensePM.EntityParentPM = null;
             }
-			
+			 newClientDrivingLicensePM.DisableMarkAsDirty = false;
 			 newClientDrivingLicensePM.IsDirty = false;
             entityPM.ClientDrivingLicenses.push(newClientDrivingLicensePM);
         }
@@ -515,6 +523,7 @@ export class ClientPMService {
                         //entityPM.ClientDrivingLicenses.push(oldClientDrivingLicenses[itemKey]);
 						var oldItemJson = oldClientDrivingLicenses[itemKey];
                         var deletedPM: ClientDrivingLicensePM = new ClientDrivingLicensePM(null);
+						deletedPM.DisableMarkAsDirty = true;
                         var pmKeys = Object.keys(oldItemJson);
                         for (var key in pmKeys) {
 
@@ -526,7 +535,7 @@ export class ClientPMService {
                             deletedPM[property] = oldItemJson[property];
                         }
 
-                      
+					    deletedPM.DisableMarkAsDirty = false;
                         deletedPM.IsDirty = false;
                         deletedPM.ChangeSetOp = "Delete";
                         
@@ -562,7 +571,8 @@ export class ClientPMService {
             {
                 newClientDrivingLicenseTypePM = new ClientDrivingLicenseTypePM(null);
             }
-                
+ 			newClientDrivingLicenseTypePM.DisableMarkAsDirty = true;
+               
             var pmKeysArray = Object.keys(jItem);
             for (var pmKey in pmKeysArray) {
                 if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
@@ -599,7 +609,7 @@ export class ClientPMService {
                 newClientDrivingLicenseTypePM.OldEntityPM = null;
                 newClientDrivingLicenseTypePM.EntityParentPM = null;
             }
-			
+			 newClientDrivingLicenseTypePM.DisableMarkAsDirty = false;
 			 newClientDrivingLicenseTypePM.IsDirty = false;
             entityPM.ClientDrivingLicenseTypes.push(newClientDrivingLicenseTypePM);
         }
@@ -613,6 +623,7 @@ export class ClientPMService {
                         //entityPM.ClientDrivingLicenseTypes.push(oldClientDrivingLicenseTypes[itemKey]);
 						var oldItemJson = oldClientDrivingLicenseTypes[itemKey];
                         var deletedPM: ClientDrivingLicenseTypePM = new ClientDrivingLicenseTypePM(null);
+						deletedPM.DisableMarkAsDirty = true;
                         var pmKeys = Object.keys(oldItemJson);
                         for (var key in pmKeys) {
 
@@ -624,7 +635,7 @@ export class ClientPMService {
                             deletedPM[property] = oldItemJson[property];
                         }
 
-                      
+					    deletedPM.DisableMarkAsDirty = false;
                         deletedPM.IsDirty = false;
                         deletedPM.ChangeSetOp = "Delete";
                         

@@ -153,6 +153,7 @@ export class CustomsHouseTypePMService {
         if (!entityPM) {
             
             entityPM = new CustomsHouseTypePM();
+			entityPM.DisableMarkAsDirty = true;
         }
 
 		var customFields: Array<string> = [];
@@ -193,6 +194,8 @@ export class CustomsHouseTypePMService {
             entityPM.OldEntityPM = null;
         }
 		entityPM.IsDirty = false;
+	    entityPM.DisableMarkAsDirty = false;
+
         return entityPM;
     }
 

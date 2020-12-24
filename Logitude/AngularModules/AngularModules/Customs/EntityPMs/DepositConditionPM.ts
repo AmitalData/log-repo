@@ -66,7 +66,10 @@ export class DepositConditionPM {
     public UniqueKey: string;
 	 	
     public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
+       if(!this.DisableMarkAsDirty)
+       {
         this.IsDirty = true;
 		  if (this.EntityParentPM) {
             this.EntityParentPM.MarkAsDirty();
@@ -76,6 +79,7 @@ export class DepositConditionPM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "Customs.DepositCondition");
            
         }
+       }
     }
 
     private MyClone: DepositConditionPM;

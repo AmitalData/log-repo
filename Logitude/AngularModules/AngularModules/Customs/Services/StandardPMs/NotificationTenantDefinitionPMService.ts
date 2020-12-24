@@ -153,6 +153,7 @@ export class NotificationTenantDefinitionPMService {
         if (!entityPM) {
             
             entityPM = new NotificationTenantDefinitionPM();
+			entityPM.DisableMarkAsDirty = true;
         }
 
 		var customFields: Array<string> = [];
@@ -193,6 +194,8 @@ export class NotificationTenantDefinitionPMService {
             entityPM.OldEntityPM = null;
         }
 		entityPM.IsDirty = false;
+	    entityPM.DisableMarkAsDirty = false;
+
         return entityPM;
     }
 

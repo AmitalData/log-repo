@@ -473,7 +473,10 @@ export class SupplierInvoicePM {
     public OldEntityPM: SupplierInvoicePM;
 		
     public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
+       if(!this.DisableMarkAsDirty)
+       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -481,6 +484,7 @@ export class SupplierInvoicePM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "Customs.SupplierInvoice");
            
         }
+       }
     }
 
     private MyClone: SupplierInvoicePM;

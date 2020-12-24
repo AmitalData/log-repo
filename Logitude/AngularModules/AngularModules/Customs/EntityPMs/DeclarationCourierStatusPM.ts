@@ -373,7 +373,10 @@ export class DeclarationCourierStatusPM {
     public OldEntityPM: DeclarationCourierStatusPM;
 		
     public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
+       if(!this.DisableMarkAsDirty)
+       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -381,6 +384,7 @@ export class DeclarationCourierStatusPM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "Customs.DeclarationCourierStatus");
            
         }
+       }
     }
 
     private MyClone: DeclarationCourierStatusPM;

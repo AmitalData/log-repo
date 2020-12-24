@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CustomsGeneralUpdateClass
    {  		
-		public const string HashString = "4e6f3e22d83c55ccf10e14b312983dd5";
+		public const string HashString = "8c6b2aa4629f8fb74d9e3dd06dd05898";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -119,7 +119,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "CustomsGeneral",
-			      				    Code =  "72b0",
+			      				    Code =  "bca8",
 			      				    Name =  "CustomsGeneral",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",
@@ -2009,6 +2009,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode CustomsGeneralTextCode_CustomsGeneralODocumentInProgress = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.General.O.DocumentInProgress", DefaultText = "There are documents in the process.",LocalDefaultText = @"קיימים מסמכים בתהליך שליחה.", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode CustomsGeneralTextCode_CustomsGeneralOValidationDocuments = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.General.O.ValidationDocuments", DefaultText = "Validation Documents",LocalDefaultText = @"בדיקת מסמכים לפני שליחת הצהרת יבוא", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CustomsGeneralTextCode_CustomsGeneralOCreateDateFrom = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.General.O.CreateDateFrom", DefaultText = "Create Date From:",LocalDefaultText = @"מ - תאריך בקשה:", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CustomsGeneralTextCode_CustomsGeneralOCreateDateTo = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.General.O.CreateDateTo", DefaultText = "Create Date To:",LocalDefaultText = @"עד - תאריך בקשה:", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

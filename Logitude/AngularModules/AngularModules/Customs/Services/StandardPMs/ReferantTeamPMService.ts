@@ -153,6 +153,7 @@ export class ReferantTeamPMService {
         if (!entityPM) {
             
             entityPM = new ReferantTeamPM();
+			entityPM.DisableMarkAsDirty = true;
         }
 
 		var customFields: Array<string> = [];
@@ -193,6 +194,8 @@ export class ReferantTeamPMService {
             entityPM.OldEntityPM = null;
         }
 		entityPM.IsDirty = false;
+	    entityPM.DisableMarkAsDirty = false;
+
         return entityPM;
     }
 
