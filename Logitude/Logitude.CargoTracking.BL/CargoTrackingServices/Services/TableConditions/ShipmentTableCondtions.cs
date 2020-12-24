@@ -34,7 +34,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
                 }
                 else
                 {
-                    cmd += " where DATEADD(dd, DATEDIFF(dd, 0, P.CreateDateTime ), 0) >= '" + cargoTrackingDataBaseArgs.CargoTrackingArguments.FromDate.Value.Date + "' and DATEADD(dd, DATEDIFF(dd, 0, P.CreateDateTime ), 0) <= '" + cargoTrackingDataBaseArgs.CargoTrackingArguments.ToDate.Value.Date + "'";
+                    cmd += " where DATEADD(dd, DATEDIFF(dd, 0, C.CreateDateTime ), 0) >= '" + cargoTrackingDataBaseArgs.CargoTrackingArguments.FromDate.Value.Date + "' and DATEADD(dd, DATEDIFF(dd, 0, C.CreateDateTime ), 0) <= '" + cargoTrackingDataBaseArgs.CargoTrackingArguments.ToDate.Value.Date + "'";
                 }
             }
 

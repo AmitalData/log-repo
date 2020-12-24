@@ -14,7 +14,9 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.SearchService
 
     public class CargoTrackingSearchService
     {
+
         public static List<string> PrivateRefrencesList = new List<string>() { "ConsigneeName", "ShipperName" };
+
 
         public static void SearchService(DataRow tableRow, BulkDataPreperation bulkDataPreperation, string tableName)
         {
@@ -71,7 +73,6 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.SearchService
                 var Value = tableRow[coulmnName];
                 string SearchField = (string)Value;
                 string[] SearchArr = SearchField.Split(',');
-
                 for (int i = 0; i < SearchArr.Length; i++)
                 {
                     ReferencecArgs ReferencecArgs = new ReferencecArgs()
@@ -134,7 +135,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.SearchService
             bool IsPublic = true;
             if (PrivateRefrencesList.Contains(coulmnName))
                 IsPublic = false;
-
+ 
             TableRow.SetField("IsPublic", IsPublic);
 
         }
@@ -144,6 +145,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.SearchService
             string ReferenceType = Regex.Replace(CoulmnName, "([a-z])([A-Z])", "$1 $2");
             return ReferenceType;
         }
+
 
     }
 
