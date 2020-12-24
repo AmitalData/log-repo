@@ -97,7 +97,7 @@ namespace Logitude.Accounting.BL.CoreBL
             var newLTranListOfAccountID = _NewLedgerTransactionsWithCounters.Where(r => r.AccountId == currentAccountId).ToList();
             decimal totalNewLedgerOpenAmount = newLTranListOfAccountID.Sum(r => r.OpenAmount);
            
-            bool Same_glaccount_for_debit_and_credit = true;
+            bool Same_glaccount_for_debit_and_credit = false;
             if (Same_glaccount_for_debit_and_credit && _NewLedgerTransactionsWithCounters[0].AccountId == _NewLedgerTransactionsWithCounters[1].AccountId)
             {
                 totalNewLedgerOpenAmount = MoveAdjustSum2SameAccountButDiffDate_useOnly1NewTransaction(ref newLTranListOfAccountID);
