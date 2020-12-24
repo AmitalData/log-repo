@@ -176,10 +176,14 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
 
         private void AddDummyCoulmnsToDatatTable(BulkDataPreperation bulkDataPreperation)
         {
-            foreach (string ColumnName in bulkDataPreperation.cargoTable.FieldsDummyName.Split(','))
+            if (!string.IsNullOrEmpty(bulkDataPreperation.cargoTable.FieldsDummyName))
             {
-                bulkDataPreperation.dataTable.Columns.Add(ColumnName);
+                foreach (string ColumnName in bulkDataPreperation.cargoTable.FieldsDummyName.Split(','))
+                {
+                    bulkDataPreperation.dataTable.Columns.Add(ColumnName);
+                }
             }
+       
         }
 
         private void BuildAllIndexesWithConstraient(CargoArgs buildCargoArgs)
