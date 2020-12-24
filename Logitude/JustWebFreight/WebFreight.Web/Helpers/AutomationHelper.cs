@@ -587,6 +587,8 @@ namespace WebFreight.Web.Helpers
                         {
                             newDocType.DocumentTypeDefaultEditorTool = newtemplate.EditorTool;
                         }
+               
+
                         if (newDocType != null && string.IsNullOrEmpty(newDocType.DocumentTypeDefaultHTMLTemplateId))
                         {
                             newDocType.DocumentTypeDefaultHTMLTemplateId = newtemplate.Id;
@@ -692,8 +694,6 @@ namespace WebFreight.Web.Helpers
                 Subject = docType.Subject,
                 IsEnabledForCustomers = true,
                 Notes = docType.Notes,
-                DocumentTypeDefaultHTMLTemplateId = docType.DocumentTypeDefaultHTMLTemplateId,
-                DocumentTypeDefaultReportTemplateId = docType.DocumentTypeDefaultReportTemplateId,
                 IsSystemAdditionalPrintingFields = docType.IsSystemAdditionalPrintingFields,
                 PrintingFieldsScreenCode = docType.PrintingFieldsScreenCode,
                 OnPrintPopulateDateFieldName = docType.OnPrintPopulateDateFieldName,
@@ -753,15 +753,8 @@ namespace WebFreight.Web.Helpers
             List<string> myAutomationListsCodes = automationQuery.GetAutomationCodeLists(tenant);
             List<string> automationDocumentTypeTemplateIds = automationRepository.GetAutomations(0).Where(d => d.ResultCode == "EMAIL" && !string.IsNullOrEmpty(d.Code) && !myAutomationListsCodes.Contains(d.Code)).Select(d => d.TemplateId).ToList();
             return automationDocumentTypeTemplateIds;
-        }
 
-        public List<string> GetAutomationDocumentTypeTemplateIds(int tenant)
-        {
-            AutomationRepository automationRepository = new AutomationRepository(tenant);
-            AutomationQuery automationQuery = new AutomationQuery(tenant);
-            List<string> myAutomationListsCodes = automationQuery.GetAutomationCodeLists(tenant);
-            List<string> automationDocumentTypeTemplateIds = automationRepository.GetAutomations(0).Where(d => d.ResultCode == "EMAIL" && !string.IsNullOrEmpty(d.Code) && !myAutomationListsCodes.Contains(d.Code)).Select(d => d.TemplateId).ToList();
-            return automationDocumentTypeTemplateIds;
+
         }
 
 

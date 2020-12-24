@@ -44,7 +44,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
         public List<DocumentTypeTemplatePM> GetDocumentTypeTemplatesByDocumentTypeId(string documentTypeId, int tenant)
         {
             List<DocumentTypeTemplatePM> documentTypeTemplates = (from a in repository.context.DocumentTypeTemplates.Include("LastUpdatedByUser.Contact").Include("DocumentType")
-                                                                        where a.DocumentTypeId == documentTypeId && a.Tenant == tenant
+                                                                        where a.DocumentTypeId == documentTypeId && a.Tenant == tenant && string.IsNullOrEmpty(a.AutomationId)
                                                                         select new DocumentTypeTemplatePM()
                                                                         {
                                                                             Description = a.Description,
@@ -84,7 +84,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                                             BCC = a.BCC,
                                                                             DefultAttachmentsXML = a.DefultAttachmentsXML,
                                                                             To = a.To,
-
+                                                                            AutomationId = a.AutomationId,
                                                                         }).ToList();
 
 
@@ -100,7 +100,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
         public List<DocumentTypeTemplateList> GetDocumentTypeTemplateListsByDocumentTypeId(string documentTypeId, int tenant)
         {
             List<DocumentTypeTemplateList> documentTypeTemplates = (from a in repository.context.DocumentTypeTemplates.Include("LastUpdatedByUser.Contact").Include("DocumentType")
-                                                                    where a.DocumentTypeId == documentTypeId && a.Tenant == tenant
+                                                                    where a.DocumentTypeId == documentTypeId && a.Tenant == tenant && string.IsNullOrEmpty(a.AutomationId)
                                                                     select new DocumentTypeTemplateList()
                                                                     {
                                                                         Description = a.Description,
@@ -134,6 +134,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                                         CC = a.CC,
                                                                         BCC = a.BCC,
                                                                         To = a.To,
+                                                                        AutomationId = a.AutomationId,
 
                                                                     }).ToList();
 
@@ -168,6 +169,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                               CC = entity.CC,
                                                               BCC = entity.BCC,
                                                               To = entity.To,
+                                                              AutomationId = entity.AutomationId,
 
                                                           };
             return result;
@@ -176,7 +178,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
         public IQueryable<DocumentTypeTemplatePM> GetDocumentTypeTemplatePMsByTenant(int tenant)
         {
             return from a in repository.context.DocumentTypeTemplates.Include("LastUpdatedByUser.Contact").Include("DocumentType")
-                   where a.Tenant == tenant
+                   where a.Tenant == tenant && string.IsNullOrEmpty(a.AutomationId)
                    select new DocumentTypeTemplatePM()
                    {
                        Description = a.Description,
@@ -215,6 +217,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                        CC = a.CC,
                        BCC = a.BCC,
                        DefultAttachmentsXML = a.DefultAttachmentsXML,
+                       AutomationId = a.AutomationId,
 
                    };
         }
@@ -259,6 +262,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                         CC = a.CC,
                         BCC = a.BCC,
                         To = a.To,
+                        AutomationId = a.AutomationId,
+
                     }).FirstOrDefault();
 
 
@@ -277,7 +282,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
 
             List<DocumentTypeTemplatePM> documentTypeTemplates = (from a in repository.context.DocumentTypeTemplates.Include("LastUpdatedByUser.Contact").Include("DocumentType")
-                                                                  where a.DocumentTypeId == documentTypeId && a.Tenant == tenant && a.InActive == false && a.EditorTool == editorToolCode
+                                                                  where a.DocumentTypeId == documentTypeId && a.Tenant == tenant && a.InActive == false && a.EditorTool == editorToolCode 
                                                                   select new DocumentTypeTemplatePM()
                                                                   {
                                                                       Description = a.Description,
@@ -317,6 +322,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                                       BCC = a.BCC,
                                                                       DefultAttachmentsXML = a.DefultAttachmentsXML,
                                                                       To = a.To,
+                                                                      AutomationId = a.AutomationId,
+
                                                                   }).ToList();
 
             foreach (DocumentTypeTemplatePM item in documentTypeTemplates.Where(d => d.TemplateType == "M").ToList())
@@ -384,6 +391,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                         BCC = a.BCC,
                         DefultAttachmentsXML = a.DefultAttachmentsXML,
                         To = a.To,
+                        AutomationId = a.AutomationId,
+
 
                     }).FirstOrDefault();
 
@@ -493,7 +502,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                 foreach (DocumentTypeList item in DocumentTypeListsFromTenat0)
                 {
                     documentTypeTemplateForDocumentType = (from a in repository.context.DocumentTypeTemplates.Include("LastUpdatedByUser.Contact").Include("DocumentType")
-                                                           where   !a.InActive && a.DocumentTypeId == item.Id 
+                                                           where   !a.InActive && a.DocumentTypeId == item.Id && string.IsNullOrEmpty(a.AutomationId)
                                                            select new DocumentTypeTemplateList()
                                                            {
                                                                Description = a.Description,
@@ -528,6 +537,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                                CC = a.CC,
                                                                BCC = a.BCC,
                                                                To = a.To,
+                                                               AutomationId = a.AutomationId,
 
                                                            });
 
@@ -580,7 +590,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             {
 
                 IQueryable<DocumentTypeTemplateList> documentTypeTemplateLists = (from a in repository.context.DocumentTypeTemplates.Include("DocumentType").Include("LastUpdatedByUser.Contact")
-                                                                                  where a.Tenant == tenant && !a.InActive && (a.DocumentType.Code == documentTypePM.Code)
+                                                                                  where a.Tenant == tenant && !a.InActive && (a.DocumentType.Code == documentTypePM.Code) && string.IsNullOrEmpty(a.AutomationId)
                                                                                   select new DocumentTypeTemplateList()
                                                                                   {
                                                                                       Description = a.Description,
@@ -613,6 +623,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                                                       CC = a.CC,
                                                                                       BCC = a.BCC,
                                                                                       To = a.To,
+                                                                                      AutomationId = a.AutomationId,
 
                                                                                   });
                 if (withFilter)
@@ -737,7 +748,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
         private static IQueryable<DocumentTypeList> GetDocumentTypeByTenentAndObjectTableId(int tenant, string objectTableId, DocumentTypeRepository documentTypeRepository, TenantPM tenantPM , bool withFilter)
         {
             IQueryable<DocumentTypeList> result = from a in documentTypeRepository.context.DocumentTypes
-                   where a.Tenant == tenant && !a.InActive 
+                   where a.Tenant == tenant && !a.InActive  
                    select new DocumentTypeList()
                    {
                        Id = a.Id,
@@ -881,7 +892,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
         public List<DocumentTypeTemplatePM> GetDocumentTypeTemplatesByDocumentTypeIds(List<string> documentTypeIds, int tenant)
         {
             List<DocumentTypeTemplatePM> documentTypeTemplates = (from a in repository.context.DocumentTypeTemplates
-                                                                  where documentTypeIds.Contains(a.DocumentTypeId) && a.Tenant == tenant
+                                                                  where documentTypeIds.Contains(a.DocumentTypeId) && a.Tenant == tenant && string.IsNullOrEmpty(a.AutomationId)
                                                                   select new DocumentTypeTemplatePM()
                                                                   {
                                                                       Description = a.Description,
