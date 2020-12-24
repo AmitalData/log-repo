@@ -580,6 +580,7 @@ namespace Logitude.TariffModule.BL.Helpers
             List<int> VersionsSurchargeIds = TariffSurchargeVersionList.Select(a => a.Version).ToList();
             Dictionary<string, List<TariffLine>> SurchargeTariffLines = tariffRepository.GetAllTariffLinesByTariffIds(SurchargeTariffList.Select(p => p.Id).ToArray(), tenant).Where(p => VersionsSurchargeIds.Contains(p.Version)).Where(p => System.Data.Entity.DbFunctions.TruncateTime(p.StartDate) <= System.Data.Entity.DbFunctions.TruncateTime(betweenDate) && p.ExpirationDate != null ? (System.Data.Entity.DbFunctions.TruncateTime(p.ExpirationDate) >= System.Data.Entity.DbFunctions.TruncateTime(betweenDate)) : true).GroupBy(p => p.TariffId).ToDictionary(o => o.Key, o => o.ToList());
             Dictionary<string, List<TariffLine>> SurchargeTariffLinesFiltered = new Dictionary<string, List<TariffLine>>();
+            
 
             foreach (KeyValuePair<string, List<TariffLine>> entry in SurchargeTariffLines)
             {
@@ -688,7 +689,7 @@ namespace Logitude.TariffModule.BL.Helpers
                         sellerName = shippingLine != null && shippingLine.Card != null ? shippingLine.Card.EnglishName : "";
                         documentId = shippingLine.ImageDetailId;
                     }
-
+                    tariffsSummary.SurchargesPrice = "0.00";
                     if (CurrentSurcharge != null)
                     {
                         if (SurchargeTariffLinesFiltered.ContainsKey(CurrentSurcharge.Id))
@@ -817,6 +818,7 @@ namespace Logitude.TariffModule.BL.Helpers
                                 tariffsSummary.AllInSurcharges = surchargesList.Where(a => a.IsAllIn).ToList();
                                 tariffsSummary.SurchargesWithoutAllIn = surchargesList.Where(a => !a.IsAllIn).ToList();
                                 tariffsSummary.SurchargesPrice = tariffsSummary.SurchargesWithoutAllIn.Sum(s => s.Price).ToString();
+                                
                             }
                         }
                     }
@@ -847,8 +849,13 @@ namespace Logitude.TariffModule.BL.Helpers
                     tariffsSummary.Remarks = result.Notes;
                     if(CurrentSurcharge != null)
                     {
-                        tariffsSummary.Remarks = tariffsSummary.Remarks + ", " + CurrentSurcharge.Notes;
-                    }
+                        if (!string.IsNullOrEmpty(tariffsSummary.Remarks) && !string.IsNullOrEmpty(CurrentSurcharge.Notes))
+                            tariffsSummary.Remarks = tariffsSummary.Remarks + " , " + CurrentSurcharge.Notes;
+                        else if (!string.IsNullOrEmpty(CurrentSurcharge.Notes))
+                            tariffsSummary.Remarks = CurrentSurcharge.Notes;
+                        else if (!string.IsNullOrEmpty(tariffsSummary.Remarks))
+                            tariffsSummary.Remarks = tariffsSummary.Remarks;
+                    }   
 
                     var calculatedLocalAmount = item.Price != null ? CalculateLocalAmount((item.Price).Value, currencyId, result.CurrencyId) : 0;
                     tariffsSummary.decimalprice = (decimal?)Sum + calculatedLocalAmount;
@@ -1094,6 +1101,7 @@ namespace Logitude.TariffModule.BL.Helpers
         private void FillSurchargeData(TariffSearchArgs args, Tariff trariff, TariffLine tariffLine)
         {
             this.CurrentSurcharge = surchargeTariffList.Where(p => p.SellerId == trariff.SellerId).FirstOrDefault();
+            tariffsSummary.SurchargesPrice = "0.00";
             if (CurrentSurcharge != null)
             {
                 if (surchargeTariffLinesFiltered.ContainsKey(CurrentSurcharge.Id))
@@ -1177,7 +1185,7 @@ namespace Logitude.TariffModule.BL.Helpers
 
                         tariffsSummary.AllInSurcharges = surchargesList.Where(a => a.IsAllIn).ToList();
                         tariffsSummary.SurchargesWithoutAllIn = surchargesList.Where(a => !a.IsAllIn).ToList();
-                        tariffsSummary.SurchargesPrice = tariffsSummary.SurchargesWithoutAllIn.Sum(s => s.Price).ToString();
+                        tariffsSummary.SurchargesPrice = tariffsSummary.SurchargesWithoutAllIn.Sum(s => s.Price).ToString();      
                     }
                 }
             }
