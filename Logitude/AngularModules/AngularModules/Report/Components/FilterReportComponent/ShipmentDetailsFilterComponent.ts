@@ -5,6 +5,7 @@ import { ReportFliter } from '../../Components/Filters/ReportFliter';
 import { QueryFilterItem } from '../../Components/Filters/QueryFilterItem';
 import { Component } from '@angular/core';
 import { AppTool, DateTool } from '../../../Infrastructure/Tools';
+import { AdvancedDatePickerResolverComponent } from '../../../Infrastructure/Components/LogitudeComponents/AdvancedDatePickerResolverComponent';
 
 @Component({
     selector: 'ShipmentDetailsFilterComponent',
@@ -125,8 +126,8 @@ export class ShipmentDetailsFilterComponent extends BaseComponent {
             if (this.ToDate == null) {
                 this.ValidationErrorsList.push('To Date is required');
             }
-
-            if (this.FromDate > this.ToDate) {
+            var advancedDatePickerResolverComponent: AdvancedDatePickerResolverComponent = new AdvancedDatePickerResolverComponent();
+            if (!advancedDatePickerResolverComponent.SetValidityBetweenTwoDateOptions(this.FromDate, this.ToDate)) {
                 this.ValidationErrorsList.push(
                     'From Date cannot be greater than To Date'
                 );

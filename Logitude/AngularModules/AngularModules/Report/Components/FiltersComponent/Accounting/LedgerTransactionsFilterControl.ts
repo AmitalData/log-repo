@@ -16,6 +16,7 @@ import { GLAccountExtendedListService } from '../../../../Accounting/Services/Ex
 import { ReportsPreviewComponent } from '../../ReportsPreviewComponent';
 import { EntityPartner } from '../../../../Infrastructure/DataContracts/EntityPartner';
 import { CardExtendedPMService } from '../../../../Common/Services/ExtendedPMs/CardExtendedPMService';
+import { AdvancedDatePickerResolverComponent } from '../../../../Infrastructure/Components/LogitudeComponents/AdvancedDatePickerResolverComponent';
 
 @Component({
 
@@ -178,7 +179,8 @@ export class LedgerTransactionsFilterControl extends BaseComponent implements On
 
     ValidateDate()
     {
-        if (this.FromDate > this.ToDate) {
+        var advancedDatePickerResolverComponent: AdvancedDatePickerResolverComponent = new AdvancedDatePickerResolverComponent();
+        if (!advancedDatePickerResolverComponent.SetValidityBetweenTwoDateOptions(this.FromDate, this.ToDate)) {
 
             setTimeout(() =>
             {
