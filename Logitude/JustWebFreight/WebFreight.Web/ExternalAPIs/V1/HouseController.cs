@@ -634,6 +634,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
                         if (HousePM != null)
                         {
                             HousePM.ConcurrencyGUID = entity.ConcurrencyGUID;
+                            HousePM.IsExternalAPI = true;
 
                             if (HousePM.IsOperationalClosed)
                             {
