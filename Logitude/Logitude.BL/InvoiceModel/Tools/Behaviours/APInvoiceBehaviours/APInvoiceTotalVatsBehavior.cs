@@ -15,7 +15,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Logitude.BL.InvoiceModel.Tools.Behaviours
+namespace Logitude.BL.InvoiceModel.Tools.Behaviours.APInvoiceBehaviours
 {
     public class APInvoiceTotalVatsBehavior : IServiceBehaviour
     {
@@ -54,12 +54,12 @@ namespace Logitude.BL.InvoiceModel.Tools.Behaviours
                 isHandling = true;
             }
 
-            else if (entityPM.TotalVATOnly && initializer.IsInvoiceTotalVATsChanged)
+            else if (entityPM.TotalVATOnly && initializer.Flags.IsInvoiceTotalVATsChanged)
             {
                 isHandling = true;
             }
 
-            else if(initializer.IsInvoiceLinesChanged)
+            else if(initializer.Flags.IsInvoiceLinesChanged)
             {
                 isHandling = true;
             }
@@ -116,7 +116,7 @@ namespace Logitude.BL.InvoiceModel.Tools.Behaviours
                     this.BuildTotalVATsFromLines();
                 }
 
-                else if (initializer.IsInvoiceLinesChanged)
+                else if (initializer.Flags.IsInvoiceLinesChanged)
                 {
                     this.BuildTotalVATsFromLines();
                 }

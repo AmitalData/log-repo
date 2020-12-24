@@ -34,7 +34,7 @@ it('OpenShipmentView', () => {
 
 
 it('CreateNewView ', () => {
-    // cy.wait(1000)
+   cy.wait(200)
     cy.get('#QueryList_0_0').should('be.visible')
     cy.get('#QueryList_0_0').click({ force: true })
     cy.get('#NewViewId_0_0').click()

@@ -755,7 +755,7 @@
                                     <div class="GenerateLinks">
                                         <Hyperlink id="{{ 'GenerateBTN' | IdGeneratorPipe}}" [IsEnabled]="IsGenerateButtonEnabled" *ngIf="IsGenerateButtonVisible" (click)="GenerateButtonClicked()">{{GenerateButtonLabel}}</Hyperlink>
 
-                                        <div *ngIf="IsBuildButtonVisible">
+                                        <div *ngIf="IsBuildButtonVisible ">
                                             <Hyperlink id="{{ 'ShipmentPackage.M.ContainNoPackages' | IdGeneratorPipe}}" [IsEnabled]="IsBuildButtonEnabled" (click)="BuildButtonClicked()">{{BuildButtonLabel}}</Hyperlink>
                                             <span style="font-style:italic; color: gray; margin-left: 5px;" *ngIf="IsNoPackagesLoadedTextVisible">{{'ShipmentPackage.M.ContainNoPackages' | TextCodeTranslationPipe}}</span>
                                         </div>

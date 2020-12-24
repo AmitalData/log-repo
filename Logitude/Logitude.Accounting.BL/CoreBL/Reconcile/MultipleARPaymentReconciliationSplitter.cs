@@ -91,15 +91,16 @@ namespace Logitude.Accounting.BL.CoreBL.Reconcile
 
         private void AddNonPaymentReconcileLine(ReconciliationLinePM paymentReconcileLine, ReconciliationPM newReconciliation)
         {
-            while (paymentReconcileLine.ReconciliationAmount != 0)
+            var clonedPaymentReconcileLine = CloneReconcileLine(paymentReconcileLine);
+            while (clonedPaymentReconcileLine.ReconciliationAmount != 0)
             {
                 ReconciliationLinePM lineToAdd = GetOppositeRecoLine();
 
-                if (IsLineHasAmountGreaterThanPaymentLine(paymentReconcileLine, lineToAdd))
-                    lineToAdd = SliceLine(paymentReconcileLine.ReconciliationAmount, lineToAdd);
+                if (IsLineHasAmountGreaterThanPaymentLine(clonedPaymentReconcileLine, lineToAdd))
+                    lineToAdd = SliceLine(clonedPaymentReconcileLine.ReconciliationAmount, lineToAdd);
 
                 AddLine(newReconciliation, lineToAdd);
-                SubtractLineAmountFromPaymentLine(paymentReconcileLine, lineToAdd);
+                SubtractLineAmountFromPaymentLine(clonedPaymentReconcileLine, lineToAdd);
             }
         }
 

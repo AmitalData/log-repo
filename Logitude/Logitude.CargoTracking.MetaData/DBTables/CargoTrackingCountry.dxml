@@ -1,10 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Table
   Name="CargoTrackingCountries"
-  OldNames="Countries"
   Schema="dbo"
-  DBType="CargoTracking"
-  Module="CargoTracking">
+  DBType="CargoTracking">
   <Column
     Name="Id"
     Type="varchar"
@@ -14,11 +12,10 @@
       Nullable="false" />
   </Column>
   <Column
-    Name="LocalName"
-    Type="nvarchar"
-    Size="120">
+    Name="Tenant"
+    Type="int">
     <Constraints
-      Nullable="true" />
+      Nullable="false" />
   </Column>
   <Column
     Name="Code"
@@ -35,9 +32,10 @@
       Nullable="false" />
   </Column>
   <Column
-    Name="Tenant"
-    Type="int">
+    Name="LocalName"
+    Type="nvarchar"
+    Size="120">
     <Constraints
-      Nullable="false" />
+      Nullable="true" />
   </Column>
 </Table>

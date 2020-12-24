@@ -43,25 +43,25 @@ namespace Logitude.CargoTracking.Def.EntityPMs
 			
 		 }
 	   }
-	  private string localName ;
+	  private int tenant ;
 	  	  
        
 	   [CustomValidation(typeof(CargoTrackingValidationClass), "ValidateClass")]
 	   [DataMember]
-       public string LocalName  
+       public int Tenant  
 	   {
 	    
 	     get
 		{
-		   return localName;
+		   return tenant;
 		 }
 		 set
 		 {
-		   if(localName != value)
+		   if(tenant != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="LocalName",OldValue=localName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Tenant",OldValue=tenant,NewValue=value,PropertyType="int"};
 		    NotifyPropertyChanged(values);
-		   localName=value;
+		   tenant=value;
 		   }
 			
 		 }
@@ -112,25 +112,25 @@ namespace Logitude.CargoTracking.Def.EntityPMs
 			
 		 }
 	   }
-	  private int tenant ;
+	  private string localName ;
 	  	  
        
 	   [CustomValidation(typeof(CargoTrackingValidationClass), "ValidateClass")]
 	   [DataMember]
-       public int Tenant  
+       public string LocalName  
 	   {
 	    
 	     get
 		{
-		   return tenant;
+		   return localName;
 		 }
 		 set
 		 {
-		   if(tenant != value)
+		   if(localName != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Tenant",OldValue=tenant,NewValue=value,PropertyType="int"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="LocalName",OldValue=localName,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
-		   tenant=value;
+		   localName=value;
 		   }
 			
 		 }

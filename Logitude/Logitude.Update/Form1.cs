@@ -88,6 +88,7 @@ using Simplog.Data.Helpers;
 using Logitude.BL.CommonDataModel.EntityOtherServices;
 using Logitude.CargoTracking.Data;
 using Logitude.CargoTracking.Data.EntityPOCOs;
+using Logitude.BL.DataContracts;
 
 namespace Logitude.Update
 {
@@ -2951,6 +2952,7 @@ User/Pass",
                     stopWatch.Start();
 
                     var myCount = 0;
+                    List<string> cardIds = new List<string>();
                     foreach (WarehouseItem item in allDataLines)
                     {
                         State myState = myCommonContext.States.Where(d => d.Tenant == 0 && d.Code == item.State).FirstOrDefault();
@@ -3005,10 +3007,13 @@ User/Pass",
                             myCommonContext.Cards.Add(entityCard);
                             myCommonContext.Warehouses.Add(entityWarehouse);
                             myCommonContext.Addresses.Add(entityAddress);
+                            cardIds.Add(entityCard.Id);
 
                             if (myCount == 1000)
                             {
                                 myCommonContext.SaveChanges();
+                                SaveCardSearches(cardIds , entityCard.Tenant);
+                                cardIds = new List<string>();
                                 myCount = 0;
                             }
 
@@ -3021,6 +3026,14 @@ User/Pass",
                     TimeSpan ts = stopWatch.Elapsed;
                     SetControlPropertyValue(addWarehouseLabel, "Text", "Done in " + ts.ToString());
                 }
+            }
+        }
+
+        private void SaveCardSearches(List<string> cardIds , int tenant)
+        {
+            foreach (string cardId in cardIds)
+            {
+                RunStoredProcedureClass.UpdateCardSearcsRecords(cardId, tenant);
             }
         }
 

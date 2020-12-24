@@ -686,6 +686,7 @@ namespace Logitude.TariffModule.BL.Helpers
                     {
                         shippingLine = shippingLineQuery.GetSinglePM(result.SellerId, tenant);
                         sellerName = shippingLine != null && shippingLine.Card != null ? shippingLine.Card.EnglishName : "";
+                        documentId = shippingLine.ImageDetailId;
                     }
 
                     if (CurrentSurcharge != null)
@@ -1005,7 +1006,7 @@ namespace Logitude.TariffModule.BL.Helpers
                     tariffsSummary.UnitOfMesurmentId = airChrageType.MeasurementId;
                     tariffsSummary.UnitOfMesurmentCode = usedMeasurements.Where(p => p.Id == airChrageType.MeasurementId).Select(p => p.Code).FirstOrDefault();
                     tariffsSummary.SellerId = trariff.SellerId;
-
+                    documentId = shippingLine.ImageDetailId;
                     byte[] filedata = this.DownloadFile(documentId, "images");
                     string resultImage = "";
                     if (filedata != null)

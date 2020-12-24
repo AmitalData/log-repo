@@ -44,14 +44,15 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CargoTracking
             SetClearance(TableRow);
             if (ConditionNumber == 1)
             {
-                SetFieldsForCustomShipment(TableRow);
+                SetForwardingShipmentHeaderId(TableRow);
             }
             else if (ConditionNumber == 2)
             {
-                SetFieldsForForwardingShipment(TableRow);
+                SetFieldsForCustomShipment(TableRow);
             }
+            SetFieldsForForwardingShipment(TableRow);
+            SetFieldsForCustomShipment(TableRow);
             SetCurrentMilestone(TableRow);
-
         }
 
         private static void SetCustomerReference(DataRow TableRow)
@@ -135,34 +136,50 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CargoTracking
             }
  
         }
+        private static void SetForwardingShipmentHeaderId(DataRow TableRow)
+        {
+         
+            TableRow.SetField("ForwardingShipmentHeaderId", TableRow["ForwardingIdForCustom"]);
+        }
+
         private static void SetFieldsForCustomShipment(DataRow TableRow)
         {
-            TableRow.SetField("EntityType", "C");
-            TableRow.SetField("EntityId", TableRow["Id"]);
-            TableRow.SetField("IsMainRecord", true);
-            TableRow.SetField("ForwardingShipmentHeaderId", TableRow["ForwardingIdForCustom"]);
-
-
-           
- 
+            if (TableRow["ShipmentLevelCode"].Equals("A"))
+            {
+                TableRow.SetField("EntityType", "C");
+                TableRow.SetField("EntityId", TableRow["Id"]);
+                TableRow.SetField("IsMainRecord", true);
+            }
         }
 
         private static void SetFieldsForForwardingShipment(DataRow TableRow)
         {
-            TableRow.SetField("EntityType", "F");
-            TableRow.SetField("EntityId", TableRow["Id"]);
+            if (!TableRow["ShipmentLevelCode"].Equals("A"))
+            {
+                TableRow.SetField("EntityType", "F");
+                TableRow.SetField("EntityId", TableRow["Id"]);
 
+                if (!TableRow["CustomFileId"].Equals(null) && !TableRow["CustomFileId"].Equals("") && TableRow["CustomFileId"].GetType().Name != "DBNull")
+                {
+                    TableRow.SetField("IsMainRecord", false);
+                }
+                else
+                {
+                    TableRow.SetField("IsMainRecord", true);
+
+                }
+            }
+           
+        }
+
+
+        private static void SetCustomsShipmentHeaderId(DataRow TableRow)
+        {
             if (!TableRow["CustomFileId"].Equals(null) && !TableRow["CustomFileId"].Equals("") && TableRow["CustomFileId"].GetType().Name != "DBNull")
             {
                 TableRow.SetField("CustomsShipmentHeaderId", TableRow["CustomFileId"]);
-                TableRow.SetField("IsMainRecord", false);
-                //ForwardingShipments.Add((string)TableRow["Id"], (string)TableRow["CustomFileId"]);
             }
-            else
-            {
-                TableRow.SetField("IsMainRecord", true);
 
-            }
         }
 
         private static void SetFromWarehouseDoneField(DataRow TableRow)

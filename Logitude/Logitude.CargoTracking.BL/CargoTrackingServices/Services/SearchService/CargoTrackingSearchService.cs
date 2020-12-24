@@ -6,12 +6,17 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
-namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
+namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.SearchService
 {
+
     public class CargoTrackingSearchService
     {
+
+        public static List<string> PrivateRefrencesList = new List<string>() { "ConsigneeName", "ShipperName" };
+
 
         public static void SearchService(DataRow tableRow, BulkDataPreperation bulkDataPreperation, string tableName)
         {
@@ -48,13 +53,21 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
             if (!string.IsNullOrEmpty(SearchField) && SearchField.Contains("/"))
             {
                 string SearchArr = SearchField.Split('/')[1];
-                AddNewReference(tableRow, dataTable, SearchArr);
+                ReferencecArgs ReferencecArgs = new ReferencecArgs()
+                {
+                    DataTable = dataTable,
+                    CoulmnName = CoulmnName,
+                    SearchField = SearchArr,
+                    TableRow = tableRow,
+
+                };
+                AddNewReference(ReferencecArgs);
             }
-            
+
         }
 
-        private static void AddSplittedData(DataRow tableRow, DataTable dataTable,string coulmnName)
-        { 
+        private static void AddSplittedData(DataRow tableRow, DataTable dataTable, string coulmnName)
+        {
             if (!IsNullOrEmpty(tableRow, coulmnName))
             {
                 var Value = tableRow[coulmnName];
@@ -62,9 +75,17 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
                 string[] SearchArr = SearchField.Split(',');
                 for (int i = 0; i < SearchArr.Length; i++)
                 {
-                    AddNewReference(tableRow, dataTable, SearchArr[i]);
+                    ReferencecArgs ReferencecArgs = new ReferencecArgs()
+                    {
+                        DataTable = dataTable,
+                        CoulmnName = coulmnName,
+                        SearchField = SearchArr[i],
+                        TableRow = tableRow,
+
+                    };
+                    AddNewReference(ReferencecArgs);
                 }
-            } 
+            }
         }
 
 
@@ -73,32 +94,59 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
         {
             if (!IsNullOrEmpty(tableRow, coulmnName))
             {
-                    var Value = tableRow[coulmnName];
-                    string SearchField = (string)Value;
-                    AddNewReference(tableRow, dataTable, SearchField);
+                var Value = tableRow[coulmnName];
+                string SearchField = (string)Value;
+                ReferencecArgs ReferencecArgs = new ReferencecArgs()
+                {
+                    DataTable = dataTable,
+                    CoulmnName = coulmnName,
+                    SearchField = SearchField,
+                    TableRow = tableRow,
+
+                };
+                AddNewReference(ReferencecArgs);
             }
         }
 
 
-        private static void AddNewReference(DataRow tableRow, DataTable dataTable, string searchField)
+        private static void AddNewReference(ReferencecArgs referencecArgs)
         {
-            DataRow TableRow1 = dataTable.NewRow();
-            TableRow1.ItemArray = tableRow.ItemArray.Clone() as object[];
-            TableRow1.SetField("SearchFields", searchField.Trim());
+            DataRow TableRow1 = referencecArgs.DataTable.NewRow();
+            TableRow1.ItemArray = referencecArgs.TableRow.ItemArray.Clone() as object[];
+            TableRow1.SetField("SearchFields", referencecArgs.SearchField.Trim());
+            TableRow1.SetField("ReferenceType", GetReferenceTypeFromCoulmnName(referencecArgs.CoulmnName));
+            SetIsPublicForCoulmn(TableRow1, referencecArgs.CoulmnName);
             if (!IsNullOrEmpty(TableRow1, "SearchFields"))
-                dataTable.Rows.Add(TableRow1);
+                referencecArgs.DataTable.Rows.Add(TableRow1);
         }
-        private static bool IsNullOrEmpty(DataRow tableRow,  string coulmnName)
+        private static bool IsNullOrEmpty(DataRow tableRow, string coulmnName)
         {
             bool IsNull = false;
             var Value = tableRow[coulmnName];
-            if (Value.Equals(null) || Value.GetType().Name == "DBNull" || string.IsNullOrEmpty((string)Value) ||  string.IsNullOrWhiteSpace((string)Value))
+            if (Value.Equals(null) || Value.GetType().Name == "DBNull" || string.IsNullOrEmpty((string)Value) || string.IsNullOrWhiteSpace((string)Value))
             {
                 IsNull = true;
             }
             return IsNull;
         }
+
+        private static void SetIsPublicForCoulmn(DataRow TableRow, string coulmnName)
+        {
+            bool IsPublic = true;
+            if (PrivateRefrencesList.Contains(coulmnName))
+                IsPublic = false;
  
+            TableRow.SetField("IsPublic", IsPublic);
+
+        }
+
+        private static string GetReferenceTypeFromCoulmnName(string CoulmnName)
+        {
+            string ReferenceType = Regex.Replace(CoulmnName, "([a-z])([A-Z])", "$1 $2");
+            return ReferenceType;
+        }
+
+
     }
 
 }

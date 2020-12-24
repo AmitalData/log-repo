@@ -24,6 +24,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
                 CT_TableName = "CargoTrackingPorts",
                 Main_CT_TableName = "CargoTrackingPorts",
                 Pre_TableName = "Pre_CargoTrackingPorts",
+                ObjectTableName = "CargoTrackingPort",
                 ConditionsNumber = 1,
             });
 
@@ -38,6 +39,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
                 CT_TableName = "CargoTrackingCards",
                 Main_CT_TableName = "CargoTrackingCards",
                 Pre_TableName = "Pre_CargoTrackingCards",
+                ObjectTableName = "CargoTrackingCard",
                 ConditionsNumber = 1,
             });
 
@@ -53,6 +55,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
                 Main_CT_TableName = "CargoTrackingTransportModes",
                 Pre_TableName = "Pre_CargoTrackingTransportModes",
                 ConditionsNumber = 1,
+                ObjectTableName = "CargoTrackingTransportMode",
                 IsClosedTable = true,
             });
 
@@ -67,6 +70,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
                 CT_TableName = "CargoTrackingCountries",
                 Main_CT_TableName = "CargoTrackingCountries",
                 Pre_TableName = "Pre_CargoTrackingCountries",
+                ObjectTableName = "CargoTrackingCountry",
                 ConditionsNumber = 1,
 
             });
@@ -82,6 +86,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
                 CT_TableName = "CargoTrackingShipmentMasters",
                 Main_CT_TableName = "CargoTrackingShipmentMasters",
                 Pre_TableName = "Pre_CargoTrackingShipmentMasters",
+                ObjectTableName = "CargoTrackingShipmentMaster",
                 ConditionsNumber = 1,
 
             });
@@ -97,6 +102,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
                 CT_TableName = "CargoTrackingShipmentComputeds",
                 Main_CT_TableName = "CargoTrackingShipmentComputeds",
                 Pre_TableName = "Pre_CargoTrackingShipmentComputeds",
+                ObjectTableName = "CargoTrackingShipmentComputed",
                 ConditionsNumber = 1,
 
             });
@@ -105,6 +111,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
             {
                 TableName = "Shipment",
                 FieldsDBName = "Id,Tenant,CustomFileNumber,ForwarderShipmentNumber,CustomsDeclarationNumber,ShipperName,CustomerId,TransportModeId,DirectionId,MasterShipmentDataId,House,ShipmentNumber,FromPortId,ToPortId,ShipperId,ConsigneeId,GrossWeight,Volume,CustomConnectToShipment,AutomaticLastUpdateDate,ShipmentPickUpIndex,FirstPickupETA,ShipmentLevelCode,CustomsClearanceDate,CustomFileId,CreateDateTime,SecurityKey,ConsigneeName,CustomerReference1,CustomerReference2,FirstPickupETD,WarehouseLegActualEntryDate,WarehouseLegExpectedEntryDate,WarehouseLegRemarks,DeclarationDate,IsCancelled,SearchFields,PackagesQuantity",
+                FieldsDummyName = "IsPublic,ReferenceType",
                 KeyName = "Id",
                 KeyName2 = "Id",
                 ConditionKey = "EntityId",
@@ -115,11 +122,13 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
                 Main_CT_TableName = "CargoTrackingShipments",
                 Main_CT2_TableName = "CargoTrackingShipmentSearches",
                 CT_FieldsDBName = "Tenant,ShipperName,IsMainRecord,CustomerId,TransportModeId,DirectionId,Master,House,ShipmentNumber,FromPortId,ToPortId,ShipperId,ConsigneeId,GrossWeight,Volume,PickupDone,PickupDate,PickupEstimationDate,FromWarehouseDone,FromWarehouseNotes,DepartureDate,DepartureEstimationDate,ClearanceDone,ClearanceDate,FromWarehouseEstimationDate,FromWarehouseDate,DepartureDone,ArrivalDone,ToWarehouseDate,ToWarehouseEstimationDate,DeliveredEstimationDate,DeliveredDone,DeliveredDate,ArrivalEstimationDate,ToWarehouseDone,ArrivalDate,EntityId,EntityType,ForwardingShipmentHeaderId,CustomsShipmentHeaderId,CurrentMilestoneCode,CurrentMilestoneDate,ToWarehouseNotes,CustomsPaymentDone,CustomsPaymentDate,CreateDate,SecurityKey,ConsigneeName,CustomerReference,ContainersNumbers,PackagesQuantity",
-                CT2_FieldsDBName = "Tenant,ShipmentId,SearchFields,ShipmentDate,IsPublic",
+                CT2_FieldsDBName = "Tenant,ShipmentId,SearchFields,ShipmentDate,IsPublic,ReferenceType",
                 Condition1 = " ((ShipmentLevelCode ='D' or ShipmentLevelCode ='H') and CustomFileId is not null)",
                 Condition2 = " ((ShipmentLevelCode !='D' and ShipmentLevelCode !='H') or CustomFileId is null)",
                 Pre_TableName = "Pre_CargoTrackingShipments",
                 Pre2_TableName = "Pre_CargoTrackingShipmentSearches",
+                ObjectTableName = "CargoTrackingShipment",
+                InnerObjectTableName = "CargoTrackingShipmentSearch",
                 ConditionsNumber = 2,
             });
 

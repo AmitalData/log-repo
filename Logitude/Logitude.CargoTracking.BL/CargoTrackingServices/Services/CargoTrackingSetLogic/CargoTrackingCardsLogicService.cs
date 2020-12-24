@@ -12,10 +12,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CargoTracking
         public static void SetTableLogic(DataRow TableRow, int ConditionNumber)
         {
             
-                if (TableRow["Code"].Equals("MUT"))
-                {
-                    TableRow.SetField("EnglishName", "Cargo_Test");
-                }
+             
  
         }
     }

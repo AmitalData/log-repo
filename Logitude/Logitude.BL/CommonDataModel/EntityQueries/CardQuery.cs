@@ -26,6 +26,7 @@ using Logitude.Server.Tools.StorageService;
 using Microsoft.Practices.Unity;
 using Logitude.Server.Tools;
 using System.IO;
+using Logitude.BL.DataContracts;
 
 namespace Logitude.BL.CommonDataModel.EntityQueries
 {
@@ -1116,6 +1117,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                 PrimaryContactId = card.PrimaryContactId,
                                                 EnableConsolidationInvoices = card.EnableConsolidationInvoices,
                                                 CityName = card.CityName,
+                                                Address1 = card.Address1,
+                                                Address2 = card.Address2,
                                                 CountryId = card.CountryId,
                                                 CountryCode = card.CountryCode,
                                                 CountryName = card.CountryName,
@@ -1559,6 +1562,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
                 TableLastUpdateClass.UpdateTableHistory(newTenantCard.Tenant, "Card");
                 TableLastUpdateClass.UpdateTableHistory(newTenantCard.Tenant, tableName);
+
                 #endregion
 
                 #region Addresses
@@ -1884,8 +1888,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
                 TableLastUpdateClass.UpdateTableHistory(tenant, tableName);
                 TableLastUpdateClass.UpdateTableHistory(tenant, "Carrier");
+                RunStoredProcedureClass.UpdateCardSearcsRecords(newTenantCard.Id, newTenantCard.Tenant);
             }
-
             #region CardList            
             CardList myCardList = new CardList()
             {

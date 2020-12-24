@@ -22,6 +22,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 {
     public partial class TaxReportLineUpdateService
     {
+
         const string StatusCode_InvoiceNumberIsNotValid = "3";
         const string LineTypeCode_StandardFromIsraeliSupplier = "T";
         const string LineTypeCode_RegularTransactions = "S";
@@ -29,6 +30,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
         const string LineType_UnidentifiedCustomerTransactions = "L";
         const string LineType_SelfInvoiceTransactions = "M";
         const string StatusCode_VATAmountInTheRecordIsHigherThanThePercentageOfVATAllowed = "9";
+
 
         protected override void OnCreating(TaxReportLinePM entityPM, EntityPM entityParentPM)
         {
@@ -258,7 +260,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
         private void CheckVATAmountInTheRecordIsHigherThanThePercentageOfVATAllowed(TaxReportLinePM entityPM)
         {
-            if (entityPM.LineTypeCode == LineType_RegularTransactionTransactions ||
+            if (entityPM.LineTypeCode == LineTypeCode_RegularTransactions ||
                    entityPM.LineTypeCode == LineType_UnidentifiedCustomerTransactions ||
                    entityPM.LineTypeCode == LineType_SelfInvoiceTransactions)
             {
@@ -311,7 +313,10 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             VatTypeQuery vatTypeQuery = new VatTypeQuery(tenant);
             VatTypePM vatType = vatTypeQuery.GetSinglePMByCode("STD", tenant);
             VatTypePercentageQuery vatTypePercentageQuery = new VatTypePercentageQuery(tenant);
-             return vatTypePercentageQuery.GetVatTypePercentagesForVatType( tenant, vatType.Id).First().Percentage;
+            double? STDPercentage = vatTypePercentageQuery.GetVatTypePercentagesForVatType(tenant, vatType.Id).First().Percentage;
+            if (STDPercentage != null && STDPercentage != 0)
+                STDPercentage = STDPercentage / 100;
+            return STDPercentage;
         }
 
         private string ModifyVatNumberToValidLength(string vatnumber)

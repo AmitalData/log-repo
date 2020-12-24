@@ -176,7 +176,7 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
                 GLAccountId = interestReportPM.GLAccountId,
                 LocalAmount = 0,
                 ForeignAmount = 0,
-                OriginalEntityLineNumber = 1,
+                OriginalEntityLineNumber = latestInterestReportId != null ? 2 : 1,
                 ChangeSetOp = ChangeSetOperation.Insert,
                 CurrencyId = localCurrencyId,
                 Tenant = tenant,

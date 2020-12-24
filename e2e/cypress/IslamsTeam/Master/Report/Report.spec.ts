@@ -37,7 +37,7 @@ it('Search For Report', () => {
 
 it(' Run Report Sucssefuly', () => {
     // cy.wait(10000)
-    //cy.wait(100)
+    cy.wait(200)
     cy.get('#CheckBox_0_0_LBL').should('be.visible')
     cy.get('#CheckBox_0_0_LBL').click({ force: true })
     cy.get('#RunReportButton').click()
