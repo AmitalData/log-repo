@@ -158,6 +158,7 @@
     <form style="visibility: collapse;">
         <input id="SavedFilterId" />
         <input id="SavedSearchText" />
+        <input id="TokenForResources" hidden="hidden" runat="server" />
     </form>
 
     <form id="form1" runat="server">

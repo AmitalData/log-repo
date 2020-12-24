@@ -554,9 +554,9 @@ export class GettingStartedComponent extends BaseComponent {
 
     ViewAllResources() {
         ServiceLocator.SendTotangoUserActivity("Help Center", "View All");
-        var uri = 'TrainingResourcesHTML/TrainingResourcesMainPage.aspx?tempId=' + SessionInfo.DocumentDownloadToken;
-        var navigate = ServiceHelper.GetLogitudeURL() + uri;
-        window.open(navigate);
+        var url = ServiceHelper.GetLogitudeURL() + 'TrainingResourcesHTML/TrainingResourcesMainPage.aspx';
+        ServiceHelper.OpenWindowWithParams(url, SessionInfo.DocumentDownloadToken);
+
     }
 }
 

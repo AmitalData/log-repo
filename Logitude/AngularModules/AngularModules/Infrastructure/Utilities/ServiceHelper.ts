@@ -545,6 +545,21 @@ export class ServiceHelper {
 
         return httpOptions;
     }
+    public static OpenWindowWithParams( url:string,  param: any) {
+        var mapForm = document.createElement("form");
+        mapForm.target = "_blank";
+        mapForm.method = "POST"; // or "post" if appropriate
+        mapForm.action = url;
+        var mapInput = document.createElement("input");
+        mapInput.type = "hidden";
+        mapInput.name = "token";
+        mapInput.setAttribute("value", param);
+        mapForm.appendChild(mapInput);
+
+        document.body.appendChild(mapForm);
+        mapForm.submit();
+        document.body.removeChild(mapForm);
+    }
 }
 
 class ErrorLogPM {

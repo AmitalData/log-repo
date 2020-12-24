@@ -25,6 +25,7 @@ import { ServiceResponse } from '../../DataContracts/ServiceResponse';
 import { UserExtendedPMService } from '../../../Common/Services/ExtendedPMs/UserExtendedPMService';
 import { interval } from 'rxjs';
 import { timeInterval } from 'rxjs/operators';
+import { ServiceHelper } from '../../Utilities/ServiceHelper';
 
 @Component({
     
@@ -1571,8 +1572,8 @@ export class HomeComponent implements OnDestroy{
     }
     HelpButtonClicked() {
         ServiceLocator.SendTotangoUserActivity("Help Center", "Help Icon");
-      
-        window.open(AppTool.GetLogitudeURL() + 'TrainingResourcesHTML/TrainingResourcesMainPage.aspx?tempId='+ SessionInfo.DocumentDownloadToken, '_blank');
+        var url = ServiceHelper.GetLogitudeURL() + 'TrainingResourcesHTML/TrainingResourcesMainPage.aspx';
+        ServiceHelper.OpenWindowWithParams(url, SessionInfo.DocumentDownloadToken);
     }
     SignoutClicked() {
         SessionLocator.Index = 0;
