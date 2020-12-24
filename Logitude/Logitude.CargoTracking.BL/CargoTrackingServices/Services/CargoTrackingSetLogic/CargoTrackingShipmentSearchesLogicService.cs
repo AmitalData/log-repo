@@ -19,8 +19,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CargoTracking
         {
             TableRow.SetField("ShipmentDate", TableRow["CreateDateTime"]);
             TableRow.SetField("ShipmentId", TableRow["Id"]);
-            TableRow.SetField("IsPublic", true);
-
+ 
         }
 
         public static string GetMappingFields(string FieldName)
