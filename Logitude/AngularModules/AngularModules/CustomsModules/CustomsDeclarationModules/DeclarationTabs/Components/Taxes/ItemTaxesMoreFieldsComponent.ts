@@ -43,6 +43,7 @@ export class ItemTaxesMoreFieldsComponent{// implements OnInit {
         ///console.warn(windowArgs);
         this.EntityPM = windowArgs;
         this._IsVisible = true;
+       var isExport = this.CurrentSession.CurrentEditComponent.EntityPM.Direction;
     }
 
     RefreshEntity() {
@@ -58,5 +59,4 @@ export class ItemTaxesMoreFieldsComponent{// implements OnInit {
     get MeasurementUnitCode() { return this.EntityPM == null ? null : this.EntityPM.MeasurementUnitCode; }
     get AlternateMeasurementUnitCode() { return this.EntityPM == null ? null : this.EntityPM.AlternateMeasurementUnitCode; }
     get TotalBtlCoverageNIS() { return this.EntityPM == null ? null : this.EntityPM.TotalBtlCoverageNIS; }            
-
-}
+ }
