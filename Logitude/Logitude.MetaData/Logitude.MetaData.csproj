@@ -73,6 +73,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>GlobalClassesGenerator.tt</DependentUpon>
     </Compile>
+    <Compile Include="AutoGenerators\InfrastructureClassesGenerator.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>InfrastructureClassesGenerator.tt</DependentUpon>
+    </Compile>
     <Compile Include="AutoGenerators\InvoiceClassesGenerator.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -142,6 +147,7 @@
     <Content Include="AutoGenerators\InfrastructureClassesGenerator.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastOutputs>.\InfrastructureClassesGenerator.cs</LastOutputs>
+      <LastGenOutput>InfrastructureClassesGenerator.cs</LastGenOutput>
     </Content>
     <Content Include="AutoGenerators\InvoiceClassesGenerator.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
