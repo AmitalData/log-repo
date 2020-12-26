@@ -31,12 +31,15 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                       where a.Id == Id
                       select new BluesnapTransactionPM()
                       {
-                          Id=a.Id,
+                          Id = a.Id,
                           Tenant = a.Tenant,
-                          CreateDate=a.CreateDate,
-                          DocumentId=a.DocumentId,
-                          LogitudeAmital=a.LogitudeAmital,
-                          TransactionDate=a.TransactionDate
+                          CreateDate = a.CreateDate,
+                          DocumentId = a.DocumentId,
+                          LogitudeAmital = a.LogitudeAmital,
+                          TransactionDate = a.TransactionDate,
+                          InvoiceAmountInUSD = a.InvoiceAmountInUSD,
+                          TaxAmountInUSD = a.TaxAmountInUSD,
+                          ContractNumber = a.ContractNumber,
                       }).FirstOrDefault();
 
             return entity;
@@ -61,8 +64,10 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                                   CreateDate = a.CreateDate,
                                                   DocumentId = a.DocumentId,
                                                   LogitudeAmital = a.LogitudeAmital,
-                                                  TransactionDate = a.TransactionDate
-
+                                                  TransactionDate = a.TransactionDate,
+                                                  InvoiceAmountInUSD = a.InvoiceAmountInUSD,
+                                                  TaxAmountInUSD = a.TaxAmountInUSD,
+                                                  ContractNumber = a.ContractNumber,
                                               });
                         foreach (var s in entitystatuses)
                         {
@@ -90,7 +95,10 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                   CreateDate = a.CreateDate,
                                   DocumentId = a.DocumentId,
                                   LogitudeAmital = a.LogitudeAmital,
-                                  TransactionDate = a.TransactionDate
+                                  TransactionDate = a.TransactionDate,
+                                  InvoiceAmountInUSD = a.InvoiceAmountInUSD,
+                                  TaxAmountInUSD = a.TaxAmountInUSD,
+                                  ContractNumber = a.ContractNumber,
 
                               }).FirstOrDefault();
                 }
@@ -110,7 +118,10 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                                           CreateDate = a.CreateDate,
                                                           DocumentId = a.DocumentId,
                                                           LogitudeAmital = a.LogitudeAmital,
-                                                          TransactionDate = a.TransactionDate
+                                                          TransactionDate = a.TransactionDate,
+                                                          InvoiceAmountInUSD = a.InvoiceAmountInUSD,
+                                                          TaxAmountInUSD = a.TaxAmountInUSD,
+                                                          ContractNumber = a.ContractNumber,
                                                       };
             return result;
         }

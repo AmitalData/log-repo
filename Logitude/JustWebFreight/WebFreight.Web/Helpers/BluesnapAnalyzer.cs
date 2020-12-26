@@ -24,7 +24,12 @@ namespace WebFreight.Web.Helpers
         CommunicationLogRepository myCommunicationLogRepository;
         int Tenant;
         private DateTime? transactionDate;
+        private double? taxAmountUSD;
+        private double? invoiceAmountUSD;
+        private string contractId;
         private string analyzeQueueSubject;
+        Dictionary<string, string> queryParameters;
+        string stringdetails;
 
         public BluesnapAnalyzer(AnalyzeQueue analyzeQueue, AnalyzeQueueRepository analyzeQueueRepository)
         {
@@ -49,42 +54,9 @@ namespace WebFreight.Web.Helpers
         {
             try
             {
-
-                string Stringdetails = Encoding.UTF8.GetString(myAnalyzeQueue.MessageBody);
-
-                Dictionary<string, string> queryParameters = new Dictionary<string, string>();
-                string[] querySegments = Stringdetails.Split('&');
-                foreach (string segment in querySegments)
-                {
-                    string[] parts = segment.Split('=');
-                    if (parts.Length > 0)
-                    {
-                        string key = parts[0].Trim(new char[] { '?', ' ' });
-                        string val = parts[1].Trim();
-                        if (!queryParameters.ContainsKey(key))
-                        {
-                            queryParameters.Add(WebUtility.UrlDecode(key), WebUtility.UrlDecode(val));
-                        }
-                    }
-                }
-
-                if (queryParameters.Count > 0)
-                {
-                    BluesnapExecutionService bluesnapExecutionService = new BluesnapExecutionService(0);
-                    TenantManagementRepository tenantManagementRepository = new TenantManagementRepository();
-                    if (queryParameters.ContainsKey("accountId"))
-                    {
-                        TenantManagement tenantManagement = tenantManagementRepository.GetSingleTenantManagementByBluesnapAccountId(queryParameters["accountId"]);
-                        bluesnapExecutionService.Tenant = tenantManagement != null ? tenantManagement.Id : 0;
-                        bool isSaveToBluesnapTransaction = IsSaveToBluesnapTransaction(queryParameters);
-                        MapReuiredFieldsOfQueryParameters(queryParameters);
-                        if (isSaveToBluesnapTransaction)
-                        {
-                            bluesnapExecutionService.SaveBluesnapTransaction(Stringdetails, analyzeQueueSubject, transactionDate);
-                        }
-                    }
-                }
-                this.AnalyzeData(myAnalyzeQueue.From);
+                this.FillAnalyzeQueueQueryParameters();
+                this.ProcessBluesnapTransaction();
+                this.AnalyzeData();
             }
             catch (Exception ex)
             {
@@ -97,7 +69,57 @@ namespace WebFreight.Web.Helpers
             }
         }
 
-        private void MapReuiredFieldsOfQueryParameters(Dictionary<string, string> queryParameters)
+        private void ProcessBluesnapTransaction()
+        {
+            if (queryParameters.Count > 0)
+            {
+                if (queryParameters.ContainsKey("accountId"))
+                {
+                    BluesnapExecutionService bluesnapExecutionService = new BluesnapExecutionService(0);
+                    TenantManagementRepository tenantManagementRepository = new TenantManagementRepository();
+                    TenantManagement tenantManagement = tenantManagementRepository.GetSingleTenantManagementByBluesnapAccountId(queryParameters["accountId"]);
+                    bluesnapExecutionService.Tenant = tenantManagement != null ? tenantManagement.Id : 0;
+                    bool isSaveToBluesnapTransaction = IsSaveToBluesnapTransaction(queryParameters);
+                    if (isSaveToBluesnapTransaction)
+                    {
+                        MapReuiredFields(queryParameters);
+                        var args = new
+                        {
+                            transactionDate = transactionDate,
+                            taxAmountUSD = taxAmountUSD,
+                            invoiceAmountUSD = invoiceAmountUSD,
+                            contractId = contractId,
+                            stringdetails = stringdetails,
+                            analyzeQueueSubject = analyzeQueueSubject,
+                        };
+
+                        bluesnapExecutionService.SaveBluesnapTransaction(args);
+                    }
+                }
+            }
+        }
+
+        private void FillAnalyzeQueueQueryParameters()
+        {
+            stringdetails = Encoding.UTF8.GetString(myAnalyzeQueue.MessageBody);
+            queryParameters = new Dictionary<string, string>();
+            string[] querySegments = stringdetails.Split('&');
+            foreach (string segment in querySegments)
+            {
+                string[] parts = segment.Split('=');
+                if (parts.Length > 0)
+                {
+                    string key = parts[0].Trim(new char[] { '?', ' ' });
+                    string val = parts[1].Trim();
+                    if (!queryParameters.ContainsKey(key))
+                    {
+                        queryParameters.Add(WebUtility.UrlDecode(key), WebUtility.UrlDecode(val));
+                    }
+                }
+            }
+        }
+
+        private void MapReuiredFields(Dictionary<string, string> queryParameters)
         {
             if (queryParameters.ContainsKey("transactionDate"))
             {
@@ -106,6 +128,31 @@ namespace WebFreight.Web.Helpers
                     this.transactionDate = DateTime.Parse(queryParameters["transactionDate"]);
                 }
             }
+
+            if (queryParameters.ContainsKey("contractId"))
+            {
+                if (!string.IsNullOrEmpty(queryParameters["contractId"]))
+                {
+                    this.contractId = (queryParameters["contractId"]).ToString();
+                }
+            }
+
+            if (queryParameters.ContainsKey("invoiceAmountUSD"))
+            {
+                if (!string.IsNullOrEmpty(queryParameters["invoiceAmountUSD"]))
+                {
+                    this.invoiceAmountUSD = Double.Parse(queryParameters["invoiceAmountUSD"]);
+                }
+            }
+
+            if (queryParameters.ContainsKey("taxAmountUSD"))
+            {
+                if (!string.IsNullOrEmpty(queryParameters["taxAmountUSD"]))
+                {
+                    this.taxAmountUSD = Double.Parse(queryParameters["taxAmountUSD"]);
+                }
+            }
+
             this.analyzeQueueSubject = myAnalyzeQueue.Subject == "Bluesnap Payment - Amital" ? "Amital" : "Logitude";
         }
 
@@ -129,10 +176,11 @@ namespace WebFreight.Web.Helpers
                     isSaveToBluesnapTransaction = false;
                 }
             }
+
             return isSaveToBluesnapTransaction;
         }
 
-        private void AnalyzeData(string from)
+        private void AnalyzeData()
         {
             try
             {
@@ -166,8 +214,6 @@ namespace WebFreight.Web.Helpers
                 this.OnCatchAnalyzingError(ex);
             }
         }
-
-
 
         private void OnCatchAnalyzingError(Exception ex)
         {
@@ -219,7 +265,4 @@ namespace WebFreight.Web.Helpers
             analyzeQueueRepository.SubmitChanges();
         }
     }
-
-
-
 }
