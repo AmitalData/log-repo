@@ -19,6 +19,7 @@ using System.Net;
 using System.Data.Entity;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.EntityPMs;
+using WebFreight.Web.Helpers;
 
 namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Bluesnap
 {
@@ -233,7 +234,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Bluesnap
                     {
                         foreach (BluesnapTransactionItem transaction in item.Transactions)
                         {
-                            var queryParameters = DeserializeDocumentBody(transaction.DocumentId, transaction.Tenant);
+                            var queryParameters = BluesnapHelper.DeserializeDocumentBody(transaction.DocumentId, transaction.Tenant);
                             string shopperId = null;
                             if (queryParameters != null && queryParameters.Count > 0)
                             {
@@ -293,45 +294,6 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Bluesnap
             itemRecord.TotalPayments = totalPayments;
         }
 
-        private Dictionary<string, string> DeserializeDocumentBody(string documentId, int tenant)
-        {
-            Dictionary<string, string> queryParameters = null;
-            Document document = documentRepository.GetSingleDocument(tenant, documentId);
-            if (document != null)
-            {
-                BlobFileInfo fileInfo = new BlobFileInfo()
-                {
-                    FileName = document.Id,
-                    FolderName = document.Folder,
-                    Extension = document.Extension,
-                    Tenant = tenant,
-                    FileSize = document.FileSize,
-                };
-
-                byte[] fileData = storageservice.Read(fileInfo);
-
-                if (fileData != null)
-                {
-                    string Stringdetails = Encoding.UTF8.GetString(fileData);
-                    queryParameters = new Dictionary<string, string>();
-                    string[] querySegments = Stringdetails.Split('&');
-                    foreach (string segment in querySegments)
-                    {
-                        string[] parts = segment.Split('=');
-                        if (parts.Length > 0)
-                        {
-                            string key = parts[0].Trim(new char[] { '?', ' ' });
-                            string val = parts[1].Trim();
-                            if (!queryParameters.ContainsKey(key))
-                            {
-                                queryParameters.Add(WebUtility.UrlDecode(key), WebUtility.UrlDecode(val));
-                            }
-                        }
-                    }
-                }
-            }
-            return queryParameters;
-        }
     }
 
     public class TenantJoinBluesnapTransactionList

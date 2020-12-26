@@ -101,22 +101,9 @@ namespace WebFreight.Web.Helpers
 
         private void FillAnalyzeQueueQueryParameters()
         {
-            stringdetails = Encoding.UTF8.GetString(myAnalyzeQueue.MessageBody);
-            queryParameters = new Dictionary<string, string>();
-            string[] querySegments = stringdetails.Split('&');
-            foreach (string segment in querySegments)
-            {
-                string[] parts = segment.Split('=');
-                if (parts.Length > 0)
-                {
-                    string key = parts[0].Trim(new char[] { '?', ' ' });
-                    string val = parts[1].Trim();
-                    if (!queryParameters.ContainsKey(key))
-                    {
-                        queryParameters.Add(WebUtility.UrlDecode(key), WebUtility.UrlDecode(val));
-                    }
-                }
-            }
+            var values = BluesnapHelper.DeserializeAnalyzeQueueMessageBody(myAnalyzeQueue.MessageBody);
+            queryParameters = values.Item1;
+            stringdetails = values.Item2;
         }
 
         private void MapReuiredFields(Dictionary<string, string> queryParameters)
