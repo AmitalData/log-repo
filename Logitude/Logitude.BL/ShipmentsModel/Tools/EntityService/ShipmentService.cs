@@ -122,17 +122,18 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             this.myCommonContext = initializer.CommonContext;
             this.entityMasterData = initializer.EntityMasterData;
             this.shipmentMasterDataRepository = initializer.MasterDataRepository;
+            this.shipmentPackageRepository = initializer.ShipmentPackageRepository;
+            this.shipmentContainerStatusRepository = initializer.ShipmentContainerStatusRepository;
+            this.insideShipmentPackageRepository = initializer.InsideShipmentPackageRepository;
+            this.shipmentPackageItemRepository = initializer.ShipmentPackageItemRepository;
+            this.shipmentPackageHarmonizeRepository = initializer.ShipmentPackageHarmonizeRepository;
+            this.shipmentOrderPackageRepository = initializer.ShipmentOrderPackageRepository;
 
             this.shipmentPickUpDeliveryRepository = new ShipmentPickUpDeliveryRepository(objectContext);
-            this.shipmentPickUpDeliveryPackageRepository = new ShipmentPickUpDeliveryPackageRepository(objectContext);
-            this.shipmentOrderPackageRepository = new ShipmentOrderPackageRepository(objectContext);
-            this.shipmentPackageRepository = new ShipmentPackageRepository(objectContext);
-            this.insideShipmentPackageRepository = new InsideShipmentPackageRepository(objectContext);
+            this.shipmentPickUpDeliveryPackageRepository = new ShipmentPickUpDeliveryPackageRepository(objectContext);  
             this.shipmentAWBPrintOnlyRepository = new ShipmentAWBPrintOnlyRepository(objectContext);
             this.shipmentReceivableRepository = new ShipmentReceivableRepository(objectContext);
             this.shipmentPayableRepository = new ShipmentPayableRepository(objectContext);
-            this.shipmentPackageItemRepository = new ShipmentPackageItemRepository(objectContext);
-            this.shipmentPackageHarmonizeRepository = new ShipmentPackageHarmonizeRepository(objectContext);
             this.pickUpDeliveryPackageHarmonizeRepository = new PickUpDeliveryPackageHarmonizeRepository(objectContext);
             this.shipmentCarrierStatusRepository = new ShipmentCarrierStatusRepository(objectContext);
             this.followUpRepository = new FollowUpRepository(tenant);
@@ -144,7 +145,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             this.shipmentCommodityRepository = new ShipmentCommodityRepository(objectContext);
             this.shipmentAdditionalCloudDataRepository = new ShipmentAdditionalCloudDataRepository(objectContext);
             this.shipmentAssemblyRepository = new ShipmentAssemblyRepository(objectContext);
-            this.shipmentContainerStatusRepository = new ShipmentContainerStatusRepository(objectContext);
             this.shipmentStoragePricingRepository = new ShipmentStoragePricingRepository(objectContext);
 
             this.SetHybridPartner(this.tenant);
@@ -396,9 +396,19 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                         calculateReceivables = true;
                     }
 
-                    entityPM.CalculateProfit = calculateProfit;
-                    entityPM.CalculatePayables = calculatePayables;
-                    entityPM.CalculateReceivables = calculateReceivables;
+                    if (initializer.IsUpdatingProfitFromConversion)
+                    {
+                        entityPM.CalculateProfit = true;
+                        entityPM.CalculatePayables = true;
+                        entityPM.CalculateReceivables = true;
+                    }
+
+                    else
+                    {
+                        entityPM.CalculateProfit = calculateProfit;
+                        entityPM.CalculatePayables = calculatePayables;
+                        entityPM.CalculateReceivables = calculateReceivables;
+                    }
 
                     if (!entityPM.IsHybrid && !loggedTenant.LogBoxTenantSetting.IsDocumentsArchive)
                     {
@@ -2408,42 +2418,41 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 #region
                 if (!entityPoco.IsCancelled || !entityPM.IsCancelled)
                 {
+                    //if (entityPM.ConvertShipmentToLCL || entityPM.ConvertShipmentToFCL)
+                    //{
+                    //    foreach (ShipmentPackagePM pm in entityPM.ShipmentPackages)
+                    //    {
+                    //        this.DeleteShipmentPackage(pm);
+                    //    }
 
-                    if (entityPM.ConvertShipmentToLCL || entityPM.ConvertShipmentToFCL)
-                    {
-                        foreach (ShipmentPackagePM pm in entityPM.ShipmentPackages)
-                        {
-                            this.DeleteShipmentPackage(pm);
-                        }
+                    //    foreach (ShipmentOrderPackagePM pm in entityPM.ShipmentOrderPackages)
+                    //    {
+                    //        this.DeleteShipmentOrderPackage(pm);
+                    //    }
 
-                        foreach (ShipmentOrderPackagePM pm in entityPM.ShipmentOrderPackages)
-                        {
-                            this.DeleteShipmentOrderPackage(pm);
-                        }
+                    //    entityPM.BookingVolume = null;
+                    //    entityPM.BookingNumberOfPackages = null;
+                    //    entityPM.OrderChargeableWeight = null;
+                    //    entityPM.OrderGrossWeight = null;
+                    //    entityPM.OrderVolumetricWeight = null;
+                    //    entityPM.TEU = null;
+                    //    entityPM.NumberOfPackages = null;
+                    //    entityPM.NumberOfContainers = null;
+                    //    entityPM.GrossWeight = null;
+                    //    entityPM.ChargeableWeight = null;
+                    //    entityPM.VolumetricWeight = null;
+                    //    entityPM.Volume = null;
 
-                        entityPM.BookingVolume = null;
-                        entityPM.BookingNumberOfPackages = null;
-                        entityPM.OrderChargeableWeight = null;
-                        entityPM.OrderGrossWeight = null;
-                        entityPM.OrderVolumetricWeight = null;
-                        entityPM.TEU = null;
-                        entityPM.NumberOfPackages = null;
-                        entityPM.NumberOfContainers = null;
-                        entityPM.GrossWeight = null;
-                        entityPM.ChargeableWeight = null;
-                        entityPM.VolumetricWeight = null;
-                        entityPM.Volume = null;
+                    //    if (entityPM.ConvertShipmentToLCL)
+                    //    {
+                    //        entityPM.ShipmentTypeId = "LCLD";
+                    //    }
 
-                        if (entityPM.ConvertShipmentToLCL)
-                        {
-                            entityPM.ShipmentTypeId = "LCLD";
-                        }
-
-                        else if (entityPM.ConvertShipmentToFCL)
-                        {
-                            entityPM.ShipmentTypeId = "FCLD";
-                        }
-                    }
+                    //    else if (entityPM.ConvertShipmentToFCL)
+                    //    {
+                    //        entityPM.ShipmentTypeId = "FCLD";
+                    //    }
+                    //}
 
                     if (entityPM.ConvertFromDirectToHouse)
                     {
@@ -2666,7 +2675,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
         private void FillDefaultSubType()
         {
-            if (string.IsNullOrEmpty(entityPM.ShipmentSubTypeId) || entityPM.ConvertShipmentToLCL || entityPM.ConvertShipmentToFCL)
+            if (string.IsNullOrEmpty(entityPM.ShipmentSubTypeId) || initializer.IsUpdatingSubType)
             {
                 string code = null;
                 if (entityPM.TransportModeId == "A")

@@ -35,6 +35,12 @@ namespace Logitude.BL.ShipmentsModel.Tools.Initializers
         public CardRepository CardRepository { get; private set; }
         public AddressRepository AddressRepository { get; private set; }
         public ContactRepository ContactRepository { get; private set; }
+        public ShipmentPackageRepository ShipmentPackageRepository { get; private set; }
+        public ShipmentContainerStatusRepository ShipmentContainerStatusRepository { get; private set; }
+        public InsideShipmentPackageRepository InsideShipmentPackageRepository { get; private set; }
+        public ShipmentPackageItemRepository ShipmentPackageItemRepository { get; private set; }
+        public ShipmentPackageHarmonizeRepository ShipmentPackageHarmonizeRepository { get; private set; }
+        public ShipmentOrderPackageRepository ShipmentOrderPackageRepository { get; private set; }
 
         public Tenant LoggedTenant { get; private set; }
         public ContactPM LoggedContact { get; private set; }
@@ -50,6 +56,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.Initializers
         public bool IsUpdatingRegistryDate { get; private set; }
         public bool IsUpdatingFirstApprovalDate { get; private set; }
         public bool IsMappingComposition { get; internal set; }
+        public bool IsUpdatingSubType { get; set; }
+        public bool IsUpdatingProfitFromConversion { get; set; }
 
         public List<ShipmentPackagePM> ShipmentPackagesChangeSet;
         public List<ShipmentOrderPackagePM> ShipmentOrderPackagesChangeSet;
@@ -83,6 +91,12 @@ namespace Logitude.BL.ShipmentsModel.Tools.Initializers
             this.CommonContext = CommonDataContext.GetContext(Tenant);
             this.Repository = new ShipmentRepository(ShipmentContext);
             this.MasterDataRepository = new ShipmentMasterDataRepository(ShipmentContext);
+            this.ShipmentPackageRepository = new ShipmentPackageRepository(ShipmentContext);
+            this.ShipmentContainerStatusRepository = new ShipmentContainerStatusRepository(ShipmentContext);
+            this.InsideShipmentPackageRepository = new InsideShipmentPackageRepository(ShipmentContext);
+            this.ShipmentPackageItemRepository = new ShipmentPackageItemRepository(ShipmentContext);
+            this.ShipmentPackageHarmonizeRepository = new ShipmentPackageHarmonizeRepository(ShipmentContext);
+            this.ShipmentOrderPackageRepository = new ShipmentOrderPackageRepository(ShipmentContext);
 
             this.CardRepository = new CardRepository(this.CommonContext);
             this.AddressRepository = new AddressRepository(this.CommonContext);
@@ -345,6 +359,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Initializers
             serviceBehaviours.Add(new ShipmentCustomerUsersBehaviour());
             serviceBehaviours.Add(new ShipmentCustomerWorkingDaysBehaviour());
             serviceBehaviours.Add(new ShipmentQuoteBehaviour());
+            serviceBehaviours.Add(new ShipmentConversionBehaviour());
 
             //serviceBehaviours.Add(new ShipmentNumberCounterBehaviour());           
 
