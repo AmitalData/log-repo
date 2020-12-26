@@ -116,7 +116,15 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                                                         Category3Name = a.Category3.EnglishName,
                                                         Category4Name = a.Category4.EnglishName,
                                                         Category5Name = a.Category5.EnglishName,
-                                                        ActiveForInterest =a.ActiveForInterest,
+                                                        Category1LocalName = a.Category1.LocalName,
+                                                        Category2LocalName = a.Category2.LocalName,
+                                                        Category3LocalName = a.Category3.LocalName,
+                                                        Category4LocalName = a.Category4.LocalName,
+                                                        Category5LocalName = a.Category5.LocalName,
+
+
+
+                                                   ActiveForInterest =a.ActiveForInterest,
                                                         ActiveForInterestCreditInvoice = a.ActiveForInterestCreditInvoice,
                                                         MinimumInterestInvoiceBilling = a.MinimumInterestInvoiceBilling,
                                                         InterestCalculationStartDate = a.InterestCalculationStartDate,
@@ -368,6 +376,8 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                                                               select a);
 
             IQueryable<GLAccountList> accountListQuery = this.GetIqueryableList(accountQuery);
+            var xxx = accountListQuery.ToList();
+
             return accountListQuery;
         }
 
