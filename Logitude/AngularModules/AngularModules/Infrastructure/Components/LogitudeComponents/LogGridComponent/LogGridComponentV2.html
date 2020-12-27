@@ -160,7 +160,7 @@
 </style>
 <div id="{{'ListDataLoaded' | IdGeneratorPipe}}" *ngIf="IsDataLoaded" ></div>
 <div class="outer-container">
-    <div [id]="LogGridId" [style.direction]="RTL == true ? 'rtl' : 'ltr'" class="GeneratedGrid noselect inner-container" (mousemove)="OnMyMouseMove($event)">
+    <div [id]="LogGridId" [style.direction]="RTL == true ? 'rtl' : 'ltr'" class="GeneratedGrid  inner-container" (mousemove)="OnMyMouseMove($event)">
         <div class="GeneratedGridHeader" [id]="LogGridColumnsId" style="position:relative;" *ngIf="columns" [ngStyle]="headerStyle">
             <div *ngIf="HasPermition == true">
                 <div class="ag-header-cell" (mousedown)="OnDragMouseDown($event,ColumnId + 'resizable-column-,'+i)"

@@ -510,7 +510,9 @@ export class LogGridComponentV2 implements OnInit, AfterViewInit, OnChanges, OnD
     SpotLightCLicked: boolean = false;
     BackFromEditSub: any;
     onRowSelected(colDef: any, colIndex: number, rowData: any, rowIndex: number) {
-        if (this.Disabled) {
+        let selection = window.getSelection();
+        if (this.Disabled || (selection.anchorNode?.data&&selection.type=='Range')) {
+            console.log(selection);
             return;
         }
 
