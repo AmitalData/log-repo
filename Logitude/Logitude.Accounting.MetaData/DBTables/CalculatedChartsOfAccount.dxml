@@ -76,7 +76,7 @@
     Type="varchar"
     Size="1">
     <Constraints
-      Nullable="false" />
+      Nullable="true" />
   </Column>
   <Column
     Name="Line"
