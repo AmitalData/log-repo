@@ -67,7 +67,7 @@ MainInterfaceCode ="5002"
                     IsDCA= true,
                     Entity="Declaration",
                     Param1= @"{ ""RequestNumber"" :""1"" ,  ""Content32"" :""1"" , 
-                              ""Content29"" :""test 29"" , ""Content27"" :""test 27"", ""status"" :""13"" , ""error"" :""true"" ,
+                              ""Content29"" :""test 29"" , ""Content27"" :""test 27"",  ""Content16"" :""PaymentID"" ,""status"" :""13"" , ""error"" :""true"" ,
                                ""constrain"" :""false"" , ""amendmentDocumentDetails"" :""false""  }",
                                                    
                                                

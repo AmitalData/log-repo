@@ -1194,7 +1194,8 @@ namespace Logitude.Customs.BL.EntityQueryServices
                         {
                             information.StatmentName = statement.LocalName;
                         }
-
+                        
+                        if(additional.StatementTypeCode != "27")
                         generalData.AdditionalInformation.Add(information);
 
 
@@ -1282,7 +1283,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
 
 
                             AmendCancellRequestInitiatorQueryService amendCancellRequestInitiatorQueryService = new AmendCancellRequestInitiatorQueryService(tenant);
-                            AmendCancellRequestInitiatorPM amendCancellRequestInitiatorPM = amendCancellRequestInitiatorQueryService.GetSingle(amendment.AmendmentRequestInitiatorType, false, true);
+                            AmendCancellRequestInitiatorPM amendCancellRequestInitiatorPM = amendCancellRequestInitiatorQueryService.GetSingle(field.AmendmentRequestInitiatorType, false, true);
                             if (amendCancellRequestInitiatorPM != null)
                             {
                                 amendment.AmendmentRequestInitiatorType = amendCancellRequestInitiatorPM.LocalName;

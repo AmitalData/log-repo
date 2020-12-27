@@ -204,6 +204,61 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     {
                         switch (additionalInformation.StatementTypeCode.Value)
                         {
+                            case "16":
+                                {
+                                    if (additionalInformation.Content != null)
+                                    {
+                                      //  additionalInformation.Content.Value = "11";
+                                         var paymentOrderQueryService = new PaymentOrderQueryService(context);
+                                        var paymentOrderId = paymentOrderQueryService.GetIdByPaymentNumber(additionalInformation.Content.Value, requestParams.Tenant);
+                                        if(!string.IsNullOrEmpty(paymentOrderId))
+                                        {
+                                            PaymentOrderPM paymentOrder = paymentOrderQueryService.GetSingle(paymentOrderId, true, false);
+                                            PaymentOrderConnectionTablePM paymentOrderConnectionTablePM= null;
+                                        if (   paymentOrder.PaymentOrderConnectionTables!= null && paymentOrder.PaymentOrderConnectionTables.Count>0)
+                                            {
+                                                foreach (var item in paymentOrder.PaymentOrderConnectionTables)
+                                                {
+                                                    if(item.ConnectedEntityId == _MyDeclarationPMOrg.Id && item.ConnectedEntityCode=="D" )
+                                                    {
+                                                        item.ChangeSetOp = ChangeSetOperation.Delete;
+
+                                                          paymentOrderConnectionTablePM = new PaymentOrderConnectionTablePM()
+                                                        {
+                                                            ConnectedEntityCode = "D",
+                                                            ChangeSetOp = ChangeSetOperation.Insert,
+                                                            PaymentOrderId = paymentOrderId,
+                                                            ConnectedEntityId   = _MyDeclarationPM.Id,
+                                                            Tenant = _MyDeclarationPM.Tenant
+
+                                                        };
+
+
+
+
+                                                    }
+                                             
+                                                }
+                                          
+                                            }
+                                            if (paymentOrderConnectionTablePM != null)
+                                            {
+                                                paymentOrder.PaymentOrderConnectionTables.Add(paymentOrderConnectionTablePM);
+
+
+                                                //  paymentOrder.FirstEntityID =  _MyDeclarationPM.Id;
+                                                paymentOrder.ChangeSetOp = ChangeSetOperation.Update;
+                                                PaymentOrderUpdateService pOUpdateservice = new PaymentOrderUpdateService(context, new Dictionary<string, IContext>(), requestParams.Tenant);
+                                                pOUpdateservice.Update(paymentOrder, false);
+
+                                                _MyDeclarationPM = declarationQueryService.GetSingle(_MyDeclarationPM.Id, true, false);
+
+                                            }
+                                        }
+
+                                    }
+                                    break;
+                                }
                             case "29":
                                 {
                                     if (additionalInformation.Content != null)
@@ -213,7 +268,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             case "27":
                                 {
                                     if (additionalInformation.Content != null)
-                                        _MyDeclarationPM.AmendmentRejectionReason += '\n' + additionalInformation.Content.Value;
+                                        _MyDeclarationPM.AmendmentRejectionReason =  additionalInformation.Content.Value;
                                     break;
 
                                 }

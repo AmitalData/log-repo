@@ -388,34 +388,37 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommDec
                     }
                 }
             }
-            if(!string.IsNullOrWhiteSpace(_LogitudeCommDecFile.SiteCode) && this._MyDeclarationPM.Consignments != null && this._MyDeclarationPM.Consignments.Count() > 0 && (this._MyDeclarationPM.Consignments[0].ConsignmentInternalTransitions == null || (this._MyDeclarationPM.Consignments[0].ConsignmentInternalTransitions != null && this._MyDeclarationPM.Consignments[0].ConsignmentInternalTransitions.Count() < 1)))
+            if (new[] { "4000005", "4000512", "4000505", "4000012" }.Contains(this._MyDeclarationPM.ProcedureCurrentCode))
             {
-                var internalBorderSiteType = new InternalBorderSiteTypeRepository(ResolvedTenant());
-                var myinternalBorderSiteType = internalBorderSiteType.GetSingle(_LogitudeCommDecFile.SiteCode);
-                string PackageTypeCode = "";
-                if (myinternalBorderSiteType == null)
+                if (!string.IsNullOrWhiteSpace(_LogitudeCommDecFile.SiteCode) && this._MyDeclarationPM.Consignments != null && this._MyDeclarationPM.Consignments.Count() > 0 && (this._MyDeclarationPM.Consignments[0].ConsignmentInternalTransitions == null || (this._MyDeclarationPM.Consignments[0].ConsignmentInternalTransitions != null && this._MyDeclarationPM.Consignments[0].ConsignmentInternalTransitions.Count() < 1)))
                 {
-                    PackageTypeCode = GetTranslationL2P("IIGC", "CTBBONDED", _LogitudeCommDecFile.SiteCode);
-                }
-                else
-                {
-                    PackageTypeCode = myinternalBorderSiteType.Code.ToString();
-                }
-                if (!string.IsNullOrWhiteSpace(PackageTypeCode))
-                {
-
-                    ConsignmentInternalTransitionPM transitionPM = new ConsignmentInternalTransitionPM()
+                    var internalBorderSiteType = new InternalBorderSiteTypeRepository(ResolvedTenant());
+                    var myinternalBorderSiteType = internalBorderSiteType.GetSingle(_LogitudeCommDecFile.SiteCode);
+                    string PackageTypeCode = "";
+                    if (myinternalBorderSiteType == null)
                     {
-                        ConsignmentNumber = this._MyDeclarationPM.Consignments[0].ConsignmentNumber,
-                        DeclarationId = this._MyDeclarationPM.Consignments[0].DeclarationId,
-                        LineNumber = 1,
-                        Tenant = this._MyDeclarationPM.Consignments[0].Tenant,
-                        SiteCode = PackageTypeCode,
+                        PackageTypeCode = GetTranslationL2P("IIGC", "CTBBONDED", _LogitudeCommDecFile.SiteCode);
+                    }
+                    else
+                    {
+                        PackageTypeCode = myinternalBorderSiteType.Code.ToString();
+                    }
+                    if (!string.IsNullOrWhiteSpace(PackageTypeCode))
+                    {
 
-                        ChangeSetOp = ChangeSetOperation.Insert,
+                        ConsignmentInternalTransitionPM transitionPM = new ConsignmentInternalTransitionPM()
+                        {
+                            ConsignmentNumber = this._MyDeclarationPM.Consignments[0].ConsignmentNumber,
+                            DeclarationId = this._MyDeclarationPM.Consignments[0].DeclarationId,
+                            LineNumber = 1,
+                            Tenant = this._MyDeclarationPM.Consignments[0].Tenant,
+                            SiteCode = PackageTypeCode,
 
-                    };
-                    this._MyDeclarationPM.Consignments[0].ConsignmentInternalTransitions.Add(transitionPM);
+                            ChangeSetOp = ChangeSetOperation.Insert,
+
+                        };
+                        this._MyDeclarationPM.Consignments[0].ConsignmentInternalTransitions.Add(transitionPM);
+                    }
                 }
             }
 
@@ -737,16 +740,14 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommDec
 
             if (currentDeclarationCourierStatusPM != null && currentDeclarationCourierStatusPM.TotalInvoiceAmountInUSD != null && currentDeclarationCourierStatusPM.TotalInvoiceAmountInUSD <= 150)
             {
-                if (!String.IsNullOrWhiteSpace(this._MyDeclarationPM.ImporterId))
-                {
-                    this._MyDeclarationPM.PalestinianCode = this._MyDeclarationPM.ImporterId;
-                    this._MyDeclarationPM.ImporterCode = null;
-                    this._MyDeclarationPM.ImporterId = null;
-                }
-                else if(!String.IsNullOrWhiteSpace(this._MyDeclarationPM.ImporterCode))
+                if(!String.IsNullOrWhiteSpace(this._MyDeclarationPM.ImporterCode))
                 {
                     this._MyDeclarationPM.PalestinianCode = this._MyDeclarationPM.ImporterCode;
                     this._MyDeclarationPM.ImporterCode = null;
+                }
+                if (!String.IsNullOrWhiteSpace(this._MyDeclarationPM.ImporterId))
+                {
+                    this._MyDeclarationPM.ImporterId = null;
                 }
             }
         }
