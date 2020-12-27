@@ -1,47 +1,48 @@
 ﻿using FluentAssertions;
 using Logitude.SpecFlow.Models;
+using Logitude.SpecFlow.Services;
 using TechTalk.SpecFlow;
+using TechTalk.SpecFlow.Assist;
 
 namespace Logitude.SpecFlow.Steps
 {
     [Binding]
     public class LoginSteps
     {
-        protected readonly UserData _user;
-        protected LoginParameters _loginParameters;
+        protected readonly UserData User;
+        protected LoginParameters LoginParameters;
 
         public LoginSteps(UserData userData, LoginParameters loginParameters)
         {
-            _user = userData;
-            _loginParameters = loginParameters;
-
-            _loginParameters.ClientType = "Web";
-            _loginParameters.GetToken = true;
+            User = userData;
+            LoginParameters = loginParameters;  
         }
 
-        [Given(@"Email is (.*) and password is (.*)")]
-        public void GivenTheEmailIs(string email, string password)
+        [Given(@"user have the following Login Properties")]
+        public void GivenUserHaveTheFollowingLoginProperties(Table loginInfo)
         {
-            _loginParameters.Email = email;
-            _loginParameters.Password = password;
+            LoginInfo myLoginInfo = loginInfo.CreateInstance<LoginInfo>();
+            LoginParameters.ClientType = "Web";
+            LoginParameters.GetToken = true;
+            LoginParameters.Email = myLoginInfo.Email;
+            LoginParameters.Password = myLoginInfo.Password;
         }
 
-        [When(@"Make login")]
-        public void WhenMakeLogin()
+        [When(@"the user call Login API")]
+        public void WhenTheUserCallLoginAPI()
         {
-            HttpRequest httpRequest = new HttpRequest("Authentication", HttpRequestType.BodyRequestType.Post, null, _loginParameters);
-            UserData user = httpRequest.GetResponse<UserData>();
-            if(user != null)
+            UserData userData = CallAPI.Post<UserData>(LoginParameters, "Authentication", "");
+            if (userData != null)
             {
-                _user.Token = user.Token;
-                _user.Tenant = user.Tenant;
+                User.Token = userData.Token;
+                User.Tenant = userData.Tenant;
             }
-        }
+        } 
 
-        [Then(@"The user successfully logged in")]
-        public void ThenTheUserSuccessfullyLoggedIn()
+        [Then(@"the user will have a token")]
+        public void ThenTheUserWillHaveAToken()
         {
-            _user.Token.Should().NotBeNullOrEmpty();
+            User.Token.Should().NotBeNullOrEmpty();
         }
     }
 }
