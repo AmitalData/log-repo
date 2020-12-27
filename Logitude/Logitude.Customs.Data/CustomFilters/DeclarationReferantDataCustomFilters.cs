@@ -18,7 +18,7 @@ namespace Logitude.Customs.Data.CustomFilters
         }
 
 
-        public IQueryable<DeclarationReferantData> GetFreelancerDeclarationReferantDatas(QueryOperations operations, IQueryable<DeclarationReferantData> queryableData, int tenant , CustomContext context)
+        public IQueryable<DeclarationReferantData> GetFreelancerDeclarationReferantDatas(QueryOperations operations, IQueryable<DeclarationReferantData> queryableData, int tenant , ICustomContext context)
         {
            // var context = CustomContext.GetContext(tenant);
 
