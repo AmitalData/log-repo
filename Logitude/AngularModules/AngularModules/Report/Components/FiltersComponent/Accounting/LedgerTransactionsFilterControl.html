@@ -300,7 +300,7 @@
                     <!-- 3 -->
                     <td >
                         <AdvancedDatePicker style="display: block;width: 110px;" float-start [ObjectFieldName]="'FromDate'"
-                                       [ObjectTableName]="ObjectTableName" [NoObjectField]="true" [DataContext]="DataContext" [InputType]="date"
+                                       [ObjectTableName]="ObjectTableName" [NoObjectField]="true" [DataContext]="DataContext" [InputType]="'date'"
                                        [SelectedDateValue]="FromDate"></AdvancedDatePicker>
                         <div style="display: inline-block; padding: 0 12px;" text-start>
                             {{'Accounting.General.O.To' | TextCodeTranslationPipe}}
@@ -311,7 +311,7 @@
                     <td>
                         <AdvancedDatePicker style="display: block;width: 150px;" float-start
                                        [ObjectFieldName]="'ToDate'" [ObjectTableName]="ObjectTableName"
-                                       [NoObjectField]="true" [DataContext]="DataContext" [InputType]="date"
+                                       [NoObjectField]="true" [DataContext]="DataContext" [InputType]="'date'"
                                        [SelectedDateValue]="ToDate"></AdvancedDatePicker>
                     </td>
 
