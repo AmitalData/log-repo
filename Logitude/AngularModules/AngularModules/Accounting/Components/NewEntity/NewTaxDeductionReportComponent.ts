@@ -1,5 +1,5 @@
 
-import { Component, DoCheck } from '@angular/core';
+import { Component } from '@angular/core';
 import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator';
 import { BaseComponent } from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { TaxDeductionReportPM } from '../../EntityPMs/TaxDeductionReportPM';
@@ -16,12 +16,12 @@ import { AppTool } from '../../../Infrastructure/Tools';
     templateUrl: './NewTaxDeductionReportComponent.html',
 })
 
-export class NewTaxDeductionReportComponent extends BaseComponent implements DoCheck{
+export class NewTaxDeductionReportComponent extends BaseComponent{
 
 
     ObjectTableName: string = "TaxDeductionReport";
     DataContext: any = this;
-    FilterSelectedOldValue: string;
+    enterdEmail: string;
     entityPM: TaxDeductionReportPM = new TaxDeductionReportPM();
     TaxDeductionReportPMService: TaxDeductionReportPMService = new TaxDeductionReportPMService();
     public TenantPM: TenantPM;
@@ -31,25 +31,12 @@ export class NewTaxDeductionReportComponent extends BaseComponent implements DoC
 
         var date = new Date();
         this.entityPM.TaxYear = date.getFullYear();
-        this.entityPM.Tenant = SessionLocator.Tenant;
-        this.entityPM.Email = SessionLocator.LoggedUserPM.Email;
+        this.entityPM.Tenant  = SessionLocator.Tenant;
+        this.entityPM.Email = this.enterdEmail = SessionLocator.LoggedUserPM.Email;
         this.BuildMonthList();
-        this.FilterSelectedOldValue = this.FilterSelectedValue;
 
     }
 
-    ngDoCheck(): void {
-        if (this.FilterSelectedOldValue != this.FilterSelectedValue) {
-            this.entityPM.Email = this.FilterSelectedValue == "Month" ? " " : SessionLocator.LoggedUserPM.Email;
-            this.FilterSelectedOldValue = this.FilterSelectedValue;
-            this.SetUIProperties();
-        }
-    }
-
-    SetUIProperties() {
-        this.UIProperties.SetEnabled("Email", this.ObjectTableName, this.ByMonth ? false : true);
-    }
-   
  public MonthsList: CodeNameClass[];
     BuildMonthList() {
 
@@ -92,14 +79,26 @@ private selectedMonth: CodeNameClass;
  public FilterSelectedValue: string = 'Year';
   FilterItemClicked(itemValue: string) {
     if (this.FilterSelectedValue != itemValue) {
-      this.FilterSelectedValue = itemValue;
+        this.FilterSelectedValue = itemValue;
         if (itemValue == "Month") {
             this.ByMonth = true;
         }
         else {
             this.ByMonth = false;
         }
+        this.SetEmailProperties();
     }
+  }
+
+    private SetEmailProperties() {
+        if (!AppTool.IsNullOrEmpty(this.entityPM.Email))
+            this.enterdEmail = this.entityPM.Email;
+        this.entityPM.Email = this.FilterSelectedValue == "Month" ? " " : this.enterdEmail;
+        this.SetEmailUIProperties();
+    }
+
+    SetEmailUIProperties() {
+        this.UIProperties.SetEnabled("Email", this.ObjectTableName, this.ByMonth ? false : true);
     }
 
     get Email() { return this.entityPM.Email; }
