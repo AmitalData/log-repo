@@ -827,25 +827,17 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
                 {
                     if (itemPOCO.ATA != null)
                     {
-                        this.DeleteTraceEvent("RCS");
+                        if (!RoutingDate.IsAllPickupsHaveDates(entityPM))
+                        {
+                            this.DeleteTraceEvent("RCS");
+                        }
+
+                        this.DeleteTraceEvent("PIAR", itemPOCO.PickUpDeliveryNumber);
                     }
 
                     if (itemPOCO.ATD != null)
                     {
                         this.DeleteTraceEvent("PICD");
-                    }
-                }
-
-                else
-                {
-                    if (itemPOCO.ATA != null)
-                    {
-                        this.DeleteTraceEvent("PIOD");
-                    }
-
-                    if (itemPOCO.ATD != null)
-                    {
-                        this.DeleteTraceEvent("DELD");
                     }
                 }
             }
@@ -856,30 +848,19 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
             {
                 if (itemPM.PickUpDeliveryTypeCode == "DELV")
                 {
-                    if (itemPOCO.PickUpDeliveryTypeCode == "PICK")
+                    if (itemPOCO.ATA != null)
                     {
-                        if (itemPOCO.ATA != null)
-                        {
-                            this.DeleteTraceEvent("RCS");
-                        }
-
-                        if (itemPOCO.ATD != null)
-                        {
-                            this.DeleteTraceEvent("PICD");
-                        }
-                    }
-
-                    else
-                    {
-                        if (itemPOCO.ATA != null)
+                        if (!RoutingDate.IsAllDeliveriesHaveDates(entityPM))
                         {
                             this.DeleteTraceEvent("PIOD");
                         }
 
-                        if (itemPOCO.ATD != null)
-                        {
-                            this.DeleteTraceEvent("DELD");
-                        }
+                        this.DeleteTraceEvent("DEAR", itemPOCO.PickUpDeliveryNumber);
+                    }
+
+                    if (itemPOCO.ATD != null)
+                    {
+                        this.DeleteTraceEvent("DELD");
                     }
                 }
             }
