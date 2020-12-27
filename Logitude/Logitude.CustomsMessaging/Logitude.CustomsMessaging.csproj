@@ -476,7 +476,8 @@
     <Compile Include="ResponseServices\VE_MSG013_VendorAddCommunicationDeviceResponseService.cs" />
     <Compile Include="ResponseServices\VE_MSG052_VendorSearchResultsForCustomsAgentResponseService.cs" />
     <Compile Include="ResponseServices\VP_NG_2691_MSG101_VehicleInResponseService.cs" />
-     <Compile Include="Tasks\SendManifestService.cs" />
+    <Compile Include="Tasks\SendDeclarationStatus.cs" />
+    <Compile Include="Tasks\SendManifestService.cs" />
     <Compile Include="Testers\LoadTest\CreateCustomFileService.cs" />
     <Compile Include="Testers\Messages\UniDebug01_Msg.cs" />
     <Compile Include="Testers\Mirit\MiritStartUp.cs" />
