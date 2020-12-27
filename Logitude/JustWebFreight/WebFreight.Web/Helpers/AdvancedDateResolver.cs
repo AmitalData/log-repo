@@ -10,8 +10,8 @@ namespace WebFreight.Web.Helpers
     {
         public DateTime GetDateValueByOptionCode(string optionCode)
         {
-            //Date date = new Date();
             DateTime dateValue = new DateTime();
+            int quarterNumber = (DateTime.Now.Month - 1) / 3 + 1;
             switch (optionCode)
             {
                 case "TOD":
@@ -27,10 +27,10 @@ namespace WebFreight.Web.Helpers
                     new DateTime(DateTime.Today.Year, DateTime.Today.Month - 1, 1);
                     break;
                 case "BTQ":
-                    //dateValue = dateOption.Name;
+                    dateValue = new DateTime(DateTime.Now.Year, (quarterNumber - 1) * 3 + 1, 1);
                     break;
                 case "BLQ":
-                    //dateValue = dateOption.Name;
+                    dateValue = GetPreviousQuarterFirstDate();
                     break;
                 case "BTY":
                     dateValue = new DateTime(DateTime.Now.Year, 1, 1);
@@ -47,10 +47,12 @@ namespace WebFreight.Web.Helpers
                     dateValue = dateValue.AddMonths(-1).AddDays(-1);
                     break;
                 case "ETQ":
-                    //dateValue = dateOption.Name;
+                    DateTime firstDayOfQuarter = new DateTime(DateTime.Now.Year, (quarterNumber - 1) * 3 + 1, 1);
+                    dateValue = firstDayOfQuarter.AddMonths(3).AddDays(-1);
                     break;
                 case "ELQ":
-                    //dateValue = dateOption.Name;
+                    DateTime myFirstDayOfQuarter = GetPreviousQuarterFirstDate();
+                    dateValue = myFirstDayOfQuarter.AddMonths(3).AddDays(-1);
                     break;
                 case "ETY":
                     dateValue = new DateTime(DateTime.Now.Year, 12, 31);
@@ -64,5 +66,22 @@ namespace WebFreight.Web.Helpers
             }
             return dateValue;
         }
+        private DateTime GetPreviousQuarterFirstDate()
+        {
+            DateTime firstDayOfQuarter;
+            int quarterNumber = (DateTime.Now.Month - 1) / 3 + 1;
+            if (quarterNumber == 1)
+            {
+                quarterNumber = 4;
+                firstDayOfQuarter = new DateTime(DateTime.Now.Year - 1, (quarterNumber - 1) * 3 + 1, 1);
+            }
+            else
+            {
+                quarterNumber--;
+                firstDayOfQuarter = new DateTime(DateTime.Now.Year, (quarterNumber - 1) * 3 + 1, 1);
+            }
+            return firstDayOfQuarter;
+        }
+
     }
 }

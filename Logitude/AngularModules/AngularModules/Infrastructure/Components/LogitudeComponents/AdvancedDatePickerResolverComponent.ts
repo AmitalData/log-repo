@@ -14,6 +14,8 @@ export class AdvancedDatePickerResolverComponent {
     public ResolveDateValue(dateOption: any) {
         var date = new Date(); 
         var dateValue = new Date();
+        var quarterNumber = (date.getMonth() - 1) / 3 + 1;
+        quarterNumber = Math.trunc(quarterNumber);
         if (dateOption != null) {
             switch (dateOption) {
                 case 'TOD':
@@ -29,10 +31,10 @@ export class AdvancedDatePickerResolverComponent {
                     dateValue = new Date(date.getFullYear(), date.getMonth() - 1, 1);
                     break;
                 case 'BTQ':
-                    dateValue = dateOption.Name;
+                    dateValue = new Date(date.getFullYear(), (quarterNumber - 1) * 3, 1);
                     break;
                 case 'BLQ':
-                    dateValue = dateOption.Name;
+                    dateValue = this.GetPreviousQuarterFirstDate();
                     break;
                 case 'BTY':
                     dateValue = new Date(date.getFullYear(), 1);
@@ -47,10 +49,10 @@ export class AdvancedDatePickerResolverComponent {
                     dateValue = new Date(date.getFullYear(), date.getMonth(), 0);
                     break;
                 case 'ETQ':
-                    dateValue = dateOption.Name;
+                    dateValue = new Date(date.getFullYear(), (quarterNumber - 1) * 3 + 3, 0);
                     break;
                 case 'ELQ':
-                    dateValue = dateOption.Name;
+                    dateValue = this.GetPreviousQuarterLastDate();
                     break;
                 case 'ETY':
                     dateValue = new Date(date.getFullYear() + 1, 0, 0);
@@ -64,5 +66,37 @@ export class AdvancedDatePickerResolverComponent {
             }
         }
         return dateValue;
+    }
+
+    public GetPreviousQuarterFirstDate() {
+        var date = new Date(); 
+        var firstDayOfQuarter: Date;
+        var quarterNumber = (date.getMonth() - 1) / 3 + 1;
+        quarterNumber = Math.trunc(quarterNumber);
+        if (quarterNumber == 1) {
+            quarterNumber = 4;
+            firstDayOfQuarter = new Date(date.getFullYear() - 1, (quarterNumber - 1) * 3, 1);
+        }
+        else {
+            quarterNumber--;
+            firstDayOfQuarter = new Date(date.getFullYear(), (quarterNumber - 1) * 3, 1);
+        }
+        return firstDayOfQuarter;
+    }
+
+    public GetPreviousQuarterLastDate() {
+        var date = new Date();
+        var lastDayOfQuarter: Date;
+        var quarterNumber = (date.getMonth() - 1) / 3 + 1;
+        quarterNumber = Math.trunc(quarterNumber);
+        if (quarterNumber == 1) {
+            quarterNumber = 4;
+            lastDayOfQuarter = new Date(date.getFullYear() - 1, (quarterNumber) * 3, 0);
+        }
+        else {
+            quarterNumber--;
+            lastDayOfQuarter = new Date(date.getFullYear(), (quarterNumber) * 3, 0);
+        }
+        return lastDayOfQuarter;
     }
 }

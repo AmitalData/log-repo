@@ -209,7 +209,7 @@
                         </div>
                         <div (mouseover)="OnDropDownMouseOver()" (mouseout)="OnDropDownMouseOut()"
                              FixedPosition [ElementId]="DropdownId" [RelativeElementId]="DivAdvancedDatePickerId" [TopDisplacement]="25" [LeftDisplacement]="1"
-                             *ngIf="IsDropDownVisible" class="AdvancedDatePickerDropdown" [ngStyle]="LovDropDownStyle" [id]="DropdownId">
+                             *ngIf="IsDropDownVisible" class="AdvancedDatePickerDropdown" [id]="DropdownId">
 
                             <ul class="DropDownList" *ngIf="IsDropDownVisible" style="width:200px;">
                                 <li *ngFor="let item of ItemsSource;"
