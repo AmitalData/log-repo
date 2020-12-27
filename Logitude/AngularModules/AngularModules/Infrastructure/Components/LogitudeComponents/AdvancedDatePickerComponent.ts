@@ -79,7 +79,8 @@ export class AdvancedDatePickerComponent
                     this.SelectedItem = selectedItem;
                     this.SelectedItemObject = this.SelectedItem;
                     this.selectedDateValue = newValue;
-                    this.DisplayValue = newValue.split(" ")[0];;
+                    var myDisplayValue = this.SetDateValue(new Date(newValue));
+                    this.DisplayValue = myDisplayValue.split(" ")[0];;
                 }
             }
         }
@@ -96,7 +97,7 @@ export class AdvancedDatePickerComponent
             if (this.selectedDateValue != newValue) {
                 var selectedItem = this.DateOptions.filter(date => date.Code == "SPD")[0];
                 this.SelectedItem = selectedItem;
-                var selectedCalendarDate = this.ChangeDisplayDateValue(newValue, null);
+                var selectedCalendarDate = this.SetDateValue(newValue, null);
                 this.selectedDateValue = selectedCalendarDate;
                 this.DisplayValue = selectedCalendarDate.split(" ")[0];
                 this.SelectedItemObject = this.SelectedItem;
@@ -380,7 +381,7 @@ export class AdvancedDatePickerComponent
     }
 
     OnSelectedCalendarDateChanged(selectedDateObj: any) {
-        var selectedCalendarDate = this.SetDateValue(selectedDateObj.SelectedDate, selectedDateObj.Suffix);
+        var selectedCalendarDate = selectedDateObj.SelectedDate;
         this.OnDropDownSelected(this.DateOptions.filter(d => d.Code == "SPD")[0], selectedCalendarDate);
         this.ToggleCalendar(false);
         //this.ToggleOpenDropDown();
@@ -414,153 +415,6 @@ export class AdvancedDatePickerComponent
     }
 
     SetDateValue(date: Date, timeSuffix: string = null, setDataContext: boolean = true) {
-        //this.InputType = "date";
-        //this.TimeMode = "12";
-        //if (date) {
-        //    var day: number;
-        //    var month: number;
-        //    var year: number;
-        //    var hour: number;
-        //    var minute: number;
-        //    var second: number;
-        //    var dateparts = this.GetDateParts(date);
-        //    day = dateparts[2];
-        //    month = dateparts[1] + 1;
-        //    year = dateparts[0];
-
-        //    hour = dateparts[3];
-        //    minute = dateparts[4];
-        //    second = dateparts[5];
-
-        //    this.DateValue =
-        //        year +
-        //        "/" +
-        //        this.ApplyPadding(month.toString()) +
-        //        "/" +
-        //        this.ApplyPadding(day.toString());
-        //    this.TimeValue =
-        //        this.ApplyPadding(hour.toString()) +
-        //        ":" +
-        //        this.ApplyPadding(minute.toString()) +
-        //        ":" +
-        //        this.ApplyPadding(second.toString());
-
-        //    var timearr = this.TimeValue.split(":");
-        //    var hourRes = this.GetTimeModeHours(
-        //        Number(timearr[0]),
-        //        timeSuffix
-        //    );
-        //    var hourResArr = hourRes.split(",");
-        //    if (this.TimeMode == "12") {
-        //        var tSuffix = hourResArr[1];
-        //        if (timeSuffix) {
-        //            tSuffix = timeSuffix;
-        //        }
-        //        this.TimeValue =
-        //            this.ApplyPadding(hourResArr[0]) +
-        //            ":" +
-        //            timearr[1] +
-        //            ":" +
-        //            timearr[2] +
-        //            " " +
-        //            tSuffix;
-        //    } else {
-        //        this.TimeValue =
-        //            this.ApplyPadding(hourResArr[0]) +
-        //            ":" +
-        //            timearr[1] +
-        //            ":" +
-        //            timearr[2];
-        //    }
-
-        //    var dateValue;
-
-        //    if (this.InputType == "date") {
-        //        if (
-        //            !AppTool.IsNullOrEmpty(
-        //                SessionLocator.TenantPM.DateTimeFormat
-        //            )
-        //        ) {
-        //            var myDateTimeFormatPrefix = SessionLocator.TenantPM.DateTimeFormat.toLowerCase().substring(
-        //                0,
-        //                2
-        //            );
-
-        //            if (myDateTimeFormatPrefix == "mm") {
-        //                dateValue = this.ApplyPadding(month.toString()) + "/" + this.ApplyPadding(day.toString()) + "/" + year;
-        //            } else {
-        //                dateValue = this.ApplyPadding(day.toString()) + "/" + this.ApplyPadding(month.toString()) + "/" + year;
-        //            }
-        //        } else {
-        //            //dateValue = this.ApplyPadding(day.toString()) + "/" + this.ApplyPadding(month.toString()) + "/" + year;
-        //            dateValue = this.ApplyPadding(month.toString()) + "/" + this.ApplyPadding(day.toString()) + "/" + year;
-        //        }
-        //        var myDate = new Date((dateValue + "T" + this.TimeValue).replace("/","-"));
-        //        return myDate;
-        //    }
-        //    else {
-        //        var timeArray = this.TimeValue.split(":");
-        //        if (
-        //            this.TimeValue.indexOf("AM") > -1 ||
-        //            this.TimeValue.indexOf("PM") > -1
-        //        ) {
-        //            var secondsWithsuffix = timeArray[2].split(" ");
-        //            var suffix = secondsWithsuffix[1];
-
-        //            dateValue = this.ApplyPadding(timeArray[0]) + ":" + timeArray[1] + " " + suffix;
-        //        } else {
-        //            dateValue = this.ApplyPadding(timeArray[0]) + ":" + timeArray[1];
-        //        }
-        //        var myDate = new Date((dateValue + "T" + this.TimeValue).replace("/", "-"));
-        //        return myDate;
-        //    }
-        //}
-        //else {
-        //    this.SelectedCalendarDate = null;
-        //    this.InputValue = null;
-        //    this.TimeValue = null;
-        //    if (this.ObjectField && this.ObjectField.IsCustom) {
-        //        var customFieldClass: CustomFieldClass = this.DataContext[
-        //            this.ObjectFieldName
-        //        ];
-        //        if (
-        //            customFieldClass != null &&
-        //            customFieldClass != undefined
-        //        ) {
-        //            customFieldClass.Value = null;
-        //            this.DataContext[
-        //                this.ObjectFieldName
-        //            ] = customFieldClass;
-        //        } else {
-        //            console.warn(
-        //                "Custom Fields are not implemented in: " +
-        //                this.ObjectTableName
-        //            );
-        //        }
-        //    } else {
-        //        this.DataContext[this.ObjectFieldName] = null;
-        //    }
-
-        //    this.ValidateField();
-        //    var dateUiProp = this.DataContext.UIProperties.GetUIProperty(
-        //        this.ObjectFieldName,
-        //        this.ObjectTableName,
-        //        this.DataContext
-        //    );
-        //    var timeUiProp = this.DataContext.UIProperties.GetUIProperty(
-        //        this.ObjectFieldName + "_timepicker",
-        //        this.ObjectTableName,
-        //        this.DataContext
-        //    );
-        //    if (timeUiProp != null && timeUiProp != undefined) {
-        //        timeUiProp.UIPropertyChanged.emit("datevaluechanges");
-        //    }
-        //    dateUiProp.UIPropertyChanged.emit("datevaluechanges");
-        //}
-        return date;
-    }
-
-    ChangeDisplayDateValue(date: Date, timeSuffix: string = null, setDataContext: boolean = true) {
         this.InputType = "date";
         this.TimeMode = "12";
         if (date) {
@@ -639,8 +493,7 @@ export class AdvancedDatePickerComponent
                         dateValue = this.ApplyPadding(day.toString()) + "/" + this.ApplyPadding(month.toString()) + "/" + year;
                     }
                 } else {
-                    //dateValue = this.ApplyPadding(day.toString()) + "/" + this.ApplyPadding(month.toString()) + "/" + year;
-                    dateValue = this.ApplyPadding(month.toString()) + "/" + this.ApplyPadding(day.toString()) + "/" + year;
+                    dateValue = this.ApplyPadding(day.toString()) + "/" + this.ApplyPadding(month.toString()) + "/" + year;
                 }
                 return dateValue + " " + this.TimeValue;
             }
