@@ -31,6 +31,8 @@ namespace Logitude.Accounting.Data.Utilities
                 EntityIconsDictionary.Add("8", "RV");// 8-Revaluation
                 EntityIconsDictionary.Add("9", "CH");// 9-PaymentCheque
                 EntityIconsDictionary.Add("10", "AJ");// 10-Adjustment
+                EntityIconsDictionary.Add("11", "YT");// Year Transfer
+                EntityIconsDictionary.Add("12", "BA");// Bank Adjustment
             }
         }
         public string getEntityIcon(string _sourceTypeCode)
