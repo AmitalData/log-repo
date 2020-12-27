@@ -31,7 +31,7 @@ namespace WebFreight.Web.TrainingResourcesHTML
         protected void Page_Load(object sender, EventArgs e)
         {
             int? tenant = null;
-            string token = Request["token"] ?? "";
+            string token = Request["Token"] ?? "";
             SecurityDocumentResult securityDocumentResult = SecurityDocumentHelper.ValidationDocumentToken(token);
             bool isValid = securityDocumentResult.IsValid;
             string email = securityDocumentResult.Email;

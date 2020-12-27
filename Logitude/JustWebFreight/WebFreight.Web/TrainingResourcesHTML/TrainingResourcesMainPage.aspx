@@ -558,7 +558,6 @@
     <script type="text/javascript">
 
         function OpenDoc(myCode) {
-
             if ($.DataResult != null) {
 
                 for (var i = 0; i < $.DataResult.length; i++) {
@@ -573,8 +572,25 @@
                         }
 
                         else {
-
-                            window.open("../WebPages/HowToDownloadPage.aspx?id=" + myCode, '_blank');
+                            var url = "../WebPages/HowToDownloadPage.aspx";
+                            var mapForm = document.createElement("form");
+                            var iToken = $("#TokenForResources").val();
+                            mapForm.target = "_blank";
+                            mapForm.method = "POST"; // or "post" if appropriate
+                            mapForm.action = url;
+                            var mapInput = document.createElement("input");
+                            mapInput.type = "hidden";
+                            mapInput.name = "Token";
+                            mapInput.setAttribute("value", iToken);
+                            mapForm.appendChild(mapInput);
+                            var mapInput2 = document.createElement("input");
+                            mapInput2.type = "hidden";
+                            mapInput2.name = "Code";
+                            mapInput2.setAttribute("value", myCode);
+                            mapForm.appendChild(mapInput2);
+                            document.body.appendChild(mapForm);
+                            mapForm.submit();
+                            document.body.removeChild(mapForm);
                         }
 
                         break;

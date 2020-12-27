@@ -1573,7 +1573,8 @@ export class HomeComponent implements OnDestroy{
     HelpButtonClicked() {
         ServiceLocator.SendTotangoUserActivity("Help Center", "Help Icon");
         var url = ServiceHelper.GetLogitudeURL() + 'TrainingResourcesHTML/TrainingResourcesMainPage.aspx';
-        ServiceHelper.OpenWindowWithParams(url, SessionInfo.DocumentDownloadToken);
+        var params: any[] = [{ name: "Token", value: SessionInfo.DocumentDownloadToken }]
+        ServiceHelper.OpenWindowWithParams(url, params);
     }
     SignoutClicked() {
         SessionLocator.Index = 0;

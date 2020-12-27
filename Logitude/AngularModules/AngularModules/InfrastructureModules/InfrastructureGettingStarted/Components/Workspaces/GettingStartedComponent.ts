@@ -555,7 +555,8 @@ export class GettingStartedComponent extends BaseComponent {
     ViewAllResources() {
         ServiceLocator.SendTotangoUserActivity("Help Center", "View All");
         var url = ServiceHelper.GetLogitudeURL() + 'TrainingResourcesHTML/TrainingResourcesMainPage.aspx';
-        ServiceHelper.OpenWindowWithParams(url, SessionInfo.DocumentDownloadToken);
+        var params: any[] = [{ name: "Token", value: SessionInfo.DocumentDownloadToken }]
+        ServiceHelper.OpenWindowWithParams(url, params);
 
     }
 }
@@ -573,9 +574,10 @@ export class HelpResourceArgs {
     get IsNew() { return this.entity.IsNew; }
     private HowToMethod() {
         ServiceLocator.SendTotangoUserActivity("Help Center", "How-To");
+        var url = ServiceHelper.GetLogitudeURL() + 'WebPages/HowToDownloadPage.aspx';
+        var params: any[] = [{ name: "Token", value: SessionInfo.DocumentDownloadToken }, { name: "Code", value: this.Code } ]
+        ServiceHelper.OpenWindowWithParams(url, params);
 
-        var uri = "/WebPages/HowToDownloadPage.aspx?id=" + this.Code;
-        window.open(ServiceHelper.GetLogitudeURL() + uri);
     }
     private NafigateToURL() {
         window.open(this.Uri);

@@ -545,17 +545,18 @@ export class ServiceHelper {
 
         return httpOptions;
     }
-    public static OpenWindowWithParams( url:string,  param: any) {
+    public static OpenWindowWithParams( url:string,  params: any[]) {
         var mapForm = document.createElement("form");
         mapForm.target = "_blank";
         mapForm.method = "POST"; // or "post" if appropriate
         mapForm.action = url;
-        var mapInput = document.createElement("input");
-        mapInput.type = "hidden";
-        mapInput.name = "token";
-        mapInput.setAttribute("value", param);
-        mapForm.appendChild(mapInput);
-
+        for (var i = 0; i < params.length; i++) {
+            var mapInput = document.createElement("input");
+            mapInput.type = "hidden";
+            mapInput.name = params[i].name;
+            mapInput.setAttribute("value", params[i].value);
+            mapForm.appendChild(mapInput);
+        }
         document.body.appendChild(mapForm);
         mapForm.submit();
         document.body.removeChild(mapForm);

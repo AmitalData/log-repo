@@ -464,7 +464,6 @@
     });
 
     $(document).ready(function () {
-        debugger
         var iToken = $("#TokenForResources").val();
         $.Token = iToken;
 
