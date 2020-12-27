@@ -11,10 +11,7 @@
 <#@ assembly name="EnvDTE" #> 
 <#@ import namespace="EnvDTE" #>
 <#@ include file="T4Toolbox.tt" #>
-<#@ assembly name="Microsoft.VisualStudio.Shell.11.0" #>
-<#@ assembly name="Microsoft.VisualStudio.Shell.Interop" #>
-<#@ import namespace="Microsoft.VisualStudio.Shell" #>
-<#@ import namespace="Microsoft.VisualStudio.Shell.Interop" #>
+
 <#
 #>
 
