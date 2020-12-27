@@ -383,12 +383,14 @@ export class LedgerTransactionsFilterControl extends BaseComponent implements On
 
         queryFilterItem = new QueryFilterItem();
         queryFilterItem.FieldName = "FromDate";
+        queryFilterItem.FieldDataType = 'Date';
         queryFilterItem.FieldValue = this.FromDate ? this.FromDate : null;
         queryFilterItem.Operator = "Equals";
         queryFilterItems.push(queryFilterItem);
 
         queryFilterItem = new QueryFilterItem();
         queryFilterItem.FieldName = "ToDate";
+        queryFilterItem.FieldDataType = 'Date';
         queryFilterItem.FieldValue = this.ToDate ? this.ToDate : null;
         queryFilterItem.Operator = "Equals";
         queryFilterItems.push(queryFilterItem);
