@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Script DBType="Main" Module="Customs">
+  <Sql Version="1">
+  </Sql>
+
+  <Oracle Version="1">
+    <![CDATA[
+update COURIERMASTERS t
+set t.OPENDECLARATIONS =
+(
+select d.res from
+(select couriermasterid myid ,count(declarationid) res from
+courierdeclarations
+where declarationid in(select declarationid from DeclarationCourierStatuses where IsClosedForFollowUp=0)
+group by couriermasterid)
+d
+where d.myid = t.id
+)
+where t.id in (select couriermasterid myid from
+courierdeclarations
+where declarationid in(select declarationid from DeclarationCourierStatuses where IsClosedForFollowUp=0));
+    ]]>
+  </Oracle>
+</Script>
