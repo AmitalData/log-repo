@@ -429,6 +429,10 @@ export class AddEditLCLChargeComponent extends BaseComponent implements OnDestro
         this.myCloner.AddField('SaleMaxAmount');
         this.myCloner.AddField('TariffId');
         this.myCloner.AddField('IsRegionalTax');
+        this.myCloner.AddField('SaleCurrencyId');
+        this.myCloner.AddField('SaleExchangeRate');
+        this.myCloner.AddField('SaleIsFixedRate');
+
         this.myCloner.AddEntity(this.EntityPM);
         this.myCloner.AddEntity(this.DataContext.QuotePM);
     }

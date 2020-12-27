@@ -235,7 +235,8 @@ export class LCLChargesComponent extends BaseComponent implements OnDestroy {
         this.SetLabelsAttached();
     }
     SetLabelsAttached() {
-        if (this.IsSaleCurrencySameAsCost) {
+
+        if (this.IsSaleCurrencySameAsCost || this.IsMultiCurrency) {
             this.SalePriceHeader = TextCodeTranslator.Translate("Quote.O.Charges.SalePrice", false).replace("%SaleCurrencyCode", "").replace("(", "").replace(")", "").split('%n');
             this.SaleAmountHeader = TextCodeTranslator.Translate("Quote.O.Charges.SaleAmount", false).replace("%SaleCurrencyCode", "").replace("(", "").replace(")", "").split('%n');
         }
@@ -524,8 +525,8 @@ export class LCLChargesComponent extends BaseComponent implements OnDestroy {
     // Profit
     InitializeProfit() {
         this.SelectedCurrencyCode = this.SaleCurrencyCode;
-        this.IsSameCostCurrency = this.IsSaleCurrencySameAsCost;
-        this.IsFixedCurrency = !this.IsSameCostCurrency;
+        //this.IsSameCostCurrency = this.IsSaleCurrencySameAsCost;
+        //this.IsFixedCurrency = !this.IsSameCostCurrency;
         this.BuildProfitData();
     }
 
@@ -544,61 +545,7 @@ export class LCLChargesComponent extends BaseComponent implements OnDestroy {
         this.BuildProfitData();
     }
 
-    OnSaleCurrencyModeChanged(mode: string) {
-        this.SetFixedSameCurrency(mode);
-    }
-
-    SetFixedSameCurrency(setType: string) {
-        this.IsFixedCurrency = null;
-        this.IsSameCostCurrency = null;
-        var allInItems = this.ItemsSource.Collection.filter(d => d.IsAllIN == true);
-
-        if (setType == "F") {
-            
-            allInItems.forEach((item: QuoteChargeItem) => {
-                item.IsAllIN = false;
-            });
-
-            this.IsFixedCurrency = true;
-            this.IsSameCostCurrency = false;
-            this.IsSaleCurrencySameAsCost = false;
-            this.OnFixedSameChanges();
-
-            allInItems.forEach((item: QuoteChargeItem) => {
-                item.IsAllIN = true;
-            });
-        }
-
-        else {
-            var itemFrieght = this.EntityPM.QuoteCharges.filter(f => f.ChargesGroupCode == "FRT")[0];
-
-            if (this.EntityPM.QuoteCharges.filter(d => d.IsAllIN == true && d.CostCurrencyId != itemFrieght.CostCurrencyId).length > 0) {
-                var messageWindow = new MessageWindow();
-                messageWindow.Show("You can't switch to multi-currency mode till you drop the all-in checks");
-                messageWindow.WindowClosed.subscribe((event: any) => {
-                    this.IsFixedCurrency = true;
-                    this.IsSameCostCurrency = false;
-                    this.IsSaleCurrencySameAsCost = false;
-                });
-            }
-
-            else {
-                allInItems.forEach((item: QuoteChargeItem) => {
-                    item.IsAllIN = false;
-                });
-
-                this.IsFixedCurrency = false;
-                this.IsSameCostCurrency = true;
-                this.IsSaleCurrencySameAsCost = true;
-                this.OnFixedSameChanges();
-
-                allInItems.forEach((item: QuoteChargeItem) => {
-                    item.IsAllIN = true;
-                });
-            }
-        }
-    }
-    OnFixedSameChanges() {
+    OnSaleCurrencyModeChanged(newCurrencyMode: string) {
 
         this.ItemsSource.Collection.forEach((item: QuoteChargeItem) => {
 
@@ -610,9 +557,29 @@ export class LCLChargesComponent extends BaseComponent implements OnDestroy {
                     }
                 }
             }
+        });
 
-            item.OnQuoteSaleCurrencySameAsCost();
-        })
+        this.SetLabelsAttached();
+        this.OnQuoteSaleCurrencyOrModeChanged();
+    }
+
+    OnQuoteSaleCurrencyOrModeChanged() {
+
+        var allInItems = this.ItemsSource.Collection.filter(d => d.IsAllIN == true);
+
+        allInItems.forEach((item: QuoteChargeItem) => {
+            item.IsAllIN = false;
+        });
+
+        this.ItemsSource.Collection.forEach((item: QuoteChargeItem) => {
+            item.OnQuoteSaleCurrencyOrModeChanged();
+        });
+
+        allInItems.forEach((item: QuoteChargeItem) => {
+            item.IsAllIN = true;
+        });
+
+        this.ComputeTotals();
     }
 
     private selectedCurrencyCode: string;
@@ -627,19 +594,27 @@ export class LCLChargesComponent extends BaseComponent implements OnDestroy {
         }
     }
 
-    private isFixedCurrency: boolean = false;
-    get IsFixedCurrency() { return this.isFixedCurrency; }
-    set IsFixedCurrency(value: boolean) {
-        if (this.isFixedCurrency != value) {
-            this.isFixedCurrency = value;
-        }
-    }
+    //private isFixedCurrency: boolean = false;
+    //get IsFixedCurrency() { return this.isFixedCurrency; }
+    //set IsFixedCurrency(value: boolean) {
+    //    if (this.isFixedCurrency != value) {
+    //        this.isFixedCurrency = value;
+    //    }
+    //}
 
-    private isSameCostCurrency: boolean = false;
-    get IsSameCostCurrency() { return this.isSameCostCurrency; }
-    set IsSameCostCurrency(value: boolean) {
-        if (this.isSameCostCurrency != value) {
-            this.isSameCostCurrency = value;
+    //private isSameCostCurrency: boolean = false;
+    //get IsSameCostCurrency() { return this.isSameCostCurrency; }
+    //set IsSameCostCurrency(value: boolean) {
+    //    if (this.isSameCostCurrency != value) {
+    //        this.isSameCostCurrency = value;
+    //    }
+    //}
+
+    get IsMultiCurrency() { return this.EntityPM.IsMultiCurrency; }
+    set IsMultiCurrency(newValue: boolean) {
+        if (this.EntityPM.IsMultiCurrency != newValue) {
+            this.EntityPM.IsMultiCurrency = newValue;
+            this.SetLabelsAttached();
         }
     }
 
@@ -655,8 +630,8 @@ export class LCLChargesComponent extends BaseComponent implements OnDestroy {
     set SaleCurrencyId(value: string) {
         if (this.EntityPM.SaleCurrencyId != value) {
             this.EntityPM.SaleCurrencyId = value;
+
             this.SetUIProperties_Summary();
-            var allInItems = this.ItemsSource.Collection.filter(d => d.IsAllIN == true);
 
             this.SaleCurrencyCode = this.SelectedCurrencyCode = this.GetCurrencyCode(value);
 
@@ -680,20 +655,7 @@ export class LCLChargesComponent extends BaseComponent implements OnDestroy {
             }
 
             else {
-
-                allInItems.forEach((item: QuoteChargeItem) => {
-                    item.IsAllIN = false;
-                });
-
-                this.ItemsSource.Collection.forEach((item: QuoteChargeItem) => {
-                    item.OnQuoteSaleCurrencyChanged();
-                });
-
-                allInItems.forEach((item: QuoteChargeItem) => {
-                    item.IsAllIN = true;
-                });
-
-                this.ComputeTotals();
+                this.OnQuoteSaleCurrencyOrModeChanged();
             }
         }
     }
@@ -710,21 +672,7 @@ export class LCLChargesComponent extends BaseComponent implements OnDestroy {
     set ExchangeRate(newValue: number) {
         if (this.EntityPM.ExchangeRate != newValue) {
             this.EntityPM.ExchangeRate = AppTool.Round(newValue, 5);
-            var allInItems = this.ItemsSource.Collection.filter(d => d.IsAllIN == true);
-
-            allInItems.forEach((item: QuoteChargeItem) => {
-                item.IsAllIN = false;
-            });
-
-            this.ItemsSource.Collection.forEach((item: QuoteChargeItem) => {
-                item.OnQuoteSaleCurrencyChanged();
-            });
-
-            allInItems.forEach((item: QuoteChargeItem) => {
-                item.IsAllIN = true;
-            });
-
-            this.ComputeTotals();
+            this.OnQuoteSaleCurrencyOrModeChanged();
         }
     }
 
@@ -1285,7 +1233,7 @@ export class LCLChargesComponent extends BaseComponent implements OnDestroy {
 }
 export class QuoteChargeItem extends BaseComponent {
     public QuotePM: QuotePM;
-    public EntityPM: QuoteChargePM;   
+    public EntityPM: QuoteChargePM;
     public ObjectTableName: string = "QuoteCharge";
     public DataContext = this;
     public IsNew: boolean = false;
@@ -1294,7 +1242,7 @@ export class QuoteChargeItem extends BaseComponent {
     public IsRoutingRate: boolean = false;
     public IsAddPricestepsEnabled: boolean = false;
     constructor(entity: QuoteChargePM, public fatherComponent: LCLChargesComponent, isNew: boolean) {
-        super(); 
+        super();
         this.IsNew = isNew;
         this.EntityPM = entity;
         this.QuotePM = fatherComponent.EntityPM;
@@ -1364,7 +1312,7 @@ export class QuoteChargeItem extends BaseComponent {
     public IsEditingEnabled: boolean = false;
     public IsEditExchangeRateVisible: boolean = false;
     SetUIProperties() {
-        this.IsEditExchangeRateVisible = this.fatherComponent.IsEditExchangeRateVisible;       
+        this.IsEditExchangeRateVisible = this.fatherComponent.IsEditExchangeRateVisible;
 
         this.IsEditingEnabled = this.fatherComponent.IsEditingEnabled;
         this.SetUIProperties_AllIn();
@@ -1376,13 +1324,13 @@ export class QuoteChargeItem extends BaseComponent {
         this.SetUIProperties_VAT();
         this.SetUIProperties_IsChargeBySteps();
         this.SetUIProperties_IsRegionalTax();
-        
+
         this.UIProperties.SetEnabled("ChargesTypeId", this.ObjectTableName, this.IsEditingEnabled);
         this.UIProperties.SetEnabled("VendorId", this.ObjectTableName, this.IsEditingEnabled);
         this.UIProperties.SetEnabled("Notes", this.ObjectTableName, this.IsEditingEnabled);
         this.UIProperties.SetEnabled("CostIsFixedRate", this.ObjectTableName, this.IsEditingEnabled);
 
-        this.UIProperties.SetEnabled("Step","QuotePriceSteps", this.IsEditingEnabled);
+        this.UIProperties.SetEnabled("Step", "QuotePriceSteps", this.IsEditingEnabled);
         this.UIProperties.SetEnabled("CostUnitPrice", "QuotePriceSteps", this.IsEditingEnabled);
         this.UIProperties.SetEnabled("MarkupValue", "QuotePriceSteps", this.IsEditingEnabled);
         this.UIProperties.SetEnabled("SaleUnitPrice", "QuotePriceSteps", this.IsEditingEnabled);
@@ -1417,7 +1365,9 @@ export class QuoteChargeItem extends BaseComponent {
         }
 
         this.IsAllInCheckBoxVisible = isAllInCheckBoxVisible;
+
         this.SetUIProperties_AllIn_CostCurrency();
+        this.SetUIProperties_AllIn_SaleCurrency();
     }
     SetUIProperties_AllIn_CostCurrency() {
 
@@ -1436,22 +1386,33 @@ export class QuoteChargeItem extends BaseComponent {
         }
 
         this.UIProperties.SetEnabled("CostCurrencyId", this.ObjectTableName, isEnabled_CostCurrencyId);
-       
+
+    }
+    SetUIProperties_AllIn_SaleCurrency() {
+
+        var isEnabled = false;
+
+        if (this.IsEditingEnabled) {
+            if (this.QuotePM.IsMultiCurrency) {
+
+                if (this.ChargesGroupCode == "FRT") {
+                    if (this.QuotePM.QuoteCharges.filter(d => d.IsAllIN).length == 0) {
+                        isEnabled = true;
+                    }
+                }
+
+                else if (!this.IsAllIN) {
+
+                    isEnabled = true;
+                }
+            }
+        }
+
+        this.UIProperties.SetEnabled("SaleCurrencyId", this.ObjectTableName, isEnabled);
+        this.UIProperties.SetEnabled("SaleExchangeRate", this.ObjectTableName, isEnabled);
+        this.UIProperties.SetEnabled("SaleIsFixedRate", this.ObjectTableName, isEnabled);
     }
 
-  SetUIProperties_AllInCost() {
-    var isFromTariff = this.EntityPM != null && this.EntityPM.TariffId != null;
-    if (this.IsEditingEnabled && isFromTariff) {
-      var isEnabled_CostCurrencyId = true;
-      if (this.IsCostAllIn) {
-        isEnabled_CostCurrencyId = false;
-      }
-      this.UIProperties.SetEnabled("CostCurrencyId", this.ObjectTableName, isEnabled_CostCurrencyId || isFromTariff);
-      this.UIProperties.SetEnabled("CostTotalAmount", this.ObjectTableName, isEnabled_CostCurrencyId || isFromTariff);
-      this.UIProperties.SetEnabled("CostUnitPrice", this.ObjectTableName, isEnabled_CostCurrencyId);
-      this.IsEnabled_CostUnitPrice = isEnabled_CostCurrencyId;
-    }
-  }
 
     public IsEnabled_CostQuantity: boolean = false;
     public IsEnabled_CostUnitPrice: boolean = false;
@@ -1483,7 +1444,7 @@ export class QuoteChargeItem extends BaseComponent {
                 case "PRFR":
                 case "GWTN":
                 case "QTY":
-                case"PDCW":
+                case "PDCW":
                     {
                         isEnabled_CostQuantity = false;
                         break;
@@ -1527,18 +1488,32 @@ export class QuoteChargeItem extends BaseComponent {
 
         if (this.IsEditingEnabled) {
             if (FeatureLocator.HasFeaturePermession("Quote", "QouteEditExchangeRate")) {
+
                 if (this.CostCurrencyId) {
                     if (this.CostCurrencyId != SessionLocator.LocalCurrencyId) {
                         if (this.CostCurrencyId != this.fatherComponent.SaleCurrencyId) {
                             isEnabled = true;
                         }
                     }
-                }                                 
+                }
             }
         }
 
         this.IsEnabled_CostExchangeRate = isEnabled;
         this.UIProperties.SetEnabled("CostExchangeRate", this.ObjectTableName, isEnabled);
+    }
+    SetUIProperties_AllInCost() {
+        var isFromTariff = this.EntityPM != null && this.EntityPM.TariffId != null;
+        if (this.IsEditingEnabled && isFromTariff) {
+            var isEnabled_CostCurrencyId = true;
+            if (this.IsCostAllIn) {
+                isEnabled_CostCurrencyId = false;
+            }
+            this.UIProperties.SetEnabled("CostCurrencyId", this.ObjectTableName, isEnabled_CostCurrencyId || isFromTariff);
+            this.UIProperties.SetEnabled("CostTotalAmount", this.ObjectTableName, isEnabled_CostCurrencyId || isFromTariff);
+            this.UIProperties.SetEnabled("CostUnitPrice", this.ObjectTableName, isEnabled_CostCurrencyId);
+            this.IsEnabled_CostUnitPrice = isEnabled_CostCurrencyId;
+        }
     }
 
     public IsEnabled_SaleQuantity: boolean = false;
@@ -1610,6 +1585,41 @@ export class QuoteChargeItem extends BaseComponent {
         this.UIProperties.SetEnabled("SaleMeasurementId", this.ObjectTableName, isEnabled_SaleMeasurement);
         this.UIProperties.SetEnabled("SaleMinAmount", this.ObjectTableName, isEnabled_SaleMinAmount);
         this.UIProperties.SetEnabled("SaleMaxAmount", this.ObjectTableName, isEnabled_SaleMinAmount);
+        this.SetUIProperties_SaleRate();
+        this.SetUIProperties_AllInCost();
+    }
+    SetUIProperties_SaleRate() {
+        var isEnabled = false;
+
+        if (this.IsEditingEnabled) {
+            if (FeatureLocator.HasFeaturePermession("Quote", "QouteEditExchangeRate")) {
+
+                if (this.SaleCurrencyId) {
+                    if (this.SaleCurrencyId != SessionLocator.LocalCurrencyId) {
+                        if (this.SaleCurrencyId != this.fatherComponent.SaleCurrencyId) {
+                            isEnabled = true;
+                        }
+                    }
+                }
+            }
+        }
+
+        //this.IsEnabled_SaleExchangeRate = isEnabled;
+        this.UIProperties.SetEnabled("SaleExchangeRate", this.ObjectTableName, isEnabled);
+    }
+    SetUIProperties_AllInSale() {
+
+        var isEnabled = false;
+
+        if (this.IsEditingEnabled) {
+            if (!this.IsAllIN) {
+                isEnabled = true;
+            }
+        }
+
+        this.UIProperties.SetEnabled("SaleCurrencyId", this.ObjectTableName, isEnabled);
+        this.UIProperties.SetEnabled("SaleExchangeRate", this.ObjectTableName, isEnabled);
+        this.UIProperties.SetEnabled("SaleIsFixedRate", this.ObjectTableName, isEnabled);
     }
 
     public CostMinMaxIconTitle: string = "";
@@ -1719,7 +1729,7 @@ export class QuoteChargeItem extends BaseComponent {
         var myCostPrice: number = this.CostUnitPriceInSaleCurrency;
         var mySalePrice: number = this.SaleUnitPrice;
 
-        if (AppTool.IsNullOrEmpty(this.CellMarkupText) && QuoteTool.IsQuoteStageDraft(this.fatherComponent.EntityPM) && !AppTool.IsNullOrEmpty(myCostPrice) && !AppTool.IsNullOrEmpty(mySalePrice) && (myCostPrice == mySalePrice) ) {
+        if (AppTool.IsNullOrEmpty(this.CellMarkupText) && QuoteTool.IsQuoteStageDraft(this.fatherComponent.EntityPM) && !AppTool.IsNullOrEmpty(myCostPrice) && !AppTool.IsNullOrEmpty(mySalePrice) && (myCostPrice == mySalePrice)) {
             this.SaleUnitPriceColor = this.IsEditingEnabled ? FontTool.Orange : FontTool.CellDisabledColor;
         }
 
@@ -1867,7 +1877,7 @@ export class QuoteChargeItem extends BaseComponent {
             this.EntityPM.ChargesTypeName = newValue;
         }
     }
-    
+
     get ChargesGroupCode() { return this.EntityPM.ChargesGroupCode; }
     set ChargesGroupCode(newValue: string) {
         if (this.EntityPM.ChargesGroupCode != newValue) {
@@ -2077,7 +2087,7 @@ export class QuoteChargeItem extends BaseComponent {
 
                     if (list.Code == "PRFR") {
                         this.CostCurrencyId = SessionLocator.TenantPM.FreightCurrencyId;
-                    }                    
+                    }
                 }
             }
 
@@ -2099,7 +2109,7 @@ export class QuoteChargeItem extends BaseComponent {
     get CostMeasurementShortName() { return this.EntityPM.CostMeasurementShortName; }
     set CostMeasurementShortName(newValue: string) {
         if (this.EntityPM.CostMeasurementShortName != newValue) {
-            this.EntityPM.CostMeasurementShortName = newValue;            
+            this.EntityPM.CostMeasurementShortName = newValue;
         }
     }
 
@@ -2151,7 +2161,7 @@ export class QuoteChargeItem extends BaseComponent {
             this.fatherComponent.CheckUpdateQuantities();
         }
     }
-    
+
     get CostUnitPriceInSaleCurrency() { return this.EntityPM.CostUnitPriceInSaleCurrency; }
     set CostUnitPriceInSaleCurrency(value: number) {
         if (this.EntityPM.CostUnitPriceInSaleCurrency != value) {
@@ -2168,7 +2178,7 @@ export class QuoteChargeItem extends BaseComponent {
 
             if (this.ChargesGroupCode == "FRT") {
                 this.fatherComponent.OnFreightAmountChanged();
-            }           
+            }
         }
     }
 
@@ -2192,7 +2202,7 @@ export class QuoteChargeItem extends BaseComponent {
         if (this.EntityPM.CostExchangeRate != value) {
             this.EntityPM.CostExchangeRate = AppTool.Round(value, 5);
 
-            if (this.QuotePM.IsSaleCurrencySameAsCost) {
+            if (this.CostCurrencyId == this.SaleCurrencyId) {
                 this.SaleExchangeRate = value;
             }
 
@@ -2272,7 +2282,7 @@ export class QuoteChargeItem extends BaseComponent {
         });
     }
 
-  SetCostQuantity(ChargesGroupCode: string = "FRT") {
+    SetCostQuantity(ChargesGroupCode: string = "FRT") {
         var myResult = null;
 
         if (this.IsAdhoc) {
@@ -2345,7 +2355,7 @@ export class QuoteChargeItem extends BaseComponent {
             this.ComputeCostInSaleAmount();
         }
 
-        this.SetUIProperties_CostMinMax();                
+        this.SetUIProperties_CostMinMax();
         this.fatherComponent.ComputeTotals();
         this.fatherComponent.CheckUpdateQuantities();
     }
@@ -2454,10 +2464,10 @@ export class QuoteChargeItem extends BaseComponent {
         if (this.EntityPM.SaleUnitPrice != value) {
             this.EntityPM.SaleUnitPrice = AppTool.Round(value, 3);
             this.ComputeSaleAmounts();
-            this.fatherComponent.CheckUpdateQuantities();            
+            this.fatherComponent.CheckUpdateQuantities();
         }
     }
-    
+
     get SaleMinAmount() { return this.EntityPM.SaleMinAmount; }
     set SaleMinAmount(newValue: number) {
         if (this.EntityPM.SaleMinAmount != newValue) {
@@ -2498,7 +2508,7 @@ export class QuoteChargeItem extends BaseComponent {
 
             if (this.ChargesGroupCode == "FRT") {
                 this.fatherComponent.OnFreightAmountChanged();
-            } 
+            }
 
             var myTotalAmount = value;
             var myPrice = this.SaleUnitPrice;
@@ -2516,9 +2526,9 @@ export class QuoteChargeItem extends BaseComponent {
             this.SetUIProperties_SaleMinMax();
             this.fatherComponent.ComputeTotals();
             this.SetUIProperties_CellsColors();
-        }        
+        }
     }
-    
+
     get SaleTotalAmountLocal() { return this.EntityPM.SaleTotalAmountLocal; }
     set SaleTotalAmountLocal(ivalue: number) {
 
@@ -2580,7 +2590,7 @@ export class QuoteChargeItem extends BaseComponent {
             this.SetUIProperties_CellsColors();
         }
     }
-    
+
     get SaleExchangeRate() { return this.EntityPM.SaleExchangeRate; }
     set SaleExchangeRate(value: number) {
         if (this.EntityPM.SaleExchangeRate != value) {
@@ -2588,7 +2598,6 @@ export class QuoteChargeItem extends BaseComponent {
             this.ComputeSaleAmounts();
         }
     }
-
 
     SetSaleQuantity(ChargesGroupCode: string = "FRT") {
         var myResult = null;
@@ -2614,7 +2623,6 @@ export class QuoteChargeItem extends BaseComponent {
 
         this.SaleQuantity = myResult;
     }
-
 
     ComputeSaleAmounts() {
         var totalAmount = null;
@@ -2745,7 +2753,7 @@ export class QuoteChargeItem extends BaseComponent {
                             myMarkUpCode = "P";
                         }
 
-                        if (!AppTool.IsNullOrEmpty(myCostPrice)) {                            
+                        if (!AppTool.IsNullOrEmpty(myCostPrice)) {
                             if (value.indexOf("+") > -1) {
                                 if (myMarkUpCode == "F") {
                                     mySalePrice = myCostPrice + myMarkUpValue;
@@ -2946,36 +2954,8 @@ export class QuoteChargeItem extends BaseComponent {
         }
     }
 
-    OnQuoteSaleCurrencyChanged() {
-        if (this.CostCurrencyId == this.fatherComponent.SaleCurrencyId) {
-            if (this.CostExchangeRate != this.fatherComponent.ExchangeRate) {
-                this.CostExchangeRate = this.fatherComponent.ExchangeRate;
-            }
-        }
+    OnQuoteSaleCurrencyOrModeChanged() {
 
-        else {
-            this.CostExchangeRate = this.fatherComponent.GetCurrencyRate(this.CostCurrencyId);
-        }
-
-        if (this.QuotePM.IsSaleCurrencySameAsCost) {
-            this.EntityPM.SaleCurrencyId = this.EntityPM.CostCurrencyId;
-            this.EntityPM.SaleCurrencyCode = this.EntityPM.CostCurrencyCode;
-            this.EntityPM.SaleExchangeRate = this.EntityPM.CostExchangeRate;
-        }
-
-        else {
-            this.EntityPM.SaleCurrencyId = this.fatherComponent.SaleCurrencyId;
-            this.EntityPM.SaleCurrencyCode = this.fatherComponent.SaleCurrencyCode;
-            this.EntityPM.SaleExchangeRate = this.fatherComponent.ExchangeRate;
-        }
-
-        // InSaleCurrency
-        this.ComputeCostInSalePrice();
-        this.ComputeCostInSaleAmount();
-        this.EntityPM.SaleTotalAmountLocal = AppTool.IsNullOrEmpty(this.SaleTotalAmount) ? null : AppTool.Round(this.SaleTotalAmount * this.SaleExchangeRate, 2);
-        this.SetUIProperties_AllIn();
-    }
-    OnQuoteSaleCurrencySameAsCost() {
         if (this.CostCurrencyId == this.QuotePM.SaleCurrencyId) {
             if (this.CostExchangeRate != this.QuotePM.ExchangeRate) {
                 this.CostExchangeRate = this.QuotePM.ExchangeRate;
@@ -2993,9 +2973,9 @@ export class QuoteChargeItem extends BaseComponent {
         }
 
         else {
-            this.EntityPM.SaleCurrencyId = this.fatherComponent.SaleCurrencyId;
-            this.EntityPM.SaleCurrencyCode = this.fatherComponent.SaleCurrencyCode;
-            this.EntityPM.SaleExchangeRate = this.fatherComponent.ExchangeRate;            
+            this.EntityPM.SaleCurrencyId = this.QuotePM.SaleCurrencyId;
+            this.EntityPM.SaleCurrencyCode = this.QuotePM.SaleCurrencyCode;
+            this.EntityPM.SaleExchangeRate = this.QuotePM.ExchangeRate;
         }
 
         // InSaleCurrency
@@ -3004,6 +2984,7 @@ export class QuoteChargeItem extends BaseComponent {
         this.EntityPM.SaleTotalAmountLocal = AppTool.IsNullOrEmpty(this.SaleTotalAmount) ? null : AppTool.Round(this.SaleTotalAmount * this.SaleExchangeRate, 2);
         this.SetUIProperties_AllIn();
     }
+
     OnMeasurementsChanged() {
         if (this.CostMeasurementId != this.SaleMeasurementId) {
 
@@ -3028,7 +3009,7 @@ export class QuoteChargeItem extends BaseComponent {
     SetEditScreenGridHeaders() {
         if (this.fatherComponent.IsSaleCurrencySameAsCost) {
             var myCurrencyCode = AppTool.IsNullOrEmpty(this.CostCurrencyCode) ? "" : this.CostCurrencyCode;
-            this.SalePriceHeader = TextCodeTranslator.Translate("Quote.O.Charges.SalePrice",false).replace("%SaleCurrencyCode", myCurrencyCode).split('%n');
+            this.SalePriceHeader = TextCodeTranslator.Translate("Quote.O.Charges.SalePrice", false).replace("%SaleCurrencyCode", myCurrencyCode).split('%n');
             this.SaleAmountHeader = TextCodeTranslator.Translate("Quote.O.Charges.SaleAmount", false).replace("%SaleCurrencyCode", myCurrencyCode).split('%n');
         }
 
@@ -3051,7 +3032,7 @@ export class QuoteChargeItem extends BaseComponent {
             isEnabled = false;
         }
 
-        else {          
+        else {
             if (this.CostMeasurementCode == "FIXD" && this.SaleMeasurementCode == "FIXD") {
                 isEnabled = false;
             }

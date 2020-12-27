@@ -856,11 +856,21 @@
                             <table>
                                 <tr style="height:25px;">
                                     <td style="width:150px;">
-                                        <LogLabel [ObjectFieldName]="'SaleCurrencyId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                        <LogLabel [ObjectFieldName]="'SaleCurrencyId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Text]="'Sale Currency Mode:'"></LogLabel>
                                     </td>
 
                                     <td>
-                                        <QuoteSaleCurrencyTypeComponent [EntityPM]="EntityPM" (SelectedValueChanged)="OnSaleCurrencyModeChanged($event)"></QuoteSaleCurrencyTypeComponent>
+                                        <table>
+                                            <tr>
+                                                <td>
+                                                    <QuoteSaleCurrencyTypeComponent [EntityPM]="EntityPM" (SelectedValueChanged)="OnSaleCurrencyModeChanged($event)"></QuoteSaleCurrencyTypeComponent>
+                                                </td>
+
+                                                <td style="width: 36px;">
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+                                        </table>
                                         <!--<table>
                                             <tr>
                                                 <td style="width:1px;">
