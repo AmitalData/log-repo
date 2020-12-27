@@ -37,7 +37,7 @@ export class AdvancedDatePickerResolverComponent {
                     dateValue = this.GetPreviousQuarterFirstDate();
                     break;
                 case 'BTY':
-                    dateValue = new Date(date.getFullYear(), 1);
+                    dateValue = new Date(date.getFullYear(), 0);
                     break;
                 case 'BLY':
                     dateValue = new Date(date.getFullYear() - 1, 0);

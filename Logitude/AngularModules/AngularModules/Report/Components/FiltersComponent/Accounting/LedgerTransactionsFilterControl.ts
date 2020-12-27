@@ -543,8 +543,8 @@ export class LedgerTransactionsFilterControl extends BaseComponent implements On
             this.ValidationErrorsList.push(TextCodeTranslator.Translate("GLAccounts.O.tofieldrequired"));
             isValid = false;
         }
-
-        if (this.FromDate > this.ToDate) {
+        var advancedDatePickerResolverComponent: AdvancedDatePickerResolverComponent = new AdvancedDatePickerResolverComponent();
+        if (!advancedDatePickerResolverComponent.SetValidityBetweenTwoDateOptions(this.FromDate, this.ToDate)) {
             this.ValidationErrorsList.push(TextCodeTranslator.Translate("Accounting.General.O.FromDateMustSmallerToDate"));
             isValid = false;
         }
