@@ -1205,7 +1205,7 @@ on record.JournalId equals j.Id
         {
 
             int days = DateTime.DaysInMonth(taxReportMonth.Value.Year, taxReportMonth.Value.Month);
-            DateTime taxdate = new DateTime(taxReportMonth.Value.Year, taxReportMonth.Value.Month, days);
+            DateTime endOfTaxReportDate = new DateTime(taxReportMonth.Value.Year, taxReportMonth.Value.Month, days,23,59,59);
 
             FullAccountingSettingRepository fullAccountingSettingRepository = new FullAccountingSettingRepository(tenant);
             FullAccountingSetting setting = fullAccountingSettingRepository.GetSingleFullAccountingSetting(tenant);
@@ -1215,9 +1215,14 @@ on record.JournalId equals j.Id
             return (from a in context.LedgerTransactions
                     join j in context.Journals on a.JournalId equals j.Id
                     join m in context.JournalAdditionalDatas on j.Id equals m.JournalId
-                    where (m.TaxReportId == null || m.TaxReportTransmitStatusCode == "2" || m.TaxReportTransmitStatusCode==null) && a.AccountingDate <= taxdate
-                   // && a.DocumentDate >= last180days
-                    && a.AccountId == setting.VATInputsGLAccountId && a.Tenant == tenant && a.LocalAmountDebit != 0 && a.OppositeAccountId != setting.VATOutputGLAccountId
+
+                    where (m.TaxReportId == null || m.TaxReportTransmitStatusCode == "2" || m.TaxReportTransmitStatusCode==null) 
+                            && a.DocumentDate <= endOfTaxReportDate
+                            && a.AccountId == setting.VATInputsGLAccountId 
+                            && a.Tenant == tenant 
+                            && a.LocalAmountDebit != 0 
+                            && a.OppositeAccountId != setting.VATOutputGLAccountId
+
                     select new TaxReportData()
                     {
                         Id = Guid.NewGuid().ToString(),
