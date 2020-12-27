@@ -86,15 +86,15 @@ private selectedMonth: CodeNameClass;
         else {
             this.ByMonth = false;
         }
-        this.SetEmailProperties();
+        this.SetEmailValue();
+        this.SetEmailUIProperties();
     }
   }
 
-    private SetEmailProperties() {
+    private SetEmailValue() {
         if (!AppTool.IsNullOrEmpty(this.entityPM.Email))
             this.enterdEmail = this.entityPM.Email;
         this.entityPM.Email = this.FilterSelectedValue == "Month" ? " " : this.enterdEmail;
-        this.SetEmailUIProperties();
     }
 
     SetEmailUIProperties() {
