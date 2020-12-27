@@ -153,7 +153,7 @@ namespace Logitude.HybridTest.WcfCallers
                 ServiceFilterType = null,
             };
             Response serviceResponse = new Response();
-            object[] serviceParameters = new object[] { EnvironmentGlobalParams.MainTenant, 0, 10, serviceResponse };
+            object[] serviceParameters = new object[] { EnvironmentGlobalParams.MainTenant, 0, 20, serviceResponse };
             ServiceOutcome serviceOutcome = WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters);
 
             ChargesTypeList[] chargesTypes = (ChargesTypeList[])serviceOutcome.Result;
