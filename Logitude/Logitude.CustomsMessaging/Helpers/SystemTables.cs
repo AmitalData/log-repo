@@ -220,6 +220,7 @@ namespace Logitude.CustomsMessaging.Helpers
                 case "1345":
                 case "1416":
                 case "1422":
+                case "2192":
                     return true;
                     break;
                 default:
