@@ -156,8 +156,6 @@
     <Compile Include="FakeMessagingServices\Fake_DCAInDF_8211_CollateralRequestMsgMessagingServices.cs" />
     <Compile Include="FakeMessagingServices\Fake_DCAInDF_NG_2470_MSG16001_ReleaseGoodsMessagingService.cs" />
     <Compile Include="FakeMessagingServices\Fake_DCAInTSH_MSG2_3050_PaymentOrderReplyMessagingService.cs" />
-    <Compile Include="FakeMessagingServices\Fake_VAL_NG_8228_RequiredDocumentVerificationDecisionResponseService.cs" />
-    <Compile Include="FakeMessagingServices\Fake_VAL_NG_8227_MSG_520_RequiredDocumentMessage.cs" />
     <Compile Include="FakeMessagingServices\Fake_DF_NG_5118_MSG14004_ImportDeclarationCancellationReplyMsg.cs" />
     <Compile Include="FakeMessagingServices\Fake_ImportDeclaration_Response.cs" />
     <Compile Include="FakeMessagingServices\FakeDCA_MSG2030_DepositRequestCreatedInfoMessagingServices.cs" />
@@ -478,8 +476,7 @@
     <Compile Include="ResponseServices\VE_MSG013_VendorAddCommunicationDeviceResponseService.cs" />
     <Compile Include="ResponseServices\VE_MSG052_VendorSearchResultsForCustomsAgentResponseService.cs" />
     <Compile Include="ResponseServices\VP_NG_2691_MSG101_VehicleInResponseService.cs" />
-    <Compile Include="Tasks\SendDeclarationStatus.cs" />
-    <Compile Include="Tasks\SendManifestService.cs" />
+     <Compile Include="Tasks\SendManifestService.cs" />
     <Compile Include="Testers\LoadTest\CreateCustomFileService.cs" />
     <Compile Include="Testers\Messages\UniDebug01_Msg.cs" />
     <Compile Include="Testers\Mirit\MiritStartUp.cs" />
