@@ -1513,27 +1513,39 @@ export class FCLQuoteChargeItem extends BaseComponent {
     }
     SetUIProperties_AllIn_SaleCurrency() {
 
-        var isEnabled = false;
+        var isEnabled_Id = false;
+        var isEnabled_Rate = false;
 
         if (this.IsEditingEnabled) {
             if (this.QuotePM.IsMultiCurrency) {
 
                 if (this.ChargesGroupCode == "FRT") {
                     if (this.QuotePM.QuoteCharges.filter(d => d.IsAllIN).length == 0) {
-                        isEnabled = true;
+                        isEnabled_Id = true;
                     }
                 }
 
                 else if (!this.IsAllIN) {
+                    isEnabled_Id = true;
+                }
 
-                    isEnabled = true;
+                if (isEnabled_Id) {
+                    if (this.SaleCurrencyId) {
+                        if (this.SaleCurrencyId != SessionLocator.LocalCurrencyId) {
+                            if (this.SaleCurrencyId != this.fatherComponent.SaleCurrencyId) {
+                                if (this.SaleCurrencyId != this.CostCurrencyId) {
+                                    isEnabled_Rate = true;
+                                }
+                            }
+                        }
+                    }
                 }
             }
         }
 
-        this.UIProperties.SetEnabled("SaleCurrencyId", this.ObjectTableName, isEnabled);
-        this.UIProperties.SetEnabled("SaleExchangeRate", this.ObjectTableName, isEnabled);
-        this.UIProperties.SetEnabled("SaleIsFixedRate", this.ObjectTableName, isEnabled);
+        this.UIProperties.SetEnabled("SaleCurrencyId", this.ObjectTableName, isEnabled_Id);
+        this.UIProperties.SetEnabled("SaleExchangeRate", this.ObjectTableName, isEnabled_Rate);
+        this.UIProperties.SetEnabled("SaleIsFixedRate", this.ObjectTableName, false);
     }
     
     public IsEnabled_CostQuantity: boolean = false;
@@ -1741,41 +1753,6 @@ export class FCLQuoteChargeItem extends BaseComponent {
         this.UIProperties.SetEnabled("SaleMeasurementId", this.ObjectTableName, isEnabled_SaleMeasurement);
         this.UIProperties.SetEnabled("SaleMinAmount", this.ObjectTableName, isEnabled_SaleMinAmount);
         this.UIProperties.SetEnabled("SaleMaxAmount", this.ObjectTableName, isEnabled_SaleMinAmount);
-        this.SetUIProperties_SaleRate();
-        this.SetUIProperties_AllInSale();
-    }
-    SetUIProperties_SaleRate() {
-        var isEnabled = false;
-
-        if (this.IsEditingEnabled) {
-            if (FeatureLocator.HasFeaturePermession("Quote", "QouteEditExchangeRate")) {
-
-                if (this.SaleCurrencyId) {
-                    if (this.SaleCurrencyId != SessionLocator.LocalCurrencyId) {
-                        if (this.SaleCurrencyId != this.fatherComponent.SaleCurrencyId) {
-                            isEnabled = true;
-                        }
-                    }
-                }
-            }
-        }
-
-        //this.IsEnabled_SaleExchangeRate = isEnabled;
-        this.UIProperties.SetEnabled("SaleExchangeRate", this.ObjectTableName, isEnabled);
-    }
-    SetUIProperties_AllInSale() {
-
-        var isEnabled = false;
-
-        if (this.IsEditingEnabled) {
-            if (!this.IsAllIN) {
-                isEnabled = true;
-            }
-        }
-
-        this.UIProperties.SetEnabled("SaleCurrencyId", this.ObjectTableName, isEnabled);
-        this.UIProperties.SetEnabled("SaleExchangeRate", this.ObjectTableName, isEnabled);
-        this.UIProperties.SetEnabled("SaleIsFixedRate", this.ObjectTableName, isEnabled);
     }
 
     public SaleUnitPriceColor: string = FontTool.Black;
