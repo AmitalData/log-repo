@@ -195,20 +195,27 @@ namespace Logitude.Infrastructure.BL
 			 
             all.Add(new ToggleDetails()
             {    
-                Code = "EQW", 
-                Name = "Export Query Data Via WorkerRole", 
-                Description = "Export Query Data to Excel Via WorkerRole", 
-                SearchFields = "Export Query Data Via WorkerRole", 
-			});
-			
-            all.Add(new ToggleDetails()
-            {    
                 Code = "ACP", 
                 SearchFields = "ACP,Accruals Approvement", 
                 Name = "Accruals Approvement", 
                 Description = "Accruals Approvement Toggle", 
 			});
-			
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "EQW", 
+                Name = "Export Query Data Via WorkerRole", 
+                Description = "Export Query Data to Excel Via WorkerRole", 
+                SearchFields = "Export Query Data Via WorkerRole", 
+			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "QMC", 
+                Name = "Quote Multi Currency Mode", 
+                SearchFields = "QMC, Quote Multi Currency Mode", 
+                Description = "Quote Multi Currency Mode", 
+			});
 			
             return all;
        }

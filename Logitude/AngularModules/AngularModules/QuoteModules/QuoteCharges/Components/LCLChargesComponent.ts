@@ -525,8 +525,6 @@ export class LCLChargesComponent extends BaseComponent implements OnDestroy {
     // Profit
     InitializeProfit() {
         this.SelectedCurrencyCode = this.SaleCurrencyCode;
-        //this.IsSameCostCurrency = this.IsSaleCurrencySameAsCost;
-        //this.IsFixedCurrency = !this.IsSameCostCurrency;
         this.BuildProfitData();
     }
 
@@ -546,19 +544,6 @@ export class LCLChargesComponent extends BaseComponent implements OnDestroy {
     }
 
     OnSaleCurrencyModeChanged(newCurrencyMode: string) {
-
-        this.ItemsSource.Collection.forEach((item: QuoteChargeItem) => {
-
-            if (item.CostCurrencyId) {
-                if (item.CostCurrencyId != this.EntityPM.SaleCurrencyId) {
-
-                    if (AppTool.IsNullOrEmpty(item.CostUnitPrice)) {
-                        item.SaleUnitPrice = null;
-                    }
-                }
-            }
-        });
-
         this.SetLabelsAttached();
         this.OnQuoteSaleCurrencyOrModeChanged();
     }
@@ -1413,7 +1398,6 @@ export class QuoteChargeItem extends BaseComponent {
         this.UIProperties.SetEnabled("SaleIsFixedRate", this.ObjectTableName, isEnabled);
     }
 
-
     public IsEnabled_CostQuantity: boolean = false;
     public IsEnabled_CostUnitPrice: boolean = false;
     public IsEnabled_CostMinAmount: boolean = false;
@@ -1586,7 +1570,7 @@ export class QuoteChargeItem extends BaseComponent {
         this.UIProperties.SetEnabled("SaleMinAmount", this.ObjectTableName, isEnabled_SaleMinAmount);
         this.UIProperties.SetEnabled("SaleMaxAmount", this.ObjectTableName, isEnabled_SaleMinAmount);
         this.SetUIProperties_SaleRate();
-        this.SetUIProperties_AllInCost();
+        this.SetUIProperties_AllInSale();
     }
     SetUIProperties_SaleRate() {
         var isEnabled = false;
@@ -2362,7 +2346,7 @@ export class QuoteChargeItem extends BaseComponent {
     ComputeCostInSaleAmount() {
         var myResult = null;
 
-        if (this.QuotePM.IsSaleCurrencySameAsCost) {
+        if (this.CostCurrencyId == this.SaleCurrencyId) {
             if (!AppTool.IsNullOrEmpty(this.CostTotalAmount)) {
                 myResult = this.CostTotalAmount;
             }
@@ -2379,7 +2363,7 @@ export class QuoteChargeItem extends BaseComponent {
     ComputeCostInSalePrice() {
         var myResult = null;
 
-        if (this.QuotePM.IsSaleCurrencySameAsCost) {
+        if (this.CostCurrencyId == this.SaleCurrencyId) {
             if (!AppTool.IsNullOrEmpty(this.CostUnitPrice)) {
                 myResult = this.CostUnitPrice;
             }
@@ -2956,6 +2940,8 @@ export class QuoteChargeItem extends BaseComponent {
 
     OnQuoteSaleCurrencyOrModeChanged() {
 
+        this.CheckAndRemoveItemSalePrice();
+
         if (this.CostCurrencyId == this.QuotePM.SaleCurrencyId) {
             if (this.CostExchangeRate != this.QuotePM.ExchangeRate) {
                 this.CostExchangeRate = this.QuotePM.ExchangeRate;
@@ -2985,6 +2971,17 @@ export class QuoteChargeItem extends BaseComponent {
         this.SetUIProperties_AllIn();
     }
 
+    private CheckAndRemoveItemSalePrice() {
+        if (this.CostCurrencyId) {
+            if (this.CostCurrencyId != this.QuotePM.SaleCurrencyId) {
+
+                if (AppTool.IsNullOrEmpty(this.CostUnitPrice)) {
+                    this.SaleUnitPrice = null;
+                }
+            }
+        }
+    }
+
     OnMeasurementsChanged() {
         if (this.CostMeasurementId != this.SaleMeasurementId) {
 
@@ -3007,7 +3004,7 @@ export class QuoteChargeItem extends BaseComponent {
     public SalePriceHeader: any = [];
     public SaleAmountHeader: any = [];
     SetEditScreenGridHeaders() {
-        if (this.fatherComponent.IsSaleCurrencySameAsCost) {
+        if (this.fatherComponent.IsSaleCurrencySameAsCost || this.fatherComponent.IsMultiCurrency) {
             var myCurrencyCode = AppTool.IsNullOrEmpty(this.CostCurrencyCode) ? "" : this.CostCurrencyCode;
             this.SalePriceHeader = TextCodeTranslator.Translate("Quote.O.Charges.SalePrice", false).replace("%SaleCurrencyCode", myCurrencyCode).split('%n');
             this.SaleAmountHeader = TextCodeTranslator.Translate("Quote.O.Charges.SaleAmount", false).replace("%SaleCurrencyCode", myCurrencyCode).split('%n');

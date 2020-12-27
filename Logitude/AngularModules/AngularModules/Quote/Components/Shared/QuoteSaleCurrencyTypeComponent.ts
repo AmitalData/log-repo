@@ -3,6 +3,7 @@ import { QuotePM } from '../../EntityPMs/QuotePM';
 import { CodeNameClass } from '../../../Infrastructure/DataContracts/CodeNameClass';
 import { TextCodeTranslator } from '../../../Infrastructure/Utilities/TextCodeTranslator';
 import { MessageWindow } from '../../../Controls/Windows/MessageWindow';
+import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator';
 
 @Component({
     selector: "QuoteSaleCurrencyTypeComponent",
@@ -16,14 +17,20 @@ export class QuoteSaleCurrencyTypeComponent implements OnInit {
     ItemsSource: CodeNameClass[] = [];
     @Output() SelectedValueChanged = new EventEmitter();
 
-    constructor() {
-        this.ItemsSource.push(new CodeNameClass("F", TextCodeTranslator.Translate("Quote.O.Charges.Fixed")));
-        this.ItemsSource.push(new CodeNameClass("S", TextCodeTranslator.Translate("Quote.O.Charges.SameAsCost")));
-        this.ItemsSource.push(new CodeNameClass("M", TextCodeTranslator.Translate("Quote.F.IsMultiCurrency")));
+    ngOnInit() {
+        this.FillComboBox();
+        this.InitSelectedItem();
     }
 
-    ngOnInit() {
-        this.InitSelectedItem();
+    FillComboBox() {
+        var hasToggleFeature = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "QCM" && d.TenantNumber == SessionLocator.Tenant)[0]
+
+        this.ItemsSource.push(new CodeNameClass("F", TextCodeTranslator.Translate("Quote.O.Charges.Fixed")));
+        this.ItemsSource.push(new CodeNameClass("S", TextCodeTranslator.Translate("Quote.O.Charges.SameAsCost")));
+
+        if (this.EntityPM.IsMultiCurrency || hasToggleFeature) {
+            this.ItemsSource.push(new CodeNameClass("M", TextCodeTranslator.Translate("Quote.F.IsMultiCurrency")));
+        }
     }
 
     InitSelectedItem() {
