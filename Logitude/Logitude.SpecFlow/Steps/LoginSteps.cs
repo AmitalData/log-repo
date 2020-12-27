@@ -19,15 +19,10 @@ namespace Logitude.SpecFlow.Steps
             _loginParameters.GetToken = true;
         }
 
-        [Given(@"The email is (.*)")]
-        public void GivenTheEmailIs(string email)
+        [Given(@"Email is (.*) and password is (.*)")]
+        public void GivenTheEmailIs(string email, string password)
         {
             _loginParameters.Email = email;
-        }
-
-        [Given(@"The password is (.*)")]
-        public void GivenThePasswordIs(string password)
-        {
             _loginParameters.Password = password;
         }
 

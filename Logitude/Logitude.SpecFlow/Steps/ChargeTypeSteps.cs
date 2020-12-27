@@ -1,6 +1,7 @@
 ﻿using FluentAssertions;
 using Logitude.SpecFlow.Models;
 using TechTalk.SpecFlow;
+using TechTalk.SpecFlow.Assist;
 
 namespace Logitude.SpecFlow.Steps
 {
@@ -14,32 +15,17 @@ namespace Logitude.SpecFlow.Steps
         {
             _user = userData;
             _chargeTypePM = chargeTypePM;
-
             _chargeTypePM.Tenant = _user.Tenant;
         }
 
-        [Given(@"The charge type code is (.*)")]
-        public void GivenTheChargeTypeCodeIs(string chargeTypeCode)
+        [Given(@"Charge type with the following data")]
+        public void GivenChargeTypeWithTheFollowingData(Table chargeTypeDataTable)
         {
-            _chargeTypePM.Code = chargeTypeCode;
-        }
-
-        [Given(@"The charge type name is (.*)")]
-        public void GivenTheChargeTypeNameIs(string chargeTypeName)
-        {
-            _chargeTypePM.EnglishName = chargeTypeName;
-        }
-
-        [Given(@"The charge type group code is (.*)")]
-        public void GivenTheChargeTypeGroupCodeIs(string chargeTypeGroupCode)
-        {
-            _chargeTypePM.ChargesGroupCode = chargeTypeGroupCode;
-        }
-
-        [Given(@"The charge type measurement id is (.*)")]
-        public void GivenTheChargeTypeMeasurementIdIs(string chargeTypeMeasurementId)
-        {
-            _chargeTypePM.MeasurementId = chargeTypeMeasurementId;
+            ChargeTypePM chargeTypePM = chargeTypeDataTable.CreateInstance<ChargeTypePM>();
+            _chargeTypePM.Code = chargeTypePM.Code;
+            _chargeTypePM.EnglishName = chargeTypePM.EnglishName;
+            _chargeTypePM.ChargesGroupCode = chargeTypePM.ChargesGroupCode;
+            _chargeTypePM.MeasurementId = chargeTypePM.MeasurementId;
         }
 
         [When(@"Try to create the charge type")]

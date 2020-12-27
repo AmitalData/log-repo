@@ -81,15 +81,12 @@ namespace Logitude.SpecFlow.Features
 #line 6
 #line hidden
 #line 8
- testRunner.Given("The email is ahmadb123@mail.com", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+ testRunner.Given("Email is ahmadb123@mail.com and password is ahmed13!A15", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
 #line 9
- testRunner.Given("The password is ahmed13!A15", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line hidden
-#line 10
  testRunner.When("Make login", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 11
+#line 10
  testRunner.Then("The user successfully logged in", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
         }
@@ -107,7 +104,7 @@ namespace Logitude.SpecFlow.Features
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Create a new charge type", null, tagsOfScenario, argumentsOfScenario);
-#line 13
+#line 12
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             bool isScenarioIgnored = default(bool);
@@ -130,22 +127,28 @@ this.ScenarioInitialize(scenarioInfo);
 #line 6
 this.FeatureBackground();
 #line hidden
-#line 14
- testRunner.Given("The charge type code is TCT", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line hidden
-#line 15
- testRunner.And("The charge type name is Test Charge Type", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line hidden
-#line 16
- testRunner.And("The charge type group code is NONE", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line hidden
-#line 17
- testRunner.And("The charge type measurement id is 1-22383", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line hidden
-#line 18
- testRunner.When("Try to create the charge type", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+                TechTalk.SpecFlow.Table table1 = new TechTalk.SpecFlow.Table(new string[] {
+                            "name",
+                            "value"});
+                table1.AddRow(new string[] {
+                            "Code",
+                            "TCT"});
+                table1.AddRow(new string[] {
+                            "EnglishName",
+                            "Test Charge Type"});
+                table1.AddRow(new string[] {
+                            "ChargesGroupCode",
+                            "NONE"});
+                table1.AddRow(new string[] {
+                            "MeasurementId",
+                            "1-22383"});
+#line 13
+ testRunner.Given("Charge type with the following data", ((string)(null)), table1, "Given ");
 #line hidden
 #line 19
+ testRunner.When("Try to create the charge type", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+#line 20
  testRunner.Then("The charge type will created successfully", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
