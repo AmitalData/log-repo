@@ -15,6 +15,9 @@ namespace Logitude.BL.GlobalModel.EntityPMs
         public DateTime? TransactionDate { get; set; }
         public string DocumentId { get; set; }
         public string LogitudeAmital { get; set; }
+        public double? InvoiceAmountInUSD { get; set; }
+        public double? TaxAmountInUSD { get; set; }
+        public string ContractNumber { get; set; }
 
     }
 }

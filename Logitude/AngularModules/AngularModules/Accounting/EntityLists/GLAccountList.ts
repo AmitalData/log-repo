@@ -116,6 +116,11 @@ export class GLAccountList {
 	ParentCurrencyId: string;
 	ReportingAsAnotherDocument: boolean;
 	CreditAllotmentPercentage: number;
+	Category1LocalName: string;
+	Category2LocalName: string;
+	Category3LocalName: string;
+	Category4LocalName: string;
+	Category5LocalName: string;
 	
 }
  

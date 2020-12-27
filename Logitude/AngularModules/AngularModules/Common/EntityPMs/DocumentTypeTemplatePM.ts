@@ -224,6 +224,9 @@ export class DocumentTypeTemplatePM {
     public get To() { return this.to; }
     public set To(newValue: string) { if (this.to != newValue) { this.to = newValue; this.MarkAsDirty("To"); } }
 
+    private automationId: string;
+    public get AutomationId() { return this.automationId; }
+    public set AutomationId(newValue: string) { if (this.automationId != newValue) { this.automationId = newValue; this.MarkAsDirty("AutomationId"); } }
 
 
 

@@ -651,7 +651,7 @@ namespace WebFreight.Web.WcfApi
                     }
 
                     Contact contact = ContactRepository.GetSingleContact(user.Id, entityPM.Tenant, true);
-                    ShipmentService service = new ShipmentService(objectContext, entityPM, contact.Email);
+                    ShipmentService service = null;
 
                     Shipment entity = shipmentRepository.GetSingleShipmentOnlyByNumber(entityPM.ShipmentNumber, entityPM.Tenant);
                     if (entity == null)
@@ -659,6 +659,7 @@ namespace WebFreight.Web.WcfApi
 
                         entityPM.StatusDate = entityPM.CreateDateTime;
 
+                        service = new ShipmentService(objectContext, entityPM, contact.Email);
                         service.SetChangeSet(entityPM.ShipmentPackages, new List<ShipmentOrderPackagePM>(), new List<ShipmentPickUpPM>(), new List<ShipmentDeliveryPM>(), new List<ShipmentReceivablePM>(), new List<ShipmentPayablePM>(), new List<ShipmentFollowUpPM>(), new List<ShipmentAWBPrintOnlyPM>(), new List<ConsoleShipmentPM>(), new List<ShipmentCarrierStatusPM>(), new List<AWBOCIPM>(), new List<ShipmentCommodityPM>(), new List<ShipmentAssemblyPM>(), new List<ShipmentStoragePricingPM>());
 
                         service.Create();
@@ -703,6 +704,7 @@ namespace WebFreight.Web.WcfApi
                         entityPM.StatusDate = entity.StatusDate;
                         entityPM.LastStatusLogDate = entity.LastStatusLogDate;
 
+                        service = new ShipmentService(objectContext, entityPM, contact.Email);//Prob... Refactore on ShipmentService.
 
                         ShipmentPackageQuery shipPackageQuery = new ShipmentPackageQuery(new ShipmentPackageRepository(objectContext));
                         List<ShipmentPackagePM> shipmentPackages = shipPackageQuery.GetShipmentPackages(entity.Id, entity.ShipmentNumber, entity.Tenant);

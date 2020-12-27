@@ -3842,7 +3842,7 @@
     LookUpTableName="&quot;ChargesGroup&quot;"
     MinLength="0"
     MaxLength="15"
-    IsRequired="false"
+    IsRequired="true"
     CopyToDW="true"
     DisplayOnLookUp="false"
     DisplayOnLookUpLocal="false"

@@ -2,8 +2,7 @@
 <Table
   Name="CargoTrackingShipments"
   Schema="dbo"
-  DBType="CargoTracking"
-  Module="CargoTracking">
+  DBType="CargoTracking">
   <Column
     Name="Tenant"
     Type="int">

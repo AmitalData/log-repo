@@ -2,8 +2,7 @@
 <Table
   Name="CargoTrackingShipmentSearches"
   Schema="dbo"
-  DBType="CargoTracking"
-  Module="CargoTracking">
+  DBType="CargoTracking">
   <Column
     Name="Tenant"
     Type="int">
@@ -43,6 +42,13 @@
     Type="bit">
     <Constraints
       Nullable="true" />
+  </Column>
+  <Column
+    Name="ReferenceType"
+    Type="varchar"
+    Size="30">
+    <Constraints
+      Nullable="false" />
   </Column>
   <Index
     Columns="Tenant,SearchFields,IsPublic" />

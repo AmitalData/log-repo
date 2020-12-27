@@ -91,8 +91,6 @@ export class AddEditCalculatedChartsOfAccountComponent extends BaseComponent {
         }
     }
     SetUIProperty() {
-        var IsEnabled = this.ValidateChartofAccountType();
-        this.UIProperties.SetEnabled("ChartOfAccountTypeCode", this.ObjectTableName, IsEnabled);
         this.UIProperties.SetEnabled("IsCancelled", this.ObjectTableName, !this.DataContext.IsNewEntity);
 
     }
@@ -133,19 +131,10 @@ export class AddEditCalculatedChartsOfAccountComponent extends BaseComponent {
                                                                                         s.LineTypeCode=='2' && !s.ChartOfAccountId? s.ErrorLog = RequiredChartsofAccountFiled:null)
                                                                                    );
     }
-
-    ValidateCreateLine(){
-        this.ValidationErrorsList = [];
-        if(AppTool.IsNullOrEmpty(this.ChartOfAccountTypeCode)){
-            var FIELD_IS_REQUIERD: string = TextCodeTranslator.Translate("General.M.FieldIsRequired");
-            var RequiredChartsOfAccountTypeFiled= FIELD_IS_REQUIERD.replace("%FieldName", TextCodeTranslator.Translate("CalculatedChartsOfAccount.F.ChartOfAccountTypeEnglishName"));
-            this.ValidationErrorsList.push(RequiredChartsOfAccountTypeFiled);
-        }
-    }
+ 
 
     AddLine() {
         if(!this.EntityPM.IsCancelled){
-            this.ValidateCreateLine();
             if( this.ValidationErrorsList.length == 0){
             var calculatedChartsOfAccountsLinePM: CalculatedChartsOfAccountsLinePM = new CalculatedChartsOfAccountsLinePM(this.EntityPM);
             calculatedChartsOfAccountsLinePM.Tenant = this.EntityPM.Tenant;
@@ -162,7 +151,7 @@ export class AddEditCalculatedChartsOfAccountComponent extends BaseComponent {
     }
 
     ValidateLinesAfterChangedChartsofAccountTypeCode(){
-        this.DataContext.CalculatedChartsOfAccountsLineItemList.Collection.forEach(s=> s.LineCancelledValidation());
+        this.DataContext.CalculatedChartsOfAccountsLineItemList.Collection.filter(s=>!s.IsCancelled).forEach(s=> s.ValidateLineHasSameChartsofAccountTypeWithHeader(false,true));
     }
  
     SetDataContext(dataContext: CalculatedChartsOfAccountItem) {
@@ -189,16 +178,9 @@ export class AddEditCalculatedChartsOfAccountComponent extends BaseComponent {
     get ChartOfAccountTypeCode() { return this.DataContext.ChartOfAccountTypeCode; }
     set ChartOfAccountTypeCode(newValue: string) {
         if (this.DataContext.ChartOfAccountTypeCode != newValue) {
-            var IsValid= this.ValidateChartofAccountType();
-            if(IsValid){
                 this.DataContext.ChartOfAccountTypeCode = newValue;
                 this.ValidateLinesAfterChangedChartsofAccountTypeCode();
                 this.SetFilterItems();
-            }
-            else{
-                this.ValidationErrorsList = [];
-                this.ValidationErrorsList.push(TextCodeTranslator.Translate("UserDefinedReport.O.CantUpdateTheChartofAccountType"));
-            }
         }
     }
 

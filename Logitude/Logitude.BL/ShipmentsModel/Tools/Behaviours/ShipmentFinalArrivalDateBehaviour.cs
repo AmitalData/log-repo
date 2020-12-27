@@ -79,22 +79,22 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours
 
             else if (entityPM.ShipmentLevelCode != "H" && !HasDeliveries && !HasOnCarriage)
             {
-                if (EntityMasterData.Transshipment3FromPortId != null && EntityMasterData.Transshipment3ToPortId != null)
+                if (entityPM.Transshipment3FromPortId != null && EntityMasterData.Transshipment3ToPortId != null)
                 {
                     this.HandleTransshipment3();
                 }
 
-                else if (EntityMasterData.Transshipment2FromPortId != null && EntityMasterData.Transshipment2ToPortId != null)
+                else if (entityPM.Transshipment2FromPortId != null && EntityMasterData.Transshipment2ToPortId != null)
                 {
                     this.HandleTransshipment2();
                 }
 
-                else if (EntityMasterData.Transshipment1FromPortId != null && EntityMasterData.Transshipment1ToPortId != null)
+                else if (entityPM.Transshipment1FromPortId != null && EntityMasterData.Transshipment1ToPortId != null)
                 {
                     this.HandleTransshipment1();
                 }
 
-                else if (EntityMasterData.MainCarriageFromPortId != null && EntityMasterData.MainCarriageToPortId != null)
+                else if (entityPM.MainCarriageFromPortId != null && EntityMasterData.MainCarriageToPortId != null)
                 {
                     this.HandleMainCarriage();
                 }

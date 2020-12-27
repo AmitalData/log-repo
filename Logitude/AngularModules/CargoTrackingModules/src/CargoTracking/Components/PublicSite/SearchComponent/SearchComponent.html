@@ -252,7 +252,7 @@
                         <!-- References -->
                         <div class="column col-md-2 reference" style="width: 14%;">
                             <div>
-                              <div [attr.src]="SplitReference(shipment.SearchReferences)" class="subtitle">Reference NO.</div>
+                              <div [attr.src]="SplitReference(shipment.CustomerReference)" class="subtitle">Reference NO.</div>
                                 <div class="truncateText" *ngFor="let item of references; let i = index">
                                    <span [ngClass]="{'hide-mobile': i > 1}" >
                                       {{item}}  

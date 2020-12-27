@@ -2234,7 +2234,7 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string INTTRABookingStatusCode { get; set; }
-        public string INTTRABookingStatusName{ get; set; }
+        public string INTTRABookingStatusName { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string INTTRABookingError { get; set; }
@@ -2385,6 +2385,9 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public string ARInvoices { get; set; }
         public bool ConvertShipmentToLCL { get; set; }
         public bool ConvertShipmentToFCL { get; set; }
+
+        public bool ConvertShipmentToLTL { get; set; }
+        public bool ConvertShipmentToFTL { get; set; }
         public string HousesNumbers { get; set; }
 
         public bool ShipmentDirectionConverted { get; set; }
@@ -2534,7 +2537,7 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public string ViewSharedDocuments { get; set; }
         public bool IsAccrualsApproved { get; set; }
         public DateTime? AccrualsApprovalDate { get; set; }
-
+        public bool IsExternalAPI { get; set; }
         public double? HousesOpenPayablesInLocal { get; set; }
         public double? HousesOpenPayablesInProfit { get; set; }
         public double? HousesACCTPayablesInLocal { get; set; }
@@ -2558,6 +2561,6 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public DateTime? ETD { get; set; }
         public DateTime? ETA { get; set; }
         public DateTime? ATD { get; set; }
-        public DateTime? ATA { get; set; }
+        public DateTime? ATA { get; set; }        
     }
 }

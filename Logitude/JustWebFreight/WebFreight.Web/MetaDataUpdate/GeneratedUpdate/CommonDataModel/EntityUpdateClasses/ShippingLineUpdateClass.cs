@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 {
    public class ShippingLineUpdateClass
    {  		
-		public const string HashString = "5face3ce97d711a44f2c1d04aadb57b0";
+		public const string HashString = "cdb5a42b304ca873c3d28040973f4557";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -3408,7 +3408,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
 			 //List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
 			    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "SLGC",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = ShippingLineGeneralFeature_TH0.Id,FeatureUniqeCode = ShippingLineGeneralFeature_TH0.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.GeneralControls.GeneralTabControl", ObjectTableId = ShippingLineObjectTable.Id, TabNameTextCodeId = ShippingLineGeneralTextCode_TH0.Id, TabNameTextCodeCode = ShippingLineGeneralTextCode_TH0.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "SLGC",HtmlComponentName = "ShippingLineGeneralTabComponent",HtmlComponentUrl = "./CommonModules/CommonPartners/Components/EditTabs/ShippingLine/ShippinglineGeneralTabComponent", FeatureId = ShippingLineGeneralFeature_TH0.Id,FeatureUniqeCode = ShippingLineGeneralFeature_TH0.FeatureUniqeCode, ControlPath = "", ObjectTableId = ShippingLineObjectTable.Id, TabNameTextCodeId = ShippingLineGeneralTextCode_TH0.Id, TabNameTextCodeCode = ShippingLineGeneralTextCode_TH0.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
    
             AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "SLBL",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = ShippingLineBillingFeature_TH1.Id,FeatureUniqeCode = ShippingLineBillingFeature_TH1.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.GeneralControls.BillingTabControl", ObjectTableId = ShippingLineObjectTable.Id, TabNameTextCodeId = ShippingLineBillingTextCode_TH1.Id, TabNameTextCodeCode = ShippingLineBillingTextCode_TH1.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
    

@@ -82,6 +82,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                     GLAccountId = a.Card.GLAccountId,
                                     INTTRAUpdatesShipment = a.INTTRAUpdatesShipment,
                                     GLAccountNumber = a.Card.GLAccountDisplayNumber,
+                                    ImageDetailId = a.Card.ImageDetailId,
                                     Card = new CardPM()
                                     {
                                         Id = a.Id,
@@ -176,6 +177,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                     INTTRAUpdatesShipment = a.INTTRAUpdatesShipment,
                                     CAAT = a.CAAT,
                                     CBSA = a.CBSA,
+                                    ImageDetailId = a.Card.ImageDetailId,
                                     Card = new CardPM()
                                     {
                                         Id = a.Id,
@@ -235,6 +237,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                            INTTRAUpdatesShipment = a.INTTRAUpdatesShipment,
                                                            CAAT = a.CAAT,
                                                            CBSA = a.CBSA,
+                                                           ImageDetailId = a.Card.ImageDetailId,
                                                        };
             return shippingLines;
         }
@@ -292,7 +295,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                              INTTRAUpdatesShipment = a.INTTRAUpdatesShipment,
                              CAAT = a.CAAT,
                              CBSA = a.CBSA,
-
+                             ImageDetailId = a.Card.ImageDetailId,
                          }).AsQueryable();
 
             IQueryable<ShippingLinePM> query2 = null;

@@ -1,0 +1,239 @@
+<style>
+    .AdvancedDatePickerControl {
+        display: block;
+        height: 22px;
+        min-height: 22px;
+        max-height: 22px;
+        line-height: 22px;
+        width: 100%;
+        position: relative;
+    }
+
+    .AdvancedDatePickerContainer {
+        height: 100%;
+        width: 100%;
+        background: white;
+        font-size: 11px;
+        color: #45494A;
+        border-radius: 3px;
+        -moz-border-radius: 3px;
+        -webkit-border-radius: 3px;
+        position: relative;
+    }
+
+    .AdvancedDatePickerWrap {
+        height: 100%;
+        width: 100%;
+        line-height: 22px;
+        width: 100%;
+        border: 1px solid #AAAAAA;
+        outline: none;
+        font-size: 11px;
+        color: #45494A;
+        background: white;
+        text-indent: 5px;
+        border-radius: 3px;
+        -webkit-border-radius: 3px;
+        -moz-border-radius: 3px;
+        -moz-box-shadow: inset 0 0 3px #AAAAAA;
+        -webkit-box-shadow: inset 0 0 3px #AAAAAA;
+        box-shadow: inset 0 0 3px #AAAAAA;
+        text-decoration: none;
+        vertical-align: middle;
+        cursor: pointer;
+    }
+
+    .AdvancedDatePickerWrap:hover:not(:disabled), .AdvancedDatePickerWrap:focus:not(:disabled) {
+        border: 1px solid #3BB3E2;
+    }
+
+    .AdvancedDatePickerWrap:disabled {
+        opacity: 0.5;
+        pointer-events: none;
+    }
+
+    .AdvancedDatePickerWrap:hover:not(:disabled) .DeleteButton {
+        visibility: visible;
+    }
+
+    .DropDownList {
+        color: #444;
+        position: relative;
+        overflow-x: hidden;
+        overflow-y: auto;
+        max-height: 310px;
+        background: white;
+        -webkit-overflow-scrolling: touch;
+        height: 309px;
+    }
+
+    .AdvancedDatePickerDropdown {
+        background: white;
+        border: 1px solid #AAAAAA;
+        box-shadow: 0 4px 8px 0 #AAAAAA;
+        border-radius: 3px;
+        -moz-border-radius: 3px;
+        -webkit-border-radius: 3px;
+        border-top-left-radius: unset;
+        -moz-border-radius-topleft: unset;
+        -webkit-border-top-left-radius: unset;
+        border-top: none;
+        /*visibility: hidden;*/
+        z-index: 10000000;
+    }
+
+    .AdvancedDatePickerDropdownItem {
+        font-size:11px;
+        width:100%;
+        position:relative;
+        display: inline-block;
+    }
+
+    .AdvancedDatePickerDropdownInnerItem {
+        height: 100%;
+        font-size: 11px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        position: relative;
+        display: inline-block;
+        margin-left: 3px;
+    }
+
+    .DropDownListItem:not(.liItemSelected):hover {
+        outline: 1px solid #8ebff5;
+        background: #ffffff; /* Old browsers */
+        background: -moz-linear-gradient(top, #ffffff 0%, #c6ebff 100%) !important; /* FF3.6-15 */
+        background: -webkit-linear-gradient(top, #ffffff 0%,#c6ebff 100%) !important; /* Chrome10-25,Safari5.1-6 */
+        background: linear-gradient(to bottom, #ffffff 0%,#c6ebff 100%) !important; /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#c6ebff',GradientType=0 ) !important; /* IE6-9 */
+    }
+
+    .DropDownListItem {
+        display: list-item;
+        cursor: pointer;
+        /*line-height: 17px;*/
+        height: 20px;
+        word-wrap: break-word;
+        -webkit-touch-callout: none;
+       /* border-bottom: 1px solid #d7d7d7;*/
+        vertical-align: middle;
+    }
+
+        /*.DropDownListItem:not(.liItemSelected):not(.highlighted):nth-child(even):not(.InActive) {
+            background: #ecf1f3;
+        }*/
+
+    .liItemSelected {
+        background: #c5dce8; /* Old browsers */
+        background: -moz-linear-gradient(top, #c5dce8 0%, #e2f5ff 14%, #91d6f2 100%); /* FF3.6-15 */
+        background: -webkit-linear-gradient(top, #c5dce8 0%,#e2f5ff 14%,#91d6f2 100%); /* Chrome10-25,Safari5.1-6 */
+        background: linear-gradient(to bottom, #c5dce8 0%,#e2f5ff 14%,#91d6f2 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#c5dce8', endColorstr='#91d6f2',GradientType=0 ); /* IE6-9 */
+    }
+
+    li.highlighted {
+        background: #c5dce8; /* Old browsers */
+        background: -moz-linear-gradient(top, #c5dce8 0%, #e2f5ff 14%, #91d6f2 100%); /* FF3.6-15 */
+        background: -webkit-linear-gradient(top, #c5dce8 0%,#e2f5ff 14%,#91d6f2 100%); /* Chrome10-25,Safari5.1-6 */
+        background: linear-gradient(to bottom, #c5dce8 0%,#e2f5ff 14%,#91d6f2 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#c5dce8', endColorstr='#91d6f2',GradientType=0 ); /* IE6-9 */
+    }
+
+
+    .DeleteButton {
+        visibility: hidden;
+        cursor: pointer;
+    }
+
+    .DatePickerCalendar {
+        background: white;
+        box-shadow: 0 4px 8px 0 #AAAAAA;
+        border-radius: 5px;
+        -moz-border-radius: 5px;
+        -webkit-border-radius: 5px;
+        border-top-left-radius: unset;
+        -moz-border-radius-topleft: unset;
+        -webkit-border-top-left-radius: unset;
+        border-top: none;
+        z-index: 10000000;
+    }
+</style>
+<div style="width:100%;height:100%" *ngIf="DataContext" (blur)="OnComponentBlur()">
+    <div [id]="ErrorPopUpId"
+         FixedPosition
+         [ElementId]="ErrorPopUpId"
+         [RelativeElementId]="DivAdvancedDatePickerId"
+         class.FlipImgHoriz]="LayoutDirection == 'rtl'"
+         [TopDisplacement]="-95"
+         [LeftDisplacement]="30"
+         [ComponentType]="'popup'"
+         class="ErrorPopUp"
+         *ngIf="ShowErrorPopup">
+
+        <div class="ErrorPopUpMessage" [class.FlipImgHoriz]="LayoutDirection == 'rtl'">
+            {{uiProperty.ValidationError}}
+        </div>
+    </div>
+    <table class="FixedTable" (mouseover)="OnComponentMouseOver()" (mouseout)="OnComponentMouseOut()">
+        <tr>
+            <td>
+                <div class="AdvancedDatePickerControl" [id]="DivAdvancedDatePickerId">
+                    <div class="AdvancedDatePickerContainer">
+                        <div class="AdvancedDatePickerWrap" tabindex="0" (click)="OnDropDownClicked()" (focus)="OnDropDownFocus()" (blur)="OnDropDownBlur()" *ngIf="!IsDisabled">
+                            <table>
+                                <tr>
+                                    <td style="width: 2px;">
+                                        <div></div>
+                                    </td>
+                                    <td>
+                                        <div class="FillParent">
+                                            <div style="text-align: left;text-indent: 5px;font-family: Arial;" class="TextTrimming">{{DisplayValue}}</div>
+                                        </div>
+                                    </td>
+                                    <td style="width: 2px;">
+                                        <div></div>
+                                    </td>
+                                    <td style="width: 10px;">
+                                        <img class="DeleteButton LeftCenter" src="Images/RedX.png" (click)="OnDeleteValue()" [ngStyle]="DeleteButtonNgStyle" />
+                                    </td>
+                                    <td style="width: 4px;">
+                                        <div></div>
+                                    </td>
+                                    <td style="width: 10px;">
+                                        <img class="LeftCenter" src="Images/ToggleIcon.png" />
+                                    </td>
+                                </tr>
+                            </table>
+
+                        </div>
+                        <div (mouseover)="OnDropDownMouseOver()" (mouseout)="OnDropDownMouseOut()"
+                             FixedPosition [ElementId]="DropdownId" [RelativeElementId]="DivAdvancedDatePickerId" [TopDisplacement]="25" [LeftDisplacement]="1"
+                             *ngIf="IsDropDownVisible" class="AdvancedDatePickerDropdown" [id]="DropdownId">
+
+                            <ul class="DropDownList" *ngIf="IsDropDownVisible" style="width:200px;">
+                                <li *ngFor="let item of ItemsSource;"
+                                    class="DropDownListItem"
+                                    (mousedown)="OnDropDownSelected(item)"
+                                    (mouseover)="OnLiMouseOver($event)"
+                                    (mouseleave)="OnLiMouseLeave($event)">
+                                    <div class="AdvancedDatePickerDropdownItem"  (mouseover)="OnLiMouseOver($event)" (mouseleave)="OnLiMouseLeave($event)">
+                                        <div class="AdvancedDatePickerDropdownInnerItem" (mouseover)="OnLiMouseOver($event)" (mouseleave)="OnLiMouseLeave($event)">
+                                            {{item.Name}}
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </td>
+        </tr>
+    </table>
+    <div FixedPosition [ElementId]="LogCalendarId" [RelativeElementId]="DropdownId" [HorizDisplacement]="185"
+         [PopupWidth]="184" [ComponentHight]="183"
+         [id]="LogCalendarId" *ngIf="IsCalendarDateDropDownOpen && IsDropDownVisible" (mouseover)="OnCalendarMouseOver()" (mouseout)="OnCalendarMouseOut()" (blur)="OnCalendarBlur()"
+         tabindex="-1" class="DatePickerCalendar" [ComponentType]="'datepicker'">
+        <LogCalendar [ToggleOpened]="IsCalendarOpen" [SelectedDate]="SelectedCalendarDate" (SelectedDateChanged)="OnSelectedCalendarDateChanged($event)"></LogCalendar>
+    </div>
+</div>

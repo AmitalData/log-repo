@@ -300,6 +300,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                     VatTypeId = a.Card.VatTypeId,
                                                     EnableConsolidationInvoices = a.Card.EnableConsolidationInvoices,
                                                     CityName = a.Card.CityName,
+                                                    Address1 = a.Card.Address1,
+                                                    Address2 = a.Card.Address2,
                                                     CountryId = a.Card.CountryId,
                                                     CountryCode = a.Card.CountryCode,
                                                     CountryName = a.Card.CountryName,

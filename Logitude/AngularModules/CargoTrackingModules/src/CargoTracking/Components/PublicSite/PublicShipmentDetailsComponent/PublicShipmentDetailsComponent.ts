@@ -182,7 +182,7 @@ export class PublicShipmentDetailsComponent implements OnInit
     LoadShipment()
     {
         this.GetShipment();
-        this.GetPublicShipmentReferences();
+        //this.GetPublicShipmentReferences();
     }
 
     public MilstonesExist: boolean = false;
@@ -198,6 +198,7 @@ export class PublicShipmentDetailsComponent implements OnInit
             this.SetCargoTrackingContainers(result);
             if (this.ShipmentWithMilestones) {
                 this.Shipment = result.ShipmentList;
+                this.ShipmentReferences = result.ShipmentList.CustomerReference.split(',');
                 if (this.Shipment.CurrentMilestoneCode == "11") {
                     this.Delivered = true;
                     this.DileveredIconColor = CargoTrackingBrandingData.SecondaryColor;

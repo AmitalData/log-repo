@@ -1491,7 +1491,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
 
         private static void ValidateConvertShipmentType(ShipmentPM entityPM)
         {
-            if (entityPM.ConvertShipmentToLCL || entityPM.ConvertShipmentToFCL)
+            if (entityPM.ConvertShipmentToLCL || entityPM.ConvertShipmentToFCL || entityPM.ConvertShipmentToLTL || entityPM.ConvertShipmentToFTL)
             {
                 if (!string.IsNullOrEmpty(entityPM.QuoteId))
                 {

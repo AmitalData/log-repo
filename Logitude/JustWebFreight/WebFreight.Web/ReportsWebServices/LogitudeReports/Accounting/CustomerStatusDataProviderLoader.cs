@@ -111,6 +111,10 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
 
         private CustomerStatus CreateNewCustomerStatus(IGrouping<string, PeriodMExtended> customer, List<IGrouping<string, PeriodMExtended>> periodsByDate)
         {
+            decimal? splitBalanceSummation = customer
+                .GroupBy(d =>  new { d.CurrencyId , d.SplitAccountId})
+                .Sum(d => d.First().BalanceInLocalCurrency);
+
             CustomerStatus customerStatus = new CustomerStatus()
             {
                 // account details
@@ -118,6 +122,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                 CustomerLocalName = customer.First().AccountLocalName,
                 CustomerDisplayNumber = customer.First().AccountDisplayNumber,
                 CustomerPaymentTerm = customer.First().AccountTermName,
+                CustomerLocalPaymentTerm = customer.First().AccountTermLocalName,
                 CustomerPhone = customer.First().AccountPhone,
 
                 //credit details
@@ -127,9 +132,29 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                 TotalOpenCheques = customer.First().TotalOpenCheques ?? 0,
                 TotalOpenShipments = customer.First().TotalOpenShipments ?? 0,
 
-                AccountingBalance = customer.Sum(d=>d.BalanceInLocalCurrency) ?? 0,
+                AccountingBalance = splitBalanceSummation ?? 0,
                 //AccountingBalance = customer.First().BalanceInLocalCurrency ?? 0,
                 //AccountingBalance = customer.Sum(d => d.Total),
+
+                AccountSalesmanName = customer.First().AccountSalesmanName,
+                AccountSalesmanLocalName = customer.First().AccountSalesmanLocalName,
+                AccountCollectorName = customer.First().AccountCollectorName,
+                AccountCollectorLocalName = customer.First().AccountCollectorLocalName,
+                Category1Name = customer.First().Category1Name,
+                Category2Name = customer.First().Category2Name,
+                Category3Name = customer.First().Category3Name,
+                Category4Name = customer.First().Category4Name,
+                Category5Name = customer.First().Category5Name,
+                Category6Name = customer.First().Category6Name,
+                Category1LocalName = customer.First().Category1LocalName,
+                Category2LocalName = customer.First().Category2LocalName,
+                Category3LocalName = customer.First().Category3LocalName,
+                Category4LocalName = customer.First().Category4LocalName,
+                Category5LocalName = customer.First().Category5LocalName,
+                Category6LocalName = customer.First().Category6LocalName,
+
+
+
                 Periods = GetStatusPeriods(periodsByDate)
             };
             return customerStatus;

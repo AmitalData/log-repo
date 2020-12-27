@@ -358,6 +358,11 @@ export class ShippingLinePM {
     public set UsoCFDICode(newValue: string) { if (this.usoCFDICode != newValue) { this.usoCFDICode = newValue; this.MarkAsDirty("UsoCFDICode"); } }
        
 	 
+    private imageDetailId: string;
+    public get ImageDetailId() { return this.imageDetailId; }
+    public set ImageDetailId(newValue: string) { if (this.imageDetailId != newValue) { this.imageDetailId = newValue; this.MarkAsDirty("ImageDetailId"); } }
+       
+	 
     private cBSA: string;
     public get CBSA() { return this.cBSA; }
     public set CBSA(newValue: string) { if (this.cBSA != newValue) { this.cBSA = newValue; this.MarkAsDirty("CBSA"); } }
