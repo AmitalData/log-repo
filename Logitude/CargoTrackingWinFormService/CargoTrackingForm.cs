@@ -35,7 +35,7 @@ namespace CargoTrackingWinFormService.Forms
         private string ToCloudConectionstring = "CargoTracking,amitaladmin,London2015!London2015!,amital.database.windows.net";
         private List<string> ErrorsValidatons = new List<string>();
         string SelectedTable = null;
-        List<CargoTable> CargoTableLists;
+        List<CargoTrackingTable> CargoTableLists;
         private int[] ScreensHight;
         private int[] ScreensWidth;
         private int[] ScreensTotalIncreasing;
@@ -202,7 +202,7 @@ namespace CargoTrackingWinFormService.Forms
             dbDestinationConnection = ServiceHelper.BuildConnectionString(destinationConnectionArray[0], destinationConnectionArray[1], destinationConnectionArray[2], destinationConnectionArray[3]);
  
         }
-        private void UpdateCargoDataBase(CargoTable table , bool IsFromBuild )
+        private void UpdateCargoDataBase(CargoTrackingTable table , bool IsFromBuild )
         {
             CargoTrackingArguments CargoTrackingArguments = null;
             if (IsFromBuild)
@@ -222,10 +222,10 @@ namespace CargoTrackingWinFormService.Forms
                     FormTableName = checkBox2.Checked ? null: SelectedTable,
                 };
             }
-            
+
 
             CargoTrackingUpdateDataBaseArgs cargoTrackingDataBaseArgs = new CargoTrackingUpdateDataBaseArgs() {
-                buildCargoArgs = new CargoArgs() { Table = table, SourceConnectionString = dbSourceConnection, DestinationConnectionString = dbDestinationConnection },
+                BuildCargoArgs = new Logitude.CargoTracking.BL.CargoTrackingServices.HelperClasses.CargoTrackingArgs() { Table = table, SourceConnectionString = dbSourceConnection, DestinationConnectionString = dbDestinationConnection },
                 NumberOfBulkPerTime = NumberOfBulkPerTime,
                 IsUpdateFromBuild = IsFromBuild,
                 CargoTrackingArguments = CargoTrackingArguments,
@@ -239,7 +239,7 @@ namespace CargoTrackingWinFormService.Forms
 
 
 
-        private void AddLabelToTable( TableLayoutPanel tableLayoutPanel, string Dw_TableName, int x, int y,int AccessLevel=0, CargoTable table=null)
+        private void AddLabelToTable( TableLayoutPanel tableLayoutPanel, string Dw_TableName, int x, int y,int AccessLevel=0, CargoTrackingTable table=null)
         {
  
 
@@ -299,7 +299,7 @@ namespace CargoTrackingWinFormService.Forms
 
 
 
-        private void AddLabelToGrid(string Dw_TableName,int X ,int Y,int AccessLevel=0, CargoTable table=null,bool IsFromBuild =false)
+        private void AddLabelToGrid(string Dw_TableName,int X ,int Y,int AccessLevel=0, CargoTrackingTable table=null,bool IsFromBuild =false)
         {
             this.Height = this.Height + TableCellMrginHight;
             tabControl1.Height = this.Height + TableCellMrginHight;
@@ -342,7 +342,7 @@ namespace CargoTrackingWinFormService.Forms
 
             }
 
-            foreach (CargoTable table in CargoTableLists)
+            foreach (CargoTrackingTable table in CargoTableLists)
             {
                 table.Labels = new List<object>();
                 string TableNameLabe = table.DBTableName.Length <23 ? table.DBTableName : table.DBTableName.Substring(0,17)+" ...";
@@ -360,9 +360,9 @@ namespace CargoTrackingWinFormService.Forms
 
         }
 
-        private void AddAllTablesToThread(List<CargoTable> CargoTableLists , bool IsFromBuild)
+        private void AddAllTablesToThread(List<CargoTrackingTable> CargoTableLists , bool IsFromBuild)
         {
-            foreach (CargoTable table in CargoTableLists)
+            foreach (CargoTrackingTable table in CargoTableLists)
             {
 
                 try
@@ -461,7 +461,7 @@ namespace CargoTrackingWinFormService.Forms
             }
         }
 
-        private void SetLabelValueAndUpdateTable(CargoTable table, bool IsFromBuild)
+        private void SetLabelValueAndUpdateTable(CargoTrackingTable table, bool IsFromBuild)
         {
 
             SetControlPropertyValue((Label)table.Labels[2], "Text", "Updating...");
@@ -1282,7 +1282,7 @@ namespace CargoTrackingWinFormService.Forms
 
         private void MappingFields()
         {
-             CargoTable  CargoTable = CargoTrackingTableList.FillCargoTableList().Where(s=>s.CT_TableName == this.MappingTableName.Text && s.CT_FieldsDBName.Contains(this.MappingFieldName.Text)).FirstOrDefault();
+             CargoTrackingTable  CargoTable = CargoTrackingTableList.FillCargoTableList().Where(s=>s.CargoTracking_TableName == this.MappingTableName.Text && s.CargoTracking_FieldsDBName.Contains(this.MappingFieldName.Text)).FirstOrDefault();
             if (CargoTable==null)
             {
                 MessageBox.Show("Table or field not found !!!");
@@ -1291,7 +1291,7 @@ namespace CargoTrackingWinFormService.Forms
             {
                 if (this.MappingTableName.Text!= "CargoTrackingShipments" && this.MappingTableName.Text != "CargoTrackingShipmentSearches")
                 {
-                    this.MappingResult.Text = GetTextMapping(CargoTable.TableName, this.MappingFieldName.Text);
+                    this.MappingResult.Text = GetTextMapping(CargoTable.CargoTracking_TableName, this.MappingFieldName.Text);
                 }
                 else
                 {

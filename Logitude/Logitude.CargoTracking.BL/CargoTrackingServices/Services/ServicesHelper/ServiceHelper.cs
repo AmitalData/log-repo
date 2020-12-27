@@ -149,46 +149,60 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.ServicesHelpe
             return result;
         }
 
-        public static void CreateCargoTrackingTable(CargoArgs buildCargoArgs, TableStructureHelper MainTableStructureHelper, TableStructureHelper InnerTableStructureHelper)
+        public static void CreateCargoTrackingTable(CargoTrackingArgs buildCargoArgs, TableStructureHelper MainTableStructureHelper, TableStructureHelper InnerTableStructureHelper)
         {
-            string TableName = buildCargoArgs.Table.Pre_TableName;
-            string TableName2 = buildCargoArgs.Table.Pre2_TableName;
-            string SQL = MainTableStructureHelper.GetTableStructure(TableName);
+            string SQL = buildCargoArgs.Table.TableStructure;
             ExecuteSql(SQL, buildCargoArgs.DestinationConnectionString);
-            if (!string.IsNullOrEmpty(TableName2))
+            if (!string.IsNullOrEmpty(buildCargoArgs.Table.InnerTableStructure))
             {
-                SQL = InnerTableStructureHelper.GetTableStructure(TableName2);
+                SQL = buildCargoArgs.Table.InnerTableStructure;
                 ExecuteSql(SQL, buildCargoArgs.DestinationConnectionString);
             }
 
         }
 
 
-        public static string GetInvokeDBTableByTableName(string TableName)
+        public static string GetInvokeDBTableByTableName(string TableName,string MethodName)
         {
             string DxmlFile = null;
-            if (!string.IsNullOrEmpty(TableName))
+            if (!string.IsNullOrEmpty(TableName) && !string.IsNullOrEmpty(MethodName))
             {
                 string DataBaseTableName = TableName;
                 Type type = Type.GetType("Logitude.CargoTracking.BL.CargoTrackingServices.DBTablesCopy.Generated." + DataBaseTableName + "Dxml");
                 Object obj = Activator.CreateInstance(type);
-                MethodInfo methodInfo = type.GetMethod("Get" + DataBaseTableName + "Dxml");
+                MethodInfo methodInfo = type.GetMethod(MethodName);
                 DxmlFile = (string)methodInfo.Invoke(obj, null);
             }
             return DxmlFile;
         }
- 
-        public static void UpdateWaterMarksTable(CargoTable table, string date, string connectionString)
+
+
+        public static string GetInvokeClassWithMethode(string ClassPath, string MethodName)
+        {
+            string DxmlFile = null;
+            if (!string.IsNullOrEmpty(ClassPath) && !string.IsNullOrEmpty(MethodName))
+            {
+                Type type = Type.GetType(ClassPath);
+                Object obj = Activator.CreateInstance(type);
+                MethodInfo methodInfo = type.GetMethod(MethodName);
+                if (methodInfo!=null)
+                {
+                    DxmlFile = (string)methodInfo.Invoke(obj, null);
+                }
+            }
+            return DxmlFile;
+        }
+        public static void UpdateWaterMarksTable(CargoTrackingTable table, string date, string connectionString)
         {
             var TodayDate = TenantServerConfigration.GetCurrentDateTime(0);
-            string cmd = "update  CargoTrackingWatermarks set LastUpdateDate = '" + date + "',LastRun = '" + TodayDate + "' where tableName = '" + table.Main_CT_TableName + "'";
+            string cmd = "update  CargoTrackingWatermarks set LastUpdateDate = '" + date + "',LastRun = '" + TodayDate + "' where tableName = '" + table.Main_CargoTracking_TableName + "'";
             ExecuteSql(cmd, connectionString);
 
         }
 
-        public static void AddWaterMarksRecord(CargoTable table, string date, string connectionString)
+        public static void AddWaterMarksRecord(CargoTrackingTable table, string date, string connectionString)
         {
-            string cmd = "insert into CargoTrackingWatermarks  values('" + table.CT_TableName + "' , NULL,NULL)";
+            string cmd = "insert into CargoTrackingWatermarks  values('" + table.CargoTracking_TableName + "' , NULL,NULL)";
             ExecuteSql(cmd, connectionString);
         }
         public static void DeleteWatermarks(string connectionString)
@@ -228,7 +242,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.ServicesHelpe
 
 
 
-        public static void UpdateWaterMarkAfterFinishCheck(CargoTable table, DateTime? automaticLastUpdateDate, CargoArgs buildCargoArgs)
+        public static void UpdateWaterMarkAfterFinishCheck(CargoTrackingTable table, DateTime? automaticLastUpdateDate, CargoTrackingArgs buildCargoArgs)
         {
             if (table != null && table.DBTableName != "CargoTrackingWatermarks")
             {
@@ -244,8 +258,8 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.ServicesHelpe
         public static void CheckAndUpdateWaterMark(string dbSourceConnection, string dbDestenationConnection)
         {
 
-            List<CargoTable> CargoTableLists = CargoTrackingTableList.FillCargoTableList();
-            foreach (CargoTable table in CargoTableLists)
+            List<CargoTrackingTable> CargoTableLists = CargoTrackingTableList.FillCargoTableList();
+            foreach (CargoTrackingTable table in CargoTableLists)
             {
                 if (table.DBTableName != "CargoTrackingWatermarks")
                 {
@@ -256,7 +270,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.ServicesHelpe
 
                         SqlCommand commandSourceData = new SqlCommand(
                        "SELECT  TableName" +
-                       " FROM dbo.CargoTrackingWatermarks WHERE TableName = '" + table.CT_TableName + "'", SourceConnection);
+                       " FROM dbo.CargoTrackingWatermarks WHERE TableName = '" + table.CargoTracking_TableName + "'", SourceConnection);
                         commandSourceData.CommandTimeout = (int)ServiceHelper.timeOut;
                         SqlDataReader reader = commandSourceData.ExecuteReader();
                         if (!reader.HasRows)
@@ -277,10 +291,10 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.ServicesHelpe
 
         }
 
-        public static void DropTable(CargoArgs buildCargoArgs)
+        public static void DropTable(CargoTrackingArgs buildCargoArgs)
         {
             string TableName = buildCargoArgs.Table.Pre_TableName;
-            string TableName2 = buildCargoArgs.Table.Pre2_TableName;
+            string TableName2 = buildCargoArgs.Table.Pre_InnerTableName;
 
             string cmd = "If exists (select * from sysobjects where name='" + TableName + "' and xtype='U') " +
                               " BEGIN " +

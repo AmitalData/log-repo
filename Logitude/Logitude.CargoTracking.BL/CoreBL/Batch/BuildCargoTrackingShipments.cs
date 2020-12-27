@@ -71,7 +71,7 @@ namespace Logitude.CargoTracking.BL.CoreBL.Batch
             return Args;
         }
 
-        private void UpdateCargoDataBase(CargoTable table)
+        private void UpdateCargoDataBase(CargoTrackingTable table)
         {
             CargoTrackingArguments CargoTrackingArgs = new CargoTrackingArguments
             {
@@ -83,7 +83,7 @@ namespace Logitude.CargoTracking.BL.CoreBL.Batch
             };
             CargoTrackingUpdateDataBaseArgs cargoTrackingDataBaseArgs = new CargoTrackingUpdateDataBaseArgs()
             {
-                buildCargoArgs = new CargoArgs() { Table = table, SourceConnectionString = sourceConnectionString, DestinationConnectionString = destinationConnectionString },
+                BuildCargoArgs = new CargoTrackingServices.HelperClasses.CargoTrackingArgs() { Table = table, SourceConnectionString = sourceConnectionString, DestinationConnectionString = destinationConnectionString },
                 NumberOfBulkPerTime = 1000,
                 IsUpdateAfterFinished = null,
                 CargoTrackingArguments = CargoTrackingArgs,
@@ -93,9 +93,9 @@ namespace Logitude.CargoTracking.BL.CoreBL.Batch
         }
 
 
-        private void AddAllTablesToThread(List<CargoTable> CargoTableLists)
+        private void AddAllTablesToThread(List<CargoTrackingTable> CargoTableLists)
         {
-            foreach (CargoTable table in CargoTableLists)
+            foreach (CargoTrackingTable table in CargoTableLists)
             {
 
                 UpdateCargoDataBase(table);
@@ -114,10 +114,10 @@ namespace Logitude.CargoTracking.BL.CoreBL.Batch
             destinationConnectionString = BuildConnectionString(destinationConnectionArray[0], destinationConnectionArray[1], destinationConnectionArray[2], destinationConnectionArray[3]);
         }
 
-        private string GetUpdateDataBaseCondition(CargoArgs buildCargoArgs)
+        private string GetUpdateDataBaseCondition(CargoTrackingServices.HelperClasses.CargoTrackingArgs buildCargoArgs)
         {
 
-            string condition = " where AutomaticLastUpdateDate > ( select LastUpdateDate from WaterMarks where TableName = " + "'" + buildCargoArgs.Table.CT_TableName + "')";
+            string condition = " where AutomaticLastUpdateDate > ( select LastUpdateDate from WaterMarks where TableName = " + "'" + buildCargoArgs.Table.CargoTracking_TableName + "')";
             return condition;
         }
 

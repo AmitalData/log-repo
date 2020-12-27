@@ -1,4 +1,5 @@
-﻿ 
+﻿
+using Logitude.CargoTracking.BL.CargoTrackingServices.HelperClasses;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -12,29 +13,24 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CustomMapping
     public class CargoTrackingCustomMappingService
     {
 
-        public static void MappingDB_CTDB(DataTable dataTable, SqlBulkCopy sbc, string CoulmnName, string TableName)
+        public static void MappingDB_CTDB(BulkDataPreperation bulkDataPreperation, SqlBulkCopy SqlBulkCopy, string TableName)
         {
-             AddCustomColumn(dataTable, sbc, CoulmnName, TableName);
+             AddCustomColumn(bulkDataPreperation, SqlBulkCopy,TableName);
         }
-        private static void AddCustomColumn(DataTable dataTable, SqlBulkCopy sbc, string ColumnName,string TableName)
+        private static void AddCustomColumn(BulkDataPreperation bulkDataPreperation, SqlBulkCopy SqlBulkCopy,string TableName)
         {
-            if (TableName == "CargoTrackingShipmentSearches"  )
+            if (TableName == "CargoTrackingShipmentSearches" || 
+                TableName == "CargoTrackingShipments")
             {
-                if (ColumnName != "Id")
+                if (bulkDataPreperation.CoulmnForCusstomMapping != "Id")
                 {
-                    AutoCoulmnMap(dataTable, sbc, ColumnName);
+                    AutoCoulmnMap(bulkDataPreperation.SelectedDataTable, SqlBulkCopy, bulkDataPreperation.CoulmnForCusstomMapping);
                 }
-            }
-            else if (TableName == "CargoTrackingShipments")
-            {
-                if (ColumnName != "Id")
-                {
-                    AutoCoulmnMap(dataTable, sbc, ColumnName);
-                }
+
             }
             else
             {
-                AutoCoulmnMap(dataTable, sbc, ColumnName);
+                AutoCoulmnMap(bulkDataPreperation.SelectedDataTable, SqlBulkCopy, bulkDataPreperation.CoulmnForCusstomMapping);
             }
            
 
@@ -43,7 +39,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CustomMapping
 
         private static void AutoCoulmnMap(DataTable dataTable, SqlBulkCopy sbc, string ColumnName)
         {
-            if (!dataTable.Columns.Contains(ColumnName))
+            if (dataTable.Columns.IndexOf(ColumnName)==-1)
             {
                 dataTable.Columns.Add(ColumnName);
             }

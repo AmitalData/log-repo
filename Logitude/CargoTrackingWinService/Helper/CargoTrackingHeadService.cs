@@ -79,11 +79,11 @@ namespace CargoTrackingWinService.Helper
             }
         }
 
-        private RecordUpdated UpdateCargoDataBase(CargoTable table)
+        private RecordUpdated UpdateCargoDataBase(CargoTrackingTable table)
         {
             CargoTrackingUpdateDataBaseArgs cargoTrackingDataBaseArgs = new CargoTrackingUpdateDataBaseArgs()
             {
-                buildCargoArgs = new CargoArgs() { Table = table, SourceConnectionString = sourceConnectionString, DestinationConnectionString = destinationConnectionString },
+                BuildCargoArgs = new CargoTrackingArgs() { Table = table, SourceConnectionString = sourceConnectionString, DestinationConnectionString = destinationConnectionString },
                 NumberOfBulkPerTime = 1000,
                 IsUpdateFromBuild = false,
                 CargoTrackingArguments = null,
@@ -94,10 +94,10 @@ namespace CargoTrackingWinService.Helper
         }
 
 
-        private bool AddAllTablesToThread(List<CargoTable> CargoTableLists)
+        private bool AddAllTablesToThread(List<CargoTrackingTable> CargoTableLists)
         {
             RecordUpdated RecordUpdatedNumber = new RecordUpdated();
-            foreach (CargoTable table in CargoTableLists)
+            foreach (CargoTrackingTable table in CargoTableLists)
             {
                 try
                 {
@@ -105,7 +105,7 @@ namespace CargoTrackingWinService.Helper
                 }
                 catch(Exception e)
                 {
-                    string ErrorsLog  ="Table Name: " +table.CT_TableName+Environment.NewLine +"Erros: "+ e.Message+ Environment.NewLine+ "Stack Trace: " + e.StackTrace;
+                    string ErrorsLog  ="Table Name: " +table.CargoTracking_TableName+Environment.NewLine +"Erros: "+ e.Message+ Environment.NewLine+ "Stack Trace: " + e.StackTrace;
                     if (!ApplicationInfo.ErrorLogs.Contains(ErrorsLog))
                     {
                         ApplicationInfo.ErrorLogs += ErrorsLog;
@@ -117,7 +117,7 @@ namespace CargoTrackingWinService.Helper
                     
                 }
                 
-                UpdaeNumberOfRecordsUpdated(table.CT_TableName, RecordUpdatedNumber.NumberOfRecordUpdated);
+                UpdaeNumberOfRecordsUpdated(table.CargoTracking_TableName, RecordUpdatedNumber.NumberOfRecordUpdated);
 
             }
 
