@@ -416,7 +416,6 @@ namespace Logitude.BL.ShipmentsModel.EntityOtherServices
                 {
                     shipperAddress = addressRepository.GetSingleAddress(item.ShipperAddressId, tenant);
                     consigneeAddress = addressRepository.GetSingleAddress(item.ConsigneeAddressId, tenant);
-                    //List<ShipmentPayable> shipmentPayables = shipmentPayableRepository.GetShipemntPayablesByShipmentId(item.Id, tenant);
 
                     string typeOper = item.TransportModeId;
                     switch(item.DirectionId)
@@ -466,18 +465,28 @@ namespace Logitude.BL.ShipmentsModel.EntityOtherServices
                     row[12] = item.ShipperName;
                     row[13] = this.ComputeAddressStreet(shipperAddress);
 
-                    if (shipperAddress != null && !string.IsNullOrEmpty(shipperAddress.CountryId))
+                    if (shipperAddress != null)
                     {
-                        Country shipperCountry = CountryRepository.GetSingleCountry(shipperAddress.CountryId, tenant, true);
-                        if (shipperCountry != null)
+                        if (!string.IsNullOrEmpty(shipperAddress.CountryId))
                         {
-                            row[14] = shipperCountry.Code;
-                            row[15] = shipperCountry.EnglishName;
+                            Country shipperCountry = CountryRepository.GetSingleCountry(shipperAddress.CountryId, tenant, true);
+                            if (shipperCountry != null)
+                            {
+                                row[14] = shipperCountry.Code;
+                                row[15] = shipperCountry.EnglishName;
+                            }
+
+                            CountryCityRepository countryCityRepository = new CountryCityRepository(commoContext);
+                            CountryCity countryCity = countryCityRepository.GetSingleCountryCityByNameAndCountry(shipperAddress.City, shipperAddress.CountryId, tenant);
+                            if (countryCity != null)
+                            {
+                                row[16] = countryCity.Code;
+                            }
                         }
+
+                        row[17] = shipperAddress.City;
                     }
 
-                    //row[16] = shipment.ShipperCityCode;
-                    row[17] = shipperAddress == null ? "" : shipperAddress.City;
                     row[18] = item.ConsigneeName;
                     row[19] = this.ComputeAddressStreet(consigneeAddress);
 
