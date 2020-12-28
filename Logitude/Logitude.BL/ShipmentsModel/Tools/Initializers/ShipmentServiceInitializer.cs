@@ -3,6 +3,7 @@ using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours;
 using Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours.CompositionBehaviours;
+using Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours.Validators;
 using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Data.CommonDataModel;
@@ -378,6 +379,21 @@ namespace Logitude.BL.ShipmentsModel.Tools.Initializers
             foreach (IServiceBehaviour behaviour in behaviours)
             {
                 behaviour.Handle(this);
+            }
+        }
+
+        public void HandleValidators()
+        {
+            List<IServiceValidator> validators = new List<IServiceValidator>();
+
+            if (!LoggedTenant.LogBoxTenantSetting.IsDocumentsArchive)
+            {
+                validators.Add(new ShipmentMasterIsUsedValidator());
+            }
+
+            foreach (IServiceValidator behaviour in validators)
+            {
+                behaviour.Validate(this);
             }
         }
 

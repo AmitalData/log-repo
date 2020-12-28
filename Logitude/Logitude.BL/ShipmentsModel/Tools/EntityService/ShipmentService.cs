@@ -188,6 +188,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
                 if (!loggedTenant.LogBoxTenantSetting.IsDocumentsArchive)
                 {
+                    this.initializer.HandleValidators();
+
                     ShipmentValidating.Validate(entityPM, entityPoco, isNewEntity, myCommonContext, loggedTenant);
                     ShipmentValidating.ValidateRoutingDates(entityPM, entityPM.ShipmentPickUps, entityPM.ShipmentDeliveries);
                 }
@@ -367,6 +369,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
                     if (!loggedTenant.LogBoxTenantSetting.IsDocumentsArchive)
                     {
+                        this.initializer.HandleValidators();
+
                         ShipmentValidating.Validate(entityPM, entityPoco, isNewEntity, myCommonContext, loggedTenant);
                         ShipmentValidating.ValidateRoutingDates(entityPM, initializer.ShipmentPickUpsChangeSet, initializer.ShipmentDeliveriesChangeSet);
                     }

@@ -26,6 +26,7 @@ using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using System.Web;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.EntityPMs;
+using Logitude.BookingLib.BL.EntityUpdateServices.Behaviours.BookingBehaviours.Validators;
 
 namespace Logitude.BookingLib.BL.EntityUpdateServices
 {
@@ -484,18 +485,31 @@ namespace Logitude.BookingLib.BL.EntityUpdateServices
 
         private void ValidateMasterNumber(BookingPM entityPM)
         {
-            if (entityPM.Tenant != 343 && entityPM.Tenant != 528)
+            BookingMasterIsUsedValidator validator = new BookingMasterIsUsedValidator();
+
+            validator.Validate(new BookingMasterIsUsedValidatorArgs()
             {
-                if (!string.IsNullOrEmpty(entityPM.Master) && !string.IsNullOrEmpty(entityPM.AirlinePrefix) && !entityPM.IsCancelled)
-                {
-                    BookingRepository myBookingRepository = new BookingRepository(entityPM.Tenant);
-                    bool isMasterFieldUsed = myBookingRepository.IsMasterFieldUsed(entityPM.Master, entityPM.AirlinePrefix, entityPM.Id, entityPM.Tenant, entityPM.DirectionCode, entityPM.TransportModeCode);
-                    if (isMasterFieldUsed)
-                    {
-                        throw new ApplicationException("Master field already used in another Booking");
-                    }
-                }
-            }
+                Tenant = entityPM.Tenant,
+                BookingId = entityPM.Id,
+                DirectionCode = entityPM.DirectionCode,
+                TransportModeCode = entityPM.TransportModeCode,
+                Master = entityPM.Master,
+                AirlinePrefix = entityPM.AirlinePrefix,
+                IsCancelled = entityPM.IsCancelled,
+            });
+
+            //if (entityPM.Tenant != 343 && entityPM.Tenant != 528)
+            //{
+            //    if (!string.IsNullOrEmpty(entityPM.Master) && !string.IsNullOrEmpty(entityPM.AirlinePrefix) && !entityPM.IsCancelled)
+            //    {
+            //        BookingRepository myBookingRepository = new BookingRepository(entityPM.Tenant);
+            //        bool isMasterFieldUsed = myBookingRepository.IsMasterFieldUsed(entityPM.Master, entityPM.AirlinePrefix, entityPM.Id, entityPM.Tenant, entityPM.DirectionCode, entityPM.TransportModeCode);
+            //        if (isMasterFieldUsed)
+            //        {
+            //            throw new ApplicationException("Master field already used in another Booking");
+            //        }
+            //    }
+            //}
         }
 
         protected override void CheckConcurrency(BookingPM entityPM, Booking entityPOCO)

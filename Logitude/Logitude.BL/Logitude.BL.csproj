@@ -2697,6 +2697,7 @@
     <Compile Include="ShipmentsModel\Tools\Behaviours\ShipmentBehaviours\ShipmentFieldsBehaviour.cs" />
     <Compile Include="ShipmentsModel\Tools\Behaviours\ShipmentBehaviours\ShipmentPartnersBehaviour.cs" />
     <Compile Include="ShipmentsModel\Tools\Behaviours\ShipmentBehaviours\ShipmentQuoteBehaviour.cs" />
+    <Compile Include="ShipmentsModel\Tools\Behaviours\ShipmentBehaviours\Validators\ShipmentMasterIsUsedValidator.cs" />
     <Compile Include="ShipmentsModel\Tools\Behaviours\ShipmentFinalArrivalDateBehaviour.cs" />
     <Compile Include="ShipmentsModel\Tools\Behaviours\UpdateCrossDockBehaviour.cs" />
     <Compile Include="ShipmentsModel\Tools\Behaviours\UpdateShipmentComputedFieldsBehaviour.cs" />
