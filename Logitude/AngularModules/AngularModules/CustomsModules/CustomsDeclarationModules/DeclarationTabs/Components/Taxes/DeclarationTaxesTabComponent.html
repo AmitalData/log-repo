@@ -1,4 +1,4 @@
-﻿
+
 <style>
     .subTitle {
         color: #1b90cb;
@@ -55,9 +55,9 @@
                     </tr>
 
                     <tr style="height:100px">
-                        <td>
+                        <td *ngIf="EntityPM.Direction!='E'">
 
-                            <div >
+                            <div>
                                 <table style="margin:10px;">
                                     <tr class="FormFieldRow">
                                         <td>
@@ -131,7 +131,64 @@
 
 
                         </td>
-                        <td  >
+                        <td *ngIf="EntityPM.Direction=='E'">
+
+                            <div>
+                                <table style="margin:10px;">
+ 
+                                    <tr class="FormFieldRow">
+                                        <td>
+                                            <div class="MyLabel">{{'Customs.Declaration.F.FOBValueNIS'| TextCodeTranslationPipe}}</div>
+                                        </td>
+                                        <td>
+                                            <!--Text="{Binding CIFValue,StringFormat=\{0:N2\}}"-->
+                                            <div class="MyTextBox">  {{ FOBValueNIS | NumbersPipe :'N2' }} </div>
+                                        </td>
+
+                                        <td style="width:10px;"></td>
+                                        <td>
+                                            <div class="MyLabel">{{'Customs.Declaration.F.FOBValueDollar'| TextCodeTranslationPipe}}</div>
+                                        </td>
+                                        <td>
+                                            <!--Text="{Binding CIFValue,StringFormat=\{0:N2\}}"-->
+                                            <div class="MyTextBox">  {{ FOBValueDollar | NumbersPipe :'N2' }} </div>
+                                        </td>
+                                      
+
+
+                                    </tr>
+
+                                    <tr class="FormFieldRow">
+
+
+                                        <td>
+                                            <div class="MyLabel">{{'Customs.Declaration.F.TotalTax'| TextCodeTranslationPipe}}</div>
+                                        </td>
+                                        <td>
+                                            <!--Text="{Binding CIFValue,StringFormat=\{0:N2\}}"-->
+                                            <div class="MyTextBox">  {{ TotalTax | NumbersPipe :'N2' }} </div>
+                                        </td>
+
+                                        <td style="width:10px;"></td>
+                                        <td>
+                                            <div class="MyLabel">{{'Customs.Declaration.F.LoadingFactor'| TextCodeTranslationPipe}}</div>
+                                        </td>
+                                        <td>
+                                            <!--Text="{Binding CIFValue,StringFormat=\{0:N2\}}"-->
+                                            <div class="MyTextBox">  {{ LoadingFactor  }} </div>
+                                        </td>
+
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                    </tr>
+                                </table>
+                            </div>
+
+
+                        </td>
+
+                        <td>
 
                             <div style="width:300px;height:100px;margin-right:50px;">
                                 <div style="width: 100% ; height : 100%">
@@ -145,12 +202,12 @@
                                                         [width]="'100'" [Alignment]="'right'"
                                                         [binding]="'InvoiceCurrencyId'">
                                                 <ng-template let-item>
-<log-cell-template  #logcelltemplate>
-                                                    <div class="TextTrimming RightCenter">
-                                                        <span>{{item.InvoiceCurrencyId}}</span>
-                                                    </div>
-                                                </log-cell-template>
-</ng-template>
+                                                    <log-cell-template #logcelltemplate>
+                                                        <div class="TextTrimming RightCenter">
+                                                            <span>{{item.InvoiceCurrencyId}}</span>
+                                                        </div>
+                                                    </log-cell-template>
+                                                </ng-template>
                                             </log-column>
 
                                             <!-- rate -->
@@ -158,12 +215,12 @@
                                                         [width]="'100'" [Alignment]="'right'"
                                                         [binding]="'ExchangeRate'">
                                                 <ng-template let-item>
-<log-cell-template  #logcelltemplate>
-                                                    <div class="TextTrimming RightCenter" >
-                                                        <span>{{item.ExchangeRate}}</span>
-                                                    </div>
-                                                </log-cell-template>
-</ng-template>
+                                                    <log-cell-template #logcelltemplate>
+                                                        <div class="TextTrimming RightCenter">
+                                                            <span>{{item.ExchangeRate}}</span>
+                                                        </div>
+                                                    </log-cell-template>
+                                                </ng-template>
                                             </log-column>
 
                                         </logitude-edit-grid>

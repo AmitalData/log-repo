@@ -38,9 +38,7 @@
   ParentTableName="SupplierInvoice"
   LocalDefaultText="&quot;שורת פרט מכס&quot;"
   DefaultText="&quot;Supplier Invoice Item&quot;"
-
-  Code="&quot;4dcb&quot;"
-
+  Code="&quot;17c4&quot;"
   Name="&quot;Customs.SupplierInvoiceItem Query Group&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Customs&quot;"
@@ -6124,7 +6122,7 @@
     IsComposition="false"
     IsMaxLength="false"
     NoMetaDataField="false"
-    GenerateInList="false"
+    GenerateInList="true"
     IsFixedLength="false"
     EnableAutoFill="false"
     IncludeInSearchField="false"
@@ -6201,7 +6199,7 @@
     IsComposition="false"
     IsMaxLength="false"
     NoMetaDataField="false"
-    GenerateInList="false"
+    GenerateInList="true"
     IsFixedLength="false"
     EnableAutoFill="false"
     IncludeInSearchField="false"
