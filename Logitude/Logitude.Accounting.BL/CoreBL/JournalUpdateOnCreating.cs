@@ -165,7 +165,7 @@ namespace Logitude.Accounting.BL.CoreBL
             {
                 JournalLinePM newLine = new JournalLinePM
                 {
-                     ActionCode = "2",
+                     ActionTypeCode = "2",
                      Reference1 = LinePM.Reference1,
                      Reference2 = LinePM.Reference2,
                      Reference3 = LinePM.Reference3,
@@ -194,12 +194,43 @@ namespace Logitude.Accounting.BL.CoreBL
                      EncodeBase64NVARCHARFieldsBy = LinePM.EncodeBase64NVARCHARFieldsBy,
 
               };
-                LinePM.ActionCode = "1";
+                LinePM.ActionTypeCode = "1";
+                LinePM.ActionCode = null;
                 LinePM.DebitAccountId = LinePM.DebitAccountId;
+                SetActionDatatForJournalLine(newLine);
+                SetActionDatatForJournalLine(LinePM);
                 SplitiedJournals.Add(newLine);
             }
 
         }
+
+        public void SetActionDatatForJournalLine(JournalLinePM journalLinePM)
+        {
+            if (!String.IsNullOrWhiteSpace(journalLinePM.ActionTypeCode) &&
+                String.IsNullOrWhiteSpace(journalLinePM.ActionCode))
+            {
+                JournalActionTypeList action =
+                    JournalActionTypeListGetByCode(journalLinePM);
+                if (action != null)
+                {
+                    journalLinePM.ActionId = action.Id;
+                    journalLinePM.ActionCode = action.Code;
+                    journalLinePM.ActionName = action.EnglishName;
+                }
+            }
+        }
+
+
+        public virtual JournalActionTypeList JournalActionTypeListGetByCode(JournalLinePM item)
+        {
+            var _IJournalActionTypeListQueryService =
+                new JournalActionTypeListQueryService(this._MainContext as IAccountingContext);
+
+            JournalActionTypeList action = _IJournalActionTypeListQueryService
+                .GetByCode(item.ActionTypeCode, item.Tenant);
+            return action;
+        }
+
 
         public virtual void ClearDMYByUserId(JournalPM entityPM, string loggedContactId)
         {
