@@ -5,28 +5,36 @@
                 <div class="SimpleGridView">
                     <div class="SimpleGridViewHeader">
                         <table>
-                            <tr>                                
+                            <tr>
                                 <td style="width: 110px; min-width: 110px; max-width: 110px;">Shipment #</td>
-                                <td>Error</td>                                
+                                <td style="width: 450px; min-width: 450px; max-width: 450px;">Error</td>
+
+                                <td class="LastChild">
+                                    <div></div>
+                                </td>
                             </tr>
                         </table>
                     </div>
 
                     <div class="SimpleGridViewBody">
                         <table>
-                            <tr class="SimpleGridViewRow RowHover" *ngFor="let item of ItemsSource">
+                            <tr class="SimpleGridViewRow" *ngFor="let item of ItemsSource">
 
                                 <td class="GridViewCell" style="width: 110px; min-width: 110px; max-width: 110px;">
                                     {{item.ShipmentNumber}}
                                 </td>
 
-                                <td class="GridViewCell">
+                                <td class="GridViewCell TextTrimming" [title]="item.ErrorText" style="width: 450px; min-width: 450px; max-width: 450px;">
                                     {{item.ErrorText}}
+                                </td>
+
+                                <td>
+                                    <div></div>
                                 </td>
                             </tr>
 
                             <tr>
-                                <td colspan="2">
+                                <td colspan="3">
                                     <div></div>
                                 </td>
                             </tr>
