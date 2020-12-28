@@ -4741,7 +4741,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
             if (!entityPM.IsHybrid)
             {
-                shipmentTracing.TracePickUp(itemPM, itemPoco);
+                shipmentTracing.TracePickUp(itemPM, itemPoco, entityPM);
             }
 
             ShipmentMapping.MapPickUp(itemPM, itemPoco, myCommonContext, true);
@@ -4763,7 +4763,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
             if (!entityPM.IsHybrid)
             {
-                shipmentTracing.TracePickUp(itemPM, itemPoco);
+                shipmentTracing.TracePickUp(itemPM, itemPoco, entityPM);
             }
 
             ShipmentMapping.MapPickUp(itemPM, itemPoco, myCommonContext, true);
