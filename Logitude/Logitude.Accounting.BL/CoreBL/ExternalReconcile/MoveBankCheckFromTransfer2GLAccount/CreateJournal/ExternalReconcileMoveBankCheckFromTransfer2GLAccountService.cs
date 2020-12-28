@@ -16,13 +16,18 @@ namespace Logitude.Accounting.BL.CoreBL.ExternalReconcile
     public class ExternalReconcileMoveBankCheckFromTransfer2GLAccountService
     {
         private IExternalReconcileDataProvider _ExternalReconcileDataProvider;
+        private bool _AdjustAsBankFee;
+        private string _OnAdjust_adjustGLAccountId;
         public const string M_LedgerNotInTransferBank = "התנועה איננה בחשבון בנק לשלם ";
         public const string M_InputPageLineNotInTransferBank = "הדף איננה בחשבון בנק לשלם ";
         public const string M_BankBelongtoDifferentBankThanLedger = "אין תאימות דף הבנק שייך לבנק אחר ";
 
-
+#if adjustfeature
         public const string M_AmountInPageAndLedgerMustBeEqual =
                     "סכום החובה בדף בנק חייב להיות זהה לסכום התנועה בכרטסת בנק לשלם בזכות";
+#endif
+        public const string M_OnAdjustMustInit = " סכום החובה בדף בנק שונה מסכום התנועה בכרטסת בנק לשלם בזכות אולם המשתנה כרטיס להפרשים לא אותחל";
+
         public const string M_CheckAmountInPageMustBeInDebit = "סכום החובה בדף בנק חייב להיות גדול מאפס כנדרש בצק";
         public const string M_LedgerAlreadyHaveExternalReconcile = "התנועה מסומנת שהותאמה כבר חיצונית";
         public const string M_InProgressExternalReconcile_Ledger = "התנועה מסומנת בתהליך התאמה חצונית";
@@ -33,6 +38,11 @@ namespace Logitude.Accounting.BL.CoreBL.ExternalReconcile
         public void MustInit(IExternalReconcileDataProvider externalReconcileDataProvider)
         {
             _ExternalReconcileDataProvider = externalReconcileDataProvider;
+        }
+        public void OnAdjustMustInit(string adjustGLAccountId, string screenNotes)
+        {
+            //screenNotes = "התאמת דף בנק (עמלה)";
+            _OnAdjust_adjustGLAccountId = adjustGLAccountId;
         }
         /// <summary>
         // המחאה לשלם נתתי לספק המחאה דחויה  -paymentcheques
@@ -48,7 +58,7 @@ namespace Logitude.Accounting.BL.CoreBL.ExternalReconcile
         //        err.Add("התנועה איננה בחשבון בנק לשלם ");
         //        err.Add("הדף איננה בחשבון בנק לשלם ");
         //        err.Add("אין תאימות דף הבנק שייך לבנק אחר הנשלף מהתנועה");
-        //       err.Add("סכום החובה בדף בנק חייב להיות זהה לסכום התנועה בכרטסת בנק לשלם בזכות");
+        // ****revert-AdjustAllowed****      err.Add("סכום החובה בדף בנק חייב להיות זהה לסכום התנועה בכרטסת בנק לשלם בזכות");
         //        err.Add("סכום החובה בדף בנק חייב להיות גדול מאפס כנדרש בצק");
         //        err.Add("התנועה מסומנת בתהליך התאמה חצונית");
         //        err.Add("התנועה מסומנת שהותאמה כבר חיצונית");
@@ -60,6 +70,46 @@ namespace Logitude.Accounting.BL.CoreBL.ExternalReconcile
         /// <param name="reconcileExternalPageLineId"></param>
         /// CreateJournalWithExtReconcile
         /// MoveBankCheckFromTransfer2GLAccount
+        /// 
+        /*
+ * בנק לשלם כרטיס 100 בזכות -תמיד בזכות
+ *  - דף בנק 101 בחובה 
+ * 
+ * פקודת יומן 
+ * חייב את בנק לשלם ב 100 -JLINE1
+ * זכה את העוש ב 100-JLINE2
+ * 
+ * באם
+ * יש הפרש של שקל עמלה 
+ * זכה את הבנק עוש ב  שקל-JLINE3
+ * חייב את כ ההפרשים ב שקל -JLINE4
+ * 
+ * 
+ * בהעברה להנהח 
+ * 
+ * יוצר התאמה ראשונה מול הבנק לשלם 
+ *   JLINE1 יוצר תנועה חדשה לחובת בנק לשלם100 
+ *   מול התנועה הישנה שבזכות 100
+ *
+ * 
+ * באם אין הפרשים A
+ *יוצר התאמה שניה מול הבנק בעוש 
+ * תנועה חדשה מזכה את העוש ב 100 JLINE2
+ * 100  מול השורה של ההמחאה שנפרע  בדף הבנק המקורית
+ * 
+ *
+ *באם יש ההפרש להתאמה דאז B
+ * התאמה מול בנק העוש
+ * 
+ *  תנועה חדשה מזכה את העוש ב 100 JLINE2
+ *  תנועה חדשה  משורה JLINE3  בזכות
+ *  על שקל אחד 
+ *  
+ * 101  מול השורה של ההמחאה שנפרע  בדף הבנק המקורית בחובה 
+ * 
+ * 
+ */
+
         public void CreateJournalWithExtReconcile(int tenant, string ledgerTransactionBankTransferId, string reconcileExternalPageLineId)
         {
             LedgerTransactionPM myLedgerTransactionBankTransferPM;
@@ -73,7 +123,7 @@ namespace Logitude.Accounting.BL.CoreBL.ExternalReconcile
                 throw new Exception(errString);
             }
 
-            JournalPM journal = CreateJournal(myLedgerTransactionBankTransferPM, myReconcileExternalPageLinePM, bankAccountFromTransfer);
+            JournalPM journal = CreateJournal(myLedgerTransactionBankTransferPM, myReconcileExternalPageLinePM, bankAccountFromTransfer, ledgerTransactionBankTransferId);
             if (journal.JournalExternalReconciles.Count > 1)
             {
                 throw new Exception("Sorry meanwhile only one Adjust Allowed !!!");
@@ -106,7 +156,7 @@ namespace Logitude.Accounting.BL.CoreBL.ExternalReconcile
             errString = Validate(tenant, CheckINprogress, myLedgerTransactionBankTransferPM, myReconcileExternalPageLinePM, bankAccountFromTransfer, bankAccountFromReconcileExternalPageLine);
         }
 
-        private JournalPM CreateJournal(LedgerTransactionPM myLedgerTransactionTransferPM, ReconcileExternalPageLinePM myReconcileExternalPageLinePM, BankAccountPM myBankAccountPM)
+        private JournalPM CreateJournal(LedgerTransactionPM myLedgerTransactionTransferPM, ReconcileExternalPageLinePM myReconcileExternalPageLinePM, BankAccountPM myBankAccountPM, string ledgerTransactionBankTransferId)
         {
 
             //if (string.IsNullOrWhiteSpace(myReconcileExternalPageLinePM.Reference))
@@ -173,7 +223,7 @@ namespace Logitude.Accounting.BL.CoreBL.ExternalReconcile
             journalLineDebitTransfer.DebitAccountId = myBankAccountPM.TransferGLAcccountId;
             journalLineDebitTransfer.CreditAccountId = myBankAccountPM.GLAccountId;
             //journalLine.CreditControlAccountId = glAccount == null ? "" : glAccount.ControlAccountId;
-            journalLineDebitTransfer.Notes = MyNotes  + " " + myReconcileExternalPageLinePM.Notes;
+            journalLineDebitTransfer.Notes = MyNotes + " " + myReconcileExternalPageLinePM.Notes;
 
             SetReference(myLedgerTransactionTransferPM, myReconcileExternalPageLinePM, journalLineDebitTransfer);
 
@@ -202,6 +252,8 @@ namespace Logitude.Accounting.BL.CoreBL.ExternalReconcile
             journalLineCreditBankGLId.ChangeSetOp = ChangeSetOperation.Insert;
             journal.JournalLines.Add(journalLineCreditBankGLId);
 
+            AdjustAsBankFee(myReconcileExternalPageLinePM, ledgerTransactionBankTransferId, journal);
+
             TryCreateInternalReconcileIfNotReconcile(myLedgerTransactionTransferPM, journal);
 
             journal.JournalExternalReconciles.Add(new JournalExternalReconcilePM()
@@ -216,6 +268,34 @@ namespace Logitude.Accounting.BL.CoreBL.ExternalReconcile
             });
 
             return journal;
+        }
+
+        private void AdjustAsBankFee(ReconcileExternalPageLinePM myReconcileExternalPageLinePM, string ledgerTransactionBankTransferId, JournalPM journal)
+        {
+            if (!_AdjustAsBankFee)
+            {
+                return;
+            }
+
+            var adjustDueBankFeesCreateJournal = new AdjustDueBankFees.CreateJournal();
+            adjustDueBankFeesCreateJournal.MustInit(_ExternalReconcileDataProvider, journal);
+
+            adjustDueBankFeesCreateJournal.CreateOnlyJournalLines(
+                new List<string>() { myReconcileExternalPageLinePM.Id }, new List<string>() { ledgerTransactionBankTransferId },
+
+                _OnAdjust_adjustGLAccountId,
+                "ScreenNotes", journal.AccountingDate
+
+                );
+            bool testedAndFoundAllOK = false;
+            if (testedAndFoundAllOK)
+            {
+                journal.StatusCodeEnum = JournalStatusTypePM.StatusCodeEnum.Approved;
+            }
+            else
+            {
+                journal.StatusCodeEnum = JournalStatusTypePM.StatusCodeEnum.Draft;
+            }
         }
 
         private  void SetReference(LedgerTransactionPM myLedgerTransactionTransferPM, ReconcileExternalPageLinePM myReconcileExternalPageLinePM, JournalLinePM journalLine)
@@ -320,21 +400,29 @@ namespace Logitude.Accounting.BL.CoreBL.ExternalReconcile
             {
                 if (myLedgerTransactionBankTransferPM.LocalAmountCredit != myReconcileExternalPageLinePM.DebitAmount) // WI 65377
                 {
-                    err.Add(
-                        M_AmountInPageAndLedgerMustBeEqual//"סכום החובה בדף בנק חייב להיות זהה לסכום התנועה בכרטסת בנק לשלם בזכות"
-                        );
+                    _AdjustAsBankFee = true;
+                    //err.Add(
+                    //    M_AmountInPageAndLedgerMustBeEqual//"סכום החובה בדף בנק חייב להיות זהה לסכום התנועה בכרטסת בנק לשלם בזכות"
+                    //    );
                 }
             }
             else
             {
                 if (myLedgerTransactionBankTransferPM.ForeignAmountCredit != myReconcileExternalPageLinePM.DebitAmount) // WI 65377
                 {
-                    err.Add(
-                        M_AmountInPageAndLedgerMustBeEqual//"סכום החובה בדף בנק חייב להיות זהה לסכום התנועה בכרטסת בנק לשלם בזכות"
-                        );
+                    _AdjustAsBankFee = true;
+                    //err.Add(
+                    //    M_AmountInPageAndLedgerMustBeEqual//"סכום החובה בדף בנק חייב להיות זהה לסכום התנועה בכרטסת בנק לשלם בזכות"
+                    //    );
                 }
             }
-         
+            if (_AdjustAsBankFee && String.IsNullOrWhiteSpace(_OnAdjust_adjustGLAccountId))
+            {
+                err.Add(
+                    M_OnAdjustMustInit// " סכום החובה בדף בנק שונה מסכום התנועה בכרטסת בנק לשלם בזכות אולם המשתנה כרטיס להפרשים לא אותחל";
+                    );
+            }
+
             if (myReconcileExternalPageLinePM.DebitAmount <= 0)
             {
                 err.Add(
