@@ -8,7 +8,7 @@ export function OpenShipment(dataFile: string){
 
 export function FillGeneralTab(){
     cy.Click("#ShipmentTHGeneral", null)
-    cy.FillRandomNumber("#Shipment_GrossWeightInKG", 100, 1000, false)
+    cy.FillRandomNumber("#Shipment_GrossWeightInKG", 100, 1000)
     cy.SelectLogLovRandomElement("#Shipment_MoveTypeId", true, 5)
 }
 
@@ -52,10 +52,10 @@ function AddPackagesOrContainersForOrdersTab(shipmentTypeCode:string){
     let numberOfPackages = gr.GenerateRandomNumber(1, 3)
     for (let i = 0; i < numberOfPackages; i++){
         cy.Click("#Orders-AddPackage", null)
-        cy.FillRandomNumber("#ShipmentOrderPackage_Quantity", 1, 10, true)
+        cy.FillRandomNumber("#ShipmentOrderPackage_Quantity", 1, 10)
         if (shipmentTypeCode === "FCLD" || shipmentTypeCode === "FTL" || shipmentTypeCode === "LCLD" || shipmentTypeCode === "LTL"){
             cy.SelectLogLovRandomElement("#ShipmentOrderPackage_PackageTypeId", true, 5)
-            cy.FillRandomNumber("#ShipmentOrderPackage_GrossWeight", 1, 50, true)
+            cy.FillRandomNumber("#ShipmentOrderPackage_GrossWeight", 1, 50)
         }
         cy.Click("#OrderOKbtn", null)
     }
@@ -77,10 +77,10 @@ function AddPackagesOrContainersForPackagesTab(transportModeCode:string, shipmen
             cy.SelectLogLovRandomElement("#ShipmentPackage_PackageTypeId", true, 5)
         }
         if(shipmentTypeCode !== "FCLD" && shipmentTypeCode !== "FTL"){
-            cy.FillRandomNumber("#ShipmentPackage_Quantity", 1, 10, true)
+            cy.FillRandomNumber("#ShipmentPackage_Quantity", 1, 10)
         }
         if(transportModeCode !== "A"){
-            cy.FillRandomNumber("#ShipmentPackage_Weight", 1, 10, true)
+            cy.FillRandomNumber("#ShipmentPackage_Weight", 1, 10)
         }
         if(transportModeCode === "A"){
             cy.Click("#OkAirPackage", null)

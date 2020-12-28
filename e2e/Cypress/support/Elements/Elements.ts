@@ -3,10 +3,10 @@ import * as gr from '../../RabaiaTeam/General/Generator'
 declare global{
 namespace Cypress {
     interface Chainable {
-        FillLogTextBox(selector: string, value: string, assertRequired: boolean): Chainable<Element>
-        FillLogLov(selector: string, value: string, assertRequired: boolean, fromCache: boolean): Chainable<Element>
-        FillRandomString(selector: string, length: number, upperCase: boolean, assertRequired: boolean): Chainable<Element>
-        FillRandomNumber(selector: string, minimum: number, maximum: number, assertRequired: boolean): Chainable<Element>
+        FillLogTextBox(selector: string, value: string): Chainable<Element>
+        FillLogLov(selector: string, value: string, fromCache: boolean): Chainable<Element>
+        FillRandomString(selector: string, length: number, upperCase: boolean): Chainable<Element>
+        FillRandomNumber(selector: string, minimum: number, maximum: number): Chainable<Element>
         Click(selector: string, contains: string): Chainable<Element>
         SaveClick(selector: string, contains: string, Url: string, resultFile: string): Chainable<Element>
         ClickCheckBox(selector: string): Chainable<Element>
@@ -20,26 +20,20 @@ namespace Cypress {
 }
 }
 
-Cypress.Commands.add("FillLogTextBox", (selector, value, assertRequired) => {
+Cypress.Commands.add("FillLogTextBox", (selector, value) => {
 
-    if (assertRequired) {
-        cy.get(selector).focus().clear().type(value).should("have.value", value)
-    } else {
-        cy.get(selector).focus().clear().type(value)
-    }
+    cy.get(selector).focus().clear().type(value)
 
 })
 
-Cypress.Commands.add("FillLogLov", (selector, value, assertRequired, fromCache) => {
+Cypress.Commands.add("FillLogLov", (selector, value, fromCache) => {
 
     if(!fromCache){
         cy.intercept("**/GetByCompactFilters?**").as("LOVDataLoaded")
     }
-    if (assertRequired) {
-        cy.get(selector).focus().clear().type(value).should("have.value", value)
-    } else {
-        cy.get(selector).focus().clear().type(value)
-    }
+
+    cy.get(selector).focus().clear().type(value)
+
     if(!fromCache){
         cy.wait("@LOVDataLoaded")
     }
@@ -81,27 +75,19 @@ Cypress.Commands.add("SelectLogLovRandomElement", (selector, fromCache, maxOptio
 
 })
 
-Cypress.Commands.add("FillRandomString", (selector, length, upperCase, assertRequired) => {
+Cypress.Commands.add("FillRandomString", (selector, length, upperCase) => {
 
     let randomString = gr.GenerateRandomString(length, upperCase)
 
-    if (assertRequired) {
-        cy.get(selector).focus().clear().type(randomString).should("have.value", randomString)
-    } else {
-        cy.get(selector).focus().clear().type(randomString)
-    }
+    cy.get(selector).focus().clear().type(randomString)
 
 })
 
-Cypress.Commands.add("FillRandomNumber", (selector, minimum, maximum, assertRequired) => {
+Cypress.Commands.add("FillRandomNumber", (selector, minimum, maximum) => {
 
     let randomNumber = gr.GenerateRandomNumber(minimum, maximum).toString()
 
-    if (assertRequired) {
-        cy.get(selector).focus().clear().type(randomNumber).should("have.value", randomNumber)
-    } else {
-        cy.get(selector).focus().clear().type(randomNumber)
-    }
+    cy.get(selector).focus().clear().type(randomNumber)
 
 })
 

@@ -14,8 +14,8 @@ describe("Add New Charge Type", () => {
   
         cy.Click("#NewButton_ChargesType", null);
 
-        cy.FillRandomString("#ChargesType_Code", 4, true, true)
-        cy.FillLogTextBox("#ChargesType_EnglishName", "RabaiaTest", true)
+        cy.FillRandomString("#ChargesType_Code", 4, true)
+        cy.FillLogTextBox("#ChargesType_EnglishName", "RabaiaTest")
         cy.SelectLogLovFirstElement("#ChargesType_ChargesGroupId", true)
         cy.SelectLogLovFirstElement("#ChargesType_MeasurementId", true)
 
