@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 {
    public class CustomsTransferLineUpdateClass
    {  		
-		public const string HashString = "67059aa2874b02b48f2095200448bbb6";
+		public const string HashString = "7615d53c017a9117a29f498c5536f150";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -89,7 +89,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 	             				    ObjectTableName =  "CustomsTransferLine",
 			      				    IsNew =  true,
 			      				    DBTableName =  "CustomsTransferLines",
-			      				    OldDBTableName =  "CustomsTransferLines",
 			      				    ObjectTableSingular =  "Customs Transfer Line",
 			      				    ObjectTablePlural =  "Customs Transfer Lines",
 			      				    HasCustomFilter =  false,
@@ -120,7 +119,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			      				    ObjectTableTypeCode =  "BR",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Customs Transfer Line",
-			      				    Code =  "faad",
+			      				    Code =  "bc9d",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Shipment",
@@ -145,7 +144,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "CustomsTransferHeaderId",
-					  						OldFieldName =  "CustomsTransferHeaderId",
 					  						ObjectTableName =  "CustomsTransferLine",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "CustomsTransferHeader",
@@ -191,6 +189,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -202,7 +201,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "ShipmentId",
-					  						OldFieldName =  "ShipmentId",
 					  						ObjectTableName =  "CustomsTransferLine",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -247,6 +245,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -258,7 +257,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "ShipmentNumber",
-					  						OldFieldName =  "ShipmentNumber",
 					  						ObjectTableName =  "CustomsTransferLine",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -303,6 +301,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -316,7 +315,19 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
-	    {    
+	    {   
+
+		   ObjectTable CustomsTransferLineObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "CustomsTransferLine" && d.Tenant == 0).FirstOrDefault();
+		   //List<ObjectField> CustomsTransferLineObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "CustomsTransferLine").ToList();
+		       
+	      
+
+	         Screen CustomsTransferLineCustomsTransferLineHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "CustomsTransferLine.HeaderScreen", Name = "CustomsTransferLineHeaderScreen", ObjectTableId = CustomsTransferLineObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
+      	
+		    CustomsTransferLineObjectTable.HeaderScreenId = CustomsTransferLineCustomsTransferLineHeaderScreenScreen0.Id;
+		    CustomsTransferLineObjectTable.HeaderScreenCode = CustomsTransferLineCustomsTransferLineHeaderScreenScreen0.Code;
+
+	   		  
 
 	    }
 

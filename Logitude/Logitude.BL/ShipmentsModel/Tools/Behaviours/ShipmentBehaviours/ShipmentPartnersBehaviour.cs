@@ -41,7 +41,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
 
             if (string.IsNullOrEmpty(cardId))
             {
-                entityPM.ShipperName = null;
+                //entityPM.ShipperName = null; //we need this for logbox env.
                 entityPM.ShipperNote = null;
                 entityPM.ShipperContactId = null;
                 entityPM.ShipperAddressId = null;
@@ -83,7 +83,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
 
             if (string.IsNullOrEmpty(cardId))
             {
-                entityPM.ConsigneeName = null;
+                //entityPM.ConsigneeName = null; //we need this for logbox env.
                 entityPM.ConsigneeNote = null;
                 entityPM.ConsigneeContactId = null;
                 entityPM.ConsigneeAddressId = null;

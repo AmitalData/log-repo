@@ -43,7 +43,7 @@ namespace Logitude.Accounting.Data.EntityMapping
 
             this.Property(t => t.IsCancelled).HasColumnName("IsCancelled").IsRequired();
 
-            this.Property(t => t.ChartOfAccountTypeCode).HasColumnName("ChartOfAccountTypeCode").IsRequired().HasMaxLength(1).IsUnicode(false);
+            this.Property(t => t.ChartOfAccountTypeCode).HasColumnName("ChartOfAccountTypeCode").HasMaxLength(1).IsUnicode(false);
 
             this.Property(t => t.Line).HasColumnName("Line").IsRequired();
         }
