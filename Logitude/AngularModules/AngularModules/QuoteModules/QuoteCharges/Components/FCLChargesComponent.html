@@ -436,6 +436,15 @@
                                         </ng-template>
                                     </log-column>
 
+                                    <!-- Sale Currency -->
+                                    <log-column [width]="'40'" [SortFieldName]="'SaleCurrencyCode'" [header]="'QuoteCharge.CH.SaleCurrencyIdListLable' | TextCodeTranslationPipe" [Alignment]="'center'" *ngIf="IsMultiCurrency">
+                                        <ng-template let-item>
+                                            <log-cell-template #logcelltemplate [Alignment]="'center'" [IsEnabled]="false">
+                                                {{item.SaleCurrencyCode}}
+                                            </log-cell-template>
+                                        </ng-template>
+                                    </log-column>
+
                                     <!-- Sale Quantity -->
                                     <log-column [SortFieldName]="'SaleQuantity'" [width]="'90'" *ngIf="IsSaleQuantityVisible">
                                         <ng-template let-item>

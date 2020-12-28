@@ -23,7 +23,7 @@ export class QuoteSaleCurrencyTypeComponent implements OnInit {
     }
 
     FillComboBox() {
-        var hasToggleFeature = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "QCM" && d.TenantNumber == SessionLocator.Tenant)[0]
+        var hasToggleFeature = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "QMC" && d.TenantNumber == SessionLocator.Tenant)[0]
 
         this.ItemsSource.push(new CodeNameClass("F", TextCodeTranslator.Translate("Quote.O.Charges.Fixed")));
         this.ItemsSource.push(new CodeNameClass("S", TextCodeTranslator.Translate("Quote.O.Charges.SameAsCost")));
@@ -38,7 +38,7 @@ export class QuoteSaleCurrencyTypeComponent implements OnInit {
             this.selectedItem = this.ItemsSource.filter(f => f.Code == "M")[0];
         }
 
-        if (this.EntityPM.IsSaleCurrencySameAsCost) {
+        else if (this.EntityPM.IsSaleCurrencySameAsCost) {
             this.selectedItem = this.ItemsSource.filter(f => f.Code == "S")[0];
         }
 
@@ -62,26 +62,39 @@ export class QuoteSaleCurrencyTypeComponent implements OnInit {
 
             this.selectedItem = value;
 
-            if (newCode == "S") {
-                var itemFrieght = this.EntityPM.QuoteCharges.filter(f => f.ChargesGroupCode == "FRT")[0];
+            if (newCode != "F") {
 
-                if (this.EntityPM.QuoteCharges.filter(d => d.IsAllIN == true && d.CostCurrencyId != itemFrieght.CostCurrencyId).length > 0) {
+                var allInItems = this.EntityPM.QuoteCharges.filter(d => d.IsAllIN == true);
 
-                    isChanging = false;
+                if (allInItems.length > 0) {
 
-                    var messageWindow = new MessageWindow();
+                    var message: string = null;
 
-                    var message = "You can't switch to same as cost currency mode till you drop the all-in checks";
+                    if (newCode == "M") {
+                        isChanging = false;
+                        message = "You can't switch to multi-currency mode till you drop the all-in checks";
+                    }
 
-                    //if (newCode == "M") {
-                    //    message = "You can't switch to multi-currency mode till you drop the all-in checks";
-                    //}
+                    else if (newCode == "S") {
 
-                    messageWindow.Show(message);
+                        var itemFrieght = this.EntityPM.QuoteCharges.filter(f => f.ChargesGroupCode == "FRT")[0];
 
-                    messageWindow.WindowClosed.subscribe((event: any) => {
-                        setTimeout(() => this.Reset(oldCode), 1);
-                    });
+                        if (allInItems.filter(d => d.CostCurrencyId != itemFrieght.CostCurrencyId).length > 0) {
+                            isChanging = false;
+                            message = "You can't switch to same as cost currency mode till you drop the all-in checks";
+                        }
+                    }
+
+                    if (!isChanging) {
+
+                        var messageWindow = new MessageWindow();
+
+                        messageWindow.Show(message);
+
+                        messageWindow.WindowClosed.subscribe((event: any) => {
+                            setTimeout(() => this.Reset(oldCode), 1);
+                        });
+                    }
                 }
             }
 

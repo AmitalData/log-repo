@@ -552,25 +552,17 @@ export class LCLChargesComponent extends BaseComponent implements OnDestroy {
 
     OnSaleCurrencyModeChanged(newCurrencyMode: string) {
 
-        if (this.IsMultiCurrency) {
+        this.SetLabelsAttached();
 
-            this.myChargesTypeService.getAllFromCache().subscribe((myResponse: ServiceResponse) => {
-                if (!myResponse.HasError) {
-                    this.AllChargesTypes = myResponse.Result;
-                    this.ApplyOnSaleCurrencyModeChanged();
-                }
-            });
+        if (this.IsMultiCurrency) {
+            this.OnQuoteSaleCurrencyModeChangedToMulti();
         }
 
         else {
-            this.ApplyOnSaleCurrencyModeChanged();
+            this.OnQuoteSaleCurrencyOrModeChanged();
         }
     }
 
-    ApplyOnSaleCurrencyModeChanged() {
-        this.SetLabelsAttached();
-        this.OnQuoteSaleCurrencyOrModeChanged();
-    }
     OnQuoteSaleCurrencyOrModeChanged() {
 
         var allInItems = this.ItemsSource.Collection.filter(d => d.IsAllIN == true);
@@ -588,6 +580,10 @@ export class LCLChargesComponent extends BaseComponent implements OnDestroy {
         });
 
         this.ComputeTotals();
+    }
+
+    OnQuoteSaleCurrencyModeChangedToMulti() {
+
     }
 
     private selectedCurrencyCode: string;
@@ -2963,14 +2959,54 @@ export class QuoteChargeItem extends BaseComponent {
             this.EntityPM.SaleExchangeRate = this.QuotePM.ExchangeRate;
         }
 
-        // InSaleCurrency
-        this.ComputeCostInSalePrice();
-        this.ComputeCostInSaleAmount();
-        this.EntityPM.SaleTotalAmountLocal = AppTool.IsNullOrEmpty(this.SaleTotalAmount) ? null : AppTool.Round(this.SaleTotalAmount * this.SaleExchangeRate, 2);
-        this.SetUIProperties_AllIn();
+        this.OnChargeCurrencyChanged();
     }
 
-    private CheckAndRemoveItemSalePrice() {
+    OnQuoteSaleCurrencyModeChangedToMulti() {
+
+        this.CheckAndRemoveItemSalePrice();
+
+        var list: ChargesTypeList = this.fatherComponent.AllChargesTypes.filter(f => f.Id == this.ChargesTypeId)[0];
+
+        if (list) {
+            var newSaleCurrencyId = list.ReceivablesDefaultCurrencyId;
+
+            if (!newSaleCurrencyId) {
+                if (list.ChargesGroupCode == "FRT" || list.ChargesGroupCode == "SCH") {
+                    newSaleCurrencyId = SessionLocator.TenantPM.FreightCurrencyId;
+                }
+
+                else {
+                    newSaleCurrencyId = SessionLocator.TenantPM.OtherChargesCurrencyId;
+                }
+            }
+
+            if (newSaleCurrencyId) {
+                if (newSaleCurrencyId != this.SaleCurrencyId) {
+
+                    if (newSaleCurrencyId == this.CostCurrencyId) {
+                        this.EntityPM.SaleCurrencyId = this.EntityPM.CostCurrencyId;
+                        this.EntityPM.SaleCurrencyCode = this.EntityPM.CostCurrencyCode;
+                        this.EntityPM.SaleExchangeRate = this.EntityPM.CostExchangeRate;
+                    }
+
+                    else if (newSaleCurrencyId == this.QuotePM.SaleCurrencyId) {
+                        this.EntityPM.SaleCurrencyId = this.QuotePM.SaleCurrencyId;
+                        this.EntityPM.SaleCurrencyCode = this.QuotePM.SaleCurrencyCode;
+                        this.EntityPM.SaleExchangeRate = this.QuotePM.ExchangeRate;
+                    }
+
+                    else {
+                        this.SaleCurrencyId = newSaleCurrencyId;
+                    }
+
+                    this.OnChargeCurrencyChanged();
+                }
+            }
+        }
+    }
+
+    CheckAndRemoveItemSalePrice() {
         if (this.CostCurrencyId) {
             if (this.CostCurrencyId != this.QuotePM.SaleCurrencyId) {
 
@@ -2979,6 +3015,12 @@ export class QuoteChargeItem extends BaseComponent {
                 }
             }
         }
+    }
+    OnChargeCurrencyChanged() {
+        this.ComputeCostInSalePrice();
+        this.ComputeCostInSaleAmount();
+        this.EntityPM.SaleTotalAmountLocal = AppTool.IsNullOrEmpty(this.SaleTotalAmount) ? null : AppTool.Round(this.SaleTotalAmount * this.SaleExchangeRate, 2);
+        this.SetUIProperties_AllIn();
     }
 
     OnMeasurementsChanged() {
