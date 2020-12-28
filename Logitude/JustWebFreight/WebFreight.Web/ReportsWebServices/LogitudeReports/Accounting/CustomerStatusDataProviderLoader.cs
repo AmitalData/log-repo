@@ -1,4 +1,7 @@
 ﻿using Logitude.Accounting.BL.CoreBL.Reports;
+using Logitude.Accounting.Data;
+using Logitude.Accounting.Data.EntityListQueryServices;
+using Logitude.Accounting.Data.EntityLists;
 using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Accounting.Data.Repositories;
 using Logitude.BL.CommonDataModel.EntityPMs;
@@ -21,13 +24,14 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
         private QueryOperations reportQueryOperations;
         private bool showLocals = false;
         private int tenant;
-
+        private CustomerStatusDataProvider dataProvider;
+        private List<LedgerTransactionList> ExternalTransactions;
 
         public CustomerStatusDataProviderLoader(int _tenant)
         {
             tenant = _tenant;
             showLocals = LoggedContactResolver.GetLoggedContactShowLocal(_tenant);
-
+            dataProvider = new CustomerStatusDataProvider();
         }
         public CustomerStatusDataProvider LoadFromXML(byte[] xmlFilters)
         {
@@ -36,55 +40,111 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
             AgingReportService agingReportService = new AgingReportService(BuildReportParameters());
             agingReportService.RunReport();
 
-            List<PeriodMExtended> resultedPeriods = agingReportService.MyPeriodExtendedList;
+            GetExternalTransactionsForPeriodsAccounts(agingReportService.MyPeriodExtendedList);
 
-            return BuildDataProvider(resultedPeriods);
+            return BuildDataProvider(agingReportService.MyPeriodExtendedList);
         }
+
+
+
+
+
+
+
 
         //-----------
 
-        private CustomerStatusDataProvider BuildDataProvider(List<PeriodMExtended> resultedPeriods)
+        private CustomerStatusDataProvider BuildDataProvider(List<PeriodMExtended> agingPeriods)
         {
-            CustomerStatusDataProvider dataProvider = new CustomerStatusDataProvider();
+            CreateCustomerStatusesByAgingPeriods(agingPeriods);
 
-            List<IGrouping<string, PeriodMExtended>> customersPeriod = resultedPeriods.GroupBy(d => d.AccountId).ToList();
-
-
-            foreach (IGrouping<string, PeriodMExtended> customer in customersPeriod)
-            {
-                var periodsByDate = customer.GroupBy(r => r.PeriodName).ToList();
-
-                string balanceFilter = GetFilterValue<string>("BalanceFilter");
-                decimal balanceFilterValue = GetFilterValue<decimal>("BalanceFilterValue");
-                decimal customerBalance = customer.First().BalanceInLocalCurrency ?? 0;
-                //decimal customerBalance = customer.Sum(d => d.Total);
-
-
-                if (balanceFilter == "debtors" && customerBalance > 0
-                    || balanceFilter == "debt" && customerBalance > balanceFilterValue
-                    || balanceFilter == "all" || balanceFilter == null)
-                {
-                        CustomerStatus customerStatus = CreateNewCustomerStatus(customer, periodsByDate);
-                    if (GetFilterValue<bool>("IsCreditLimitSet") == true && customerStatus.CreditLimit == 0)
-                    {
-
-                    }
-                    else
-                    {
-                        dataProvider.CustomersStatuses.Add(customerStatus);
-                    }
-
-
-                }
-
-            }
-
-            SortCustomerStatuses(dataProvider);
+            SortCustomerStatuses();
 
             return dataProvider;
         }
 
-        private void SortCustomerStatuses(CustomerStatusDataProvider dataProvider)
+        private void GetExternalTransactionsForPeriodsAccounts(List<PeriodMExtended> agingPeriods)
+        {
+            List<string> accountsIds = agingPeriods.Select(p => p.AccountId).Distinct().ToList();
+
+            IAccountingContext accountingContext = AccountingContext.GetContext(tenant);
+            LedgerTransactionListQueryService ledgerQuery = new LedgerTransactionListQueryService(accountingContext);
+            ExternalTransactions = ledgerQuery.GetExternalTransactionsForAccounts(accountsIds, tenant).ToList();
+        }
+
+        private void CreateCustomerStatusesByAgingPeriods(List<PeriodMExtended> resultedPeriods)
+        {
+            var customersPeriods = GroupPeriodsByCustomers(resultedPeriods);
+            customersPeriods = FilterPeriods(customersPeriods);
+
+            foreach (var customerPeriods in customersPeriods)
+                CreateCustomerStatusByPeriods(customerPeriods);
+        }
+
+        private IEnumerable<IGrouping<string, PeriodMExtended>> FilterPeriods(IEnumerable<IGrouping<string, PeriodMExtended>> customersPeriods)
+        {
+            bool filterByDeptors = CheckIfFilterByDeptorsEnabled();
+            bool filterByDept = CheckIfFilterByDeptEnabled();
+            bool noFilterSelected = CheckIfNoFilterSelected();
+
+            if (filterByDeptors)
+                customersPeriods = customersPeriods.Where(customerPeriods => customerPeriods.First().BalanceInLocalCurrency > 0).ToList();
+            else if (filterByDept)
+            {
+                decimal balanceFilterValue = GetFilterValue<decimal>("BalanceFilterValue");
+                customersPeriods = customersPeriods.Where(customerPeriods => customerPeriods.First().BalanceInLocalCurrency > balanceFilterValue).ToList();
+            }
+            else
+                customersPeriods = customersPeriods.ToList();
+
+
+            return customersPeriods;
+        }
+
+        private static IEnumerable<IGrouping<string, PeriodMExtended>> GroupPeriodsByCustomers(List<PeriodMExtended> resultedPeriods)
+        {
+            return resultedPeriods.GroupBy(periods => periods.AccountId);
+        }
+
+        private void CreateCustomerStatusByPeriods(IGrouping<string, PeriodMExtended> customerPeriods)
+        {
+            CustomerStatus customerStatus = CreateNewCustomerStatus(customerPeriods);
+
+            bool isCreditLimitSetAndCustomerHasNoCredit = CheckIfCustomerHasNoCreditAndIsCreditLimitSet(customerStatus);
+            if (!isCreditLimitSetAndCustomerHasNoCredit)
+                dataProvider.CustomersStatuses.Add(customerStatus);
+        }
+
+        private bool CheckIfCustomerHasNoCreditAndIsCreditLimitSet(CustomerStatus customerStatus)
+        {
+            var creditLimitSet = GetFilterValue<bool>("IsCreditLimitSet") == true;
+            var customerHasNoCreditLimit = customerStatus.CreditLimit == 0;
+            bool isCreditLimitSetAndCustomerHasNoCredit = (creditLimitSet && customerHasNoCreditLimit);
+            return isCreditLimitSetAndCustomerHasNoCredit;
+        }
+
+        private bool CheckIfNoFilterSelected()
+        {
+            string balanceFilter = GetFilterValue<string>("BalanceFilter");
+            bool noFilter = balanceFilter == "all" || balanceFilter == null;
+            return noFilter;
+        }
+
+        private bool CheckIfFilterByDeptEnabled()
+        {
+            string balanceFilter = GetFilterValue<string>("BalanceFilter");
+            var filterByDept = balanceFilter == "debt";
+            return filterByDept;
+        }
+
+        private bool CheckIfFilterByDeptorsEnabled()
+        {
+            string balanceFilter = GetFilterValue<string>("BalanceFilter");
+            var filterByDeptors = balanceFilter == "debtors";
+            return filterByDeptors;
+        }
+
+        private void SortCustomerStatuses()
         {
             string sortField = GetFilterValue<string>("SortField");
             string sortDirection = GetFilterValue<string>("SortDirection");
@@ -109,54 +169,63 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
             }
         }
 
-        private CustomerStatus CreateNewCustomerStatus(IGrouping<string, PeriodMExtended> customer, List<IGrouping<string, PeriodMExtended>> periodsByDate)
+        private CustomerStatus CreateNewCustomerStatus(IGrouping<string, PeriodMExtended> customerPeriods)
         {
-            decimal? splitBalanceSummation = customer
-                .GroupBy(d =>  new { d.CurrencyId , d.SplitAccountId})
-                .Sum(d => d.First().BalanceInLocalCurrency);
-
             CustomerStatus customerStatus = new CustomerStatus()
             {
                 // account details
-                CustomerName = customer.First().AccountEnglishName,
-                CustomerLocalName = customer.First().AccountLocalName,
-                CustomerDisplayNumber = customer.First().AccountDisplayNumber,
-                CustomerPaymentTerm = customer.First().AccountTermName,
-                CustomerLocalPaymentTerm = customer.First().AccountTermLocalName,
-                CustomerPhone = customer.First().AccountPhone,
+                CustomerName = customerPeriods.First().AccountEnglishName,
+                CustomerLocalName = customerPeriods.First().AccountLocalName,
+                CustomerDisplayNumber = customerPeriods.First().AccountDisplayNumber,
+                CustomerPaymentTerm = customerPeriods.First().AccountTermName,
+                CustomerLocalPaymentTerm = customerPeriods.First().AccountTermLocalName,
+                CustomerPhone = customerPeriods.First().AccountPhone,
 
                 //credit details
-                CreditLimit = (decimal)customer.First().CreditLimitAmount,
-                CreditStatus = customer.First().CreditStatusAmount ?? 0,
-                TotalFutureOpenCheques = customer.First().TotalFutureOpenCheques??0,
-                TotalOpenCheques = customer.First().TotalOpenCheques ?? 0,
-                TotalOpenShipments = customer.First().TotalOpenShipments ?? 0,
+                CreditLimit = (decimal)customerPeriods.First().CreditLimitAmount,
+                CreditStatus = customerPeriods.First().CreditStatusAmount ?? 0,
+                TotalFutureOpenCheques = customerPeriods.First().TotalFutureOpenCheques ?? 0,
+                TotalOpenCheques = customerPeriods.First().TotalOpenCheques ?? 0,
+                TotalOpenShipments = customerPeriods.First().TotalOpenShipments ?? 0,
+                ExternalTransactionsTotal = ExternalTransactions.Where(d => d.AccountId == customerPeriods.First().AccountId).Sum(d => d.LocalAmountCredit),
 
-                AccountingBalance = splitBalanceSummation ?? 0,
-                //AccountingBalance = customer.First().BalanceInLocalCurrency ?? 0,
-                //AccountingBalance = customer.Sum(d => d.Total),
-                Periods = GetStatusPeriods(periodsByDate)
+                AccountingBalance = GetBalanceSummationForSpliitedAccounts(customerPeriods) ?? 0,
+                Periods = GetStatusPeriods(customerPeriods)
             };
             return customerStatus;
         }
 
-        private List<StatusPeriod> GetStatusPeriods(List<IGrouping<string, PeriodMExtended>> customerDatePeriods)
+        private static decimal? GetBalanceSummationForSpliitedAccounts(IGrouping<string, PeriodMExtended> customerPeriods)
         {
-            List<StatusPeriod> ssss = new List<StatusPeriod>();
+            return customerPeriods
+                            .GroupBy(d => new { d.CurrencyId, d.SplitAccountId })
+                            .Sum(d => d.First().BalanceInLocalCurrency);
+        }
+
+        private List<StatusPeriod> GetStatusPeriods(IGrouping<string, PeriodMExtended> customerPeriods)
+        {
+            var customerDatePeriods = customerPeriods.GroupBy(r => r.PeriodName).ToList();
+
+            List<StatusPeriod> statusPeriods = new List<StatusPeriod>();
             foreach (var datePeriod in customerDatePeriods)
             {
-                List<PeriodMExtended> currencyPeriods = datePeriod.ToList();
-                StatusPeriod statusPeriod = new StatusPeriod()
-                {
-                    PeriodName = ResharpPeriodName(currencyPeriods.First().PeriodName),
-                    PeriodTotal = currencyPeriods.Sum(d => d.Total),
-                    PeriodCurrenciesSummaries = GetCurrencyPeriodsSummaries(currencyPeriods)
-                };
-
-                ssss.Add(statusPeriod);
+                StatusPeriod statusPeriod = CreateNewStatusPeriods(datePeriod);
+                statusPeriods.Add(statusPeriod);
             }
 
-            return ssss;
+            return statusPeriods;
+        }
+
+        private StatusPeriod CreateNewStatusPeriods(IGrouping<string, PeriodMExtended> datePeriod)
+        {
+            List<PeriodMExtended> currencyPeriods = datePeriod.ToList();
+            StatusPeriod statusPeriod = new StatusPeriod()
+            {
+                PeriodName = ResharpPeriodName(currencyPeriods.First().PeriodName),
+                PeriodTotal = currencyPeriods.Sum(d => d.Total),
+                PeriodCurrenciesSummaries = GetCurrencyPeriodsSummaries(currencyPeriods)
+            };
+            return statusPeriod;
         }
 
         private List<PeriodCurrencySummary> GetCurrencyPeriodsSummaries(List<PeriodMExtended> currencyPeriods)
