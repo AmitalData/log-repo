@@ -44,7 +44,8 @@ import { debounceTime } from 'rxjs/operators';
     providers: [EntityListService, ServiceArgs, EntityResourceService],
     inputs: ['ObjectFieldName', 'ObjectTableName', 'DataContext', 'LookUpTableName', 'DisplayMemberPath', 'SelectedValuePath','IsDisabled',
         'PlaceHolder', 'DependencyFilter1Value', 'DependencyFilter2Value', 'DependencyFilter3Value', "HideColumns", "HideLastColumn", "DependencyFilter1IsList",
-        "DependencyFilter2IsList", "DependencyFilter3IsList", "DependencyFilter1IsListExact", "DependencyFilter2IsListExact", "DependencyFilter3IsListExact", "AutoFocus", "IsTenantZeroSearch", "ShowInActive", "FocusOnMe", "IsFreeText", "AlwaysEnabled", "IgnoreCustomFieldCheck", "IsDecendingSort"],
+        "DependencyFilter2IsList", "DependencyFilter3IsList", "DependencyFilter1IsListExact", "DependencyFilter2IsListExact", "DependencyFilter3IsListExact",
+         "AutoFocus", "IsTenantZeroSearch", "ShowInActive", "FocusOnMe", "IsFreeText", "AlwaysEnabled", "IgnoreCustomFieldCheck", "IsDecendingSort","CustomizedWidth"],
 })
 
 export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
@@ -113,7 +114,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
 
     public get IsVisible() {
         if (!this.uiProperty) {
-            this.uiProperty = this.DataContext.UIProperties.GetUIProperty(this.ObjectFieldName, this.ObjectTableName, this.DataContext);
+            this.InitializeUiProperty();
         }
         return this.uiProperty.IsVisible;
     }
@@ -219,9 +220,11 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
     PropertyChangedSubscribtion: any;
     FocusOnSelect: boolean = true;
     @Input() DisplayFieldsFromList: string;
+    @Input() DisplayLocalFieldsFromList: string;
     public isRTL: boolean = false;
     LovPartnerTypes: Array<PartnerTypeList> = [];
     private CurrentSession = SessionLocator.SelectedSession;
+    CustomizedWidth:number;
     constructor(public entityListService: EntityListService, private entityPMService: EntityPMService,
         private _entityResourceService: EntityResourceService, private CD: ChangeDetectorRef) {
         this.show = false;
@@ -423,7 +426,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
                 });
             }
         });
-        this.uiProperty = this.DataContext.UIProperties.GetUIProperty(this.ObjectFieldName, this.ObjectTableName, this.DataContext);
+        this.InitializeUiProperty();
         this.uiProperty.UIPropertyChanged.subscribe(value => {
 
             if (value instanceof UIPropertyArgs) {
@@ -469,13 +472,8 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
             this.CopyValueSubs.unsubscribe();
             this.CopyValueSubs = null;
         }
-        //if (this.uiProperty != null && this.uiProperty != undefined) {
-        //    if (this.uiProperty.UIPropertyChanged != null && this.uiProperty.UIPropertyChanged != undefined) {
-        //        this.uiProperty.UIPropertyChanged.unsubscribe();
-        //        this.uiProperty = null;
-        //    }
-        //}
     }
+
     CheckIfExists(IdCom: string) {
         var element = document.getElementById(IdCom);
         if (element != null && element != undefined) {
@@ -484,23 +482,8 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
         return false;
     }
 
-    SetControlIds(baseIdCombination: string) {
+    SetControlIds() {
 
-        this.DivLogLovId = 'LogLov_' + baseIdCombination;
-        this.ElementId = baseIdCombination;
-        this.DropdownId = 'LogLovDropDown-' + baseIdCombination;
-        this.ErrorPopUpId = 'loglovererrorpop_' + baseIdCombination;
-        this.MyDataListId = 'mydatalist_' + baseIdCombination;
-        this.AllDataListId = 'alldatalist_' + baseIdCombination;
-        this.SearchIconId = 'searchicon_' + baseIdCombination;
-        this.ToolTipId = 'tooltip_' + baseIdCombination;
-    }
-    SetIsDisabledTimer: any;
-    InitializeControl() {
-         this.Widths = [];
-        this.MinWidths = [];
-        this.ItemsNgStyles = [];
-        this.LogLOVControlClass = "LogLOVControl";
         this.counterId = null;
         var baseIdCombination = null;
         if (this.ObjectTableName) {
@@ -517,304 +500,296 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
             baseIdCombination = baseIdCombination + '_' + this.counterId.toString();
         }
 
-        this.SetControlIds(baseIdCombination);
+        this.DivLogLovId = 'LogLov_' + baseIdCombination;
+        this.ElementId = baseIdCombination;
+        this.DropdownId = 'LogLovDropDown-' + baseIdCombination;
+        this.ErrorPopUpId = 'loglovererrorpop_' + baseIdCombination;
+        this.MyDataListId = 'mydatalist_' + baseIdCombination;
+        this.AllDataListId = 'alldatalist_' + baseIdCombination;
+        this.SearchIconId = 'searchicon_' + baseIdCombination;
+        this.ToolTipId = 'tooltip_' + baseIdCombination;
+    }
+    SetIsDisabledTimer: any;
+    InitializeControl() {
+        this.InitializeLovVariables();
 
-        if (this.FocusOnMe) {// it means it is inside a grid.
-            this.CopyValueSubs = this.CurrentSession.CopyCellIntoMemory.subscribe((id) => {
-                if (id == this.ElementId) {
-                    //this.CurrentSession.CopiedCell = this.DataContext[this.ObjectFieldName];
-                    this.DataContext[this.ObjectFieldName] = this.CurrentSession.CopiedCell;
-                    this.GetSingle(this.LookUpTable);
-                    this.CurrentSession.CopiedCell = null;
-                }
-            });
+        this.SetControlIds();
 
-            //if (this.CurrentSession.CopiedCell) {
-            //    this.DataContext[this.ObjectFieldName] = this.CurrentSession.CopiedCell;
-            //    this.CurrentSession.CopiedCell = null;
-            //}
-        }
+        this.InsideEditableGridCopyCellInitialization();
+    
+        this.AssignLookupAndObjectTable();
+        
+        this.ShowSearchOrToggleButton();
 
-        var objectFieldAvailable: boolean = true;
-        this.LookUpTable = window.ObjectTables.filter(d => d.Name === this.LookUpTableName)[0];
-        this.ObjectTable = window.ObjectTables.filter(d => d.Name === this.ObjectTableName)[0];
-        //(currentTable.AutoCompleteSearchWindow || this.AutoCompleteSearchWindow) && !this.RunToggleMode
-        if ((this.LookUpTable.AutoCompleteSearchWindow || this.AutoCompleteSearchWindow) && !this.RunToggleMode) {
-            this.ShowSearchButton = true;
-            this.showToggleButton = false;
-        }
-        else {
-            this.showToggleButton = true;
-            this.ShowSearchButton = false;
+        this.AssignLookup1AndLookup2();
+        
+        this.SetDropDownWidthAccordingToTable();
 
-        }
+        this.UseCompactSearchForSomeTables();
 
-        this.LookUp1 = this.LookUpTable.LookUp1;
-        this.LookUp2 = this.LookUpTable.LookUp2;
+        this.ConvertToAllMyDataModeForSomeTables();
+
+        this.InitializeSelectedValuePath();
+
+        this.InitializeKeyPropertyPath();
+
+        this.InitializeUiProperty();
+
+        this.SetIsDisabled();
+
+        this.SetIsDisabledTimer = setInterval(() => this.SetIsDisabled(), 1);
+
+        this.StartLoadingEntityRescourcesAndContinueInitialization();
+
+        this.InitializeActionButtonsState();
+        
+    }
+
+    private InitializeLovVariables() {
+        this.Widths = [];
+        this.MinWidths = [];
+        this.ItemsNgStyles = [];
         this.headerColumns = [];
         this.dataColumns = [];
-        if (this.LookUpTableName == 'Card' ){
-            this.DropDownWidth = 450;
-        }
-        if (this.LookUpTableName == 'User' || this.LookUpTableName == 'ChargesType') {
-            this.DropDownWidth = 400;
-        }
-        if (this.LookUpTableName == 'Carrier') {
-            this.DropDownWidth = 350;
-        }
-        if (this.LookUpTableName == 'GLAccount') {
-            this.DropDownWidth = 400;
-        }
-
-        if (this.LookUpTableName == 'Port' || this.LookUpTableName == 'Carrier' || this.LookUpTableName == 'Card') {
-            this.UseCompactSearch = true;
-        }
-        if (this.LookUpTableName == 'Port' || this.LookUpTableName == 'Carrier') {
-            this.IsAllDataVisible = true;
-            this.DropDownHeight = 280;
-            this.MyDropDownHeight = { 'height': '105px' }
-            this.DisplayHeader = false;
-            if (this.LookUpTableName == 'Port') {
-                this.AllDataHeaderTitle = 'All Ports';
-                this.MyDataHeaderTitle = 'My Ports';
-            }
-            else {
-                this.AllDataHeaderTitle = 'All Carriers';
-                this.MyDataHeaderTitle = 'My Carriers';
-            }
-        }
-        else {
-
-            this.IsAllDataVisible = false;
-        }
-
+        this.LogLOVControlClass = "LogLOVControl";
 
         if (!this.PlaceHolder) {
             this.PlaceHolder = '';
         }
+    }
 
-
-
-        if (!this.SelectedValuePath) {
-            this.SelectedValuePath = this.LookUpTable.KeyPropertyPath;
-        }
-        this.KeyPropertyPath = this.LookUpTable.KeyPropertyPath;
-        this.uiProperty = this.DataContext.UIProperties.GetUIProperty(this.ObjectFieldName, this.ObjectTableName, this.DataContext);
-        //console.log(this.uiProperty);
-        if (this.AlwaysEnabled == true) {
-            this.IsDisabled = false;
-        }
-        else {
-            this.IsDisabled = !this.uiProperty.IsEnabled;
-            //console.log("Out " + this.LookUpTableName+ " " + this.uiProperty.IsEnabled)
-        }
-        if (this.SetIsDisabledTimer) {
-            clearTimeout(this.SetIsDisabledTimer);
-        }
-        this.SetIsDisabledTimer = setInterval(() => this.SetIsDisabled(), 1);
+    private StartLoadingEntityRescourcesAndContinueInitialization() {
+        let objectFieldAvailable: boolean = true;
         this._entityResourceService.getEntityResourceByTableName(this.LookUpTableName, 0).subscribe((res: any) => {
             this._entityResourceService.getEntityResourceByTableName("PartnerType", 0).subscribe((res3: any) => {
 
-                var apiQueryFilter: ApiQueryFilters;
-                if (!this.QueryFilterItems) {
-                    apiQueryFilter = new ApiQueryFilters();
-
-                }
-                else {
-                    apiQueryFilter = new ApiQueryFilters();
-                    for (var i = 0; i < this.QueryFilterItems.AdditionalFilters.length; i++) {
-                        var filter: FilterItem = this.QueryFilterItems.AdditionalFilters[i];
-                        apiQueryFilter.addAdditionalFilter(filter.FieldName, filter.FieldValue, filter.FieldValue2, filter.FieldValue3, filter.Operator,
-                            filter.IsCustom, filter.DisplayInList, filter.IsCustomField, filter.FieldDataType, filter.IgnoreFilter, this.LookUpTable.CacheOnClient);
-                    }
-
-
-                }
-                // apiQueryFilter.GetAll = true; by mohammad.
+                var apiQueryFilter: ApiQueryFilters = this.PrepareApiQueryFilters();
                 this.entityListService.getAllFromCache("PartnerType", apiQueryFilter).then((res3: any) => {
                     res3.subscribe(res4 => {
                         this.PartnerTypes = res4.Result;
                         var parentName = this.GetObjectTableName(this.LookUpTableName);
                         this._entityResourceService.getEntityResourceByTableName(parentName, 0).subscribe((res5: any) => {
 
-                            if (this.LookUpTableName == "Card" || this.LookUpTableName == "Carrier") {
-                                if (this.DependencyFilter1Value != null && this.DependencyFilter1Value != undefined) {
+                            this.InitializeLovPartnerTypsForSomeTables();
 
-                                    //this._entityResourceService.getEntityResourceByTableName(parentName, 0).subscribe((otherResp: any) => { });
-                                    if (this.DependencyFilter1Value.toString().split(',').length > 1) {
-                                        var types: string[] = this.DependencyFilter1Value.toString().split(',');
-                                        this.LovPartnerTypes = this.PartnerTypes.filter(d => types.indexOf(d.Id) > -1);
-                                    }
-                                }
-                            }
+                            this.InitializeLanguageFilter();
 
-                            // drow columns
-                            var lang = 'E';
-                            if (SessionInfo.LoggedUserPM.ShowLocalNameInLOV) {
-                                lang = 'L';
-                                this.ShowLanguageFilter = true;
-                            }
-                            this.LanguageFilterValue = lang;
                             this.DrawColumns();
-                            if (!this.DisplayMemberPath) {
-                                this.SetDisplayMemberPath();
-                            }
-                            else {
-                                this.DisplayMemberPathManuallySet = true;
-                            }
+
+                            this.InitializeDisplayMemberPath();
 
 
-                            if (this.ObjectTable) {
-                                this.ObjectField = window.ObjectFields.filter(d => d.ObjectTableId === this.ObjectTable.Id && d.FieldName === this.ObjectFieldName)[0];
-                                if (!this.ObjectField) {
-                                    objectFieldAvailable = false;
+                            objectFieldAvailable = this.ContinueInitializationIfObjectFieldAvailable(objectFieldAvailable);
 
+                            this.WarnIfObjectFieldNotAvailable(objectFieldAvailable);
 
-                                }
-                                else {
-                                    objectFieldAvailable = true;
-                                    if (this.ObjectField.HelpTextCodeCode != null) {
-                                        this.ObjectFieldHelp = TextCodeTranslator.Translate(this.ObjectField.HelpTextCodeCode);
+                            this.GetFirstSingleValueForInitialization();
 
-                                        if (!AppTool.IsNullOrEmpty(this.ObjectFieldHelp)) {
-                                            if (this.ObjectFieldHelp.length > 1) {
-                                                if (!this.IsFreeText) this.ShowHelp = true;
-
-                                            }
-                                        }
-                                    }
-
-                                    if (this.DependencyFilter1Value == null || this.DependencyFilter1Value === undefined) {
-                                        if (this.ObjectField.DependencyFilter1Value) {
-                                            if (this.ObjectField.DependencyFilter1Type == "Constant") {
-                                                this.DependencyFilter1Value = this.ObjectField.DependencyFilter1Value;
-                                                this.DependencyFilter1IsList = this.ObjectField.DependencyFilter1IsList;
-                                            }
-                                            else {
-
-                                                this.DependencyFilter1Value = this.DataContext[this.ObjectField.DependencyFilter1Value];
-                                            }
-                                        }
-                                        else if (this.ObjectField.ControlField1) {
-                                            this.DependencyFilter1Value = this.DataContext[this.ObjectField.ControlField1];
-                                        }
-                                    }
-                                   
-                                    if (this.DependencyFilter2Value == null || this.DependencyFilter2Value === undefined) {
-                                        if (this.ObjectField.DependencyFilter2Value) {
-                                            if (this.ObjectField.DependencyFilter2Type == "Constant") {
-                                                this.DependencyFilter2Value = this.ObjectField.DependencyFilter2Value;
-                                                this.DependencyFilter2IsList = this.ObjectField.DependencyFilter2IsList;
-                                            }
-                                            else {
-                                                this.DependencyFilter2Value = this.DataContext[this.ObjectField.DependencyFilter2Value];
-                                            }
-                                        }
-                                        else if (this.ObjectField.ControlField2) {
-                                            this.DependencyFilter2Value = this.DataContext[this.ObjectField.ControlField2];
-                                        }
-                                    }
-
-                                    if (this.DependencyFilter3Value == null || this.DependencyFilter3Value === undefined) {
-                                        if (this.ObjectField.DependencyFilter3Value) {
-                                            if (this.ObjectField.DependencyFilter3Type == "Constant") {
-                                                this.DependencyFilter3Value = this.ObjectField.DependencyFilter3Value;
-                                                this.DependencyFilter3IsList = this.ObjectField.DependencyFilter3IsList;
-                                            }
-                                            else {
-
-                                                this.DependencyFilter3Value = this.DataContext[this.ObjectField.DependencyFilter3Value];
-                                            }
-                                        }
-                                        else if (this.ObjectField.ControlField3) {
-                                            this.DependencyFilter3Value = this.DataContext[this.ObjectField.ControlField3];
-                                        }
-                                    }
-
-                                    if (this.ObjectField.ControlField1 || this.ObjectField.ControlField2 || this.ObjectField.ControlField3) {
-                                        if (this.DataContext.PropertyChanged != null && this.DataContext.PropertyChanged != undefined) {
-                                            this.PropertyChangedSubscribtion = this.DataContext.PropertyChanged.subscribe(args => {
-                                                if (args.PropertyName == this.ObjectField.ControlField1) {
-                                                    this.DependencyFilter1Value = this.DataContext[this.ObjectField.ControlField1];
-                                                    this.OnDeleteValue();
-                                                }
-
-                                                if (args.PropertyName == this.ObjectField.ControlField2) {
-                                                    this.DependencyFilter2Value = this.DataContext[this.ObjectField.ControlField2];
-                                                    this.OnDeleteValue();
-                                                }
-
-                                                if (args.PropertyName == this.ObjectField.ControlField3) {
-                                                    this.DependencyFilter3Value = this.DataContext[this.ObjectField.ControlField3];
-                                                    this.OnDeleteValue();
-                                                }
-                                            });
-                                        }
-                                    }
-                                }
-
-                            }
-
-                            var value = this.DataContext[this.ObjectFieldName];
-                            if (this.ObjectField && this.ObjectField.IsCustom && this.IgnoreCustomFieldCheck == false) {
-                                var customFieldClass: CustomFieldClass = this.DataContext[this.ObjectFieldName];
-                                if (customFieldClass != null && customFieldClass != undefined) {
-                                    value = customFieldClass.Value;
-                                }
-                                else {
-                                    console.warn("Custom Fields are not implemented in: " + this.ObjectTableName);
-                                }
-
-                            }
-
-                            if (value) {
-
-                                this.GetSingle(this.LookUpTable);
-
-                            }
-
-
-                            // this.uiProperty.UIPropertyChanged.subscribe(value => {
-
-                            //     if (value instanceof UIPropertyArgs) {
-                            //         var uiPropertyArgs: UIPropertyArgs = value as UIPropertyArgs;
-                            //         var uiProperty: UIProperty = uiPropertyArgs.uiProperty as UIProperty;
-                            //         if (uiProperty.FieldName == this.ObjectFieldName && uiProperty.ObjectTableName == this.ObjectTableName) {
-                            //             if (uiPropertyArgs.property == "IsEnabled") {
-                            //                 var isEnabled = uiPropertyArgs.newValue;
-                            //                 this.IsDisabled = !isEnabled;
-                            //                 this.uiProperty.IsEnabled = isEnabled;
-                            //             }
-                            //             else if (uiPropertyArgs.property == "IsRequired") {
-                            //                 if (this.searchTextChanged) {
-
-                            //                     this.ValidateField(false);
-                            //                 }
-                            //             }
-                            //             else if (uiPropertyArgs.property == "IsVisible") {
-                            //                 if (uiPropertyArgs.newValue == true && this.AfterViewInitialized == false) {
-                            //                     this.InitializeAfterViewInit();
-                            //                 }
-                            //             }
-                            //             else if (uiPropertyArgs.property == "IsValid") {
-                            //                 this.ValidateField(false);
-                            //             }
-                            //         }
-                            //     }
-
-                            // });
                         });
                     });
                 });
             });
         });
+        return objectFieldAvailable;
+    }
+
+    private WarnIfObjectFieldNotAvailable(objectFieldAvailable: boolean) {
+        if (!objectFieldAvailable && !this.NoObjectField) {
+            console.warn(this.ObjectFieldName + " LOV has no object field!");
+        }
+    }
+
+    private ContinueInitializationIfObjectFieldAvailable(objectFieldAvailable: boolean) {
+        if (this.ObjectTable) {
+            this.ObjectField = window.ObjectFields.filter(d => d.ObjectTableId === this.ObjectTable.Id && d.FieldName === this.ObjectFieldName)[0];
+            if (!this.ObjectField) {
+                objectFieldAvailable = false;
+            }
+            else {
+                objectFieldAvailable = true;
+                this.InitializeObjectFieldHelp();
+
+                this.InitializeDependencyFilter1Value();
+
+                this.InitializeDependencyFilter2Value();
+
+                this.InitializeDependencyFilter3Value();
+
+                this.InitializeControlFieldSubscribtion();
+            }
+
+        }
+        return objectFieldAvailable;
+    }
+
+    private InitializeControlFieldSubscribtion() {
+        if (this.ObjectField.ControlField1 || this.ObjectField.ControlField2 || this.ObjectField.ControlField3) {
+            if (this.DataContext.PropertyChanged != null && this.DataContext.PropertyChanged != undefined) {
+                this.PropertyChangedSubscribtion = this.DataContext.PropertyChanged.subscribe(args => {
+                    if (args.PropertyName == this.ObjectField.ControlField1) {
+                        this.DependencyFilter1Value = this.DataContext[this.ObjectField.ControlField1];
+                        this.OnDeleteValue();
+                    }
+
+                    if (args.PropertyName == this.ObjectField.ControlField2) {
+                        this.DependencyFilter2Value = this.DataContext[this.ObjectField.ControlField2];
+                        this.OnDeleteValue();
+                    }
+
+                    if (args.PropertyName == this.ObjectField.ControlField3) {
+                        this.DependencyFilter3Value = this.DataContext[this.ObjectField.ControlField3];
+                        this.OnDeleteValue();
+                    }
+                });
+            }
+        }
+    }
+
+    private InitializeDependencyFilter3Value() {
+        if (this.DependencyFilter3Value == null || this.DependencyFilter3Value === undefined) {
+            if (this.ObjectField.DependencyFilter3Value) {
+                if (this.ObjectField.DependencyFilter3Type == "Constant") {
+                    this.DependencyFilter3Value = this.ObjectField.DependencyFilter3Value;
+                    this.DependencyFilter3IsList = this.ObjectField.DependencyFilter3IsList;
+                }
+                else {
+
+                    this.DependencyFilter3Value = this.DataContext[this.ObjectField.DependencyFilter3Value];
+                }
+            }
+            else if (this.ObjectField.ControlField3) {
+                this.DependencyFilter3Value = this.DataContext[this.ObjectField.ControlField3];
+            }
+        }
+    }
+
+    private InitializeDependencyFilter2Value() {
+        if (this.DependencyFilter2Value == null || this.DependencyFilter2Value === undefined) {
+            if (this.ObjectField.DependencyFilter2Value) {
+                if (this.ObjectField.DependencyFilter2Type == "Constant") {
+                    this.DependencyFilter2Value = this.ObjectField.DependencyFilter2Value;
+                    this.DependencyFilter2IsList = this.ObjectField.DependencyFilter2IsList;
+                }
+                else {
+                    this.DependencyFilter2Value = this.DataContext[this.ObjectField.DependencyFilter2Value];
+                }
+            }
+            else if (this.ObjectField.ControlField2) {
+                this.DependencyFilter2Value = this.DataContext[this.ObjectField.ControlField2];
+            }
+        }
+    }
+
+    private InitializeDependencyFilter1Value() {
+        if (this.DependencyFilter1Value == null || this.DependencyFilter1Value === undefined) {
+            if (this.ObjectField.DependencyFilter1Value) {
+                if (this.ObjectField.DependencyFilter1Type == "Constant") {
+                    this.DependencyFilter1Value = this.ObjectField.DependencyFilter1Value;
+                    this.DependencyFilter1IsList = this.ObjectField.DependencyFilter1IsList;
+                }
+                else {
+
+                    this.DependencyFilter1Value = this.DataContext[this.ObjectField.DependencyFilter1Value];
+                }
+            }
+            else if (this.ObjectField.ControlField1) {
+                this.DependencyFilter1Value = this.DataContext[this.ObjectField.ControlField1];
+            }
+        }
+    }
+
+    private InitializeObjectFieldHelp() {
+        if (this.ObjectField.HelpTextCodeCode != null) {
+            this.ObjectFieldHelp = TextCodeTranslator.Translate(this.ObjectField.HelpTextCodeCode);
+
+            if (!AppTool.IsNullOrEmpty(this.ObjectFieldHelp)) {
+                if (this.ObjectFieldHelp.length > 1) {
+                    if (!this.IsFreeText)
+                        this.ShowHelp = true;
+
+                }
+            }
+        }
+    }
+
+    private GetFirstSingleValueForInitialization() {
+        var value = this.DataContext[this.ObjectFieldName];
+        if (this.ObjectField && this.ObjectField.IsCustom && this.IgnoreCustomFieldCheck == false) {
+            var customFieldClass: CustomFieldClass = this.DataContext[this.ObjectFieldName];
+            if (customFieldClass != null && customFieldClass != undefined) {
+                value = customFieldClass.Value;
+            }
+            else {
+                console.warn("Custom Fields are not implemented in: " + this.ObjectTableName);
+            }
+
+        }
+
+        if (value) {
+
+            this.GetSingle(this.LookUpTable);
+
+        }
+    }
+
+    private InitializeDisplayMemberPath() {
+        if (!this.DisplayMemberPath) {
+            this.SetDisplayMemberPath();
+        }
+        else {
+            this.DisplayMemberPathManuallySet = true;
+        }
+    }
+
+    private InitializeLovPartnerTypsForSomeTables() {
+        if (this.LookUpTableName == "Card" || this.LookUpTableName == "Carrier") {
+            if (this.DependencyFilter1Value != null && this.DependencyFilter1Value != undefined) {
+
+                //this._entityResourceService.getEntityResourceByTableName(parentName, 0).subscribe((otherResp: any) => { });
+                if (this.DependencyFilter1Value.toString().split(',').length > 1) {
+                    var types: string[] = this.DependencyFilter1Value.toString().split(',');
+                    this.LovPartnerTypes = this.PartnerTypes.filter(d => types.indexOf(d.Id) > -1);
+                }
+            }
+        }
+    }
+
+    private InitializeLanguageFilter() {
+        var lang = 'E';
+        if (SessionInfo.LoggedUserPM.ShowLocalNameInLOV) {
+            lang = 'L';
+            this.ShowLanguageFilter = true;
+        }
+        this.LanguageFilterValue = lang;
+    }
+
+    private PrepareApiQueryFilters() {
+        var apiQueryFilter: ApiQueryFilters;
+        if (!this.QueryFilterItems) {
+            apiQueryFilter = new ApiQueryFilters();
+
+        }
+        else {
+            apiQueryFilter = new ApiQueryFilters();
+            for (var i = 0; i < this.QueryFilterItems.AdditionalFilters.length; i++) {
+                var filter: FilterItem = this.QueryFilterItems.AdditionalFilters[i];
+                apiQueryFilter.addAdditionalFilter(filter.FieldName, filter.FieldValue, filter.FieldValue2, filter.FieldValue3, filter.Operator,
+                    filter.IsCustom, filter.DisplayInList, filter.IsCustomField, filter.FieldDataType, filter.IgnoreFilter, this.LookUpTable.CacheOnClient);
+            }
+
+
+        }
+        return apiQueryFilter;
+    }
+
+    private InitializeActionButtonsState() {
         if (this.LookUpTable.IsClosed)
             this.showOnlyDelete = true;
         if (this.LookUpTable.EnableAddFromLOV) {
             this.isAddDisabled = false;
 
             if (ObjectsLocator.IsDemoTenant(SessionLocator.Tenant.toString()) && !SessionLocator.LoggedUserPM.IsCustomerCare && (this.LookUpTableName == "User" || this.LookUpTableName == "Contact")) {
-                this.ShowAddLink = false
+                this.ShowAddLink = false;
 
             }
 
@@ -850,50 +825,133 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
             }
         }
 
-        //*ngIf="ShowAddLink || ShowSearchButton"
         if (!this.ShowAddLink && !this.ShowSearchButton) {
 
-            this.MyDropDownHeight = { 'height': '255px' }
-        }
-
-        if (!objectFieldAvailable && !this.NoObjectField) {
-            console.warn(this.ObjectFieldName + " LOV has no object field!");
+            this.MyDropDownHeight = { 'height': '255px' };
         }
     }
-    DrawColumns() {
 
-          var lookupFields: any[];
-        this.headerColumns = [];
-        this.dataColumns = [];
-        if (this.DisplayFieldsFromList != null && this.DisplayFieldsFromList != undefined) {
-            var fields: string[] = this.DisplayFieldsFromList.split(',');
-            var fields: string[] = this.DisplayFieldsFromList.split(',');
-            lookupFields = window.ObjectFields.filter(d => d.ObjectTableId == this.LookUpTable.Id && fields.lastIndexOf(d.FieldName) > -1);
+    private ClearIsDisabledTimer() {
+        if (this.SetIsDisabledTimer) {
+            clearTimeout(this.SetIsDisabledTimer);
         }
-        else {
-            //if(!SessionInfo.LoggedUserPM.ShowLocalNameInLOV){
-            if (this.LanguageFilterValue == 'E') {
-                lookupFields = window.ObjectFields.filter(d => d.DisplayOnLookUp && d.ObjectTableId == this.LookUpTable.Id);
+    }
+
+    private InitializeUiProperty() {
+        this.uiProperty = this.DataContext.UIProperties.GetUIProperty(this.ObjectFieldName, this.ObjectTableName, this.DataContext);
+    }
+
+    private InitializeKeyPropertyPath() {
+        this.KeyPropertyPath = this.LookUpTable.KeyPropertyPath;
+    }
+
+    private InitializeSelectedValuePath() {
+        if (!this.SelectedValuePath) {
+            this.SelectedValuePath = this.LookUpTable.KeyPropertyPath;
+        }
+    }
+
+    private ConvertToAllMyDataModeForSomeTables() {
+        if (this.LookUpTableName == 'Port' || this.LookUpTableName == 'Carrier') {
+            this.IsAllDataVisible = true;
+            this.DropDownHeight = 280;
+            this.MyDropDownHeight = { 'height': '105px' };
+            this.DisplayHeader = false;
+            if (this.LookUpTableName == 'Port') {
+                this.AllDataHeaderTitle = 'All Ports';
+                this.MyDataHeaderTitle = 'My Ports';
             }
             else {
-                lookupFields = window.ObjectFields.filter(d => d.DisplayOnLookUpLocal && d.ObjectTableId == this.LookUpTable.Id);
-                if (lookupFields.length == 0) {
-                    console.warn("There is no Fields defined as display in lookup local");
-                    this.ShowLanguageFilter = false;
-                    lookupFields = window.ObjectFields.filter(d => d.DisplayOnLookUp && d.ObjectTableId == this.LookUpTable.Id);
-                }
+                this.AllDataHeaderTitle = 'All Carriers';
+                this.MyDataHeaderTitle = 'My Carriers';
             }
         }
-        if (!this.DisplayFieldsFromList) {
-            lookupFields = lookupFields.sort((a, b) => { return a.DisplayInLookUpIndex - b.DisplayInLookUpIndex });
+        else {
+
+            this.IsAllDataVisible = false;
         }
+    }
+
+    private UseCompactSearchForSomeTables() {
+        if (this.LookUpTableName == 'Port' || this.LookUpTableName == 'Carrier' || this.LookUpTableName == 'Card') {
+            this.UseCompactSearch = true;
+        }
+    }
+
+    private SetDropDownWidthAccordingToTable() {
+        if(!this.CustomizedWidth){
+            if (this.LookUpTableName == 'Card' || this.LookUpTableName == 'User' || this.LookUpTableName == 'ChargesType') {
+                this.DropDownWidth = 400;
+            }
+            if (this.LookUpTableName == 'Carrier') {
+                this.DropDownWidth = 350;
+            }
+            if (this.LookUpTableName == 'GLAccount') {
+                this.DropDownWidth = 400;
+            }
+        }
+        else{
+            this.DropDownWidth = this.CustomizedWidth;
+        }
+    }
+
+    private AssignLookup1AndLookup2() {
+        this.LookUp1 = this.LookUpTable.LookUp1;
+        this.LookUp2 = this.LookUpTable.LookUp2;
+    }
+
+    private AssignLookupAndObjectTable() {
+        this.LookUpTable = window.ObjectTables.filter(d => d.Name === this.LookUpTableName)[0];
+        this.ObjectTable = window.ObjectTables.filter(d => d.Name === this.ObjectTableName)[0];
+    }
+
+    private ShowSearchOrToggleButton() {
+        if ((this.LookUpTable.AutoCompleteSearchWindow || this.AutoCompleteSearchWindow) && !this.RunToggleMode) {
+            this.ShowSearchButton = true;
+            this.showToggleButton = false;
+        }
+        else {
+            this.showToggleButton = true;
+            this.ShowSearchButton = false;
+
+        }
+    }
+
+    private InsideEditableGridCopyCellInitialization() {
+        if (this.FocusOnMe) { // it means it is inside a grid.
+            this.CopyValueSubs = this.CurrentSession.CopyCellIntoMemory.subscribe((id) => {
+                if (id == this.ElementId) {
+                    this.DataContext[this.ObjectFieldName] = this.CurrentSession.CopiedCell;
+                    this.GetSingle(this.LookUpTable);
+                    this.CurrentSession.CopiedCell = null;
+                }
+            });
+
+        }
+    }
+
+    DrawColumns() {
+        var lookupFields: any[];
+        this.headerColumns = [];
+        this.dataColumns = [];
+        let drawCustomColumns=(this.DisplayFieldsFromList != null && this.DisplayFieldsFromList != undefined)
+        ||(this.DisplayLocalFieldsFromList != null && this.DisplayLocalFieldsFromList != undefined);
+
+        if (drawCustomColumns) {
+            lookupFields = this.DrawCustomColumns(lookupFields);
+        }
+        else {
+            
+            lookupFields = this.DrawDefaultColumns(lookupFields);
+        }
+       
 
         for (var i = 0; i < lookupFields.length; i++) {
-            //this.Widths.push(this.DropDownWidth / lookupFields.length);
+            
             this.MinWidths.push(TextCodeTranslator.Translate(lookupFields[i].ListTextCodeCode).length * 8 + 6);
         }
-        //var dropdownWidth = lookupFields.length * 120 + 20;
-        //this.DropPopUpStyle = { width: dropdownWidth.toString() + 'px' };
+        
+        
         var additionalCols = lookupFields.filter(d => d.DisplayInLookUpIndex > 1);
         if (lookupFields.length == 1) {
             this.DisplayHeader = false;
@@ -954,6 +1012,53 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
         }
     }
 
+    private DrawDefaultColumns(lookupFields: any[]) {
+        if (this.LanguageFilterValue == 'E') {
+            lookupFields = window.ObjectFields.filter(d => d.DisplayOnLookUp && d.ObjectTableId == this.LookUpTable.Id);
+        }
+        else {
+            lookupFields = window.ObjectFields.filter(d => d.DisplayOnLookUpLocal && d.ObjectTableId == this.LookUpTable.Id);
+            if (lookupFields.length == 0) {
+                console.warn("There is no Fields defined as display in lookup local");
+                this.ShowLanguageFilter = false;
+                lookupFields = window.ObjectFields.filter(d => d.DisplayOnLookUp && d.ObjectTableId == this.LookUpTable.Id);
+            }
+        }
+        lookupFields = lookupFields.sort((a, b) => { return a.DisplayInLookUpIndex - b.DisplayInLookUpIndex });
+        return lookupFields;
+    }
+
+    private DrawCustomColumns(lookupFields: any[]) {
+        let fields: string[]=[];
+        let hasLocalCustomColumns=(this.DisplayLocalFieldsFromList != null && this.DisplayLocalFieldsFromList != undefined);
+        let hasEnglishCustomColumns=(this.DisplayFieldsFromList != null && this.DisplayFieldsFromList != undefined);
+
+        if (hasEnglishCustomColumns && (this.LanguageFilterValue == 'E' || !hasLocalCustomColumns)) {
+            fields = this.DisplayFieldsFromList.split(',');
+        }
+        else{
+            fields=this.DisplayLocalFieldsFromList.split(',');
+        }
+
+        lookupFields = window.ObjectFields.filter(d => d.ObjectTableId == this.LookUpTable.Id && fields.lastIndexOf(d.FieldName) > -1);
+        lookupFields=this.OrderLookupFieldsByCustomFieldsArray(lookupFields,fields);
+        return lookupFields;
+    }
+
+    OrderLookupFieldsByCustomFieldsArray(lookupFields:ObjectFieldPM[],orderedFields:string[]){
+        lookupFields = lookupFields.sort((a,b)=>{
+            var A = a['FieldName'], B = b['FieldName'];
+    
+            if (orderedFields.indexOf(A) > orderedFields.indexOf(B)) {
+                 return 1;
+            } 
+            else {
+                return -1;
+            }
+        });
+        return lookupFields;
+    }
+
     SetDisplayMemberPath() {
         if (!this.DisplayMemberPathManuallySet) {
             /// this case we have to show the local display member path if available
@@ -987,18 +1092,13 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
     }
 
     SetIsDisabled() {
-        this.uiProperty = this.DataContext.UIProperties.GetUIProperty(this.ObjectFieldName, this.ObjectTableName, this.DataContext);
-        //console.log(this.uiProperty);
         if (this.AlwaysEnabled == true) {
             this.IsDisabled = false;
         }
         else {
             this.IsDisabled = !this.uiProperty.IsEnabled;
-            //console.log("Out " + this.LookUpTableName+ " " + this.uiProperty.IsEnabled)
         }
-        if (this.SetIsDisabledTimer) {
-            clearTimeout(this.SetIsDisabledTimer);
-        }
+        this.ClearIsDisabledTimer();
     }
     GetSingle(lookup: any) {
 

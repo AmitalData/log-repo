@@ -48,14 +48,25 @@ export class NewGeneralAPInvoiceComponent extends BaseComponent {
     public IsEditExchangeRateVisible: boolean = false;
     public isRTL: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
+    DisplayFieldsFromList:string;
+    DisplayLocalFieldsFromList:string;
+    VendorLovSizeForFullAccounting:number;
     constructor(private entityResourceService: EntityResourceService) {
         super();
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
         this.IsAccountingActivated = SessionLocator.TenantPM.AccountingActivated;
         this.InitializeServices();
-
+        this.InitializeVendorLov();
         if (FeatureLocator.HasFeaturePermession("General", "General.Features.SystemCurrencies")) {
             this.IsEditExchangeRateVisible = true;
+        }
+    }
+
+    private InitializeVendorLov() {
+        if (this.IsAccountingActivated) {
+            this.DisplayFieldsFromList = "Code,CalculatedEnglishName,GLAccountDisplayNumber,CityName,CountryCode,PartnerTypeName";
+            this.DisplayLocalFieldsFromList = "Code,CalculatedLocalName,GLAccountDisplayNumber,CityName,CountryCode,PartnerTypeName";
+            this.VendorLovSizeForFullAccounting = 550;
         }
     }
 
