@@ -25,7 +25,7 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
                 entityPOCO.DontShowLocalLabels = tenant.LayoutDirection == "rtl" ? false : true; //bug 44449
             }
 
-            entityPOCO.ComputedKey = (!string.IsNullOrEmpty(entityPOCO.Email) ? entityPOCO.Email : entityPOCO.Id);
+            entityPOCO.ComputedKey = (!string.IsNullOrEmpty(entityPM.Email) ? entityPM.Email : entityPM.Id);
             entityPOCO.Anniversary = entityPM.Anniversary;
             entityPOCO.Birthday = entityPM.Birthday;
             entityPOCO.BusinessPhone = entityPM.BusinessPhone;
