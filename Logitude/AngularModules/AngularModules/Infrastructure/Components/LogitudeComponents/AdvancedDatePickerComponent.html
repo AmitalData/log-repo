@@ -61,10 +61,10 @@
         position: relative;
         overflow-x: hidden;
         overflow-y: auto;
-        max-height: 310px;
+        max-height: 338px;
         background: white;
         -webkit-overflow-scrolling: touch;
-        height: 309px;
+        height: 338px;
     }
 
     .AdvancedDatePickerDropdown {
@@ -113,7 +113,7 @@
         display: list-item;
         cursor: pointer;
         /*line-height: 17px;*/
-        height: 20px;
+        height: 22px;
         word-wrap: break-word;
         -webkit-touch-callout: none;
        /* border-bottom: 1px solid #d7d7d7;*/
@@ -159,12 +159,12 @@
         z-index: 10000000;
     }
 </style>
-<div style="width:100%;height:100%" *ngIf="DataContext" (blur)="OnComponentBlur()">
+<div style="width:100%;height:100%" *ngIf="DataContext">
     <div [id]="ErrorPopUpId"
          FixedPosition
          [ElementId]="ErrorPopUpId"
          [RelativeElementId]="DivAdvancedDatePickerId"
-         class.FlipImgHoriz]="LayoutDirection == 'rtl'"
+         [class.FlipImgHoriz]="LayoutDirection == 'rtl'"
          [TopDisplacement]="-95"
          [LeftDisplacement]="30"
          [ComponentType]="'popup'"
@@ -187,8 +187,8 @@
                                         <div></div>
                                     </td>
                                     <td>
-                                        <div class="FillParent">
-                                            <div style="text-align: left;text-indent: 5px;font-family: Arial;" class="TextTrimming">{{DisplayValue}}</div>
+                                        <div class="FillParent" >
+                                            <div style="text-align: left;text-indent: 5px;font-family: Arial;" class="TextTrimming" title="{{ShowToolTip ? DisplayValue:''}}">{{DisplayValue}}</div>
                                         </div>
                                     </td>
                                     <td style="width: 2px;">
@@ -207,7 +207,7 @@
                             </table>
 
                         </div>
-                        <div (mouseover)="OnDropDownMouseOver()" (mouseout)="OnDropDownMouseOut()"
+                        <div (mouseover)="OnDropDownMouseOver()" (mouseout)="OnDropDownMouseOut()" 
                              FixedPosition [ElementId]="DropdownId" [RelativeElementId]="DivAdvancedDatePickerId"  [VertDisplacement]="25" [HorizDisplacement]="1"
                              *ngIf="IsDropDownVisible" class="AdvancedDatePickerDropdown" [id]="DropdownId">
 

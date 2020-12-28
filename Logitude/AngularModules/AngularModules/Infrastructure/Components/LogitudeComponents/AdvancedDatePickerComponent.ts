@@ -1,15 +1,14 @@
 declare var window: any;
-import { Input, Output, Component, OnInit, EventEmitter, ChangeDetectorRef, OnDestroy } from "@angular/core";
-import { UIProperty, } from "./UIProperties";
-import { ObjectFieldPM } from "../../EntityPMs/ObjectFieldPM";
-import { SessionLocator } from "../../Utilities/SessionLocator";
-import { AppTool } from "../../Tools";
-import { ControlsIdCounter } from "../../Utilities/ControlsIdCounter";
-import { FieldValidator } from "../../Validators/FieldValidator";
-import { FormControl, FormGroup, } from "@angular/forms";
+import { Input, Output, Component, OnInit, EventEmitter, OnDestroy, HostListener, ElementRef } from "@angular/core";
 import { CustomFieldClass } from "../../DataContracts/CustomFieldClass";
-import { ObjectsLocator } from "../../Locators/ObjectsLocator";
+import { ControlsIdCounter } from "../../Utilities/ControlsIdCounter";
 import { CodeNameClass } from '../../DataContracts/CodeNameClass';
+import { FieldValidator } from "../../Validators/FieldValidator";
+import { SessionLocator } from "../../Utilities/SessionLocator";
+import { ObjectsLocator } from "../../Locators/ObjectsLocator";
+import { ObjectFieldPM } from "../../EntityPMs/ObjectFieldPM";
+import { UIProperty, } from "./UIProperties";
+import { AppTool } from "../../Tools";
 
 @Component({
     selector: "AdvancedDatePicker",
@@ -21,35 +20,30 @@ import { CodeNameClass } from '../../DataContracts/CodeNameClass';
         "InputType",
         "TimeMode",
         "IsDisabled",
+        "ShowToolTip",
     ]
 })
 
-export class AdvancedDatePickerComponent
-    implements OnInit, OnDestroy {
-
+export class AdvancedDatePickerComponent implements OnInit, OnDestroy {
     public DateOptions: CodeNameClass[] = [];
     DropdownId: string;
     DivAdvancedDatePickerId: string;
     DisplayValue: string;
     LayoutDirection: string = "ltr";
     isRTL: boolean = false;
-
+    show: boolean;
     public CopyValueSubs: any;
     public ObjectField: ObjectFieldPM;
     public ObjectFieldName: string = null;
     public ObjectTableName: string = null;
     public DataContext: any;
-    public InputType;
+    public InputType: string;
+    public TimeMode: string;
     public uiProperty: UIProperty;
     private isDisabled: boolean;
-    InputValue: string;
-    DateValue: string;
-    TimeValue: string;
+    public ShowToolTip: boolean;
 
-    ctrl: FormControl;
-    @Input() LogitudeForm: FormGroup;
     @Output() ValueChanged = new EventEmitter();
-    @Output() Click = new EventEmitter();
     @Input() NoObjectField: boolean = false;
     @Input() NoValidation: boolean = false;
 
@@ -80,7 +74,7 @@ export class AdvancedDatePickerComponent
                     this.SelectedItemObject = this.SelectedItem;
                     this.selectedDateValue = newValue;
                     var myDisplayValue = this.SetDateValue(new Date(newValue));
-                    this.DisplayValue = myDisplayValue.split(" ")[0];;
+                    this.DisplayValue = myDisplayValue?.split(" ")[0];;
                 }
             }
         }
@@ -99,7 +93,7 @@ export class AdvancedDatePickerComponent
                 this.SelectedItem = selectedItem;
                 var selectedCalendarDate = this.SetDateValue(newValue, null);
                 this.selectedDateValue = selectedCalendarDate;
-                this.DisplayValue = selectedCalendarDate.split(" ")[0];
+                this.DisplayValue = selectedCalendarDate?.split(" ")[0];
                 this.SelectedItemObject = this.SelectedItem;
             }
         }
@@ -133,18 +127,23 @@ export class AdvancedDatePickerComponent
         }
     }
 
-    constructor(private cd: ChangeDetectorRef) {
-        this.show = false;
-        this.InputType = "date";
-        this.SetDateOptions();
+    @HostListener('document:click', ['$event'])
+    clickout(event) {
+        if (!this.eRef.nativeElement.contains(event.target)) {
+            this.IsDropDownVisible = false;
+            this.IsOpen = false;
+        }
+    }
 
+    constructor(private eRef: ElementRef) {
+        this.show = false;
         if (ObjectsLocator.GlobalSetting) {
             this.LayoutDirection = ObjectsLocator.GlobalSetting.LayoutDirection;
             this.isRTL = ObjectsLocator.GlobalSetting.LayoutDirection == "rtl";
         }
-        else {
-            this.LayoutDirection = "ltr";
-        }
+        else this.LayoutDirection = "ltr";
+
+        this.SetDateOptions();
     }
 
     SetDateOptions() {
@@ -167,6 +166,8 @@ export class AdvancedDatePickerComponent
 
     ngOnInit() {
         this.InitializeControl();
+        this.uiProperty = this.DataContext.UIProperties.GetUIProperty(this.ObjectFieldName, this.ObjectTableName, this.DataContext);
+        this.IsDisabled = this.uiProperty != null ? !this.uiProperty.IsEnabled : false;
     }
 
     counterId: number;
@@ -176,10 +177,16 @@ export class AdvancedDatePickerComponent
         this.DropdownId = 'AdvancedDatePickerDropDown-' + this.ObjectFieldName + '-' + this.counterId.toString();
         this.ErrorPopUpId = 'advanceddatepickerererrorpop-' + this.counterId;
         this.LogCalendarId = 'LogCalendar-' + this.ObjectFieldName + '-' + this.counterId.toString();
-
-        this.uiProperty = this.DataContext.UIProperties.GetUIProperty(this.ObjectFieldName, this.ObjectTableName, this.DataContext);
-        this.IsDisabled = this.uiProperty != null ? !this.uiProperty.IsEnabled : false;
     }
+
+
+    ngOnDestroy() {
+        console.log("advanceddatepicker:ngOnDestroy");
+    }
+
+    //ErrorPopUp
+    ErrorPopUpId: string;
+    ShowErrorPopup: boolean = false;
 
     SetValidity(validValue: boolean, errorMessage) {
         if (this.uiProperty != null) {
@@ -196,32 +203,8 @@ export class AdvancedDatePickerComponent
         }
     }
 
-    ngOnDestroy() {
-        console.log("advanceddatepicker:ngOnDestroy");
-        this.cd = null;
-
-        if (this.CopyValueSubs) {
-            this.CopyValueSubs.unsubscribe();
-            this.CopyValueSubs = null;
-        }
-    }
-
-    MouseInArea: boolean;
-    OnMouseOver() {
-        this.MouseInArea = true;
-    }
-
-    OnMouseOut() {
-        this.MouseInArea = false;
-    }
-
-    //ErrorPopUp
-    ErrorPopUpId: string;
-    ShowErrorPopup: boolean = false;
-
     //MainTable
     DeleteButtonNgStyle: any;
-    private show: boolean;
     Detach: boolean;
     ComponentMouseInArea: boolean;
 
@@ -245,8 +228,10 @@ export class AdvancedDatePickerComponent
     }
 
     //DropDownList
-    IsDropDownVisible: boolean;
-    DropDownMouseInArea: boolean;
+    public IsDropDownVisible: boolean;
+    public DropDownMouseInArea: boolean;
+    public IsOpen: boolean;
+    public ItemsSource: any[];
 
     OnDropDownMouseOver() {
         this.DropDownMouseInArea = true;
@@ -279,9 +264,6 @@ export class AdvancedDatePickerComponent
     OnLiMouseLeave($event) {
         this.DropDownMouseInArea = false;
         $event.target.classList.remove("highlighted");
-        //if ($event.target.innerText == "Specific Date") {
-        //    this.ToggleCalendar(false);
-        //}
     }
 
     OnDropDownSelected(item: any, newValue = null) {
@@ -292,16 +274,11 @@ export class AdvancedDatePickerComponent
         this.DataContext[this.ObjectFieldName] = this.SelectedItem.Code == "SPD" ? selectedValue : this.SelectedItem.Code;
         this.SelectedItemObject = this.SelectedItem;
         this.SelectedItemChanged.emit(this.SelectedItem);
-        this.DisplayValue = name;
         this.ValidateField();
         this.ToggleOpenDropDown();
         this.ValueChanged.emit(this.DataContext[this.ObjectFieldName]);
         this.DetectChanges();
     }
-
-    //DropDownList
-    public IsOpen: boolean;
-    public ItemsSource: any[];
 
     OnDropDownClicked() {
         this.ToggleOpenDropDown();
@@ -327,9 +304,8 @@ export class AdvancedDatePickerComponent
     }
 
     OnDropDownFocus() {
-        //this.ToggleOpenDropDown();
-        //this.ToggleOpenDropDown();
-        //
+        //var inputElement = document.getElementById(this.DropdownId);
+        //if (inputElement) inputElement.focus();
     }
 
     OnDropDownBlur() {
@@ -356,7 +332,9 @@ export class AdvancedDatePickerComponent
     IsCalendarDateDropDownOpen: boolean;
     LogCalendarId: string;
     CalendarMouseInArea: boolean;
-    public TimeMode: string;
+    InputValue: string;
+    DateValue: string;
+    TimeValue: string;
 
     private selectedCalendarDate: Date;
     public get SelecteCalendardDate() {
@@ -373,33 +351,17 @@ export class AdvancedDatePickerComponent
         if (!this.DropDownMouseInArea && !this.CalendarMouseInArea) {
             this.IsDropDownVisible = false;
         }
-        //else if (!this.CalendarMouseInArea) this.IsDropDownVisible = false;
-    }
-
-    OnComponentBlur() {
-        this.IsDropDownVisible = false;
     }
 
     OnSelectedCalendarDateChanged(selectedDateObj: any) {
         var selectedCalendarDate = selectedDateObj.SelectedDate;
         this.OnDropDownSelected(this.DateOptions.filter(d => d.Code == "SPD")[0], selectedCalendarDate);
         this.ToggleCalendar(false);
-        //this.ToggleOpenDropDown();
     }
 
     ToggleCalendar(open: boolean) {
-        if (open) {
-            this.IsCalendarDateDropDownOpen = true;
-            this.IsCalendarOpen = true;
-
-            var inputElement = document.getElementById(this.DropdownId);
-            if (inputElement) inputElement.focus();
-        } else {
-            this.IsCalendarDateDropDownOpen = false;
-            this.IsCalendarOpen = false;
-            var elem = document.getElementById(this.DropdownId);
-            if (elem) elem.focus();
-        }
+        this.IsCalendarDateDropDownOpen = open;
+        this.IsCalendarOpen = open;
     }
 
     OnCalendarMouseOver() {
@@ -414,9 +376,7 @@ export class AdvancedDatePickerComponent
         if (inputElement) inputElement.focus();
     }
 
-    SetDateValue(date: Date, timeSuffix: string = null, setDataContext: boolean = true) {
-        this.InputType = "date";
-        this.TimeMode = "12";
+    SetDateValue(date: Date, timeSuffix: string = null) {
         if (date) {
             var day: number;
             var month: number;
