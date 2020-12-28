@@ -10,21 +10,18 @@ import { Validator } from '../../../Infrastructure/Validators/Validator';
 import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
 import { TextCodeTranslator } from '../../../Infrastructure/Utilities/TextCodeTranslator';
 import { AppTool } from '../../../Infrastructure/Tools';
-import { UIProperties } from '../../../Infrastructure/Components/LogitudeComponents/UIProperties';
-
 
 @Component({
     selector: 'NewTaxDeductionReportComponent',
-    
-
     templateUrl: './NewTaxDeductionReportComponent.html',
 })
 
-export class NewTaxDeductionReportComponent extends BaseComponent {
+export class NewTaxDeductionReportComponent extends BaseComponent{
 
 
     ObjectTableName: string = "TaxDeductionReport";
     DataContext: any = this;
+    enterdEmail: string;
     entityPM: TaxDeductionReportPM = new TaxDeductionReportPM();
     TaxDeductionReportPMService: TaxDeductionReportPMService = new TaxDeductionReportPMService();
     public TenantPM: TenantPM;
@@ -34,11 +31,12 @@ export class NewTaxDeductionReportComponent extends BaseComponent {
 
         var date = new Date();
         this.entityPM.TaxYear = date.getFullYear();
-        this.entityPM.Tenant = SessionLocator.Tenant;
-        this.entityPM.Email = SessionLocator.LoggedUserPM.Email;
+        this.entityPM.Tenant  = SessionLocator.Tenant;
+        this.entityPM.Email = this.enterdEmail = SessionLocator.LoggedUserPM.Email;
         this.BuildMonthList();
 
     }
+
  public MonthsList: CodeNameClass[];
     BuildMonthList() {
 
@@ -76,17 +74,33 @@ private selectedMonth: CodeNameClass;
 
         }
     }
+
+    
  public FilterSelectedValue: string = 'Year';
   FilterItemClicked(itemValue: string) {
     if (this.FilterSelectedValue != itemValue) {
-      this.FilterSelectedValue = itemValue;
-    if(itemValue =="Month"){
-     this.ByMonth=true;
-      }
-  else  this.ByMonth=false;;
-
+        this.FilterSelectedValue = itemValue;
+        if (itemValue == "Month") {
+            this.ByMonth = true;
+        }
+        else {
+            this.ByMonth = false;
+        }
+        this.SetEmailValue();
+        this.SetEmailUIProperties();
     }
   }
+
+    private SetEmailValue() {
+        if (!AppTool.IsNullOrEmpty(this.entityPM.Email))
+            this.enterdEmail = this.entityPM.Email;
+        this.entityPM.Email = this.FilterSelectedValue == "Month" ? " " : this.enterdEmail;
+    }
+
+    SetEmailUIProperties() {
+        this.UIProperties.SetEnabled("Email", this.ObjectTableName, this.ByMonth ? false : true);
+    }
+
     get Email() { return this.entityPM.Email; }
     set Email(value: string) {
         if (this.entityPM.Email != value) {
@@ -100,6 +114,8 @@ private selectedMonth: CodeNameClass;
             this.entityPM.Month = value;
         }
     }
+
+
  get ByMonth() { return this.entityPM.ByMonth; }
     set ByMonth(value: boolean) {
         if (this.entityPM.ByMonth != value) {
@@ -120,7 +136,6 @@ private selectedMonth: CodeNameClass;
             this.entityPM.IsAdditionalReportExist = value;
         }
     }
-
 
     FIELD_IS_REQUIERD: string = null;
     ValidationErrorsList: string[] = [];
@@ -143,11 +158,7 @@ private selectedMonth: CodeNameClass;
 
             errors.push(s);
         }
-        if (AppTool.IsNullOrEmpty(this.entityPM.Email)) {
-            var s: string = this.FIELD_IS_REQUIERD.replace("%FieldName", TextCodeTranslator.Translate("TaxDeductionReport.F.Email"));
-
-            errors.push(s);
-        }
+       
 
         this.ValidationErrorsList = errors;
 
@@ -178,19 +189,12 @@ private selectedMonth: CodeNameClass;
                     this.CurrentSession.StopBusyIndicator();
                 }
             });
-
-
         }
-
-
-
     }
-
 
     CancelButtonClicked() {
         this.CurrentSession.CloseCurrentWindow();
 
     }
-
 
 }
