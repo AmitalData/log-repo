@@ -195,8 +195,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Operational
 
                     List<ReportGroup> masterCommodityAgentResults = (from p in myDataList
                                                                      group p by new { p.Master, p.CommodityNumber, p.CustomAgentImportId, p.CustomAgentImportName,
-                                                                     p.CommodityName ,p.MasterLong, p.ATD, p.ETD, p.ETA, 
-                                                                     p.Shipper, p.ShipperId,p.ConsigneeId, p.Consignee,p.Routing} 
+                                                                     p.CommodityName ,p.MasterLong, p.ATD, p.ETD} 
                                                                      into g
                                                                      orderby g.Key.Master
                                                                      select new ReportGroup()
@@ -209,12 +208,6 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Operational
                                                                          MasterLong = g.Key.MasterLong,
                                                                          ATD = g.Key.ATD,
                                                                          ETD = g.Key.ETD,
-                                                                         ETA = g.Key.ETA,
-                                                                         Shipper = g.Key.Shipper,
-                                                                         ShipperId = g.Key.ShipperId,
-                                                                         ConsigneeId = g.Key.ConsigneeId,
-                                                                         Consignee = g.Key.Consignee,
-                                                                         Routing = g.Key.Routing,
                                                                          ReportGroupDataList = g.ToList(),
                                                                      }).ToList();
 
