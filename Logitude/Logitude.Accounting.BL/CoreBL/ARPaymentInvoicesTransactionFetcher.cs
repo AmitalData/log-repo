@@ -135,8 +135,18 @@ namespace Logitude.Accounting.BL.CoreBL
             // exclude partially reconcile transactions
             reconciledTransactions = reconciledTransactions.Where(d => d.IsReconciled == true && d.SourceTypeCode == AccountingEntityValues.ARInvoice).ToList();
 
+            FillTransactionsAmountToReconcile(reconciledTransactions);
 
             return reconciledTransactions;
+        }
+
+        private static void FillTransactionsAmountToReconcile(List<LedgerTransactionPM> reconciledTransactions)
+        {
+            reconciledTransactions.ForEach(transaction =>
+            {
+                var foreignAmount = transaction.ForeignAmountCredit == 0 ? transaction.ForeignAmountDebit : transaction.ForeignAmountCredit;
+                transaction.AmountToReconcile = foreignAmount;
+            });
         }
 
         private List<LedgerTransactionPM> GetTransactionsById(List<string> ids)
