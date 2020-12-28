@@ -195,7 +195,8 @@ export class SearchComponent implements AfterViewInit,OnInit, OnDestroy
         if (this.tenant!=null && this.SearchText) {
             // this.router.navigate(['public-tracking/search',  this.SearchText]);
             // this.router.navigate(['public-tracking/search',  this.SearchText]);
-            this.location.go( 'public-tracking/search?searchKey=' + this.SearchText);
+            //this.location.go( 'public-tracking/search?searchKey=' + this.SearchText);
+            this.router.navigate(['public-tracking/search'],{ queryParams: { searchKey: this.SearchText}});
             this.LoadShipments();
         }
 
