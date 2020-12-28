@@ -125,7 +125,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Bluesnap
             iQueryable_BluesnapTransactions = iQueryable_BluesnapTransactions.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.TransactionDate) >= System.Data.Entity.DbFunctions.TruncateTime(fromDate) && System.Data.Entity.DbFunctions.TruncateTime(d.TransactionDate) <= System.Data.Entity.DbFunctions.TruncateTime(toDate));
             List<string> tenantsIds = iQueryable_Tenantmanagements.ToList().Select(e => e.Id.ToString()).ToList();
             this.customers_CRM = (from a in commonDataContext.Cards.Include("Customer")
-                             where tenantsIds.Contains(a.ReceivablesAccountingCard) && !string.IsNullOrEmpty(a.ReceivablesAccountingCard)
+                             where a.Tenant == 341 && !string.IsNullOrEmpty(a.ReceivablesAccountingCard) && tenantsIds.Contains(a.ReceivablesAccountingCard)  
                                   select new CustomerCRMData
                                   {
                                       EnglishName = a.EnglishName,
