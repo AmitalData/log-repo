@@ -568,7 +568,7 @@ namespace Simplog.Data.ShipmentsModel.Repositories
                             && myShipment.IsCancelled == false
                             && myMasterData.Master == myMasterNumber
                             && myMasterData.MainCarriageCarrierId == myAirlineId
-                            && myShipment.CreateDateTime >= lastYearDate
+                            && myShipment.OperationalDate >= lastYearDate
                             select myShipment).FirstOrDefault();
             }
 
