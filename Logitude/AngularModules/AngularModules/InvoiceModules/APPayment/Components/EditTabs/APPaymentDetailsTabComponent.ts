@@ -70,7 +70,7 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
 
         }
         this.IsFullAccounting = SessionLocator.TenantPM.AccountingActivated;
-        //this.InitializeBillToLov()
+        this.InitializeBillToLov()
         this.EntityPM = entityArgs.EntityPM;
         this.ItemsSource = new ObservableCollection([]);
         this.EnableNegativeOffsetAPPayments = ObjectsLocator.AccountingSettingPM.EnableNegativeOffsetAPPayments;
