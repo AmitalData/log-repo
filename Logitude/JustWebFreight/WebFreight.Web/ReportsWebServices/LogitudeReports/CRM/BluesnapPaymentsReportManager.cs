@@ -121,9 +121,10 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Bluesnap
                                                                          where a.GlobalTenant.IsActive && a.IsRecurring == true && a.RecurringPeriodCode == "MO" && a.PaymentChannelCode == "PL"
                                                                          select a);
             iQueryable_BluesnapTransactions = globalObjectContext.BluesnapTransactions;
-            iQueryable_BluesnapTransactions = iQueryable_BluesnapTransactions.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.TransactionDate) >= System.Data.Entity.DbFunctions.TruncateTime(fromDate) && System.Data.Entity.DbFunctions.TruncateTime(d.TransactionDate) <= System.Data.Entity.DbFunctions.TruncateTime(toDate));            
+            iQueryable_BluesnapTransactions = iQueryable_BluesnapTransactions.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.TransactionDate) >= System.Data.Entity.DbFunctions.TruncateTime(fromDate) && System.Data.Entity.DbFunctions.TruncateTime(d.TransactionDate) <= System.Data.Entity.DbFunctions.TruncateTime(toDate));
+            List<string> tenantsIds = iQueryable_Tenantmanagements.ToList().Select(e => e.Id.ToString()).ToList();
             this.customers_CRM = (from a in commonDataContext.Cards.Include("Customer")
-                             where a.ReceivablesAccountingCard == "341" 
+                             where a.Tenant == 341 && !string.IsNullOrEmpty(a.ReceivablesAccountingCard) && tenantsIds.Contains(a.ReceivablesAccountingCard)  
                              select new CustomerCRMData
                              {
                                  EnglishName = a.EnglishName,
