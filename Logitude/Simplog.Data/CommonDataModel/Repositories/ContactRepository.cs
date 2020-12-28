@@ -365,6 +365,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
 
         public void Add(Contact entity)
         {
+            SetComputedKeyValue(entity);
             context.Contacts.Add(entity);
         }
 
@@ -382,10 +383,20 @@ namespace Simplog.Data.CommonDataModel.Repositories
         {
             try
             {
+                SetComputedKeyValue(entity);
                 context.Contacts.Attach(entity);
             }
             catch { }
             context.SetAsModified(entity);
+        }
+
+        private void SetComputedKeyValue(Contact entity)
+        {
+            if (!string.IsNullOrEmpty(entity.Email) && entity.ComputedKey != entity.Email)
+                entity.ComputedKey = entity.Email;
+            else
+                entity.ComputedKey = entity.Id;
+
         }
 
         public List<Contact> All()
