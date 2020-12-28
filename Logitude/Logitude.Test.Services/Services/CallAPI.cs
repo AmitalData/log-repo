@@ -14,47 +14,42 @@ namespace Logitude.SpecFlow.Services
         private static string mainURL = "http://test.logitudeworld.com/test/api/";
         public static T Post<T>(Object model, string url, string token)
         {
-            var restCliesnt = new RestClient(mainURL + url);
-            var request = new RestRequest(Method.POST);
-            if (!string.IsNullOrEmpty(token))
-            {
-                request.AddHeader("Token", token);
-
-            }
-            request.AddJsonBody(JsonConvert.SerializeObject(model));
-
-            var response = restCliesnt.Execute<T>(request);
-
-            if (response.StatusCode == HttpStatusCode.OK)
-                return response.Data;
-            throw new Exception("post failed");
+            return CallAPIProcess<T>(Method.POST, model, url, token);
         }
 
         public static T Put<T>(Object model, string url, string token)
-        {
-            var restCliesnt = new RestClient(mainURL + url);
-            var request = new RestRequest(Method.PUT);
-            request.AddHeader("Token", token);
-            request.AddJsonBody(JsonConvert.SerializeObject(model));
-
-            var response = restCliesnt.Execute<T>(request);
-
-            if (response.StatusCode == HttpStatusCode.OK)
-                return response.Data;
-            throw new Exception("Put failed");
+        { 
+            return CallAPIProcess<T>(Method.PUT, model, url, token);  
         }
+
+       
 
         public static T Get<T>(string url, string token)
         {
-            var restCliesnt = new RestClient(mainURL + url);
-            var request = new RestRequest(Method.GET);
-            request.AddHeader("Token", token); 
+            return CallAPIProcess<T>(Method.GET, null, url, token);
+        }
 
-            var response = restCliesnt.Execute<T>(request);
+        private static T CallAPIProcess<T>(Method method, Object model, string url, string token)
+        {
+            var restClient = new RestClient(mainURL + url);
+            var request = new RestRequest(method);
+            request.AddHeader("Token", token);
+            if (method != Method.GET)
+            {
+                request.AddJsonBody(JsonConvert.SerializeObject(model));
+            }
+            
+            var response = restClient.Execute<T>(request);
 
             if (response.StatusCode == HttpStatusCode.OK)
+            {
                 return response.Data;
-            throw new Exception("Get failed");
+            }
+            else
+            {
+                throw new Exception(method.ToString() + " Request To " + url + " Faild With the message " + response.Content);
+            }
         }
+
     }
 }
