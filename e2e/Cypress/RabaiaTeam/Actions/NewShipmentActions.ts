@@ -27,5 +27,5 @@ export function FillShipmentDefaultFields(directionCode: string, transportModCod
 }
 
 export function SaveShipment(resultFile:string) {
-    cy.SaveClick("#ShipmentCreatebtn", null, "**/shipment", null)
+    cy.SaveClick("#ShipmentCreatebtn", null, "**/shipment", resultFile)
 }
