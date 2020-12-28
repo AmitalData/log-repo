@@ -225,8 +225,7 @@ namespace Logitude.Accounting.BL.Validators
                 {
                     if (UserDefinedReportValidatorArguments.CurrentLinePM.LineTypeCode == GLAccountType)
                     {
-                        if ((!string.IsNullOrEmpty(CurrentGLAccountId) && CurrentGLAccountId == UserDefinedReportValidatorArguments.LinePM.GLAccountId) ||
-                            (!string.IsNullOrEmpty(CurrentChartofAccountId) && CurrentChartofAccountId == UserDefinedReportValidatorArguments.LinePM.ChartOfAccountIdForValidate))
+                        if ((!string.IsNullOrEmpty(CurrentGLAccountId) && CurrentGLAccountId == UserDefinedReportValidatorArguments.LinePM.GLAccountId))
                         {
                             ThrowValidationGLAccountAlreadyExist(UserDefinedReportValidatorArguments);
                         }
@@ -241,8 +240,8 @@ namespace Logitude.Accounting.BL.Validators
                 }
                 else if (UserDefinedReportValidatorArguments.LinePM.LineTypeCode == ChartsofAccountType)
                 {
-                    if ((UserDefinedReportValidatorArguments.LinePM.LineTypeCode == ChartsofAccountType && (!string.IsNullOrEmpty(CurrentChartofAccountId) && CurrentChartofAccountId == UserDefinedReportValidatorArguments.LinePM.ChartOfAccountId)) ||
-                        (UserDefinedReportValidatorArguments.LinePM.LineTypeCode == GLAccountType && (!string.IsNullOrEmpty(CurrentChartofAccountId) && CurrentChartofAccountId == UserDefinedReportValidatorArguments.LinePM.ChartOfAccountIdForValidate)))
+                    if ((UserDefinedReportValidatorArguments.CurrentLinePM.LineTypeCode == ChartsofAccountType && (!string.IsNullOrEmpty(CurrentChartofAccountId) && CurrentChartofAccountId == UserDefinedReportValidatorArguments.LinePM.ChartOfAccountId)) ||
+                        (UserDefinedReportValidatorArguments.CurrentLinePM.LineTypeCode == GLAccountType && (!string.IsNullOrEmpty(CurrentChartofAccountId) && CurrentChartofAccountId == UserDefinedReportValidatorArguments.LinePM.ChartOfAccountId)))
                     {
                         ThrowValidationChartsofAccountAlreadyExist(UserDefinedReportValidatorArguments);
                     }
