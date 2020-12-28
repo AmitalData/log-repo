@@ -1,0 +1,80 @@
+﻿<Script DBType="Main" Module="Common">
+  <Sql Version="1">
+    <![CDATA[
+    
+      
+declare @Tenant as int
+declare @Code as varchar(10)
+declare @Name as varchar(100)
+declare @NewId as varchar(15)
+declare @ObjectTableId as varchar(15)
+
+BEGIN
+       DECLARE DataCursor CURSOR READ_ONLY
+       FOR
+       SELECT Id
+       FROM Tenants
+       OPEN DataCursor FETCH NEXT FROM DataCursor INTO @Tenant
+       WHILE @@FETCH_STATUS = 0
+       BEGIN
+			  set @ObjectTableId = (select Id from ObjectTables where Name = 'Shipment')
+              set @Code = 'DEAR'
+              set @Name = 'Delivery Arrived'
+
+              if not exists (select * from EventTypes where Code = @Code and Tenant = @Tenant)
+              begin                     
+                     EXECUTE usp_GetNextTableIdValue @NewId OUTPUT,'EventType'
+                     insert into EventTypes(Id, Code, ObjectTableId, Tenant, EnglishName, LocalName, AddedManually, IsManualEntry, IsFollowUp, ManualActivatedFollowUp, InActive, ShortView)
+                     values
+                     (
+                     @NewId,
+                     @Code,
+                     @ObjectTableId,
+                     @Tenant,
+                     @Name,
+                     @Name,
+                     0,
+                     0,
+                     0,
+                     0,
+                     0,
+                     1
+                     )
+              end    
+
+			        set @Code = 'PIAR'
+              set @Name = 'Pickup Arrived'
+
+              if not exists (select * from EventTypes where Code = @Code and Tenant = @Tenant)
+              begin                     
+                     EXECUTE usp_GetNextTableIdValue @NewId OUTPUT,'EventType'
+                     insert into EventTypes(Id, Code, ObjectTableId, Tenant, EnglishName, LocalName, AddedManually, IsManualEntry, IsFollowUp, ManualActivatedFollowUp, InActive, ShortView)
+                     values
+                     (
+                     @NewId,
+                     @Code,
+                     @ObjectTableId,
+                     @Tenant,
+                     @Name,
+                     @Name,
+                     0,
+                     0,
+                     0,
+                     0,
+                     0,
+                     1
+                     )
+              end    
+       FETCH NEXT FROM DataCursor INTO @Tenant
+       END
+       CLOSE DataCursor
+       DEALLOCATE DataCursor
+END
+
+
+      
+    ]]>
+  </Sql>
+  <Oracle Version="1"></Oracle>
+</Script>
+
