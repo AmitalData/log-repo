@@ -584,6 +584,15 @@ export class LCLChargesComponent extends BaseComponent implements OnDestroy {
 
     OnQuoteSaleCurrencyModeChangedToMulti() {
 
+        this.myChargesTypeService.getAllFromCache().subscribe((myResponse: ServiceResponse) => {
+            if (!myResponse.HasError) {
+                this.AllChargesTypes = myResponse.Result;
+
+                this.ItemsSource.Collection.forEach((item: QuoteChargeItem) => {
+                    item.OnQuoteSaleCurrencyModeChangedToMulti();
+                });
+            }
+        });
     }
 
     private selectedCurrencyCode: string;
@@ -2947,7 +2956,15 @@ export class QuoteChargeItem extends BaseComponent {
             this.CostExchangeRate = this.fatherComponent.GetCurrencyRate(this.CostCurrencyId);
         }
 
-        if (this.QuotePM.IsSaleCurrencySameAsCost) {
+        if (this.QuotePM.IsMultiCurrency) {
+            if (this.SaleCurrencyId != this.CostCurrencyId && this.SaleCurrencyId == this.QuotePM.SaleCurrencyId) {
+                if (this.SaleExchangeRate != this.QuotePM.ExchangeRate) {
+                    this.SaleExchangeRate = this.QuotePM.ExchangeRate;
+                }
+            }
+        }
+
+        else if (this.QuotePM.IsSaleCurrencySameAsCost) {
             this.EntityPM.SaleCurrencyId = this.EntityPM.CostCurrencyId;
             this.EntityPM.SaleCurrencyCode = this.EntityPM.CostCurrencyCode;
             this.EntityPM.SaleExchangeRate = this.EntityPM.CostExchangeRate;

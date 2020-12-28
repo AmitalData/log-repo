@@ -4614,7 +4614,15 @@ export class FCLQuoteChargeItem extends BaseComponent {
             this.CostExchangeRate = this.fatherComponent.GetCurrencyRate(this.CostCurrencyId);
         }
 
-        if (this.QuotePM.IsSaleCurrencySameAsCost) {
+        if (this.QuotePM.IsMultiCurrency) {
+            if (this.SaleCurrencyId != this.CostCurrencyId && this.SaleCurrencyId == this.QuotePM.SaleCurrencyId) {
+                if (this.SaleExchangeRate != this.QuotePM.ExchangeRate) {
+                    this.SaleExchangeRate = this.QuotePM.ExchangeRate;
+                }
+            }
+        }
+
+        else if (this.QuotePM.IsSaleCurrencySameAsCost) {
             this.EntityPM.SaleCurrencyId = this.EntityPM.CostCurrencyId;
             this.EntityPM.SaleCurrencyCode = this.EntityPM.CostCurrencyCode;
             this.EntityPM.SaleExchangeRate = this.EntityPM.CostExchangeRate;
@@ -4625,6 +4633,7 @@ export class FCLQuoteChargeItem extends BaseComponent {
             this.EntityPM.SaleCurrencyCode = this.QuotePM.SaleCurrencyCode;
             this.EntityPM.SaleExchangeRate = this.QuotePM.ExchangeRate;
         }
+
 
         this.OnChargeCurrencyChanged();
     }
