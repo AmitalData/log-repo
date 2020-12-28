@@ -515,6 +515,22 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                          CurrencyId = acc.ReconcileMethodCode == "0" ? tenant.CurrencyId : acc.CurrencyId,
 
                          AccountTermLocalName = card.PaymentTerm.LocalName,
+                         AccountSalesmanName = card.SalesmanUser.Contact.EnglishName,
+                         AccountSalesmanLocalName = card.SalesmanUser.Contact.LocalName,
+                         AccountCollectorName = card.CollectorUser.Contact.EnglishName,
+                         AccountCollectorLocalName = card.CollectorUser.Contact.LocalName,
+
+                         Category1Name = acc.Category1Name,
+                         Category2Name = acc.Category2Name,
+                         Category3Name = acc.Category3Name,
+                         Category4Name = acc.Category4Name,
+                         Category5Name = acc.Category5Name,
+
+                         Category1LocalName = acc.Category1LocalName,
+                         Category2LocalName = acc.Category2LocalName,
+                         Category3LocalName = acc.Category3LocalName,
+                         Category4LocalName = acc.Category4LocalName,
+                         Category5LocalName = acc.Category5LocalName,
 
 
                          //CurrencyId = acc.ReconcileMethodCode == "0" ? tenant.CurrencyId : acc.CurrencyId,
@@ -618,7 +634,27 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                         GLAccountStandardInterestRate=r.GLAccountStandardInterestRate,
                         AccountTermLocalName = r.AccountTermLocalName,
                         CustomerVatNumber = r.CustomerVatNumber,
-                        
+
+
+                        AccountSalesmanName = r.AccountSalesmanName,
+                        AccountSalesmanLocalName = r.AccountSalesmanLocalName,
+                        AccountCollectorName = r.AccountCollectorName,
+                        AccountCollectorLocalName = r.AccountCollectorLocalName,
+
+                        Category1Name = r.Category1Name,
+                        Category2Name = r.Category2Name,
+                        Category3Name = r.Category3Name,
+                        Category4Name = r.Category4Name,
+                        Category5Name = r.Category5Name,
+
+                        Category1LocalName = r.Category1LocalName,
+                        Category2LocalName = r.Category2LocalName,
+                        Category3LocalName = r.Category3LocalName,
+                        Category4LocalName = r.Category4LocalName,
+                        Category5LocalName = r.Category5LocalName,
+
+
+
                     }
                     ).ToList();
 
@@ -680,17 +716,17 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
         private static List<PeriodMExtended> MapExtended(List<PeriodM> reportList, List<PeriodMExtended> periodMExtendeds, /*IQueryable*/List<Logitude.BL.CommonDataModel.EntityPMs.CurrencyPM> currencies)
         {
             List<PeriodMExtended> namedPeriods = (from line in reportList
-                                                 
-                                                  //join account in periodMExtendeds
-                                                  //  on line.AccountId equals account.AccountId into accJoin
-                                                  //from account in accJoin.DefaultIfEmpty()
-                                                  let account = periodMExtendeds.FirstOrDefault(account=> account.AccountId ==line.AccountId)
+
+                                                      //join account in periodMExtendeds
+                                                      //  on line.AccountId equals account.AccountId into accJoin
+                                                      //from account in accJoin.DefaultIfEmpty()
+                                                  let account = periodMExtendeds.FirstOrDefault(account => account.AccountId == line.AccountId)
                                                   let splitAccount = periodMExtendeds.FirstOrDefault(account => account.AccountId == line.SplitAccountId)
 
                                                   //join currency in currencies
                                                   //  on line.CurrencyId equals currency.Id into currencyJoin
                                                   //from currency in currencyJoin.DefaultIfEmpty()
-                                                  let currency= currencies.FirstOrDefault(r=>r.Id ==line.CurrencyId)
+                                                  let currency = currencies.FirstOrDefault(r => r.Id == line.CurrencyId)
 
                                                   select new PeriodMExtended()
                                                   {
@@ -711,18 +747,35 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                                                       CreditLimitAmount = account.CreditLimitAmount,
                                                       InterestCreditLimit = account.InterestCreditLimit,
                                                       CreditStatusAmount_AsIs = account.CreditStatusAmount_AsIs,
-                                                      BalanceInLocalCurrency = splitAccount!=null ? splitAccount.BalanceInLocalCurrency: account.BalanceInLocalCurrency,
-                                                      LocalBalanceInDue = splitAccount!=null ? splitAccount.LocalBalanceInDue : account.LocalBalanceInDue,                                                      
+                                                      BalanceInLocalCurrency = splitAccount != null ? splitAccount.BalanceInLocalCurrency : account.BalanceInLocalCurrency,
+                                                      LocalBalanceInDue = splitAccount != null ? splitAccount.LocalBalanceInDue : account.LocalBalanceInDue,
                                                       TotalOpenShipments = account.TotalOpenShipments,
                                                       TotalFutureOpenCheques = account.TotalFutureOpenCheques,
                                                       TotalOpenCheques = account.TotalOpenCheques,
                                                       OpenCredit = line.OpenCredit,
                                                       OpenDebit = line.OpenDebit,
                                                       CreditStatusAmount = account.CreditStatusAmount,
-                                                       GLAccountStandardInterestRate=account.GLAccountStandardInterestRate,
-                                                       CustomerVatNumber = account.CustomerVatNumber,
-                                                       AccountTermLocalName = account.AccountTermLocalName,
-                                                       
+                                                      GLAccountStandardInterestRate = account.GLAccountStandardInterestRate,
+                                                      CustomerVatNumber = account.CustomerVatNumber,
+                                                      AccountTermLocalName = account.AccountTermLocalName,
+
+                                                      AccountSalesmanName = account.AccountSalesmanName,
+                                                      AccountSalesmanLocalName = account.AccountSalesmanLocalName,
+                                                      AccountCollectorName = account.AccountCollectorName,
+                                                      AccountCollectorLocalName = account.AccountCollectorLocalName,
+
+                                                      Category1Name = account.Category1Name,
+                                                      Category2Name = account.Category2Name,
+                                                      Category3Name = account.Category3Name,
+                                                      Category4Name = account.Category4Name,
+                                                      Category5Name = account.Category5Name,
+
+                                                      Category1LocalName = account.Category1LocalName,
+                                                      Category2LocalName = account.Category2LocalName,
+                                                      Category3LocalName = account.Category3LocalName,
+                                                      Category4LocalName = account.Category4LocalName,
+                                                      Category5LocalName = account.Category5LocalName,
+
 
                                                   }).ToList();
             return namedPeriods;
@@ -1534,6 +1587,23 @@ Period	Acc	Currency	Total
         public decimal? BalanceInLocalCurrency { get;  set; }
         public decimal? LocalBalanceInDue { get;  set; }
         public string SplitAccountId { get;  set; }
+        public string AccountSalesmanName { get; set; }
+        public string AccountSalesmanLocalName { get; set; }
+
+        public string AccountCollectorName { get; set; }
+        public string AccountCollectorLocalName { get; set; }
+        public string Category1Name { get; set; }
+        public string Category2Name { get; set; }
+        public string Category3Name { get; set; }
+        public string Category4Name { get; set; }
+        public string Category5Name { get; set; }
+        public string Category6Name { get; set; }
+        public string Category1LocalName { get; set; }
+        public string Category2LocalName { get; set; }
+        public string Category3LocalName { get; set; }
+        public string Category4LocalName { get; set; }
+        public string Category5LocalName { get; set; }
+        public string Category6LocalName { get; set; }
     }
 
     public class AgingReportParam

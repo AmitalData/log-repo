@@ -113,6 +113,8 @@ export class GlAccountLedgerTransactionsListTemplate {
     CheckBoxClicked(checked: boolean) {
         //console.log("clicked: ", checked);
         //this.rowData['IsChecked'] = checked;
+
+        
         ReconcileEventManager.CheckBoxChecked.emit({
             line: this.rowData,
             isChecked: checked,

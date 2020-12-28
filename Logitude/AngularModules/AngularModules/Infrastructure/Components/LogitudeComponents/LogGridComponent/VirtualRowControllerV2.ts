@@ -30,6 +30,7 @@ export class VirtualRowMetaData {
     SpotlightDataTemplate: string;
     DetailsIcon: string;
     cd: ChangeDetectorRef;
+    DontApplyVirtualization: boolean;
 }
 export class VirtualRowControllerV2 extends DataSource<any | undefined> implements OnInit, OnChanges {
     dataSource: any;
@@ -88,35 +89,27 @@ export class VirtualRowControllerV2 extends DataSource<any | undefined> implemen
     Filters: ApiQueryFilters = new ApiQueryFilters();
 
     connect(collectionViewer: CollectionViewer): Observable<(any | undefined)[]> {
-        this.myCollectionViewer = collectionViewer;
-        this.mySub = collectionViewer.viewChange.subscribe(range => {
-            if (this.timer) {
-                clearTimeout(this.timer);
-            }
-            this.timer = setTimeout(() => this.HandleRange(range), 400);
-        });
-        //   this.subscription.add(collectionViewer.viewChange.subscribe(range => {
-        //       if (this.timer) {
-        //           clearTimeout(this.timer);
-        //       }
-        //       this.timer = setTimeout(() => this.HandleRange(range), 400);
-        ///*range.valueChanges
-        //     .pipe(
-
-        //     ).subscribe((search: string): any => {
-
-        //     });*/
-        //       //debounceTime(500);
-        //       //distinctUntilChanged();
-        //       //this.HandleRange(range); 
-        // }));
+        
+            this.myCollectionViewer = collectionViewer;
+            this.mySub = collectionViewer.viewChange.subscribe(range => {
+                if (this.timer) {
+                    clearTimeout(this.timer);
+                }
+                this.timer = setTimeout(() => this.HandleRange(range), 400);
+            }); 
         return this.dataStream;
     }
     HandleRange(range: any) {
-        const startPage = this._getPageForIndex(range.start);
-        const endPage = this._getPageForIndex(range.end - 1);
-        for (let i = startPage; i <= endPage; i++) {
-            this._fetchPage(i);
+        if (this.myMetaData.DontApplyVirtualization) {
+            this.fetchedPages.delete(0);
+            this._fetchPage(0);
+        }
+        else {
+            const startPage = this._getPageForIndex(range.start);
+            const endPage = this._getPageForIndex(range.end - 1);
+            for (let i = startPage; i <= endPage; i++) {
+                this._fetchPage(i);
+            }
         }
         if (this.myMetaData.cd) {
             this.myMetaData.cd.detectChanges();
@@ -139,7 +132,7 @@ export class VirtualRowControllerV2 extends DataSource<any | undefined> implemen
     }
     timer = null;
     private _fetchPage(page: number) {
-        if (this.fetchedPages.has(page)) {
+        if (this.fetchedPages.has(page) && this.myMetaData.DontApplyVirtualization) {
             if (!this.fetchedPages.has(page + 1)) {
                 this._fetchPage(page + 1);
                 //if (!this.fetchedPages.has(page + 2)) {  
@@ -231,20 +224,8 @@ export class VirtualRowControllerV2 extends DataSource<any | undefined> implemen
          console.log("this.MyCallTime before" + this.MyCallTime);
         this.dataSource.getRows(pageIndex * PSize, PSize, sortingCol, sortingDir, getCount, searchfields, Filters).then(res => {
             res.subscribe((viewResponse: ServiceResponse) => {
-                if (!viewResponse.HasError) {
-                    //this.dataStream = new BehaviorSubject<(any | undefined)[]>(this.cachedData);
-                    //this.dataStream.next(this.cachedData);
-
-
-
-                    if (!getCount) {
-                        this.requestedRowsReady.emit(viewResponse.Count);
-                    }
-                    else {
-                
-                        this.requestedRowCount.emit( viewResponse.Count);
-                    }
-
+                if (!viewResponse.HasError) { 
+                    this.requestedRowCount.emit(viewResponse.Count);  
                 }
             });
         });

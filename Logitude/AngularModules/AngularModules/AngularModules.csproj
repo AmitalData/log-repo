@@ -287,13 +287,10 @@
     <Content Include="CustomsModules\CustomsDeclarationModules\DeclarationTabs\Components\Classification\CasualSupplierDetailsComponent.html" />
     <Content Include="CustomsModules\CustomsDeclarationModules\DeclarationTabs\Components\DeclarationAmendment\DeclarationAmendmentComponent.html" />
     <Content Include="CustomsModules\CustomsDeclarationModules\DeclarationTabs\Components\General\ConsigmentTabContent\ExportConsigmentContentComponent.html" />
-
     <TypeScriptCompile Include="App\DynamicLoader\LazyWidgetsLogitude.ts" />
     <TypeScriptCompile Include="Accounting\Components\Others\CopyJournalComponent.ts" />
-
     <TypeScriptCompile Include="Common\CustomFilters\ChargesTypeCustomFilter.ts" />
     <TypeScriptCompile Include="Common\Tools.ts" />
-
     <TypeScriptCompile Include="CustomsModules\CustomsDeclarationModules\DeclarationOthers\Components\DeclarationCancellation\DeclarationCancellationComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsDeclarationModules\DeclarationOthers\Components\DeclarationCancellation\Documents\DeclarationCancellationCustomsDocumentsController.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsDeclarationModules\DeclarationOthers\Components\NewEntity\NewExportDeclarationComponent.ts" />
@@ -1982,6 +1979,7 @@
     <Content Include="ShipmentModules\ShipmentAMANAC\Components\BlockedShipmentsComponent.html" />
     <Content Include="ShipmentModules\ShipmentAMANAC\Components\EditTabs\CustomsTransferGeneralTabComponent.html" />
     <Content Include="ShipmentModules\ShipmentAMANAC\Components\NewEntity\AMANACExportTransferComponent.html" />
+    <Content Include="ShipmentModules\ShipmentAMANAC\Components\NewEntity\AMANACValidationComponent.html" />
     <Content Include="ShipmentModules\ShipmentAMANAC\Components\NewEntity\NewTransferComponent.html" />
     <Content Include="ShipmentModules\ShipmentINTTRA\Components\Wizard\AddEBookingVesselComponent.html" />
     <Content Include="ShipmentModules\ShipmentINTTRA\Components\Wizard\SimulatorBookingComponent.html" />
@@ -4458,6 +4456,7 @@
     <TypeScriptCompile Include="ShipmentModules\ShipmentAMANAC\Components\BlockedShipmentsComponent.ts" />
     <TypeScriptCompile Include="ShipmentModules\ShipmentAMANAC\Components\EditTabs\CustomsTransferGeneralTabComponent.ts" />
     <TypeScriptCompile Include="ShipmentModules\ShipmentAMANAC\Components\NewEntity\AMANACExportTransferComponent.ts" />
+    <TypeScriptCompile Include="ShipmentModules\ShipmentAMANAC\Components\NewEntity\AMANACValidationComponent.ts" />
     <TypeScriptCompile Include="ShipmentModules\ShipmentAMANAC\Components\NewEntity\NewTransferComponent.ts" />
     <TypeScriptCompile Include="ShipmentModules\ShipmentAMANAC\ModuleDeclarations.ts" />
     <TypeScriptCompile Include="ShipmentModules\ShipmentAMANAC\ModuleShipmentAMANAC.ts" />

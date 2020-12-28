@@ -2651,7 +2651,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 this.ComputeTEU();
                 this.FillDefaultSubType();
 
-                ShipmentFinalArrivalDateBehaviour behaviour = new ShipmentFinalArrivalDateBehaviour(this.entityPM, this.entityMasterData, this.objectContext);
+                ShipmentFinalArrivalDateBehaviour behaviour = new ShipmentFinalArrivalDateBehaviour(this.entityPM, this.objectContext, isNewEntity);
                 behaviour.Handle();
                 this.isUpdatingHousesFinalArrivalDate = behaviour.IsUpdatingHouses;
             }
@@ -4741,7 +4741,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
             if (!entityPM.IsHybrid)
             {
-                shipmentTracing.TracePickUp(itemPM, itemPoco);
+                shipmentTracing.TracePickUp(itemPM, itemPoco, entityPM);
             }
 
             ShipmentMapping.MapPickUp(itemPM, itemPoco, myCommonContext, true);
@@ -4763,7 +4763,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
             if (!entityPM.IsHybrid)
             {
-                shipmentTracing.TracePickUp(itemPM, itemPoco);
+                shipmentTracing.TracePickUp(itemPM, itemPoco, entityPM);
             }
 
             ShipmentMapping.MapPickUp(itemPM, itemPoco, myCommonContext, true);

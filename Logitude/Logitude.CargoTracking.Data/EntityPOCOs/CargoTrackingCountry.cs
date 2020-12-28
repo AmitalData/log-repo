@@ -21,14 +21,14 @@ namespace Logitude.CargoTracking.Data.EntityPOCOs
         [Key]
         [Column("Id")]
 	    public string Id { get; set; }
-        [Column("LocalName")]
-	    public string LocalName { get; set; }
+        [Column("Tenant")]
+	    public int Tenant { get; set; }
         [Column("Code")]
 	    public string Code { get; set; }
         [Column("EnglishName")]
 	    public string EnglishName { get; set; }
-        [Column("Tenant")]
-	    public int Tenant { get; set; }
+        [Column("LocalName")]
+	    public string LocalName { get; set; }
     }
 }
 	 

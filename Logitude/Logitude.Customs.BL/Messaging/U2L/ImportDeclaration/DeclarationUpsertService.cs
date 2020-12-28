@@ -28,6 +28,7 @@ using Logitude.Customs.Data.EntityPOCOs;
 using Logitude.Customs.Data.EntityPOCOs;
 using Logitude.Customs.Data.EntityListQueryServices;
 using Logitude.Customs.Data.EntityLists;
+using Logitude.BL.DataContracts;
 
 namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
 {
@@ -1147,6 +1148,9 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
                     customerRepository.Add(myCustomer);
                     customerRepository.SubmitChanges();
                     AppendLogLine("Create new Customer (Customer tables)  = " + amitalCustomerCode);
+
+                    RunStoredProcedureClass.UpdateCardSearcsRecords(myCard.Id, myCard.Tenant);
+
                 }
             }
             var cardId = myCard.Id;

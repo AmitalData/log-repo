@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CalculatedChartsOfAccountUpdateClass
    {  		
-		public const string HashString = "9a94fed8ccf89a2427082994eb802da4";
+		public const string HashString = "405aebc1808ec50ce8672485c40617aa";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -120,7 +120,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    MaxNumberOfCustomFields =  0,
 			      				    LocalDefaultText =  "קבוצות מאזן מחושבות",
 			      				    DefaultText =  "Calculated Charts Of Accounts",
-			      				    Code =  "b3b4",
+			      				    Code =  "fe90",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Accounting",
@@ -615,7 +615,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						LookUpTableName =  "ChartOfAccountsType",
 					  						MinLength =  0,
 					  						MaxLength =  1,
-					  						IsRequired =  true,
+					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
@@ -647,7 +647,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ChartOfAccountTypeCode",
-					  						DefaultText =  "Chart Of Account Type Code",
+					  						DefaultText =  "Chart Of Account Type",
 					  						FullLocalDefaultText =  "סוג כרטיס",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,

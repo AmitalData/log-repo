@@ -345,7 +345,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
         public DocumentsFilingPM GetSinglePM(string id, int tenant)
         {
-            id = Regex.Replace(id, " ", "+");
+            if (!string.IsNullOrEmpty(id))
+            { 
+                id = Regex.Replace(id, " ", "+");
+            }
               DocumentsFilingPM extDocPm = (from a in repository.context.DocumentsFilings.Include("CreatedByUser.Contact").Include("ReceivedByUser.Contact").Include("Document").Include("DocumentType").Include("Owner.Contact")
                                           where a.Id == id && a.Tenant == tenant
                                           select new DocumentsFilingPM()

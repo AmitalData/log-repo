@@ -15,6 +15,7 @@ using WebFreight.Web.Security;
 using Logitude.Server.Tools;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.Tools.EntityService;
+using Logitude.BL.CommonDataModel.EntityQueries;
 
 namespace WebFreight.Web.WcfApi
 {
@@ -100,6 +101,57 @@ namespace WebFreight.Web.WcfApi
                     response.ErrorMessage += Environment.NewLine + ex.StackTrace;
                 }
                 return response;
+            }
+        }
+
+        public VesselPM GetVesselPM(string code, int tenant, ref Response response)
+        {
+
+            try
+            {
+                VesselPM entityPM = null;
+                SecurityUtility.AuthenticationOnTenant(tenant);
+                SecurityUtility.CheckContactFeature("Vessel", "READ", tenant);//UPDATE//READ
+                if (CacheManager.CacheWrapper == null)
+                {
+                    CacheManager.CacheWrapper = new MockCacheWrapper();
+                }
+
+                ICommonDataContext objectContext = CommonDataContext.GetContext(tenant);
+
+                ContactRepository contactRepository = new ContactRepository(objectContext);
+                CountryRepository countryRepository = new CountryRepository(objectContext);
+                VesselQuery query = new VesselQuery(tenant);
+
+                entityPM = query.GetSinglePMByCode(code, tenant);
+
+                //if (entityPM != null)
+                //{
+                //    if (entityPM.CountryId != null)
+                //    {
+                //       var country = countryRepository.GetSingleCountry(entityPM.CountryId, entityPM.Tenant);
+                //        if (country != null)
+                //        {
+                //            entityPM.CountryId = country.Code;
+                //        }
+                //    }
+                //}
+
+                return entityPM;
+            }
+            catch (Exception ex)
+            {
+                response.IsAuthenticationError = ex.GetType() == typeof(AutenticationException);
+                response.HasError = true;
+                response.ErrorMessage = ex.Message;
+                response.InnerErrorMessage = ex.InnerException != null ? ex.InnerException.Message : null;
+                if (!string.IsNullOrEmpty(ex.StackTrace))
+                {
+                    response.ErrorMessage += Environment.NewLine + ex.StackTrace;
+                }
+
+                return null;
+
             }
         }
     }

@@ -49,12 +49,17 @@ export class ReconcileExternalPageLineListTemplate {
     CheckBoxClicked(checked: boolean) {
         console.log("clicked: ", checked);
         this.rowData['IsChecked'] = checked;
+
+        if(!ReconcileEventManager.CheckBoxChecked)
+            ReconcileEventManager.CheckBoxChecked = new EventEmitter();
         ReconcileEventManager.CheckBoxChecked.emit({ line: this.rowData, isChecked: checked, RowIndex: this.AdditionalData.rowIndex });
 
     }
     ExtPageCheckBoxClicked(checked: boolean) {
         console.log("clicked: ", checked);
         // this.rowData['IsChecked'] = checked;
+
+        
         ReconcileEventManager.ExtPageCheckBoxChecked.emit({ line: this.rowData, isChecked: checked, RowIndex: this.AdditionalData.rowIndex });
 
     }

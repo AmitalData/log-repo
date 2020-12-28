@@ -36,11 +36,11 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;CargoTracking Transport Mode&quot;"
-  Code="&quot;7452&quot;"
+  Code="&quot;5cc2&quot;"
   Name="&quot;TransportMode&quot;"
   CloseTableName="&quot;Name&quot;"
   GenerateDomainService="false"
-  ClientModuleName="&quot;CargoTracking&quot;"
+  ClientModuleName="&quot;&quot;"
   NoViewController="false"
   NoPMController="false"
   NoTS="false"
@@ -51,6 +51,7 @@
   ApplyOnPropertyChangedCode="false"
   HasApiHelper="false"
   AllowedForComputingPartners="false"
+  IsBusinessUnitEnabled="false"
   Code1="&quot;cd07&quot;"
   Name1="&quot; Query Group&quot;"
   CustomFieldsCount="0"
@@ -350,7 +351,8 @@
         IsAttribute="true"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;Name&quot;"
         DCVersion="&quot;&quot;"
@@ -365,7 +367,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
     </DataContract>
   </DataContracts>
   <AdditionalTextCodes />

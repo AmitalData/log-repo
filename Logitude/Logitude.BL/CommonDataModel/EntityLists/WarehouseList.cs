@@ -25,6 +25,8 @@ namespace Logitude.BL.CommonDataModel.EntityLists
         public string VatTypeId { get; set; }
         public bool EnableConsolidationInvoices { get; set; }
         public string CityName { get; set; }
+        public string Address1 { get; set; }
+        public string Address2 { get; set; }
         public string CountryId { get; set; }
         public string CountryCode { get; set; }
         public string CountryName { get; set; }

@@ -53,6 +53,9 @@ namespace WebFreight.Web.DataProviders
         public string Master { get; set; }
         public string Shipper { get; set; }
         public string Consignee { get; set; }
+        public string ShipperId { get; set; }
+        public string ConsigneeId { get; set; }
+        public string Routing { get; set; }
         public int? Quantity { get; set; }
         public double? Weight { get; set; }
         public double? Volume { get; set; }
@@ -69,7 +72,7 @@ namespace WebFreight.Web.DataProviders
         public string MasterLong { get; set; }
         public DateTime? ETD { get; set; }
         public DateTime? ATD { get; set; }
-
+        public DateTime? ETA { get; set; }
         public string ShipmentField1 { get; set; }
         public string ShipmentField2 { get; set; }
         public string ShipmentField3 { get; set; }

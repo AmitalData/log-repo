@@ -158,6 +158,29 @@ namespace Logitude.CargoTracking.Def.EntityPMs
 			
 		 }
 	   }
+	  private string referenceType ;
+	  	  
+       
+	   [CustomValidation(typeof(CargoTrackingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ReferenceType  
+	   {
+	    
+	     get
+		{
+		   return referenceType;
+		 }
+		 set
+		 {
+		   if(referenceType != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ReferenceType",OldValue=referenceType,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   referenceType=value;
+		   }
+			
+		 }
+	   }
    }
    
 }
