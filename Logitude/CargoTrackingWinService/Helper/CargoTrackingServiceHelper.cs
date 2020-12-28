@@ -11,25 +11,18 @@ namespace CargoTrackingWinService.Helper
 {
     public class CargoTrackingServiceHelper
     {
-        public static int timeOut = 0;
- 
-
-
+        public static long timeOut = 100000000000000000;
 
         public bool GetFieldValueFromDBByTableNameAndFieldName(string fieldName, string tableName,string connectionString)
         {
             bool result = false;
-            
             SqlConnection con = new SqlConnection(connectionString);
-
             SqlCommand com = new SqlCommand(
-"select " + fieldName + " " +
-"FROM dbo." + tableName + " ;", con);
-
+            "select " + fieldName + " " +
+            "FROM dbo." + tableName + " ;", con);
             try
             {
                 con.Open();
-
                 using (SqlDataReader reader = com.ExecuteReader())
                 {
                     if (reader.Read())
@@ -77,9 +70,7 @@ namespace CargoTrackingWinService.Helper
             return result;
         }
  
-      
-         
-
+ 
         public bool CheckIsUpgradingSystem(string sourceConnectionString)
         {
             string connection = sourceConnectionString.Replace("Main", "Global");

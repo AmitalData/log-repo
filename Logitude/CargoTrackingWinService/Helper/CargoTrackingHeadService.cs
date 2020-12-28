@@ -34,7 +34,6 @@ namespace CargoTrackingWinService.Helper
 
         public void UpdateCargoTracking()
         {
-
             while (true)
             {
                 try
@@ -43,38 +42,49 @@ namespace CargoTrackingWinService.Helper
                     {
                         if (!cargoTrackingServiceHelper.CheckIsUpgradingSystem(sourceConnectionString))
                         {
-                            if (ApplicationInfo.UpdateCounter == 0)
-                            {
-                                ApplicationInfo.StartDate = TenantServerConfigration.GetCurrentDateTime(0);
-                                ApplicationInfo.Ports = 0;
-                                ApplicationInfo.Shipments = 0;
-                                ApplicationInfo.TransportModes = 0;
-                                ApplicationInfo.Cards = 0;
-                                ApplicationInfo.Countries = 0;
-                            }
+                            InitializeIncrementalRecordData();
                             ServiceHelper.CheckAndUpdateWaterMark(destinationConnectionString,sourceConnectionString);
                             bool IsFromBuild = AddAllTablesToThread(CargoTrackingTableList.FillCargoTableList());
                             ApplicationInfo.UpdateCounter++;
-                            if (ApplicationInfo.UpdateCounter==10)
-                            {
-                                ApplicationInfo.UpdateCounter = 0;
-                                ApplicationInfo.EndDate = TenantServerConfigration.GetCurrentDateTime(0);
-                                if (!IsFromBuild)
-                                {
-                                    CargoTrackingServiceHelper.AddRecordToCargoTrackingIncrementalStats(destinationConnectionString);
-
-                                }
-                            }
+                            SetIncrementalRecordData(IsFromBuild);
                             Thread.Sleep(ApplicationInfo.UpdateCargoTrackingSleepTime);
                         }
                         else Thread.Sleep(new TimeSpan(0, 5, 0));
                     }
                     else Thread.Sleep(new TimeSpan(0, 5, 0));
                 }
-
                 catch (Exception ex)
                 {
                     Thread.Sleep(ApplicationInfo.UpdateCargoTrackingSleepTime);
+                }
+            }
+        }
+
+         private void InitializeIncrementalRecordData()
+        {
+            if (ApplicationInfo.UpdateCounter == 0)
+            {
+                ApplicationInfo.StartDate = TenantServerConfigration.GetCurrentDateTime(0);
+                ApplicationInfo.Ports = 0;
+                ApplicationInfo.Shipments = 0;
+                ApplicationInfo.TransportModes = 0;
+                ApplicationInfo.Cards = 0;
+                ApplicationInfo.Countries = 0;
+                ApplicationInfo.ShipmentComputedFields = 0;
+                ApplicationInfo.ShipmentMasterDatas = 0;
+            }
+        }
+
+        private void SetIncrementalRecordData(bool isFromBuild)
+        {
+            if (ApplicationInfo.UpdateCounter == 10)
+            {
+                ApplicationInfo.UpdateCounter = 0;
+                ApplicationInfo.EndDate = TenantServerConfigration.GetCurrentDateTime(0);
+                if (!isFromBuild)
+                {
+                    CargoTrackingServiceHelper.AddRecordToCargoTrackingIncrementalStats(destinationConnectionString);
+
                 }
             }
         }
@@ -94,27 +104,20 @@ namespace CargoTrackingWinService.Helper
         }
 
 
-        private bool AddAllTablesToThread(List<CargoTrackingTable> CargoTableLists)
+        private bool AddAllTablesToThread(List<CargoTrackingTable> cargoTableLists)
         {
             RecordUpdated RecordUpdatedNumber = new RecordUpdated();
-            foreach (CargoTrackingTable table in CargoTableLists)
+            foreach (CargoTrackingTable table in cargoTableLists)
             {
                 try
                 {
                     RecordUpdatedNumber = UpdateCargoDataBase(table);
                 }
-                catch(Exception e)
+                catch(Exception exception)
                 {
-                    string ErrorsLog  ="Table Name: " +table.CargoTracking_TableName+Environment.NewLine +"Erros: "+ e.Message+ Environment.NewLine+ "Stack Trace: " + e.StackTrace;
-                    if (!ApplicationInfo.ErrorLogs.Contains(ErrorsLog))
-                    {
-                        ApplicationInfo.ErrorLogs += ErrorsLog;
-                    }
-                    if (ApplicationInfo.ErrorLogs.Length > 4000)
-                    {
-                        ApplicationInfo.ErrorLogs.Substring(0, 4000);
-                    }
-                    
+                    SetIncrementalErrorLog(exception, table);
+
+
                 }
                 
                 UpdaeNumberOfRecordsUpdated(table.CargoTracking_TableName, RecordUpdatedNumber.NumberOfRecordUpdated);
@@ -126,33 +129,58 @@ namespace CargoTrackingWinService.Helper
         }
 
 
-        private void UpdaeNumberOfRecordsUpdated(string TableName, int RecordUpdatedNumber)
+        private void SetIncrementalErrorLog(Exception exception, CargoTrackingTable table)
         {
-            switch (TableName)
+            string ErrorsLog = "Table Name: " + table.CargoTracking_TableName + Environment.NewLine + "Erros: " + exception.Message + Environment.NewLine + "Stack Trace: " + exception.StackTrace;
+            if (!ApplicationInfo.ErrorLogs.Contains(ErrorsLog))
+            {
+                ApplicationInfo.ErrorLogs += ErrorsLog;
+            }
+            if (ApplicationInfo.ErrorLogs.Length > 4000)
+            {
+                ApplicationInfo.ErrorLogs.Substring(0, 4000);
+            }
+        }
+
+        private void UpdaeNumberOfRecordsUpdated(string tableName, int recordUpdatedNumber)
+        {
+            switch (tableName)
             {
                 case "CargoTrackingShipments":
                     {
-                        ApplicationInfo.Shipments+= RecordUpdatedNumber;
+                        ApplicationInfo.Shipments+= recordUpdatedNumber;
                         break;
                     }
                 case "CargoTrackingCards":
                     {
-                        ApplicationInfo.Cards+= RecordUpdatedNumber;
+                        ApplicationInfo.Cards+= recordUpdatedNumber;
                         break;
                     }
                 case "CargoTrackingPorts":
                     {
-                        ApplicationInfo.Ports+= RecordUpdatedNumber;
+                        ApplicationInfo.Ports+= recordUpdatedNumber;
                         break;
                     }
                 case "CargoTrackingCountries":
                     {
-                        ApplicationInfo.Countries+= RecordUpdatedNumber;
+                        ApplicationInfo.Countries+= recordUpdatedNumber;
                         break;
                     }
                 case "CargoTrackingTransportModes":
                     {
-                        ApplicationInfo.TransportModes+= RecordUpdatedNumber;
+                        ApplicationInfo.TransportModes+= recordUpdatedNumber;
+                        break;
+                    }
+
+                case "CargoTrackingShipmentComputeds":
+                    {
+                        ApplicationInfo.ShipmentComputedFields += recordUpdatedNumber;
+                        break;
+                    }
+
+                case "CargoTrackingShipmentMasters":
+                    {
+                        ApplicationInfo.ShipmentMasterDatas += recordUpdatedNumber;
                         break;
                     }
 
