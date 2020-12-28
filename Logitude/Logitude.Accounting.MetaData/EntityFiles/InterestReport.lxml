@@ -3816,7 +3816,7 @@
     <TextCode
       Code="&quot;InterestReport.O.DownloadorView&quot;"
       DefaultText="&quot;Would you like to Download or View all selected interest invoices as one document?&quot;"
-      LocalDefaultText="&quot;&quot;"
+      LocalDefaultText="&quot;האם להדפיס את החשבוניות הנבחרות ?&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
