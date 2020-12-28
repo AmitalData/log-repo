@@ -172,6 +172,7 @@ export class NewTransferComponent extends BaseComponent {
         filters.addAdditionalFilter("IsCancelled", false, null, null, "Equals", false, false, false, "Boolean");
         filters.addAdditionalFilter("IsOperationalClosed", false, null, null, "Equals", false, false, false, "Boolean");
         filters.addAdditionalFilter("IsAccountingClosed", false, null, null, "Equals", false, false, false, "Boolean");
+        filters.addAdditionalFilter("AMANACShipmentsFilter", true, null, null, "Equals", true, false, false, "Boolean");
 
         if (!AppTool.IsNullOrEmpty(this.SearchText)) {
             filters.addAdditionalFilter("SearchFields", this.SearchText, null, null, "Contains", false, true, false, "string");
@@ -250,6 +251,8 @@ export class NewTransferComponent extends BaseComponent {
     }
 
     ExportButtonClicked() {
+        this.EntityPM.CustomsTransferLines = [];
+
         var errors: string[] = [];
         Validator.TryValidateObject(this.EntityPM, this.ObjectTableName, errors);
 

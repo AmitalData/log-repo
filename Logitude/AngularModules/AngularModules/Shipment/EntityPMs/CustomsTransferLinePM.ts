@@ -81,8 +81,18 @@ export class CustomsTransferLinePM {
     private status: string;
     public get Status() { return this.status; }
     public set Status(newValue: string) { if (this.status != newValue) { this.status = newValue; this.MarkAsDirty("Status"); } }
-       
-	 
+
+
+    private hasError: boolean;
+    public get HasError() { return this.hasError; }
+    public set HasError(newValue: boolean) { if (this.hasError != newValue) { this.hasError = newValue; this.MarkAsDirty("HasError"); } }
+
+
+    private errorText: string;
+    public get ErrorText() { return this.errorText; }
+    public set ErrorText(newValue: string) { if (this.errorText != newValue) { this.errorText = newValue; this.MarkAsDirty("ErrorText"); } }
+
+
 
     public OldEntityPM: CustomsTransferLinePM;
 	    

@@ -1,0 +1,55 @@
+<table>
+    <tr>
+        <td>
+            <div class="MediaFill">
+                <div class="SimpleGridView">
+                    <div class="SimpleGridViewHeader">
+                        <table>
+                            <tr>                                
+                                <td style="width: 110px; min-width: 110px; max-width: 110px;">Shipment #</td>
+                                <td>Error</td>                                
+                            </tr>
+                        </table>
+                    </div>
+
+                    <div class="SimpleGridViewBody">
+                        <table>
+                            <tr class="SimpleGridViewRow RowHover" *ngFor="let item of ItemsSource">
+
+                                <td class="GridViewCell" style="width: 110px; min-width: 110px; max-width: 110px;">
+                                    {{item.ShipmentNumber}}
+                                </td>
+
+                                <td class="GridViewCell">
+                                    {{item.ErrorText}}
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td colspan="2">
+                                    <div></div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </td>
+    </tr>
+
+    <tr style="height: 32px;">
+        <td style="vertical-align: bottom">
+            <table style="height: 22px;">
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="Button" (click)="CloseButtonClicked()">Close</button>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
