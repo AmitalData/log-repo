@@ -19,7 +19,7 @@
 
 </style>
 <div *ngIf="_IsVisible">
-    <table *ngIf="!isExport">
+    <table *ngIf="isExport!='E'">
         <tr style="height:25px;">
             <td colspan="7" class="TabTitleRow">
 
@@ -107,7 +107,7 @@
             <td colspan="7"></td>
         </tr>
     </table>
-    <table *ngIf="isExport">
+    <table *ngIf="isExport=='E'">
         <tr style="height:25px;">
             <td colspan="7" class="TabTitleRow">
 
@@ -167,28 +167,34 @@
 
 
         <tr class="FormFieldRow">
-            <td>
-                <div class="MyLabel">{{'Customs.SupplierInvoiceItemsTax.F.MeasurementUnitCode'| TextCodeTranslationPipe}}</div>
-            </td>
-            <td>
-                <div class="MyTextBox">  {{ MeasurementUnitCode}} </div>
-            </td>
 
-            <td>
+
+            <td *ngIf="AlternateMeasurementUnitCode">
                 <div class="MyLabel">{{'Customs.SupplierInvoiceItemsTax.F.AlternateMeasurementUnitCode'| TextCodeTranslationPipe}}</div>
             </td>
-            <td>
+            <td  *ngIf="AlternateMeasurementUnitCode">
                 <div class="MyTextBox">  {{ AlternateMeasurementUnitCode}} </div>
             </td>
 
+              <td *ngIf="!AlternateMeasurementUnitCode">
+                <div class="MyLabel">{{'Customs.SupplierInvoiceItemsTax.F.MeasurementUnitCode'| TextCodeTranslationPipe}}</div>
+            </td>
+            <td *ngIf="!AlternateMeasurementUnitCode">
+                <div class="MyTextBox">  {{ MeasurementUnitCode}} </div>
+            </td> 
             <td>
-                <div class="MyLabel">{{'Customs.SupplierInvoiceItemsTax.F.TotalBtlCoverageNIS'| TextCodeTranslationPipe}}</div>
+                <div class="MyLabel">ערך FOB של הסחורה בש"ח</div>
             </td>
             <td>
-                <div class="MyTextBox">  {{ TotalBtlCoverageNIS}} </div>
+                <div class="MyTextBox">  {{ ItemFOBAmountNIS}} </div>
             </td>
 
-
+            <td>
+                <div class="MyLabel"> ערך FOB של הסחורה במטבע זר של החשבון</div>
+            </td>
+            <td>
+                <div class="MyTextBox">  {{ ItemFOBAmountForeign}} </div>
+            </td>
         </tr>
 
         <tr>
