@@ -164,6 +164,7 @@ export class LCLChargesComponent extends BaseComponent implements OnDestroy {
     public AllMeasurements: MeasurementList[] = [];
     public AllVatTypes: VatTypeList[] = [];
     public AllVatPercentages: VatTypePercentagePM[] = [];
+    public AllChargesTypes: ChargesTypeList[] = [];
     LoadRequiredData() {
         var isEditingEnabled = QuoteUtilities.IsQuoteEditEnabled(this.EntityPM);
         if (isEditingEnabled) {
@@ -196,6 +197,12 @@ export class LCLChargesComponent extends BaseComponent implements OnDestroy {
         this.myVatTypeService.getAllFromCache().subscribe((myResponse4: ServiceResponse) => {
             if (!myResponse4.HasError) {
                 this.AllVatTypes = myResponse4.Result;
+            }
+        });
+
+        this.myChargesTypeService.getAllFromCache().subscribe((myResponse5: ServiceResponse) => {
+            if (!myResponse5.HasError) {
+                this.AllChargesTypes = myResponse5.Result;
             }
         });
     }
@@ -544,10 +551,26 @@ export class LCLChargesComponent extends BaseComponent implements OnDestroy {
     }
 
     OnSaleCurrencyModeChanged(newCurrencyMode: string) {
+
+        if (this.IsMultiCurrency) {
+
+            this.myChargesTypeService.getAllFromCache().subscribe((myResponse: ServiceResponse) => {
+                if (!myResponse.HasError) {
+                    this.AllChargesTypes = myResponse.Result;
+                    this.ApplyOnSaleCurrencyModeChanged();
+                }
+            });
+        }
+
+        else {
+            this.ApplyOnSaleCurrencyModeChanged();
+        }
+    }
+
+    ApplyOnSaleCurrencyModeChanged() {
         this.SetLabelsAttached();
         this.OnQuoteSaleCurrencyOrModeChanged();
     }
-
     OnQuoteSaleCurrencyOrModeChanged() {
 
         var allInItems = this.ItemsSource.Collection.filter(d => d.IsAllIN == true);
