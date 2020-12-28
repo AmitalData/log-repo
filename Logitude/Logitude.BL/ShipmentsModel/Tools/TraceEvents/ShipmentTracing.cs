@@ -603,12 +603,14 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
                 string ArrivedCode_New = "PIAR";
                 if (RoutingDate.IsDateAddedOrModified(itemPM.ATA, itemPOCO.ATA))
                 {
-                    if(RoutingDate.IsAllPickupsHaveDates(entityPM))
-                    {
-                        this.CreateTraceEvent(ArrivedCode, itemPM.ATA, itemPM);
-                    }
-
+                    this.DeleteTraceEvent(ArrivedCode);
                     this.CreateTraceEvent(ArrivedCode_New, itemPM.ATA, itemPM);
+
+                    ShipmentPickUpPM lastPickup = entityPM.ShipmentPickUps.Where(d => d.ChangeSetOp != Simplog.Server.Infrastructure.ChangeSetOperation.Delete).OrderByDescending(s => s.PickUpDeliveryNumber).FirstOrDefault();
+                    if (RoutingDate.IsAllPickupsHaveDates(entityPM) && lastPickup != null)
+                    {
+                        this.CreateTraceEvent(ArrivedCode, lastPickup.ATA, lastPickup);
+                    }                   
                 }
 
                 else if (RoutingDate.IsDateRemoved(itemPM.ATA, itemPOCO.ATA))
@@ -748,12 +750,14 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
                     string ArrivedCode_New = "DEAR";
                     if (RoutingDate.IsDateAddedOrModified(itemPM.ATA, itemPOCO.ATA))
                     {
-                        if (RoutingDate.IsAllDeliveriesHaveDates(entityPM))
-                        {
-                            this.CreateTraceEvent(ArrivedCode, itemPM.ATA, itemPM);
-                        }
-
+                        this.DeleteTraceEvent(ArrivedCode);
                         this.CreateTraceEvent(ArrivedCode_New, itemPM.ATA, itemPM);
+
+                        ShipmentDeliveryPM lastDelivery = entityPM.ShipmentDeliveries.Where(d => d.ChangeSetOp != Simplog.Server.Infrastructure.ChangeSetOperation.Delete).OrderByDescending(s => s.PickUpDeliveryNumber).FirstOrDefault();
+                        if (RoutingDate.IsAllDeliveriesHaveDates(entityPM) && lastDelivery != null)
+                        {
+                            this.CreateTraceEvent(ArrivedCode, lastDelivery.ATA, lastDelivery);
+                        }
                     }
 
                     else if (RoutingDate.IsDateRemoved(itemPM.ATA, itemPOCO.ATA))
@@ -827,12 +831,14 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
                 {
                     if (itemPOCO.ATA != null)
                     {
-                        if (!RoutingDate.IsAllPickupsHaveDates(entityPM))
-                        {
-                            this.DeleteTraceEvent("RCS");
-                        }
-
+                        this.DeleteTraceEvent("RCS");
                         this.DeleteTraceEvent("PIAR", itemPOCO.PickUpDeliveryNumber);
+
+                        ShipmentPickUpPM lastPickup = entityPM.ShipmentPickUps.Where(d => d.ChangeSetOp != Simplog.Server.Infrastructure.ChangeSetOperation.Delete).OrderByDescending(s => s.PickUpDeliveryNumber).FirstOrDefault();
+                        if (RoutingDate.IsAllPickupsHaveDates(entityPM) && lastPickup != null)
+                        {
+                            this.CreateTraceEvent("RCS", lastPickup.ATA, lastPickup);
+                        }
                     }
 
                     if (itemPOCO.ATD != null)
@@ -850,12 +856,14 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
                 {
                     if (itemPOCO.ATA != null)
                     {
-                        if (!RoutingDate.IsAllDeliveriesHaveDates(entityPM))
-                        {
-                            this.DeleteTraceEvent("PIOD");
-                        }
-
+                        this.DeleteTraceEvent("PIOD");
                         this.DeleteTraceEvent("DEAR", itemPOCO.PickUpDeliveryNumber);
+
+                        ShipmentDeliveryPM lastDelivery = entityPM.ShipmentDeliveries.Where(d => d.ChangeSetOp != Simplog.Server.Infrastructure.ChangeSetOperation.Delete).OrderByDescending(s => s.PickUpDeliveryNumber).FirstOrDefault();
+                        if (RoutingDate.IsAllDeliveriesHaveDates(entityPM) && lastDelivery != null)
+                        {
+                            this.CreateTraceEvent("PIOD", lastDelivery.ATA, lastDelivery);
+                        }
                     }
 
                     if (itemPOCO.ATD != null)
