@@ -9,22 +9,22 @@ using System.Threading.Tasks;
 
 namespace Logitude.SpecFlow.Services
 {
-    public class CallAPI
+    public class APICaller
     {
         private static string mainURL = "http://test.logitudeworld.com/test/api/";
-        public static T Post<T>(Object model, string url, string token)
+        public static T CallPost<T>(Object model, string url, string token)
         {
             return CallAPIProcess<T>(Method.POST, model, url, token);
         }
 
-        public static T Put<T>(Object model, string url, string token)
+        public static T CallPut<T>(Object model, string url, string token)
         { 
             return CallAPIProcess<T>(Method.PUT, model, url, token);  
         }
 
        
 
-        public static T Get<T>(string url, string token)
+        public static T CallGet<T>(string url, string token)
         {
             return CallAPIProcess<T>(Method.GET, null, url, token);
         }

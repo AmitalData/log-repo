@@ -31,7 +31,7 @@ namespace Logitude.SpecFlow.Steps
         [When(@"the user call Login API")]
         public void WhenTheUserCallLoginAPI()
         {
-            UserData userData = CallAPI.Post<UserData>(LoginParameters, "Authentication", "");
+            UserData userData = APICaller.CallPost<UserData>(LoginParameters, "Authentication", "");
             if (userData != null)
             {
                 User.Token = userData.Token;

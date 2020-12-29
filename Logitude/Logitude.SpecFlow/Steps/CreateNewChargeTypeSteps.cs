@@ -38,7 +38,7 @@ namespace Logitude.SpecFlow.Steps
         [When(@"the user call create charge type API")]
         public void WhenTheUserCallCreateChargeTypeAPI()
         {
-            ChargeTypePM = CallAPI.Post<ChargesTypePM>(ChargeTypePM, "ChargesTypes", User.Token);
+            ChargeTypePM = APICaller.CallPost<ChargesTypePM>(ChargeTypePM, "ChargesTypes", User.Token);
         }
         
        
