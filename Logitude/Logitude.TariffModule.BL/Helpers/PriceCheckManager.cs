@@ -991,13 +991,16 @@ namespace Logitude.TariffModule.BL.Helpers
                             tariffsSummary.ValidityDate = tariffsSummary.ValidityDate + " - " + String.Format("{0:dd/MM/yyyy}", trariff.ExpirationDate.Value);
                         }
                     }
-
                     tariffsSummary.Remarks = trariff.Notes;
                     if (CurrentSurcharge != null)
                     {
-                        tariffsSummary.Remarks = tariffsSummary.Remarks + ", " + CurrentSurcharge.Notes;
+                        if (!string.IsNullOrEmpty(tariffsSummary.Remarks) && !string.IsNullOrEmpty(CurrentSurcharge.Notes))
+                            tariffsSummary.Remarks = tariffsSummary.Remarks + " , " + CurrentSurcharge.Notes;
+                        else if (!string.IsNullOrEmpty(CurrentSurcharge.Notes))
+                            tariffsSummary.Remarks = CurrentSurcharge.Notes;
+                        else if (!string.IsNullOrEmpty(tariffsSummary.Remarks))
+                            tariffsSummary.Remarks = tariffsSummary.Remarks;
                     }
-
                     var calculatedLocalAmount = CalculateLocalAmount(price, currencyId, trariff.CurrencyId, tenant);
                     tariffsSummary.decimalprice = (decimal?)Sum + calculatedLocalAmount;
                     tariffsSummary.VersionId = tariffLine.Version + "";
