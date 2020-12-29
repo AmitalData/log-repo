@@ -704,6 +704,16 @@ namespace WebFreight.Web.WcfApi
                         entityPM.StatusDate = entity.StatusDate;
                         entityPM.LastStatusLogDate = entity.LastStatusLogDate;
 
+                        if (entity.ShipmentLevelCode == "H" && entityPM.ShipmentLevelCode == "D")
+                        {
+                            entityPM.ConvertFromHouseToDirect = true;
+                        }
+
+                        if (entity.ShipmentLevelCode == "D" && entityPM.ShipmentLevelCode == "H")
+                        {
+                            entityPM.ConvertFromDirectToHouse = true;
+                        }
+
                         service = new ShipmentService(objectContext, entityPM, contact.Email);//Prob... Refactore on ShipmentService.
 
                         ShipmentPackageQuery shipPackageQuery = new ShipmentPackageQuery(new ShipmentPackageRepository(objectContext));
@@ -717,15 +727,7 @@ namespace WebFreight.Web.WcfApi
                         service.SetChangeSet(entityPM.ShipmentPackages, new List<ShipmentOrderPackagePM>(), new List<ShipmentPickUpPM>(), new List<ShipmentDeliveryPM>(), new List<ShipmentReceivablePM>(), new List<ShipmentPayablePM>(), new List<ShipmentFollowUpPM>(), new List<ShipmentAWBPrintOnlyPM>(), new List<ConsoleShipmentPM>(), new List<ShipmentCarrierStatusPM>(), new List<AWBOCIPM>(), new List<ShipmentCommodityPM>(), new List<ShipmentAssemblyPM>(), new List<ShipmentStoragePricingPM>());
 
 
-                        if (entity.ShipmentLevelCode == "H" && entityPM.ShipmentLevelCode == "D")
-                        {
-                            entityPM.ConvertFromHouseToDirect = true;
-                        }
-
-                        if (entity.ShipmentLevelCode == "D" && entityPM.ShipmentLevelCode == "H")
-                        {
-                            entityPM.ConvertFromDirectToHouse = true;
-                        }
+                        
 
                         if (entityPM.ShipmentLevelCode == "A")
                         {

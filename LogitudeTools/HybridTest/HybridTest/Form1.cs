@@ -1153,17 +1153,18 @@ namespace HypredTest
                     //Read block of bytes from stream into the byte array
                     filestream.Read(fileData, 0, System.Convert.ToInt32(filestream.Length));
                     filestream.Position = 0;
-					//LoginProxy.LoginWcfServiceClient loginService = new LoginProxy.LoginWcfServiceClient();
-					//LoginProxy.Response loginResponse = loginService.Login("customercare@logitudeworld.com", "!C123456");
-					//if (!loginResponse.HasError)
-					//{
-					//    Token = loginResponse.Result;
-					//}
+                    //LoginProxy.LoginWcfServiceClient loginService = new LoginProxy.LoginWcfServiceClient();
+                    //LoginProxy.Response loginResponse = loginService.Login("customercare@logitudeworld.com", "!C123456");
+                    //if (!loginResponse.HasError)
+                    //{
+                    //    Token = loginResponse.Result;
+                    //}
 
-					// LoginToCustoms();
-				
+                    // LoginToCustoms();
+
                     // Login("yaronc@amital.co.il", "!Y123456");
-                    LoginByCredential("3969c070-65c7-4f4a-bc69-785d0b4fc300", 1071);
+                    //LoginByCredential("3969c070-65c7-4f4a-bc69-785d0b4fc300", 1071);
+                    Token = "z6VGJluczfJoScdV1F+/01ZSxShUxCjS2Fc=";
                     ShipmentProxy.ShipmentWcfServiceClient shipmentService = new ShipmentWcfServiceClient();
 
                     using (new System.ServiceModel.OperationContextScope((System.ServiceModel.IClientChannel)shipmentService.InnerChannel))
