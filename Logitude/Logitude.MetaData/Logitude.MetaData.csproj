@@ -257,6 +257,7 @@
     <None Include="DBScripts\CommonModel\UpdateAutomationWorkerRoleName.sxml" />
     <None Include="DBScripts\CommonModel\UpdateIsCustomerOnCardSearchField.sxml" />
     <None Include="DBScripts\GlobalModel\202010151325_InsertDocumentApprovalQueue.sxml" />
+    <None Include="DBScripts\GlobalModel\202012291502_AddWarmCargoTrackingForBatchServicesDefinitions.sxml" />
     <None Include="DBScripts\InsertDBMigrationSettingsData.sxml" />
     <None Include="DBScripts\InvoiceModel\202012060902_FillPaidDateOfAPInvoices.sxml" />
     <None Include="DBScripts\InvoiceModel\202012201448_SAT voided invoices and payments.sxml" />

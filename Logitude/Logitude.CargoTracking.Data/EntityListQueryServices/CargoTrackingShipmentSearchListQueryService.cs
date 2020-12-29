@@ -76,6 +76,14 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
 
             return shipments;
         }
+
+
+        public CargoTrackingShipmentSearch GetFirstShipmentSearchesForWarmCargoTracking()
+        {
+            CargoTrackingShipmentSearchRepository repo = new CargoTrackingShipmentSearchRepository(0);
+            CargoTrackingShipmentSearch  shipmentsSearchEntiy= repo.GetFirstShipmentSearchesForWarmCargoTracking();
+            return shipmentsSearchEntiy;
+        }
         public List<CargoTrackingShipmentList> GetShipmentsByFilters(int pageIndex, int pageSize, CargoTrackingShipmentFilters shipmentFilters)
         {
             List<string> shipmentsIds = GetTenantShipmentsIdsBySearchKey(shipmentFilters.SearchText, shipmentFilters.Tenant);
