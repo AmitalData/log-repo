@@ -32,7 +32,6 @@ export class AddEditLCLChargeComponent extends BaseComponent implements OnDestro
     public DataContext2 = this;
     public Father: any;
     public IsAdhoc: boolean = false;
-    public IsRoutingRate: boolean = false;
     public IsEditingEnabled: boolean = false;
     public ObjectTableName: string = "QuoteCharge";
     public QuotePriceObjectTableName: string = "QuotePriceSteps";
@@ -93,7 +92,6 @@ export class AddEditLCLChargeComponent extends BaseComponent implements OnDestro
         this.DataContext = dataContext;
         this.Father = this.DataContext.fatherComponent;
         this.IsAdhoc = this.DataContext.fatherComponent.IsAdhoc;
-        this.IsRoutingRate = this.DataContext.fatherComponent.IsRoutingRate;
         this.IsEditingEnabled = this.DataContext.fatherComponent.IsEditingEnabled;
         this.IsVATVisible = this.IsAdhoc && this.QuotePM.IsChargesByVAT ? true : false;
         this.IsRegionalTaxVisible = this.IsVATVisible && this.Father.IsRegionalTaxVisible ? true : false;

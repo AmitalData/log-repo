@@ -25,7 +25,6 @@ export class AddEditFCLChargeComponent implements OnDestroy {
     public DataContext: FCLQuoteChargeItem;
     public Father: any;
     public IsAdhoc: boolean = false;
-    public IsRoutingRate: boolean = false;
     public IsEditingEnabled: boolean = false;
     public ObjectTableName: string = "QuoteCharge";
     public ItemsSource: ObservableCollection;
@@ -70,7 +69,6 @@ export class AddEditFCLChargeComponent implements OnDestroy {
         this.DataContext = dataContext;
         this.Father = this.DataContext.fatherComponent;
         this.IsAdhoc = this.DataContext.fatherComponent.IsAdhoc;
-        this.IsRoutingRate = this.DataContext.fatherComponent.IsRoutingRate;
         this.IsEditingEnabled = this.DataContext.fatherComponent.IsEditingEnabled;
         this.IsVATVisible = this.IsAdhoc && this.QuotePM.IsChargesByVAT ? true : false;
         this.IsRegionalTaxVisible = this.IsVATVisible && this.Father.IsRegionalTaxVisible ? true : false;

@@ -110,7 +110,7 @@ export class QuoteSaleCurrencyTypeComponent implements OnInit {
                     this.EntityPM.IsSaleCurrencySameAsCost = true;
                 }
 
-                this.SelectedValueChanged.emit(value.Code);
+                this.SelectedValueChanged.emit();
             }
         }
     }

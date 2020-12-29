@@ -15,23 +15,17 @@ import {MessageWindow} from '../../../Controls/Windows/MessageWindow';
 import {LogitudeWindow} from '../../../Controls/Windows/LogitudeWindow';
 import {CardList} from '../../../Common/EntityLists/CardList';
 import {VatTypeList} from '../../../Common/EntityLists/VatTypeList';
-import {CurrencyList} from '../../../Common/EntityLists/CurrencyList';
 import {ChargesTypeList} from '../../../Common/EntityLists/ChargesTypeList';
 import {MeasurementList} from '../../../Common/EntityLists/MeasurementList';
-import {CardListService} from '../../../Common/Services/StandardLists/CardListService';
-import {VatTypeListService} from '../../../Common/Services/StandardLists/VatTypeListService';
-import {CurrencyListService} from '../../../Common/Services/StandardLists/CurrencyListService';
-import {ChargesTypeListService} from '../../../Common/Services/StandardLists/ChargesTypeListService';
-import {MeasurementListService} from '../../../Common/Services/StandardLists/MeasurementListService';
-import {CurrencyRatesService, LastRate} from '../../../Common/Services/CurrencyRatesService';
-import {CommonDomainService} from '../../../Common/Services/CommonDomainService';
-import {VatTypePercentagePM} from '../../../Common/EntityPMs/VatTypePercentagePM';
+import { LastRate } from '../../../Common/Services/CurrencyRatesService';
 import {VATTypesGroupPM} from '../../../Common/EntityPMs/VATTypesGroupPM';
 import {FeatureLocator} from '../../../Infrastructure/Utilities/FeatureLocator';
 import { DecimalFormatter } from '../../../Infrastructure/Utilities/DecimalFormatter';
 import { EntityResourceService } from '../../../Infrastructure/Services/EntityResourceService';
 import { QuoteTool } from '../../../Quote/Tools';
 import { ServiceLocator } from '../../../Infrastructure/Locators/ServiceLocator';
+import { QuoteChargesBehaviours } from '../Behaviours/QuoteChargesBehaviours';
+import { QuoteTariffsBehaviours } from '../Behaviours/QuoteTariffsBehaviours';
 
 @Component({
     selector: 'LCLChargesComponent',    
@@ -44,23 +38,20 @@ export class LCLChargesComponent extends BaseComponent implements OnDestroy {
     public DataContext = this;
     public ItemsSource: ObservableCollection;
     public IsAdhoc: boolean = false;
-    public IsRoutingRate: boolean = false;
     public TransportModeId: string;
     public LocalCurrencyId: string;
     public LocalCurrencyCode: string;
     public DisplayTariffs: boolean = false;
     public IsEditExchangeRateVisible: boolean = false;
     public CurrentSession = SessionLocator.SelectedSession;
-    IsRouteRate: boolean = false;
     public IsPriceCheckVisible: boolean = false;
-    private entityResourceService: EntityResourceService = new EntityResourceService();;
+    private entityResourceService: EntityResourceService = new EntityResourceService();
     public ComponentRef: any;
     constructor(private entityArgs: EntityArgs) {
         super();
         this.EntityPM = entityArgs.EntityPM;
         this.TransportModeId = this.EntityPM.TransportModeId;
         this.IsAdhoc = this.EntityPM.QuoteTypeCode == "A" ? true : false;
-        this.IsRoutingRate = !this.IsAdhoc;
         this.LocalCurrencyId = SessionLocator.LocalCurrencyId;
         this.LocalCurrencyCode = SessionLocator.LocalCurrencyCode;
         this.ItemsSource = new ObservableCollection([]);
@@ -75,24 +66,26 @@ export class LCLChargesComponent extends BaseComponent implements OnDestroy {
 
         this.IsPriceCheckVisible = QuoteUtilities.IsPriceCheckVisible(this.EntityPM);
         
-        this.InitializeServices();
-        this.LoadRequiredData();
+        this.InitBehaviours();
+
         this.SetLabels();
         this.SetUIProperties();
         this.CheckUpdateQuantities();
         this.BuildItemsSource();
         this.InitializeProfit();
-        this.GetQuoteType();
         this.Listen();
         this.SetRegionalTaxVisibility();
     }
 
-    GetQuoteType() {
-        if (this.EntityPM != null) {
-            if (this.EntityPM.QuoteTypeCode == "P") {
-                this.IsRouteRate = true;
-            }
-        }
+    public Behaviours: QuoteChargesBehaviours;
+    public TariffBehaviours: QuoteTariffsBehaviours;
+    InitBehaviours() {
+        this.Behaviours = new QuoteChargesBehaviours(this.EntityPM);
+        this.TariffBehaviours = new QuoteTariffsBehaviours(this.EntityPM);
+    }
+    UpdateBehaviours() {
+        this.Behaviours.EntityPM = this.EntityPM;
+        this.TariffBehaviours.EntityPM = this.EntityPM;
     }
 
     private TabSelectedEvent: any = null;
@@ -104,7 +97,9 @@ export class LCLChargesComponent extends BaseComponent implements OnDestroy {
             this.SaveCompletedEvent = this.entityArgs.EditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                 if (isSaveSuccess) {
                     this.EntityPM = this.entityArgs.EditComponent.EntityPM;
-                    this.LoadRequiredData();
+                    this.UpdateBehaviours();
+
+                    this.Behaviours.LoadRequiredData();
                     this.SetUIProperties();
                     this.BuildItemsSource();
                     this.BuildProfitData();
@@ -114,7 +109,9 @@ export class LCLChargesComponent extends BaseComponent implements OnDestroy {
             this.LoadCompletedEvent = this.entityArgs.EditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
                 if (isLoadSuccess) {
                     this.EntityPM = this.entityArgs.EditComponent.EntityPM;
-                    this.LoadRequiredData();
+                    this.UpdateBehaviours();
+
+                    this.Behaviours.LoadRequiredData();
                     this.SetUIProperties();
                     this.BuildItemsSource();
                     this.BuildProfitData();
@@ -140,81 +137,6 @@ export class LCLChargesComponent extends BaseComponent implements OnDestroy {
         AppTool.KillEventEmitter(this.TabSelectedEvent);
         AppTool.KillEventEmitter(this.SaveCompletedEvent);
         AppTool.KillEventEmitter(this.LoadCompletedEvent);
-    }
-
-    myCardListService: CardListService;
-    myVatTypeService: VatTypeListService;
-    myCurrencyService: CurrencyListService;
-    myChargesTypeService: ChargesTypeListService;
-    myMeasurementService: MeasurementListService;
-    myCurrencyRatesService: CurrencyRatesService;
-    myCommonDomainService: CommonDomainService;
-    InitializeServices() {
-        this.myCardListService = new CardListService();
-        this.myVatTypeService = new VatTypeListService();
-        this.myCurrencyService = new CurrencyListService();
-        this.myChargesTypeService = new ChargesTypeListService();
-        this.myMeasurementService = new MeasurementListService();
-        this.myCurrencyRatesService = new CurrencyRatesService();
-        this.myCommonDomainService = new CommonDomainService();
-    }
-
-    public AllRates: LastRate[] = [];
-    public AllCurrencies: CurrencyList[] = [];
-    public AllMeasurements: MeasurementList[] = [];
-    public AllVatTypes: VatTypeList[] = [];
-    public AllVatPercentages: VatTypePercentagePM[] = [];
-    public AllChargesTypes: ChargesTypeList[] = [];
-    LoadRequiredData() {
-        var isEditingEnabled = QuoteUtilities.IsQuoteEditEnabled(this.EntityPM);
-        if (isEditingEnabled) {
-
-            this.myCurrencyRatesService.getAll(this.LocalCurrencyId, DateTool.GetCurrentDateAsUtc()).subscribe((myResponse0: ServiceResponse) => {
-                if (!myResponse0.HasError) {
-                    this.AllRates = myResponse0.Result;
-                }
-            });
-
-            this.myCommonDomainService.GetVatTypePercentagePMByDate(DateTool.GetCurrentDateAsUtc()).subscribe((myResponse1: ServiceResponse) => {
-                if (!myResponse1.HasError) {
-                    this.AllVatPercentages = myResponse1.Result;
-                }
-            });
-        }
-
-        this.myCurrencyService.getAllFromCache().subscribe((myResponse2: ServiceResponse) => {
-            if (!myResponse2.HasError) {
-                this.AllCurrencies = myResponse2.Result;
-            }
-        });
-
-        this.myMeasurementService.getAllFromCache().subscribe((myResponse3: ServiceResponse) => {
-            if (!myResponse3.HasError) {
-                this.AllMeasurements = myResponse3.Result;
-            }
-        });
-
-        this.myVatTypeService.getAllFromCache().subscribe((myResponse4: ServiceResponse) => {
-            if (!myResponse4.HasError) {
-                this.AllVatTypes = myResponse4.Result;
-            }
-        });
-
-        this.myChargesTypeService.getAllFromCache().subscribe((myResponse5: ServiceResponse) => {
-            if (!myResponse5.HasError) {
-                this.AllChargesTypes = myResponse5.Result;
-            }
-        });
-    }
-    GetVatTypePercentage(vatTypeId: string) {
-        var myResult: number = null;
-
-        var vatTypePercentagePM = this.AllVatPercentages.filter(d => d.VatTypeId == vatTypeId)[0];
-        if (vatTypePercentagePM != null) {
-            myResult = vatTypePercentagePM.Percentage;
-        }
-
-        return myResult;
     }
 
     // SetLabels
@@ -331,59 +253,80 @@ export class LCLChargesComponent extends BaseComponent implements OnDestroy {
     }
 
     // Commands
-    AddChargeClicked() {        
-            var newItem = new QuoteChargePM(null);
-            newItem.Tenant = SessionLocator.Tenant;
-            newItem.QuoteId = this.EntityPM.Id;            
-            newItem.UpdatedByUserId = SessionLocator.LoggedUserId;
-            newItem.MarkUpTypeCode = "F";
-            newItem.MarkUpValue = 0;
-            newItem.QuoteTypeCode = this.EntityPM.QuoteTypeCode;
-            newItem.SaleCurrencyId = this.EntityPM.SaleCurrencyId;
-            newItem.SaleCurrencyCode = this.EntityPM.SaleCurrencyCode;
-            newItem.SaleExchangeRate = this.EntityPM.ExchangeRate;
-            newItem.IsAllIN = false;
-            newItem.CostIsFixedRate = false;
-            newItem.SaleIsFixedRate = false;
-            newItem.IsChargeBySteps = false;
-            var itemComponent = new QuoteChargeItem(newItem, this, true);
+    //AddChargeClicked() {
+    //    var newItem = new QuoteChargePM(null);
+    //    newItem.Tenant = SessionLocator.Tenant;
+    //    newItem.QuoteId = this.EntityPM.Id;
+    //    newItem.UpdatedByUserId = SessionLocator.LoggedUserId;
+    //    newItem.MarkUpTypeCode = "F";
+    //    newItem.MarkUpValue = 0;
+    //    newItem.QuoteTypeCode = this.EntityPM.QuoteTypeCode;
+    //    newItem.SaleCurrencyId = this.EntityPM.SaleCurrencyId;
+    //    newItem.SaleCurrencyCode = this.EntityPM.SaleCurrencyCode;
+    //    newItem.SaleExchangeRate = this.EntityPM.ExchangeRate;
+    //    newItem.IsAllIN = false;
+    //    newItem.CostIsFixedRate = false;
+    //    newItem.SaleIsFixedRate = false;
+    //    newItem.IsChargeBySteps = false;
+    //    var itemComponent = new QuoteChargeItem(newItem, this, true);
 
-            var title = TextCodeTranslator.Translate("Quote.O.Charges.AddCharges");
-            this.RunAddEditCharge(itemComponent, title);
-             
+    //    var title = TextCodeTranslator.Translate("Quote.O.Charges.AddCharges");
+    //    this.RunAddEditCharge(itemComponent, title);
+
+    //}
+    //EditChargeClicked(itemComponent: QuoteChargeItem) {
+    //    var title = TextCodeTranslator.Translate("Quote.O.Charges.EditCharges");
+    //    this.RunAddEditCharge(itemComponent, title);
+    //}
+    //DeleteChargeClicked(itemComponent: QuoteChargeItem) {
+    //    if ((itemComponent.EntityPM.ChargesGroupCode == "FRT" && this.EntityPM.QuoteCharges.filter(d => d.IsAllIN).length > 0) ||
+    //        (itemComponent.EntityPM.ChargesGroupCode == "FRT" && this.EntityPM.QuoteCharges.filter(d => d.IsCostAllIn).length > 0)) {
+    //        var window = new MessageWindow();
+    //        window.Show("Can't delete this charge because it's connected to other All In charges");
+    //    }
+
+    //    else if (itemComponent.EntityPM.IsAllIN) {
+    //        var window = new MessageWindow();
+    //        window.Show("Can't delete this charge because it's All In");
+    //    }
+
+    //    else {
+    //        var confirmWindow = new ConfirmWindow();
+    //        confirmWindow.Show(TextCodeTranslator.Translate("Quote.M.DeleteThisCharge"));
+    //        confirmWindow.WindowClosed.subscribe((event: any) => {
+    //            if (confirmWindow.Yes) {
+    //                this.EntityPM.RemoveQuoteChargePM(itemComponent.EntityPM);
+
+    //                if (itemComponent.ChargesGroupCode == "FRT") {
+    //                    this.OnFreightAmountChanged();
+    //                }
+
+    //                this.BuildItemsSource();
+    //                this.ComputeTotals();
+    //            }
+    //        });
+    //    }
+    //}
+
+    AddChargeClicked() {
+        var itemComponent = new QuoteChargeItem(this.Behaviours.CreateQuoteCharge(), this, true);
+        this.RunAddEditCharge(itemComponent, this.Behaviours.AddChargeLabel);
     }
     EditChargeClicked(itemComponent: QuoteChargeItem) {
-        var title = TextCodeTranslator.Translate("Quote.O.Charges.EditCharges");
-        this.RunAddEditCharge(itemComponent, title);
+        this.RunAddEditCharge(itemComponent, this.Behaviours.EditChargeLabel);
     }
     DeleteChargeClicked(itemComponent: QuoteChargeItem) {
-        if ((itemComponent.EntityPM.ChargesGroupCode == "FRT" && this.EntityPM.QuoteCharges.filter(d => d.IsAllIN).length > 0) ||
-            (itemComponent.EntityPM.ChargesGroupCode == "FRT" && this.EntityPM.QuoteCharges.filter(d => d.IsCostAllIn).length > 0)) {
-            var window = new MessageWindow();
-            window.Show("Can't delete this charge because it's connected to other All In charges");            
-        }
 
-        else if (itemComponent.EntityPM.IsAllIN) {
-            var window = new MessageWindow();
-            window.Show("Can't delete this charge because it's All In");            
-        }
+        this.Behaviours.DeleteChargeCompleted.subscribe(() => {
+            if (itemComponent.ChargesGroupCode == "FRT") {
+                this.OnFreightAmountChanged();
+            }
 
-        else {
-            var confirmWindow = new ConfirmWindow();
-            confirmWindow.Show(TextCodeTranslator.Translate("Quote.M.DeleteThisCharge"));
-            confirmWindow.WindowClosed.subscribe((event: any) => {
-                if (confirmWindow.Yes) {
-                    this.EntityPM.RemoveQuoteChargePM(itemComponent.EntityPM);
+            this.BuildItemsSource();
+            this.ComputeTotals();
+        });
 
-                    if (itemComponent.ChargesGroupCode == "FRT") {
-                        this.OnFreightAmountChanged();
-                    }
-
-                    this.BuildItemsSource();
-                    this.ComputeTotals();
-                }
-            });
-        }
+        this.Behaviours.DeleteCharge(itemComponent.EntityPM);
     }
     RunAddEditCharge(itemComponent: QuoteChargeItem, windowTitle: string) {
 
@@ -396,6 +339,7 @@ export class LCLChargesComponent extends BaseComponent implements OnDestroy {
         logitudeWindow.DataContext = itemComponent;
         logitudeWindow.Show('./QuoteModules/QuoteCharges/Components/AddEditLCLChargeComponent');
     }
+
     ShowTariffsClicked() {
         var logWindow = new LogitudeWindow();
         logWindow.Width = 960;
@@ -405,59 +349,6 @@ export class LCLChargesComponent extends BaseComponent implements OnDestroy {
         logWindow.Show('./QuoteModules/QuoteTabs/Components/Tariffs/TariffsComponent');
        
     }
-    GetCurrencyCode(myCurrencyId: string) {
-        var myCode = null;
-
-        if (!AppTool.IsNullOrEmpty(myCurrencyId)) {
-            var list: CurrencyList = this.AllCurrencies.filter(d => d.Id == myCurrencyId)[0];
-            if (list != null) {
-                myCode = list.Code;
-            }
-        }
-
-        return myCode;
-    }
-    GetCurrencyRate(myCurrencyId: string) {
-        var myResult = null;
-
-        if (!AppTool.IsNullOrEmpty(myCurrencyId)) {
-            if (myCurrencyId == SessionLocator.LocalCurrencyId) {
-                myResult = 1;
-            }
-
-            else if (myCurrencyId == this.SaleCurrencyId) {
-                myResult = this.ExchangeRate;
-            }
-
-            else {
-                var lastRate: LastRate = this.AllRates.filter(d => d.ForeignCurrencyId == myCurrencyId)[0];
-                if (lastRate != null) {
-                    myResult = lastRate.Rate;
-                }
-            }
-        }
-
-        return myResult;
-    }
-    GetCurrencyRateDate(myCurrencyId: string) {
-        var myResult = null;
-
-        if (!AppTool.IsNullOrEmpty(myCurrencyId)) {
-            if (myCurrencyId == SessionLocator.LocalCurrencyId) {
-                myResult = null;
-            }
-
-            else {
-                var lastRate: LastRate = this.AllRates.filter(d => d.ForeignCurrencyId == myCurrencyId)[0];
-                if (lastRate != null) {
-                    myResult = lastRate.ValueDate;
-                }
-            }
-        }
-
-        return myResult;
-    }
-
     PriceCheck() {
         this.entityResourceService.getEntityResourceByTableName("TariffLine").subscribe((res1: any) => {
             ServiceLocator.SendTotangoUserActivity("Tariff", "Generate from Quote");
@@ -520,7 +411,6 @@ export class LCLChargesComponent extends BaseComponent implements OnDestroy {
             editWindow.ShowEditComponent(item.TariffId, "Tariff", item.TariffVersion + "");
         }
     }
-
     DeleteTariff(item: QuoteChargeItem) {
         if (item != null) {
             item.TariffId = null;
@@ -534,7 +424,6 @@ export class LCLChargesComponent extends BaseComponent implements OnDestroy {
         this.SelectedCurrencyCode = this.SaleCurrencyCode;
         this.BuildProfitData();
     }
-
     IsLocalCurrency: boolean = false;
     OnSelectCurrency(mySelectedCode: string) {
         this.SelectedCurrencyCode = mySelectedCode;
@@ -550,20 +439,35 @@ export class LCLChargesComponent extends BaseComponent implements OnDestroy {
         this.BuildProfitData();
     }
 
-    OnSaleCurrencyModeChanged(newCurrencyMode: string) {
+    OnSaleCurrencyModeChanged() {
 
         this.SetLabelsAttached();
 
-        if (this.IsMultiCurrency) {
-            this.OnQuoteSaleCurrencyModeChangedToMulti();
-        }
+        this.Behaviours.ChargesTypeListService.getAllFromCache().subscribe((myResponse: ServiceResponse) => {
+            if (!myResponse.HasError) {
+                this.Behaviours.AllChargesTypes = myResponse.Result;
 
-        else {
-            this.OnQuoteSaleCurrencyOrModeChanged();
-        }
+                var allInItems = this.ItemsSource.Collection.filter(d => d.IsAllIN == true);
+
+                allInItems.forEach((item: QuoteChargeItem) => {
+                    item.IsAllIN = false;
+                });
+
+                this.ItemsSource.Collection.forEach((item: QuoteChargeItem) => {
+                    item.OnQuoteSaleCurrencyModeChanged();
+                });
+
+                allInItems.forEach((item: QuoteChargeItem) => {
+                    item.IsAllIN = true;
+                });
+
+                this.ComputeTotals();
+            }
+        });
     }
+    OnQuoteSaleCurrencyDataChanged() {
 
-    OnQuoteSaleCurrencyOrModeChanged() {
+        this.SetLabelsAttached();
 
         var allInItems = this.ItemsSource.Collection.filter(d => d.IsAllIN == true);
 
@@ -572,7 +476,7 @@ export class LCLChargesComponent extends BaseComponent implements OnDestroy {
         });
 
         this.ItemsSource.Collection.forEach((item: QuoteChargeItem) => {
-            item.OnQuoteSaleCurrencyOrModeChanged();
+            item.OnQuoteSaleCurrencyDataChanged();
         });
 
         allInItems.forEach((item: QuoteChargeItem) => {
@@ -582,18 +486,6 @@ export class LCLChargesComponent extends BaseComponent implements OnDestroy {
         this.ComputeTotals();
     }
 
-    OnQuoteSaleCurrencyModeChangedToMulti() {
-
-        this.myChargesTypeService.getAllFromCache().subscribe((myResponse: ServiceResponse) => {
-            if (!myResponse.HasError) {
-                this.AllChargesTypes = myResponse.Result;
-
-                this.ItemsSource.Collection.forEach((item: QuoteChargeItem) => {
-                    item.OnQuoteSaleCurrencyModeChangedToMulti();
-                });
-            }
-        });
-    }
 
     private selectedCurrencyCode: string;
     get SelectedCurrencyCode() { return this.selectedCurrencyCode; }
@@ -606,22 +498,6 @@ export class LCLChargesComponent extends BaseComponent implements OnDestroy {
             this.selectedCurrencyCode = value;
         }
     }
-
-    //private isFixedCurrency: boolean = false;
-    //get IsFixedCurrency() { return this.isFixedCurrency; }
-    //set IsFixedCurrency(value: boolean) {
-    //    if (this.isFixedCurrency != value) {
-    //        this.isFixedCurrency = value;
-    //    }
-    //}
-
-    //private isSameCostCurrency: boolean = false;
-    //get IsSameCostCurrency() { return this.isSameCostCurrency; }
-    //set IsSameCostCurrency(value: boolean) {
-    //    if (this.isSameCostCurrency != value) {
-    //        this.isSameCostCurrency = value;
-    //    }
-    //}
 
     get IsMultiCurrency() { return this.EntityPM.IsMultiCurrency; }
     set IsMultiCurrency(newValue: boolean) {
@@ -646,7 +522,7 @@ export class LCLChargesComponent extends BaseComponent implements OnDestroy {
 
             this.SetUIProperties_Summary();
 
-            this.SaleCurrencyCode = this.SelectedCurrencyCode = this.GetCurrencyCode(value);
+            this.SaleCurrencyCode = this.SelectedCurrencyCode = this.Behaviours.GetCurrencyCode(value);
 
             var myExchangeRate = null;
 
@@ -656,7 +532,7 @@ export class LCLChargesComponent extends BaseComponent implements OnDestroy {
                 }
 
                 else {
-                    var lastRate: LastRate = this.AllRates.filter(d => d.ForeignCurrencyId == value)[0];
+                    var lastRate: LastRate = this.Behaviours.AllRates.filter(d => d.ForeignCurrencyId == value)[0];
                     if (lastRate != null) {
                         myExchangeRate = lastRate.Rate;
                     }
@@ -668,7 +544,7 @@ export class LCLChargesComponent extends BaseComponent implements OnDestroy {
             }
 
             else {
-                this.OnQuoteSaleCurrencyOrModeChanged();
+                this.OnQuoteSaleCurrencyDataChanged();
             }
         }
     }
@@ -685,7 +561,7 @@ export class LCLChargesComponent extends BaseComponent implements OnDestroy {
     set ExchangeRate(newValue: number) {
         if (this.EntityPM.ExchangeRate != newValue) {
             this.EntityPM.ExchangeRate = AppTool.Round(newValue, 5);
-            this.OnQuoteSaleCurrencyOrModeChanged();
+            this.OnQuoteSaleCurrencyDataChanged();
         }
     }
 
@@ -700,7 +576,7 @@ export class LCLChargesComponent extends BaseComponent implements OnDestroy {
         logWindow.ComponentLoaded.subscribe(comp => {
             logWindow.WindowClosed.subscribe(s => {
                 if (s) {
-                    this.AllRates = comp.RatesList;
+                    this.Behaviours.AllRates = comp.RatesList;
                     this.ExchangeRate = AppTool.Round(comp.Rate, 5);
                 }
             });
@@ -1003,7 +879,7 @@ export class LCLChargesComponent extends BaseComponent implements OnDestroy {
 
             this.ItemsSource.Collection.forEach((item: QuoteChargeItem) => {
                 if (value == true) {
-                    this.myChargesTypeService.getSingleFromCache(item.ChargesTypeId).subscribe((myResponse: ServiceResponse) => {
+                    this.Behaviours.ChargesTypeListService.getSingleFromCache(item.ChargesTypeId).subscribe((myResponse: ServiceResponse) => {
                         if (!myResponse.HasError) {
                             var list: ChargesTypeList = myResponse.Result;
                             if (list) {
@@ -1037,7 +913,7 @@ export class LCLChargesComponent extends BaseComponent implements OnDestroy {
                     // Build Group Source
                     var group_Source: QuoteTotalVATPM[] = [];
                     myCharges.forEach(item => {
-                        var lineVatType = this.AllVatTypes.filter(f => f.Id == item.VatTypeId)[0];
+                        var lineVatType = this.Behaviours.AllVatTypes.filter(f => f.Id == item.VatTypeId)[0];
                         if (lineVatType) {
 
                             if (AppTool.IsNullOrEmpty(item.SaleTotalAmount)) {
@@ -1091,7 +967,7 @@ export class LCLChargesComponent extends BaseComponent implements OnDestroy {
 
                                 myVatGroups.forEach(itemGroup => {
 
-                                    var lineSingleVatType = this.AllVatTypes.filter(f => f.Id == itemGroup.SingleVATTypeId)[0];
+                                    var lineSingleVatType = this.Behaviours.AllVatTypes.filter(f => f.Id == itemGroup.SingleVATTypeId)[0];
 
                                     if (lineSingleVatType) {
 
@@ -1100,7 +976,7 @@ export class LCLChargesComponent extends BaseComponent implements OnDestroy {
                                         myQroupItem.QuoteId = this.EntityPM.Id;
                                         myQroupItem.Id = itemGroup.SingleVATTypeId;
                                         myQroupItem.VatTypeId = itemGroup.SingleVATTypeId;
-                                        myQroupItem.VatPercent = this.GetVatTypePercentage(itemGroup.SingleVATTypeId);
+                                        myQroupItem.VatPercent = this.Behaviours.GetVatTypePercentage(itemGroup.SingleVATTypeId);
                                         myQroupItem.ExternalVATCard = lineSingleVatType.ReceivablesExternalId;
                                         myQroupItem.ExternalTAXItemId = lineSingleVatType.ExternalTAXItemId;
                                         myQroupItem.QuoteCurrencyVatableAmount = item.SaleAmountInSaleCurrency;
@@ -1137,7 +1013,7 @@ export class LCLChargesComponent extends BaseComponent implements OnDestroy {
                     // Build Quote Total VATs
                     group_data.forEach(item => {
 
-                        var itemVatType = this.AllVatTypes.filter(f => f.Id == item.VatTypeId)[0];
+                        var itemVatType = this.Behaviours.AllVatTypes.filter(f => f.Id == item.VatTypeId)[0];
 
                         var itemTotalVAT = new QuoteTotalVATPM(null);
                         itemTotalVAT.Tenant = SessionLocator.Tenant;
@@ -1209,11 +1085,11 @@ export class LCLChargesComponent extends BaseComponent implements OnDestroy {
             }
 
             else {
-                this.RegionalTaxPercentage = this.GetVatTypePercentage(newValue);
+                this.RegionalTaxPercentage = this.Behaviours.GetVatTypePercentage(newValue);
 
                 if (AppTool.IsNullOrEmpty(oldValue)) {
                     this.ItemsSource.Collection.filter(f => f.IsRegionalTax == false && f.VatIsMultiPercentage == false).forEach(item => {
-                        this.myChargesTypeService.getSingleFromCache(item.ChargesTypeId).subscribe((myResponse: ServiceResponse) => {
+                        this.Behaviours.ChargesTypeListService.getSingleFromCache(item.ChargesTypeId).subscribe((myResponse: ServiceResponse) => {
                             if (!myResponse.HasError) {
                                 var list: ChargesTypeList = myResponse.Result;
                                 if (list != null) {
@@ -1252,7 +1128,6 @@ export class QuoteChargeItem extends BaseComponent {
     public IsNew: boolean = false;
     public TransportModeId: string;
     public IsAdhoc: boolean = false;
-    public IsRoutingRate: boolean = false;
     public IsAddPricestepsEnabled: boolean = false;
     constructor(entity: QuoteChargePM, public fatherComponent: LCLChargesComponent, isNew: boolean) {
         super();
@@ -1260,7 +1135,6 @@ export class QuoteChargeItem extends BaseComponent {
         this.EntityPM = entity;
         this.QuotePM = fatherComponent.EntityPM;
         this.IsAdhoc = fatherComponent.IsAdhoc;
-        this.IsRoutingRate = fatherComponent.IsRoutingRate;
         this.TransportModeId = fatherComponent.TransportModeId;
         this.SetUIProperties();
         this.ReadVatTypeData();
@@ -1786,7 +1660,7 @@ export class QuoteChargeItem extends BaseComponent {
             }
 
             else {
-                this.fatherComponent.myChargesTypeService.getSingleFromCache(value).subscribe((myResponse: ServiceResponse) => {
+                this.fatherComponent.Behaviours.ChargesTypeListService.getSingleFromCache(value).subscribe((myResponse: ServiceResponse) => {
                     if (!myResponse.HasError) {
                         var list: ChargesTypeList = myResponse.Result;
 
@@ -1795,7 +1669,7 @@ export class QuoteChargeItem extends BaseComponent {
                         }
 
                         else {
-                            this.fatherComponent.myChargesTypeService.getSingle(value).subscribe((myResponse2: ServiceResponse) => {
+                            this.fatherComponent.Behaviours.ChargesTypeListService.getSingle(value).subscribe((myResponse2: ServiceResponse) => {
                                 if (!myResponse2.HasError) {
                                     list = myResponse2.Result;
                                     this.OnChargesTypeChanged(list);
@@ -1903,7 +1777,7 @@ export class QuoteChargeItem extends BaseComponent {
             }
 
             else {
-                this.fatherComponent.myVatTypeService.getSingleFromCache(value).subscribe((myResponse: ServiceResponse) => {
+                this.fatherComponent.Behaviours.VatTypeListService.getSingleFromCache(value).subscribe((myResponse: ServiceResponse) => {
                     if (!myResponse.HasError) {
                         var list: VatTypeList = myResponse.Result;
                         if (list) {
@@ -1917,7 +1791,7 @@ export class QuoteChargeItem extends BaseComponent {
                             }
 
                             else {
-                                this.VatPercentage = this.fatherComponent.GetVatTypePercentage(value);
+                                this.VatPercentage = this.fatherComponent.Behaviours.GetVatTypePercentage(value);
                             }
 
                             this.ReadVatTypeData();
@@ -2030,7 +1904,7 @@ export class QuoteChargeItem extends BaseComponent {
             }
 
             else {
-                this.fatherComponent.myCardListService.getSingle(value).subscribe((myResponse: ServiceResponse) => {
+                this.fatherComponent.Behaviours.CardListService.getSingle(value).subscribe((myResponse: ServiceResponse) => {
                     if (!myResponse.HasError) {
                         var list: CardList = myResponse.Result;
 
@@ -2064,7 +1938,7 @@ export class QuoteChargeItem extends BaseComponent {
             }
 
             else {
-                var list: MeasurementList = this.fatherComponent.AllMeasurements.filter(d => d.Id == value)[0];
+                var list: MeasurementList = this.fatherComponent.Behaviours.AllMeasurements.filter(d => d.Id == value)[0];
                 if (list != null) {
                     this.CostMeasurementCode = list.Code;
                     this.CostMeasurementShortName = list.ShortName;
@@ -2107,9 +1981,9 @@ export class QuoteChargeItem extends BaseComponent {
             this.EntityPM.CostCurrencyId = value;
             this.SetUIProperties_CostRate();
 
-            this.CostCurrencyCode = this.fatherComponent.GetCurrencyCode(value);
-            this.CostExchangeRate = this.fatherComponent.GetCurrencyRate(value);
-            this.RelativeRateDate = DateTool.GetRelativeRateDate(DateTool.GetCurrentDateAsUtc(), this.fatherComponent.GetCurrencyRateDate(value), "ago");
+            this.CostCurrencyCode = this.fatherComponent.Behaviours.GetCurrencyCode(value);
+            this.CostExchangeRate = this.fatherComponent.Behaviours.GetCurrencyRate(value);
+            this.RelativeRateDate = DateTool.GetRelativeRateDate(DateTool.GetCurrentDateAsUtc(), this.fatherComponent.Behaviours.GetCurrencyRateDate(value), "ago");
 
             if (this.QuotePM.IsSaleCurrencySameAsCost) {
                 this.SaleCurrencyId = value;
@@ -2262,7 +2136,7 @@ export class QuoteChargeItem extends BaseComponent {
         logWindow.ComponentLoaded.subscribe(comp => {
             logWindow.WindowClosed.subscribe(s => {
                 if (s) {
-                    this.fatherComponent.AllRates = comp.RatesList;
+                    this.fatherComponent.Behaviours.AllRates = comp.RatesList;
                     this.CostExchangeRate = AppTool.Round(comp.Rate, 5);
                     this.RelativeRateDate = DateTool.GetRelativeRateDate(DateTool.GetCurrentDateAsUtc(), comp.RateDate, "ago");
                 }
@@ -2395,7 +2269,7 @@ export class QuoteChargeItem extends BaseComponent {
             }
 
             else {
-                var list: MeasurementList = this.fatherComponent.AllMeasurements.filter(d => d.Id == value)[0];
+                var list: MeasurementList = this.fatherComponent.Behaviours.AllMeasurements.filter(d => d.Id == value)[0];
                 if (list != null) {
                     this.SaleMeasurementCode = list.Code;
                     this.SaleMeasurementShortName = list.ShortName;
@@ -2426,8 +2300,8 @@ export class QuoteChargeItem extends BaseComponent {
     set SaleCurrencyId(value: string) {
         if (this.EntityPM.SaleCurrencyId != value) {
             this.EntityPM.SaleCurrencyId = value;
-            this.SaleCurrencyCode = this.fatherComponent.GetCurrencyCode(value);
-            this.SaleExchangeRate = this.fatherComponent.GetCurrencyRate(value);
+            this.SaleCurrencyCode = this.fatherComponent.Behaviours.GetCurrencyCode(value);
+            this.SaleExchangeRate = this.fatherComponent.Behaviours.GetCurrencyRate(value);
         }
     }
 
@@ -2942,104 +2816,6 @@ export class QuoteChargeItem extends BaseComponent {
         }
     }
 
-    OnQuoteSaleCurrencyOrModeChanged() {
-
-        this.CheckAndRemoveItemSalePrice();
-
-        if (this.CostCurrencyId == this.QuotePM.SaleCurrencyId) {
-            if (this.CostExchangeRate != this.QuotePM.ExchangeRate) {
-                this.CostExchangeRate = this.QuotePM.ExchangeRate;
-            }
-        }
-
-        else {
-            this.CostExchangeRate = this.fatherComponent.GetCurrencyRate(this.CostCurrencyId);
-        }
-
-        if (this.QuotePM.IsMultiCurrency) {
-            if (this.SaleCurrencyId != this.CostCurrencyId && this.SaleCurrencyId == this.QuotePM.SaleCurrencyId) {
-                if (this.SaleExchangeRate != this.QuotePM.ExchangeRate) {
-                    this.SaleExchangeRate = this.QuotePM.ExchangeRate;
-                }
-            }
-        }
-
-        else if (this.QuotePM.IsSaleCurrencySameAsCost) {
-            this.EntityPM.SaleCurrencyId = this.EntityPM.CostCurrencyId;
-            this.EntityPM.SaleCurrencyCode = this.EntityPM.CostCurrencyCode;
-            this.EntityPM.SaleExchangeRate = this.EntityPM.CostExchangeRate;
-        }
-
-        else {
-            this.EntityPM.SaleCurrencyId = this.QuotePM.SaleCurrencyId;
-            this.EntityPM.SaleCurrencyCode = this.QuotePM.SaleCurrencyCode;
-            this.EntityPM.SaleExchangeRate = this.QuotePM.ExchangeRate;
-        }
-
-        this.OnChargeCurrencyChanged();
-    }
-
-    OnQuoteSaleCurrencyModeChangedToMulti() {
-
-        this.CheckAndRemoveItemSalePrice();
-
-        var list: ChargesTypeList = this.fatherComponent.AllChargesTypes.filter(f => f.Id == this.ChargesTypeId)[0];
-
-        if (list) {
-            var newSaleCurrencyId = list.ReceivablesDefaultCurrencyId;
-
-            if (!newSaleCurrencyId) {
-                if (list.ChargesGroupCode == "FRT" || list.ChargesGroupCode == "SCH") {
-                    newSaleCurrencyId = SessionLocator.TenantPM.FreightCurrencyId;
-                }
-
-                else {
-                    newSaleCurrencyId = SessionLocator.TenantPM.OtherChargesCurrencyId;
-                }
-            }
-
-            if (newSaleCurrencyId) {
-                if (newSaleCurrencyId != this.SaleCurrencyId) {
-
-                    if (newSaleCurrencyId == this.CostCurrencyId) {
-                        this.EntityPM.SaleCurrencyId = this.EntityPM.CostCurrencyId;
-                        this.EntityPM.SaleCurrencyCode = this.EntityPM.CostCurrencyCode;
-                        this.EntityPM.SaleExchangeRate = this.EntityPM.CostExchangeRate;
-                    }
-
-                    else if (newSaleCurrencyId == this.QuotePM.SaleCurrencyId) {
-                        this.EntityPM.SaleCurrencyId = this.QuotePM.SaleCurrencyId;
-                        this.EntityPM.SaleCurrencyCode = this.QuotePM.SaleCurrencyCode;
-                        this.EntityPM.SaleExchangeRate = this.QuotePM.ExchangeRate;
-                    }
-
-                    else {
-                        this.SaleCurrencyId = newSaleCurrencyId;
-                    }
-
-                    this.OnChargeCurrencyChanged();
-                }
-            }
-        }
-    }
-
-    CheckAndRemoveItemSalePrice() {
-        if (this.CostCurrencyId) {
-            if (this.CostCurrencyId != this.QuotePM.SaleCurrencyId) {
-
-                if (AppTool.IsNullOrEmpty(this.CostUnitPrice)) {
-                    this.SaleUnitPrice = null;
-                }
-            }
-        }
-    }
-    OnChargeCurrencyChanged() {
-        this.ComputeCostInSalePrice();
-        this.ComputeCostInSaleAmount();
-        this.EntityPM.SaleTotalAmountLocal = AppTool.IsNullOrEmpty(this.SaleTotalAmount) ? null : AppTool.Round(this.SaleTotalAmount * this.SaleExchangeRate, 2);
-        this.SetUIProperties_AllIn();
-    }
-
     OnMeasurementsChanged() {
         if (this.CostMeasurementId != this.SaleMeasurementId) {
 
@@ -3102,5 +2878,120 @@ export class QuoteChargeItem extends BaseComponent {
             this.EntityPM.IsRegionalTax = newValue;
             this.fatherComponent.ComputeTotals();
         }
+    }
+
+    OnQuoteSaleCurrencyModeChanged() {
+
+        this.UpgradeCostData();
+
+        if (this.QuotePM.IsMultiCurrency) {
+
+            var list: ChargesTypeList = this.fatherComponent.Behaviours.AllChargesTypes.filter(f => f.Id == this.ChargesTypeId)[0];
+
+            if (list) {
+                var newSaleCurrencyId = list.ReceivablesDefaultCurrencyId;
+
+                if (!newSaleCurrencyId) {
+                    if (list.ChargesGroupCode == "FRT" || list.ChargesGroupCode == "SCH") {
+                        newSaleCurrencyId = SessionLocator.TenantPM.FreightCurrencyId;
+                    }
+
+                    else {
+                        newSaleCurrencyId = SessionLocator.TenantPM.OtherChargesCurrencyId;
+                    }
+                }
+
+                if (newSaleCurrencyId) {
+                    if (newSaleCurrencyId != this.SaleCurrencyId) {
+
+                        if (newSaleCurrencyId == this.CostCurrencyId) {
+                            this.EntityPM.SaleCurrencyId = this.EntityPM.CostCurrencyId;
+                            this.EntityPM.SaleCurrencyCode = this.EntityPM.CostCurrencyCode;
+                            this.EntityPM.SaleExchangeRate = this.EntityPM.CostExchangeRate;
+                        }
+
+                        else if (newSaleCurrencyId == this.QuotePM.SaleCurrencyId) {
+                            this.EntityPM.SaleCurrencyId = this.QuotePM.SaleCurrencyId;
+                            this.EntityPM.SaleCurrencyCode = this.QuotePM.SaleCurrencyCode;
+                            this.EntityPM.SaleExchangeRate = this.QuotePM.ExchangeRate;
+                        }
+
+                        else {
+                            this.SaleCurrencyId = newSaleCurrencyId;
+                        }
+                    }
+                }
+            }
+        }
+
+        else if (this.QuotePM.IsSaleCurrencySameAsCost) {
+            this.EntityPM.SaleCurrencyId = this.EntityPM.CostCurrencyId;
+            this.EntityPM.SaleCurrencyCode = this.EntityPM.CostCurrencyCode;
+            this.EntityPM.SaleExchangeRate = this.EntityPM.CostExchangeRate;
+        }
+
+        else {
+            this.EntityPM.SaleCurrencyId = this.QuotePM.SaleCurrencyId;
+            this.EntityPM.SaleCurrencyCode = this.QuotePM.SaleCurrencyCode;
+            this.EntityPM.SaleExchangeRate = this.QuotePM.ExchangeRate;
+        }
+
+        this.OnChargeCurrencyChanged();
+    }
+
+    OnQuoteSaleCurrencyDataChanged() {
+
+        this.UpgradeCostData();
+
+        if (this.QuotePM.IsMultiCurrency) {
+            if (this.SaleCurrencyId == this.QuotePM.SaleCurrencyId) {
+                this.EntityPM.SaleCurrencyCode = this.QuotePM.SaleCurrencyCode;
+                this.EntityPM.SaleExchangeRate = this.QuotePM.ExchangeRate;
+            }
+        }
+
+        else if (this.QuotePM.IsSaleCurrencySameAsCost) {
+            this.EntityPM.SaleCurrencyId = this.EntityPM.CostCurrencyId;
+            this.EntityPM.SaleCurrencyCode = this.EntityPM.CostCurrencyCode;
+            this.EntityPM.SaleExchangeRate = this.EntityPM.CostExchangeRate;
+        }
+
+        else {
+            this.EntityPM.SaleCurrencyId = this.QuotePM.SaleCurrencyId;
+            this.EntityPM.SaleCurrencyCode = this.QuotePM.SaleCurrencyCode;
+            this.EntityPM.SaleExchangeRate = this.QuotePM.ExchangeRate;
+        }
+
+        this.OnChargeCurrencyChanged();
+    }
+
+    UpgradeCostData() {
+        if (this.CostCurrencyId) {
+
+            if (this.CostCurrencyId == this.QuotePM.SaleCurrencyId) {
+                if (this.CostExchangeRate != this.QuotePM.ExchangeRate) {
+                    this.CostExchangeRate = this.QuotePM.ExchangeRate;
+                }
+
+                if (this.CostCurrencyCode != this.QuotePM.SaleCurrencyCode) {
+                    this.CostCurrencyCode = this.QuotePM.SaleCurrencyCode;
+                }
+            }
+
+            else {
+                this.CostExchangeRate = this.fatherComponent.Behaviours.GetCurrencyRate(this.CostCurrencyId);
+                this.CostCurrencyCode = this.fatherComponent.Behaviours.GetCurrencyCode(this.CostCurrencyId);
+
+                if (AppTool.IsNullOrEmpty(this.CostUnitPrice)) {
+                    this.SaleUnitPrice = null;
+                }
+            }
+        }
+    }
+    OnChargeCurrencyChanged() {
+        this.ComputeCostInSalePrice();
+        this.ComputeCostInSaleAmount();
+        this.EntityPM.SaleTotalAmountLocal = AppTool.IsNullOrEmpty(this.SaleTotalAmount) ? null : AppTool.Round(this.SaleTotalAmount * this.SaleExchangeRate, 2);
+        this.SetUIProperties_AllIn();
     }
 }

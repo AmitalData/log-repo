@@ -169,8 +169,8 @@ export class TariffsComponent {
                     chargePM.MarkUpValue = 0;
                     chargePM.QuoteTypeCode = this.EntityPM.QuoteTypeCode;
                     chargePM.SaleCurrencyId = this.EntityPM.SaleCurrencyId;
-                    chargePM.SaleCurrencyCode = this.fatherComponent.GetCurrencyCode(this.EntityPM.SaleCurrencyId);
-                    chargePM.SaleExchangeRate = this.fatherComponent.GetCurrencyRate(this.EntityPM.SaleCurrencyId);                    
+                    chargePM.SaleCurrencyCode = this.fatherComponent.EntityPM.SaleCurrencyCode;
+                    chargePM.SaleExchangeRate = this.fatherComponent.EntityPM.ExchangeRate;                    
                     this.EntityPM.AddQuoteChargePM(chargePM);
                     
                     chargeItem = new QuoteChargeItem(chargePM, this.fatherComponent, false);

@@ -2862,6 +2862,8 @@
     <TypeScriptCompile Include="Invoice\Services\StandardPMs\AccountingPaymentMethodPMService.ts" />
     <TypeScriptCompile Include="Invoice\Services\StandardPMs\ARInvoiceStockPMService.ts" />
     <TypeScriptCompile Include="Invoice\Validators\ARInvoiceStockValidator.ts" />
+    <TypeScriptCompile Include="QuoteModules\QuoteCharges\Behaviours\QuoteChargesBehaviours.ts" />
+    <TypeScriptCompile Include="QuoteModules\QuoteCharges\Behaviours\QuoteTariffsBehaviours.ts" />
     <TypeScriptCompile Include="QuoteModules\QuoteCharges\Components\AddEditFCLChargeComponent.ts" />
     <TypeScriptCompile Include="QuoteModules\QuoteCharges\Components\AddEditLCLChargeComponent.ts" />
     <TypeScriptCompile Include="QuoteModules\QuoteCharges\Components\AddEditPriceStepComponent.ts" />
