@@ -61,10 +61,10 @@
         position: relative;
         overflow-x: hidden;
         overflow-y: auto;
-        max-height: 338px;
+        max-height: 323px;
         background: white;
         -webkit-overflow-scrolling: touch;
-        height: 338px;
+        height: 323px;
     }
 
     .AdvancedDatePickerDropdown {
@@ -113,7 +113,7 @@
         display: list-item;
         cursor: pointer;
         /*line-height: 17px;*/
-        height: 22px;
+        height: 21px;
         word-wrap: break-word;
         -webkit-touch-callout: none;
        /* border-bottom: 1px solid #d7d7d7;*/
@@ -230,7 +230,7 @@
             </td>
         </tr>
     </table>
-    <div FixedPosition [ElementId]="LogCalendarId" [RelativeElementId]="DropdownId" [HorizDisplacement]="185"
+    <div FixedPosition [ElementId]="LogCalendarId" [RelativeElementId]="DropdownId" [VertDisplacement]="0" [HorizDisplacement]="185"
          [PopupWidth]="184" [ComponentHight]="183"
          [id]="LogCalendarId" *ngIf="IsCalendarDateDropDownOpen && IsDropDownVisible" (mouseover)="OnCalendarMouseOver()" (mouseout)="OnCalendarMouseOut()" (blur)="OnCalendarBlur()"
          tabindex="-1" class="DatePickerCalendar" [ComponentType]="'datepicker'">
