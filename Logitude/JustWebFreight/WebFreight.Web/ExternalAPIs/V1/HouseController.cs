@@ -654,6 +654,9 @@ namespace WebFreight.Web.ExternalAPIs.V1
                             APITransshipmentHelper aPITransshipmentHelper = new APITransshipmentHelper(HousePM, authToken.Tenant);
                             aPITransshipmentHelper.ValidateRoutingsSeriesDates();
 
+                            AddressRepository addressRepository = new AddressRepository(authToken.Tenant);
+                            this.ValidateAndSetCustomerData(HousePM, addressRepository, authToken.Tenant);
+
                             ShipmentService service = new ShipmentService(MyContext, HousePM, SecurityUtility.GetAuthenticatedUser());
                             service.Update(true);
                         }

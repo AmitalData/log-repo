@@ -879,8 +879,11 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
     }
 
     private SetDropDownWidthAccordingToTable() {
-        if(!this.CustomizedWidth){
-            if (this.LookUpTableName == 'Card' || this.LookUpTableName == 'User' || this.LookUpTableName == 'ChargesType') {
+        if (!this.CustomizedWidth) {
+            if (this.LookUpTableName == 'Card') {
+                this.DropDownWidth = 450;
+            }
+            if (this.LookUpTableName == 'User' || this.LookUpTableName == 'ChargesType') {
                 this.DropDownWidth = 400;
             }
             if (this.LookUpTableName == 'Carrier') {
