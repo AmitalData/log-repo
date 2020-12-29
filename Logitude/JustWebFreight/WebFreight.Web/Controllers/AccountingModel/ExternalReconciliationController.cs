@@ -129,15 +129,17 @@ namespace WebFreight.Web.Controllers.AccountingModel
                         {
 
                             string valuestring1 = filter.FieldValue != null ? filter.FieldValue.ToString() : null;
-                            object value1 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring1);
+                            
+                            object value1;
+                            if (valuestring1 == "#today")
+                                value1 = today;
+                            else
+                                value1 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring1);
 
                             string valuestring2 = filter.FieldValue2 != null ? filter.FieldValue2.ToString() : null;
                             object value2 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring2);
 
-                            if (filter.FieldName == "DueDate")
-                                value1 = today;
-
-                                queryOperationsTrans.SetFilter(filter.FieldName, value1, field.IsCustomFilter, filter.Operator, value2, field.DisplayInList);
+                            queryOperationsTrans.SetFilter(filter.FieldName, value1, field.IsCustomFilter, filter.Operator, value2, field.DisplayInList);
                         }
                         else
                         {
