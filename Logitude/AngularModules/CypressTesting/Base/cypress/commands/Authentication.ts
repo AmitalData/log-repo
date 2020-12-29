@@ -2,6 +2,7 @@ declare namespace Cypress {
     interface Chainable {
         Login(): Chainable<Element>
         OpenAndFillChangePasswordPage(newPassword:string,confirmNewPassword:string): Chainable<Element>
+        RedirectToLogin(): Chainable<Element>
     } 
 }
 
@@ -31,6 +32,19 @@ Cypress.Commands.add("OpenAndFillChangePasswordPage", (newPassword,confirmNewPas
     }) 
 })
 
+Cypress.Commands.add("RedirectToLogin", () => {
+    let mode = Cypress.env("Mode")
+    
+    if(mode.toLowerCase() === "development"){ 
+        cy.fixture("Login.json").then((LoginData) => {
+            CompleteRedirectToLoginProcess(LoginData.url + '/login.aspx');
+        }) 
+    }
+    else{ 
+        CompleteRedirectToLoginProcess(Cypress.env("Url") + '/login.aspx'); 
+    }
+})
+
 
 function CompleteLoginProcess(Email:string, Password:string, URL: string, Tenant?:number){
     cy.visit(URL)
@@ -47,4 +61,8 @@ function CompleteLoginProcess(Email:string, Password:string, URL: string, Tenant
     cy.intercept("**/ObjectTableLastUpdate/**").as("LoadDataCompleted")
     cy.window().then(win => { win.sessionStorage.setItem("ControlledByCypress", "true") })
     cy.wait("@LoadDataCompleted")
+}
+
+function CompleteRedirectToLoginProcess(URL: string){
+    cy.visit(URL) 
 }

@@ -1,5 +1,7 @@
 {
 "integrationFolder": "cypress/tests",
+"testFiles": "**/*.feature",
+"ignoreTestFiles": "*.ts",
 "env":{
     "Mode": "Development"
 },
