@@ -121,7 +121,7 @@
     </Reference>
     <Reference Include="UnifreightIIG.Resources, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\UnifreightIIGResources.1.0.1\lib\Net40\UnifreightIIG.Resources.dll</HintPath>
+      <HintPath>..\packages\UnifreightIIGResources.1.0.3\lib\Net40\UnifreightIIG.Resources.dll</HintPath>
     </Reference>
     <Reference Include="UnifreightIIG.UServer, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\UnifreightIIG.1.0.0\lib\Net40\UnifreightIIG.UServer.dll</HintPath>
