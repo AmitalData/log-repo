@@ -12536,13 +12536,14 @@
     CopyToDW="false"
     DisplayOnLookUp="false"
     DisplayOnLookUpLocal="false"
-    CanFilter="false"
+    CanFilter="true"
     DisplayOnly="false"
     SystemRequired="false"
     ObjectFieldNotRequired="false"
     SystemMaxLength="1000"
     DisplayInList="true"
     IsCustomFilter="false"
+    Operator="&quot;Contains&quot;"
     MultiLine="false"
     IsTimeFrameFilter="false"
     DisplayInSearchWindowList="false"
@@ -14726,6 +14727,7 @@
     SystemMaxLength="1000"
     DisplayInList="true"
     IsCustomFilter="false"
+    Operator="&quot;Contains&quot;"
     MultiLine="false"
     IsTimeFrameFilter="false"
     DisplayInSearchWindowList="false"
@@ -22083,6 +22085,18 @@
       Code="&quot;Customs.Declaration.O.FieldAmendmentRejectReasonRemarks&quot;"
       DefaultText="&quot;Amendment Reject Reason Remarks&quot;"
       LocalDefaultText="&quot;סיבת דחיה&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.Declaration.O.Export&quot;"
+      DefaultText="&quot;Export Declaration&quot;"
+      LocalDefaultText="&quot;הצהרת יצוא&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.Declaration.O.CargoTypeCode&quot;"
+      DefaultText="&quot;Cargo Type Code&quot;"
+      LocalDefaultText="&quot;סוג מזהה מטען&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>
