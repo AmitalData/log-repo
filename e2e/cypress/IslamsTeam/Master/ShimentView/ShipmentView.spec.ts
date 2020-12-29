@@ -44,11 +44,11 @@ it('CreateNewView ', () => {
     cy.get(".ListBoxItem").eq(0).click();
     cy.get("#NewButtonViewAdd").click()
     cy.get("#NewButtonViewCreate").click()
-    cy.get('#BusyIndicator_0').should('not.be.visible')
+   // cy.get('#BusyIndicator_0').should('not.be.visible')
 })
 
 it('EditShipmentView', () => {
-  cy.wait(100)
+  cy.wait(1000)
 
     //cy.get('#QueryList_0_0').should('be.visible')
 
