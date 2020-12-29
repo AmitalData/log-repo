@@ -210,7 +210,7 @@ namespace WebFreight.Web.Controllers.AccountingModel
                         if (filter.FieldName != null)
                         {
                             filter.FieldName = filter.FieldName.Replace("ForeignAmount", "Amount");
-                            filter.FieldName = filter.FieldName.Replace("CreateDate", "ReferenceDate");
+                            filter.FieldName = filter.FieldName.Replace("DocumentDate", "ReferenceDate");
                         }
 
                         if (filter.FieldName == "IsExternalReconcile"
