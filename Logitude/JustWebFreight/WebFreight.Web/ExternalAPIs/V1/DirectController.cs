@@ -700,6 +700,9 @@ namespace WebFreight.Web.ExternalAPIs.V1
                             aPITransshipmentHelper.ValidateTransshipments();
                             aPITransshipmentHelper.MapTransshipments();
 
+                            AddressRepository addressRepository = new AddressRepository(authToken.Tenant);
+                            this.ValidateAndSetCustomerData(directPM, addressRepository, authToken.Tenant);
+
                             ShipmentService service = new ShipmentService(MyContext, directPM, SecurityUtility.GetAuthenticatedUser());
                             service.Update(true);
                         }
