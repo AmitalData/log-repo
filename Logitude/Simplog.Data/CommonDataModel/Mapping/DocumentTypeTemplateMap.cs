@@ -93,6 +93,12 @@ namespace Simplog.Data.CommonDataModel.Mapping
                 .HasMaxLength(4000)
                 .IsUnicode(false);
 
+            this.Property(t => t.AutomationId)
+                 .HasMaxLength(15)
+                .IsUnicode(false);
+
+
+
 
             string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
 
@@ -180,6 +186,12 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.DefultAttachmentsXML).HasColumnName("DefultAttachmentsXML");
             this.Property(t => t.To).HasColumnName("To");
 
+            this.Property(t => t.AutomationId).HasColumnName("AutomationId");
+
+
+            
+
+
             if (dbms == "oracle")
             {
                 this.Property(t => t.From).HasColumnName("From1");
@@ -207,6 +219,13 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.HasOptional(t => t.OriginalTemplate)
                 .WithMany()
                 .HasForeignKey(d => d.OriginalTemplateId);
+
+
+            this.HasOptional(t => t.Automation)
+                .WithMany()
+                .HasForeignKey(d => d.AutomationId);
+
+
 
         }
     }

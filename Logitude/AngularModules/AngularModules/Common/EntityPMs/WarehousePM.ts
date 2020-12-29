@@ -470,6 +470,16 @@ export class WarehousePM {
     public set StorageFreeDays(newValue: number) { if (this.storageFreeDays != newValue) { this.storageFreeDays = newValue; this.MarkAsDirty("StorageFreeDays"); } }
        
 	 
+    private address1: string;
+    public get Address1() { return this.address1; }
+    public set Address1(newValue: string) { if (this.address1 != newValue) { this.address1 = newValue; this.MarkAsDirty("Address1"); } }
+       
+	 
+    private address2: string;
+    public get Address2() { return this.address2; }
+    public set Address2(newValue: string) { if (this.address2 != newValue) { this.address2 = newValue; this.MarkAsDirty("Address2"); } }
+       
+	 
 
     public OldEntityPM: WarehousePM;
 		

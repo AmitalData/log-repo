@@ -21,7 +21,9 @@ namespace Logitude.BL.GlobalModel.Tools.DataMapping
             poco.LogitudeAmital = entityPM.LogitudeAmital;
             poco.DocumentId = entityPM.DocumentId;
             poco.CreateDate = entityPM.CreateDate;
-
+            poco.InvoiceAmountInUSD = entityPM.InvoiceAmountInUSD;
+            poco.TaxAmountInUSD = entityPM.TaxAmountInUSD;
+            poco.ContractNumber = entityPM.ContractNumber;
         }
     }
 }

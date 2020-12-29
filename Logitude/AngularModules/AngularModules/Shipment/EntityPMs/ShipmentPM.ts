@@ -4276,6 +4276,15 @@ export class ShipmentPM {
     public get ConvertShipmentToFCL() { return this.convertShipmentToFCL; }
     public set ConvertShipmentToFCL(newValue: boolean) { if (this.convertShipmentToFCL != newValue) { this.convertShipmentToFCL = newValue; this.MarkAsDirty("ConvertShipmentToFCL"); } }
 
+    private convertShipmentToLTL: boolean;
+    public get ConvertShipmentToLTL() { return this.convertShipmentToLTL; }
+    public set ConvertShipmentToLTL(newValue: boolean) { if (this.convertShipmentToLTL != newValue) { this.convertShipmentToLTL = newValue; this.MarkAsDirty("ConvertShipmentToLTL"); } }
+
+    private convertShipmentToFTL: boolean;
+    public get ConvertShipmentToFTL() { return this.convertShipmentToFTL; }
+    public set ConvertShipmentToFTL(newValue: boolean) { if (this.convertShipmentToFTL != newValue) { this.convertShipmentToFTL = newValue; this.MarkAsDirty("ConvertShipmentToFTL"); } }
+
+
     private shipmentDirectionConverted: boolean;
     public get ShipmentDirectionConverted() { return this.shipmentDirectionConverted; }
     public set ShipmentDirectionConverted(newValue: boolean) { if (this.shipmentDirectionConverted != newValue) { this.shipmentDirectionConverted = newValue; this.MarkAsDirty("ShipmentDirectionConverted"); } }

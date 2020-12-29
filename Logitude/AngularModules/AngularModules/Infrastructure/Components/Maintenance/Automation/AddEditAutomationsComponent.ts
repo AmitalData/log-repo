@@ -49,6 +49,8 @@ import {ServiceLocator} from '../../../../Infrastructure/Locators/ServiceLocator
 import { UserList } from '../../../../Common/EntityLists/UserList';
 import { UserListService } from '../../../../Common/Services/StandardLists/UserListService';
 import { ChooseUserArgs } from '../../../../Infrastructure/Components/Maintenance/Automation/ChooseSpecificUserComponent';
+import { MessageWindow } from '../../../../Controls/Windows/MessageWindow';
+
 
 @Component({
 
@@ -159,14 +161,19 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
     private CurrentSession = SessionLocator.SelectedSession;
     entityResourceService: EntityResourceService = new EntityResourceService();
     IsShowSendInterfaceResult: boolean = false;
-
+    IsTenantZero: boolean = false;
 
     constructor(public _automationResultEmailRecipientExtendedService:
 
         AutomationResultEmailRecipientExtendedService, public _documentTypeTemplatePMExtendedService: DocumentTypeTemplatePMExtendedService, public _automationExtendedPMService: AutomationExtendedPMService, public _automationHistoryExtendedPMService: AutomationHistoryExtendedPMService, private cd: ChangeDetectorRef, public entityArgs: EntityArgs) {
         super();
 
-        if (SessionLocator.TenantPM.Id == 0) this.IsShowAutomationCodeField = true;
+        if (SessionLocator.TenantPM.Id == 0) {
+
+            this.IsShowAutomationCodeField = true;
+            this.IsTenantZero = true;
+        }
+
 
         this._documentTypeListService = new DocumentTypeListService();
 
@@ -397,7 +404,6 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
             if (this.CurrentEntityPM && this.CurrentEntityPM.DocumentTypeId != value.Id) {
                 this.CurrentEntityPM.DocumentTypeId = value.Id;
                 this.IsChangeAutomation = true;
-                this.LoadDocumentTypeTemplate(value);
             }
             this.IsEnableAddTemplate = true;
 
@@ -405,6 +411,8 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
                 this.IsEnableAddReportTemplate = true;
             }
         }
+        this.LoadDocumentTypeTemplate(this.documentTypeSelected);
+
     }
 
 
@@ -471,11 +479,8 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
                 }
             }
 
-            if (this.DocumentTypeSelected) {
-                this.LoadDocumentTypeTemplate(this.DocumentTypeSelected);
-            }
+             this.CurrentSession.CurrentWindow.StopBusyIndicator();
 
-            else this.CurrentSession.CurrentWindow.StopBusyIndicator();
         }
         else {
             this.IsEnableAddTemplate = false;
@@ -534,13 +539,19 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
     }
 
 
-    LoadDocumentTypeHTMLTemplate(documentTypeList: DocumentTypeList) {
-        this.DocumentTypeTemplateLists = [];
+    LoadDocumentTypeHTMLTemplate(documentTypeList: DocumentTypeList , documentTemplateId:string= null) {
         this._documentTypeTemplatePMExtendedService.getDocumentTypeTemplatesByDocumentTypeIdForAutomations(documentTypeList.Id, "R" , SessionLocator.Tenant).subscribe((res: any) => {
             var pmResponse: ServiceResponse = res;
             this.CurrentSession.CurrentWindow.StopBusyIndicator();
-            if (!pmResponse.HasError) {
+            this.DocumentTypeTemplateLists = [];
+
+            if (!pmResponse.HasError && pmResponse.Result) {
                 var myResult = pmResponse.Result;
+
+                if (!this.IsTenantZero) {
+                    myResult = myResult.filter(d => d.AutomationId == this.CurrentEntityPM.Id || !d.AutomationId);
+                }
+          
 
                 myResult.forEach((item) => {
                     this.DocumentTypeTemplateLists.push(new DocumentTypeTemplateViewModel(item));
@@ -550,7 +561,12 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
 
 
                 if (this.DocumentTypeTemplateLists && this.DocumentTypeTemplateLists.length > 0) {
-                    if (this.CurrentEntityPM.TemplateId) {
+
+                    if (documentTemplateId) {
+                        selectedTemplate = this.DocumentTypeTemplateLists.filter(d => d.Id == documentTemplateId)[0];
+
+                    }
+                    else if (this.CurrentEntityPM.TemplateId) {
                         selectedTemplate = this.DocumentTypeTemplateLists.filter(d => d.Id == this.CurrentEntityPM.TemplateId)[0];
                     }
 
@@ -577,10 +593,14 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
 
 
     LoadDocumentTypeReportTemplate(documentTypeList: DocumentTypeList , reportTemplateId:string = null) {
-        this.DocumentTypeTemplateReportLists = [];
         this._documentTypeTemplatePMExtendedService.getDocumentTypeTemplatesByDocumentTypeIdForAutomations(documentTypeList.Id, "S", SessionLocator.Tenant).subscribe((res: any) => {
             var pmResponse: ServiceResponse = res;
             this.CurrentSession.CurrentWindow.StopBusyIndicator();
+
+            this.DocumentTypeTemplateReportLists = [];
+
+
+
             if (!pmResponse.HasError) {
                 var myResult = pmResponse.Result;
 
@@ -617,7 +637,7 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
 
 
 
-
+    AutomationDocumentTypeTemplateIds: string[] = [];
 
     EditDocumentTemplate(documentTypeTemplateViewModel: DocumentTypeTemplateViewModel) {
         
@@ -632,13 +652,19 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
             windowArgs.EntityId = this.CurrentEntityPM.Id;
             windowArgs.ChildObjectTableId = "";
 
+
             if (documentTypeTemplateViewModel && documentTypeTemplateViewModel.EditorTool == "R") {
 
                 windowArgs.DocumentTypeTemplatePMLists = this.DocumentTypeTemplateLists;
                 windowArgs.DataViewModel = this;
                 windowArgs.PageType = "Maintenance";
                 windowArgs.DontShowToField = true;
-             
+
+                if (!this.IsTenantZero) {
+                    windowArgs.RequsetPageName = "Automation";
+                    windowArgs.AutomationId = this.CurrentEntityPM.Id;
+                }
+
                 var widthwindow = window.innerWidth;
                 var heighthwindow = window.innerHeight;
 
@@ -646,8 +672,29 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
                 logWindow.Width = widthwindow - 100;
                 logWindow.Height = heighthwindow - 100;
                 logWindow.Title = "Edit Html Template";
+
+
+
+                if (this.AutomationDocumentTypeTemplateIds.filter(d => d == documentTypeTemplateViewModel.Id)[0]) {
+                    windowArgs.RequsetPageName = "";
+                }
+
                 logWindow.WindowArgs = windowArgs;
                 logWindow.Show("./InfrastructureModules/InfrastructureDocuments/Components/DocumentComponent/HtmlDocumentPreviewComponent");
+                logWindow.WindowClosed.subscribe(($event: any) => {
+                    if ($event) {
+
+                        var documentTypeTemplate: any = this.DocumentTypeTemplateLists.filter(d => d.Id == $event)[0];
+                        if (!documentTypeTemplate) {
+                            this.AutomationDocumentTypeTemplateIds.push($event);
+                        }
+
+
+                        this.LoadDocumentTypeHTMLTemplate(this.DocumentTypeSelected, $event);
+                        
+                    }
+                });
+
             }
             else {
 
@@ -682,6 +729,7 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
         windowArgs.CurrentEntityPM = this.DocumentTypeSelected;
         windowArgs.DocumentTypeTemplateLists = this.DocumentTypeTemplateLists;
         windowArgs.TypeTab = "RichText";
+        windowArgs.AutomationId = !this.IsTenantZero ?  this.CurrentEntityPM.Id:null;
 
         var logitudeWindow = new LogitudeWindow();
         logitudeWindow.Width = 800;
@@ -693,6 +741,12 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
         logitudeWindow.WindowClosed.subscribe(($event: any) => {
             if ($event && this.DocumentTypeTemplateLists && this.DocumentTypeTemplateLists.length > 0) {
                 this.IsEnableEditTemplate = true;
+            }
+
+            if ($event) {
+
+                this.AutomationDocumentTypeTemplateIds.push($event);
+
             }
         });
     }
@@ -1636,6 +1690,8 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
 
 
             if (this.IsNewEntity) {
+
+                this.SaveDocumentTypeTemplates();
                 this._automationExtendedPMService.insert(this.CurrentEntityPM).subscribe((res:any) => {
                     var pmResponse: ServiceResponse = res;
                     if (!pmResponse.HasError) {
@@ -1647,7 +1703,14 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
                     }
 
                     else {
+
+
                         this.CurrentSession.CurrentWindow.StopBusyIndicator();
+                        if (pmResponse.ErrorsArray && pmResponse.ErrorsArray.length > 0) {
+                            this.ShowMessage(pmResponse.ErrorsArray[0], "Logitude Message");
+                        }
+
+
                     }
                 });
             }
@@ -1671,6 +1734,9 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
                         }
                         else {
                             this.CurrentSession.CurrentWindow.StopBusyIndicator();
+                            if (pmResponse.ErrorsArray && pmResponse.ErrorsArray.length > 0) {
+                                this.ShowMessage(pmResponse.ErrorsArray[0], "Logitude Message");
+                            }
                         }
                     });
                 }
@@ -1681,6 +1747,17 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
     }
 
 
+
+    public ShowMessage(message: string, title: string = "") {
+
+        var messageWindow: MessageWindow = new MessageWindow();
+        messageWindow.Show(message);
+
+        if (title) {
+            messageWindow.Title = title;
+        }
+    }
+
     CheckIfAutomationSendInterFaceChange() {
         var isChange =false;
         if (this.AutomatedBackupClass.AutomationSendInterface) {
@@ -1688,13 +1765,18 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
         }
         return isChange;
     }
-
+    
 
     SaveAutomationResultEmailRecipientLists() {
 
         if (this.IsResultEmail) { this.CurrentEntityPM.AutomationResultEmailRecipientLists = this.BuildAutomationResultEmailRecipient(); }
     }
 
+
+    SaveDocumentTypeTemplates() {
+
+        if (this.ResultCodeSelected.Code == "EMAIL" && !this.IsTenantZero) { this.CurrentEntityPM.DocumentTypeTemplateIds = this.AutomationDocumentTypeTemplateIds }
+    }
 
     IsFollowUp() {
 

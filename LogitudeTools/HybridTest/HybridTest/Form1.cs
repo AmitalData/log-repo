@@ -1127,7 +1127,7 @@ namespace HypredTest
         private void btnUploadQuoteDocument_Click(object sender, EventArgs e)
         {
 
-			string m = "hello word ya manyak";
+			string m = "hello word";
 			var s = m.Split("word".ToArray());
 
 			OpenFileDialog openFileDialog = new OpenFileDialog();

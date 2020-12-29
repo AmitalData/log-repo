@@ -41,7 +41,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
 
             if (string.IsNullOrEmpty(cardId))
             {
-                entityPM.ShipperName = null;
+                //entityPM.ShipperName = null; //we need this for logbox env.
                 entityPM.ShipperNote = null;
                 entityPM.ShipperContactId = null;
                 entityPM.ShipperAddressId = null;
@@ -57,14 +57,23 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
 
                 entityPM.ShipperName = card.EnglishName;
 
-                if (entityPM.ShipperContactId == null)
+                if (entityPM.IsExternalAPI)
                 {
                     entityPM.ShipperContactId = card.PrimaryContactId;
+                    entityPM.ShipperAddressId = initializer.AddressRepository.GetMainAddressId(cardId, initializer.Tenant);
                 }
 
-                if (entityPM.ShipperAddressId == null)
+                else
                 {
-                    entityPM.ShipperAddressId = initializer.AddressRepository.GetMainAddressId(cardId, initializer.Tenant);
+                    if (entityPM.ShipperContactId == null)
+                    {
+                        entityPM.ShipperContactId = card.PrimaryContactId;
+                    }
+
+                    if (entityPM.ShipperAddressId == null)
+                    {
+                        entityPM.ShipperAddressId = initializer.AddressRepository.GetMainAddressId(cardId, initializer.Tenant);
+                    }
                 }
             }
         }
@@ -74,7 +83,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
 
             if (string.IsNullOrEmpty(cardId))
             {
-                entityPM.ConsigneeName = null;
+                //entityPM.ConsigneeName = null; //we need this for logbox env.
                 entityPM.ConsigneeNote = null;
                 entityPM.ConsigneeContactId = null;
                 entityPM.ConsigneeAddressId = null;
@@ -90,14 +99,23 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
 
                 entityPM.ConsigneeName = card.EnglishName;
 
-                if (entityPM.ConsigneeContactId == null)
+                if (entityPM.IsExternalAPI)
                 {
                     entityPM.ConsigneeContactId = card.PrimaryContactId;
+                    entityPM.ConsigneeAddressId = initializer.AddressRepository.GetMainAddressId(cardId, initializer.Tenant);
                 }
 
-                if (entityPM.ConsigneeAddressId == null)
+                else
                 {
-                    entityPM.ConsigneeAddressId = initializer.AddressRepository.GetMainAddressId(cardId, initializer.Tenant);
+                    if (entityPM.ConsigneeContactId == null)
+                    {
+                        entityPM.ConsigneeContactId = card.PrimaryContactId;
+                    }
+
+                    if (entityPM.ConsigneeAddressId == null)
+                    {
+                        entityPM.ConsigneeAddressId = initializer.AddressRepository.GetMainAddressId(cardId, initializer.Tenant);
+                    }
                 }
             }
         }
@@ -122,14 +140,23 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
 
                 entityPM.AgentName = card.EnglishName;
 
-                if (entityPM.AgentContactId == null)
+                if (entityPM.IsExternalAPI)
                 {
                     entityPM.AgentContactId = card.PrimaryContactId;
+                    entityPM.AgentAddressId = initializer.AddressRepository.GetMainAddressId(cardId, initializer.Tenant);
                 }
 
-                if (entityPM.AgentAddressId == null)
+                else
                 {
-                    entityPM.AgentAddressId = initializer.AddressRepository.GetMainAddressId(cardId, initializer.Tenant);
+                    if (entityPM.AgentContactId == null)
+                    {
+                        entityPM.AgentContactId = card.PrimaryContactId;
+                    }
+
+                    if (entityPM.AgentAddressId == null)
+                    {
+                        entityPM.AgentAddressId = initializer.AddressRepository.GetMainAddressId(cardId, initializer.Tenant);
+                    }
                 }
             }
         }
@@ -152,14 +179,23 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
 
                 entityPM.ShipperNotExporterName = card.EnglishName;
 
-                if (entityPM.ShipperNotExporterContactId == null)
+                if (entityPM.IsExternalAPI)
                 {
                     entityPM.ShipperNotExporterContactId = card.PrimaryContactId;
+                    entityPM.ShipperNotExporterAddressId = initializer.AddressRepository.GetMainAddressId(cardId, initializer.Tenant);
                 }
 
-                if (entityPM.ShipperNotExporterAddressId == null)
+                else
                 {
-                    entityPM.ShipperNotExporterAddressId = initializer.AddressRepository.GetMainAddressId(cardId, initializer.Tenant);
+                    if (entityPM.ShipperNotExporterContactId == null)
+                    {
+                        entityPM.ShipperNotExporterContactId = card.PrimaryContactId;
+                    }
+
+                    if (entityPM.ShipperNotExporterAddressId == null)
+                    {
+                        entityPM.ShipperNotExporterAddressId = initializer.AddressRepository.GetMainAddressId(cardId, initializer.Tenant);
+                    }
                 }
             }
         }
@@ -182,14 +218,23 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
 
                 entityPM.CustomAgentImportName = card.EnglishName;
 
-                if (entityPM.CustomAgentImportContactId == null)
+                if (entityPM.IsExternalAPI)
                 {
                     entityPM.CustomAgentImportContactId = card.PrimaryContactId;
+                    entityPM.CustomAgentImportAddressId = initializer.AddressRepository.GetMainAddressId(cardId, initializer.Tenant);
                 }
 
-                if (entityPM.CustomAgentImportAddressId == null)
+                else
                 {
-                    entityPM.CustomAgentImportAddressId = initializer.AddressRepository.GetMainAddressId(cardId, initializer.Tenant);
+                    if (entityPM.CustomAgentImportContactId == null)
+                    {
+                        entityPM.CustomAgentImportContactId = card.PrimaryContactId;
+                    }
+
+                    if (entityPM.CustomAgentImportAddressId == null)
+                    {
+                        entityPM.CustomAgentImportAddressId = initializer.AddressRepository.GetMainAddressId(cardId, initializer.Tenant);
+                    }
                 }
             }
         }
@@ -213,14 +258,23 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
 
                 entityPM.ReleasingAgentName = card.EnglishName;
 
-                if (entityPM.ReleasingAgentContactId == null)
+                if (entityPM.IsExternalAPI)
                 {
                     entityPM.ReleasingAgentContactId = card.PrimaryContactId;
+                    entityPM.ReleasingAgentAddressId = initializer.AddressRepository.GetMainAddressId(cardId, initializer.Tenant);
                 }
 
-                if (entityPM.ReleasingAgentAddressId == null)
+                else
                 {
-                    entityPM.ReleasingAgentAddressId = initializer.AddressRepository.GetMainAddressId(cardId, initializer.Tenant);
+                    if (entityPM.ReleasingAgentContactId == null)
+                    {
+                        entityPM.ReleasingAgentContactId = card.PrimaryContactId;
+                    }
+
+                    if (entityPM.ReleasingAgentAddressId == null)
+                    {
+                        entityPM.ReleasingAgentAddressId = initializer.AddressRepository.GetMainAddressId(cardId, initializer.Tenant);
+                    }
                 }
             }
         }
@@ -243,14 +297,23 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
 
                 entityPM.FreightForwarderName = card.EnglishName;
 
-                if (entityPM.FreightForwarderContactId == null)
+                if (entityPM.IsExternalAPI)
                 {
                     entityPM.FreightForwarderContactId = card.PrimaryContactId;
+                    entityPM.FreightForwarderAddressId = initializer.AddressRepository.GetMainAddressId(cardId, initializer.Tenant);
                 }
 
-                if (entityPM.FreightForwarderAddressId == null)
+                else
                 {
-                    entityPM.FreightForwarderAddressId = initializer.AddressRepository.GetMainAddressId(cardId, initializer.Tenant);
+                    if (entityPM.FreightForwarderContactId == null)
+                    {
+                        entityPM.FreightForwarderContactId = card.PrimaryContactId;
+                    }
+
+                    if (entityPM.FreightForwarderAddressId == null)
+                    {
+                        entityPM.FreightForwarderAddressId = initializer.AddressRepository.GetMainAddressId(cardId, initializer.Tenant);
+                    }
                 }
             }
         }

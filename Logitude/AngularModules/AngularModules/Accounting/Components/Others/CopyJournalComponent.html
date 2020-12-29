@@ -1,74 +1,78 @@
+<style>
+    .fields-wrapper > div{
+        line-height: 30px;
+        padding: 0px 15px;
+    }
+    .fields-wrapper > div::after{
+        clear: both;
+        content: ' ';
+        display: flex;
+    }
+    .force-disable {
+        opacity: 0.5 !important;
+        pointer-events: none !important;
+    }
+</style>
 <table>
     <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
-        <td colspan="4">
-            <ValidationSummary [ItemsSource]="ValidationErrorsList" [SingleLine]="true"></ValidationSummary>
+        <td colspan="2">
+            <ValidationSummary [ItemsSource]="ValidationErrorsList" ></ValidationSummary>
         </td>
     </tr>
-
-    <tr style="height:50px">
-        <td>
-            <table>
-                <tr>
-                    <td style="width:20px">
-                        <CheckBox [IsChecked]="AmountsAndCurrencies" (Checked)="AmountsAndCurrencies = $event"></CheckBox>
-                    </td>
-
-                    <td style="width:150px">
-                        {{'Journal.O.AmountsAndCurrencies' | TextCodeTranslationPipe}}
-                    </td>
-                    <td style="width:20px">
-                        <CheckBox [IsChecked]="Dates" (Checked)="Dates = $event"></CheckBox>
-                    </td>
-
-                    <td> {{'Journal.O.Dates' | TextCodeTranslationPipe}}</td>
-                    <td style="width:20px">
+    <tr style="height: 110px;">
+        <td class="fields-wrapper">
+            <div>
+                <div float-start style="width: 160px;">{{'Journal.O.AmountsAndCurrencies' | TextCodeTranslationPipe}}</div>
+                <div float-start style="width: 20px; padding-top: 5px;">
+                    <CheckBox [IsChecked]="AmountsAndCurrencies" (Checked)="AmountsAndCurrencies = $event"></CheckBox>
+                </div>
+            </div>
+            <div>
+                <div float-start style="width: 160px;">{{'Journal.O.Dates' | TextCodeTranslationPipe}}</div>
+                <div float-start style="width: 20px; padding-top: 5px;">
+                    <CheckBox [IsChecked]="Dates" (Checked)="Dates = $event"></CheckBox>
+                </div>
+            </div>
+            <div>
+                <div>
+                    <div float-start style="width: 160px;">{{'Journal.O.ReferencesAndNotes' | TextCodeTranslationPipe}}
+                    </div>
+                    <div float-start style="width: 20px; padding-top: 5px;">
                         <CheckBox [IsChecked]="ReferencesAndNotes" (Checked)="ReferencesAndNotes = $event"></CheckBox>
-                    </td>
-                    <td>{{'Journal.O.ReferencesAndNotes' | TextCodeTranslationPipe}}</td>
-
-
-                </tr>
-            </table>
+                    </div>
+                </div>
+            </div>
+        </td>
+        <td class="fields-wrapper" >
+            <div>
+                <div float-start style="width: 160px;">{{'Accounting.General.O.AccountingDate' | TextCodeTranslationPipe}}</div>
+                <div [class.force-disable]="disableDates" float-start style="width: 120px">
+                    <LogDatePicker  [ObjectFieldName]="'AccountingDate'" [ObjectTableName]="'cheese'"
+                        [DataContext]="DataContext" [HideColumns]="true"  [SelectedDateValue]="AccountingDate"></LogDatePicker>
+                </div>
+            </div>
+            <div>
+                <div float-start style="width: 160px;">{{'Journal.F.DocumentDate' | TextCodeTranslationPipe}}</div>
+                <div [class.force-disable]="disableDates" float-start style="width: 120px">
+                    <LogDatePicker [ObjectFieldName]="'DocumentDate'" [ObjectTableName]="ObjectTableName"
+                        [DataContext]="DataContext" [HideColumns]="true"  [SelectedDateValue]="DocumentDate"></LogDatePicker>
+                </div>
+            </div>
+            <div>
+                <div float-start style="width: 160px;">{{'Journal.F.DueDate' | TextCodeTranslationPipe}}</div>
+                <div [class.force-disable]="disableDates" float-start style="width: 120px">
+                    <LogDatePicker [ObjectFieldName]="'DueDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"
+                        [HideColumns]="true"  [SelectedDateValue]="DueDate"></LogDatePicker>
+                </div>
+            </div>
         </td>
     </tr>
 
-    <tr style="height:50px">
+    <tr>
         <td>
-            <table>
-                <tr class="FormFieldRow">
-
-                    <td style="text-align:center">{{'Accounting.General.O.AccountingDate' | TextCodeTranslationPipe}}</td>
-                    <td style="width:30px"></td>
-                    <td style="width: 180px;">
-                        <LogDatePicker [ObjectFieldName]="'AccountingDate'" [ObjectTableName]="ObjectTableName"
-                                       [DataContext]="DataContext" [HideColumns]="true" [ForceFocus]="forceFocus"></LogDatePicker>
-                    </td>
-
-
-                    <td style="width:50px"></td>
-                    <td style="text-align: center">{{'Journal.F.DocumentDate' | TextCodeTranslationPipe}}</td>
-                    <td style="width:30px"></td>
-                    <td style="width: 180px;">
-                        <LogDatePicker [ObjectFieldName]="'DocumentDate'" [ObjectTableName]="ObjectTableName"
-                                       [DataContext]="DataContext" [HideColumns]="true" [ForceFocus]="forceFocus"></LogDatePicker>
-                    </td>
-                    <td style="width:50px"></td>
-
-
-                    <td style="text-align:center">{{'Journal.F.DueDate' | TextCodeTranslationPipe}}</td>
-                    <td style="width:30px"></td>
-                    <td style="width: 180px;">
-                        <LogDatePicker [ObjectFieldName]="'DueDate'" [ObjectTableName]="ObjectTableName"
-                                       [DataContext]="DataContext" [HideColumns]="true" [ForceFocus]="forceFocus"></LogDatePicker>
-                    </td>
-                    <td>
-                        <div></div>
-                    </td>
-
-                </tr>
-            </table>
+            <div></div>
         </td>
-    </tr>
+    </tr>   
 
     <tr style="height: 32px;">
         <td colspan="4" style="vertical-align: bottom">
@@ -93,5 +97,6 @@
             </table>
         </td>
     </tr>
+
 
 </table>

@@ -33,6 +33,8 @@ export class CardList {
 		SearchFields: string;
 		BankName: string;
 		BankAddress: string;
+		Address1: string;
+		Address2: string;
 		Swift: string;
 		AccountNumber: string;
 		IBANNumber: string;

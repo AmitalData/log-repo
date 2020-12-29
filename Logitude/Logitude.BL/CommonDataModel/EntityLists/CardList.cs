@@ -32,6 +32,8 @@ namespace Logitude.BL.CommonDataModel.EntityLists
         public string SearchFields { get; set; }
         public string BankName { get; set; }
         public string BankAddress { get; set; }
+        public string Address1 { get; set; }
+        public string Address2 { get; set; }
         public string Swift { get; set; }
         public string AccountNumber { get; set; }
         public string IBANNumber { get; set; }

@@ -58,10 +58,14 @@ export class ARInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
     public isRTL: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
     public ShowLocal:boolean=false;
+    DisplayFieldsFromList:string;
+    DisplayLocalFieldsFromList:string;
+    BillToLovSizeForFullAccounting:number;
+    IsAccountingActivated:boolean = false;
     constructor(private entityArgs: EntityArgs) {
         super();
        // this.CurrentSession.StartBusyIndicatorLoading();
-
+       this.IsAccountingActivated = SessionLocator.TenantPM.AccountingActivated;
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
         this.EntityPM = entityArgs.EntityPM;
         this.IsManifest = this.EntityPM.ARInvoiceTypeCode == "MN" ? true : false;
@@ -71,7 +75,7 @@ export class ARInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
         this.ShowLocal=  !SessionLocator.LoggedUserPM.DontShowLocal;
 
 
-
+        this.InitializeBillToLov();
         this.InitializeServices();
         this.InitializeComponent();
         this.SetUIProperties();
@@ -86,6 +90,13 @@ export class ARInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
 
     }
 
+    private InitializeBillToLov() {
+        if (this.IsAccountingActivated) {
+            this.DisplayFieldsFromList = "Code,CalculatedEnglishName,GLAccountDisplayNumber,CityName,CountryCode,PartnerTypeName";
+            this.DisplayLocalFieldsFromList = "Code,CalculatedLocalName,GLAccountDisplayNumber,CityName,CountryCode,PartnerTypeName";
+            this.BillToLovSizeForFullAccounting = 550;
+        }
+    }
     private SaveCompletedEvent: any = null;
     private LoadCompletedEvent: any = null;
     private Listen() {

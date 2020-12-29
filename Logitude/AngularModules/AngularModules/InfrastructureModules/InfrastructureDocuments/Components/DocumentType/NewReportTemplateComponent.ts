@@ -84,6 +84,7 @@ export class NewReportTemplateComponent extends BaseComponent implements OnInit 
     RequestAreaName: string;
     ObjectTableId: string;
     IsLoadPage: boolean = false;
+    AutomationId: string;
     SetWindowArgs(args: any) {
 
 
@@ -100,6 +101,7 @@ export class NewReportTemplateComponent extends BaseComponent implements OnInit 
             this.TypeTab = args.TypeTab;
             this.FullDocumentTypeTemplateLists = args.DocumentTypeTemplateLists;
             this.RequestAreaName = args.RequestAreaName;
+            this.AutomationId = !args.AutomationId ? null : args.AutomationId;
 
             
             if (this.TypeTab == "Document") {
@@ -150,6 +152,7 @@ export class NewReportTemplateComponent extends BaseComponent implements OnInit 
         template.DocumentTypeId = this.DocumentType.Id;
         template.IsEnabledForCustomers = true;
         template.IsCopiedAtSignup = true;
+        template.AutomationId = this.AutomationId;
         if (this.TypeTab == "Document") {
             template.TemplateType = "P";
             template.EditorTool = this.ValueEditorRadio == "StimulSoft" ? "S" : "R";
@@ -280,8 +283,9 @@ export class NewReportTemplateComponent extends BaseComponent implements OnInit 
                     }
 
                     this.DataViewModel.DocumentTypeTemplateLists.push(templateViewModel);
-                    this.DataViewModel.EditDocumentTemplate(templateViewModel);
                     this.CurrentSession.CurrentWindow.Close(myResult.Result.Id);
+                    this.DataViewModel.EditDocumentTemplate(templateViewModel);
+
                 }
 
 

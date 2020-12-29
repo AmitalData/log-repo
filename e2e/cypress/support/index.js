@@ -20,6 +20,14 @@ import 'cypress-mochawesome-reporter/register';
 import './commands'
 
 
+import './Authentication/Authentication'
+import './Elements/Elements'
+import './Common/GeneralCommands'
+import './Elements/ToggleButtonCommands'
+
+
+
+
 
 // Alternatively you can use CommonJS syntax:
 // require('./commands')

@@ -716,6 +716,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
                         if (MasterPM != null)
                         {
                             MasterPM.ConcurrencyGUID = entity.ConcurrencyGUID;
+                            MasterPM.IsExternalAPI = true;
 
                             if (MasterPM.IsOperationalClosed)
                             {

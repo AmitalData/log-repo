@@ -39,7 +39,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   NewWizardControlName="&quot;./Accounting/Components/NewEntity/NewUserDefinedReportComponent&quot;"
-  LocalDefaultText="&quot;הוגדר ע\&quot;י משתמש&quot;"
+  LocalDefaultText="&quot;קבוצות מאזן מחושבות&quot;"
   DefaultText="&quot;User Defined Reports&quot;"
   Code="&quot;c4c8&quot;"
   Name="&quot; Query Group&quot;"
@@ -1326,7 +1326,7 @@
   <Query
     Code="&quot;User Defined Reports&quot;"
     TextCode="&quot;User Defined Reports&quot;"
-    LocalTextCode="&quot;הוגדר ע\&quot;י משתמש&quot;"
+    LocalTextCode="&quot;קבוצות מאזן מחושבות&quot;"
     QueryGroupCode="&quot;c4c8&quot;"
     IndexOrder="0"
     ObjectTableName="&quot;UserDefinedReport&quot;"

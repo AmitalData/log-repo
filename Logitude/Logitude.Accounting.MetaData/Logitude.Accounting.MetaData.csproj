@@ -73,6 +73,7 @@
     <None Include="DBOthers\Views\CardGLAccountDataView.dxml" />
     <None Include="DBScripts\202008241136_EventTypesConverteLocalNameToEnglishName.sxml" />
     <None Include="DBScripts\202009231117_UpdateActiveForInterestFieldOnGLAccount.sxml" />
+    <None Include="DBScripts\202012251232_UpdateUserDefinedReportLocalName.sxml" />
     <None Include="DBScripts\202012021000_UpdateNullableGLAccountFields.sxml" />
     <None Include="DBScripts\202009041551_UpdateDisplayNumberFieldOnCards.sxml" />
     <None Include="DBScripts\202011101133_AvailableForScheduling.sxml" />

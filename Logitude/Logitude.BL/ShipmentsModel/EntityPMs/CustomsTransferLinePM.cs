@@ -30,5 +30,8 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public string Shipper { get; set; }
         public string Consignee { get; set; }
         public string Status { get; set; }
+
+        public bool HasError { get; set; }
+        public string ErrorText { get; set; }
     }
 }

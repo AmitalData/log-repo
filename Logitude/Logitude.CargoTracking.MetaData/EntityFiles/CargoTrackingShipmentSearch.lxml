@@ -37,7 +37,7 @@
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;CargoTrackingShipmentSearch&quot;"
 
-  Code="&quot;3d48&quot;"
+  Code="&quot;2fe6&quot;"
 
   Name="&quot; Query Group&quot;"
   GenerateDomainService="false"
