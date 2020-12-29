@@ -381,9 +381,9 @@ namespace Simplog.Data.CommonDataModel.Repositories
 
         public void Update(Contact entity)
         {
+            SetComputedKeyValue(entity);
             try
             {
-                SetComputedKeyValue(entity);
                 context.Contacts.Attach(entity);
             }
             catch { }
