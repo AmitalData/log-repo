@@ -17,6 +17,8 @@ using System.Xml.Serialization;
 using WebFreight.Web.DataProviders;
 using System.Net;
 using System.Data.Entity;
+using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.BL.CommonDataModel.EntityPMs;
 
 namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Bluesnap
 {
@@ -29,10 +31,11 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Bluesnap
         private BluesnapPaymentsDataProvider iDataProvider;
         private IQueryable<TenantJoinBluesnapTransactionList> iQueryable_JoinTenantBluesnapTransaction;
         private IQueryable<BluesnapTransaction> iQueryable_BluesnapTransactions;
+        ICommonDataContext commonDataContext;
         IBlobService storageservice;
         DocumentRepository documentRepository;
         private List<BlusnapTransactionsList> otherTenantsTransactions;
-
+        private List<CustomerCRMData> customers_CRM;
         public BluesnapPaymentsReportManager(byte[] xmlFilters, int tenant)
         {
             this.tenant = tenant;
@@ -43,6 +46,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Bluesnap
             QueryOperations iQueryOperations = (QueryOperations)xmlSerializer.Deserialize(memoryStream);
             this.FilterByDates(iQueryOperations);
             this.FilterByShowAllRecurringTenants(iQueryOperations);
+            commonDataContext = CommonDataContext.GetContext(tenant); 
         }
 
         private void FilterByDates(QueryOperations iQueryOperations)
@@ -113,13 +117,20 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Bluesnap
         private void BuildSourceData()
         {
             IGlobalContext globalObjectContext = GlobalContext.GetContext();
-            ICommonDataContext iContext = CommonDataContext.GetContext(tenant);
             IQueryable<TenantManagement> iQueryable_Tenantmanagements = (from a in globalObjectContext.TenantManagements.Include("GlobalTenant")
                                                                          where a.GlobalTenant.IsActive && a.IsRecurring == true && a.RecurringPeriodCode == "MO" && a.PaymentChannelCode == "PL"
                                                                          select a);
             iQueryable_BluesnapTransactions = globalObjectContext.BluesnapTransactions;
             iQueryable_BluesnapTransactions = iQueryable_BluesnapTransactions.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.TransactionDate) >= System.Data.Entity.DbFunctions.TruncateTime(fromDate) && System.Data.Entity.DbFunctions.TruncateTime(d.TransactionDate) <= System.Data.Entity.DbFunctions.TruncateTime(toDate));
-
+            List<string> tenantsIds = iQueryable_Tenantmanagements.ToList().Select(e => e.Id.ToString()).ToList();
+            this.customers_CRM = (from a in commonDataContext.Cards.Include("Customer")
+                             where a.Tenant == 341 && !string.IsNullOrEmpty(a.ReceivablesAccountingCard) && tenantsIds.Contains(a.ReceivablesAccountingCard)  
+                             select new CustomerCRMData
+                             {
+                                 EnglishName = a.EnglishName,
+                                 ReceivablesAccountingCard = a.ReceivablesAccountingCard
+                             }).ToList();
+                         
             this.iQueryable_JoinTenantBluesnapTransaction = (from tenantmanagements in iQueryable_Tenantmanagements
                                                              select new TenantJoinBluesnapTransactionList()
                                                              {
@@ -205,7 +216,6 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Bluesnap
                 itemRecord.Notes = "unmatched transaction";
                 tenantZeroTransactions.Add(itemRecord);
             }
-
             this.iDataProvider.BlusnapTransactionsList.AddRange(tenantZeroTransactions);
         }
 
@@ -250,6 +260,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Bluesnap
             var itemRecord = new BlusnapTransactionsList();
             itemRecord.Tenant = item.Tenant;
             itemRecord.TenantName = item.TenantName;
+
             itemRecord.ShopperId = item.ShopperId;
             itemRecord.AmountToPay = item.AmountToPay;
             itemRecord.TransactionCount = item.Transactions != null ? item.Transactions.Count() : 0;
@@ -264,6 +275,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Bluesnap
             {
                 otherTenantsTransactions.Add(itemRecord);
             }
+            itemRecord.CRMCustomer = this.customers_CRM.Where(e => e.ReceivablesAccountingCard == item.Tenant.ToString()).Select(a=>a.EnglishName).FirstOrDefault();
         }
 
         private void CalculateContractCountAndTotalPayments(BlusnapTransactionsList itemRecord, List<BluesnapTransactionItem> transactions)
@@ -369,5 +381,11 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Bluesnap
         public string DocumentId { get; set; }
         public DateTime? TransactionDate { get; set; }
         public string ShopperId { get; set; }
+    }
+
+    public class CustomerCRMData
+    {
+        public string EnglishName { get; set; }
+        public string ReceivablesAccountingCard { get; set; }
     }
 }
