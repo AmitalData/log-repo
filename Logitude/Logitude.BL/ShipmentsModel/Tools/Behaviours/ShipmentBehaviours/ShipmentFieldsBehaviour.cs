@@ -47,7 +47,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
             entityPM.FWBStatusCode = "NSEN";
             entityPM.FHLStatusCode = "NSEN";
             entityPM.CargonautFHLStatusCode = "NSEN";
-           entityPM.CargonautFWBStatusCode = "NSEN";
+            entityPM.CargonautFWBStatusCode = "NSEN";
             entityPM.ShipmentReceivableStatusCode = "NORE";
             entityPM.ShipmentPayableStatusCode = "NOPA";
             entityPM.INTTRASIStatusCode = "NSEN";
@@ -68,17 +68,11 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
             {
                 entityPM.ProrateReceivables = initializer.LoggedTenant.ProrateMasterReceivables;
             }
-
-            
         }
-
-
 
         private void InitializeOnUpdating()
         {
             entityPM.OldStatusValue = initializer.EntityPOCO.StatusId;
-
-
         }
 
         private void InitializeFields()

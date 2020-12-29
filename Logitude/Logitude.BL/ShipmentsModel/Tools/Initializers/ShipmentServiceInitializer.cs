@@ -27,7 +27,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Initializers
         public bool IsNewEntity { get; private set; }
         public Shipment EntityPOCO { get; private set; }
         public ShipmentPM EntityPM { get; private set; }
-        public ShipmentMasterData EntityMasterData { get; private set; }
+        public ShipmentMasterData EntityMasterData { get; set; } //private set;
         public IShipmentsContext ShipmentContext { get; private set; }
         public ICommonDataContext CommonContext { get; private set; }
         public ShipmentRepository Repository { get; private set; }
@@ -46,9 +46,9 @@ namespace Logitude.BL.ShipmentsModel.Tools.Initializers
         public DateTime TodayDateTime { get; private set; }
         public bool IsLCLEntity { get; private set; }
         public bool IsFCLEntity { get; private set; }
-        public bool IsProratingChanged { get; private set; }
-        public bool IsUpdatingRegistryDate { get; private set; }
-        public bool IsUpdatingFirstApprovalDate { get; private set; }
+        public bool IsProratingChanged { get; set; } //private set;
+        public bool IsUpdatingRegistryDate { get; set; } //private set;
+        public bool IsUpdatingFirstApprovalDate { get; set; } //private set;
         public bool IsMappingComposition { get; internal set; }
 
         public List<ShipmentPackagePM> ShipmentPackagesChangeSet;
@@ -97,8 +97,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.Initializers
             InitializeLoggedTenant();
             InitializeLoggedContact();
             InitializeEntity();
-            InitializeShipmentNumber();
-            InitializeMasterEntity();
             InitializeFlags();
         }
 
@@ -143,195 +141,10 @@ namespace Logitude.BL.ShipmentsModel.Tools.Initializers
                 EntityPOCO = Repository.GetSingleShipment(EntityPM.Id, Tenant);
             }
         }
-        private void InitializeShipmentNumber()
-        {
-            // Ayman: We need this here before InitializeMasterEntity
-
-            if (IsNewEntity)
-            {
-                if (!EntityPM.IsHybrid)
-                {
-                    this.GetCounterShipmentNumber();
-                }
-            }
-
-            else
-            {
-                if (!EntityPOCO.IsCancelled || !EntityPM.IsCancelled)
-                {
-                    if (EntityPM.ShipmentDirectionConverted)
-                    {
-                        if (EntityPM.ShipmentConvertedNewNumber)
-                        {
-                            this.GetCounterShipmentNumber();
-                        }
-                    }
-                }
-            }
-        }
-
-        private void GetCounterShipmentNumber()
-        {
-            bool isTakenCounter = false;
-
-            if (IsNewEntity && EntityPM.ShipmentNumber == null)
-            {
-                isTakenCounter = true;
-            }
-
-            else if (EntityPM.ShipmentDirectionConverted && EntityPM.ShipmentConvertedNewNumber)
-            {
-                isTakenCounter = true;
-
-                EventTracer.CreateTraceEvent(new EventTracerArgs()
-                {
-                    Tenant = Tenant,
-                    EventTypeCode = "SNOC",
-                    UserId = LoggedContactId,
-                    EntityId = EntityPM.Id,
-                    ObjectTableName = "Shipment",
-                    Notes = "Old Number: " + EntityPM.ShipmentNumber,
-                    Entity = EntityPM,
-                });
-            }
-
-            if (isTakenCounter)
-            {
-                Dictionary<string, string> counterAdditionalParameters = new Dictionary<string, string>() { { "[B]", "" } };
-                if (!string.IsNullOrEmpty(EntityPM.BranchId))
-                {
-                    BranchRepository branchRepository = new BranchRepository(CommonContext);
-                    Branch myBranch = branchRepository.GetSingleBranch(EntityPM.BranchId, EntityPM.Tenant);
-
-                    if (myBranch != null && !string.IsNullOrEmpty(myBranch.CounterCode))
-                    {
-                        counterAdditionalParameters["[B]"] = myBranch.CounterCode;
-                    }
-                }
-
-                if (EntityPM.ShipmentLevelCode == "C")
-                {
-                    EntityPM.ShipmentNumber = TableCounter.GetNumber(Tenant, "MAST", EntityPM.DirectionId, EntityPM.TransportModeId, counterAdditionalParameters);
-                }
-
-                else
-                {
-                    if (EntityPM.DirectionId.ToUpper() == "C")
-                    {
-                        EntityPM.ShipmentNumber = TableCounter.GetNumber(Tenant, "SHIP", "I", EntityPM.TransportModeId, counterAdditionalParameters);
-                    }
-
-                    else
-                    {
-                        EntityPM.ShipmentNumber = TableCounter.GetNumber(Tenant, "SHIP", EntityPM.DirectionId, EntityPM.TransportModeId, counterAdditionalParameters);
-                    }
-                }
-            }
-        }
-
-        private void InitializeMasterEntity()
-        {
-            if (this.IsNewEntity)
-            {
-                if (EntityPM.ShipmentLevelCode != "H")
-                {
-                    EntityMasterData = new ShipmentMasterData();
-                    EntityMasterData.Id = EntityPM.Id;
-                    EntityMasterData.MasterShipmentNumber = EntityPM.ShipmentNumber;
-                    EntityPM.MasterShipmentDataId = EntityPM.Id;
-                    MasterDataRepository.Add(EntityMasterData);
-                }
-
-                else if (EntityPM.ShipmentLevelCode == "H" && EntityPM.MasterShipmentDataId != null)
-                {
-                    // this case is when create house from master sceen
-                    // need to get the master, some fields need to be calculated from the master
-                    // but we dont want to map the master it self
-                    EntityMasterData = MasterDataRepository.GetSingleMasterData(EntityPM.MasterShipmentDataId);
-
-                    if (EntityMasterData != null)
-                    {
-                        EntityPM.ComputedShipmentNumber = EntityMasterData.MasterShipmentNumber;
-
-                        if (EntityMasterData.ProrateReceivables)
-                        {
-                            IsUpdatingRegistryDate = true;
-                            IsUpdatingFirstApprovalDate = true;
-                        }
-                    }
-                }
-            }
-
-            else
-            {
-                string masterDataId = null;
-
-                if (EntityPM.ShipmentLevelCode == "H")
-                {
-                    masterDataId = EntityPM.MasterShipmentDataId;
-                }
-
-                else
-                {
-                    masterDataId = EntityPOCO.MasterShipmentDataId;
-                }
-
-                if (masterDataId != null)
-                {
-                    EntityMasterData = MasterDataRepository.GetSingleMasterData(masterDataId);
-                }
-
-                if (EntityPM.IsHybrid)
-                {
-                    if (EntityMasterData == null)
-                    {
-                        if (EntityPM.ShipmentLevelCode != "H")
-                        {
-                            if (!EntityPM.ConvertFromDirectToHouse && !EntityPM.ConvertFromHouseToDirect)
-                            {
-                                EntityMasterData = new ShipmentMasterData();
-                                EntityMasterData.Id = EntityPM.Id;
-                                EntityPM.MasterShipmentDataId = EntityPM.Id;
-                                EntityMasterData.MasterShipmentNumber = EntityPM.ShipmentNumber;
-                                MasterDataRepository.Add(EntityMasterData);
-                            }
-                        }
-                    }
-                }
-            }
-        }
         private void InitializeFlags()
         {
             this.IsFCLEntity = MethodHelper.IsFCLEntity(EntityPM.TransportModeId, EntityPM.ShipmentTypeId);
             this.IsLCLEntity = !this.IsFCLEntity;
-
-            if (EntityMasterData != null)
-            {
-                if (IsNewEntity)
-                {
-                    if (EntityPM.ShipmentLevelCode == "H")
-                    {
-                        if (EntityMasterData.ProrateReceivables)
-                        {
-                            IsUpdatingRegistryDate = true;
-                            IsUpdatingFirstApprovalDate = true;
-                        }
-                    }
-                }
-
-                else
-                {
-                    if (EntityPM.ShipmentLevelCode == "C")
-                    {
-                        if (EntityPM.ProrateReceivables != EntityMasterData.ProrateReceivables)
-                        {
-                            IsProratingChanged = true;
-                            IsUpdatingRegistryDate = true;
-                            IsUpdatingFirstApprovalDate = true;
-                        }
-                    }
-                }
-            }
         }
 
         public void HandleBehaviours()
@@ -340,13 +153,13 @@ namespace Logitude.BL.ShipmentsModel.Tools.Initializers
 
             serviceBehaviours.Add(new MapCompositionBehaviour());
             serviceBehaviours.Add(new ShipmentFieldsBehaviour());
+            serviceBehaviours.Add(new ShipmentNumberBehaviour());
+            serviceBehaviours.Add(new ShipmentMasterEntityBehaviour());
             serviceBehaviours.Add(new ShipmentPartnersBehaviour());
             serviceBehaviours.Add(new ShipmentCustomerBehaviour());
             serviceBehaviours.Add(new ShipmentCustomerUsersBehaviour());
             serviceBehaviours.Add(new ShipmentCustomerWorkingDaysBehaviour());
             serviceBehaviours.Add(new ShipmentQuoteBehaviour());
-
-            //serviceBehaviours.Add(new ShipmentNumberCounterBehaviour());           
 
             foreach (IServiceBehaviour behaviour in serviceBehaviours)
             {
