@@ -1,7 +1,8 @@
 Feature: Create Shipments
 
-  Scenario: User Login
+  Scenario: Login And Open Shipments Workspace
     Given User logged in successfully
+    And Go to shipments workspace
 
   Scenario: Create Direct Export Air Shipment
     Given Test log message
