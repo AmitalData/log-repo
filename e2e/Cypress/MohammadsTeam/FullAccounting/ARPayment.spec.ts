@@ -28,7 +28,7 @@ let R: CreateRandom= new CreateRandom();
     
       cy.get('li[id=FACS]').click();
       cy.get('button[id=NewARPayment]').click();
-      cy.get('input[id=ARPayment_BillToId]').type("Test Customer GLAccountAB36000WD").should("have.value", "Test Customer GLAccountAB36000WD")
+      cy.get('input[id=ARPayment_BillToId]').type("Test Customer GLAccountXU805920XV").should("have.value", "Test Customer GLAccountXU805920XV")
       cy.get('ul[id=mydatalist_ARPayment_BillToId]').contains("Test Customer GLAccountAB36000WD").then(a => {
           a[0].click();
       })
