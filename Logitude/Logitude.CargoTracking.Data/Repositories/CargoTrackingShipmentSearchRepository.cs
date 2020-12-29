@@ -50,6 +50,17 @@ namespace Logitude.CargoTracking.Data.Repositories
 
             return shipmentsSearchEntities;
         }
+
+        public CargoTrackingShipmentSearch GetFirstShipmentSearchesForWarmCargoTracking()
+        {
+            CargoTrackingShipmentSearch  shipmentsSearchEntities = (from searchEntity in currentContext.CargoTrackingShipmentSearches
+                                                                    where searchEntity.IsPublic == true
+                                                                    select searchEntity).FirstOrDefault();
+
+
+
+            return shipmentsSearchEntities;
+        }
         public IQueryable<CargoTrackingShipmentSearch> GetShipmentSearchs(string searchKey, int tenant)
         {
             IQueryable<CargoTrackingShipmentSearch> shipmentsSearchEntities = (from searchEntity in currentContext.CargoTrackingShipmentSearches
