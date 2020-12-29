@@ -25,6 +25,9 @@ namespace Logitude.Accounting.BL.CoreBL
     {
         private IAccountingContext _MainContext;
         private List<JournalLinePM> SplitiedJournals;
+        const string ActionCode_Credit = "1";
+        const string ActionCode_Debit = "2";
+        const string ActionCode_DebitAndCredit = "3";
         public JournalUpdateOnCreating(IAccountingContext mainContext)
         {
             this.SplitiedJournals = new List<JournalLinePM>();
@@ -158,14 +161,14 @@ namespace Logitude.Accounting.BL.CoreBL
             //}
 
         }
-
+    
         private void CheckJournalActionCodeAndSplitedIt(JournalLinePM LinePM , List<JournalLinePM>  JournalLines)
         {
-            if (LinePM.ActionCode=="3")
+            if (LinePM.ActionCode== ActionCode_DebitAndCredit)
             {
                 JournalLinePM newLine = new JournalLinePM
                 {
-                     ActionTypeCode = "2",
+                     ActionTypeCode = ActionCode_Debit,
                      Reference1 = LinePM.Reference1,
                      Reference2 = LinePM.Reference2,
                      Reference3 = LinePM.Reference3,
@@ -194,7 +197,7 @@ namespace Logitude.Accounting.BL.CoreBL
                      EncodeBase64NVARCHARFieldsBy = LinePM.EncodeBase64NVARCHARFieldsBy,
 
               };
-                LinePM.ActionTypeCode = "1";
+                LinePM.ActionTypeCode = ActionCode_Credit;
                 LinePM.ActionCode = null;
                 LinePM.DebitAccountId = LinePM.DebitAccountId;
                 SetActionDatatForJournalLine(newLine);
@@ -206,11 +209,9 @@ namespace Logitude.Accounting.BL.CoreBL
 
         public void SetActionDatatForJournalLine(JournalLinePM journalLinePM)
         {
-            if (!String.IsNullOrWhiteSpace(journalLinePM.ActionTypeCode) &&
-                String.IsNullOrWhiteSpace(journalLinePM.ActionCode))
+            if (!String.IsNullOrWhiteSpace(journalLinePM.ActionTypeCode))
             {
-                JournalActionTypeList action =
-                    JournalActionTypeListGetByCode(journalLinePM);
+                JournalActionTypeList action = GetJournalActionTypeListByCode(journalLinePM);
                 if (action != null)
                 {
                     journalLinePM.ActionId = action.Id;
@@ -221,7 +222,7 @@ namespace Logitude.Accounting.BL.CoreBL
         }
 
 
-        public virtual JournalActionTypeList JournalActionTypeListGetByCode(JournalLinePM item)
+        public virtual JournalActionTypeList GetJournalActionTypeListByCode(JournalLinePM item)
         {
             var _IJournalActionTypeListQueryService =
                 new JournalActionTypeListQueryService(this._MainContext as IAccountingContext);
