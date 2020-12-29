@@ -2695,6 +2695,8 @@
     <Compile Include="ShipmentsModel\Tools\Behaviours\ShipmentBehaviours\ShipmentCustomerUsersBehaviour.cs" />
     <Compile Include="ShipmentsModel\Tools\Behaviours\ShipmentBehaviours\ShipmentCustomerWorkingDaysBehaviour.cs" />
     <Compile Include="ShipmentsModel\Tools\Behaviours\ShipmentBehaviours\ShipmentFieldsBehaviour.cs" />
+    <Compile Include="ShipmentsModel\Tools\Behaviours\ShipmentBehaviours\ShipmentMasterEntityBehaviour.cs" />
+    <Compile Include="ShipmentsModel\Tools\Behaviours\ShipmentBehaviours\ShipmentNumberBehaviour.cs" />
     <Compile Include="ShipmentsModel\Tools\Behaviours\ShipmentBehaviours\ShipmentPartnersBehaviour.cs" />
     <Compile Include="ShipmentsModel\Tools\Behaviours\ShipmentBehaviours\ShipmentQuoteBehaviour.cs" />
     <Compile Include="ShipmentsModel\Tools\Behaviours\ShipmentBehaviours\Validators\ShipmentMasterIsUsedValidator.cs" />

@@ -91,8 +91,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
         private PortRepository myPortRepository;
         private ShipmentAdditionalCloudDataRepository shipmentAdditionalCloudDataRepository;
         private ShipmentAdditionalCloudData shipmentAdditionalCloudData;
-        private DocumentsFilingRepository documentsFilingRepository;
-        private DocumentTypeRepository DocTypeReposioty;
+        //private DocumentsFilingRepository documentsFilingRepository;
+        //private DocumentTypeRepository DocTypeReposioty;
         private ShipmentTracing shipmentTracing;
         private Tenant loggedTenant;
         private ContactPM loggedContact;
@@ -141,7 +141,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             this.myAddressRepository = new AddressRepository(myCommonContext);
             this.myPortRepository = new PortRepository(myCommonContext);
             this.aWBOCIRepository = new AWBOCIRepository(objectContext);
-            this.documentsFilingRepository = new DocumentsFilingRepository(myCommonContext);
+            //this.documentsFilingRepository = new DocumentsFilingRepository(myCommonContext);
             this.shipmentCommodityRepository = new ShipmentCommodityRepository(objectContext);
             this.shipmentAdditionalCloudDataRepository = new ShipmentAdditionalCloudDataRepository(objectContext);
             this.shipmentAssemblyRepository = new ShipmentAssemblyRepository(objectContext);
@@ -160,6 +160,20 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
         public void SetChangeSet(List<ShipmentPackagePM> shipmentPackagesChangeSet, List<ShipmentOrderPackagePM> shipmentOrderPackagesChangeSet, List<ShipmentPickUpPM> shipmentPickUpsChangeSet, List<ShipmentDeliveryPM> shipmentDeliveriesChangeSet, List<ShipmentReceivablePM> shipmentReceivablesChangeSet, List<ShipmentPayablePM> shipmentPayablesChangeSet, List<ShipmentFollowUpPM> shipmentFollowUpsChangeSet, List<ShipmentAWBPrintOnlyPM> shipmentAWBPrintOnliesChangeSet, List<ConsoleShipmentPM> shipmentConsoleShipmentsChangeSet, List<ShipmentCarrierStatusPM> shipmentCarrierStatusesChangeSet, List<AWBOCIPM> aWBOCIPMChangeSet, List<ShipmentCommodityPM> shipmentCommoditiesChangeSet, List<ShipmentAssemblyPM> shipmentAssembliesChangeSet, List<ShipmentStoragePricingPM> shipmentStoragePricingsChangeSet)
         {
             // this was for the old silverlight system
+            this.initializer.ShipmentPackagesChangeSet = shipmentPackagesChangeSet;
+            this.initializer.ShipmentOrderPackagesChangeSet = shipmentOrderPackagesChangeSet;
+            this.initializer.ShipmentPickUpsChangeSet = shipmentPickUpsChangeSet;
+            this.initializer.ShipmentDeliveriesChangeSet = shipmentDeliveriesChangeSet;
+            this.initializer.ShipmentReceivablesChangeSet = shipmentReceivablesChangeSet;
+            this.initializer.ShipmentPayablesChangeSet = shipmentPayablesChangeSet;
+            this.initializer.ShipmentFollowUpsChangeSet = shipmentFollowUpsChangeSet;
+            this.initializer.ShipmentAWBPrintOnliesChangeSet = shipmentAWBPrintOnliesChangeSet;
+            this.initializer.ShipmentConsoleShipmentsChangeSet = shipmentConsoleShipmentsChangeSet;
+            this.initializer.ShipmentCarrierStatusesChangeSet = shipmentCarrierStatusesChangeSet;
+            this.initializer.AWBOCIPMChangeSet = aWBOCIPMChangeSet;
+            this.initializer.ShipmentCommoditiesChangeSet = shipmentCommoditiesChangeSet;
+            this.initializer.ShipmentAssembliesChangeSet = shipmentAssembliesChangeSet;
+            this.initializer.ShipmentStoragePricingsChangeSet = shipmentStoragePricingsChangeSet;
         }
 
         public void Create()
@@ -184,6 +198,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
                 this.initializer.HandleBehaviours();
 
+                this.entityMasterData = this.initializer.EntityMasterData;
+
                 this.InitializeComponent();
 
                 if (!loggedTenant.LogBoxTenantSetting.IsDocumentsArchive)
@@ -195,11 +211,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 }
 
                 this.initializer.HandleComposition();
-
-                //foreach (ShipmentOrderPackagePM itemPM in entityPM.ShipmentOrderPackages)
-                //{
-                //    this.CreateShipmentOrderPackage(itemPM);
-                //}
 
                 foreach (ShipmentPackagePM itemPM in entityPM.ShipmentPackages)
                 {
@@ -364,6 +375,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     this.OldCustomerId = myOldCustomerId;
 
                     this.initializer.HandleBehaviours();
+
+                    this.entityMasterData = this.initializer.EntityMasterData;
 
                     this.InitializeComponent();
 
