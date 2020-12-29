@@ -39,7 +39,11 @@ namespace Logitude.Accounting.BL.Validators
         {
             foreach (CalculatedChartsOfAccountPM periodPM in entityPM.CalculatedChartsOfAccounts)
             {
-                if (periodPM.ChangeSetOp != ChangeSetOperation.None && periodPM.ChangeSetOp != ChangeSetOperation.Delete && !periodPM.IsCancelled)
+                bool IsPeriodUpdatedtAndNotDeletedorCancelled = periodPM.ChangeSetOp != ChangeSetOperation.None &&
+                                                                periodPM.ChangeSetOp != ChangeSetOperation.Delete &&
+                                                               !periodPM.IsCancelled;
+
+                if (IsPeriodUpdatedtAndNotDeletedorCancelled)
                 {
                     ValidateRequiredFieldsOnChartsofAccount(periodPM, showLocals);
                     ValidateIsReportHasAtLeastOneCalculatedChartsOfAccountsLine(periodPM, showLocals);
@@ -67,7 +71,10 @@ namespace Logitude.Accounting.BL.Validators
         {
             foreach (CalculatedChartsOfAccountsLinePM LinePM in periodPM.CalculatedChartsOfAccountLines)
             {
-                if (LinePM.ChangeSetOp != ChangeSetOperation.None && LinePM.ChangeSetOp != ChangeSetOperation.Delete && !LinePM.IsCancelled)
+                bool IsLineUpdatedtAndNotDeletedorCancelled = (LinePM.ChangeSetOp != ChangeSetOperation.None &&
+                                                               LinePM.ChangeSetOp != ChangeSetOperation.Delete &&
+                                                               !LinePM.IsCancelled);
+                if (IsLineUpdatedtAndNotDeletedorCancelled)
                 {
                     UserDefinedReportValidatorArguments UserDefinedReportValidatorArguments = new UserDefinedReportValidatorArguments()
                     {
@@ -87,9 +94,11 @@ namespace Logitude.Accounting.BL.Validators
         private static void ValidateRequiredFieldsOnChartsofAccount(CalculatedChartsOfAccountPM periodPM , bool showLocals)
         {
             string FIELD_IS_REQUIERD = TextCodesTranslator.TranslateText("General.M.FieldIsRequired", periodPM.Tenant, showLocals);
-            string RequiredChartsofAccountTypeCodeFiled = FIELD_IS_REQUIERD.Replace("%FieldName", TextCodesTranslator.TranslateText("CalculatedChartsOfAccount.F.ChartOfAccountTypeEnglishName", periodPM.Tenant, showLocals));
             string RequiredLocalNameFiled = FIELD_IS_REQUIERD.Replace("%FieldName", TextCodesTranslator.TranslateText("CalculatedChartsOfAccount.F.LocalName", periodPM.Tenant, showLocals));
-            if (periodPM.ChangeSetOp != ChangeSetOperation.None && periodPM.ChangeSetOp != ChangeSetOperation.Delete && !periodPM.IsCancelled)
+            bool IsPeriodUpdatedtAndNotDeletedorCancelled = (periodPM.ChangeSetOp != ChangeSetOperation.None &&
+                                                             periodPM.ChangeSetOp != ChangeSetOperation.Delete &&
+                                                             !periodPM.IsCancelled);
+            if (IsPeriodUpdatedtAndNotDeletedorCancelled)
             {
                 if (string.IsNullOrEmpty(periodPM.LocalName))
                 {
@@ -126,7 +135,10 @@ namespace Logitude.Accounting.BL.Validators
             string RequiredLineTypeFiled = FIELD_IS_REQUIERD.Replace("%FieldName", TextCodesTranslator.TranslateText("CalculatedChartsOfAccountsLine.F.LineTypeCode", periodPM.Tenant, showLocals));
             foreach (CalculatedChartsOfAccountsLinePM LinePM in periodPM.CalculatedChartsOfAccountLines)
             {
-                if (LinePM.ChangeSetOp != ChangeSetOperation.None &&  LinePM.ChangeSetOp != ChangeSetOperation.Delete && !LinePM.IsCancelled)
+                bool IsLineUpdatedtAndNotDeletedorCancelled = (LinePM.ChangeSetOp != ChangeSetOperation.None &&
+                                                               LinePM.ChangeSetOp != ChangeSetOperation.Delete &&
+                                                              !LinePM.IsCancelled);
+                if (IsLineUpdatedtAndNotDeletedorCancelled)
                 {   if (string.IsNullOrEmpty(LinePM.LineTypeCode))
                     {    throw new Exception(TextCodesTranslator.TranslateText("UserDefinedReport.O.CalculatedChartofAccount", periodPM.Tenant, showLocals) + " " + periodPM.Line + " " +
                          TextCodesTranslator.TranslateText("CalculatedChartsOfAccountsLine", periodPM.Tenant, showLocals)+" "+ LinePM.Line+" "+ RequiredLineTypeFiled);
@@ -145,29 +157,32 @@ namespace Logitude.Accounting.BL.Validators
 
 
 
-        private static void ThrowValidationGLAccountAlreadyExist(UserDefinedReportValidatorArguments Arguments)
+        private static void ThrowValidationGLAccountAlreadyExist(UserDefinedReportValidatorArguments arguments)
         {
-            throw new Exception(TextCodesTranslator.TranslateText("UserDefinedReport.O.CalculatedChartofAccount", Arguments.PeriodPM.Tenant, Arguments.ShowLocals) + " " + Arguments.CurrentperiodPM.Line + " " +
-                                TextCodesTranslator.TranslateText("CalculatedChartsOfAccountsLine", Arguments.PeriodPM.Tenant, Arguments.ShowLocals) + " " + Arguments.CurrentLinePM.Line + " " +
-                                TextCodesTranslator.TranslateText("UserDefinedReport.O.ChildGLAccountsAlreadyIncluded", Arguments.PeriodPM.Tenant, Arguments.ShowLocals) + " " + Arguments.LinePM.Line + " " +
-                                 TextCodesTranslator.TranslateText("UserDefinedReport.O.AndCantBeAddedAgain.", Arguments.PeriodPM.Tenant, Arguments.ShowLocals) + " (" +
-                                 TextCodesTranslator.TranslateText("CalculatedChartsOfAccount", Arguments.PeriodPM.Tenant, Arguments.ShowLocals) + ": " + Arguments.PeriodPM.Line + " )") ;
+            throw new Exception(TextCodesTranslator.TranslateText("UserDefinedReport.O.CalculatedChartofAccount", arguments.PeriodPM.Tenant, arguments.ShowLocals) + " " + arguments.CurrentperiodPM.Line + " " +
+                                TextCodesTranslator.TranslateText("CalculatedChartsOfAccountsLine", arguments.PeriodPM.Tenant, arguments.ShowLocals) + " " + arguments.CurrentLinePM.Line + " " +
+                                TextCodesTranslator.TranslateText("UserDefinedReport.O.ChildGLAccountsAlreadyIncluded", arguments.PeriodPM.Tenant, arguments.ShowLocals) + " " + arguments.LinePM.Line + " " +
+                                 TextCodesTranslator.TranslateText("UserDefinedReport.O.AndCantBeAddedAgain.", arguments.PeriodPM.Tenant, arguments.ShowLocals) + " (" +
+                                 TextCodesTranslator.TranslateText("CalculatedChartsOfAccount", arguments.PeriodPM.Tenant, arguments.ShowLocals) + ": " + arguments.PeriodPM.Line + " )") ;
         }
 
-        private static void ThrowValidationChartsofAccountAlreadyExist(UserDefinedReportValidatorArguments Arguments)
+        private static void ThrowValidationChartsofAccountAlreadyExist(UserDefinedReportValidatorArguments arguments)
         {
-            throw new Exception(TextCodesTranslator.TranslateText("UserDefinedReport.O.CalculatedChartofAccount", Arguments.PeriodPM.Tenant, Arguments.ShowLocals) + " " + Arguments.CurrentperiodPM.Line + " " +
-                                TextCodesTranslator.TranslateText("CalculatedChartsOfAccountsLine", Arguments.PeriodPM.Tenant, Arguments.ShowLocals) + " " + Arguments.CurrentLinePM.Line + " " +
-                                TextCodesTranslator.TranslateText("UserDefinedReport.O.ChildGLAccountsAlreadyIncluded", Arguments.PeriodPM.Tenant, Arguments.ShowLocals) + " " + Arguments.LinePM.Line + " " +
-                                 TextCodesTranslator.TranslateText("UserDefinedReport.O.AndCantBeAddedAgain.", Arguments.PeriodPM.Tenant, Arguments.ShowLocals) + " (" +
-                                 TextCodesTranslator.TranslateText("CalculatedChartsOfAccount", Arguments.PeriodPM.Tenant, Arguments.ShowLocals) + ": " + Arguments.PeriodPM.Line + " )") ;
+            throw new Exception(TextCodesTranslator.TranslateText("UserDefinedReport.O.CalculatedChartofAccount", arguments.PeriodPM.Tenant, arguments.ShowLocals) + " " + arguments.CurrentperiodPM.Line + " " +
+                                TextCodesTranslator.TranslateText("CalculatedChartsOfAccountsLine", arguments.PeriodPM.Tenant, arguments.ShowLocals) + " " + arguments.CurrentLinePM.Line + " " +
+                                TextCodesTranslator.TranslateText("UserDefinedReport.O.ChildGLAccountsAlreadyIncluded", arguments.PeriodPM.Tenant, arguments.ShowLocals) + " " + arguments.LinePM.Line + " " +
+                                 TextCodesTranslator.TranslateText("UserDefinedReport.O.AndCantBeAddedAgain.", arguments.PeriodPM.Tenant, arguments.ShowLocals) + " (" +
+                                 TextCodesTranslator.TranslateText("CalculatedChartsOfAccount", arguments.PeriodPM.Tenant, arguments.ShowLocals) + ": " + arguments.PeriodPM.Line + " )") ;
         }
 
         private static void ValidateCanUpdatedChartsOfAccountTypeCode(CalculatedChartsOfAccountPM periodPM, bool showLocals)
         {
             foreach (CalculatedChartsOfAccountsLinePM LinePM in periodPM.CalculatedChartsOfAccountLines)
             {
-                if (LinePM.ChangeSetOp != ChangeSetOperation.None && LinePM.ChangeSetOp != ChangeSetOperation.Delete && !LinePM.IsCancelled)
+                bool IsLineUpdatedtAndNotDeletedorCancelled = (LinePM.ChangeSetOp != ChangeSetOperation.None &&
+                                                              LinePM.ChangeSetOp != ChangeSetOperation.Delete &&
+                                                              !LinePM.IsCancelled);
+                if (IsLineUpdatedtAndNotDeletedorCancelled)
                 {
                     if (!string.IsNullOrEmpty(periodPM.ChartOfAccountTypeCode) &&
                         !string.IsNullOrEmpty(LinePM.ChartOfAccountTypeCode) &&
@@ -184,28 +199,26 @@ namespace Logitude.Accounting.BL.Validators
 
         }
 
-        private static void CheckAllLinesIsGLAccountorChartofAccountAlreadyExist(UserDefinedReportPM entityPM, UserDefinedReportValidatorArguments UserDefinedReportValidatorArguments)
+        private static void CheckAllLinesIsGLAccountorChartofAccountAlreadyExist(UserDefinedReportPM entityPM, UserDefinedReportValidatorArguments userDefinedReportValidatorArguments)
         {
             string CurrentChartofAccountId = "";
             string CurrentGLAccountId = "";
-            if (UserDefinedReportValidatorArguments.CurrentLinePM.LineTypeCode == GLAccountType)
+            if (userDefinedReportValidatorArguments.CurrentLinePM.LineTypeCode == GLAccountType)
             {
-                CurrentGLAccountId = UserDefinedReportValidatorArguments.CurrentLinePM.GLAccountId;
-                CurrentChartofAccountId = UserDefinedReportValidatorArguments.CurrentLinePM.ChartOfAccountIdForValidate;
+                CurrentGLAccountId = userDefinedReportValidatorArguments.CurrentLinePM.GLAccountId;
+                CurrentChartofAccountId = userDefinedReportValidatorArguments.CurrentLinePM.ChartOfAccountIdForValidate;
             }
-            else if (UserDefinedReportValidatorArguments.CurrentLinePM.LineTypeCode == ChartsofAccountType)
-            {
-                CurrentChartofAccountId = UserDefinedReportValidatorArguments.CurrentLinePM.ChartOfAccountId;
-            }
+            else if (userDefinedReportValidatorArguments.CurrentLinePM.LineTypeCode == ChartsofAccountType)
+                CurrentChartofAccountId = userDefinedReportValidatorArguments.CurrentLinePM.ChartOfAccountId;
             foreach (CalculatedChartsOfAccountPM periodPM in entityPM.CalculatedChartsOfAccounts.Where(s=>s.IsCancelled==false))
             {
                 foreach (CalculatedChartsOfAccountsLinePM LinePM in periodPM.CalculatedChartsOfAccountLines)
                 {
                     UserDefinedReportValidatorArguments Arguments = new UserDefinedReportValidatorArguments()
                     {
-                        CurrentperiodPM = UserDefinedReportValidatorArguments.CurrentperiodPM,
-                        CurrentLinePM = UserDefinedReportValidatorArguments.CurrentLinePM,
-                        ShowLocals = UserDefinedReportValidatorArguments.ShowLocals,
+                        CurrentperiodPM = userDefinedReportValidatorArguments.CurrentperiodPM,
+                        CurrentLinePM = userDefinedReportValidatorArguments.CurrentLinePM,
+                        ShowLocals = userDefinedReportValidatorArguments.ShowLocals,
                         LinePM = LinePM,
                         PeriodPM = periodPM,
                     };
@@ -214,41 +227,67 @@ namespace Logitude.Accounting.BL.Validators
             }
 
         }
-
-
-
-        private static void IsGLAccountorChartofAccountAlreadyExist(UserDefinedReportValidatorArguments UserDefinedReportValidatorArguments , string CurrentChartofAccountId ,string CurrentGLAccountId)
+ 
+        private static void IsGLAccountorChartofAccountAlreadyExist(UserDefinedReportValidatorArguments userDefinedReportValidatorArguments , 
+                                                                    string currentChartofAccountId ,
+                                                                    string currentGLAccountId)
         {
-            if ((UserDefinedReportValidatorArguments.CurrentLinePM.Line != UserDefinedReportValidatorArguments.LinePM.Line || UserDefinedReportValidatorArguments.CurrentperiodPM.Line != UserDefinedReportValidatorArguments.PeriodPM.Line) && !UserDefinedReportValidatorArguments.LinePM.IsCancelled)
+            bool IsCompareLineNotEqualCurrentLineAndNotCancelled = ((userDefinedReportValidatorArguments.CurrentLinePM.Line != userDefinedReportValidatorArguments.LinePM.Line ||
+                                                                    userDefinedReportValidatorArguments.CurrentperiodPM.Line != userDefinedReportValidatorArguments.PeriodPM.Line) &&
+                                                                    !userDefinedReportValidatorArguments.LinePM.IsCancelled);
+            if (IsCompareLineNotEqualCurrentLineAndNotCancelled)
             {
-                if (UserDefinedReportValidatorArguments.LinePM.LineTypeCode == GLAccountType)
+                if (userDefinedReportValidatorArguments.LinePM.LineTypeCode == GLAccountType)
                 {
-                    if (UserDefinedReportValidatorArguments.CurrentLinePM.LineTypeCode == GLAccountType)
-                    {
-                        if ((!string.IsNullOrEmpty(CurrentGLAccountId) && CurrentGLAccountId == UserDefinedReportValidatorArguments.LinePM.GLAccountId))
-                        {
-                            ThrowValidationGLAccountAlreadyExist(UserDefinedReportValidatorArguments);
-                        }
-                    }
-                    if (UserDefinedReportValidatorArguments.CurrentLinePM.LineTypeCode == ChartsofAccountType)
-                    {
-                        if (!string.IsNullOrEmpty(CurrentChartofAccountId) && CurrentChartofAccountId == UserDefinedReportValidatorArguments.LinePM.ChartOfAccountIdForValidate)
-                        {
-                            ThrowValidationChartsofAccountAlreadyExist(UserDefinedReportValidatorArguments);
-                        }
-                    }
+                    ValidateLineTypeGLAccount(userDefinedReportValidatorArguments, currentChartofAccountId, currentGLAccountId);
                 }
-                else if (UserDefinedReportValidatorArguments.LinePM.LineTypeCode == ChartsofAccountType)
+                else if (userDefinedReportValidatorArguments.LinePM.LineTypeCode == ChartsofAccountType)
                 {
-                    if ((UserDefinedReportValidatorArguments.CurrentLinePM.LineTypeCode == ChartsofAccountType && (!string.IsNullOrEmpty(CurrentChartofAccountId) && CurrentChartofAccountId == UserDefinedReportValidatorArguments.LinePM.ChartOfAccountId)) ||
-                        (UserDefinedReportValidatorArguments.CurrentLinePM.LineTypeCode == GLAccountType && (!string.IsNullOrEmpty(CurrentChartofAccountId) && CurrentChartofAccountId == UserDefinedReportValidatorArguments.LinePM.ChartOfAccountId)))
-                    {
-                        ThrowValidationChartsofAccountAlreadyExist(UserDefinedReportValidatorArguments);
-                    }
+                    ValidateLineTypeChartofAccount(userDefinedReportValidatorArguments, currentChartofAccountId);
+
                 }
             }
         }
+        public static void ValidateLineTypeChartofAccount(UserDefinedReportValidatorArguments userDefinedReportValidatorArguments,
+                                         string currentChartofAccountId)
+        {
+            bool IsCompareLineChartsofAccountEqualCurrentLineChartsofAccount = ((userDefinedReportValidatorArguments.CurrentLinePM.LineTypeCode == ChartsofAccountType &&
+                                                                                      (!string.IsNullOrEmpty(currentChartofAccountId) &&
+                                                                                       currentChartofAccountId == userDefinedReportValidatorArguments.LinePM.ChartOfAccountId)) ||
+                                                                                      (userDefinedReportValidatorArguments.CurrentLinePM.LineTypeCode == GLAccountType &&
+                                                                                      (!string.IsNullOrEmpty(currentChartofAccountId) &&
+                                                                                      currentChartofAccountId == userDefinedReportValidatorArguments.LinePM.ChartOfAccountId)));
 
+            if (IsCompareLineChartsofAccountEqualCurrentLineChartsofAccount)
+            {
+                ThrowValidationChartsofAccountAlreadyExist(userDefinedReportValidatorArguments);
+            }
+        }
+
+            public static void ValidateLineTypeGLAccount(UserDefinedReportValidatorArguments userDefinedReportValidatorArguments, 
+                                          string currentChartofAccountId, 
+                                          string currentGLAccountId)
+        {
+            if (userDefinedReportValidatorArguments.CurrentLinePM.LineTypeCode == GLAccountType)
+            {
+                bool IsCompareLineGLAccountEqualCurrentLineGLAccount = ((!string.IsNullOrEmpty(currentGLAccountId) &&
+                                                                        currentGLAccountId == userDefinedReportValidatorArguments.LinePM.GLAccountId));
+
+                if (IsCompareLineGLAccountEqualCurrentLineGLAccount)
+                {
+                    ThrowValidationGLAccountAlreadyExist(userDefinedReportValidatorArguments);
+                }
+            }
+            if (userDefinedReportValidatorArguments.CurrentLinePM.LineTypeCode == ChartsofAccountType)
+            {
+                bool IsCompareLineChartsofAccountEqualCurrentLineChartsofAccount = (!string.IsNullOrEmpty(currentChartofAccountId) &&
+                                                                                    currentChartofAccountId == userDefinedReportValidatorArguments.LinePM.ChartOfAccountIdForValidate);
+                if (IsCompareLineChartsofAccountEqualCurrentLineChartsofAccount)
+                {
+                    ThrowValidationChartsofAccountAlreadyExist(userDefinedReportValidatorArguments);
+                }
+            }
+        }
 
         public static Func<int, ContactPM> OverrideGetLoggedContactFunc { get; set; }
         public static ContactPM GetLoggedContact(int tenant)
