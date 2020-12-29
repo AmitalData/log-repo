@@ -163,6 +163,27 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                 else
                     dataProvider.CustomersStatuses = dataProvider.CustomersStatuses.OrderBy(d => d.CustomerName).ToList();
             }
+            else if (sortField == "TotalToCollect")
+            {
+                if (sortDirection == "Descending")
+                    dataProvider.CustomersStatuses = dataProvider.CustomersStatuses.OrderByDescending(d => d.TotalToCollect).ToList();
+                else
+                    dataProvider.CustomersStatuses = dataProvider.CustomersStatuses.OrderBy(d => d.TotalToCollect).ToList();
+            }
+            else if (sortField == "Obligo")
+            {
+                if (sortDirection == "Descending")
+                    dataProvider.CustomersStatuses = dataProvider.CustomersStatuses.OrderByDescending(d => d.Obligo).ToList();
+                else
+                    dataProvider.CustomersStatuses = dataProvider.CustomersStatuses.OrderBy(d => d.Obligo).ToList();
+            }
+            else if (sortField == "CreditUsed")
+            {
+                if (sortDirection == "Descending")
+                    dataProvider.CustomersStatuses = dataProvider.CustomersStatuses.OrderByDescending(d => d.CreditUsed).ToList();
+                else
+                    dataProvider.CustomersStatuses = dataProvider.CustomersStatuses.OrderBy(d => d.CreditUsed).ToList();
+            }
             else
             {
                 dataProvider.CustomersStatuses = dataProvider.CustomersStatuses.OrderBy(d => d.CustomerName).ToList();
