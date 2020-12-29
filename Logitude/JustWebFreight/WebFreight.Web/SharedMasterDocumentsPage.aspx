@@ -42,7 +42,7 @@
         .DocumentEntityArea {
             margin: 0 5px;
             background: #FFFFFF;
-            border: 2px solid #639527;
+            border: 2px solid <%=SecondaryColor%>;
             padding-top: 3px;
             margin: 0 50px;
         }
@@ -110,7 +110,7 @@
     <div id="Container" style="position: absolute; top: 0px; z-index: 3; width: 100%; display: normal">
         <table style="height: 100%;">
 
-            <thead style="background-color: #639527">
+            <thead style="background-color: <%= MainColor %>">
                 <tr style="height: 50px;">
                     <td style="vertical-align: top;">
                         <table style="margin: 5px 0 0 0;">
@@ -455,15 +455,27 @@
 
         function OnDownloadAllDocument() {
             $.SendContactsActivity($.CurrentEmail, "Shipment", "Document Download", $.CurrentTenant, $.CurrentCardId);
-            window.open("WebPages/SharedDownloadPage.aspx?id=" + $.CurrentTenant + ":" + null + ":ship:" + $.CurrentEntityId + ":" + $.CurrentCardType);
+            var sharedDownloadURL = "WebPages/SharedDownloadPage.aspx?id=" + $.CurrentTenant + ":" + null + ":ship:" + $.CurrentEntityId + ":" + $.CurrentCardType;
+            if ($.IsExternalURL) {
+                sharedDownloadURL += ":securitykey:" + $.CurrentEntityKey;
+            }
+            window.open(sharedDownloadURL);
         }
 
         function OnDownloadAllConnectedDocuments() {
-            window.open("WebPages/SharedDownloadPage.aspx?id=" + $.CurrentTenant + ":" + null + ":master:" + $.CurrentEntityId + ":" + $.CurrentCardType);
+            var sharedDownloadURL = "WebPages/SharedDownloadPage.aspx?id=" + $.CurrentTenant + ":" + null + ":master:" + $.CurrentEntityId + ":" + $.CurrentCardType;
+            if ($.IsExternalURL) {
+                sharedDownloadURL += ":securitykey:" + $.CurrentEntityKey;
+            }
+            window.open(sharedDownloadURL);
         }
 
         function GetURL() {
-            return "WebPages/SharedDownloadPage.aspx?id=" + $.CurrentTenant + ":" + null + ":ship:" + $.CurrentEntityId + ":" + $.CurrentCardType;
+            var sharedDownloadURL = "WebPages/SharedDownloadPage.aspx?id=" + $.CurrentTenant + ":" + null + ":ship:" + $.CurrentEntityId + ":" + $.CurrentCardType;
+            if ($.IsExternalURL) {
+                sharedDownloadURL += ":securitykey:" + $.CurrentEntityKey;
+            }
+            return sharedDownloadURL;
         }
     </script>
 

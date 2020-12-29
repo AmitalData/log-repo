@@ -36,6 +36,10 @@ using System.Net.Http;
 using Json2KeyValue;
 using HypredTest.CurrencyProxy;
 using Logitude.Server.Tools;
+using HypredTest.VendorProxy;
+using HypredTest.AirlineProxy;
+using HypredTest.ShippingAgentProxy;
+using HypredTest.ShippingLineProxy;
 
 namespace HypredTest
 {
@@ -2347,15 +2351,15 @@ namespace HypredTest
 
                 Response resultResponse = new Response();
                 // CustomerPM pm = customerservice.GetCustomerPM(new CustomerApiFilters() { ByCode = true, SearchCode = "10107933" }, 8, ref resultResponse);
-                CustomerPM newCustomer = new CustomerPM()
+                CustomerProxy.CustomerPM newCustomer = new CustomerProxy.CustomerPM()
                 {
-                    Code = "HBRDTSTCustE",
+                    Code = "HBRDTST888",
                     EnglishName = "hybrid customer E",
                     Tenant = 1,
                     PartnerTypeId = "CS",
                     SalesmanUserId = "HybridU1",
-                    VatNumber = "98956454",
-                    CustomerStatusCode = "ACT",
+                    VatNumber = "123456",
+                    CustomerStatusCode = "POT",
                     //SetActivated = true,
                     CreditLimitAmount = 50.65,
                     CountryCode = "IL",
@@ -2395,6 +2399,7 @@ namespace HypredTest
         //public string SalesmanUserName { get; set; }
         }
 
+      
         private void TestQuoteEvents()
         {
             QuoteProxy.QuoteWcfServiceClient quoteservice = new QuoteWcfServiceClient();
@@ -3138,22 +3143,53 @@ namespace HypredTest
         private void btnRunTest_Click(object sender, EventArgs e)
         {
             Login();
-
-            switch(cmdServices.SelectedItem)
+            var response = new Response();
+            var partnersTester = new PartnersTester();
+            switch (cmdServices.SelectedItem)
             {
                 case "Warehouse":
-                    TestWarehouseService(Token);
+                    response = partnersTester.TestWarehouseService(Token);
                     break;
                 case "Customer":
-                    TestCustomerService(Token);
+                    response = TestCustomerService(Token);
+                    break;
+                case "Vendor":
+                    response = partnersTester.TestVendorService(Token);
+                    break;
+                case "Agent":
+                    response = partnersTester.TestAgentService(Token);
+                    break;
+                case "Airline":
+                    response = partnersTester.TestAirlineService(Token);
+                    break;
+                case "ShippingAgent":
+                    response = partnersTester.TestShippingAgentService(Token);
+                    break;
+                case "Trucker":
+                    response = partnersTester.TestTruckerService(Token);
+                    break;
+                case "Vessel":
+                    response = partnersTester.TestVesselService(Token);
+                    break;
+                case "ShippingLine":
+                    response = partnersTester.TestShippingLineService(Token);
                     break;
                 default:
                     MessageBox.Show("select a service to test");
                     break;
             }
-            
+
+            if(response != null && response.HasError)
+            {
+                var errorMessage = response.ErrorMessage + (response.InnerErrorMessage ?? "");
+                MessageBox.Show(errorMessage);
+            }
+
+            MessageBox.Show("Success " + response?.Result);
+
         }
 
+      
         private void btnPaymentTerms_Click(object sender, EventArgs e)
         {
             Login();

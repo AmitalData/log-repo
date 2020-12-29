@@ -712,7 +712,9 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
                 code = code + "," + item.LineId;
             }
 
-            editWindow.ShowEditComponent(item.TariffId, "Tariff", code);
+            var argumentsPriceCheck = { VersionId: item.VersionId, LineId: item.LineId, ChargeableWeightInKG: this.chargeableWeightInKG };
+            editWindow.EditComponentArguments = argumentsPriceCheck;
+            editWindow.ShowEditComponent(item.TariffId, "Tariff");
         }
     }
 

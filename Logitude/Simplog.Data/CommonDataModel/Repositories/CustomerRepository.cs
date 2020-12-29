@@ -153,6 +153,22 @@ namespace Simplog.Data.CommonDataModel.Repositories
             }
             return null;
         }
+
+
+        public List<Customer> GetCustomersByVat(string vat, int tenant)
+        {
+            var result = new List<Customer>();
+            if (!string.IsNullOrEmpty(vat))
+            {
+                result = (from a in context.Customers.Include("Card")
+                          where a.Tenant == tenant && a.Card.VatNumber == vat && a.Card.InActive == false
+                          select a).ToList();
+ 
+
+            }
+
+            return result;
+        }
         public Customer GetSingleCustomerByVatForHybrid(string vat, int tenant, bool getFromCache)
         {
             if (!string.IsNullOrEmpty(vat))

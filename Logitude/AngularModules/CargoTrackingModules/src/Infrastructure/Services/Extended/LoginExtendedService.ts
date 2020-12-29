@@ -115,6 +115,7 @@ export class ResetPasswordParameters {
 	CaptchaKey: string;
 	CaptchaCode: string;
 	PageName: string;
+	Domain: string;
 	BrandingTenant: string;
 }
 

@@ -8,6 +8,7 @@ namespace Logitude.HybridTest.ServicesTest
     [TestClass]
     public class StateTest
     {
+        private static EntityWcfCaller entityWcfCaller = new EntityWcfCaller();
         [TestMethod]
         public void Test_State_UPSERT()
         {
@@ -19,7 +20,7 @@ namespace Logitude.HybridTest.ServicesTest
                 CountryId = HybridData.CountryCodeUS,
                 Tenant = EnvironmentGlobalParams.MainTenant,
             };
-            ServiceOutcome serviceOutcome = EntityWcfCaller.CallEntityUpsert(statePM);
+            ServiceOutcome serviceOutcome = entityWcfCaller.CallEntityUpsert(statePM);
             Assert.IsFalse(serviceOutcome.Response.HasError, "Upsert Failed! " + serviceOutcome.Response.ErrorMessage);
             Assert.IsNotNull(serviceOutcome.Response.Result, "Upsert Failed! " + serviceOutcome.Response.ErrorMessage);
         }

@@ -1024,6 +1024,7 @@
     <Compile Include="Controllers\ShipmentsModel\Extended\LogboxShipmentExportExcelController.cs" />
     <Compile Include="Controllers\ShipmentsModel\Generated\ListControllers\AccountingInformationIdentifierViewsController.Generated.cs" />
     <Compile Include="Controllers\ShipmentsModel\DocumentApprovalController.cs" />
+    <Compile Include="DataContracts\CargoTrackingBrandingDataRequest.cs" />
     <Compile Include="DataContracts\CargoTrackingBrandingData.cs" />
     <Compile Include="DataContracts\InterestReportArgs.cs" />
     <Compile Include="Controllers\ShipmentsModel\Generated\ListControllers\ShipmentSubTypeViewsController.Generated.cs" />
@@ -2569,6 +2570,7 @@
     <Compile Include="HealthProb.aspx.designer.cs">
       <DependentUpon>HealthProb.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\AdvancedDateResolver.cs" />
     <Compile Include="Helpers\APIHelpers\ApiExceptionFilter.cs" />
     <Compile Include="Helpers\APIHelpers\APIReceivablePayableHelper.cs" />
     <Compile Include="Helpers\APIHelpers\APITransshipmentHelper.cs" />
@@ -2580,10 +2582,12 @@
     <Compile Include="Helpers\APIHelpers\TMMBProjectsHelper.cs" />
     <Compile Include="Helpers\APIHelpers\TMProjectsHelper.cs" />
     <Compile Include="Helpers\AutomationModel\AutomationMetaDataUpdateService.cs" />
+    <Compile Include="Helpers\AutomationModel\ReportTemplateDocOutService.cs" />
     <Compile Include="Helpers\AutomationModel\FTPAutomationService.cs" />
     <Compile Include="Helpers\BIReportsSecurityIntegrationService.cs" />
     <Compile Include="Helpers\BluesnapAnalyzer.cs" />
     <Compile Include="Helpers\BluesnapExecutionService.cs" />
+    <Compile Include="Helpers\BluesnapHelper.cs" />
     <Compile Include="Helpers\CargoTrackingHelper.cs" />
     <Compile Include="Helpers\DataProviderHelpers\AutomationTestReportDataProvider.cs" />
     <Compile Include="Helpers\DataProviderHelpers\CrossDockEntryLabelDataProviderHelper.cs" />
@@ -2630,6 +2634,7 @@
     <Compile Include="Helpers\LogBox\LogBoxMailgunAnalyzer.cs" />
     <Compile Include="Helpers\LogitudeLeadHelper.cs" />
     <Compile Include="Helpers\MetadataUpdateUtility.cs" />
+    <Compile Include="Helpers\QueryToExcelExportService.cs" />
     <Compile Include="Helpers\ReferentPartnerService.cs" />
     <Compile Include="Helpers\NumbersConverterToWords.cs" />
     <Compile Include="Helpers\PasswordChangeHelper.cs" />
@@ -3155,6 +3160,7 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\InfrastructureModel\EntityUpdateClasses\ObjectFieldUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\InfrastructureModel\EntityUpdateClasses\ObjectTableUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\InfrastructureModel\EntityUpdateClasses\PrepaidCollectUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\InfrastructureModel\EntityUpdateClasses\QueryExportExecutionLogUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\InfrastructureModel\EntityUpdateClasses\QueueMessageMoreDetailsUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\InfrastructureModel\EntityUpdateClasses\RatesTableUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\InfrastructureModel\EntityUpdateClasses\RuleUpdateHistoryUpdateClass.cs" />
@@ -3402,6 +3408,7 @@
     <Content Include="Monitoring\ReportExecutionLogWaitingStatus.aspx" />
     <Content Include="Monitoring\ReportExecutionRunTimeMonitoring.aspx" />
     <Content Include="Monitoring\SATCommunicationWaitingStatus.aspx" />
+    <Content Include="Monitoring\SignupLeadMonitoringPage.aspx" />
     <Content Include="Monitoring\StorageBackup.aspx" />
     <Content Include="QuickbooksOnlineAuth2.aspx" />
     <Content Include="QuickbooksOnline.aspx" />
@@ -5577,6 +5584,13 @@
     </Compile>
     <Compile Include="Monitoring\SATCommunicationWaitingStatus.aspx.designer.cs">
       <DependentUpon>SATCommunicationWaitingStatus.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Monitoring\SignupLeadMonitoringPage.aspx.cs">
+      <DependentUpon>SignupLeadMonitoringPage.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Monitoring\SignupLeadMonitoringPage.aspx.designer.cs">
+      <DependentUpon>SignupLeadMonitoringPage.aspx</DependentUpon>
     </Compile>
     <Compile Include="Monitoring\StorageBackup.aspx.cs">
       <DependentUpon>StorageBackup.aspx</DependentUpon>

@@ -544,6 +544,7 @@ namespace Simplog.Data.ShipmentsModel.Repositories
         public Shipment GetShipmentByMasterAndAirline(string myMasterNumber, string myAirlineId, int myTenant)
         {
             Shipment myEntity = null;
+            DateTime lastYearDate = TenantServerConfigration.GetCurrentDateTime(myTenant).AddYears(-1);
 
             myEntity = (from myShipment in context.Shipments
                         join db_Masters in context.ShipmentMasterDatas on myShipment.MasterShipmentDataId equals db_Masters.Id into ShipmentsMasters
@@ -553,6 +554,7 @@ namespace Simplog.Data.ShipmentsModel.Repositories
                         && myShipment.IsCancelled == false
                         && myMasterData.Master == myMasterNumber
                         && myMasterData.InterlineId == myAirlineId
+                        && myShipment.OperationalDate >= lastYearDate
                         select myShipment).FirstOrDefault();
 
 
@@ -566,6 +568,7 @@ namespace Simplog.Data.ShipmentsModel.Repositories
                             && myShipment.IsCancelled == false
                             && myMasterData.Master == myMasterNumber
                             && myMasterData.MainCarriageCarrierId == myAirlineId
+                            && myShipment.OperationalDate >= lastYearDate
                             select myShipment).FirstOrDefault();
             }
 

@@ -39,9 +39,19 @@ export class RoutingTab {
         Resolvers.ButtonResolver.Selector(typeId).Click();
         this.FillFromAddress('Port');
         this.FillToAddress('PART');
-        
+
+        cy.server();
+        cy.route({
+            method: 'PUT',
+            url: '**/' + 'shipment',
+            onResponse: (xhr) => {
+                expect(xhr.status).to.eq(200);
+            }
+        }).as('SavingEditComponent')
+
         Resolvers.ButtonResolver.Selector('#CloseBtn').Click();
         Resolvers.ButtonResolver.Selector('#ConfirmWindow_Yes_0').Click();
+        cy.wait('@SavingEditComponent');
         Resolvers.WindowResolver.ShouldBeClosed();
     }
     private FillFromAddress(PickupDeliveryTypeCode: string) {

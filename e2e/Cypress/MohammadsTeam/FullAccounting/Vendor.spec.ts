@@ -21,9 +21,9 @@ let R: CreateRandom= new CreateRandom();
 
       var str = R.createrandomnum();
  
-     cy.get('li[id=GeneralMHMaintenance]').click()
+      cy.get('li[id=GeneralMHMaintenance]').click({ force: true })
    
-cy.get('li[id=PAR]')
+      cy.get('li[id=PAR]').click({ force: true })
       v.CreateNewVendor("Test Vendor" + str);
       v.ActivateVendorGlaccount()
 

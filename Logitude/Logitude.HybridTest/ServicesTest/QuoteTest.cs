@@ -14,11 +14,12 @@ namespace Logitude.HybridTest.ServicesTest
     [TestClass]
     public class QuoteTest
     {
+        private static EntityWcfCaller entityWcfCaller = new EntityWcfCaller();
         [TestMethod]
         public void Test_Quote_UPSERT()
         {
             QuotePM quotePM = QuoteWcfFactory.GetQuotePM();
-            ServiceOutcome serviceOutcome = EntityWcfCaller.CallEntityUpsert(quotePM);
+            ServiceOutcome serviceOutcome = entityWcfCaller.CallEntityUpsert(quotePM);
             Assert.IsFalse(serviceOutcome.Response.HasError, "Upsert Failed! " + serviceOutcome.Response.ErrorMessage);
             Assert.IsNotNull(serviceOutcome.Response.Result, "Upsert Failed! " + serviceOutcome.Response.ErrorMessage);
         }
@@ -60,7 +61,7 @@ namespace Logitude.HybridTest.ServicesTest
         public void Test_Quote_CreateEvent()
         {
             QuotePM quotePM = QuoteWcfFactory.GetQuotePM();
-            ServiceOutcome upsertOutcome = EntityWcfCaller.CallEntityUpsert(quotePM);
+            ServiceOutcome upsertOutcome = entityWcfCaller.CallEntityUpsert(quotePM);
             InvokedProperties serviceProperties = new InvokedProperties
             {
                 ServiceName = "Quote",
@@ -78,7 +79,7 @@ namespace Logitude.HybridTest.ServicesTest
         public void Test_Quote_BuildEventsList()
         {
             QuotePM quotePM = QuoteWcfFactory.GetQuotePM();
-            ServiceOutcome upsertOutcome = EntityWcfCaller.CallEntityUpsert(quotePM);
+            ServiceOutcome upsertOutcome = entityWcfCaller.CallEntityUpsert(quotePM);
             List<TraceEventPM> events = new List<TraceEventPM>()
             {
                // new TraceEventPM() { Tenant = EnvironmentGlobalParams.MainTenant, ExternalId = null, UserId = HybridData.UserCodeHU, EventTypeCode = "UPQT", EventDateTime = DateTime.Now.AddDays(-2), LogDateTime = DateTime.Now.AddDays(-2), Notes = "Testing hybrid updated" },
@@ -92,7 +93,7 @@ namespace Logitude.HybridTest.ServicesTest
         public void Test_Quote_DeleteQuoteEvent()
         {
             QuotePM quotePM = QuoteWcfFactory.GetQuotePM();
-            ServiceOutcome upsertOutcome = EntityWcfCaller.CallEntityUpsert(quotePM);
+            ServiceOutcome upsertOutcome = entityWcfCaller.CallEntityUpsert(quotePM);
             string acceptedExternalId = Guid.NewGuid().ToString();
             List<TraceEventPM> events = new List<TraceEventPM>()
             {

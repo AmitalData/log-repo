@@ -21,7 +21,8 @@ export class PublicShipmentDetailsComponent implements OnInit
     isLoading: boolean = false;
     isMobileView: boolean = false;
     isTabletView: boolean = false;
-  
+    ShipmentQuantity:number=0;
+    ShipmentContainers:string[]=[];
     previousUrl: string;
 
     constructor(private route: ActivatedRoute,
@@ -181,7 +182,7 @@ export class PublicShipmentDetailsComponent implements OnInit
     LoadShipment()
     {
         this.GetShipment();
-        this.GetPublicShipmentReferences();
+        //this.GetPublicShipmentReferences();
     }
 
     public MilstonesExist: boolean = false;
@@ -194,8 +195,10 @@ export class PublicShipmentDetailsComponent implements OnInit
             this.isLoading = false;
             console.log("[getShipment]", result);
             this.ShipmentWithMilestones = result;
+            this.SetCargoTrackingContainers(result);
             if (this.ShipmentWithMilestones) {
                 this.Shipment = result.ShipmentList;
+                this.ShipmentReferences = result.ShipmentList.CustomerReference.split(',');
                 if (this.Shipment.CurrentMilestoneCode == "11") {
                     this.Delivered = true;
                     this.DileveredIconColor = CargoTrackingBrandingData.SecondaryColor;
@@ -215,7 +218,16 @@ export class PublicShipmentDetailsComponent implements OnInit
 
         });
     }
+    SetCargoTrackingContainers(result: CargoTrackingShipmentWithMilestones){
+         var Containers:string[] = [];
+         if(result.ShipmentList && result.ShipmentList.ContainersNumbers){
+            Containers = result.ShipmentList.ContainersNumbers.split(',');
+            Containers = Containers.filter(S=>S.trim()!=null&&S.trim()!="");
+            this.ShipmentQuantity = Containers.length;
+            this.ShipmentContainers = Containers;
 
+         }
+    }
     SetMilestonesFields(result: CargoTrackingShipmentWithMilestones)
     {
 
@@ -260,6 +272,7 @@ export class PublicShipmentDetailsComponent implements OnInit
     ShipmentReferences: string[] = [];
     IsLoadingReferences = false;
     showMoreReferences: boolean  = false;
+    showMoreContainers: boolean  = false;
 
     GetPublicShipmentReferences()
     {

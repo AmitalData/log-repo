@@ -11,6 +11,7 @@ namespace Logitude.HybridTest.WcfCallers
     [TestClass]
     class PrepareSystem
     {
+        private static EntityWcfCaller entityWcfCaller = new EntityWcfCaller();
         [AssemblyInitialize]
         public static void PrepareSystemVars(TestContext context)
         {
@@ -24,6 +25,7 @@ namespace Logitude.HybridTest.WcfCallers
             UpsertBranch();
             UpsertUser();
             UpsertCardContact();
+            UpsertContact();
         }
         private static void GetAuthenticationMainTenantToken()
         {
@@ -124,9 +126,22 @@ namespace Logitude.HybridTest.WcfCallers
             };
             AssertResponse(cardContactPM);
         }
+        private static void UpsertContact()
+        {
+            ContactPM contactPM = new ContactPM()
+            {
+                EnglishName = HybridData.ContactCode,
+                LocalName = "Hybrid Contact",
+                Email = "HybridContact@logitudeworld.com",
+                Password = "!H0",
+                ExternalId = HybridData.ContactCode,
+                Tenant = EnvironmentGlobalParams.MainTenant,
+            };
+            AssertResponse(contactPM);
+        }
         private static void AssertResponse<T>(T entityPM)
         {
-            ServiceOutcome serviceOutcome = EntityWcfCaller.CallEntityUpsert(entityPM);
+            ServiceOutcome serviceOutcome = entityWcfCaller.CallEntityUpsert(entityPM);
             Assert.IsFalse(serviceOutcome.Response.HasError, "Prepare System Vars Failed! " + serviceOutcome.Response.ErrorMessage);
             Assert.IsNotNull(serviceOutcome.Response.Result, "Prepare System Vars Failed! " + serviceOutcome.Response.ErrorMessage);
         }

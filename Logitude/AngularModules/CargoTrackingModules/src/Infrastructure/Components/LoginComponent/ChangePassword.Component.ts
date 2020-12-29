@@ -1,7 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { CargoTrackingBrandingData } from 'src/CargoTracking/DataContracts/CargoTrackingBrandingData';
+import { ServiceResponse } from 'src/CargoTracking/DataContracts/ServiceResponse';
+import { CargoTrackingBrandingDataExtendedService } from 'src/CargoTracking/Services/Others/CargoTrackingBrandingDataExtendedService';
+import { ServiceHelper } from 'src/CargoTracking/Utilities/ServiceHelper';
 import { CommonDataExtendedService } from 'src/Infrastructure/Services/Extended/CommonDataExtendedService';
 import { ChangePasswordParameter, LoginExtendedService } from 'src/Infrastructure/Services/Extended/LoginExtendedService';
+import { LoginServiceHelper } from 'src/Infrastructure/Utilities/LoginServiceHelper';
 
 @Component({
     selector: 'changePassword',
@@ -22,11 +27,37 @@ export class ChangePasswordComponent implements OnInit {
     public PasswordLenghtImg: string;
     public PasswordContainsCharactersImg: string;
     public PasswordContainsNumberImg: string;
+    public MainColor: string = null;
+    public SecondaryColor: string = null;
 
     constructor(private router: Router,
         private route: ActivatedRoute,
         private loginExtendedService: LoginExtendedService,
-        private commonDataExtendedService: CommonDataExtendedService) {
+        private commonDataExtendedService: CommonDataExtendedService,
+        private cargoTrackingBrandingDataExtendedService: CargoTrackingBrandingDataExtendedService,
+        private loginServiceHelper: LoginServiceHelper,
+        @Inject('BASE_URL') baseUrl: string) {
+        this.GetcargoTrackingData(baseUrl);
+    }
+
+    private GoToError401(){
+        this.router.navigate(['Error401']);
+    }
+
+    private GetcargoTrackingData(baseUrl:string) {
+        this.LogoImgSrc = "./assets/images/logo/White.jpg";
+        this.cargoTrackingBrandingDataExtendedService.GetCargoTrackingBrandingDataForPrivateSite(ServiceHelper.GetcargoTrackingDataRequest(baseUrl)).subscribe((response: ServiceResponse) => { 
+            if(response.Result){
+                this.Tenant = response.Result.Tenant;
+                ServiceHelper.SetCargoTrackingDate(response.Result,baseUrl);
+                this.LogoImgSrc = this.loginServiceHelper.GetLoginLogoImg();
+                this.MainColor = response.Result.MainColor != null ? ServiceHelper.ConvertHexaToRGBA(response.Result.MainColor) : null;
+                this.SecondaryColor = response.Result.SecondaryColor != null ? ServiceHelper.ConvertHexaToRGBA(response.Result.SecondaryColor) : null;
+            }
+            else{
+                this.GoToError401();
+            }
+        });
     }
 
     ngOnInit() {
@@ -40,7 +71,6 @@ export class ChangePasswordComponent implements OnInit {
         if(this.requestNumber) this.IsResetPasswordViaEmail = true;
 
         this.SetPasswordImagesAndColors();
-        this.GetLogoImgage();
     }
 
     private SetPasswordImagesAndColors(){
@@ -51,21 +81,6 @@ export class ChangePasswordComponent implements OnInit {
         document.documentElement.style.setProperty('--PasswordLenghtColor', "gray");
         document.documentElement.style.setProperty('--PasswordContainsCharacters', "gray");
         document.documentElement.style.setProperty('--PasswordContainsNumber', "gray");
-    }
-
-    private GetLogoImgage() {
-        this.LogoImgSrc = "./assets/images/logo/White.jpg";
-        this.Tenant = this.route.snapshot.queryParams?.tenant;
-        if(this.Tenant){
-            this.commonDataExtendedService.GetComponayLogo(this.Tenant).subscribe((logoImage: any) => {
-                if (logoImage && !logoImage.HasError)
-                    this.LogoImgSrc = logoImage;
-                else  
-                    this.LogoImgSrc = "./assets/images/logo/UnifreightLogo.jpg";
-            });
-        }
-        else
-            this.LogoImgSrc = "./assets/images/logo/UnifreightLogo.jpg";
     }
 
     public SubmitClicked() {
@@ -252,11 +267,12 @@ export class ChangePasswordComponent implements OnInit {
 
         this.loginExtendedService.PostChangePassword(this.Email, params).subscribe((res:any) => {
             if (res) {
-                this.Tenant = this.route.snapshot.queryParams?.tenant;
+                //this.Tenant = this.route.snapshot.queryParams?.tenant;
                 if(this.Tenant)
-                    this.router.navigate(["login"],{ queryParams: {tenant: this.Tenant}});
+
+                    this.router.navigate(["Cargo-Tracking/login"]);//,{ queryParams: {tenant: this.Tenant}}
                 else
-                    this.router.navigate(["login"]);
+                    this.router.navigate(["Cargo-Tracking/login"]);
             }
             else {
                 this.ErrorMessage = "Changing password failed!"

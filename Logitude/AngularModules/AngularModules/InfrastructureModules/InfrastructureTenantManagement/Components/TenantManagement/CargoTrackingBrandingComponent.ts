@@ -37,16 +37,26 @@ export class CargoTrackingBrandingComponent extends BaseComponent implements Aft
     public DataContext:any= this;
     IsVisibile: boolean;
     public EntityId: number;
+    public BackgroundId: string;
+    public ComapnylogoId: string;
+    public BrowserIconId: string;
     private _entityResourceService: EntityResourceService = new EntityResourceService();
     constructor( public entityArgs: EntityArgs) {
         super();
         this.EntityPM = entityArgs.EntityPM;
         this.EntityId = this.EntityPM.Id;
-        this.ImageId = this.EntityPM.BackgroundId;
+        this.InitializeImageIds();
         if(this.EntityPM.MainColor ==null)  document.documentElement.style.setProperty('--sliderBackground', null);
         if(this.EntityPM.SecondaryColor ==null)  document.documentElement.style.setProperty('--sliderBackground2', null);
 
     }
+
+    private  InitializeImageIds(){
+        this.BackgroundId = this.EntityPM.BackgroundId;
+        this.ComapnylogoId = this.EntityPM.ComapnylogoId;
+        this.BrowserIconId = this.EntityPM.BrowserIconId;
+    }
+
     clickColor(color: any) {
          console.log('working.....'); 
     }
@@ -250,10 +260,18 @@ get CustomerURL() {
 
 
     }
-    public ImageId: string;
-    ImageUploadedCompleted(code) {
-        this.ImageId = code;
+    
+    BackgroundImageUploadedCompleted(code) {
+        this.BackgroundId = code;
         this.EntityPM.BackgroundId = code;
+    }
+    ComapnylogoUploadedCompleted(code) {
+        this.ComapnylogoId = code;
+        this.EntityPM.ComapnylogoId = code;
+    }
+    BrowserIconUploadedCompleted(code) {
+        this.BrowserIconId = code;
+        this.EntityPM.BrowserIconId = code;
     }
 
     EnableBrandingChange(value: any) {
@@ -268,7 +286,6 @@ get CustomerURL() {
       
         this.UIProperties.SetEnabled("MainColor", "TenantManagement", value);
         this.UIProperties.SetEnabled("SecondaryColor", "TenantManagement", value);
-
         this.UIProperties.SetEnabled("CustomerURL", "TenantManagement", value);
         this.UIProperties.SetEnabled("ContactEmail", "TenantManagement", value);
         this.UIProperties.SetEnabled("HideSharedlogistics", "TenantManagement", value);

@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class UserDefinedReportUpdateClass
    {  		
-		public const string HashString = "88f755d53e558ec364802cfa5df3e835";
+		public const string HashString = "762c0452cf3c9abcb046499a1e8fee6e";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -121,7 +121,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    NewWizardControlName =  "./Accounting/Components/NewEntity/NewUserDefinedReportComponent",
-			      				    LocalDefaultText =  "הוגדר ע\"י משתמש",
+			      				    LocalDefaultText =  "קבוצות מאזן מחושבות",
 			      				    DefaultText =  "User Defined Reports",
 			      				    Code =  "c4c8",
 			      				    Name =  " Query Group",
@@ -1073,7 +1073,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			List<AdvancedQueryFilter> addedQueryFilters = new List<AdvancedQueryFilter>();
    
 
-			   TextCode UserDefinedReportTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "UserDefinedReport.Q.UserDefinedReports", DefaultText = @"User Defined Reports",LocalDefaultText = "הוגדר ע\"י משתמש", ObjectTableId = UserDefinedReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   TextCode UserDefinedReportTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "UserDefinedReport.Q.UserDefinedReports", DefaultText = @"User Defined Reports",LocalDefaultText = "קבוצות מאזן מחושבות", ObjectTableId = UserDefinedReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
 			   Feature UserDefinedReportFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UserDefinedReport.Q.UserDefinedReports", ObjectTableId = UserDefinedReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "UserDefinedReportFeatures.UserDefinedReports", NameTextCodeDefaultText = "User Defined Reports", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,UserDefinedReportObjectTable, addedFeatures, addedTextCodes);
 
 	        //TextCodeRepository.SubmitChanges();

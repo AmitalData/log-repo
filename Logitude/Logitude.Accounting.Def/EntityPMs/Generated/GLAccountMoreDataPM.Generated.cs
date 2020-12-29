@@ -66,12 +66,12 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
-	  private decimal? balanceInLocalCurrency ;
+	  private decimal balanceInLocalCurrency ;
 	  	  
        
 	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
 	   [DataMember]
-       public decimal? BalanceInLocalCurrency  
+       public decimal BalanceInLocalCurrency  
 	   {
 	    
 	     get
@@ -82,19 +82,19 @@ namespace Logitude.Accounting.Def.EntityPMs
 		 {
 		   if(balanceInLocalCurrency != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="BalanceInLocalCurrency",OldValue=balanceInLocalCurrency,NewValue=value,PropertyType="decimal?"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="BalanceInLocalCurrency",OldValue=balanceInLocalCurrency,NewValue=value,PropertyType="decimal"};
 		    NotifyPropertyChanged(values);
 		   balanceInLocalCurrency=value;
 		   }
 			
 		 }
 	   }
-	  private decimal? localBalanceInDue ;
+	  private decimal localBalanceInDue ;
 	  	  
        
 	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
 	   [DataMember]
-       public decimal? LocalBalanceInDue  
+       public decimal LocalBalanceInDue  
 	   {
 	    
 	     get
@@ -105,7 +105,7 @@ namespace Logitude.Accounting.Def.EntityPMs
 		 {
 		   if(localBalanceInDue != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="LocalBalanceInDue",OldValue=localBalanceInDue,NewValue=value,PropertyType="decimal?"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="LocalBalanceInDue",OldValue=localBalanceInDue,NewValue=value,PropertyType="decimal"};
 		    NotifyPropertyChanged(values);
 		   localBalanceInDue=value;
 		   }

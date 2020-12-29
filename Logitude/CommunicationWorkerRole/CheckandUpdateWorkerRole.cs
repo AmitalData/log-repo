@@ -159,9 +159,21 @@ namespace CommunicationWorkerRole
                                         GlobaltenantRep.Update(updatedTenant);
                                         GlobaltenantRep.SubmitChanges();
 
-                                        if (LogitudeSettings.DeploymentStage == "Dev")
-                                        {
-                                            //throw e;
+                                        if (LogitudeSettings.DeploymentStage != "Dev")
+                                        { 
+
+                                            EmailCommunicationParams emailParams = new EmailCommunicationParams()
+                                            {
+                                                From = "admin@fnarsoft.com",
+                                                To = "ahmada@logitudeworld.com",
+                                                CC = "",
+                                                BCC = "",
+                                                Subject = "Updating tenant " + tenant.Id + " Failed!.",
+                                                EmailBody = str1.ToString(),
+                                                Tenant = 0,
+                                            };
+
+                                            Communications.AddEmailCommunicationLogQueue(emailParams, 0);
                                         }
                                     }
                                 }
@@ -176,7 +188,7 @@ namespace CommunicationWorkerRole
                                 EmailCommunicationParams emailParams = new EmailCommunicationParams()
                                 {
                                     From = "admin@fnarsoft.com",
-                                    To = "jalal@logitudeworld.com",
+                                    To = "ahmada@logitudeworld.com",
                                     CC = "",
                                     BCC = "",
                                     Subject = "Update All Tenants History",

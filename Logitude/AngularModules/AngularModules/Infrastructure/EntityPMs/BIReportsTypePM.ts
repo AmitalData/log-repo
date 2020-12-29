@@ -43,7 +43,10 @@ export class BIReportsTypePM {
     public OldEntityPM: BIReportsTypePM;
 		
     public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
+       if(!this.DisableMarkAsDirty)
+       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -51,6 +54,7 @@ export class BIReportsTypePM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "BIReportsType");
            
         }
+       }
     }
 
     private MyClone: BIReportsTypePM;

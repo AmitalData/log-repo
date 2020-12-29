@@ -169,7 +169,6 @@ namespace Logitude.Infrastructure.BL
                 SearchFields = "LIC,License Management", 
 			});
 			 
-
             all.Add(new ToggleDetails()
             {    
                 Name = "CRM Customer Quick Search", 
@@ -177,7 +176,7 @@ namespace Logitude.Infrastructure.BL
                 SearchFields = "CQS,CRM Customer Quick Search", 
                 Description = "CRM Customer Quick Search", 
 			});
-
+			 
             all.Add(new ToggleDetails()
             {    
                 Name = "Charges Types Direction Restrictions", 
@@ -185,7 +184,38 @@ namespace Logitude.Infrastructure.BL
                 SearchFields = "CTR,Charges Types Direction Restrictions", 
                 Description = "Charges Types Direction Restrictions", 
 			});
-
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Name = "Branch Code in Counters", 
+                SearchFields = "Branch Code in Counters", 
+                Description = "Branch Code in Counters", 
+                Code = "BCC", 
+			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "ACP", 
+                SearchFields = "ACP,Accruals Approvement", 
+                Name = "Accruals Approvement", 
+                Description = "Accruals Approvement Toggle", 
+			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "EQW", 
+                Name = "Export Query Data Via WorkerRole", 
+                Description = "Export Query Data to Excel Via WorkerRole", 
+                SearchFields = "Export Query Data Via WorkerRole", 
+			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Name = " Improved Search in Customers Views", 
+                Code = "SCV", 
+                SearchFields = "SCV, Improved Search in Customers Views", 
+                Description = " Improved Search in Customers Views", 
+			});
 			
             return all;
        }

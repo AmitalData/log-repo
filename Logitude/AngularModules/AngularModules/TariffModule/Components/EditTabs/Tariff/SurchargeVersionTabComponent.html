@@ -91,7 +91,7 @@
         <tr>
             <td>
                 <div class="MediaFill">
-                    <logitude-edit-grid GridWidth="100%" GridHeight="100%" [ItemSource]="TariffsLinesSource">
+                    <logitude-edit-grid GridWidth="100%" GridHeight="100%" [ItemSource]="TariffsLinesSource" [SelectedRow]="selectedRow" [ChangeScrollPosition]="changeScrollPosition">
 
                         <!--Actions-->
                         <log-column [width]="'60'" *ngIf="IsDraftVersion">

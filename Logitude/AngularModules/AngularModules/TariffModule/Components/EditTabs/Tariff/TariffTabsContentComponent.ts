@@ -265,6 +265,7 @@ export class TariffTabsContentComponent implements OnDestroy {
     private Retries: number = 0;
     private timerToken: any;
     private lineIdFromPriceCheck: string;
+    private chargeableWeightInKG: number;
     RunComponent(IsNext: boolean = true) {
         var index = 0;
         if (!IsNext) {
@@ -277,17 +278,12 @@ export class TariffTabsContentComponent implements OnDestroy {
             }
 
             else {
-                if (!AppTool.IsNullOrEmpty(this.entityArgs.EditComponent.PreSelectedTabCode)) {
+                if (!AppTool.IsNullOrEmpty(this.entityArgs.EditComponentArgument)) {
 
-                    var versionId = null;
-
-                    if (this.entityArgs.EditComponent.PreSelectedTabCode.indexOf(',') > -1) {
-                        var codeArray: string[] = this.entityArgs.EditComponent.PreSelectedTabCode.split(',');
-
-                        versionId = codeArray[0];
-                        this.lineIdFromPriceCheck = codeArray[1];
-                    }
-                    
+                    var versionId = this.entityArgs.EditComponentArgument['VersionId'];
+                    this.lineIdFromPriceCheck = this.entityArgs.EditComponentArgument['LineId'];
+                    this.chargeableWeightInKG = this.entityArgs.EditComponentArgument['ChargeableWeightInKG'];
+                                        
                     var SelectedTab: TariffDetailsTab = this.Tabs.filter(p => p.VersionPM != null ? (p.VersionPM.Version == + versionId) : 0)[0];
 
                     if (SelectedTab) {
@@ -295,7 +291,17 @@ export class TariffTabsContentComponent implements OnDestroy {
                     }
 
                     else {
-                        this.SelectionChanged(this.Tabs[index]);
+                        SelectedTab = this.Tabs.filter(p => p.Code == "VH")[0];
+                        if (SelectedTab == undefined) {
+                            this.pager.startIndex = this.pager.endIndex + 1;
+                            if (this.pager.endIndex + 4 >= this.AllTabs.length - 1)
+                                this.pager.endIndex = this.AllTabs.length - 1;
+                            else
+                                this.pager.endIndex  = this.pager.endIndex + 4;
+                            this.Tabs = this.AllTabs.slice(this.pager.startIndex, this.pager.endIndex + 1);
+                            this.RunComponent(false);
+                        }
+                        this.SelectionChanged(SelectedTab);
                     }
 
                     this.entityArgs.EditComponent.PreSelectedTabCode = null;
@@ -367,7 +373,14 @@ export class TariffTabsContentComponent implements OnDestroy {
                                 cmpRef.instance.Intialize({
                                     CurrentVersion: this.SelectedTabItem.VersionPM,
                                     SelectedVersionNumber: this.SelectedTabItem.VersionPM.Version,
-                                    LineIdFromPriceCheck: this.lineIdFromPriceCheck
+                                    LineIdFromPriceCheck: this.lineIdFromPriceCheck,
+                                    ChargeableWeightInKG: this.chargeableWeightInKG
+                                });
+                            }
+                            if (this.SelectedTabItem.Code == "VH") {
+                                cmpRef.instance.Intialize({
+                                    LineIdFromPriceCheck: this.lineIdFromPriceCheck,
+                                    ChargeableWeightInKG: this.chargeableWeightInKG
                                 });
                             }
                         });

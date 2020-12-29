@@ -91,11 +91,7 @@ namespace Logitude.Accounting.BL.Validators
             string RequiredLocalNameFiled = FIELD_IS_REQUIERD.Replace("%FieldName", TextCodesTranslator.TranslateText("CalculatedChartsOfAccount.F.LocalName", periodPM.Tenant, showLocals));
             if (periodPM.ChangeSetOp != ChangeSetOperation.None && periodPM.ChangeSetOp != ChangeSetOperation.Delete && !periodPM.IsCancelled)
             {
-                if (string.IsNullOrEmpty(periodPM.ChartOfAccountTypeCode))
-                {
-                    throw new Exception(TextCodesTranslator.TranslateText("UserDefinedReport.O.CalculatedChartofAccount", periodPM.Tenant, showLocals) + " " + periodPM.Line + " " + RequiredChartsofAccountTypeCodeFiled);
-                }
-                else if (string.IsNullOrEmpty(periodPM.LocalName))
+                if (string.IsNullOrEmpty(periodPM.LocalName))
                 {
                     throw new Exception(TextCodesTranslator.TranslateText("UserDefinedReport.O.CalculatedChartofAccount", periodPM.Tenant, showLocals) + " " + periodPM.Line + " " + RequiredLocalNameFiled);
 
@@ -173,10 +169,13 @@ namespace Logitude.Accounting.BL.Validators
             {
                 if (LinePM.ChangeSetOp != ChangeSetOperation.None && LinePM.ChangeSetOp != ChangeSetOperation.Delete && !LinePM.IsCancelled)
                 {
-                    if (LinePM.ChartOfAccountTypeCode != periodPM.ChartOfAccountTypeCode)
+                    if (!string.IsNullOrEmpty(periodPM.ChartOfAccountTypeCode) &&
+                        !string.IsNullOrEmpty(LinePM.ChartOfAccountTypeCode) &&
+                        LinePM.ChartOfAccountTypeCode != periodPM.ChartOfAccountTypeCode)
                     {
                         throw new Exception(TextCodesTranslator.TranslateText("UserDefinedReport.O.CalculatedChartofAccount", periodPM.Tenant, showLocals) + " " + periodPM.Line + " " +
-                                       TextCodesTranslator.TranslateText("UserDefinedReport.O.CantUpdateTheChartofAccountType", periodPM.Tenant, showLocals));
+                                            TextCodesTranslator.TranslateText("CalculatedChartsOfAccountsLine", periodPM.Tenant,  showLocals) + " " + LinePM.Line + " " +
+                                            TextCodesTranslator.TranslateText("UserDefinedReport.O.ChartOfAccountTypeforthislinediffersfromtheChartofAccount", periodPM.Tenant, showLocals));
 
                     }
 

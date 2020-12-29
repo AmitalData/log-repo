@@ -17,4 +17,21 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  <xs:element name="GetAgentPM">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="code" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="tenant" type="xs:int" />
+        <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/Logitude.Server.Tools" minOccurs="0" name="response" nillable="true" type="q3:Response" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetAgentPMResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/Logitude.BL.CommonDataModel.EntityPMs" minOccurs="0" name="GetAgentPMResult" nillable="true" type="q4:AgentPM" />
+        <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/Logitude.Server.Tools" minOccurs="0" name="response" nillable="true" type="q5:Response" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
 </xs:schema>

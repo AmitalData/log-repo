@@ -31,11 +31,17 @@ namespace Logitude.Accounting.Data.Utilities
                 EntityIconsDictionary.Add("8", "RV");// 8-Revaluation
                 EntityIconsDictionary.Add("9", "CH");// 9-PaymentCheque
                 EntityIconsDictionary.Add("10", "AJ");// 10-Adjustment
+                EntityIconsDictionary.Add("11", "YT");// Year Transfer
+                EntityIconsDictionary.Add("12", "BA");// Bank Adjustment
             }
         }
-        public   string getEntityIcon(string _sourceTypeCode)
+        public string getEntityIcon(string _sourceTypeCode)
         {
-            var iconTxt = EntityIconsDictionary[_sourceTypeCode];
+            string iconTxt = null;
+            if (!string.IsNullOrEmpty(_sourceTypeCode))
+            {
+              iconTxt= EntityIconsDictionary[_sourceTypeCode];
+            } 
            
             return iconTxt;
         }

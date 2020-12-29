@@ -140,6 +140,10 @@ namespace Logitude.Accounting.Data.EntityLists
        public string ForeignAmountCreditWithSign  { get; set; }
        [DataMember]
        public string CumulativeForeignAmountSign  { get; set; }
+       [DataMember]
+       public decimal CalculatedLocalAmount  { get; set; }
+       [DataMember]
+       public decimal CalculatedForeignAmount  { get; set; }
    }
 
 }

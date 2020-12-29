@@ -8,6 +8,7 @@ using Logitude.BL.ShipmentsModel.EntityLists;
 using Logitude.BL.ShipmentsModel.EntityOtherServices;
 using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.BL.ShipmentsModel.EntityQueries;
+using Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours.Validators;
 using Logitude.BL.ShipmentsModel.Tools.EntityService;
 using Logitude.BL.ShipmentsModel.Tools.Validating;
 using Logitude.CRM.Data;
@@ -356,22 +357,47 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int myTenant = authToken.Tenant;
 
-                bool isFieldExists = ShipmentValidating.IsMasterFieldUsedByAnotherShipment(args.ShipmentId, args.Master, args.AirlinePrefix, args.DirectionId, args.TransportModeId, args.ShipmentLevelCode, args.IsCancelled, myTenant);
-                if (isFieldExists)
+                try
                 {
-                    myResult = "Master field already used in another Shipment";
+                    ShipmentMasterIsUsedValidator validator = new ShipmentMasterIsUsedValidator();
+
+                    validator.Validate(new ShipmentMasterIsUsedValidatorArgs()
+                    {
+                        Tenant = myTenant,
+                        ShipmentId = args.ShipmentId,
+                        BookingId = args.BookingId,
+                        DirectionId = args.DirectionId,
+                        TransportModeId = args.TransportModeId,
+                        ShipmentLevelCode = args.ShipmentLevelCode,
+                        Master = args.Master,
+                        AirlinePrefix = args.AirlinePrefix,
+                        IsCancelled = args.IsCancelled,                        
+                    });
                 }
 
-                else
+                catch (Exception ex)
                 {
-                    isFieldExists = ShipmentValidating.IsMasterFieldUsedByAnotherBooking(args.BookingId, args.Master, args.AirlinePrefix, args.DirectionId, args.TransportModeId, args.ShipmentLevelCode, args.IsCancelled, myTenant);
-                    if (isFieldExists)
-                    {
-                        myResult = "Master field already used in another Booking";
-                    }
+                    myResult = ex.Message;
                 }
 
                 return Request.CreateResponse(HttpStatusCode.OK, myResult);
+                
+                //bool isFieldExists = ShipmentValidating.IsMasterFieldUsedByAnotherShipment(args.ShipmentId, args.Master, args.AirlinePrefix, args.DirectionId, args.TransportModeId, args.ShipmentLevelCode, args.IsCancelled, myTenant);
+                //if (isFieldExists)
+                //{
+                //    myResult = "Master field already used in another Shipment";
+                //}
+
+                //else
+                //{
+                //    isFieldExists = ShipmentValidating.IsMasterFieldUsedByAnotherBooking(args.BookingId, args.Master, args.AirlinePrefix, args.DirectionId, args.TransportModeId, args.ShipmentLevelCode, args.IsCancelled, myTenant);
+                //    if (isFieldExists)
+                //    {
+                //        myResult = "Master field already used in another Booking";
+                //    }
+                //}
+
+                //return Request.CreateResponse(HttpStatusCode.OK, myResult);
             }
 
             catch (Exception ex)
@@ -2540,6 +2566,192 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
+        }
+
+        [ActionName("PostValidateAMANACShipmentsBeforeExporting")]
+        public HttpResponseMessage PostValidateAMANACShipmentsBeforeExporting(CustomsTransferHeaderPM myEntity)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int myTenant = authToken.Tenant;
+
+                if(myEntity.CustomsTransferLines.Count > 0)
+                {
+                    List<string> ids = myEntity.CustomsTransferLines.Select(s => s.ShipmentId).ToList();
+                    ShipmentRepository shipmentRepository = new ShipmentRepository(myTenant);
+                    List<ShipmentDataView>shipments = shipmentRepository.GetShipmentsFromIdList(ids, myTenant);
+
+                    foreach (ShipmentDataView item in shipments)
+                    {
+                        CustomsTransferLinePM myLine = myEntity.CustomsTransferLines.Where(d => d.ShipmentId == item.Id).FirstOrDefault();
+                        if (myLine != null)
+                        {
+                            if (string.IsNullOrEmpty(item.AirlinePrefix) || string.IsNullOrEmpty(item.Master)
+                            || string.IsNullOrEmpty(item.MainCarriageFromPortCode) || string.IsNullOrEmpty(item.MainCarriageFromPortName)
+                            || string.IsNullOrEmpty(item.MainCarriageFinalDestinationPortCode) || string.IsNullOrEmpty(item.MainCarriageFinalDestinationPortName)
+                            || string.IsNullOrEmpty(item.MainCarriageCarrierCode) || string.IsNullOrEmpty(item.MainCarriageCarrierName)
+                            || item.NumberOfPackages == null || item.NumberOfPackages == 0
+                            || item.GrossWeight == null || item.GrossWeight == 0
+                            || (item.DirectionId == "E" && string.IsNullOrEmpty(item.ShipperId))
+                            || (item.DirectionId == "I" && string.IsNullOrEmpty(item.ConsigneeId)))
+                            {
+                                myLine.HasError = true;
+                                myLine.ErrorText = this.BuildAMANACErrorText(item);
+                            }
+
+                            else
+                            {
+                                myLine.HasError = false;
+                                myLine.ErrorText = null;
+                            }
+                        }
+                    }
+                }
+
+                return Request.CreateResponse(HttpStatusCode.OK, myEntity);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+        private string BuildAMANACErrorText(ShipmentDataView item)
+        {
+            string myResult = "";
+
+            if (string.IsNullOrEmpty(item.AirlinePrefix) && string.IsNullOrEmpty(item.Master))
+            {
+                myResult = "Missing Master B/L";
+            }
+            else
+            {
+                myResult = "Invalid Master B/L";
+            }
+
+            if (string.IsNullOrEmpty(item.MainCarriageFromPortCode))
+            {
+                if(string.IsNullOrEmpty(myResult))
+                {
+                    myResult = "Missing Origin Airport Code";
+                }
+                else
+                {
+                    myResult = myResult + ", Missing Origin Airport Code";
+                }
+            }
+
+            if (string.IsNullOrEmpty(item.MainCarriageFromPortName))
+            {
+                if (string.IsNullOrEmpty(myResult))
+                {
+                    myResult = "Missing Origin Airport";
+                }
+                else
+                {
+                    myResult = myResult + ", Missing Origin Airport";
+                }
+            }
+
+            if (string.IsNullOrEmpty(item.MainCarriageFinalDestinationPortCode))
+            {
+                if (string.IsNullOrEmpty(myResult))
+                {
+                    myResult = "Missing Destination Airport Code";
+                }
+                else
+                {
+                    myResult = myResult + ", Missing Destination Airport Code";
+                }
+            }
+
+            if (string.IsNullOrEmpty(item.MainCarriageFinalDestinationPortName))
+            {
+                if (string.IsNullOrEmpty(myResult))
+                {
+                    myResult = "Missing Destination Airport";
+                }
+                else
+                {
+                    myResult = myResult + ", Missing Destination Airport";
+                }
+            }
+
+            if (string.IsNullOrEmpty(item.MainCarriageCarrierCode))
+            {
+                if (string.IsNullOrEmpty(myResult))
+                {
+                    myResult = "Missing IATA Code of the Carrier";
+                }
+                else
+                {
+                    myResult = myResult + ", Missing IATA Code of the Carrier";
+                }
+            }
+
+            if (string.IsNullOrEmpty(item.MainCarriageCarrierName))
+            {
+                if (string.IsNullOrEmpty(myResult))
+                {
+                    myResult = "Missing Airline";
+                }
+                else
+                {
+                    myResult = myResult + ", Missing Airline";
+                }
+            }
+
+            if (item.NumberOfPackages == null || item.NumberOfPackages == 0)
+            {
+                if (string.IsNullOrEmpty(myResult))
+                {
+                    myResult = "Missing Pieces";
+                }
+                else
+                {
+                    myResult = myResult + ", Missing Pieces";
+                }
+            }
+
+            if (item.GrossWeight == null || item.GrossWeight == 0)
+            {
+                if (string.IsNullOrEmpty(myResult))
+                {
+                    myResult = "Missing Gross Weight";
+                }
+                else
+                {
+                    myResult = myResult + ", Missing Gross Weight";
+                }
+            }
+
+            if (item.DirectionId == "E" && string.IsNullOrEmpty(item.ShipperId))
+            {
+                if (string.IsNullOrEmpty(myResult))
+                {
+                    myResult = "Missing Shipper";
+                }
+                else
+                {
+                    myResult = myResult + ", Missing Shipper";
+                }
+            }
+
+            if (item.DirectionId == "I" && string.IsNullOrEmpty(item.ConsigneeId))
+            {
+                if (string.IsNullOrEmpty(myResult))
+                {
+                    myResult = "Missing Consignee";
+                }
+                else
+                {
+                    myResult = myResult + ", Missing Consignee";
+                }
+            }
+
+            return myResult;
         }
     }
 }

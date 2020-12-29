@@ -1079,12 +1079,20 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
                 Tenant = tenant,
                 SearchText = mySearchText,
                 PageSize = 11,
-                Customers = myListQuery,
+                EntityLists = myListQuery,
+                FilterItems = GetQueryFilterItems(),
             };
-            CustomerSearchService customerSearchFilter = new CustomerSearchService(customerSearchArgs);
-            myResult = customerSearchFilter.Run();
+            CustomerDataSearchService customerDataSearchService = new CustomerDataSearchService();
+            myResult = customerDataSearchService.Run(customerSearchArgs);
 
             return myResult;
+        }
+
+        private List<QueryFilterItem>  GetQueryFilterItems()
+        {
+            var queryFilterItems = new List<QueryFilterItem>();
+            queryFilterItems.Add(new QueryFilterItem() { FieldName = "IsCustomer", FieldValue = true });
+            return queryFilterItems;
         }
 
         [Invoke]

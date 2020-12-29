@@ -1,7 +1,7 @@
 import { FullAccountingSettingPM } from './../../EntityPMs/FullAccountingSettingPM';
 import { FullAccountingSettingPMService } from './../../Services/StandardPMs/FullAccountingSettingPMService';
 import { AccountingEntityHelper } from './../../Utilities/AccountingEntityHelper';
-import {Component, Output, EventEmitter, OnInit, AfterViewInit, ChangeDetectorRef}  from '@angular/core';
+import {Component, Output, EventEmitter, OnInit, AfterViewInit, ChangeDetectorRef, OnDestroy}  from '@angular/core';
 import {BaseComponent} from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 import {TextCodeTranslator} from '../../../Infrastructure/Utilities/TextCodeTranslator';
@@ -214,7 +214,7 @@ export class LineModel extends BaseComponent {
     styleUrls: ['ReconcileComponent.css']
 })
 
-export class ReconcileComponent extends BaseComponent implements OnInit {
+export class ReconcileComponent extends BaseComponent implements OnInit, OnDestroy {
 
     public EntityPM: LedgerTransactionPM;
     public GLAccountPM: GLAccountPM;
@@ -248,6 +248,12 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
         super();
 
         this.InitComponent();
+    }
+
+    ngOnDestroy() {
+        AppTool.KillEventEmitter(ReconcileEventManager.CheckBoxChecked);
+        ReconcileEventManager.CheckBoxChecked = new EventEmitter();
+
     }
 
     public InitComponent()
@@ -770,42 +776,58 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
 
     SaveAsDraftButton() {
 
-        if (this.SelectedLines.Length > 0) {
+        if (this.SelectedLines.Length == 0) 
+            this.ShowNoTransactionsSelectedValidationMessage();
+        else
+            this.SubmitDraftLedgerTransactions();        
 
-            // 1- prepare transactions
-            var transactionsIds = [];
-            this.SelectedLines.Collection.forEach((lineModel: LineModel) => {
-                var transaction = lineModel.LedgerTransactionPM;
-                //transaction.Mark = !transaction.Mark; // the service will take this misson
+    }
 
-                transactionsIds.push(transaction.Id);
-            });
+    private ShowNoTransactionsSelectedValidationMessage()
+    {
+        const noTransactionsSelectedMSG = TextCodeTranslator.Translate("Accounting.General.O.NotransactionsSelected");
+        this.ValidationErrorsList = [noTransactionsSelectedMSG];
+    }
 
-            var transactions: LineModel[] = this.SelectedLines.Collection;
-            var ledgerTransactionsPMs = transactions.map(d=>d.LedgerTransactionPM);
+    private SubmitDraftLedgerTransactions()
+    {
+        var ledgerTransactionsPMs = this.GetLedgerTransactionsPMs();
+        
+        this.CurrentSession.StartBusyIndicatorSaving();
+        this._ReconciliationExtendedPMService.UpdateDraftReconciliationTransactions(ledgerTransactionsPMs).subscribe((serviceResponse: ServiceResponse) =>
+        {
+            this.CurrentSession.StopBusyIndicator();
+            this.ShowDraftTransactionsSuccessMessage();
+        });
+    }
 
-            // 2- call the service
-            this.CurrentSession.StartBusyIndicatorSaving();
-            this._ReconciliationExtendedPMService.UpdateDraftReconciliationTransactions(ledgerTransactionsPMs).subscribe((serviceResponse: ServiceResponse) => {
-                console.log("_ReconciliationExtendedPMService.UpdateDraftReconciliationTransactions", serviceResponse);
-                this.CurrentSession.StopBusyIndicator();
+    private ShowDraftTransactionsSuccessMessage()
+    {
+        var msg = new MessageWindow();
+        msg.ShowSuccessIcon = true;
+        msg.RTL = this.isRTL;
+        msg.Width = 400;
+        msg.Show(TextCodeTranslator.Translate("Reconciliations.Q.reconciliationwassavedas"));
+        msg.WindowClosed.subscribe((event: any) =>
+        {
+            this.CancelButtonClicked();
+        });
+    }
 
-                var result = serviceResponse.Result;
+    private GetLedgerTransactionsPMs()
+    {
+        var transactions: LineModel[] = this.SelectedLines.Collection;
+        var ledgerTransactionsPMs = transactions.map(d => d.LedgerTransactionPM);
 
-                var msg = new MessageWindow();
-                msg.ShowSuccessIcon = true;
-                msg.RTL = this.isRTL;
-                msg.Width = 400;
-                msg.Show(TextCodeTranslator.Translate("Reconciliations.Q.reconciliationwassavedas"));
-                msg.WindowClosed.subscribe((event: any) => {
-                    this.CancelButtonClicked();
-                });
+        this.ResetArrayOriginalIds(ledgerTransactionsPMs);
+        return ledgerTransactionsPMs;
+    }
 
-            });
-
-        } else {
-            this.ValidationErrorsList = [];
-            this.ValidationErrorsList.push(TextCodeTranslator.Translate("Accounting.General.O.NotransactionsSelected")); //"No transactions selected!"
+    private ResetArrayOriginalIds(ledgerTransactionsPMs: LedgerTransactionPM[])
+    {
+        for (let i = 0; i < ledgerTransactionsPMs.length; i++) {
+            const ledger: any = ledgerTransactionsPMs[i];
+            ledger.$id = i;
         }
     }
 
@@ -1140,7 +1162,7 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
             this.CalculateTotals();
 
             // update select all checkbox
-            if (this.SelectedLines.Length >= this.DataSource.rowCount || this.SelectedLines.Length >= 100)
+            if (this.SelectedLines.Length >= this.DataSource.rowCount || this.SelectedLines.Length >= 500)
                 this._isAllSelected = true;
         }
     }
@@ -1250,6 +1272,9 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
     public GetAPIFilters()
     {
         var filters = new ApiQueryFilters;
+        if (this.dateFilter) {
+            filters.AdditionalFilters.push(this.dateFilter);
+        }
         if (this.currencyFilter) {
             filters.AdditionalFilters.push(this.currencyFilter);
         }

@@ -33,7 +33,7 @@ namespace Logitude.DBMigrations.Models
                 }
                 mailMessage.BodyEncoding = Encoding.UTF8;
                 mailMessage.Subject = Subject;
-                mailMessage.Body = MessageBody + "\n\nSent From DBMigrations Tool At " + DateTime.Now.ToString();
+                mailMessage.Body = MessageBody + "\n\nSent From DBMigrations Tool Which Running On " + Environment.MachineName + "\nSent At " + DateTime.Now.ToString();
                 smtpClient.Port = ToolConfigurations.SmtpClientPort;
                 smtpClient.Credentials = new NetworkCredential(ToolConfigurations.SmtpClientUsername, ToolConfigurations.SmtpClientPassword);
                 smtpClient.Send(mailMessage);

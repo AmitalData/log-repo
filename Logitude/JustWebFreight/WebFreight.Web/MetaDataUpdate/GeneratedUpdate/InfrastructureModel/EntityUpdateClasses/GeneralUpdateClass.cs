@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 {
    public class GeneralUpdateClass
    {  		
-		public const string HashString = "52a473561ecd64d1fe9bd22f56b382e8";
+		public const string HashString = "7dab6d0db3db3cef31fa4a05290a364c";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -118,7 +118,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "General",
-			      				    Code =  "515b",
+			      				    Code =  "0173",
 			      				    Name =  "General",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Generals",
@@ -617,7 +617,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 
 		   Feature GeneralFeature_MASTERSDOCUMENTSLINK = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "MASTERSDOCUMENTSLINK", FeatureTypeCode = "OTH", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.MASTERSDOCUMENTSLINK", NameTextCodeDefaultText = @"Enable Masters Documents Link for Agents" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,GeneralObjectTable);
 
-		   Feature GeneralFeature_AGENTDOCUMENTSPERMISSION = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "AGENTDOCUMENTSPERMISSION", FeatureTypeCode = "OTH", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.AGENTDOCUMENTSPERMISSION", NameTextCodeDefaultText = @"Documents Permission Agent View under Others table" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,GeneralObjectTable);
+		   Feature GeneralFeature_AGENTDOCUMENTSPERMISSION = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "AGENTDOCUMENTSPERMISSION", FeatureTypeCode = "OTH", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.AGENTDOCUMENTSPERMISSION", NameTextCodeDefaultText = @"Documents Permission Agent View" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,GeneralObjectTable);
 
    
 	    
@@ -2415,9 +2415,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 
  		   TextCode GeneralTextCode_GeneralOFieldIsInactive = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.O.FieldIsInactive", DefaultText = "%FieldName is Inactive",LocalDefaultText = @"%FieldName  חסום", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode GeneralTextCode_GeneralMCOthersUserDefinedReport = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MC.Others.UserDefinedReport", DefaultText = "User Defined Reports",LocalDefaultText = "הוגדר ע\''י משתמש", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode GeneralTextCode_GeneralMCOthersUserDefinedReport = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MC.Others.UserDefinedReport", DefaultText = "User Defined Reports",LocalDefaultText = @"קבוצות מאזן מחושבות", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode GeneralTextCode_AccountingGeneralONewUserDefinedReport = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.NewUserDefinedReport", DefaultText = "New User Defined Report",LocalDefaultText = "הוגדר מחדש ע''י", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GeneralTextCode_GeneralMApprovalPaymentWarning = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.M.ApprovalPaymentWarning", DefaultText = "Please note that in addition to paying VAT, %br We need your approval to pay: %br Purchase tax in the amount of %PurchaseTax ₪ %br Customs in the amount of %CustomsTax ₪ %br Do you confirm?",LocalDefaultText = "אנא תשומת ליבך כי בנוסף לתשלום המע''מ, %br יש לנו צורך באישורך לשלם: %br מס קנייה בסך של %PurchaseTax ₪ %br מכס בסך של %CustomsTax ₪ %br האם אתה מאשר?", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

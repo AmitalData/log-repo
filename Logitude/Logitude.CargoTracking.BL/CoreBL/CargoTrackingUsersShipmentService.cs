@@ -19,6 +19,26 @@ namespace Logitude.CargoTracking.BL.CoreBL
 
             return response;
         }
+        public CargoTrackingShipmentsCounter GetUserShipmentsCounter(CargoTrackingShipmentFilters shipmentFilters)
+        {
+
+            shipmentFilters.TransportModeCodes = "";
+            shipmentFilters.DirectionCodes = "";
+            //var customers = shipmentFilters.CustomersIdsString;
+            //shipmentFilters.CustomersIdsString = "";
+
+            CargoTrackingShipmentSearchListQueryService shipmentSearchQuery = GetCargoTrackingShipmentSearchQuery(shipmentFilters);
+            IQueryable<CargoTrackingShipmentList> shipmentsIQuerable = shipmentSearchQuery.GetShipmentsByFilters(shipmentFilters);
+
+            CargoTrackingShipmentsCounter counter = new CargoTrackingShipmentsCounter();
+            counter.Air = shipmentsIQuerable.Count(d => d.TransportModeId == "A");
+            counter.Land = shipmentsIQuerable.Count(d => d.TransportModeId == "I");
+            counter.Sea = shipmentsIQuerable.Count(d => d.TransportModeId == "O");
+            counter.Import = shipmentsIQuerable.Count(d => d.DirectionId == "I");
+            counter.Export = shipmentsIQuerable.Count(d => d.DirectionId == "E");
+
+            return counter;
+        }
         private int GetAllShipmentsCount(int pageIndex, CargoTrackingShipmentFilters shipmentFilters)
         {
             CargoTrackingShipmentSearchListQueryService shipmentSearchQuery = GetCargoTrackingShipmentSearchQuery(shipmentFilters);
@@ -40,5 +60,13 @@ namespace Logitude.CargoTracking.BL.CoreBL
     {
         public List<CargoTrackingShipmentList> Shipments { get; set; }
         public int ShipmentsCount { get; set; }
+    }
+    public class CargoTrackingShipmentsCounter
+    {
+        public int Import { get; set; }
+        public int Export { get; set; }
+        public int Air { get; set; }
+        public int Land { get; set; }
+        public int Sea { get; set; }
     }
 }

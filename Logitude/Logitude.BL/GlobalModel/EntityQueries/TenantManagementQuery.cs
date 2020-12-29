@@ -36,13 +36,16 @@ namespace Logitude.BL.GlobalModel.EntityQueries
 
             domain = TrimDomainByRegex(domain);
             TenantManagementPM TenantManagement = (from a in repository.context.TenantManagements
-                                                   where  a.CustomerURL == domain && a.Id !=0 && a.GlobalTenant.IsActive
+                                                   where a.EnableBranding && a.CustomerURL == domain && a.Id !=0 && a.GlobalTenant.IsActive
                                                    select new TenantManagementPM()
                                                    {
                                                        Id = a.Id,
                                                        MainColor = a.MainColor, 
                                                        SecondaryColor = a.SecondaryColor, 
                                                        BackgroundId = a.BackgroundId,
+                                                       ComapnylogoId = a.ComapnylogoId,
+                                                       BrowserIconId = a.BrowserIconId,
+                                                       CustomerURL = a.CustomerURL,
 
                                                    }).FirstOrDefault();
 
@@ -228,6 +231,8 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                                      SecondaryColor = a.SecondaryColor,// != null && a.SecondaryColor.Length > 7) ? "#" + a.SecondaryColor.Substring(3, 6) : null,
 
                                                      BackgroundId = a.BackgroundId,
+                                                     ComapnylogoId = a.ComapnylogoId,
+                                                     BrowserIconId = a.BrowserIconId,
                                                      NoPaymentForChildTenants = a.NoPaymentForChildTenants,
                                                  }).FirstOrDefault();
                     if (tenant != null)
@@ -410,6 +415,8 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                                   SecondaryColor = a.SecondaryColor,// != null && a.SecondaryColor.Length > 7) ? "#" + a.SecondaryColor.Substring(3, 6) : null,
 
                                                   BackgroundId = a.BackgroundId,
+                                                  ComapnylogoId = a.ComapnylogoId,
+                                                  BrowserIconId = a.BrowserIconId,
                                                   NoPaymentForChildTenants = a.NoPaymentForChildTenants,
                                               }).FirstOrDefault();
 

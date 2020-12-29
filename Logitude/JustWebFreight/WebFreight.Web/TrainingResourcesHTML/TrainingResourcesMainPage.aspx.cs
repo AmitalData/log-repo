@@ -31,14 +31,30 @@ namespace WebFreight.Web.TrainingResourcesHTML
         protected void Page_Load(object sender, EventArgs e)
         {
             int? tenant = null;
-            string token = Request["tempId"] ?? "";
-
+            string token = Request["Token"] ?? "";
             SecurityDocumentResult securityDocumentResult = SecurityDocumentHelper.ValidationDocumentToken(token);
             bool isValid = securityDocumentResult.IsValid;
             string email = securityDocumentResult.Email;
             string exceptionMessage = securityDocumentResult.ExceptionResult;
             tenant = securityDocumentResult.Tenant;
+            
+            if (!string.IsNullOrEmpty(email))
+            {
+                int tenant1 = tenant == null ? 0 : tenant.Value;
 
+                ContactRepository contactRepository = new ContactRepository(tenant1);
+                Contact contact = contactRepository.GetSingleContactByEmail(email, tenant1);
+                if (contact == null)
+                {
+                    this.Context.Response.Redirect("../Login.aspx");
+                }
+            }
+            else
+            {
+                this.Context.Response.Redirect("../Login.aspx");
+            }
+
+            this.TokenForResources.Value = token;
 
             if (isValid)
             {

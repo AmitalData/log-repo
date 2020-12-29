@@ -24,7 +24,7 @@
     Precision="16"
     Scale="2">
     <Constraints
-      Nullable="true" />
+      Nullable="false" />
   </Column>
   <Column
     Name="LocalBalanceInDue"
@@ -32,7 +32,7 @@
     Precision="16"
     Scale="2">
     <Constraints
-      Nullable="true" />
+      Nullable="false" />
   </Column>
   <Column
     Name="NextDueDate"

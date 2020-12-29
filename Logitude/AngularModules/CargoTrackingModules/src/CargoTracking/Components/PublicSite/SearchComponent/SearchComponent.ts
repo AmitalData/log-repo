@@ -84,7 +84,12 @@ export class SearchComponent implements AfterViewInit,OnInit, OnDestroy
     private GetSearchTextFromURI()
     {
         let searchKey = this.route.snapshot.paramMap.get('searchKey');
-        this.SearchText = searchKey;
+
+        const queryParams = this.route.snapshot.queryParams;
+        if(queryParams){
+            var searchKeyFromQueryParams = queryParams['searchKey'];
+            this.SearchText = searchKeyFromQueryParams;
+        }
 
     }
 
@@ -181,12 +186,17 @@ export class SearchComponent implements AfterViewInit,OnInit, OnDestroy
     Clear()
     {
         this.SearchText = '';
-        this.Search();
+        this.noResult = false;
+        this.Shipments = [];
+        this.location.go( 'public-tracking/search/' );
     }
     Search()
     {
         if (this.tenant!=null && this.SearchText) {
-            this.location.go( 'public-tracking/search/' + this.SearchText);
+            // this.router.navigate(['public-tracking/search',  this.SearchText]);
+            // this.router.navigate(['public-tracking/search',  this.SearchText]);
+            //this.location.go( 'public-tracking/search?searchKey=' + this.SearchText);
+            this.router.navigate(['public-tracking/search'],{ queryParams: { searchKey: this.SearchText}});
             this.LoadShipments();
         }
 

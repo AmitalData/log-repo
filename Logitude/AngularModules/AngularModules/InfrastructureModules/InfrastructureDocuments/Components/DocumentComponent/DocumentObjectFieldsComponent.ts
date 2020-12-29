@@ -75,7 +75,7 @@ export class DocumentObjectFieldsComponent implements OnInit {
         this.HideSystemDataTab = args.HideSystemDataTab;
 
      if (AppTool.IsNullOrEmpty(this.ObjectTypeField)) {
-         if (this.InSertDataFieldType == "From" || this.InSertDataFieldType == "ReplyTo" || this.InSertDataFieldType == "CC" || this.InSertDataFieldType == "BCC") this.ObjectTypeField = "Emails"; 
+         if (this.InSertDataFieldType == "From" || this.InSertDataFieldType == "ReplyTo" || this.InSertDataFieldType == "CC" || this.InSertDataFieldType == "BCC" || this.InSertDataFieldType == "To") this.ObjectTypeField = "Emails"; 
         } 
           
 
@@ -367,40 +367,44 @@ export class DocumentObjectFieldsComponent implements OnInit {
 
 
 
+    IsFieldInsideRoot(selectedField) {
+        var fieldInsideRoot = AppTool.IsNullOrEmpty(selectedField.ResultFieldName) ? false : selectedField.ResultFieldName.indexOf('.') != -1;
+        return fieldInsideRoot;
+    }
 
     TextSelected: string;
     SaveButtonClicked() {
         this.TextSelected = "";
 
-            if (this.SelectObjectDataFieldsRowViewModel) {
+        if (this.SelectObjectDataFieldsRowViewModel) {
 
-                var selectedField = this.SelectObjectDataFieldsRowViewModel;
-                if (selectedField.ObjectTableId != this.ObjectTableId)
-                    this.TextSelected = "[" + selectedField.ObjectTableName + selectedField.ResultFieldName + "]";
-                else
-                    this.TextSelected = "[" + selectedField.ResultFieldName + "]";
+            var selectedField = this.SelectObjectDataFieldsRowViewModel;
+            if ((selectedField.ObjectTableId != this.ObjectTableId) && !this.IsFieldInsideRoot(selectedField))
+                this.TextSelected = "[" + selectedField.ObjectTableName + selectedField.ResultFieldName + "]";
+            else
+                this.TextSelected = "[" + selectedField.ResultFieldName + "]";
 
-                if (this.InSertDataFieldType == "FroalaEditor") this.TextSelected = "<span>" + this.TextSelected + "</span>";
-            }
-            else if (this.SelectSystemDataObjectFieldsRowViewModel) {
-                var selectedField = this.SelectSystemDataObjectFieldsRowViewModel;
+            if (this.InSertDataFieldType == "FroalaEditor") this.TextSelected = "<span>" + this.TextSelected + "</span>";
+        }
+        else if (this.SelectSystemDataObjectFieldsRowViewModel) {
+            var selectedField = this.SelectSystemDataObjectFieldsRowViewModel;
 
-                if (this.InSertDataFieldType != "FroalaEditor") {
-                    if (selectedField.FieldName && (selectedField.FieldName.toLowerCase() == "logo" || selectedField.FieldName.toLowerCase() == "smalllogo" || selectedField.FieldName.toLowerCase() == "signature")) {
-                        return;
-                    }
-                    this.TextSelected = "[SystemData." + selectedField.ResultFieldName + "]"
+            if (this.InSertDataFieldType != "FroalaEditor") {
+                if (selectedField.FieldName && (selectedField.FieldName.toLowerCase() == "logo" || selectedField.FieldName.toLowerCase() == "smalllogo" || selectedField.FieldName.toLowerCase() == "signature")) {
+                    return;
                 }
-
-                else {
-                    this.TextSelected = "[SystemData." + selectedField.ResultFieldName + "]"
-
-                    this.TextSelected=   "<span>" + this.TextSelected + "</span>"
-                }
-
+                this.TextSelected = "[SystemData." + selectedField.ResultFieldName + "]"
             }
 
-            this.CurrentSession.CurrentWindow.Close(this.TextSelected);
+            else {
+                this.TextSelected = "[SystemData." + selectedField.ResultFieldName + "]"
+
+                this.TextSelected=   "<span>" + this.TextSelected + "</span>"
+            }
+
+        }
+
+        this.CurrentSession.CurrentWindow.Close(this.TextSelected);
     }
 
 

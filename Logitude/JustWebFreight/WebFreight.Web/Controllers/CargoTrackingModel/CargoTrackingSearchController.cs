@@ -59,8 +59,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
 
                 List<CargoTrackingShipmentList> shipments = cargoTrackingShipmentSearchQuery.GetShipments(searchKey, tenant).OrderByDescending(s => s.CreateDate).ToList();
 
-                //throw new ApplicationException("Hi, I am an error!! okay!");
-
+ 
                 HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, shipments);
 
                 return reponseMessage;
@@ -121,24 +120,16 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
         }
 
         [HttpGet]
-        public HttpResponseMessage GetUserShipmentsCount(int pageIndex, int pageSize, int tenant)
+        public HttpResponseMessage GetUserShipmentsCount([FromUri] CargoTrackingShipmentFilters shipmentFilters)
         {
             try
             {
-                // for now, it gets top 500 shipments by tenant
+               
+                CargoTrackingUsersShipmentService usersShipmentService = new CargoTrackingUsersShipmentService();
+                CargoTrackingShipmentsCounter counter = usersShipmentService.GetUserShipmentsCounter(shipmentFilters);
 
-                ICargoTrackingContext MyContext = CargoTrackingContext.GetContext(tenant);
-                CargoTrackingShipmentSearchListQueryService cargoTrackingShipmentSearchQuery = new CargoTrackingShipmentSearchListQueryService(MyContext);
 
-                List<CargoTrackingShipmentList> shipments
-                    = cargoTrackingShipmentSearchQuery
-                    .GetTop500Shipments(pageIndex, pageSize, tenant)
-                    .OrderByDescending(s => s.CreateDate)
-                    .ToList();
-
-                //Thread.Sleep(700);
-
-                HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, shipments);
+                HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, counter);
 
                 return reponseMessage;
             }

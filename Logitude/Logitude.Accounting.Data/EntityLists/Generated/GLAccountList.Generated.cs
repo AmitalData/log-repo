@@ -230,6 +230,16 @@ namespace Logitude.Accounting.Data.EntityLists
        public bool ReportingAsAnotherDocument  { get; set; }
        [DataMember]
        public decimal? CreditAllotmentPercentage  { get; set; }
+       [DataMember]
+       public string Category1LocalName  { get; set; }
+       [DataMember]
+       public string Category2LocalName  { get; set; }
+       [DataMember]
+       public string Category3LocalName  { get; set; }
+       [DataMember]
+       public string Category4LocalName  { get; set; }
+       [DataMember]
+       public string Category5LocalName  { get; set; }
    }
 
 }

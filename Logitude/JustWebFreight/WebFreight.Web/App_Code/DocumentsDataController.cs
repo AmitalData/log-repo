@@ -137,7 +137,7 @@ namespace WebFreight.Web.App_Code
                 {
                     if (shipment.SecurityKey.ToLower() == securitykey.ToLower())
                     {
-                        partnerType = "CS";
+                        if(partnerType !="AG") partnerType = "CS"; //To avoid change PartnerType if it's agent
 
                         output = this.GetShipmentSharedDocuments(entityId, partnerType, tenant, true);
                     }

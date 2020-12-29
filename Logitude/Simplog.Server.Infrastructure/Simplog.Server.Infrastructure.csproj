@@ -224,6 +224,7 @@
     <Compile Include="Interfaces\IDateTimeUtil.cs" />
     <Compile Include="Interfaces\IServiceBehaviour.cs" />
     <Compile Include="Interfaces\IServiceInitializer.cs" />
+    <Compile Include="Interfaces\IServiceValidator.cs" />
     <Compile Include="IRepository.cs" />
     <Compile Include="LogitudeCacheManager\LocalHttpCache.cs" />
     <Compile Include="LogitudeCacheManager\IServerCache.cs" />

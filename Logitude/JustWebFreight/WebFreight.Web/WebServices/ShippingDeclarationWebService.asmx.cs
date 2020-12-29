@@ -599,7 +599,7 @@ namespace WebFreight.Web.WebServices
                         Address shipperClientAddress = addressRepository.GetSingleAddress(shipment.ShipperAddressId, tenant);
 
                         if (shipperClientAddress != null)
-                        {
+                       { 
                             if (shipperClientAddress.IsLocalLanguage)
                             {
                                 if (shipperClient != null && !string.IsNullOrEmpty(shipperClient.LocalName))
@@ -739,7 +739,37 @@ namespace WebFreight.Web.WebServices
                     Card consignee = (from a in commonContext.Cards
                                       where a.Id == shipment.ConsigneeId
                                       select a).FirstOrDefault();
+                    if (consignee != null)
+                    {
+                        string myResultConsignee = "";
 
+                        myResultConsignee = consignee.EnglishName != null ? consignee.EnglishName : "";
+
+                        if (shipment.ConsigneeAddressId != null)
+                        {
+                            Address consigneeAddress = addressRepository.GetSingleAddress(shipment.ConsigneeAddressId, tenant);
+
+
+                            if (consigneeAddress != null)
+                            {
+                                if (consigneeAddress.IsLocalLanguage && !string.IsNullOrEmpty(consignee.LocalName))
+                                {
+                                    myResultConsignee = consignee.LocalName;
+                                }
+
+                                myResultConsignee += Environment.NewLine + DataProviders.General.GetAddress(consigneeAddress);
+
+                                if (consigneeAddress.PhoneNumber != null || consigneeAddress.FaxNumber != null)
+                                {
+                                    myResultConsignee += Environment.NewLine + (consigneeAddress.PhoneNumber != null ? "Tel: " + consigneeAddress.PhoneNumber + " " : "") + (consigneeAddress.FaxNumber != null ? "Fax: " + consigneeAddress.FaxNumber + " " : "");
+                                }
+
+
+                            }
+                        }
+
+                        myDataProvider.ConsigneeNameAddress = myResultConsignee;
+                    }
                     myDataProvider.ConsigneeName = consignee != null ? consignee.EnglishName : "";
                     myDataProvider.ConsigneeVAT = consignee != null ? consignee.VatNumber : "";
 

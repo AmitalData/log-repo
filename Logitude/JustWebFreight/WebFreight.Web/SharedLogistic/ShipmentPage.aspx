@@ -994,10 +994,16 @@
             window.open(url);
         }
 
-
         function OnDownloadAllDocument() {
             $.SendContactsActivity($.CurrentEmail, "Shipment", "Document Download", $.CurrentTenant, $.CurrentCardId);
-            window.open("../WebPages/SharedDownloadPage.aspx?id=" + $.CurrentTenant + ":" + null + ":ship:" + $.CurrentEntityId + ":" + $.CurrentCardType);
+
+            var url = "../WebPages/SharedDownloadPage.aspx?id=" + $.CurrentTenant + ":" + null + ":ship:" + $.CurrentEntityId + ":" + $.CurrentCardType;
+
+            if ($.IsExternalURL) {
+                url += ":securitykey:" + $.CurrentEntityKey;
+            }
+
+            window.open(url);
         }
 
         function GetURL() {

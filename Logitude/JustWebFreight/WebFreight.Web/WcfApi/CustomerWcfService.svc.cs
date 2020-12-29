@@ -464,13 +464,15 @@ namespace WebFreight.Web.WcfApi
 
                     if (entity == null && !string.IsNullOrEmpty(entityPM.VatNumber))
                     {
-                        Customer customer = customerRepository.GetSingleCustomerByVatForHybrid(entityPM.VatNumber, entityPM.Tenant, false);
-                        if (customer != null && (customer.CustomerStatusCode == "WAC" || customer.CustomerStatusCode == "POT"))
+                        bool isPotentialCustomerReceived = (entityPM.CustomerStatusCode == "POT" || entityPM.CustomerStatusCode == "WAC" || entityPM.SetReady);
+                        List<Customer> varCustomers = customerRepository.GetCustomersByVat(entityPM.VatNumber, entityPM.Tenant);
+                        Customer cloudPotentailCustomer = varCustomers.FirstOrDefault(c => c.CustomerStatusCode == "WAC" || c.CustomerStatusCode == "POT");//customerRepository.GetSingleCustomerByVatForHybrid(entityPM.VatNumber, entityPM.Tenant, false);
+                        if (cloudPotentailCustomer != null && isPotentialCustomerReceived) //merge only potential customer with potentials item#75761
                         {
-                            entity = customer;
+                            entity = cloudPotentailCustomer;
                         }
                         else
-                            entity = GetCustomerByVatNumber(entityPM, customerRepository, countryRepository, tenantEntity);
+                           ValidateCustomerByVatNumber(entityPM, customerRepository, countryRepository, tenantEntity);
                     }
 
                     if (entity == null)
@@ -611,7 +613,7 @@ namespace WebFreight.Web.WcfApi
 
         }
 
-        private Customer GetCustomerByVatNumber(CustomerPM entityPM, CustomerRepository customerRepository, CountryRepository countryRepository, Tenant tenantEntity)
+        private void ValidateCustomerByVatNumber(CustomerPM entityPM, CustomerRepository customerRepository, CountryRepository countryRepository, Tenant tenantEntity)
         {
             Customer entity = null;
             if (tenantEntity.VatUniqueTypeCode == "UFA")
@@ -624,21 +626,12 @@ namespace WebFreight.Web.WcfApi
                 if (customerCountry != null && tenantEntity.VatUniqueCountryId == customerCountry.Id)
                 {
                     entity = GetCustomerByVatUniquePartnerType(entityPM, customerRepository, tenantEntity);
-                    //entity = customerRepository.GetSingleCustomerByVatForHybrid(entityPM.VatNumber, entityPM.Tenant, false);
-
-                    if (entity != null && (entity.Card.Code != entityPM.Code))
-                    {
-                        throw new ApplicationException("A customer with the same vat and different code already exists.");
-                        //response.HasError = true;
-                        //response.ErrorMessage = "A customer with the same vat and different code already exists.";
-                        //return response;
-                    }
-
-
                 }
             }
-
-            return entity;
+            if (entity != null && (entity.Card.Code != entityPM.Code))
+            {
+                throw new ApplicationException("A customer with the same vat and different code already exists.");
+            }
         }
 
         private Customer GetCustomerByVatUniquePartnerType(CustomerPM entityPM, CustomerRepository customerRepository, Tenant tenantEntity)

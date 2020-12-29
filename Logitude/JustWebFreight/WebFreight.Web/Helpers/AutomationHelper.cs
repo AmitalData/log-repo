@@ -26,6 +26,7 @@ using System.Linq;
 using System.Text;
 using System.Transactions;
 using System.Web;
+using WebFreight.Web.Helpers.AutomationModel;
 
 namespace WebFreight.Web.Helpers
 {
@@ -45,13 +46,8 @@ namespace WebFreight.Web.Helpers
           
             var automatedBackup = LogitudeXmlSerializer.DeserializeObject<AutomatedBackup>(automation.AutomationXML);
             bool allActiveUsers = automatedBackup.IsAutomationResultEmailAllActiveUsers;
-            string subject = string.Empty ;
-            string from = string.Empty;
-            string replyTo = string.Empty;
-            string cc = string.Empty;
-            string bcc = string.Empty;
             string userId = string.Empty;
-            string htmlTemplateBody = string.Empty;
+            var htmlEditorResolveResult = new HtmlEditorResolveResult();
 
             //  #region Send Email Prosess
 
@@ -65,17 +61,32 @@ namespace WebFreight.Web.Helpers
                     DocumentTypeTemplate template = documentTypeTemplateRepository.GetSingleDocumentTypeTemplateWithOutInClude(automation.TemplateId, automation.Tenant);
                     if (template != null)
                     {
-                        subject = template.Subject;
-                        from = template.From;
-                        replyTo = template.ReplyTo;
-                        cc = template.CC;
-                        bcc = template.BCC;
+                 
                         userId = template.LastUpdatedByUserId;
                         if (!string.IsNullOrEmpty(automationSendEmailArgs.CreateByUserId)) userId = automationSendEmailArgs.CreateByUserId;
                         try
                         {
-                            htmlTemplateBody = htmlEditorHelper.GetEditorHtmlData("", automationSendEmailArgs.EntityId, automationSendEmailArgs.ObjectTableId, "", "", automationSendEmailArgs.Tenant, userId, true, template.Id, ref subject, ref from, ref replyTo, ref cc, ref bcc, "", template);
-                            if (!string.IsNullOrEmpty(htmlTemplateBody)) htmlTemplateBody = htmlEditorHelper.GetLogoHtmlString(htmlTemplateBody);
+                            HtmlEditorResolveArgs htmlEditorResolveArgs = new HtmlEditorResolveArgs()
+                            {
+                                Subject = template.Subject,
+                                From = template.From,
+                                ReplyTo = template.ReplyTo,
+                                Cc = template.CC,
+                                Bcc = template.BCC,
+                                UserId = userId,
+                                EntityId  = automationSendEmailArgs.EntityId,
+                                ObjectTableId = automationSendEmailArgs.ObjectTableId,
+                                DocumentTemplateId = template.Id,
+                                Tenant = automationSendEmailArgs.Tenant,
+                                IsSendMail = true,
+                                DocumentTypeTemplate = template,
+                            };
+
+
+
+
+                            htmlEditorResolveResult = htmlEditorHelper.GetEditorHtmlData(htmlEditorResolveArgs);
+                            if (!string.IsNullOrEmpty(htmlEditorResolveResult.HtmlString)) htmlEditorResolveResult.HtmlString = htmlEditorHelper.GetLogoHtmlString(htmlEditorResolveResult.HtmlString);
                         }
                         catch (Exception ex)
                         {
@@ -180,8 +191,8 @@ namespace WebFreight.Web.Helpers
 
                     if (!string.IsNullOrEmpty(Emails))
                     {
-                        var emailBodyData = GetEmailBodyData(htmlTemplateBody);
-                        string communicationLog = AddAutomationToQueue(automation, automationSendEmailArgs, emailBodyData, Emails, from, replyTo, cc, bcc, subject, automationSendEmailArgs.ExternalAttachmentDocumentId, objectTableName);
+                        var emailBodyData = GetEmailBodyData(htmlEditorResolveResult.HtmlString);
+                        string communicationLog = AddAutomationToQueue(automation, automationSendEmailArgs, emailBodyData, Emails, htmlEditorResolveResult.From, htmlEditorResolveResult.ReplyTo, htmlEditorResolveResult.Cc, htmlEditorResolveResult.Bcc, htmlEditorResolveResult.Subject, automationSendEmailArgs.ExternalAttachmentDocumentId, objectTableName);
                         comunicationLogId = communicationLog;
                     }
 
@@ -293,8 +304,8 @@ namespace WebFreight.Web.Helpers
                 ObjectTable objectTable = objectTabelRepository.GetObjectTableById(objectTableId, tenant);
                 if (objectTable != null) objectTableName = objectTable.Name;
             }
-  
-            if(objectTableName == "Shipment")
+
+            if (objectTableName == "Shipment")
             {
                 #region Document Out
                 DocumentOutRepository documentOutRepository = new DocumentOutRepository(automation.Tenant);
@@ -360,7 +371,7 @@ namespace WebFreight.Web.Helpers
                 LastStatusDate = TenantServerConfigration.GetCurrentDateTime(tenant),
                 CommunicationLogTypeCode = "E",
                 CommunicationStatusTypeCode = "W",
-                
+
             };
 
 
@@ -376,7 +387,7 @@ namespace WebFreight.Web.Helpers
             context.CommunicationLogs.Add(log);
 
             DocumentTypeTemplateDefultAttachmentService documentTypeTemplateDefultAttachmentService = new DocumentTypeTemplateDefultAttachmentService();
-            var attachments = documentTypeTemplateDefultAttachmentService.GetDefultAttachmentList(new DocumentTypeTemplateDefultAttachmentArgs() {DocumentTypeTemplateId = automation.TemplateId , EntityId = entityId, ObjectTableId = objectTableId , Tenant = tenant });
+            var attachments = documentTypeTemplateDefultAttachmentService.GetDefultAttachmentList(new DocumentTypeTemplateDefultAttachmentArgs() { DocumentTypeTemplateId = automation.TemplateId, EntityId = entityId, ObjectTableId = objectTableId, Tenant = tenant });
             if (attachments.Count() > 0)
             {
                 foreach (var item in attachments)
@@ -388,6 +399,8 @@ namespace WebFreight.Web.Helpers
 
             }
 
+            AddReportTemplateDocOutAttachment(automationSendEmailArgs, context, log);
+
             if (!string.IsNullOrEmpty(externalAttachmentDocumentId))
             {
                 context.CommunicationAttachments.Add(GetNewCommunicationAttachment(tenant, log, externalAttachmentDocumentId));
@@ -397,9 +410,31 @@ namespace WebFreight.Web.Helpers
 
             //IQueueService queueservice = QueueServiceManager.GetQueueService("EmailQueue", tenant);
             DbQueueService queueservice = new DbQueueService("EmailQueue", tenant);
-			queueservice.Send(new Dictionary<string, string>() { { "CommunicationLogId", log.Id }, { "Tenant", tenant.ToString() } }, tenant);
+            queueservice.Send(new Dictionary<string, string>() { { "CommunicationLogId", log.Id }, { "Tenant", tenant.ToString() } }, tenant);
 
             return log.Id;
+        }
+
+        private  void AddReportTemplateDocOutAttachment(AutomationSendEmailArgs automationSendEmailArgs, ICommonDataContext context, CommunicationLog log)
+        {
+            if (!string.IsNullOrEmpty(automationSendEmailArgs.ReportTemplateId))
+            {
+                ReportTemplateDocOutArgs reportTemplateDocOutArgs = new ReportTemplateDocOutArgs()
+                {
+                    Tenant = automationSendEmailArgs.Tenant,
+                    ReportTemplateId = automationSendEmailArgs.ReportTemplateId,
+                    DocumentTypeId = automationSendEmailArgs.Automation.DocumentTypeId,
+                    EntityId = automationSendEmailArgs.EntityId, 
+                    ObjectTableId = automationSendEmailArgs.ObjectTableId,
+                };
+
+                string documentId = new ReportTemplateDocOutService(reportTemplateDocOutArgs).GetDocOutDocumentId();
+                if (!string.IsNullOrEmpty(documentId))
+                {
+                    CommunicationAttachment attachment = GetNewCommunicationAttachment(automationSendEmailArgs.Tenant, log, documentId);
+                    context.CommunicationAttachments.Add(attachment);
+                }
+            }
         }
 
         private static CommunicationAttachment GetNewCommunicationAttachment(int tenant, CommunicationLog log, string documentId)
@@ -525,7 +560,7 @@ namespace WebFreight.Web.Helpers
                     DocumentTypePM myDocType = myDocumentTypeListsUsedInAutomation.Where(d => d.Code == automationDocumentTypeClass.DocumentTypeCode).FirstOrDefault();
                     if (myDocType == null)
                     {
-                        var docType = tenantZeroDocumentTypePmsUsedInAutomation.Where(d => d.Id == automationDocumentTypeClass.DocumentTypeTemplateId).FirstOrDefault();
+                        var docType = tenantZeroDocumentTypePmsUsedInAutomation.Where(d => d.Id == automationDocumentTypeClass.DocumentTypeId).FirstOrDefault();
                         if (docType != null)
                         {
                             newDocType = CreateNewDocumentType(docType, documentTypeRepository, tenant);
@@ -545,12 +580,18 @@ namespace WebFreight.Web.Helpers
                         var tenantZeroDocumentTypeTemplate = tenantZeroDocumentTypeTemplatePmsUsedInAutomation.Where(d => d.Id == automationDocumentTypeClass.DocumentTypeTemplateId).FirstOrDefault();
                         DocumentTypeTemplate newtemplate = CreateNewDocumentTypeTemplate(documentTypeTemplateRepository, myDocType, tenantZeroDocumentTypeTemplate);
                         documentTypeTemplateRepository.Add(newtemplate);
-                        myDocumentTypeTemplatePM = new DocumentTypeTemplatePM() { Id = newtemplate.Id, DocumentTypeId = newtemplate.DocumentTypeId, OriginalTemplateId = newtemplate.OriginalTemplateId,Tenant = newtemplate.Tenant };
+                        myDocumentTypeTemplatePM = new DocumentTypeTemplatePM() { Id = newtemplate.Id, DocumentTypeId = newtemplate.DocumentTypeId, OriginalTemplateId = newtemplate.OriginalTemplateId, Tenant = newtemplate.Tenant };
                         myDocumentTypeTempaltesUsedInAutomation.Add(myDocumentTypeTemplatePM);
 
-                        if (newDocType!=null && string.IsNullOrEmpty(newDocType.DocumentTypeDefaultEditorTool) )
+                        if (newDocType != null && string.IsNullOrEmpty(newDocType.DocumentTypeDefaultEditorTool))
                         {
-                            newDocType.DocumentTypeDefaultEditorTool = newtemplate.Id;
+                            newDocType.DocumentTypeDefaultEditorTool = newtemplate.EditorTool;
+                        }
+               
+
+                        if (newDocType != null && string.IsNullOrEmpty(newDocType.DocumentTypeDefaultHTMLTemplateId))
+                        {
+                            newDocType.DocumentTypeDefaultHTMLTemplateId = newtemplate.Id;
                         }
                     }
                     #endregion
@@ -576,6 +617,7 @@ namespace WebFreight.Web.Helpers
 
             return myAutomationDocumentTypeClassLists;
         }
+
 
         private static AutomationDocumentTypeClass CreateNewAutomationDocumentTypeClass( AutomationDocumentTypeClass automationDocumentTypeClass, DocumentTypePM myDocType, DocumentTypeTemplatePM myDocumentTypeTemplatePM)
         {
@@ -652,8 +694,6 @@ namespace WebFreight.Web.Helpers
                 Subject = docType.Subject,
                 IsEnabledForCustomers = true,
                 Notes = docType.Notes,
-                DocumentTypeDefaultHTMLTemplateId = docType.DocumentTypeDefaultHTMLTemplateId,
-                DocumentTypeDefaultReportTemplateId = docType.DocumentTypeDefaultReportTemplateId,
                 IsSystemAdditionalPrintingFields = docType.IsSystemAdditionalPrintingFields,
                 PrintingFieldsScreenCode = docType.PrintingFieldsScreenCode,
                 OnPrintPopulateDateFieldName = docType.OnPrintPopulateDateFieldName,
@@ -706,7 +746,16 @@ namespace WebFreight.Web.Helpers
             return automationdocumentTypeIds;
         }
 
+        public List<string> GetAutomationDocumentTypeTemplateIds(int tenant)
+        {
+            AutomationRepository automationRepository = new AutomationRepository(tenant);
+            AutomationQuery automationQuery = new AutomationQuery(tenant);
+            List<string> myAutomationListsCodes = automationQuery.GetAutomationCodeLists(tenant);
+            List<string> automationDocumentTypeTemplateIds = automationRepository.GetAutomations(0).Where(d => d.ResultCode == "EMAIL" && !string.IsNullOrEmpty(d.Code) && !myAutomationListsCodes.Contains(d.Code)).Select(d => d.TemplateId).ToList();
+            return automationDocumentTypeTemplateIds;
 
+
+        }
 
 
     }
@@ -735,8 +784,9 @@ namespace WebFreight.Web.Helpers
 
         public string CreateByUserId { get; set; }
         public int Tenant { get; set; }
+        public string ReportTemplateId { get; set; }
 
-
+        
 
     }
 

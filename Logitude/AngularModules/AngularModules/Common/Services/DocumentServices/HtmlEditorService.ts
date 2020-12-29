@@ -20,21 +20,42 @@ export class HtmlEditorService {
     }
 
 
-    getEditorHtmlData(docOutId: string, entityId: string, objecttableId: string, childEntityId: string, childEntityObjectTableId: string, tenant: number, userId: string, theIsSendMail: boolean, documentTemplateId: string, subject: string, mode: string = null, from: string = null, replyTo: string = null, cc: string = null, bcc:string =null) {
+    getEditorHtmlData(docOutId: string, entityId: string, objecttableId: string, childEntityId: string, childEntityObjectTableId: string, tenant: number, userId: string, isSendMail: boolean, documentTemplateId: string, subject: string, mode: string = null, from: string = null, replyTo: string = null, cc: string = null, bcc: string = null, to:string = null) {
+
+        var htmlEditorArgs: HtmlEditorResolveArgs = new HtmlEditorResolveArgs();
+        htmlEditorArgs.DocumentOutId = docOutId;
+        htmlEditorArgs.EntityId = entityId;
+        htmlEditorArgs.ObjectTableId = objecttableId;
+        htmlEditorArgs.ChildEntityId = childEntityId;
+        htmlEditorArgs.ChildEntityObjectTableId = childEntityObjectTableId;
+        htmlEditorArgs.Tenant = tenant;
+        htmlEditorArgs.UserId = userId;
+        htmlEditorArgs.IsSendMail = isSendMail;
+        htmlEditorArgs.DocumentTemplateId = documentTemplateId;
+        htmlEditorArgs.Subject = subject;
+        htmlEditorArgs.Mode = mode;
+        htmlEditorArgs.From = from;
+        htmlEditorArgs.ReplyTo = replyTo;
+        htmlEditorArgs.Cc = cc;
+        htmlEditorArgs.Bcc = bcc;
+        htmlEditorArgs.To = to;
 
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
         authHeader.append('Content-Type', 'application/json');
-
-        return this._http.get(this._apiUrl + '?docOutId=' + docOutId + '&entityId=' + entityId + '&objecttableId=' + objecttableId + '&childEntityId=' + childEntityId + '&childEntityObjectTableId=' + childEntityObjectTableId + '&tenant=' + tenant + '&userId=' + userId + '&theIsSendMail=' + theIsSendMail + '&documentTemplateId=' + documentTemplateId + '&subject=' + subject + "&mode=" + mode + "&from=" + from + "&replyTo=" + replyTo + "&cc=" + cc + "&bcc=" + bcc
-            ,ServiceHelper.GetHttpHeaders()).pipe(map((result:any) => {
+        return defer(() => {
+            return this._http.post(this._apiUrl + '/PostGetEditorHtmlData', JSON.stringify(htmlEditorArgs), ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                 var pmresponse: ServiceResponse;
                 pmresponse = new ServiceResponse();
 
-                pmresponse.Result = result;
+                pmresponse.Result = response;
                 return pmresponse;
-            }),catchError(ServiceHelper.HandleServiceError));
+            }), catchError(ServiceHelper.HandleServiceError));
+        }
+
+        );
+
 
     }
 
@@ -99,5 +120,30 @@ export class HtmlEditorService {
 
 
 
+}
+
+
+export class HtmlEditorResolveArgs{
+
+    DocumentOutId: string;
+    EntityId: string;
+    ObjectTableId: string;
+    ChildEntityId: string;
+    ChildEntityObjectTableId: string;
+    Tenant: number;
+    UserId: string;
+    DocumentTemplateId: string;
+    Subject: string;
+    From: string;
+    ReplyTo: string;
+    Cc: string;
+    Bcc: string;
+    To: string;
+    Mode: string;
+    ObjectTableName: string;
+    HtmlString: string;
+    IsSendMail: boolean;
+
+    
 }
 

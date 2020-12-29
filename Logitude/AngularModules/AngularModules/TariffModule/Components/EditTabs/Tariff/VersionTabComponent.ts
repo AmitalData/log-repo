@@ -1,4 +1,4 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, EventEmitter } from '@angular/core';
 import { BaseComponent } from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { ServiceHelper } from '../../../../Infrastructure/Utilities/ServiceHelper';
 import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
@@ -29,7 +29,7 @@ declare var ResultAsArray: any;
     templateUrl: './VersionTabComponent.html',
 })
 
-export class VersionTabComponent extends BaseComponent implements OnDestroy {
+export class VersionTabComponent extends BaseComponent implements OnDestroy  {
     public EntityPM: TariffPM;
     public ObjectTableName: string = "Tariff";
     public TariffsLinesSource: ObservableCollection;
@@ -52,9 +52,14 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
     public LineIdFromPriceCheck: string;
     public AllInCharges: string;
     public LinesCount: number;
+    public selectedRow: any;
+    public changeScrollPosition: EventEmitter<any> = new EventEmitter();
+    public darkerColler: string = "#f8ca12";
+    public chargeableWeightInKG: number;
 
-    constructor(public entityArgs: EntityArgs) {
+    constructor(public entityArgs: EntityArgs ) {    
         super();
+        
         this.EntityPM = entityArgs.EntityPM;
         this.GetTariffType();
         this.Listen();
@@ -74,6 +79,7 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
         this.CurrentVersion = args['CurrentVersion'];
         this.SelectedVersionNumber = args['SelectedVersionNumber'];
         this.LineIdFromPriceCheck = args['LineIdFromPriceCheck'];
+        this.chargeableWeightInKG = args['ChargeableWeightInKG'];
         this.LoadVersions();
         this.SetOriginDependencyFilterValue();
     }
@@ -342,16 +348,28 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
         }
 
         this.ItemsCollection = [];
-
+        var count = 0; var selectedIndexRow = 0; var isItemSelectExist = false;
         tariffLines.sort((a, b) => a.Index - b.Index).forEach(item => {
-            this.ItemsCollection.push(new AirCostTariffLineData(item, this));
+            var itemAir = new AirCostTariffLineData(item, this)
+            count++;
+            this.ItemsCollection.push(itemAir);
+            if (!AppTool.IsNullOrEmpty(this.LineIdFromPriceCheck) && itemAir.EntityPM.Id == this.LineIdFromPriceCheck) {
+                this.selectedRow = itemAir;
+                selectedIndexRow = count;
+                isItemSelectExist = true;
+            }
         });
-
         this.TariffsLinesSource.InsertCollection(this.ItemsCollection);
 
         //this.InitializePager();
         //this.FillGridPagerItems();
         this.DoCompare();
+        if (isItemSelectExist) {
+            this.changeScrollPosition.emit({
+                RowIndex: selectedIndexRow
+            });
+        }
+      
     }
 
     //FillGridPagerItems() {

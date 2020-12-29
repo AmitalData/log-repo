@@ -211,7 +211,7 @@ namespace CommunicationWorkerRole
                                         Code = CodeCounter.GetNumber("Customer", crmTenant).ToString(),
                                         PartnerTypeId = "PO",
                                         Tenant = crmTenant,
-                                        EnglishName = TruncateLongString(lead.CompanyName, 70),
+                                        EnglishName =TruncateLongString(lead.CompanyName, 70),
                                         LocalName = TruncateLongString(lead.CompanyName, 100),
                                         CustomerStatusCode = "POT",
                                         IsCustomer = true,

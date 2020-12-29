@@ -47,6 +47,7 @@ export class HtmlDocumentPreviewComponent implements OnInit, AfterViewInit {
     IsShowReplyToInputBox: boolean;
     IsShowCCInputBox: boolean;
     IsShowBCCInputBox: boolean;
+    IsShowToInputBox: boolean;
 
     IsShowUploadAndDownloadButtons: boolean = false;
     HtmlTemplateEditor: string;
@@ -72,10 +73,14 @@ export class HtmlDocumentPreviewComponent implements OnInit, AfterViewInit {
     ReplyToId: string;
     CCId: string;
     BCCId: string;
+    TOId: string;
+
+
 
     CC: string;
     BCC: string;
-    
+    To: string;
+
     Mode: string = "Preview";
     ObjectType: string = "PM";
     public TemplatePMLists: any[];
@@ -89,6 +94,10 @@ export class HtmlDocumentPreviewComponent implements OnInit, AfterViewInit {
     TemplateHeaderHeight: number;
     TemplateFooterHtml: any;
     TemplateFooterHeight: number;
+
+    RequsetPageName: string;
+    public AutomationId: string;
+
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(public _documentTypeTemplatePMExtendedService: DocumentTypeTemplatePMExtendedService, private cd: ChangeDetectorRef, public _htmlEditorService: HtmlEditorService) {
         if (this.documentTypeTemplatePMService == null) {
@@ -111,7 +120,7 @@ export class HtmlDocumentPreviewComponent implements OnInit, AfterViewInit {
     }
 
 
-
+    DontShowToField: boolean = false;
     public DataViewModel: any;
     SetWindowArgs(args: any) {
 
@@ -126,8 +135,10 @@ export class HtmlDocumentPreviewComponent implements OnInit, AfterViewInit {
         this.ObjectTableId = args.ObjectTableId ? args.ObjectTableId : "";
         this.ChildEntityId = args.ChildEntityId ? args.ChildEntityId : "";
         this.ChildObjectTableId = args.ChildObjectTableId ? args.ChildObjectTableId : "";
+        this.DontShowToField = args.DontShowToField;
+        this.RequsetPageName = args.RequsetPageName;
+        this.AutomationId = args.AutomationId;
 
-       
         if (args.ObjectType) this.ObjectType = args.ObjectType;
        
         this.TemplatePMLists = args.DocumentTypeTemplatePMLists;
@@ -153,8 +164,7 @@ export class HtmlDocumentPreviewComponent implements OnInit, AfterViewInit {
 
 
         if (this.TemplateId) this.Run(args);
-       
-        
+
     }
 
 
@@ -176,7 +186,8 @@ export class HtmlDocumentPreviewComponent implements OnInit, AfterViewInit {
         this.ReplyToId = Guid.newGuid();
         this.CCId = Guid.newGuid();
         this.BCCId = Guid.newGuid();
-        
+        this.TOId = Guid.newGuid();
+
 
         this.IsShowButtonSaveAs = true;
         this.froalaEditorSetting.IsDisableEdit = false;
@@ -236,7 +247,6 @@ export class HtmlDocumentPreviewComponent implements OnInit, AfterViewInit {
        
         this.froalaEditorSetting.Height = this.froalaEditorSetting.Height - 20;
 
-        
 
         this.CurrentSession.CurrentWindow.StartBusyIndicator("Loading...");
 
@@ -370,10 +380,19 @@ export class HtmlDocumentPreviewComponent implements OnInit, AfterViewInit {
     }
 
 
-
+    IsShowSaveAsButtonOnly: boolean = false;
     FillData() {
 
         if (this.template) {
+
+            if (this.RequsetPageName == "Automation") {
+
+                if (!this.template.AutomationId) {
+                    this.IsShowSaveAsButtonOnly = true;
+                } 
+
+            }
+
 
 
             if (this.template.TemplateType == "M") {
@@ -456,6 +475,11 @@ export class HtmlDocumentPreviewComponent implements OnInit, AfterViewInit {
             this.ReplyTo = !AppTool.IsNullOrEmpty(this.template.ReplyTo) ? this.template.ReplyTo : ""; 
             this.CC = !AppTool.IsNullOrEmpty(this.template.CC) ? this.template.CC : "";
             this.BCC = !AppTool.IsNullOrEmpty(this.template.BCC) ? this.template.BCC : "";
+            this.To = !AppTool.IsNullOrEmpty(this.template.To) ? this.template.To : "";
+
+
+
+
             if (this.From) {
                 this.IsShowFromInputBox = true;
                 this.froalaEditorSetting.Height -= 30;
@@ -478,6 +502,13 @@ export class HtmlDocumentPreviewComponent implements OnInit, AfterViewInit {
                 this.froalaEditorSetting.Height -= 30;
 
             }
+
+            if (this.To) {
+                this.IsShowToInputBox = true;
+                this.froalaEditorSetting.Height -= 30;
+
+            }
+
 
             
         }
@@ -608,6 +639,16 @@ export class HtmlDocumentPreviewComponent implements OnInit, AfterViewInit {
      }
 
 
+    AddToLinkClick() {
+        this.IsShowToInputBox = true;
+        this.froalaEditorSetting.Height -= 30;
+        this.ReloadFroalaEditor();
+    }
+
+
+
+
+
     AddReplyToLinkClick() {
 
         this.IsShowReplyToInputBox = true;
@@ -663,7 +704,12 @@ export class HtmlDocumentPreviewComponent implements OnInit, AfterViewInit {
                     return;
                 }
 
+                if (!this.CheckIsValidEmails(this.To)) {
 
+                    this.ShowMessage("Some of To e-mails are Invalid", "Logitude Message");
+                    this.CurrentSession.CurrentWindow.StopBusyIndicator();
+                    return;
+                }
 
 
                 this.template.Subject = this.Subject;
@@ -671,6 +717,7 @@ export class HtmlDocumentPreviewComponent implements OnInit, AfterViewInit {
                 this.template.ReplyTo = this.ReplyTo;
                 this.template.CC = this.CC;
                 this.template.BCC = this.BCC;
+                this.template.To = this.To;
 
                 if (this.PageType == "ReportTemplate") {
 
@@ -851,6 +898,12 @@ export class HtmlDocumentPreviewComponent implements OnInit, AfterViewInit {
                     if (this.BCC && $event) this.BCC += ";";
                     this.BCC += $event;
                 }
+                else if (type == "To") {
+                    if (this.To && $event) this.To += ";";
+                    this.To += $event;
+                }
+
+
                 else if (type == "FroalaEditor") {
                     this.froalaEditorSetting.froalaEditorComponent.InSertHtml($event);
                     this.ReloadFroalaEditor();

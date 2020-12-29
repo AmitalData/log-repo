@@ -122,7 +122,7 @@ namespace Logitude.BL.InvoiceModel.Tools.DataMapping
             entity.Field10 = entityPM.Field10 != null ? entityPM.Field10.Value : null;
 
             entity.TotalVATOnly = entityPM.TotalVATOnly;
-
+            entity.PaidDate = entityPM.PaidDate;
 
             if (entityPM.SetApproved)
             {
@@ -185,10 +185,34 @@ namespace Logitude.BL.InvoiceModel.Tools.DataMapping
             entity.PrepaidCollectId = entityPM.PrepaidCollectId;
             entity.ContainerTypeId = entityPM.ContainerTypeId;
             entity.Quantity = entityPM.Quantity;
-            double? LocalAmountWithVatRecognized = (entityPM.VatRecognizedPercentage == null || entityPM.VatRecognizedPercentage == 0) ? entityPM.LocalCurrencyAmount + ((entityPM.VatPercentage / 100) * entityPM.LocalCurrencyAmount) : (entityPM.LocalCurrencyAmount + ((entityPM.VatPercentage / 100) * ((1 - entityPM.VatRecognizedPercentage) * entityPM.LocalCurrencyAmount)));
-            entityPM.ForiegnAmountWithRecognizedVat = LocalAmountWithVatRecognized != null ? LocalAmountWithVatRecognized / entityPM.ForiegnExchangeRate: LocalAmountWithVatRecognized;
+            MapJournalAmount(entityPM);
 
             //ForeignCurrencyAmount = localCurrencyAmount/ForeignExchangeRate;
+        }
+
+
+        private static void MapJournalAmount(APInvoiceLinePM entityPM)
+        {
+            double? LocalAmountWithVatRecognized = 0;
+            if (entityPM.VatRecognizedPercentage == 0 || entityPM.VatRecognizedPercentage == null)
+            {
+                if (entityPM.VatPercentage == null || entityPM.VatRecognizedPercentage == null)
+                {
+                    LocalAmountWithVatRecognized = entityPM.LocalCurrencyAmount;
+                }
+                else
+                {
+                    LocalAmountWithVatRecognized = entityPM.LocalCurrencyAmount + ((entityPM.VatPercentage / 100) * entityPM.LocalCurrencyAmount);
+                }
+
+            }
+            else
+            {
+                LocalAmountWithVatRecognized = (entityPM.LocalCurrencyAmount + ((entityPM.VatPercentage / 100) * ((1 - entityPM.VatRecognizedPercentage) * entityPM.LocalCurrencyAmount)));
+            }
+            entityPM.ForiegnAmountWithRecognizedVat = LocalAmountWithVatRecognized != null ? LocalAmountWithVatRecognized / entityPM.ForiegnExchangeRate : LocalAmountWithVatRecognized;
+
+
         }
 
         public static void MapInvoicePayment(APInvoicePaymentPM entityPM, APInvoicePayment entity, bool isNewState)

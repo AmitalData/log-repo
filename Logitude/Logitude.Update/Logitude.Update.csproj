@@ -232,6 +232,7 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Helper\BluesnapTransactionUppdateOld.cs" />
     <Compile Include="PatchDistribution\PatchDistributionForm.cs">
       <SubType>Form</SubType>
     </Compile>

@@ -16,6 +16,7 @@ import { GLAccountExtendedListService } from '../../../../Accounting/Services/Ex
 import { ReportsPreviewComponent } from '../../ReportsPreviewComponent';
 import { EntityPartner } from '../../../../Infrastructure/DataContracts/EntityPartner';
 import { CardExtendedPMService } from '../../../../Common/Services/ExtendedPMs/CardExtendedPMService';
+import { AdvancedDatePickerResolverComponent } from '../../../../Infrastructure/Components/LogitudeComponents/AdvancedDatePickerResolverComponent';
 
 @Component({
 
@@ -178,7 +179,8 @@ export class LedgerTransactionsFilterControl extends BaseComponent implements On
 
     ValidateDate()
     {
-        if (this.FromDate > this.ToDate) {
+        var advancedDatePickerResolverComponent: AdvancedDatePickerResolverComponent = new AdvancedDatePickerResolverComponent();
+        if (!advancedDatePickerResolverComponent.SetValidityBetweenTwoDateOptions(this.FromDate, this.ToDate)) {
 
             setTimeout(() =>
             {
@@ -381,12 +383,14 @@ export class LedgerTransactionsFilterControl extends BaseComponent implements On
 
         queryFilterItem = new QueryFilterItem();
         queryFilterItem.FieldName = "FromDate";
+        queryFilterItem.FieldDataType = 'Date';
         queryFilterItem.FieldValue = this.FromDate ? this.FromDate : null;
         queryFilterItem.Operator = "Equals";
         queryFilterItems.push(queryFilterItem);
 
         queryFilterItem = new QueryFilterItem();
         queryFilterItem.FieldName = "ToDate";
+        queryFilterItem.FieldDataType = 'Date';
         queryFilterItem.FieldValue = this.ToDate ? this.ToDate : null;
         queryFilterItem.Operator = "Equals";
         queryFilterItems.push(queryFilterItem);
@@ -541,8 +545,8 @@ export class LedgerTransactionsFilterControl extends BaseComponent implements On
             this.ValidationErrorsList.push(TextCodeTranslator.Translate("GLAccounts.O.tofieldrequired"));
             isValid = false;
         }
-
-        if (this.FromDate > this.ToDate) {
+        var advancedDatePickerResolverComponent: AdvancedDatePickerResolverComponent = new AdvancedDatePickerResolverComponent();
+        if (!advancedDatePickerResolverComponent.SetValidityBetweenTwoDateOptions(this.FromDate, this.ToDate)) {
             this.ValidationErrorsList.push(TextCodeTranslator.Translate("Accounting.General.O.FromDateMustSmallerToDate"));
             isValid = false;
         }

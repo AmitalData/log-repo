@@ -1658,6 +1658,15 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             shipmentPM.ProfitInProfitCurrency = shipment.ProfitInProfitCurrency;
             shipmentPM.NotInvoicedReceivablesAmount = shipment.NotInvoicedReceivablesAmount;
 
+            shipmentPM.HousesOpenPayablesInLocal = shipment.HousesOpenPayablesInLocal;
+            shipmentPM.HousesOpenPayablesInProfit = shipment.HousesOpenPayablesInProfit;
+            shipmentPM.HousesACCTPayablesInLocal = shipment.HousesACCTPayablesInLocal;
+            shipmentPM.HousesACCTPayablesInProfit = shipment.HousesACCTPayablesInProfit;
+            shipmentPM.HousesOpenReceivablesInLocal = shipment.HousesOpenReceivablesInLocal;
+            shipmentPM.HousesOpenReceivablesInProfit = shipment.HousesOpenReceivablesInProfit;
+            shipmentPM.HousesACCTReceivablesInLocal = shipment.HousesACCTReceivablesInLocal;
+            shipmentPM.HousesACCTReceivablesInProfit = shipment.HousesACCTReceivablesInProfit;
+
             #endregion
 
             #region Routings
@@ -3605,8 +3614,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             shipmentPM.WarehouseLegLastFreeDate = shipment.WarehouseLegLastFreeDate;
             shipmentPM.LastSharedEventId = shipment.LastSharedEventId;
             shipmentPM.LastSharedEventDate = shipment.LastSharedEventDate;
-
-
+            shipmentPM.IsAccrualsApproved = shipment.IsAccrualsApproved;
 
             if (masterData != null)
             {
@@ -4580,8 +4588,9 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     shipmentPM.MasterShipmentDataId = shipment.MasterShipmentDataId;
                     shipmentPM.LastSharedEventDate = shipment.LastSharedEventDate;
                     shipmentPM.LastSharedEventId = shipment.LastSharedEventId;
+                    shipmentPM.IsAccrualsApproved = shipment.IsAccrualsApproved;
 
-
+                    
 
                     if (m != null)
                     {
@@ -11793,6 +11802,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                MainCarriageToPortCode = f.MainCarriageToPortCode,
                                MainCarriageToPortCountryName = f.MainCarriageToPortCountryName,
                                MainCarriageToPortName = f.MainCarriageToPortName,
+                               MainHarmonize = f.MainHarmonize,
                                StatusId = f.StatusId,
                                StatusDate = f.StatusDate,
                                StatusName = f.StatusName,

@@ -4,7 +4,7 @@ import { Random } from "../../@e2e/core";
 
 export class ReceivablesTab {
 
-    public EntityNumber: string ="100";
+    public EntityNumber: string ="10";
     public count: number;
     public RunReceivablesTabScenarios() {
         this.count = 1;
@@ -45,7 +45,7 @@ export class ReceivablesTab {
         //}).as('entityLoaded');
         //this.GoToGeneralTabInARInvoice();
         //this.BackToShipmentsTab(this.count);
-        //cy.wait('@entityLoaded');;
+        //cy.wait('@entityLoaded');
     }
     private GoToReceivablesTab() {
         cy.get('#ShipmentTHReceivables').click();
@@ -55,7 +55,7 @@ export class ReceivablesTab {
         cy.get('#AddReceivable').click();
         Resolvers.LOVResolver.Selector('#ShipmentReceivable_ChargesTypeId').SelectFirst();
         Resolvers.LOVResolver.Selector('#ShipmentReceivable_CurrencyId').Type('NIS');
-        Resolvers.TextBoxResolver.Selector('#ShipmentReceivable_TotalAmount').Type(EntityNumber);
+        Resolvers.TextBoxResolver.Selector('#ShipmentReceivable_UnitPrice').Type(EntityNumber);
         Resolvers.TextBoxResolver.Selector('#ShipmentReceivable_Notes').Type('test');
         Resolvers.ButtonResolver.Selector('#Ok-AddReceivableBtn').Click();
         Resolvers.ButtonResolver.Selector('#Shipment-Save').Click();
