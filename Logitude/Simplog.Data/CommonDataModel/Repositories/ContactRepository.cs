@@ -392,7 +392,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
 
         private void SetComputedKeyValue(Contact entity)
         {
-            if (!string.IsNullOrEmpty(entity.Email) && entity.ComputedKey != entity.Email)
+            if (!string.IsNullOrEmpty(entity.Email))
                 entity.ComputedKey = entity.Email;
             else
                 entity.ComputedKey = entity.Id;
