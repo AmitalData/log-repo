@@ -82,7 +82,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 		AgentTalkBackTypeUpdateClass  AgentTalkBackTypeUpdateClass = new AgentTalkBackTypeUpdateClass();
 		AmendCancellRequestInitiatorUpdateClass  AmendCancellRequestInitiatorUpdateClass = new AmendCancellRequestInitiatorUpdateClass();
 		AmendmentFieldReasonTypeUpdateClass  AmendmentFieldReasonTypeUpdateClass = new AmendmentFieldReasonTypeUpdateClass();
-		AmendmentFieldStatusTypeUpdateClass  AmendmentFieldStatusTypeUpdateClass = new AmendmentFieldStatusTypeUpdateClass();
+	 	AmendmentFieldStatusTypeUpdateClass  AmendmentFieldStatusTypeUpdateClass = new AmendmentFieldStatusTypeUpdateClass();
 		AmendRequestRejectReasonTypeUpdateClass  AmendRequestRejectReasonTypeUpdateClass = new AmendRequestRejectReasonTypeUpdateClass();
 		AmendmentRequestStatusUpdateClass  AmendmentRequestStatusUpdateClass = new AmendmentRequestStatusUpdateClass();
 		AmendmentStatusUpdateClass  AmendmentStatusUpdateClass = new AmendmentStatusUpdateClass();

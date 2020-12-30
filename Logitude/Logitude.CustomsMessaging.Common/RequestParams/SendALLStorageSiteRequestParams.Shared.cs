@@ -11,6 +11,8 @@ namespace Logitude.CustomsMessaging.Common.RequestParams
         public string CourierMasterId { get; set; }
         public string HAWB { get; set; }
         public string StorageSiteCode { get; set; }
+
+        public string UnLoadPortCode { get; set; }
     }
 }
 

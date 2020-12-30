@@ -1194,7 +1194,8 @@ namespace Logitude.Customs.BL.EntityQueryServices
                         {
                             information.StatmentName = statement.LocalName;
                         }
-
+                        
+                        if(additional.StatementTypeCode != "27")
                         generalData.AdditionalInformation.Add(information);
 
 

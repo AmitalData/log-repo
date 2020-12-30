@@ -114,7 +114,8 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
 
     public IsDisplayOnly: boolean = false;
     public DisplayOnlyMessage: string = "";
-    private currentSession=SessionLocator.SelectedSession;
+    private currentSession = SessionLocator.SelectedSession;
+    private ChangedUnloadPortSite: boolean ;
     //constructor(public entityArgs: EntityArgs) {
     constructor(public _CourierWorksheetSharedDataService: CourierWorksheetSharedDataService, public entityArgs: EntityArgs, private EntityResourceService: EntityResourceService) {
         super();
@@ -153,7 +154,7 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
                     this.RefreshButtonClicked();
                 }
             });
-
+        this.ChangedUnloadPortSite = false;
         //if (!AppTool.IsNullOrEmpty(this.PendingFilter)) {
         //    setTimeout(() => {
         //        this.MenuHeaderchangeevent.emit({ Filters: this.filterAgrs, IgnoreFilter: false });
@@ -1885,6 +1886,30 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
             });
     }
 
+    ChangeUnloadPortSiteMethod() {
+
+        if (this.IsDisplayOnly) {
+            var myMessageWindow = new MessageWindow();
+            myMessageWindow.Width = 250;
+            myMessageWindow.Height = 150;
+            myMessageWindow.Show("קיים מסר זהה בתהליך");
+            return;
+        }
+
+        var logitudeWindow = new LogitudeWindow();
+        var windowArgs: any = {};
+        windowArgs.CourierMasterPM = this.entityPM;
+        logitudeWindow.Width = 350;
+        logitudeWindow.Height = 250;
+        logitudeWindow.IsShowCloseButton = true;
+        logitudeWindow.Title = "שינוי אתר פריקה";
+        logitudeWindow.WindowArgs = windowArgs;
+        logitudeWindow.Show('./CustomsModules/CustomsCourier/Components/CourierWorkSheet/GetUnloadPortCodeComponent');
+        this.ChangedUnloadPortSite=true;
+        logitudeWindow.WindowClosed.subscribe(($event: any) => {
+            this.RefreshButtonClicked();
+        });
+    }
     ChangeStorageSiteMethod() {
 
         if (this.IsDisplayOnly) {
@@ -1969,7 +1994,7 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
                 let customsRequestsSheetPM: CustomsRequestsSheetPM = displayOnlyCheckResult.filter(r => r.InterfaceTypeCode == "UCBCMSS")[0];
                 if (customsRequestsSheetPM != null) {
                     this.IsDisplayOnly = true;
-                    this.DisplayOnlyMessage = "לתצוגה בלבד - קיימת בקשה לשינוי םתר םיחסון ברקע ";
+                    this.DisplayOnlyMessage = "לתצוגה בלבד - קיימת בקשה לשינוי אתר אחסון/פריקה ברקע ";
                     this._CourierWorksheetSharedDataService.IsDisplayOnly = true;
                 }
             }
