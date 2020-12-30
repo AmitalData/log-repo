@@ -13,8 +13,8 @@
   },
   "env": {
     "TestURL": "https://test.logitudeworld.com/test/",
-    "TestEmail": "sg1209@test.com",
-    "TestPassword": "!Sg13579",
+    "TestEmail": "protractor2@test.com",
+    "TestPassword": "!P123p456",
     "TestStagingURL": "https://test.logitudeworld.com/staging/",
 	"TestStagingCargoTrackingURL": "https://test.logitudeworld.com/staging/CargoTracking/948/",
     "TestStagingEmail": "protractor2@test.com",
