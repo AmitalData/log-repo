@@ -14,7 +14,7 @@ import {Output, EventEmitter}  from '@angular/core';
 import {PropertyChangedArgs} from '../../Infrastructure/EventEmitterArgs/PropertyChangedArgs';
 import {CustomFieldClass} from '../../Infrastructure/DataContracts/CustomFieldClass';
 
-export class TariffSurchargesUpdatePM {
+export class TariffVersionUploadedExcelPM {
 
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
@@ -34,14 +34,14 @@ export class TariffSurchargesUpdatePM {
     public set Tenant(newValue: number) { if (this.tenant != newValue) { this.tenant = newValue; this.MarkAsDirty("Tenant"); } }
        
 	 
-    private createDate: Date;
-    public get CreateDate() { return this.createDate; }
-    public set CreateDate(newValue: Date) { if (this.createDate != newValue) { this.createDate = newValue; this.MarkAsDirty("CreateDate"); } }
+    private uploadDate: Date;
+    public get UploadDate() { return this.uploadDate; }
+    public set UploadDate(newValue: Date) { if (this.uploadDate != newValue) { this.uploadDate = newValue; this.MarkAsDirty("UploadDate"); } }
        
 	 
-    private createdByUserId: string;
-    public get CreatedByUserId() { return this.createdByUserId; }
-    public set CreatedByUserId(newValue: string) { if (this.createdByUserId != newValue) { this.createdByUserId = newValue; this.MarkAsDirty("CreatedByUserId"); } }
+    private uploadedByUserId: string;
+    public get UploadedByUserId() { return this.uploadedByUserId; }
+    public set UploadedByUserId(newValue: string) { if (this.uploadedByUserId != newValue) { this.uploadedByUserId = newValue; this.MarkAsDirty("UploadedByUserId"); } }
        
 	 
     private tariffId: string;
@@ -49,48 +49,23 @@ export class TariffSurchargesUpdatePM {
     public set TariffId(newValue: string) { if (this.tariffId != newValue) { this.tariffId = newValue; this.MarkAsDirty("TariffId"); } }
        
 	 
-    private startDate: Date;
-    public get StartDate() { return this.startDate; }
-    public set StartDate(newValue: Date) { if (this.startDate != newValue) { this.startDate = newValue; this.MarkAsDirty("StartDate"); } }
-       
-	 
-    private linesUpdated: number;
-    public get LinesUpdated() { return this.linesUpdated; }
-    public set LinesUpdated(newValue: number) { if (this.linesUpdated != newValue) { this.linesUpdated = newValue; this.MarkAsDirty("LinesUpdated"); } }
-       
-	 
-    private from: string;
-    public get From() { return this.from; }
-    public set From(newValue: string) { if (this.from != newValue) { this.from = newValue; this.MarkAsDirty("From"); } }
-       
-	 
-    private to: string;
-    public get To() { return this.to; }
-    public set To(newValue: string) { if (this.to != newValue) { this.to = newValue; this.MarkAsDirty("To"); } }
-       
-	 
     private version: number;
     public get Version() { return this.version; }
     public set Version(newValue: number) { if (this.version != newValue) { this.version = newValue; this.MarkAsDirty("Version"); } }
        
 	 
-    private surcharges: string;
-    public get Surcharges() { return this.surcharges; }
-    public set Surcharges(newValue: string) { if (this.surcharges != newValue) { this.surcharges = newValue; this.MarkAsDirty("Surcharges"); } }
+    private documentId: string;
+    public get DocumentId() { return this.documentId; }
+    public set DocumentId(newValue: string) { if (this.documentId != newValue) { this.documentId = newValue; this.MarkAsDirty("DocumentId"); } }
        
 	 
-    private updateMethodCode: string;
-    public get UpdateMethodCode() { return this.updateMethodCode; }
-    public set UpdateMethodCode(newValue: string) { if (this.updateMethodCode != newValue) { this.updateMethodCode = newValue; this.MarkAsDirty("UpdateMethodCode"); } }
-       
-	 
-    private updateMethodName: string;
-    public get UpdateMethodName() { return this.updateMethodName; }
-    public set UpdateMethodName(newValue: string) { if (this.updateMethodName != newValue) { this.updateMethodName = newValue; this.MarkAsDirty("UpdateMethodName"); } }
+    private numberOfLines: number;
+    public get NumberOfLines() { return this.numberOfLines; }
+    public set NumberOfLines(newValue: number) { if (this.numberOfLines != newValue) { this.numberOfLines = newValue; this.MarkAsDirty("NumberOfLines"); } }
        
 	 
 
-    public OldEntityPM: TariffSurchargesUpdatePM;
+    public OldEntityPM: TariffVersionUploadedExcelPM;
 		
     public IsDirty: boolean;
     public DisableMarkAsDirty: boolean = false;
@@ -101,13 +76,13 @@ export class TariffSurchargesUpdatePM {
 		  	
         if (propertyName != null) {
             this.PropertyChanged.emit(new PropertyChangedArgs(propertyName,this));
-            ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "TariffSurchargesUpdate");
+            ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "TariffVersionUploadedExcel");
            
         }
        }
     }
 
-    private MyClone: TariffSurchargesUpdatePM;
+    private MyClone: TariffVersionUploadedExcelPM;
 
     public CloneMe() {
         ServiceHelper.CloneEntityPM(this);

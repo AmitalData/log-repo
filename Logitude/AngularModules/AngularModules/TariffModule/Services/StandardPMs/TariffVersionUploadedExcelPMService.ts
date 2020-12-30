@@ -19,17 +19,17 @@ import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
 import {CustomFieldClass} from '../../../Infrastructure/DataContracts/CustomFieldClass'
 import {PerformanceLogger} from '../../../Infrastructure/Utilities/PerformanceLogger';
 
-import {TariffProductPM} from '../../EntityPMs/TariffProductPM';
+import {TariffVersionUploadedExcelPM} from '../../EntityPMs/TariffVersionUploadedExcelPM';
 
 
 @Injectable()
 
-export class TariffProductPMService {
+export class TariffVersionUploadedExcelPMService {
  private _http: HttpClient;
  private _apiUrl: string;
  constructor() {
         this._http = ServiceHelper.HttpClient;
-        this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/tariffproducts';      
+        this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/tariffversionuploadedexcels';      
     }
 
 	get(id: string) {       
@@ -42,7 +42,7 @@ export class TariffProductPMService {
 					map((response: HttpResponse<any>) => {
 						var pm = response.body;
 				
-						var entity: TariffProductPM;
+						var entity: TariffVersionUploadedExcelPM;
 						if (pm) {
 							entity = this.MapJsonToEntityPM(pm);
 						}
@@ -51,7 +51,7 @@ export class TariffProductPMService {
 						serviceResponse.Result = entity;
               
 						var servertime = response.headers.get('ServerExecutionTime');
-						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "TariffProduct", "GetSinglePM", 'id=' + id);
+						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "TariffVersionUploadedExcel", "GetSinglePM", 'id=' + id);
 				 
 						return serviceResponse;
 
@@ -61,7 +61,7 @@ export class TariffProductPMService {
 		});                    
 	}
 
-	insert(entityPM: TariffProductPM) {
+	insert(entityPM: TariffVersionUploadedExcelPM) {
  
 		var callTime = new Date();  
 		
@@ -69,12 +69,12 @@ export class TariffProductPMService {
 
 			var serviceResponse: ServiceResponse = new ServiceResponse();
 			var validator: ClassLevelValidator = new ClassLevelValidator();                
-			var errorsArray = validator.Validate("TariffProduct", entityPM);
+			var errorsArray = validator.Validate("TariffVersionUploadedExcel", entityPM);
 
 
 			if (errorsArray.length == 0) {
 
-				var mappedEntity: TariffProductPM = this.MapJsonToEntityPM(entityPM, false);
+				var mappedEntity: TariffVersionUploadedExcelPM = this.MapJsonToEntityPM(entityPM, false);
 				
 				return this._http.post(this._apiUrl, JSON.stringify(mappedEntity), ServiceHelper.GetHttpFullHeaders())
 					.pipe(
@@ -82,12 +82,12 @@ export class TariffProductPMService {
 
 							var pm = response.body;
 							if (pm) {
-								var mappedResult: TariffProductPM = this.MapJsonToEntityPM(pm, true, entityPM);
+								var mappedResult: TariffVersionUploadedExcelPM = this.MapJsonToEntityPM(pm, true, entityPM);
 								serviceResponse.Result = mappedResult;
 							}						
 
 							var servertime = response.headers.get('ServerExecutionTime');
-							PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "TariffProduct", "SaveChanges", "");                    
+							PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "TariffVersionUploadedExcel", "SaveChanges", "");                    
 												                             
 							return serviceResponse;
 						}),
@@ -103,7 +103,7 @@ export class TariffProductPMService {
 		});
 	}
 
-	update(entityPM: TariffProductPM) {
+	update(entityPM: TariffVersionUploadedExcelPM) {
 
 		var callTime = new Date();     
 		
@@ -111,12 +111,12 @@ export class TariffProductPMService {
 
 			var serviceResponse: ServiceResponse = new ServiceResponse();
 			var validator: ClassLevelValidator = new ClassLevelValidator();               
-			var errorsArray = validator.Validate("TariffProduct", entityPM);
+			var errorsArray = validator.Validate("TariffVersionUploadedExcel", entityPM);
 
 
 			if (errorsArray.length == 0) {
 
-				var mappedEntity: TariffProductPM = this.MapJsonToEntityPM(entityPM, false);
+				var mappedEntity: TariffVersionUploadedExcelPM = this.MapJsonToEntityPM(entityPM, false);
 				
 				return this._http.put(this._apiUrl, JSON.stringify(mappedEntity), ServiceHelper.GetHttpFullHeaders())
 					.pipe(
@@ -124,12 +124,12 @@ export class TariffProductPMService {
                  
 							var pm = response.body;
 							if (pm) {
-								var mappedResult: TariffProductPM = this.MapJsonToEntityPM(pm, true, entityPM);
+								var mappedResult: TariffVersionUploadedExcelPM = this.MapJsonToEntityPM(pm, true, entityPM);
 								serviceResponse.Result = mappedResult;
 							}
 							 
 							var servertime = response.headers.get('ServerExecutionTime');
-							PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "TariffProduct", "SaveChanges", "");                    
+							PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "TariffVersionUploadedExcel", "SaveChanges", "");                    
 					                           
 							return serviceResponse;
 						}),
@@ -147,12 +147,12 @@ export class TariffProductPMService {
 
    
 
-	  MapJsonToEntityPM(jsonPM: any, mapParent: boolean = true, entityPM: TariffProductPM = null) {
+	  MapJsonToEntityPM(jsonPM: any, mapParent: boolean = true, entityPM: TariffVersionUploadedExcelPM = null) {
 
          
         if (!entityPM) {
             
-            entityPM = new TariffProductPM();
+            entityPM = new TariffVersionUploadedExcelPM();
 			entityPM.DisableMarkAsDirty = true;
         }
 
@@ -219,8 +219,8 @@ export class TariffProductPMService {
     }
 
 	  public GetNewEntityPM() {		 
-		    var entityPM: TariffProductPM;
-			entityPM = new TariffProductPM();
+		    var entityPM: TariffVersionUploadedExcelPM;
+			entityPM = new TariffVersionUploadedExcelPM();
 			entityPM.Tenant = InfraSettings.TenantPM.Id;
 			return entityPM;
     }
