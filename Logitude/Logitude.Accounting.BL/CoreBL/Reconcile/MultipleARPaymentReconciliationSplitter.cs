@@ -124,7 +124,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reconcile
 
         private static void SubtractLineAmountFromPaymentLine(ReconciliationLinePM paymentReconcileLine, ReconciliationLinePM oppositeRecoLine)
         {
-            if (oppositeRecoLine.ReconciliationAmount > paymentReconcileLine.ReconciliationAmount)
+            if (Math.Abs(oppositeRecoLine.ReconciliationAmount) > Math.Abs(paymentReconcileLine.ReconciliationAmount))
                 paymentReconcileLine.ReconciliationAmount = 0;
             else if (paymentReconcileLine.ReconciliationAmount > 0)
                 paymentReconcileLine.ReconciliationAmount -= Math.Abs(oppositeRecoLine.ReconciliationAmount);
