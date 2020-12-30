@@ -416,21 +416,25 @@ export class TaxReportDetailsTabComponent extends BaseComponent implements OnIni
             Styles: { width: '70px' },
             HtmlListComponentName: 'TaxReportListTemplate',
             HtmlListComponentUrl: './Accounting/Components/ListTemplates/TaxReportListTemplate',
-            IsCustomTemplate: true
+            IsCustomTemplate: true,
+            ServerSideSortable: true
+
         });
         this.columns.push({
             FieldName: 'Line',
             DataTypeCode: 'String',
             Display: TextCodeTranslator.Translate("TaxReportLine.F.Line"),
             Styles: { width: '50px' },
-            IsCustomTemplate: true
+            IsCustomTemplate: true,
+            ServerSideSortable: true
         });
         this.columns.push({
             FieldName: 'LineTypeCode',
             DataTypeCode: 'String',
             Display: TextCodeTranslator.Translate("TaxReportLine.F.LineTypeCode"),
             Styles: { width: '50px' },
-            IsCustomTemplate: true
+            IsCustomTemplate: true,
+            ServerSideSortable: true
         });
         this.columns.push({
             FieldName: 'VatNumber',
@@ -439,7 +443,8 @@ export class TaxReportDetailsTabComponent extends BaseComponent implements OnIni
             Styles: { width: '100px' },
             HtmlListComponentName: 'TaxReportListTemplate',
             HtmlListComponentUrl: './Accounting/Components/ListTemplates/TaxReportListTemplate',
-            IsCustomTemplate: true
+            IsCustomTemplate: true,
+            ServerSideSortable: true
         });
         this.columns.push({
             FieldName: 'Reference',
@@ -448,7 +453,9 @@ export class TaxReportDetailsTabComponent extends BaseComponent implements OnIni
             Styles: { width: '100px' },
             HtmlListComponentName: 'TaxReportListTemplate',
             HtmlListComponentUrl: './Accounting/Components/ListTemplates/TaxReportListTemplate',
-            IsCustomTemplate: true
+            IsCustomTemplate: true,
+            ServerSideSortable: true
+
         });
         this.columns.push({
             FieldName: 'ReferecneGroup',
@@ -457,7 +464,8 @@ export class TaxReportDetailsTabComponent extends BaseComponent implements OnIni
             Styles: { width: '100px' },
             HtmlListComponentName: 'TaxReportListTemplate',
             HtmlListComponentUrl: './Accounting/Components/ListTemplates/TaxReportListTemplate',
-            IsCustomTemplate: true
+            IsCustomTemplate: true,
+            ServerSideSortable: true
         });
         this.columns.push({
             FieldName: 'ReferenceDate',
@@ -466,7 +474,8 @@ export class TaxReportDetailsTabComponent extends BaseComponent implements OnIni
             Styles: { width: '100px' },
             HtmlListComponentName: 'TaxReportListTemplate',
             HtmlListComponentUrl: './Accounting/Components/ListTemplates/TaxReportListTemplate',
-            IsCustomTemplate: true
+            IsCustomTemplate: true,
+            ServerSideSortable: true
         });
         this.columns.push({
           FieldName: 'TotalInvoiceAmount',
@@ -475,7 +484,8 @@ export class TaxReportDetailsTabComponent extends BaseComponent implements OnIni
             Styles: { width: '100px' },
             HtmlListComponentName: 'TaxReportListTemplate',
             HtmlListComponentUrl: './Accounting/Components/ListTemplates/TaxReportListTemplate',
-            IsCustomTemplate: true
+            IsCustomTemplate: true,
+            ServerSideSortable: true
         });
         this.columns.push({
             FieldName: 'VatAmount',
@@ -484,7 +494,8 @@ export class TaxReportDetailsTabComponent extends BaseComponent implements OnIni
             Styles: { width: '100px' },
             HtmlListComponentName: 'TaxReportListTemplate',
             HtmlListComponentUrl: './Accounting/Components/ListTemplates/TaxReportListTemplate',
-            IsCustomTemplate: true
+            IsCustomTemplate: true,
+            ServerSideSortable: true
         });
         this.columns.push({
             FieldName: SessionLocator.LoggedUserPM.DontShowLocal ? 'StatusEnglishName' : 'StatusLocalName',
@@ -493,7 +504,8 @@ export class TaxReportDetailsTabComponent extends BaseComponent implements OnIni
             Styles: { width: '300px' },
             HtmlListComponentName: 'TaxReportListTemplate',
             HtmlListComponentUrl: './Accounting/Components/ListTemplates/TaxReportListTemplate',
-            IsCustomTemplate: true
+            IsCustomTemplate: true,
+            ServerSideSortable: true
         });
         this.columns.push({
             FieldName: 'JournalNumber',
@@ -502,7 +514,8 @@ export class TaxReportDetailsTabComponent extends BaseComponent implements OnIni
             Styles: { width: '85px' },
             HtmlListComponentName: 'TaxReportListTemplate',
             HtmlListComponentUrl: './Accounting/Components/ListTemplates/TaxReportListTemplate',
-            IsCustomTemplate: true
+            IsCustomTemplate: true,
+            ServerSideSortable: true
         });
         this.columns.push({
             FieldName: 'Buttons;' + this.EntityPM.StatusCode,
@@ -521,8 +534,8 @@ export class TaxReportDetailsTabComponent extends BaseComponent implements OnIni
             Styles: { width: '30px' },
             HtmlListComponentName: 'TaxReportListTemplate',
             HtmlListComponentUrl: './Accounting/Components/ListTemplates/TaxReportListTemplate',
-           
             IsCustomTemplate: true,
+            ServerSideSortable: true
           
         });
       this.columns.push({
@@ -532,7 +545,8 @@ export class TaxReportDetailsTabComponent extends BaseComponent implements OnIni
         Styles: { width: '40px' },
         HtmlListComponentName: 'TaxReportListTemplate',
         HtmlListComponentUrl: './Accounting/Components/ListTemplates/TaxReportListTemplate',
-          IsCustomTemplate: true, 
+          IsCustomTemplate: true,
+          ServerSideSortable: true,
       });
         this.TaxReportColumnsReady.emit(this.columns);
         //this.CustomColumnsReady.emit(this.columns);
@@ -541,6 +555,7 @@ export class TaxReportDetailsTabComponent extends BaseComponent implements OnIni
     DataSource = {
         pageSize: 30,
         rowCount: null,
+        sortingCol: "Line",
         sortingDir: "Ascending",
         getRows: (skip: number, take: number, sortingCol: string, sortingDir: string, getCount: boolean, searchFields?: string, filters: ApiQueryFilters = null) => {
             var tempo = this.GetRows(skip, take, sortingCol, sortingDir, getCount, searchFields, filters);
@@ -572,8 +587,8 @@ export class TaxReportDetailsTabComponent extends BaseComponent implements OnIni
         filters.PageIndex = skip;
         filters.GetCount = true;
 
-        filters.SortBy = "Line";
-        filters.SortDirection = "Ascending";
+        filters.SortBy = sortingCol;
+        filters.SortDirection = sortingDir;
 
         // filters.addAdditionalFilter("BankAccountId", this.EntityPM.Id, null, null, "Equals", false, false, false, "string");
         //filters.addAdditionalFilter("IsCancelled", false, null, null, "Equals", false, false, false, "boolean");
