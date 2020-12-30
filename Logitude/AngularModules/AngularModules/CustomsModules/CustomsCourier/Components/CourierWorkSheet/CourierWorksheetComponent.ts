@@ -155,7 +155,6 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
                     this.RefreshButtonClicked();
                 }
             });
-        this.ChangedUnloadPortSite = false;
         //if (!AppTool.IsNullOrEmpty(this.PendingFilter)) {
         //    setTimeout(() => {
         //        this.MenuHeaderchangeevent.emit({ Filters: this.filterAgrs, IgnoreFilter: false });
