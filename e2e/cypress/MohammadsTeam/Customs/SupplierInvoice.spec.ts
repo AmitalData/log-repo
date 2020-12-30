@@ -99,8 +99,7 @@ cy.get('#Add_2').click({force: true} );
 			cy.get('#edit-log-grid_0_30_7_0').click({force: true} );
 		    cy.get('input[id="Customs.SupplierInvoice_ItemPrice"]').type('300');
 		}
- 
-  
+    }
   })
 
     //it('Edit Supplier invoice item', () => {
