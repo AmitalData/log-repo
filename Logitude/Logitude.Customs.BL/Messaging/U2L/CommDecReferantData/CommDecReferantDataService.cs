@@ -168,12 +168,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommDecReferantData
                 if (!string.IsNullOrWhiteSpace(_LogitudeDeclarationReferantData.LastStatusName)) _DeclarationReferantDataPM.LastStatusName = _LogitudeDeclarationReferantData.LastStatusName;
                 var tempDate = AmitalConvertUtil.GetUnifreightFormatedDate(_LogitudeDeclarationReferantData.LastStatusDate, "_LogitudeDeclarationReferantData.LastStatusDate");
                 if (!string.IsNullOrWhiteSpace(_LogitudeDeclarationReferantData.LastStatusDate) && tempDate.HasValue) _DeclarationReferantDataPM.LastStatusDate = tempDate.Value;
-                if (string.IsNullOrWhiteSpace(_LogitudeDeclarationReferantData.OrderMoney) || (!string.IsNullOrWhiteSpace(_LogitudeDeclarationReferantData.OrderMoney) && _LogitudeDeclarationReferantData.OrderMoney.ToLower().Substring(0,1) != "t"))
-                {
-                    _DeclarationReferantDataPM.OrderMoney = false;
-
-                }
-                else
+                if (!string.IsNullOrWhiteSpace(_LogitudeDeclarationReferantData.OrderMoney) && _LogitudeDeclarationReferantData.OrderMoney.ToLower().Substring(0,1) == "t")
                 {
                     _DeclarationReferantDataPM.OrderMoney = true;
                 }
