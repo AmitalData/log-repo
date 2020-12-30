@@ -1,4 +1,4 @@
-﻿
+
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
@@ -23,7 +23,6 @@ export class CustomsRequestSheetExtendedPMService {
   
     PostSetCustomsRequestSheetStatus(mappedEntity: CustomsRequestsSheetPM){
     //CancellRequestInProgress(Id: string, Tenant: number) {
-
 
         return defer(() => {
 
@@ -60,6 +59,17 @@ export class CustomsRequestSheetExtendedPMService {
 
         );
 
+    }
+    GetRequestDescription(id: string) {
+        return defer(() => {
+            var authHeader = new Headers();
+            authHeader.append('Token', SessionInfo.Token);
+            authHeader.append('Content-Type', 'application/json');
+            return this._http.get(this._apiUrl + '/GetRequestDescription/?' + '&id=' + id, ServiceHelper.GetHttpHeaders()).pipe(map((response: ServiceResponse) => {
+                var serviceResponse: ServiceResponse = response;
+                return serviceResponse;
+            }), catchError(ServiceHelper.HandleServiceError));
+        });
     }
 
     
@@ -117,7 +127,6 @@ export class CustomsRequestSheetExtendedPMService {
 
         return entityPM;
     }
-
-
+   
 
 }
