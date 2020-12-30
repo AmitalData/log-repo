@@ -175,6 +175,7 @@ namespace WebFreight.Web.ReportsWebServices
             if (loggedContact != null)
             {
                 dataProvider.UserName = loggedContact.EnglishName;
+                dataProvider.UserPhoneNumber = loggedContact.BusinessPhone;
             }
         }
 

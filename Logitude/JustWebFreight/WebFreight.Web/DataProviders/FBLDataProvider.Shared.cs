@@ -43,6 +43,7 @@ namespace WebFreight.Web.DataProviders
         public string TotalVolume { get; set; }
         public string PrepaidCollect { get; set; }
         public string PlaceAndDateOfIssue { get; set; }
+        public string PlaceAndDateOfIssue_Local { get; set; }
         public string NumberOfOriginals { get; set; }//custom
         public string Signature { get; set; }
         public string AgentInfo { get; set; }

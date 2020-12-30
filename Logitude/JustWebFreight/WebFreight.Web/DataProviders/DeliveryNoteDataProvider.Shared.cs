@@ -200,5 +200,7 @@ namespace WebFreight.Web.DataProviders
 
         public string BranchName { get; set; }
         public string BranchAddress { get; set; }
+
+        public string UserPhoneNumber {get; set;}
     }
 }
