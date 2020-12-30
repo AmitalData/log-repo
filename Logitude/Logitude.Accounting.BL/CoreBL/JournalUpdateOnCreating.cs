@@ -25,6 +25,9 @@ namespace Logitude.Accounting.BL.CoreBL
     {
         private IAccountingContext _MainContext;
         private List<JournalLinePM> SplitiedJournals;
+        const string ActionCode_Credit = "1";
+        const string ActionCode_Debit = "2";
+        const string ActionCode_DebitAndCredit = "3";
         public JournalUpdateOnCreating(IAccountingContext mainContext)
         {
             this.SplitiedJournals = new List<JournalLinePM>();
@@ -158,14 +161,14 @@ namespace Logitude.Accounting.BL.CoreBL
             //}
 
         }
-
+    
         private void CheckJournalActionCodeAndSplitedIt(JournalLinePM LinePM , List<JournalLinePM>  JournalLines)
         {
-            if (LinePM.ActionCode=="3")
+            if (LinePM.ActionCode== ActionCode_DebitAndCredit)
             {
                 JournalLinePM newLine = new JournalLinePM
                 {
-                     ActionCode = "2",
+                     ActionTypeCode = ActionCode_Debit,
                      Reference1 = LinePM.Reference1,
                      Reference2 = LinePM.Reference2,
                      Reference3 = LinePM.Reference3,
@@ -194,12 +197,41 @@ namespace Logitude.Accounting.BL.CoreBL
                      EncodeBase64NVARCHARFieldsBy = LinePM.EncodeBase64NVARCHARFieldsBy,
 
               };
-                LinePM.ActionCode = "1";
+                LinePM.ActionTypeCode = ActionCode_Credit;
+                LinePM.ActionCode = null;
                 LinePM.DebitAccountId = LinePM.DebitAccountId;
+                SetActionDatatForJournalLine(newLine);
+                SetActionDatatForJournalLine(LinePM);
                 SplitiedJournals.Add(newLine);
             }
 
         }
+
+        public void SetActionDatatForJournalLine(JournalLinePM journalLinePM)
+        {
+            if (!String.IsNullOrWhiteSpace(journalLinePM.ActionTypeCode))
+            {
+                JournalActionTypeList action = GetJournalActionTypeListByCode(journalLinePM);
+                if (action != null)
+                {
+                    journalLinePM.ActionId = action.Id;
+                    journalLinePM.ActionCode = action.Code;
+                    journalLinePM.ActionName = action.EnglishName;
+                }
+            }
+        }
+
+
+        public virtual JournalActionTypeList GetJournalActionTypeListByCode(JournalLinePM item)
+        {
+            var _IJournalActionTypeListQueryService =
+                new JournalActionTypeListQueryService(this._MainContext as IAccountingContext);
+
+            JournalActionTypeList action = _IJournalActionTypeListQueryService
+                .GetByCode(item.ActionTypeCode, item.Tenant);
+            return action;
+        }
+
 
         public virtual void ClearDMYByUserId(JournalPM entityPM, string loggedContactId)
         {
