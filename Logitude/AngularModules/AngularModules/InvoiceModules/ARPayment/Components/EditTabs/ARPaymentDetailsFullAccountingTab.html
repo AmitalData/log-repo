@@ -822,7 +822,7 @@
                                     </log-column>
                                 </logitude-edit-grid>
 
-                                <div *ngIf="TransactionsList?.Length == 0 && !_loading" class="NoDataText">
+                                <div  *ngIf="TransactionsList?.Length == 0 && !_loading" id="{{'ARPaymentSpinner' | IdGeneratorPipe}}" class="NoDataText">
                                     {{'ARPayment.S.NoInvoicesFound' | TextCodeTranslationPipe}}
                                 </div>
                                 <div *ngIf="_loading" class="NoDataText">
