@@ -36,13 +36,11 @@ it('Create New Shipper', () => {
   })
 
 it('Search For Shipper', () => {
-
-   // cy.get('#BusyIndicator_0').should('not.be.visible')
-    cy.wait(100)
+    cy.get('#BusyIndicator_0').should('not.exist')
+   // cy.wait(100)
    cy.get('#SearchFieldsId_0_0').should('be.visible')
    cy.get('#SearchFieldsId_0_0').type("CypressShipper" + timeStamp)
-   //cy.get('#BusyIndicator_0').should('not.be.visible')
-    cy.wait(10000)
+   cy.get('#BusyIndicator_0').should('not.exist')
    cy.get("#LogGrid_0_0row0").click({ force: true })
 
 })
@@ -50,7 +48,6 @@ it('Search For Shipper', () => {
  it('Edit Shipper', () => {
      cy.wait(100)
      cy.get('#CustomerTHGeneral').click({ force: true })
-   //  cy.wait(1000)
      cy.get('#Customer_LocalName').type('Test Company 123')
      cy.wait(1000)
      cy.get("#Customer-Save").click()

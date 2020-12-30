@@ -44,20 +44,20 @@ it('CreateNewView ', () => {
     cy.get(".ListBoxItem").eq(0).click();
     cy.get("#NewButtonViewAdd").click()
     cy.get("#NewButtonViewCreate").click()
-   // cy.get('#BusyIndicator_0').should('not.be.visible')
+    cy.get('#BusyIndicator_0').should('not.exist')
 })
 
 it('EditShipmentView', () => {
-  cy.wait(1000)
+  cy.wait(100)
 
     //cy.get('#QueryList_0_0').should('be.visible')
     cy.get('#BusyIndicator_0').should('not.be.visible')
-    cy.wait(200)
+   // cy.wait(200)
     cy.get('#QueryList_0_0').click({ force: true })
     cy.get('#SearchFieldsId_0_0').click({ force: true })
     cy.wait(100)
     cy.get('#QueryList_0_0').click({ force: true })
-    cy.wait(100)
+   // cy.wait(100)
     cy.get('.ActionButtonsParent').should('be.visible')
     let lastShipment = cy.get('.ActionButtonsParent').last()
     lastShipment.trigger('mouseover')
@@ -67,7 +67,7 @@ it('EditShipmentView', () => {
     cy.wait(1000)
     cy.get("#NewButtonViewAdd").click()
     cy.get("#NewButtonViewCreate").click()
-    cy.get('#BusyIndicator_0').should('not.be.visible')
+    cy.get('#BusyIndicator_0').should('not.exist')
 
 
 })
