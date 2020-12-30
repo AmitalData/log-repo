@@ -19908,6 +19908,32 @@
       AllowedInAutomation="false"
       ManualActivatedFollowUp="false"
       IsFollowUp="false" />
+    <EventType
+      Code="&quot;RDA&quot;"
+      ObjectTableName="&quot;Customs.Declaration&quot;"
+      EnglishName="&quot;Required Document Verified&quot;"
+      LocalName="&quot;מסמך נדרש אומת&quot;"
+      IsManualEntry="false"
+      ShortView="false"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
+    <EventType
+      Code="&quot;RDR&quot;"
+      ObjectTableName="&quot;Customs.Declaration&quot;"
+      EnglishName="&quot;Required Document Rejected&quot;"
+      LocalName="&quot;מסמך נדרש נדחה&quot;"
+      IsManualEntry="false"
+      ShortView="false"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
   </EventTypes>
   <Records />
   <MenuButtons
