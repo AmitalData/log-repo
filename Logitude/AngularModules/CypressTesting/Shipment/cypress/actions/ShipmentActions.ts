@@ -40,18 +40,15 @@ export function OpenShipment(dataFile: string){
 }
 
 export function FillGeneralTab(){
-    cy.Click(Selectors.ShipmentTHGeneral, null)
     cy.FillRandomNumber("#Shipment_GrossWeightInKG", 100, 1000)
     cy.SelectLogLovRandomElement("#Shipment_MoveTypeId", true, 5)
 }
 
 export function FillOrdersTab(shipmentTypeCode?:string){
-    cy.Click("#ShipmentTHOrders", null)
     AddPackagesOrContainersForOrdersTab(shipmentTypeCode)
 }
 
 export function FillPartnersTab(directionCode:string, transportModeCode:string){
-    cy.Click("#ShipmentTHPartners", null)
     if (directionCode === "I") {
         AddPartner("SHIPR", "Shipment_ShipperId")
     }
@@ -76,7 +73,6 @@ export function FillPartnersTab(directionCode:string, transportModeCode:string){
 }
 
 export function FillPackagesTab(transportModeCode:string, shipmentTypeCode?:string){
-    cy.Click("#ShipmentTHPackages", null)
     AddPackagesOrContainersForPackagesTab(transportModeCode, shipmentTypeCode)
 }
 
