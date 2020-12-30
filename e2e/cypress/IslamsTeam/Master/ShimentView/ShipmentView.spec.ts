@@ -48,11 +48,9 @@ it('CreateNewView ', () => {
 })
 
 it('EditShipmentView', () => {
-  cy.wait(100)
 
+    cy.wait(100)
     //cy.get('#QueryList_0_0').should('be.visible')
-    cy.get('#BusyIndicator_0').should('not.be.visible')
-   // cy.wait(200)
     cy.get('#QueryList_0_0').click({ force: true })
     cy.get('#SearchFieldsId_0_0').click({ force: true })
     cy.wait(100)
