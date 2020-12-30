@@ -51,6 +51,8 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             entityPM.Id = IdCounter.GetNumber("Customs.CourierMaster", entityPM.Tenant);
             entityPM.CreateDateTime = DateTime.Now;
             entityPM.IsOpen = true;
+            int.TryParse(EntityPM.NoOfCourierHawb, out int noOfCourierHawb);
+            EntityPM.OpenDeclarations = noOfCourierHawb;
             entityPM.IsCancelled = false;
         }
 

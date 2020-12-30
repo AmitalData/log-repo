@@ -40,7 +40,7 @@ namespace Logitude.Customs.BL.CloseTables
                     Code = "2754Constraint",
                     Name = "הצהרת יבוא אילוץ",
                     Entity="Declaration",
-                    Param1= @"{ ""code"":""4589""}",
+                    Param1= @"{ ""code"":""4589"" , ""documentSectionCode"" : ""30B"", ""tagId"" :""D024""}",
                 },
 
                 new SincroTestCaseDetail()
@@ -114,7 +114,7 @@ MainInterfaceCode ="5002"
                                  ""entityIdKey3"" :""""  }",
 
 
-                    MainInterfaceCode="8227",
+                    MainInterfaceCode="8228",
                 },
                 new SincroTestCaseDetail()
                 {

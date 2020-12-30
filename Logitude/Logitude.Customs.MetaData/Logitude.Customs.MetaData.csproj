@@ -111,6 +111,8 @@
     <None Include="DBScripts\Post\202005270158_SetNullableForCDROPColumns_Main.sxml" />
     <None Include="DBScripts\Post\202007031145_DeclarationCancellationAddOn.sxml" />
     <None Include="DBScripts\Post\202010111400_UpdateRequiredFields.sxml" />
+    <None Include="DBScripts\Post\202012211428_SetDeclarationDirection2I.sxml" />
+    <None Include="DBScripts\Post\2020122708949_SetOpenDeclarations.sxml" />
     <None Include="DBScripts\Pre\202005210104_DropUnneededTables_Global.sxml" />
     <None Include="DBScripts\Pre\202005210105_DropUnneededTables_Main.sxml" />
     <None Include="DBScripts\Pre\202005210106_DropUnneededTables_SystemLogs.sxml" />
@@ -139,6 +141,7 @@
     <None Include="DBScripts\Pre\202007091941_AddONDeclarationCancellationAndAmendment.sxml" />
     <None Include="DBScripts\Pre\202007091441_FixFKCliam.sxml" />
     <None Include="DBScripts\Pre\202009061641_FixFKCourierPendingReason.sxml" />
+    <None Include="DBScripts\Pre\20201215_AddAddonCourierAuto.sxml" />
     <None Include="DBTables\AcceptanceStatus.dxml" />
     <None Include="DBTables\AccumalationState.dxml" />
     <None Include="DBTables\ActionCode.dxml" />

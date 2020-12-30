@@ -199,7 +199,7 @@ namespace Logitude.CustomsMessaging.FakeMessagingServices
             };
             fakeRespond.Response.Error = _Constraints;
         }
-        public void AddErrors(string code)
+        public void AddErrors(string code,string  tagID , string documentSectionCode)
         {
             _Errors = new ResponseError[1];
             _Errors[0] = new ResponseError() { ValidationCode = new ErrorValidationCodeType() { name = "תשאל את סוהיב", listVersionID = "1", Value = code } };
@@ -210,16 +210,28 @@ namespace Logitude.CustomsMessaging.FakeMessagingServices
             _Errors[0].Pointer[2] = new ResponseErrorPointer();
             _Errors[0].Pointer[3] = new ResponseErrorPointer();
 
+            if (string.IsNullOrEmpty(documentSectionCode))
+            _Errors[0].Pointer[3].DocumentSectionCode = new PointerDocumentSectionCodeType() { Value = "30B" };
+            else
+                _Errors[0].Pointer[3].DocumentSectionCode = new PointerDocumentSectionCodeType() { Value = documentSectionCode };
+
+
             _Errors[0].Pointer[0].DocumentSectionCode = new PointerDocumentSectionCodeType() { Value = "42A" };
             _Errors[0].Pointer[1].DocumentSectionCode = new PointerDocumentSectionCodeType() { Value = "67A" };
             _Errors[0].Pointer[2].DocumentSectionCode = new PointerDocumentSectionCodeType() { Value = "28A" };
-            _Errors[0].Pointer[3].DocumentSectionCode = new PointerDocumentSectionCodeType() { Value = "30B" };
+           // _Errors[0].Pointer[3].DocumentSectionCode = new PointerDocumentSectionCodeType() { Value = "30B" };
+
 
             //TagId
+            if (string.IsNullOrEmpty(tagID))
+                _Errors[0].Pointer[3].TagID = new PointerTagIDType() { Value = "D024" };
+            else
+                _Errors[0].Pointer[3].TagID = new PointerTagIDType() { Value = tagID };
+
             _Errors[0].Pointer[0].TagID = new PointerTagIDType();
             _Errors[0].Pointer[1].TagID = new PointerTagIDType();
             _Errors[0].Pointer[2].TagID = new PointerTagIDType();
-            _Errors[0].Pointer[3].TagID = new PointerTagIDType() { Value = "D024" };
+           // _Errors[0].Pointer[3].TagID = new PointerTagIDType() { Value = tagID };
             // SequenceNumeric
             _Errors[0].Pointer[0].SequenceNumeric = 0;
             _Errors[0].Pointer[1].SequenceNumeric = 0;

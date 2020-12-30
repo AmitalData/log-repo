@@ -64,6 +64,24 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     }
                 }
             }
+            if (entityPM.IsClosedForFollowUp != entityPOCO.IsClosedForFollowUp)
+            {
+                DeclarationCourierStatusRepository rep = new DeclarationCourierStatusRepository(context);
+                CourierMasterQueryService courierMasterQueryService = new CourierMasterQueryService(entityPM.Tenant);
+                CourierMasterUpdateService CourierMasterUpdateService = new CourierMasterUpdateService(context, new Dictionary<string, IContext>(), entityPM.Tenant);
+                var courierMasterPM = courierMasterQueryService.GetByDeclarationId(entityPM.DeclarationId, entityPM.Tenant);
+                courierMasterPM.OpenDeclarations = rep.CountOpenDeclarations(courierMasterPM.Id, courierMasterPM.Tenant);
+                if (entityPM.IsClosedForFollowUp && !entityPOCO.IsClosedForFollowUp)
+                {
+                    courierMasterPM.OpenDeclarations -= 1;
+                }
+                if (!entityPM.IsClosedForFollowUp && entityPOCO.IsClosedForFollowUp)
+                {
+                    courierMasterPM.OpenDeclarations += 1;
+                }
+                courierMasterPM.ChangeSetOp = ChangeSetOperation.Update;
+                CourierMasterUpdateService.Update(courierMasterPM, true);
+            }
 
             DateTime stopLogAt = new DateTime(2020, 03, 01);
             Debug.WriteLine("DeclarationCourierStatusUpdateServiceOnUpdating");
@@ -196,13 +214,13 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 {
                     myDeclarationCourierStatusPM.CourierDeclarationStatusCode = "M";
                 }
-                else if(myDeclarationCourierStatusPM.TotalInvoiceAmountInUSD > 100 && string.IsNullOrEmpty(declarationPM.ImporterId) && string.IsNullOrEmpty(declarationPM.ImporterCode))
+                else if (myDeclarationCourierStatusPM.TotalInvoiceAmountInUSD > 100 && string.IsNullOrEmpty(declarationPM.ImporterId) && string.IsNullOrEmpty(declarationPM.ImporterCode))
                 {
                     myDeclarationCourierStatusPM.CourierDeclarationStatusCode = "M";
                 }
                 else
                 {
-                    if (string.IsNullOrWhiteSpace(declarationPM.DeclarationStatusTypeCode) || declarationPM.IsChanged==true && myDeclarationCourierStatusPM.CourierDeclarationStatusCode == "V")//task 39471
+                    if (string.IsNullOrWhiteSpace(declarationPM.DeclarationStatusTypeCode) || declarationPM.IsChanged == true && myDeclarationCourierStatusPM.CourierDeclarationStatusCode == "V")//task 39471
                     {
                         myDeclarationCourierStatusPM.CourierDeclarationStatusCode = "R";
                     }
@@ -234,7 +252,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 //Set CourierPaymentStatusCode
                 if (declarationPM.PaymentDate == null)
                 {
-                    if (declarationPM.DeclarationStatusTypeCode == "13" && myDeclarationCourierStatusPM.CourierDeclarationStatusCode=="V")//Task 39471
+                    if (declarationPM.DeclarationStatusTypeCode == "13" && myDeclarationCourierStatusPM.CourierDeclarationStatusCode == "V")//Task 39471
                     {
                         myDeclarationCourierStatusPM.CourierPaymentStatusCode = "R";
                     }
@@ -274,7 +292,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     else
                     {
                         List<SupplierInvoicePM> emptyItemsList = declarationPM.SupplierInvoices.
-                        Where(SI => SI.SupplierInvoiceItems == null || SI.SupplierInvoiceItems.Count()==0).ToList();
+                        Where(SI => SI.SupplierInvoiceItems == null || SI.SupplierInvoiceItems.Count() == 0).ToList();
                         if (emptyItemsList != null && emptyItemsList.Count() > 0)
                         {
                             myDeclarationCourierStatusPM.IsCourierMissingClassification = true;
@@ -294,8 +312,8 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 string defValue = GetDefault("ISRAEL", "CGO_HIGH_VALUE", "NON", "NON");
                 decimal defaultAmount = 0;
                 var boolvar = (decimal.TryParse(defValue, out defaultAmount));
-                
-                if(myDeclarationCourierStatusPM.TotalInvoiceAmountInUSD > defaultAmount)
+
+                if (myDeclarationCourierStatusPM.TotalInvoiceAmountInUSD > defaultAmount)
                 {
                     myDeclarationCourierStatusPM.HighLowValue = "H";
                 }

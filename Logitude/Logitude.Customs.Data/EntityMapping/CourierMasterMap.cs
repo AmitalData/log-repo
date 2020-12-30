@@ -88,6 +88,8 @@ namespace Logitude.Customs.Data.EntityMapping
             this.Property(t => t.UnifreightLeadingFile).HasColumnName("UnifreightLeadingFile").HasMaxLength(12).IsUnicode(true);
 
             this.Property(t => t.CourierMasterRemarks).HasColumnName("CourierMasterRemarks").HasMaxLength(512).IsUnicode(true);
+
+            this.Property(t => t.OpenDeclarations).HasColumnName("OpenDeclarations");
         }
     }
 }

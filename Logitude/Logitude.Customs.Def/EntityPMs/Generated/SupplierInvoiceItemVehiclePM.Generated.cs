@@ -418,6 +418,52 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private string vehicleChassisNumberSource ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string VehicleChassisNumberSource  
+	   {
+	    
+	     get
+		{
+		   return vehicleChassisNumberSource;
+		 }
+		 set
+		 {
+		   if(vehicleChassisNumberSource != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="VehicleChassisNumberSource",OldValue=vehicleChassisNumberSource,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   vehicleChassisNumberSource=value;
+		   }
+			
+		 }
+	   }
+	  private string richbitFileNumberSource ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string RichbitFileNumberSource  
+	   {
+	    
+	     get
+		{
+		   return richbitFileNumberSource;
+		 }
+		 set
+		 {
+		   if(richbitFileNumberSource != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="RichbitFileNumberSource",OldValue=richbitFileNumberSource,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   richbitFileNumberSource=value;
+		   }
+			
+		 }
+	   }
    }
    
 }
