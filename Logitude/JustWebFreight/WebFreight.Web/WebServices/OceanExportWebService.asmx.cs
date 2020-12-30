@@ -1493,6 +1493,7 @@ namespace WebFreight.Web.WebServices
                     if (currentBranch != null)
                     {
                         myDataProvider.PlaceAndDateOfIssue = currentBranch.EnglishName;
+                        myDataProvider.PlaceAndDateOfIssue_Local = currentBranch.LocalName;
                     }
                 }
 
@@ -2029,11 +2030,13 @@ namespace WebFreight.Web.WebServices
                 if (shipment.HAWBDate != null)
                 {
                     myDataProvider.PlaceAndDateOfIssue = myDataProvider.PlaceAndDateOfIssue + " " + String.Format("{0:dd MMM yyyy}", shipment.HAWBDate.Value);
+                    myDataProvider.PlaceAndDateOfIssue_Local = myDataProvider.PlaceAndDateOfIssue_Local + " " + String.Format("{0:dd MMM yyyy}", shipment.HAWBDate.Value);
                 }
                 else
                 {
                     myDataProvider.PlaceAndDateOfIssue = myDataProvider.PlaceAndDateOfIssue + " " + String.Format("{0:dd MMM yyyy}", TenantServerConfigration.GetCurrentDateTime(tenant));
-                }
+                    myDataProvider.PlaceAndDateOfIssue_Local = myDataProvider.PlaceAndDateOfIssue_Local + " " + String.Format("{0:dd MMM yyyy}", TenantServerConfigration.GetCurrentDateTime(tenant));
+                }                
 
                 myDataProvider.TenantLogo = DataProviders.General.GetLogo(tenantSettings.Id);
 
