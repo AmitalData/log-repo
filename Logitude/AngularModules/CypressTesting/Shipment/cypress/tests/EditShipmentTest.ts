@@ -10,7 +10,7 @@ describe("Edit Direct Shipment Tests", () => {
     })
 
     it("Edit Direct Export Air Shipment", () => {
-        sh.OpenShipment("ResponseData/DEAShipment.json")
+        sh.OpenShipment("CreatedShipmentsData/DirectEA.json")
         sh.FillGeneralTab()
         sh.FillOrdersTab()
         sh.FillPartnersTab("E","A")
