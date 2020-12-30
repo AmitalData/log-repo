@@ -153,19 +153,17 @@ export class JournalMenuButtonsHandler {
         const JournalAccountingEntity = "1";
         const RevaluationAccountingEntity = "8";
         const AdjustmentAccountingEntity = "10";
+        const ApprovedStatusCode = "2";
 
         let IsVoidButtonEnabled: Boolean = this.EntityPM.AccountingEntityCode == JournalAccountingEntity ||
             this.EntityPM.AccountingEntityCode == RevaluationAccountingEntity ||
             this.EntityPM.AccountingEntityCode == AdjustmentAccountingEntity;
 
-
-        if (IsVoidButtonEnabled)
-            button.IsDisabled = false;
-
-        else if (this.EntityPM.StatusCode == "2" // 2- Approved
+        let IsApprovedAndNotStorno: Boolean = this.EntityPM.StatusCode == ApprovedStatusCode
             && this.EntityPM.AccountingEntityCode == JournalAccountingEntity
-            && this.EntityPM.OriginalJournalId == null) // Not Storno
-        {
+            && this.EntityPM.OriginalJournalId == null; // Not Storno
+
+        if (IsVoidButtonEnabled || IsApprovedAndNotStorno) {
             button.IsDisabled = false;
         }
 
