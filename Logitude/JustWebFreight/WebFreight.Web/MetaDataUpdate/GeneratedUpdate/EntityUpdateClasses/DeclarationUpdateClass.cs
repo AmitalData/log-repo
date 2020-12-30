@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class DeclarationUpdateClass
    {  		
-		public const string HashString = "25104597d341684a3dbd4bd1a44ecab7";
+		public const string HashString = "0e9a7063a5fb3b1d3715b3d39d78af50";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -10231,12 +10231,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
-					  						CanFilter =  false,
+					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  1000,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						Operator =  "Contains",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -12020,6 +12021,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  1000,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						Operator =  "Contains",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -16194,6 +16196,42 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             }, EventTypeRepository, tenantEventTypes);
 
 
+            AddEventTypes.AddEventType(new EventTypeDetails()
+            {
+                Code =  "RDA",
+                EnglishName =  "Required Document Verified",
+                LocalName =  "מסמך נדרש אומת",
+                IsManualEntry =  false,
+                ShortView =  false,
+                IsAgentView =  false,
+                IsCustomerView =  false,
+                IsSharedLogisticsEnabled =  false,
+                AllowedInAutomation =  false,
+                ManualActivatedFollowUp =  false,
+                IsFollowUp =  false,
+                ObjectTableId = DeclarationObjectTable.Id,
+				 
+            }, EventTypeRepository, tenantEventTypes);
+
+
+            AddEventTypes.AddEventType(new EventTypeDetails()
+            {
+                Code =  "RDR",
+                EnglishName =  "Required Document Rejected",
+                LocalName =  "מסמך נדרש נדחה",
+                IsManualEntry =  false,
+                ShortView =  false,
+                IsAgentView =  false,
+                IsCustomerView =  false,
+                IsSharedLogisticsEnabled =  false,
+                AllowedInAutomation =  false,
+                ManualActivatedFollowUp =  false,
+                IsFollowUp =  false,
+                ObjectTableId = DeclarationObjectTable.Id,
+				 
+            }, EventTypeRepository, tenantEventTypes);
+
+
 	    }
 	
 	    public void AddTableMenuButtons(Dictionary<string, MenuButton> tenantMenuButtons,Dictionary<string, MenuButtonGroup> tenantMenuButtonGroups, Dictionary<string, TextCode> textCodes,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, MenuButtonRepository menuButtonRepository,Dictionary<string, Feature> TenantFeatures,MenuButtonGroupRepository menuButtonGroupRepository ,IWebFreightContext ObjectContext)
@@ -17362,6 +17400,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode DeclarationTextCode_CustomsDeclarationOAmendmentRequestInitiatorType = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.AmendmentRequestInitiatorType", DefaultText = "Amendment Request Initiator Type",LocalDefaultText = @"יוזם התיקון", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode DeclarationTextCode_CustomsDeclarationOFieldAmendmentRejectReasonRemarks = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.FieldAmendmentRejectReasonRemarks", DefaultText = "Amendment Reject Reason Remarks",LocalDefaultText = @"סיבת דחיה", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOExport = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.Export", DefaultText = "Export Declaration",LocalDefaultText = @"הצהרת יצוא", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOCargoTypeCode = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.CargoTypeCode", DefaultText = "Cargo Type Code",LocalDefaultText = @"סוג מזהה מטען", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

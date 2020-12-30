@@ -268,6 +268,7 @@
     <Content Include="CustomsModules\CustomsCourier\Components\CourierPendingReason\AddCourierPendingToUnifreightStatusComponent.html" />
     <Content Include="CustomsModules\CustomsCourier\Components\CourierPendingReason\DeclarationPendingsGeneralComponent.html" />
     <Content Include="CustomsModules\CustomsCourier\Components\CourierWorkSheet\GetStorageSiteCodeComponent.html" />
+    <Content Include="CustomsModules\CustomsCourier\Components\CourierWorkSheet\GetUnloadPortCodeComponent.html" />
     <Content Include="CustomsModules\CustomsCourier\Components\CourierWorkspaces\CourierDeclarationWorkspaceComponent.html" />
     <Content Include="CustomsModules\CustomsCourier\Components\GatepassRequest\GatepassRequestComponent.html" />
     <Content Include="CustomsModules\CustomsCourier\Components\MamanSpecialAction\AddEditMamanStickerComponent.html" />
@@ -286,6 +287,7 @@
     <Content Include="CustomsModules\CustomsDeclarationModules\DeclarationTabs\Components\DeclarationAmendment\DeclarationAmendmentComponent.html" />
     <Content Include="CustomsModules\CustomsDeclarationModules\DeclarationTabs\Components\General\ConsigmentTabContent\ExportConsigmentContentComponent.html" />
     <Content Include="_Resources\js\UnifreightJSBridge.js" />
+    <TypeScriptCompile Include="CustomsModules\CustomsCourier\Components\CourierWorkSheet\GetUnloadPortCodeComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsDeclarationModules\DeclarationOthers\Components\DeclarationCancellation\DeclarationCancellationComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsDeclarationModules\DeclarationOthers\Components\DeclarationCancellation\Documents\DeclarationCancellationCustomsDocumentsController.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsDeclarationModules\DeclarationOthers\Components\NewEntity\NewExportDeclarationComponent.ts" />

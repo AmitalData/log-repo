@@ -25,9 +25,9 @@ namespace WebFreight.Web.CustomWebServices.BL.XLSExport
                     r.AirlineId,
                     r.MAWB,
                     r.MasterHAWB,
-                    
-                    r.MasterGrossMassMeasure,
-                    r.MasterPackageQuantity,
+
+                    MasterGrossMassMeasure=r.MasterGrossMassMeasure??0,
+                    MasterPackageQuantity =r.MasterPackageQuantity ?? 0,
                     r.MasterCreateDateTime,
                     r.MasterGatewayPortCode,
                     r.MasterEstimatedArrivalDate,
@@ -37,7 +37,7 @@ namespace WebFreight.Web.CustomWebServices.BL.XLSExport
                     r.FastIndividualProcessCode,
                     r.ImporterName,
                     r.ImporterCode,
-                    r.TotalInvoiceAmountInUSD,
+                    TotalInvoiceAmountInUSD=r.TotalInvoiceAmountInUSD ?? 0,
                     r.DocumentStatusCode,
                     r.IsCourierMissingClassification,
                     r.CourierManifestStatusCode,

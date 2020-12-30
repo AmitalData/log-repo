@@ -230,8 +230,22 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                         remarksChas += "מס' חשבון ספק: " + entityPM.InvoiceNumber;
                         remarksChas += " שורת פרט מכס: " + itemPM.LineNumber;
                         remarksChas += " שורת שלדה: " + vehicle.LineNumber;
-                        remarksChas += " מס' שלדה/ריכבית ישן: " + vehicle.VehicleChassisNumberSource + vehicle.RichbitFileNumberSource;
-                        remarksChas += " מס' שלדה/ריכבית חדש: " + vehicle.VehicleChassisNumber + vehicle.RichbitFileNumber;
+                        if (vehicle.RichbitFileNumberSource != null)
+                        {
+                            remarksChas += " מס' ריכבית ישן: "  + vehicle.RichbitFileNumberSource;
+                        }
+                        else
+                        {
+                            remarksChas += " מס' שלדה ישן: " + vehicle.VehicleChassisNumberSource;
+                        }
+                        if (vehicle.RichbitFileNumber != null)
+                        {
+                            remarksChas += " מס' ריכבית חדש: " + vehicle.RichbitFileNumber;
+                        }
+                        else
+                        {
+                            remarksChas += " מס' שלדה חדש: " + vehicle.VehicleChassisNumber ;
+                        }
                     }
                 }
             }
@@ -239,9 +253,9 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             {
                 SendClass(entityPM.Tenant, _DeclarationPM.CustomFileNo, AuthenticationUtil.ResolveUserId(entityPM.Tenant), remarksClass);
             }
-            if(remarksChas != "")
+            if (remarksChas != "")
             {
-                SendCHAS(entityPM.Tenant,_DeclarationPM.CustomFileNo, AuthenticationUtil.ResolveUserId(entityPM.Tenant), remarksChas);
+                SendCHAS(entityPM.Tenant, _DeclarationPM.CustomFileNo, AuthenticationUtil.ResolveUserId(entityPM.Tenant), remarksChas);
             }
             base.OnUpdating(entityPM, entityPOCO);
         }

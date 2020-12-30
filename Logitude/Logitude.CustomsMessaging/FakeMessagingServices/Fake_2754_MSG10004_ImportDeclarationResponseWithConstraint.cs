@@ -22,8 +22,11 @@ namespace Logitude.CustomsMessaging.FakeMessagingServices
             AddResponseHeader();
             dynamic params1 = JObject.Parse(requestParams.TestCase.Param1);
             string code = Convert.ToString(params1.code);
+            string documentSectionCode = Convert.ToString(params1.documentSectionCode);
+            string tagId = Convert.ToString(params1.tagId);
+
             if (code != null) {
-                AddErrors(code);
+                AddErrors(code, tagId, documentSectionCode);
             } else
             {
                 AddConstraints();

@@ -197,7 +197,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                     TotalInvoiceAmountInUSD = rec.myDeclarationCourierStatuses != null ? rec.myDeclarationCourierStatuses.TotalInvoiceAmountInUSD : null,
                     IsPending902 = rec.myDeclarationCourierStatuses != null ? (rec.myDeclarationCourierStatuses.CourierPendingReasonList.Contains("902") ? true : false) : false,
                     IsPending900 = rec.myDeclarationCourierStatuses != null ? (rec.myDeclarationCourierStatuses.CourierPendingReasonList.Contains("900") ? true : false) : false,
-                    //CourierPendingReasonList = rec.myDeclarationCourierStatuses != null ? rec.myDeclarationCourierStatuses.CourierPendingReasonList : null,
+                    CourierPendingReasonList = rec.myDeclarationCourierStatuses != null ? rec.myDeclarationCourierStatuses.CourierPendingReasonList : null,
                     MAWB = rec.CourierMaster != null ? rec.CourierMaster.MAWB : null,
                     IsCourierMissingClassification = rec.myDeclarationCourierStatuses != null ? rec.myDeclarationCourierStatuses.IsCourierMissingClassification : false,
                     IsPendingNotNull = rec.myDeclarationCourierStatuses != null ? (rec.myDeclarationCourierStatuses.CourierPendingReasonList != null && rec.myDeclarationCourierStatuses.CourierPendingReasonList.Length > 0 ? true : false) : false,
@@ -268,7 +268,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                TotalInvoiceAmountInUSD = 1,
                                IsPending902 = true,
                                IsPending900 = true,
-                               //CourierPendingReasonList= "",
+                                CourierPendingReasonList= "",
                                MAWB = "",
                                IsCourierMissingClassification = true,
                                IsPendingNotNull = true,
@@ -432,9 +432,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                      IsPending902 = myJoin != null ? myJoin.IsPending902 : false,
                                                      IsPending900 = myJoin != null ? myJoin.IsPending900 : false,
                                                      IsPendingNotNull = myJoin != null ? myJoin.IsPendingNotNull : false,
-                                                     //CourierPendingReasonList = myJoin != null ? myJoin.CourierPendingReasonList : null,
+                                                     CourierPendingReasonList = myJoin != null ? myJoin.CourierPendingReasonList : null,
                                                      /*CourierPendingReasonList = mypr != null ? mypr.CourierPendingReasonName : null,*/
-                                                     //CourierPendingReasonName = a.CourierPendingReasonName,
+                                                    //CourierPendingReasonName = a.CourierPendingReasonName,
 
                                                      MAWB = myJoin != null ? myJoin.MAWB : null,
                                                      IsCourierMissingClassification = myJoin != null ? myJoin.IsCourierMissingClassification : false,
@@ -475,7 +475,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
         {
             DeclarationCustomFilters filters = new DeclarationCustomFilters();
 
-            iQueryable = filters.GetFilteredQuery(queryOperations, iQueryable);
+            iQueryable = filters.GetFilteredQuery(queryOperations, iQueryable,tenant);
 
             iQueryable = filters.GetFreelancerDeclarations(queryOperations, iQueryable, tenant);
 
@@ -555,7 +555,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
         public  decimal? TotalInvoiceAmountInUSD { get; set; }
         public bool IsPending902 { get; set; }
         public bool IsPending900 { get; set; }
-        //public string CourierPendingReasonList { get; set; }
+        public string CourierPendingReasonList { get; set; }
         public string MAWB { get; set; }
         public bool IsCourierMissingClassification { get; set; }
         public bool IsPendingNotNull { get; set; }
