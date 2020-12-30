@@ -171,6 +171,7 @@ export class DeclarationCargoSplitPMService {
         if (!entityPM) {
             
             entityPM = new DeclarationCargoSplitPM();
+			entityPM.DisableMarkAsDirty = true;
         }
 
 		var customFields: Array<string> = [];
@@ -245,6 +246,8 @@ export class DeclarationCargoSplitPMService {
             entityPM.OldEntityPM = null;
         }
 		entityPM.IsDirty = false;
+	    entityPM.DisableMarkAsDirty = false;
+
         return entityPM;
     }
 
@@ -270,7 +273,8 @@ export class DeclarationCargoSplitPMService {
             {
                 newDecCargoSplitConPM = new DecCargoSplitConPM(null);
             }
-                
+ 			newDecCargoSplitConPM.DisableMarkAsDirty = true;
+               
             var pmKeysArray = Object.keys(jItem);
             for (var pmKey in pmKeysArray) {
                 if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
@@ -313,7 +317,7 @@ export class DeclarationCargoSplitPMService {
                 newDecCargoSplitConPM.OldEntityPM = null;
                 newDecCargoSplitConPM.EntityParentPM = null;
             }
-			
+			 newDecCargoSplitConPM.DisableMarkAsDirty = false;
 			 newDecCargoSplitConPM.IsDirty = false;
             entityPM.DecCargoSplitCons.push(newDecCargoSplitConPM);
         }
@@ -327,6 +331,7 @@ export class DeclarationCargoSplitPMService {
                         //entityPM.DecCargoSplitCons.push(oldDecCargoSplitCons[itemKey]);
 						var oldItemJson = oldDecCargoSplitCons[itemKey];
                         var deletedPM: DecCargoSplitConPM = new DecCargoSplitConPM(null);
+						deletedPM.DisableMarkAsDirty = true;
                         var pmKeys = Object.keys(oldItemJson);
                         for (var key in pmKeys) {
 
@@ -338,7 +343,7 @@ export class DeclarationCargoSplitPMService {
                             deletedPM[property] = oldItemJson[property];
                         }
 
-                      
+					    deletedPM.DisableMarkAsDirty = false;
                         deletedPM.IsDirty = false;
                         deletedPM.ChangeSetOp = "Delete";
                         
@@ -374,7 +379,8 @@ export class DeclarationCargoSplitPMService {
             {
                 newDecCargoSplitConsItemPM = new DecCargoSplitConsItemPM(null);
             }
-                
+ 			newDecCargoSplitConsItemPM.DisableMarkAsDirty = true;
+               
             var pmKeysArray = Object.keys(jItem);
             for (var pmKey in pmKeysArray) {
                 if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
@@ -422,7 +428,7 @@ export class DeclarationCargoSplitPMService {
                 newDecCargoSplitConsItemPM.OldEntityPM = null;
                 newDecCargoSplitConsItemPM.EntityParentPM = null;
             }
-			
+			 newDecCargoSplitConsItemPM.DisableMarkAsDirty = false;
 			 newDecCargoSplitConsItemPM.IsDirty = false;
             entityPM.DecCargoSplitConsItems.push(newDecCargoSplitConsItemPM);
         }
@@ -436,6 +442,7 @@ export class DeclarationCargoSplitPMService {
                         //entityPM.DecCargoSplitConsItems.push(oldDecCargoSplitConsItems[itemKey]);
 						var oldItemJson = oldDecCargoSplitConsItems[itemKey];
                         var deletedPM: DecCargoSplitConsItemPM = new DecCargoSplitConsItemPM(null);
+						deletedPM.DisableMarkAsDirty = true;
                         var pmKeys = Object.keys(oldItemJson);
                         for (var key in pmKeys) {
 
@@ -447,7 +454,7 @@ export class DeclarationCargoSplitPMService {
                             deletedPM[property] = oldItemJson[property];
                         }
 
-                      
+					    deletedPM.DisableMarkAsDirty = false;
                         deletedPM.IsDirty = false;
                         deletedPM.ChangeSetOp = "Delete";
                         
@@ -483,7 +490,8 @@ export class DeclarationCargoSplitPMService {
             {
                 newDecCargoSplitConsPackDetPM = new DecCargoSplitConsPackDetPM(null);
             }
-                
+ 			newDecCargoSplitConsPackDetPM.DisableMarkAsDirty = true;
+               
             var pmKeysArray = Object.keys(jItem);
             for (var pmKey in pmKeysArray) {
                 if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
@@ -520,7 +528,7 @@ export class DeclarationCargoSplitPMService {
                 newDecCargoSplitConsPackDetPM.OldEntityPM = null;
                 newDecCargoSplitConsPackDetPM.EntityParentPM = null;
             }
-			
+			 newDecCargoSplitConsPackDetPM.DisableMarkAsDirty = false;
 			 newDecCargoSplitConsPackDetPM.IsDirty = false;
             entityPM.DecCargoSplitConsPackDets.push(newDecCargoSplitConsPackDetPM);
         }
@@ -534,6 +542,7 @@ export class DeclarationCargoSplitPMService {
                         //entityPM.DecCargoSplitConsPackDets.push(oldDecCargoSplitConsPackDets[itemKey]);
 						var oldItemJson = oldDecCargoSplitConsPackDets[itemKey];
                         var deletedPM: DecCargoSplitConsPackDetPM = new DecCargoSplitConsPackDetPM(null);
+						deletedPM.DisableMarkAsDirty = true;
                         var pmKeys = Object.keys(oldItemJson);
                         for (var key in pmKeys) {
 
@@ -545,7 +554,7 @@ export class DeclarationCargoSplitPMService {
                             deletedPM[property] = oldItemJson[property];
                         }
 
-                      
+					    deletedPM.DisableMarkAsDirty = false;
                         deletedPM.IsDirty = false;
                         deletedPM.ChangeSetOp = "Delete";
                         
@@ -580,7 +589,8 @@ export class DeclarationCargoSplitPMService {
             {
                 newDecCargoSplitCargoIdentifierPM = new DecCargoSplitCargoIdentifierPM(null);
             }
-                
+ 			newDecCargoSplitCargoIdentifierPM.DisableMarkAsDirty = true;
+               
             var pmKeysArray = Object.keys(jItem);
             for (var pmKey in pmKeysArray) {
                 if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
@@ -612,7 +622,7 @@ export class DeclarationCargoSplitPMService {
                 newDecCargoSplitCargoIdentifierPM.OldEntityPM = null;
                 newDecCargoSplitCargoIdentifierPM.EntityParentPM = null;
             }
-			
+			 newDecCargoSplitCargoIdentifierPM.DisableMarkAsDirty = false;
 			 newDecCargoSplitCargoIdentifierPM.IsDirty = false;
             entityPM.DecCargoSplitCargoIdentifiers.push(newDecCargoSplitCargoIdentifierPM);
         }
@@ -626,6 +636,7 @@ export class DeclarationCargoSplitPMService {
                         //entityPM.DecCargoSplitCargoIdentifiers.push(oldDecCargoSplitCargoIdentifiers[itemKey]);
 						var oldItemJson = oldDecCargoSplitCargoIdentifiers[itemKey];
                         var deletedPM: DecCargoSplitCargoIdentifierPM = new DecCargoSplitCargoIdentifierPM(null);
+						deletedPM.DisableMarkAsDirty = true;
                         var pmKeys = Object.keys(oldItemJson);
                         for (var key in pmKeys) {
 
@@ -637,7 +648,7 @@ export class DeclarationCargoSplitPMService {
                             deletedPM[property] = oldItemJson[property];
                         }
 
-                      
+					    deletedPM.DisableMarkAsDirty = false;
                         deletedPM.IsDirty = false;
                         deletedPM.ChangeSetOp = "Delete";
                         

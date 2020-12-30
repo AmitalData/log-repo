@@ -153,6 +153,7 @@ export class DeclarationReferantDataPMService {
         if (!entityPM) {
             
             entityPM = new DeclarationReferantDataPM();
+			entityPM.DisableMarkAsDirty = true;
         }
 
 		var customFields: Array<string> = [];
@@ -193,6 +194,8 @@ export class DeclarationReferantDataPMService {
             entityPM.OldEntityPM = null;
         }
 		entityPM.IsDirty = false;
+	    entityPM.DisableMarkAsDirty = false;
+
         return entityPM;
     }
 

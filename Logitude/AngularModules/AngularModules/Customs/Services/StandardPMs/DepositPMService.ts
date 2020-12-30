@@ -154,6 +154,7 @@ export class DepositPMService {
         if (!entityPM) {
             
             entityPM = new DepositPM();
+			entityPM.DisableMarkAsDirty = true;
         }
 
 		var customFields: Array<string> = [];
@@ -204,6 +205,8 @@ export class DepositPMService {
             entityPM.OldEntityPM = null;
         }
 		entityPM.IsDirty = false;
+	    entityPM.DisableMarkAsDirty = false;
+
         return entityPM;
     }
 
@@ -229,7 +232,8 @@ export class DepositPMService {
             {
                 newDepositConditionPM = new DepositConditionPM(null);
             }
-                
+ 			newDepositConditionPM.DisableMarkAsDirty = true;
+               
             var pmKeysArray = Object.keys(jItem);
             for (var pmKey in pmKeysArray) {
                 if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
@@ -261,7 +265,7 @@ export class DepositPMService {
                 newDepositConditionPM.OldEntityPM = null;
                 newDepositConditionPM.EntityParentPM = null;
             }
-			
+			 newDepositConditionPM.DisableMarkAsDirty = false;
 			 newDepositConditionPM.IsDirty = false;
             entityPM.DepositConditions.push(newDepositConditionPM);
         }
@@ -275,6 +279,7 @@ export class DepositPMService {
                         //entityPM.DepositConditions.push(oldDepositConditions[itemKey]);
 						var oldItemJson = oldDepositConditions[itemKey];
                         var deletedPM: DepositConditionPM = new DepositConditionPM(null);
+						deletedPM.DisableMarkAsDirty = true;
                         var pmKeys = Object.keys(oldItemJson);
                         for (var key in pmKeys) {
 
@@ -286,7 +291,7 @@ export class DepositPMService {
                             deletedPM[property] = oldItemJson[property];
                         }
 
-                      
+					    deletedPM.DisableMarkAsDirty = false;
                         deletedPM.IsDirty = false;
                         deletedPM.ChangeSetOp = "Delete";
                         

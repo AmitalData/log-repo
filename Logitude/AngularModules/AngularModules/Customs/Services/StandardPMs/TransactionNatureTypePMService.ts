@@ -153,6 +153,7 @@ export class TransactionNatureTypePMService {
         if (!entityPM) {
             
             entityPM = new TransactionNatureTypePM();
+			entityPM.DisableMarkAsDirty = true;
         }
 
 		var customFields: Array<string> = [];
@@ -193,6 +194,8 @@ export class TransactionNatureTypePMService {
             entityPM.OldEntityPM = null;
         }
 		entityPM.IsDirty = false;
+	    entityPM.DisableMarkAsDirty = false;
+
         return entityPM;
     }
 

@@ -153,6 +153,7 @@ export class InterfaceTenantDefinitionPMService {
         if (!entityPM) {
             
             entityPM = new InterfaceTenantDefinitionPM();
+			entityPM.DisableMarkAsDirty = true;
         }
 
 		var customFields: Array<string> = [];
@@ -193,6 +194,8 @@ export class InterfaceTenantDefinitionPMService {
             entityPM.OldEntityPM = null;
         }
 		entityPM.IsDirty = false;
+	    entityPM.DisableMarkAsDirty = false;
+
         return entityPM;
     }
 

@@ -68,7 +68,10 @@ export class CustomsRequiredFieldPM {
     public OldEntityPM: CustomsRequiredFieldPM;
 		
     public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
+       if(!this.DisableMarkAsDirty)
+       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -76,6 +79,7 @@ export class CustomsRequiredFieldPM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "Customs.CustomsRequiredField");
            
         }
+       }
     }
 
     private MyClone: CustomsRequiredFieldPM;

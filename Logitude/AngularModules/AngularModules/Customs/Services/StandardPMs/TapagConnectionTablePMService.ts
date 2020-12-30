@@ -153,6 +153,7 @@ export class TapagConnectionTablePMService {
         if (!entityPM) {
             
             entityPM = new TapagConnectionTablePM();
+			entityPM.DisableMarkAsDirty = true;
         }
 
 		var customFields: Array<string> = [];
@@ -193,6 +194,8 @@ export class TapagConnectionTablePMService {
             entityPM.OldEntityPM = null;
         }
 		entityPM.IsDirty = false;
+	    entityPM.DisableMarkAsDirty = false;
+
         return entityPM;
     }
 

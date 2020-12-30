@@ -448,7 +448,10 @@ export class VehiclePM {
     public OldEntityPM: VehiclePM;
 		
     public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
+       if(!this.DisableMarkAsDirty)
+       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -456,6 +459,7 @@ export class VehiclePM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "Customs.Vehicle");
            
         }
+       }
     }
 
     private MyClone: VehiclePM;

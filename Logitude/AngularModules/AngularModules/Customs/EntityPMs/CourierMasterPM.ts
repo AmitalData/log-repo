@@ -318,7 +318,10 @@ export class CourierMasterPM {
     public OldEntityPM: CourierMasterPM;
 		
     public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
+       if(!this.DisableMarkAsDirty)
+       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -326,6 +329,7 @@ export class CourierMasterPM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "Customs.CourierMaster");
            
         }
+       }
     }
 
     private MyClone: CourierMasterPM;

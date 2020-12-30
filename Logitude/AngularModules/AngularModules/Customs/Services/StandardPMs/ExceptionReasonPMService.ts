@@ -153,6 +153,7 @@ export class ExceptionReasonPMService {
         if (!entityPM) {
             
             entityPM = new ExceptionReasonPM();
+			entityPM.DisableMarkAsDirty = true;
         }
 
 		var customFields: Array<string> = [];
@@ -193,6 +194,8 @@ export class ExceptionReasonPMService {
             entityPM.OldEntityPM = null;
         }
 		entityPM.IsDirty = false;
+	    entityPM.DisableMarkAsDirty = false;
+
         return entityPM;
     }
 

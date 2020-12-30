@@ -179,6 +179,7 @@ export class ClaimPMService {
         if (!entityPM) {
             
             entityPM = new ClaimPM();
+			entityPM.DisableMarkAsDirty = true;
         }
 
 		var customFields: Array<string> = [];
@@ -308,6 +309,8 @@ export class ClaimPMService {
             entityPM.OldEntityPM = null;
         }
 		entityPM.IsDirty = false;
+	    entityPM.DisableMarkAsDirty = false;
+
         return entityPM;
     }
 
@@ -333,7 +336,8 @@ export class ClaimPMService {
             {
                 newClaimImporterDeclarsPage3PM = new ClaimImporterDeclarsPage3PM(null);
             }
-                
+ 			newClaimImporterDeclarsPage3PM.DisableMarkAsDirty = true;
+               
             var pmKeysArray = Object.keys(jItem);
             for (var pmKey in pmKeysArray) {
                 if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
@@ -376,7 +380,7 @@ export class ClaimPMService {
                 newClaimImporterDeclarsPage3PM.OldEntityPM = null;
                 newClaimImporterDeclarsPage3PM.EntityParentPM = null;
             }
-			
+			 newClaimImporterDeclarsPage3PM.DisableMarkAsDirty = false;
 			 newClaimImporterDeclarsPage3PM.IsDirty = false;
             entityPM.ClaimImporterDeclarsPage3.push(newClaimImporterDeclarsPage3PM);
         }
@@ -390,6 +394,7 @@ export class ClaimPMService {
                         //entityPM.ClaimImporterDeclarsPage3.push(oldClaimImporterDeclarsPage3[itemKey]);
 						var oldItemJson = oldClaimImporterDeclarsPage3[itemKey];
                         var deletedPM: ClaimImporterDeclarsPage3PM = new ClaimImporterDeclarsPage3PM(null);
+						deletedPM.DisableMarkAsDirty = true;
                         var pmKeys = Object.keys(oldItemJson);
                         for (var key in pmKeys) {
 
@@ -401,7 +406,7 @@ export class ClaimPMService {
                             deletedPM[property] = oldItemJson[property];
                         }
 
-                      
+					    deletedPM.DisableMarkAsDirty = false;
                         deletedPM.IsDirty = false;
                         deletedPM.ChangeSetOp = "Delete";
                         
@@ -437,7 +442,8 @@ export class ClaimPMService {
             {
                 newClaimImporterDeclarsP3LoiPM = new ClaimImporterDeclarsP3LoiPM(null);
             }
-                
+ 			newClaimImporterDeclarsP3LoiPM.DisableMarkAsDirty = true;
+               
             var pmKeysArray = Object.keys(jItem);
             for (var pmKey in pmKeysArray) {
                 if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
@@ -474,7 +480,7 @@ export class ClaimPMService {
                 newClaimImporterDeclarsP3LoiPM.OldEntityPM = null;
                 newClaimImporterDeclarsP3LoiPM.EntityParentPM = null;
             }
-			
+			 newClaimImporterDeclarsP3LoiPM.DisableMarkAsDirty = false;
 			 newClaimImporterDeclarsP3LoiPM.IsDirty = false;
             entityPM.ClaimImporterDeclarsP3Loi.push(newClaimImporterDeclarsP3LoiPM);
         }
@@ -488,6 +494,7 @@ export class ClaimPMService {
                         //entityPM.ClaimImporterDeclarsP3Loi.push(oldClaimImporterDeclarsP3Loi[itemKey]);
 						var oldItemJson = oldClaimImporterDeclarsP3Loi[itemKey];
                         var deletedPM: ClaimImporterDeclarsP3LoiPM = new ClaimImporterDeclarsP3LoiPM(null);
+						deletedPM.DisableMarkAsDirty = true;
                         var pmKeys = Object.keys(oldItemJson);
                         for (var key in pmKeys) {
 
@@ -499,7 +506,7 @@ export class ClaimPMService {
                             deletedPM[property] = oldItemJson[property];
                         }
 
-                      
+					    deletedPM.DisableMarkAsDirty = false;
                         deletedPM.IsDirty = false;
                         deletedPM.ChangeSetOp = "Delete";
                         
@@ -533,7 +540,8 @@ export class ClaimPMService {
             {
                 newClaimsRelatedEntityPM = new ClaimsRelatedEntityPM(null);
             }
-                
+ 			newClaimsRelatedEntityPM.DisableMarkAsDirty = true;
+               
             var pmKeysArray = Object.keys(jItem);
             for (var pmKey in pmKeysArray) {
                 if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
@@ -620,7 +628,7 @@ export class ClaimPMService {
                 newClaimsRelatedEntityPM.OldEntityPM = null;
                 newClaimsRelatedEntityPM.EntityParentPM = null;
             }
-			
+			 newClaimsRelatedEntityPM.DisableMarkAsDirty = false;
 			 newClaimsRelatedEntityPM.IsDirty = false;
             entityPM.ClaimsRelatedEntities.push(newClaimsRelatedEntityPM);
         }
@@ -634,6 +642,7 @@ export class ClaimPMService {
                         //entityPM.ClaimsRelatedEntities.push(oldClaimsRelatedEntities[itemKey]);
 						var oldItemJson = oldClaimsRelatedEntities[itemKey];
                         var deletedPM: ClaimsRelatedEntityPM = new ClaimsRelatedEntityPM(null);
+						deletedPM.DisableMarkAsDirty = true;
                         var pmKeys = Object.keys(oldItemJson);
                         for (var key in pmKeys) {
 
@@ -645,7 +654,7 @@ export class ClaimPMService {
                             deletedPM[property] = oldItemJson[property];
                         }
 
-                      
+					    deletedPM.DisableMarkAsDirty = false;
                         deletedPM.IsDirty = false;
                         deletedPM.ChangeSetOp = "Delete";
                         
@@ -693,7 +702,8 @@ export class ClaimPMService {
             {
                 newClaimsRelatedEntitiesAmountPM = new ClaimsRelatedEntitiesAmountPM(null);
             }
-                
+ 			newClaimsRelatedEntitiesAmountPM.DisableMarkAsDirty = true;
+               
             var pmKeysArray = Object.keys(jItem);
             for (var pmKey in pmKeysArray) {
                 if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
@@ -730,7 +740,7 @@ export class ClaimPMService {
                 newClaimsRelatedEntitiesAmountPM.OldEntityPM = null;
                 newClaimsRelatedEntitiesAmountPM.EntityParentPM = null;
             }
-			
+			 newClaimsRelatedEntitiesAmountPM.DisableMarkAsDirty = false;
 			 newClaimsRelatedEntitiesAmountPM.IsDirty = false;
             entityPM.ClaimsRelatedEntitiesAmounts.push(newClaimsRelatedEntitiesAmountPM);
         }
@@ -744,6 +754,7 @@ export class ClaimPMService {
                         //entityPM.ClaimsRelatedEntitiesAmounts.push(oldClaimsRelatedEntitiesAmounts[itemKey]);
 						var oldItemJson = oldClaimsRelatedEntitiesAmounts[itemKey];
                         var deletedPM: ClaimsRelatedEntitiesAmountPM = new ClaimsRelatedEntitiesAmountPM(null);
+						deletedPM.DisableMarkAsDirty = true;
                         var pmKeys = Object.keys(oldItemJson);
                         for (var key in pmKeys) {
 
@@ -755,7 +766,7 @@ export class ClaimPMService {
                             deletedPM[property] = oldItemJson[property];
                         }
 
-                      
+					    deletedPM.DisableMarkAsDirty = false;
                         deletedPM.IsDirty = false;
                         deletedPM.ChangeSetOp = "Delete";
                         
@@ -788,7 +799,8 @@ export class ClaimPMService {
             {
                 newClaimsRelatedEntitiesReasonPM = new ClaimsRelatedEntitiesReasonPM(null);
             }
-                
+ 			newClaimsRelatedEntitiesReasonPM.DisableMarkAsDirty = true;
+               
             var pmKeysArray = Object.keys(jItem);
             for (var pmKey in pmKeysArray) {
                 if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
@@ -836,7 +848,7 @@ export class ClaimPMService {
                 newClaimsRelatedEntitiesReasonPM.OldEntityPM = null;
                 newClaimsRelatedEntitiesReasonPM.EntityParentPM = null;
             }
-			
+			 newClaimsRelatedEntitiesReasonPM.DisableMarkAsDirty = false;
 			 newClaimsRelatedEntitiesReasonPM.IsDirty = false;
             entityPM.ClaimsRelatedEntitiesReasons.push(newClaimsRelatedEntitiesReasonPM);
         }
@@ -850,6 +862,7 @@ export class ClaimPMService {
                         //entityPM.ClaimsRelatedEntitiesReasons.push(oldClaimsRelatedEntitiesReasons[itemKey]);
 						var oldItemJson = oldClaimsRelatedEntitiesReasons[itemKey];
                         var deletedPM: ClaimsRelatedEntitiesReasonPM = new ClaimsRelatedEntitiesReasonPM(null);
+						deletedPM.DisableMarkAsDirty = true;
                         var pmKeys = Object.keys(oldItemJson);
                         for (var key in pmKeys) {
 
@@ -861,7 +874,7 @@ export class ClaimPMService {
                             deletedPM[property] = oldItemJson[property];
                         }
 
-                      
+					    deletedPM.DisableMarkAsDirty = false;
                         deletedPM.IsDirty = false;
                         deletedPM.ChangeSetOp = "Delete";
                         
@@ -897,7 +910,8 @@ export class ClaimPMService {
             {
                 newClaimsRelatedEntsReasonsExpPM = new ClaimsRelatedEntsReasonsExpPM(null);
             }
-                
+ 			newClaimsRelatedEntsReasonsExpPM.DisableMarkAsDirty = true;
+               
             var pmKeysArray = Object.keys(jItem);
             for (var pmKey in pmKeysArray) {
                 if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
@@ -934,7 +948,7 @@ export class ClaimPMService {
                 newClaimsRelatedEntsReasonsExpPM.OldEntityPM = null;
                 newClaimsRelatedEntsReasonsExpPM.EntityParentPM = null;
             }
-			
+			 newClaimsRelatedEntsReasonsExpPM.DisableMarkAsDirty = false;
 			 newClaimsRelatedEntsReasonsExpPM.IsDirty = false;
             entityPM.ClaimsRelatedEntsReasonsExps.push(newClaimsRelatedEntsReasonsExpPM);
         }
@@ -948,6 +962,7 @@ export class ClaimPMService {
                         //entityPM.ClaimsRelatedEntsReasonsExps.push(oldClaimsRelatedEntsReasonsExps[itemKey]);
 						var oldItemJson = oldClaimsRelatedEntsReasonsExps[itemKey];
                         var deletedPM: ClaimsRelatedEntsReasonsExpPM = new ClaimsRelatedEntsReasonsExpPM(null);
+						deletedPM.DisableMarkAsDirty = true;
                         var pmKeys = Object.keys(oldItemJson);
                         for (var key in pmKeys) {
 
@@ -959,7 +974,7 @@ export class ClaimPMService {
                             deletedPM[property] = oldItemJson[property];
                         }
 
-                      
+					    deletedPM.DisableMarkAsDirty = false;
                         deletedPM.IsDirty = false;
                         deletedPM.ChangeSetOp = "Delete";
                         
@@ -993,7 +1008,8 @@ export class ClaimPMService {
             {
                 newClaimsRelatedEntsExpDeclarPM = new ClaimsRelatedEntsExpDeclarPM(null);
             }
-                
+ 			newClaimsRelatedEntsExpDeclarPM.DisableMarkAsDirty = true;
+               
             var pmKeysArray = Object.keys(jItem);
             for (var pmKey in pmKeysArray) {
                 if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
@@ -1030,7 +1046,7 @@ export class ClaimPMService {
                 newClaimsRelatedEntsExpDeclarPM.OldEntityPM = null;
                 newClaimsRelatedEntsExpDeclarPM.EntityParentPM = null;
             }
-			
+			 newClaimsRelatedEntsExpDeclarPM.DisableMarkAsDirty = false;
 			 newClaimsRelatedEntsExpDeclarPM.IsDirty = false;
             entityPM.ClaimsRelatedEntsExpDeclars.push(newClaimsRelatedEntsExpDeclarPM);
         }
@@ -1044,6 +1060,7 @@ export class ClaimPMService {
                         //entityPM.ClaimsRelatedEntsExpDeclars.push(oldClaimsRelatedEntsExpDeclars[itemKey]);
 						var oldItemJson = oldClaimsRelatedEntsExpDeclars[itemKey];
                         var deletedPM: ClaimsRelatedEntsExpDeclarPM = new ClaimsRelatedEntsExpDeclarPM(null);
+						deletedPM.DisableMarkAsDirty = true;
                         var pmKeys = Object.keys(oldItemJson);
                         for (var key in pmKeys) {
 
@@ -1055,7 +1072,7 @@ export class ClaimPMService {
                             deletedPM[property] = oldItemJson[property];
                         }
 
-                      
+					    deletedPM.DisableMarkAsDirty = false;
                         deletedPM.IsDirty = false;
                         deletedPM.ChangeSetOp = "Delete";
                         
@@ -1088,7 +1105,8 @@ export class ClaimPMService {
             {
                 newClaimsRelatedEntitiesSeizurePM = new ClaimsRelatedEntitiesSeizurePM(null);
             }
-                
+ 			newClaimsRelatedEntitiesSeizurePM.DisableMarkAsDirty = true;
+               
             var pmKeysArray = Object.keys(jItem);
             for (var pmKey in pmKeysArray) {
                 if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
@@ -1125,7 +1143,7 @@ export class ClaimPMService {
                 newClaimsRelatedEntitiesSeizurePM.OldEntityPM = null;
                 newClaimsRelatedEntitiesSeizurePM.EntityParentPM = null;
             }
-			
+			 newClaimsRelatedEntitiesSeizurePM.DisableMarkAsDirty = false;
 			 newClaimsRelatedEntitiesSeizurePM.IsDirty = false;
             entityPM.ClaimsRelatedEntitiesSeizures.push(newClaimsRelatedEntitiesSeizurePM);
         }
@@ -1139,6 +1157,7 @@ export class ClaimPMService {
                         //entityPM.ClaimsRelatedEntitiesSeizures.push(oldClaimsRelatedEntitiesSeizures[itemKey]);
 						var oldItemJson = oldClaimsRelatedEntitiesSeizures[itemKey];
                         var deletedPM: ClaimsRelatedEntitiesSeizurePM = new ClaimsRelatedEntitiesSeizurePM(null);
+						deletedPM.DisableMarkAsDirty = true;
                         var pmKeys = Object.keys(oldItemJson);
                         for (var key in pmKeys) {
 
@@ -1150,7 +1169,7 @@ export class ClaimPMService {
                             deletedPM[property] = oldItemJson[property];
                         }
 
-                      
+					    deletedPM.DisableMarkAsDirty = false;
                         deletedPM.IsDirty = false;
                         deletedPM.ChangeSetOp = "Delete";
                         
@@ -1183,7 +1202,8 @@ export class ClaimPMService {
             {
                 newClaimsRelatedEntitiesRefundPM = new ClaimsRelatedEntitiesRefundPM(null);
             }
-                
+ 			newClaimsRelatedEntitiesRefundPM.DisableMarkAsDirty = true;
+               
             var pmKeysArray = Object.keys(jItem);
             for (var pmKey in pmKeysArray) {
                 if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
@@ -1220,7 +1240,7 @@ export class ClaimPMService {
                 newClaimsRelatedEntitiesRefundPM.OldEntityPM = null;
                 newClaimsRelatedEntitiesRefundPM.EntityParentPM = null;
             }
-			
+			 newClaimsRelatedEntitiesRefundPM.DisableMarkAsDirty = false;
 			 newClaimsRelatedEntitiesRefundPM.IsDirty = false;
             entityPM.ClaimsRelatedEntitiesRefunds.push(newClaimsRelatedEntitiesRefundPM);
         }
@@ -1234,6 +1254,7 @@ export class ClaimPMService {
                         //entityPM.ClaimsRelatedEntitiesRefunds.push(oldClaimsRelatedEntitiesRefunds[itemKey]);
 						var oldItemJson = oldClaimsRelatedEntitiesRefunds[itemKey];
                         var deletedPM: ClaimsRelatedEntitiesRefundPM = new ClaimsRelatedEntitiesRefundPM(null);
+						deletedPM.DisableMarkAsDirty = true;
                         var pmKeys = Object.keys(oldItemJson);
                         for (var key in pmKeys) {
 
@@ -1245,7 +1266,7 @@ export class ClaimPMService {
                             deletedPM[property] = oldItemJson[property];
                         }
 
-                      
+					    deletedPM.DisableMarkAsDirty = false;
                         deletedPM.IsDirty = false;
                         deletedPM.ChangeSetOp = "Delete";
                         
@@ -1279,7 +1300,8 @@ export class ClaimPMService {
             {
                 newClaimImporterDeclarsPage3APM = new ClaimImporterDeclarsPage3APM(null);
             }
-                
+ 			newClaimImporterDeclarsPage3APM.DisableMarkAsDirty = true;
+               
             var pmKeysArray = Object.keys(jItem);
             for (var pmKey in pmKeysArray) {
                 if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
@@ -1311,7 +1333,7 @@ export class ClaimPMService {
                 newClaimImporterDeclarsPage3APM.OldEntityPM = null;
                 newClaimImporterDeclarsPage3APM.EntityParentPM = null;
             }
-			
+			 newClaimImporterDeclarsPage3APM.DisableMarkAsDirty = false;
 			 newClaimImporterDeclarsPage3APM.IsDirty = false;
             entityPM.ClaimImporterDeclarsPage3A.push(newClaimImporterDeclarsPage3APM);
         }
@@ -1325,6 +1347,7 @@ export class ClaimPMService {
                         //entityPM.ClaimImporterDeclarsPage3A.push(oldClaimImporterDeclarsPage3A[itemKey]);
 						var oldItemJson = oldClaimImporterDeclarsPage3A[itemKey];
                         var deletedPM: ClaimImporterDeclarsPage3APM = new ClaimImporterDeclarsPage3APM(null);
+						deletedPM.DisableMarkAsDirty = true;
                         var pmKeys = Object.keys(oldItemJson);
                         for (var key in pmKeys) {
 
@@ -1336,7 +1359,7 @@ export class ClaimPMService {
                             deletedPM[property] = oldItemJson[property];
                         }
 
-                      
+					    deletedPM.DisableMarkAsDirty = false;
                         deletedPM.IsDirty = false;
                         deletedPM.ChangeSetOp = "Delete";
                         
@@ -1369,7 +1392,8 @@ export class ClaimPMService {
             {
                 newClaimImporterDeclarsPage3BPM = new ClaimImporterDeclarsPage3BPM(null);
             }
-                
+ 			newClaimImporterDeclarsPage3BPM.DisableMarkAsDirty = true;
+               
             var pmKeysArray = Object.keys(jItem);
             for (var pmKey in pmKeysArray) {
                 if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
@@ -1401,7 +1425,7 @@ export class ClaimPMService {
                 newClaimImporterDeclarsPage3BPM.OldEntityPM = null;
                 newClaimImporterDeclarsPage3BPM.EntityParentPM = null;
             }
-			
+			 newClaimImporterDeclarsPage3BPM.DisableMarkAsDirty = false;
 			 newClaimImporterDeclarsPage3BPM.IsDirty = false;
             entityPM.ClaimImporterDeclarsPage3B.push(newClaimImporterDeclarsPage3BPM);
         }
@@ -1415,6 +1439,7 @@ export class ClaimPMService {
                         //entityPM.ClaimImporterDeclarsPage3B.push(oldClaimImporterDeclarsPage3B[itemKey]);
 						var oldItemJson = oldClaimImporterDeclarsPage3B[itemKey];
                         var deletedPM: ClaimImporterDeclarsPage3BPM = new ClaimImporterDeclarsPage3BPM(null);
+						deletedPM.DisableMarkAsDirty = true;
                         var pmKeys = Object.keys(oldItemJson);
                         for (var key in pmKeys) {
 
@@ -1426,7 +1451,7 @@ export class ClaimPMService {
                             deletedPM[property] = oldItemJson[property];
                         }
 
-                      
+					    deletedPM.DisableMarkAsDirty = false;
                         deletedPM.IsDirty = false;
                         deletedPM.ChangeSetOp = "Delete";
                         
