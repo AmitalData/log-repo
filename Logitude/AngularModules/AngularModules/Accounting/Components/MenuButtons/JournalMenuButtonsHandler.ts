@@ -104,20 +104,7 @@ export class JournalMenuButtonsHandler {
                                 // the VOID button is only available on this case:          BUG #44819
                                 //    - Approved Journal, not storno
 
-                                if (this.EntityPM.StatusCode == "2"                 // 2- Approved
-                                    && this.EntityPM.AccountingEntityCode == "1"    // 1- Journal
-                                    && this.EntityPM.OriginalJournalId == null)     // Not Storno
-                                {
-                                    button.IsDisabled = false;
-                                }
-                                else
-                                {
-                                    button.IsDisabled = true;
-                                }
-
-                                if(this.EntityPM.ExternalSystem)
-                                    button.IsDisabled = true;
-
+                                this.SetVoidButtonEnability(button);
 
                                 // if (this.EntityPM.StatusCode == "3" || this.EntityPM.AccountingEntityCode != "1") { // 3- Voided | 1- Journal
                                 //     button.IsDisabled = true;
@@ -160,6 +147,34 @@ export class JournalMenuButtonsHandler {
         }
 
         return menuButtons;
+    }
+
+    private SetVoidButtonEnability(button: MenuButtonPM) {
+        const JournalAccountingEntity = "1";
+        const RevaluationAccountingEntity = "8";
+        const AdjustmentAccountingEntity = "10";
+
+        let IsVoidButtonEnabled: Boolean = this.EntityPM.AccountingEntityCode == JournalAccountingEntity ||
+            this.EntityPM.AccountingEntityCode == RevaluationAccountingEntity ||
+            this.EntityPM.AccountingEntityCode == AdjustmentAccountingEntity;
+
+
+        if (IsVoidButtonEnabled)
+            button.IsDisabled = false;
+
+        else if (this.EntityPM.StatusCode == "2" // 2- Approved
+            && this.EntityPM.AccountingEntityCode == JournalAccountingEntity
+            && this.EntityPM.OriginalJournalId == null) // Not Storno
+        {
+            button.IsDisabled = false;
+        }
+
+        else {
+            button.IsDisabled = true;
+        }
+
+        if (this.EntityPM.ExternalSystem)
+            button.IsDisabled = true;
     }
 
     public MenuButtonClick(menuButton: MenuButtonPM) {
