@@ -102,6 +102,7 @@ export class GetUnloadPortCodeComponent extends BaseComponent {
         currRequestParams.Tenant = SessionLocator.Tenant;
         currRequestParams.CourierMasterId = this.CourierMasterPM.Id;
         currRequestParams.UnLoadPortCode = this.UnloadPortCode;
+        currRequestParams.RequestName = "עדכון אתר פריקה";
 
         this._CourierMasterService.PostSendALLChangeStorageSiteCode(currRequestParams)
             .subscribe((res: any) => {

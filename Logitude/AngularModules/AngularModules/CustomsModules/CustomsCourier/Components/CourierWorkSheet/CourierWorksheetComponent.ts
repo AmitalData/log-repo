@@ -31,6 +31,7 @@ import { CourierMasterPMService } from '../../../../Customs/Services/StandardPMs
 import { ConfirmWindow } from '../../../../Controls/Windows/ConfirmWindow';
 import { ServiceHelper } from '../../../../Infrastructure/Utilities/ServiceHelper';
 import { FeatureLocator } from '../../../../Infrastructure/Utilities/FeatureLocator';
+import { CustomsRequestSheetExtendedPMService } from '../../../../Customs/Services/ExtendedPMs/CustomsRequestSheetExtendedPMService';
 
 @Component({
     
@@ -68,6 +69,7 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
     _CourierMasterService: CourierMasterService = new CourierMasterService();
     _DeclarationCourierStatusListService: DeclarationCourierStatusListService = new DeclarationCourierStatusListService();
     _EntityListService: EntityListService = new EntityListService();
+    _CustomsRequestSheetExtendedPMService: CustomsRequestSheetExtendedPMService = new CustomsRequestSheetExtendedPMService();
 
     @ViewChild(DropdownMenuFilterComponent)
     public MyDropdownMenuFilterComponent: DropdownMenuFilterComponent = new DropdownMenuFilterComponent(null, null);
@@ -114,7 +116,7 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
 
     public IsDisplayOnly: boolean = false;
     public DisplayOnlyMessage: string = "";
-    private currentSession=SessionLocator.SelectedSession;
+    private currentSession = SessionLocator.SelectedSession;
     //constructor(public entityArgs: EntityArgs) {
     constructor(public _CourierWorksheetSharedDataService: CourierWorksheetSharedDataService, public entityArgs: EntityArgs, private EntityResourceService: EntityResourceService) {
         super();
@@ -153,7 +155,6 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
                     this.RefreshButtonClicked();
                 }
             });
-
         //if (!AppTool.IsNullOrEmpty(this.PendingFilter)) {
         //    setTimeout(() => {
         //        this.MenuHeaderchangeevent.emit({ Filters: this.filterAgrs, IgnoreFilter: false });
@@ -1990,9 +1991,21 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
             if (displayOnlyCheckResult != null && displayOnlyCheckResult.length > 0) {
                 let customsRequestsSheetPM: CustomsRequestsSheetPM = displayOnlyCheckResult.filter(r => r.InterfaceTypeCode == "UCBCMSS")[0];
                 if (customsRequestsSheetPM != null) {
-                    this.IsDisplayOnly = true;
-                    this.DisplayOnlyMessage = "לתצוגה בלבד - קיימת בקשה לשינוי אתר איחסון ברקע ";
-                    this._CourierWorksheetSharedDataService.IsDisplayOnly = true;
+                    this._CustomsRequestSheetExtendedPMService.GetRequestDescription(customsRequestsSheetPM.Id).subscribe((response: any) => {
+                        if (response != null) {
+                            if (String(response).includes("פריקה")) {
+                                this.DisplayOnlyMessage = "לתצוגה בלבד - קיימת בקשה לשינוי אתר פריקה ברקע ";
+                                this.IsDisplayOnly = true;
+                                this._CourierWorksheetSharedDataService.IsDisplayOnly = true;
+                            } else {
+                                this.DisplayOnlyMessage = "לתצוגה בלבד - קיימת בקשה לשינוי אתר איחסון ברקע ";
+                                this.IsDisplayOnly = true;
+                                this._CourierWorksheetSharedDataService.IsDisplayOnly = true;
+                            }
+                            
+                        }
+
+                    });
                 }
             }
         });
