@@ -6,6 +6,7 @@
 import  { CreateRandom } from './CreateRandom';
 
 import { LoginComp } from "../../login/Login.po";
+import { FullAccountingHelper } from './FullAccountingHelper';
 export class ARPAyemntSpec {
 
   private login: LoginComp = new LoginComp();
@@ -42,7 +43,7 @@ let R: CreateRandom= new CreateRandom();
           a[0].click();
       })
       cy.get('button[id=ok-AddARPayment]').click();
-      cy.get('#ARPaymentSpinner').should("not.be.visible");
+      cy.get('#ARPaymentSpinner').should('not.exist');     
       cy.get('button[id=ARPaymentBApprove]').click();
       cy.contains('Approved') 
       cy.log('ARPayment Is Approved')
