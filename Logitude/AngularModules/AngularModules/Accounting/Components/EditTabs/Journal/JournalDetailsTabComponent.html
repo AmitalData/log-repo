@@ -489,8 +489,8 @@
                     <ng-template let-item>
                       <log-cell-template #logcelltemplate [TabIndex]="item.ActionCode ? 0 : -1" [IsEnabled]="item.ActionCode ? true : false">
                         <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" [style.text-align]="isRTL ? 'right' : 'left'">
-                          <span *ngIf="Approved" class="hyperlink" (click)="item.GLAccountHyperlinkClicked()">{{item.CreditAccountName}}</span>
-                          <span *ngIf="!Approved">{{item.CreditAccountName}}</span>
+                          <span *ngIf="Approved || Voided" class="hyperlink" (click)="item.GLAccountHyperlinkClicked()">{{item.CreditAccountName}}</span>
+                          <span *ngIf="!Approved && !Voided">{{item.CreditAccountName}}</span>
 
                         </div>
                         <div *ngIf="logcelltemplate.IsEditMode">
@@ -518,8 +518,8 @@
                       <log-cell-template #logcelltemplate [TabIndex]="item.ActionCode ? 0 : -1" [IsEnabled]="item.ActionCode ? true : false">
                         <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" [style.text-align]="isRTL ? 'right' : 'left'">
                           <span></span>
-                          <span *ngIf="Approved" class="hyperlink" (click)="item.DebitAccountHyperlinkClicked()">{{item.DebitAccountName}}</span>
-                          <span *ngIf="!Approved">{{item.DebitAccountName}}</span>
+                          <span *ngIf="Approved || Voided" class="hyperlink" (click)="item.DebitAccountHyperlinkClicked()">{{item.DebitAccountName}}</span>
+                          <span *ngIf="!Approved && !Voided">{{item.DebitAccountName}}</span>
 
 
 
