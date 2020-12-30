@@ -164,6 +164,7 @@
     <None Include="DBTables\TaxReportStatus.dxml" />
     <None Include="DBTables\TaxWithholdingAssessOffice.dxml" />
     <None Include="DBTables\TestEntity.dxml" />
+    <None Include="DBTables\UserDefinedReport.dxml" />
     <None Include="DBTables\VatReportStatus.dxml" />
     <None Include="DBTables\WithholdingTaxDeductionType.dxml" />
     <None Include="EntityFiles\AccountingCompanyType.lxml" />
