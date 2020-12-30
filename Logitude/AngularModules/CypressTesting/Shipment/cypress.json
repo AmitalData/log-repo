@@ -1,0 +1,11 @@
+{
+"integrationFolder": "cypress/tests",
+"testFiles": "**/*.feature",
+"ignoreTestFiles": "*.ts",
+"env":{
+    "Mode": "Development"
+},
+"defaultCommandTimeout": 120000,
+"responseTimeout": 120000,
+"requestTimeout": 120000
+}
