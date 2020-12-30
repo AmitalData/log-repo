@@ -37,6 +37,7 @@ using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using System.Reflection;
 using Simplog.Data.InfrastructureModel.Repositories;
+using System.Transactions;
 
 namespace WebFreight.Web.Controllers.CustomsModel.Extended
 {
@@ -748,6 +749,34 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
             catch (Exception ex)
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+        public HttpResponseMessage GetRequestDescription(string id)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    using (TransactionScope scope = TransactionFactory.GetTransaction())
+                    {
+                        string token = HttpContext.Current.Request.Headers["Token"];
+                        AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                        int tenant = authToken.Tenant;
+                        ICustomContext MyContext = CustomContext.GetContext(tenant);
+                        CustomsRequestsSheetRepository customsRequestsSheetRepository = new CustomsRequestsSheetRepository(MyContext);
+                        string desc = customsRequestsSheetRepository.GetRequestDescription(id);
+                        scope.Complete();
+                        return Request.CreateResponse(HttpStatusCode.OK, desc);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+                }
+            }
+            else
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildModelException(ModelState));
             }
         }
     }
