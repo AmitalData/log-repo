@@ -41,7 +41,8 @@ it('Search For Shipper', () => {
     cy.wait(100)
    cy.get('#SearchFieldsId_0_0').should('be.visible')
    cy.get('#SearchFieldsId_0_0').type("CypressShipper" + timeStamp)
-   cy.get('#BusyIndicator_0').should('not.be.visible')
+   //cy.get('#BusyIndicator_0').should('not.be.visible')
+    cy.wait(10000)
    cy.get("#LogGrid_0_0row0").click({ force: true })
 
 })
