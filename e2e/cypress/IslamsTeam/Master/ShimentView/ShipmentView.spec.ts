@@ -1,4 +1,4 @@
-/// <reference types="cypress" />
+1./// <reference types="cypress" />
 
 
 //login
@@ -34,7 +34,7 @@ it('OpenShipmentView', () => {
 
 
 it('CreateNewView ', () => {
-   cy.wait(200)
+    // cy.wait(200)
     cy.get('#QueryList_0_0').should('be.visible')
     cy.get('#QueryList_0_0').click({ force: true })
     cy.get('#NewViewId_0_0').click()
@@ -49,13 +49,13 @@ it('CreateNewView ', () => {
 
 it('EditShipmentView', () => {
 
-    cy.wait(100)
+    //  cy.wait(100)
     //cy.get('#QueryList_0_0').should('be.visible')
     cy.get('#QueryList_0_0').click({ force: true })
     cy.get('#SearchFieldsId_0_0').click({ force: true })
     cy.wait(100)
     cy.get('#QueryList_0_0').click({ force: true })
-   // cy.wait(100)
+    // cy.wait(100)
     cy.get('.ActionButtonsParent').should('be.visible')
     let lastShipment = cy.get('.ActionButtonsParent').last()
     lastShipment.trigger('mouseover')
