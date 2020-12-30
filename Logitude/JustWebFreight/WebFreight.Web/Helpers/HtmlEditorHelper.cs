@@ -5857,21 +5857,39 @@ namespace WebFreight.Web.Helpers
             string shipmentLevelCode = GetEntityPropertyValue(sharedLinkHTMLArgs.Entity, "ShipmentLevelCode");
             string myUrl = url;
             string pagePath = @"/SharedLogistic/ShipmentPage.aspx";
+            string pageLink;
             Tenant sharedTenant = GetCurrentTenant(sharedLinkHTMLArgs.Tenant);
             if (sharedTenant != null && sharedTenant.SharedLogisMasterMessageLink && shipmentLevelCode == "C")
             {
-                TenantManagementQuery tenantManagementQuery = new TenantManagementQuery(sharedLinkHTMLArgs.Tenant);
-                TenantManagementPM tenantManagementPM = tenantManagementQuery.GetSinglePMByDomain(url);
-                if (tenantManagementPM != null && !string.IsNullOrEmpty(tenantManagementPM.CustomerURL))
-                {
-                    myUrl = tenantManagementPM.CustomerURL;
-                }
+                myUrl = GetSystemURL(sharedLinkHTMLArgs, myUrl);
                 pagePath = @"/SharedMasterDocumentsPage.aspx";
+                pageLink = (myUrl + pagePath).ToLower() + "?securitykey=" + sharedLinkHTMLArgs.Key + ":" + entityId;
+            }
+            else
+            {
+                pageLink = (myUrl + pagePath).ToLower() + "?securitykey=" + sharedLinkHTMLArgs.Key + ":" + entityId + ":" +
+                                  sharedLinkHTMLArgs.Tenant + ":" + sharedLinkHTMLArgs.HideSharedlogistics;
             }
 
-            string pageLink = (myUrl + pagePath).ToLower() + "?securitykey=" + sharedLinkHTMLArgs.Key + ":" + entityId + ":" +
-                              sharedLinkHTMLArgs.Tenant + ":" + sharedLinkHTMLArgs.HideSharedlogistics;
+            if (!pageLink.Contains("//"))
+            {
+                pageLink = "https://" + pageLink;
+            }
+
             return pageLink;
+        }
+
+        private static string GetSystemURL(SharedLinkHTMLArgs sharedLinkHTMLArgs, string systemUrl)
+        {
+            string myUrl = systemUrl;
+            TenantManagementQuery tenantManagementQuery = new TenantManagementQuery(sharedLinkHTMLArgs.Tenant);
+            TenantManagementPM tenantManagementPM = tenantManagementQuery.GetSinglePMByDomain(systemUrl);
+            if (tenantManagementPM != null && !string.IsNullOrEmpty(tenantManagementPM.CustomerURL))
+            {
+                myUrl = tenantManagementPM.CustomerURL;
+            }
+
+            return myUrl;
         }
 
         private string GetEntityPropertyValue(object entity, string property)
