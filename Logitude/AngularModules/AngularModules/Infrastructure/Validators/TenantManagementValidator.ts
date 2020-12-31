@@ -65,10 +65,27 @@ export class TenantManagementValidator {
             entityPM.TenantManagementLicenses.forEach(item => {
                 if (AppTool.IsNullOrZero(item.NumberOfUsers) && AppTool.IsNullOrZero(item.FreeUsers)) {
                     errors.push("You should enter Number of Users or Free Users for " + item.PackageCode);
-                }                
+                }
             });
+
+            // if (entityPM.MainColor && this.IsValidHexCode(entityPM.MainColor)) {
+            //     errors.push("Please enter valid color code");
+            // }
+
+            // if (entityPM.SecondaryColor && this.IsValidHexCode(entityPM.SecondaryColor)) {
+            //     errors.push("Please enter valid color code");
+            // }
         }
 
         return errors;
+    }
+
+    IsValidHexCode(colorHexCode: string)
+    {
+        const regex = new RegExp('^#([a-fA-F0-9]{6})$');
+        var valid = regex.test(colorHexCode);
+        if (colorHexCode && !valid)
+            return false;
+        return true;
     }
 }
