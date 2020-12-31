@@ -43,6 +43,7 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy  {
     public IsDraftVersion: boolean = true;
     public CurrentVersion: TariffVersionPM;
     private FileName: string;
+    private FileExtension: string;
     private CurrentSession = SessionLocator.SelectedSession;
     public IsFirstDraft = false;
     public SelectedVersionNumber: number;
@@ -551,10 +552,13 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy  {
         this.CurrentSession.StartBusyIndicator("Uploading...");
 
         this.FileName = null;
+        this.FileExtension = null;
+
         if (!AppTool.IsNullOrEmpty(file.name)) {
             var name = file.name.split('.');
             if (name.length == 2) {
                 this.FileName = name[0];
+                this.FileExtension = name[1];
             }
         }
         if (file && file.size > 0) {
@@ -591,8 +595,8 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy  {
             filter.TariffId = context.EntityPM.Id;
             filter.Version = context.CurrentVersion.Version;
             filter.TariffType = context.EntityPM.TypeCode;
-            filter.TariffType = context.EntityPM.TypeCode;
             filter.FileName = context.FileName;
+            filter.FileExtension = context.FileExtension;
             context.SendExcelToServer(filter);
 
         };

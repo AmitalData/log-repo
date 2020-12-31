@@ -366,6 +366,7 @@ export class TariffFilterParameter {
     Version: number;
     TariffType: string;
     FileName: string;
+    FileExtension: string;
 }
 
 export class TariffSearchSummary {

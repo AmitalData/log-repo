@@ -32,7 +32,9 @@ namespace WebFreight.Web.Helpers
         private string fileData;
         private string tariffId;
         private string carrierId;
-        private int version;
+        private int version;        
+        private string fileName;
+        private string fileExtension;
         private MemoryStream memoryStream;
         private TariffQueryService tariffQueryService;
         private TariffCarrierTranslationRepository tariffCarrierTranslationRepository;
@@ -47,6 +49,8 @@ namespace WebFreight.Web.Helpers
             tariffType = filterParameter.TariffType;
             tariffId = filterParameter.TariffId;
             version = filterParameter.Version;
+            fileName = filterParameter.FileName;
+            fileExtension = filterParameter.FileExtension;
 
             this.tariffContext = TariffModuleContext.GetContext(tenant);
             this.commonContext = CommonDataContext.GetContext(tenant);
@@ -1638,7 +1642,6 @@ namespace WebFreight.Web.Helpers
 
         private string UploadExcelFileToStorage(string tariffNumber, int tenant)
         {
-            string extension = "";
             Document document = null;
             IBlobService storageservice = ContainerAccessor.Container.Resolve(typeof(IBlobService), "StorageService", new ParameterOverride("", 1)) as IBlobService;
             
@@ -1648,9 +1651,9 @@ namespace WebFreight.Web.Helpers
                 DocumentRepository documentRepository = new DocumentRepository(tenant);
                 document = new Document()
                 {
-                    FileName = tariffNumber + "-v" + version + "-" + String.Format("{0:dd-MM-yyyy}", TenantServerConfigration.GetCurrentDateTime(tenant)),
+                    FileName = fileName,
                     CreateDate = DateTime.Now,
-                    Extension = extension,
+                    Extension = fileExtension,
                     FileSize = ByteData.Length,
                     Tenant = tenant,
                     Id = IdCounter.GetNumber("Document", tenant),
@@ -1686,6 +1689,7 @@ namespace WebFreight.Web.Helpers
         public int Version { get; set; }
         public string TariffType { get; set; }
         public string FileName { get; set; }
+        public string FileExtension { get; set; }
     }
     
     public class ExcelSheetLine
