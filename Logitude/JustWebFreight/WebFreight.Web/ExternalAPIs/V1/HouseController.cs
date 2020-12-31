@@ -229,6 +229,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
 
                     HouseQueryService mappingService = new HouseQueryService(authToken.Tenant);
                     ShipmentPM entityPM = mappingService.HouseCustomDataMappingAndValidatin(entity, authToken.Tenant, computingPartnerCode);
+                    entityPM.IsExternalAPI = true;
 
                     using (TransactionScope scope = TransactionFactory.GetTransaction())
                     {
