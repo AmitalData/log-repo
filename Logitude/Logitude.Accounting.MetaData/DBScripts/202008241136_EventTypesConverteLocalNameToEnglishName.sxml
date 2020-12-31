@@ -52,7 +52,9 @@ BEGIN
 		    update EventTypes
 			set LocalName= T.EnglishName 
 			FROM EventTypes eventTypesTable
-			INNER JOIN #temp_EventTypes T on eventTypesTable.Id = T.Id
+			INNER JOIN #temp_EventTypes T 
+      --on eventTypesTable.Id = T.Id
+      on eventTypesTable.Id COLLATE SQL_Latin1_General_CP1_CI_AS= T.Id COLLATE SQL_Latin1_General_CP1_CI_AS
 
 			truncate table #temp_EventTypes
 			set @Count = 0
@@ -68,8 +70,9 @@ END
 	update EventTypes
 	set LocalName= T.EnglishName 
 	FROM EventTypes eventTypesTable
-	INNER JOIN #temp_EventTypes T on eventTypesTable.Id = T.Id
-	
+	INNER JOIN #temp_EventTypes T 
+  --on eventTypesTable.Id = T.Id
+	on eventTypesTable.Id COLLATE SQL_Latin1_General_CP1_CI_AS= T.Id COLLATE SQL_Latin1_General_CP1_CI_AS
 	drop table #tempTable
     drop table #temp_EventTypes
     

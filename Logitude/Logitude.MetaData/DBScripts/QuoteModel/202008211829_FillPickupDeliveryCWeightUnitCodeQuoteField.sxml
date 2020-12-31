@@ -49,8 +49,8 @@
 				PickupDeliveryCWeightUnitCode = #temp_Quotes.PickupDeliveryCWeightUnitCode
 				FROM Quotes
 				INNER JOIN #temp_Quotes
-				on Quotes.Id = #temp_Quotes.Id
-
+				--on Quotes.Id = #temp_Quotes.Id
+				on Quotes.Id COLLATE SQL_Latin1_General_CP1_CI_AS= #temp_Quotes.Id COLLATE SQL_Latin1_General_CP1_CI_AS
 				truncate table #temp_Quotes
         
         --WAITFOR DELAY '00:00:01'
@@ -70,7 +70,9 @@
 				PickupDeliveryCWeightUnitCode = #temp_Quotes.PickupDeliveryCWeightUnitCode
 				FROM Quotes
 				INNER JOIN #temp_Quotes
-				on Quotes.Id = #temp_Quotes.Id
+				--on Quotes.Id = #temp_Quotes.Id
+        on Quotes.Id COLLATE SQL_Latin1_General_CP1_CI_AS= #temp_Quotes.Id COLLATE SQL_Latin1_General_CP1_CI_AS
+        
 	end
 
 	drop table #tempTable
