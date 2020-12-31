@@ -9,11 +9,11 @@ Given("User logged in successfully", () => {
 
 Given("Go to shipments workspace", () => {
   cy.Click(BaseSelectors.OperationsMenu, null)
-  cy.Click("#SHIP", null)
+  cy.Click(Selectors.ShipmentTab, null)
 });
 
-Given("Open direct Shipment", () => {
-  sh.OpenShipment("ResponseData/DEAShipment.json")
+Given("Open the direct Shipment {string}", (shipmentJsonObject) => {
+  sh.OpenShipment(shipmentJsonObject)
 });
 
 Given("The user in the general work space", () => {
@@ -53,8 +53,9 @@ When("The user fill Packages tab and click save button", () => {
 });
 
 Then("The save operation complete successfully", () => {
-    cy.intercept('PUT', '**/shipment').as('updateShipment')
-    cy.wait("@updateShipment").then((response) => {
-        assert.equal(response.response.statusCode, 200);
+    cy.intercept('PUT', '/test/api/shipment', (req) => {
+        req.reply((response) => {
+            assert.equal(response.statusCode, 200);
+        })
     })
 });
