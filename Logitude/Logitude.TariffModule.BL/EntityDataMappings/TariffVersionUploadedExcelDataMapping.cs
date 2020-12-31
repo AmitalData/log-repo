@@ -10,13 +10,14 @@ using Logitude.Server.Tools;
 using Logitude.TariffModule.Data.EntityPOCOs;
 using Logitude.TariffModule.BL.EntityPMs; 
 using Logitude.TariffModule.Data;
+using Simplog.Data.CommonDataModel.Repositories;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 
 namespace Logitude.TariffModule.BL.EntityDataMappings
 {
    
    public partial class TariffVersionUploadedExcelDataMapping: IMapping<TariffVersionUploadedExcelPM, TariffVersionUploadedExcel>
    {
-
         public void CustomPMToPOCO(TariffVersionUploadedExcelPM entityPM, TariffVersionUploadedExcel entityPOCO)
         {
             this.CustomMappedPOCOProperties.Add(POCOPropertyNames.Id);
@@ -30,10 +31,23 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 
         public void CustomPOCOToPM(TariffVersionUploadedExcelPM entityPM, TariffVersionUploadedExcel entityPOCO)
         {
-            //throw new NotImplementedException();
+            this.CustomMappedPMProperties.Add(PMPropertyNames.UploadedByUserName);
+            this.CustomMappedPMProperties.Add(PMPropertyNames.FileName);
+
+            UserRepository userRepository = new UserRepository(entityPOCO.Tenant);
+            User user = userRepository.GetSingleUser(entityPOCO.UploadedByUserId, entityPOCO.Tenant, false);
+            if (user != null)
+            {
+                entityPM.UploadedByUserName = user.Contact.EnglishName;
+            }
+
+            DocumentRepository documentRepository = new DocumentRepository(entityPOCO.Tenant);
+            Document document = documentRepository.GetSingleDocument(entityPOCO.Tenant, entityPOCO.DocumentId);
+            if (document != null)
+            {
+                entityPM.FileName = document.FileName;
+            }
         }
    }
-
-
 }
    

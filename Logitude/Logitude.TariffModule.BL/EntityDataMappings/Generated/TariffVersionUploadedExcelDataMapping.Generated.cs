@@ -46,7 +46,8 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 	         DocumentId, 
 	         NumberOfLines, 
 	         Index, 
-	         UploadedByUserName,
+	         UploadedByUserName, 
+	         FileName,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();

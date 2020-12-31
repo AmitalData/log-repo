@@ -7,7 +7,13 @@
                         <table>
                             <tr>
                                 <td style="width:70px; min-width:70px; max-width:70px;">Index</td>
-                                <td style="width:450px; min-width: 450px; max-width: 450px;">Error</td>
+                                <td style="width:110px; min-width:110px; max-width:110px;">Upload Date</td>
+                                <td style="width:200px; min-width:200px; max-width:200px;">Uploaded by</td>
+                                <td style="width:80px; min-width:80px; max-width:80px;">No. of Lines</td>
+
+                                <td style="width:100px; min-width:100px; max-width:100px;">
+                                    <div></div>
+                                </td>
 
                                 <td class="LastChild">
                                     <div></div>
@@ -24,8 +30,20 @@
                                     {{item.Index}}
                                 </td>
 
-                                <td class="GridViewCell TextTrimming" [title]="item.ErrorText" style="width: 450px; min-width: 450px; max-width: 450px;">
-                                    {{item.ErrorText}}
+                                <td class="GridViewCell" style="width:110px; min-width:110px; max-width:110px;">
+                                    {{item.UploadDate | DateTimeToDatePipe}}
+                                </td>
+
+                                <td class="GridViewCell" style="width: 200px; min-width: 200px; max-width: 200px;">
+                                    {{item.UploadedByUserName}}
+                                </td>
+
+                                <td class="GridViewCell" style="width:80px; min-width:80px; max-width:80px;">
+                                    {{item.NumberOfLines}}
+                                </td>
+
+                                <td class="GridViewCell" style="width:100px; min-width:100px; max-width:100px;">
+                                    <Hyperlink (click)="item.DownloadClicked()">Download</Hyperlink>
                                 </td>
 
                                 <td>
@@ -34,7 +52,7 @@
                             </tr>
 
                             <tr>
-                                <td colspan="3">
+                                <td colspan="6">
                                     <div></div>
                                 </td>
                             </tr>

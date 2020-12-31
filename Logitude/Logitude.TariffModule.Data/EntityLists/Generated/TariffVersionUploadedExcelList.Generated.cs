@@ -18,6 +18,22 @@ namespace Logitude.TariffModule.Data.EntityLists
        public string Id  { get; set; }
        [DataMember]
        public int Tenant  { get; set; }
+       [DataMember]
+       public DateTime UploadDate  { get; set; }
+       [DataMember]
+       public string UploadedByUserId  { get; set; }
+       [DataMember]
+       public string TariffId  { get; set; }
+       [DataMember]
+       public int Version  { get; set; }
+       [DataMember]
+       public string DocumentId  { get; set; }
+       [DataMember]
+       public int NumberOfLines  { get; set; }
+       [DataMember]
+       public int Index  { get; set; }
+       [DataMember]
+       public string UploadedByUserName  { get; set; }
    }
 
 }

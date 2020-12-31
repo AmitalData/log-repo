@@ -74,6 +74,11 @@ export class TariffVersionUploadedExcelPM {
     public set UploadedByUserName(newValue: string) { if (this.uploadedByUserName != newValue) { this.uploadedByUserName = newValue; this.MarkAsDirty("UploadedByUserName"); } }
        
 	 
+    private fileName: string;
+    public get FileName() { return this.fileName; }
+    public set FileName(newValue: string) { if (this.fileName != newValue) { this.fileName = newValue; this.MarkAsDirty("FileName"); } }
+       
+	 
 
     public OldEntityPM: TariffVersionUploadedExcelPM;
 		

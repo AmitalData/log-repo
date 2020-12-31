@@ -10,6 +10,14 @@ export class TariffVersionUploadedExcelList {
    
 	Id: string;
 	Tenant: number;
+	UploadDate: Date;
+	UploadedByUserId: string;
+	TariffId: string;
+	Version: number;
+	DocumentId: string;
+	NumberOfLines: number;
+	Index: number;
+	UploadedByUserName: string;
 	
 }
  
