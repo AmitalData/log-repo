@@ -1,5 +1,5 @@
 ﻿<Script DBType="Main" Module="Infrastructure" AOT="true" TargetTableName="EventTypes">
-  <Sql Version="1">
+  <Sql Version="3">
     <![CDATA[
    
 If(OBJECT_ID('tempdb..#tempTable') Is Not Null)
