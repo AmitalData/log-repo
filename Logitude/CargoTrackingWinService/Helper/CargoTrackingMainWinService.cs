@@ -67,6 +67,7 @@ namespace CargoTrackingWinService.Helper
         {
             if (ApplicationInfo.UpdateCounter == 0)
             {
+                ApplicationInfo.StartDate = TenantServerConfigration.GetCurrentDateTime(0);
                 ApplicationInfo.CargoTrackingRecordsUpdatedDictionary = new Dictionary<string, int>();
             }
         }
