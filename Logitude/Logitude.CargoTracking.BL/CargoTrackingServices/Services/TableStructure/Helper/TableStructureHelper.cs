@@ -24,17 +24,22 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
 
         public TableStructureHelper(string dxmlStructure)
         {
+            InitializeDataTables(dxmlStructure);
+        }
+ 
+
+        private void InitializeDataTables(string dxmlStructure)
+        {
             TableCoulmnsNameWithoutIDentity = new List<string>();
             xmlDataSet = new DataSet();
             xmlDataSet.ReadXml(XmlReader.Create(new StringReader(dxmlStructure)));
             table = xmlDataSet.Tables["Table"];
             tableCoulmns = table.ChildRelations["Table_Column"].ChildTable;
-            tableIndexs = table.ChildRelations["Table_Index"]==null?null:table.ChildRelations["Table_Index"].ChildTable;
-            tableCoulmnsRelation = table.ChildRelations["Table_Relation"]==null?null:table.ChildRelations["Table_Relation"].ChildTable;
+            tableIndexs = table.ChildRelations["Table_Index"] == null ? null : table.ChildRelations["Table_Index"].ChildTable;
+            tableCoulmnsRelation = table.ChildRelations["Table_Relation"] == null ? null : table.ChildRelations["Table_Relation"].ChildTable;
             tableUniqueConstraints = table.ChildRelations["Table_UniqueConstraint"] == null ? null : table.ChildRelations["Table_UniqueConstraint"].ChildTable;
             tableCoulmnsConstraint = tableCoulmns.ChildRelations["Column_Constraints"].ChildTable;
-         }
- 
+        }
         public string GetTableStructure(string tableName)
         {
 

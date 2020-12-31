@@ -10,16 +10,16 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
     {
         public string GetColumnsForCopy()
         {
-            List<string> ColumnsForCopy = new List<string>();
-            ColumnsForCopy.Add("Id");
-            ColumnsForCopy.Add("FirstPickupATD");
-            ColumnsForCopy.Add("FinalDeliveryATA");
-            ColumnsForCopy.Add("FinalDeliveryETA");
-            ColumnsForCopy.Add("Tenant");
-            ColumnsForCopy.Add("AutomaticLastUpdateDate");
+            List<string> columnsForCopy = new List<string>();
+            columnsForCopy.Add("Id");
+            columnsForCopy.Add("FirstPickupATD");
+            columnsForCopy.Add("FinalDeliveryATA");
+            columnsForCopy.Add("FinalDeliveryETA");
+            columnsForCopy.Add("Tenant");
+            columnsForCopy.Add("AutomaticLastUpdateDate");
 
 
-            return string.Join(",", ColumnsForCopy.ToArray());
+            return string.Join(",", columnsForCopy.ToArray());
         }
 
 

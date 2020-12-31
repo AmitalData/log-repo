@@ -9,10 +9,19 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
 {
     public static class CargoTrackingTableList
     {
-        public static List<CargoTrackingTable> FillCargoTableList()
+        public static List<CargoTrackingTable> CargoTableLists = new List<CargoTrackingTable>();
+        public static List<CargoTrackingTable> GetCargoTrackingTableList()
         {
-            List<CargoTrackingTable> CargoTableLists = new List<CargoTrackingTable>();
+            if (CargoTableLists == null || CargoTableLists.Count==0)
+            {
+                FillCargoTrackingTableList();
+            }
+            return CargoTableLists;
 
+        }
+
+        private static void FillCargoTrackingTableList()
+        {
             CargoTableLists.Add(new CargoTrackingTable("CargoTrackingPort")
             {
                 DBTableName = "Ports",
@@ -66,9 +75,6 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
                 InnerConditionKey = "ShipmentId",
                 ConditionsNumber = 2,
             });
-
-            return CargoTableLists;
-
         }
     }
 }

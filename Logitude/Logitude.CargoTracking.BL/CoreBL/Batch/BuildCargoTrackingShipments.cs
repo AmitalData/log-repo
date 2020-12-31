@@ -42,7 +42,7 @@ namespace Logitude.CargoTracking.BL.CoreBL.Batch
                 TenantRepository tenantRepository = new TenantRepository(0);
                 UpdateIsIncrementalRunning(tenantRepository,true);
                 ServiceHelper.CheckAndUpdateWaterMark(destinationConnectionString,sourceConnectionString);
-                AddAllTablesToThread(CargoTrackingTableList.FillCargoTableList());
+                AddAllTablesToThread(CargoTrackingTableList.GetCargoTrackingTableList());
                 UpdateIsIncrementalRunning(tenantRepository,false);
             }
 
@@ -107,57 +107,53 @@ namespace Logitude.CargoTracking.BL.CoreBL.Batch
         {
             string dbConnectionFrom = ConfigurationManager.ConnectionStrings["Globalstr"].ConnectionString;
             string dbConnectionTo = ConfigurationManager.ConnectionStrings["CargoTrackingStr"].ConnectionString;
-            string[] sourceConnectionArray = dbConnectionFrom.Split(',');
-            string[] destinationConnectionArray = dbConnectionTo.Split(',');
-            string[] SourceMainDB = GetMainDBConnectionString(BuildConnectionString(sourceConnectionArray[0], sourceConnectionArray[1], sourceConnectionArray[2], sourceConnectionArray[3])).Split(',');
-            sourceConnectionString = BuildConnectionString(SourceMainDB[0], SourceMainDB[1], SourceMainDB[2], SourceMainDB[3]);
-            destinationConnectionString = BuildConnectionString(destinationConnectionArray[0], destinationConnectionArray[1], destinationConnectionArray[2], destinationConnectionArray[3]);
+            string[] GlobalConnectionArray = dbConnectionFrom.Split(',');
+            string[] CargoTrackingConnectionArray = dbConnectionTo.Split(',');
+            string[] MainConnectionArray = GetMainDBConnectionString(ServiceHelper.BuildConnectionString(ServiceHelper.GetConnectionStringArguments(GlobalConnectionArray))).Split(',');
+            ConnectionStringArguments sourceConnectionStringArguments = ServiceHelper.GetConnectionStringArguments(MainConnectionArray);
+            ConnectionStringArguments destinationConnectionStringArguments = ServiceHelper.GetConnectionStringArguments(CargoTrackingConnectionArray);
+            sourceConnectionString = ServiceHelper.BuildConnectionString(sourceConnectionStringArguments);
+            destinationConnectionString = ServiceHelper.BuildConnectionString(destinationConnectionStringArguments);
         }
-
-        private string GetUpdateDataBaseCondition(CargoTrackingServices.HelperClasses.CargoTrackingArgs buildCargoArgs)
-        {
-
-            string condition = " where AutomaticLastUpdateDate > ( select LastUpdateDate from WaterMarks where TableName = " + "'" + buildCargoArgs.Table.CargoTracking_TableName + "')";
-            return condition;
-        }
-
-        private string BuildConnectionString(string catalog, string userName, string password, string server)
-        {
-            string result = "Data Source=" + server + ";Initial Catalog=" + catalog + ";Integrated Security=False;Persist Security Info=True;User ID=" + userName + ";Password= " + password + ";MultipleActiveResultSets=True;Connect Timeout=60";
-            return result;
-        }
+ 
 
         public string GetMainDBConnectionString(string connectionString)
         {
             string result = null;
-            SqlConnection con = new SqlConnection(connectionString);
-            SqlCommand com = new SqlCommand("select DBConnection,SecondaryAzureDBConnection from dbo.GlobalDBs where Id =0;", con);
+            SqlConnection connection = new SqlConnection(connectionString);
+            SqlCommand command = new SqlCommand("select DBConnection,SecondaryAzureDBConnection from dbo.GlobalDBs where Id =0;", connection);
             try
             {
-                con.Open();
-
-                using (SqlDataReader reader = com.ExecuteReader())
-                {
-                    reader.Read();
-
-                    var dbConnectionString = reader["DBConnection"];
-                    if (dbConnectionString != null && !string.IsNullOrEmpty(dbConnectionString.ToString()))
-                    {
-                        result = dbConnectionString.ToString();
-                    }
-                    else
-                    {
-                        dbConnectionString = reader["SecondaryAzureDBConnection"];
-                        if (dbConnectionString != null && !string.IsNullOrEmpty(dbConnectionString.ToString())) result = dbConnectionString.ToString();
-                    }
-
-                }
+                connection.Open();
+                result=ExecuteGetMainDBConnectionStringCommand(command);
             }
             finally
             {
-                con.Close();
+                connection.Close();
             }
 
+            return result;
+        }
+
+        private string ExecuteGetMainDBConnectionStringCommand(SqlCommand command)
+        {
+            string result = null;
+            using (SqlDataReader reader = command.ExecuteReader())
+            {
+                reader.Read();
+
+                var dbConnectionString = reader["DBConnection"];
+                if (dbConnectionString != null && !string.IsNullOrEmpty(dbConnectionString.ToString()))
+                {
+                    result = dbConnectionString.ToString();
+                }
+                else
+                {
+                    dbConnectionString = reader["SecondaryAzureDBConnection"];
+                    if (dbConnectionString != null && !string.IsNullOrEmpty(dbConnectionString.ToString())) result = dbConnectionString.ToString();
+                }
+
+            }
             return result;
         }
     }

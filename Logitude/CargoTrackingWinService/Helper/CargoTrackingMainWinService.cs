@@ -16,7 +16,7 @@ using System.Threading.Tasks;
 
 namespace CargoTrackingWinService.Helper
 {
-    public class CargoTrackingHeadService
+    public class CargoTrackingMainWinService
     {
         string sourceConnectionString = string.Empty;
         string destinationConnectionString = string.Empty;
@@ -24,7 +24,7 @@ namespace CargoTrackingWinService.Helper
         CargoTrackingServiceHelper cargoTrackingServiceHelper;
         CargoTrackingMainService cargoTrackingMainService;
 
-        public CargoTrackingHeadService()
+        public CargoTrackingMainWinService()
         {
 
             cargoTrackingMainService = new CargoTrackingMainService();
@@ -43,10 +43,7 @@ namespace CargoTrackingWinService.Helper
                         if (!cargoTrackingServiceHelper.CheckIsUpgradingSystem(sourceConnectionString))
                         {
                             InitializeIncrementalRecordData();
-                            ServiceHelper.CheckAndUpdateWaterMark(destinationConnectionString,sourceConnectionString);
-                            bool IsFromBuild = AddAllTablesToThread(CargoTrackingTableList.FillCargoTableList());
-                            ApplicationInfo.UpdateCounter++;
-                            SetIncrementalRecordData(IsFromBuild);
+                            StartCargoTrackingIncrementalUpdate();
                             Thread.Sleep(ApplicationInfo.UpdateCargoTrackingSleepTime);
                         }
                         else Thread.Sleep(new TimeSpan(0, 5, 0));
@@ -60,6 +57,13 @@ namespace CargoTrackingWinService.Helper
             }
         }
 
+        private void StartCargoTrackingIncrementalUpdate()
+        {
+            ServiceHelper.CheckAndUpdateWaterMark(destinationConnectionString, sourceConnectionString);
+            bool IsFromBuild = AddAllTablesToThread(CargoTrackingTableList.GetCargoTrackingTableList());
+            ApplicationInfo.UpdateCounter++;
+            SetIncrementalRecordData(IsFromBuild);
+        }
          private void InitializeIncrementalRecordData()
         {
             if (ApplicationInfo.UpdateCounter == 0)
@@ -106,12 +110,13 @@ namespace CargoTrackingWinService.Helper
 
         private bool AddAllTablesToThread(List<CargoTrackingTable> cargoTableLists)
         {
-            RecordUpdated RecordUpdatedNumber = new RecordUpdated();
+            RecordUpdated recordUpdated = new RecordUpdated();
             foreach (CargoTrackingTable table in cargoTableLists)
             {
                 try
                 {
-                    RecordUpdatedNumber = UpdateCargoDataBase(table);
+                    recordUpdated = UpdateCargoDataBase(table);
+                    ApplicationInfo.ErrorLogs += recordUpdated.ErrorLogs;
                 }
                 catch(Exception exception)
                 {
@@ -119,85 +124,78 @@ namespace CargoTrackingWinService.Helper
 
 
                 }
-                
-                UpdaeNumberOfRecordsUpdated(table.CargoTracking_TableName, RecordUpdatedNumber.NumberOfRecordUpdated);
+
+                UpdateNumberOfRecordsUpdated(table.DBTableName, recordUpdated.NumberOfRecordUpdated);
 
             }
 
-            return RecordUpdatedNumber.IsFromBuild;
+            return recordUpdated.IsFromBuild;
 
         }
 
 
         private void SetIncrementalErrorLog(Exception exception, CargoTrackingTable table)
         {
-            string ErrorsLog = "Table Name: " + table.CargoTracking_TableName + Environment.NewLine + "Erros: " + exception.Message + Environment.NewLine + "Stack Trace: " + exception.StackTrace;
+            string ErrorsLog = "Table Name: " + table.CargoTracking_TableName + Environment.NewLine +
+                                "Erros: " + exception.Message + Environment.NewLine + 
+                                "Stack Trace: " + exception.StackTrace + Environment.NewLine ;
+
             if (!ApplicationInfo.ErrorLogs.Contains(ErrorsLog))
-            {
                 ApplicationInfo.ErrorLogs += ErrorsLog;
-            }
+
+            TrimIfOver4000();
+        }
+
+
+        private void TrimIfOver4000()
+        {
             if (ApplicationInfo.ErrorLogs.Length > 4000)
             {
-                ApplicationInfo.ErrorLogs.Substring(0, 4000);
+                ApplicationInfo.ErrorLogs = ApplicationInfo.ErrorLogs.Substring(0, 4000);
             }
         }
 
-        private void UpdaeNumberOfRecordsUpdated(string tableName, int recordUpdatedNumber)
+        private void UpdateNumberOfRecordsUpdated(string tableName, int recordUpdatedNumber)
         {
-            switch (tableName)
+            if (ApplicationInfo.CargoTrackingRecordsUpdatedDictionary.ContainsKey(tableName))
             {
-                case "CargoTrackingShipments":
-                    {
-                        ApplicationInfo.Shipments+= recordUpdatedNumber;
-                        break;
-                    }
-                case "CargoTrackingCards":
-                    {
-                        ApplicationInfo.Cards+= recordUpdatedNumber;
-                        break;
-                    }
-                case "CargoTrackingPorts":
-                    {
-                        ApplicationInfo.Ports+= recordUpdatedNumber;
-                        break;
-                    }
-                case "CargoTrackingCountries":
-                    {
-                        ApplicationInfo.Countries+= recordUpdatedNumber;
-                        break;
-                    }
-                case "CargoTrackingTransportModes":
-                    {
-                        ApplicationInfo.TransportModes+= recordUpdatedNumber;
-                        break;
-                    }
-
-                case "CargoTrackingShipmentComputeds":
-                    {
-                        ApplicationInfo.ShipmentComputedFields += recordUpdatedNumber;
-                        break;
-                    }
-
-                case "CargoTrackingShipmentMasters":
-                    {
-                        ApplicationInfo.ShipmentMasterDatas += recordUpdatedNumber;
-                        break;
-                    }
-
+                ApplicationInfo.CargoTrackingRecordsUpdatedDictionary[tableName] = 
+                              ApplicationInfo.CargoTrackingRecordsUpdatedDictionary[tableName] + recordUpdatedNumber;
             }
+            else
+            {
+                ApplicationInfo.CargoTrackingRecordsUpdatedDictionary.Add(tableName, recordUpdatedNumber);
+            }
+  
         }
 
         private void BuildConnectionString()
         {
             string[] sourceConnectionArray = ApplicationInfo.SourceConnection.Split(',');
             string[] destinationConnectionArray = ApplicationInfo.DestinationConnection.Split(',');
-            sourceConnectionString = cargoTrackingServiceHelper.BuildConnectionString(sourceConnectionArray[0], sourceConnectionArray[1], sourceConnectionArray[2], sourceConnectionArray[3]);
-            destinationConnectionString = cargoTrackingServiceHelper.BuildConnectionString(destinationConnectionArray[0], destinationConnectionArray[1], destinationConnectionArray[2], destinationConnectionArray[3]);
+            ConnectionStringArguments sourceConnectionStringArguments = GetConnectionStringArguments(sourceConnectionArray);
+            ConnectionStringArguments destinationConnectionStringArguments = GetConnectionStringArguments(destinationConnectionArray);
+            sourceConnectionString = cargoTrackingServiceHelper.BuildConnectionString(sourceConnectionStringArguments);
+            destinationConnectionString = cargoTrackingServiceHelper.BuildConnectionString(destinationConnectionStringArguments);
         }
- 
+
+        private ConnectionStringArguments GetConnectionStringArguments(string[] connectionArray)
+        {
+            ConnectionStringArguments connectionStringArguments = new ConnectionStringArguments()
+            {
+                Catalog = connectionArray[0],
+                UserName = connectionArray[1],
+                Password = connectionArray[2],
+                Server = connectionArray[3],
+            };
+
+            return connectionStringArguments;
+        }
+
+
     }
 
- 
+
 
 
 }

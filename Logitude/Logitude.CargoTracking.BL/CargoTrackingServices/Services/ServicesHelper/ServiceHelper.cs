@@ -14,114 +14,128 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.ServicesHelpe
 {
     public static class ServiceHelper
     {
-        public static long timeOut = 100000000000000000;
+        public static long TimeOut = 100000000000000000;
 
         public static bool GetIsIncrementalRunning(string connectionString)
         {
             bool Result = false;
 
-            SqlConnection con = new SqlConnection(connectionString);
+            SqlConnection connection = new SqlConnection(connectionString);
 
-            SqlCommand com = new SqlCommand(
-               "Select  IsIncrementalBuildRunning FROM dbo.Tenants Where Id = 0", con);
+            SqlCommand getIsIncrementalBuildRunningcommand = new SqlCommand(
+               "Select  IsIncrementalBuildRunning FROM dbo.Tenants Where Id = 0", connection);
             try
             {
-                com.CommandTimeout = (int)timeOut;
-                con.Open();
-                using (SqlDataReader reader = com.ExecuteReader())
-                {
-                    reader.Read();
-                    bool IsRunning = false;
-                    var value = reader["IsIncrementalBuildRunning"];
-                    if (value != null)
-                    {
-                        IsRunning = (bool)(value);
-                        if (IsRunning != null) Result = IsRunning;
-
-
-                    }
-                }
+                getIsIncrementalBuildRunningcommand.CommandTimeout = (int)TimeOut;
+                connection.Open();
+                Result = ExecuteIsIncrementalRunningCommand(getIsIncrementalBuildRunningcommand);
             }
             finally
             {
-                con.Close();
+                connection.Close();
             }
             return Result;
         }
 
+        private static bool ExecuteIsIncrementalRunningCommand(SqlCommand isIncrementalBuildRunningcommand)
+        {
+            bool result = false;
+            using (SqlDataReader reader = isIncrementalBuildRunningcommand.ExecuteReader())
+            {
+                reader.Read();
+                bool isRunning = false;
+                var value = reader["IsIncrementalBuildRunning"];
+                if (value != null)
+                {
+                    isRunning = (bool)(value);
+                    if (isRunning != null) result = isRunning;
+
+                }
+            }
+            return result;
+        }
 
         public static string GetAutomaticLastUpdateDate(string tableName, string connectionString)
         {
             string result = null;
 
-            SqlConnection con = new SqlConnection(connectionString);
+            SqlConnection connection = new SqlConnection(connectionString);
 
-            SqlCommand com = new SqlCommand(
+            SqlCommand getAutomaticLastUpdateDateCommand= new SqlCommand(
                "select MIN(AutomaticLastUpdateDate) -1 AutomaticLastUpdateDate " +
-               "FROM dbo." + tableName + " ;", con);
+               "FROM dbo." + tableName + " ;", connection);
 
             try
             {
-                com.CommandTimeout = (int)timeOut;
-                con.Open();
-                using (SqlDataReader reader = com.ExecuteReader())
-                {
-                    reader.Read();
-                    DateTime? datetime = null;
-                    var value = reader["AutomaticLastUpdateDate"];
-                    if (value != null)
-                    {
-                        if (!string.IsNullOrEmpty(value.ToString()))
-                        {
-                            datetime = (DateTime?)(value);
-                            if (datetime != null) result = datetime.Value.ToString("MM/dd/yyyy hh:mm:ss.fff tt");
-                        }
-
-                    }
-                }
+                getAutomaticLastUpdateDateCommand.CommandTimeout = (int)TimeOut;
+                connection.Open();
+                ExecuteAutomaticLastUpdateDateCommand(getAutomaticLastUpdateDateCommand);
             }
             finally
             {
-                con.Close();
+                connection.Close();
+            }
+            return result;
+        }
+
+        private static string ExecuteAutomaticLastUpdateDateCommand(SqlCommand automaticLastUpdateDateCommand)
+        {
+            string result = "";
+            using (SqlDataReader reader = automaticLastUpdateDateCommand.ExecuteReader())
+            {
+                reader.Read();
+                DateTime? datetime = null;
+                var value = reader["AutomaticLastUpdateDate"];
+                if (value != null)
+                {
+                    if (!string.IsNullOrEmpty(value.ToString()))
+                    {
+                        datetime = (DateTime?)(value);
+                        if (datetime != null) result = datetime.Value.ToString("MM/dd/yyyy hh:mm:ss.fff tt");
+                    }
+
+                }
+            }
+            return result;
+        }
+
+        public static string GetTableLastUpdate(string tableName, string connectionString)
+        {
+            string result = null;
+            SqlConnection connection = new SqlConnection(connectionString);
+            SqlCommand getLastUpdateDateCommand = new SqlCommand(
+               "Select top 1 LastUpdateDate from CargoTrackingWatermarks where TableName = '" + tableName + "';", connection);
+            try
+            {
+                getLastUpdateDateCommand.CommandTimeout = (int)TimeOut;
+                connection.Open();
+                ExecuteTableLastUpdateCommand(getLastUpdateDateCommand);
+            }
+            finally
+            {
+                connection.Close();
             }
             return result;
         }
 
 
-
-        public static string GetTableLastUpdate(string tableName, string connectionString)
+        private static string ExecuteTableLastUpdateCommand(SqlCommand lastUpdateDateCommand)
         {
-
-
-            string result = null;
-
-            SqlConnection con = new SqlConnection(connectionString);
-
-            SqlCommand com = new SqlCommand(
-               "Select top 1 LastUpdateDate from CargoTrackingWatermarks where TableName = '" + tableName + "';", con);
-            try
+            string result = "";
+            using (SqlDataReader reader = lastUpdateDateCommand.ExecuteReader())
             {
-                com.CommandTimeout = (int)timeOut;
-                con.Open();
-                using (SqlDataReader reader = com.ExecuteReader())
+                reader.Read();
+                DateTime? datetime = null;
+                var value = reader["LastUpdateDate"];
+                if (value != null)
                 {
-                    reader.Read();
-                    DateTime? datetime = null;
-                    var value = reader["LastUpdateDate"];
-                    if (value != null)
+                    if (!string.IsNullOrEmpty(value.ToString()))
                     {
-                        if (!string.IsNullOrEmpty(value.ToString()))
-                        {
-                            datetime = (DateTime?)(value);
-                            if (datetime != null) result = datetime.Value.ToString("MM/dd/yyyy hh:mm:ss.fff tt");
-                        }
-
+                        datetime = (DateTime?)(value);
+                        if (datetime != null) result = datetime.Value.ToString("MM/dd/yyyy hh:mm:ss.fff tt");
                     }
+
                 }
-            }
-            finally
-            {
-                con.Close();
             }
             return result;
         }
@@ -131,102 +145,118 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.ServicesHelpe
 
             if (!string.IsNullOrEmpty(sqlString))
             {
-                using (SqlConnection cn = new SqlConnection(connectionString))
+                using (SqlConnection connection = new SqlConnection(connectionString))
                 {
-                    SqlCommand sqlCommand = new SqlCommand(sqlString, cn);
-                    sqlCommand.CommandTimeout = (int)ServiceHelper.timeOut;
-                    cn.Open();
+                    SqlCommand sqlCommand = new SqlCommand(sqlString, connection);
+                    sqlCommand.CommandTimeout = (int)ServiceHelper.TimeOut;
+                    connection.Open();
                     sqlCommand.ExecuteNonQuery();
-                    cn.Close();
+                    connection.Close();
                 }
             }
         }
 
 
-        public static string BuildConnectionString(string catalog, string userName, string password, string server)
+        public static string BuildConnectionString(ConnectionStringArguments connectionStringArguments)
         {
-            string result = "Data Source=" + server + ";Initial Catalog=" + catalog + ";Integrated Security=False;Persist Security Info=True;User ID=" + userName + ";Password= " + password + ";MultipleActiveResultSets=True;Connect Timeout=60";
+            string result = "Data Source=" + connectionStringArguments.Server + 
+                ";Initial Catalog="+connectionStringArguments.Catalog + 
+                ";Integrated Security=False;Persist Security Info=True;User ID=" + connectionStringArguments.UserName + 
+                ";Password= " + connectionStringArguments.Password + ";MultipleActiveResultSets=True;Connect Timeout=60";
             return result;
         }
 
-        public static void CreateCargoTrackingTable(CargoTrackingArgs buildCargoArgs, TableStructureHelper MainTableStructureHelper, TableStructureHelper InnerTableStructureHelper)
+        public static void CreateCargoTrackingTable(CargoTrackingArgs buildCargoArgs)
         {
-            string SQL = buildCargoArgs.Table.TableStructure;
-            ExecuteSql(SQL, buildCargoArgs.DestinationConnectionString);
+            string tableStructureSQLCommand = buildCargoArgs.Table.TableStructure;
+            ExecuteSql(tableStructureSQLCommand, buildCargoArgs.DestinationConnectionString);
             if (!string.IsNullOrEmpty(buildCargoArgs.Table.InnerTableStructure))
             {
-                SQL = buildCargoArgs.Table.InnerTableStructure;
-                ExecuteSql(SQL, buildCargoArgs.DestinationConnectionString);
+                tableStructureSQLCommand = buildCargoArgs.Table.InnerTableStructure;
+                ExecuteSql(tableStructureSQLCommand, buildCargoArgs.DestinationConnectionString);
             }
 
         }
 
-
-        public static string GetInvokeDBTableByTableName(string TableName,string MethodName)
+        public static ConnectionStringArguments GetConnectionStringArguments(string[] connectionArray)
         {
-            string DxmlFile = null;
-            if (!string.IsNullOrEmpty(TableName) && !string.IsNullOrEmpty(MethodName))
+            ConnectionStringArguments connectionStringArguments = new ConnectionStringArguments()
             {
-                string DataBaseTableName = TableName;
-                Type type = Type.GetType("Logitude.CargoTracking.BL.CargoTrackingServices.DBTablesCopy.Generated." + DataBaseTableName + "Dxml");
-                Object obj = Activator.CreateInstance(type);
-                MethodInfo methodInfo = type.GetMethod(MethodName);
-                DxmlFile = (string)methodInfo.Invoke(obj, null);
-            }
-            return DxmlFile;
+                Catalog = connectionArray[0],
+                UserName = connectionArray[1],
+                Password = connectionArray[2],
+                Server = connectionArray[3],
+            };
+
+            return connectionStringArguments;
         }
 
 
-        public static string GetInvokeClassWithMethode(string ClassPath, string MethodName)
+        public static string GetInvokeDBTableByTableName(string tableName,string methodName)
         {
-            string DxmlFile = null;
-            if (!string.IsNullOrEmpty(ClassPath) && !string.IsNullOrEmpty(MethodName))
+            string dmlFile = null;
+            if (!string.IsNullOrEmpty(tableName) && !string.IsNullOrEmpty(methodName))
             {
-                Type type = Type.GetType(ClassPath);
+                string dataBaseTableName = tableName;
+                Type type = Type.GetType("Logitude.CargoTracking.BL.CargoTrackingServices.DBTablesCopy.Generated." + dataBaseTableName + "Dxml");
                 Object obj = Activator.CreateInstance(type);
-                MethodInfo methodInfo = type.GetMethod(MethodName);
+                MethodInfo methodInfo = type.GetMethod(methodName);
+                dmlFile = (string)methodInfo.Invoke(obj, null);
+            }
+            return dmlFile;
+        }
+
+
+        public static string GetInvokeClassWithMethode(string classPath, string methodName)
+        {
+            string dxmlFile = null;
+            if (!string.IsNullOrEmpty(classPath) && !string.IsNullOrEmpty(methodName))
+            {
+                Type type = Type.GetType(classPath);
+                Object obj = Activator.CreateInstance(type);
+                MethodInfo methodInfo = type.GetMethod(methodName);
                 if (methodInfo!=null)
                 {
-                    DxmlFile = (string)methodInfo.Invoke(obj, null);
+                    dxmlFile = (string)methodInfo.Invoke(obj, null);
                 }
             }
-            return DxmlFile;
+            return dxmlFile;
         }
         public static void UpdateWaterMarksTable(CargoTrackingTable table, string date, string connectionString)
         {
-            var TodayDate = TenantServerConfigration.GetCurrentDateTime(0);
-            string cmd = "update  CargoTrackingWatermarks set LastUpdateDate = '" + date + "',LastRun = '" + TodayDate + "' where tableName = '" + table.Main_CargoTracking_TableName + "'";
-            ExecuteSql(cmd, connectionString);
+            var todayDate = TenantServerConfigration.GetCurrentDateTime(0);
+            string setLastUpdateDateCommand = "update  CargoTrackingWatermarks set LastUpdateDate = '" + date + "',LastRun = '" + todayDate + "' where tableName = '" + table.Main_CargoTracking_TableName + "'";
+            ExecuteSql(setLastUpdateDateCommand, connectionString);
 
         }
 
-        public static void AddWaterMarksRecord(CargoTrackingTable table, string date, string connectionString)
+        public static void AddWaterMarksRecord(CargoTrackingTable table, string connectionString)
         {
-            string cmd = "insert into CargoTrackingWatermarks  values('" + table.CargoTracking_TableName + "' , NULL,NULL)";
-            ExecuteSql(cmd, connectionString);
+            string insertRecoredInWatermarksCommand = "insert into CargoTrackingWatermarks  values('" + table.CargoTracking_TableName + "' , NULL,NULL)";
+            ExecuteSql(insertRecoredInWatermarksCommand, connectionString);
         }
         public static void DeleteWatermarks(string connectionString)
         {
-            string cmd = "Delete From CargoTrackingWatermarks";
-            ExecuteSql(cmd, connectionString);
+            string deleteRecoredFromWatermarksCommand = "Delete From CargoTrackingWatermarks";
+            ExecuteSql(deleteRecoredFromWatermarksCommand, connectionString);
         }
-        public static void UpdateIsIncrementalRunning(int IsRunning, string connectionString)
+        public static void UpdateIsIncrementalRunning(int isRunning, string connectionString)
         {
-            string cmd = "Update Tenants set IsIncrementalBuildRunning = " + IsRunning + " Where Id = 0";
-            ExecuteSql(cmd, connectionString);
+            string updateIsIncrementalBuildRunningCommandcmd = "Update Tenants set IsIncrementalBuildRunning = " + isRunning + " Where Id = 0";
+            ExecuteSql(updateIsIncrementalBuildRunningCommandcmd, connectionString);
         }
 
-        public static DateTime? GetAutomaticLastUpdateDate(DateTime? automaticLastUpdateDate, DataTable dataTable, bool IsClosed)
+        public static DateTime? GetAutomaticLastUpdateDate(DateTime? automaticLastUpdateDate, DataTable dataTable, bool isClosed)
         {
 
-            if (!IsClosed)
+            if (!isClosed)
             {
 
-                var MaxUpdate = (DateTime)dataTable.Rows
+                var maxUpdate = (DateTime)dataTable.Rows
                                                 .Cast<DataRow>()
                                                 .Max(d => d["AutomaticLastUpdateDate"]);
 
-                if (MaxUpdate > automaticLastUpdateDate || automaticLastUpdateDate == null)
+                if (maxUpdate > automaticLastUpdateDate || automaticLastUpdateDate == null)
                 {
                     automaticLastUpdateDate = (DateTime)dataTable.Rows
                    .Cast<DataRow>()
@@ -258,62 +288,76 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.ServicesHelpe
         public static void CheckAndUpdateWaterMark(string dbSourceConnection, string dbDestenationConnection)
         {
 
-            List<CargoTrackingTable> CargoTableLists = CargoTrackingTableList.FillCargoTableList();
+            List<CargoTrackingTable> CargoTableLists = CargoTrackingTableList.GetCargoTrackingTableList();
             foreach (CargoTrackingTable table in CargoTableLists)
             {
                 if (table.DBTableName != "CargoTrackingWatermarks")
                 {
-                    using (SqlConnection SourceConnection =
-                         new SqlConnection(dbSourceConnection))
-                    {
-                        SourceConnection.Open();
-
-                        SqlCommand commandSourceData = new SqlCommand(
-                       "SELECT  TableName" +
-                       " FROM dbo.CargoTrackingWatermarks WHERE TableName = '" + table.CargoTracking_TableName + "'", SourceConnection);
-                        commandSourceData.CommandTimeout = (int)ServiceHelper.timeOut;
-                        SqlDataReader reader = commandSourceData.ExecuteReader();
-                        if (!reader.HasRows)
-                        {
-                            string lastUpdateDate = GetAutomaticLastUpdateDate(table.DBTableName, dbDestenationConnection);
-                            if (string.IsNullOrEmpty(lastUpdateDate)) lastUpdateDate = DateTime.Now.ToString("MM/dd/yyyy hh:mm:ss.fff tt");
-                            AddWaterMarksRecord(table, lastUpdateDate, dbSourceConnection);
-                            SourceConnection.Close();
-                        }
-                        else
-                        {
-                            SourceConnection.Close();
-
-                        }
-                    }
+                    ExecuteCheckAndUpdateWaterMarkCommand(dbSourceConnection, dbDestenationConnection, table);
                 }
             }
 
         }
 
-        public static void DropTable(CargoTrackingArgs buildCargoArgs)
+        private static void ExecuteCheckAndUpdateWaterMarkCommand(string dbSourceConnection, string dbDestenationConnection, CargoTrackingTable table)
         {
-            string TableName = buildCargoArgs.Table.Pre_TableName;
-            string TableName2 = buildCargoArgs.Table.Pre_InnerTableName;
-
-            string cmd = "If exists (select * from sysobjects where name='" + TableName + "' and xtype='U') " +
-                              " BEGIN " +
-                              " Drop Table " + TableName +
-                              " END ";
-
-
-            ExecuteSql(cmd, buildCargoArgs.DestinationConnectionString);
-
-            if (!string.IsNullOrEmpty(TableName2))
+            using (SqlConnection sourceConnection =
+                       new SqlConnection(dbSourceConnection))
             {
-                cmd = "If exists (select * from sysobjects where name='" + TableName2 + "' and xtype='U') " +
-                        " BEGIN " +
-                        " Drop Table " + TableName2 +
-                        " END ";
+                sourceConnection.Open();
 
+                SqlCommand getTableNameFromWatermarksCommand = new SqlCommand(
+               "SELECT  TableName" +
+               " FROM dbo.CargoTrackingWatermarks WHERE TableName = '" + table.CargoTracking_TableName + "'", sourceConnection);
+                getTableNameFromWatermarksCommand.CommandTimeout = (int)ServiceHelper.TimeOut;
+                SqlDataReader reader = getTableNameFromWatermarksCommand.ExecuteReader();
+                if (!reader.HasRows)
+                {
+                    string lastUpdateDate = GetAutomaticLastUpdateDate(table.DBTableName, dbDestenationConnection);
+                    if (string.IsNullOrEmpty(lastUpdateDate)) lastUpdateDate = DateTime.Now.ToString("MM/dd/yyyy hh:mm:ss.fff tt");
+                    AddWaterMarksRecord(table,dbSourceConnection);
+                    sourceConnection.Close();
+                }
+                else
+                {
+                    sourceConnection.Close();
 
-                ExecuteSql(cmd, buildCargoArgs.DestinationConnectionString);
+                }
             }
         }
+
+        public static void DropTable(CargoTrackingArgs buildCargoArgs)
+        {
+            string minTableName = buildCargoArgs.Table.Pre_TableName;
+            string innerTableName  = buildCargoArgs.Table.Pre_InnerTableName;
+            string dropTableCommand = GetDropTableCommand(minTableName);
+            ExecuteSql(dropTableCommand, buildCargoArgs.DestinationConnectionString);
+            if (!string.IsNullOrEmpty(innerTableName))
+            {
+                dropTableCommand = GetDropTableCommand(innerTableName);
+                ExecuteSql(dropTableCommand, buildCargoArgs.DestinationConnectionString);
+            }
+        }
+
+        private static string GetDropTableCommand(string tableName)
+        {
+            string dropTableCommand = "If exists (select * from sysobjects where name='" + tableName + "' and xtype='U') " +
+                                      " BEGIN " +
+                                      " Drop Table " + tableName +
+                                      " END ";
+
+            return dropTableCommand;
+        }
+    }
+
+
+    public class ConnectionStringArguments
+    {
+        public string Server { get; set; }
+        public string UserName { get; set; }
+        public string Password { get; set; }
+        public string Catalog { get; set; }
+
+
     }
 }

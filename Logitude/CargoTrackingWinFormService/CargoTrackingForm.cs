@@ -96,7 +96,7 @@ namespace CargoTrackingWinFormService.Forms
             this.numericUpDown2.Enabled = false;
             this.checkBox3.Checked = true;
             this.checkBox3.Enabled = false;
-            CargoTableLists = CargoTrackingTableList.FillCargoTableList();
+            CargoTableLists = CargoTrackingTableList.GetCargoTrackingTableList();
             string [] DBTabkeNames = CargoTableLists.Select(s=>s.DBTableName).ToArray();
             this.comboBox2.Items.AddRange(DBTabkeNames);
             this.comboBox2.SelectedIndex = DBTabkeNames.Count() - 1;
@@ -198,10 +198,30 @@ namespace CargoTrackingWinFormService.Forms
                 return;
             }
 
-            dbSourceConnection = ServiceHelper.BuildConnectionString(sourceConnectionArray[0], sourceConnectionArray[1], sourceConnectionArray[2], sourceConnectionArray[3]);
-            dbDestinationConnection = ServiceHelper.BuildConnectionString(destinationConnectionArray[0], destinationConnectionArray[1], destinationConnectionArray[2], destinationConnectionArray[3]);
+            ConnectionStringArguments sourceConnectionStringArguments = GetConnectionStringArguments(sourceConnectionArray);
+            ConnectionStringArguments destinationConnectionStringArguments = GetConnectionStringArguments(destinationConnectionArray);
+ 
+
+            dbSourceConnection = ServiceHelper.BuildConnectionString(sourceConnectionStringArguments);
+            dbDestinationConnection = ServiceHelper.BuildConnectionString(destinationConnectionStringArguments);
  
         }
+
+        private ConnectionStringArguments GetConnectionStringArguments(string[] connectionArray)
+        {
+            ConnectionStringArguments connectionStringArguments = new ConnectionStringArguments()
+            {
+                Catalog = connectionArray[0],
+                UserName = connectionArray[1],
+                Password = connectionArray[2],
+                Server = connectionArray[3],
+            };
+
+            return connectionStringArguments;
+        }
+
+
+
         private void UpdateCargoDataBase(CargoTrackingTable table , bool IsFromBuild )
         {
             CargoTrackingArguments CargoTrackingArguments = null;
@@ -328,7 +348,7 @@ namespace CargoTrackingWinFormService.Forms
 
         private void UpdateCargoTables(bool IsFromBuild)
         {
-            CargoTableLists = CargoTrackingTableList.FillCargoTableList();
+            CargoTableLists = CargoTrackingTableList.GetCargoTrackingTableList();
 
             if (!checkBox2.Checked)
             {
@@ -1282,7 +1302,7 @@ namespace CargoTrackingWinFormService.Forms
 
         private void MappingFields()
         {
-             CargoTrackingTable  CargoTable = CargoTrackingTableList.FillCargoTableList().Where(s=>s.CargoTracking_TableName == this.MappingTableName.Text && s.CargoTracking_FieldsDBName.Contains(this.MappingFieldName.Text)).FirstOrDefault();
+             CargoTrackingTable  CargoTable = CargoTrackingTableList.GetCargoTrackingTableList().Where(s=>s.CargoTracking_TableName == this.MappingTableName.Text && s.CargoTracking_FieldsDBName.Contains(this.MappingFieldName.Text)).FirstOrDefault();
             if (CargoTable==null)
             {
                 MessageBox.Show("Table or field not found !!!");

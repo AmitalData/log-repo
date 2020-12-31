@@ -13,37 +13,37 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CustomMapping
     public class CargoTrackingCustomMappingService
     {
 
-        public static void MappingDB_CTDB(BulkDataPreperation bulkDataPreperation, SqlBulkCopy SqlBulkCopy, string TableName)
+        public static void MapCargoTrackingToDataBase(BulkDataPreperation bulkDataPreperation, SqlBulkCopy sqlBulkCopy, string tableName)
         {
-             AddCustomColumn(bulkDataPreperation, SqlBulkCopy,TableName);
+             AddCustomColumn(bulkDataPreperation, sqlBulkCopy, tableName);
         }
-        private static void AddCustomColumn(BulkDataPreperation bulkDataPreperation, SqlBulkCopy SqlBulkCopy,string TableName)
+        private static void AddCustomColumn(BulkDataPreperation bulkDataPreperation, SqlBulkCopy sqlBulkCopy,string tableName)
         {
-            if (TableName == "CargoTrackingShipmentSearches" || 
-                TableName == "CargoTrackingShipments")
+            if (tableName == "CargoTrackingShipmentSearches" ||
+                tableName == "CargoTrackingShipments")
             {
                 if (bulkDataPreperation.CoulmnForCusstomMapping != "Id")
                 {
-                    AutoCoulmnMap(bulkDataPreperation.SelectedDataTable, SqlBulkCopy, bulkDataPreperation.CoulmnForCusstomMapping);
+                    AutoCoulmnMap(bulkDataPreperation.SelectedDataTable, sqlBulkCopy, bulkDataPreperation.CoulmnForCusstomMapping);
                 }
 
             }
             else
             {
-                AutoCoulmnMap(bulkDataPreperation.SelectedDataTable, SqlBulkCopy, bulkDataPreperation.CoulmnForCusstomMapping);
+                AutoCoulmnMap(bulkDataPreperation.SelectedDataTable, sqlBulkCopy, bulkDataPreperation.CoulmnForCusstomMapping);
             }
            
 
         }
 
 
-        private static void AutoCoulmnMap(DataTable dataTable, SqlBulkCopy sbc, string ColumnName)
+        private static void AutoCoulmnMap(DataTable dataTable, SqlBulkCopy sqlBulkCopy, string columnName)
         {
-            if (dataTable.Columns.IndexOf(ColumnName)==-1)
+            if (dataTable.Columns.IndexOf(columnName) ==-1)
             {
-                dataTable.Columns.Add(ColumnName);
+                dataTable.Columns.Add(columnName);
             }
-            sbc.ColumnMappings.Add(ColumnName, ColumnName);
+            sqlBulkCopy.ColumnMappings.Add(columnName, columnName);
         }
 
 

@@ -1,4 +1,6 @@
 ﻿
+using Logitude.CargoTracking.BL.CargoTrackingServices.Services;
+using Logitude.CargoTracking.BL.CargoTrackingServices.Services.ServicesHelper;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
@@ -16,28 +18,23 @@ namespace CargoTrackingWinService.Helper
         public bool GetFieldValueFromDBByTableNameAndFieldName(string fieldName, string tableName,string connectionString)
         {
             bool result = false;
-            SqlConnection con = new SqlConnection(connectionString);
-            SqlCommand com = new SqlCommand(
-            "select " + fieldName + " " +
-            "FROM dbo." + tableName + " ;", con);
+            SqlConnection  connection = new SqlConnection(connectionString);
+            SqlCommand selectFieldCommand = new SqlCommand("select " + fieldName + " " + "FROM dbo." + tableName + " ;", connection);
             try
             {
-                con.Open();
-                using (SqlDataReader reader = com.ExecuteReader())
+                connection.Open();
+                using (SqlDataReader reader = selectFieldCommand.ExecuteReader())
                 {
                     if (reader.Read())
                     {
                         if (reader[fieldName] != null)
-                        {
                             result = (bool)(reader[fieldName]);
-                        }
-
                     }
                 }
             }
             finally
             {
-                con.Close();
+                connection.Close();
             }
             return result;
         }
@@ -46,27 +43,58 @@ namespace CargoTrackingWinService.Helper
         public static void AddRecordToCargoTrackingIncrementalStats(string destinationConnectionString)
         {
             var Error = ApplicationInfo.ErrorLogs!=null? ApplicationInfo.ErrorLogs : "null";
-            string cmd = "Insert Into [dbo].[CargoTrackingIncrementalStats] (StartDate,EndDate,Shipments,Cards,Ports,Countries,TransportModes,ShipmentComputedFields,ShipmentMasterDatas,ErrorLog) values ('" + ApplicationInfo.StartDate+ "','"+ ApplicationInfo.EndDate+ "',"+ ApplicationInfo.Shipments+ ","+ ApplicationInfo .Cards+ ","+ ApplicationInfo .Ports+ ","+ ApplicationInfo .Countries+ ","+ ApplicationInfo .TransportModes+","+ ApplicationInfo.ShipmentComputedFields + ","+ ApplicationInfo.ShipmentMasterDatas+ "," + Error + ");";
-            RunScript(cmd, destinationConnectionString);
+            string[] CargoTrackingTableCopyFields = CargoTrackingTableList.GetCargoTrackingTableList().Select(s => s.DBTableName).ToArray();
+            string CargoTrackingTableCopyFieldsAsString = string.Join("," ,CargoTrackingTableCopyFields);
+            string CargoTrackingTableCopyFieldsValueAsString = GetCargoTrackingTableCopyFieldsValueAsString(CargoTrackingTableCopyFields);
+            string IncrementalStatsNewRecoredCommand = "Insert Into [dbo].[CargoTrackingIncrementalStats] (StartDate,EndDate,ErrorLog," 
+                                                        + CargoTrackingTableCopyFieldsAsString +") " +
+                                                       "values ('" + 
+                                                         ApplicationInfo.StartDate+ "','"+ 
+                                                         ApplicationInfo.EndDate+ "',"+
+                                                         Error +","+
+                                                         CargoTrackingTableCopyFieldsValueAsString + 
+                                                        ");";
+            RunScript(IncrementalStatsNewRecoredCommand, destinationConnectionString);
         }
 
-
-        public static void RunScript(string sql , string connection)
+        private static string GetCargoTrackingTableCopyFieldsValueAsString(string[] cargoTrackingTableCopyFields)
         {
-            using (SqlConnection cn = new SqlConnection(connection))
+            string CargoTrackingTableCopyFieldsValueAsString = "";
+            for (int i = 0; i < cargoTrackingTableCopyFields.Length; i++)
             {
-                SqlCommand sqlCommand = new SqlCommand(sql, cn);
+                foreach (string table in ApplicationInfo.CargoTrackingRecordsUpdatedDictionary.Keys)
+                {
+                    if (table == cargoTrackingTableCopyFields[i])
+                    {
+                        CargoTrackingTableCopyFieldsValueAsString += ApplicationInfo.CargoTrackingRecordsUpdatedDictionary[table] + "";
+                        if (i != cargoTrackingTableCopyFields.Length - 1)
+                            CargoTrackingTableCopyFieldsValueAsString += ",";
+                        break;
+                    }
+                }
+
+            }
+            return CargoTrackingTableCopyFieldsValueAsString;
+        }
+        public static void RunScript(string command , string connection)
+        {
+            using (SqlConnection sqlConnection = new SqlConnection(connection))
+            {
+                SqlCommand sqlCommand = new SqlCommand(command, sqlConnection);
                 sqlCommand.CommandTimeout = (int)timeOut;
-                cn.Open();
+                sqlConnection.Open();
                 sqlCommand.ExecuteNonQuery();
-                cn.Close();
+                sqlConnection.Close();
             }
         }
  
 
-        public string BuildConnectionString(string catalog, string userName, string password, string server)
+        public string BuildConnectionString(ConnectionStringArguments  connectionStringArguments)
         {
-            string result = "Data Source=" + server + ";Initial Catalog=" + catalog + ";Integrated Security=False;Persist Security Info=True;User ID=" + userName + ";Password= " + password + ";MultipleActiveResultSets=True;Connect Timeout=60";
+            string result = "Data Source=" + connectionStringArguments.Server + 
+                            ";Initial Catalog=" + connectionStringArguments.Catalog + 
+                            ";Integrated Security=False;Persist Security Info=True;User ID=" + connectionStringArguments.UserName + 
+                            ";Password= " + connectionStringArguments.Password + ";MultipleActiveResultSets=True;Connect Timeout=60";
             return result;
         }
  
@@ -79,4 +107,6 @@ namespace CargoTrackingWinService.Helper
         }
  
     }
+
+
 }
