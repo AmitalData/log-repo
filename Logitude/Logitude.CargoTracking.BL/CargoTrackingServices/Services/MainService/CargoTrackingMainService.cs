@@ -475,7 +475,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
                 }
                 catch(Exception exception)
                 {
-                    SetIncrementalErrorLog(exception, bulkDataPreperation);
+                    SetErrorLog(exception, bulkDataPreperation);
                 }
 
                 finally
@@ -488,7 +488,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
         }
 
 
-        private void SetIncrementalErrorLog(Exception exception, BulkDataPreperation bulkDataPreperation)
+        private void SetErrorLog(Exception exception, BulkDataPreperation bulkDataPreperation)
         {
             string ErrorsLog = "Table Name: " + bulkDataPreperation.CargoTrackingTable.CargoTracking_TableName +
                                        Environment.NewLine + "Erros: " + exception.Message +
