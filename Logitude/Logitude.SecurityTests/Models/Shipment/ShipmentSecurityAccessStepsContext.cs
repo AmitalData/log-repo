@@ -1,4 +1,6 @@
-﻿namespace Logitude.SecurityTests.Models.Shipment
+﻿using System.Collections.Generic;
+
+namespace Logitude.SecurityTests.Models.Shipment
 {
     public class ShipmentSecurityAccessStepsContext
     {
@@ -10,5 +12,6 @@
 
         public ShipmentPM ShipmentPM { get; set; }
         public ShipmentPM OtherShipmentPM { get; set; }
+        public IEnumerable<ShipmentPM> ShipmentPMs { get; set; }
     }
 }
