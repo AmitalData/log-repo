@@ -42,39 +42,39 @@ namespace CargoTrackingWinService.Helper
 
         public static void AddRecordToCargoTrackingIncrementalStats(string destinationConnectionString)
         {
-            var Error = !string.IsNullOrEmpty(ApplicationInfo.ErrorLogs)? ApplicationInfo.ErrorLogs : "null";
-            string[] CargoTrackingTableCopyFields = CargoTrackingTableList.GetCargoTrackingTableList().Select(s => s.DBTableName).ToArray();
-            string CargoTrackingTableCopyFieldsAsString = string.Join("," ,CargoTrackingTableCopyFields);
-            string CargoTrackingTableCopyFieldsValueAsString = GetCargoTrackingTableCopyFieldsValueAsString(CargoTrackingTableCopyFields);
-            string IncrementalStatsNewRecoredCommand = "Insert Into [dbo].[CargoTrackingIncrementalStats] (StartDate,EndDate,ErrorLog," 
-                                                        + CargoTrackingTableCopyFieldsAsString +") " +
+            var error = !string.IsNullOrEmpty(ApplicationInfo.ErrorLogs)? ApplicationInfo.ErrorLogs : "null";
+            string[] cargoTrackingTableCopyFields = CargoTrackingTableList.GetCargoTrackingTableList().Select(s => s.DBTableName).ToArray();
+            string cargoTrackingTableCopyFieldsAsString = string.Join("," ,cargoTrackingTableCopyFields);
+            string cargoTrackingTableCopyFieldsValueAsString = GetCargoTrackingTableCopyFieldsValueAsString(cargoTrackingTableCopyFields);
+            string incrementalStatsNewRecoredCommand = "Insert Into [dbo].[CargoTrackingIncrementalStats] (StartDate,EndDate,ErrorLog," 
+                                                        + cargoTrackingTableCopyFieldsAsString +") " +
                                                        "values ('" + 
                                                          ApplicationInfo.StartDate+ "','"+ 
                                                          ApplicationInfo.EndDate+ "',"+
-                                                         Error +","+
-                                                         CargoTrackingTableCopyFieldsValueAsString + 
+                                                         error +","+
+                                                         cargoTrackingTableCopyFieldsValueAsString + 
                                                         ");";
-            RunScript(IncrementalStatsNewRecoredCommand, destinationConnectionString);
+            RunScript(incrementalStatsNewRecoredCommand, destinationConnectionString);
         }
 
         private static string GetCargoTrackingTableCopyFieldsValueAsString(string[] cargoTrackingTableCopyFields)
         {
-            string CargoTrackingTableCopyFieldsValueAsString = "";
+            string cargoTrackingTableCopyFieldsValueAsString = "";
             for (int i = 0; i < cargoTrackingTableCopyFields.Length; i++)
             {
                 foreach (string table in ApplicationInfo.CargoTrackingRecordsUpdatedDictionary.Keys)
                 {
                     if (table == cargoTrackingTableCopyFields[i])
                     {
-                        CargoTrackingTableCopyFieldsValueAsString += ApplicationInfo.CargoTrackingRecordsUpdatedDictionary[table] + "";
+                        cargoTrackingTableCopyFieldsValueAsString += ApplicationInfo.CargoTrackingRecordsUpdatedDictionary[table] + "";
                         if (i != cargoTrackingTableCopyFields.Length - 1)
-                            CargoTrackingTableCopyFieldsValueAsString += ",";
+                            cargoTrackingTableCopyFieldsValueAsString += ",";
                         break;
                     }
                 }
 
             }
-            return CargoTrackingTableCopyFieldsValueAsString;
+            return cargoTrackingTableCopyFieldsValueAsString;
         }
         public static void RunScript(string command , string connection)
         {

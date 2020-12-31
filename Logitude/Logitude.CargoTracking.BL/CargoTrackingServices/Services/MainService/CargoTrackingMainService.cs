@@ -61,7 +61,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
                 UpdateLastRemainInnerRecordsIfExist(bulkDataPreperation, cargoTrackingDataBaseArgs);
                 if (KeysForRecoredsNotValidated.Count > 0)
                 {
-                    RemoveNotValidateLines(cargoTrackingDataBaseArgs);
+                    RemoveNotValidLines(cargoTrackingDataBaseArgs);
                 }
                 bulkDataPreperation.SqlDataReader.Close();
             }
@@ -72,7 +72,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
             }
         }
  
-        private void RemoveNotValidateLines(CargoTrackingUpdateDataBaseArgs cargoTrackingDataBaseArgs)
+        private void RemoveNotValidLines(CargoTrackingUpdateDataBaseArgs cargoTrackingDataBaseArgs)
         {
             if (cargoTrackingDataBaseArgs.CargoTrackingArguments == null)
             {
@@ -88,13 +88,13 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
 
         private void ExecuteDeleteNotValidateCommand(CargoTrackingUpdateDataBaseArgs cargoTrackingDataBaseArgs, StringBuilder deletedRows)
         {
-            string DeleteNotValidRecordsCommand = "";
-            DeleteNotValidRecordsCommand = "delete from " + cargoTrackingDataBaseArgs.BuildCargoArgs.Table.CargoTracking_TableName + " where " + cargoTrackingDataBaseArgs.BuildCargoArgs.Table.ConditionKey + " in " + ("(" + deletedRows.ToString() + ")").Replace(",)", ")");
-            ServiceHelper.ExecuteSql(DeleteNotValidRecordsCommand, cargoTrackingDataBaseArgs.BuildCargoArgs.DestinationConnectionString);
+            string deleteNotValidRecordsCommand = "";
+            deleteNotValidRecordsCommand = "delete from " + cargoTrackingDataBaseArgs.BuildCargoArgs.Table.CargoTracking_TableName + " where " + cargoTrackingDataBaseArgs.BuildCargoArgs.Table.ConditionKey + " in " + ("(" + deletedRows.ToString() + ")").Replace(",)", ")");
+            ServiceHelper.ExecuteSql(deleteNotValidRecordsCommand, cargoTrackingDataBaseArgs.BuildCargoArgs.DestinationConnectionString);
             if (cargoTrackingDataBaseArgs.BuildCargoArgs.Table.CargoTracking_InnerTableName != null)
             {
-                DeleteNotValidRecordsCommand = "delete from " + cargoTrackingDataBaseArgs.BuildCargoArgs.Table.CargoTracking_InnerTableName + " where " + cargoTrackingDataBaseArgs.BuildCargoArgs.Table.InnerConditionKey + " in " + ("(" + deletedRows.ToString() + ")").Replace(",)", ")");
-                ServiceHelper.ExecuteSql(DeleteNotValidRecordsCommand, cargoTrackingDataBaseArgs.BuildCargoArgs.DestinationConnectionString);
+                deleteNotValidRecordsCommand = "delete from " + cargoTrackingDataBaseArgs.BuildCargoArgs.Table.CargoTracking_InnerTableName + " where " + cargoTrackingDataBaseArgs.BuildCargoArgs.Table.InnerConditionKey + " in " + ("(" + deletedRows.ToString() + ")").Replace(",)", ")");
+                ServiceHelper.ExecuteSql(deleteNotValidRecordsCommand, cargoTrackingDataBaseArgs.BuildCargoArgs.DestinationConnectionString);
             }
             KeysForRecoredsNotValidated = new List<string>();
 
@@ -138,7 +138,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
                 }
                 if (KeysForRecoredsNotValidated.Count > 0)
                 {
-                    RemoveNotValidateLines(cargoTrackingDataBaseArgs);
+                    RemoveNotValidLines(cargoTrackingDataBaseArgs);
 
                 }
 
@@ -156,7 +156,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
                                                      .ToList();
                 bulkDataPreperation.CargoTrackingUpdateDataBaseArgs = cargoTrackingDataBaseArgs;
                 bulkDataPreperation.SelectedDataTable = bulkDataPreperation.MainDataTable;
-                bulkDataPreperation = UpdateBulkPreperations(bulkDataPreperation, Lastcolumns);
+                bulkDataPreperation = BulkUpdateTable(bulkDataPreperation, Lastcolumns);
             }
         }
 
@@ -171,7 +171,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
                                                      .ToList();
                 bulkDataPreperation.CargoTrackingUpdateDataBaseArgs = cargoTrackingDataBaseArgs;
                 bulkDataPreperation.SelectedDataTable = bulkDataPreperation.InnerDataTable;
-                bulkDataPreperation = UpdateBulkPreperations(bulkDataPreperation, Lastcolumns, true);
+                bulkDataPreperation = BulkUpdateTable(bulkDataPreperation, Lastcolumns, true);
             }
         }
 
@@ -253,16 +253,16 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
                      .Select(r => (string)r[bulkDataPreperation.CargoTrackingTable.InnerKeyName].ToString())
                      .ToList();
 
-            DataTable ThreadDataTable = bulkDataPreperation.InnerDataTable.Clone();
+            DataTable dataTable = bulkDataPreperation.InnerDataTable.Clone();
             foreach (DataRow drtableOld in bulkDataPreperation.InnerDataTable.Rows)
             {
-                ThreadDataTable.ImportRow(drtableOld);
+                dataTable.ImportRow(drtableOld);
 
             }
             bulkDataPreperation.InnerDataTable.Rows.Clear();
             bulkDataPreperation.CargoTrackingUpdateDataBaseArgs = cargoTrackingDataBaseArgs;
-            bulkDataPreperation.SelectedDataTable = ThreadDataTable;
-            UpdateBulkPreperations(bulkDataPreperation, columns, true);
+            bulkDataPreperation.SelectedDataTable = dataTable;
+            BulkUpdateTable(bulkDataPreperation, columns, true);
 
         }
 
@@ -276,26 +276,26 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
                      .Select(r => (string)r[bulkDataPreperation.CargoTrackingTable.KeyName].ToString())
                      .ToList();
             var ThreadStardBulding = bulkDataPreperation.NumberRecoredTake;
-            DataTable ThreadDataTable = bulkDataPreperation.MainDataTable.Clone();
+            DataTable dataTable = bulkDataPreperation.MainDataTable.Clone();
             foreach (DataRow drtableOld in bulkDataPreperation.MainDataTable.Rows)
             {
-                ThreadDataTable.ImportRow(drtableOld);
+                dataTable.ImportRow(drtableOld);
 
             }
             bulkDataPreperation.MainDataTable.Rows.Clear();
             bulkDataPreperation.NumberRecoredTake = 0;
             bulkDataPreperation.CargoTrackingUpdateDataBaseArgs = cargoTrackingDataBaseArgs;
-            bulkDataPreperation.SelectedDataTable = ThreadDataTable;
-            UpdateBulkPreperations(bulkDataPreperation,columns);
+            bulkDataPreperation.SelectedDataTable = dataTable;
+            BulkUpdateTable(bulkDataPreperation,columns);
 
         }
 
         private BulkDataPreperation InitializeBulkDataPreperation(CargoTrackingUpdateDataBaseArgs cargoTrackingDataBaseArgs)
         {
-            DateTime? AutomaticDate = null;
+            DateTime? automaticDate = null;
             if (cargoTrackingDataBaseArgs.CargoTrackingArguments != null)
             {
-                AutomaticDate = DateTime.Now;
+                automaticDate = DateTime.Now;
             }
            
             BulkDataPreperation bulkDataPreperation = new BulkDataPreperation()
@@ -303,7 +303,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
                 CargoTrackingTable = cargoTrackingDataBaseArgs.BuildCargoArgs.Table,
                 MaxRecoredTakeEachTime = cargoTrackingDataBaseArgs.NumberOfBulkPerTime,
                 MainDataTable = null,
-                AutomaticLastUpdateDate = AutomaticDate,
+                AutomaticLastUpdateDate = automaticDate,
                 SqlDataReader = null,
                 NumberOfMainCoulmnsUpdated = 0,
                 NumberOfInnerCoulmnsUpdated =0,
@@ -314,7 +314,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
 
         }
 
-        private BulkDataPreperation UpdateBulkPreperations(BulkDataPreperation bulkDataPreperation, 
+        private BulkDataPreperation BulkUpdateTable(BulkDataPreperation bulkDataPreperation, 
                                                            List<string> columns ,bool 
                                                            isInnerCargoTracking=false)
         {
@@ -324,7 +324,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
                bulkDataPreperation.NumberOfInnerCoulmnsUpdated += columns.Count;
 
             bulkDataPreperation.CargoTrackingTable = PrepareTableParameters(bulkDataPreperation, columns, isInnerCargoTracking);
-            bulkDataPreperation.AutomaticLastUpdateDate = UpdateBulkValues(bulkDataPreperation, isInnerCargoTracking);
+            bulkDataPreperation.AutomaticLastUpdateDate = BulkUpdateValues(bulkDataPreperation, isInnerCargoTracking);
 
             return bulkDataPreperation;
         }
@@ -359,26 +359,34 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
                                                CargoTrackingTable table, 
                                                SqlConnection sourceConnection)
         {
-            string TableConditionCommand = "";
+            string tableConditionCommand = "";
             string condition;
-            if (cargoTrackingDataBaseArgs.BuildCargoArgs.Table.Main_CargoTracking_TableName == "CargoTrackingShipments" && cargoTrackingDataBaseArgs.BuildCargoArgs.Table.CurrentCondition == 1)
-                TableConditionCommand = ShipmentTableCondtions.GetAllCustomsShipmentsThatContainForwardingShipments(cargoTrackingDataBaseArgs, table, LastUpdate);
-            else if (cargoTrackingDataBaseArgs.BuildCargoArgs.Table.Main_CargoTracking_TableName == "CargoTrackingShipments" && cargoTrackingDataBaseArgs.BuildCargoArgs.Table.CurrentCondition == 2)
-                TableConditionCommand = ShipmentTableCondtions.GetAllNonCustomShipmentsThatContainForwardingShipments(cargoTrackingDataBaseArgs, table, LastUpdate);
+            if (cargoTrackingDataBaseArgs.BuildCargoArgs.Table.Main_CargoTracking_TableName == "CargoTrackingShipments" && cargoTrackingDataBaseArgs.BuildCargoArgs.Table.CurrentCondition ==
+                                                                                                                                                    ShipmentTable_GetAllCustomsShipmentsThatContainForwardingShipments)
+                tableConditionCommand = ShipmentTableCondtions.GetAllCustomsShipmentsThatContainForwardingShipments(cargoTrackingDataBaseArgs, table, LastUpdate);
+            else if (cargoTrackingDataBaseArgs.BuildCargoArgs.Table.Main_CargoTracking_TableName == "CargoTrackingShipments" && cargoTrackingDataBaseArgs.BuildCargoArgs.Table.CurrentCondition ==
+                                                                                                                                                    ShipmentTable_GetAllNonCustomShipmentsThatContainForwardingShipments)
+                tableConditionCommand = ShipmentTableCondtions.GetAllNonCustomShipmentsThatContainForwardingShipments(cargoTrackingDataBaseArgs, table, LastUpdate);
             else
-            {
-                string fieldName = !string.IsNullOrEmpty(cargoTrackingDataBaseArgs.BuildCargoArgs.Table.FieldsDBName) ? cargoTrackingDataBaseArgs.BuildCargoArgs.Table.FieldsDBName : "*";
-                condition = GetUpdateDataBaseCondition(cargoTrackingDataBaseArgs.BuildCargoArgs, cargoTrackingDataBaseArgs.CargoTrackingArguments);
-                TableConditionCommand = "SELECT " + fieldName + " " +
-                        "FROM dbo." + table.DBTableName + condition;
-            }
+                tableConditionCommand = AddDefaultWhereCondition(cargoTrackingDataBaseArgs, table);
 
-            SqlCommand commandSourceData = new SqlCommand(TableConditionCommand, sourceConnection);
+            SqlCommand commandSourceData = new SqlCommand(tableConditionCommand, sourceConnection);
             commandSourceData.CommandTimeout = (int)ServiceHelper.TimeOut;
             SqlDataReader reader = commandSourceData.ExecuteReader(CommandBehavior.CloseConnection);
 
             return reader;
 
+        }
+
+        private string AddDefaultWhereCondition(CargoTrackingUpdateDataBaseArgs cargoTrackingDataBaseArgs,
+                                               CargoTrackingTable table)
+        {
+            string fieldName = !string.IsNullOrEmpty(cargoTrackingDataBaseArgs.BuildCargoArgs.Table.FieldsDBName) ? cargoTrackingDataBaseArgs.BuildCargoArgs.Table.FieldsDBName : "*";
+            string condition = GetUpdateDataBaseCondition(cargoTrackingDataBaseArgs.BuildCargoArgs, cargoTrackingDataBaseArgs.CargoTrackingArguments);
+            string tableConditionCommand = "SELECT " + fieldName + " " +
+                    "FROM dbo." + table.DBTableName + condition;
+
+            return tableConditionCommand;
         }
 
         private DataColumn GetCoulmnFromDataRow(DataRow drow)
@@ -394,28 +402,39 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
 
         private DataTable FillDataTableValues(List<DataColumn> listCols, BulkDataPreperation bulkDataPreperation, string tableName)
         {
-            bool isRoWValid = CargoTrackingValidateRecordsService.ValidateRecords(tableName, bulkDataPreperation.SqlDataReader);
-            if (isRoWValid)
+            bool isRecoredValid = CargoTrackingValidateRecordsService.ValidateRecords(tableName, bulkDataPreperation.SqlDataReader);
+            if (isRecoredValid)
             {
-                DataRow dataRow = bulkDataPreperation.MainDataTable.NewRow();
-                for (int i = 0; i < listCols.Count; i++)
-                {
-                    dataRow[((DataColumn)listCols[i])] = bulkDataPreperation.SqlDataReader[i];
-                }
-                CargoTrackingSearchService.SearchService(dataRow, bulkDataPreperation, tableName);
-                bulkDataPreperation.MainDataTable.Rows.Add(dataRow);
+                AddValidRecoredToDataTable(listCols, bulkDataPreperation, tableName);
             }
             else
             {
-                DataRow dataRow = bulkDataPreperation.MainDataTable.NewRow();
-                for (int i = 0; i < listCols.Count; i++)
-                {
-                    dataRow[((DataColumn)listCols[i])] = bulkDataPreperation.SqlDataReader[i];
-                }
-                KeysForRecoredsNotValidated.Add((string)dataRow[bulkDataPreperation.CargoTrackingTable.KeyName]);
+                AddNotValidRecoredToRecoredsNotValidatedList(listCols, bulkDataPreperation);
             }
             return bulkDataPreperation.MainDataTable;
         }
+
+        private void AddValidRecoredToDataTable(List<DataColumn> listCols, BulkDataPreperation bulkDataPreperation, string tableName)
+        {
+            DataRow dataRow = bulkDataPreperation.MainDataTable.NewRow();
+            for (int i = 0; i < listCols.Count; i++)
+            {
+                dataRow[((DataColumn)listCols[i])] = bulkDataPreperation.SqlDataReader[i];
+            }
+            CargoTrackingSearchService.SearchService(dataRow, bulkDataPreperation, tableName);
+            bulkDataPreperation.MainDataTable.Rows.Add(dataRow);
+        }
+
+        private void AddNotValidRecoredToRecoredsNotValidatedList(List<DataColumn> listCols, BulkDataPreperation bulkDataPreperation)
+        {
+            DataRow dataRow = bulkDataPreperation.MainDataTable.NewRow();
+            for (int i = 0; i < listCols.Count; i++)
+            {
+                dataRow[((DataColumn)listCols[i])] = bulkDataPreperation.SqlDataReader[i];
+            }
+            KeysForRecoredsNotValidated.Add((string)dataRow[bulkDataPreperation.CargoTrackingTable.KeyName]);
+        }
+
 
         private CargoTrackingTable PrepareTableParameters(BulkDataPreperation bulkDataPreperation, 
                                                           List<string> columns,
@@ -425,24 +444,24 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
 
             if (isFromInnerCargoTrackingTable)
             {
-                CargoDeleteRowsArgs DeleteRowsArgs = new CargoDeleteRowsArgs() { TableName = bulkDataPreperation.CargoTrackingTable.CargoTracking_InnerTableName, KeyName = bulkDataPreperation.CargoTrackingTable.InnerConditionKey, IdsList = columns, ConnectionString = bulkDataPreperation.CargoTrackingUpdateDataBaseArgs.BuildCargoArgs.DestinationConnectionString, ReturnDeleteIdsAsString = true };
+                CargoDeleteRowsArgs deleteRowsArgs = new CargoDeleteRowsArgs() { TableName = bulkDataPreperation.CargoTrackingTable.CargoTracking_InnerTableName, KeyName = bulkDataPreperation.CargoTrackingTable.InnerConditionKey, IdsList = columns, ConnectionString = bulkDataPreperation.CargoTrackingUpdateDataBaseArgs.BuildCargoArgs.DestinationConnectionString, ReturnDeleteIdsAsString = true };
                 bulkDataPreperation.CargoTrackingTable.InnerRefreshIds = columns.ToString();
                 if (bulkDataPreperation.CargoTrackingUpdateDataBaseArgs.CargoTrackingArguments == null)
-                    bulkDataPreperation.CargoTrackingTable.InnerRefreshIds = DeleteRowsFromCargoTables(DeleteRowsArgs);
+                    bulkDataPreperation.CargoTrackingTable.InnerRefreshIds = DeleteRowsFromCargoTables(deleteRowsArgs);
             }
             else
             {
-                CargoDeleteRowsArgs DeleteRowsArgs = new CargoDeleteRowsArgs() { TableName = bulkDataPreperation.CargoTrackingTable.CargoTracking_TableName, KeyName = bulkDataPreperation.CargoTrackingTable.ConditionKey, IdsList = columns, ConnectionString = bulkDataPreperation.CargoTrackingUpdateDataBaseArgs.BuildCargoArgs.DestinationConnectionString, ReturnDeleteIdsAsString = true };
+                CargoDeleteRowsArgs deleteRowsArgs = new CargoDeleteRowsArgs() { TableName = bulkDataPreperation.CargoTrackingTable.CargoTracking_TableName, KeyName = bulkDataPreperation.CargoTrackingTable.ConditionKey, IdsList = columns, ConnectionString = bulkDataPreperation.CargoTrackingUpdateDataBaseArgs.BuildCargoArgs.DestinationConnectionString, ReturnDeleteIdsAsString = true };
                 bulkDataPreperation.CargoTrackingTable.RefreshIds = columns.ToString();
                 if (bulkDataPreperation.CargoTrackingUpdateDataBaseArgs.CargoTrackingArguments == null)
-                    bulkDataPreperation.CargoTrackingTable.RefreshIds = DeleteRowsFromCargoTables(DeleteRowsArgs);
+                    bulkDataPreperation.CargoTrackingTable.RefreshIds = DeleteRowsFromCargoTables(deleteRowsArgs);
             }
             return bulkDataPreperation.CargoTrackingTable;
         }
 
       
 
-        private DateTime? UpdateBulkValues(BulkDataPreperation bulkDataPreperation, bool isFromInnerCargoTrackingTable=false)
+        private DateTime? BulkUpdateValues(BulkDataPreperation bulkDataPreperation, bool isFromInnerCargoTrackingTable=false)
         {
             if (!string.IsNullOrEmpty(bulkDataPreperation.CargoTrackingTable.RefreshIds) || 
                 !string.IsNullOrEmpty(bulkDataPreperation.CargoTrackingTable.InnerRefreshIds))
@@ -490,7 +509,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
 
         private void SetErrorLog(Exception exception, BulkDataPreperation bulkDataPreperation)
         {
-            string ErrorsLog = "Table Name: " + bulkDataPreperation.CargoTrackingTable.CargoTracking_TableName +
+            string ErrorsLog = "Table Name: " + bulkDataPreperation.CargoTrackingTable.Main_CargoTracking_TableName +
                                        Environment.NewLine + "Erros: " + exception.Message +
                                        Environment.NewLine + "Stack Trace: " + exception.StackTrace +
                                        Environment.NewLine;
@@ -553,36 +572,36 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
         }
 
 
-        public void AutoMapColumns(SqlBulkCopy SqlBulkCopy, BulkDataPreperation bulkDataPreperation, bool isFromInnerCargoTracking=false)
+        public void AutoMapColumns(SqlBulkCopy sqlBulkCopy, BulkDataPreperation bulkDataPreperation, bool isFromInnerCargoTracking=false)
         {
             List<string> mappingMatching = new List<string>();
             string[] dataBase_Columns = bulkDataPreperation.CargoTrackingTable.FieldsDBName.Split(',');
             string[] cargoTrackingDB_Columns = bulkDataPreperation.CargoTrackingTable.CargoTracking_FieldsDBName.Split(',');
             if (isFromInnerCargoTracking)
                 cargoTrackingDB_Columns = bulkDataPreperation.CargoTrackingTable.InnerCargoTracking_FieldsDBName.Split(',');
-            string CompareDB = MapMatchingColumnsName(cargoTrackingDB_Columns, dataBase_Columns, mappingMatching);
+            string compareDB = MapMatchingColumnsName(cargoTrackingDB_Columns, dataBase_Columns, mappingMatching);
             for (int i =0; i< cargoTrackingDB_Columns.Length;i++)
             {
-                var CompareList = CompareDB.Split(',').ToList();
+                var CompareList = compareDB.Split(',').ToList();
                 if (!CompareList.Contains(cargoTrackingDB_Columns[i]))
                 {
                     bulkDataPreperation.CoulmnForCusstomMapping = cargoTrackingDB_Columns[i];
-                    DataRowCustomMap(bulkDataPreperation, SqlBulkCopy, isFromInnerCargoTracking);
+                    DataRowCustomMap(bulkDataPreperation, sqlBulkCopy, isFromInnerCargoTracking);
                 }
             }
-            AddMappingMatchingToBulkColumMap(SqlBulkCopy, mappingMatching);
+            AddMappingMatchingToBulkColumMap(sqlBulkCopy, mappingMatching);
         }
         private void DataRowCustomMap(BulkDataPreperation bulkDataPreperation,
-                                       SqlBulkCopy SqlBulkCopy,
+                                       SqlBulkCopy sqlBulkCopy,
                                        bool isFromInnerCargoTracking)
         {
             if (isFromInnerCargoTracking)
             {
-                CargoTrackingCustomMappingService.MapCargoTrackingToDataBase(bulkDataPreperation, SqlBulkCopy, bulkDataPreperation.CargoTrackingTable.Main_CargoTracking_InnerTableName);
+                CargoTrackingCustomMappingService.MapCargoTrackingToDataBase(bulkDataPreperation, sqlBulkCopy, bulkDataPreperation.CargoTrackingTable.Main_CargoTracking_InnerTableName);
             }
             else
             {
-                CargoTrackingCustomMappingService.MapCargoTrackingToDataBase(bulkDataPreperation, SqlBulkCopy, bulkDataPreperation.CargoTrackingTable.Main_CargoTracking_TableName);
+                CargoTrackingCustomMappingService.MapCargoTrackingToDataBase(bulkDataPreperation, sqlBulkCopy, bulkDataPreperation.CargoTrackingTable.Main_CargoTracking_TableName);
             }
 
         }
@@ -602,7 +621,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
                                               string[] DataBase_Columnss, 
                                               List<string> MappingMatching)
         {
-          StringBuilder CompareDB = new StringBuilder();
+          StringBuilder compareDB = new StringBuilder();
             foreach (string CTDB_columns in CargoTrackingDB_Columnss)
             {
                 foreach (string DB_columns in DataBase_Columnss)
@@ -610,21 +629,18 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
                     if (CTDB_columns.Equals(DB_columns))
                     {
                         MappingMatching.Add(DB_columns + "," + CTDB_columns);
-                        CompareDB.Append(CTDB_columns + ",");
+                        compareDB.Append(CTDB_columns + ",");
                     }
                 }
 
             }
 
-            return CompareDB.ToString();
+            return compareDB.ToString();
         }
 
         private string GetUpdateDataBaseCondition(CargoTrackingArgs buildCargoArgs, CargoTrackingArguments cargoTrackingArguments = null)
         {
-            if (cargoTrackingArguments == null)
-            {
-                LastUpdate = ServiceHelper.GetTableLastUpdate(buildCargoArgs.Table.CargoTracking_TableName, buildCargoArgs.DestinationConnectionString);
-            }
+            GetLastUpdateIfArgumentsProvided(buildCargoArgs, cargoTrackingArguments);
             BuildWhereConditionArgs buildWhereConditionArgs = new BuildWhereConditionArgs()
             {
                 TableName = buildCargoArgs.Table.Main_CargoTracking_TableName,
@@ -635,6 +651,14 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
             return condition;
         }
 
+        private void GetLastUpdateIfArgumentsProvided(CargoTrackingArgs buildCargoArgs, CargoTrackingArguments cargoTrackingArguments)
+        {
+            if (cargoTrackingArguments == null)
+            {
+                LastUpdate = ServiceHelper.GetTableLastUpdate(buildCargoArgs.Table.Main_CargoTracking_TableName, buildCargoArgs.DestinationConnectionString);
+            }
+
+        }
 
         public string DeleteRowsFromCargoTables(CargoDeleteRowsArgs deleteRowsArgs)
         {
@@ -661,13 +685,13 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
 
         private void SetTablesStructureHelper(CargoTrackingUpdateDataBaseArgs cargoTrackingDataBaseArgs)
         {
-            TableStructureHelper MainTableStructureHelper = cargoTrackingDataBaseArgs.BuildCargoArgs.Table.MainTableStructureHelper;
-            TableStructureHelper InnerTableStructureHelper = null;
-            cargoTrackingDataBaseArgs.BuildCargoArgs.MainTableStructureHelper = MainTableStructureHelper;
+            TableStructureHelper mainTableStructureHelper = cargoTrackingDataBaseArgs.BuildCargoArgs.Table.MainTableStructureHelper;
+            TableStructureHelper innerTableStructureHelper = null;
+            cargoTrackingDataBaseArgs.BuildCargoArgs.MainTableStructureHelper = mainTableStructureHelper;
             if (!string.IsNullOrEmpty(cargoTrackingDataBaseArgs.BuildCargoArgs.Table.Pre_InnerTableName))
             {
-                InnerTableStructureHelper = cargoTrackingDataBaseArgs.BuildCargoArgs.Table.InnerTableStructureHelper;
-                cargoTrackingDataBaseArgs.BuildCargoArgs.InnerTableStructureHelper = InnerTableStructureHelper;
+                innerTableStructureHelper = cargoTrackingDataBaseArgs.BuildCargoArgs.Table.InnerTableStructureHelper;
+                cargoTrackingDataBaseArgs.BuildCargoArgs.InnerTableStructureHelper = innerTableStructureHelper;
             }
 
         }

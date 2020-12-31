@@ -1302,7 +1302,7 @@ namespace CargoTrackingWinFormService.Forms
 
         private void MappingFields()
         {
-             CargoTrackingTable  CargoTable = CargoTrackingTableList.GetCargoTrackingTableList().Where(s=>s.CargoTracking_TableName == this.MappingTableName.Text && s.CargoTracking_FieldsDBName.Contains(this.MappingFieldName.Text)).FirstOrDefault();
+             CargoTrackingTable  CargoTable = CargoTrackingTableList.GetCargoTrackingTableList().Where(s=>s.Main_CargoTracking_TableName == this.MappingTableName.Text && s.CargoTracking_FieldsDBName.Contains(this.MappingFieldName.Text)).FirstOrDefault();
             if (CargoTable==null)
             {
                 MessageBox.Show("Table or field not found !!!");
@@ -1311,7 +1311,7 @@ namespace CargoTrackingWinFormService.Forms
             {
                 if (this.MappingTableName.Text!= "CargoTrackingShipments" && this.MappingTableName.Text != "CargoTrackingShipmentSearches")
                 {
-                    this.MappingResult.Text = GetTextMapping(CargoTable.CargoTracking_TableName, this.MappingFieldName.Text);
+                    this.MappingResult.Text = GetTextMapping(CargoTable.Main_CargoTracking_TableName, this.MappingFieldName.Text);
                 }
                 else
                 {

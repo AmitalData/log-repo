@@ -96,8 +96,8 @@ namespace CargoTrackingWinService.Helper
                 CargoTrackingArguments = null,
                 IsUpdateAfterFinished = null,
             };
-            RecordUpdated RecordUpdatedNumber = cargoTrackingMainService.UpdateCargoTrackingDataBase(cargoTrackingDataBaseArgs);
-            return RecordUpdatedNumber;
+            RecordUpdated recordUpdatedNumber = cargoTrackingMainService.UpdateCargoTrackingDataBase(cargoTrackingDataBaseArgs);
+            return recordUpdatedNumber;
         }
 
 
@@ -125,7 +125,7 @@ namespace CargoTrackingWinService.Helper
 
         private void SetIncrementalErrorLog(Exception exception, CargoTrackingTable table)
         {
-            string ErrorsLog = "Table Name: " + table.CargoTracking_TableName + Environment.NewLine +
+            string ErrorsLog = "Table Name: " + table.Main_CargoTracking_TableName + Environment.NewLine +
                                 "Erros: " + exception.Message + Environment.NewLine + 
                                 "Stack Trace: " + exception.StackTrace + Environment.NewLine ;
 

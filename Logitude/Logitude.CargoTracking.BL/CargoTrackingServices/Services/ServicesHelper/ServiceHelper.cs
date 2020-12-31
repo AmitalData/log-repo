@@ -232,7 +232,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.ServicesHelpe
 
         public static void AddWaterMarksRecord(CargoTrackingTable table, string connectionString)
         {
-            string insertRecoredInWatermarksCommand = "insert into CargoTrackingWatermarks  values('" + table.CargoTracking_TableName + "' , NULL,NULL)";
+            string insertRecoredInWatermarksCommand = "insert into CargoTrackingWatermarks  values('" + table.Main_CargoTracking_TableName + "' , NULL,NULL)";
             ExecuteSql(insertRecoredInWatermarksCommand, connectionString);
         }
         public static void DeleteWatermarks(string connectionString)
@@ -274,7 +274,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.ServicesHelpe
 
         public static void UpdateWaterMarkAfterFinishCheck(CargoTrackingTable table, DateTime? automaticLastUpdateDate, CargoTrackingArgs buildCargoArgs)
         {
-            if (table != null && table.DBTableName != "CargoTrackingWatermarks")
+            if (table != null && table.Main_CargoTracking_TableName != "CargoTrackingWatermarks")
             {
 
                 var lastUpdateDate = string.Empty;
@@ -288,8 +288,8 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.ServicesHelpe
         public static void CheckAndUpdateWaterMark(string dbSourceConnection, string dbDestenationConnection)
         {
 
-            List<CargoTrackingTable> CargoTableLists = CargoTrackingTableList.GetCargoTrackingTableList();
-            foreach (CargoTrackingTable table in CargoTableLists)
+            List<CargoTrackingTable> cargoTableLists = CargoTrackingTableList.GetCargoTrackingTableList();
+            foreach (CargoTrackingTable table in cargoTableLists)
             {
                 if (table.DBTableName != "CargoTrackingWatermarks")
                 {
@@ -308,7 +308,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.ServicesHelpe
 
                 SqlCommand getTableNameFromWatermarksCommand = new SqlCommand(
                "SELECT  TableName" +
-               " FROM dbo.CargoTrackingWatermarks WHERE TableName = '" + table.CargoTracking_TableName + "'", sourceConnection);
+               " FROM dbo.CargoTrackingWatermarks WHERE TableName = '" + table.Main_CargoTracking_TableName + "'", sourceConnection);
                 getTableNameFromWatermarksCommand.CommandTimeout = (int)ServiceHelper.TimeOut;
                 SqlDataReader reader = getTableNameFromWatermarksCommand.ExecuteReader();
                 if (!reader.HasRows)
