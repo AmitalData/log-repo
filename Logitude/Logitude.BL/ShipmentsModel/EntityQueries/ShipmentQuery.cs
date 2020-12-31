@@ -3759,24 +3759,47 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
                 if (shipment != null)
                 {
-                    ShipmentMasterData masterData = (from a in repository.context.ShipmentMasterDatas
-                                                     where a.Id == shipment.MasterShipmentDataId
-                                                     select a).FirstOrDefault();
-
-                    ShipmentPM shipmentPM = new ShipmentPM();
-
-                    shipmentPM = MapShipmentToShipmentPM(shipmentPM, shipment, null, masterData, true);
-
-                    ShipmentPM securedPM = new ShipmentPM();
-                    SecuredMapping.GetMappedPM(shipmentPM, securedPM, "Shipment", tenant);
-
-                    ShipmentPM returnShipment = BranchPermitionsFilter.AddUserBranchRestrictionFilters(new QueryOperations(), securedPM, tenant);//securedPM;
-                    returnShipment = ProductPermitionsFilter.AddUserProductRestrictionFilters(new QueryOperations(), securedPM, tenant);
-
+                    ShipmentPM returnShipment = MapShipmentToSecuredShipmentPMWithRestrictionFilters(shipment, tenant);
                     return returnShipment;
                 }
             }
             return null;
+        }
+
+        public ShipmentPM GetSinglePMBySecurityKeyAndTenant(string key, int tenant)
+        {
+            if (!string.IsNullOrEmpty(key))
+            {
+                Shipment shipment = (from a in repository.context.Shipments.Include("EntityStatus").Include("ShipmentType").Include("Incoterm").Include("ShipmentReceivableStatus").Include("ShipmentPayableStatus").Include("ShipmentLevel").Include("NextLeg").Include("ShipmentType").Include("MoveType")
+                                     where a.SecurityKey == key && a.Tenant == tenant
+                                     select a).FirstOrDefault();
+
+                if (shipment != null)
+                {
+                    ShipmentPM returnShipment = MapShipmentToSecuredShipmentPMWithRestrictionFilters(shipment, tenant);
+                    return returnShipment;
+                }
+            }
+            return null;
+        }
+
+        private ShipmentPM MapShipmentToSecuredShipmentPMWithRestrictionFilters(Shipment shipment, int tenant)
+        {
+            ShipmentMasterData masterData = (from a in repository.context.ShipmentMasterDatas
+                                             where a.Id == shipment.MasterShipmentDataId
+                                             select a).FirstOrDefault();
+
+            ShipmentPM shipmentPM = new ShipmentPM();
+
+            shipmentPM = MapShipmentToShipmentPM(shipmentPM, shipment, null, masterData, true);
+
+            ShipmentPM securedPM = new ShipmentPM();
+            SecuredMapping.GetMappedPM(shipmentPM, securedPM, "Shipment", tenant);
+
+            ShipmentPM returnShipment = BranchPermitionsFilter.AddUserBranchRestrictionFilters(new QueryOperations(), securedPM, tenant);//securedPM;
+            returnShipment = ProductPermitionsFilter.AddUserProductRestrictionFilters(new QueryOperations(), securedPM, tenant);
+
+            return returnShipment;
         }
 
         public ShipmentPM GetSinglePmForMobile(string id, int tenant)
