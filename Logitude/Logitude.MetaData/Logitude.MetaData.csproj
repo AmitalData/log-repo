@@ -251,6 +251,8 @@
     <None Include="DBOthers\CommonDataModel\Triggers\Trigger_AutomaticLastUpdateDateVessels.dxml" />
     <None Include="DBScripts\CommonModel\202011190832_UpdateEORInumberInCustomerToField1Value.sxml" />
     <None Include="DBScripts\CommonModel\202012080421_UpdatePortsSearchFields.sxml" />
+    <None Include="DBScripts\CommonModel\202012080423_FillAirLineCardSearchData.sxml" />
+    <None Include="DBScripts\CommonModel\202012080427_PreparerUpdateCardSearchData.sxml" />
     <None Include="DBScripts\CommonModel\202012080440_FillContactCardSearchData.sxml" />
     <None Include="DBScripts\CommonModel\202012100811_QueryExportExecutionLogWorkerRole.sxml" />
     <None Include="DBScripts\CommonModel\202012211256_AddNewPickupDeliveryEventTypesToShipment.sxml" />

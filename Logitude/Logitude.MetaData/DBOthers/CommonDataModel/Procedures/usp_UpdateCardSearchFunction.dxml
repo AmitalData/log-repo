@@ -32,7 +32,8 @@ declare  @Weight int
 declare  @PartnerTypeId varchar(2)
 declare  @InActive bit
 declare  @IsCustomer bit
-
+declare  @Prefix varchar(3)
+declare  @ICAO varchar(3)
 
 if (@CardId is not null)
 
@@ -72,6 +73,16 @@ where Id = @CardId
 		if (@CityName is not null)	begin 		 insert into CardSearches (Tenant, CardId  , RecordDate  , PartnerTypeId,InActive , IsCustomer,Keyword , Weight) select  @Tenant, @CardId , @RecordDate  , @PartnerTypeId,@InActive , @IsCustomer, t.Keyword  , t.weight from dbo.BuildSearchKeywordFunction(@CityName , 40 , 40) t where KeyWord !=' ' end
 		if (@ReceivablesAccountingCard is not null)	begin 		 insert into CardSearches (Tenant, CardId  , RecordDate  , PartnerTypeId,InActive ,IsCustomer, Keyword , Weight) select  @Tenant, @CardId , @RecordDate  , @PartnerTypeId,@InActive ,  @IsCustomer,t.Keyword  , t.weight from dbo.BuildSearchKeywordFunction(@ReceivablesAccountingCard , 80 , 80) t where KeyWord !=' ' end
 		if (@PayablesAccountingCard is not null)	begin 		 insert into CardSearches (Tenant, CardId  , RecordDate  , PartnerTypeId,InActive ,IsCustomer, Keyword , Weight) select  @Tenant, @CardId , @RecordDate  , @PartnerTypeId,@InActive ,  @IsCustomer,t.Keyword  , t.weight from dbo.BuildSearchKeywordFunction(@PayablesAccountingCard , 80 , 80) t where KeyWord !=' ' end
+	if(@PartnerTypeId = 'AL')
+  begin 
+
+       SELECT @Prefix = Prefix, @ICAO = ICAO FROM Airlines where id = @CardId
+
+    if (@Prefix is not null)	begin 		 insert into CardSearches (Tenant, CardId  , RecordDate  , PartnerTypeId,InActive ,IsCustomer, Keyword , Weight) select  @Tenant, @CardId , @RecordDate  , @PartnerTypeId,@InActive , @IsCustomer, t.Keyword  , t.weight from dbo.BuildSearchKeywordFunction(@Prefix , 30 , 30) t where KeyWord !=' ' end
+		if (@ICAO is not null)	begin 		 insert into CardSearches (Tenant, CardId  , RecordDate  , PartnerTypeId,InActive ,IsCustomer, Keyword , Weight) select  @Tenant, @CardId , @RecordDate  , @PartnerTypeId,@InActive , @IsCustomer, t.Keyword  , t.weight from dbo.BuildSearchKeywordFunction(@ICAO , 30 , 30) t where KeyWord !=' ' end
+  end 
+
+
 
 		if(@IsCustomer = 1  or @PartnerTypeId = 'CS' or @PartnerTypeId = 'PO')
 		begin
