@@ -1,7 +1,7 @@
 ﻿using FluentAssertions;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.SpecFlow.Models;
-using Logitude.SpecFlow.Services;
+using Logitude.Test.Services;
 using System;
 using System.Text.RegularExpressions;
 using TechTalk.SpecFlow;
