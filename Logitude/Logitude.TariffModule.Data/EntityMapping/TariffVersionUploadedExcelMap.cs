@@ -38,6 +38,8 @@ namespace Logitude.TariffModule.Data.EntityMapping
             this.Property(t => t.DocumentId).HasColumnName("DocumentId").IsRequired().HasMaxLength(15).IsUnicode(false);
 
             this.Property(t => t.NumberOfLines).HasColumnName("NumberOfLines").IsRequired();
+
+            this.Property(t => t.Index).HasColumnName("Index").IsRequired();
         }
     }
 }

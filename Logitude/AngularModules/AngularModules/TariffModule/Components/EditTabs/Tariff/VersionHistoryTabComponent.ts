@@ -672,6 +672,10 @@ export class VersionHistoryTabComponent implements OnDestroy {
             }
         });
     }
+
+    ViewUploadedExcelFilesClicked() {
+
+    }
 }
 
 export class VersionHistoryTariffLine {

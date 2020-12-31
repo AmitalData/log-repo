@@ -58,6 +58,12 @@
     <Constraints
       Nullable="false" />
   </Column>
+  <Column
+    Name="Index"
+    Type="int">
+    <Constraints
+      Nullable="false" />
+  </Column>
   <Relation
     ForeignKeyColumn="UploadedByUserId"
     ReferencedTable="Users"

@@ -19,7 +19,13 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 
         public void CustomPMToPOCO(TariffVersionUploadedExcelPM entityPM, TariffVersionUploadedExcel entityPOCO)
         {
-            //throw new NotImplementedException();
+            this.CustomMappedPOCOProperties.Add(POCOPropertyNames.Id);
+            this.CustomMappedPOCOProperties.Add(POCOPropertyNames.Tenant);
+            this.CustomMappedPOCOProperties.Add(POCOPropertyNames.TariffId);
+
+            entityPOCO.Id = entityPM.Id;
+            entityPOCO.Tenant = entityPM.Tenant;
+            entityPOCO.TariffId = entityPM.TariffId;
         }
 
         public void CustomPOCOToPM(TariffVersionUploadedExcelPM entityPM, TariffVersionUploadedExcel entityPOCO)

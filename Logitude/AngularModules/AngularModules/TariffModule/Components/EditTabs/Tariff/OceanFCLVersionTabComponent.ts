@@ -344,21 +344,6 @@ export class OceanFCLVersionTabComponent extends BaseComponent implements OnDest
       }
   }
 
-//FillGridPagerItems() {
-
-//    var items: OceanFCLFreightTariffLineData[] = [];
-
-//    if (this.ItemsCollection) {
-//      var start = (this.PageIndex - 1) * this.PageSize;
-//      var end = start + this.PageSize;
-
-//      items = this.ItemsCollection.slice(start, end);
-//    }
-
-//    this.TariffsLinesSource.Clear();
-//    this.TariffsLinesSource.InsertCollection(items);
-//  }
-
     private DoCompare() {
         this.DeletedTariffsLines = [];
         if (this.IsComparToChecked && this.ComparedToVersionPM != null) {
@@ -826,6 +811,10 @@ export class OceanFCLVersionTabComponent extends BaseComponent implements OnDest
                 }
             });
         }
+    }
+
+    ViewUploadedExcelFilesClicked() {
+
     }
 }
 

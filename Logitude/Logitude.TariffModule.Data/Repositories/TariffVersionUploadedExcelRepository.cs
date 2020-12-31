@@ -21,7 +21,13 @@ namespace Logitude.TariffModule.Data.Repositories
 			throw new NotImplementedException();
         }
 
-   }
+        public IQueryable<TariffVersionUploadedExcel> GetAllVersionUploadedExcels(string tariffId, int version, int tenant)
+        {
+            return (from a in context.TariffVersionUploadedExcels
+                    where a.TariffId == tariffId && a.Tenant == tenant && a.Version == version
+                    select a);
+        }
+    }
 
 }
    

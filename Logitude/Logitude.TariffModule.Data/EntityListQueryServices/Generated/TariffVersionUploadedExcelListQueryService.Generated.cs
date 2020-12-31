@@ -105,7 +105,7 @@ namespace Logitude.TariffModule.Data.EntityListQueryServices
                             }
                         default:
                             {
-                                query2 = query2.OrderBy(d => d.Id);
+                                query2 = query2.OrderBy(d => d.Index);
                                 break;
                             }
                     }
@@ -114,7 +114,7 @@ namespace Logitude.TariffModule.Data.EntityListQueryServices
             }
 		    else
             {
-                query2 = query2.OrderBy(d => d.Id);
+                query2 = query2.OrderBy(d => d.Index);
             }
 			if(!queryOperations.GetAll)
 			{

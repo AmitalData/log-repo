@@ -372,21 +372,6 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy  {
       
     }
 
-    //FillGridPagerItems() {
-
-    //  var items: AirCostTariffLineData[] = [];
-
-    //  if (this.ItemsCollection) {
-    //    var start = (this.PageIndex - 1) * this.PageSize;
-    //    var end = start + this.PageSize;
-
-    //    items = this.ItemsCollection.slice(start, end);
-    //  }
-
-    //  this.TariffsLinesSource.Clear();
-    //  this.TariffsLinesSource.InsertCollection(items);
-    //}
-
     private DoCompare() {
         this.DeletedTariffsLines = [];
         if (this.IsComparToChecked && this.ComparedToVersionPM != null) {
@@ -880,6 +865,15 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy  {
                 }
             });
         }
+    }
+
+    ViewUploadedExcelFilesClicked() {
+        var logWindow = new LogitudeWindow();
+        logWindow.Title = "Uploaded Excel Files";
+        logWindow.Width = 600;
+        logWindow.Height = 500;
+        logWindow.WindowArgs = { TariffId: this.EntityPM.Id, Version: this.CurrentVersion.Version };
+        logWindow.Show('./TariffModule/Components/EditTabs/Tariff/UploadedExcelsComponent');
     }
 }
 

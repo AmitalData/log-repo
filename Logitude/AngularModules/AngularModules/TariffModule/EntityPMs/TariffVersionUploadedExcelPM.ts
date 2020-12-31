@@ -64,6 +64,16 @@ export class TariffVersionUploadedExcelPM {
     public set NumberOfLines(newValue: number) { if (this.numberOfLines != newValue) { this.numberOfLines = newValue; this.MarkAsDirty("NumberOfLines"); } }
        
 	 
+    private index: number;
+    public get Index() { return this.index; }
+    public set Index(newValue: number) { if (this.index != newValue) { this.index = newValue; this.MarkAsDirty("Index"); } }
+       
+	 
+    private uploadedByUserName: string;
+    public get UploadedByUserName() { return this.uploadedByUserName; }
+    public set UploadedByUserName(newValue: string) { if (this.uploadedByUserName != newValue) { this.uploadedByUserName = newValue; this.MarkAsDirty("UploadedByUserName"); } }
+       
+	 
 
     public OldEntityPM: TariffVersionUploadedExcelPM;
 		

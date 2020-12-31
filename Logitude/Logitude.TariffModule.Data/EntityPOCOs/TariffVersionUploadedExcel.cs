@@ -44,6 +44,8 @@ namespace Logitude.TariffModule.Data.EntityPOCOs
         public virtual Document Document { get; set; }
         [Column("NumberOfLines")]
 	    public int NumberOfLines { get; set; }
+        [Column("Index")]
+	    public int Index { get; set; }
     }
 }
 	 
