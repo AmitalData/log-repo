@@ -74,7 +74,7 @@ export class DocumentOutPMService {
         createDocumentOutArgs.DocumentTypeId = documentTypeId;
         createDocumentOutArgs.ChildEntityId = childEntityId;
         createDocumentOutArgs.EntityId = entityId;
-        createDocumentOutArgs.ChildReference = "CHECK#885381";//childReference;
+        createDocumentOutArgs.ChildReference = childReference;
         createDocumentOutArgs.ObjectTableId = objectTableId;
         createDocumentOutArgs.Tenant = tenant;
         var authHeader = new Headers();
