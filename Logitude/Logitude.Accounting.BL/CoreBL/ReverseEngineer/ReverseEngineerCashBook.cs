@@ -41,13 +41,13 @@ namespace Logitude.Accounting.BL.CoreBL.ReverseEngineer
                 var q = (from c in myCashBookRepository.GetAll(_Tenant)
                          join a in myGLAccountMoreDataRepository.GetAll(_Tenant)
                          on c.AccountId equals a.AccountId
-                         where a.LocalBalanceInDue!= c.TotalAmount
+                         where a.LocalBalanceInDue!= c.TotalAmount 
 
 
                          select new GLAccountBalanceDTO
                          {
                              AccountId = c.AccountId,
-                             BalanceInLocalCurrency = c.TotalAmount.GetValueOrDefault() - a.BalanceInLocalCurrency,
+                             BalanceInLocalCurrency = c.TotalAmount ?? 0 - a.BalanceInLocalCurrency,
                              CHANGE_TYPE = c.LocalName + "  היתרה בקופה שונה מהיתרה בכרטיס הנחש"
 
                          }
