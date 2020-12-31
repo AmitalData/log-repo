@@ -1,10 +1,9 @@
 ﻿using FluentAssertions;
-using Logitude.SpecFlow.Models;
+using Logitude.SecurityTests.Models.Login;
 using Logitude.Test.Services;
 using TechTalk.SpecFlow;
-using TechTalk.SpecFlow.Assist;
 
-namespace Logitude.SpecFlow.Steps
+namespace Logitude.SecurityTests.Steps.Login
 {
     [Binding]
     public class LoginSteps
@@ -18,20 +17,19 @@ namespace Logitude.SpecFlow.Steps
             LoginParameters = loginParameters;  
         }
 
-        [Given(@"user have the following Login Properties")]
-        public void GivenUserHaveTheFollowingLoginProperties(Table loginInfo)
+        [Given(@"User email is (.*) and password is (.*)")]
+        public void GivenUserEmailAndPassword(string email, string password)
         {
-            LoginInfo myLoginInfo = loginInfo.CreateInstance<LoginInfo>();
+            LoginParameters.Email = email;
+            LoginParameters.Password = password;
             LoginParameters.ClientType = "Web";
             LoginParameters.GetToken = true;
-            LoginParameters.Email = myLoginInfo.Email;
-            LoginParameters.Password = myLoginInfo.Password;
         }
 
-        [When(@"the user call Login API")]
-        public void WhenTheUserCallLoginAPI()
+        [When(@"User make login request")]
+        public void WhenUserMakeLoginRequest()
         {
-            UserData userData = APICaller.CallPost<UserData>(LoginParameters, "Authentication", "");
+            UserData userData = APICaller.CallPost<UserData>(LoginParameters, "Authentication", null);
             if (userData != null)
             {
                 User.Token = userData.Token;
@@ -39,8 +37,8 @@ namespace Logitude.SpecFlow.Steps
             }
         } 
 
-        [Then(@"the user will have a token")]
-        public void ThenTheUserWillHaveAToken()
+        [Then(@"User should have token")]
+        public void ThenUserShouldHaveToken()
         {
             User.Token.Should().NotBeNullOrEmpty();
         }

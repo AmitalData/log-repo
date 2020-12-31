@@ -1,55 +1,75 @@
 ﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using RestSharp;
 using System;
-using System.Collections.Generic;
-using System.Linq;
+using System.Configuration;
 using System.Net;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Logitude.SpecFlow.Services
+namespace Logitude.Test.Services
 {
     public class APICaller
     {
-        private static string mainURL = "http://test.logitudeworld.com/test/api/";
-        public static T CallPost<T>(Object model, string url, string token)
+        protected static readonly string ApiUrl = ConfigurationManager.AppSettings["Url"];
+
+        public static T CallPost<T>(object requestBody, string url, string token)
         {
-            return CallAPIProcess<T>(Method.POST, model, url, token);
+            return CallAPIProcess<T>(Method.POST, requestBody, url, token, null);
         }
 
-        public static T CallPut<T>(Object model, string url, string token)
+        public static T CallPut<T>(object requestBody, string url, string token)
         { 
-            return CallAPIProcess<T>(Method.PUT, model, url, token);  
+            return CallAPIProcess<T>(Method.PUT, requestBody, url, token, null);  
         }
 
-       
-
-        public static T CallGet<T>(string url, string token)
+        public static T CallGet<T>(string url, string token, string jsonElement)
         {
-            return CallAPIProcess<T>(Method.GET, null, url, token);
+            return CallAPIProcess<T>(Method.GET, null, url, token, jsonElement);
         }
 
-        private static T CallAPIProcess<T>(Method method, Object model, string url, string token)
+        protected static T CallAPIProcess<T>(Method method, object requestBody, string url, string token, string jsonElement)
         {
-            var restClient = new RestClient(mainURL + url);
-            var request = new RestRequest(method);
-            request.AddHeader("Token", token);
-            if (method != Method.GET)
+            string restClientUrl = GetRequestUrl(url);
+            RestClient restClient = new RestClient(restClientUrl);
+            RestRequest restRequest = new RestRequest(method) { RequestFormat = DataFormat.Json };
+
+            if (!string.IsNullOrEmpty(token))
             {
-                request.AddJsonBody(JsonConvert.SerializeObject(model));
+                restRequest.AddHeader("Token", token);
             }
-            
-            var response = restClient.Execute<T>(request);
 
-            if (response.StatusCode == HttpStatusCode.OK)
+            if (requestBody != null)
             {
-                return response.Data;
+                restRequest.AddJsonBody(JsonConvert.SerializeObject(requestBody));
+            }
+
+            IRestResponse<T> restResponse = restClient.Execute<T>(restRequest);
+
+            if (restResponse.StatusCode == HttpStatusCode.OK)
+            {
+                if (jsonElement != null)
+                {
+                    JObject jObject = JObject.Parse(restResponse.Content);
+                    string result = jObject[jsonElement].ToString();
+                    return JsonConvert.DeserializeObject<T>(result);
+                }
+                else
+                {
+                    return restResponse.Data;
+                }
             }
             else
             {
-                throw new Exception(method.ToString() + " Request To " + url + " Faild With the message " + response.Content);
+                throw new Exception(method.ToString() + " Request To " + restClientUrl + " Faild With Message " + restResponse.Content);
             }
         }
 
+        protected static string GetRequestUrl(string url)
+        {
+            if (String.IsNullOrEmpty(url))
+            {
+                return null;
+            }
+            return (ApiUrl.EndsWith("/") ? ApiUrl.TrimEnd('/') : ApiUrl) + (!url.StartsWith("/") ? ("/" + url) : url);
+        }
     }
 }
