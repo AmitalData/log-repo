@@ -40,7 +40,8 @@
                                   set SearchFields = #temp_Invoices.SearchFields 
                                   FROM ARInvoices
                                   INNER JOIN #temp_Invoices
-                                  on ARInvoices.Id = #temp_Invoices.ARInvoiceId
+                                  ---on ARInvoices.Id = #temp_Invoices.ARInvoiceId
+                                  on ARInvoices.Id COLLATE SQL_Latin1_General_CP1_CI_AS= #temp_Invoices.ARInvoiceId COLLATE SQL_Latin1_General_CP1_CI_AS
                                   truncate table #temp_Invoices
                                   set @Count = 0
                      end
@@ -58,7 +59,9 @@
                     SearchFields = #temp_Invoices.SearchFields 
                     FROM ARInvoices
                     INNER JOIN #temp_Invoices
-                    on ARInvoices.Id = #temp_Invoices.ARInvoiceId
+                    --on ARInvoices.Id = #temp_Invoices.ARInvoiceId
+                    on ARInvoices.Id COLLATE SQL_Latin1_General_CP1_CI_AS= #temp_Invoices.ARInvoiceId COLLATE SQL_Latin1_General_CP1_CI_AS
+
               end
 
         drop table #temp

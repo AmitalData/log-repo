@@ -51,7 +51,8 @@
 				PickupDeliveryRatio = #temp_Quotes.PickupDelivaryRatio
 				FROM Quotes
 				INNER JOIN #temp_Quotes
-				on Quotes.Id = #temp_Quotes.Id
+				--on Quotes.Id = #temp_Quotes.Id
+         on Quotes.Id COLLATE SQL_Latin1_General_CP1_CI_AS= #temp_Quotes.Id COLLATE SQL_Latin1_General_CP1_CI_AS
 
 				truncate table #temp_Quotes
 
@@ -72,7 +73,8 @@
 				PickupDeliveryRatio = #temp_Quotes.PickupDelivaryRatio
 				FROM Quotes
 				INNER JOIN #temp_Quotes
-				on Quotes.Id = #temp_Quotes.Id
+				--on Quotes.Id = #temp_Quotes.Id
+         on Quotes.Id COLLATE SQL_Latin1_General_CP1_CI_AS= #temp_Quotes.Id COLLATE SQL_Latin1_General_CP1_CI_AS
 	end
 
 	drop table #tempTable
