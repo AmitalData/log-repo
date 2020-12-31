@@ -69,7 +69,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.ServicesHelpe
             {
                 getAutomaticLastUpdateDateCommand.CommandTimeout = (int)TimeOut;
                 connection.Open();
-                ExecuteAutomaticLastUpdateDateCommand(getAutomaticLastUpdateDateCommand);
+                result = ExecuteAutomaticLastUpdateDateCommand(getAutomaticLastUpdateDateCommand);
             }
             finally
             {
@@ -109,7 +109,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.ServicesHelpe
             {
                 getLastUpdateDateCommand.CommandTimeout = (int)TimeOut;
                 connection.Open();
-                ExecuteTableLastUpdateCommand(getLastUpdateDateCommand);
+                result = ExecuteTableLastUpdateCommand(getLastUpdateDateCommand);
             }
             finally
             {

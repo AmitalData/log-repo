@@ -16,13 +16,6 @@ namespace CargoTrackingWinService.Helper
         public static bool RunCargoTrackingImmediately { get; set; }
         public static string Mode { get; set; }
         public static int UpdateCounter { get; set; }
-        public static int Shipments { get; set; }
-        public static int Ports { get; set; }
-        public static int Cards { get; set; }
-        public static int Countries { get; set; }
-        public static int TransportModes { get; set; }
-        public static int ShipmentComputedFields { get; set; }
-        public static int ShipmentMasterDatas { get; set; }
 
         public static Dictionary<string, int> CargoTrackingRecordsUpdatedDictionary = new Dictionary<string, int>();
         public static string ErrorLogs { get; set; }

@@ -16,28 +16,25 @@ namespace CargoTrackingWinService
         static void Main()
         {
 
-
-//#if DEBUG
-            //ApplicationInfo.Mode = "Release";
-            //ServiceBase[] ServicesToRun;
-            //ServicesToRun = new ServiceBase[]
-            //{
-            //    new Service1()
-            //};
-            //ServiceBase.Run(ServicesToRun);
+            //#if DEBUG
+            ApplicationInfo.Mode = "Release";
+            ServiceBase[] ServicesToRun;
+            ServicesToRun = new ServiceBase[]
+            {
+                new Service1()
+            };
+            ServiceBase.Run(ServicesToRun);
             //#else
 
-            ApplicationInfo.Mode = "Debug";
-            Service1 myService = new Service1();
-            myService.OnDebug("Logitude2-5_Main,sa,Saas256,.", "CargoTracking,sa,Saas256,.", 0);
-            System.Threading.Thread.Sleep(System.Threading.Timeout.Infinite);
+            //            ServiceBase.Run(ServicesToRun);
+            //            ApplicationInfo.Mode = "Debug";
+            //            Service1 myService = new Service1();
+            //            myService.OnDebug("Logitude2-5_Main,sa,Saas256,.", "CargoTracking,sa,Saas256,.", 0);
+            //            System.Threading.Thread.Sleep(System.Threading.Timeout.Infinite);
 
 
 
             //#endif
-
-
-
 
 
         }

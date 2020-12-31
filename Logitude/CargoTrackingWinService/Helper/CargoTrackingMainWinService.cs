@@ -26,7 +26,6 @@ namespace CargoTrackingWinService.Helper
 
         public CargoTrackingMainWinService()
         {
-
             cargoTrackingMainService = new CargoTrackingMainService();
             cargoTrackingServiceHelper = new CargoTrackingServiceHelper();
             BuildConnectionString();
@@ -64,18 +63,11 @@ namespace CargoTrackingWinService.Helper
             ApplicationInfo.UpdateCounter++;
             SetIncrementalRecordData(IsFromBuild);
         }
-         private void InitializeIncrementalRecordData()
+        private void InitializeIncrementalRecordData()
         {
             if (ApplicationInfo.UpdateCounter == 0)
             {
-                ApplicationInfo.StartDate = TenantServerConfigration.GetCurrentDateTime(0);
-                ApplicationInfo.Ports = 0;
-                ApplicationInfo.Shipments = 0;
-                ApplicationInfo.TransportModes = 0;
-                ApplicationInfo.Cards = 0;
-                ApplicationInfo.Countries = 0;
-                ApplicationInfo.ShipmentComputedFields = 0;
-                ApplicationInfo.ShipmentMasterDatas = 0;
+                ApplicationInfo.CargoTrackingRecordsUpdatedDictionary = new Dictionary<string, int>();
             }
         }
 
@@ -121,12 +113,8 @@ namespace CargoTrackingWinService.Helper
                 catch(Exception exception)
                 {
                     SetIncrementalErrorLog(exception, table);
-
-
                 }
-
                 UpdateNumberOfRecordsUpdated(table.DBTableName, recordUpdated.NumberOfRecordUpdated);
-
             }
 
             return recordUpdated.IsFromBuild;
@@ -192,10 +180,6 @@ namespace CargoTrackingWinService.Helper
             return connectionStringArguments;
         }
 
-
     }
-
-
-
 
 }
