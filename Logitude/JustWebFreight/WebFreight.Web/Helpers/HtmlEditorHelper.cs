@@ -5863,7 +5863,7 @@ namespace WebFreight.Web.Helpers
             {
                 myUrl = GetSystemURL(sharedLinkHTMLArgs, myUrl);
                 pagePath = @"/SharedMasterDocumentsPage.aspx";
-                pageLink = (myUrl + pagePath).ToLower() + "?securitykey=" + sharedLinkHTMLArgs.Key + ":" + entityId;
+                pageLink = (myUrl + pagePath).ToLower() + "?securitykey=" + sharedLinkHTMLArgs.Key;
             }
             else
             {
@@ -5888,6 +5888,7 @@ namespace WebFreight.Web.Helpers
             {
                 myUrl = tenantManagementPM.CustomerURL;
             }
+            myUrl = myUrl.ToLower().Replace("/cargotracking", "");
 
             return myUrl;
         }

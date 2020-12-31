@@ -71,6 +71,7 @@
                     $.GetCompanyLogo();
                 }
                 else {
+                    $("#DocumentsPageBusyIndicator").hide();
                     $("#Container").hide();
                     $("#InvalidKeyArea").show();
                 }
@@ -78,6 +79,7 @@
 
             error: function (jqXHR, textStatus, errorThrown) {
                 $.CheckUserException(jqXHR);
+                $("#DocumentsPageBusyIndicator").hide();
                 $("#Container").hide();
                 $("#InvalidKeyArea").show();
             }
@@ -122,7 +124,7 @@
         $("#DocumentsPageBusyIndicator").show();
 
         if ($.IsExternalURL) {
-            var url = "api/shipments/getsinglepmbykey/" + $.CurrentEntityKey + "/" + $.CurrentEntityId + "/" + $.CurrentTenant;
+            var url = "api/shipments/getsinglepmbykeyandtenant/" + $.CurrentEntityKey + "/" + $.CurrentTenant;
         }
 
         $.ajax({
@@ -300,7 +302,6 @@
 
         if ($.trim(link).indexOf("securitykey") != -1) {
             $.CurrentEntityKey = linkParameters[0];
-            $.CurrentEntityId = linkParameters[1];
             $.IsExternalURL = true;
 
             $("#DownloadAllConnectedDocuments").hide();
