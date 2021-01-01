@@ -102,9 +102,9 @@ namespace <#= DXMLnamespacestring #>
    {    
       
         public string  Get<#=fileNameWithoutExtension#>Dxml (){
-		    string DxmlFile = "<#= FileDXML #>";
+		    string dxmlFile = "<#= FileDXML #>";
 		
-		   return DxmlFile;
+		   return dxmlFile;
 		}
 		 
    }

@@ -8,7 +8,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.DBTablesCopy.Generated
    {    
       
         public string  GetCargoTrackingWatermarkDxml (){
-		    string DxmlFile = "<Table Name='CargoTrackingWatermarks' Schema='dbo' DBType='CargoTracking' Module='CargoTracking'>"+
+		    string dxmlFile = "<Table Name='CargoTrackingWatermarks' Schema='dbo' DBType='CargoTracking' Module='CargoTracking'>"+
 "  <Column Name='TableName' Type='varchar' Size='100'>"+
 "    <Constraints PrimaryKey='true' Nullable='false' />"+
 "  </Column>"+
@@ -20,7 +20,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.DBTablesCopy.Generated
 "  </Column>"+
 "</Table>";
 		
-		   return DxmlFile;
+		   return dxmlFile;
 		}
 		 
    }
