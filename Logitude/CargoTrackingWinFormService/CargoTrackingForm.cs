@@ -856,8 +856,8 @@ namespace CargoTrackingWinFormService.Forms
 
             if (tabControl1.SelectedIndex == 2 || tabControl1.SelectedIndex == 4)
             {
-                this.IncrementalEndDate.Value = DateTime.Today;
-                this.IncrementalStartDate.Value = new DateTime(this.IncrementalEndDate.Value.Year, this.IncrementalEndDate.Value.Month - 1, this.IncrementalEndDate.Value.Day);
+                this.IncrementalEndDate.Value = DateTime.Today.AddDays(1);
+                this.IncrementalStartDate.Value = IncrementalEndDate.Value.AddMonths(-1);
                 if (tabControl1.SelectedIndex == 2)
                 {
                     this.IncResults.Text = "(" + IncrementalsResultCount + ")";
