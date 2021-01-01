@@ -19,19 +19,27 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
         private DataTable tableCoulmnsRelation;
         private DataTable tableIndexs;
         private DataTable tableUniqueConstraints;
-        private string primarykeyColumn;
+        public string primarykeyColumn;
+        public List<string> TableCoulmnsNameWithoutIDentity;
+
         public TableStructureHelper(string dxmlStructure)
-        { 
+        {
+            InitializeDataTables(dxmlStructure);
+        }
+ 
+
+        private void InitializeDataTables(string dxmlStructure)
+        {
+            TableCoulmnsNameWithoutIDentity = new List<string>();
             xmlDataSet = new DataSet();
             xmlDataSet.ReadXml(XmlReader.Create(new StringReader(dxmlStructure)));
             table = xmlDataSet.Tables["Table"];
             tableCoulmns = table.ChildRelations["Table_Column"].ChildTable;
-            tableIndexs = table.ChildRelations["Table_Index"]==null?null:table.ChildRelations["Table_Index"].ChildTable;
-            tableCoulmnsRelation = table.ChildRelations["Table_Relation"]==null?null:table.ChildRelations["Table_Relation"].ChildTable;
+            tableIndexs = table.ChildRelations["Table_Index"] == null ? null : table.ChildRelations["Table_Index"].ChildTable;
+            tableCoulmnsRelation = table.ChildRelations["Table_Relation"] == null ? null : table.ChildRelations["Table_Relation"].ChildTable;
             tableUniqueConstraints = table.ChildRelations["Table_UniqueConstraint"] == null ? null : table.ChildRelations["Table_UniqueConstraint"].ChildTable;
             tableCoulmnsConstraint = tableCoulmns.ChildRelations["Column_Constraints"].ChildTable;
-         }
- 
+        }
         public string GetTableStructure(string tableName)
         {
 
@@ -62,8 +70,14 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
                     TableStructure += "[" + tableCoulmns.Rows[i]["Name"] + "] " + tableCoulmns.Rows[i]["Type"];
                 if (tableCoulmns.Columns.Contains("Size"))
                     TableStructure += GetCoulmnSize(tableCoulmns.Rows[i]["Size"]);
-                if(tableCoulmns.Columns.Contains("Identity"))
-                  TableStructure += GetIsCoulmnIdentity(tableCoulmns.Rows[i]["Identity"]);
+                if (tableCoulmns.Columns.Contains("Identity"))
+                {   string IdentityText = GetIsCoulmnIdentity(tableCoulmns.Rows[i]["Identity"]);
+                    TableStructure += IdentityText;
+                    if (string.IsNullOrEmpty(IdentityText))
+                        TableCoulmnsNameWithoutIDentity.Add((string)tableCoulmns.Rows[i]["Name"]);
+                }
+                else
+                    TableCoulmnsNameWithoutIDentity.Add((string)tableCoulmns.Rows[i]["Name"]);
                 if (tableCoulmnsConstraint.Columns.Contains("Nullable"))
                     TableStructure += GetIsCoulmnNullable(tableCoulmnsConstraint.Rows[i]["Nullable"]);
                 if (tableCoulmnsConstraint.Columns.Contains("PrimaryKey") && tableCoulmns.Columns.Contains("Name"))
@@ -72,6 +86,15 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
             }
             return TableStructure;
         }
+
+     
+        public string GetTableName()
+        {           
+            string TableName = (string)table.Rows[0]["Name"];
+            return TableName;
+        }
+ 
+
         private string GetCoulmnSize(object coulmnnSize)
         {
             string TableCoulmnnSize = null;
@@ -120,6 +143,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
         private string GetTableStructurePrimartKey(string tableName)
         {
             string TablePrimaryKey = null;
+
             if (!string.IsNullOrEmpty(primarykeyColumn))
             {
                 TablePrimaryKey  = "CONSTRAINT[PK_" + tableName + "] PRIMARY KEY([" + primarykeyColumn + "]) )\n";

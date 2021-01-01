@@ -33,7 +33,7 @@ namespace WebFreight.Web.Controllers.AccountingModel
     public class CargoTrackingBuildTablesController : ApiController
     {
 
-        public HttpResponseMessage PostCargoTrackingBuilder(CargoTrackingArgs Args)
+        public HttpResponseMessage PostCargoTrackingBuilder(Logitude.CargoTracking.BL.CoreBL.Batch.CargoTrackingArgs Args)
         {
             try
             {
@@ -54,13 +54,13 @@ namespace WebFreight.Web.Controllers.AccountingModel
 
  
 
-        private string CreateBatchTaskExecution(CargoTrackingArgs Args, string Subject, string ClassName, int tenant)
+        private string CreateBatchTaskExecution(Logitude.CargoTracking.BL.CoreBL.Batch.CargoTrackingArgs Args, string Subject, string ClassName, int tenant)
         {
             // 1- create BTE record
             BatchTaskExecutionPM taskExe;
 
             var stringwriter = new System.IO.StringWriter();
-            var serializer = new XmlSerializer(typeof(CargoTrackingArgs));
+            var serializer = new XmlSerializer(typeof(Logitude.CargoTracking.BL.CoreBL.Batch.CargoTrackingArgs));
             serializer.Serialize(stringwriter, Args);
             string xmlParameters = stringwriter.ToString();
 

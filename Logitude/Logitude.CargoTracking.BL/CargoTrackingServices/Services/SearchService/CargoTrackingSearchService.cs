@@ -22,22 +22,22 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.SearchService
         {
             if (tableName == "CargoTrackingShipmentSearches" || tableName == "CargoTrackingShipments")
             {
-                if (bulkDataPreperation.dataTable2 == null)
+                if (bulkDataPreperation.InnerDataTable == null)
                 {
-                    bulkDataPreperation.dataTable2 = bulkDataPreperation.dataTable.Clone();
+                    bulkDataPreperation.InnerDataTable = bulkDataPreperation.MainDataTable.Clone();
                 }
 
-                AddShipmentNumberReference(tableRow, bulkDataPreperation.dataTable2);
-                AddSplittedData(tableRow, bulkDataPreperation.dataTable2, "CustomerReference1");
-                AddSplittedData(tableRow, bulkDataPreperation.dataTable2, "CustomerReference2");
-                AddNewRecord(tableRow, bulkDataPreperation.dataTable2, "Master");
-                AddNewRecord(tableRow, bulkDataPreperation.dataTable2, "House");
-                AddNewRecord(tableRow, bulkDataPreperation.dataTable2, "ForwarderShipmentNumber");
-                AddNewRecord(tableRow, bulkDataPreperation.dataTable2, "CustomFileNumber");
-                AddNewRecord(tableRow, bulkDataPreperation.dataTable2, "CustomsDeclarationNumber");
-                AddNewRecord(tableRow, bulkDataPreperation.dataTable2, "ShipperName");
-                AddNewRecord(tableRow, bulkDataPreperation.dataTable2, "ConsigneeName");
-                AddSplittedData(tableRow, bulkDataPreperation.dataTable2, "ContainersNumbers");
+                AddShipmentNumberReference(tableRow, bulkDataPreperation.InnerDataTable);
+                AddSplittedData(tableRow, bulkDataPreperation.InnerDataTable, "CustomerReference1");
+                AddSplittedData(tableRow, bulkDataPreperation.InnerDataTable, "CustomerReference2");
+                AddNewRecord(tableRow, bulkDataPreperation.InnerDataTable, "Master");
+                AddNewRecord(tableRow, bulkDataPreperation.InnerDataTable, "House");
+                AddNewRecord(tableRow, bulkDataPreperation.InnerDataTable, "ForwarderShipmentNumber");
+                AddNewRecord(tableRow, bulkDataPreperation.InnerDataTable, "CustomFileNumber");
+                AddNewRecord(tableRow, bulkDataPreperation.InnerDataTable, "CustomsDeclarationNumber");
+                AddNewRecord(tableRow, bulkDataPreperation.InnerDataTable, "ShipperName");
+                AddNewRecord(tableRow, bulkDataPreperation.InnerDataTable, "ConsigneeName");
+                AddSplittedData(tableRow, bulkDataPreperation.InnerDataTable, "ContainersNumbers");
 
 
             }
