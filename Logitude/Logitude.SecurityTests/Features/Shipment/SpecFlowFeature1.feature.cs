@@ -19,7 +19,7 @@ namespace Logitude.SecurityTests.Features.Shipment
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("TechTalk.SpecFlow", "3.5.0.0")]
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public partial class SpecFlowFeature1Feature : object, Xunit.IClassFixture<SpecFlowFeature1Feature.FixtureData>, System.IDisposable
+    public partial class JustTestFeatureFeature : object, Xunit.IClassFixture<JustTestFeatureFeature.FixtureData>, System.IDisposable
     {
         
         private static TechTalk.SpecFlow.ITestRunner testRunner;
@@ -31,7 +31,7 @@ namespace Logitude.SecurityTests.Features.Shipment
 #line 1 "SpecFlowFeature1.feature"
 #line hidden
         
-        public SpecFlowFeature1Feature(SpecFlowFeature1Feature.FixtureData fixtureData, Logitude_SecurityTests_XUnitAssemblyFixture assemblyFixture, Xunit.Abstractions.ITestOutputHelper testOutputHelper)
+        public JustTestFeatureFeature(JustTestFeatureFeature.FixtureData fixtureData, Logitude_SecurityTests_XUnitAssemblyFixture assemblyFixture, Xunit.Abstractions.ITestOutputHelper testOutputHelper)
         {
             this._testOutputHelper = testOutputHelper;
             this.TestInitialize();
@@ -40,7 +40,7 @@ namespace Logitude.SecurityTests.Features.Shipment
         public static void FeatureSetup()
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
-            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features/Shipment", "SpecFlowFeature1", null, ProgrammingLanguage.CSharp, ((string[])(null)));
+            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features/Shipment", "Just Test Feature", null, ProgrammingLanguage.CSharp, ((string[])(null)));
             testRunner.OnFeatureStart(featureInfo);
         }
         
@@ -75,20 +75,35 @@ namespace Logitude.SecurityTests.Features.Shipment
             testRunner.CollectScenarioErrors();
         }
         
+        public virtual void FeatureBackground()
+        {
+#line 3
+#line hidden
+#line 4
+ testRunner.Given("User email is ahmadb123@mail.com and password is ahmed13!A15", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+#line 5
+ testRunner.When("User make login request", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+#line 6
+ testRunner.Then("User should have token", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+        }
+        
         void System.IDisposable.Dispose()
         {
             this.TestTearDown();
         }
         
         [Xunit.SkippableFactAttribute(DisplayName="Just Test Scenario")]
-        [Xunit.TraitAttribute("FeatureTitle", "SpecFlowFeature1")]
+        [Xunit.TraitAttribute("FeatureTitle", "Just Test Feature")]
         [Xunit.TraitAttribute("Description", "Just Test Scenario")]
         public virtual void JustTestScenario()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Just Test Scenario", null, tagsOfScenario, argumentsOfScenario);
-#line 3
+#line 8
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             bool isScenarioIgnored = default(bool);
@@ -108,20 +123,17 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 this.ScenarioStart();
-#line 4
- testRunner.Given("User email is ahmadb123@mail.com and password is ahmed13!A15", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 3
+this.FeatureBackground();
 #line hidden
-#line 5
- testRunner.When("User make login request", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 9
+ testRunner.Given("User request the shipments list", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
-#line 6
- testRunner.Then("User should have token", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 10
+ testRunner.When("User get the first shipment from shipments list", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 7
- testRunner.When("Request first shipment from shipments list", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line hidden
-#line 8
- testRunner.Then("The eequested shipment should be exists", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 11
+ testRunner.Then("Shipment should be exists", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();
@@ -134,12 +146,12 @@ this.ScenarioInitialize(scenarioInfo);
             
             public FixtureData()
             {
-                SpecFlowFeature1Feature.FeatureSetup();
+                JustTestFeatureFeature.FeatureSetup();
             }
             
             void System.IDisposable.Dispose()
             {
-                SpecFlowFeature1Feature.FeatureTearDown();
+                JustTestFeatureFeature.FeatureTearDown();
             }
         }
     }

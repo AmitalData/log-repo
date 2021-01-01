@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Logitude.SecurityTests.Models.Login;
+using System.Collections.Generic;
 
 namespace Logitude.SecurityTests.Models.Shipment
 {
@@ -6,12 +7,14 @@ namespace Logitude.SecurityTests.Models.Shipment
     {
         public ShipmentSecurityAccessStepsContext()
         {
-            ShipmentPM = new ShipmentPM();
-            OtherShipmentPM = new ShipmentPM();
+            FirstUserShipment = new ShipmentPM();
+            SecondUserShipment = new ShipmentPM();
         }
 
-        public ShipmentPM ShipmentPM { get; set; }
-        public ShipmentPM OtherShipmentPM { get; set; }
-        public IEnumerable<ShipmentPM> ShipmentPMs { get; set; }
+        public ShipmentPM FirstUserShipment { get; set; }
+        public ShipmentPM SecondUserShipment { get; set; }
+        public IEnumerable<ShipmentPM> FirstUserShipments { get; set; }
+        public UserData FirstUser { get; set; }
+        public UserData SecondUser { get; set; }
     }
 }
