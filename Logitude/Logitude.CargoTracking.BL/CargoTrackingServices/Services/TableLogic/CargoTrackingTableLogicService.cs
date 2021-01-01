@@ -13,23 +13,23 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableLogic
     public class CargoTrackingTableLogicService
     { 
 
-        public static void SetTableLogic(DataRow TableRow, string TableName,int ConditionNumber)
+        public static void SetTableLogic(DataRow tableRow, string tableName,int conditionNumber)
         {
-            switch (TableName)
+            switch (tableName)
             {
                 case "CargoTrackingPorts":
                     {
-                        CargoTrackingPortsLogicService.SetTableLogic(TableRow, ConditionNumber);
+                        CargoTrackingPortsLogicService.SetTableLogic(tableRow, conditionNumber);
                         break;
                     }
                 case "CargoTrackingShipments":
                     {
-                        CargoTrackingShipmentsLogicService.SetTableLogic(TableRow, ConditionNumber);
+                        CargoTrackingShipmentsLogicService.SetTableLogic(tableRow, conditionNumber);
                         break;
                     }
                 case "CargoTrackingShipmentSearches":
                     {
-                        CargoTrackingShipmentSearchesLogicService.SetTableLogic(TableRow, ConditionNumber);
+                        CargoTrackingShipmentSearchesLogicService.SetTableLogic(tableRow, conditionNumber);
                         break;
                     }
 

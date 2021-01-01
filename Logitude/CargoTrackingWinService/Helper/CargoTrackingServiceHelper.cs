@@ -42,7 +42,7 @@ namespace CargoTrackingWinService.Helper
 
         public static void AddRecordToCargoTrackingIncrementalStats(string destinationConnectionString)
         {
-            var error = !string.IsNullOrEmpty(ApplicationInfo.ErrorLogs)? ApplicationInfo.ErrorLogs : "null";
+            var error = !string.IsNullOrEmpty(ApplicationInfo.ErrorLogs)? "'"+ApplicationInfo.ErrorLogs+"'" : "null";
             string[] cargoTrackingTableCopyFields = CargoTrackingTableList.GetCargoTrackingTableList().Select(s => s.DBTableName).ToArray();
             string cargoTrackingTableCopyFieldsAsString = string.Join("," ,cargoTrackingTableCopyFields);
             string cargoTrackingTableCopyFieldsValueAsString = GetCargoTrackingTableCopyFieldsValueAsString(cargoTrackingTableCopyFields);

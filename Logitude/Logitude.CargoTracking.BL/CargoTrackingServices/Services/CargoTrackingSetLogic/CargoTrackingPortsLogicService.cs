@@ -9,7 +9,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CargoTracking
 {
     public class CargoTrackingPortsLogicService
     {
-        public static void SetTableLogic(DataRow TableRow,int ConditionNumber)
+        public static void SetTableLogic(DataRow tableRow,int conditionNumber)
         {
 
         }

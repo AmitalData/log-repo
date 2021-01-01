@@ -18,7 +18,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.ServicesHelpe
 
         public static bool GetIsIncrementalRunning(string connectionString)
         {
-            bool Result = false;
+            bool result = false;
 
             SqlConnection connection = new SqlConnection(connectionString);
 
@@ -28,13 +28,13 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.ServicesHelpe
             {
                 getIsIncrementalBuildRunningcommand.CommandTimeout = (int)TimeOut;
                 connection.Open();
-                Result = ExecuteIsIncrementalRunningCommand(getIsIncrementalBuildRunningcommand);
+                result = ExecuteIsIncrementalRunningCommand(getIsIncrementalBuildRunningcommand);
             }
             finally
             {
                 connection.Close();
             }
-            return Result;
+            return result;
         }
 
         private static bool ExecuteIsIncrementalRunningCommand(SqlCommand isIncrementalBuildRunningcommand)
