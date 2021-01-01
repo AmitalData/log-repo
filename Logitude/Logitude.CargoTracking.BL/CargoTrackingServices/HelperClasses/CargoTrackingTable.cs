@@ -42,40 +42,40 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.HelperClasses
         public List<object> Labels { get; set; }
 
 
-        public CargoTrackingTable(string FileName,string InnerFileName=null)
+        public CargoTrackingTable(string fileName, string innerFileName = null)
         {
-            SetMainTableFields(FileName);
-            SetInnerTableFields(InnerFileName);
+            SetMainTableFields(fileName);
+            SetInnerTableFields(innerFileName);
         }
 
 
-        private void SetMainTableFields(string FileName)
+        private void SetMainTableFields(string fileName)
         {
-            MainTableStructureHelper = new TableStructureHelper(ServiceHelper.GetInvokeDBTableByTableName(FileName, "Get" + FileName + "Dxml"));
+            MainTableStructureHelper = new TableStructureHelper(ServiceHelper.GetInvokeDBTableByTableName(fileName, "Get" + fileName + "Dxml"));
             CargoTracking_TableName = MainTableStructureHelper.GetTableName();
             Pre_TableName = "Pre_" + CargoTracking_TableName;
             TableStructure = MainTableStructureHelper.GetTableStructure(Pre_TableName);
-            KeyName = MainTableStructureHelper.primarykeyColumn;
+            KeyName = MainTableStructureHelper.PrimarykeyColumn;
             CargoTracking_FieldsDBName = string.Join(",", MainTableStructureHelper.TableCoulmnsNameWithoutIDentity.ToArray());
-            FieldsDBName = ServiceHelper.GetInvokeClassWithMethode("Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructure." + FileName + "TableStructure", "GetColumnsForCopy");
-            FieldsDummyName = ServiceHelper.GetInvokeClassWithMethode("Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructure." + FileName + "TableStructure", "GetDummyColumnsForCopy");
+            FieldsDBName = ServiceHelper.GetInvokeClassWithMethode("Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructure." + fileName + "TableStructure", "GetColumnsForCopy");
+            FieldsDummyName = ServiceHelper.GetInvokeClassWithMethode("Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructure." + fileName + "TableStructure", "GetDummyColumnsForCopy");
             Main_CargoTracking_TableName = CargoTracking_TableName;
-            ObjectTableName = FileName;
+            ObjectTableName = fileName;
         }
 
 
-        private void SetInnerTableFields(string InnerFileName)
+        private void SetInnerTableFields(string innerFileName)
         {
-            if (!string.IsNullOrEmpty(InnerFileName))
+            if (!string.IsNullOrEmpty(innerFileName))
             {
-                InnerTableStructureHelper = new TableStructureHelper(ServiceHelper.GetInvokeDBTableByTableName(InnerFileName, "Get" + InnerFileName + "Dxml"));
+                InnerTableStructureHelper = new TableStructureHelper(ServiceHelper.GetInvokeDBTableByTableName(innerFileName, "Get" + innerFileName + "Dxml"));
                 CargoTracking_InnerTableName = InnerTableStructureHelper.GetTableName();
                 Pre_InnerTableName = "Pre_" + CargoTracking_InnerTableName;
                 InnerTableStructure = InnerTableStructureHelper.GetTableStructure(Pre_InnerTableName);
-                InnerKeyName = InnerTableStructureHelper.primarykeyColumn;
+                InnerKeyName = InnerTableStructureHelper.PrimarykeyColumn;
                 InnerCargoTracking_FieldsDBName = string.Join(",", InnerTableStructureHelper.TableCoulmnsNameWithoutIDentity.ToArray());
                 Main_CargoTracking_InnerTableName = CargoTracking_InnerTableName;
-                InnerObjectTableName = InnerFileName;
+                InnerObjectTableName = innerFileName;
             }
         }
     }

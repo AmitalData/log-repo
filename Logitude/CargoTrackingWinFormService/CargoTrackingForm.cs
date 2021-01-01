@@ -84,14 +84,14 @@ namespace CargoTrackingWinFormService.Forms
             this.WinServiceFromConnections.Text = dbSourceConnection;
             this.WinServiceToConnections.Text = dbDestinationConnection;
             this.SleepSecounds.Value = SleepTime;
-            this.MappingFromConnections.Text = dbSourceConnection;
-            this.MappingToConnections.Text = dbSourceConnection;
+            this.MappingFromConnections.Text = dbDestinationConnection;
             this.numericUpDown1.Value =  3;
             this.checkBox2.Checked = true;
             //this.textBox3.Text = "Shipments";
             this.BuildFrom.Value = BuildTo.Value.AddMonths(-6);
             this.checkBox1.Checked = false;
             this.checkBox1.Enabled = false;
+            MappingFromConnections.Enabled = false;
             this.numericUpDown2.Value = 1;
             this.numericUpDown2.Enabled = false;
             this.checkBox3.Checked = true;
@@ -105,7 +105,7 @@ namespace CargoTrackingWinFormService.Forms
 
         private void button1_Click(object sender, EventArgs e)
         {
-            this.label22.Text = null;
+             
            // this.EnableDisabledAllData(false);
             if (FirstInit)
             {
@@ -426,7 +426,7 @@ namespace CargoTrackingWinFormService.Forms
             this.radioButton1.Enabled = IsEnabled;
 
             this.button2.Enabled = IsEnabled;
-            this.button7.Enabled = IsEnabled;
+       
             this.button1.Enabled = IsEnabled;
 
             this.numericUpDown1.Enabled = IsEnabled;
@@ -911,6 +911,7 @@ namespace CargoTrackingWinFormService.Forms
             this.LoadIncrementalsData("*");
         }
 
+
         private void radioButton25_CheckedChanged(object sender, EventArgs e)
         {
             IncrementalConnectionStrings.Enabled = false;
@@ -1036,6 +1037,73 @@ namespace CargoTrackingWinFormService.Forms
                         
 
 
+                    }
+                }
+                catch (SqlException e)
+                {
+                    MessageBox.Show("Error accessing database: { 0}", e.Message);
+                }
+                finally
+                {
+                    conn.Close();
+                }
+
+            }
+            else
+            {
+                MessageBox.Show("Add Valid Connection strings ...");
+
+            }
+
+        }
+
+
+        private void LoadWaterMarksData()
+        {
+
+
+            if (!string.IsNullOrEmpty(MappingFromConnections.Text))
+            {
+                string sqlQueryStr = "SELECT * From CargoTrackingWatermarks ";
+
+
+
+                SqlConnection conn = new SqlConnection();
+                try
+                {
+                    string[] ConnectionSplitted = null;
+                
+                    ConnectionSplitted = MappingFromConnections.Text.Split(',');
+                    SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder();
+                    builder.DataSource = ConnectionSplitted[3];
+                    builder.InitialCatalog = ConnectionSplitted[0];
+                    builder.IntegratedSecurity = false;
+                    builder.PersistSecurityInfo = true;
+                    builder.UserID = ConnectionSplitted[1];
+                    builder.Password = ConnectionSplitted[2];
+                    builder.MultipleActiveResultSets = true;
+
+                    conn.ConnectionString = builder.ConnectionString;
+
+                    // Connect
+                    conn.Open();
+
+                    using (SqlDataAdapter myAdapter = new SqlDataAdapter(sqlQueryStr, conn))
+                    {
+                        // Use DataAdapter to fill DataTable
+                        DataTable myTable = new DataTable();
+                        myAdapter.Fill(myTable);
+                        dataGridView3.DataSource = myTable;
+                        for (int i = 0; i < dataGridView3.Columns.Count; i++)
+                        {
+                            if (dataGridView3.Columns[i].HeaderText == "TableName")
+                            {
+                                dataGridView3.Columns[i].Width =200;
+                                break;
+
+                            }
+
+                        }
                     }
                 }
                 catch (SqlException e)
@@ -1184,7 +1252,7 @@ namespace CargoTrackingWinFormService.Forms
             if (!ButtonWindowsServiceIsForStop)
             {
                 this.button4.Text = "Stop Windows Service";
-                button4.BackColor = System.Drawing.Color.Gray;
+                button4.BackColor = System.Drawing.Color.LightGray;
                 button4.FlatStyle = FlatStyle.Flat;
                 button4.FlatAppearance.BorderColor = Color.Red;
                 button4.FlatAppearance.BorderSize = 1;
@@ -1215,51 +1283,27 @@ namespace CargoTrackingWinFormService.Forms
         private void radioButton42_CheckedChanged(object sender, EventArgs e)
         {
             MappingFromConnections.Enabled = false;
-            this.MappingFromConnections.Text = FromLocalConectionstring;
+            this.MappingFromConnections.Text = ToLocalConectionstring;
 
         }
 
         private void radioButton41_CheckedChanged(object sender, EventArgs e)
         {
             MappingFromConnections.Enabled = false;
-            this.MappingFromConnections.Text = FromTestConectionstring;
+            this.MappingFromConnections.Text = ToTestConectionstring;
         }
 
         private void radioButton39_CheckedChanged(object sender, EventArgs e)
         {
             MappingFromConnections.Enabled = false;
-            this.MappingFromConnections.Text = FromCloudConectionstring;
+            this.MappingFromConnections.Text = ToCloudConectionstring;
         }
 
         private void radioButton40_CheckedChanged(object sender, EventArgs e)
         {
             MappingFromConnections.Enabled = true;
         }
-
-        private void radioButton44_CheckedChanged(object sender, EventArgs e)
-        {
-            MappingToConnections.Enabled = false;
-            this.MappingToConnections.Text = ToLocalConectionstring;
-
-        }
-
-        private void radioButton43_CheckedChanged(object sender, EventArgs e)
-        {
-            MappingToConnections.Enabled = false;
-            this.MappingToConnections.Text = ToTestConectionstring;
-        }
-
-        private void radioButton37_CheckedChanged(object sender, EventArgs e)
-        {
-            MappingToConnections.Enabled = false;
-            this.MappingToConnections.Text = ToCloudConectionstring;
-
-        }
-
-        private void radioButton38_CheckedChanged(object sender, EventArgs e)
-        {
-            MappingToConnections.Enabled = true;
-        }
+ 
 
         private void label17_Click(object sender, EventArgs e)
         {
@@ -1286,61 +1330,10 @@ namespace CargoTrackingWinFormService.Forms
 
         }
 
-        private void button6_Click(object sender, EventArgs e)
-        {
-            
-            if (string.IsNullOrEmpty(this.MappingFieldName.Text) && string.IsNullOrEmpty(this.MappingTableName.Text))
-            {
-                MessageBox.Show("Please Fill All Values ...");
-            }
-            else
-            {
-                MappingFields();
-            }
-        }
+     
 
-
-        private void MappingFields()
-        {
-             CargoTrackingTable  CargoTable = CargoTrackingTableList.GetCargoTrackingTableList().Where(s=>s.Main_CargoTracking_TableName == this.MappingTableName.Text && s.CargoTracking_FieldsDBName.Contains(this.MappingFieldName.Text)).FirstOrDefault();
-            if (CargoTable==null)
-            {
-                MessageBox.Show("Table or field not found !!!");
-            }
-            else
-            {
-                if (this.MappingTableName.Text!= "CargoTrackingShipments" && this.MappingTableName.Text != "CargoTrackingShipmentSearches")
-                {
-                    this.MappingResult.Text = GetTextMapping(CargoTable.Main_CargoTracking_TableName, this.MappingFieldName.Text);
-                }
-                else
-                {
-                    this.MappingResult.Text = GetFieldMappingFeomShipments( this.MappingTableName.Text ,  this.MappingFieldName.Text);
-                }
-                
-            }
-        }
-
-        private string GetFieldMappingFeomShipments(string TableName , string FieldName)
-        {
-            switch (TableName)
-            {
-                case "CargoTrackingShipmentSearches":
-                    {
-                        return CargoTrackingShipmentSearchesLogicService.GetMappingFields(FieldName);
-                        
-                    }
-                case "CargoTrackingShipments":
-                    {
-                        return CargoTrackingShipmentsLogicService.GetMappingFields(FieldName);
-                      
-                    }
-            }
-
-            return null;
-           
-        }
-
+ 
+ 
 
         private string GetTextMapping(string TableNmae , string FieldName)
         {
@@ -1394,19 +1387,33 @@ namespace CargoTrackingWinFormService.Forms
                 comboBox2.Enabled = true;
             }
         }
-
-        private void button7_Click(object sender, EventArgs e)
-        {
-
-            this.label22.Text = null;
-            this.BuildConnectionStrings(false);
-            ServiceHelper.DeleteWatermarks(this.dbDestinationConnection);
-            this.label22.Text = "Watermarks Deleted";
-        }
+ 
 
         private void BuildTo_ValueChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void button6_Click_1(object sender, EventArgs e)
+        {
+            this.LoadWaterMarksData();
+
+        }
+
+        private void button8_Click(object sender, EventArgs e)
+        {
+            
+            this.BuildConnectionStrings(false);
+            string[] destinationConnectionArray = MappingFromConnections.Text.Split(',');
+            if (destinationConnectionArray.Length != 4 || destinationConnectionArray.Length != 4)
+            {
+                MessageBox.Show("Connection String not valid");
+                return;
+            }
+            ConnectionStringArguments destinationConnectionStringArguments = GetConnectionStringArguments(destinationConnectionArray);
+            string ConnectionString = ServiceHelper.BuildConnectionString(destinationConnectionStringArguments);
+            ServiceHelper.DeleteWatermarks(ConnectionString);
+            this.LoadWaterMarksData();
         }
     }
 }
