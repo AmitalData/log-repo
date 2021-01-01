@@ -1,8 +1,12 @@
+using System;
+using System.Collections.Generic;
+using System.Text;
 
 namespace Logitude.CargoTracking.BL.CargoTrackingServices.DBTablesCopy.Generated
 {
    public partial class CargoTrackingIncrementalStatDxml  
    {    
+      
         public string  GetCargoTrackingIncrementalStatDxml (){
 		    string DxmlFile = "<Table Name='CargoTrackingIncrementalStats' Schema='dbo' DBType='CargoTracking' Module='CargoTracking'>"+
 "  <Column Name='StartDate' Type='datetime'>"+
@@ -42,6 +46,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.DBTablesCopy.Generated
 		
 		   return DxmlFile;
 		}
+		 
    }
 
 }

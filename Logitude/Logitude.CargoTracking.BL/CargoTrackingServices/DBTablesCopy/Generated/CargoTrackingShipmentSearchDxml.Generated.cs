@@ -1,8 +1,12 @@
+using System;
+using System.Collections.Generic;
+using System.Text;
 
 namespace Logitude.CargoTracking.BL.CargoTrackingServices.DBTablesCopy.Generated
 {
    public partial class CargoTrackingShipmentSearchDxml  
    {    
+      
         public string  GetCargoTrackingShipmentSearchDxml (){
 		    string DxmlFile = "<Table Name='CargoTrackingShipmentSearches' Schema='dbo' DBType='CargoTracking'>"+
 "  <Column Name='Tenant' Type='int'>"+
@@ -34,6 +38,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.DBTablesCopy.Generated
 		
 		   return DxmlFile;
 		}
+		 
    }
 
 }
