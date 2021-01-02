@@ -525,6 +525,7 @@
     <Compile Include="EntityQueryServiceExt\BankAccountQueryServiceExt.cs" />
     <Compile Include="EntityQueryServiceExt\BankCodeQueryServiceExt.cs" />
     <Compile Include="EntityQueryServiceExt\CashBookQueryServiceExt.cs" />
+    <Compile Include="EntityQueryServiceExt\InterestTransactionQueryServiceExt.cs" />
     <Compile Include="EntityQueryServiceExt\FullAccountingSettingQueryServiceExt.cs" />
     <Compile Include="EntityQueryServiceExt\GLAccountQueryServiceExt.cs" />
     <Compile Include="EntityQueryServiceExt\GLAccountWithholdingTaxQueryServiceExt.cs" />

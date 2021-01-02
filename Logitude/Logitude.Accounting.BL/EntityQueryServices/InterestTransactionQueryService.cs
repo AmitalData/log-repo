@@ -31,6 +31,25 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             return interestTransactionPMs;
 
         }
+
+        public  InterestTransactionPM GetInterestTransactionPMByEntityId(string entityId, int tenant)
+        {
+            InterestTransactionRepository interestTransactionRepository = new InterestTransactionRepository(tenant);
+            InterestTransactionPM interestTransactionPM = (from a in context.InterestTransactions
+                                                              where a.EntityId == entityId && a.Tenant == tenant
+                                                              select new InterestTransactionPM()
+                                                              {
+                                                                  Id = a.Id,
+                                                                  OriginalEntityLineNumber = a.OriginalEntityLineNumber,
+                                                                  EntityId = a.EntityId,
+                                                                  InterestEntityTypeCode = a.InterestEntityTypeCode
+
+                                                              }).FirstOrDefault();
+
+            return interestTransactionPM;
+
+        }
+
         public InterestTransactionPM GetOpenBalanceInterestTransactionsByInterestReportId(string interestReportId, int tenant)
         {
             InterestTransactionRepository interestTransactionRepository = new InterestTransactionRepository(tenant);

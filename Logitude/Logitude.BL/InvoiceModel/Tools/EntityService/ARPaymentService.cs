@@ -41,6 +41,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 {
     public class ARPaymentService
     {
+        const string PartnerTypeId_Customer = "CS";
+
         private int tenant;
         public ARPayment paymentPoco { get; set; }
         private ARPaymentPM entityPM;
@@ -648,30 +650,57 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             ////    CreateInterestTransactionLine(item);
             //}
         }
-        int lineNumber = 0;
+        private int originalEntityLineNumber = 0;
         private void CreateInterestTransactionLine(ARPaymentPM payment,bool isFromVoidARPayment=false)
         {
-            GLAccountPM account = getGLAccount(payment.BillToId, payment.Tenant);
-            if (tenantPOCO != null && tenantPOCO.AccountingActivated && payment.BillToPartnerTypeId == "CS")
+            SetOriginalEntityLineNumber(payment, isFromVoidARPayment);
+            if (tenantPOCO != null && 
+                tenantPOCO.AccountingActivated && 
+                payment.BillToPartnerTypeId == PartnerTypeId_Customer)
             {
-                DateTime? dateForInterest = payment.ValueDate == null ? DateTime.Now : payment.ValueDate;
-                InterestTransactionPM interestTransaction = new InterestTransactionPM()
-                {
-                    InterestEntityTypeCode = "2",
-                    EntityId = payment.Id,
-                    OriginalEntityLineNumber = ++lineNumber,
-                    LocalAmount = isFromVoidARPayment? (decimal)payment.AmountInLocalCurrency :
-                                                                         (decimal)payment.AmountInLocalCurrency *-1,
-                    ForeignAmount = isFromVoidARPayment ? (decimal?)payment.AmountInPaymentCurrency:
-                                                                         (decimal?)payment.AmountInPaymentCurrency *-1,
-                    InterestValueDate = (DateTime)dateForInterest,
-                    Tenant = entityPM.Tenant,
-                    GLAccountId = account!= null? account.Id:null,
+            InterestTransactionPM interestTransaction = MapInterestTransactionPMFromARPaymentPM(payment, isFromVoidARPayment);
+            IInterestTransactionUpdateServiceExt interestTransactionUpdateService = ContainerAccessor.Container.Resolve(typeof(IInterestTransactionUpdateServiceExt), "InterestTransactionUpdateServiceExt", new ParameterOverride("", 1)) as IInterestTransactionUpdateServiceExt;
+            interestTransactionUpdateService.Create(interestTransaction);
+
+            }
+        }
+
+        private InterestTransactionPM MapInterestTransactionPMFromARPaymentPM(ARPaymentPM payment, bool isFromVoidARPayment)
+        {
+            DateTime? dateForInterest = payment.ValueDate == null ? DateTime.Now : payment.ValueDate;
+            GLAccountPM account = getGLAccount(payment.BillToId, payment.Tenant);
+            InterestTransactionPM interestTransaction = new InterestTransactionPM()
+            {
+                InterestEntityTypeCode = "2",
+                EntityId = payment.Id,
+                OriginalEntityLineNumber = ++originalEntityLineNumber,
+                LocalAmount = isFromVoidARPayment ? (decimal)payment.AmountInLocalCurrency :
+                                                                     (decimal)payment.AmountInLocalCurrency * -1,
+                ForeignAmount = isFromVoidARPayment ? (decimal?)payment.AmountInPaymentCurrency :
+                                                                     (decimal?)payment.AmountInPaymentCurrency * -1,
+                InterestValueDate = (DateTime)dateForInterest,
+                Tenant = entityPM.Tenant,
+                GLAccountId = account != null ? account.Id : null,
                 ChangeSetOp = ChangeSetOperation.Insert,
                 CurrencyId = payment.PaymentCurrencyId,
             };
-            IInterestTransactionUpdateServiceExt interestTransactionUpdateService = ContainerAccessor.Container.Resolve(typeof(IInterestTransactionUpdateServiceExt), "InterestTransactionUpdateServiceExt", new ParameterOverride("", 1)) as IInterestTransactionUpdateServiceExt;
-            interestTransactionUpdateService.Create(interestTransaction);
+            return interestTransaction;
+        }
+        private InterestTransactionPM GetInterestTransactionPMForPayment(ARPaymentPM payment)
+        {
+            IInterestTransactionQueryServiceExt interestTransactionQueryServiceExt = ContainerAccessor.Container.Resolve(typeof(IInterestTransactionQueryServiceExt), "InterestTransactionQueryServiceExt", new ParameterOverride("", 1)) as IInterestTransactionQueryServiceExt;
+            InterestTransactionPM interestTransactionPMForPayment = interestTransactionQueryServiceExt.GetInterestTransactionPMByEntityId(payment.Id, payment.Tenant);
+            return interestTransactionPMForPayment;
+
+        }
+
+        private void SetOriginalEntityLineNumber(ARPaymentPM payment, bool isFromVoidARPayment)
+        {
+            if (isFromVoidARPayment)
+            {
+                InterestTransactionPM interestTransactionPMForPayment = GetInterestTransactionPMForPayment(payment);
+                if (interestTransactionPMForPayment != null)
+                    originalEntityLineNumber = interestTransactionPMForPayment.OriginalEntityLineNumber;
 
             }
         }
