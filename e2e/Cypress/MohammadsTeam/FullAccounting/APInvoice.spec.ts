@@ -38,7 +38,7 @@ let R: CreateRandom= new CreateRandom();
             cy.get('ul[id=mydatalist_APInvoice_InvoiceCurrencyId]').contains('NIS').then(a => {
                 a[0].click();
             })
-            cy.get('input[id=date_APInvoice_InvoiceDate]').type("1/7/2020")
+            cy.get('input[id=date_APInvoice_InvoiceDate]').type("1/12/2020")
 
             cy.get('input[id=APInvoice_VATNumber]').type('123456789').should("have.value", '123456789')
 
