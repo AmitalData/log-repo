@@ -269,10 +269,11 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.ServicesHelpe
             if (table != null && table.Main_CargoTracking_TableName != "CargoTrackingWatermarks")
             {
 
-                var lastUpdateDate = string.Empty;
-                if (automaticLastUpdateDate != null) lastUpdateDate = automaticLastUpdateDate.Value.ToString("MM/dd/yyyy hh:mm:ss.fff tt");
-                else lastUpdateDate = DateTime.Now.ToString("MM/dd/yyyy hh:mm:ss.fff tt");
-                UpdateWaterMarksTable(table, lastUpdateDate, buildCargoArgs.DestinationConnectionString);
+                if (automaticLastUpdateDate != null) {
+                    var lastUpdateDate = automaticLastUpdateDate.Value.ToString("MM/dd/yyyy hh:mm:ss.fff tt");
+                    UpdateWaterMarksTable(table, lastUpdateDate, buildCargoArgs.DestinationConnectionString);
+                } 
+ 
                 table.IsUpdated = true;
 
             }
