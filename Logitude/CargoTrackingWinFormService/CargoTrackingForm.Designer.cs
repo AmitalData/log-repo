@@ -222,8 +222,8 @@
             this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(4);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 1;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 62F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(604, 64);
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 63F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(604, 65);
             this.tableLayoutPanel1.TabIndex = 9;
             // 
             // CheckLabel
@@ -675,7 +675,6 @@
             // BuildTo
             // 
             this.BuildTo.CustomFormat = "dd/MM/yyy";
-            this.BuildTo.Enabled = false;
             this.BuildTo.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
             this.BuildTo.Location = new System.Drawing.Point(472, 42);
             this.BuildTo.Margin = new System.Windows.Forms.Padding(4);
@@ -720,8 +719,8 @@
             this.tableLayoutPanel2.Margin = new System.Windows.Forms.Padding(4);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             this.tableLayoutPanel2.RowCount = 1;
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 65F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(604, 67);
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 66F));
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(604, 68);
             this.tableLayoutPanel2.TabIndex = 28;
             this.tableLayoutPanel2.Paint += new System.Windows.Forms.PaintEventHandler(this.tableLayoutPanel2_Paint);
             // 

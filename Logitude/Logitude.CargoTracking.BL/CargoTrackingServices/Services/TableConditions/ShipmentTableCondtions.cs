@@ -26,9 +26,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
             else
             {
                 if (cargoTrackingDataBaseArgs.CargoTrackingArguments.Tenant != null)
-                    getAllCustomsShipmentsThatContainForwardingShipmentsCommand += " where C.Tenant=" + cargoTrackingDataBaseArgs.CargoTrackingArguments.Tenant + " and DATEADD(dd, DATEDIFF(dd, 0, P.CreateDateTime ), 0) >= '" + cargoTrackingDataBaseArgs.CargoTrackingArguments.FromDate.Value.Date + "' and DATEADD(dd, DATEDIFF(dd, 0, P.CreateDateTime ), 0) <= '" + cargoTrackingDataBaseArgs.CargoTrackingArguments.ToDate.Value.Date + "'";
-                else
-                    getAllCustomsShipmentsThatContainForwardingShipmentsCommand += " where DATEADD(dd, DATEDIFF(dd, 0, C.CreateDateTime ), 0) >= '" + cargoTrackingDataBaseArgs.CargoTrackingArguments.FromDate.Value.Date + "' and DATEADD(dd, DATEDIFF(dd, 0, C.CreateDateTime ), 0) <= '" + cargoTrackingDataBaseArgs.CargoTrackingArguments.ToDate.Value.Date + "'";
+                    getAllCustomsShipmentsThatContainForwardingShipmentsCommand += " where C.Tenant=" + cargoTrackingDataBaseArgs.CargoTrackingArguments.Tenant;
             }
 
             getAllCustomsShipmentsThatContainForwardingShipmentsCommand += " group by " + fielsdName + ",com.ContainersNumbers,com.FinalDeliveryETA,com.FinalDeliveryATA,com.FirstPickupATD,Mas.MainCarriageATD,Mas.Master,Mas.MainCarriageETD,Mas.MainCarriageATA,Mas.MainCarriageETA ";
@@ -53,9 +51,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
             else
             {
                 if (cargoTrackingDataBaseArgs.CargoTrackingArguments.Tenant != null)
-                    getAllNonCustomShipmentsThatContainForwardingShipmentsCommand += " and P.Tenant=" + cargoTrackingDataBaseArgs.CargoTrackingArguments.Tenant + " and DATEADD(dd, DATEDIFF(dd, 0, P.CreateDateTime ), 0) >= '" + cargoTrackingDataBaseArgs.CargoTrackingArguments.FromDate.Value.Date + "' and DATEADD(dd, DATEDIFF(dd, 0, P.CreateDateTime ), 0) <= '" + cargoTrackingDataBaseArgs.CargoTrackingArguments.ToDate.Value.Date + "'";
-                else
-                    getAllNonCustomShipmentsThatContainForwardingShipmentsCommand += " and DATEADD(dd, DATEDIFF(dd, 0, P.CreateDateTime ), 0) >= '" + cargoTrackingDataBaseArgs.CargoTrackingArguments.FromDate.Value.Date + "' and DATEADD(dd, DATEDIFF(dd, 0, P.CreateDateTime ), 0) <= '" + cargoTrackingDataBaseArgs.CargoTrackingArguments.ToDate.Value.Date + "'";
+                    getAllNonCustomShipmentsThatContainForwardingShipmentsCommand += " and P.Tenant=" + cargoTrackingDataBaseArgs.CargoTrackingArguments.Tenant;
             }
 
             getAllNonCustomShipmentsThatContainForwardingShipmentsCommand += " group by " + fieldsName + ",com.ContainersNumbers,com.FinalDeliveryETA,com.FinalDeliveryATA,com.FirstPickupATD,Mas.MainCarriageATD,Mas.MainCarriageETD,Mas.Master,Mas.MainCarriageATA,Mas.MainCarriageETA ";

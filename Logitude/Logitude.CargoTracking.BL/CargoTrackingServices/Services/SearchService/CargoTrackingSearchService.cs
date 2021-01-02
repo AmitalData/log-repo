@@ -21,10 +21,18 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.SearchService
             if (tableName == "CargoTrackingShipmentSearches" || tableName == "CargoTrackingShipments")
             {
                 if (bulkDataPreperation.InnerDataTable == null)
-                {
                     bulkDataPreperation.InnerDataTable = bulkDataPreperation.MainDataTable.Clone();
-                }
 
+                CreateShipmentRefences(tableRow, bulkDataPreperation);
+            }
+
+
+        }
+        private static void CreateShipmentRefences(DataRow tableRow, BulkDataPreperation bulkDataPreperation)
+        {
+            bool isValidToCreateRefrences = IsShipmentValidToCreateRefrences(tableRow, bulkDataPreperation);
+            if (isValidToCreateRefrences)
+            {
                 AddShipmentNumberReference(tableRow, bulkDataPreperation.InnerDataTable);
                 AddSplittedData(tableRow, bulkDataPreperation.InnerDataTable, "CustomerReference1");
                 AddSplittedData(tableRow, bulkDataPreperation.InnerDataTable, "CustomerReference2");
@@ -36,12 +44,28 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.SearchService
                 AddNewRecord(tableRow, bulkDataPreperation.InnerDataTable, "ShipperName");
                 AddNewRecord(tableRow, bulkDataPreperation.InnerDataTable, "ConsigneeName");
                 AddSplittedData(tableRow, bulkDataPreperation.InnerDataTable, "ContainersNumbers");
-
-
             }
 
-
         }
+
+        private static bool IsShipmentValidToCreateRefrences(DataRow tableRow, BulkDataPreperation bulkDataPreperation)
+        {
+            bool isShipmentValid = true;
+            if (bulkDataPreperation.CargoTrackingUpdateDataBaseArgs.CargoTrackingArguments!=null)
+            {
+                DateTime shipmetnCreateDate = (DateTime)(tableRow["CreateDateTime"]);
+                DateTime cargTrackingBuildFromDate = (DateTime)bulkDataPreperation.CargoTrackingUpdateDataBaseArgs.CargoTrackingArguments.FromDate;
+                DateTime cargTrackingBuildToDate = (DateTime)bulkDataPreperation.CargoTrackingUpdateDataBaseArgs.CargoTrackingArguments.ToDate;
+                if (shipmetnCreateDate.Date < cargTrackingBuildFromDate.Date ||
+                    shipmetnCreateDate.Date > cargTrackingBuildToDate.Date)
+                {
+                    isShipmentValid = false;
+                }
+            }
+
+            return isShipmentValid;
+        }
+
         private static void AddShipmentNumberReference(DataRow tableRow, DataTable dataTable)
         {
             string CoulmnName = "ShipmentNumber";

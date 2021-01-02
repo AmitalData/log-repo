@@ -133,7 +133,7 @@ export class CargoTrackingBuildShipmentComponent extends BaseComponent implement
     
 }
 SetUIProperty() {
-    this.UIProperties.SetEnabled("ToDate", this.ObjectTableName, false);
+     
 }
 
 CheckDateDifferenceEqualOrLessThan6Months(fieldName){

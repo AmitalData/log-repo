@@ -246,24 +246,16 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.ServicesHelpe
             ExecuteSql(updateIsIncrementalBuildRunningCommandcmd, connectionString);
         }
 
-        public static DateTime? GetAutomaticLastUpdateDate(DateTime? automaticLastUpdateDate, DataTable dataTable, bool isClosed)
+        public static DateTime? GetAutomaticLastUpdateDate(DataTable dataTable, bool isClosed)
         {
+            DateTime? automaticLastUpdateDate = null;
 
             if (!isClosed)
             {
 
-                var maxUpdate = (DateTime)dataTable.Rows
-                                                .Cast<DataRow>()
-                                                .Max(d => d["AutomaticLastUpdateDate"]);
-
-                if (maxUpdate > automaticLastUpdateDate || automaticLastUpdateDate == null)
-                {
                     automaticLastUpdateDate = (DateTime)dataTable.Rows
-                   .Cast<DataRow>()
-                   .Max(d => d["AutomaticLastUpdateDate"]);
-                }
-
-
+                                                     .Cast<DataRow>()
+                                                     .Max(d => d["AutomaticLastUpdateDate"]);
             }
 
 
