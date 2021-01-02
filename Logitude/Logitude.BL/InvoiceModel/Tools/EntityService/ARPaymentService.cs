@@ -649,7 +649,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             //}
         }
         int lineNumber = 0;
-        private void CreateInterestTransactionLine(ARPaymentPM payment)
+        private void CreateInterestTransactionLine(ARPaymentPM payment,bool isFromVoidARPayment=false)
         {
             GLAccountPM account = getGLAccount(payment.BillToId, payment.Tenant);
             if (tenantPOCO != null && tenantPOCO.AccountingActivated && payment.BillToPartnerTypeId == "CS")
@@ -660,8 +660,10 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                     InterestEntityTypeCode = "2",
                     EntityId = payment.Id,
                     OriginalEntityLineNumber = ++lineNumber,
-                    LocalAmount = (decimal)payment.AmountInLocalCurrency *-1,
-                    ForeignAmount = (decimal?)payment.AmountInPaymentCurrency *-1,
+                    LocalAmount = isFromVoidARPayment? (decimal)payment.AmountInLocalCurrency :
+                                                                         (decimal)payment.AmountInLocalCurrency *-1,
+                    ForeignAmount = isFromVoidARPayment ? (decimal?)payment.AmountInPaymentCurrency:
+                                                                         (decimal?)payment.AmountInPaymentCurrency *-1,
                     InterestValueDate = (DateTime)dateForInterest,
                     Tenant = entityPM.Tenant,
                     GLAccountId = account!= null? account.Id:null,
@@ -1829,7 +1831,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                                     cashBookUpdate.Update(cashBook);
                                     CreateVoidedARPaymentEvent("ARPayment Cancel");
                                     CancelJournal(entityPm);
-                                    CancelledInterestTransactions(entityPm);
+                                    //CancelledInterestTransactions(entityPm);
+                                    CreateInterestTransactionLine(entityPm,true);
                                 }
                             }
                         }
@@ -1869,7 +1872,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                                     cashBookUpdate.Update(cashBook);
                                     CreateVoidedARPaymentEvent("ARPayment Cancel");
                                     CancelJournal(entityPm);
-                                    CancelledInterestTransactions(entityPm);
+                                    //CancelledInterestTransactions(entityPm);
+                                    CreateInterestTransactionLine(entityPm, true);
                                 }
                             }
                         }
@@ -1877,7 +1881,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                         {
                             CreateVoidedARPaymentEvent("ARPayment Cancel");
                             CancelJournal(entityPm);
-                            CancelledInterestTransactions(entityPm);
+                            //CancelledInterestTransactions(entityPm);
+                            CreateInterestTransactionLine(entityPm, true);
                         }
                     }
                 }
