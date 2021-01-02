@@ -653,7 +653,6 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         private int originalEntityLineNumber = 0;
         private void CreateInterestTransactionLine(ARPaymentPM payment,bool isFromVoidARPayment=false)
         {
-            SetOriginalEntityLineNumber(payment, isFromVoidARPayment);
             if (tenantPOCO != null && 
                 tenantPOCO.AccountingActivated && 
                 payment.BillToPartnerTypeId == PartnerTypeId_Customer)
@@ -673,7 +672,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             {
                 InterestEntityTypeCode = "2",
                 EntityId = payment.Id,
-                OriginalEntityLineNumber = ++originalEntityLineNumber,
+                OriginalEntityLineNumber = isFromVoidARPayment ? 2 : 1,
                 LocalAmount = isFromVoidARPayment ? (decimal)payment.AmountInLocalCurrency :
                                                                      (decimal)payment.AmountInLocalCurrency * -1,
                 ForeignAmount = isFromVoidARPayment ? (decimal?)payment.AmountInPaymentCurrency :
@@ -686,24 +685,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             };
             return interestTransaction;
         }
-        private InterestTransactionPM GetInterestTransactionPMForPayment(ARPaymentPM payment)
-        {
-            IInterestTransactionQueryServiceExt interestTransactionQueryServiceExt = ContainerAccessor.Container.Resolve(typeof(IInterestTransactionQueryServiceExt), "InterestTransactionQueryServiceExt", new ParameterOverride("", 1)) as IInterestTransactionQueryServiceExt;
-            InterestTransactionPM interestTransactionPMForPayment = interestTransactionQueryServiceExt.GetInterestTransactionPMByEntityId(payment.Id, payment.Tenant);
-            return interestTransactionPMForPayment;
-
-        }
-
-        private void SetOriginalEntityLineNumber(ARPaymentPM payment, bool isFromVoidARPayment)
-        {
-            if (isFromVoidARPayment)
-            {
-                InterestTransactionPM interestTransactionPMForPayment = GetInterestTransactionPMForPayment(payment);
-                if (interestTransactionPMForPayment != null)
-                    originalEntityLineNumber = interestTransactionPMForPayment.OriginalEntityLineNumber;
-
-            }
-        }
+ 
         private void UpdatePaymentInvoice(ARPaymentInvoicePM item)
         {
             ARInvoicePayment invoicePayment = invoicePaymentRepository.GetSingleARInvoicePayment(item.Id, entityPM.Tenant);
