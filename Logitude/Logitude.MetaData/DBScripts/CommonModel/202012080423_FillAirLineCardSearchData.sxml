@@ -1,12 +1,12 @@
-﻿<Script DBType="Main" Module="Common"  AOT="true" TargetTableName="Cards">
-  <Sql Version="6">
+﻿<Script DBType="Main" Module="Common"  AOT="true" TargetTableName="Airlines">
+  <Sql Version="1">
     <![CDATA[
-
 
 If(OBJECT_ID('tempdb..#temp_CardSearches') Is Not Null)
 Begin
     Drop Table #temp_CardSearches
 End
+
  
 CREATE TABLE #temp_CardSearches
 (
@@ -16,7 +16,7 @@ CREATE TABLE #temp_CardSearches
 	[Weight] [int] NOT NULL,
 	[CardId] [varchar](15) NULL,
 	[PartnerTypeId] [varchar](2) not NULL,
-  [InActive] bit,
+    [InActive] bit,
 	[IsCustomer] bit
 )
 
@@ -34,19 +34,19 @@ declare  @UpdateDate datetime
 declare  @Weight int
 declare  @PartnerTypeId varchar(2)
 declare  @InActive bit
-declare  @ContactName varchar(70)
-declare  @ContactEmail varchar(70)
+declare  @Prefix varchar(3)
+declare  @ICAO varchar(3)
 declare  @IsCustomer bit
 
 
-     DECLARE ContactsCursor CURSOR READ_ONLY
+     DECLARE AirlinesCursor CURSOR READ_ONLY
      FOR
-     select Cards.Id ,Cards.Tenant , Cards.InActive,Cards.CreateDate , Cards.UpdateDate ,Cards.IsCustomer , Cards.PartnerTypeId,Contacts.EnglishName,Contacts.Email
-     from Contacts
-     INNER JOIN CardContacts ON CardContacts.ContactId = Contacts.Id
-     INNER JOIN Cards ON Cards.Id = CardContacts.CardId
-     where  $LastCounterWhere$ and  Contacts.Id in (select ContactId from CardContacts where CardId = Cards.Id and Tenant = Cards.Tenant) and (Cards.IsCustomer = 1  or Cards.PartnerTypeId = 'CS' or Cards.PartnerTypeId = 'PO')
-     OPEN ContactsCursor FETCH NEXT FROM ContactsCursor INTO  @CardId,@Tenant, @InActive,  @CreateDate , @UpdateDate ,@IsCustomer,  @PartnerTypeId , @ContactName , @ContactEmail
+     select Cards.Id ,Cards.Tenant , Cards.InActive,Cards.CreateDate , Cards.UpdateDate ,Cards.IsCustomer , Cards.PartnerTypeId,Airlines.Prefix,Airlines.ICAO
+     from Airlines
+     INNER JOIN Cards ON Cards.Id = Airlines.Id
+     where  $LastCounterWhere$
+
+     OPEN AirlinesCursor FETCH NEXT FROM AirlinesCursor INTO  @CardId,@Tenant, @InActive,  @CreateDate , @UpdateDate ,@IsCustomer,  @PartnerTypeId , @Prefix , @ICAO
      WHILE @@FETCH_STATUS = 0
      BEGIN
 
@@ -60,8 +60,8 @@ declare  @IsCustomer bit
 
 			       BEGIN TRY  
 
-		        	    if (@ContactName is not null)	begin 		 insert into #temp_CardSearches (Tenant, CardId  , RecordDate  , PartnerTypeId,InActive ,IsCustomer, Keyword , Weight) select  @Tenant, @CardId , @RecordDate  , @PartnerTypeId,@InActive , @IsCustomer, t.Keyword  , t.weight from dbo.BuildSearchKeywordFunction(@ContactName , 30 , 30) t where KeyWord !=' ' end
-		              if (@ContactEmail is not null)	begin 		 insert into #temp_CardSearches (Tenant, CardId  , RecordDate  , PartnerTypeId,InActive ,IsCustomer, Keyword , Weight) select  @Tenant, @CardId , @RecordDate  , @PartnerTypeId,@InActive , @IsCustomer, t.Keyword  , t.weight from dbo.BuildSearchKeywordFunction(@ContactEmail , 30 , 30) t where KeyWord !=' ' end
+		        	    if (@Prefix  is not null)	begin 		 insert into #temp_CardSearches (Tenant, CardId  , RecordDate  , PartnerTypeId,InActive ,IsCustomer, Keyword , Weight) select  @Tenant, @CardId , @RecordDate  , @PartnerTypeId,@InActive , @IsCustomer, t.Keyword  , t.weight from dbo.BuildSearchKeywordFunction(@Prefix , 30 , 30) t where KeyWord !=' ' end
+		              if (@ICAO is not null)	begin 		 insert into #temp_CardSearches (Tenant, CardId  , RecordDate  , PartnerTypeId,InActive ,IsCustomer, Keyword , Weight) select  @Tenant, @CardId , @RecordDate  , @PartnerTypeId,@InActive , @IsCustomer, t.Keyword  , t.weight from dbo.BuildSearchKeywordFunction(@ICAO , 30 , 30) t where KeyWord !=' ' end
 
 
 	                set @Count = @Count + 1;
@@ -89,17 +89,16 @@ declare  @IsCustomer bit
         end
 
  
-    FETCH NEXT FROM ContactsCursor INTO  @CardId,@Tenant, @InActive,  @CreateDate , @UpdateDate ,@IsCustomer,  @PartnerTypeId , @ContactName , @ContactEmail
+    FETCH NEXT FROM AirlinesCursor INTO  @CardId,@Tenant, @InActive,  @CreateDate , @UpdateDate ,@IsCustomer,  @PartnerTypeId ,  @Prefix , @ICAO
     END
-    CLOSE ContactsCursor
-    DEALLOCATE ContactsCursor
+    CLOSE AirlinesCursor
+    DEALLOCATE AirlinesCursor
 
  
         if (@Count > 0) begin  insert into CardSearches (Tenant, CardId , Keyword , RecordDate , Weight , PartnerTypeId,InActive , IsCustomer) select  Tenant, CardId , Keyword , RecordDate , Weight , PartnerTypeId,InActive , IsCustomer from #temp_CardSearches end
  
 	 
              drop table #temp_CardSearches
-    
     ]]>
   </Sql>
   <Oracle Version="1"></Oracle>
