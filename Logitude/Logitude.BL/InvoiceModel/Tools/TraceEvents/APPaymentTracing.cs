@@ -17,6 +17,8 @@ namespace Logitude.BL.InvoiceModel.Tools.TraceEvents
             string myEntityName = "APPayment";
 
             ContactPM loggedContact = LoggedContactResolver.GetLoggedContact(entityPM.Tenant);
+            bool showLocals = !loggedContact.DontShowLocal;
+
 
             if (isNewState)
             {
@@ -87,8 +89,38 @@ namespace Logitude.BL.InvoiceModel.Tools.TraceEvents
                 }
             }
 
+            else if(entityPM.InternalNotes != payment.InternalNotes)
+            {
+                EventTracer.CreateTraceEvent(new EventTracerArgs()
+                {
+                    Tenant = entityPM.Tenant,
+                    EventTypeCode = "UPAP",
+                    UserId = loggedContact.Id,
+                    EntityId = entityPM.Id,
+                    ObjectTableName = myEntityName,
+                    Notes = TranslateTextsClass.Translate("Accounting.General.O.OldValue", entityPM.Tenant, showLocals) + payment.InternalNotes + TranslateTextsClass.Translate("Accounting.General.O.NewValue", entityPM.Tenant, showLocals) + entityPM.InternalNotes
+                });
+            }
+
+
+            else if (entityPM.PrintNotes != payment.PrintNotes)
+            {
+                EventTracer.CreateTraceEvent(new EventTracerArgs()
+                {
+                    Tenant = entityPM.Tenant,
+                    EventTypeCode = "UPAP",
+                    UserId = loggedContact.Id,
+                    EntityId = entityPM.Id,
+                    ObjectTableName = myEntityName,
+                    Notes = TranslateTextsClass.Translate("Accounting.General.O.OldValue", entityPM.Tenant, showLocals) + payment.PrintNotes + TranslateTextsClass.Translate("Accounting.General.O.NewValue", entityPM.Tenant, showLocals) + entityPM.PrintNotes
+                });
+            }
+
             TraceExternalPayment(entityPM, payment, loggedContact.Id);
         }
+
+
+     
 
         private static void TraceExternalPayment(APPaymentPM entityPM, APPayment payment, string loggedContactId)
         {

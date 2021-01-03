@@ -1137,6 +1137,17 @@ on record.JournalId equals j.Id
                  select a).ToList();
             return ledgerTransactionPOCOs;
         }
+
+        public List<LedgerTransaction> GetLedgerTransactionsByAccountIdListAndJournalId(List<String> accountIdList,string journalId, int tenant)
+        {
+            List<LedgerTransaction> ledgerTransactionPOCOs =
+                (from a in context.LedgerTransactions
+                 where accountIdList.Contains(a.AccountId) && 
+                 a.Tenant == tenant &&
+                 a.JournalId == journalId
+                 select a).ToList();
+            return ledgerTransactionPOCOs;
+        }
         public List<string> GetTransactionsCurrencies(string accountId, int tenant)
         {
             List<string> transactionsCurrencies = (from lt in context.LedgerTransactions
