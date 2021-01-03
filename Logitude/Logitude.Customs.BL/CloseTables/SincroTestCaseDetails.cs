@@ -19,6 +19,13 @@ namespace Logitude.Customs.BL.CloseTables
                     Entity="Declaration",
                     
                 },
+                 new SincroTestCaseDetail()
+                {
+                    Code = "8373",
+                    Name = "(8373)שחזור נתוני הצהרה",
+                    Entity="RetrieveDeclaration",
+
+                },
                 new SincroTestCaseDetail()
                 {
                     Code = "2754Payment",
