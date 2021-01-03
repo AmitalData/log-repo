@@ -100,7 +100,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Features\Shipment\SpecFlowFeature1Steps.cs" />
     <Compile Include="Models\Login\LoginParameters.cs" />
     <Compile Include="Models\Login\UserCredential.cs" />
     <Compile Include="Models\Login\UserData.cs" />
@@ -115,7 +114,6 @@
   <ItemGroup>
     <None Include="app.config" />
     <None Include="Features\Shipment\GetShipmentSecurityAccess.feature" />
-    <None Include="Features\Shipment\SpecFlowFeature1.feature" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

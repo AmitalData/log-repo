@@ -8,10 +8,10 @@ Background:
 	When Users make login request
 	Then Users should have token
 
-Scenario: Get Users Shipment Depending On Their Tenants
-	Given First user request the shipments list
+Scenario: Get Shipment From User's Tenant
 	When First user get the first shipment from shipments list
-	*    Second user request the shipment that requested by first user
-	Then Users should not be on same tenant
-	*    Shipment for first user should be exists
-	*    Shipment for second user should not be exists
+	Then Shipment for first user should be exists
+
+Scenario: Get Shipment From Other Tenant
+	When Second user get the shipment that requested by first user
+	Then Shipment for second user should not be exists

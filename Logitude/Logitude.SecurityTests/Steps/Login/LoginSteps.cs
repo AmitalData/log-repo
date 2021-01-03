@@ -2,6 +2,7 @@
 using Logitude.SecurityTests.Models.Login;
 using Logitude.Test.Services;
 using System.Collections.Generic;
+using System.Linq;
 using TechTalk.SpecFlow;
 using TechTalk.SpecFlow.Assist;
 
@@ -53,7 +54,7 @@ namespace Logitude.SecurityTests.Steps.Login
         public void GivenUsersWithFollowingCredentials(Table credentialsTable)
         {
             IEnumerable<UserCredential> userCredentials = credentialsTable.CreateSet<UserCredential>();
-            foreach(UserCredential userCredential in userCredentials)
+            userCredentials.ToList().ForEach(userCredential =>
             {
                 LoginsParameters.Logins.Add(new LoginParameters
                 {
@@ -62,13 +63,13 @@ namespace Logitude.SecurityTests.Steps.Login
                     ClientType = "Web",
                     GetToken = true
                 });
-            }
+            });
         }
 
         [When(@"Users make login request")]
         public void WhenUsersMakeLoginRequest()
         {
-            foreach(LoginParameters login in LoginsParameters.Logins)
+            LoginsParameters.Logins.ForEach(login =>
             {
                 UserData userData = APICaller.CallPost<UserData>(login, "Authentication", null);
                 if (userData != null)
@@ -79,16 +80,16 @@ namespace Logitude.SecurityTests.Steps.Login
                         Tenant = userData.Tenant,
                     });
                 }
-            }
+            });
         }
 
         [Then(@"Users should have token")]
         public void ThenUsersShouldHaveToken()
         {
-            foreach(UserData user in UsersData.Users)
+            UsersData.Users.ForEach(user =>
             {
                 user.Token.Should().NotBeNull();
-            }
+            });
         }
     }
 }

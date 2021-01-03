@@ -13,7 +13,6 @@ namespace Logitude.SecurityTests.Models.Shipment
 
         public ShipmentPM FirstUserShipment { get; set; }
         public ShipmentPM SecondUserShipment { get; set; }
-        public IEnumerable<ShipmentPM> FirstUserShipments { get; set; }
         public UserData FirstUser { get; set; }
         public UserData SecondUser { get; set; }
     }

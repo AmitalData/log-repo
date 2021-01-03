@@ -104,14 +104,14 @@ namespace Logitude.SecurityTests.Features.Shipment
             this.TestTearDown();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="Get Users Shipment Depending On Their Tenants")]
+        [Xunit.SkippableFactAttribute(DisplayName="Get Shipment From User\'s Tenant")]
         [Xunit.TraitAttribute("FeatureTitle", "Get Shipment Security Access")]
-        [Xunit.TraitAttribute("Description", "Get Users Shipment Depending On Their Tenants")]
-        public virtual void GetUsersShipmentDependingOnTheirTenants()
+        [Xunit.TraitAttribute("Description", "Get Shipment From User\'s Tenant")]
+        public virtual void GetShipmentFromUsersTenant()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get Users Shipment Depending On Their Tenants", null, tagsOfScenario, argumentsOfScenario);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get Shipment From User\'s Tenant", null, tagsOfScenario, argumentsOfScenario);
 #line 11
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -136,22 +136,51 @@ this.ScenarioInitialize(scenarioInfo);
 this.FeatureBackground();
 #line hidden
 #line 12
- testRunner.Given("First user request the shipments list", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line hidden
-#line 13
  testRunner.When("First user get the first shipment from shipments list", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 14
- testRunner.And("Second user request the shipment that requested by first user", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "* ");
+#line 13
+ testRunner.Then("Shipment for first user should be exists", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
+            }
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.SkippableFactAttribute(DisplayName="Get Shipment From Other Tenant")]
+        [Xunit.TraitAttribute("FeatureTitle", "Get Shipment Security Access")]
+        [Xunit.TraitAttribute("Description", "Get Shipment From Other Tenant")]
+        public virtual void GetShipmentFromOtherTenant()
+        {
+            string[] tagsOfScenario = ((string[])(null));
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get Shipment From Other Tenant", null, tagsOfScenario, argumentsOfScenario);
 #line 15
- testRunner.Then("Users should not be on same tenant", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            bool isScenarioIgnored = default(bool);
+            bool isFeatureIgnored = default(bool);
+            if ((tagsOfScenario != null))
+            {
+                isScenarioIgnored = tagsOfScenario.Where(__entry => __entry != null).Where(__entry => String.Equals(__entry, "ignore", StringComparison.CurrentCultureIgnoreCase)).Any();
+            }
+            if ((this._featureTags != null))
+            {
+                isFeatureIgnored = this._featureTags.Where(__entry => __entry != null).Where(__entry => String.Equals(__entry, "ignore", StringComparison.CurrentCultureIgnoreCase)).Any();
+            }
+            if ((isScenarioIgnored || isFeatureIgnored))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                this.ScenarioStart();
+#line 3
+this.FeatureBackground();
 #line hidden
 #line 16
- testRunner.And("Shipment for first user should be exists", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "* ");
+ testRunner.When("Second user get the shipment that requested by first user", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
 #line 17
- testRunner.And("Shipment for second user should not be exists", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "* ");
+ testRunner.Then("Shipment for second user should not be exists", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();
