@@ -389,6 +389,7 @@ export class TariffSearchSummary {
     UpdateDate: Date;
     ValidityDate: string;
     CurrencySign: string;
+    NoteMissingContainers: string;
 }
 
 export class ContainersPrice {

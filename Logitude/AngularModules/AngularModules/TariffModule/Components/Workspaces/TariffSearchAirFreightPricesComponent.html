@@ -888,184 +888,205 @@
                                             <tr *ngFor="let item of AvailableTariffs" style="height:1px">
                                                 <td>
                                                     <table>
-                                                        <tr style="height:110px;">
+                                                        <tr style="height:140px;">
                                                             <td>
                                                                 <table>
                                                                     <tr style="height:3px">
-                                                                        <td>
-                                                                            <div></div>
-                                                                        </td>
+                                                                        
                                                                     </tr>
+                                                                 
                                                                     <tr>
                                                                         <td>
                                                                             <table style="border-radius: 8px; border:1px solid rgba(149, 149, 149, 0.5);">
                                                                                 <tr>
-                                                                                    <td style="width:150px;min-width:150px">
-                                                                                        <div>
-                                                                                            <img style="width:120px;height:100px;" *ngIf="item.ImageId" class="CenterCenter" [attr.id]="item.Name" src="{{item.ImageId}}" />
-                                                                                        </div>
-                                                                                    </td>
-
-                                                                                    <td style="width:180px;min-width:180px; max-width:180px; vertical-align:central">
+                                                                                    <td>
                                                                                         <table>
+                                                                                            <tr *ngIf="item.NoteMissingContainers != null" style="height:30px;">
+                                                                                                <td style="padding:1%">
+                                                                                                    <div [ngStyle]="LayoutDirection == 'rtl' ? {'padding-right': '25px'} : {'padding-left': '25px'}">
+                                                                                                        <img style="padding:10px" [className]="LayoutDirection == 'rtl' ? 'RightCenter' : 'LeftCenter'" src="./Images/ValidationError.png" />
+                                                                                                        {{item.NoteMissingContainers}}
+                                                                                                    </div>
+
+                                                                                                </td>
+                                                                                            </tr>
+
                                                                                             <tr>
                                                                                                 <td>
                                                                                                     <div></div>
                                                                                                 </td>
                                                                                             </tr>
 
-                                                                                            <tr style="height:22px;">
-                                                                                                <td>
-                                                                                                    <div style="width: 100%; white-space: normal; font-size:16px; word-wrap:break-word; text-align:center" class="Value">
-                                                                                                        {{item.SellerName}}
+                                                                                            <tr>
+                                                                                                <td style="width:150px;min-width:150px">
+                                                                                                    <div>
+                                                                                                        <img style="width:120px;height:90px;" *ngIf="item.ImageId" class="CenterCenter" [attr.id]="item.Name" src="{{item.ImageId}}" />
                                                                                                     </div>
                                                                                                 </td>
-                                                                                            </tr>
 
-                                                                                            <tr style="height:32px;">
-                                                                                                <td style="font-size: 20px; text-align:center; font-weight:700" class="ColorBlue">{{item.WholePriceWithoutAllIn | NumbersPipe:'N2'}} {{item.CurrencySign}}</td>
-                                                                                            </tr>
-
-                                                                                            <tr>
-                                                                                                <td>
-                                                                                                    <div></div>
-                                                                                                </td>
-                                                                                            </tr>
-                                                                                        </table>
-                                                                                    </td>
-
-                                                                                    <td style="width:15px;">
-                                                                                        <div></div>
-                                                                                    </td>
-
-                                                                                    <td style="width:110px;vertical-align:central">
-                                                                                        <table>
-                                                                                            <tr>
-                                                                                                <td>
-                                                                                                    <div></div>
-                                                                                                </td>
-                                                                                            </tr>
-
-                                                                                            <tr style="height:22px;">
-                                                                                                <td class="Value" style="font-size:12px;">Remarks</td>
-                                                                                            </tr>
-                                                                                            <tr style="height:22px;">
-                                                                                                <td class="Value" style="font-size:12px;">All-In</td>
-                                                                                            </tr>
-                                                                                            <tr style="height:22px;">
-                                                                                                <td class="Value" style="font-size:12px;">Validity</td>
-                                                                                            </tr>
-                                                                                            <tr style="height:22px;">
-                                                                                                <td class="Value" style="font-size:12px;">Estimated Transit</td>
-                                                                                            </tr>
-
-                                                                                            <tr>
-                                                                                                <td>
-                                                                                                    <div></div>
-                                                                                                </td>
-                                                                                            </tr>
-                                                                                        </table>
-                                                                                    </td>
-
-                                                                                    <td style="vertical-align:central; width:500px;">
-                                                                                        <table>
-                                                                                            <tr>
-                                                                                                <td>
-                                                                                                    <div></div>
-                                                                                                </td>
-                                                                                            </tr>
-
-                                                                                            <tr style="height:22px;">
-                                                                                                <td style="width:500px;">
-                                                                                                    <div class="Label TextTrimming" style="font-size:11px; width:500px; max-width:500px;" [title]="item.Remarks">
-                                                                                                        {{item.Remarks}}
-                                                                                                    </div>
-                                                                                                </td>
-                                                                                            </tr>
-                                                                                            <tr style="height:22px;">
-                                                                                                <td class="Label TextTrimming" style="font-size:11px; width:500px; max-width:500px;">{{item.AllIn}}</td>
-                                                                                            </tr>
-                                                                                            <tr style="height:22px;">
-                                                                                                <td class="Label" style="font-size:11px;">{{item.ValidityDate}}</td>
-                                                                                            </tr>
-                                                                                            <tr style="height:22px;">
-                                                                                                <td class="Label" style="font-size:11px;">{{item.TransitTime}}</td>
-                                                                                            </tr>
-
-                                                                                            <tr>
-                                                                                                <td>
-                                                                                                    <div></div>
-                                                                                                </td>
-                                                                                            </tr>
-                                                                                        </table>
-                                                                                    </td>
-
-                                                                                    <td style="width:15px;">
-                                                                                        <div></div>
-                                                                                    </td>
-
-                                                                                    <td style="width:140px;">
-                                                                                        <table>
-                                                                                            <tr style="height:5px;">
-                                                                                                <td><div></div></td>
-                                                                                            </tr>
-
-                                                                                            <tr style="height:20px;">
-                                                                                                <td style="float:right; right:3px;">
-                                                                                                    <table>
-                                                                                                        <tr>
-                                                                                                            <td class="Label" style="font-size:10px;">Last Used</td>
-                                                                                                            <td style="width:2px;"><div></div></td>
-                                                                                                            <td class="Label" style="font-size:10px; width:70px;">{{item.LastUsedDate | DateTimePipe:'SD'}}</td>
-                                                                                                        </tr>
-                                                                                                    </table>
-                                                                                                </td>
-                                                                                            </tr>
-
-                                                                                            <tr style="height:20px;">
-                                                                                                <td style="float:right; right:3px;">
-                                                                                                    <table>
-                                                                                                        <tr>
-                                                                                                            <td class="Label" style="font-size:10px;">Last Updated</td>
-                                                                                                            <td style="width:2px;"><div></div></td>
-                                                                                                            <td class="Label" style="font-size:10px; width:70px;">{{item.UpdateDate | DateTimePipe:'SD'}}</td>
-                                                                                                        </tr>
-                                                                                                    </table>
-                                                                                                </td>
-                                                                                            </tr>
-
-                                                                                            <tr>
-                                                                                                <td *ngIf="IsGeneratePayablesVisible">
-                                                                                                    <button style="margin-top:-15px;" class="SelectButton" (click)="GeneratePayablesClicked(item)">Select</button>
-                                                                                                </td>
-                                                                                            </tr>
-
-                                                                                            <tr style="height:20px;">
-                                                                                                <td>
+                                                                                                <td style="width:180px;min-width:180px; max-width:180px; vertical-align:central">
                                                                                                     <table>
                                                                                                         <tr>
                                                                                                             <td>
                                                                                                                 <div></div>
                                                                                                             </td>
+                                                                                                        </tr>
 
-                                                                                                            <td style="width:70px; color: #45494a;" class="Label">
-                                                                                                                More Details
+                                                                                                        <tr style="height:22px;">
+                                                                                                            <td>
+                                                                                                                <div style="width: 100%; white-space: normal; font-size:16px; word-wrap:break-word; text-align:center" class="Value">
+                                                                                                                    {{item.SellerName}}
+                                                                                                                </div>
                                                                                                             </td>
+                                                                                                        </tr>
 
-                                                                                                            <td style="width:20px">
-                                                                                                                <img *ngIf="item.IsShown" (click)="ShowTariffclicked(item)" src="./Images/Buttons/uparrow.png" style="cursor:pointer;width:15px;float:right" />
-                                                                                                                <img *ngIf="!item.IsShown" (click)="ShowTariffclicked(item)" src="./Images/Buttons/downarrow.png" style="cursor:pointer;width:15px;float:right" />
+                                                                                                        <tr style="height:32px;">
+                                                                                                            <td style="font-size: 20px; text-align:center; font-weight:700" class="ColorBlue">{{item.WholePriceWithoutAllIn | NumbersPipe:'N2'}} {{item.CurrencySign}}</td>
+                                                                                                        </tr>
+
+                                                                                                        <tr>
+                                                                                                            <td>
+                                                                                                                <div></div>
                                                                                                             </td>
-
                                                                                                         </tr>
                                                                                                     </table>
                                                                                                 </td>
+
+                                                                                                <td style="width:15px;">
+                                                                                                    <div></div>
+                                                                                                </td>
+
+                                                                                                <td style="width:110px;vertical-align:central">
+                                                                                                    <table>
+                                                                                                        <tr>
+                                                                                                            <td>
+                                                                                                                <div></div>
+                                                                                                            </td>
+                                                                                                        </tr>
+
+                                                                                                        <tr style="height:22px;">
+                                                                                                            <td class="Value" style="font-size:12px;">Remarks</td>
+                                                                                                        </tr>
+                                                                                                        <tr style="height:22px;">
+                                                                                                            <td class="Value" style="font-size:12px;">All-In</td>
+                                                                                                        </tr>
+                                                                                                        <tr style="height:22px;">
+                                                                                                            <td class="Value" style="font-size:12px;">Validity</td>
+                                                                                                        </tr>
+                                                                                                        <tr style="height:22px;">
+                                                                                                            <td class="Value" style="font-size:12px;">Estimated Transit</td>
+                                                                                                        </tr>
+
+                                                                                                        <tr>
+                                                                                                            <td>
+                                                                                                                <div></div>
+                                                                                                            </td>
+                                                                                                        </tr>
+                                                                                                    </table>
+                                                                                                </td>
+
+                                                                                                <td style="vertical-align:central; width:500px;">
+                                                                                                    <table>
+                                                                                                        <tr>
+                                                                                                            <td>
+                                                                                                                <div></div>
+                                                                                                            </td>
+                                                                                                        </tr>
+
+                                                                                                        <tr style="height:22px;">
+                                                                                                            <td style="width:500px;">
+                                                                                                                <div class="Label TextTrimming" style="font-size:11px; width:500px; max-width:500px;" [title]="item.Remarks">
+                                                                                                                    {{item.Remarks}}
+                                                                                                                </div>
+                                                                                                            </td>
+                                                                                                        </tr>
+                                                                                                        <tr style="height:22px;">
+                                                                                                            <td class="Label TextTrimming" style="font-size:11px; width:500px; max-width:500px;">{{item.AllIn}}</td>
+                                                                                                        </tr>
+                                                                                                        <tr style="height:22px;">
+                                                                                                            <td class="Label" style="font-size:11px;">{{item.ValidityDate}}</td>
+                                                                                                        </tr>
+                                                                                                        <tr style="height:22px;">
+                                                                                                            <td class="Label" style="font-size:11px;">{{item.TransitTime}}</td>
+                                                                                                        </tr>
+
+                                                                                                        <tr>
+                                                                                                            <td>
+                                                                                                                <div></div>
+                                                                                                            </td>
+                                                                                                        </tr>
+                                                                                                    </table>
+                                                                                                </td>
+
+                                                                                                <td style="width:15px;">
+                                                                                                    <div></div>
+                                                                                                </td>
+
+                                                                                                <td style="width:140px;">
+                                                                                                    <table>
+                                                                                                        <tr style="height:5px;">
+                                                                                                            <td><div></div></td>
+                                                                                                        </tr>
+
+                                                                                                        <tr style="height:20px;">
+                                                                                                            <td style="float:right; right:3px;">
+                                                                                                                <table>
+                                                                                                                    <tr>
+                                                                                                                        <td class="Label" style="font-size:10px;">Last Used</td>
+                                                                                                                        <td style="width:2px;"><div></div></td>
+                                                                                                                        <td class="Label" style="font-size:10px; width:70px;">{{item.LastUsedDate | DateTimePipe:'SD'}}</td>
+                                                                                                                    </tr>
+                                                                                                                </table>
+                                                                                                            </td>
+                                                                                                        </tr>
+
+                                                                                                        <tr style="height:20px;">
+                                                                                                            <td style="float:right; right:3px;">
+                                                                                                                <table>
+                                                                                                                    <tr>
+                                                                                                                        <td class="Label" style="font-size:10px;">Last Updated</td>
+                                                                                                                        <td style="width:2px;"><div></div></td>
+                                                                                                                        <td class="Label" style="font-size:10px; width:70px;">{{item.UpdateDate | DateTimePipe:'SD'}}</td>
+                                                                                                                    </tr>
+                                                                                                                </table>
+                                                                                                            </td>
+                                                                                                        </tr>
+
+                                                                                                        <tr>
+                                                                                                            <td *ngIf="IsGeneratePayablesVisible">
+                                                                                                                <button style="margin-top:-15px;" class="SelectButton" (click)="GeneratePayablesClicked(item)">Select</button>
+                                                                                                            </td>
+                                                                                                        </tr>
+
+                                                                                                        <tr style="height:20px;">
+                                                                                                            <td>
+                                                                                                                <table>
+                                                                                                                    <tr>
+                                                                                                                        <td>
+                                                                                                                            <div></div>
+                                                                                                                        </td>
+
+                                                                                                                        <td style="width:70px; color: #45494a;" class="Label">
+                                                                                                                            More Details
+                                                                                                                        </td>
+
+                                                                                                                        <td style="width:20px">
+                                                                                                                            <img *ngIf="item.IsShown" (click)="ShowTariffclicked(item)" src="./Images/Buttons/uparrow.png" style="cursor:pointer;width:15px;float:right" />
+                                                                                                                            <img *ngIf="!item.IsShown" (click)="ShowTariffclicked(item)" src="./Images/Buttons/downarrow.png" style="cursor:pointer;width:15px;float:right" />
+                                                                                                                        </td>
+
+                                                                                                                    </tr>
+                                                                                                                </table>
+                                                                                                            </td>
+                                                                                                        </tr>
+                                                                                                    </table>
+                                                                                                </td>
+
+                                                                                                <td style="width:20px;">
+                                                                                                    <div></div>
+                                                                                                </td>
                                                                                             </tr>
                                                                                         </table>
-                                                                                    </td>
-
-                                                                                    <td style="width:20px;">
-                                                                                        <div></div>
                                                                                     </td>
                                                                                 </tr>
                                                                             </table>
