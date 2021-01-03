@@ -1,6 +1,7 @@
 ﻿using FluentAssertions;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.SpecFlow.Models;
+using Logitude.SpecFlow.ValueRetrievers;
 using Logitude.Test.Services;
 using System;
 using System.Text.RegularExpressions;
@@ -19,20 +20,20 @@ namespace Logitude.SpecFlow.Steps
         {
             User = user;
             ChargeTypePM = chargeTypePM;
+
+            Service.Instance.ValueRetrievers.Register(new ChargesTypeValuesRetriever(User));
         }
-         
+
         [Given(@"user add a charge type with the following properties")]
         public void GivenUserAddAChargeTypeWithTheFollowingProperties(Table chargeTypeData)
         {
             ChargesTypePM chargeTypePM = chargeTypeData.CreateInstance<ChargesTypePM>();
-            var myCode = Regex.Replace(Guid.NewGuid().ToString(), "[^a-zA-Z]+", "");
-            ChargeTypePM.Code = myCode.Substring(0,3);
+            ChargeTypePM.Code = Regex.Replace(Guid.NewGuid().ToString(), "[^a-zA-Z]+", "").Substring(0,3);
             ChargeTypePM.Tenant = User.Tenant;
             ChargeTypePM.EnglishName = chargeTypePM.EnglishName;
             ChargeTypePM.ChargesGroupCode = chargeTypePM.ChargesGroupCode;
             ChargeTypePM.MeasurementId = chargeTypePM.MeasurementId;
             ChargeTypePM.ChargesGroupId = chargeTypePM.ChargesGroupId;
-
         }
 
         [When(@"the user call create charge type API")]
@@ -40,8 +41,6 @@ namespace Logitude.SpecFlow.Steps
         {
             ChargeTypePM = APICaller.CallPost<ChargesTypePM>(ChargeTypePM, "ChargesTypes", User.Token);
         }
-        
-       
         
         [Then(@"a new charge type should be added")]
         public void ThenANewChargeTypeShouldBeAdded()
