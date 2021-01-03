@@ -11,40 +11,51 @@ namespace Logitude.SecurityTests.Steps.Shipment
     [Binding]
     public class GetShipmentSecurityAccessSteps
     {
-        protected readonly UserData User;
-        protected readonly ShipmentSecurityAccessStepsContext Context;
+        protected readonly UsersData UsersData;
+        protected ShipmentSecurityAccessStepsContext Context;
 
-        public GetShipmentSecurityAccessSteps(UserData user, ShipmentSecurityAccessStepsContext context)
+        public GetShipmentSecurityAccessSteps(UsersData usersData, ShipmentSecurityAccessStepsContext context)
         {
-            User = user;
+            UsersData = usersData;
             Context = context;
+            Context.FirstUser = UsersData.Users[0];
+            Context.SecondUser = UsersData.Users[1];
         }
 
-        [When(@"Get the first shipment from shipments list")]
-        public void WhenGetTheFirstShipmentFromShipmentsList()
+        [When(@"First user get the first shipment from shipments list")]
+        public void WhenFirstUserGetTheFirstShipmentFromShipmentsList()
         {
-            IEnumerable<ShipmentPM> shipmentPMs = APICaller.CallGet<IEnumerable<ShipmentPM>>("ShipmentViews/getbyfilters?ForceCacheRefresh=false&GetAll=false&GetCount=true&PageIndex=0&PageSize=10", User.Token, "Result");
-            Context.ShipmentPM.Id = shipmentPMs.FirstOrDefault()?.Id;
+            IEnumerable<ShipmentPM> firstUserShipmentsList = GetShipmentsListForFirstUser();
+            Context.FirstUserShipment.Id = firstUserShipmentsList?.FirstOrDefault()?.Id;
         }
 
-        [Then(@"Shipment should be exists")]
-        public void ThenShipmentShouldBeExists()
+        [When(@"Second user get the shipment that requested by first user")]
+        public void WhenSecondUserGetTheShipmentThatRequestedByFirstUser()
         {
-            Context.ShipmentPM.Id.Should().NotBeNull();
+            IEnumerable<ShipmentPM> firstUserShipmentsList = GetShipmentsListForFirstUser();
+            string singleShipmentUrl = "Shipment/GetSingle?id=" + firstUserShipmentsList?.FirstOrDefault()?.Id;
+            ShipmentPM shipmentPM = APICaller.CallGet<ShipmentPM>(singleShipmentUrl, Context.SecondUser.Token, null);
+            Context.SecondUserShipment.Id = shipmentPM?.Id;
+        }
+
+        [Then(@"Shipment for first user should be exists")]
+        public void ThenShipmentForFirstUserShouldBeExists()
+        {
+            Context.FirstUserShipment.Id.Should().NotBeNull();
+        }
+
+        [Then(@"Shipment for second user should not be exists")]
+        public void ThenShipmentForSecondUserShouldNotBeExists()
+        {
+            Context.SecondUserShipment.Id.Should().BeNull();
         }
 
 
-        [When(@"Get shipment from other tenant")]
-        public void WhenGetShipmentFromOtherTenant()
+        protected IEnumerable<ShipmentPM> GetShipmentsListForFirstUser()
         {
-            ShipmentPM otherShipmentPM = APICaller.CallGet<ShipmentPM>("Shipment/GetSingle?id=" + Context.ShipmentPM.Id, User.Token, null);
-            Context.OtherShipmentPM.Id = otherShipmentPM?.Id;
-        }
-
-        [Then(@"Shipment from other tenant should not be exists")]
-        public void ThenShipmentFromOtherTenantShouldNotBeExists()
-        {
-            Context.OtherShipmentPM.Id.Should().BeNull();
+            string shipmentsListUrl = "ShipmentViews/GetByFilters?ForceCacheRefresh=false&GetAll=false&GetCount=true&PageIndex=0&PageSize=10";
+            IEnumerable<ShipmentPM> shipmentPMs = APICaller.CallGet<IEnumerable<ShipmentPM>>(shipmentsListUrl, Context.FirstUser.Token, "Result");
+            return shipmentPMs;
         }
     }
 }
