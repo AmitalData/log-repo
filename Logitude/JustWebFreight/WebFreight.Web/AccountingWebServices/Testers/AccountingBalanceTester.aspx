@@ -771,6 +771,7 @@
             defaultParam.UpToDueDate = "01.01.2020";
             defaultParam.LT_LinesMaximum = 50;
             defaultParam.MaxPageSize = 1000;
+            defaultParam.CloseOnlyZeroes = "FALSE";
 
             if (!_ResponseToken) {
                 getToken();
@@ -798,6 +799,8 @@
             myUrl = myUrl + "&lT_LinesMaximum=" + objToCheck1.LT_LinesMaximum;
 
             myUrl = myUrl + "&maximalPageSize=" + objToCheck1.MaxPageSize;
+
+            myUrl = myUrl + "&closeOnlyZeroes=" + objToCheck1.CloseOnlyZeroes;
 
             //alert(myUrl);
 
@@ -849,6 +852,8 @@
             defaultParam.UpToDueDate = "01.01.2020";
             defaultParam.LT_LinesMaximum = 50;
             defaultParam.MaxPageSize = 1000;
+            defaultParam.CloseOnlyZeroes = "FALSE";
+
             if (!_ResponseToken) {
                 getToken();
             }
@@ -875,6 +880,8 @@
             myUrl = myUrl + "&lT_LinesMaximum=" + objToCheck1.LT_LinesMaximum;
 
             myUrl = myUrl + "&maxPageSize=" + objToCheck1.MaxPageSize;
+
+            myUrl = myUrl + "&closeOnlyZeroes=" + objToCheck1.CloseOnlyZeroes;
 
             myUrl = myUrl + "&noBatch=1";
 
