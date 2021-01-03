@@ -110,14 +110,17 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 
         private IQueryable<DeclarationReferantData> ApplyCustomFilters(QueryOperations queryOperations, IQueryable<DeclarationReferantData> iQueryable, int tenant)
         {
+            DeclarationReferantDataCustomFilters filters = new DeclarationReferantDataCustomFilters();
+
             var filter = queryOperations.QueryFilterItems.FirstOrDefault(x => x.FieldName == "RetrievData");
             if (filter == null)
             {
-                DeclarationReferantDataCustomFilters filters = new DeclarationReferantDataCustomFilters();
 
                 iQueryable = filters.GetFilteredQuery(iQueryable);
                 iQueryable = filters.GetFreelancerDeclarationReferantDatas(queryOperations, iQueryable, tenant);
             }
+            iQueryable = filters.GetFreelancerDeclarationReferantDatas(queryOperations, iQueryable, tenant, context);
+
             return iQueryable;
 
         }
