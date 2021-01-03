@@ -26,6 +26,8 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
 {
     public class ARPaymentQuery
     {
+        const string ActionTypeCode_Credit = "1";
+
         ARPaymentRepository repository;
         public ARPaymentQuery()
         {
@@ -265,17 +267,13 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
         {
             foreach (JournalPM journal in journals)
             {
-                foreach (JournalLinePM journalLine in journal.JournalLines)
+                decimal? journalTotalLocalAmount= journal.JournalLines.Where(s=>s.ActionTypeCode == ActionTypeCode_Credit).Sum(s=>s.LocalAmount);
+                if (interestTransactionLists.LocalAmount == journalTotalLocalAmount)
                 {
-                    if (journalLine.LocalAmount == interestTransactionLists.LocalAmount)
-                    {
-                        payment.JournalId = journal.Id;
-                        payment.JournalNumber = journal.JournalNumber;
-                        break;
-                    }
-                }
-                if (!string.IsNullOrEmpty(payment.JournalId))
+                    payment.JournalId = journal.Id;
+                    payment.JournalNumber = journal.JournalNumber;
                     break;
+                }
 
             }
         }

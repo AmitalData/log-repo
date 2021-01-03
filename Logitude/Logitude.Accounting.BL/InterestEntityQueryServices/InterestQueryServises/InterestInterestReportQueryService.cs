@@ -17,14 +17,14 @@ namespace Logitude.Accounting.BL.InterestEntityQueryServices.InterestQueryServis
     {
         public InterestEntityResult GetInterestEntity(InterestTransactionList interestTransactionLists)
         {
-            InterestReportQueryService ReportQuery = new InterestReportQueryService(interestTransactionLists.Tenant);
-            InterestReportPM  ReportPM = ReportQuery.GetSinglePMForInterest(interestTransactionLists.EntityId, interestTransactionLists.Tenant);
+            InterestReportQueryService reportQuery = new InterestReportQueryService(interestTransactionLists.Tenant);
+            InterestReportPM  reportPM = reportQuery.GetSinglePMForInterest(interestTransactionLists.EntityId, interestTransactionLists.Tenant);
             InterestEntityResult result = new InterestEntityResult();
 
-            if (ReportPM != null)
+            if (reportPM != null)
             {
-                result.EntityId = ReportPM.Id;
-                result.EntityNumber = ReportPM.ReportNumber;
+                result.EntityId = reportPM.Id;
+                result.EntityNumber = reportPM.ReportNumber;
                 result.JournalId = null;
                 result.JournalNumber = null;
                 result.AccountCode = "11";
