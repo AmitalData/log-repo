@@ -400,7 +400,7 @@
     Name="ItemFOBAmountForeign"
     Type="decimal"
     Precision="16"
-    Scale="2">
+    Scale="2">   
     <Constraints
       Nullable="true" />
   </Column>

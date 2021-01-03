@@ -64,7 +64,7 @@ export class FilterField extends BaseComponent {
                 else {
                     this.EnableDelete = true;
                 }
-                debugger;
+                
                 this.Operation = this.Operators.filter(a => a.Code == preDefinedFilter.Operator)[0];
             }
             else {
@@ -93,7 +93,7 @@ export class FilterField extends BaseComponent {
                 else {
                     this.EnableDelete = true;
                 }
-                debugger;
+                
                 this.Operation = this.Operators.filter(a => a.Code == preDefinedFilter.Operator)[0];
             }
             else {
@@ -252,7 +252,7 @@ export class FilterField extends BaseComponent {
     private operation: ObjectFieldOperator;
     public get Operation()
     {
-        debugger;
+        
         if (!this.operation) {
             if ((this.ObjectField.DataTypeCode == "Text" || this.ObjectField.DataTypeCode == "nText") && AppTool.IsNullOrEmpty(this.operation)) {
                 this.operation = new ObjectFieldOperator("StartsWith", "Starts With");
@@ -419,7 +419,7 @@ export class FilterField extends BaseComponent {
     list: ObjectFieldOperator[];
     private GetFieldOperators(field: ObjectFieldPM) {
 
-        debugger;
+        
         this.list = [];
 
         if (field.DataTypeCode == "Text" || field.DataTypeCode == "nText") {

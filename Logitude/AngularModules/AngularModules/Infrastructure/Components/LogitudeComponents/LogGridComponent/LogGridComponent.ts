@@ -537,7 +537,7 @@ export class LogGridComponent implements OnInit, AfterViewInit, OnChanges, OnDes
     BackFromEditSub: any;
     onRowSelected(colDef: any, colIndex: number, rowData: any, rowIndex: number) {
         let selection = window.getSelection();
-        if (this.Disabled || selection) {
+        if (this.Disabled || (selection.anchorNode?.data&&selection.type=='Range')) {
             console.log(selection)
             return;
         }
