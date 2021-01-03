@@ -825,10 +825,6 @@ namespace CargoTrackingWinFormService.Forms
             else
             {
                 var dateSpan = BuildTo.Value - BuildFrom.Value;
-                if (dateSpan.TotalDays > (31 * 6))
-                {
-                    this.ErrorsValidatons.Add("The date difference must be less than 6 months");
-                }
                 if (dateSpan.TotalDays < 0)
                 {
                     this.ErrorsValidatons.Add("'From date' must be less than 'to date'");

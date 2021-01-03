@@ -126,36 +126,12 @@ export class CargoTrackingBuildShipmentComponent extends BaseComponent implement
             this.UIProperties.SetValidity("ToDate", this.ObjectTableName, false, "''To date'' field must be greater than or equal to ''From date'' field");
             this.UIProperties.SetValidity("FromDate", this.ObjectTableName, false, "''From date'' field must be less than or equal to ''To date'' field");
      }
-     else {
-       this.CheckDateDifferenceEqualOrLessThan6Months(fieldName);
-    }
-       
     
 }
 SetUIProperty() {
      
 }
-
-CheckDateDifferenceEqualOrLessThan6Months(fieldName){
-    if( this.FromDate &&  this.ToDate){
-        var DateDifference =  this.toDate.getTime() - this.FromDate.getTime() ;
-        var DayByMilliSecounds = 1000 * 60 * 60 * 24;
-        var DifferenceByDays =  DateDifference/DayByMilliSecounds ;
-        var DifferenceByMonths = DifferenceByDays/31 ;
-        if (DifferenceByMonths > 6) {
-            if (fieldName == null) {
-                this.ValidationErrorsList.push("The date difference must be less than 6 months");
-            }
-                this.UIProperties.SetValidity("ToDate", this.ObjectTableName, false, "The date difference must be less than 6 months");
-                this.UIProperties.SetValidity("FromDate", this.ObjectTableName, false, "The date difference must be less than 6 months");
-        }
-        else{
-            this.UIProperties.SetValidity("ToDate", this.ObjectTableName, true, "");
-            this.UIProperties.SetValidity("FromDate", this.ObjectTableName, true, "");
-        }
-    }
-
-}
+ 
 
 CargoTrackingBuilder() {
     var iCargoTrackingArgs:CargoTrackingArgs=  new CargoTrackingArgs();  

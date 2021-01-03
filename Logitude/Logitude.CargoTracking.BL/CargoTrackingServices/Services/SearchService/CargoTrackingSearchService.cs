@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.SearchService
 {
 
-    public class CargoTrackingSearchService
+    public static class CargoTrackingSearchService
     {
         public static List<string> PrivateRefrencesList = new List<string>(){ "ConsigneeName", "ShipperName" };
 
@@ -54,8 +54,11 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.SearchService
             if (bulkDataPreperation.CargoTrackingUpdateDataBaseArgs.CargoTrackingArguments!=null)
             {
                 DateTime shipmetnCreateDate = (DateTime)(tableRow["CreateDateTime"]);
-                DateTime cargTrackingBuildFromDate = (DateTime)bulkDataPreperation.CargoTrackingUpdateDataBaseArgs.CargoTrackingArguments.FromDate;
                 DateTime cargTrackingBuildToDate = (DateTime)bulkDataPreperation.CargoTrackingUpdateDataBaseArgs.CargoTrackingArguments.ToDate;
+                DateTime cargTrackingBuildFromDate = (DateTime)bulkDataPreperation.CargoTrackingUpdateDataBaseArgs.CargoTrackingArguments.FromDate;
+                int differenceMonthsBetweenBuildToAndFromDate = SetDifferenceMonthsBetweenBuildToAndFromDate(cargTrackingBuildToDate, cargTrackingBuildFromDate);
+                if(differenceMonthsBetweenBuildToAndFromDate>=6)
+                   cargTrackingBuildFromDate = cargTrackingBuildToDate.AddMonths(-differenceMonthsBetweenBuildToAndFromDate);
                 if (shipmetnCreateDate.Date < cargTrackingBuildFromDate.Date ||
                     shipmetnCreateDate.Date > cargTrackingBuildToDate.Date)
                 {
@@ -66,6 +69,19 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.SearchService
             return isShipmentValid;
         }
 
+        private static int SetDifferenceMonthsBetweenBuildToAndFromDate( DateTime cargTrackingBuildToDate , DateTime cargTrackingBuildFromDate)
+        {
+            int differenceMonthsBetweenBuildToAndFromDate = MonthDifference(cargTrackingBuildToDate, cargTrackingBuildFromDate);
+            if (differenceMonthsBetweenBuildToAndFromDate >= 6)
+                differenceMonthsBetweenBuildToAndFromDate = 6;
+
+            return differenceMonthsBetweenBuildToAndFromDate;
+        }
+
+        private static int MonthDifference(this DateTime toDate, DateTime fromDate)
+        {
+            return (toDate.Month - fromDate.Month) + 12 * (toDate.Year - fromDate.Year);
+        }
         private static void AddShipmentNumberReference(DataRow tableRow, DataTable dataTable)
         {
             string CoulmnName = "ShipmentNumber";
