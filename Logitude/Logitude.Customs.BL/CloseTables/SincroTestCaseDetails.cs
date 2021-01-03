@@ -51,7 +51,14 @@ namespace Logitude.Customs.BL.CloseTables
                     Param1= @"{ ""Error"":""false""}",
 MainInterfaceCode ="2892"
                 },
-
+                               new SincroTestCaseDetail()
+                {
+                    Code = "1170",
+                    Name = "(1170)מסר מצהר- מניפסט",
+                    Entity="Manifest",
+                    Param1= @"{ ""manifestCargoStatusCode"":""1""  }",
+                    MainInterfaceCode ="1170"
+                },
                         new SincroTestCaseDetail()
                 {
                     Code = "5002",
