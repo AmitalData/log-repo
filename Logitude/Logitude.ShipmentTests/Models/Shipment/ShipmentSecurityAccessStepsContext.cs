@@ -1,4 +1,5 @@
-﻿using Logitude.SecurityTests.Models.Login;
+﻿using Logitude.BL.ShipmentsModel.EntityPMs;
+using Logitude.SecurityTests.Models.Login;
 using System.Collections.Generic;
 
 namespace Logitude.SecurityTests.Models.Shipment

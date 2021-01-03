@@ -1,7 +1,9 @@
 ﻿using FluentAssertions;
+using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.SecurityTests.Models.Login;
 using Logitude.SecurityTests.Models.Shipment;
 using Logitude.Test.Services;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using TechTalk.SpecFlow;
@@ -15,9 +17,9 @@ namespace Logitude.SecurityTests.Steps.Shipment
         protected readonly UserData UserData;
         protected ShipmentPM _shipmentPM;
 
-        public UpdateShipment(UserData userData,ShipmentPM shipmentPM)
+        public UpdateShipment(UsersData usersData, ShipmentPM shipmentPM)
         {
-            UserData = userData;
+            UserData = usersData.Users[0];
             _shipmentPM = shipmentPM;
         }
 
@@ -25,6 +27,8 @@ namespace Logitude.SecurityTests.Steps.Shipment
         public void GivenTheMasterShipmentFields(Table table)
         {
             _shipmentPM = table.CreateInstance<ShipmentPM>();
+            _shipmentPM.Tenant = UserData.Tenant;
+            _shipmentPM.NewConcurrencyGUID = Guid.NewGuid().ToString();
         }
 
         [When(@"The shipment create API sent")]
