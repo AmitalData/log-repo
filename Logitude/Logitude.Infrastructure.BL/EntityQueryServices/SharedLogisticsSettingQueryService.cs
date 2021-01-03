@@ -17,6 +17,7 @@ using Logitude.Infrastructure.Data;
 using Logitude.Server.Tools.StorageService;
 using Microsoft.Practices.Unity;
 using System.IO;
+using Logitude.BL.ShipmentsModel.EntityPMs;
 
 namespace Logitude.Infrastructure.BL.EntityQueryServices
 { 
@@ -68,5 +69,23 @@ namespace Logitude.Infrastructure.BL.EntityQueryServices
             else
                 return null;
         }
-   }
+
+        public ShipmentPM MapShipmentSharedLogisticsFields(ShipmentPM pm, int tenant)
+        {
+            ShipmentPM shipmentPM = pm;
+            SharedLogisticsSettingRepository sharedLogisticsSettingRepository = new SharedLogisticsSettingRepository(tenant);
+            SharedLogisticsSetting sharedLogisticsSetting = sharedLogisticsSettingRepository.GetSingle(tenant.ToString(), tenant);
+            if (sharedLogisticsSetting != null)
+            {
+                shipmentPM.IsSharedLogisticsMoneyTabEnabled = sharedLogisticsSetting.IsMoneyTabEnabled;
+                shipmentPM.IsSharedLogisticsMainCarrierVisible = sharedLogisticsSetting.IsMainCarrierShared;
+                shipmentPM.IsSharedLogisticsPickDelvCarrierVisible = sharedLogisticsSetting.IsPickDelivCarriesShared;
+                shipmentPM.IsSharedLogisticsAgentVisible = sharedLogisticsSetting.IsAgentShared;
+                shipmentPM.IsSharedLogisticsShipperVisible = sharedLogisticsSetting.IsShipperShared;
+                shipmentPM.IsSharedLogisticsConsigneeVisible = sharedLogisticsSetting.IsConsigneeShared;
+            }
+
+            return shipmentPM;
+        }
+    }
 }

@@ -12,6 +12,7 @@
     jQuery.DisplayDocumentsAndEvents = false;
     jQuery.DownloadAll = false;
     jQuery.DocumentUrl = "";
+    jQuery.AllDocumentsFileName = "";
 
     jQuery.ResizePage = (function (myFixedHeight) {
         var minHeight = 400;
@@ -53,6 +54,39 @@
         });
     });
 
+    jQuery.GetLoginTenant = (function (myDomain) {
+
+        var url = "api/CargoTrackingBranding/?domain=" + myDomain;
+
+        $.ajax({
+            url: url,
+            type: 'GET',
+            contentType: 'application/json',
+
+            success: function (result) {
+                if (result != null && result.Result != null) {
+                    $.CurrentTenant = result.Result;
+
+                    $.GetLogginData();
+                    $.GetCompanyLogo();
+                }
+                else {
+                    $("#DocumentsPageBusyIndicator").hide();
+                    $("#Container").hide();
+                    $("#InvalidKeyArea").show();
+                }
+            },
+
+            error: function (jqXHR, textStatus, errorThrown) {
+                $.CheckUserException(jqXHR);
+                $("#DocumentsPageBusyIndicator").hide();
+                $("#Container").hide();
+                $("#InvalidKeyArea").show();
+            }
+        });
+
+    });
+
     jQuery.GetLogginData = (function () {
 
         var url = "api/commondata/?email=" + $.CurrentEmail + "&tenant=" + $.CurrentTenant + "&cardId=" + $.CurrentCardId;
@@ -90,7 +124,7 @@
         $("#DocumentsPageBusyIndicator").show();
 
         if ($.IsExternalURL) {
-            var url = "api/shipments/getsinglepmbykey/" + $.CurrentEntityKey + "/" + $.CurrentEntityId + "/" + $.CurrentTenant;
+            var url = "api/shipments/getsinglepmbykeyandtenant/" + $.CurrentEntityKey + "/" + $.CurrentTenant;
         }
 
         $.ajax({
@@ -106,7 +140,7 @@
                     $("#DocumentsPageBusyIndicator").hide();
                     if ($.IsExternalURL) {
                         if ($.DisplayDocumentsAndEvents) {
-                            $.GetShipmentDocuments($.CurrentEntityId, $.CurrentEntityKey);
+                            $.GetShipmentDocuments($.CurrentEntityId, $.CurrentEntityKey, "MasterDocuments_"+ shipmentPM.LongMaster);
                             if (shipmentPM.ConnectedShipments > 0) {
                                 $.GetMasterConnectedHouseShipments();
                             }
@@ -146,7 +180,7 @@
         });
     });
 
-    jQuery.GetShipmentDocuments = (function (myEntityId, myEntityKey) {
+    jQuery.GetShipmentDocuments = (function (myEntityId, myEntityKey, fileName) {
         $("#DocumentsPageBusyIndicator").show();
 
         var url = null;
@@ -166,7 +200,7 @@
                 let documentsTabPageControlId = "#DocumentsTabPageControl" + myEntityId;
                 if (result.length > 0) {
                     $("#DownloadAllConnectedDocuments").show();
-                    ko.applyBindings(BuildMasterDocumentsTabPageViewModel(myEntityId, result, ""), document.getElementById(documentsTabPageControlId));
+                    ko.applyBindings(BuildMasterDocumentsTabPageViewModel(myEntityId, result, fileName, ""), document.getElementById(documentsTabPageControlId));
                 }
 
                 else {
@@ -214,7 +248,7 @@
                     $.each(result, function (index, value) {
                         if (value) {
                             if ($.DisplayDocumentsAndEvents) {
-                                $.GetShipmentDocuments(value.Id, value.SecurityKey);
+                                $.GetShipmentDocuments(value.Id, value.SecurityKey, "HouseDocuments_"+value.House);
                             }
                             else {
                                 $("#DocumentsTabPageControl" + value.Id).css({
@@ -253,7 +287,12 @@
         var linkArray = link.split('=')
         var linkQuery = linkArray[1];
         var linkParameters = null;
-
+        var domain = link.split("/sharedmasterdocumentspage.aspx")[0];
+        if (domain != null && domain.indexOf("//") > -1) {
+            domain = domain.split("//")[1];
+            if (domain.indexOf(":") > -1)
+                domain = domain.split(":")[0];
+        }
         if (linkQuery && linkQuery.indexOf('%3A') > -1) {
             linkParameters = linkQuery.split('%3A')
         }
@@ -263,19 +302,11 @@
 
         if ($.trim(link).indexOf("securitykey") != -1) {
             $.CurrentEntityKey = linkParameters[0];
-            $.CurrentEntityId = linkParameters[1];
-            $.CurrentTenant = linkParameters[2];
-            $.IsBrandingEnabled = linkParameters[3];
-
             $.IsExternalURL = true;
-            if ($.IsBrandingEnabled == "true") {
-                //Do Something
-            }
 
             $("#DownloadAllConnectedDocuments").hide();
             $("#DocumentsPageBusyIndicator").show();
-            $.GetLogginData();
-            $.GetCompanyLogo();
+            $.GetLoginTenant(domain);
         }
     });
 
@@ -285,6 +316,7 @@ function SetShipmentPM(shipmentPM) {
     $.CurrentEntityPM = shipmentPM;
     $.CurrentEntityId = shipmentPM.Id;
     $("#LongMasterNumber").html(shipmentPM.LongMaster);
+    $.AllDocumentsFileName = "MasterDocuments_" + shipmentPM.LongMaster;
     $("#ConnectedShipments").html(" (" + shipmentPM.ConnectedShipments + " Houses)");
     $("#MainCarriageCarrierName").html(shipmentPM.MainCarriageCarrierName != null ? shipmentPM.MainCarriageCarrierName : "---");
     let mainCarriageATD = shipmentPM.MainCarriageATD;

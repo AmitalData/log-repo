@@ -69,26 +69,32 @@ namespace WebFreight.Web
 
         private void HandlePage(string[] linkParameters)
         {
-            SetCurrentEntityVariables(linkParameters);
             SetCargoTrackingBrandingData();
+            SetCurrentEntityVariables(linkParameters);
             SetAllConnectedHousesShipments();
         }
 
         private void SetCurrentEntityVariables(string[] linkParameters)
         {
-            CurrentEntityId = linkParameters[1];
-            if (linkParameters[2] != null)
+            if (Tenant != null)
             {
-                Tenant = Int32.Parse(linkParameters[2]);
+                ShipmentQuery shipmentQuery = new ShipmentQuery((int)Tenant);
+
+                ShipmentPM pm = shipmentQuery.GetSinglePMBySecurityKeyAndTenant(linkParameters[0], (int)Tenant);
+                if (pm != null)
+                {
+                    CurrentEntityId = pm.Id;
+                }
             }
         }
 
         private void SetCargoTrackingBrandingData()
         {
-            TenantManagementQuery tenantManagementQuery = new TenantManagementQuery((int)Tenant);
+            TenantManagementQuery tenantManagementQuery = new TenantManagementQuery(0);
             TenantManagementPM tenantManagementPM = tenantManagementQuery.GetSinglePMByDomain(this.Domain);
             if (tenantManagementPM != null)
             {
+                this.Tenant = tenantManagementPM.Id;
                 this.MainColor = tenantManagementPM.MainColor == null ? this.MainColor : ConvertHexaToRGBA(tenantManagementPM.MainColor);
                 this.SecondaryColor = tenantManagementPM.SecondaryColor == null ? this.SecondaryColor : ConvertHexaToRGBA(tenantManagementPM.SecondaryColor);
             }
