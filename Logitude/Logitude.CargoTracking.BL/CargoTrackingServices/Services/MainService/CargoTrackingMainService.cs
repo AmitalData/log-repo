@@ -183,7 +183,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
         private RecordUpdated UpdateCargoTrackingDatabase(CargoTrackingUpdateDataBaseArgs cargoTrackingDataBaseArgs, 
                                                          bool isUpadteWaterMark = false)
         {
-            RecordUpdated _RecordUpdated = new RecordUpdated();
+            RecordUpdated recordUpdated = new RecordUpdated();
             KeysForRecoredsNotValidated = new List<string>();
             BulkDataPreperation bulkDataPreperation = InitializeBulkDataPreperation(cargoTrackingDataBaseArgs);
             using (SqlConnection sourceConnection =
@@ -199,9 +199,9 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
                 AfterFinishUpdateCargoTracking(bulkDataPreperation, isUpadteWaterMark);
                 sourceConnection.Close();
             }
-            _RecordUpdated.NumberOfRecordUpdated = bulkDataPreperation.NumberOfMainCoulmnsUpdated;
-            _RecordUpdated.NumberOfRecordUpdated2 = bulkDataPreperation.NumberOfInnerCoulmnsUpdated;
-            return _RecordUpdated;
+            recordUpdated.NumberOfRecordUpdated = bulkDataPreperation.NumberOfMainCoulmnsUpdated;
+            recordUpdated.NumberOfRecordUpdated2 = bulkDataPreperation.NumberOfInnerCoulmnsUpdated;
+            return recordUpdated;
         }
 
         private void AddDummyCoulmnsToDatatTable(BulkDataPreperation bulkDataPreperation)
@@ -265,7 +265,6 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
                      .Cast<DataRow>()
                      .Select(r => (string)r[bulkDataPreperation.CargoTrackingTable.KeyName].ToString())
                      .ToList();
-            var ThreadStardBulding = bulkDataPreperation.NumberRecoredTake;
             DataTable dataTable = bulkDataPreperation.MainDataTable.Clone();
             foreach (DataRow drtableOld in bulkDataPreperation.MainDataTable.Rows)
             {

@@ -34,19 +34,21 @@ export class CargoTrackingBuildShipmentComponent extends BaseComponent implement
   }
 
   OkButtonClicked(){
-    this.ValidationErrorsList=[];
-    if(this.SelectedValue ==="S" && AppTool.IsNullOrEmpty(this.Tenant)){
-        this.ValidationErrorsList.push("Please enter the number of an existing Tenant");
-    }
-    else{
-        this.ValidateDate(null);
-    }
-
+    this.ValidateCargoTrackingBuildScreen();
     if(this.ValidationErrorsList == null || this.ValidationErrorsList.length==0){
          this.OpenConfirmMessage();
     }
  }
  
+ ValidateCargoTrackingBuildScreen(){
+    this.ValidationErrorsList=[];
+    if(this.SelectedValue ==="S" && AppTool.IsNullOrEmpty(this.Tenant)){
+        this.ValidationErrorsList.push("Please enter the number of an existing Tenant");
+    }
+    else{
+        this.ValidateDate(true);
+    }
+ }
 
  private OpenConfirmMessage(){
 
@@ -70,7 +72,7 @@ export class CargoTrackingBuildShipmentComponent extends BaseComponent implement
     public set FromDate(value: Date) {
         if (this.fromDate != value) {
             this.fromDate = value;
-            this.ValidateDate("FromDate");
+            this.ValidateDate();
 
         }
     }
@@ -86,7 +88,7 @@ export class CargoTrackingBuildShipmentComponent extends BaseComponent implement
     public set ToDate(value: Date) {
         if (this.toDate != value) {
             this.toDate = value;
-            this.ValidateDate("ToDate");
+            this.ValidateDate();
            
 
         }
@@ -108,26 +110,45 @@ export class CargoTrackingBuildShipmentComponent extends BaseComponent implement
      }
 }
  
-  ValidateDate(fieldName: any) {
-    
-     if(!this.FromDate || !this.ToDate){
-        if (fieldName == null) {
-            this.ValidationErrorsList.push("Please Fill All Dates Fields");
-        }
-        
-            this.UIProperties.SetValidity("ToDate", this.ObjectTableName, false, "''To date'' field is required");
-            this.UIProperties.SetValidity("FromDate", this.ObjectTableName, false, "''From date'' field is required");
+  ValidateDate(fromButtonClick: boolean=false) {
+    if(!this.FromDate || !this.ToDate){
+      this.ValidateIsToDateAndFromDateFilled(fromButtonClick);
     }
     else if (DateTool.GetDateFromDate(this.FromDate, true) > DateTool.GetDateFromDate(this.ToDate, true)) {
-        if (fieldName == null) {
-            this.ValidationErrorsList.push("''To date'' field must be greater than or equal to ''From date'' field");
-        }
-        
-            this.UIProperties.SetValidity("ToDate", this.ObjectTableName, false, "''To date'' field must be greater than or equal to ''From date'' field");
-            this.UIProperties.SetValidity("FromDate", this.ObjectTableName, false, "''From date'' field must be less than or equal to ''To date'' field");
+        this.ValidateIsToDateGreaterOrEqualFromDate(fromButtonClick);
+     }
+     else{
+        this.SetUIPropertiesDateValidation(true);
      }
     
 }
+ValidateIsToDateAndFromDateFilled(fromButtonClick: boolean){
+    var toDateValidationText="''To date'' field is required";
+    var fromDateValidationText="''From date'' field is required";
+    var fromtoDateValidationText="Please Fill All Dates Fields";
+    if (fromButtonClick) {
+        this.ValidationErrorsList.push(fromtoDateValidationText);
+    }
+    this.SetUIPropertiesDateValidation(false,toDateValidationText,fromDateValidationText);
+        
+}
+
+ValidateIsToDateGreaterOrEqualFromDate(fromButtonClick: boolean){
+    var toDateValidationText="''To date'' field must be greater than or equal to ''From date'' field";
+    var fromDateValidationText="''From date'' field must be less than or equal to ''To date'' field";
+    var fromtoDateValidationText="''To date'' field must be greater than or equal to ''From date'' field";
+    if (fromButtonClick) {
+        this.ValidationErrorsList.push(fromtoDateValidationText);
+    }
+    this.SetUIPropertiesDateValidation(false,toDateValidationText,fromDateValidationText);
+        
+}
+
+SetUIPropertiesDateValidation(isValid:boolean,toDateText:string=null,fromDateText:string=null){
+    this.UIProperties.SetValidity("ToDate", this.ObjectTableName, isValid, toDateText);
+    this.UIProperties.SetValidity("FromDate", this.ObjectTableName, isValid, fromDateText);
+}
+
 SetUIProperty() {
      
 }
@@ -141,12 +162,12 @@ CargoTrackingBuilder() {
     this.CurrentSession.StartBusyIndicatorLoading();
     this.iCargoTrackingExtendedPMService.PostCargoTrackingBuilder(iCargoTrackingArgs).subscribe((response: ServiceResponse) => {
     this.CurrentSession.StopBusyIndicator();
-      var mm: ServiceResponse = response;
-      if (!mm.HasError) {
+    var  response: ServiceResponse = response;
+      if (!response.HasError) {
           this.CurrentSession.CloseCurrentWindow();
       }
       else {
-        this.ValidationErrorsList.push(mm.ErrorsArray.toString());
+        this.ValidationErrorsList.push(response.ErrorsArray.toString());
       }
 
     });
