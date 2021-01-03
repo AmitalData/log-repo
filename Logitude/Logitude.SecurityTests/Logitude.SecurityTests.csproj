@@ -102,14 +102,17 @@
   <ItemGroup>
     <Compile Include="Models\Login\LoginParameters.cs" />
     <Compile Include="Models\Login\UserData.cs" />
+    <Compile Include="Models\Login\UsersData.cs" />
     <Compile Include="Models\Shipment\ShipmentSecurityAccessStepsContext.cs" />
     <Compile Include="Models\Shipment\ShipmentPM.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Steps\Login\LoginSteps.cs" />
+    <Compile Include="Steps\Shipment\CreateAndUpdateShipmentSecurityAccessSteps.cs" />
     <Compile Include="Steps\Shipment\GetShipmentSecurityAccessSteps.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <None Include="Features\Shipment\CreateAndUpdateShipmentSecurityAccess.feature" />
     <None Include="Features\Shipment\GetShipmentSecurityAccess.feature" />
     <None Include="packages.config" />
   </ItemGroup>
