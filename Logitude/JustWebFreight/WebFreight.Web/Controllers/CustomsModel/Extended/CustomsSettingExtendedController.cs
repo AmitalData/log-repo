@@ -270,6 +270,16 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                                         .ToList();
                                 }
                                 break;
+
+                            case "SincroSendRetrieveDeclaration":
+                                {
+                                    mySincroTestCaseDetailList =
+                                    queryService.GetAllSincroTestCaseDetails()
+                                        .Where(r => r.Entity == "RetrieveDeclaration")
+                                        .Where(r => !r.IsDCA)
+                                        .ToList();
+                                }
+                                break;
                             case "SincroSendDeclarationDCA":
                                 {
                                     mySincroTestCaseDetailList
