@@ -901,12 +901,14 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
             IQueryable<LedgerTransaction> query;
             int myMAX = getNextGroupArgs.MaxPageSize; //getNextGroupArgs.LT_LinesMaximum;
             GetNextGroupArgs args = getNextGroupArgs;
+            bool onlyZeroes = args.OnlyZeroes;
             LedgerTransactionRepository repo = new LedgerTransactionRepository(this.context);
             List<LedgerTransaction> q;
             if (getNextGroupArgs.MoveOn)
             {
                 query = repo.GetAll(getNextGroupArgs.Tenant).Where(rec => rec.Tenant == args.Tenant && rec.AccountId == args.GLAccountId
                     && (rec.OpenAmount > 0.00m || rec.OpenAmount < 0.00m || (rec.OpenAmount == 0m && rec.IsReconciled == false))
+                    && (args.OnlyZeroes == false || rec.OpenAmount == 0m)
                     && (rec.DueDate > args.OldDate || (rec.DueDate == args.OldDate && String.Compare(rec.Id, args.OldId) > 0))
                     && rec.DueDate < args.UpToDueDate).OrderBy(r => r.DueDate).ThenBy(r1 => r1.Id).Take(myMAX);//.ToList();
             }
@@ -915,6 +917,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                // myMAX = getNextGroupArgs.LT_LinesMaximum;// was * 2;
                 query = repo.GetAll(getNextGroupArgs.Tenant).Where(rec => rec.Tenant == args.Tenant && rec.AccountId == args.GLAccountId
                     && (rec.OpenAmount > 0.00m || rec.OpenAmount < 0.00m || (rec.OpenAmount == 0m && rec.IsReconciled == false))
+                    && (args.OnlyZeroes == false || rec.OpenAmount == 0m)
                     && (rec.DueDate > args.OldDate || (rec.DueDate == args.OldDate && String.Compare(rec.Id, args.OldId) >= 0))
                     && rec.DueDate < args.UpToDueDate).OrderBy(r => r.DueDate).ThenBy(r1 => r1.Id).Take(myMAX);//.ToList();
 
@@ -923,6 +926,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
             {
                 query = repo.GetAll(getNextGroupArgs.Tenant).Where(rec => rec.Tenant == args.Tenant && rec.AccountId == args.GLAccountId
                     && (rec.OpenAmount > 0.00m || rec.OpenAmount < 0.00m || (rec.OpenAmount == 0m && rec.IsReconciled == false))
+                    && (args.OnlyZeroes == false || rec.OpenAmount == 0m)
                     && (rec.DueDate > args.OldDate || (rec.DueDate == args.OldDate && String.Compare(rec.Id, args.OldId) > 0))
                     && rec.DueDate < args.UpToDueDate).OrderBy(r => r.DueDate).ThenBy(r1 => r1.Id).Take(myMAX);//.ToList();
 
@@ -1456,6 +1460,8 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
         public int MaxPageSize { get; set; }
         public decimal MaximalDifference { get; set; }
         public decimal ActualDifference { get; set; }
+        public bool OnlyZeroes { get; set; }
+
     }
 
     public class GetAllAccountArgs
