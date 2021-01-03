@@ -1151,7 +1151,11 @@ namespace WebFreight.Web.WebServices
                                                                     ChargeTypeEnglish = g.Select(s => s.ChargesType.EnglishName).FirstOrDefault(),
                                                                     ChargeTypeLocal = g.Select(s => s.ChargesType.EnglishName).FirstOrDefault(),
                                                                     PrepaidChargeAmount = g.Select(s => s.PrepaidCollectId).FirstOrDefault() == "P" ? g.Sum(s => s.TotalAmount) : 0,
+                                                                    PrepaidChargeAmountInProfitCurrency = g.Select(s => s.PrepaidCollectId).FirstOrDefault() == "P" ? g.Sum(s => s.AmountInProfitCurrency) : 0,
+                                                                    PrepaidChargeAmountInLocalCurrency = g.Select(s => s.PrepaidCollectId).FirstOrDefault() == "P" ? g.Sum(s => s.TotalAmountLocal) : 0,
                                                                     CollectChargeAmount = g.Select(s => s.PrepaidCollectId).FirstOrDefault() == "C" ? g.Sum(s => s.TotalAmount) : 0,
+                                                                    CollectChargeAmountInProfitCurrency = g.Select(s => s.PrepaidCollectId).FirstOrDefault() == "C" ? g.Sum(s => s.AmountInProfitCurrency) : 0,
+                                                                    CollectChargeAmountInLocalCurrency = g.Select(s => s.PrepaidCollectId).FirstOrDefault() == "C" ? g.Sum(s => s.TotalAmountLocal) : 0,
                                                                     Remark = g.Select(s => s.Notes).FirstOrDefault(),
                                                                     CurrencyCode = g.Select(s => s.Currency.Code).FirstOrDefault(),
                                                                     CurrencyName = g.Select(s => s.Currency.EnglishName).FirstOrDefault(),
@@ -1162,7 +1166,11 @@ namespace WebFreight.Web.WebServices
                 if (shipmentReceivables != null)
                 {
                     myDataProvider.TotalPrepaid = shipmentReceivables.Sum(a => a.PrepaidChargeAmount);
+                    myDataProvider.TotalPrepaidInProfitCurrency = shipmentReceivables.Sum(a => a.PrepaidChargeAmountInProfitCurrency);
+                    myDataProvider.TotalPrepaidInLocalCurrency = shipmentReceivables.Sum(a => a.PrepaidChargeAmountInLocalCurrency);
                     myDataProvider.TotalCollect = shipmentReceivables.Sum(a => a.CollectChargeAmount);
+                    myDataProvider.TotalCollectInProfitCurrency = shipmentReceivables.Sum(a => a.CollectChargeAmountInProfitCurrency);
+                    myDataProvider.TotalCollectInLocalCurrency = shipmentReceivables.Sum(a => a.CollectChargeAmountInLocalCurrency);
                 }
 
                 //ShipmentReceivableRepository receivableRepository = new ShipmentReceivableRepository(tenant);
