@@ -65,6 +65,9 @@ namespace Logitude.Accounting.BL.CoreBL
                 reconciledTransactions = GetReconciledInvoicesTransactions();
 
                 reconciledTransactions = FillReconciliationNumbersOnTransactions(reconciledTransactions);
+
+                reconciledTransactions = FillReconciledPaymentAmountOnTransaction(reconciledTransactions);
+
             }
 
             return reconciledTransactions;
@@ -145,7 +148,6 @@ namespace Logitude.Accounting.BL.CoreBL
             reconciledTransactions.ForEach(transaction =>
             {
                 var foreignAmount = transaction.ForeignAmountCredit == 0 ? transaction.ForeignAmountDebit : transaction.ForeignAmountCredit;
-                transaction.AmountToReconcile = foreignAmount;
             });
         }
 
