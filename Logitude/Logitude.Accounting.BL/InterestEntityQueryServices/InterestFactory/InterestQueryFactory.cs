@@ -9,27 +9,31 @@ namespace Logitude.Accounting.BL.InterestEntityQueryServices.InterestFactory
 {
     public class InterestQueryFactory
     {
+        const string InterestEntityTypeCode_ARInvoice = "1";
+        const string InterestEntityTypeCode_ARPayment = "2";
+        const string InterestEntityTypeCode_Journal = "3";
+        const string InterestEntityTypeCode_InterestReport = "4";
         public static IInterestEntityQueryService CreateInstance(string code)
         {
             IInterestEntityQueryService entifty=null; 
             switch (code)
             {
-                case "1":
+                case InterestEntityTypeCode_ARInvoice:
                     {
                         entifty = new InterestARInvoiceQueryService();
                         break;
                     }
-                 case "2":
+                 case InterestEntityTypeCode_ARPayment:
                     {
                         entifty = new InterestARPaymentQueryService();
                         break;
                     }
-                case "3":
+                case InterestEntityTypeCode_Journal:
                     {
                         entifty = new InterestJournalQueryService();
                         break;
                     }
-                case "4":
+                case InterestEntityTypeCode_InterestReport:
                     {
                         entifty = new InterestInterestReportQueryService();
                         break;
