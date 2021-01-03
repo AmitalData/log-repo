@@ -155,7 +155,12 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
             TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "AccountingPartner");
             TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "Card");
-            RunStoredProcedureClass.UpdateCardSearcsRecords(entityPM.Id, entityPM.Tenant);
+
+            string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
+            if (dbms != "oracle")
+            {
+                RunStoredProcedureClass.UpdateCardSearcsRecords(entityPM.Id, entityPM.Tenant);
+            }
 
             foreach (ContactPM itemPM in entityPM.Contacts)
             {
@@ -225,8 +230,11 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
             TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "AccountingPartner");
             TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "Card");
-            RunStoredProcedureClass.UpdateCardSearcsRecords(entityPM.Id, entityPM.Tenant);
-
+            string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
+            if (dbms != "oracle")
+            {
+                RunStoredProcedureClass.UpdateCardSearcsRecords(entityPM.Id, entityPM.Tenant);
+            }
         }
 
         private void InitializeComponent()

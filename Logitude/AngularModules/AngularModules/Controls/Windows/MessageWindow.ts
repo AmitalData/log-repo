@@ -234,7 +234,9 @@ export class MessageWindowTemplateComponent implements AfterViewInit {
     OkButtonClicked() {
         this.MessageWindow.Close();
     }
-
+    OnCTRL_S_HotKeyPressed(){
+        this.OkButtonClicked();
+    }
     GetIconPath() {
         var path = "./Images/InfoIcon.png";
         if (this.ShowSuccessIcon)

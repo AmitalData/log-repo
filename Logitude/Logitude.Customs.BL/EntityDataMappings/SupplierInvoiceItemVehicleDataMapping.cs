@@ -49,6 +49,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
                 CargoIdentityQualifierPM cargoIdentityQualifier = cargoIdentityQualifierQueryService.GetSingle(entityPOCO.VehicleTypeCode, false, true); ;
                 if (cargoIdentityQualifier != null)
                     entityPM.VehicleTypeName = cargoIdentityQualifier.LocalName;
+                
             }
 
             if (entityPOCO.RichbitFileNumber != null || entityPOCO.VehicleChassisNumber != null)
@@ -57,6 +58,14 @@ namespace Logitude.Customs.BL.EntityDataMappings
                 VehiclePM vehicle = vehicleQueryService.GetVehicleByVehicleChassisNumberOrRichbitFileNumber(entityPOCO.VehicleChassisNumber, entityPOCO.RichbitFileNumber, entityPOCO.Tenant);
                 if (vehicle != null)
                     entityPM.RichbitFileStatus = vehicle.StatusName;
+            }
+            if(entityPOCO.VehicleChassisNumber != null)
+            {
+                entityPM.VehicleChassisNumberSource = entityPOCO.VehicleChassisNumber;
+            }
+            if(entityPOCO.RichbitFileNumber != null)
+            {
+                entityPM.RichbitFileNumberSource = entityPOCO.RichbitFileNumber;
             }
         }
    }

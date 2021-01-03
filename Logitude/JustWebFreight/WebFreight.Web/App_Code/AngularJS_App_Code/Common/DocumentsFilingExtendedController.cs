@@ -167,7 +167,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Common
             newDocument.UpdateDate = TenantServerConfigration.GetCurrentDateTime(tenant);
             newDocument.ExternalEntityName = externalEntityName;
             newDocument.ExternalEntityReference = externalEntityReference;
-            newDocument.EntityNumber = entityNumber;
+            newDocument.EntityReference = entityNumber;
             // documentsFilingRepository.Add(newDocument);
             //documentsFilingRepository.SubmitChanges();
 

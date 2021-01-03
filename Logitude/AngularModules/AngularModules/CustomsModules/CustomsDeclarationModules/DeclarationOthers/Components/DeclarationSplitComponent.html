@@ -379,7 +379,7 @@
                 <img *ngIf="!IsNoDocumentSelected &&  this.base64Image!=null " style="width: 100%;" class="grabbable"
                      (mousemove)="OnMouseMove($event)"
                      (mousedown)="OnMouseDown($event)"
-                     (mouseup)="OnMouseUp($event)"
+                      (mouseup)="OnMouseUp($event)"
                      [attr.src]="base64Image" alt=""
                      draggable="false" />
             </div>

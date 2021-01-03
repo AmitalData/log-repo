@@ -764,8 +764,8 @@
   </Column>
   <Column
     Name="AmendmentRejectionReason"
-    Type="nvarchar"
-    Size="512">
+    Type="varchar"
+    Size="3">
     <Constraints
       Nullable="true" />
   </Column>
@@ -953,6 +953,26 @@
     Type="decimal"
     Precision="16"
     Scale="2">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="TransshipmentApprovalDateTime"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="FinalLoadingSite"
+    Type="varchar"
+    Size="10">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="PalestinianCode"
+    Type="nvarchar"
+    Size="15">
     <Constraints
       Nullable="true" />
   </Column>
@@ -1151,6 +1171,13 @@
     ReferencedTable="CancellationRequestStatuses"
     ReferencedColumn="Code"
     ReferencedTableSchema="Customs" />
+  <Relation
+    ForeignKeyColumn="FinalLoadingSite"
+    ReferencedTable="LoadingSiteTypes"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="Customs" />
   <Index
     Columns="AmendmentOriginalDeclartation" />
+  <Index
+    Columns="CourierHAWB" />
 </Table>

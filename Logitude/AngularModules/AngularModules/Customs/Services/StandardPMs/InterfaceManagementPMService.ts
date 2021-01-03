@@ -153,6 +153,7 @@ export class InterfaceManagementPMService {
         if (!entityPM) {
             
             entityPM = new InterfaceManagementPM();
+			entityPM.DisableMarkAsDirty = true;
         }
 
 		var customFields: Array<string> = [];
@@ -193,6 +194,8 @@ export class InterfaceManagementPMService {
             entityPM.OldEntityPM = null;
         }
 		entityPM.IsDirty = false;
+	    entityPM.DisableMarkAsDirty = false;
+
         return entityPM;
     }
 

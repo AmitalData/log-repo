@@ -19,7 +19,7 @@
     <Constraints
       PrimaryKey="true"
       Nullable="false" />
-  </Column>
+  </Column>   
   <Column
     Name="InvoiceItemLineNumber"
     Type="int">

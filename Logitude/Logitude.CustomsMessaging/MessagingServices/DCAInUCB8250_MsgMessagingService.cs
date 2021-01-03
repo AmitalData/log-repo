@@ -81,6 +81,8 @@ namespace Logitude.CustomsMessaging.MessagingServices
         public string CreateCRS(int tenant, string LoggingUserId, string CourierMasterId, string testerSendOption)
         {
             var objectTableId = ObjectTableRepository.GetObjectTableByName("Customs.CourierMaster");
+            var objectTableId2 = ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
+
             var customsRequestsSheetQS = new CustomsRequestsSheetQueryService(tenant);
             var RequestInProgressList = customsRequestsSheetQS.GetRequestInProgress(tenant, this.MainInterfaceCode, objectTableId, CourierMasterId, null, null, null, true);
             if (RequestInProgressList != null && RequestInProgressList.Count > 0)
@@ -98,7 +100,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
 
                 //foreach (var item in listPoco)
                 //{
-                var RequestInProgressList2 = customsRequestsSheetQS.GetRequestInProgressByIds(tenant, "8250", objectTableId, Ids, true);
+                var RequestInProgressList2 = customsRequestsSheetQS.GetRequestInProgressByIds(tenant, "8250", objectTableId2, Ids, false);
                 if (RequestInProgressList2 != null && RequestInProgressList2.Count > 0)
                 {
                     ///throw new System.Exception("Requestsheet  with Interface Type  = UCB8250  already in progress  !!!");

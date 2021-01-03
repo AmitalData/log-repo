@@ -53,7 +53,10 @@ export class ItemGovernmentProcedureTypePM {
     public OldEntityPM: ItemGovernmentProcedureTypePM;
 		
     public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
+       if(!this.DisableMarkAsDirty)
+       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -61,6 +64,7 @@ export class ItemGovernmentProcedureTypePM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "Customs.ItemGovernmentProcedureType");
            
         }
+       }
     }
 
     private MyClone: ItemGovernmentProcedureTypePM;

@@ -122,6 +122,18 @@ namespace Logitude.Customs.BL.Messaging.Maman
         private GWMessageECTHRData CreateCourierHawbMamanMessage(
             DeclarationPM myDeclarationPM, CourierMasterPM myCourierMasterPM)
         {
+            var context = CustomContext.GetContext(myDeclarationPM.Tenant);
+
+            bool isDelay = false;
+            var declarationMamanSpecialActionQueryService = new DeclarationMamanSpecialActionQueryService(context);
+            var pmDeclarationMamanSpecialAction = declarationMamanSpecialActionQueryService.GetSingle(myDeclarationPM.Id, ((int)MamanSpecialCode.ReceivingDelayCertificate_DelayIt).ToString(), false, false);
+
+            if(pmDeclarationMamanSpecialAction!= null)
+            {
+                isDelay = true;
+            }
+
+
             var ConsignmentPackageQualifierCode2 = myDeclarationPM.Consignments.SelectMany(r => r.ConsignmentPackages)
                 .Where(r1 => r1.PackageMeasureQualifierCode == "2")
                 .ToList();
@@ -149,10 +161,12 @@ namespace Logitude.Customs.BL.Messaging.Maman
             //Get Trucker details - Task 49270
             string distributorHP = "";
             string distributorName = "";
-            if (!string.IsNullOrWhiteSpace(myCourierMasterPM.TruckerId))
-            { 
-                CardRepository cardRep = new CardRepository(myCourierMasterPM.Tenant);
-                Card card = cardRep.GetSingleCard(myCourierMasterPM.TruckerId, myCourierMasterPM.Tenant);
+            DeclarationCourierStatusRepository declarationCourierStatusRepository = new DeclarationCourierStatusRepository(myDeclarationPM.Tenant);
+            var declarationCourierStatus = declarationCourierStatusRepository.GetSingle(myDeclarationPM.Id, myDeclarationPM.Tenant);
+            if (!string.IsNullOrWhiteSpace(declarationCourierStatus.TruckerId))
+            {
+                CardRepository cardRep = new CardRepository(myDeclarationPM.Tenant);
+                Card card = cardRep.GetSingleCardCache(declarationCourierStatus.TruckerId, myDeclarationPM.Tenant);
                 if (card != null)
                 {
                     distributorHP = card.VatNumber;
@@ -167,14 +181,14 @@ namespace Logitude.Customs.BL.Messaging.Maman
             var courierHawbMamanModel = new GWMessageECTHRData()
             {
                 BaldarCode = defBaldarCodeValue,//"לקחת מדיפולט קוד משלח בלדר",
-                BaldarAwb = myDeclarationPM.CourierHAWB??"",
+                BaldarAwb = myDeclarationPM.CourierHAWB ?? "",
                 //AirlineAwbPref = _CourierMasterPM.AirlineId,//יש לשלוח את Airline PRFIX)- 114
-                AirlineAwbPref = myCourierMasterPM.AirlinePrefix??"",//יש לשלוח את Airline PRFIX)- 114
+                AirlineAwbPref = myCourierMasterPM.AirlinePrefix ?? "",//יש לשלוח את Airline PRFIX)- 114
 
                 Master = CInt(myCourierMasterPM.MAWB),
                 Awb8 = aw8,
-                HawbExtnd = myCourierMasterPM.HAWB??"",
-                AirlineCode = customsAirline.AirlineCode??"",
+                HawbExtnd = myCourierMasterPM.HAWB ?? "",
+                AirlineCode = customsAirline.AirlineCode ?? "",
                 FltNo = CInt(myCourierMasterPM.FlightNumber),
                 //FltDate = _CourierMasterPM.DepartureDate.GetValueOrDefault().Date,// fltdate is not nullable ??
                 LandTime = myCourierMasterPM.EstimatedArrivalDate,// LandTime is not nullable ??
@@ -182,12 +196,12 @@ namespace Logitude.Customs.BL.Messaging.Maman
                 DecWeight = DecWeight,
                 DolarValue = DolarValue,
                 StoreTypeReq = "67",//לפי טבלה B1                יש לשלוח תמיד 67
-                Description = myDeclarationPM.Consignments.DefaultIfEmpty(new ConsignmentPM()).First().CargoDescription??"",
-                CustomerName = myDeclarationPM.ImporterName??"",
-                CustomerAddress = myDeclarationPM.ImporterAddress??"",
-                CustomerPhone = myDeclarationPM.CasualImporterTel??"",
-//                DestLineDesc = "1",//יש לנהל קו הפרדה פר לקוח                יעד הפצה של חברת ההפצה לצורך בניית ממשקים
-                DestLineDesc = "כללי",// - שינוי בשדה יעד המטען שליחה של "כללי" כברירת מחדל במקום 1
+                Description = myDeclarationPM.Consignments.DefaultIfEmpty(new ConsignmentPM()).First().CargoDescription ?? "",
+                CustomerName = myDeclarationPM.ImporterName ?? "",
+                CustomerAddress = myDeclarationPM.ImporterAddress ?? "",
+                CustomerPhone = myDeclarationPM.CasualImporterTel ?? "",
+                //                DestLineDesc = "1",//יש לנהל קו הפרדה פר לקוח                יעד הפצה של חברת ההפצה לצורך בניית ממשקים
+                DestLineDesc = declarationCourierStatus.DistributionArea ?? "כללי",// " - שינוי בשדה יעד המטען שליחה של "כללי" כברירת מחדל במקום 1
                 BaldarMessageTime = DateTime.Now,
                 BaldarHp = myDeclarationPM.AgentId??"",
                 OpenBaldarAwbDate = GetOpenBaldarAwbDate(myDeclarationPM),// _DeclarationPM.Consignments.DefaultIfEmpty(new ConsignmentPM()).First().ThirdCargoID.GetValueOrDefault(),///ThirdCargoID.Consignment
@@ -200,7 +214,7 @@ namespace Logitude.Customs.BL.Messaging.Maman
                 //Task 46455
                 DistributorHP = distributorHP,
                 DistributorName = distributorName,
-
+                 IsDelay = isDelay
 
             };
 
@@ -301,7 +315,8 @@ namespace Logitude.Customs.BL.Messaging.Maman
 
         public int ResponseStatusCode { get; set; }
         public string ResponseStatusMsg { get; set; }
-        
+        public bool IsDelay { get; set; }
+
 
 
     }

@@ -153,6 +153,7 @@ export class UIMessageAdditionalPMService {
         if (!entityPM) {
             
             entityPM = new UIMessageAdditionalPM();
+			entityPM.DisableMarkAsDirty = true;
         }
 
 		var customFields: Array<string> = [];
@@ -193,6 +194,8 @@ export class UIMessageAdditionalPMService {
             entityPM.OldEntityPM = null;
         }
 		entityPM.IsDirty = false;
+	    entityPM.DisableMarkAsDirty = false;
+
         return entityPM;
     }
 

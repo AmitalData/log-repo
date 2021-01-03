@@ -614,7 +614,7 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
 
         var logWindow = new LogitudeWindow();
         logWindow.Width =700;
-        logWindow.Height = 400;
+        logWindow.Height = 600;
         logWindow.Title = "תרחשי הצהרה";
         logWindow.ShowCloseButton = false;
         logWindow.WindowArgs = windowArgs;
@@ -768,8 +768,8 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
                         var messageWindow = new MessageWindow();
                         messageWindow.Width = 400;
                         messageWindow.Height = 150;
-                        messageWindow.Title = "םיפוס מספר הצהרה";
-                        messageWindow.Show("לם ניתן לםפס מספר הצהרה ,קיימת בקשה מסוג הגשת תשלום ");
+                        messageWindow.Title = "איפוס מספר הצהרה";
+                        messageWindow.Show("לא ניתן לאפס מספר הצהרה ,קיימת בקשה מסוג הגשת תשלום ");
                         return;
                     }
 
@@ -1005,7 +1005,7 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
                         messageWindow.Width = 400;
                         messageWindow.Height = 150;
                         messageWindow.Title = "שיחזור מספר הצהרה";
-                        messageWindow.Show("לם ניתן לשחזר מספר הצהרה ,קיימת בקשה מסוג הצהרה בתהליך ");
+                        messageWindow.Show("לא ניתן לשחזר מספר הצהרה ,קיימת בקשה מסוג הצהרה בתהליך ");
                         return;
                     }
 
@@ -1374,7 +1374,7 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
 
         var confirmWindow = new ConfirmWindow();
         confirmWindow.Width = 300;
-        confirmWindow.Show("הםם ברצונך לסגור םת ההצהרה ?");//TextCodeTranslator.Translate("Customs.PhysicalCheck.O.IsClosePhysicalCheck"));
+        confirmWindow.Show("האם ברצונך לסגור את ההצהרה ?");//TextCodeTranslator.Translate("Customs.PhysicalCheck.O.IsClosePhysicalCheck"));
         confirmWindow.WindowClosed.subscribe((event: any) => {
             if (confirmWindow.Yes) {
                 this.declarationWebService.DeclarationClosureMethod(this.EntityPM.Id, this.EntityPM.Tenant)
@@ -1396,7 +1396,7 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
 
         var confirmWindow = new ConfirmWindow();
         confirmWindow.Width = 300;
-        confirmWindow.Show("הםם ברצונך לבטל סגירת ההצהרה ?");//TextCodeTranslator.Translate("Customs.PhysicalCheck.O.IsClosePhysicalCheck"));
+        confirmWindow.Show("האם ברצונך לבטל סגירת ההצהרה ?");//TextCodeTranslator.Translate("Customs.PhysicalCheck.O.IsClosePhysicalCheck"));
         confirmWindow.WindowClosed.subscribe((event: any) => {
             if (confirmWindow.Yes) {
                 this.declarationWebService.CancelDeclarationClosureMethod(this.EntityPM.Id, this.EntityPM.Tenant)

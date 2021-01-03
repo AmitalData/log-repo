@@ -157,6 +157,7 @@ export class CustomsCollateralPMService {
         if (!entityPM) {
             
             entityPM = new CustomsCollateralPM();
+			entityPM.DisableMarkAsDirty = true;
         }
 
 		var customFields: Array<string> = [];
@@ -224,6 +225,8 @@ export class CustomsCollateralPMService {
             entityPM.OldEntityPM = null;
         }
 		entityPM.IsDirty = false;
+	    entityPM.DisableMarkAsDirty = false;
+
         return entityPM;
     }
 
@@ -249,7 +252,8 @@ export class CustomsCollateralPMService {
             {
                 newCustomsCollateralsConditionPM = new CustomsCollateralsConditionPM(null);
             }
-                
+ 			newCustomsCollateralsConditionPM.DisableMarkAsDirty = true;
+               
             var pmKeysArray = Object.keys(jItem);
             for (var pmKey in pmKeysArray) {
                 if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
@@ -281,7 +285,7 @@ export class CustomsCollateralPMService {
                 newCustomsCollateralsConditionPM.OldEntityPM = null;
                 newCustomsCollateralsConditionPM.EntityParentPM = null;
             }
-			
+			 newCustomsCollateralsConditionPM.DisableMarkAsDirty = false;
 			 newCustomsCollateralsConditionPM.IsDirty = false;
             entityPM.CustomsCollateralsConditions.push(newCustomsCollateralsConditionPM);
         }
@@ -295,6 +299,7 @@ export class CustomsCollateralPMService {
                         //entityPM.CustomsCollateralsConditions.push(oldCustomsCollateralsConditions[itemKey]);
 						var oldItemJson = oldCustomsCollateralsConditions[itemKey];
                         var deletedPM: CustomsCollateralsConditionPM = new CustomsCollateralsConditionPM(null);
+						deletedPM.DisableMarkAsDirty = true;
                         var pmKeys = Object.keys(oldItemJson);
                         for (var key in pmKeys) {
 
@@ -306,7 +311,7 @@ export class CustomsCollateralPMService {
                             deletedPM[property] = oldItemJson[property];
                         }
 
-                      
+					    deletedPM.DisableMarkAsDirty = false;
                         deletedPM.IsDirty = false;
                         deletedPM.ChangeSetOp = "Delete";
                         
@@ -339,7 +344,8 @@ export class CustomsCollateralPMService {
             {
                 newCustomsCollateralsAnswerPM = new CustomsCollateralsAnswerPM(null);
             }
-                
+ 			newCustomsCollateralsAnswerPM.DisableMarkAsDirty = true;
+               
             var pmKeysArray = Object.keys(jItem);
             for (var pmKey in pmKeysArray) {
                 if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
@@ -382,7 +388,7 @@ export class CustomsCollateralPMService {
                 newCustomsCollateralsAnswerPM.OldEntityPM = null;
                 newCustomsCollateralsAnswerPM.EntityParentPM = null;
             }
-			
+			 newCustomsCollateralsAnswerPM.DisableMarkAsDirty = false;
 			 newCustomsCollateralsAnswerPM.IsDirty = false;
             entityPM.CustomsCollateralsAnswers.push(newCustomsCollateralsAnswerPM);
         }
@@ -396,6 +402,7 @@ export class CustomsCollateralPMService {
                         //entityPM.CustomsCollateralsAnswers.push(oldCustomsCollateralsAnswers[itemKey]);
 						var oldItemJson = oldCustomsCollateralsAnswers[itemKey];
                         var deletedPM: CustomsCollateralsAnswerPM = new CustomsCollateralsAnswerPM(null);
+						deletedPM.DisableMarkAsDirty = true;
                         var pmKeys = Object.keys(oldItemJson);
                         for (var key in pmKeys) {
 
@@ -407,7 +414,7 @@ export class CustomsCollateralPMService {
                             deletedPM[property] = oldItemJson[property];
                         }
 
-                      
+					    deletedPM.DisableMarkAsDirty = false;
                         deletedPM.IsDirty = false;
                         deletedPM.ChangeSetOp = "Delete";
                         
@@ -443,7 +450,8 @@ export class CustomsCollateralPMService {
             {
                 newCollateralsRequestFileCondPM = new CollateralsRequestFileCondPM(null);
             }
-                
+ 			newCollateralsRequestFileCondPM.DisableMarkAsDirty = true;
+               
             var pmKeysArray = Object.keys(jItem);
             for (var pmKey in pmKeysArray) {
                 if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
@@ -480,7 +488,7 @@ export class CustomsCollateralPMService {
                 newCollateralsRequestFileCondPM.OldEntityPM = null;
                 newCollateralsRequestFileCondPM.EntityParentPM = null;
             }
-			
+			 newCollateralsRequestFileCondPM.DisableMarkAsDirty = false;
 			 newCollateralsRequestFileCondPM.IsDirty = false;
             entityPM.CollateralsRequestFileConds.push(newCollateralsRequestFileCondPM);
         }
@@ -494,6 +502,7 @@ export class CustomsCollateralPMService {
                         //entityPM.CollateralsRequestFileConds.push(oldCollateralsRequestFileConds[itemKey]);
 						var oldItemJson = oldCollateralsRequestFileConds[itemKey];
                         var deletedPM: CollateralsRequestFileCondPM = new CollateralsRequestFileCondPM(null);
+						deletedPM.DisableMarkAsDirty = true;
                         var pmKeys = Object.keys(oldItemJson);
                         for (var key in pmKeys) {
 
@@ -505,7 +514,7 @@ export class CustomsCollateralPMService {
                             deletedPM[property] = oldItemJson[property];
                         }
 
-                      
+					    deletedPM.DisableMarkAsDirty = false;
                         deletedPM.IsDirty = false;
                         deletedPM.ChangeSetOp = "Delete";
                         

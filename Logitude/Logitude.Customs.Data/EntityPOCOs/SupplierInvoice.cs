@@ -140,6 +140,10 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public string PartyRelationshipCode { get; set; }
 	      
         public virtual PartyRelationshipType PartyRelationship { get; set; }
+        [Column("ItemFOBAmountForeign")]
+	    public decimal? ItemFOBAmountForeign { get; set; }
+        [Column("ItemFOBAmountNIS")]
+	    public decimal? ItemFOBAmountNIS { get; set; }
     }
 }
 	 

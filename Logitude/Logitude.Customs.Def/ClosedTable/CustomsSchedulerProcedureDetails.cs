@@ -28,6 +28,13 @@ namespace Logitude.Customs.Def.ClosedTable
                 Description = "Send Manifest",
 
             });
+            all.Add(new CustomsSchedulerProcedureDetails()
+            {
+                Code= "CustomsSendDeclarationStatus",
+                Name= "CustomsSendDeclarationStatus",
+                SearchFields= "CustomsSendDeclarationStatus,CustomsSendDeclarationStatus",
+                Description="Send DeclarationStatus",
+            });
             return all;
         }
             public void MapPoco(SchedulerProcedure newPoco)

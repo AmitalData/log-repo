@@ -4,7 +4,7 @@
   ObjectTableName="&quot;Customs.DeclarationCargoSplit&quot;"
   IsNew="false"
   DBTableName="&quot;Customs.DeclarationCargoSplits&quot;"
-  OldDBTableName="&quot;Customs.DeclarationCargoSplits&quot;"
+  DBTableOldNames="Customs.DeclarationCargoSplits"
   ObjectTableSingular="&quot;Customs.DeclarationCargoSplit&quot;"
   ObjectTablePlural="&quot;Customs.DeclarationCargoSplits&quot;"
   HasCustomFilter="false"
@@ -50,6 +50,7 @@
   NoViewController="false"
   NoPMController="false"
   NoTS="false"
+  NoDefaultFeatures="false"
   HasCompactSearch="false"
   ApplyDefaultValues="false"
   HasMenuButtons="true"
@@ -62,12 +63,13 @@
   DisableSearchBox="false"
   HasDocuments="false"
   IsLookUp="false"
+  IsTabsHidden="false"
   DxmlDatabaseTypeCode="Main"
   DxmlDatabaseSchemaCode="Customs">
   <field
     Id="&quot;047c5fe0-324a-4d57-ad84-21a26a8a99d9&quot;"
     FieldName="&quot;Id&quot;"
-    OldFieldName="&quot;Id&quot;"
+    OldNames="Id"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -76,7 +78,9 @@
     MinLength="0"
     MaxLength="15"
     IsRequired="true"
+    CopyToDW="false"
     DisplayOnLookUp="false"
+    DisplayOnLookUpLocal="false"
     CanFilter="false"
     DisplayOnly="false"
     SystemRequired="false"
@@ -114,6 +118,7 @@
     ListLocalDefaultText="&quot;Id&quot;"
     IsNullable="false"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="true"
     HasDataBaseField="true"
     HasPMField="true"
@@ -127,16 +132,18 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
-    IsSpellCheckedListLocalDefaultText="false" />
+    IsSpellCheckedListLocalDefaultText="false"
+    EnableFullscreenTextBox="false" />
   <field
     Id="&quot;e7943785-034a-478a-a02c-50bc6d07e7ae&quot;"
     FieldName="&quot;Tenant&quot;"
-    OldFieldName="&quot;Tenant&quot;"
+    OldNames="Tenant"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -145,7 +152,9 @@
     MinLength="0"
     MaxLength="0"
     IsRequired="true"
+    CopyToDW="false"
     DisplayOnLookUp="false"
+    DisplayOnLookUpLocal="false"
     CanFilter="false"
     DisplayOnly="false"
     SystemRequired="false"
@@ -183,6 +192,7 @@
     ListLocalDefaultText="&quot;Tenant&quot;"
     IsNullable="false"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -196,16 +206,18 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
-    IsSpellCheckedListLocalDefaultText="false" />
+    IsSpellCheckedListLocalDefaultText="false"
+    EnableFullscreenTextBox="false" />
   <field
     Id="&quot;d6220d75-190f-41f3-8188-9a94c5872fe7&quot;"
     FieldName="&quot;RequestDate&quot;"
-    OldFieldName="&quot;RequestDate&quot;"
+    OldNames="RequestDate"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -214,7 +226,9 @@
     MinLength="0"
     MaxLength="0"
     IsRequired="true"
+    CopyToDW="false"
     DisplayOnLookUp="false"
+    DisplayOnLookUpLocal="false"
     CanFilter="false"
     DisplayOnly="false"
     SystemRequired="false"
@@ -252,6 +266,7 @@
     ListLocalDefaultText="&quot;תאריך בקשת פיצול&quot;"
     IsNullable="false"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -265,16 +280,18 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
-    IsSpellCheckedListLocalDefaultText="false" />
+    IsSpellCheckedListLocalDefaultText="false"
+    EnableFullscreenTextBox="false" />
   <field
     Id="&quot;222a0744-8e31-4aa4-81e9-2d97049503c7&quot;"
     FieldName="&quot;SearchFields&quot;"
-    OldFieldName="&quot;SearchFields&quot;"
+    OldNames="SearchFields"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -283,7 +300,9 @@
     MinLength="0"
     MaxLength="1000"
     IsRequired="false"
+    CopyToDW="false"
     DisplayOnLookUp="false"
+    DisplayOnLookUpLocal="false"
     CanFilter="false"
     DisplayOnly="false"
     SystemRequired="false"
@@ -319,6 +338,7 @@
     ListLableDefaultText="&quot;Search ...&quot;"
     IsNullable="true"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -332,16 +352,18 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
-    IsSpellCheckedListLocalDefaultText="false" />
+    IsSpellCheckedListLocalDefaultText="false"
+    EnableFullscreenTextBox="false" />
   <field
     Id="&quot;956a8e1a-e613-4acd-8828-46393671faad&quot;"
     FieldName="&quot;ActionTypeCode&quot;"
-    OldFieldName="&quot;ActionTypeCode&quot;"
+    OldNames="ActionTypeCode"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -351,7 +373,9 @@
     MinLength="0"
     MaxLength="2"
     IsRequired="true"
+    CopyToDW="false"
     DisplayOnLookUp="false"
+    DisplayOnLookUpLocal="false"
     CanFilter="true"
     DisplayOnly="false"
     SystemRequired="false"
@@ -391,6 +415,7 @@
     IsNullable="true"
     IsForeignKey="true"
     ForeignEntity="ActionCode"
+    DontBuildRelationOnDB="false"
     NavigationPropertyName="ActionCode"
     IsPrimaryKey="false"
     HasDataBaseField="true"
@@ -405,16 +430,18 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
-    IsSpellCheckedListLocalDefaultText="false" />
+    IsSpellCheckedListLocalDefaultText="false"
+    EnableFullscreenTextBox="false" />
   <field
     Id="&quot;143c5c64-61c0-4bab-8bf8-3d0a1e7d679e&quot;"
     FieldName="&quot;RequestReason&quot;"
-    OldFieldName="&quot;RequestReason&quot;"
+    OldNames="RequestReason"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -424,7 +451,9 @@
     MinLength="0"
     MaxLength="3"
     IsRequired="true"
+    CopyToDW="false"
     DisplayOnLookUp="false"
+    DisplayOnLookUpLocal="false"
     CanFilter="true"
     DisplayOnly="false"
     SystemRequired="false"
@@ -464,6 +493,7 @@
     IsNullable="true"
     IsForeignKey="true"
     ForeignEntity="SplitOrMergeReason"
+    DontBuildRelationOnDB="false"
     NavigationPropertyName="SplitOrMergeReason"
     IsPrimaryKey="false"
     HasDataBaseField="true"
@@ -478,16 +508,18 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
-    IsSpellCheckedListLocalDefaultText="false" />
+    IsSpellCheckedListLocalDefaultText="false"
+    EnableFullscreenTextBox="false" />
   <field
     Id="&quot;c7e0f8c7-dfdd-44cd-80d8-8cba7a76bbc2&quot;"
     FieldName="&quot;RequestNumber&quot;"
-    OldFieldName="&quot;RequestNumber&quot;"
+    OldNames="RequestNumber"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -496,7 +528,9 @@
     MinLength="0"
     MaxLength="9"
     IsRequired="false"
+    CopyToDW="false"
     DisplayOnLookUp="false"
+    DisplayOnLookUpLocal="false"
     CanFilter="true"
     DisplayOnly="false"
     SystemRequired="false"
@@ -535,6 +569,7 @@
     ListLocalDefaultText="&quot;מספר בקשת פיצול&quot;"
     IsNullable="true"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -548,16 +583,18 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
-    IsSpellCheckedListLocalDefaultText="false" />
+    IsSpellCheckedListLocalDefaultText="false"
+    EnableFullscreenTextBox="false" />
   <field
     Id="&quot;5b26e7e8-562d-4387-8b38-807cd27e4393&quot;"
     FieldName="&quot;ActionTypeName&quot;"
-    OldFieldName="&quot;ActionTypeName&quot;"
+    OldNames="ActionTypeName"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -566,7 +603,9 @@
     MinLength="0"
     MaxLength="40"
     IsRequired="false"
+    CopyToDW="false"
     DisplayOnLookUp="false"
+    DisplayOnLookUpLocal="false"
     CanFilter="false"
     DisplayOnly="false"
     SystemRequired="false"
@@ -605,6 +644,7 @@
     ListLocalDefaultText="&quot;סוג פעולה&quot;"
     IsNullable="true"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="false"
     HasPMField="true"
@@ -618,30 +658,34 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
-    IsSpellCheckedListLocalDefaultText="false" />
+    IsSpellCheckedListLocalDefaultText="false"
+    EnableFullscreenTextBox="false" />
   <field
     Id="&quot;a79ba21d-50f0-4f3f-8d5f-416265648d18&quot;"
     FieldName="&quot;RequestReasonName&quot;"
-    OldFieldName="&quot;RequestReasonName&quot;"
+    OldNames="RequestReasonName"
     IsNew="false"
-    IsChecked="false"
+    IsChecked="true"
     IsDeleted="false"
     ObjectTableName="&quot;Customs.DeclarationCargoSplit&quot;"
     FieldsDataType="&quot;Text&quot;"
     MinLength="0"
-    MaxLength="40"
+    MaxLength="100"
     IsRequired="false"
+    CopyToDW="false"
     DisplayOnLookUp="false"
+    DisplayOnLookUpLocal="false"
     CanFilter="false"
     DisplayOnly="false"
     SystemRequired="false"
     ObjectFieldNotRequired="false"
-    SystemMaxLength="40"
+    SystemMaxLength="100"
     DisplayInList="true"
     IsCustomFilter="false"
     Operator="&quot;StartsWith&quot;"
@@ -675,6 +719,7 @@
     ListLocalDefaultText="&quot;סיבת בקשה לפיצול&quot;"
     IsNullable="true"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="false"
     HasPMField="true"
@@ -688,16 +733,18 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
-    IsSpellCheckedListLocalDefaultText="false" />
+    IsSpellCheckedListLocalDefaultText="false"
+    EnableFullscreenTextBox="false" />
   <field
     Id="&quot;cbdbf696-b243-4147-b532-312ff03f4d90&quot;"
     FieldName="&quot;RequestRemarks&quot;"
-    OldFieldName="&quot;RequestRemarks&quot;"
+    OldNames="RequestRemarks"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -706,7 +753,9 @@
     MinLength="0"
     MaxLength="255"
     IsRequired="false"
+    CopyToDW="false"
     DisplayOnLookUp="false"
+    DisplayOnLookUpLocal="false"
     CanFilter="true"
     DisplayOnly="false"
     SystemRequired="false"
@@ -745,6 +794,7 @@
     ListLocalDefaultText="&quot;הערות לבקשת פיצול&quot;"
     IsNullable="true"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -758,16 +808,18 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
-    IsSpellCheckedListLocalDefaultText="false" />
+    IsSpellCheckedListLocalDefaultText="false"
+    EnableFullscreenTextBox="false" />
   <field
     Id="&quot;718df416-e2fd-4527-8ae9-9db09d63f958&quot;"
     FieldName="&quot;CargoTypeCode&quot;"
-    OldFieldName="&quot;CargoTypeCode&quot;"
+    OldNames="CargoTypeCode"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -777,7 +829,9 @@
     MinLength="0"
     MaxLength="4"
     IsRequired="true"
+    CopyToDW="false"
     DisplayOnLookUp="false"
+    DisplayOnLookUpLocal="false"
     CanFilter="true"
     DisplayOnly="false"
     SystemRequired="false"
@@ -817,6 +871,7 @@
     IsNullable="true"
     IsForeignKey="true"
     ForeignEntity="CargoIdentifireType"
+    DontBuildRelationOnDB="false"
     NavigationPropertyName="CargoIdentifireType"
     IsPrimaryKey="false"
     HasDataBaseField="true"
@@ -831,16 +886,18 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
-    IsSpellCheckedListLocalDefaultText="false" />
+    IsSpellCheckedListLocalDefaultText="false"
+    EnableFullscreenTextBox="false" />
   <field
     Id="&quot;8daf5e36-1de9-4f69-9091-1101321189f2&quot;"
     FieldName="&quot;CargoTypeName&quot;"
-    OldFieldName="&quot;CargoTypeName&quot;"
+    OldNames="CargoTypeName"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -849,7 +906,9 @@
     MinLength="0"
     MaxLength="40"
     IsRequired="false"
+    CopyToDW="false"
     DisplayOnLookUp="false"
+    DisplayOnLookUpLocal="false"
     CanFilter="false"
     DisplayOnly="false"
     SystemRequired="false"
@@ -888,6 +947,7 @@
     ListLocalDefaultText="&quot;סוג מזהה מטען&quot;"
     IsNullable="true"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="false"
     HasPMField="true"
@@ -901,16 +961,18 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
-    IsSpellCheckedListLocalDefaultText="false" />
+    IsSpellCheckedListLocalDefaultText="false"
+    EnableFullscreenTextBox="false" />
   <field
     Id="&quot;9cf357f5-175b-45d0-8685-80d8ac4edf1a&quot;"
     FieldName="&quot;ManifestNumber&quot;"
-    OldFieldName="&quot;ManifestNumber&quot;"
+    OldNames="ManifestNumber"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -919,7 +981,9 @@
     MinLength="0"
     MaxLength="35"
     IsRequired="true"
+    CopyToDW="false"
     DisplayOnLookUp="false"
+    DisplayOnLookUpLocal="false"
     CanFilter="true"
     DisplayOnly="false"
     SystemRequired="false"
@@ -958,6 +1022,7 @@
     ListLocalDefaultText="&quot;מזהה מטען ראשון&quot;"
     IsNullable="true"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -971,16 +1036,18 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
-    IsSpellCheckedListLocalDefaultText="false" />
+    IsSpellCheckedListLocalDefaultText="false"
+    EnableFullscreenTextBox="false" />
   <field
     Id="&quot;e228aabf-111a-41a5-8f21-7529262a2ca6&quot;"
     FieldName="&quot;SecondCargoID&quot;"
-    OldFieldName="&quot;SecondCargoID&quot;"
+    OldNames="SecondCargoID"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -989,7 +1056,9 @@
     MinLength="0"
     MaxLength="35"
     IsRequired="false"
+    CopyToDW="false"
     DisplayOnLookUp="false"
+    DisplayOnLookUpLocal="false"
     CanFilter="true"
     DisplayOnly="false"
     SystemRequired="false"
@@ -1028,6 +1097,7 @@
     ListLocalDefaultText="&quot;מזהה מטען שני&quot;"
     IsNullable="true"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -1041,16 +1111,18 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
-    IsSpellCheckedListLocalDefaultText="false" />
+    IsSpellCheckedListLocalDefaultText="false"
+    EnableFullscreenTextBox="false" />
   <field
     Id="&quot;ddd9b0dc-a1ae-4717-8610-1e065d969c60&quot;"
     FieldName="&quot;ThirdCargoID&quot;"
-    OldFieldName="&quot;ThirdCargoID&quot;"
+    OldNames="ThirdCargoID"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -1059,7 +1131,9 @@
     MinLength="0"
     MaxLength="35"
     IsRequired="false"
+    CopyToDW="false"
     DisplayOnLookUp="false"
+    DisplayOnLookUpLocal="false"
     CanFilter="true"
     DisplayOnly="false"
     SystemRequired="false"
@@ -1098,6 +1172,7 @@
     ListLocalDefaultText="&quot;מזהה מטען שלישי&quot;"
     IsNullable="true"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -1111,16 +1186,18 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
-    IsSpellCheckedListLocalDefaultText="false" />
+    IsSpellCheckedListLocalDefaultText="false"
+    EnableFullscreenTextBox="false" />
   <field
     Id="&quot;51542534-6245-4cd6-ba82-c9592706fa07&quot;"
     FieldName="&quot;DeclarationId&quot;"
-    OldFieldName="&quot;DeclarationId&quot;"
+    OldNames="DeclarationId"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -1129,7 +1206,9 @@
     MinLength="0"
     MaxLength="15"
     IsRequired="false"
+    CopyToDW="false"
     DisplayOnLookUp="false"
+    DisplayOnLookUpLocal="false"
     CanFilter="false"
     DisplayOnly="false"
     SystemRequired="false"
@@ -1168,6 +1247,7 @@
     IsNullable="true"
     IsForeignKey="true"
     ForeignEntity="Declaration"
+    DontBuildRelationOnDB="false"
     NavigationPropertyName="Declaration"
     IsPrimaryKey="false"
     HasDataBaseField="true"
@@ -1182,16 +1262,18 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
-    IsSpellCheckedListLocalDefaultText="false" />
+    IsSpellCheckedListLocalDefaultText="false"
+    EnableFullscreenTextBox="false" />
   <field
     Id="&quot;32c3cbbe-384c-4df5-8d1b-4ea816f40ca7&quot;"
     FieldName="&quot;IsClosed&quot;"
-    OldFieldName="&quot;IsClosed&quot;"
+    OldNames="IsClosed"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -1200,7 +1282,9 @@
     MinLength="0"
     MaxLength="0"
     IsRequired="true"
+    CopyToDW="false"
     DisplayOnLookUp="false"
+    DisplayOnLookUpLocal="false"
     CanFilter="true"
     DisplayOnly="false"
     SystemRequired="false"
@@ -1241,6 +1325,7 @@
     ListLocalDefaultText="&quot;סגור&quot;"
     IsNullable="false"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -1254,16 +1339,18 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="true"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
-    IsSpellCheckedListLocalDefaultText="false" />
+    IsSpellCheckedListLocalDefaultText="false"
+    EnableFullscreenTextBox="false" />
   <field
     Id="&quot;d16a4683-77d2-4874-8e47-2a61423fd77c&quot;"
     FieldName="&quot;ResponseStatusCode&quot;"
-    OldFieldName="&quot;ResponseStatusCode&quot;"
+    OldNames="ResponseStatusCode"
     IsNew="false"
     IsChecked="true"
     IsDeleted="false"
@@ -1273,7 +1360,9 @@
     MinLength="0"
     MaxLength="2"
     IsRequired="false"
+    CopyToDW="false"
     DisplayOnLookUp="false"
+    DisplayOnLookUpLocal="false"
     CanFilter="true"
     DisplayOnly="false"
     SystemRequired="false"
@@ -1313,6 +1402,7 @@
     IsNullable="true"
     IsForeignKey="true"
     ForeignEntity="CargoSplitRequestStatus"
+    DontBuildRelationOnDB="false"
     NavigationPropertyName="CargoSplitRequestStatus"
     IsPrimaryKey="false"
     HasDataBaseField="true"
@@ -1327,16 +1417,18 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
-    IsSpellCheckedListLocalDefaultText="false" />
+    IsSpellCheckedListLocalDefaultText="false"
+    EnableFullscreenTextBox="false" />
   <field
     Id="&quot;64ca0f67-555f-4ba3-a240-86a922e58c56&quot;"
     FieldName="&quot;ResponseStatusName&quot;"
-    OldFieldName="&quot;ResponseStatusName&quot;"
+    OldNames="ResponseStatusName"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -1345,7 +1437,9 @@
     MinLength="0"
     MaxLength="40"
     IsRequired="false"
+    CopyToDW="false"
     DisplayOnLookUp="false"
+    DisplayOnLookUpLocal="false"
     CanFilter="false"
     DisplayOnly="false"
     SystemRequired="false"
@@ -1384,6 +1478,7 @@
     ListLocalDefaultText="&quot;סטטוס בקשת פיצול&quot;"
     IsNullable="true"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="false"
     HasPMField="true"
@@ -1397,16 +1492,18 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
-    IsSpellCheckedListLocalDefaultText="false" />
+    IsSpellCheckedListLocalDefaultText="false"
+    EnableFullscreenTextBox="false" />
   <field
     Id="&quot;22f65385-edce-4235-937d-208fa8a21519&quot;"
     FieldName="&quot;CustomFileNo&quot;"
-    OldFieldName="&quot;CustomFileNo&quot;"
+    OldNames="CustomFileNo"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -1415,7 +1512,9 @@
     MinLength="0"
     MaxLength="12"
     IsRequired="false"
+    CopyToDW="false"
     DisplayOnLookUp="false"
+    DisplayOnLookUpLocal="false"
     CanFilter="true"
     DisplayOnly="false"
     SystemRequired="false"
@@ -1454,6 +1553,7 @@
     ListLocalDefaultText="&quot;תיק עמילות&quot;"
     IsNullable="true"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="false"
     HasPMField="true"
@@ -1467,16 +1567,18 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
-    IsSpellCheckedListLocalDefaultText="false" />
+    IsSpellCheckedListLocalDefaultText="false"
+    EnableFullscreenTextBox="false" />
   <field
     Id="&quot;92fa9ed0-de75-4222-bcdb-fae5ead808c5&quot;"
     FieldName="&quot;DecCargoSplitCons&quot;"
-    OldFieldName="&quot;DecCargoSplitCons&quot;"
+    OldNames="DecCargoSplitCons"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -1485,7 +1587,9 @@
     MinLength="0"
     MaxLength="0"
     IsRequired="false"
+    CopyToDW="false"
     DisplayOnLookUp="false"
+    DisplayOnLookUpLocal="false"
     CanFilter="false"
     DisplayOnly="false"
     SystemRequired="false"
@@ -1519,6 +1623,7 @@
     DefaultText="&quot;Dec Cargo Split Cons&quot;"
     IsNullable="false"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="false"
     HasPMField="true"
@@ -1535,16 +1640,18 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
-    IsSpellCheckedListLocalDefaultText="false" />
+    IsSpellCheckedListLocalDefaultText="false"
+    EnableFullscreenTextBox="false" />
   <field
     Id="&quot;7ca37bae-399b-4532-be54-9d7053ad28b4&quot;"
     FieldName="&quot;DecCargoSplitCargoIdentifiers&quot;"
-    OldFieldName="&quot;DecCargoSplitCargoIdentifiers&quot;"
+    OldNames="DecCargoSplitCargoIdentifiers"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -1553,7 +1660,9 @@
     MinLength="0"
     MaxLength="0"
     IsRequired="false"
+    CopyToDW="false"
     DisplayOnLookUp="false"
+    DisplayOnLookUpLocal="false"
     CanFilter="false"
     DisplayOnly="false"
     SystemRequired="false"
@@ -1587,6 +1696,7 @@
     DefaultText="&quot;Dec Cargo Split Cargo Identifiers&quot;"
     IsNullable="false"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="false"
     HasPMField="true"
@@ -1603,264 +1713,261 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
-    IsSpellCheckedListLocalDefaultText="false" />
-  <Records />
-  <DataContracts />
-  <AdditionalTextCodes />
-  <AdditionalFeatures>
-    <Feature
-      Code="&quot;GENERAL&quot;"
-      FeatureTypeCode="&quot;AREA&quot;"
-      IsPackagable="true"
-      IsBusinessUnitEnabled="false"
-      IsOld="false"
-      IsCoreFeature="false"
-      FeatureTextCodeCode="&quot;Customs.CustomsDeclarationCargoSplit.Features.General&quot;"
-      FeatureDefaultText="&quot;General&quot;" />
-  </AdditionalFeatures>
+    IsSpellCheckedListLocalDefaultText="false"
+    EnableFullscreenTextBox="false" />
   <Query
     Code="&quot;OpenCargoSplits&quot;"
-    ObjectTableName="&quot;Customs.DeclarationCargoSplit&quot;"
-    IsAddNewEntity="true"
-    SystemLevel="true"
-    QuerySection="&quot;Customs.DeclarationCargoSplit&quot;"
-    IndexOrder="0"
-    QueryGroupCode="&quot;DECS&quot;"
-    QueryGroupName="&quot;Customs.DeclarationCargoSplit&quot;"
-    LocalTextCode="&quot;בקשות פיצול מטען פתוחות&quot;"
     TextCode="&quot;Open Cargo Splits&quot;"
-    TextCodeCode="&quot;Customs.DeclarationCargoSplit.Q.OpenCargoSplits&quot;"
-    IsSpellChecked="false"
-    FeatureCode="&quot;OPENCARGOSPLITS&quot;"
+    LocalTextCode="&quot;בקשות פיצול מטען פתוחות&quot;"
+    QueryGroupCode="&quot;DECS&quot;"
+    IndexOrder="0"
+    ObjectTableName="&quot;Customs.DeclarationCargoSplit&quot;"
+    QuerySection="&quot;Customs.DeclarationCargoSplit&quot;"
+    SystemLevel="true"
+    IsAddNewEntity="true"
     IsPackagable="true"
+    EditWizardName="&quot;Logitude.Customs.Views.DeclarationCargoSplit.DeclarationCargoSplitControl&quot;"
+    QueryGroupName="&quot;Customs.DeclarationCargoSplit&quot;"
+    TextCodeCode="&quot;Customs.DeclarationCargoSplit.Q.OpenCargoSplits&quot;"
+    FeatureCode="&quot;OPENCARGOSPLITS&quot;"
     FeatureTextCodeCode="&quot;Customs.CustomsDeclarationCargoSplit.Features.OpenDeclarationCargoSplits&quot;"
     FeatureDefaultText="&quot;Open Declaration Cargo Splits&quot;"
-    EditWizardName="&quot;Logitude.Customs.Views.DeclarationCargoSplit.DeclarationCargoSplitControl&quot;">
+    IsSpellChecked="false">
     <QueryColumns>
       <QueryColumn
+        QueryCode="&quot;OpenCargoSplits&quot;"
         IndexOrder="0"
-        ColumnWidth="110"
         ObjectFieldName="&quot;RequestNumber&quot;"
-        QueryCode="&quot;OpenCargoSplits&quot;" />
+        ColumnWidth="110" />
       <QueryColumn
+        QueryCode="&quot;OpenCargoSplits&quot;"
         IndexOrder="1"
-        ColumnWidth="110"
         ObjectFieldName="&quot;RequestDate&quot;"
-        QueryCode="&quot;OpenCargoSplits&quot;" />
+        ColumnWidth="110" />
       <QueryColumn
+        QueryCode="&quot;OpenCargoSplits&quot;"
         IndexOrder="2"
-        ColumnWidth="130"
         ObjectFieldName="&quot;ManifestNumber&quot;"
-        QueryCode="&quot;OpenCargoSplits&quot;" />
+        ColumnWidth="130" />
       <QueryColumn
+        QueryCode="&quot;OpenCargoSplits&quot;"
         IndexOrder="3"
-        ColumnWidth="130"
         ObjectFieldName="&quot;SecondCargoID&quot;"
-        QueryCode="&quot;OpenCargoSplits&quot;" />
+        ColumnWidth="130" />
       <QueryColumn
+        QueryCode="&quot;OpenCargoSplits&quot;"
         IndexOrder="4"
-        ColumnWidth="130"
         ObjectFieldName="&quot;ThirdCargoID&quot;"
-        QueryCode="&quot;OpenCargoSplits&quot;" />
+        ColumnWidth="130" />
       <QueryColumn
+        QueryCode="&quot;OpenCargoSplits&quot;"
         IndexOrder="5"
-        ColumnWidth="130"
         ObjectFieldName="&quot;ActionTypeName&quot;"
-        QueryCode="&quot;OpenCargoSplits&quot;" />
+        ColumnWidth="130" />
       <QueryColumn
+        QueryCode="&quot;OpenCargoSplits&quot;"
         IndexOrder="6"
-        ColumnWidth="130"
         ObjectFieldName="&quot;RequestReasonName&quot;"
-        QueryCode="&quot;OpenCargoSplits&quot;" />
+        ColumnWidth="130" />
       <QueryColumn
+        QueryCode="&quot;OpenCargoSplits&quot;"
         IndexOrder="7"
-        ColumnWidth="110"
         ObjectFieldName="&quot;CustomFileNo&quot;"
-        QueryCode="&quot;OpenCargoSplits&quot;" />
+        ColumnWidth="110" />
       <QueryColumn
+        QueryCode="&quot;OpenCargoSplits&quot;"
         IndexOrder="8"
-        ColumnWidth="130"
         ObjectFieldName="&quot;ResponseStatusName&quot;"
-        QueryCode="&quot;OpenCargoSplits&quot;" />
+        ColumnWidth="130" />
       <QueryColumn
+        QueryCode="&quot;OpenCargoSplits&quot;"
         IndexOrder="9"
-        ColumnWidth="130"
         ObjectFieldName="&quot;IsClosed&quot;"
-        QueryCode="&quot;OpenCargoSplits&quot;" />
+        ColumnWidth="130" />
     </QueryColumns>
     <QueryFilters>
       <QueryFilter
         QueryCode="&quot;OpenCargoSplits&quot;"
-        IndexOrder="0"
-        IsPredefined="true"
+        PredefinedValue="&quot;false&quot;"
         ObjectFieldName="&quot;IsClosed&quot;"
-        PredefinedValue="&quot;false&quot;" />
+        IsPredefined="true"
+        IndexOrder="0" />
     </QueryFilters>
   </Query>
   <Query
     Code="&quot;ClosedCargoSplits&quot;"
-    ObjectTableName="&quot;Customs.DeclarationCargoSplit&quot;"
-    IsAddNewEntity="true"
-    SystemLevel="true"
-    QuerySection="&quot;Customs.DeclarationCargoSplit&quot;"
-    IndexOrder="1"
-    QueryGroupCode="&quot;DECS&quot;"
-    QueryGroupName="&quot;Customs.DeclarationCargoSplit&quot;"
-    LocalTextCode="&quot;בקשות פיצול מטען סגורות&quot;"
     TextCode="&quot;Closed Cargo Splits&quot;"
-    TextCodeCode="&quot;Customs.DeclarationCargoSplit.Q.ClosedCargoSplits&quot;"
-    IsSpellChecked="false"
-    FeatureCode="&quot;CLOSEDCARGOSPLITS&quot;"
+    LocalTextCode="&quot;בקשות פיצול מטען סגורות&quot;"
+    QueryGroupCode="&quot;DECS&quot;"
+    IndexOrder="1"
+    ObjectTableName="&quot;Customs.DeclarationCargoSplit&quot;"
+    QuerySection="&quot;Customs.DeclarationCargoSplit&quot;"
+    SystemLevel="true"
+    IsAddNewEntity="true"
     IsPackagable="true"
+    EditWizardName="&quot;Logitude.Customs.Views.DeclarationCargoSplit.DeclarationCargoSplitControl&quot;"
+    QueryGroupName="&quot;Customs.DeclarationCargoSplit&quot;"
+    TextCodeCode="&quot;Customs.DeclarationCargoSplit.Q.ClosedCargoSplits&quot;"
+    FeatureCode="&quot;CLOSEDCARGOSPLITS&quot;"
     FeatureTextCodeCode="&quot;Customs.CustomsDeclarationCargoSplit.Features.ClosedDeclarationCargoSplits&quot;"
     FeatureDefaultText="&quot;Closed Declaration Cargo Splits&quot;"
-    EditWizardName="&quot;Logitude.Customs.Views.DeclarationCargoSplit.DeclarationCargoSplitControl&quot;">
+    IsSpellChecked="false">
     <QueryColumns>
       <QueryColumn
+        QueryCode="&quot;ClosedCargoSplits&quot;"
         IndexOrder="0"
-        ColumnWidth="110"
         ObjectFieldName="&quot;RequestNumber&quot;"
-        QueryCode="&quot;ClosedCargoSplits&quot;" />
+        ColumnWidth="110" />
       <QueryColumn
+        QueryCode="&quot;ClosedCargoSplits&quot;"
         IndexOrder="1"
-        ColumnWidth="110"
         ObjectFieldName="&quot;RequestDate&quot;"
-        QueryCode="&quot;ClosedCargoSplits&quot;" />
+        ColumnWidth="110" />
       <QueryColumn
+        QueryCode="&quot;ClosedCargoSplits&quot;"
         IndexOrder="2"
-        ColumnWidth="130"
         ObjectFieldName="&quot;ManifestNumber&quot;"
-        QueryCode="&quot;ClosedCargoSplits&quot;" />
+        ColumnWidth="130" />
       <QueryColumn
+        QueryCode="&quot;ClosedCargoSplits&quot;"
         IndexOrder="3"
-        ColumnWidth="130"
         ObjectFieldName="&quot;SecondCargoID&quot;"
-        QueryCode="&quot;ClosedCargoSplits&quot;" />
+        ColumnWidth="130" />
       <QueryColumn
+        QueryCode="&quot;ClosedCargoSplits&quot;"
         IndexOrder="4"
-        ColumnWidth="130"
         ObjectFieldName="&quot;ThirdCargoID&quot;"
-        QueryCode="&quot;ClosedCargoSplits&quot;" />
+        ColumnWidth="130" />
       <QueryColumn
+        QueryCode="&quot;ClosedCargoSplits&quot;"
         IndexOrder="5"
-        ColumnWidth="130"
         ObjectFieldName="&quot;ActionTypeName&quot;"
-        QueryCode="&quot;ClosedCargoSplits&quot;" />
+        ColumnWidth="130" />
       <QueryColumn
+        QueryCode="&quot;ClosedCargoSplits&quot;"
         IndexOrder="6"
-        ColumnWidth="130"
         ObjectFieldName="&quot;RequestReasonName&quot;"
-        QueryCode="&quot;ClosedCargoSplits&quot;" />
+        ColumnWidth="130" />
       <QueryColumn
+        QueryCode="&quot;ClosedCargoSplits&quot;"
         IndexOrder="7"
-        ColumnWidth="110"
         ObjectFieldName="&quot;CustomFileNo&quot;"
-        QueryCode="&quot;ClosedCargoSplits&quot;" />
+        ColumnWidth="110" />
       <QueryColumn
+        QueryCode="&quot;ClosedCargoSplits&quot;"
         IndexOrder="8"
-        ColumnWidth="130"
         ObjectFieldName="&quot;ResponseStatusName&quot;"
-        QueryCode="&quot;ClosedCargoSplits&quot;" />
+        ColumnWidth="130" />
       <QueryColumn
+        QueryCode="&quot;ClosedCargoSplits&quot;"
         IndexOrder="9"
-        ColumnWidth="130"
         ObjectFieldName="&quot;IsClosed&quot;"
-        QueryCode="&quot;ClosedCargoSplits&quot;" />
+        ColumnWidth="130" />
     </QueryColumns>
     <QueryFilters>
       <QueryFilter
         QueryCode="&quot;ClosedCargoSplits&quot;"
-        IndexOrder="0"
-        IsPredefined="true"
+        PredefinedValue="&quot;true&quot;"
         ObjectFieldName="&quot;IsClosed&quot;"
-        PredefinedValue="&quot;true&quot;" />
+        IsPredefined="true"
+        IndexOrder="0" />
     </QueryFilters>
   </Query>
   <Query
     Code="&quot;AllCargoSplits&quot;"
-    ObjectTableName="&quot;Customs.DeclarationCargoSplit&quot;"
-    IsAddNewEntity="true"
-    SystemLevel="true"
-    QuerySection="&quot;Customs.DeclarationCargoSplit&quot;"
-    IndexOrder="2"
-    QueryGroupCode="&quot;DECS&quot;"
-    QueryGroupName="&quot;Customs.DeclarationCargoSplit&quot;"
-    LocalTextCode="&quot;הכל&quot;"
     TextCode="&quot;All Cargo Splits&quot;"
-    TextCodeCode="&quot;Customs.DeclarationCargoSplit.Q.AllCargoSplits&quot;"
-    IsSpellChecked="false"
-    FeatureCode="&quot;ALLCARGOSPLITS&quot;"
+    LocalTextCode="&quot;הכל&quot;"
+    QueryGroupCode="&quot;DECS&quot;"
+    IndexOrder="2"
+    ObjectTableName="&quot;Customs.DeclarationCargoSplit&quot;"
+    QuerySection="&quot;Customs.DeclarationCargoSplit&quot;"
+    SystemLevel="true"
+    IsAddNewEntity="true"
     IsPackagable="true"
+    EditWizardName="&quot;Logitude.Customs.Views.DeclarationCargoSplit.DeclarationCargoSplitControl&quot;"
+    QueryGroupName="&quot;Customs.DeclarationCargoSplit&quot;"
+    TextCodeCode="&quot;Customs.DeclarationCargoSplit.Q.AllCargoSplits&quot;"
+    FeatureCode="&quot;ALLCARGOSPLITS&quot;"
     FeatureTextCodeCode="&quot;Customs.CustomsDeclarationCargoSplit.Features.AllDeclarationCargoSplits&quot;"
     FeatureDefaultText="&quot;All Declaration Cargo Splits&quot;"
-    EditWizardName="&quot;Logitude.Customs.Views.DeclarationCargoSplit.DeclarationCargoSplitControl&quot;">
+    IsSpellChecked="false">
     <QueryColumns>
       <QueryColumn
+        QueryCode="&quot;AllCargoSplits&quot;"
         IndexOrder="0"
-        ColumnWidth="110"
         ObjectFieldName="&quot;RequestNumber&quot;"
-        QueryCode="&quot;AllCargoSplits&quot;" />
+        ColumnWidth="110" />
       <QueryColumn
+        QueryCode="&quot;AllCargoSplits&quot;"
         IndexOrder="1"
-        ColumnWidth="110"
         ObjectFieldName="&quot;RequestDate&quot;"
-        QueryCode="&quot;AllCargoSplits&quot;" />
+        ColumnWidth="110" />
       <QueryColumn
+        QueryCode="&quot;AllCargoSplits&quot;"
         IndexOrder="2"
-        ColumnWidth="130"
         ObjectFieldName="&quot;ManifestNumber&quot;"
-        QueryCode="&quot;AllCargoSplits&quot;" />
+        ColumnWidth="130" />
       <QueryColumn
+        QueryCode="&quot;AllCargoSplits&quot;"
         IndexOrder="3"
-        ColumnWidth="130"
         ObjectFieldName="&quot;SecondCargoID&quot;"
-        QueryCode="&quot;AllCargoSplits&quot;" />
+        ColumnWidth="130" />
       <QueryColumn
+        QueryCode="&quot;AllCargoSplits&quot;"
         IndexOrder="4"
-        ColumnWidth="130"
         ObjectFieldName="&quot;ThirdCargoID&quot;"
-        QueryCode="&quot;AllCargoSplits&quot;" />
+        ColumnWidth="130" />
       <QueryColumn
+        QueryCode="&quot;AllCargoSplits&quot;"
         IndexOrder="5"
-        ColumnWidth="130"
         ObjectFieldName="&quot;ActionTypeName&quot;"
-        QueryCode="&quot;AllCargoSplits&quot;" />
+        ColumnWidth="130" />
       <QueryColumn
+        QueryCode="&quot;AllCargoSplits&quot;"
         IndexOrder="6"
-        ColumnWidth="130"
         ObjectFieldName="&quot;RequestReasonName&quot;"
-        QueryCode="&quot;AllCargoSplits&quot;" />
+        ColumnWidth="130" />
       <QueryColumn
+        QueryCode="&quot;AllCargoSplits&quot;"
         IndexOrder="7"
-        ColumnWidth="110"
         ObjectFieldName="&quot;CustomFileNo&quot;"
-        QueryCode="&quot;AllCargoSplits&quot;" />
+        ColumnWidth="110" />
       <QueryColumn
+        QueryCode="&quot;AllCargoSplits&quot;"
         IndexOrder="8"
-        ColumnWidth="130"
         ObjectFieldName="&quot;ResponseStatusName&quot;"
-        QueryCode="&quot;AllCargoSplits&quot;" />
+        ColumnWidth="130" />
       <QueryColumn
+        QueryCode="&quot;AllCargoSplits&quot;"
         IndexOrder="9"
-        ColumnWidth="130"
         ObjectFieldName="&quot;IsClosed&quot;"
-        QueryCode="&quot;AllCargoSplits&quot;" />
+        ColumnWidth="130" />
     </QueryColumns>
     <QueryFilters />
   </Query>
+  <Screen
+    Name="&quot;Customs.DeclarationCargoSplitHeaderScreen&quot;"
+    ObjectTableName="&quot;Customs.DeclarationCargoSplit&quot;"
+    IsReadOnly="true"
+    IsHeaderScreen="true"
+    NumberOfColumns="2"
+    NumberOfRows="1">
+    <ScreenFields />
+  </Screen>
   <EventTypes>
     <EventType
       Code="&quot;CREV&quot;"
       ObjectTableName="&quot;Customs.DeclarationCargoSplit&quot;"
-      ShortView="true"
-      IsManualEntry="false"
-      LocalName="&quot;Created&quot;"
       EnglishName="&quot;Created&quot;"
+      LocalName="&quot;Created&quot;"
+      IsManualEntry="false"
+      ShortView="true"
       EventTypeCategoryCode="&quot;OPE&quot;"
       IsAgentView="false"
       IsCustomerView="false"
@@ -1871,10 +1978,10 @@
     <EventType
       Code="&quot;UPEV&quot;"
       ObjectTableName="&quot;Customs.DeclarationCargoSplit&quot;"
-      ShortView="false"
-      IsManualEntry="false"
-      LocalName="&quot;Updated&quot;"
       EnglishName="&quot;Updated&quot;"
+      LocalName="&quot;Updated&quot;"
+      IsManualEntry="false"
+      ShortView="false"
       EventTypeCategoryCode="&quot;OPE&quot;"
       IsAgentView="false"
       IsCustomerView="false"
@@ -1885,10 +1992,10 @@
     <EventType
       Code="&quot;CSR&quot;"
       ObjectTableName="&quot;Customs.DeclarationCargoSplit&quot;"
-      ShortView="false"
-      IsManualEntry="false"
-      LocalName="&quot;בקשה לפיצול מטען&quot;"
       EnglishName="&quot;Cargo Split Request&quot;"
+      LocalName="&quot;בקשה לפיצול מטען&quot;"
+      IsManualEntry="false"
+      ShortView="false"
       EventTypeCategoryCode="&quot;LOG&quot;"
       IsAgentView="false"
       IsCustomerView="false"
@@ -1897,4 +2004,18 @@
       ManualActivatedFollowUp="false"
       IsFollowUp="false" />
   </EventTypes>
+  <Records />
+  <DataContracts />
+  <AdditionalTextCodes />
+  <AdditionalFeatures>
+    <Feature
+      Code="&quot;GENERAL&quot;"
+      FeatureTypeCode="&quot;AREA&quot;"
+      FeatureTextCodeCode="&quot;Customs.CustomsDeclarationCargoSplit.Features.General&quot;"
+      FeatureDefaultText="&quot;General&quot;"
+      IsPackagable="true"
+      IsOld="false"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
+  </AdditionalFeatures>
 </entity>

@@ -170,7 +170,7 @@ namespace Logitude.Customs.BL.Messaging.Amital
                         PRIMARYNUM = dirtyDeclarationPM.CustomFileNo,
                         FORMID = "LGT_UPDATE_FCI",
                         DEBUG = "F",
-                        DONEOPERATION = "A",
+                        DONEOPERATION = "D",
                         //GSTRING1 = myYCULTASKPM.TASKID,
                     };
                     myGGGQUpdateService.Update(myGGGQPM, true);

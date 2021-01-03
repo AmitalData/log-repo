@@ -73,7 +73,10 @@ export class CustomsHouseTypeAdditionalPM {
     public OldEntityPM: CustomsHouseTypeAdditionalPM;
 		
     public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
+       if(!this.DisableMarkAsDirty)
+       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -81,6 +84,7 @@ export class CustomsHouseTypeAdditionalPM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "Customs.CustomsHouseTypeAdditional");
            
         }
+       }
     }
 
     private MyClone: CustomsHouseTypeAdditionalPM;

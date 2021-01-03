@@ -302,6 +302,7 @@ export const ControlsComponents =
         FTBSchedulerTemplateComponent,
         SendInterfaceResultComponent,
         FTPAutomationDetailsComponent,
+        
     ];
 export const Components =
     [
@@ -376,7 +377,9 @@ export const Components =
         BTELogTabComponent,
         BTEParameterTabComponent,
         LastSuccessfulLoginComponent,
-        FTBSchedulerTemplateComponent
+        FTBSchedulerTemplateComponent,
+        
+        
     ];
 
 export class ModuleDeclarations {

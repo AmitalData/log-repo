@@ -153,6 +153,7 @@ export class VendorCommissionPMService {
         if (!entityPM) {
             
             entityPM = new VendorCommissionPM();
+			entityPM.DisableMarkAsDirty = true;
         }
 
 		var customFields: Array<string> = [];
@@ -193,6 +194,8 @@ export class VendorCommissionPMService {
             entityPM.OldEntityPM = null;
         }
 		entityPM.IsDirty = false;
+	    entityPM.DisableMarkAsDirty = false;
+
         return entityPM;
     }
 

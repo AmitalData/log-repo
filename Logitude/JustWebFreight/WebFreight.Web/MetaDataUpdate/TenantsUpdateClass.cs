@@ -1741,21 +1741,21 @@ namespace WebFreight.Web.MetaDataUpdate
 
 
 
-        public static void DownloadEntityResource()
+        public static void DownloadEntityResource(string tableName,string path)
           {
             
               ObjectTableRepository objectTabelRepository = new ObjectTableRepository(0);
 
-              List<ObjectTable> ObjectTableList = objectTabelRepository.GetObjectsByTenant(0).Where(t => !t.Name.Contains("Customs.")).ToList();
+            ObjectTable ObjectTableList = objectTabelRepository.GetObjectsByTenant(0).Where(d=>d.Name==tableName).FirstOrDefault();//.Where(t => !t.Name.Contains("Customs.")).ToList();
+            System.IO.File.WriteAllBytes(path + ObjectTableList.Name + ".zip", ObjectTableList.EntityResource);
+            //foreach (ObjectTable table in ObjectTableList)
+            //  {
+            //      if (table.EntityResource !=null)
+            //      {
+            //          System.IO.File.WriteAllBytes(@"C:\TestFolder\" + table.Name + ".zip", table.EntityResource);
+            //      }
 
-              foreach (ObjectTable table in ObjectTableList)
-              {
-                  if (table.EntityResource !=null)
-                  {
-                      System.IO.File.WriteAllBytes(@"C:\TestFolder\" + table.Name + ".zip", table.EntityResource);
-                  }
-
-              }
+            //  }
 
           }
       

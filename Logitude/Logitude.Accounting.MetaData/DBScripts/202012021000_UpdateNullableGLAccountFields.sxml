@@ -9,4 +9,5 @@
         ALTER TABLE glaccountmoredatas ADD CONSTRAINT DF_DefaultValue_LocalBalance DEFAULT 0 FOR LocalBalanceInDue
     ]]>
   </Sql>
+   <Oracle Version="1"></Oracle>
 </Script>

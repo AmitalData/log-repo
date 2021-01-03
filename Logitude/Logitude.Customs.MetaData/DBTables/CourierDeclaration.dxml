@@ -42,4 +42,14 @@
     ReferencedTable="CourierMasters"
     ReferencedColumn="Id"
     ReferencedTableSchema="Customs" />
+  
+  
+  <!--
+  Invalid DXML Syntax: Unnecessary Index On Columns
+  <Index
+    Columns="DeclarationId" />
+
+  <Index
+    Columns="CourierMasterId" />-->
+
 </Table>

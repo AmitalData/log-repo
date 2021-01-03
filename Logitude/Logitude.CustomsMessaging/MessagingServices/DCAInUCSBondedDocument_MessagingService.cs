@@ -130,8 +130,23 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 return "קיים מסר זהה בתהליך";
 
             }
-            LogMessagingUtil.Instance.AppendLine("Build !!!Requestsheet  with Interface Type  = UCBUCBNDCD  !!!");
+            
 
+
+            
+             var RequestInProgressList2715 = customsRequestsSheetQS
+                   .GetRequestInProgress(tenant, "2715",
+                   null, null,
+                   objectTableDocumentsFilingId, documentsFilingPM.Id, null, true);
+            if (RequestInProgressList2715 != null && RequestInProgressList2715.Count > 0)
+            {
+                LogMessagingUtil.Instance.AppendLine("2715 קיים מסר זהה בתהליך");
+                return " 2715 קיים מסר זהה בתהליך";
+            }
+
+
+            LogMessagingUtil.Instance.AppendLine("Build !!!Requestsheet  with Interface Type  = UCBUCBNDCD  !!!");
+            
 
 
             string uniComm = null;

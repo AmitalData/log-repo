@@ -90,6 +90,7 @@ using Logitude.CargoTracking.Data;
 using Logitude.CargoTracking.Data.EntityPOCOs;
 using Logitude.BL.DataContracts;
 using Logitude.Update.Helper;
+using Simplog.Server.Infrastructure.Interfaces;
 
 namespace Logitude.Update
 {
@@ -153,7 +154,7 @@ namespace Logitude.Update
                 string queueServiceMode = "azure";
                 Logitude.Server.Tools.ContainerAccessor.InitContainer();
                 InjectionUtil.Init(null, null, null, () => (new ByteCompressorUtil()) as IByteCompressorUtil, null, null,null);
-
+            InfraRegistrationHelper.Register();
             CacheManager.CacheWrapper = new CacheWrapper(WorkerEntryPoint.Cache);
         }
 
@@ -882,7 +883,10 @@ User/Pass",
             //string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
             //LogitudeSettings.DatabaseManagementSystem = dbms;
 
-
+            if (LogitudeSettings.IsCostomsDeploy)
+            {
+                return;
+            }
             conStrLabel.Text = "DB: " + ConfigurationManager.ConnectionStrings["Globalstr"].ConnectionString;
 
             
@@ -1923,7 +1927,7 @@ User/Pass",
 
         private void DownLoadZipFile_Click(object sender, EventArgs e)
         {
-            TenantsUpdateClass.DownloadEntityResource();
+            TenantsUpdateClass.DownloadEntityResource("InvoiceType", @"D:\zevel\Mohammad");
 
             label1.Text = "DownLoad Zip File completed successfully";
         }

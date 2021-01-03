@@ -289,7 +289,7 @@
                                      [style.text-align]="'center'">
                                     <div class="TextTrimming" style="font-size: 11px;">
                                         <p>  {{tab.Header}}</p>
-                                        <img   *ngIf="EntityPM.AmendmentErrorXml &&  tab.Name=='Errors'" class="LeftCenter" style="width:10px;height:10px;margin-top:6px;left:2px" title="Yes" src="./Images/CheckBoxIcon.png" />
+                                        <img *ngIf="EntityPM.AmendmentErrorXml &&  tab.Name=='Errors'" class="LeftCenter" style="width:10px;height:10px;margin-top:6px;left:2px" title="Yes" src="./Images/CheckBoxIcon.png" />
                                     </div>
                                 </div>
 
@@ -395,7 +395,7 @@
                                                     <tr style="height: 10px;"></tr>
 
                                                 </table>
-                                                <table style="width:950px;height: 25px;" *ngIf="EntityPM.IsAmendment">
+                                                <table style="width:950px;height: 35px;" *ngIf="EntityPM.IsAmendment">
                                                     <tr style="height: 25px;">
 
                                                         <td style="width:83px">
@@ -447,7 +447,7 @@
                                                         </td>
 
                                                         <td style="width:240px">
-                                                            <LogTextBox [ObjectFieldName]="'AmendmentRejectionReason'" [ObjectTableName]="ObjectTableName" [Text]="AmendmentRejectionReason"
+                                                            <LogTextBox [ObjectFieldName]="'AmendmentRejectionReasonName'" [ObjectTableName]="ObjectTableName" [Text]="AmendmentRejectionReasonName"
                                                                         [HideColumns]="true" [DataContext]="DataContext" [IsMultiline]="true" [InputType]="'ntext'"></LogTextBox>
                                                         </td>
                                                         <!--<td style="width:7px"></td>-->
@@ -656,6 +656,44 @@
 
                                                     </log-column>
 
+
+                                                    <!-- NewValue -->
+                                                    <log-column [header]="'Customs.Declaration.O.AmendmentFieldStatus' | TextCodeTranslationPipe"
+                                                                [width]="'200'" [Alignment]="'right'" [binding]="'AmendmentFieldStatus'">
+
+                                                        <ng-template let-item>
+                                                            <log-cell-template [IgnoreMods]="true" #logcelltemplate>
+                                                                <div style="text-align: right;" class="TextTrimming">
+                                                                    <span>{{item.AmendmentFieldStatus}}</span>
+                                                                </div>
+                                                            </log-cell-template>
+                                                        </ng-template>
+
+                                                    </log-column>
+                                                    <log-column [header]="'Customs.Declaration.O.AmendmentRequestInitiatorType' | TextCodeTranslationPipe"
+                                                                [width]="'200'" [Alignment]="'right'" [binding]="'AmendmentRequestInitiatorType'">
+
+                                                        <ng-template let-item>
+                                                            <log-cell-template [IgnoreMods]="true" #logcelltemplate>
+                                                                <div style="text-align: right;" class="TextTrimming">
+                                                                    <span>{{item.AmendmentRequestInitiatorType}}</span>
+                                                                </div>
+                                                            </log-cell-template>
+                                                        </ng-template>
+
+                                                    </log-column>
+                                                    <log-column [header]="'Customs.Declaration.O.FieldAmendmentRejectReasonRemarks' | TextCodeTranslationPipe"
+                                                                [width]="'200'" [Alignment]="'right'" [binding]="'FieldAmendmentRejectReasonRemarks'">
+
+                                                        <ng-template let-item>
+                                                            <log-cell-template [IgnoreMods]="true" #logcelltemplate>
+                                                                <div style="text-align: right;" class="TextTrimming">
+                                                                    <span>{{item.FieldAmendmentRejectReasonRemarks}}</span>
+                                                                </div>
+                                                            </log-cell-template>
+                                                        </ng-template>
+
+                                                    </log-column>
                                                 </logitude-edit-grid>
                                             </td>
                                         </tr>
@@ -672,369 +710,369 @@
                         </div>
                     </div>
                 </div>
- 
- <div  *ngIf="!EntityPM.IsAmendment"> 
-                                    <table *ngIf="EntityPM && !IsNoAmendmentsMsgVisible">
 
-                                        <!--Disble Alert-->
-                                        <tr *ngIf="IsDisplayOnly" style="height: 28px;">
-                                            <td colspan="3">
-                                                <div style="width: 100%;text-align:center">
-                                                    <div class="DisbleBox">
-                                                        {{DisplayOnlyMessage}}
-                                                        <span style="padding: 0px 16px;">-</span>
-                                                        <span class="hyperlink" (click)="RefreshEntity()" style="font-size:12px;">רענן</span>
-
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr *ngIf="(!IsDisplayOnly) && DisplayOnlyMessage" style="height: 28px;">
-                                            <td colspan="3">
-                                                <div style="width: 100%;text-align:center">
-                                                    <div class="DisbleBox">
-                                                        {{DisplayOnlyMessage}}
-
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <!-- Title -->
-                                        <tr style="height: 28px;">
-                                            <td colspan="3" class="subTitle">{{'Customs.Declaration.O.CorrectionGeneral' | TextCodeTranslationPipe}}</td>
-                                        </tr>
-
-                                        <!-- Version DDL -->
-                                        <tr style="height: 40px;" *ngIf="!EntityPM.IsAmendment">
-                                            <td style="width: 250px;">
-                                                <ComboBox [ItemsSource]="VersionsList"
-                                                          [SelectedItem]="SelectedVersion"
-                                                          (SelectedItemChanged)="FilterItemClicked($event)"></ComboBox>
-                                            </td>
-                                            <td colspan="2"></td>
-                                        </tr>
-                                        <!--{{'Customs.Declaration.F.AmendmentRequestNumber' | TextCodeTranslationPipe}} :-->
-
-
-
-                                        <tr style="height: 28px;">
-
-                                            <td colspan="1">
-                                                <table style="width:800px;height: 25px;" *ngIf="EntityPM.IsAmendment">
-
-                                                    <tr style="height: 25px;">
-                                                        <td style="width:40px">
-                                                            <LogLabel [ObjectFieldName]="'AmendmentRequestNumber'" [ObjectTableName]="ObjectTableName"
-                                                                      [DataContext]="DataContext"></LogLabel>
-
-                                                        </td>
-
-
-                                                        <td style="width:60px">
-                                                            <LogTextBox [ObjectFieldName]="'AmendmentRequestNumber'" [ObjectTableName]="ObjectTableName" [Text]="AmendmentRequestNumber"
-                                                                        [HideColumns]="true" [DataContext]="DataContext" [InputType]="'ntext'"></LogTextBox>
-
-                                                        </td>
-
-
-                                                        <td style="width:60px">
-                                                            <LogLabel [ObjectFieldName]="'AmendmentissueDate'" [ObjectTableName]="ObjectTableName"
-                                                                      [DataContext]="DataContext"></LogLabel>
-                                                        </td>
-                                                        <td style="width:85px">
-                                                            <LogTextBox [ObjectFieldName]="'AmendmentissueDate'" [ObjectTableName]="ObjectTableName" [Text]="AmendmentissueDate"
-                                                                        [HideColumns]="true" [DataContext]="DataContext" [InputType]="'ntext'"></LogTextBox>
-
-                                                            <!--<LogDatePicker [ObjectFieldName]="'AmendmentissueDate'" [ObjectTableName]="ObjectTableName"
-                                                [DataContext]="DataContext" [HideColumns]="true" [SelectedDateValue]="AmendmentissueDate"></LogDatePicker>-->
-                                                        </td>
-
-
-                                                        <td style="width:60px">
-                                                            <LogLabel [ObjectFieldName]="'VersionId'" [ObjectTableName]="ObjectTableName"
-                                                                      [DataContext]="DataContext"></LogLabel>
-
-                                                        </td>
-                                                        <td style="width:75px">
-                                                            <LogTextBox [ObjectFieldName]="'VersionId'" [ObjectTableName]="ObjectTableName" [Text]="VersionId"
-                                                                        [HideColumns]="true" [DataContext]="DataContext" [InputType]="'ntext'"></LogTextBox>
-                                                            <!--<LogTextBox [ObjectFieldName]="'VersionId'" [ObjectTableName]="ObjectTableName" [Text]="VersionId"
-                                                [HideColumns]="true" [DataContext]="DataContext"></LogTextBox>-->
-                                                        </td>
-                                                        <td style="width:7px"></td>
-
-                                                    </tr>
-                                                    <tr style="height: 10px;"></tr>
-
-                                                </table>
-                                                <table style="width:950px;height: 25px;" *ngIf="EntityPM.IsAmendment">
-                                                    <tr style="height: 25px;">
-
-                                                        <td style="width:83px">
-                                                            <LogLabel [ObjectFieldName]="'AmendmentDeficitInitiated'" [ObjectTableName]="ObjectTableName"
-                                                                      [DataContext]="DataContext"></LogLabel>
-
-                                                        </td>
-
-                                                        <td style="width:50px">
-                                                            <LogCheckBox [ObjectFieldName]="'AmendmentDeficitInitiated'" (ValueChanged)="AmendmentDeficitInitiatedChecked($event)" [Checked]="DataContext.AmendmentDeficitInitiated" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
-                                                        </td>
-                                                        <!--<td style="width:7px"></td>-->
-
-                                                        <td style="width:110px">
-                                                            <LogLabel [ObjectFieldName]="'AmendDeficitInitiatedReasTo'" [ObjectTableName]="ObjectTableName"
-                                                                      [DataContext]="DataContext"></LogLabel>
-
-                                                        </td>
-                                                        <td style="vertical-align: top;padding-top: 2px">
-                                                            <LogTextBox [ObjectFieldName]="'AmendDeficitInitiatedReasTo'" [ObjectTableName]="ObjectTableName" [Text]="AmendDeficitInitiatedReasTo"
-                                                                        [HideColumns]="true" [DataContext]="DataContext" [IsMultiline]="true"></LogTextBox>
-                                                        </td>
-                                                        <!--<td style="width:7px"></td>-->
-
-                                                        <td style="width:110px">
-                                                            <LogLabel [ObjectFieldName]="'AmendmentRemarks'" [ObjectTableName]="ObjectTableName"
-                                                                      [DataContext]="DataContext"></LogLabel>
-
-                                                        </td>
-                                                        <td>
-                                                            <LogTextBox [ObjectFieldName]="'AmendmentRemarks'" [ObjectTableName]="ObjectTableName" [Text]="AmendmentRemarks"
-                                                                        [HideColumns]="true" [DataContext]="DataContext" [IsMultiline]="true" [InputType]="'ntext'"></LogTextBox>
-
-                                                        </td>
-                                                        <td style="width:7px"></td>
-
-
-                                                    </tr>
-                                                    <tr style="height: 10px;"></tr>
-                                                </table>
-                                                <table style="width:950px;height: 25px;" *ngIf="EntityPM.IsAmendment">
-
-                                                    <tr style="height: 25px;">
-
-                                                        <td style="width:83px">
-                                                            <LogLabel [ObjectFieldName]="'AmendmentRejectionReason'" [ObjectTableName]="ObjectTableName"
-                                                                      [DataContext]="DataContext"></LogLabel>
-
-                                                        </td>
-
-                                                        <td style="width:240px">
-                                                            <LogTextBox [ObjectFieldName]="'AmendmentRejectionReason'" [ObjectTableName]="ObjectTableName" [Text]="AmendmentRejectionReason"
-                                                                        [HideColumns]="true" [DataContext]="DataContext" [IsMultiline]="true" [InputType]="'ntext'"></LogTextBox>
-                                                        </td>
-                                                        <!--<td style="width:7px"></td>-->
-
-                                                        <td style="width:110px">
-                                                        </td>
-                                                        <td>
-                                                        </td>
-                                                        <td style="width:7px"></td>
-
-
-                                                    </tr>
-                                                    <!--rowspan="3"-->
-                                                    <!--<tr style="height: 25px;">
-                                            <td style="width:75px"></td>
-                                            <td></td>
-                                            <td style="width:110px"></td>
-                                            <td></td>
-                                            <td style="width:110px"></td>
-
-                                        </tr>
-                                        <tr style="height: 25px;">
-                                            <td style="width:75px"></td>
-                                            <td></td>
-                                            <td style="width:110px"></td>
-                                            <td></td>
-                                            <td style="width:110px"></td>
-
-                                        </tr>-->
-                                                </table>
-                                            </td>
-                                        </tr>
-                                        <tr style="height: 10px;">
-                                            <td></td>
-                                        </tr>
-                                        <!-- System Messages -->
-                                        <tr *ngIf="IsDescriptionVisible" style="height: 28px;">
-                                            <td colspan="3" class="subTitle">{{'Customs.Declaration.O.SystemMessages' | TextCodeTranslationPipe}}</td>
-                                        </tr>
-                                        <tr *ngIf="IsDescriptionVisible" style="height: 30px;">
-                                            <td colspan="3">
-                                                <div class="DisbleBox" style="max-width: 860px;word-wrap: break-word;word-break: break-word;white-space: initial;">
-                                                    {{Description}}
-                                                </div>
-                                            </td>
-                                        </tr>
-
-                                        <!-- Correction Statement | AdditionalInformationlist -->
-                                        <tr style="height: 28px;">
-                                            <td colspan="3" class="subTitle">{{'Customs.Declaration.O.CorrectionStatement' | TextCodeTranslationPipe}}</td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="3" style="border: 1px solid gray;">
-                                                <logitude-edit-grid GridWidth="100%"
-                                                                    GridHeight="100%"
-                                                                    [ItemSource]="AdditionalInformationlist"
-                                                                    [IsDarkHeader]="true"
-                                                                    (SelectedItemChanged)="OnRowSelected($event)"
-                                                                    [SelectedRow]="SelectedRow">
-
-                                                    <!-- Staement -->
-                                                    <log-column [header]="'Customs.Declaration.O.Statement' | TextCodeTranslationPipe"
-                                                                [width]="'200'" [Alignment]="'right'" [binding]="'StatmentName'">
-
-                                                        <ng-template let-item>
-                                                            <log-cell-template [IgnoreMods]="true" #logcelltemplate>
-                                                                <div style="text-align: right;" class="TextTrimming">
-                                                                    <span>{{item.StatmentName}}</span>
-                                                                </div>
-                                                            </log-cell-template>
-                                                        </ng-template>
-
-                                                    </log-column>
-
-                                                    <!-- Content -->
-                                                    <log-column [header]="'Customs.Declaration.O.Content' | TextCodeTranslationPipe"
-                                                                [width]="'500'" [Alignment]="'right'" [binding]="'Content'">
-
-                                                        <ng-template let-item>
-                                                            <log-cell-template [IgnoreMods]="true" #logcelltemplate>
-                                                                <div style="text-align: right;" class="TextTrimming">
-                                                                    <span>{{item.Content}}</span>
-                                                                </div>
-                                                            </log-cell-template>
-                                                        </ng-template>
-
-                                                    </log-column>
-
-                                                </logitude-edit-grid>
-                                            </td>
-                                        </tr>
-
-                                        <tr style="height: 25px;">
-                                            <td></td>
-                                        </tr>
-
-                                        <!-- Amendments -->
-                                        <tr style="height: 28px;">
-                                            <td colspan="8" class="subTitle">{{'Customs.Declaration.O.Amendments' | TextCodeTranslationPipe}}</td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="8" style="border: 1px solid gray;">
-                                                <logitude-edit-grid GridWidth="100%"
-                                                                    GridHeight="100%"
-                                                                    [ItemSource]="AmendmentViewsList"
-                                                                    [UseVirtuallization]="true"
-                                                                    [IsDarkHeader]="true"
-                                                                    (SelectedItemChanged)="OpenAmendment($event)">
-
-
-                                                    <!-- TableNameTextCode -->
-                                                    <log-column [header]="'Customs.Declaration.O.Entity' | TextCodeTranslationPipe"
-                                                                [width]="'200'" [Alignment]="'right'" [binding]="'Description'">
-
-                                                        <ng-template let-item>
-                                                            <log-cell-template [IgnoreMods]="true" #logcelltemplate>
-                                                                <div style="text-align: right;" class="TextTrimming">
-                                                                    <span>{{item.TableNameTextCode | TextCodeTranslationPipe}}</span>
-                                                                </div>
-                                                            </log-cell-template>
-                                                        </ng-template>
-
-                                                    </log-column>
-
-                                                    <!-- Field -->
-                                                    <log-column [header]="'Customs.Declaration.O.Field' | TextCodeTranslationPipe"
-                                                                [width]="'120'" [Alignment]="'right'" [binding]="'FieldNameTextCode'">
-
-                                                        <ng-template let-item>
-                                                            <log-cell-template [IgnoreMods]="true" #logcelltemplate>
-                                                                <div style="text-align: right;" class="TextTrimming">
-                                                                    <span>{{ GetFieldName(item) }}</span>
-                                                                </div>
-                                                            </log-cell-template>
-                                                        </ng-template>
-
-                                                    </log-column>
-
-                                                    <!-- Line -->
-                                                    <log-column [header]="'Customs.Declaration.O.Line' | TextCodeTranslationPipe"
-                                                                [width]="'80'" [Alignment]="'right'" [binding]="'LineNumber'">
-
-                                                        <ng-template let-item>
-                                                            <log-cell-template [IgnoreMods]="true" #logcelltemplate>
-                                                                <div style="text-align: right;" class="TextTrimming">
-                                                                    <span>{{item.LineNumber}}</span>
-                                                                </div>
-                                                            </log-cell-template>
-                                                        </ng-template>
-
-                                                    </log-column>
-
-                                                    <!-- ErrorType -->
-                                                    <log-column [header]="'Customs.Declaration.O.ErrorType' | TextCodeTranslationPipe"
-                                                                [width]="'80'" [Alignment]="'right'" [binding]="'ErrorType'">
-
-                                                        <ng-template let-item>
-                                                            <log-cell-template [IgnoreMods]="true" #logcelltemplate>
-                                                                <div style="text-align: right;" class="TextTrimming">
-                                                                    <span>{{item.ErrorType}}</span>
-                                                                </div>
-                                                            </log-cell-template>
-                                                        </ng-template>
-
-                                                    </log-column>
-
-                                                    <!-- MessageError -->
-                                                    <log-column [header]="'Customs.General.O.MessageError' | TextCodeTranslationPipe"
-                                                                [width]="'300'" [Alignment]="'right'" [binding]="'MessageError'">
-
-                                                        <ng-template let-item>
-                                                            <log-cell-template [IgnoreMods]="true" #logcelltemplate>
-                                                                <div style="text-align: right;" class="TextTrimming">
-                                                                    <span>{{item.MessageError}}</span>
-                                                                </div>
-                                                            </log-cell-template>
-                                                        </ng-template>
-
-                                                    </log-column>
-
-                                                    <!-- OldValue -->
-                                                    <log-column [header]="'Customs.General.O.OldValue' | TextCodeTranslationPipe"
-                                                                [width]="'200'" [Alignment]="'right'" [binding]="'MessageError'">
-
-                                                        <ng-template let-item>
-                                                            <log-cell-template [IgnoreMods]="true" #logcelltemplate>
-                                                                <div style="text-align: right;" class="TextTrimming">
-                                                                    <span>{{item.OldValue}}</span>
-                                                                </div>
-                                                            </log-cell-template>
-                                                        </ng-template>
-
-                                                    </log-column>
-
-                                                    <!-- NewValue -->
-                                                    <log-column [header]="'Customs.General.O.NewValue' | TextCodeTranslationPipe"
-                                                                [width]="'200'" [Alignment]="'right'" [binding]="'NewValue'">
-
-                                                        <ng-template let-item>
-                                                            <log-cell-template [IgnoreMods]="true" #logcelltemplate>
-                                                                <div style="text-align: right;" class="TextTrimming">
-                                                                    <span>{{item.NewValue}}</span>
-                                                                </div>
-                                                            </log-cell-template>
-                                                        </ng-template>
-
-                                                    </log-column>
-
-                                                </logitude-edit-grid>
-                                            </td>
-                                        </tr>
-
-                                    </table>
+                <div style="position: absolute; top: 0;" class="LogTabControl" *ngIf="!EntityPM.IsAmendment">
+                    <table *ngIf="EntityPM && !IsNoAmendmentsMsgVisible">
+
+                        <!--Disble Alert-->
+                        <tr *ngIf="IsDisplayOnly" style="height: 28px;">
+                            <td colspan="3">
+                                <div style="width: 100%;text-align:center">
+                                    <div class="DisbleBox">
+                                        {{DisplayOnlyMessage}}
+                                        <span style="padding: 0px 16px;">-</span>
+                                        <span class="hyperlink" (click)="RefreshEntity()" style="font-size:12px;">רענן</span>
+
+                                    </div>
                                 </div>
-                         
+                            </td>
+                        </tr>
+                        <tr *ngIf="(!IsDisplayOnly) && DisplayOnlyMessage" style="height: 28px;">
+                            <td colspan="3">
+                                <div style="width: 100%;text-align:center">
+                                    <div class="DisbleBox">
+                                        {{DisplayOnlyMessage}}
+
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <!-- Title -->
+                        <tr style="height: 28px;">
+                            <td colspan="3" class="subTitle">{{'Customs.Declaration.O.CorrectionGeneral' | TextCodeTranslationPipe}}</td>
+                        </tr>
+
+                        <!-- Version DDL -->
+                        <tr style="height: 40px;" *ngIf="!EntityPM.IsAmendment">
+                            <td style="width: 250px;">
+                                <ComboBox [ItemsSource]="VersionsList"
+                                          [SelectedItem]="SelectedVersion"
+                                          (SelectedItemChanged)="FilterItemClicked($event)"></ComboBox>
+                            </td>
+                            <td colspan="2"></td>
+                        </tr>
+                        <!--{{'Customs.Declaration.F.AmendmentRequestNumber' | TextCodeTranslationPipe}} :-->
+
+
+
+                        <tr style="height: 28px;">
+
+                            <td colspan="1">
+                                <table style="width:800px;height: 25px;" *ngIf="EntityPM.IsAmendment">
+
+                                    <tr style="height: 25px;">
+                                        <td style="width:40px">
+                                            <LogLabel [ObjectFieldName]="'AmendmentRequestNumber'" [ObjectTableName]="ObjectTableName"
+                                                      [DataContext]="DataContext"></LogLabel>
+
+                                        </td>
+
+
+                                        <td style="width:60px">
+                                            <LogTextBox [ObjectFieldName]="'AmendmentRequestNumber'" [ObjectTableName]="ObjectTableName" [Text]="AmendmentRequestNumber"
+                                                        [HideColumns]="true" [DataContext]="DataContext" [InputType]="'ntext'"></LogTextBox>
+
+                                        </td>
+
+
+                                        <td style="width:60px">
+                                            <LogLabel [ObjectFieldName]="'AmendmentissueDate'" [ObjectTableName]="ObjectTableName"
+                                                      [DataContext]="DataContext"></LogLabel>
+                                        </td>
+                                        <td style="width:85px">
+                                            <LogTextBox [ObjectFieldName]="'AmendmentissueDate'" [ObjectTableName]="ObjectTableName" [Text]="AmendmentissueDate"
+                                                        [HideColumns]="true" [DataContext]="DataContext" [InputType]="'ntext'"></LogTextBox>
+
+                                            <!--<LogDatePicker [ObjectFieldName]="'AmendmentissueDate'" [ObjectTableName]="ObjectTableName"
+                                [DataContext]="DataContext" [HideColumns]="true" [SelectedDateValue]="AmendmentissueDate"></LogDatePicker>-->
+                                        </td>
+
+
+                                        <td style="width:60px">
+                                            <LogLabel [ObjectFieldName]="'VersionId'" [ObjectTableName]="ObjectTableName"
+                                                      [DataContext]="DataContext"></LogLabel>
+
+                                        </td>
+                                        <td style="width:75px">
+                                            <LogTextBox [ObjectFieldName]="'VersionId'" [ObjectTableName]="ObjectTableName" [Text]="VersionId"
+                                                        [HideColumns]="true" [DataContext]="DataContext" [InputType]="'ntext'"></LogTextBox>
+                                            <!--<LogTextBox [ObjectFieldName]="'VersionId'" [ObjectTableName]="ObjectTableName" [Text]="VersionId"
+                                [HideColumns]="true" [DataContext]="DataContext"></LogTextBox>-->
+                                        </td>
+                                        <td style="width:7px"></td>
+
+                                    </tr>
+                                    <tr style="height: 10px;"></tr>
+
+                                </table>
+                                <table style="width:950px;height: 25px;" *ngIf="EntityPM.IsAmendment">
+                                    <tr style="height: 25px;">
+
+                                        <td style="width:83px">
+                                            <LogLabel [ObjectFieldName]="'AmendmentDeficitInitiated'" [ObjectTableName]="ObjectTableName"
+                                                      [DataContext]="DataContext"></LogLabel>
+
+                                        </td>
+
+                                        <td style="width:50px">
+                                            <LogCheckBox [ObjectFieldName]="'AmendmentDeficitInitiated'" (ValueChanged)="AmendmentDeficitInitiatedChecked($event)" [Checked]="DataContext.AmendmentDeficitInitiated" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+                                        </td>
+                                        <!--<td style="width:7px"></td>-->
+
+                                        <td style="width:110px">
+                                            <LogLabel [ObjectFieldName]="'AmendDeficitInitiatedReasTo'" [ObjectTableName]="ObjectTableName"
+                                                      [DataContext]="DataContext"></LogLabel>
+
+                                        </td>
+                                        <td style="vertical-align: top;padding-top: 2px">
+                                            <LogTextBox [ObjectFieldName]="'AmendDeficitInitiatedReasTo'" [ObjectTableName]="ObjectTableName" [Text]="AmendDeficitInitiatedReasTo"
+                                                        [HideColumns]="true" [DataContext]="DataContext" [IsMultiline]="true"></LogTextBox>
+                                        </td>
+                                        <!--<td style="width:7px"></td>-->
+
+                                        <td style="width:110px">
+                                            <LogLabel [ObjectFieldName]="'AmendmentRemarks'" [ObjectTableName]="ObjectTableName"
+                                                      [DataContext]="DataContext"></LogLabel>
+
+                                        </td>
+                                        <td>
+                                            <LogTextBox [ObjectFieldName]="'AmendmentRemarks'" [ObjectTableName]="ObjectTableName" [Text]="AmendmentRemarks"
+                                                        [HideColumns]="true" [DataContext]="DataContext" [IsMultiline]="true" [InputType]="'ntext'"></LogTextBox>
+
+                                        </td>
+                                        <td style="width:7px"></td>
+
+
+                                    </tr>
+                                    <tr style="height: 10px;"></tr>
+                                </table>
+                                <table style="width:950px;height: 25px;" *ngIf="EntityPM.IsAmendment">
+
+                                    <tr style="height: 25px;">
+
+                                        <td style="width:83px">
+                                            <LogLabel [ObjectFieldName]="'AmendmentRejectionReasonName'" [ObjectTableName]="ObjectTableName"
+                                                      [DataContext]="DataContext"></LogLabel>
+
+                                        </td>
+
+                                        <td style="width:240px">
+                                            <LogTextBox [ObjectFieldName]="'AmendmentRejectionReasonName'" [ObjectTableName]="ObjectTableName" [Text]="AmendmentRejectionReasonName"
+                                                        [HideColumns]="true" [DataContext]="DataContext" [IsMultiline]="true" [InputType]="'ntext'"></LogTextBox>
+                                        </td>
+                                        <!--<td style="width:7px"></td>-->
+
+                                        <td style="width:110px">
+                                        </td>
+                                        <td>
+                                        </td>
+                                        <td style="width:7px"></td>
+
+
+                                    </tr>
+                                    <!--rowspan="3"-->
+                                    <!--<tr style="height: 25px;">
+                            <td style="width:75px"></td>
+                            <td></td>
+                            <td style="width:110px"></td>
+                            <td></td>
+                            <td style="width:110px"></td>
+
+                        </tr>
+                        <tr style="height: 25px;">
+                            <td style="width:75px"></td>
+                            <td></td>
+                            <td style="width:110px"></td>
+                            <td></td>
+                            <td style="width:110px"></td>
+
+                        </tr>-->
+                                </table>
+                            </td>
+                        </tr>
+                        <tr style="height: 10px;">
+                            <td></td>
+                        </tr>
+                        <!-- System Messages -->
+                        <tr *ngIf="IsDescriptionVisible" style="height: 28px;">
+                            <td colspan="3" class="subTitle">{{'Customs.Declaration.O.SystemMessages' | TextCodeTranslationPipe}}</td>
+                        </tr>
+                        <tr *ngIf="IsDescriptionVisible" style="height: 30px;">
+                            <td colspan="3">
+                                <div class="DisbleBox" style="max-width: 860px;word-wrap: break-word;word-break: break-word;white-space: initial;">
+                                    {{Description}}
+                                </div>
+                            </td>
+                        </tr>
+
+                        <!-- Correction Statement | AdditionalInformationlist -->
+                        <tr style="height: 28px;">
+                            <td colspan="3" class="subTitle">{{'Customs.Declaration.O.CorrectionStatement' | TextCodeTranslationPipe}}</td>
+                        </tr>
+                        <tr>
+                            <td colspan="3" style="border: 1px solid gray;">
+                                <logitude-edit-grid GridWidth="100%"
+                                                    GridHeight="100%"
+                                                    [ItemSource]="AdditionalInformationlist"
+                                                    [IsDarkHeader]="true"
+                                                    (SelectedItemChanged)="OnRowSelected($event)"
+                                                    [SelectedRow]="SelectedRow">
+
+                                    <!-- Staement -->
+                                    <log-column [header]="'Customs.Declaration.O.Statement' | TextCodeTranslationPipe"
+                                                [width]="'200'" [Alignment]="'right'" [binding]="'StatmentName'">
+
+                                        <ng-template let-item>
+                                            <log-cell-template [IgnoreMods]="true" #logcelltemplate>
+                                                <div style="text-align: right;" class="TextTrimming">
+                                                    <span>{{item.StatmentName}}</span>
+                                                </div>
+                                            </log-cell-template>
+                                        </ng-template>
+
+                                    </log-column>
+
+                                    <!-- Content -->
+                                    <log-column [header]="'Customs.Declaration.O.Content' | TextCodeTranslationPipe"
+                                                [width]="'500'" [Alignment]="'right'" [binding]="'Content'">
+
+                                        <ng-template let-item>
+                                            <log-cell-template [IgnoreMods]="true" #logcelltemplate>
+                                                <div style="text-align: right;" class="TextTrimming">
+                                                    <span>{{item.Content}}</span>
+                                                </div>
+                                            </log-cell-template>
+                                        </ng-template>
+
+                                    </log-column>
+
+                                </logitude-edit-grid>
+                            </td>
+                        </tr>
+
+                        <tr style="height: 25px;">
+                            <td></td>
+                        </tr>
+
+                        <!-- Amendments -->
+                        <tr style="height: 28px;">
+                            <td colspan="8" class="subTitle">{{'Customs.Declaration.O.Amendments' | TextCodeTranslationPipe}}</td>
+                        </tr>
+                        <tr>
+                            <td colspan="8" style="border: 1px solid gray;">
+                                <logitude-edit-grid GridWidth="100%"
+                                                    GridHeight="100%"
+                                                    [ItemSource]="AmendmentViewsList"
+                                                    [UseVirtuallization]="true"
+                                                    [IsDarkHeader]="true"
+                                                    (SelectedItemChanged)="OpenAmendment($event)">
+
+
+                                    <!-- TableNameTextCode -->
+                                    <log-column [header]="'Customs.Declaration.O.Entity' | TextCodeTranslationPipe"
+                                                [width]="'200'" [Alignment]="'right'" [binding]="'Description'">
+
+                                        <ng-template let-item>
+                                            <log-cell-template [IgnoreMods]="true" #logcelltemplate>
+                                                <div style="text-align: right;" class="TextTrimming">
+                                                    <span>{{item.TableNameTextCode | TextCodeTranslationPipe}}</span>
+                                                </div>
+                                            </log-cell-template>
+                                        </ng-template>
+
+                                    </log-column>
+
+                                    <!-- Field -->
+                                    <log-column [header]="'Customs.Declaration.O.Field' | TextCodeTranslationPipe"
+                                                [width]="'120'" [Alignment]="'right'" [binding]="'FieldNameTextCode'">
+
+                                        <ng-template let-item>
+                                            <log-cell-template [IgnoreMods]="true" #logcelltemplate>
+                                                <div style="text-align: right;" class="TextTrimming">
+                                                    <span>{{ GetFieldName(item) }}</span>
+                                                </div>
+                                            </log-cell-template>
+                                        </ng-template>
+
+                                    </log-column>
+
+                                    <!-- Line -->
+                                    <log-column [header]="'Customs.Declaration.O.Line' | TextCodeTranslationPipe"
+                                                [width]="'80'" [Alignment]="'right'" [binding]="'LineNumber'">
+
+                                        <ng-template let-item>
+                                            <log-cell-template [IgnoreMods]="true" #logcelltemplate>
+                                                <div style="text-align: right;" class="TextTrimming">
+                                                    <span>{{item.LineNumber}}</span>
+                                                </div>
+                                            </log-cell-template>
+                                        </ng-template>
+
+                                    </log-column>
+
+                                    <!-- ErrorType -->
+                                    <log-column [header]="'Customs.Declaration.O.ErrorType' | TextCodeTranslationPipe"
+                                                [width]="'80'" [Alignment]="'right'" [binding]="'ErrorType'">
+
+                                        <ng-template let-item>
+                                            <log-cell-template [IgnoreMods]="true" #logcelltemplate>
+                                                <div style="text-align: right;" class="TextTrimming">
+                                                    <span>{{item.ErrorType}}</span>
+                                                </div>
+                                            </log-cell-template>
+                                        </ng-template>
+
+                                    </log-column>
+
+                                    <!-- MessageError -->
+                                    <log-column [header]="'Customs.General.O.MessageError' | TextCodeTranslationPipe"
+                                                [width]="'300'" [Alignment]="'right'" [binding]="'MessageError'">
+
+                                        <ng-template let-item>
+                                            <log-cell-template [IgnoreMods]="true" #logcelltemplate>
+                                                <div style="text-align: right;" class="TextTrimming">
+                                                    <span>{{item.MessageError}}</span>
+                                                </div>
+                                            </log-cell-template>
+                                        </ng-template>
+
+                                    </log-column>
+
+                                    <!-- OldValue -->
+                                    <log-column [header]="'Customs.General.O.OldValue' | TextCodeTranslationPipe"
+                                                [width]="'200'" [Alignment]="'right'" [binding]="'MessageError'">
+
+                                        <ng-template let-item>
+                                            <log-cell-template [IgnoreMods]="true" #logcelltemplate>
+                                                <div style="text-align: right;" class="TextTrimming">
+                                                    <span>{{item.OldValue}}</span>
+                                                </div>
+                                            </log-cell-template>
+                                        </ng-template>
+
+                                    </log-column>
+
+                                    <!-- NewValue -->
+                                    <log-column [header]="'Customs.General.O.NewValue' | TextCodeTranslationPipe"
+                                                [width]="'200'" [Alignment]="'right'" [binding]="'NewValue'">
+
+                                        <ng-template let-item>
+                                            <log-cell-template [IgnoreMods]="true" #logcelltemplate>
+                                                <div style="text-align: right;" class="TextTrimming">
+                                                    <span>{{item.NewValue}}</span>
+                                                </div>
+                                            </log-cell-template>
+                                        </ng-template>
+
+                                    </log-column>
+
+                                </logitude-edit-grid>
+                            </td>
+                        </tr>
+
+                    </table>
+                </div>
+
             </div>
 </td>
     </tr>

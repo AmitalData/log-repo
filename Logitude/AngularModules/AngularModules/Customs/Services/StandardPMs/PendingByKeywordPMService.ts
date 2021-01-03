@@ -153,6 +153,7 @@ export class PendingByKeywordPMService {
         if (!entityPM) {
             
             entityPM = new PendingByKeywordPM();
+			entityPM.DisableMarkAsDirty = true;
         }
 
 		var customFields: Array<string> = [];
@@ -193,6 +194,8 @@ export class PendingByKeywordPMService {
             entityPM.OldEntityPM = null;
         }
 		entityPM.IsDirty = false;
+	    entityPM.DisableMarkAsDirty = false;
+
         return entityPM;
     }
 

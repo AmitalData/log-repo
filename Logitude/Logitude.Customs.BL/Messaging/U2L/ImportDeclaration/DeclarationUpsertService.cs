@@ -29,6 +29,9 @@ using Logitude.Customs.Data.EntityPOCOs;
 using Logitude.Customs.Data.EntityListQueryServices;
 using Logitude.Customs.Data.EntityLists;
 using Logitude.BL.DataContracts;
+using Logitude.CustomsMessaging.Common.RequestParams;
+using Logitude.Customs.BL.Messaging.Customs;
+using Logitude.BL.CommonDataModel.EntityQueries;
 
 namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
 {
@@ -42,6 +45,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
         private ICustomContext _context;
         private CourierMasterPM _CourierMasterPM;
         private CourierDeclarationPM _CourierDeclarationPM;
+        private DeclarationCourierStatusPM currentDeclarationCourierStatusPM;
         private string mode;
         public Boolean suppressNewTrans;
 
@@ -123,11 +127,11 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
             throw new NotImplementedException();
         }
 
-        private void Upsert(bool suppressNewTrans=false)
+        private void Upsert(bool suppressNewTrans = false)
         {
             //CheckExist();
             using (TransactionScope scope =
-                suppressNewTrans? TransactionFactory.GetTransaction():TransactionFactory.GetNewTransaction(TimeSpan.FromMinutes(10)))
+                suppressNewTrans ? TransactionFactory.GetTransaction() : TransactionFactory.GetNewTransaction(TimeSpan.FromMinutes(10)))
             {
                 AppendLogLine("Upsert..");
 
@@ -330,16 +334,24 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
                         }
                         else
                         {
+                            string importerId = _AmitalCustomsFile.ImporterId;
                             if (_AmitalCustomsFile.ImporterId.Length > 9)
                             {
-                                this._MyDeclarationPM.ImporterId = TranslateClient(_AmitalCustomsFile.ImporterId.Substring(0, 9)); //Yuval Chalup 04.02.2016 TASK-20059
-                                this._MyDeclarationPM.ImporterCode = _AmitalCustomsFile.ImporterId.Substring(0, 9); // moran 7.9.14 - Task 7860 + Yuval Chalup 04.02.2016 TASK-20059 (Add .Substring(0, 9))
+                                importerId = _AmitalCustomsFile.ImporterId.Substring(0, 9);
                             }
-                            else
+                            string clientId = TranslateClient(importerId);
+
+                            FeatureQuery featureQuery = new FeatureQuery();
+                            int.TryParse(_AmitalCustomsFile.Tenant, out int tenant);
+                            var features = featureQuery.GetAllowedFeaturesForLoggedUser( AuthenticationUtil.ResolveUserId(tenant), tenant);
+                            var feature = features.Features.FirstOrDefault(x => x.Code == "AddNewClientFromManifest");
+                            if (clientId == null && mode == "UpdateNotEmpty" && feature != null)
                             {
-                                this._MyDeclarationPM.ImporterId = TranslateClient(_AmitalCustomsFile.ImporterId);
-                                this._MyDeclarationPM.ImporterCode = _AmitalCustomsFile.ImporterId; // moran 7.9.14 - Task 7860
+                                SendClientSearch();
                             }
+                            this._MyDeclarationPM.ImporterId = clientId;
+                            this._MyDeclarationPM.ImporterCode = importerId;
+
                         }
                     }
                 }
@@ -349,7 +361,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
                 this._MyDeclarationPM.ReferentUserId = TranslateUser(_AmitalCustomsFile.ReferentUserId);
                 this._MyDeclarationPM.DepartmentId = TranslateDepartment(_AmitalCustomsFile.DepartmentId);
                 this._MyDeclarationPM.WeightValue = _AmitalCustomsFile.COUWTVAL;
-
+                
                 if (String.IsNullOrWhiteSpace(this._MyDeclarationPM.CustomerId))
                 {
                     MyGenericResponseObj.StatusType = GenericResponseObj.StatusEnum.BusinessError;
@@ -406,7 +418,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
                     }
                     if (this._MyDeclarationPM.Consignments[0].CargoTypeCode == "17")
                     {
-                        
+
                         if (mode != "UpdateNotEmpty")
                         {
                             this._MyDeclarationPM.Consignments[0].ManifestNumber = _AmitalCustomsFile.HAWB;
@@ -472,7 +484,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
                     else if (this._MyDeclarationPM.Consignments[0].CargoTypeCode == "1")
                     {
                         this._MyDeclarationPM.Consignments[0].ManifestNumber = _AmitalCustomsFile.ManifestNumber;
-                        
+
                         if (mode != "UpdateNotEmpty")
                         {
                             this._MyDeclarationPM.Consignments[0].SecondCargoID = _AmitalCustomsFile.MAWB;
@@ -483,7 +495,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
                             if (!String.IsNullOrWhiteSpace(_AmitalCustomsFile.MAWB)) this._MyDeclarationPM.Consignments[0].SecondCargoID = _AmitalCustomsFile.MAWB;
                             if (!String.IsNullOrWhiteSpace(_AmitalCustomsFile.HAWB)) this._MyDeclarationPM.Consignments[0].ThirdCargoID = _AmitalCustomsFile.HAWB;
                         }
-                        
+
                     }
                     else
                     {
@@ -573,12 +585,24 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
 
                     if (string.IsNullOrWhiteSpace(_AmitalCustomsFile.IsCourierDeclaration) || (!string.IsNullOrWhiteSpace(_AmitalCustomsFile.IsCourierDeclaration) && _AmitalCustomsFile.IsCourierDeclaration.ToLower() != "true"))
                     {
-                        string unloadportId = null;
-                        if (!String.IsNullOrWhiteSpace(_AmitalCustomsFile.UnloadportId))
+                        if (String.IsNullOrWhiteSpace(this._MyDeclarationPM.Consignments[0].UnloadPortCode))
                         {
-                            unloadportId = TranslateUnloadPort(_AmitalCustomsFile.UnloadportId);
+                            if (_CourierMasterPM == null)
+                            {
+                                var myCourierMasterQueryService = new CourierMasterQueryService(_context);
+                                _CourierMasterPM = myCourierMasterQueryService.GetByDeclarationId(this._MyDeclarationPM.Id, ResolvedTenant());
+                            }
+                            if (_CourierMasterPM != null)
+                            {
+                                CustomsAirlineQueryService customsAirlineQueryService = new CustomsAirlineQueryService(_CourierMasterPM.Tenant);
+                                CustomsAirlinePM customsAirline = customsAirlineQueryService.GetSingle(_CourierMasterPM.AirlineId, false, true);
+                                if (customsAirline != null)
+                                {
+                                    if (!String.IsNullOrWhiteSpace(customsAirline.UnloadPortCode))this._MyDeclarationPM.Consignments[0].UnloadPortCode = customsAirline.UnloadPortCode;
+                                }
+                            }
                         }
-                        this._MyDeclarationPM.Consignments[0].UnloadPortCode = unloadportId;
+
                         if (!string.IsNullOrWhiteSpace(_AmitalCustomsFile.HAWBDATE))
                         {
                             this._MyDeclarationPM.Consignments[0].ManifestDate = AmitalConvertUtil.GetUnifreightFormatedDate(_AmitalCustomsFile.HAWBDATE, "AmitalCustomsFile.HAWBDATE");
@@ -627,7 +651,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
                         this._MyDeclarationPM.Consignments[0].ConsignmentPackages[0].PackageQuantity = packageQuantity;
                     }
                     decimal GrossMassMeasure = 0;
-                    if(String.IsNullOrWhiteSpace(this._MyDeclarationPM.Consignments[0].ConsignmentPackages[0].GrossMassMeasureTypeCode))
+                    if (String.IsNullOrWhiteSpace(this._MyDeclarationPM.Consignments[0].ConsignmentPackages[0].GrossMassMeasureTypeCode))
                     {
                         this._MyDeclarationPM.Consignments[0].ConsignmentPackages[0].GrossMassMeasureTypeCode = "KGM";
                     }
@@ -639,7 +663,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
                             GrossMassMeasure = (decimal)this._MyDeclarationPM.Consignments[0].ConsignmentPackages[0].GrossMassMeasure;
                         }
                         decimal weight = Math.Truncate(GrossMassMeasure);
-                        if(weight > 99999999)
+                        if (weight > 99999999)
                         {
                             GrossMassMeasure = GrossMassMeasure / 1000;
                             this._MyDeclarationPM.Consignments[0].ConsignmentPackages[0].GrossMassMeasureTypeCode = "TNE";
@@ -679,7 +703,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
                 _MyDeclarationPM.Tenant = ResolvedTenant();
                 _MyDeclarationPM.IsConnectedToUnifreight = true; //Yuval Chalup 19.10.2016 TASK-22516
                 //_MyDeclarationPM.ProcedureCurrentCode = ResolveProcedureCurrentCode();//remarked by eitan h 24/9/15 16527
-                if(!string.IsNullOrWhiteSpace(_AmitalCustomsFile.ProcedureCurrentCode))_MyDeclarationPM.ProcedureCurrentCode = _AmitalCustomsFile.ProcedureCurrentCode;
+                if (!string.IsNullOrWhiteSpace(_AmitalCustomsFile.ProcedureCurrentCode)) _MyDeclarationPM.ProcedureCurrentCode = _AmitalCustomsFile.ProcedureCurrentCode;
                 MyGenericResponseObj.Stage = "Updating ";
                 _MyDeclarationPM.CurrentContextTag = UpsertActionConst;
 
@@ -692,6 +716,8 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
                 {
                     _MyDeclarationPM.IsDiamondDeclaration = true;
                 }
+
+                UpdateTrucker();
 
                 if (string.IsNullOrWhiteSpace(_AmitalCustomsFile.IsCourierDeclaration) || (!string.IsNullOrWhiteSpace(_AmitalCustomsFile.IsCourierDeclaration) && _AmitalCustomsFile.IsCourierDeclaration.ToLower() != "true"))
                 {
@@ -816,6 +842,40 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
 
             }
         }
+        public void SendClientSearch()
+        {
+            int.TryParse(_AmitalCustomsFile.Tenant, out int Tenant);
+            var loggedUserId = AuthenticationUtil.ResolveUserId(Tenant);
+            var newClientSearchRequestParams = new ClientSearchRequestParams()
+            {
+                LoggingEnabled = true,
+                IsFakeResponse = true,
+                InterfaceTypeCode = "3610",
+                Tenant = Tenant,
+                RequestName = "Client Search",
+                ResponseName = "Client Search",
+                LoggingUserId = loggedUserId,
+                RequestVIA = SendRequestVIA.WebServiceBatch,
+                SuppressSplitWR = true,
+                ExternalId = _AmitalCustomsFile.ImporterId.Substring(0, 9),
+            };
+
+            try
+            {
+                SBQMessageService.CreateSheetSBQMessage<Logitude.CustomsMessaging.Common.RequestParams.ClientSearchRequestParams>(newClientSearchRequestParams
+                    , false, DateTime.Now
+                    );
+            }
+            catch (CustomsRequestsSheetDomainModelServiceException myCustomsRequestsSheetServiceException)
+            {
+                if (myCustomsRequestsSheetServiceException.Where == CustomsRequestsSheetDomainModelServiceException.WhereEnum.SameRequestInProgress)
+                {
+                    Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.AppendLine("3610 RequestInProgress stop create a new one !! ");
+                }
+                throw;
+            }
+        }
+
         private void DeclarationReferantDataUpdate()
         {
             MyGenericResponseObj.Stage = "DeclarationReferantDataUpsert";
@@ -826,7 +886,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
             MyGenericResponseObj.Stage = "GetSingle DeclarationReferantData";
             this._DeclarationReferantDataPM = myDeclarationReferantDataQueryService.GetSingle(this._MyDeclarationPM.Id, true, false);
             /// Exist
-            bool isNew = false; 
+            bool isNew = false;
             if (_DeclarationReferantDataPM == null)
             {
                 this._DeclarationReferantDataPM = new Def.EntityPMs.DeclarationReferantDataPM();
@@ -873,7 +933,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
 
             this._DeclarationReferantDataPM.Tenant = ResolvedTenant();
             myDeclarationReferantDataUpdateService.Update(this._DeclarationReferantDataPM, true);
-            
+
         }
 
         private string TranslateVendor(string amitalvendorId)
@@ -920,7 +980,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
             AppendLogLine("amitalTeamId = " + amitalTeamId + " Translated to " + referantTeamCode);
             return referantTeamCode;
 
-            
+
         }
 
         private string TranslateAirline(string airlineId)
@@ -1012,9 +1072,9 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
             return portId;
         }
 
-        
 
-       private string TranslateloadPort(string loadportId)
+
+        private string TranslateloadPort(string loadportId)
         {
             if (String.IsNullOrWhiteSpace(loadportId))
             {
@@ -1114,7 +1174,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
             //using (TransactionScope scope = TransactionFactory.GetTransaction())
             {
                 var repository = new CardRepository(ResolvedTenant());
-                myCard = repository.GetSingleCardByCode(amitalCustomerCode, ResolvedTenant(), false);
+                myCard = repository.GetSingleCardByCode(amitalCustomerCode, ResolvedTenant(), false);// why not from cache - maybe just now updated !!
 
                 if (myCard == null)
                 {
@@ -1325,7 +1385,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
                 this._AmitalCustomsFile = _LOGICUSTFILE.LogitudeCustomsFile[0];
                 MyCommunicationsParams.Tenant = ResolvedTenant();
 
-                if(MoreParams == "CommDecService")
+                if (MoreParams == "CommDecService")
                 {
                     mode = "UpdateNotEmpty";
                 }
@@ -1422,7 +1482,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
             var amitalObjExample = new LOGICUSTFILE();
             var myAmitalCustom = new LogitudeCustomsFile();
             myAmitalCustom.CustomFileNo = CustomFileNo.ToString();//"41350144";
-            
+
             myAmitalCustom.DeclarationOfficeCode = "4";
             myAmitalCustom.AgentId = "550221105";
 
@@ -1430,30 +1490,85 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
             myAmitalCustom.CustomerId = "10010650";
             myAmitalCustom.TransportModeId = "O";
             myAmitalCustom.Tenant = "1";
-           myAmitalCustom.ImporterId="00000000";
+            myAmitalCustom.ImporterId = "00000000";
 
             amitalObjExample.LogitudeCustomsFile = new LogitudeCustomsFile[] { myAmitalCustom };
 
             var xml = XmlGenericUtil<LOGICUSTFILE>.SerializeObject(amitalObjExample);
 
-            var dus= new DeclarationUpsertService();
-            string MoreParams="";string MessageOut="";
+            var dus = new DeclarationUpsertService();
+            string MoreParams = ""; string MessageOut = "";
             //dus.CopyFromDeclarationId = CopyFromDeclarationId; //1-3033 616200697;
             dus.ProccessGenericRequest(xml, ref MoreParams,
                 out MessageOut);
-            
-            
-                var _context = CustomContext.GetContext(dus._MyDeclarationPM.Tenant);
-                var myCopyDeclarationUpdateService = new DeclarationUpdateService(_context, new Dictionary<string, IContext>(), dus._MyDeclarationPM.Tenant);
-                myCopyDeclarationUpdateService.CopyDeclaration(CopyFromDeclarationId, dus._MyDeclarationPM.Id, dus._MyDeclarationPM.Tenant);
-                
-            
+
+
+            var _context = CustomContext.GetContext(dus._MyDeclarationPM.Tenant);
+            var myCopyDeclarationUpdateService = new DeclarationUpdateService(_context, new Dictionary<string, IContext>(), dus._MyDeclarationPM.Tenant);
+            myCopyDeclarationUpdateService.CopyDeclaration(CopyFromDeclarationId, dus._MyDeclarationPM.Id, dus._MyDeclarationPM.Tenant);
+
+
             //dus._MyDeclarationPM.Id;
         }
 
 
+        private void UpdateTrucker()
+        {
+            if (currentDeclarationCourierStatusPM == null)
+            {
+                DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(_context);
+                currentDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(_MyDeclarationPM.Id, true, false);
+            }
 
-        
+            if (currentDeclarationCourierStatusPM != null)
+            {
+                string truckerId = null;
+                if (!String.IsNullOrWhiteSpace(_AmitalCustomsFile.TruckerId))
+                {
+                    CardRepository cardRep = new CardRepository(this._MyDeclarationPM.Tenant);
+                    Card card = cardRep.GetSingleCard(_AmitalCustomsFile.TruckerId, this._MyDeclarationPM.Tenant);
+                    if (card != null)
+                    {
+                        truckerId = _AmitalCustomsFile.TruckerId;
+                    }
+                    else
+                    {
+                        card = cardRep.GetSingleCardByCode(_AmitalCustomsFile.TruckerId, this._MyDeclarationPM.Tenant, true);
+                        if (card != null)
+                        {
+                            truckerId = card.Id;
+                        }
+                    }
+                }
+
+                if (truckerId != currentDeclarationCourierStatusPM.TruckerId || _AmitalCustomsFile.DistributionArea != currentDeclarationCourierStatusPM.DistributionArea)
+                {
+                    DeclarationCourierStatusUpdateService declarationCourierStatusUpdateService = new DeclarationCourierStatusUpdateService(_context, new Dictionary<string, IContext>(), _MyDeclarationPM.Tenant);
+                    currentDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
+                    currentDeclarationCourierStatusPM.TruckerId = truckerId;
+                    currentDeclarationCourierStatusPM.DistributionArea = _AmitalCustomsFile.DistributionArea;
+                    AppendLogLine("try to update trucker " + truckerId + " to declarationCourierStatus for DeclarationPM.Id: " + _MyDeclarationPM.Id);
+                    try
+                    {
+                        declarationCourierStatusUpdateService.Update(currentDeclarationCourierStatusPM, true);
+                    }
+                    catch (DbEntityValidationException ex)
+                    {
+                        var FormatedException = ExceptionFormatUtil.GetFormated(ex);
+                        AppendLogLine("ProccessRequest():Exception " + FormatedException.ToString() + Environment.NewLine + "---------------------------------------------");
+                        return;
+                    }
+                    catch (Exception e)
+                    {
+                        AppendLogLine("ProccessRequest():Exception " + e.ToString() + Environment.NewLine + "---------------------------------------------");
+                        return;
+                    }
+                }
+                
+            }
+
+        }
+
     }
 
 }

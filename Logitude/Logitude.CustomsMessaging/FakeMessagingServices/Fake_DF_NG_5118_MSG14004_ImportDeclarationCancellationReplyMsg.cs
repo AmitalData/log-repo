@@ -9,7 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Serialization;
-using UnifreightIIG.Common.MessageLib.DeclarationCancel;
+using UnifreightIIG.Common.MessageLib.ID;
 using UnifreightIIG.Common.MessageLib.PhysicalCheck190;
 using Exception = UnifreightIIG.Common.MessageLib.ID.Exception;
 
@@ -100,7 +100,7 @@ namespace Logitude.CustomsMessaging.FakeMessagingServices
                         }
 
             response.AdditionalInformation = AdditionalInformation.ToArray();
-            response.AmendmentDocumentDetails = null;
+            response.CanceledDocumentDetails = null;
             response.ProceduralFaultMsg = new ProceduralFaultDetails[1];
             response.ProceduralFaultMsg[0]= new ProceduralFaultDetails
             {
@@ -118,8 +118,8 @@ namespace Logitude.CustomsMessaging.FakeMessagingServices
                 isAgentResponsibility= true,
                 isAgentProceduralFaultCountable=true,
                 leadingDocumentVersion="1.0",
-                ConnectedEntity= new UnifreightIIG.Common.MessageLib.DeclarationCancel.ConnectedEntity[1]
-                { new UnifreightIIG.Common.MessageLib.DeclarationCancel.ConnectedEntity
+                ConnectedEntity= new UnifreightIIG.Common.MessageLib.ID.ConnectedEntity[1]
+                { new UnifreightIIG.Common.MessageLib.ID.ConnectedEntity
                       {
                     entityIdKey1 = dec.DeclarationNumber,
                     entityType= 1055,

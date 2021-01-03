@@ -153,6 +153,7 @@ export class CustomerRoleTypePMService {
         if (!entityPM) {
             
             entityPM = new CustomerRoleTypePM();
+			entityPM.DisableMarkAsDirty = true;
         }
 
 		var customFields: Array<string> = [];
@@ -193,6 +194,8 @@ export class CustomerRoleTypePMService {
             entityPM.OldEntityPM = null;
         }
 		entityPM.IsDirty = false;
+	    entityPM.DisableMarkAsDirty = false;
+
         return entityPM;
     }
 

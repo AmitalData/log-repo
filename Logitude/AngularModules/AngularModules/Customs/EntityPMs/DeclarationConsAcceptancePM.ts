@@ -73,7 +73,10 @@ export class DeclarationConsAcceptancePM {
     public OldEntityPM: DeclarationConsAcceptancePM;
 		
     public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
+       if(!this.DisableMarkAsDirty)
+       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -81,6 +84,7 @@ export class DeclarationConsAcceptancePM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "Customs.DeclarationConsAcceptance");
            
         }
+       }
     }
 
     private MyClone: DeclarationConsAcceptancePM;

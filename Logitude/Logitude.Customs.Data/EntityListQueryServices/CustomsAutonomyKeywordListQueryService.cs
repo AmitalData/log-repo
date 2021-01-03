@@ -32,7 +32,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 
 																KeywordtypeCode = a.KeywordtypeCode,
 																KeywordsList = a.KeywordsList,
-																KeywordtypeLocalName = a.KeywordtypeCode == "1" ? "עיר" : "טלפון"
+																KeywordtypeLocalName = a.KeywordtypeCode == "1" ? "עיר" : (a.KeywordtypeCode == "2" ? "טלפון" : "קידומת ת\"ז/ח\"פ פלסטינאי")
 
 															});
 			return query;

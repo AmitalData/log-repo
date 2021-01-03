@@ -80,7 +80,7 @@
       Nullable="false" />
   </Column>
   <Column
-    Name="IdentifierID"
+    Name="IdentifierID"   
     Type="nvarchar"
     Size="35">
     <Constraints

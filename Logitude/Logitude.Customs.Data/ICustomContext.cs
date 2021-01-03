@@ -21,7 +21,10 @@ namespace Logitude.Customs.Data
 		 IDbSet<AddressContactState> AddressContactStates { get; }
 		 IDbSet<AddressPurpose> AddressPurposes { get; }
 		 IDbSet<AgentTalkBackType> AgentTalkBackTypes { get; }
+		 IDbSet<AmendCancellRequestInitiator> AmendCancellRequestInitiators { get; }
 		 IDbSet<AmendmentFieldReasonType> AmendmentFieldReasonTypes { get; }
+		 IDbSet<AmendmentFieldStatusType> AmendmentFieldStatusTypes { get; }
+		 IDbSet<AmendRequestRejectReasonType> AmendRequestRejectReasonTypes { get; }
 		 IDbSet<AmendmentRequestStatus> AmendmentRequestStatuses { get; }
 		 IDbSet<AmendmentStatus> AmendmentStatuses { get; }
 		 IDbSet<AmendmentType> AmendmentTypes { get; }
@@ -218,6 +221,7 @@ namespace Logitude.Customs.Data
 		 IDbSet<LastReleaseFromWarehouse> LastReleaseFromWarehouses { get; }
 		 IDbSet<LeadDocumentExceptionType> LeadDocumentExceptionTypes { get; }
 		 IDbSet<LeadDocumentType> LeadDocumentTypes { get; }
+		 IDbSet<LoadingSiteType> LoadingSiteTypes { get; }
 		 IDbSet<MamanSpecialAction> MamanSpecialActions { get; }
 		 IDbSet<MamanSpecialActionStatus> MamanSpecialActionStatuses { get; }
 		 IDbSet<MamanStatus> MamanStatuses { get; }

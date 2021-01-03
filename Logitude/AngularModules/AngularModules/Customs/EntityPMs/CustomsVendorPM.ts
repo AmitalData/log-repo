@@ -183,7 +183,10 @@ export class CustomsVendorPM {
     public OldEntityPM: CustomsVendorPM;
 		
     public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
+       if(!this.DisableMarkAsDirty)
+       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -191,6 +194,7 @@ export class CustomsVendorPM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "Customs.CustomsVendor");
            
         }
+       }
     }
 
     private MyClone: CustomsVendorPM;

@@ -163,6 +163,26 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="Delivered"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="TruckerId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="DistributionArea"
+    Type="nvarchar"
+    Size="30">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="DeclarationId"
     ReferencedTable="Declarations"
@@ -178,6 +198,11 @@
     ReferencedTable="MamanStatuses"
     ReferencedColumn="Code"
     ReferencedTableSchema="Customs" />
+  <Relation
+    ForeignKeyColumn="TruckerId"
+    ReferencedTable="Truckers"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
   <Index
     Columns="CourierPendingReasonList" />
   <Index

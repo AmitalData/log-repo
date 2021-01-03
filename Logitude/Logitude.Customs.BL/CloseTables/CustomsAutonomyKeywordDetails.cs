@@ -30,7 +30,17 @@ namespace Logitude.Customs.BL.CloseTables
                 Partner = "",
                 ViaMethod = ""
             }
-        
+            ,
+
+            new InterfaceDetails()
+            {
+                Code = "3",
+                Name = "קידומת ת.ז/ח.פ פלסטינאי",
+                TypeCode = "3",
+                Partner = "",
+                ViaMethod = ""
+            }
+
             };
             ///
 

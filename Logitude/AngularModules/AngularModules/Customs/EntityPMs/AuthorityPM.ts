@@ -53,7 +53,10 @@ export class AuthorityPM {
     public OldEntityPM: AuthorityPM;
 		
     public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
+       if(!this.DisableMarkAsDirty)
+       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -61,6 +64,7 @@ export class AuthorityPM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "Customs.Authority");
            
         }
+       }
     }
 
     private MyClone: AuthorityPM;

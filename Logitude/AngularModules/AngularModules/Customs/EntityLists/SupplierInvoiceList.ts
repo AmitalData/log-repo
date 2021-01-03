@@ -54,6 +54,8 @@ export class SupplierInvoiceList {
 	PartyRelationshipName: string;
 	BuyerRoleName: string;
 	BuyerCountryName: string;
+	ItemFOBAmountForeign: number;
+	ItemFOBAmountNIS: number;
 	
 }
  
