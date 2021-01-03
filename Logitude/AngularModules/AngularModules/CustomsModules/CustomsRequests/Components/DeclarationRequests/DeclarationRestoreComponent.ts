@@ -250,7 +250,7 @@ export class DeclarationRestoreComponent
 
         if (customSendOptionsArgs.TestCase) {
 
-            let windowArgs = { "SincroScreen": "SincroSendDeclaration" };
+            let windowArgs = { "SincroScreen": "SincroSendRetrieveDeclaration" };
 
             var logWindow = new LogitudeWindow();
             logWindow.Width = 600;

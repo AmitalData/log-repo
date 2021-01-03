@@ -121,6 +121,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 var Fake  = new Fake_2754_MSG10004_ImportDeclarationResponse(requestParams);
                 _ResponseHeader = Fake.CallWS(requestParams, out response1);
                 response = CastMsg(response1);
+                return response;
             }
 
             // var mP = new UnifreightIIG.Common.TheGateway.MoreParams() { MyOption = UnifreightIIG.Common.TheGateway.MoreParams.Options.None };
