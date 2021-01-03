@@ -20,6 +20,7 @@ using Logitude.Server.Tools;
 using Microsoft.Practices.Unity;
 using Logitude.Accounting.Data.Repositories;
 using Logitude.Accounting.Data.EntityPOCOs;
+using Logitude.Accounting.Data.EntityLists;
 
 namespace Logitude.BL.InvoiceModel.EntityQueries
 {
@@ -38,10 +39,11 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
         {
             repository = arPaymentRepository;
         }
-        public ARPaymentPM GetSinglePMForInterest(string id, int tenant)
+        public ARPaymentPM GetSinglePMForInterest(InterestTransactionList interestTransactionLists)
         {
             ARPaymentPM payment = (from a in repository.context.ARPayments 
-                                   where a.Id == id && a.Tenant == tenant
+                                   where a.Id == interestTransactionLists.EntityId && 
+                                         a.Tenant == interestTransactionLists.Tenant
                                    select new ARPaymentPM()
                                    {
                                        Id = a.Id,
@@ -51,7 +53,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                    }).FirstOrDefault();
             if (payment!=null)
             {
-                payment = SetJournalFields(payment);
+                payment = SetInterestJournalFields(payment, interestTransactionLists);
             }
 
             return payment;
@@ -246,8 +248,43 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
             JournalPM journal = journalQuery.GetJournalByAccountingEntityIdAndCode(paymentId,"3",tenant);
             return journal;
 
+        }
+
+        private ARPaymentPM SetInterestJournalFields(ARPaymentPM payment, InterestTransactionList interestTransactionLists)
+        {
+            List<JournalPM> journals = GetJournalsWithLinesByPaymentId(payment.Id, payment.Tenant);
+            if (journals != null)
+            {
+                SetInterestJournalFieldsForPayment(journals, payment, interestTransactionLists);
+            }
+            return payment;
+        }
 
 
+        private void SetInterestJournalFieldsForPayment(List<JournalPM> journals, ARPaymentPM payment, InterestTransactionList interestTransactionLists)
+        {
+            foreach (JournalPM journal in journals)
+            {
+                foreach (JournalLinePM journalLine in journal.JournalLines)
+                {
+                    if (journalLine.LocalAmount == interestTransactionLists.LocalAmount)
+                    {
+                        payment.JournalId = journal.Id;
+                        payment.JournalNumber = journal.JournalNumber;
+                        break;
+                    }
+                }
+                if (!string.IsNullOrEmpty(payment.JournalId))
+                    break;
+
+            }
+        }
+
+        private List<JournalPM> GetJournalsWithLinesByPaymentId(string paymentId, int tenant)
+        {
+            IJournalQueryServiceExt journalQuery = ContainerAccessor.Container.Resolve(typeof(IJournalQueryServiceExt), "JournalQueryServiceExt", new ParameterOverride("", 1)) as IJournalQueryServiceExt;
+            List<JournalPM> journals = journalQuery.GetJournalsWithLinesByAccountingEntityIdAndCode(paymentId, "3", tenant);
+            return journals;
         }
 
         private string GetAccountIdForGLAccountCurrency(GLAccountPM gLAccount, string paymentCurrencyId)

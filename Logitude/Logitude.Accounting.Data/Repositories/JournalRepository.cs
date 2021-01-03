@@ -312,7 +312,17 @@ namespace Logitude.Accounting.Data.Repositories
             return Journal;
         }
 
+        public List<Journal> GetJournalsByAccountingEntityIdAndTypeCode(string entityId, string entityTypeCode, int tenant)
+        {
 
+
+            List<Journal> journals = (from a in context.Journals where
+                                                   a.Tenant == tenant &&
+                                                   a.AccountingEntityId == entityId &&
+                                                   a.AccountingEntityCode == entityTypeCode
+                               select a).ToList();
+            return journals;
+        }
         public bool CheckIfExternalNoAndSystemExist(string externalNo, string externalSystem, out string journalNumber, int tenant)
         {
             bool exist;
