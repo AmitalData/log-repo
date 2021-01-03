@@ -25,12 +25,13 @@ namespace Logitude.SecurityTests.Steps.Shipment
         public void WhenCreateShipmentRequestSentForUserSTenant()
         {
             var firstUser = Users.ListOfUserData[0];
-            var model = GetValidShipmentPM();
-            model.Tenant = firstUser.Tenant;
-            model.CreatedByUserId = firstUser.UserId;
-            model.UpdatedByUserId = firstUser.UserId;
-            IEnumerable<ShipmentPM> shipmentPMs = APICaller.CallPost<IEnumerable<ShipmentPM>>(model, "shipment", firstUser.Token);
-            Context.ShipmentPM.Id = shipmentPMs.FirstOrDefault()?.Id;
+            ShipmentPM shipmentModel = GetValidShipmentPM();
+            shipmentModel.Tenant = firstUser.Tenant;
+            shipmentModel.CreatedByUserId = firstUser.UserId;
+            shipmentModel.UpdatedByUserId = firstUser.UserId;
+
+            ShipmentPM shipmentPM = APICaller.CallPost<ShipmentPM>(shipmentModel, "shipment", firstUser.Token);
+            Context.ShipmentPM.Id = shipmentPM?.Id;
         }
 
         [Then(@"Shipment should be added successfully")]
@@ -42,9 +43,16 @@ namespace Logitude.SecurityTests.Steps.Shipment
         [When(@"Create shipment request sent for other Tenant")]
         public void WhenCreateShipmentRequestSentForOtherTenant()
         {
-            var OtherUserToken = Users.ListOfUserData[2].Token;
-            IEnumerable<ShipmentPM> shipmentPMs = APICaller.CallPost<IEnumerable<ShipmentPM>>(GetValidShipmentPM(), "shipment", OtherUserToken);
-            Context.OtherShipmentPM.Id = shipmentPMs.FirstOrDefault()?.Id;
+            var firstUser = Users.ListOfUserData[0];
+            var secondUser = Users.ListOfUserData[1];
+
+            ShipmentPM shipmentModel = GetValidShipmentPM();
+            shipmentModel.Tenant = firstUser.Tenant; // Second user try to Post on first user tenant
+            shipmentModel.CreatedByUserId = secondUser.UserId;
+            shipmentModel.UpdatedByUserId = secondUser.UserId;
+
+            ShipmentPM shipmentPMs = APICaller.CallPost<ShipmentPM>(shipmentModel, "shipment", secondUser.Token);
+            Context.OtherShipmentPM.Id = shipmentPMs?.Id;
         }
 
         [Then(@"Shipment should not be added")]
@@ -56,9 +64,17 @@ namespace Logitude.SecurityTests.Steps.Shipment
         [When(@"Update shipment request sent for User's Tenant")]
         public void WhenUpdateShipmentRequestSentForUserSTenant()
         {
-            var UserToken = Users.ListOfUserData[1].Token;
-            IEnumerable<ShipmentPM> shipmentPMs = APICaller.CallPut<IEnumerable<ShipmentPM>>(GetValidShipmentPM(), "shipment", UserToken);
-            Context.ShipmentPM.Id = shipmentPMs.FirstOrDefault()?.Id;
+            var firstUser = Users.ListOfUserData[0];
+            ShipmentPM shipmentModel = GetValidShipmentPM();
+            shipmentModel.Id = GetShipmentIdForFirstUser();
+            shipmentModel.Tenant = firstUser.Tenant;
+            shipmentModel.CreatedByUserId = firstUser.UserId;
+            shipmentModel.UpdatedByUserId = firstUser.UserId;
+
+            shipmentModel.TransportModeId = "O";
+
+            ShipmentPM shipmentPM = APICaller.CallPut<ShipmentPM>(shipmentModel, "shipment", firstUser.Token);
+            Context.ShipmentPM.Id = shipmentPM?.Id;
         }
 
         [Then(@"Shipment should be Updated successfully")]
@@ -70,9 +86,17 @@ namespace Logitude.SecurityTests.Steps.Shipment
         [When(@"Update shipment request sent for other Tenant")]
         public void WhenUpdateShipmentRequestSentForOtherTenant()
         {
-            var OtherUserToken = Users.ListOfUserData[2].Token;
-            IEnumerable<ShipmentPM> shipmentPMs = APICaller.CallPost<IEnumerable<ShipmentPM>>(GetValidShipmentPM(), "shipment", OtherUserToken);
-            Context.OtherShipmentPM.Id = shipmentPMs.FirstOrDefault()?.Id;
+            var firstUser = Users.ListOfUserData[0];
+            var secondUser = Users.ListOfUserData[1];
+
+            ShipmentPM shipmentModel = GetValidShipmentPM();
+            shipmentModel.Id = GetShipmentIdForFirstUser();
+            shipmentModel.Tenant = firstUser.Tenant; // Second user try to Put on first user tenant
+            shipmentModel.CreatedByUserId = secondUser.UserId;
+            shipmentModel.UpdatedByUserId = secondUser.UserId;
+
+            ShipmentPM shipmentPMs = APICaller.CallPut<ShipmentPM>(shipmentModel, "shipment", secondUser.Token);
+            Context.OtherShipmentPM.Id = shipmentPMs?.Id;
         }
 
         [Then(@"Shipment should not be Updated")]
@@ -84,28 +108,29 @@ namespace Logitude.SecurityTests.Steps.Shipment
         private ShipmentPM GetValidShipmentPM()
         {
             return new ShipmentPM { 
-                Id = "1",
-                Tenant = 951,
                 DirectionId = "E",
                 TransportModeId = "A",
-                shipmentType = "Direct",
-                FromPortId = "1-3824",
-                ToPortId = "1-3824",
                 ShipmentLevelCode = "C",
                 NewConcurrencyGUID = Guid.NewGuid().ToString(),
                 MainCarriageToPortId = "1-300930",
                 MainCarriageFromPortId = "1-303023",
                 BranchId = "1-1102",
                 DepartmentId = "1-2988",
-                BasicFreightId = "P",
                 OtherPrepaidCollectId = "P",
-                FreightPayerAddressId = "1-610125",
-                FreightPayerId = "1-577381",
-                FreightPrepaidCollectId = "P",
-                CreatedByUserId = "1-108265",
-                UpdatedByUserId = "1-108265"
+                FreightPrepaidCollectId = "P"
             };
         }
 
+        private string GetShipmentIdForFirstUser()
+        {
+            var firstUser = Users.ListOfUserData[0];
+            ShipmentPM shipmentModel = GetValidShipmentPM();
+            shipmentModel.Tenant = firstUser.Tenant;
+            shipmentModel.CreatedByUserId = firstUser.UserId;
+            shipmentModel.UpdatedByUserId = firstUser.UserId;
+
+            ShipmentPM shipmentPM = APICaller.CallPost<ShipmentPM>(shipmentModel, "shipment", firstUser.Token);
+            return shipmentPM?.Id;
+        }
     }
 }

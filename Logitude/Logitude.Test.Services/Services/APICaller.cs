@@ -59,7 +59,8 @@ namespace Logitude.Test.Services
             }
             else
             {
-                throw new Exception(method.ToString() + " Request To " + restClientUrl + " Faild With Message " + restResponse.Content);
+                return default(T);
+                //throw new Exception(method.ToString() + " Request To " + restClientUrl + " Faild With Message " + restResponse.Content);
             }
         }
 
