@@ -105,6 +105,7 @@
     <Compile Include="Models\Login\UserData.cs" />
     <Compile Include="Models\Login\LoginsParameters.cs" />
     <Compile Include="Models\Login\UsersData.cs" />
+    <Compile Include="Models\Shipment\ShipmentPackagePM.cs" />
     <Compile Include="Models\Shipment\ShipmentSecurityAccessStepsContext.cs" />
     <Compile Include="Models\Shipment\ShipmentPM.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
