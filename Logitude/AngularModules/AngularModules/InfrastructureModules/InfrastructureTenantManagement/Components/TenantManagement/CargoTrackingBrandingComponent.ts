@@ -41,7 +41,7 @@ export class CargoTrackingBrandingComponent extends BaseComponent implements Aft
     public BackgroundId: string;
     public ComapnylogoId: string;
     public BrowserIconId: string;
-    private _entityResourceService: EntityResourceService = new EntityResourceService();
+    private entityResourceService: EntityResourceService = new EntityResourceService();
     constructor(public entityArgs: EntityArgs)
     {
         super();
@@ -96,11 +96,15 @@ export class CargoTrackingBrandingComponent extends BaseComponent implements Aft
     set MainColorOpacity(value: number)
     {
         this.mainColorOpacity = value;
-
-        this.EntityMainColor = this.ConvertHexToRGBColor(this.MainColorCode, this.MainColorOpacity);
+        this.UpdateEntityMainColor();
     }
 
     private mainColorCode: string;
+    private UpdateEntityMainColor()
+    {
+        this.EntityMainColor = this.ConvertHexToRGBColor(this.MainColorCode, this.MainColorOpacity);
+    }
+
     public get MainColorCode(): string
     {
         return this.mainColorCode;
@@ -108,15 +112,18 @@ export class CargoTrackingBrandingComponent extends BaseComponent implements Aft
     public set MainColorCode(hexColor: string)
     {
         this.mainColorCode = hexColor;
+        this.ValidateMainColorCode(hexColor);
+        this.UpdateEntityMainColor();
+    }
 
+    private ValidateMainColorCode(hexColor: string)
+    {
         if (!this.ValidateHexCode(hexColor, "MainColorCode"))
             this.wrongMainColor = true;
-         else
+        else
             this.wrongMainColor = false;
 
         this.UpdateEditComponentValidationErrors();
-
-        this.EntityMainColor = this.ConvertHexToRGBColor(this.MainColorCode, this.MainColorOpacity);
     }
 
     private UpdateEditComponentValidationErrors()
@@ -163,12 +170,17 @@ export class CargoTrackingBrandingComponent extends BaseComponent implements Aft
 
 
 
-        this.EntitySecondaryColor = this.ConvertHexToRGBColor(this.SecondaryColorCode, this.SecondaryColorOpacity);
+        this.SetEntitySecondaryColor();
     }
 
     wrongSecondaryColor: boolean = false;
     wrongMainColor: boolean = false;
     private secondaryColorCode: string;
+    private SetEntitySecondaryColor()
+    {
+        this.EntitySecondaryColor = this.ConvertHexToRGBColor(this.SecondaryColorCode, this.SecondaryColorOpacity);
+    }
+
     public get SecondaryColorCode(): string
     {
         return this.secondaryColorCode;
@@ -177,18 +189,23 @@ export class CargoTrackingBrandingComponent extends BaseComponent implements Aft
     {
         this.secondaryColorCode = hexColor;
 
-        if (!this.ValidateHexCode(hexColor, "SecondaryColorCode"))
-            this.wrongSecondaryColor = true;
-        else
-            this.wrongSecondaryColor = false;
-
-        this.UpdateEditComponentValidationErrors();
-
-        this.EntitySecondaryColor = this.ConvertHexToRGBColor(this.SecondaryColorCode, this.SecondaryColorOpacity);
+        this.ValidateSecondaryColor(hexColor);
+        this.SetEntitySecondaryColor();
     }
 
 
 
+
+    private ValidateSecondaryColor(hexColor: string)
+    {
+        if (!this.ValidateHexCode(hexColor, "SecondaryColorCode"))
+            this.wrongSecondaryColor = true;
+
+        else
+            this.wrongSecondaryColor = false;
+
+        this.UpdateEditComponentValidationErrors();
+    }
 
     get ContactEmail()
     {
@@ -243,7 +260,7 @@ export class CargoTrackingBrandingComponent extends BaseComponent implements Aft
 
     ngOnInit()
     {
-        this._entityResourceService.getEntityResourceByTableName("TenantManagement", 0).subscribe((response: any) =>
+        this.entityResourceService.getEntityResourceByTableName("TenantManagement", 0).subscribe((response: any) =>
         {
             this.IsVisibile = true;
             this.EntityPM = this.entityArgs.EntityPM;
