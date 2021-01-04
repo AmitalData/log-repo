@@ -91,8 +91,8 @@ using Simplog.Data.ShipmentsModel;
 			  
 				   if(item.VendorId != null)
 				   {
-					   VendorQueryService VendorService4 = new VendorQueryService(Tenant);
-					   					   temp.Vendor = VendorService4.GetVendorById(item.VendorId,Tenant,ComputingPartnerName); 
+					   CardQueryService CardService4 = new CardQueryService(Tenant);
+					   					   temp.Vendor = CardService4.GetCardById(item.VendorId,Tenant,ComputingPartnerName); 
 			       
 					   				   }
 				   					
@@ -259,10 +259,10 @@ using Simplog.Data.ShipmentsModel;
 										}  
 
 					
-					VendorQueryService VendorVendorService = new VendorQueryService(Tenant);
+					CardQueryService VendorCardService = new CardQueryService(Tenant);
 					if(item.Vendor != null)
 					{
-						var myVendorPM = VendorVendorService.VendorDataMappingAndValidatin(item.Vendor,Tenant,ComputingPartnerName,IsUpdate);
+						var myVendorPM = VendorCardService.CardDataMappingAndValidatin(item.Vendor,Tenant,ComputingPartnerName,IsUpdate);
 						
 						if(myVendorPM != null)
 						{ 
