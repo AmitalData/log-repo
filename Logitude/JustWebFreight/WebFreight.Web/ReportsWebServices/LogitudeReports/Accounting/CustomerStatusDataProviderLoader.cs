@@ -25,7 +25,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
         private bool showLocals = false;
         private int tenant;
         private CustomerStatusDataProvider dataProvider;
-        private List<LedgerTransactionList> ExternalTransactions;
+        public List<LedgerTransactionList> ExternalTransactions;
 
         public CustomerStatusDataProviderLoader(int _tenant)
         {
@@ -150,44 +150,62 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
             string sortDirection = GetFilterValue<string>("SortDirection");
 
             if (sortField == "balance")
-            {
-                if (sortDirection == "Descending")
-                    dataProvider.CustomersStatuses = dataProvider.CustomersStatuses.OrderByDescending(d => d.AccountingBalance).ToList();
-                else
-                    dataProvider.CustomersStatuses = dataProvider.CustomersStatuses.OrderBy(d => d.AccountingBalance).ToList();
-            }
+                SortByBalance(sortDirection);
             else if (sortField == "customer")
-            {
-                if (sortDirection == "Descending")
-                    dataProvider.CustomersStatuses = dataProvider.CustomersStatuses.OrderByDescending(d => d.CustomerName).ToList();
-                else
-                    dataProvider.CustomersStatuses = dataProvider.CustomersStatuses.OrderBy(d => d.CustomerName).ToList();
-            }
+                SortByCustoemrName(sortDirection);
             else if (sortField == "TotalToCollect")
-            {
-                if (sortDirection == "Descending")
-                    dataProvider.CustomersStatuses = dataProvider.CustomersStatuses.OrderByDescending(d => d.TotalToCollect).ToList();
-                else
-                    dataProvider.CustomersStatuses = dataProvider.CustomersStatuses.OrderBy(d => d.TotalToCollect).ToList();
-            }
+                SortByTotalToCollectAmount(sortDirection);
             else if (sortField == "Obligo")
-            {
-                if (sortDirection == "Descending")
-                    dataProvider.CustomersStatuses = dataProvider.CustomersStatuses.OrderByDescending(d => d.Obligo).ToList();
-                else
-                    dataProvider.CustomersStatuses = dataProvider.CustomersStatuses.OrderBy(d => d.Obligo).ToList();
-            }
+                SortByObligoField(sortDirection);
             else if (sortField == "CreditUsed")
-            {
-                if (sortDirection == "Descending")
-                    dataProvider.CustomersStatuses = dataProvider.CustomersStatuses.OrderByDescending(d => d.CreditUsed).ToList();
-                else
-                    dataProvider.CustomersStatuses = dataProvider.CustomersStatuses.OrderBy(d => d.CreditUsed).ToList();
-            }
+                SortByUsedCreditAmount(sortDirection);
             else
-            {
+                DefaultSort();
+        }
+
+        private void DefaultSort()
+        {
+            dataProvider.CustomersStatuses = dataProvider.CustomersStatuses.OrderBy(d => d.CustomerName).ToList();
+        }
+
+        private void SortByUsedCreditAmount(string sortDirection)
+        {
+            if (sortDirection == "Descending")
+                dataProvider.CustomersStatuses = dataProvider.CustomersStatuses.OrderByDescending(d => d.CreditUsed).ToList();
+            else
+                dataProvider.CustomersStatuses = dataProvider.CustomersStatuses.OrderBy(d => d.CreditUsed).ToList();
+        }
+
+        private void SortByObligoField(string sortDirection)
+        {
+            if (sortDirection == "Descending")
+                dataProvider.CustomersStatuses = dataProvider.CustomersStatuses.OrderByDescending(d => d.Obligo).ToList();
+            else
+                dataProvider.CustomersStatuses = dataProvider.CustomersStatuses.OrderBy(d => d.Obligo).ToList();
+        }
+
+        private void SortByTotalToCollectAmount(string sortDirection)
+        {
+            if (sortDirection == "Descending")
+                dataProvider.CustomersStatuses = dataProvider.CustomersStatuses.OrderByDescending(d => d.TotalToCollect).ToList();
+            else
+                dataProvider.CustomersStatuses = dataProvider.CustomersStatuses.OrderBy(d => d.TotalToCollect).ToList();
+        }
+
+        private void SortByCustoemrName(string sortDirection)
+        {
+            if (sortDirection == "Descending")
+                dataProvider.CustomersStatuses = dataProvider.CustomersStatuses.OrderByDescending(d => d.CustomerName).ToList();
+            else
                 dataProvider.CustomersStatuses = dataProvider.CustomersStatuses.OrderBy(d => d.CustomerName).ToList();
-            }
+        }
+
+        private void SortByBalance(string sortDirection)
+        {
+            if (sortDirection == "Descending")
+                dataProvider.CustomersStatuses = dataProvider.CustomersStatuses.OrderByDescending(d => d.AccountingBalance).ToList();
+            else
+                dataProvider.CustomersStatuses = dataProvider.CustomersStatuses.OrderBy(d => d.AccountingBalance).ToList();
         }
 
         private CustomerStatus CreateNewCustomerStatus(IGrouping<string, PeriodMExtended> customerPeriods)
@@ -251,12 +269,10 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
 
         private List<PeriodCurrencySummary> GetCurrencyPeriodsSummaries(List<PeriodMExtended> currencyPeriods)
         {
-            var ssss = new List<PeriodCurrencySummary>();
+            var periodCurrencySummaries = new List<PeriodCurrencySummary>();
 
             foreach (PeriodMExtended currencyPeriod in currencyPeriods)
             {
-                var showCurrencyDetails = GetFilterValue<bool>("Detailed");
-                var customerId = GetFilterValue<string>("CustomerId");
                 PeriodCurrencySummary summary = new PeriodCurrencySummary()
                 {
                     CurrencyId = currencyPeriod.CurrencyId,
@@ -264,27 +280,26 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                     TotalDebit = currencyPeriod.OpenDebit,
                     CurrencyCode = currencyPeriod.CurrencyCode
                 };
-
-                //if ((showCurrencyDetails && customerId != null && currencyPeriod.CurrencyId != null)||!showCurrencyDetails)
-                    ssss.Add(summary);
+                periodCurrencySummaries.Add(summary);
             }
 
-            return ssss;
+            return periodCurrencySummaries;
         }
         private string ResharpPeriodName(string name)
+        {
+            name = ReplaceBeforeLabel(name);
+            return name;
+        }
+
+        private string ReplaceBeforeLabel(string name)
         {
             if (name.Contains("b4"))
                 name = name.Replace("b4", showLocals ? "לפני" : "Before");
             return name;
         }
+
         private void SetReportCategoryParameters(AgingReportParam reportParameters)
         {
-            string category1Id = null;
-            string category2Id = null;
-            string category3Id = null;
-            string category4Id = null;
-            string category5Id = null;
-
             string categoryIndex = GetFilterValue<string>("CategoryIndex");
             string categoryValue = GetFilterValue<string>("CategoryValue");
 
@@ -293,19 +308,14 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
 
                 switch (categoryIndex)
                 {
-                    case "Category1": { category1Id = categoryValue; break; }
-                    case "Category2": { category2Id = categoryValue; break; }
-                    case "Category3": { category3Id = categoryValue; break; }
-                    case "Category4": { category4Id = categoryValue; break; }
-                    case "Category5": { category5Id = categoryValue; break; }
+                    case "Category1": { reportParameters.Category1Id = categoryValue; break; }
+                    case "Category2": { reportParameters.Category2Id = categoryValue; break; }
+                    case "Category3": { reportParameters.Category3Id = categoryValue; break; }
+                    case "Category4": { reportParameters.Category4Id = categoryValue; break; }
+                    case "Category5": { reportParameters.Category5Id = categoryValue; break; }
                 }
             }
 
-            reportParameters.Category1Id = category1Id;
-            reportParameters.Category2Id = category2Id;
-            reportParameters.Category3Id = category3Id;
-            reportParameters.Category4Id = category4Id;
-            reportParameters.Category5Id = category5Id;
         }
 
         private AgingReportParam BuildReportParameters()
@@ -378,9 +388,9 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                 if (filterItem.FieldDataType == "decimal")
                 {
                     decimal value = Convert.ToDecimal(filterItem.FieldValue);
-                    object x = value;
+                    object valueObject = value;
 
-                    return (T)x;
+                    return (T)valueObject;
                 }
                 else
                 {
