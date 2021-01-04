@@ -51,7 +51,7 @@ namespace Logitude.SpecFlow.ValueRetrievers
                     ChargesGroup chargesGroup = chargesGroupRepository.GetSingleChargesGroupByCode(chargesGroupCode, User.Tenant);
                     return chargesGroup.Id;
             }
-            return null;
+            return keyValuePair.Value;
         }
 
         protected string GetCodeFromIdRegex(string valueFromTable)
