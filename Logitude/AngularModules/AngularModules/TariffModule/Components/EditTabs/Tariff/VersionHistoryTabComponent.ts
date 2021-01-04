@@ -672,6 +672,15 @@ export class VersionHistoryTabComponent implements OnDestroy {
             }
         });
     }
+
+    ViewUploadedExcelFilesClicked() {
+        var logWindow = new LogitudeWindow();
+        logWindow.Title = "Uploaded Excel Files";
+        logWindow.Width = 600;
+        logWindow.Height = 500;
+        logWindow.WindowArgs = { TariffId: this.EntityPM.Id, Version: this.VersionPM.Version };
+        logWindow.Show('./TariffModule/Components/EditTabs/Tariff/UploadedExcelsComponent');
+    }
 }
 
 export class VersionHistoryTariffLine {

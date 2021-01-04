@@ -7,7 +7,6 @@
 //------------------------------------------------------------------------------
 //------------------------------------------------------------------------------
 
-import {TariffVersionPM} from './TariffVersionPM';
 import {UIProperties, UIProperty} from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
 import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceLocator} from '../../Infrastructure/Locators/ServiceLocator';
@@ -15,17 +14,15 @@ import {Output, EventEmitter}  from '@angular/core';
 import {PropertyChangedArgs} from '../../Infrastructure/EventEmitterArgs/PropertyChangedArgs';
 import {CustomFieldClass} from '../../Infrastructure/DataContracts/CustomFieldClass';
 
-export class TariffVersionAllInChargePM {
+export class TariffVersionUploadedExcelPM {
 
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
-	        constructor(_entityParentPM: any) {
-          this.EntityParentPM = _entityParentPM;
+	  constructor() {
           this.UIProperties = new UIProperties(this); 
           this.IsDirty = false;
       }
-
-	 
+ 	 
     
     private id: string;
     public get Id() { return this.id; }
@@ -37,24 +34,14 @@ export class TariffVersionAllInChargePM {
     public set Tenant(newValue: number) { if (this.tenant != newValue) { this.tenant = newValue; this.MarkAsDirty("Tenant"); } }
        
 	 
-    private version: number;
-    public get Version() { return this.version; }
-    public set Version(newValue: number) { if (this.version != newValue) { this.version = newValue; this.MarkAsDirty("Version"); } }
+    private uploadDate: Date;
+    public get UploadDate() { return this.uploadDate; }
+    public set UploadDate(newValue: Date) { if (this.uploadDate != newValue) { this.uploadDate = newValue; this.MarkAsDirty("UploadDate"); } }
        
 	 
-    private chargesTypeId: string;
-    public get ChargesTypeId() { return this.chargesTypeId; }
-    public set ChargesTypeId(newValue: string) { if (this.chargesTypeId != newValue) { this.chargesTypeId = newValue; this.MarkAsDirty("ChargesTypeId"); } }
-       
-	 
-    private addedByUserId: string;
-    public get AddedByUserId() { return this.addedByUserId; }
-    public set AddedByUserId(newValue: string) { if (this.addedByUserId != newValue) { this.addedByUserId = newValue; this.MarkAsDirty("AddedByUserId"); } }
-       
-	 
-    private addDate: Date;
-    public get AddDate() { return this.addDate; }
-    public set AddDate(newValue: Date) { if (this.addDate != newValue) { this.addDate = newValue; this.MarkAsDirty("AddDate"); } }
+    private uploadedByUserId: string;
+    public get UploadedByUserId() { return this.uploadedByUserId; }
+    public set UploadedByUserId(newValue: string) { if (this.uploadedByUserId != newValue) { this.uploadedByUserId = newValue; this.MarkAsDirty("UploadedByUserId"); } }
        
 	 
     private tariffId: string;
@@ -62,42 +49,55 @@ export class TariffVersionAllInChargePM {
     public set TariffId(newValue: string) { if (this.tariffId != newValue) { this.tariffId = newValue; this.MarkAsDirty("TariffId"); } }
        
 	 
-    private chargesTypeCode: string;
-    public get ChargesTypeCode() { return this.chargesTypeCode; }
-    public set ChargesTypeCode(newValue: string) { if (this.chargesTypeCode != newValue) { this.chargesTypeCode = newValue; this.MarkAsDirty("ChargesTypeCode"); } }
+    private version: number;
+    public get Version() { return this.version; }
+    public set Version(newValue: number) { if (this.version != newValue) { this.version = newValue; this.MarkAsDirty("Version"); } }
+       
+	 
+    private documentId: string;
+    public get DocumentId() { return this.documentId; }
+    public set DocumentId(newValue: string) { if (this.documentId != newValue) { this.documentId = newValue; this.MarkAsDirty("DocumentId"); } }
+       
+	 
+    private numberOfLines: number;
+    public get NumberOfLines() { return this.numberOfLines; }
+    public set NumberOfLines(newValue: number) { if (this.numberOfLines != newValue) { this.numberOfLines = newValue; this.MarkAsDirty("NumberOfLines"); } }
+       
+	 
+    private index: number;
+    public get Index() { return this.index; }
+    public set Index(newValue: number) { if (this.index != newValue) { this.index = newValue; this.MarkAsDirty("Index"); } }
+       
+	 
+    private uploadedByUserName: string;
+    public get UploadedByUserName() { return this.uploadedByUserName; }
+    public set UploadedByUserName(newValue: string) { if (this.uploadedByUserName != newValue) { this.uploadedByUserName = newValue; this.MarkAsDirty("UploadedByUserName"); } }
+       
+	 
+    private fileName: string;
+    public get FileName() { return this.fileName; }
+    public set FileName(newValue: string) { if (this.fileName != newValue) { this.fileName = newValue; this.MarkAsDirty("FileName"); } }
        
 	 
 
-    public OldEntityPM: TariffVersionAllInChargePM;
-	
-    private entityParentPM: any;
-    public get EntityParentPM() { return this.entityParentPM; }
-    public set EntityParentPM(newValue: any) { this.entityParentPM = newValue; }
-
-    private changeSetOp: string;
-    public get ChangeSetOp() { return this.changeSetOp; }
-    public set ChangeSetOp(newValue: string) { this.changeSetOp = newValue;  }//this.MarkAsDirty(); mohammad removed it because it sets the dirty bool to true when there is no changes.
-
-    public UniqueKey: string;
-	 	
+    public OldEntityPM: TariffVersionUploadedExcelPM;
+		
     public IsDirty: boolean;
     public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
        if(!this.DisableMarkAsDirty)
        {
         this.IsDirty = true;
-		  if (this.EntityParentPM) {
-            this.EntityParentPM.MarkAsDirty();
-        }	
+		  	
         if (propertyName != null) {
             this.PropertyChanged.emit(new PropertyChangedArgs(propertyName,this));
-            ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "TariffVersionAllInCharge");
+            ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "TariffVersionUploadedExcel");
            
         }
        }
     }
 
-    private MyClone: TariffVersionAllInChargePM;
+    private MyClone: TariffVersionUploadedExcelPM;
 
     public CloneMe() {
         ServiceHelper.CloneEntityPM(this);

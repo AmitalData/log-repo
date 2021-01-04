@@ -3087,6 +3087,7 @@
     <Content Include="TariffModule\Components\EditTabs\Tariff\TariffGeneralTabComponent.html" />
     <Content Include="TariffModule\Components\EditTabs\Tariff\TariffTabsContentComponent.html" />
     <Content Include="TariffModule\Components\EditTabs\Tariff\UpdateSurchargesComponent.html" />
+    <Content Include="TariffModule\Components\EditTabs\Tariff\UploadedExcelsComponent.html" />
     <Content Include="TariffModule\Components\EditTabs\Tariff\VersionHistoryTabComponent.html" />
     <Content Include="TariffModule\Components\EditTabs\Tariff\VersionTabComponent.html" />
     <Content Include="TariffModule\Components\Helpers\TariffHelperComponent.html" />
@@ -7477,6 +7478,7 @@
     <TypeScriptCompile Include="TariffModule\Components\EditTabs\Tariff\TariffGeneralTabComponent.ts" />
     <TypeScriptCompile Include="TariffModule\Components\EditTabs\Tariff\TariffTabsContentComponent.ts" />
     <TypeScriptCompile Include="TariffModule\Components\EditTabs\Tariff\UpdateSurchargesComponent.ts" />
+    <TypeScriptCompile Include="TariffModule\Components\EditTabs\Tariff\UploadedExcelsComponent.ts" />
     <TypeScriptCompile Include="TariffModule\Components\EditTabs\Tariff\VersionHistoryTabComponent.ts" />
     <TypeScriptCompile Include="TariffModule\Components\EditTabs\Tariff\VersionTabComponent.ts" />
     <TypeScriptCompile Include="TariffModule\Components\Helpers\TariffHelperComponent.ts" />
@@ -7498,6 +7500,7 @@
     <TypeScriptCompile Include="TariffModule\EntityLists\TariffSettingList.ts" />
     <TypeScriptCompile Include="TariffModule\EntityLists\TariffTypeList.ts" />
     <TypeScriptCompile Include="TariffModule\EntityLists\TariffVersionList.ts" />
+    <TypeScriptCompile Include="TariffModule\EntityLists\TariffVersionUploadedExcelList.ts" />
     <TypeScriptCompile Include="TariffModule\EntityPMInitServices\TariffPMInitService.ts" />
     <TypeScriptCompile Include="TariffModule\EntityPMs\TariffLineExpirationDatePM.ts" />
     <TypeScriptCompile Include="TariffModule\EntityPMs\TariffLinePM.ts" />
@@ -7507,6 +7510,7 @@
     <TypeScriptCompile Include="TariffModule\EntityPMs\TariffTypePM.ts" />
     <TypeScriptCompile Include="TariffModule\EntityPMs\TariffVersionAllInChargePM.ts" />
     <TypeScriptCompile Include="TariffModule\EntityPMs\TariffVersionPM.ts" />
+    <TypeScriptCompile Include="TariffModule\EntityPMs\TariffVersionUploadedExcelPM.ts" />
     <TypeScriptCompile Include="TariffModule\ModuleDeclarations.ts" />
     <TypeScriptCompile Include="TariffModule\ModuleProviders.ts" />
     <TypeScriptCompile Include="TariffModule\Module_Tariff.ts" />
@@ -7514,9 +7518,11 @@
     <TypeScriptCompile Include="TariffModule\Services\StandardLists\TariffSettingListService.ts" />
     <TypeScriptCompile Include="TariffModule\Services\StandardLists\TariffSurchargesUpdateListService.ts" />
     <TypeScriptCompile Include="TariffModule\Services\StandardLists\TariffSurchargesUpdateMethodListService.ts" />
+    <TypeScriptCompile Include="TariffModule\Services\StandardLists\TariffVersionUploadedExcelListService.ts" />
     <TypeScriptCompile Include="TariffModule\Services\StandardPMs\TariffProductPMService.ts" />
     <TypeScriptCompile Include="TariffModule\Services\StandardPMs\TariffSettingPMService.ts" />
     <TypeScriptCompile Include="TariffModule\Services\StandardPMs\TariffSurchargesUpdatePMService.ts" />
+    <TypeScriptCompile Include="TariffModule\Services\StandardPMs\TariffVersionUploadedExcelPMService.ts" />
     <TypeScriptCompile Include="TariffModule\Services\TariffDomainService.ts" />
     <TypeScriptCompile Include="TariffModule\Services\StandardLists\TariffListService.ts" />
     <TypeScriptCompile Include="TariffModule\Services\StandardLists\TariffTypeListService.ts" />

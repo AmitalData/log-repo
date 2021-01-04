@@ -109,6 +109,7 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="EntityFiles\TariffVersionAllInCharge.lxml" />
+    <None Include="EntityFiles\TariffVersionUploadedExcel.lxml" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

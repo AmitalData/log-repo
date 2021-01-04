@@ -91,7 +91,10 @@ export class TariffLinesContainersPricePM {
     public UniqueKey: string;
 	 	
     public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
+       if(!this.DisableMarkAsDirty)
+       {
         this.IsDirty = true;
 		  if (this.EntityParentPM) {
             this.EntityParentPM.MarkAsDirty();
@@ -101,6 +104,7 @@ export class TariffLinesContainersPricePM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "TariffLinesContainersPrice");
            
         }
+       }
     }
 
     private MyClone: TariffLinesContainersPricePM;

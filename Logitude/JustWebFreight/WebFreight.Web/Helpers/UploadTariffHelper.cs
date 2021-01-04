@@ -17,6 +17,10 @@ using Logitude.TariffModule.Data;
 using Logitude.TariffModule.BL.EntityUpdateServices;
 using Simplog.Server.Infrastructure;
 using Simplog.Data.Helpers;
+using Logitude.Server.Tools.StorageService;
+using Microsoft.Practices.Unity;
+using Logitude.Server.Tools;
+using System.IO;
 
 namespace WebFreight.Web.Helpers
 {
@@ -28,7 +32,10 @@ namespace WebFreight.Web.Helpers
         private string fileData;
         private string tariffId;
         private string carrierId;
-        private int version;
+        private int version;        
+        private string fileName;
+        private string fileExtension;
+        private MemoryStream memoryStream;
         private TariffQueryService tariffQueryService;
         private TariffCarrierTranslationRepository tariffCarrierTranslationRepository;
         private PortRepository portRepository;
@@ -42,6 +49,8 @@ namespace WebFreight.Web.Helpers
             tariffType = filterParameter.TariffType;
             tariffId = filterParameter.TariffId;
             version = filterParameter.Version;
+            fileName = filterParameter.FileName;
+            fileExtension = filterParameter.FileExtension;
 
             this.tariffContext = TariffModuleContext.GetContext(tenant);
             this.commonContext = CommonDataContext.GetContext(tenant);
@@ -90,11 +99,10 @@ namespace WebFreight.Web.Helpers
         public void Upload()
         {
             byte[] fileDataArray = Convert.FromBase64String(fileData);
-
-            System.IO.MemoryStream stream = new System.IO.MemoryStream(fileDataArray);
+            memoryStream = new MemoryStream(fileDataArray);
             ExcelEngine excelEngine = new ExcelEngine();
             IApplication application = excelEngine.Excel;
-            IWorkbook workbook = excelEngine.Excel.Workbooks.Open(stream);
+            IWorkbook workbook = excelEngine.Excel.Workbooks.Open(memoryStream);
             IWorksheet sheet = workbook.Worksheets[0];
 
             if (sheet.UsedRange.Rows.Count() - 1 > 1000)
@@ -118,6 +126,7 @@ namespace WebFreight.Web.Helpers
                     tariffLinesResult = this.BuildTariffLines_FCL(excelSheetLines);
                 }
 
+                this.CreateTariffUploadExcel(sheet.UsedRange.Rows.Count() - 1);
                 this.SaveTariff(tariffLinesResult);
             }
         }
@@ -1587,6 +1596,29 @@ namespace WebFreight.Web.Helpers
             return isDateTime;
         }
 
+        private void CreateTariffUploadExcel(int count)
+        {
+            if (tariffPM != null && versionPM != null)
+            {
+                TariffVersionUploadedExcelRepository excelRepository = new TariffVersionUploadedExcelRepository(tariffContext);
+                IQueryable<TariffVersionUploadedExcel> uploadedExcels = excelRepository.GetAllVersionUploadedExcels(tariffId, version, tenant);
+
+                string documentId = this.UploadExcelFileToStorage(tariffPM.TariffNumber,  tenant);
+
+                TariffVersionUploadedExcelPM tariffVersionUploadedExcel = new TariffVersionUploadedExcelPM();
+                tariffVersionUploadedExcel.ChangeSetOp = ChangeSetOperation.Insert;
+                tariffVersionUploadedExcel.TariffId = tariffId;
+                tariffVersionUploadedExcel.Tenant = tenant;
+                tariffVersionUploadedExcel.Version = version;
+                tariffVersionUploadedExcel.NumberOfLines = count;
+                tariffVersionUploadedExcel.DocumentId = documentId;
+                tariffVersionUploadedExcel.Index = uploadedExcels.Count() + 1;
+
+                TariffVersionUploadedExcelUpdateService updateService = new TariffVersionUploadedExcelUpdateService(tariffContext, new Dictionary<string, IContext>(), tenant);
+                updateService.Update(tariffVersionUploadedExcel, true);
+            }
+        }
+
         private void SaveTariff(List<TariffLinePM> tariffLinesResult)
         {
             if(tariffPM != null && versionPM != null)
@@ -1607,6 +1639,45 @@ namespace WebFreight.Web.Helpers
                 tariffUpdateService.Update(tariffPM, true);
             }
         }
+
+        private string UploadExcelFileToStorage(string tariffNumber, int tenant)
+        {
+            Document document = null;
+            IBlobService storageservice = ContainerAccessor.Container.Resolve(typeof(IBlobService), "StorageService", new ParameterOverride("", 1)) as IBlobService;
+            
+            if (memoryStream != null)
+            {
+                byte[] ByteData = memoryStream.ToArray();
+                DocumentRepository documentRepository = new DocumentRepository(tenant);
+                document = new Document()
+                {
+                    FileName = fileName,
+                    CreateDate = DateTime.Now,
+                    Extension = fileExtension,
+                    FileSize = ByteData.Length,
+                    Tenant = tenant,
+                    Id = IdCounter.GetNumber("Document", tenant),
+                    HasFile = true,
+                    Folder = "Tariff",
+                };
+
+                documentRepository.Add(document);
+                documentRepository.SubmitChanges();
+
+                BlobFileInfo fileInfo = new BlobFileInfo()
+                {
+                    FileName = document.Id,
+                    FolderName = "Tariff",
+                    Extension = document.Extension,
+                    Tenant = tenant,
+                    FileSize = document.FileSize,
+                };
+
+                storageservice.Write(ByteData, fileInfo);
+            }
+
+            return document != null ? document.Id : null;
+        }
     }
 
     public class TariffFilterParameter
@@ -1618,6 +1689,7 @@ namespace WebFreight.Web.Helpers
         public int Version { get; set; }
         public string TariffType { get; set; }
         public string FileName { get; set; }
+        public string FileExtension { get; set; }
     }
     
     public class ExcelSheetLine
