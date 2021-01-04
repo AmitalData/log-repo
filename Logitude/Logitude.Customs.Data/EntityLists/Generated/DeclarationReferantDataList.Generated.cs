@@ -126,6 +126,10 @@ namespace Logitude.Customs.Data.EntityLists
        public string ImporterName  { get; set; }
        [DataMember]
        public string ProcedureCurrentName  { get; set; }
+       [DataMember]
+       public bool IsPaymentDateNull  { get; set; }
+       [DataMember]
+       public bool IsAvailabilityDateNull  { get; set; }
    }
 
 }
