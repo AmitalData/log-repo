@@ -140,8 +140,8 @@ namespace Logitude.BL.GlobalModel.Tools.DataMapping
             entityPOCO.AveragePrice = entityPM.AveragePrice;
             entityPOCO.TotalPaymentamount = entityPM.TotalPaymentamount;
             entityPOCO.SecondaryColor = entityPM.SecondaryColor;
-            entityPM.MainColor = (entityPM.MainColor != null && entityPM.MainColor.Length > 7) ? "#" + entityPM.MainColor.Substring(3, 6) : entityPM.MainColor;
-            entityPM.SecondaryColor = (entityPM.SecondaryColor != null && entityPM.SecondaryColor.Length > 7) ? "#" + entityPM.SecondaryColor.Substring(3, 6) : entityPM.SecondaryColor;          
+            entityPM.MainColor = entityPM.MainColor;
+            entityPM.SecondaryColor = entityPM.SecondaryColor;
             entityPOCO.ComapnylogoId = entityPM.ComapnylogoId;
             entityPOCO.BackgroundId = entityPM.BackgroundId;
             entityPOCO.BrowserIconId = entityPM.BrowserIconId;
