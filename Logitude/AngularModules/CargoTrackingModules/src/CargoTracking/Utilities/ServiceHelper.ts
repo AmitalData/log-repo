@@ -5,11 +5,11 @@ import { CargoTrackingImage } from '../DataContracts/CargoTrackingImage';
 
 export  class ServiceHelper{
 
- 
+
    public static favIcon: HTMLLinkElement = document.querySelector('#appIcon');
 
     constructor(){
-        
+
     }
     public static GetAppURL(baseUrl:string){
 
@@ -21,9 +21,9 @@ export  class ServiceHelper{
             }
             return baseUrl
         }
-            
+
     }
- 
+
     public static GetcargoTrackingDataRequest(baseUrl:string)
     {   var BackgroundId:string = this.GetImageIdFromStorage("BackgroundImg");
         var CompanyLogoId:string = this.GetImageIdFromStorage("CompanyLogoImg");
@@ -38,15 +38,17 @@ export  class ServiceHelper{
     public static SetCargoTrackingDate(brandingData:any,baseUrl:string){
 
         CargoTrackingBrandingData.Tenant = brandingData.Tenant;
-        CargoTrackingBrandingData.MainColor = brandingData.MainColor != null ? this.ConvertHexaToRGBA(brandingData.MainColor) :"#000000";
-        CargoTrackingBrandingData.SecondaryColor = brandingData.SecondaryColor ? this.ConvertHexaToRGBA(brandingData.SecondaryColor) : "#002664";
+        CargoTrackingBrandingData.MainColor = brandingData.MainColor || "#000000";
+        CargoTrackingBrandingData.SecondaryColor = brandingData.SecondaryColor || "#002664";
+
         document.documentElement.style.setProperty('--BGColor', CargoTrackingBrandingData.MainColor);
         document.documentElement.style.setProperty('--MainColor', CargoTrackingBrandingData.MainColor);
         document.documentElement.style.setProperty('--busyIndicatorColor', CargoTrackingBrandingData.MainColor);
         document.documentElement.style.setProperty('--secondaryColor', CargoTrackingBrandingData.SecondaryColor);
+
         ServiceHelper.SetCarogTrackingImages(brandingData,baseUrl);
     }
-     
+
     public static ConvertHexaToRGBA(color: string)
     {
         if (color) {
@@ -61,7 +63,7 @@ export  class ServiceHelper{
         this.SetBrowserIcon(BrandingData);
     }
     private static SetBackGroundImg(BrandingData:any,baseUrl:string)
-    {   
+    {
         if(BrandingData.BackgroundBytes){
             CargoTrackingBrandingData.BackgroundURL = "url("+ServiceHelper.GetImageFromBytes(BrandingData.BackgroundBytes)+")";
             this.StoreImageInStorage("BackgroundImg",BrandingData.BackgroundId,BrandingData.BackgroundBytes);
@@ -74,7 +76,7 @@ export  class ServiceHelper{
                 else{
                     CargoTrackingBrandingData.BackgroundURL ="url('"+baseUrl+"assets/images/misc/map-bg.svg')"
                 }
-        } 
+        }
     }
 
     private static SetComapnyLogo(BrandingData:any,baseUrl:string)
@@ -106,7 +108,7 @@ export  class ServiceHelper{
                 }
         }
     }
-     
+
     private static GetImageFromBytes(ImageByte:any){
         return "data:image/png;base64,"+ImageByte;
     }
