@@ -35,8 +35,8 @@
 
         <td style="width:120px;">
             <LogDatePicker [ObjectFieldName]="'FromDate'" [ObjectTableName]="ObjectTableName"
-                                                        [NoObjectField]="true" [ForceSubscribe]="true" [DataContext]="DataContext"
-                                                        [HideColumns]="true" [SelectedDateValue]="FromDate"></LogDatePicker>
+                           [NoObjectField]="true" [ForceSubscribe]="true" [DataContext]="DataContext"
+                           [HideColumns]="true" [SelectedDateValue]="FromDate"></LogDatePicker>
         </td>
 
         <td style="width:10px"></td>
@@ -46,8 +46,8 @@
 
         <td style="width:120px;">
             <LogDatePicker [ObjectFieldName]="'ToDate'" [ObjectTableName]="ObjectTableName"
-                                                        [NoObjectField]="true" [ForceSubscribe]="true" [DataContext]="DataContext"
-                                                        [HideColumns]="true" [SelectedDateValue]="ToDate"></LogDatePicker>
+                           [NoObjectField]="true" [ForceSubscribe]="true" [DataContext]="DataContext"
+                           [HideColumns]="true" [SelectedDateValue]="ToDate"></LogDatePicker>
         </td>
         <td style="width:10px"></td>
 
@@ -63,21 +63,22 @@
         </td>
         <td style="width: 250px;">
             <div>
-            {{'InterestReport.O.ShowReportsWithPrintedInvoices' | TextCodeTranslationPipe}}
-        </div>
-        </td>
-        <td style="width: 35px;height:23px;">
-            <div>
-                <CheckBox [IsChecked]="AttachReportWithEachInvoice" (Checked)="AttachReportWithEachInvoice = $event "></CheckBox>
-
+                {{'InterestReport.O.ShowReportsWithPrintedInvoices' | TextCodeTranslationPipe}}
             </div>
         </td>
-        <td>
-        <div>
-            {{'InterestReport.O.AttachReportWithEachInvoice' | TextCodeTranslationPipe}}
-        </div>
-        </td>
-        <td  ></td>
+        <!-- <td style="width: 35px;height:23px;">
+         <div>
+             <CheckBox [IsChecked]="AttachReportWithEachInvoice" (Checked)="AttachReportWithEachInvoice = $event "></CheckBox>
+
+         </div>
+     </td>
+     <td>
+     <div>
+         {{'InterestReport.O.AttachReportWithEachInvoice' | TextCodeTranslationPipe}}
+     </div>
+     </td>
+        -->
+        <td></td>
 
 
     </tr>
@@ -100,7 +101,7 @@
         <td colspan="13" style="vertical-align: bottom">
             <table style="height: 22px;">
                 <tr>
-                 
+
                     <td style="width: 57px;">
                         <button class="Button" (click)="CancelButtonClicked()">{{'Accounting.General.B.Cancel' | TextCodeTranslationPipe}}</button>
                     </td>
@@ -108,10 +109,25 @@
                     <td style="width: 85%">
                         <div></div>
                     </td>
-                    <td style="width: 57px;">
-                        <button class="RedButton" (click)="GetNumberOfDocumentNotPrinted()">{{PrintButtonText}}</button>
-                    </td>
-
+                    <!-- DDL -->
+                            <dropdown-button  [Dropdownbutton_TextCode]="SelectedItemsCount > 0 ?'ARInvoice.B.Print'+'('+SelectedItemsCount+')' : 'ARInvoice.B.Print'">
+                                <div class="class-dropdown-content">
+                                    <div style="width:250px;">
+                                        <table>
+                                            <tr class="FormFieldRow">
+                                                <td style="width: 57px;">
+                                                    <button (click)="AttachReportWithEachInvoice = $event">{{'InterestReport.O.PrintInvoicesAndAttachedReports' | TextCodeTranslationPipe}}</button>
+                                                </td>
+                                            </tr>
+                                            <tr class="FormFieldRow">
+                                                <td style="width: 57px;">
+                                                    <button (click)="GetNumberOfDocumentNotPrinted()">{{'InterestReport.O.PrintInvoicesAlone' | TextCodeTranslationPipe}}</button>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            </dropdown-button>
                 </tr>
             </table>
         </td>

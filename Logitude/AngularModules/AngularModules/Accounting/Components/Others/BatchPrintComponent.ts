@@ -302,6 +302,7 @@ private selectedItems:ObservableCollection;
     public set AttachReportWithEachInvoice(value: boolean) {
       if (this.attachReportWithEachInvoice != value) {
           this.attachReportWithEachInvoice = value;
+          this.GetNumberOfDocumentNotPrinted();
        }
       }
 
