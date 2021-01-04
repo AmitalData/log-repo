@@ -1,4 +1,5 @@
-﻿using Logitude.BL.InvoiceModel.EntityPMs;
+﻿using Logitude.Accounting.Data.EntityLists;
+using Logitude.BL.InvoiceModel.EntityPMs;
 using Logitude.BL.InvoiceModel.EntityQueries;
 using Simplog.Data.InvoiceModel.EntityPOCOs;
 using System;
@@ -11,10 +12,10 @@ namespace Logitude.Accounting.BL.InterestEntityQueryServices.InterestQueryServis
 {
     public class InterestARPaymentQueryService : IInterestEntityQueryService
     {
-        public InterestEntityResult GetInterestEntity(string Id, int Tenant)
+        public InterestEntityResult GetInterestEntity(InterestTransactionList interestTransactionLists)
         {
-            ARPaymentQuery aRPaymentQuery = new ARPaymentQuery(Tenant);
-            ARPaymentPM aRPaymentPM = aRPaymentQuery.GetSinglePMForInterest(Id, Tenant);
+            ARPaymentQuery aRPaymentQuery = new ARPaymentQuery(interestTransactionLists.Tenant);
+            ARPaymentPM aRPaymentPM = aRPaymentQuery.GetSinglePMForInterest(interestTransactionLists);
             InterestEntityResult result = new InterestEntityResult();
 
             if (aRPaymentPM!=null)

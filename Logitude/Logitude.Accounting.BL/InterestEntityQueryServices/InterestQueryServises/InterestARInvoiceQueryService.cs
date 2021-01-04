@@ -1,4 +1,5 @@
-﻿using Logitude.BL.InvoiceModel.EntityPMs;
+﻿using Logitude.Accounting.Data.EntityLists;
+using Logitude.BL.InvoiceModel.EntityPMs;
 using Logitude.BL.InvoiceModel.EntityQueries;
 using Logitude.CustomsMessaging.Common.ResponseData;
 using Simplog.Data.InvoiceModel.EntityPOCOs;
@@ -12,10 +13,10 @@ namespace Logitude.Accounting.BL.InterestEntityQueryServices.InterestQueryServis
 {
     public class InterestARInvoiceQueryService : IInterestEntityQueryService
     {
-        public InterestEntityResult GetInterestEntity(string Id, int Tenant)
+        public InterestEntityResult GetInterestEntity(InterestTransactionList interestTransactionLists)
         {
-            ARInvoiceQuery aRInvoiceQuery = new ARInvoiceQuery(Tenant);
-            ARInvoicePM aRInvoice = aRInvoiceQuery.GetSinglePMForInterest(Id, Tenant);
+            ARInvoiceQuery aRInvoiceQuery = new ARInvoiceQuery(interestTransactionLists.Tenant);
+            ARInvoicePM aRInvoice = aRInvoiceQuery.GetSinglePMForInterest(interestTransactionLists.EntityId, interestTransactionLists.Tenant);
             InterestEntityResult result = new InterestEntityResult();
 
             if (aRInvoice!=null)
