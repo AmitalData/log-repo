@@ -83,10 +83,10 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             var JournalLineUpdateServicePriv = new JournalLineUpdateServicePriv
            //JournalLineUpdateService journalLineUpdateService = new JournalLineUpdateService
            (MainContext, new Dictionary<string, IContext>(), Tenant);
-            UpdatePrintNotesRelatedToJournal(entityPM);
 
             JournalLineUpdateServicePriv.UpdateMulti(entityPM.JournalLines, entityPM.DeletedJournalLines, entityPM, true);
 
+            UpdatePrintNotesRelatedToJournal(entityPM);
             //GetIQueryableLedgerTransactionsByGLAccountIdsList
             //base.UpdateComposition(entityPM);
             //while insert do once insert JournalReconciles +  Update ledgerTrasaction to  InReconcileProgress !!!!
@@ -144,7 +144,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                     foreach (LedgerTransactionPM transaction in allTransactionRelatedToJournal)
                     {
                         transaction.Notes = firstJournalLine.Notes;
-                        transaction.ChangeSetOp = ChangeSetOperation.Update;
+                        journalLine.ChangeSetOp = ChangeSetOperation.Update;
                         ledgerTransactionUpdateService.Update(transaction, false, null);
                     }
                 }
