@@ -3,9 +3,9 @@
 Background: 
 	successful login with valid credentials for set of users
 	Given Email and Password for these users
-	   | Email                 | Password  |
-	   | maheera@fnarsoft.com  | 0		   |
-	   | maheera@fnarsoft.com  | 0         |
+	   | Email                 | Password    |
+	   | ahmadb123@mail.com    | ahmed13!A15 |
+	   | protractor@test.com   | !P123t456   |
 	When Login API called for given users
 	Then All user will has a token
 

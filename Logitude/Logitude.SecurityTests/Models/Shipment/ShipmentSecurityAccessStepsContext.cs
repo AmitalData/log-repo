@@ -1,4 +1,6 @@
-﻿namespace Logitude.SecurityTests.Models.Shipment
+﻿using Logitude.BL.ShipmentsModel.EntityPMs;
+
+namespace Logitude.SecurityTests.Models.Shipment
 {
     public class ShipmentSecurityAccessStepsContext
     {
