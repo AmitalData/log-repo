@@ -167,7 +167,7 @@ ul.line-list li.tick {
 
 .steps-list li:hover:not(.dimmed),
 .steps-list li.highlighted {
-    background:var(--secondaryColor); /*#002664;*/
+    background:var(--MainColor); /*#002664;*/
     color: white;
     font-weight: 600;
 }
