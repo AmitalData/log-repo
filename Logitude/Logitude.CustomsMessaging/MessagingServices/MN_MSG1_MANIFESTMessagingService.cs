@@ -1,5 +1,6 @@
 ﻿using Logitude.CustomsMessaging.Common.RequestParams;
 using Logitude.CustomsMessaging.Common.ResponseData;
+using Logitude.CustomsMessaging.FakeMessagingServices;
 using Logitude.CustomsMessaging.RequestServices;
 using Logitude.CustomsMessaging.ResponseServices;
 using Logitude.Server.Tools.Helpers;
@@ -75,6 +76,19 @@ namespace Logitude.CustomsMessaging.MessagingServices
         {
             exceptionMessage = null;
             var response = new MN_MSG4_SendManifestFeedBack_Message();
+
+            if (requestParams.TestCase != null)
+            {
+                var Fake  = new Fake_1770_MN_MSG1_MANIFESTResponse(requestParams);
+                _ResponseHeader = Fake.CallWS(requestParams, out response);
+
+
+                exceptionMessage = null;
+                return response;
+
+
+            }
+
             // var mP = new UnifreightIIG.Common.TheGateway.MoreParams() { MyOption = UnifreightIIG.Common.TheGateway.MoreParams.Options.None };
 
             using (var uifreightSdkGateway = new UnifreightSdkGateway(base.CustomsSetting.IIGServiceAddress))
