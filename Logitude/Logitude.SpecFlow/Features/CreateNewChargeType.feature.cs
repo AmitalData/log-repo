@@ -144,17 +144,17 @@ this.FeatureBackground();
                             "NONE"});
                 table2.AddRow(new string[] {
                             "MeasurementId",
-                            "1-22383"});
+                            "Get id from code {FIXD}"});
                 table2.AddRow(new string[] {
                             "ChargesGroupId",
-                            "1-889"});
+                            "Get id from code {NONE}"});
 #line 15
  testRunner.Given("user add a charge type with the following properties", ((string)(null)), table2, "Given ");
 #line hidden
-#line 22
+#line 21
  testRunner.When("the user call create charge type API", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 23
+#line 22
  testRunner.Then("a new charge type should be added", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
