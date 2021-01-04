@@ -212,9 +212,7 @@ export class NewUserComponent extends BaseComponent implements OnInit {
     }
 
     private OpenLicenseManagementScreen() {
-        var LicenseToggle: FeatureToggleList = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "LIC" && d.TenantNumber == SessionLocator.Tenant)[0];
-
-        if (SessionLocator.TenantManagementJS.IsMultiPackage && FeatureLocator.HasFeaturePermession("User", "User.Feature.LicensesManagment") && LicenseToggle != null) {
+        if (SessionLocator.TenantManagementJS.IsMultiPackage && FeatureLocator.HasFeaturePermession("User", "User.Feature.LicensesManagment")) {
             var service: PackageListService = new PackageListService();
             service.getAllFromCache().subscribe((result: any) => {
                 var allPackages: PackageList[] = result.Result;
