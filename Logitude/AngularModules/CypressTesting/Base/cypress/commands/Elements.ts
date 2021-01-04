@@ -8,7 +8,7 @@ namespace Cypress {
         FillRandomString(selector: string, length: number, upperCase: boolean): Chainable<Element>
         FillRandomNumber(selector: string, minimum: number, maximum: number): Chainable<Element>
         Click(selector: string, contains: string): Chainable<Element>
-        SaveClick(selector: string, contains: string, Url: string, resultFile: string): Chainable<Element>
+        SaveClick(selector: string, contains: string, url: string, resultFile: string): Chainable<Element>
         ClickCheckBox(selector: string): Chainable<Element>
         ClickRadio(selector: string): Chainable<Element>
         SelectLogLovFirstElement(selector: string, fromCache: boolean): Chainable<Element>
@@ -56,7 +56,7 @@ Cypress.Commands.add("SelectLogLovFirstElement", (selector, fromCache) => {
     if(!fromCache){
         cy.wait("@LOVDataLoaded")
     }
-    cy.get(".DropDownListItem").children().eq(0).click()
+    cy.get(".DropDownListItem").children().eq(1).click()
 
 })
 
@@ -70,7 +70,7 @@ Cypress.Commands.add("SelectLogLovRandomElement", (selector, fromCache, maxOptio
         cy.wait("@LOVDataLoaded")
     }
 
-    let randomIndex = gr.GenerateRandomNumber(0, (maxOptions - 1))
+    let randomIndex = gr.GenerateRandomNumber(1, (maxOptions - 1))
     cy.get(".DropDownListItem").children().eq(randomIndex).click()
 
 })

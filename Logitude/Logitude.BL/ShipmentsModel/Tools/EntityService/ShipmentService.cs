@@ -1205,7 +1205,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             {
                 CustomerRepository customerRepository = new CustomerRepository(tenant);
                 Customer customer = customerRepository.GetSingleCustomer(entityPM.CustomerId, tenant, true);
-                if (customer != null && customer.LogBoxActivated)
+                if (customer != null && (customer.LogBoxActivated || customer.IsPrivateLabelCustomer))
                     return true;
             }
 

@@ -52,6 +52,7 @@ export class JournalDetailsTabComponent extends BaseComponent implements OnInit 
     Opacity: string = "1";
     referencesDivHeight: number;
     Approved: boolean = false;
+    Voided: boolean = false;
     AccountingPeriods: AccountingPeriodList[] = [];
     _AccountingPeriodListService: AccountingPeriodListService = new AccountingPeriodListService();
     ratesTableExtendedListService: RatesTableExtendedListService = new RatesTableExtendedListService();
@@ -181,6 +182,7 @@ export class JournalDetailsTabComponent extends BaseComponent implements OnInit 
             this.journalDisabled = true;
             this.PointerEvents = 'none';
             this.Opacity = "1";
+            this.Voided = true;
         }
         else if (this.EntityPM.StatusCode == "2") { // 3-Voided and 2-Approved
             //disable controls

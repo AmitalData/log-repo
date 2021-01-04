@@ -9,33 +9,37 @@ namespace Logitude.Accounting.BL.InterestEntityQueryServices.InterestFactory
 {
     public class InterestQueryFactory
     {
-        public static IInterestEntityQueryService CreateInstance(string Code)
+        const string InterestEntityTypeCode_ARInvoice = "1";
+        const string InterestEntityTypeCode_ARPayment = "2";
+        const string InterestEntityTypeCode_Journal = "3";
+        const string InterestEntityTypeCode_InterestReport = "4";
+        public static IInterestEntityQueryService CreateInstance(string code)
         {
-            IInterestEntityQueryService Entifty=null; 
-            switch (Code)
+            IInterestEntityQueryService entifty=null; 
+            switch (code)
             {
-                case "1":
+                case InterestEntityTypeCode_ARInvoice:
                     {
-                        Entifty = new InterestARInvoiceQueryService();
+                        entifty = new InterestARInvoiceQueryService();
                         break;
                     }
-                 case "2":
+                 case InterestEntityTypeCode_ARPayment:
                     {
-                        Entifty = new InterestARPaymentQueryService();
+                        entifty = new InterestARPaymentQueryService();
                         break;
                     }
-                case "3":
+                case InterestEntityTypeCode_Journal:
                     {
-                        Entifty = new InterestJournalQueryService();
+                        entifty = new InterestJournalQueryService();
                         break;
                     }
-                case "4":
+                case InterestEntityTypeCode_InterestReport:
                     {
-                        Entifty = new InterestInterestReportQueryService();
+                        entifty = new InterestInterestReportQueryService();
                         break;
                     }
             }
-            return Entifty;
+            return entifty;
         }
     }
 }

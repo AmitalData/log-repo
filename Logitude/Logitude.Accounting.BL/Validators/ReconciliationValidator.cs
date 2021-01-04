@@ -180,8 +180,8 @@ namespace Logitude.Accounting.BL.Validators
             {
                 if (arpaymentsCount > 1)
                     AddErrorByTextCode(errorsList, "Reconciliation.O.CantReconcileMutipleAPPayment");
-                if (appaymentsCount > 1)
-                    AddErrorByTextCode(errorsList, "Reconciliation.O.CantReconcileMutipleAPPayment");
+                //if (appaymentsCount > 1)
+                //    AddErrorByTextCode(errorsList, "Reconciliation.O.CantReconcileMutipleAPPayment");
                 if (appaymentsCount == 1 && arpaymentsCount == 1)
                     AddErrorByTextCode(errorsList, "Accounting.O.CantIncludeTwoOrMorePayment");
             }

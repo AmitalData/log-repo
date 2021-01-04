@@ -92,16 +92,21 @@ void SaveDXMLOutput(string outputFileName)
           SetFileDxml(entity);
          
    #>
+using System;
+using System.Collections.Generic;
+using System.Text;
 
 namespace <#= DXMLnamespacestring #>
 {
    public partial class <#=fileNameWithoutExtension #>Dxml  
    {    
+      
         public string  Get<#=fileNameWithoutExtension#>Dxml (){
-		    string DxmlFile = "<#= FileDXML #>";
+		    string dxmlFile = "<#= FileDXML #>";
 		
-		   return DxmlFile;
+		   return dxmlFile;
 		}
+		 
    }
 
 }

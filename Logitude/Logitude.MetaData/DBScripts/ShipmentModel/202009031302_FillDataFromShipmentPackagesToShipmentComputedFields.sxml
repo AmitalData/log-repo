@@ -1,5 +1,5 @@
 ﻿<Script DBType="Main" Module="Shipment" AOT="true" TargetTableName="Shipments">
-  <Sql Version="1">
+  <Sql Version="2">
     <![CDATA[
     
       
@@ -31,8 +31,12 @@ select
 Shipments.Id, ShipmentPackages.ContainerNumber as ContainerNumber, PackageTypes.Code as PackageTypeCode
 into #temp
 from Shipments 
-left outer join ShipmentPackages on Shipments.Id = ShipmentPackages.ShipmentId
-left outer join PackageTypes on ShipmentPackages.PackageTypeId = PackageTypes.Id
+left outer join ShipmentPackages 
+---on Shipments.Id = ShipmentPackages.ShipmentId
+ on Shipments.Id COLLATE SQL_Latin1_General_CP1_CI_AS= ShipmentPackages.ShipmentId COLLATE SQL_Latin1_General_CP1_CI_AS
+left outer join PackageTypes 
+--on ShipmentPackages.PackageTypeId = PackageTypes.Id
+on ShipmentPackages.PackageTypeId COLLATE SQL_Latin1_General_CP1_CI_AS= PackageTypes.Id COLLATE SQL_Latin1_General_CP1_CI_AS
 where $LastCounterWhere$
 
 
@@ -76,7 +80,8 @@ FROM #temp temp3
 						 
 			FROM ShipmentComputedFields
 			INNER JOIN #temp_ShipmentComputedFields
-			on ShipmentComputedFields.Id = #temp_ShipmentComputedFields.Id
+			---on ShipmentComputedFields.Id = #temp_ShipmentComputedFields.Id
+      on ShipmentComputedFields.Id COLLATE SQL_Latin1_General_CP1_CI_AS= #temp_ShipmentComputedFields.Id COLLATE SQL_Latin1_General_CP1_CI_AS
 
 			truncate table #temp_ShipmentComputedFields
 			set @Count = 0
@@ -93,7 +98,8 @@ FROM #temp temp3
 			
 			FROM ShipmentComputedFields
 			INNER JOIN #temp_ShipmentComputedFields
-			on ShipmentComputedFields.Id = #temp_ShipmentComputedFields.Id
+			--on ShipmentComputedFields.Id = #temp_ShipmentComputedFields.Id
+      on ShipmentComputedFields.Id COLLATE SQL_Latin1_General_CP1_CI_AS= #temp_ShipmentComputedFields.Id COLLATE SQL_Latin1_General_CP1_CI_AS
 	end
 
 drop table #temp

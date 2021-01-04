@@ -69,14 +69,23 @@ namespace WebFreight.Web
 
         private void HandlePage(string[] linkParameters)
         {
-            SetCurrentEntityVariables(linkParameters);
             SetCargoTrackingBrandingData();
+            SetCurrentEntityVariables(linkParameters);
             SetAllConnectedHousesShipments();
         }
 
         private void SetCurrentEntityVariables(string[] linkParameters)
         {
-            CurrentEntityId = linkParameters[1];
+            if (Tenant != null)
+            {
+                ShipmentQuery shipmentQuery = new ShipmentQuery((int)Tenant);
+
+                ShipmentPM pm = shipmentQuery.GetSinglePMBySecurityKeyAndTenant(linkParameters[0], (int)Tenant);
+                if (pm != null)
+                {
+                    CurrentEntityId = pm.Id;
+                }
+            }
         }
 
         private void SetCargoTrackingBrandingData()

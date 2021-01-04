@@ -1,4 +1,5 @@
-﻿using Logitude.SystemLogs;
+﻿using CommunicationWorkerRole.Services;
+using Logitude.SystemLogs;
 using Simplog.Data.CommonDataModel;
 using Simplog.Server.Infrastructure.Helpers;
 using System;
@@ -16,17 +17,15 @@ namespace CommunicationWorkerRole.Tasks
         public QuoteAutomaticallyClosingTask(string Id, int tenant)
             : base(Id, tenant)
         {
+
         }
 
         public override void StartTask()
         {
             try
             {
-                using (TransactionScope scope = TransactionFactory.GetNewSerializableTransaction(new TimeSpan(3, 0, 0)))
-                {
-                    QuoteModelProcedureClass.ExecuteDailyAutomaticallyClosing();
-                    scope.Complete();
-                }
+                QuoteSchedulerTaskService quoteSchedulerTaskService = new QuoteSchedulerTaskService(this);
+                quoteSchedulerTaskService.ExecuteDailyAutomaticallyClosing();
             }
             catch (Exception ex)
             {
@@ -34,33 +33,6 @@ namespace CommunicationWorkerRole.Tasks
                 errorMessage += new StringBuilder().Append("Stack Trace:").AppendLine().Append(ex.StackTrace).AppendLine().ToString();
                 throw new Exception(errorMessage);
             }
-        }
-
-        private void RunTask()
-        {
-           
-
-            //ICommonDataContext iContext = CommonDataContext.GetContext(0);
-            //List<int> AllTenants = (from d in iContext.Tenants select d.Id).ToList();
-            //if (AllTenants != null)
-            //{
-            //    foreach (int iTenant in AllTenants)
-            //    {
-            //        try
-            //        {
-            //            using (TransactionScope scope = TransactionFactory.GetTransaction(new TimeSpan(3, 0, 0)))
-            //            {
-            //                QuoteModelProcedureClass.ExecuteSingleQuoteAutomaticallyClosing(iTenant);
-            //                scope.Complete();
-            //            }
-            //        }
-
-            //        catch (Exception ex)
-            //        {
-            //            ExceptionHandler.HandleException(ex, DateTime.Now, 0, null, "Quote automatically closing worker role, Tenant: " + iTenant, null, null);
-            //        }
-            //    }
-            //}
         }
     }
 }

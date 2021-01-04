@@ -1,9 +1,9 @@
 import * as gr from "../../../Base/cypress/Actions/GenerateRandoms"
 import {Selectors} from "../selectors/Selectors"
 
-export function OpenNewShipmentWizard(type: string){
+export function OpenNewShipmentWizard(levelCode: string){
     cy.Click("#HelperNotesButton_0_0", null)
-    cy.Click(".LogitudeToggleButtonItem", type)
+    cy.Click(".LogitudeToggleButtonItem", levelCode)
 }
 
 export function FillShipmentDefaultFields(directionCode: string, transportModCode: string, shipmentTypeCode: string = null){
@@ -15,8 +15,8 @@ export function FillShipmentDefaultFields(directionCode: string, transportModCod
     }
 
     if(directionCode === "D" && transportModCode === "I"){
-        cy.SelectLogLovRandomElement("#Shipment_ShipperId", false, 5)
-        cy.SelectLogLovRandomElement("#Shipment_ConsigneeId", false, 5)
+        cy.SelectLogLovFirstElement("#Shipment_ShipperId", false)
+        cy.SelectLogLovFirstElement("#Shipment_ConsigneeId", false)
     }else{
         if(directionCode === "I"){
             cy.SelectLogLovRandomElement("#Shipment_ConsigneeId", false, 5)
@@ -24,13 +24,27 @@ export function FillShipmentDefaultFields(directionCode: string, transportModCod
             cy.SelectLogLovRandomElement("#Shipment_ShipperId", false, 5)
         }
 
-        cy.SelectLogLovRandomElement("#Shipment_MainCarriageFromPortId", false, 5)
-        cy.SelectLogLovRandomElement("#Shipment_MainCarriageToPortId", false, 5)
+        if(directionCode === "D"){
+            cy.SelectLogLovFirstElement("#Shipment_MainCarriageFromPortId", false)
+            cy.SelectLogLovFirstElement("#Shipment_MainCarriageToPortId", false)
+        }else{
+            cy.SelectLogLovRandomElement("#Shipment_MainCarriageFromPortId", false, 5)
+            cy.SelectLogLovRandomElement("#Shipment_MainCarriageToPortId", false, 5)
+        }
     }
 }
 
 export function SaveShipment(resultFile: string) {
     cy.SaveClick("#ShipmentCreatebtn", null, "**/shipment", resultFile)
+}
+
+export function CreateShipment(){
+    cy.DefineRequestWait("POST", "**/shipment", "WaitPostShipmentRequest")
+    cy.Click("#ShipmentCreatebtn", null)
+}
+
+export function ValidateCreatedShipment(resultFile: string){
+    cy.AssertResponseStatusCode("WaitPostShipmentRequest", 200, resultFile)
 }
 
 export function OpenShipment(dataFile: string){

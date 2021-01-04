@@ -69,6 +69,7 @@ namespace Logitude.Accounting.BL.Utils
 
                 DateTime myUpToDueDate = reconciliationStageCArg.UpToDueDate;
                 BatchTaskExecutionPM batchTaskExecutionPM = reconciliationStageCArg.BatchTask;
+                bool closeOnlyZeroes = reconciliationStageCArg.CloseOnlyZeroes;
                 BatchTaskExecutionUpdateService batchTaskExecutionUpdateService = null;
                 if (batchTaskExecutionPM != null)
                 {
@@ -165,6 +166,7 @@ namespace Logitude.Accounting.BL.Utils
                             OldDate = oldDate,
                             OldId = oldId,
                             OldAmount = oldAmount,
+                            OnlyZeroes = reconciliationStageCArg.CloseOnlyZeroes,
                          //   FromDate = fromDate,
                          //   FromId = fromId,
                             MaximalDifference = reconciliationStageCArg.MaximalDifference,
@@ -603,6 +605,8 @@ namespace Logitude.Accounting.BL.Utils
         public decimal MaximalDifference { get; set; }
 
         public BatchTaskExecutionPM BatchTask { get; set; }
+
+        public bool CloseOnlyZeroes { get; set; }
     }
    
 

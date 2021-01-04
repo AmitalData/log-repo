@@ -1270,8 +1270,12 @@ namespace WebFreight.Web.ReportsWebServices
 
                 packageDetail.Weight = package.Weight != null ? (package.Weight != 0 ? String.Format("{0:#,0.00}", package.Weight + " " + (shipmentView.GrossWeightUnitCode != null ? shipmentView.GrossWeightUnitCode : "")) : "") : "";
                 packageDetail.Volume = package.Volume != null ? (package.Volume != 0 ? package.Volume.ToString() + " " + volumeUnitCode : "") : "";
-
                 packageDetail.Quantity = package.Quantity == null ? "" : package.Quantity.ToString();
+
+                if (package.Length != null && package.Width != null && package.Height != null)
+                {
+                    packageDetail.Dimensions = package.Length + "x" + package.Width + "x" + package.Height;
+                }
 
                 if (package.PackageTypeId != null)
                 {

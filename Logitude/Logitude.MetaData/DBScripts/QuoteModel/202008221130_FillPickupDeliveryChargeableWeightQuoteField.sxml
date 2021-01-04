@@ -1,6 +1,6 @@
 ﻿
 <Script DBType="Main" Module="Quote" AOT="true" TargetTableName="Quotes">
-  <Sql Version="6">
+  <Sql Version="7">
     <![CDATA[
 					If(OBJECT_ID('tempdb..#tempTable') Is Not Null)
 				Begin
@@ -187,8 +187,8 @@
 					PickupDeliveryChargeableWeight = #temp_Quotes.PickupDeliveryChargeableWeight
 					FROM Quotes
 					INNER JOIN #temp_Quotes
-					on Quotes.Id = #temp_Quotes.Id
-
+					--on Quotes.Id = #temp_Quotes.Id
+					 on Quotes.Id COLLATE SQL_Latin1_General_CP1_CI_AS= #temp_Quotes.Id COLLATE SQL_Latin1_General_CP1_CI_AS
 					truncate table #temp_Quotes
 
 					WAITFOR DELAY '00:00:01'
@@ -209,7 +209,8 @@
 			PickupDeliveryChargeableWeight = #temp_Quotes.PickupDeliveryChargeableWeight
 			FROM Quotes
 			INNER JOIN #temp_Quotes
-			on Quotes.Id = #temp_Quotes.Id
+			---on Quotes.Id = #temp_Quotes.Id
+       on Quotes.Id COLLATE SQL_Latin1_General_CP1_CI_AS= #temp_Quotes.Id COLLATE SQL_Latin1_General_CP1_CI_AS
 		end
 
 		drop table #tempTable
