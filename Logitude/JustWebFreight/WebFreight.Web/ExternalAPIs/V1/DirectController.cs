@@ -708,6 +708,8 @@ namespace WebFreight.Web.ExternalAPIs.V1
                             service.Update(true);
                         }
 
+                        MyContext = ShipmentsContext.GetContext(authToken.Tenant);
+                        mappingService = new DirectQueryService(authToken.Tenant);
                         var result = mappingService.GetDirectById(directPM.Id, authToken.Tenant);
                         APIHelper.AddCommunicationLog("D", entity, result, "Shipment", directPM.Id, "Direct API", authToken.Tenant);
                         return Request.CreateResponse(HttpStatusCode.OK, result);
