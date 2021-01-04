@@ -36,26 +36,20 @@ export class AMANACExportTransferComponent {
     }
 
     StartExporting() {
-        if (this.EntityPM.CustomsTransferTypeCode == "AMAS") {
-            var shipmentService: ShipmentDomainService = new ShipmentDomainService();
-            shipmentService.ValidateAMANACShipmentsBeforeExporting(this.EntityPM).subscribe((myResponse: ServiceResponse) => {
-                this.IsExportingInProgress = false;
+        var shipmentService: ShipmentDomainService = new ShipmentDomainService();
+        shipmentService.ValidateAMANACShipmentsBeforeExporting(this.EntityPM).subscribe((myResponse: ServiceResponse) => {
+            this.IsExportingInProgress = false;
 
-                if (!myResponse.HasError) {
-                    if (this.EntityPM.CustomsTransferLines.filter(d => d.HasError).length > 0) {
-                        this.IsValidated = true;
-                    }
-
-                    else {
-                        this.Transfer();
-                    }
+            if (!myResponse.HasError) {
+                if (this.EntityPM.CustomsTransferLines.filter(d => d.HasError).length > 0) {
+                    this.IsValidated = true;
                 }
-            });
-        }
 
-        else {
-            this.Transfer();
-        }                
+                else {
+                    this.Transfer();
+                }
+            }
+        });
     }
 
     Transfer() {
