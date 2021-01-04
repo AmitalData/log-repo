@@ -1,11 +1,12 @@
 import * as sh from "../actions/ShipmentActions"
-import {Selectors} from "../selectors/Selectors"
+import { BaseSelectors } from "../../../Base/cypress/selectors/BaseSelectors"
+
 
 describe("Edit Direct Shipment Tests", () => {
 
     before(() => {
         cy.Login()
-        cy.Click(Selectors.GeneralMHOperations, null)
+        cy.Click(BaseSelectors.OperationsMenu, null)
         cy.Click("#SHIP", null)
     })
 

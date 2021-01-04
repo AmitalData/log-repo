@@ -1,5 +1,5 @@
 import * as gr from "../../../Base/cypress/Actions/GenerateRandoms"
-import {Selectors} from "../selectors/Selectors"
+import { Selectors } from "../selectors/Selectors"
 
 export function OpenNewShipmentWizard(levelCode: string){
     cy.Click("#HelperNotesButton_0_0", null)
@@ -49,23 +49,20 @@ export function ValidateCreatedShipment(resultFile: string){
 
 export function OpenShipment(dataFile: string){
     cy.fixture(dataFile).then((shipment) => {
-        cy.SelectQuickSearchFirstElement("#Shipment_Search", shipment.ShipmentNumber)
+        cy.SelectQuickSearchFirstElement(Selectors.ShipmentSearchBar, shipment.ShipmentNumber)
     })
 }
 
 export function FillGeneralTab(){
-    cy.Click(Selectors.ShipmentTHGeneral, null)
-    cy.FillRandomNumber("#Shipment_GrossWeightInKG", 100, 1000)
-    cy.SelectLogLovRandomElement("#Shipment_MoveTypeId", true, 5)
+    cy.FillRandomNumber(Selectors.ShipmentGrossWeight, 100, 1000)
+    cy.SelectLogLovRandomElement(Selectors.ShipmentMoveType, true, 5)
 }
 
 export function FillOrdersTab(shipmentTypeCode?:string){
-    cy.Click("#ShipmentTHOrders", null)
     AddPackagesOrContainersForOrdersTab(shipmentTypeCode)
 }
 
 export function FillPartnersTab(directionCode:string, transportModeCode:string){
-    cy.Click("#ShipmentTHPartners", null)
     if (directionCode === "I") {
         AddPartner("SHIPR", "Shipment_ShipperId")
     }
@@ -90,7 +87,6 @@ export function FillPartnersTab(directionCode:string, transportModeCode:string){
 }
 
 export function FillPackagesTab(transportModeCode:string, shipmentTypeCode?:string){
-    cy.Click("#ShipmentTHPackages", null)
     AddPackagesOrContainersForPackagesTab(transportModeCode, shipmentTypeCode)
 }
 
@@ -98,41 +94,46 @@ export function FillPackagesTab(transportModeCode:string, shipmentTypeCode?:stri
 function AddPackagesOrContainersForOrdersTab(shipmentTypeCode:string){
     let numberOfPackages = gr.GenerateRandomNumber(1, 3)
     for (let i = 0; i < numberOfPackages; i++){
-        cy.Click("#Orders-AddPackage", null)
-        cy.FillRandomNumber("#ShipmentOrderPackage_Quantity", 1, 10)
+        cy.Click(Selectors.OrdersAddPackage, null)
+        cy.FillRandomNumber(Selectors.OrderPackageQuantity, 1, 10)
         if (shipmentTypeCode === "FCLD" || shipmentTypeCode === "FTL" || shipmentTypeCode === "LCLD" || shipmentTypeCode === "LTL"){
-            cy.SelectLogLovRandomElement("#ShipmentOrderPackage_PackageTypeId", true, 5)
-            cy.FillRandomNumber("#ShipmentOrderPackage_GrossWeight", 1, 50)
+            cy.SelectLogLovRandomElement(Selectors.OrderPackageType, true, 5)
+            cy.FillRandomNumber(Selectors.OrderPackageGrossWeight, 1, 50)
         }
-        cy.Click("#OrderOKbtn", null)
+        cy.Click(Selectors.OrderOKButton, null)
     }
 }
 
 function AddPartner(partnerTypeId: string, partnerFieldId: string) {
     cy.Click("label", "Add Partners")
-    cy.Click(("#" + partnerTypeId), null)
-    let partnerFieldSelector = "addeditpartnercomponent input[id^='" + partnerFieldId + "']"
-    cy.SelectLogLovRandomElement(partnerFieldSelector, false, 10)
-    cy.Click("#PartnerOKbtn", null)
+    
+    cy.get("#" + partnerTypeId).then((btn) => {
+        if(!btn.is('[disabled]')) {
+            cy.Click(("#" + partnerTypeId), null)
+            let partnerFieldSelector = "addeditpartnercomponent input[id^='" + partnerFieldId + "']"
+            cy.SelectLogLovRandomElement(partnerFieldSelector, false, 10)
+            cy.Click(Selectors.PartnerOKButton, null)
+        }
+    })
 }
 
 function AddPackagesOrContainersForPackagesTab(transportModeCode:string, shipmentTypeCode:string){
     let numberOfPackages = gr.GenerateRandomNumber(1, 3)
     for (let i = 0; i < numberOfPackages; i++){
-        cy.Click("#AddPackage", null)
+        cy.Click(Selectors.AddPackage, null)
         if(transportModeCode !== "A"){
-            cy.SelectLogLovRandomElement("#ShipmentPackage_PackageTypeId", true, 5)
+            cy.SelectLogLovRandomElement(Selectors.PackageType, true, 5)
         }
         if(shipmentTypeCode !== "FCLD" && shipmentTypeCode !== "FTL"){
-            cy.FillRandomNumber("#ShipmentPackage_Quantity", 1, 10)
+            cy.FillRandomNumber(Selectors.PackageQuantity, 1, 10)
         }
         if(transportModeCode !== "A"){
-            cy.FillRandomNumber("#ShipmentPackage_Weight", 1, 10)
+            cy.FillRandomNumber(Selectors.PackageWeight, 1, 10)
         }
         if(transportModeCode === "A"){
-            cy.Click("#OkAirPackage", null)
+            cy.Click(Selectors.AirPackageOKButton, null)
         }else{
-            cy.Click("#OkOceanPackage", null)
+            cy.Click(Selectors.OceanPackageOKButton, null)
         }
     }
 }

@@ -2,5 +2,11 @@
   "cypress-cucumber-preprocessor": {
     "nonGlobalStepDefinitions": true,
     "step_definitions": "cypress/tests/"
+  },
+  "devDependencies": {
+    "cucumber": "^7.0.0-rc.0",
+    "cypress": "^6.2.0",
+    "cypress-cucumber-preprocessor": "^4.0.0",
+    "typescript": "^4.1.3"
   }
 }
