@@ -358,13 +358,14 @@ export class SendDocumentComponent implements OnInit, AfterViewInit {
                 }
             }
 
-            if (!AppTool.IsNullOrEmpty(this.SelectedInternalDocument.Subject)) {
-                this.Subject = this.SelectedInternalDocument.Subject;
+            if (!this.IsResendEmail) {
+                if (!AppTool.IsNullOrEmpty(this.SelectedInternalDocument.Subject)) {
+                    this.Subject = this.SelectedInternalDocument.Subject;
+                }
+                else {
+                    this.Subject = this.CurrentDocument.DocumentTypeSubject != null ? this.CurrentDocument.DocumentTypeSubject : this.CurrentDocument.DocumentTypeName;
+                }
             }
-            else {
-                this.Subject = this.CurrentDocument.DocumentTypeSubject != null ? this.CurrentDocument.DocumentTypeSubject : this.CurrentDocument.DocumentTypeName;
-            }
-
             this.LoadDocumentTypeTemplates(null);
         }
         else {
