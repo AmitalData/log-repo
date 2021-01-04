@@ -1692,7 +1692,7 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
     ResetFilters() {
 
         // Date
-        this.SelectedDateOperator = null;
+        this.SelectedDateOperator = this.DateFilterList[4];
         this.FromDate = null;
         this.ToDate = null;
 
