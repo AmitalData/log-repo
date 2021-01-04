@@ -65,7 +65,6 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                                                            SourceId = a.JournalLine.Journal.AccountingEntityId, // hidden id to use in link
                                                            SourceNumber = a.JournalLine.Journal.AccountingEntityReference, // display number
                                                            SourceTypeCode = a.JournalLine.Journal.AccountingEntity.Code, // source type code from AccountingEntities
-
                                                            SelectCheckBox = false,
                                                            CurrencySign = a.Currency.Sign,
                                                            OpenAmountCurrencySign = a.OpenAmountCurrency.Sign,
@@ -73,7 +72,8 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                                                            OppositeAccountEnglishName = a.OppositeAccount != null ? a.OppositeAccount.EnglishName : null,
                                                            OppositeAccountLocalName = a.OppositeAccount != null ? a.OppositeAccount.LocalName : null,
                                                            OppositeAccountDisplayNumber = a.OppositeAccount != null ? a.OppositeAccount.DisplayNumber : null,
-                                                           
+                                                           OriginalAmount = 0,
+
                                                        });
 
 
