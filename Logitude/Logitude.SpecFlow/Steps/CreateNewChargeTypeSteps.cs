@@ -21,14 +21,14 @@ namespace Logitude.SpecFlow.Steps
             User = user;
             ChargeTypePM = chargeTypePM;
 
-            Service.Instance.ValueRetrievers.Register(new ChargesTypeValuesRetriever(User));
+            Service.Instance.ValueRetrievers.Register(new ChargesTypeValueRetrievers(User));
         }
 
         [Given(@"user add a charge type with the following properties")]
         public void GivenUserAddAChargeTypeWithTheFollowingProperties(Table chargeTypeData)
         {
             ChargesTypePM chargeTypePM = chargeTypeData.CreateInstance<ChargesTypePM>();
-            ChargeTypePM.Code = Regex.Replace(Guid.NewGuid().ToString(), "[^a-zA-Z]+", "").Substring(0,3);
+            ChargeTypePM.Code = Regex.Replace(Guid.NewGuid().ToString(), "[^a-zA-Z]+", "").Substring(0, 3).ToUpper();
             ChargeTypePM.Tenant = User.Tenant;
             ChargeTypePM.EnglishName = chargeTypePM.EnglishName;
             ChargeTypePM.ChargesGroupCode = chargeTypePM.ChargesGroupCode;

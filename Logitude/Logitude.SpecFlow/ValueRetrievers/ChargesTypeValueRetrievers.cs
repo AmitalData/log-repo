@@ -10,20 +10,20 @@ using TechTalk.SpecFlow.Assist;
 
 namespace Logitude.SpecFlow.ValueRetrievers
 {
-    public class ChargesTypeValuesRetriever : IValueRetriever
+    public class ChargesTypeValueRetrievers : IValueRetriever
     {
-        protected readonly UserData User;
-        protected Regex GetIdRegex;
+        protected UserData User;
+        protected Regex IdRegex;
 
-        public ChargesTypeValuesRetriever(UserData user)
+        public ChargesTypeValueRetrievers(UserData user)
         {
             User = user;
-            GetIdRegex = new Regex(@"^get id from code \{(.*?)\}", RegexOptions.IgnoreCase);
+            IdRegex = new Regex(@"^Get id from code \{(.*?)\}", RegexOptions.IgnoreCase);
         }
-
+        
         public bool CanRetrieve(KeyValuePair<string, string> keyValuePair, Type targetType, Type propertyType)
         {
-            if (GetIdRegex.IsMatch(keyValuePair.Value))
+            if (IdRegex.IsMatch(keyValuePair.Value))
             {
                 switch (keyValuePair.Key.ToLower())
                 {
@@ -41,12 +41,12 @@ namespace Logitude.SpecFlow.ValueRetrievers
             switch (keyValuePair.Key.ToLower())
             {
                 case "measurementid":
-                    string measurementCode = GetCodeFromId(keyValuePair.Value);
+                    string measurementCode = GetCodeFromIdRegex(keyValuePair.Value);
                     MeasurementRepository measurementRepository = new MeasurementRepository();
                     Measurement measurement = measurementRepository.GetMeasurementbyCode(measurementCode, User.Tenant);
                     return measurement.Id;
                 case "chargesgroupid":
-                    string chargesGroupCode = GetCodeFromId(keyValuePair.Value);
+                    string chargesGroupCode = GetCodeFromIdRegex(keyValuePair.Value);
                     ChargesGroupRepository chargesGroupRepository = new ChargesGroupRepository();
                     ChargesGroup chargesGroup = chargesGroupRepository.GetSingleChargesGroupByCode(chargesGroupCode, User.Tenant);
                     return chargesGroup.Id;
@@ -54,9 +54,9 @@ namespace Logitude.SpecFlow.ValueRetrievers
             return null;
         }
 
-        protected string GetCodeFromId(string valueFromTable)
+        protected string GetCodeFromIdRegex(string valueFromTable)
         {
-            return GetIdRegex.Match(valueFromTable).ToString().Split('{')[1].Split('}')[0].Trim();
+            return IdRegex.Match(valueFromTable).ToString().Split('{')[1].Split('}')[0].Trim();
         }
     }
 }
