@@ -13,11 +13,12 @@ import { Validator } from                   '../../../../Infrastructure/Validato
 import { TextCodeTranslator } from          '../../../../Infrastructure/Utilities/TextCodeTranslator';
 import { AppTool, DateTool } from           '../../../../Infrastructure/Tools';
 import { BaseRequestsSheetMassaging, IRequestsSheetMassagingComponent } from '../../../../CustomsModules/CustomsRequests/Components/BaseRequestsSheetMassaging';
-import { CustomSendOptionsArgs } from '../../../../Customs/DataContract/RequestParams/RequestParamsBase';
+import { CustomSendOptionsArgs, TestCase } from '../../../../Customs/DataContract/RequestParams/RequestParamsBase';
 import { CustomMessageProgressComponent } from '../../../../CustomsModules/CustomsControls/Components/CustomMessageProgressComponent';
 import { ConfirmWindow } from '../../../../Controls/Windows/ConfirmWindow';
 import { MessageWindow } from '../../../../Controls/Windows/MessageWindow';
 import { DeclarationDisplayOnlyChecks, DisplayOnlyCheckResult } from '../../../../Customs/Utilities/DeclarationDisplayOnlyChecks';
+import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
 
 @Component({
     selector: 'DeclarationRestoreComponent',    
@@ -247,6 +248,35 @@ export class DeclarationRestoreComponent
             return;
         }
 
+        if (customSendOptionsArgs.TestCase) {
+
+            let windowArgs = { "SincroScreen": "SincroSendRetrieveDeclaration" };
+
+            var logWindow = new LogitudeWindow();
+            logWindow.Width = 600;
+            logWindow.Height = 400;
+            logWindow.Title = "תרחשי הצהרה";
+            logWindow.ShowCloseButton = false;
+            logWindow.WindowArgs = windowArgs;
+
+            logWindow.ComponentLoaded.subscribe(comp => {
+                logWindow.WindowClosed.subscribe(res => {
+                    if (!AppTool.IsNullOrEmpty(res) && res == "Ok") {
+                        this.RequestParams.TestCase = new TestCase();
+                        this.RequestParams.TestCase.Code = comp._ScenarioCode;
+                        this.RequestParams.TestCase.Param1 = comp.Param1;
+                        this.RequestParams.TestCase.Param2 = comp.Param2;
+                        this.SendDeclarationRestoreRequest(customSendOptionsArgs);
+                    }
+                });
+            });
+
+            logWindow.Show('./CustomsModules/CustomsControls/Components/TestCase/SendDeclarationTastCaseComponent');
+            ///this.StopMyBusyIndicator();///this.CurrentSession.CurrentEditComponent.StopBusyIndicator();
+
+            return;
+        }
+
         if (!AppTool.IsNullOrEmpty(this.CustomFileNo)) {
             var declarationDisplayOnlyChecks: DeclarationDisplayOnlyChecks = new DeclarationDisplayOnlyChecks();
             declarationDisplayOnlyChecks.CheckIfRequestInProgress("2715", this.CustomFileNo, SessionLocator.Tenant)
@@ -304,6 +334,8 @@ export class DeclarationRestoreComponent
 
     SendDeclarationRestoreRequest(customSendOptionsArgs: CustomSendOptionsArgs) {
         var currRequestParams = new DeclarationRestoreRequestParams();///Force new GUID On Each Send !!
+
+         currRequestParams.TestCase = this.RequestParams.TestCase;
         currRequestParams.LoggingEnabled = true;
         currRequestParams.LoggingUserId = SessionLocator.LoggedUserId;
         currRequestParams.Tenant = SessionLocator.Tenant;
