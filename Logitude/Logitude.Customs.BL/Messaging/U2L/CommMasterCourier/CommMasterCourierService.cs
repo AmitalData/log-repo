@@ -243,6 +243,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommMasterCourier
                 }
                 */
                 int packageQuantityInMAWB = 0;
+                _CourierMasterPM.PackageQuantityInMAWB = packageQuantityInMAWB;
                 if (!string.IsNullOrWhiteSpace(_LogitudeMasterCourier.PackageQuantityInMAWB))
                 {
                     if (int.TryParse(_LogitudeMasterCourier.PackageQuantityInMAWB, out packageQuantityInMAWB))
