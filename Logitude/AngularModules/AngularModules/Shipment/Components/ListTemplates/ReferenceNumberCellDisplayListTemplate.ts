@@ -13,6 +13,9 @@ import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceRe
                        <img *ngIf="Source" style="width: 70px;max-height:35px;" src="{{Source}}"  title="{{rowData ? rowData['PartnerName'] : ''}}" />
                        </div>
                 </td>
+                <td style="width:10%;">
+                    <div></div>
+                </td>
                 <td *ngIf="ToggleIsExportShipments">
                        <div style="text-indent: 10px; overflow: hidden; text-overflow: ellipsis;float:left;">
                         <img width="18" height="15" style="vertical-align: middle;margin-left: -7px;" [src]="DirectionSRC" title="{{rowData ? rowData['DirectionName']:''}}" />
@@ -22,8 +25,11 @@ import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceRe
                        <div style="text-indent: 10px; overflow: hidden; text-overflow: ellipsis;float:left;">
                         <img width="18" height="15" style="vertical-align: middle;margin-left: -7px;" [src]="TransportModSRC" title="{{rowData ? rowData['TransportModeName']:''}}" />
                        </div>
-                </td> 
-                <td style="width:90px;">
+                </td>
+                <td style="width:10%;">
+                    <div></div>
+                </td>
+                <td style="width:100%;">
                         <div style="text-indent: 10px; overflow: hidden; text-overflow: ellipsis;float:left; position: absolute;top: 0;bottom: 0;left: 0;right: 0;">
                         <span style="text-overflow: ellipsis;overflow: hidden;white-space: nowrap;" *ngIf="fieldName == 'My Shipments'">{{rowData ? rowData['CustomerReference1']:''}}</span>
                         <span style="text-overflow: ellipsis;overflow: hidden;white-space: nowrap;" *ngIf="fieldName != 'My Shipments'">{{rowData ? rowData['ForwarderShipmentNumber']:''}}</span>
