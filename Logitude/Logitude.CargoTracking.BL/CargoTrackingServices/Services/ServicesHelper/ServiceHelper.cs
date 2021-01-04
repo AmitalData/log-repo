@@ -246,24 +246,16 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.ServicesHelpe
             ExecuteSql(updateIsIncrementalBuildRunningCommandcmd, connectionString);
         }
 
-        public static DateTime? GetAutomaticLastUpdateDate(DateTime? automaticLastUpdateDate, DataTable dataTable, bool isClosed)
+        public static DateTime? GetAutomaticLastUpdateDate(DataTable dataTable, bool isClosed)
         {
+            DateTime? automaticLastUpdateDate = null;
 
             if (!isClosed)
             {
 
-                var maxUpdate = (DateTime)dataTable.Rows
-                                                .Cast<DataRow>()
-                                                .Max(d => d["AutomaticLastUpdateDate"]);
-
-                if (maxUpdate > automaticLastUpdateDate || automaticLastUpdateDate == null)
-                {
                     automaticLastUpdateDate = (DateTime)dataTable.Rows
-                   .Cast<DataRow>()
-                   .Max(d => d["AutomaticLastUpdateDate"]);
-                }
-
-
+                                                     .Cast<DataRow>()
+                                                     .Max(d => d["AutomaticLastUpdateDate"]);
             }
 
 
@@ -277,10 +269,11 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.ServicesHelpe
             if (table != null && table.Main_CargoTracking_TableName != "CargoTrackingWatermarks")
             {
 
-                var lastUpdateDate = string.Empty;
-                if (automaticLastUpdateDate != null) lastUpdateDate = automaticLastUpdateDate.Value.ToString("MM/dd/yyyy hh:mm:ss.fff tt");
-                else lastUpdateDate = DateTime.Now.ToString("MM/dd/yyyy hh:mm:ss.fff tt");
-                UpdateWaterMarksTable(table, lastUpdateDate, buildCargoArgs.DestinationConnectionString);
+                if (automaticLastUpdateDate != null) {
+                    var lastUpdateDate = automaticLastUpdateDate.Value.ToString("MM/dd/yyyy hh:mm:ss.fff tt");
+                    UpdateWaterMarksTable(table, lastUpdateDate, buildCargoArgs.DestinationConnectionString);
+                } 
+ 
                 table.IsUpdated = true;
 
             }
