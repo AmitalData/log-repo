@@ -12,13 +12,14 @@ import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResp
 import {NewGLAccountArgs} from '../../Args';
 import {LogitudeWindow} from '../../../Controls/Windows/LogitudeWindow';
 import { EntityResourceService } from '../../../Infrastructure/Services/EntityResourceService';
+import { AccountingPartners } from 'Accounting/DataContracts/AccountingPartners';
 
 @Component({
-    
+
     templateUrl: './AccountingTab_Full.html',
 })
 
- 
+
 export class AccountingTab_Full extends BaseComponent implements OnDestroy, OnInit,AfterViewInit {
     @ViewChild("TabPlaceholder", { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
 
@@ -157,10 +158,11 @@ export class AccountingTab_Full extends BaseComponent implements OnDestroy, OnIn
             args.AccountType = "2";
             args.ChartOfAccountType = "3";
         }
-        else if (this.CardList.PartnerTypeId == "AC") {
+        else if (this.CardList.PartnerTypeId == AccountingPartners.AccountingPartner
+            || this.CardList.PartnerTypeId == AccountingPartners.Agent) {
             args.AccountType = null;
             args.ChartOfAccountType = null;
-           
+
         }
         else {
             args.AccountType = "3";
@@ -172,7 +174,7 @@ export class AccountingTab_Full extends BaseComponent implements OnDestroy, OnIn
         args.LocalName = this.CardList.LocalName;
 
         args.EnglishName = this.CardList.EnglishName;
-        args.PartnerType = "AC";
+        args.PartnerType = this.CardList.PartnerTypeId;
         logWindow.WindowArgs = args;
 
         logWindow.Show('./Accounting/Components/NewEntity/NewGLAccountComponent');
@@ -202,12 +204,15 @@ export class AccountingTab_Full extends BaseComponent implements OnDestroy, OnIn
         logWindow.Title = TextCodeTranslator.Translate("Accounting.O.GLAccounts");
 
         var args: any = {};
-       
+
         var chartOfAccountTypeCode
+
+        const isAccountingPartner = this.CardList.PartnerTypeId == AccountingPartners.AccountingPartner;
+        const isAgent = this.CardList.PartnerTypeId == AccountingPartners.Agent;
 
         if (this.CardList.PartnerTypeId == 'CS' || this.CardList.PartnerTypeId == 'CC' || this.CardList.PartnerTypeId == 'CG' || this.CardList.PartnerTypeId == 'CH' || this.CardList.PartnerTypeId == 'CO')
             chartOfAccountTypeCode = '3';
-        else if(this.CardList.PartnerTypeId != "AC"){
+        else if(!isAccountingPartner && !isAgent){
             chartOfAccountTypeCode = '4';
           }
         args.PartnerId = this.CardList.PartnerTypeId;
