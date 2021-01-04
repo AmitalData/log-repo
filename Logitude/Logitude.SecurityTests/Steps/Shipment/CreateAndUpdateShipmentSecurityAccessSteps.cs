@@ -65,13 +65,9 @@ namespace Logitude.SecurityTests.Steps.Shipment
         public void WhenUpdateShipmentRequestSentForUserSTenant()
         {
             var firstUser = Users.ListOfUserData[0];
-            ShipmentPM shipmentModel = GetValidShipmentPM();
-            shipmentModel.Id = GetShipmentIdForFirstUser();
-            shipmentModel.Tenant = firstUser.Tenant;
-            shipmentModel.CreatedByUserId = firstUser.UserId;
-            shipmentModel.UpdatedByUserId = firstUser.UserId;
 
-            shipmentModel.TransportModeId = "O";
+            ShipmentPM shipmentModel = GetShipmentForFirstUser();
+            shipmentModel.NewConcurrencyGUID = Guid.NewGuid().ToString();
 
             ShipmentPM shipmentPM = APICaller.CallPut<ShipmentPM>(shipmentModel, "shipment", firstUser.Token);
             Context.ShipmentPM.Id = shipmentPM?.Id;
@@ -89,11 +85,8 @@ namespace Logitude.SecurityTests.Steps.Shipment
             var firstUser = Users.ListOfUserData[0];
             var secondUser = Users.ListOfUserData[1];
 
-            ShipmentPM shipmentModel = GetValidShipmentPM();
-            shipmentModel.Id = GetShipmentIdForFirstUser();
-            shipmentModel.Tenant = firstUser.Tenant; // Second user try to Put on first user tenant
-            shipmentModel.CreatedByUserId = secondUser.UserId;
-            shipmentModel.UpdatedByUserId = secondUser.UserId;
+            ShipmentPM shipmentModel = GetShipmentForFirstUser();
+            shipmentModel.NewConcurrencyGUID = Guid.NewGuid().ToString();
 
             ShipmentPM shipmentPMs = APICaller.CallPut<ShipmentPM>(shipmentModel, "shipment", secondUser.Token);
             Context.OtherShipmentPM.Id = shipmentPMs?.Id;
@@ -121,7 +114,7 @@ namespace Logitude.SecurityTests.Steps.Shipment
             };
         }
 
-        private string GetShipmentIdForFirstUser()
+        private ShipmentPM GetShipmentForFirstUser()
         {
             var firstUser = Users.ListOfUserData[0];
             ShipmentPM shipmentModel = GetValidShipmentPM();
@@ -129,8 +122,7 @@ namespace Logitude.SecurityTests.Steps.Shipment
             shipmentModel.CreatedByUserId = firstUser.UserId;
             shipmentModel.UpdatedByUserId = firstUser.UserId;
 
-            ShipmentPM shipmentPM = APICaller.CallPost<ShipmentPM>(shipmentModel, "shipment", firstUser.Token);
-            return shipmentPM?.Id;
+            return APICaller.CallPost<ShipmentPM>(shipmentModel, "shipment", firstUser.Token);
         }
     }
 }

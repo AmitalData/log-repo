@@ -83,11 +83,11 @@ namespace Logitude.SecurityTests.Features.Shipment
                         "Email",
                         "Password"});
             table1.AddRow(new string[] {
-                        "ahmadb123@mail.com",
-                        "ahmed13!A15"});
+                        "maheera@fnarsoft.com",
+                        "0"});
             table1.AddRow(new string[] {
-                        "protractor@test.com",
-                        "!P123t456"});
+                        "maheera@fnarsoft.com",
+                        "0"});
 #line 5
  testRunner.Given("Email and Password for these users", ((string)(null)), table1, "Given ");
 #line hidden
