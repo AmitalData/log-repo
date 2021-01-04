@@ -22,6 +22,9 @@ using Logitude.BL.GlobalModel.EntityPMs;
 using Logitude.BL.GlobalModel.EntityQueries;
 using Logitude.BL.GlobalModel.Tools.EntityService;
 using System.Web;
+using System.Transactions;
+using Simplog.Server.Infrastructure.Helpers;
+using Logitude.Server.Tools;
 
 namespace WebFreight.Web.Helpers
 {
@@ -124,11 +127,44 @@ namespace WebFreight.Web.Helpers
                     };
 
                     logitudeLeadService.Create(LogitudeLeadpm);
-
+                    AddCommunicationLog(LogitudeLeadpm);
                 }
             }
             return null;
         }
+
+
+        public void AddCommunicationLog(LogitudeLeadPM leadPM)
+        {
+            byte[] documentXML = LogitudeXmlSerializer.SerializeObject(leadPM);
+
+            using (TransactionScope scope = TransactionFactory.GetTransaction())
+            {
+                CommunicationsParams logParams = new CommunicationsParams()
+                {
+                    From = leadPM.CompanyName,
+                    Tenant =0,
+                    CommunicationLogTypeCode = "Lead",
+                    QueueName = "LogitudeLeadQueue",
+                    Priority = 1,
+                    InOut = "O",
+                    Status = "W",
+                    Subject = "Logitude Lead",
+                    FolderName = "LogitudeLeadQueue",
+                    ByteData = documentXML,
+
+                };
+                Communications.AddCommunicationLog(logParams);
+
+                scope.Complete();
+            }
+        }
+
+
+
+
+
+
 
 
         public string VerifiyLogitudeLead(LogitudeLeadPM leadPM)

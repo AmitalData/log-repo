@@ -62,6 +62,13 @@ namespace Logitude.BL.CommonDataModel
                 SearchFields = "T,Transmission,", 
                 Name = "Transmission", 
 			});
+			 
+            all.Add(new CommunicationLogTypeDetails()
+            {    
+                Code = "Lead", 
+                Name = "LogitudeLead", 
+                SearchFields = "Lead,LogitudeLead", 
+			});
 			
             return all;
        }
