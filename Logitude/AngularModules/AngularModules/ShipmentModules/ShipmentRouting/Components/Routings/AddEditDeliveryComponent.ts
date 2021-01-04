@@ -456,7 +456,9 @@ export class AddEditDeliveryComponent implements AfterViewInit, OnDestroy {
     OkButtonClicked() {
         this.Save(false);
     }
-
+    SaveChangesAndClose() {
+        this.Save(true);
+    }
     Save(isClosingWindow: boolean) {
 
         var isValid = this.Validate();
