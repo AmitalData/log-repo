@@ -119,8 +119,12 @@ namespace Logitude.Customs.Data.Repsitories
                 }
             }
         }
-
-
+        public string GetRequestDescription(string id)
+        {
+            return (from a in context.CustomsRequestsSheets
+                    where a.Id == id 
+                    select a.RequestDescription).FirstOrDefault();
+        }
     }
 
 }

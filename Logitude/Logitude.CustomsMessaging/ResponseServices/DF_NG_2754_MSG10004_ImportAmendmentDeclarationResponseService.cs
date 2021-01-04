@@ -129,7 +129,17 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     if (declarationOrg == null)
                     {
                         declarationOrg = myQueryService.GetAcceptDeclarationAmendment(  idOrg , tenant);
-                        declarationOrg = myQueryService.GetDeclarationsByIds(new List<string> { declarationOrg.Id }, tenant).FirstOrDefault();
+                        if(declarationOrg == null)
+                        {
+                            declarationOrg = myQueryService.GetDeclarationsByIds(new List<string> { idOrg }, tenant).FirstOrDefault();
+
+
+                        }
+                        else
+                        {
+                            declarationOrg = myQueryService.GetDeclarationsByIds(new List<string> { declarationOrg.Id }, tenant).FirstOrDefault();
+
+                        }
                     }
 
                     if (declarationOrg.IsAmendment == true  && declarationOrg.AmendmentDontDisplayInList==true)

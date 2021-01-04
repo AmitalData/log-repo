@@ -267,7 +267,11 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 DeclarationPM connectedDeclarationPM = GetConnectedDeclarationPM(entityPM);
                 DoUpdateNotification(entityPM, connectedDeclarationPM, loggingUserId, notificationDefinitionCode, eventContextTagModel.FUStatusRemarks);
                 if(connectedDeclarationPM!= null && connectedDeclarationPM.Direction=="E")
-                SendEvent(eventContextTagModel.EventCode, eventContextTagModel, loggingUserId, this.connectedDeclarationId, entityPM.VerificationRemarks, entityPM.RequestedCustomsDocId);
+                {
+                    eventContextTagModel.StatusCustomFileNo = connectedDeclarationPM.CustomFileNo;
+                    SendEvent(eventContextTagModel.EventCode, eventContextTagModel, loggingUserId, connectedDeclarationPM.Id, entityPM.VerificationRemarks, entityPM.RequestedCustomsDocId);
+
+                }
             }
         }
 
@@ -283,10 +287,10 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     myAmitalEventTracerModel = new Logitude.Customs.BL.TraceEvents.AmitalEventTracerModel()
                     {
                         Tenant =  Tenant,
-                        objectTableName = eventContextTagModel.StatusObjectTable,
+                        objectTableName = "Customs.Declaration",
                         EventCode = statusId,
                         notes = "DocumentId :" + requestedCustomsDocId + '\n' + remarks,
-                        CommunicationLoggingEntityReference = eventContextTagModel.StatusEntityId,
+                        CommunicationLoggingEntityReference = declarationId,
                         EntityId = declarationId,
                         UserId = loggingUserId,
                         CommunicationSubject = "FU Status from logitude ",

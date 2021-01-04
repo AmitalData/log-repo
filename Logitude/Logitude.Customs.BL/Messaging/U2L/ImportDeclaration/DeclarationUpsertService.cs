@@ -585,23 +585,6 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
 
                     if (string.IsNullOrWhiteSpace(_AmitalCustomsFile.IsCourierDeclaration) || (!string.IsNullOrWhiteSpace(_AmitalCustomsFile.IsCourierDeclaration) && _AmitalCustomsFile.IsCourierDeclaration.ToLower() != "true"))
                     {
-                        if (String.IsNullOrWhiteSpace(this._MyDeclarationPM.Consignments[0].UnloadPortCode))
-                        {
-                            if (_CourierMasterPM == null)
-                            {
-                                var myCourierMasterQueryService = new CourierMasterQueryService(_context);
-                                _CourierMasterPM = myCourierMasterQueryService.GetByDeclarationId(this._MyDeclarationPM.Id, ResolvedTenant());
-                            }
-                            if (_CourierMasterPM != null)
-                            {
-                                CustomsAirlineQueryService customsAirlineQueryService = new CustomsAirlineQueryService(_CourierMasterPM.Tenant);
-                                CustomsAirlinePM customsAirline = customsAirlineQueryService.GetSingle(_CourierMasterPM.AirlineId, false, true);
-                                if (customsAirline != null)
-                                {
-                                    if (!String.IsNullOrWhiteSpace(customsAirline.UnloadPortCode))this._MyDeclarationPM.Consignments[0].UnloadPortCode = customsAirline.UnloadPortCode;
-                                }
-                            }
-                        }
 
                         if (!string.IsNullOrWhiteSpace(_AmitalCustomsFile.HAWBDATE))
                         {
@@ -761,7 +744,23 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
                             _MyDeclarationPM.Consignments[0].ThirdCargoID = datetime.HasValue ? datetime.Value.ToString("ddMMyy") : "";
                         }
                         _MyDeclarationPM.Consignments[0].UnloadDate = AmitalConvertUtil.GetUnifreightFormatedDate(_AmitalCustomsFile.UnloadDate, "AmitalCustomsFile.UnloadDate");
-                        _MyDeclarationPM.Consignments[0].UnloadPortCode = TranslateUnloadPort(_AmitalCustomsFile.WarehouseId);
+                        if (String.IsNullOrWhiteSpace(this._MyDeclarationPM.Consignments[0].UnloadPortCode))
+                        {
+                            if (_CourierMasterPM == null)
+                            {
+                                var myCourierMasterQueryService = new CourierMasterQueryService(_context);
+                                _CourierMasterPM = myCourierMasterQueryService.GetByDeclarationId(this._MyDeclarationPM.Id, ResolvedTenant());
+                            }
+                            if (_CourierMasterPM != null)
+                            {
+                                CustomsAirlineQueryService customsAirlineQueryService = new CustomsAirlineQueryService(_CourierMasterPM.Tenant);
+                                CustomsAirlinePM customsAirline = customsAirlineQueryService.GetSingle(_CourierMasterPM.AirlineId, false, true);
+                                if (customsAirline != null)
+                                {
+                                    if (!String.IsNullOrWhiteSpace(customsAirline.UnloadPortCode)) this._MyDeclarationPM.Consignments[0].UnloadPortCode = customsAirline.UnloadPortCode;
+                                }
+                            }
+                        }
                         _MyDeclarationPM.Consignments[0].StorageSiteCode = TranslateWarehouse(_AmitalCustomsFile.WarehouseId);
                     }
                     myDeclarationUpdateService.Update(_MyDeclarationPM, true);
