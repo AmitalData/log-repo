@@ -111,7 +111,9 @@ namespace Simplog.Data.Helpers
         public AutomationSendInterface AutomationSendInterface { get; set; }
 
 
-        
+        [DataMember]
+        public AutomationSendDocument AutomationSendDocument { get; set; }
+
 
     }
 

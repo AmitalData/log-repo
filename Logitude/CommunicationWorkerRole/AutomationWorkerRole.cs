@@ -508,6 +508,7 @@ namespace CommunicationWorkerRole
             else if (resultCode == "DOCINFOLLOWUP") result = "Docs In F/U Creation";
             else if (resultCode == "QUEUE") result = "Queued Task";
             else if (resultCode == "SENDINTERFACE") result = "Send Interface";
+            else if (resultCode == "SENDDOCUMENT") result = "Documents Send";
 
             return result;
 
@@ -767,6 +768,8 @@ namespace CommunicationWorkerRole
             entityChangeAutomationList = entityChangeAutomationList.Concat(GetEntityChangeAutomationList(entityChange.QueuedTaskAutomationFailedXml)).ToList();
             entityChangeAutomationList = entityChangeAutomationList.Concat(GetEntityChangeAutomationList(entityChange.SendInterfaceAutomationSsucceedXml)).ToList();
             entityChangeAutomationList = entityChangeAutomationList.Concat(GetEntityChangeAutomationList(entityChange.SendInterfaceAutomationFailedXml)).ToList();
+            entityChangeAutomationList = entityChangeAutomationList.Concat(GetEntityChangeAutomationList(entityChange.SendDocumentAutomationSsucceedXml)).ToList();
+            entityChangeAutomationList = entityChangeAutomationList.Concat(GetEntityChangeAutomationList(entityChange.SendDocumentAutomationFailedXml)).ToList();
             return entityChangeAutomationList;
         }
 
