@@ -64,6 +64,8 @@ export class DeclarationReferantDataList {
 	StorageSiteName: string;
 	ImporterName: string;
 	ProcedureCurrentName: string;
+	IsPaymentDateNull: boolean;
+	IsAvailabilityDateNull: boolean;
 	
 }
  
