@@ -7,7 +7,7 @@
 
 a {
     color: black;
-    
+
 }
 
 .box-header {
@@ -123,7 +123,7 @@ a {
     font-size: 12px;
     text-transform: uppercase;
 }
-   
+
 
 /* ul.line-list {
     padding: 0;
@@ -167,7 +167,7 @@ ul.line-list li.tick {
 
 .steps-list li:hover:not(.dimmed),
 .steps-list li.highlighted {
-    background:var(--secondaryColor); /*#002664;*/
+    background:var(--MainColor); /*#002664;*/
     color: white;
     font-weight: 600;
 }
@@ -348,17 +348,17 @@ ul.line-list li.tick {
 
 .tab-selector>div {
     display: inline-block;
-    width: calc(50% - 53px);
+    width: calc(50% - 45px);
     text-align: center;
     padding: 10px 0px;
     border-bottom: 4px solid #FFF;
-    margin: 0px 26px;
+    margin: 0px 22px;
     cursor: pointer;
     user-select: none;
 }
 
 .tab-selector>div.active {
-    color: #002664;
+    color: var(--MainColor);
     font-weight: bold;
     border-bottom: 4px solid #E5E9EF;
 }
@@ -434,10 +434,11 @@ ul.line-list li.tick {
         font-weight: normal;
     }
     .steps-list li.highlighted>.caption {
-        background: #002664;
+        background: var(--MainColor);
         border-radius: 15px;
         padding: 3px 10px;
         color: white;
+        width: fit-content !important;
     }
     .steps-list li:hover:not(.dimmed) {
         background: none;
