@@ -105,6 +105,9 @@
     <Compile Include="Models\Shipment\ShipmentSecurityAccessStepsContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Steps\Login\LoginSteps.cs" />
+    <Compile Include="Steps\Shipment\ShipmentPackagePM.cs" />
+    <Compile Include="Steps\Shipment\ShipmentPayablesPM.cs" />
+    <Compile Include="Steps\Shipment\ShipmentPM.cs" />
     <Compile Include="Steps\Shipment\UpdateShipmentSteps.cs" />
   </ItemGroup>
   <ItemGroup>

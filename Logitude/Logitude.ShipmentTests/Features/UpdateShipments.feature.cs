@@ -164,7 +164,7 @@ this.FeatureBackground();
  testRunner.Given("The master shipment fields", ((string)(null)), table2, "Given ");
 #line hidden
 #line 15
- testRunner.When("The shipment create API sent", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("The post API sent to create master shipment", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
 #line 16
  testRunner.Then("A new master created successfully", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
@@ -205,29 +205,41 @@ this.ScenarioInitialize(scenarioInfo);
 this.FeatureBackground();
 #line hidden
                 TechTalk.SpecFlow.Table table3 = new TechTalk.SpecFlow.Table(new string[] {
-                            "Direction",
-                            "Transport Mode",
-                            "Shipment Type",
-                            "From Port",
-                            "To Port",
-                            "Customer Type",
-                            "Customer Name"});
+                            "NewConcurrencyGUID",
+                            "DirectionId",
+                            "TransportModeId",
+                            "ShipmentLevelCode",
+                            "BranchId",
+                            "DepartmentId",
+                            "FreightPrepaidCollectId",
+                            "OtherPrepaidCollectId",
+                            "CreatedByUserId",
+                            "UpdatedByUserId",
+                            "MainCarriageToPortId",
+                            "MainCarriageFromPortId",
+                            "CustomerId"});
                 table3.AddRow(new string[] {
-                            "Export",
-                            "Air",
-                            "Air",
-                            "EZE",
-                            "MVD",
-                            "Shipper",
-                            "Maheera"});
+                            "Guid.NewGuid().ToString()",
+                            "E",
+                            "A",
+                            "H",
+                            "1-1102",
+                            "1-2988",
+                            "P",
+                            "C",
+                            "1-108265",
+                            "1-108265",
+                            "1-300930",
+                            "1-303023",
+                            "1-200716"});
 #line 19
  testRunner.Given("The house shipment fields", ((string)(null)), table3, "Given ");
 #line hidden
 #line 22
- testRunner.And("houseMasterId is 1", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("MasterShipmentDataId is 1-1997645 and MasterShipmentNumber is M1304", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
 #line 23
- testRunner.When("The shipment create API sent", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("The post API sent to create house shipment", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
 #line 24
  testRunner.Then("A new house created successfully", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
@@ -268,7 +280,7 @@ this.ScenarioInitialize(scenarioInfo);
 this.FeatureBackground();
 #line hidden
                 TechTalk.SpecFlow.Table table4 = new TechTalk.SpecFlow.Table(new string[] {
-                            "Pieces",
+                            "Quantity",
                             "Length",
                             "Width",
                             "Hight",
@@ -283,10 +295,10 @@ this.FeatureBackground();
  testRunner.Given("The master shipment packages fields", ((string)(null)), table4, "Given ");
 #line hidden
 #line 30
- testRunner.And("shipmentMasterId is 1", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("MasterShipmentId is 1-1997648", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
 #line 31
- testRunner.When("The shipment update API sent", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("The put API sent to add master packages", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
 #line 32
  testRunner.Then("A new master packages added successfully", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
@@ -327,7 +339,7 @@ this.ScenarioInitialize(scenarioInfo);
 this.FeatureBackground();
 #line hidden
                 TechTalk.SpecFlow.Table table5 = new TechTalk.SpecFlow.Table(new string[] {
-                            "Pieces",
+                            "Quantity",
                             "Length",
                             "Width",
                             "Hight",
@@ -342,10 +354,10 @@ this.FeatureBackground();
  testRunner.Given("The house shipment packages fields", ((string)(null)), table5, "Given ");
 #line hidden
 #line 38
- testRunner.And("houseMasterId is 1", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("HouseShipmentId is 1-1997665", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
 #line 39
- testRunner.When("The shipment update API sent", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("The put API sent to add house packages", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
 #line 40
  testRunner.Then("A new house packages added successfully", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
@@ -386,23 +398,31 @@ this.ScenarioInitialize(scenarioInfo);
 this.FeatureBackground();
 #line hidden
                 TechTalk.SpecFlow.Table table6 = new TechTalk.SpecFlow.Table(new string[] {
-                            "Charge Type",
-                            "UOM",
-                            "Unit Price",
-                            "Currency"});
+                            "ChargesTypeName",
+                            "ChargesTypeId",
+                            "ChargesTypeCode",
+                            "MeasurementId",
+                            "MeasurementCode",
+                            "UnitPrice",
+                            "CurrencyId",
+                            "ShipmentPayableLineStatusCode"});
                 table6.AddRow(new string[] {
                             "Air Freight",
+                            "1-32",
+                            "AFT",
+                            "1-24",
                             "GRWT",
                             "100",
-                            "USD"});
+                            "1-7",
+                            "OAMT"});
 #line 43
  testRunner.Given("The Payable Charge Type fields", ((string)(null)), table6, "Given ");
 #line hidden
 #line 46
- testRunner.And("shipmentMasterId is 1", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("MasterShipmentId is 1-1997648", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
 #line 47
- testRunner.When("The shipment update API sent", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("The put API sent to add master Payable", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
 #line 48
  testRunner.Then("The payable cherge type added successfully", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
