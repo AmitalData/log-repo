@@ -21,6 +21,7 @@ namespace WebFreight.Web.Helpers.APIHelpers
         private TenantRepository tenantRepository;
         private ChargesTypeRepository chargesTypeRepository;
         private MeasurementRepository measurementRepository;
+        private CardRepository cardRepository;
         RatesTableQuery ratesTableQuery;
         public APIReceivablePayableHelper(ShipmentPM shipment, int tenant)
         {
@@ -29,6 +30,7 @@ namespace WebFreight.Web.Helpers.APIHelpers
             tenantRepository = new TenantRepository(commonContext);
             chargesTypeRepository = new ChargesTypeRepository(commonContext);
             measurementRepository = new MeasurementRepository(commonContext);
+            cardRepository = new CardRepository(commonContext);
             ratesTableQuery = new RatesTableQuery(tenant);
 
             this.shipmentPM = shipment;
@@ -417,6 +419,20 @@ namespace WebFreight.Web.Helpers.APIHelpers
                     }
                 }
 
+                if (!string.IsNullOrEmpty(item.VendorId))
+                {
+                    Simplog.Data.CommonDataModel.EntityPOCOs.Card card = cardRepository.GetSingleCard(item.VendorId, tenant);
+                    if (card != null)
+                    {
+                        string [] allowedPartnerTypes = { "AG", "AL", "CG", "SG", "SL", "TR", "VD", "WH" };
+                      
+                        if (!allowedPartnerTypes.Contains(card.PartnerTypeId))
+                        {
+                            throw new ApplicationException("Payable vendor partner type is not allowed");
+                        }
+                    }
+                }
+
                 RatesTableQuery ratesTableQuery = new RatesTableQuery(tenant);
                 if (item.Rate == null)
                 {
@@ -455,7 +471,6 @@ namespace WebFreight.Web.Helpers.APIHelpers
                         }
                     }
                 }
-
 
                 string measurementCode = "";
                 Simplog.Data.CommonDataModel.EntityPOCOs.Measurement measurement = measurementRepository.GetSingleMeasurement(item.MeasurementId, tenant);
