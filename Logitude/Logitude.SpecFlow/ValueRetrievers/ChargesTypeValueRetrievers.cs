@@ -18,7 +18,7 @@ namespace Logitude.SpecFlow.ValueRetrievers
         public ChargesTypeValueRetrievers(UserData user)
         {
             User = user;
-            IdRegex = new Regex(@"^Get id from code \{(.*?)\}", RegexOptions.IgnoreCase);
+            IdRegex = new Regex(@"^Get id from code \{[^\{\}]*\}$", RegexOptions.IgnoreCase);
         }
         
         public bool CanRetrieve(KeyValuePair<string, string> keyValuePair, Type targetType, Type propertyType)
@@ -56,7 +56,7 @@ namespace Logitude.SpecFlow.ValueRetrievers
 
         protected string GetCodeFromIdRegex(string valueFromTable)
         {
-            return IdRegex.Match(valueFromTable).ToString().Split('{')[1].Split('}')[0].Trim();
+            return valueFromTable.Split('{')[1].Split('}')[0].Trim();
         }
     }
 }
