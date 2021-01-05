@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "26266606-8022-4848-b10d-a6e739513d76",
+		"_postman_id": "a2ba18db-aacc-4176-9d74-c60b8bbddd66",
 		"name": "DocumentsOut",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -11,7 +11,6 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "3a407f41-cd36-4246-b395-1a100342cd25",
 						"exec": [
 							"pm.test(\"GetDocumentTypeId\", function () {",
 							"   pm.response.to.have.status(200);",
@@ -100,7 +99,7 @@
 					"formdata": []
 				},
 				"url": {
-					"raw": "{{URL}}/api/documenttypeviews/getbyfilters?ForceCacheRefresh=false&GetAll=true&Tenant={{Tenant}}",
+					"raw": "{{URL}}/api/documenttypeviews/getbyfilters?ForceCacheRefresh=false&GetAll=true&Tenant={{Tenant}}&&",
 					"host": [
 						"{{URL}}"
 					],
@@ -141,7 +140,6 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "239e635b-e6f1-4948-97ee-2a88d735525f",
 						"exec": [
 							"pm.test(\"GetDocumentOutAirManifestId\", function () {",
 							" ",
@@ -259,7 +257,6 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "357a31d4-22bd-4112-95f5-d894e9d2e134",
 						"exec": [
 							"pm.test(\"GetDocumentOutAirManifestId\", function () {",
 							" ",
@@ -361,7 +358,6 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "24b09f2f-cd76-41bb-b12e-378ffcf78b09",
 						"exec": [
 							"pm.test(\"GetDocumentTypeTemplateId\", function () {",
 							"   pm.response.to.have.status(200);",
@@ -463,7 +459,6 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "9945ed15-e99a-44b2-831e-a152532c2413",
 						"exec": [
 							"pm.test(\"GetDocumentTypeCopyId\", function () {",
 							"   pm.response.to.have.status(200);",
@@ -567,7 +562,6 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "38014ec4-ea93-4e66-a5c0-984bfc57dee7",
 						"exec": [
 							"pm.test(\"GetDocumentOutCopyId\", function () {",
 							"   pm.response.to.have.status(200);",
@@ -696,7 +690,6 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "bd6634bd-e77c-41d5-9090-8977b1e144f7",
 						"exec": [
 							"pm.test(\"UpdateDocumentOutAirManifestId\", function () {",
 							"   pm.response.to.have.status(200);",
@@ -773,13 +766,14 @@
 					"raw": "{\n  \"UIProperties\": {\n    \"UIPropertyList\": []\n  },\n  \"IsDirty\": true,\n  \"$id\": \"1\",\n  \"id\": \"{{DocumentOutAirManifestId}}\",\n  \"tenant\": \"{{Tenant}}\",\n  \"Note\": null,\n  \"issuedDate\": null,\n  \"entityId\": \"{{DirectShipmentAirExportId}}\",\n  \"objectTableId\": \"{{ObjectTableId}}\",\n  \"issuedByUserId\": \"{{LoggedUserId}}\",\n  \"documentTypeId\": \"{{AirManifestId}}\",\n  \"issued\": true,\n  \"followUpId\": null,\n  \"followUpCount\": 0,\n  \"issuedByUserName\": \"\",\n  \"extension\": null,\n  \"documentTypeName\": \"Air Manifest\",\n  \"reportTemplate\": null,\n  \"hasFollowUp\": false,\n  \"documentTypeCode\": \"785A\",\n  \"hTMLTemplate\": null,\n  \"templateType\": \"P\",\n  \"documentTypeSubject\": null,\n  \"editableFields\": null,\n  \"documentTemplateId\": \"{{documentTemplateId}}\",\n  \"emailTemplateId\": \"{{emailTemplateId}}\",\n  \"childEntityId\": null,\n  \"childEntityReference\": null,\n  \"xamlDocumentId\": null,\n  \"documentTemplateEditorTool\": \"S\",\n  \"documentTypeObjectTableId\": \"{{ObjectTableId}}\",\n  \"needsRebuild\": false,\n  \"isBlobExist\": false,\n  \"fileSize\": null,\n  \"fileName\": null,\n  \"name\": null,\n  \"isChangeIssuedDate\": true,\n  \"documentOutCopies\": [\n  \t    {\n      \"$id\": \"2\",\n      \"Id\": \"{{DocumentOutCopyId}}\",\n      \"Tenant\": \"{{Tenant}}\",\n      \"DocumentId\": \"{{DocumentOutCopyId}}\",\n      \"DocumentOutId\": \"{{DocumentOutAirManifestId}}\",\n      \"DocumentTypeCopyId\": \"{{DocumentTypeCopyId}}\",\n      \"DocoumentTypeCopyName\": \"Air Manifest\",\n      \"DocumentTypeCopyNameWithDocumentTypeName\": \"Air Manifest\",\n      \"LastPrintedByUserId\": null,\n      \"LastPrintDate\": null,\n      \"FileSize\": null,\n      \"FileName\": \"Air Manifest\",\n      \"LastPrintedByUserName\": null,\n      \"CalculatedFileName\": \"Air Manifest\",\n      \"changeOp\": 0\n    }\n  \t],\n  \"IsAgentView\": false,\n  \"IsCustomerView\": false\n}"
 				},
 				"url": {
-					"raw": "{{URL}}/api/DocumentOutExtended",
+					"raw": "{{URL}}/api/DocumentOutExtended/PutDocumentOut",
 					"host": [
 						"{{URL}}"
 					],
 					"path": [
 						"api",
-						"DocumentOutExtended"
+						"DocumentOutExtended",
+						"PutDocumentOut"
 					]
 				}
 			},
@@ -791,7 +785,6 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "8e46774f-c1f7-438b-be91-4a200ae8bece",
 						"exec": [
 							"pm.test(\"GetDocumentDownloadToken\", function () {",
 							"    pm.response.to.have.status(200);",
@@ -888,7 +881,6 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "4681226b-83b6-4e67-9277-50c7e21b1dac",
 						"exec": [
 							"pm.test(\"PrintDocument\", function () {",
 							"    pm.response.to.have.status(200);",
@@ -972,7 +964,6 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "ebc83573-ce47-4df3-a070-71dffd367d2e",
 						"exec": [
 							"pm.test(\"PrintDocument\", function () {",
 							"    pm.response.to.have.status(200);",
