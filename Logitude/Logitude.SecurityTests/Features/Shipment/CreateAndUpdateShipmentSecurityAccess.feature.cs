@@ -89,13 +89,13 @@ namespace Logitude.SecurityTests.Features.Shipment
                         "protractor@test.com",
                         "!P123t456"});
 #line 5
- testRunner.Given("Email and Password for these users", ((string)(null)), table1, "Given ");
+ testRunner.Given("Users with following credentials", ((string)(null)), table1, "Given ");
 #line hidden
 #line 9
- testRunner.When("Login API called for given users", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("Users make login request", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
 #line 10
- testRunner.Then("All user will has a token", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then("Users should have token", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
         }
         
