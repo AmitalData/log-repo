@@ -19,6 +19,7 @@ namespace Logitude.SecurityTests.Steps.Login
         protected readonly UserData User;
 
         protected LoginsParameters LoginsParameters;
+        protected List<LoginParameters> UsersLoginParameters = new List<LoginParameters>();
 
         public LoginSteps(UserData userData, UsersData usersData, LoginParameters loginParameters, LoginsParameters loginsParameters)
         {
@@ -99,7 +100,7 @@ namespace Logitude.SecurityTests.Steps.Login
 
 
 
-        ///////////////////////////////////////////////////////////////
+        
 
 
         [Given(@"Email and Password for these users")]
