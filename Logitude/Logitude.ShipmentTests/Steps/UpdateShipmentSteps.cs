@@ -1,43 +1,41 @@
 ﻿using FluentAssertions;
-using Logitude.SecurityTests.Models.Login;
-using Logitude.SecurityTests.Models.Shipment;
-using Logitude.ShipmentTests.Steps.Shipment;
-using Logitude.Test.Services;
+using Logitude.ShipmentTests.Models;
+using Logitude.Test.Base.Models.Login;
+using Logitude.Test.Base.Services;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using TechTalk.SpecFlow;
 using TechTalk.SpecFlow.Assist;
 using Xunit;
 
-namespace Logitude.SecurityTests.Steps.Shipment
+namespace Logitude.ShipmentTests.Steps
 {
     [Binding]
     public class UpdateShipment
     {
-        protected readonly UserData UserData;
+        protected User User;
         protected ShipmentPM _masterPM, _housePM;
         protected ShipmentPackagePM _housePackage, _masterPackages;
         protected ShipmentPayablesPM _shipmentPayablesPM;
         protected Exception exceptionForHouse, exceptionForMaster, exceptionForPayables;
 
-        public UpdateShipment(UsersData usersData)
+        public UpdateShipment(MultiUsers multiUsers)
         {
-            UserData = usersData.Users[0];
+            User = multiUsers.Users[0];
         }
 
         [Given(@"The master shipment fields")]
         public void GivenTheMasterShipmentFields(Table table)
         {
             _masterPM = table.CreateInstance<ShipmentPM>();
-            _masterPM.Tenant = UserData.Tenant;
+            _masterPM.Tenant = User.Tenant;
             _masterPM.NewConcurrencyGUID = Guid.NewGuid().ToString();
         }
 
         [When(@"The post API sent to create master shipment")]
         public void WhenTheShipmentCreateAPISent()
         {
-            _masterPM = APICaller.CallPost<ShipmentPM>(_masterPM, "Shipment", UserData.Token);
+            _masterPM = APICaller.CallPost<ShipmentPM>(_masterPM, "Shipment", User.Token);
         }
 
         [Then(@"A new master created successfully")]
@@ -52,7 +50,7 @@ namespace Logitude.SecurityTests.Steps.Shipment
         public void GivenTheHouseShipmentFields(Table table)
         {
             _housePM = table.CreateInstance<ShipmentPM>();
-            _housePM.Tenant = UserData.Tenant;
+            _housePM.Tenant = User.Tenant;
             _housePM.NewConcurrencyGUID = Guid.NewGuid().ToString();
         }
 
@@ -66,7 +64,7 @@ namespace Logitude.SecurityTests.Steps.Shipment
         [When(@"The post API sent to create house shipment")]
         public void WhenThePostAPISentToCreateHouseShipment()
         {
-            _housePM = APICaller.CallPost<ShipmentPM>(_housePM, "Shipment", UserData.Token);
+            _housePM = APICaller.CallPost<ShipmentPM>(_housePM, "Shipment", User.Token);
         }
 
         [Then(@"A new house created successfully")]
@@ -81,14 +79,14 @@ namespace Logitude.SecurityTests.Steps.Shipment
         public void GivenTheMasterShipmentPackagesFields(Table table)
         {
             _masterPackages = table.CreateInstance<ShipmentPackagePM>();
-            _masterPackages.Tenant = UserData.Tenant;
+            _masterPackages.Tenant = User.Tenant;
         }
 
         [Given(@"MasterShipmentId is (.*)")] 
         public void GivenShipmentMasterIdIs(string masterShipmentId)
         {
             string singleShipmentUrl = "Shipment/GetSingle?id=" + masterShipmentId;
-            _masterPM = APICaller.CallGet<ShipmentPM>(singleShipmentUrl, UserData.Token, null);
+            _masterPM = APICaller.CallGet<ShipmentPM>(singleShipmentUrl, User.Token, null);
         }
 
         [When(@"The put API sent to add master packages")]
@@ -101,7 +99,7 @@ namespace Logitude.SecurityTests.Steps.Shipment
             _masterPM.PackagesQuantity = _masterPackages.Quantity;
             _masterPM.ShipmentPackages.Add(_masterPackages);
 
-            exceptionForMaster = Record.Exception(() => APICaller.CallPut<ShipmentPM>(_masterPM, "Shipment", UserData.Token));
+            exceptionForMaster = Record.Exception(() => APICaller.CallPut<ShipmentPM>(_masterPM, "Shipment", User.Token));
         }
 
         [Then(@"A new master packages added successfully")]
@@ -116,14 +114,14 @@ namespace Logitude.SecurityTests.Steps.Shipment
         public void GivenTheHouseShipmentPackagesFields(Table table)
         {
             _housePackage = table.CreateInstance<ShipmentPackagePM>();
-            _housePackage.Tenant = UserData.Tenant;
+            _housePackage.Tenant = User.Tenant;
         }
 
         [Given(@"HouseShipmentId is (.*)")]
         public void GivenShipmentHouseIdIs(string houseShipmentId)
         {
             string singleShipmentUrl = "Shipment/GetSingle?id=" + houseShipmentId;
-            _housePM = APICaller.CallGet<ShipmentPM>(singleShipmentUrl, UserData.Token, null);
+            _housePM = APICaller.CallGet<ShipmentPM>(singleShipmentUrl, User.Token, null);
         }
 
         [When(@"The put API sent to add house packages")]
@@ -137,7 +135,7 @@ namespace Logitude.SecurityTests.Steps.Shipment
             _housePackage.ShipmentId = _housePM.Id;
             _housePM.ShipmentPackages.Add(_housePackage);
 
-            exceptionForHouse = Record.Exception(() => APICaller.CallPut<ShipmentPM>(_housePM, "Shipment", UserData.Token));
+            exceptionForHouse = Record.Exception(() => APICaller.CallPut<ShipmentPM>(_housePM, "Shipment", User.Token));
         }
 
         [Then(@"A new house packages added successfully")]
@@ -152,17 +150,17 @@ namespace Logitude.SecurityTests.Steps.Shipment
         public void GivenThePayableChargeTypeFields(Table table)
         {
             _shipmentPayablesPM = table.CreateInstance<ShipmentPayablesPM>();
-            _shipmentPayablesPM.Tenant = UserData.Tenant;
+            _shipmentPayablesPM.Tenant = User.Tenant;
         }
 
         [When(@"The put API sent to add master Payable")]
         public void WhenThePutAPISentToAddMasterPayable()
         {
-            _masterPM.shipmentPayables = new List<ShipmentPayablesPM>();
+            _masterPM.ShipmentPayables = new List<ShipmentPayablesPM>();
             _shipmentPayablesPM.ShipmentId = _masterPM.Id;
-            _masterPM.shipmentPayables.Add(_shipmentPayablesPM);
+            _masterPM.ShipmentPayables.Add(_shipmentPayablesPM);
 
-            exceptionForPayables = Record.Exception(() => APICaller.CallPut<ShipmentPM>(_masterPM, "Shipment", UserData.Token));
+            exceptionForPayables = Record.Exception(() => APICaller.CallPut<ShipmentPM>(_masterPM, "Shipment", User.Token));
         }
 
         [Then(@"The payable cherge type added successfully")]

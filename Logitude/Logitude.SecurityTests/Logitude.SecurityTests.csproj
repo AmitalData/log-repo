@@ -100,16 +100,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Models\Login\LoginParameters.cs" />
-    <Compile Include="Models\Login\UserData.cs" />
-    <Compile Include="Models\Login\LoginsParameters.cs" />
-    <Compile Include="Models\Login\UsersData.cs" />
+    <Compile Include="Models\Shipment\ShipmentSecurityAccessStepsContext.cs" />
     <Compile Include="Models\Shipment\ShipmentPackagePM.cs" />
-    <Compile Include="Models\Shipment\ShipmentSecurityAccessStepsContext.cs" />
     <Compile Include="Models\Shipment\ShipmentPM.cs" />
-    <Compile Include="Models\Shipment\ShipmentSecurityAccessStepsContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Steps\Login\LoginSteps.cs" />
     <Compile Include="Steps\Shipment\CreateAndUpdateShipmentSecurityAccessSteps.cs" />
     <Compile Include="Steps\Shipment\GetShipmentSecurityAccessSteps.cs" />
   </ItemGroup>
@@ -120,13 +114,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Logitude.BL\Logitude.BL.csproj">
-      <Project>{a663e7ef-b858-4bb6-bc33-e473f51b8e56}</Project>
-      <Name>Logitude.BL</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Logitude.Test.Services\Logitude.Test.Services.csproj">
-      <Project>{f1fa1ab7-b923-4f48-9f32-17bdefa1f30b}</Project>
-      <Name>Logitude.Test.Services</Name>
+    <ProjectReference Include="..\Logitude.Test.Base\Logitude.Test.Base.csproj">
+      <Project>{74fbc07e-5cbf-44c5-85c8-f86facaa06b6}</Project>
+      <Name>Logitude.Test.Base</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />

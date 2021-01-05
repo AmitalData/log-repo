@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Logitude.ShipmentTests.Steps.Shipment
+﻿namespace Logitude.ShipmentTests.Models
 {
     public class ShipmentPayablesPM
     {
@@ -15,7 +9,6 @@ namespace Logitude.ShipmentTests.Steps.Shipment
         public string ChargesTypeCode { get; set; }
         public string ChargesTypeName { get; set; }
         public string ShipmentPayableLineStatusCode { get; set; }
-
         public double? UnitPrice { get; set; }
         public string CurrencyId { get; set; }
         public string CurrencyCode { get; set; }

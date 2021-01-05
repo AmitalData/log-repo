@@ -1,11 +1,11 @@
 ﻿Feature: Create and Update Shipment Security Access
 
-Background: 
-	successful login with valid credentials for set of users
+Background:
+	Successful login with valid credentials for set of users
 	Given Users with following credentials
-	   | Email                 | Password    |
-	   | ahmadb123@mail.com    | ahmed13!A15 |
-	   | protractor@test.com   | !P123t456   |
+		| Email               | Password    |
+		| ahmadb123@mail.com  | ahmed13!A15 |
+		| protractor@test.com | !P123t456   |
 	When Users make login request
 	Then Users should have token
 

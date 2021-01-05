@@ -1,6 +1,6 @@
-﻿namespace Logitude.SecurityTests.Models.Login
+﻿namespace Logitude.Test.Base.Models.Login
 {
-    public class UserData
+    public class User
     {
         public string UserId { get; set; }
         public string UserName { get; set; }

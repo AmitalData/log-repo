@@ -1,7 +1,4 @@
-﻿using Logitude.SecurityTests.Models.Login;
-using System.Collections.Generic;
-
-using Logitude.BL.ShipmentsModel.EntityPMs;
+﻿using Logitude.Test.Base.Models.Login;
 
 namespace Logitude.SecurityTests.Models.Shipment
 {
@@ -15,7 +12,7 @@ namespace Logitude.SecurityTests.Models.Shipment
 
         public ShipmentPM FirstUserShipment { get; set; }
         public ShipmentPM SecondUserShipment { get; set; }
-        public UserData FirstUser { get; set; }
-        public UserData SecondUser { get; set; }
+        public User FirstUser { get; set; }
+        public User SecondUser { get; set; }
     }
 }

@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
 
-namespace Logitude.SecurityTests.Models.Login
+namespace Logitude.Test.Base.Models.Login
 {
-    public class LoginsParameters
+    public class MultiLoginParameters
     {
-        public LoginsParameters()
+        public MultiLoginParameters()
         {
             Logins = new List<LoginParameters>();
         }
