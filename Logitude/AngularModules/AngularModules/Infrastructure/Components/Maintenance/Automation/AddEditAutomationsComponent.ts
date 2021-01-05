@@ -1029,7 +1029,7 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
             if (this.AutomatedBackupClass.AutomationSendInterface && this.ResultCodeSelected.Code == "SENDINTERFACE") {
                 this.MapAutomationSendInterface();
             }
-            if (this.AutomatedBackupClass.AutomationSendDocument && this.ResultCodeSelected.Code == "SENDDocument") {
+            if (this.AutomatedBackupClass.AutomationSendDocument && this.ResultCodeSelected.Code == "SENDDOCUMENT") {
                 this.MapAutomationSendDocument();
             }
 
