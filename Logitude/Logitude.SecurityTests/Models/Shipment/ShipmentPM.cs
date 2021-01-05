@@ -22,5 +22,8 @@ namespace Logitude.SecurityTests.Models.Shipment
         public string UpdatedByUserId { get; set; }
         public string MainCarriageToPortId { get; set; }
         public string MainCarriageFromPortId { get; set; }
+
+        public string ConcurrencyGUID { get; set; }
+
     }
 }
