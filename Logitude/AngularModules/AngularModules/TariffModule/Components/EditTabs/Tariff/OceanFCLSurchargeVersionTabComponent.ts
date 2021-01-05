@@ -739,7 +739,8 @@ export class OceanFCLSurchargeVersionTabComponent extends BaseComponent implemen
                 containerPrice.Price2 = containerItem.Price2;
                 containerPrice.Price3 = containerItem.Price3;
                 containerPrice.Price4 = containerItem.Price4;
-                containerPrice.Price5 = containerItem.Price5;
+                containerPrice.Price5 = containerItem.Price5
+                containerPrice.CostPrice = containerItem.CostPrice;
                 tariffLine.AddTariffLinesContainersPrice(containerPrice);
             });
 
@@ -1652,6 +1653,16 @@ export class ContainerPricesItem extends BaseComponent {
         }
     }
 
+    get CostPrice() {
+        return this.EntityPM.CostPrice;
+    }
+    set CostPrice(value: number) {
+        if (this.EntityPM.CostPrice != value) {
+            this.EntityPM.CostPrice = value;
+            this.TariffLinePM.LineEdited = true;
+        }
+    }
+
     get Price1() {
         return this.EntityPM.Price1;
     }
@@ -1717,12 +1728,14 @@ export class ContainerPricesItem extends BaseComponent {
     public ComparingPrice3: number;
     public ComparingPrice4: number;
     public ComparingPrice5: number;
+    public ComparingCostPrice: number;
 
     public Price1ComparingTextColor: string = null;
     public Price2ComparingTextColor: string = null;
     public Price3ComparingTextColor: string = null;
     public Price4ComparingTextColor: string = null;
-    public Price5ComparingTextColor: string = null;
+    public Price5ComparingTextColor: string = null
+    public CostPriceComparingTextColor: string = null;
 
     SetCellsComparingText() {
         this.ComparePrice(1);
@@ -1730,22 +1743,31 @@ export class ContainerPricesItem extends BaseComponent {
         this.ComparePrice(3);
         this.ComparePrice(4);
         this.ComparePrice(5);
+        this.ComparePrice("");
     }
-    private ComparePrice(index: number) {
+    private ComparePrice(index: any) {
+        var comparingPriceText = 'ComparingPrice';
+        var priceText = 'Price';
+        if (index == "") {
+            comparingPriceText = 'ComparingCostPrice';
+            priceText = 'CostPrice';
+        }
+
         if (this.ComparedEntity != null) {
-            this['ComparingPrice' + index] = null;
-            this['Price' + index + 'ComparingTextColor'] = this.DefaultColor;
+            this[comparingPriceText + index] = null;
+            this[priceText + index + 'ComparingTextColor'] = this.DefaultColor;
 
-            if (this.ComparedEntity['Price' + index] != null) {
-                var comparingValue = this['Price' + index] - this.ComparedEntity['Price' + index];
+            if (this.ComparedEntity[priceText + index] != null) {
+                var comparingValue = this[priceText + index] - this.ComparedEntity[priceText + index];
 
-                if (!AppTool.IsNullOrZero(comparingValue) && !AppTool.IsNullOrZero(this.ComparedEntity['Price' + index])) {
-                    this['ComparingPrice' + index] = (comparingValue / this.ComparedEntity['Price' + index]) * 100;
-                    this['Price' + index + 'ComparingTextColor'] = this.ComputeWarningPercentageColor(this['ComparingPrice' + index]);
+                if (!AppTool.IsNullOrZero(comparingValue) && !AppTool.IsNullOrZero(this.ComparedEntity[priceText + index])) {
+                    this[comparingPriceText + index] = (comparingValue / this.ComparedEntity[priceText + index]) * 100;
+                    this[priceText + index + 'ComparingTextColor'] = this.ComputeWarningPercentageColor(this[comparingPriceText + index]);
                 }
             }
         }
     }
+
     ComputeWarningPercentageColor(price: number) {
         var color = "blue";
 

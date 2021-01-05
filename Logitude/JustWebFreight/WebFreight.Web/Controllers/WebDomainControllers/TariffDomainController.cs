@@ -3055,6 +3055,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             decimal? price3 = null;
             decimal? price4 = null;
             decimal? price5 = null;
+            decimal? costPrice = null;
 
             if (this.FixFilter(charge_array[0]) != null)
             {
@@ -3086,7 +3087,12 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 price5 = Convert.ToDecimal(charge_array[6]);
             }
 
-            if(isNew)
+            if (this.FixFilter(charge_array[7]) != null)
+            {
+                costPrice = Convert.ToDecimal(charge_array[7]);
+            }
+
+            if (isNew)
             {
                 containersPricePM = new TariffLinesContainersPricePM()
                 {
@@ -3099,6 +3105,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     Price3 = price3,
                     Price4 = price4,
                     Price5 = price5,
+                    CostPrice = costPrice,
                 };
 
                 tariffLine.ContainersPrices.Add(containersPricePM);
@@ -3107,7 +3114,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             else
             {
                 containersPricePM.ChangeSetOp = ChangeSetOperation.Update;
-
+                containersPricePM.CostPrice = costPrice;
                 if (!string.IsNullOrEmpty(tariff.ContainerType1Id))
                 {
                     containersPricePM.Price1 = price1;

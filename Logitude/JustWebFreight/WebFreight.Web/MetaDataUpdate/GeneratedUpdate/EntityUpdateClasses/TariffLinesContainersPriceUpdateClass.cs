@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class TariffLinesContainersPriceUpdateClass
    {  		
-		public const string HashString = "ab33579aeb126ed453b29bac17d27feb";
+		public const string HashString = "2126df7f9d5ae96eff8ed6f31674f895";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -89,7 +89,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	             				    ObjectTableName =  "TariffLinesContainersPrice",
 			      				    IsNew =  true,
 			      				    DBTableName =  "TariffLinesContainersPrices",
-			      				    OldDBTableName =  "TariffLinesContainersPrices",
 			      				    ObjectTableSingular =  "Tariff Lines Containers Price",
 			      				    ObjectTablePlural =  "Tariff Lines Containers Prices",
 			      				    HasCustomFilter =  false,
@@ -120,7 +119,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Tariff Lines Containers Prices",
-			      				    Code =  "6888",
+			      				    Code =  "8890",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "TariffModule",
@@ -145,7 +144,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "TariffId",
-					  						OldFieldName =  "TariffId",
 					  						ObjectTableName =  "TariffLinesContainersPrice",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Tariff",
@@ -203,7 +201,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "TariffLineId",
-					  						OldFieldName =  "TariffLineId",
 					  						ObjectTableName =  "TariffLinesContainersPrice",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "TariffLine",
@@ -261,7 +258,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "SurchargeId",
-					  						OldFieldName =  "SurchargeId",
 					  						ObjectTableName =  "TariffLinesContainersPrice",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "ChargesType",
@@ -319,7 +315,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "Price1",
-					  						OldFieldName =  "Price1",
 					  						ObjectTableName =  "TariffLinesContainersPrice",
 					  						FieldsDataType =  "Decimal",
 					  						MinLength =  0,
@@ -378,7 +373,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "Price2",
-					  						OldFieldName =  "Price2",
 					  						ObjectTableName =  "TariffLinesContainersPrice",
 					  						FieldsDataType =  "Decimal",
 					  						MinLength =  0,
@@ -437,7 +431,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "Price3",
-					  						OldFieldName =  "Price3",
 					  						ObjectTableName =  "TariffLinesContainersPrice",
 					  						FieldsDataType =  "Decimal",
 					  						MinLength =  0,
@@ -496,7 +489,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "Price4",
-					  						OldFieldName =  "Price4",
 					  						ObjectTableName =  "TariffLinesContainersPrice",
 					  						FieldsDataType =  "Decimal",
 					  						MinLength =  0,
@@ -555,7 +547,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "Price5",
-					  						OldFieldName =  "Price5",
 					  						ObjectTableName =  "TariffLinesContainersPrice",
 					  						FieldsDataType =  "Decimal",
 					  						MinLength =  0,
@@ -595,6 +586,64 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Price5",
 					  						DefaultText =  "Price 5",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "CostPrice",
+					  						ObjectTableName =  "TariffLinesContainersPrice",
+					  						FieldsDataType =  "Decimal",
+					  						MinLength =  0,
+					  						MaxLength =  0,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "CostPrice",
+					  						ListPropertyPath =  "CostPrice",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						NumberOfDigits =  18,
+					  						DigitsAfterPoint =  3,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "CostPrice",
+					  						DefaultText =  "Cost Price",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,

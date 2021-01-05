@@ -48,6 +48,8 @@ namespace Logitude.TariffModule.Data.EntityPOCOs
 	    public decimal? Price4 { get; set; }
         [Column("Price5")]
 	    public decimal? Price5 { get; set; }
+        [Column("CostPrice")]
+	    public decimal? CostPrice { get; set; }
     }
 }
 	 

@@ -145,19 +145,6 @@ export class NewAirFreightCostComponent extends BaseComponent implements OnInit 
         this.UIProperties.SetRequired("StartDate", this.ObjectTableName, this.StartDate == null)
         this.UIProperties.SetRequired("ExpirationDate", this.ObjectTableName, false);
 
-        if (this.EntityPM.TypeCode == "OFS") {
-            this.UIProperties.SetVisibility("Surcharge1UOM", this.ObjectTableName, false);
-            this.UIProperties.SetVisibility("Surcharge2UOM", this.ObjectTableName, false);
-            this.UIProperties.SetVisibility("Surcharge3UOM", this.ObjectTableName, false);
-            this.UIProperties.SetVisibility("Surcharge4UOM", this.ObjectTableName, false);
-            this.UIProperties.SetVisibility("Surcharge5UOM", this.ObjectTableName, false);
-            this.UIProperties.SetVisibility("Surcharge6UOM", this.ObjectTableName, false);
-            this.UIProperties.SetVisibility("Surcharge7UOM", this.ObjectTableName, false);
-            this.UIProperties.SetVisibility("Surcharge8UOM", this.ObjectTableName, false);
-            this.UIProperties.SetVisibility("Surcharge9UOM", this.ObjectTableName, false);
-            this.UIProperties.SetVisibility("Surcharge10UOM", this.ObjectTableName, false);
-        }
-
         if (this.EntityPM.TypeCode == 'AFC') {
             this.UIProperties.SetRequired("TariffProductId", this.ObjectTableName, AppTool.IsNullOrEmpty(this.TariffProductId));
         }
@@ -195,7 +182,13 @@ export class NewAirFreightCostComponent extends BaseComponent implements OnInit 
         }
 
         this.MeasurementsQueryFilters = new ApiQueryFilters();
-        this.MeasurementsQueryFilters.addAdditionalFilter("Code", "STFE", null, null, "NotContains", false, false, false, "string", false, true, true);
+
+        if (this.EntityPM.TypeCode == "OFS") {
+            this.MeasurementsQueryFilters.addAdditionalFilter("Code", "BCNT,BTEU,FIXD", null, null, "InList", false, true, false, "string", false, true, true);
+        }
+        else {
+            this.MeasurementsQueryFilters.addAdditionalFilter("Code", "STFE", null, null, "NotContains", false, false, false, "string", false, true, true);
+        }
 
         this.ChargeTypesQueryFilters = new ApiQueryFilters();
         this.ChargeTypesQueryFilters.addAdditionalFilter("InActive", false, null, null, "Equals", false, false, false, "Boolean");

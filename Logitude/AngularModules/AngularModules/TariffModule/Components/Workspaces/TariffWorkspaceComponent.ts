@@ -74,12 +74,14 @@ export class TariffWorkspaceComponent {
 
             case "COST": {
               if (this.Page_TW == null) {
-                this._entityResourceService.getEntityResourceByTableName("Tariff", 0).subscribe((response: any) => {
-                  SessionLocator.DynamicLoader.Load('./TariffModule/Components/Workspaces/CostWorkspaceComponent', myLocation.viewContainerRef)
-                    .then(cmpRef => {
-                      this.Page_TW = cmpRef.instance;
-                    });
-                });
+                  this._entityResourceService.getEntityResourceByTableName("Tariff", 0).subscribe((response: any) => {
+                      this._entityResourceService.getEntityResourceByTableName("TariffLinesContainersPrice", 0).subscribe((response: any) => {
+                          SessionLocator.DynamicLoader.Load('./TariffModule/Components/Workspaces/CostWorkspaceComponent', myLocation.viewContainerRef)
+                              .then(cmpRef => {
+                                  this.Page_TW = cmpRef.instance;
+                              });
+                      });
+                  });
               }
               else {
                 this.Page_TW.LoadAllScreenData();

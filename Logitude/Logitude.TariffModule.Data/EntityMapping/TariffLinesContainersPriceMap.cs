@@ -42,6 +42,8 @@ namespace Logitude.TariffModule.Data.EntityMapping
             this.Property(t => t.Price4).HasColumnName("Price4").HasPrecision(18, 3);
 
             this.Property(t => t.Price5).HasColumnName("Price5").HasPrecision(18, 3);
+
+            this.Property(t => t.CostPrice).HasColumnName("CostPrice").HasPrecision(18, 3);
         }
     }
 }

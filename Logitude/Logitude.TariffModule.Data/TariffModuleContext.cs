@@ -156,6 +156,8 @@ namespace Logitude.TariffModule.Data
 			modelBuilder.Entity<TariffLinesContainersPrice>().Property(x => x.Price4).HasPrecision(18, 3);
 				
 			modelBuilder.Entity<TariffLinesContainersPrice>().Property(x => x.Price5).HasPrecision(18, 3);
+				
+			modelBuilder.Entity<TariffLinesContainersPrice>().Property(x => x.CostPrice).HasPrecision(18, 3);
 						 
             #region
             modelBuilder.Configurations.Add(new AccountingSystemMap());
