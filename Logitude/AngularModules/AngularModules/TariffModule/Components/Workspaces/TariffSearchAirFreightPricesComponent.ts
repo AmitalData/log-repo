@@ -967,6 +967,7 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
                 var shipmentPayable: ShipmentPayablePM = this.Generator.GeneratePayablesFromTariff(chargesType);
                 shipmentPayable.TariffId = newRecord.TariffId;
                 shipmentPayable.TariffNumber = newRecord.TariffNumber;
+                shipmentPayable.TariffLineId = newRecord.LineId;
                 shipmentPayable.TariffVersion = newRecord.VersionId != null ? newRecord.VersionId.toString() : newRecord.VersionId;
                 shipmentPayable.CurrencyId = newRecord.CurrencyId;
                 this.Generator.GetCurrencyCode(shipmentPayable);
@@ -1305,6 +1306,7 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
                 chargePM.ChargesTypeLocalName = chargesType.LocalName;
                 chargePM.TariffId = item.TariffId;
                 chargePM.TariffNumber = item.TariffNumber;
+                chargePM.TariffLineId = item.LineId;
                 chargePM.TariffVersion = item.VersionId != null ? item.VersionId.toString() : item.VersionId;
                 chargePM.Tenant = this.FatherComponent.EntityPM.Tenant;
                 chargePM.QuoteId = this.FatherComponent.EntityPM.Id;

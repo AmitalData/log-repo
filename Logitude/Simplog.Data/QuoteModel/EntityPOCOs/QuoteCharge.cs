@@ -41,6 +41,7 @@ namespace Simplog.Data.QuoteModel.EntityPOCOs
         public bool IsCostAllIn { get; set; }
         public string TariffId { get; set; }
         public string TariffNumber { get; set; }
+        public string TariffLineId { get; set; }
         public int TariffVersion { get; set; }
 
         // Sale                
