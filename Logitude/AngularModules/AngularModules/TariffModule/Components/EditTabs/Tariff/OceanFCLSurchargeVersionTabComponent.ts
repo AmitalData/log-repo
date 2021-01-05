@@ -77,10 +77,6 @@ export class OceanFCLSurchargeVersionTabComponent extends BaseComponent implemen
             this.IsDraftVersion = this.CurrentVersion.IsDraft;
         }
 
-        if (this.IsDraftVersion) {
-            this.IsComparToChecked = true;
-        }
-
         this.GetTariffSettings();
 
         var iChargesTypeListService = new ChargesTypeListService();
@@ -110,6 +106,10 @@ export class OceanFCLSurchargeVersionTabComponent extends BaseComponent implemen
                 this.SetContainersLabelsAndVisibility();
             }
         });
+
+        if (this.IsDraftVersion) {
+            this.IsComparToChecked = true;
+        }
     }
 
     public Surcharge1Id: string;
@@ -1641,6 +1641,30 @@ export class ContainerPricesItem extends BaseComponent {
         }
 
         this.ChargeLabel = this.FatherComponent.DataContext.FatherComponent['Surcharge' + index + 'PriceLabel'];
+        var iMeasurement = this.FatherComponent.DataContext.FatherComponent.AllMeasurements.filter(f => f.Id == this.FatherComponent.DataContext.FatherComponent.EntityPM['Surcharge' + index + 'UOM'])[0];
+        if (iMeasurement) {
+            if (iMeasurement.Code == "FIXD" || iMeasurement.Code == "BTEU") {
+                this.SetUIProperties_TariffLinesContainersPrice(false);
+                this.UIProperties.SetEnabled("CostPrice", this.ObjectTableName, true);
+            }
+            else if (iMeasurement.Code == "BCNT") {
+                this.SetUIProperties_TariffLinesContainersPrice(true);
+                this.UIProperties.SetEnabled("CostPrice", this.ObjectTableName, false);
+            }
+        }
+    }
+
+    SetUIProperties_TariffLinesContainersPrice(isEnabled) {
+        this.SetUIProperties_Price(1, isEnabled);
+        this.SetUIProperties_Price(2, isEnabled);
+        this.SetUIProperties_Price(3, isEnabled);
+        this.SetUIProperties_Price(4, isEnabled);
+        this.SetUIProperties_Price(5, isEnabled);
+    }
+
+    private SetUIProperties_Price(index: number, isEnabled) {
+
+        this.UIProperties.SetEnabled(("Price" + index), this.ObjectTableName, isEnabled);
     }
 
     get SurchargeId() {
@@ -1660,6 +1684,7 @@ export class ContainerPricesItem extends BaseComponent {
         if (this.EntityPM.CostPrice != value) {
             this.EntityPM.CostPrice = value;
             this.TariffLinePM.LineEdited = true;
+            this.ComparePrice("");
         }
     }
 

@@ -623,24 +623,39 @@ export class ContainerPriceClass extends BaseComponent {
     public ChargeId: string;
     public ChargeCode: string;
     public DataContext: ContainerPriceClass = this;
+    private measurementCode: string;
+    private isEnabled: boolean;
     constructor(charge: CodeNameClass, public mainComponent: any) {
         super();
         this.ChargeLabel = charge.DisplyText;
         this.ChargeId = charge.Code;
         this.ChargeCode = charge.Name;
+        this.measurementCode = charge.AdditionalField;
         this.SetUIProperties();
     }
 
     SetUIProperties() {
+        if (this.measurementCode == "FIXD" || this.measurementCode == "BTEU") {
+            this.isEnabled = false;
+            this.SetUIProperties_TariffLinesContainersPrice();
+            this.UIProperties.SetEnabled("CostPrice", null, this.IsChargeChecked && true);
+        }
+        else if (this.measurementCode == "BCNT") {
+            this.isEnabled = true;
+            this.SetUIProperties_TariffLinesContainersPrice();
+            this.UIProperties.SetEnabled("CostPrice", null, false);
+        }
+    }
+
+    SetUIProperties_TariffLinesContainersPrice() {
         this.SetUIProperties_Price(1);
         this.SetUIProperties_Price(2);
         this.SetUIProperties_Price(3);
         this.SetUIProperties_Price(4);
         this.SetUIProperties_Price(5);
-        this.UIProperties.SetEnabled("CostPrice", null, this.IsChargeChecked);
     }
     private SetUIProperties_Price(index: number) {        
-        this.UIProperties.SetEnabled(("Price" + index), null, this.IsChargeChecked);
+        this.UIProperties.SetEnabled(("Price" + index), null, this.IsChargeChecked && this.isEnabled);
     }
     
     private isChargeChecked: boolean;
