@@ -47,7 +47,7 @@ it('CreateNewView ', () => {
     cy.get('#BusyIndicator_0').should('not.exist')
 })
 
-it('EditShipmentView', () => {
+/*it('EditShipmentView', () => {
 
      cy.wait(100)
     cy.get('#QueryList_0_0').should('be.visible')
@@ -84,5 +84,5 @@ it('DeleteShipmentView', () => {
     cy.get('#ConfirmWindow_Yes_0').click()
 
 
-})
+})*/
 
