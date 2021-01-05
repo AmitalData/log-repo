@@ -1,4 +1,5 @@
 ﻿using FluentAssertions;
+//using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.SecurityTests.Models.Login;
 using Logitude.SecurityTests.Models.Shipment;
 using Logitude.Test.Services;
@@ -11,15 +12,13 @@ namespace Logitude.SecurityTests.Steps.Shipment
     [Binding]
     public class GetShipmentSecurityAccessSteps
     {
-        protected readonly UsersData UsersData;
         protected ShipmentSecurityAccessStepsContext Context;
 
         public GetShipmentSecurityAccessSteps(UsersData usersData, ShipmentSecurityAccessStepsContext context)
         {
-            UsersData = usersData;
             Context = context;
-            Context.FirstUser = UsersData.Users[0];
-            Context.SecondUser = UsersData.Users[1];
+            Context.FirstUser = usersData.Users[0];
+            Context.SecondUser = usersData.Users[1];
         }
 
         [When(@"First user get the first shipment from shipments list")]

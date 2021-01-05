@@ -1,6 +1,8 @@
 ﻿using Logitude.SecurityTests.Models.Login;
 using System.Collections.Generic;
 
+using Logitude.BL.ShipmentsModel.EntityPMs;
+
 namespace Logitude.SecurityTests.Models.Shipment
 {
     public class ShipmentSecurityAccessStepsContext

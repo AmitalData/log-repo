@@ -3,6 +3,7 @@ using Logitude.SecurityTests.Models.Login;
 using Logitude.Test.Services;
 using System.Collections.Generic;
 using System.Linq;
+using System.Collections.Generic;
 using TechTalk.SpecFlow;
 using TechTalk.SpecFlow.Assist;
 
@@ -11,58 +12,24 @@ namespace Logitude.SecurityTests.Steps.Login
     [Binding]
     public class LoginSteps
     {
-        protected readonly UserData UserData;
         protected readonly UsersData UsersData;
-        protected LoginParameters LoginParameters;
         protected LoginsParameters LoginsParameters;
 
-        public LoginSteps(UserData userData, UsersData usersData, LoginParameters loginParameters, LoginsParameters loginsParameters)
+        public LoginSteps(UsersData usersData, LoginsParameters loginsParameters)
         {
-            UserData = userData;
             UsersData = usersData;
-            LoginParameters = loginParameters;
             LoginsParameters = loginsParameters;
-        }
-        
-        [Given(@"User email is (.*) and password is (.*)")]
-        public void GivenUserEmailAndPassword(string email, string password)
-        {
-            LoginParameters.Email = email;
-            LoginParameters.Password = password;
-            LoginParameters.ClientType = "Web";
-            LoginParameters.GetToken = true;
-        }
-
-        [When(@"User make login request")]
-        public void WhenUserMakeLoginRequest()
-        {
-            UserData user = APICaller.CallPost<UserData>(LoginParameters, "Authentication", null);
-            if (user != null)
-            {
-                UserData.Token = user.Token;
-                UserData.Tenant = user.Tenant;
-            }
-        } 
-
-        [Then(@"User should have token")]
-        public void ThenUserShouldHaveToken()
-        {
-            UserData.Token.Should().NotBeNull();
         }
 
         [Given(@"Users with following credentials")]
         public void GivenUsersWithFollowingCredentials(Table credentialsTable)
         {
-            IEnumerable<UserCredential> userCredentials = credentialsTable.CreateSet<UserCredential>();
-            userCredentials.ToList().ForEach(userCredential =>
+            IEnumerable<LoginParameters> loginParameters = credentialsTable.CreateSet<LoginParameters>();
+            LoginsParameters.Logins.AddRange(loginParameters);
+            LoginsParameters.Logins.ForEach(login =>
             {
-                LoginsParameters.Logins.Add(new LoginParameters
-                {
-                    Email = userCredential.Email,
-                    Password = userCredential.Password,
-                    ClientType = "Web",
-                    GetToken = true
-                });
+                login.ClientType = "Web";
+                login.GetToken = true;
             });
         }
 
@@ -78,6 +45,8 @@ namespace Logitude.SecurityTests.Steps.Login
                     {
                         Token = userData.Token,
                         Tenant = userData.Tenant,
+                        UserId = userData.UserId,
+                        UserName = userData.UserName
                     });
                 }
             });
