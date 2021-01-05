@@ -54,7 +54,7 @@
         });
     });
 
-    jQuery.GetLoginTenant = (function (myDomain) {
+    jQuery.GetCargoLoginTenant = (function (myDomain) {
 
         var url = "api/CargoTrackingBranding/?domain=" + myDomain;
 
@@ -74,6 +74,37 @@
                     $("#DocumentsPageBusyIndicator").hide();
                     $("#Container").hide();
                     $("#InvalidKeyArea").show();
+                }
+            },
+
+            error: function (jqXHR, textStatus, errorThrown) {
+                $.CheckUserException(jqXHR);
+                $("#DocumentsPageBusyIndicator").hide();
+                $("#Container").hide();
+                $("#InvalidKeyArea").show();
+            }
+        });
+
+    });
+
+    jQuery.GetLoginTenant = (function (myDomain) {
+
+        var url = "api/CargoTrackingBranding/?domain=" + myDomain;
+
+        $.ajax({
+            url: url,
+            type: 'GET',
+            contentType: 'application/json',
+
+            success: function (result) {
+                if (result != null && result.Result != null) {
+                    $.CurrentTenant = result.Result;
+
+                    $.GetLogginData();
+                    $.GetCompanyLogo();
+                }
+                else {
+                    $.GetCargoLoginTenant(myDomain + "/cargotracking");
                 }
             },
 
