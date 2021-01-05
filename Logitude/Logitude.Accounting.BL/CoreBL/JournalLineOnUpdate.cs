@@ -52,7 +52,7 @@ namespace Logitude.Accounting.BL.CoreBL
                     journalLinePM.CurrencyName = currency.EnglishName;
                 }
             }
-            if (!journalPM.ConversionJournal)
+            ///if (!journalPM.ConversionJournal)
             {
                 bool haveChange = false;
                 haveChange = FixCredit(journalLinePM, haveChange);
