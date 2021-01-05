@@ -3,6 +3,7 @@ using Logitude.SecurityTests.Models.Login;
 using Logitude.Test.Services;
 using System.Collections.Generic;
 using System.Linq;
+using System.Collections.Generic;
 using TechTalk.SpecFlow;
 using TechTalk.SpecFlow.Assist;
 
@@ -13,7 +14,10 @@ namespace Logitude.SecurityTests.Steps.Login
     {
         protected readonly UserData UserData;
         protected readonly UsersData UsersData;
+        
         protected LoginParameters LoginParameters;
+        protected readonly UserData User;
+
         protected LoginsParameters LoginsParameters;
 
         public LoginSteps(UserData userData, UsersData usersData, LoginParameters loginParameters, LoginsParameters loginsParameters)
@@ -21,6 +25,7 @@ namespace Logitude.SecurityTests.Steps.Login
             UserData = userData;
             UsersData = usersData;
             LoginParameters = loginParameters;
+            User = userData;
             LoginsParameters = loginsParameters;
         }
         
@@ -89,6 +94,39 @@ namespace Logitude.SecurityTests.Steps.Login
             UsersData.Users.ForEach(user =>
             {
                 user.Token.Should().NotBeNull();
+            });
+        }
+
+
+
+        ///////////////////////////////////////////////////////////////
+
+
+        [Given(@"Email and Password for these users")]
+        public void GivenEmailAndPasswordForTheseUsers(Table UsersLoginInfo)
+        {
+            IEnumerable<LoginParameters> usersLoginParameters = UsersLoginInfo.CreateSet<LoginParameters>();
+            UsersLoginParameters.AddRange(usersLoginParameters);
+            UsersLoginParameters.ForEach((usersLoginParameter) => {
+                usersLoginParameter.ClientType = "Web";
+                usersLoginParameter.GetToken = true;
+            });
+        }
+
+        [When(@"Login API called for given users")]
+        public void WhenLoginAPICalledForGivenUsers()
+        {
+            UsersLoginParameters.ForEach((usersLoginParameter) => {
+                UserData userData = APICaller.CallPost<UserData>(usersLoginParameter, "Authentication", null);
+                UsersData.ListOfUserData.Add(userData);
+            });
+        }
+
+        [Then(@"All user will has a token")]
+        public void ThenAllUserWillHasAToken()
+        {
+            UsersData.ListOfUserData.ForEach((userData) => {
+                userData.Token.Should().NotBeNullOrEmpty();
             });
         }
     }

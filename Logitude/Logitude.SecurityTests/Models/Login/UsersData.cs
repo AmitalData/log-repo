@@ -1,4 +1,10 @@
-﻿using System.Collections.Generic;
+﻿
+using System;
+using System.Collections.Generic;
+
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace Logitude.SecurityTests.Models.Login
 {
@@ -7,8 +13,11 @@ namespace Logitude.SecurityTests.Models.Login
         public UsersData()
         {
             Users = new List<UserData>();
+            ListOfUserData = new List<UserData>();
         }
 
         public List<UserData> Users { get; set; }
+        public List<UserData> ListOfUserData { set; get; }
     }
 }
+
