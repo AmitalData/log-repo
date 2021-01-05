@@ -660,22 +660,19 @@ export class NewAirFreightCostComponent extends BaseComponent implements OnInit 
     }
 
     SetDefaultUOM(index: number) {
-        if (this.EntityPM.TypeCode != "OFS") {
-            this.chargesTypePMService.getSingleFromCache(this[this.IdProps[index]]).subscribe((res: any) => {
-                if (!res.HasError) {
-                    if (res.Result) {
-                        var ChargesType: ChargesTypeList = res.Result;
+        this.chargesTypePMService.getSingleFromCache(this[this.IdProps[index]]).subscribe((res: any) => {
+            if (!res.HasError) {
+                if (res.Result) {
+                    var ChargesType: ChargesTypeList = res.Result;
+                    if (this.EntityPM.TypeCode == "OFS") {
+                        this[this.UOMProps[index]] = ChargesType.ContainerMeasurementId;
+                    }
+                    else {
                         this[this.UOMProps[index]] = ChargesType.MeasurementId;
                     }
                 }
-            });
-        }
-
-        else {
-            if (!AppTool.IsNullOrEmpty(this.BCNTmeasurementId)) {
-                this[this.UOMProps[index]] = this.BCNTmeasurementId;
             }
-        }
+        });
     }
 
     // Commands
