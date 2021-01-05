@@ -665,7 +665,12 @@ export class NewAirFreightCostComponent extends BaseComponent implements OnInit 
                 if (res.Result) {
                     var ChargesType: ChargesTypeList = res.Result;
                     if (this.EntityPM.TypeCode == "OFS") {
-                        this[this.UOMProps[index]] = ChargesType.ContainerMeasurementId;
+                        if (!AppTool.IsNullOrEmpty(ChargesType.ContainerMeasurementId)) {
+                            this[this.UOMProps[index]] = ChargesType.ContainerMeasurementId;
+                        }
+                        else {
+                            this[this.UOMProps[index]] = this.BCNTmeasurementId;
+                        }
                     }
                     else {
                         this[this.UOMProps[index]] = ChargesType.MeasurementId;
