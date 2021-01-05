@@ -737,6 +737,8 @@ namespace WebFreight.Web.ExternalAPIs.V1
                             service.Update(true);
                         }
 
+                        MyContext = ShipmentsContext.GetContext(authToken.Tenant);
+                        mappingService = new MasterQueryService(authToken.Tenant);
                         var result = mappingService.GetMasterById(MasterPM.Id, authToken.Tenant);
                         APIHelper.AddCommunicationLog("D", entity, result, "Shipment", MasterPM.Id, "Master API", authToken.Tenant);
                         return Request.CreateResponse(HttpStatusCode.OK, result);
