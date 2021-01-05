@@ -592,7 +592,7 @@ namespace Logitude.Accounting.BL.CoreBL
             var transWithoutControlAccountItsMustBeCardType = this.LedgerTransactions.Where(trans => String.IsNullOrWhiteSpace(trans.ControlAccountId));
             var cardsLocalAmount = transWithoutControlAccountItsMustBeCardType.Sum(trans => trans.LocalAmountDebit - trans.LocalAmountCredit);
             var controlLocalAmount = myConnectedControlGLAccountTotalByMonthsAccountingdate.Sum(r => r.LocalAmountDebit - r.LocalAmountCredit);
-            if (controlLocalAmount + cardsLocalAmount != 0)
+            if (controlLocalAmount + Math.Round(cardsLocalAmount,2) != 0)
             {
                 var mmes =
                     //"(not all JL Have ControlAccount  (crads like Tax) ,due that the _ConnectedControlGLAccountTotalByMonths total isnot equal)Journal:" + _JournalPM.Id + " controlLocalAmount =" + controlLocalAmount.ToString();
@@ -627,9 +627,9 @@ namespace Logitude.Accounting.BL.CoreBL
             {
                 ThrowExceptionAxiom("CurrencyId is must !!");
             }
-            var totalLocalAmountCredit = GLAccountTotalByMonths.Sum(rec => rec.LocalAmountCredit);
-            var totalLocalAmountDebit = GLAccountTotalByMonths.Sum(rec => rec.LocalAmountDebit);
-            if (!totalLocalAmountDebit.Equals(totalLocalAmountCredit))
+            var totalLocalAmountCredit = GLAccountTotalByMonths.Sum(rec => Math.Round(rec.LocalAmountCredit,2));
+            var totalLocalAmountDebit = GLAccountTotalByMonths.Sum(rec => Math.Round(rec.LocalAmountDebit,4));
+            if (!Math.Round(totalLocalAmountDebit,2).Equals(totalLocalAmountCredit))
             {
 
                 ThrowExceptionAxiom("CheckGLAccountTotalByMonth() totalLocalAmountDebit != totalLocalAmountCredit");
@@ -670,8 +670,8 @@ namespace Logitude.Accounting.BL.CoreBL
                  .Sum(jl => jl.LocalAmount);
 
             var totalLocalAmountCredit = LedgerTransactions.Sum(rec => rec.LocalAmountCredit);
-            var totalLocalAmountDebit = LedgerTransactions.Sum(rec => rec.LocalAmountDebit);
-            if (!totalLocalAmountCredit.Equals(totalLocalAmountDebit))
+            var totalLocalAmountDebit =  LedgerTransactions.Sum(rec => rec.LocalAmountDebit) ;
+            if (!totalLocalAmountCredit.Equals(Math.Round(totalLocalAmountDebit,2)))
             {
                 ThrowExceptionAxiom("totalLocalAmountDebit != totalLocalAmountCredit");
             }
