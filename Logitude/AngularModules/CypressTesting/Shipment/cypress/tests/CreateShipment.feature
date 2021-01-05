@@ -1,14 +1,15 @@
-Feature: Create Shipments Test
+Feature: Create Shipment Tests
 
   Scenario: Login And Open Shipments Workspace
-    Given User logged in successfully
-    And Open shipments workspace
-
+    Given User logged in
+    And He is in shipments workspace
 
   Scenario Outline: Create Shipments
-    Given "<LevelCode>" shipment with direction "<DirectionCode>" and transport mode "<TransportModeCode>" and type "<ShipmentTypeCode>"
-    When Click create shipment
-    Then The shipment should created successfully
+    Given A shipment details
+      | LevelCode   | DirectionCode   | TransportModeCode   | ShipmentTypeCode   |
+      | <LevelCode> | <DirectionCode> | <TransportModeCode> | <ShipmentTypeCode> |
+    When He Click create shipment button
+    Then The create operation complete successfully
     Examples:
       | LevelCode | DirectionCode | TransportModeCode | ShipmentTypeCode |
       | Direct    | E             | A                 |                  |
@@ -31,3 +32,21 @@ Feature: Create Shipments Test
       | Direct    | D             | I                 | LTL              |
       | Direct    | R             | I                 | FTL              |
       | Direct    | R             | I                 | LTL              |
+      | House     | E             | A                 |                  |
+      | House     | I             | A                 |                  |
+      | House     | D             | A                 |                  |
+      | House     | R             | A                 |                  |
+      | House     | E             | O                 | FCLD             |
+      | House     | E             | O                 | LCLD             |
+      | House     | I             | O                 | FCLD             |
+      | House     | I             | O                 | LCLD             |
+      | House     | D             | O                 | FCLD             |
+      | House     | D             | O                 | LCLD             |
+      | House     | R             | O                 | FCLD             |
+      | House     | R             | O                 | LCLD             |
+      | House     | E             | I                 | FTL              |
+      | House     | E             | I                 | LTL              |
+      | House     | I             | I                 | FTL              |
+      | House     | I             | I                 | LTL              |
+      | House     | R             | I                 | FTL              |
+      | House     | R             | I                 | LTL              |

@@ -43,10 +43,6 @@ export function CreateShipment(){
     cy.Click("#ShipmentCreatebtn", null)
 }
 
-export function ValidateCreatedShipment(resultFile: string){
-    cy.AssertResponseStatusCode("WaitPostShipmentRequest", 200, resultFile)
-}
-
 export function OpenShipment(dataFile: string){
     cy.fixture(dataFile).then((shipment) => {
         cy.SelectQuickSearchFirstElement(Selectors.ShipmentSearchBar, shipment.ShipmentNumber)
