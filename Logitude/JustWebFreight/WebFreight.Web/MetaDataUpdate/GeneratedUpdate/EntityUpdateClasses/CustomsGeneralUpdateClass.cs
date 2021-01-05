@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CustomsGeneralUpdateClass
    {  		
-		public const string HashString = "690679bb715b4edebb65f26a0d989c5b";
+		public const string HashString = "3e5221519a4c1ecc41a161b96c138540";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -119,7 +119,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "CustomsGeneral",
-			      				    Code =  "4a53",
+			      				    Code =  "fed9",
 			      				    Name =  "CustomsGeneral",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",
@@ -2011,6 +2011,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode CustomsGeneralTextCode_CustomsGeneralODocumentInProgress = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.General.O.DocumentInProgress", DefaultText = "There are documents in the process.",LocalDefaultText = @"קיימים מסמכים בתהליך שליחה.", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode CustomsGeneralTextCode_CustomsGeneralOValidationDocuments = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.General.O.ValidationDocuments", DefaultText = "Validation Documents",LocalDefaultText = @"בדיקת מסמכים לפני שליחת הצהרת יבוא", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CustomsGeneralTextCode_GeneralMHReferantWorkspace = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MH.ReferantWorkspace", DefaultText = "Referant Workspace",LocalDefaultText = @"מסך רפרנט", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MH", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

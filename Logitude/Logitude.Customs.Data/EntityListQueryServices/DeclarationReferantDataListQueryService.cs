@@ -101,7 +101,8 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                                  ProcedureCurrentName = d.GovernmentProcedureCurrent.LocalName,
                                                                  StorageSiteName=d.StorageSiteName,
                                                                  ImporterName = d.Importer != null ? d.Importer.FullName : d.ImporterName,
-
+                                                                 IsAvailabilityDateNull= d.AvailabilityDate == null,
+                                                                 IsPaymentDateNull = d.PaymentDate == null,
                                                              }) ;
                                                                 
                                               return query;

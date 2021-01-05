@@ -1,6 +1,7 @@
 import { AddEditReferantExceptionReasonComponent } from "./Components/ReferantExceptionReason/AddEditReferantExceptionReasonComponent";
 import { AddExceptionReasonToUnifreightStatusComponent } from './Components/ReferantExceptionReason/AddExceptionReasonToUnifreightStatusComponent';
 import { RemarksPopUp } from './Components/RemarksPopUp';
+import { ReferantWorkspaceComponent } from './Components/ReferantWorkspaces/ReferantWorkspaceComponent';
 
 
 export const Components =
@@ -8,6 +9,7 @@ export const Components =
         AddEditReferantExceptionReasonComponent,
         AddExceptionReasonToUnifreightStatusComponent,
         RemarksPopUp,
+        ReferantWorkspaceComponent,
     ];
 export class ModuleDeclarations {
     public static Get(name: string) {
@@ -18,7 +20,7 @@ export class ModuleDeclarations {
             case "AddEditReferantExceptionReasonComponent": { myResult = AddEditReferantExceptionReasonComponent; break; }
             case "AddExceptionReasonToUnifreightStatusComponent": { myResult = AddExceptionReasonToUnifreightStatusComponent; break; }
             case "RemarksPopUp": { myResult = RemarksPopUp; break; }
-
+            case "ReferantWorkspaceComponent": { myResult = ReferantWorkspaceComponent; break; }
         }
         return myResult;
     }
