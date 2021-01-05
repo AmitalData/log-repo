@@ -536,8 +536,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
 
         public void TracePickUp(ShipmentPickUpPM itemPM, ShipmentPickUpDelivery itemPOCO, ShipmentPM shipmentPM)
         {
-            if (!entityPM.IsHybrid)
-            {
+            //if (!entityPM.IsHybrid)
+            //{
                 string DepartedCode = "PICD";
                 if (RoutingDate.IsDateAddedOrModified(itemPM.ATD, itemPOCO.ATD))
                 {
@@ -673,12 +673,12 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
                         this.DeleteTraceEvent(ArrivedCode);
                     }
                 }
-            }
+            //}
         }
         public void TraceDelivery(ShipmentDeliveryPM itemPM, ShipmentPickUpDelivery itemPOCO)
         {
-            if (!entityPM.IsHybrid)
-            {
+            //if (!entityPM.IsHybrid)
+            //{
                 if (itemPM.PickUpDeliveryTypeCode == "DELV")
                 {
                     string DepartedCode = "DELD";
@@ -821,12 +821,12 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
                         }
                     }
                 }
-            }
+           // }
         }
         public void TraceDeletedPickUp(ShipmentPickUpPM itemPM, ShipmentPickUpDelivery itemPOCO)
         {
-            if (!entityPM.IsHybrid)
-            {
+            //if (!entityPM.IsHybrid)
+            //{
                 if (itemPOCO.PickUpDeliveryTypeCode == "PICK")
                 {
                     if (itemPOCO.ATA != null)
@@ -846,12 +846,12 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
                         this.DeleteTraceEvent("PICD");
                     }
                 }
-            }
+            //}
         }
         public void TraceDeletedDelivery(ShipmentDeliveryPM itemPM, ShipmentPickUpDelivery itemPOCO)
         {
-            if (!entityPM.IsHybrid)
-            {
+            //if (!entityPM.IsHybrid)
+            //{
                 if (itemPM.PickUpDeliveryTypeCode == "DELV")
                 {
                     if (itemPOCO.ATA != null)
@@ -871,7 +871,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
                         this.DeleteTraceEvent("DELD");
                     }
                 }
-            }
+            //}
         }
         public void TraceShipmentOnCreateDoneFollowUp(FollowUp followUp)
         {
