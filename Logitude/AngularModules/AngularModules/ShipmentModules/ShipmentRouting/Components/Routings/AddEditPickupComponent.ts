@@ -54,7 +54,7 @@ export class AddEditPickupComponent implements AfterViewInit, OnDestroy {
         this.SavedEntityId = this.EntityPM.Id;
         this.SavedEntityNumber = this.EntityPM.PickUpDeliveryNumber;
 
-        if (!this.EntityPM.TransportModeCode) {
+        if (this.IsNewEntity && !this.EntityPM.TransportModeCode) {
             this.EntityPM.TransportModeCode = "BYTR";
         }
 

@@ -3621,6 +3621,7 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
             newPickUp.FromAddressId = this.PickUpAddressId;
             newPickUp.PickUpDeliveryToTypeCode = "PORT";
             newPickUp.ToPortId = this.MainCarriageFromPortId;
+            newPickUp.TransportModeCode = "BYTR";
             this.EntityPM.AddPickUp(newPickUp);
         }
 
@@ -3641,6 +3642,7 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
             newDelivery.ToAddressZipCode = this.ToAddressZipCode;
             newDelivery.ToPartnerCardId = this.ConsigneeId;
             newDelivery.ToAddressId = this.DeliveryAddressId;
+            newDelivery.TransportModeCode = "BYTR";
             this.EntityPM.AddDelivery(newDelivery);
         }
     }
