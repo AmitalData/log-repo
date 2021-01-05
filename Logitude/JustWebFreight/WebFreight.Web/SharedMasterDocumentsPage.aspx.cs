@@ -92,6 +92,10 @@ namespace WebFreight.Web
         {
             TenantManagementQuery tenantManagementQuery = new TenantManagementQuery(0);
             TenantManagementPM tenantManagementPM = tenantManagementQuery.GetSinglePMByDomain(this.Domain);
+            if(tenantManagementPM == null)
+            {
+                tenantManagementPM = tenantManagementQuery.GetSinglePMByDomain(this.Domain + "/cargotracking");
+            }
             if (tenantManagementPM != null)
             {
                 this.Tenant = tenantManagementPM.Id;
