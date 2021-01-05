@@ -14,13 +14,9 @@ export class ReferantWorkspaceComponent implements AfterViewInit {
     private _entityResourceService: EntityResourceService = new EntityResourceService();
 
     ngAfterViewInit(): void {
-        throw new Error("Method not implemented.");
     }
     constructor() {
-        this.CurrentSession.StartBusyIndicatorLoading();
-        this._entityResourceService.getEntityResourceByTableName("Customs.DeclarationReferantData").subscribe((response: any) => {
-
-        });
+    
 
     }
     ViewReferantQuery(myQueryCode: string) {
