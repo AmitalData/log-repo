@@ -13,39 +13,39 @@ namespace Logitude.SecurityTests.Steps.Shipment
     [Binding]
     public class CreateAndUpdateShipmentSecurityAccessSteps
     {
-        protected readonly UsersData Users;
         protected readonly ShipmentSecurityAccessStepsContext Context;
 
-        public CreateAndUpdateShipmentSecurityAccessSteps(UsersData users, ShipmentSecurityAccessStepsContext context)
+        public CreateAndUpdateShipmentSecurityAccessSteps(UsersData usersData, ShipmentSecurityAccessStepsContext context)
         {
-            Users = users;
             Context = context;
+            Context.FirstUser = usersData.Users[0];
+            Context.SecondUser = usersData.Users[1];
         }
 
         [When(@"Create shipment request sent for User's Tenant")]
         public void WhenCreateShipmentRequestSentForUserSTenant()
         {
-            var firstUser = Users.ListOfUserData[0];
+            var firstUser = Context.FirstUser;
             ShipmentPM shipmentModel = GetValidShipmentPM();
             shipmentModel.Tenant = firstUser.Tenant;
             shipmentModel.CreatedByUserId = firstUser.UserId;
             shipmentModel.UpdatedByUserId = firstUser.UserId;
 
             ShipmentPM shipmentPM = APICaller.CallPost<ShipmentPM>(shipmentModel, "shipment", firstUser.Token);
-            Context.ShipmentPM.Id = shipmentPM?.Id;
+            Context.FirstUserShipment.Id = shipmentPM?.Id;
         }
 
         [Then(@"Shipment should be added successfully")]
         public void ThenShipmentShouldBeAddedSuccessfully()
         {
-            Context.ShipmentPM.Id.Should().NotBeNull();
+            Context.FirstUserShipment.Id.Should().NotBeNull();
         }
 
         [When(@"Create shipment request sent for other Tenant")]
         public void WhenCreateShipmentRequestSentForOtherTenant()
         {
-            var firstUser = Users.ListOfUserData[0];
-            var secondUser = Users.ListOfUserData[1];
+            var firstUser = Context.FirstUser;
+            var secondUser = Context.SecondUser;
 
             ShipmentPM shipmentModel = GetValidShipmentPM();
             shipmentModel.Tenant = firstUser.Tenant; // Second user try to Post on first user tenant
@@ -53,50 +53,50 @@ namespace Logitude.SecurityTests.Steps.Shipment
             shipmentModel.UpdatedByUserId = secondUser.UserId;
 
             ShipmentPM shipmentPMs = APICaller.CallPost<ShipmentPM>(shipmentModel, "shipment", secondUser.Token);
-            Context.OtherShipmentPM.Id = shipmentPMs?.Id;
+            Context.SecondUserShipment.Id = shipmentPMs?.Id;
         }
 
         [Then(@"Shipment should not be added")]
         public void ThenShipmentShouldNotBeAdded()
         {
-            Context.OtherShipmentPM.Id.Should().BeNull();
+            Context.SecondUserShipment.Id.Should().BeNull();
         }
 
         [When(@"Update shipment request sent for User's Tenant")]
         public void WhenUpdateShipmentRequestSentForUserSTenant()
         {
-            var firstUser = Users.ListOfUserData[0];
+            var firstUser = Context.FirstUser;
 
             ShipmentPM shipmentModel = GetShipmentForFirstUser();
             shipmentModel.NewConcurrencyGUID = Guid.NewGuid().ToString();
 
             ShipmentPM shipmentPM = APICaller.CallPut<ShipmentPM>(shipmentModel, "shipment", firstUser.Token);
-            Context.ShipmentPM.Id = shipmentPM?.Id;
+            Context.FirstUserShipment.Id = shipmentPM?.Id;
         }
 
         [Then(@"Shipment should be Updated successfully")]
         public void ThenShipmentShouldBeUpdatedSuccessfully()
         {
-            Context.ShipmentPM.Id.Should().NotBeNull();
+            Context.FirstUserShipment.Id.Should().NotBeNull();
         }
 
         [When(@"Update shipment request sent for other Tenant")]
         public void WhenUpdateShipmentRequestSentForOtherTenant()
         {
-            var firstUser = Users.ListOfUserData[0];
-            var secondUser = Users.ListOfUserData[1];
+            var firstUser = Context.FirstUser;
+            var secondUser = Context.SecondUser;
 
             ShipmentPM shipmentModel = GetShipmentForFirstUser();
             shipmentModel.NewConcurrencyGUID = Guid.NewGuid().ToString();
 
             ShipmentPM shipmentPMs = APICaller.CallPut<ShipmentPM>(shipmentModel, "shipment", secondUser.Token);
-            Context.OtherShipmentPM.Id = shipmentPMs?.Id;
+            Context.SecondUserShipment.Id = shipmentPMs?.Id;
         }
 
         [Then(@"Shipment should not be Updated")]
         public void ThenShipmentShouldNotBeUpdated()
         {
-            Context.OtherShipmentPM.Id.Should().BeNull();
+            Context.SecondUserShipment.Id.Should().BeNull();
         }
 
         private ShipmentPM GetValidShipmentPM()
@@ -117,7 +117,7 @@ namespace Logitude.SecurityTests.Steps.Shipment
 
         private ShipmentPM GetShipmentForFirstUser()
         {
-            var firstUser = Users.ListOfUserData[0];
+            var firstUser = Context.FirstUser;
             ShipmentPM shipmentModel = GetValidShipmentPM();
             shipmentModel.Tenant = firstUser.Tenant;
             shipmentModel.CreatedByUserId = firstUser.UserId;

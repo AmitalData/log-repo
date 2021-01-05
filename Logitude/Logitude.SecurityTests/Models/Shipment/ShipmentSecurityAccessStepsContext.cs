@@ -11,12 +11,8 @@ namespace Logitude.SecurityTests.Models.Shipment
         {
             FirstUserShipment = new ShipmentPM();
             SecondUserShipment = new ShipmentPM();
-            ShipmentPM = new ShipmentPM();
-            OtherShipmentPM = new ShipmentPM();
         }
 
-        public ShipmentPM ShipmentPM { get; set; }
-        public ShipmentPM OtherShipmentPM { get; set; }
         public ShipmentPM FirstUserShipment { get; set; }
         public ShipmentPM SecondUserShipment { get; set; }
         public UserData FirstUser { get; set; }
