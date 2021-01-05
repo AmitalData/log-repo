@@ -304,15 +304,15 @@ export class CustomerStatusReportFilterComponent extends BaseComponent implement
     private SetFilterItem(queryFilterItem: QueryFilterItem) {
         if (queryFilterItem) {
             this.SetAgingForDateFilter(queryFilterItem);
-            this.SetCustomerIdFilter(queryFilterItem);            
-            this.SetCollectorIdFilter(queryFilterItem);          
-            this.SetSalesmanIdFilter(queryFilterItem);        
-            this.SetDetailedFilter(queryFilterItem);          
-            this.SetIsCreditLimitFilter(queryFilterItem);          
+            this.SetCustomerIdFilter(queryFilterItem);
+            this.SetCollectorIdFilter(queryFilterItem);
+            this.SetSalesmanIdFilter(queryFilterItem);
+            this.SetDetailedFilter(queryFilterItem);
+            this.SetIsCreditLimitFilter(queryFilterItem);
             this.SetBalanceFilter(queryFilterItem);
             this.SetBalanceFilterValue(queryFilterItem);
-            this.SetSortFieldFilter(queryFilterItem);          
-            this.SetSortDirectionFilter(queryFilterItem);          
+            this.SetSortFieldFilter(queryFilterItem);
+            this.SetSortDirectionFilter(queryFilterItem);
         }
     }
 
@@ -385,11 +385,11 @@ export class CustomerStatusReportFilterComponent extends BaseComponent implement
     }
 
     PrepareContactList() {
-     
+
         var glAccountId = this.GetLookUpFieldValue(this.Customer);
         if (glAccountId != null) {
             this.GLAccountCardContacts(glAccountId);
-           
+
         }
     }
     GLAccountCardContacts(glAccountId:string) {
@@ -408,10 +408,10 @@ export class CustomerStatusReportFilterComponent extends BaseComponent implement
     }
     RunButtonClicked() {
         this.SetUIProperties();
-      this.LoadAccSettings().then(res => { 
+      this.LoadAccSettings().then(res => {
 
         var errors: string[] = [];
-     
+
         this.ValidationErrorsList = [];
 
         //#region requierd fields
@@ -430,18 +430,18 @@ export class CustomerStatusReportFilterComponent extends BaseComponent implement
               this.RunReportEvent.emit(myReportFliter);
           }
         else {
-          
+
             this.ValidationErrorsList = errors;
         }
-      }); 
+      });
     }
-   
+
     ValidateSelectedFilters() {
         this.ValidationErrorsList = [];
         var isValid: boolean = true;
         this.ValidateFutureDate(isValid);
         this.ValidateAgingMonth(isValid);
-        this.ValidateDebitBalance(isValid);      
+        this.ValidateDebitBalance(isValid);
         return isValid;
     }
 
@@ -471,7 +471,7 @@ export class CustomerStatusReportFilterComponent extends BaseComponent implement
     }
     GetQueryFilterItems() {
         var queryFilterItems = new Array<QueryFilterItem>();
-        var queryFilterItem: QueryFilterItem;              
+        var queryFilterItem: QueryFilterItem;
         queryFilterItems.push(new QueryFilterItem("AgingForDate", new Date(), "Date"));
         queryFilterItems.push(new QueryFilterItem("GLAccountType", "2"));
         queryFilterItems.push(new QueryFilterItem("CustomerId", this.Customer ? this.GetLookUpFieldValue(this.Customer) : null));
@@ -479,13 +479,13 @@ export class CustomerStatusReportFilterComponent extends BaseComponent implement
         queryFilterItems.push(new QueryFilterItem("CollectorId", this.GetLookUpFieldValue(this.Collector)));
         queryFilterItems.push(new QueryFilterItem("SalesmanId",    this.GetLookUpFieldValue(this.Salesman)));
         queryFilterItems.push(new QueryFilterItem("Detailed", this.CurrenciesDetailed? true : false));
-        queryFilterItems.push(new QueryFilterItem("IsCreditLimitSet", this.IsCreditLimitSet?  true:false ));       
+        queryFilterItems.push(new QueryFilterItem("IsCreditLimitSet", this.IsCreditLimitSet?  true:false ));
         queryFilterItems.push(new QueryFilterItem("GroupByDate", ""));
         queryFilterItems.push(new QueryFilterItem("BalanceFilter", this.SelectedBalanceTypeItem.Code));
         queryFilterItems.push(new QueryFilterItem("BalanceFilterValue", this.balance || 0, "decimal"));
         queryFilterItems.push(new QueryFilterItem("SortField", this.SelectedSortTypeItem.Code));
         queryFilterItems.push(new QueryFilterItem("SortDirection", this.SelectedSortDirectionCode));
-        this.SetCategoryIndexAndValueFilters(queryFilterItems);   
+        this.SetCategoryIndexAndValueFilters(queryFilterItems);
         queryFilterItems.push(new QueryFilterItem("CategoryIndex", this.categoryIndex));
         queryFilterItems.push(new QueryFilterItem("CategoryValue", this.categoryValue));
         return queryFilterItems;
@@ -493,13 +493,13 @@ export class CustomerStatusReportFilterComponent extends BaseComponent implement
     categoryIndex: any = null;
     categoryValue: any = null;
     SetCategoryIndexAndValueFilters(queryFilterItems: Array<QueryFilterItem>) {
-       this.categoryIndex = this.SelectedCategory? this.SelectedCategory.replace(' ', ''): null;      
-        if (this.categoryIndex)       
-        this.SetCategoryValueFilter( );      
+       this.categoryIndex = this.SelectedCategory? this.SelectedCategory.replace(' ', ''): null;
+        if (this.categoryIndex)
+        this.SetCategoryValueFilter( );
     }
-   
+
     SetCategoryValueFilter() {
-        this.categoryValue = this.DataContext[this.categoryIndex];      
+        this.categoryValue = this.DataContext[this.categoryIndex];
     }
 
     IsBalanceTypeDisabled = false;
@@ -528,10 +528,13 @@ export class CustomerStatusReportFilterComponent extends BaseComponent implement
     // }
 
     SelectedSortTypeCode: string = "balance";
-    SelectedSortTypeItem = { Code: "balance", EnglishName: "Balance", LocalName: "Balance" };
+    SelectedSortTypeItem = { Code: "balance", EnglishName: "Balance", LocalName: "יתרה בעו''ש" };
     SortTypes = [
-        { Code: "balance", EnglishName: "Balance", LocalName: "Balance" },
-        { Code: "customer", EnglishName: "Customer", LocalName: "Customer" },
+        { Code: "balance", EnglishName: "Balance", LocalName: "יתרה בעו''ש" },
+        { Code: "customer", EnglishName: "Customer", LocalName: "לקוח" },
+        { Code: "TotalToCollect", EnglishName: "Total To Collect", LocalName: "סה''כ לגביה" },
+        { Code: "Obligo", EnglishName: "Obligo", LocalName: "אובליגו" },
+        { Code: "CreditUsed", EnglishName: "Credit Used", LocalName: "ע/ח מהמסגרת" },
     ];
     SortTypeChanged(dir){
         this.SelectedSortTypeCode = dir.Code;
