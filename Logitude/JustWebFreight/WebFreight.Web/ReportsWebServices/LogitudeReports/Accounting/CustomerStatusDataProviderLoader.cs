@@ -221,39 +221,34 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                 CustomerPhone = customerPeriods.First().AccountPhone,
 
                 //credit details
-                CreditLimit = (decimal)customer.First().CreditLimitAmount,
-                CreditStatus = customer.First().CreditStatusAmount ?? 0,
 
-                //AccountingBalance = customer.First().BalanceInLocalCurrency ?? 0,
-                //AccountingBalance = customer.Sum(d => d.Total),
 
+                CreditLimit = (decimal)customerPeriods.First().CreditLimitAmount,
+                CreditStatus = customerPeriods.First().CreditStatusAmount ?? 0,
                 TotalFutureOpenCheques = customerPeriods.First().TotalFutureOpenCheques ?? 0,
-                TotalOpenCheques = customerPeriods.First().TotalOpenCheques ?? 0,
-                TotalOpenShipments = customerPeriods.First().TotalOpenShipments ?? 0,
                 ExternalTransactionsTotal = ExternalTransactions.Where(d => d.AccountId == customerPeriods.First().AccountId).Sum(d => d.LocalAmountCredit),
 
                 AccountingBalance = GetBalanceSummationForSpliitedAccounts(customerPeriods) ?? 0,
-                Periods = GetStatusPeriods(customerPeriods)
-                AccountSalesmanName = customer.First().AccountSalesmanName,                
-                AccountSalesmanLocalName = customer.First().AccountSalesmanLocalName,
-                AccountCollectorName = customer.First().AccountCollectorName,
-                AccountCollectorLocalName = customer.First().AccountCollectorLocalName,
-                Category1Name = customer.First().Category1Name,
-                Category2Name = customer.First().Category2Name,
-                Category3Name = customer.First().Category3Name,
-                Category4Name = customer.First().Category4Name,
-                Category5Name = customer.First().Category5Name,
-                Category6Name = customer.First().Category6Name,
-                Category1LocalName = customer.First().Category1LocalName,
-                Category2LocalName = customer.First().Category2LocalName,
-                Category3LocalName = customer.First().Category3LocalName,
-                Category4LocalName = customer.First().Category4LocalName,
-                Category5LocalName = customer.First().Category5LocalName,
-                Category6LocalName = customer.First().Category6LocalName,
+                Periods = GetStatusPeriods(customerPeriods),
+                AccountSalesmanName = customerPeriods.First().AccountSalesmanName,
+                AccountSalesmanLocalName = customerPeriods.First().AccountSalesmanLocalName,
+                AccountCollectorName = customerPeriods.First().AccountCollectorName,
+                AccountCollectorLocalName = customerPeriods.First().AccountCollectorLocalName,
+                Category1Name = customerPeriods.First().Category1Name,
+                Category2Name = customerPeriods.First().Category2Name,
+                Category3Name = customerPeriods.First().Category3Name,
+                Category4Name = customerPeriods.First().Category4Name,
+                Category5Name = customerPeriods.First().Category5Name,
+                Category6Name = customerPeriods.First().Category6Name,
+                Category1LocalName = customerPeriods.First().Category1LocalName,
+                Category2LocalName = customerPeriods.First().Category2LocalName,
+                Category3LocalName = customerPeriods.First().Category3LocalName,
+                Category4LocalName = customerPeriods.First().Category4LocalName,
+                Category5LocalName = customerPeriods.First().Category5LocalName,
+                Category6LocalName = customerPeriods.First().Category6LocalName,
+                TotalOpenCheques = customerPeriods.First().TotalOpenCheques ?? 0,
+                TotalOpenShipments = customerPeriods.First().TotalOpenShipments ?? 0,
 
-
-
-                Periods = GetStatusPeriods(periodsByDate)
             };
             return customerStatus;
         }
