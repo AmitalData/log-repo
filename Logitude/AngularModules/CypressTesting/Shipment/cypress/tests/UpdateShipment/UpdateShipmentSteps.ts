@@ -1,4 +1,4 @@
-import * as sh from "../../actions/ShipmentActions"
+import * as sh from "../../actions/Actions"
 import { Selectors } from "../../selectors/Selectors"
 import { BaseSelectors } from "../../../../Base/cypress/selectors/BaseSelectors"
 import { Given, When, Then } from "cypress-cucumber-preprocessor/steps";

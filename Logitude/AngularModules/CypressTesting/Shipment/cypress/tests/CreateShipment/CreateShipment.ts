@@ -1,35 +1,40 @@
-import * as sh from "../../actions/ShipmentActions";
+import * as shipmentActions from "../../actions/Actions";
+import * as shipmentAssertions from "../../actions/Assertions";
 import { Given, When, Then } from "cypress-cucumber-preprocessor/steps";
+import { ShipmentDetails } from "../../models/ShipmentDetails";
+import { BaseSelectors } from "../../../../Base/cypress/selectors/BaseSelectors"
+import { Selectors } from "../../selectors/Selectors";
 
 let LevelCode: string;
 let DirectionCode: string;
 let TransportModeCode: string;
 let ShipmentTypeCode: string;
 
-Given("User logged in successfully", () => {
+Given("User logged in", () => {
   cy.Login();
 });
 
-Given("Open shipments workspace", () => {
-  cy.Click("#GeneralMHOperations", null);
-  cy.Click("#SHIP", null);
+Given("He is in shipments workspace", () => {
+  cy.Click(BaseSelectors.OperationsMenu, null);
+  cy.Click(Selectors.ShipmentTab, null);
 });
 
-Given("{string} shipment with direction {string} and transport mode {string} and type {string}",
-(levelCode, directionCode, transportModeCode, shipmentTypeCode) => {
-  LevelCode = levelCode;
-  DirectionCode = directionCode;
-  TransportModeCode = transportModeCode;
-  ShipmentTypeCode = shipmentTypeCode;
-  sh.OpenNewShipmentWizard(LevelCode);
-  sh.FillShipmentDefaultFields(DirectionCode, TransportModeCode, ShipmentTypeCode);
+Given("A shipment details",
+  (dataTable) => {
+   const shipmentDetails = dataTable.hashes()[0] as ShipmentDetails;
+   LevelCode = shipmentDetails.LevelCode;
+   DirectionCode = shipmentDetails.DirectionCode;
+   TransportModeCode = shipmentDetails.TransportModeCode;
+   ShipmentTypeCode = shipmentDetails.ShipmentTypeCode;
+   shipmentActions.OpenNewShipmentWizard(LevelCode);
+   shipmentActions.FillShipmentDefaultFields(DirectionCode, TransportModeCode, ShipmentTypeCode);
 });
 
-When("Click create shipment", () => {
-  sh.CreateShipment();
+When("He Click create shipment button", () => {
+  shipmentActions.CreateShipment();
 });
 
-Then("The shipment should created successfully", () => {
+Then("The create operation complete successfully", () => {
   let resultFile = "CreatedShipmentsData/" + LevelCode + DirectionCode + TransportModeCode + ShipmentTypeCode + ".json";
-  sh.ValidateCreatedShipment(resultFile);
+  shipmentAssertions.ValidateCreatedShipment(resultFile);
 });
