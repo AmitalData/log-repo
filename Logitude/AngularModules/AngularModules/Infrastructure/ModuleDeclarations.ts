@@ -184,6 +184,7 @@ import { FTBSchedulerTemplateComponent } from '../InfrastructureModules/Infrastr
 import { SendInterfaceResultComponent } from './Components/Maintenance/Automation/AutomationResult/SendInterfaceResultComponent';
 import { FTPAutomationDetailsComponent } from './Components/Maintenance/Automation/AutomationResult/FTPAutomationDetailsComponent';
 import { ToolTipFloatDirective } from './Utilities/RTLDirectives/ToolTipFloatDirective';
+import { SendDocumentResultComponent } from './Components/Maintenance/Automation/AutomationResult/SendDocumentResultComponent';
 
 
 
@@ -304,6 +305,7 @@ export const ControlsComponents =
         FTBSchedulerTemplateComponent,
         SendInterfaceResultComponent,
         FTPAutomationDetailsComponent,
+        SendDocumentResultComponent,
     ];
 export const Components =
     [
@@ -482,6 +484,7 @@ export class ModuleDeclarations {
             case 'FTBSchedulerTemplateComponent': { myResult = FTBSchedulerTemplateComponent; break; }
             case 'SendInterfaceResultComponent': { myResult = SendInterfaceResultComponent; break; }
             case 'FTPAutomationDetailsComponent': { myResult = FTPAutomationDetailsComponent; break; }
+            case 'SendDocumentResultComponent': { myResult = SendDocumentResultComponent; break; }
 
                 
 
