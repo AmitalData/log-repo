@@ -51,7 +51,16 @@ namespace Logitude.Customs.BL.EntityQueryServices
                        // MainCarriageCarrierId = item.Id,
                     });
 
-                    myResult.Add(new DeclarationReferantDataChartingClass()
+                myResult.Add(new DeclarationReferantDataChartingClass()
+                {
+                    Id = "WAT1",
+                    DataTypeCode = "WAT",
+                    StringProperty = "aaa",
+                    IntegerProperty = data_WAT.Count(),
+                    // MainCarriageCarrierId = item.Id,
+                });
+
+                myResult.Add(new DeclarationReferantDataChartingClass()
                     {
                         Id ="WAC",
                         DataTypeCode = "WAC",

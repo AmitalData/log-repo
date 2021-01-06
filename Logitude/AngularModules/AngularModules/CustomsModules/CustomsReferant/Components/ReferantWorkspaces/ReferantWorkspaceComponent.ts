@@ -35,11 +35,11 @@ export class ReferantWorkspaceComponent implements AfterViewInit {
     public AllCasesVisibility: boolean = true;
     public isRTL: boolean = false;
     public ChartID: string = null;
-    public InProgressBookingId: string = "InProgressBookingId_";
-    public InProgressBookingDashboard: Array<ChartingDataClass>;
-    public InProgressBookingYAxis: any[] = [];
-    public InProgressBookingYAxisFilterd = [];
-    public InProgressBookingXAxis: string[] = [];
+    public InProgressDeclarationReferantDataId: string = "InProgressDeclarationReferantDataId_";
+    public InProgressDeclarationReferantDataDashboard: Array<ChartingDataClass>;
+    public InProgressDeclarationReferantDataYAxis: any[] = [];
+    public InProgressDeclarationReferantDataYAxisFilterd = [];
+    public InProgressDeclarationReferantDataXAxis: string[] = [];
     public filterAgrs: ApiQueryFilters;
 
 
@@ -77,36 +77,69 @@ export class ReferantWorkspaceComponent implements AfterViewInit {
                     this.ChartID = "ChartID_" + this.CurrentSession.GetChartId();
                 }
 
-                this.InProgressBookingId = this.InProgressBookingId + this.CurrentSession.GetChartId();
-                this.LoadInProgressBookingsDashboard();
+                this.InProgressDeclarationReferantDataId = this.InProgressDeclarationReferantDataId + this.CurrentSession.GetChartId();
+                this.LoadInProgressDeclarationReferantDatasDashboard();
             });
 
     }
 
+    BarClicking() {
+        if (BarClick() != null) {
+            this.OnBarClick(BarClick());
+            ResetItem();
+        }
 
-    LoadInProgressBookingsDashboard() {
-        this._declarationReferantDataWebService.GetDeclarationReferantDataDashBoard(SessionLocator.TenantPM.Id).subscribe((myResult: any) => {
-            this.InProgressBookingDashboard = new Array<ChartingDataClass>();
-            var myResponse: ServiceResponse = myResult;
-            this.InProgressBookingDashboard = myResponse.Result;
-            this.FillInProgressBookingDashboardData();
-        });
+    }
+    LoadInProgressDeclarationReferantDatasDashboard() {
+
+        this.InProgressDeclarationReferantDataDashboard = new Array<ChartingDataClass>();
+
+        var ele1 = new ChartingDataClass();
+        ele1.Id = "FilesInProcess";
+        ele1.StringProperty = "תיקים בתהליך";
+        ele1.IntegerProperty = this.counters.FilesInProcess;
+        ele1.DataTypeCode = "FilesInProcess";
+        this.InProgressDeclarationReferantDataDashboard.push(ele1);
+
+        ele1 = new ChartingDataClass();
+         ele1.Id = "FilesInProcess_1";
+        ele1.StringProperty = "תיקים בתהליך";
+        ele1.IntegerProperty = this.counters.FilesInProcess;
+        ele1.DataTypeCode = "FilesInProcess1";
+        this.InProgressDeclarationReferantDataDashboard.push(ele1);
+
+        ele1 = new ChartingDataClass();
+        ele1.Id = "TrackingCases";
+        ele1.StringProperty = "תיקים XXX";
+        ele1.IntegerProperty = this.counters.FilesInProcess;
+        ele1.DataTypeCode = "TrackingCases";
+        this.InProgressDeclarationReferantDataDashboard.push(ele1);
+
+            this.FillInProgressDeclarationReferantDataDashboardData();
+ 
+
+        //this._declarationReferantDataWebService.GetDeclarationReferantDataDashBoard(SessionLocator.TenantPM.Id).subscribe((myResult: any) => {
+        //    this.InProgressDeclarationReferantDataDashboard = new Array<ChartingDataClass>();
+        //    var myResponse: ServiceResponse = myResult;
+        //    this.InProgressDeclarationReferantDataDashboard = myResponse.Result;
+        //    this.FillInProgressDeclarationReferantDataDashboardData();
+        //});
     }
 
 
-    FillInProgressBookingDashboardData() {
+    FillInProgressDeclarationReferantDataDashboardData() {
         var index = 0;
-        this.InProgressBookingXAxis = [];
+        this.InProgressDeclarationReferantDataXAxis = [];
 
-        this.InProgressBookingDashboard.sort((a, b) => { return (a.DateTimeProperty === b.DateTimeProperty) ? 0 : (a.DateTimeProperty < b.DateTimeProperty) ? -1 : 1 });
+        this.InProgressDeclarationReferantDataDashboard.sort((a, b) => { return (a.DateTimeProperty === b.DateTimeProperty) ? 0 : (a.DateTimeProperty < b.DateTimeProperty) ? -1 : 1 });
         var StringArr: Array<string> = new Array<string>();
         var j = 0;
 
-        this.InProgressBookingDashboard.forEach(element => {
+        this.InProgressDeclarationReferantDataDashboard.forEach(element => {
             if (!StringArr.includes(element.StringProperty) && element.StringProperty != null) {
                 StringArr.push(element.StringProperty);
-                this.InProgressBookingYAxis[j] = { data: [], label: null, BindingElement: [], OwnerIds: [] };
-                this.InProgressBookingYAxis[j].data = [];
+                this.InProgressDeclarationReferantDataYAxis[j] = { data: [], label: null, BindingElement: [], OwnerIds: [] };
+                this.InProgressDeclarationReferantDataYAxis[j].data = [];
                 j++;
             }
         });
@@ -114,38 +147,38 @@ export class ReferantWorkspaceComponent implements AfterViewInit {
         StringArr.sort((a, b) => { return (a === b) ? 0 : (a < b) ? -1 : 1 });
         var Graphs = [];
         var index = 0;
-        this.InProgressBookingDashboard.forEach(element => {
+        this.InProgressDeclarationReferantDataDashboard.forEach(element => {
             for (var i = 0; i < StringArr.length; i++) {
                 if (element.StringProperty == StringArr[i]) {
-                    this.InProgressBookingYAxis[i].data.push(element.IntegerProperty);
-                    this.InProgressBookingYAxis[i].label = element.DataTypeCode;
-                    this.InProgressBookingYAxis[i].BindingElement.push(element.DataTypeCode);
-                    this.InProgressBookingYAxis[i].OwnerIds.push(element.OwnerId);
-                    if (!this.InProgressBookingXAxis.includes(element.StringProperty) && element.StringProperty != null) {
-                        if (this.InProgressBookingXAxis[i] == null)
-                            this.InProgressBookingXAxis[i] = (element.StringProperty);
+                    this.InProgressDeclarationReferantDataYAxis[i].data.push(element.IntegerProperty);
+                    this.InProgressDeclarationReferantDataYAxis[i].label = element.DataTypeCode;
+                    this.InProgressDeclarationReferantDataYAxis[i].BindingElement.push(element.DataTypeCode);
+                    this.InProgressDeclarationReferantDataYAxis[i].OwnerIds.push(element.OwnerId);
+                    if (!this.InProgressDeclarationReferantDataXAxis.includes(element.StringProperty) && element.StringProperty != null) {
+                        if (this.InProgressDeclarationReferantDataXAxis[i] == null)
+                            this.InProgressDeclarationReferantDataXAxis[i] = (element.StringProperty);
 
                     }
                 }
             }
         });
 
-        this.InProgressBookingYAxisFilterd = [];
+        this.InProgressDeclarationReferantDataYAxisFilterd = [];
         var DataProvider = [];
         var objectArray = [];
         var maximum = 0;
-        if (this.InProgressBookingYAxis.length > 0)
-            maximum = this.InProgressBookingYAxis[0].data[0];
-        this.InProgressBookingYAxis.forEach(element => {
+        if (this.InProgressDeclarationReferantDataYAxis.length > 0)
+            maximum = this.InProgressDeclarationReferantDataYAxis[0].data[0];
+        this.InProgressDeclarationReferantDataYAxis.forEach(element => {
             for (var i = 0; i < element.data.length; i++) {
-                if (this.InProgressBookingYAxisFilterd[i] == null) {
-                    this.InProgressBookingYAxisFilterd[i] = { data: [], label: null, BindingElement: [], OwnerIds: [] };
+                if (this.InProgressDeclarationReferantDataYAxisFilterd[i] == null) {
+                    this.InProgressDeclarationReferantDataYAxisFilterd[i] = { data: [], label: null, BindingElement: [], OwnerIds: [] };
                 }
                 if (element.data[i] > maximum)
                     maximum = element.data[i];
-                this.InProgressBookingYAxisFilterd[i].data.push(element.data[i]);
-                this.InProgressBookingYAxisFilterd[i].BindingElement.push(element.BindingElement[i]);
-                this.InProgressBookingYAxisFilterd[i].OwnerIds.push(element.OwnerIds[i]);
+                this.InProgressDeclarationReferantDataYAxisFilterd[i].data.push(element.data[i]);
+                this.InProgressDeclarationReferantDataYAxisFilterd[i].BindingElement.push(element.BindingElement[i]);
+                this.InProgressDeclarationReferantDataYAxisFilterd[i].OwnerIds.push(element.OwnerIds[i]);
                 if (index == 0) {
                     Graphs[i] = {
                         "balloonText": FormatTool.FormatBigNumbersToExtension("[[value]]") + "",
@@ -168,20 +201,20 @@ export class ReferantWorkspaceComponent implements AfterViewInit {
                 objectArray[i] = (element.data[i]);
 
             }
-            DataProvider[index] = { "category": this.InProgressBookingXAxis[index], "col1": objectArray[0], "col2": objectArray[1], "col3": objectArray[2], "col4": objectArray[3] };
+            DataProvider[index] = { "category": this.InProgressDeclarationReferantDataXAxis[index], "col1": objectArray[0], "col2": objectArray[1], "col3": objectArray[2], "col4": objectArray[3] };
             index++;
         });
 
-        var InProgressBookingDashboardFilterd: Array<ChartingDataClass> = new Array<ChartingDataClass>();
+        var InProgressDeclarationReferantDataDashboardFilterd: Array<ChartingDataClass> = new Array<ChartingDataClass>();
         try {
-            if (this.InProgressBookingXAxis.length != 0) {
+            if (this.InProgressDeclarationReferantDataXAxis.length != 0) {
 
                 maximum += 1;
                 while (maximum % 5 != 0) {
                     maximum += 1;
 
                 }
-                makeAmBarChart(this.InProgressBookingId, Graphs, DataProvider, maximum);
+                makeAmBarChart(this.InProgressDeclarationReferantDataId, Graphs, DataProvider, maximum);
             }
         }
         catch (e) {
@@ -212,14 +245,14 @@ export class ReferantWorkspaceComponent implements AfterViewInit {
         var Key = e.target.columnIndex;
         var myQueryCode: string = "";
         var displayName: string = "";
-        var myTableName: string = "Booking";
+        var myTableName: string = "DeclarationReferantData";
         this.filterAgrs = new ApiQueryFilters();
         if (flag) {
             switch (Key + "") {
                 case "0":
                     {
                         displayName = "Waiting for Transmission";
-                        myQueryCode = "CreatedBookings";
+                        myQueryCode = "CreatedDeclarationReferantDatas";
                         break;
                     }
 
@@ -234,20 +267,20 @@ export class ReferantWorkspaceComponent implements AfterViewInit {
                 case "2":
                     {
                         displayName = "Confirmed Without Shipment";
-                        myQueryCode = "ConfirmedBookings";
+                        myQueryCode = "ConfirmedDeclarationReferantDatas";
                         break;
                     }
 
                 case "3":
                     {
                         displayName = "Errors and Rejections";
-                        myQueryCode = "RejectedBookings";
+                        myQueryCode = "RejectedDeclarationReferantDatas";
                         break;
                     }
             }
 
             this.filterAgrs.addAdditionalFilter("IsCancelled", false, null, null, "Equals", false, false, false, "Boolean");
-            this.filterAgrs.addAdditionalFilter("MainCarriageCarrierId", this.InProgressBookingYAxisFilterd[e.target.columnIndex].OwnerIds[e.index], null, null, "Equals", false, false, false, "String");
+            this.filterAgrs.addAdditionalFilter("MainCarriageCarrierId", this.InProgressDeclarationReferantDataYAxisFilterd[e.target.columnIndex].OwnerIds[e.index], null, null, "Equals", false, false, false, "String");
 
             var listArgs = new ListComponentArgs();
             listArgs.Filters = this.filterAgrs;
