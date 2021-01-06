@@ -1,0 +1,9 @@
+﻿<Script DBType="Main" Module="Infrastructure">
+  <Sql Version="1">
+    <![CDATA[
+
+         update FeatureToggles set SearchFields = (select Name from Toggles where Code = FeatureToggles.ToggleCode) + ',' + CONVERT(varchar(10), TenantNumber)     
+         
+    ]]>
+  </Sql>
+</Script>
