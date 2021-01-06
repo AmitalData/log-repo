@@ -1,4 +1,4 @@
-﻿namespace Logitude.SecurityTests.Models.Login
+﻿namespace Logitude.Test.Base.Models.Login
 {
     public class LoginParameters
     {

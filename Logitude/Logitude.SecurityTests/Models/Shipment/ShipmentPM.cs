@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Logitude.SecurityTests.Models.Shipment
+﻿namespace Logitude.SecurityTests.Models.Shipment
 {
     public class ShipmentPM
     {
@@ -22,7 +16,6 @@ namespace Logitude.SecurityTests.Models.Shipment
         public string UpdatedByUserId { get; set; }
         public string MainCarriageToPortId { get; set; }
         public string MainCarriageFromPortId { get; set; }
-
         public string ConcurrencyGUID { get; set; }
 
     }

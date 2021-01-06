@@ -2,7 +2,7 @@
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.SpecFlow.Models;
 using Logitude.SpecFlow.ValueRetrievers;
-using Logitude.Test.Services;
+using Logitude.Test.Base.Services;
 using System;
 using System.Text.RegularExpressions;
 using TechTalk.SpecFlow;

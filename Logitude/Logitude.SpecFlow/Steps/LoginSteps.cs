@@ -1,6 +1,6 @@
 ﻿using FluentAssertions;
 using Logitude.SpecFlow.Models;
-using Logitude.Test.Services;
+using Logitude.Test.Base.Services;
 using TechTalk.SpecFlow;
 using TechTalk.SpecFlow.Assist;
 

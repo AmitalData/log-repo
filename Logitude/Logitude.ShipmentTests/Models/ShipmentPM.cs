@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
-namespace Logitude.ShipmentTests.Steps.Shipment
+namespace Logitude.ShipmentTests.Models
 {
     public class ShipmentPM
     {
@@ -27,12 +23,8 @@ namespace Logitude.ShipmentTests.Steps.Shipment
         public string MainCarriageToPortId { get; set; }
         public string MainCarriageFromPortId { get; set; }
         public int? PackagesQuantity { get; set; }
-
         public string ConcurrencyGUID { get; set; }
-
         public List<ShipmentPackagePM> ShipmentPackages { get; set; }
-        public List<ShipmentPayablesPM> shipmentPayables { get; set; }
-
-
+        public List<ShipmentPayablesPM> ShipmentPayables { get; set; }
     }
 }
