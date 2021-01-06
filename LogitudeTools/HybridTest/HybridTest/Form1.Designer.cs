@@ -201,7 +201,8 @@
             "ShippingLine",
             "Trucker",
             "Vessel",
-            "Warehouse"});
+            "Warehouse",
+            "Shipment Pickups & Deliveries"});
             this.cmdServices.Location = new System.Drawing.Point(37, 41);
             this.cmdServices.Name = "cmdServices";
             this.cmdServices.Size = new System.Drawing.Size(298, 21);
