@@ -4526,6 +4526,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;IsPaymentDateNull&quot;"
     ListPropertyPath="&quot;IsPaymentDateNull&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -4597,6 +4598,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;IsAvailabilityDateNull&quot;"
     ListPropertyPath="&quot;IsAvailabilityDateNull&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -5826,6 +5828,55 @@
   </EventTypes>
   <Records />
   <DataContracts />
-  <AdditionalTextCodes />
+  <AdditionalTextCodes>
+    <TextCode
+      Code="&quot;Customs.DeclarationReferantData.O.FilesInProcess&quot;"
+      DefaultText="&quot;Files In Process&quot;"
+      LocalDefaultText="&quot;תיקים בטיפול&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.DeclarationReferantData.O.TrackingCases&quot;"
+      DefaultText="&quot;TrackingCases&quot;"
+      LocalDefaultText="&quot;תיקים במעקב&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.DeclarationReferantData.O.FilesInOCR&quot;"
+      DefaultText="&quot;FilesInOCR&quot;"
+      LocalDefaultText="&quot;תיקים ב-OCR&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.DeclarationReferantData.O.FilesInSivug&quot;"
+      DefaultText="&quot;FilesInSivug&quot;"
+      LocalDefaultText="&quot;תיקים בסיווג&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.DeclarationReferantData.O.FilesInReview&quot;"
+      DefaultText="&quot;FilesInReview&quot;"
+      LocalDefaultText="&quot;תיקים בביקורת&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.DeclarationReferantData.O.FilesInCreditControl&quot;"
+      DefaultText="&quot;Files In Credit Control&quot;"
+      LocalDefaultText="&quot;תיקים בבקרת אשראי&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.DeclarationReferantData.O.FilesAvailableFreeOfCharge&quot;"
+      DefaultText="&quot;FilesAvailableFreeOfCharge&quot;"
+      LocalDefaultText="&quot;תיקים זמינים ללא תשלום&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.DeclarationReferantData.O.AllCases&quot;"
+      DefaultText="&quot;AllCases&quot;"
+      LocalDefaultText="&quot;כל התיקים&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+  </AdditionalTextCodes>
   <AdditionalFeatures />
 </entity>

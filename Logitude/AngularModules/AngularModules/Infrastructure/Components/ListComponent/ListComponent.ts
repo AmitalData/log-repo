@@ -853,6 +853,9 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                                 myObjectTableName = myObjectTableName.substr((this.ObjectTable.ClientModuleName + '.').length)
                             }
                             var myComponentPath = "./" + this.ObjectTable.ClientModuleName + "/Components/FiltersMenu/" + /*this.ObjectTable.Name*/myObjectTableName + "FiltersMenuComponent";
+                            if (myObjectTableName == "DeclarationReferantData") {
+                                var myComponentPath = "./CustomsModules/CustomsReferant/Components/FiltersMenu/" + /*this.ObjectTable.Name*/myObjectTableName + "FiltersMenuComponent";
+                            }
                             SessionLocator.DynamicLoader.Load(myComponentPath, myLocation.viewContainerRef)
                                 .then(cmpRef => {
 

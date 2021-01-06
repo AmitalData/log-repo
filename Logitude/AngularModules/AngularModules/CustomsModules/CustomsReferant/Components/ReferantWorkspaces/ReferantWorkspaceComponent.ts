@@ -34,14 +34,16 @@ export class ReferantWorkspaceComponent implements AfterViewInit {
     }
     constructor(public _declarationReferantDataWebService: DeclarationReferantDataWebService) {
         this.CurrentSession.StartBusyIndicatorLoading();
-        _declarationReferantDataWebService.GetQueriesCounts().subscribe(
-            (data: any) => {
-                this.counters = data.Result;
-                this.isScreenLoaded = true;
-                this.CurrentSession.StopBusyIndicator();
-
-            });
-
+        this._entityResourceService.getEntityResourceByTableName("Customs.DeclarationReferantData").subscribe((response: any) => {
+            _declarationReferantDataWebService.GetQueriesCounts().subscribe(
+                (data: any) => {
+                    this.counters = data.Result;
+                    this.isScreenLoaded = true;
+                    this.CurrentSession.StopBusyIndicator();
+                });
+        });
+    }
+    FilterChange($eevnt) {
     }
     ViewReferantQuery(myQueryCode: string) {
         if (myQueryCode != null) {
@@ -50,47 +52,42 @@ export class ReferantWorkspaceComponent implements AfterViewInit {
             switch (myQueryCode) {
                 case "FilesInProcess":
                     {
-                        displayTitle = "hello";
+                        displayTitle = TextCodeTranslator.Translate("Customs.DeclarationReferantData.O.FilesInProcess");
                         break;
                     }
                 case "TrackingCases":
                     {
-                        displayTitle = "hello2";
+                        displayTitle = TextCodeTranslator.Translate("Customs.DeclarationReferantData.O.TrackingCases");
                         break;
                     }
                 case "FilesInOCR":
                     {
-                        displayTitle = "hello";
-
+                        displayTitle = TextCodeTranslator.Translate("Customs.DeclarationReferantData.O.FilesInOCR");
                         break;
                     }
                 case "FilesInSivug":
                     {
-                        displayTitle = "hello";
+                        displayTitle = TextCodeTranslator.Translate("Customs.DeclarationReferantData.O.FilesInSivug");
                         break;
                     }
                 case "FilesInReview":
                     {
-                        displayTitle = "hello";
-
+                        displayTitle = TextCodeTranslator.Translate("Customs.DeclarationReferantData.O.FilesInReview");
                         break;
                     }
                 case "FilesInCreditControl":
                     {
-                        displayTitle = "hello";
-
+                        displayTitle = TextCodeTranslator.Translate("Customs.DeclarationReferantData.O.FilesInCreditControl");
                         break;
                     }
                 case "FilesAvailableFreeOfCharge":
                     {
-                        displayTitle = "hello";
-
+                        displayTitle = TextCodeTranslator.Translate("Customs.DeclarationReferantData.O.FilesAvailableFreeOfCharge");
                         break;
                     }
                 case "AllCases":
                     {
-                        displayTitle = "AllCases";
-
+                        displayTitle = TextCodeTranslator.Translate("Customs.DeclarationReferantData.O.AllCases");
                         break;
                     }
                 default: { break;}
