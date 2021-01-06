@@ -43,6 +43,7 @@ namespace WebFreight.Web.Helpers.APIHelpers
         private ICommonDataContext commonDataContext;
         private IInfrastructureContext infrastructureContext;
         private ContactRepository contactRep;
+        private CustomerRepository customerRepository;
         private Contact systemContact;
         private List<ContactPM> contacts;
         private ContactQuery contactQuery;
@@ -81,6 +82,7 @@ namespace WebFreight.Web.Helpers.APIHelpers
             countryRepository = new CountryRepository(commonDataContext);
             stateRepository = new StateRepository(commonDataContext);
             contactRep = new ContactRepository(commonDataContext);
+            customerRepository = new CustomerRepository(commonDataContext);
             contactQuery = new ContactQuery(contactRep);
             cardRepository = new CardRepository(commonDataContext);
             addressQuery = new AddressQuery(tenant);
@@ -1056,18 +1058,27 @@ namespace WebFreight.Web.Helpers.APIHelpers
 
                     if (systemUser == null)
                     {
-                        throw new ApplicationException("Salesman " + item.SalesmanEmail + " is not a system user");
+                        if (count > 0)
+                        {
+                            cardRepository.SubmitChanges();
+                            customerRepository.SubmitChanges();
+                        }
+                        throw new ApplicationException("Salesman " + item.SalesmanEmail + " is not a system user,");
                     }
 
                     else
                     {
-                        Card card = cardRepository.GetSingleCardByUniqueCode(item.UniqueCode, tenant, true);
+                        Card card = cardRepository.GetSingleCardByUniqueCode(item.UniqueCode, tenant, false);
+                      
                         if (card != null)
                         {
                             if (card.SalesmanUserId == null)
                             {
-                                card.SalesmanUserId = systemContact.Id;
+                                card.SalesmanUserId = systemUsers.Where(a=>a.Email == item.SalesmanEmail).Select(a=>a.Id).FirstOrDefault();
+                                Customer customer = customerRepository.GetSingleCustomer(card.Id, tenant);
+                                customer.SalesmanUserId = card.SalesmanUserId;
                                 cardRepository.Update(card);
+                                customerRepository.Update(customer);
                                 count++;
                             }
                         }
@@ -1076,12 +1087,14 @@ namespace WebFreight.Web.Helpers.APIHelpers
                     if(count >= 100)
                     {
                         cardRepository.SubmitChanges();
+                        customerRepository.SubmitChanges();
                     }
                 }
 
                 if (count > 0)
                 {
                     cardRepository.SubmitChanges();
+                    customerRepository.SubmitChanges();
                 }
             }
         }

@@ -603,7 +603,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
                     {
 
                         entity = (from a in context.Cards
-                                  where a.Tenant == tenant && a.Code == unique
+                                  where a.Tenant == tenant && a.UploadingUniqueKey == unique
                                   select a).FirstOrDefault();
 
                         if (CacheManager.CacheWrapper.Get(entityName) == null && entity != null)
@@ -620,7 +620,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
                 }
                 else
                 {
-                    entity = (from record in context.Cards where record.Code == unique && record.Tenant == tenant select record).FirstOrDefault();
+                    entity = (from record in context.Cards where record.UploadingUniqueKey == unique && record.Tenant == tenant select record).FirstOrDefault();
                 }
                 return entity;
             }
