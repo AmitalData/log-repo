@@ -81,6 +81,6 @@
     ReferencedTable="Users"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
-	<Index
-  Columns="AutomaticLastUpdateDate" />
+  <Index
+    Columns="AutomaticLastUpdateDate" />
 </Table>

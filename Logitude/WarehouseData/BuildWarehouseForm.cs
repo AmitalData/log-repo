@@ -177,10 +177,10 @@ namespace WarehouseData
                             {
                                 Stopwatch stopWatchDimensionsTable = null;
                              
-                                 if(table.DBTableName == "QuoteStages")
-                                {
+                               //  if(table.DBTableName == "QuoteStages")
+                               // {
 
-                                }
+                              //  }
                                     if (table.DispayInScreen)
                                     {
                                         stopWatchDimensionsTable = new Stopwatch();

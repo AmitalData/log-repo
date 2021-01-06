@@ -22,7 +22,7 @@
 	From dw_QuoteStages
 	inner JOIN dw_DWHSettings ON dw_QuoteStages.Tenant = dw_DWHSettings.Tenant
 	where dw_QuoteStages.AutomaticLastUpdateDate > @LastUpdateDate	
-	OPEN QuoteStages FETCH NEXT FROM QuoteStages INTO   @Id , @Name, @Code, @Tenant, @AutomaticLastUpdateDate
+	OPEN QuoteStagesCursor FETCH NEXT FROM QuoteStagesCursor INTO   @Id , @Name, @Code, @Tenant, @AutomaticLastUpdateDate
 	WHILE @@FETCH_STATUS = 0
 	BEGIN
 	
@@ -31,14 +31,14 @@
 	if(@Key is  null) begin     insert into DIM_QuoteStages (Id,[Name], Code, [Tenant],[Automatic Last Update Date])
 	values(@Id , @Name, @Code, @Tenant, @AutomaticLastUpdateDate) end
 	else begin update  
-	DIM_QuoteStage set [Code] =@Code, [Name] =@Name, [Tenant] = @Tenant, [Automatic Last Update Date] = @AutomaticLastUpdateDate 
+	DIM_QuoteStages set [Code] =@Code, [Name] =@Name, [Tenant] = @Tenant, [Automatic Last Update Date] = @AutomaticLastUpdateDate 
 	Where Id = @Id end
 
 
-	FETCH NEXT FROM QuoteStages INTO   @Id ,@Name, @Code,@Tenant, @AutomaticLastUpdateDate
+	FETCH NEXT FROM QuoteStagesCursor INTO   @Id ,@Name, @Code,@Tenant, @AutomaticLastUpdateDate
 		End
-	CLOSE QuoteStages
-	DEALLOCATE QuoteStages
+	CLOSE QuoteStagesCursor
+	DEALLOCATE QuoteStagesCursor
 
 
 	    update dw_WaterMarks set LastUpdateDate = @MaxAutomaticLastUpdateDate where TableName = 'QuoteStage'
