@@ -26,6 +26,11 @@ namespace Logitude.Test.Base.Services
             return CallAPIProcess<T>(Method.GET, null, url, token, jsonElement);
         }
 
+        public static dynamic CallGet(string url, string token, string jsonElement)
+        {
+            return CallAPIProcess<dynamic>(Method.GET, null, url, token, jsonElement);
+        }
+
         protected static T CallAPIProcess<T>(Method method, object requestBody, string url, string token, string jsonElement)
         {
             string restClientUrl = GetRequestUrl(url);
@@ -59,7 +64,7 @@ namespace Logitude.Test.Base.Services
             }
             else
             {
-                return default(T);
+                return default;
                 //throw new Exception(method.ToString() + " Request To " + restClientUrl + " Faild With Message " + restResponse.Content);
             }
         }
