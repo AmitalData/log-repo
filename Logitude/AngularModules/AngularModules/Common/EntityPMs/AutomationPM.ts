@@ -163,6 +163,8 @@ export class AutomationPM {
        
 	 
 
+    public DocumentTypeTemplateIds: Array<string>= [];
+		 
     public OldEntityPM: AutomationPM;
 		
     public IsDirty: boolean;
