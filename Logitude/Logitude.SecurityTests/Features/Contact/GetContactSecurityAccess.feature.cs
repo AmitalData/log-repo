@@ -10,7 +10,7 @@
 // ------------------------------------------------------------------------------
 #region Designer generated code
 #pragma warning disable
-namespace Logitude.SecurityTests.Features.Shipment
+namespace Logitude.SecurityTests.Features.Contact
 {
     using TechTalk.SpecFlow;
     using System;
@@ -19,7 +19,7 @@ namespace Logitude.SecurityTests.Features.Shipment
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("TechTalk.SpecFlow", "3.5.0.0")]
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public partial class GetShipmentSecurityAccessFeature : object, Xunit.IClassFixture<GetShipmentSecurityAccessFeature.FixtureData>, System.IDisposable
+    public partial class GetContactSecurityAccessFeature : object, Xunit.IClassFixture<GetContactSecurityAccessFeature.FixtureData>, System.IDisposable
     {
         
         private static TechTalk.SpecFlow.ITestRunner testRunner;
@@ -28,10 +28,10 @@ namespace Logitude.SecurityTests.Features.Shipment
         
         private Xunit.Abstractions.ITestOutputHelper _testOutputHelper;
         
-#line 1 "GetShipmentSecurityAccess.feature"
+#line 1 "GetContactSecurityAccess.feature"
 #line hidden
         
-        public GetShipmentSecurityAccessFeature(GetShipmentSecurityAccessFeature.FixtureData fixtureData, Logitude_SecurityTests_XUnitAssemblyFixture assemblyFixture, Xunit.Abstractions.ITestOutputHelper testOutputHelper)
+        public GetContactSecurityAccessFeature(GetContactSecurityAccessFeature.FixtureData fixtureData, Logitude_SecurityTests_XUnitAssemblyFixture assemblyFixture, Xunit.Abstractions.ITestOutputHelper testOutputHelper)
         {
             this._testOutputHelper = testOutputHelper;
             this.TestInitialize();
@@ -40,7 +40,7 @@ namespace Logitude.SecurityTests.Features.Shipment
         public static void FeatureSetup()
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
-            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features/Shipment", "Get Shipment Security Access", null, ProgrammingLanguage.CSharp, ((string[])(null)));
+            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features/Contact", "Get Contact Security Access", null, ProgrammingLanguage.CSharp, ((string[])(null)));
             testRunner.OnFeatureStart(featureInfo);
         }
         
@@ -79,17 +79,17 @@ namespace Logitude.SecurityTests.Features.Shipment
         {
 #line 3
 #line hidden
-            TechTalk.SpecFlow.Table table4 = new TechTalk.SpecFlow.Table(new string[] {
+            TechTalk.SpecFlow.Table table1 = new TechTalk.SpecFlow.Table(new string[] {
                         "Email",
                         "Password"});
-            table4.AddRow(new string[] {
+            table1.AddRow(new string[] {
                         "ahmadb123@mail.com",
                         "ahmed13!A15"});
-            table4.AddRow(new string[] {
+            table1.AddRow(new string[] {
                         "protractor@test.com",
                         "!P123t456"});
 #line 5
- testRunner.Given("Users with following credentials", ((string)(null)), table4, "Given ");
+ testRunner.Given("Users with following credentials", ((string)(null)), table1, "Given ");
 #line hidden
 #line 9
  testRunner.When("Users make login request", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
@@ -104,14 +104,14 @@ namespace Logitude.SecurityTests.Features.Shipment
             this.TestTearDown();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="Get Shipment From User\'s Tenant")]
-        [Xunit.TraitAttribute("FeatureTitle", "Get Shipment Security Access")]
-        [Xunit.TraitAttribute("Description", "Get Shipment From User\'s Tenant")]
-        public virtual void GetShipmentFromUsersTenant()
+        [Xunit.SkippableFactAttribute(DisplayName="Get Contact From User\'s Tenant")]
+        [Xunit.TraitAttribute("FeatureTitle", "Get Contact Security Access")]
+        [Xunit.TraitAttribute("Description", "Get Contact From User\'s Tenant")]
+        public virtual void GetContactFromUsersTenant()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get Shipment From User\'s Tenant", null, tagsOfScenario, argumentsOfScenario);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get Contact From User\'s Tenant", null, tagsOfScenario, argumentsOfScenario);
 #line 12
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -136,23 +136,23 @@ this.ScenarioInitialize(scenarioInfo);
 this.FeatureBackground();
 #line hidden
 #line 13
- testRunner.When("First user get the first shipment from shipments list", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("First user get the first contact from contacts list", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
 #line 14
- testRunner.Then("Shipment for first user should be exists", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then("the Contact for first user should be exists", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="Get Shipment From Other Tenant")]
-        [Xunit.TraitAttribute("FeatureTitle", "Get Shipment Security Access")]
-        [Xunit.TraitAttribute("Description", "Get Shipment From Other Tenant")]
-        public virtual void GetShipmentFromOtherTenant()
+        [Xunit.SkippableFactAttribute(DisplayName="Get Contact From Other Tenant")]
+        [Xunit.TraitAttribute("FeatureTitle", "Get Contact Security Access")]
+        [Xunit.TraitAttribute("Description", "Get Contact From Other Tenant")]
+        public virtual void GetContactFromOtherTenant()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get Shipment From Other Tenant", null, tagsOfScenario, argumentsOfScenario);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get Contact From Other Tenant", null, tagsOfScenario, argumentsOfScenario);
 #line 16
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -177,10 +177,10 @@ this.ScenarioInitialize(scenarioInfo);
 this.FeatureBackground();
 #line hidden
 #line 17
- testRunner.When("Second user get the shipment that requested by first user", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("Second user get the contact that requested by first user", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
 #line 18
- testRunner.Then("Shipment for second user should not be exists", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then("the Contact for second user should not be exists", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();
@@ -193,12 +193,12 @@ this.FeatureBackground();
             
             public FixtureData()
             {
-                GetShipmentSecurityAccessFeature.FeatureSetup();
+                GetContactSecurityAccessFeature.FeatureSetup();
             }
             
             void System.IDisposable.Dispose()
             {
-                GetShipmentSecurityAccessFeature.FeatureTearDown();
+                GetContactSecurityAccessFeature.FeatureTearDown();
             }
         }
     }
