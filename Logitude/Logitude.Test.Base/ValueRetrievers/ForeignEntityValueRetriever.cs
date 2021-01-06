@@ -38,8 +38,12 @@ namespace Logitude.Test.Base.ValueRetrievers
 
             dynamic requestResult = APICaller.CallGet(requestUrl, User.Token, "Result");
             
-            string requiredPropertyValue = Convert.ToString(requestResult[0][requiredPropertyName]);
-            return requiredPropertyValue;
+            if(requestResult != null)
+            {
+                string requiredPropertyValue = Convert.ToString(requestResult[0][requiredPropertyName]);
+                return requiredPropertyValue;
+            }
+            return null;
         }
 
         protected string GetDataInForeignEntityRegex(string tableValue, int index)
