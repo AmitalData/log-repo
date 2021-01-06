@@ -22,7 +22,7 @@ namespace WebFreight.Web.Controllers.AccountingModel
 
         }
 
-        public HttpResponseMessage GetReconciliationStageC(int tenant, string gLAccountId, string accountTypeCode, string upToDueDate, int lT_LinesMaximum, int maxPageSize)
+        public HttpResponseMessage GetReconciliationStageC(int tenant, string gLAccountId, string accountTypeCode, string upToDueDate, int lT_LinesMaximum, int maxPageSize, string closeOnlyZeroes)
         {
             try
             {
@@ -30,7 +30,7 @@ namespace WebFreight.Web.Controllers.AccountingModel
                 ReconciliationStageCArg args = null;
                 string message = "";
                 decimal maximalDifference = Decimal.MaxValue;
-                bool isSuccess = CreateArgs(tenant, gLAccountId, accountTypeCode, upToDueDate, lT_LinesMaximum, maxPageSize, maximalDifference, ref args, message);
+                bool isSuccess = CreateArgs(tenant, gLAccountId, accountTypeCode, upToDueDate, lT_LinesMaximum, maxPageSize, maximalDifference, closeOnlyZeroes, ref args, message);
                 if (!isSuccess)
                 {
                     throw new Exception(message);
@@ -67,9 +67,10 @@ namespace WebFreight.Web.Controllers.AccountingModel
             }
         }
 
-        private bool CreateArgs(int tenant, string gLAccountId, string accountTypeCode, string upToDueDate, int lT_LinesMaximum, int maxPageSize, decimal maximalDifference, ref ReconciliationStageCArg args, string message)
+        private bool CreateArgs(int tenant, string gLAccountId, string accountTypeCode, string upToDueDate, int lT_LinesMaximum, int maxPageSize, decimal maximalDifference, string closeOnlyZeroes, ref ReconciliationStageCArg args, string message)
         {
             bool isSuccess = false;
+            bool v_closeOnlyZeroes = false;
             if (String.IsNullOrWhiteSpace(gLAccountId) && (String.IsNullOrWhiteSpace(accountTypeCode) || (accountTypeCode != "2" && accountTypeCode != "3"))) // 2=Client, 3=Vendor
             {
                 message = "AccountTypeCode is a must (2=Client, 3=Vendor), when no GLAccountId is provided";
@@ -106,7 +107,10 @@ namespace WebFreight.Web.Controllers.AccountingModel
                 return isSuccess;
             }
 
-
+            if (!String.IsNullOrEmpty(closeOnlyZeroes) && closeOnlyZeroes.ToUpperInvariant() == "TRUE")
+            {
+                v_closeOnlyZeroes = true;
+            }
 
             args = new ReconciliationStageCArg()
             {
@@ -117,12 +121,13 @@ namespace WebFreight.Web.Controllers.AccountingModel
                 LT_LinesMaximum = lT_LinesMaximum,
                 MaxPageSize = maxPageSize,
                 MaximalDifference = maximalDifference,
+                CloseOnlyZeroes = v_closeOnlyZeroes,
             };
             isSuccess = true;
             return isSuccess;
         }
 
-        public HttpResponseMessage GetReconciliationStageCNoBatch(int tenant, string gLAccountId, string accountTypeCode, string upToDueDate, int lT_LinesMaximum, int maxPageSize, int noBatch)  
+        public HttpResponseMessage GetReconciliationStageCNoBatch(int tenant, string gLAccountId, string accountTypeCode, string upToDueDate, int lT_LinesMaximum, int maxPageSize, string closeOnlyZeroes, int noBatch)  
         {
             try
             {
@@ -130,7 +135,7 @@ namespace WebFreight.Web.Controllers.AccountingModel
                 ReconciliationStageCArg args = null;
                 string message = "";
                 decimal maximalDifference = Decimal.MaxValue;
-                bool isSuccess = CreateArgs(tenant, gLAccountId, accountTypeCode, upToDueDate, lT_LinesMaximum, maxPageSize, maximalDifference, ref args, message);
+                bool isSuccess = CreateArgs(tenant, gLAccountId, accountTypeCode, upToDueDate, lT_LinesMaximum, maxPageSize, maximalDifference, closeOnlyZeroes, ref args, message);
                 if (!isSuccess)
                 {
                     throw new Exception(message);

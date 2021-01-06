@@ -30,6 +30,7 @@ using System.Net.Http;
 using System.ServiceModel.DomainServices.Server;
 using System.Web;
 using System.Web.Http;
+using WebFreight.Web.DataContracts;
 using WebFreight.Web.Helpers;
 using WebFreight.Web.Security;
 
@@ -229,6 +230,8 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
         }
 
 
+
+
         public HttpResponseMessage GetCreateDocumentOut(string documentTypeId, string entityId, string childEntityId, string childReference, string objectTableId, int tenant)
         {
             try
@@ -243,6 +246,32 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
                 {
                     DocumentHelper documentHelper = new DocumentHelper();
                     documentOutPM = documentHelper.CreateDocumentOut(documentTypeId, entityId, childEntityId, childReference, objectTableId, tenant);
+                }
+
+                return Request.CreateResponse(HttpStatusCode.OK, documentOutPM);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
+
+
+        public HttpResponseMessage PutCreateDocumentOut(CreateDocumentOutArgs createDocumentOutArgs)
+        {
+            try
+            {
+                if (createDocumentOutArgs.ChildEntityId == "null" || createDocumentOutArgs.ChildEntityId == "undefined") createDocumentOutArgs.ChildEntityId = null;
+                if (createDocumentOutArgs.ChildReference == "null" || createDocumentOutArgs.ChildReference == "undefined") createDocumentOutArgs.ChildReference = null;
+
+                Authentication();
+                DocumentOutQuery documentOutQuery = new DocumentOutQuery(createDocumentOutArgs.Tenant);
+                DocumentOutPM documentOutPM = documentOutQuery.GetDocumentOutByDocumentTypeEntityAndChild(createDocumentOutArgs.EntityId, createDocumentOutArgs.ChildEntityId, createDocumentOutArgs.DocumentTypeId, createDocumentOutArgs.Tenant);
+                if (documentOutPM == null)
+                {
+                    DocumentHelper documentHelper = new DocumentHelper();
+                    documentOutPM = documentHelper.CreateDocumentOut(createDocumentOutArgs.DocumentTypeId, createDocumentOutArgs.EntityId, createDocumentOutArgs.ChildEntityId, createDocumentOutArgs.ChildReference, createDocumentOutArgs.ObjectTableId, createDocumentOutArgs.Tenant);
                 }
          
                 return Request.CreateResponse(HttpStatusCode.OK, documentOutPM);

@@ -41,6 +41,7 @@ using Logitude.SystemLogs;
 using WebFreight.Web.App_Code;
 using Logitude.Infrastructure.Data.EntityPOCOs;
 using Logitude.Infrastructure.Data.Repsitories;
+using Logitude.Infrastructure.BL.EntityQueryServices;
 
 namespace WebFreight.Web
 {
@@ -1148,24 +1149,22 @@ namespace WebFreight.Web
             ShipmentQuery shipmentQuery = new ShipmentQuery(tenant); 
 
             ShipmentPM pm = shipmentQuery.GetSinglePMBySecurityKey(securitykey, id, tenant);
+            SharedLogisticsSettingQueryService sharedLogisticsSettingQueryService = new SharedLogisticsSettingQueryService(tenant);
+            pm = sharedLogisticsSettingQueryService.MapShipmentSharedLogisticsFields(pm, tenant);
 
-            SharedLogisticsSettingRepository sharedLogisticsSettingRepository = new SharedLogisticsSettingRepository(tenant);
-            SharedLogisticsSetting sharedLogisticsSetting = sharedLogisticsSettingRepository.GetSingle(tenant.ToString(), tenant);
-            if (sharedLogisticsSetting != null)
-            {
-                pm.IsSharedLogisticsMoneyTabEnabled = sharedLogisticsSetting.IsMoneyTabEnabled;
-                pm.IsSharedLogisticsMainCarrierVisible = sharedLogisticsSetting.IsMainCarrierShared;
-                pm.IsSharedLogisticsPickDelvCarrierVisible = sharedLogisticsSetting.IsPickDelivCarriesShared;
-                pm.IsSharedLogisticsAgentVisible = sharedLogisticsSetting.IsAgentShared;
-                pm.IsSharedLogisticsShipperVisible = sharedLogisticsSetting.IsShipperShared;
-                pm.IsSharedLogisticsConsigneeVisible = sharedLogisticsSetting.IsConsigneeShared;
-            }
+            return pm;
+        }
 
+        [OperationContract]
+        [WebGet(UriTemplate = "getsinglepmbykeyandtenant/{securitykey}/{tenant}")]
+        public ShipmentPM GetSingleShipmentPMByKeyAndTenant(string securitykey, int tenant)
+        {
+            ShipmentQuery shipmentQuery = new ShipmentQuery(tenant);
 
-
-
-
-
+            ShipmentPM pm = shipmentQuery.GetSinglePMBySecurityKeyAndTenant(securitykey, tenant);
+            SharedLogisticsSettingQueryService sharedLogisticsSettingQueryService = new SharedLogisticsSettingQueryService(tenant);
+            pm = sharedLogisticsSettingQueryService.MapShipmentSharedLogisticsFields(pm, tenant);
+            
             return pm;
         }
 

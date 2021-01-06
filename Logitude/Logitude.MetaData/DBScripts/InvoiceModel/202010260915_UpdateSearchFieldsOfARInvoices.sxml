@@ -1,5 +1,5 @@
 ﻿<Script DBType="Main" Module="Invoice" AOT="true" TargetTableName="ARInvoices">
-  <Sql Version="2">
+  <Sql Version="3">
     <![CDATA[
     
 		  If(OBJECT_ID('tempdb..#temp') Is Not Null)

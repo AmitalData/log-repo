@@ -246,6 +246,10 @@ namespace WebFreight.Web.WebPages
                         {
                             name = shipment.ShipmentNumber;
                         }
+                        if (!string.IsNullOrEmpty(downloadAllDocumentsArgs.FileName))
+                        {
+                            name = downloadAllDocumentsArgs.FileName.Replace("_null", "");
+                        }
                         byte[] CompressedData = CompressionData(name, CompressedArray, false);
                         HttpContext.Current.Response.Clear();
                         HttpContext.Current.Response.AddHeader("Content-Length", CompressedData.Length.ToString());
@@ -341,6 +345,7 @@ namespace WebFreight.Web.WebPages
                 //string url = "../WebPages/SharedDownloadPage.aspx?id=" + tenant + ":" + item.DocumentId +documenttype+ entityId;
 
 
+                string fileName = Request["filename"];
 
 
                 tenant = Convert.ToInt32(filestrings[0]);
@@ -360,6 +365,10 @@ namespace WebFreight.Web.WebPages
                         downloadAllDocumentsArgs.Securitykey = filestrings[6];
                     }
 
+                    if (!string.IsNullOrEmpty(fileName))
+                    {
+                        downloadAllDocumentsArgs.FileName = fileName;
+                    }
                     DownloadAllDocuments(downloadAllDocumentsArgs);                    
                 }
 
@@ -545,5 +554,6 @@ namespace WebFreight.Web.WebPages
         public string PartnerType { get; set; }
         public string Token { get; set; }
         public string Securitykey { get; set; }
+        public string FileName { get; set; }
     }
 }

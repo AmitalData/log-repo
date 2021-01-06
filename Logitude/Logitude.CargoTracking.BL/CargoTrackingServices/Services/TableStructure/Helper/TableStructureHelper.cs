@@ -19,147 +19,171 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
         private DataTable tableCoulmnsRelation;
         private DataTable tableIndexs;
         private DataTable tableUniqueConstraints;
-        private string primarykeyColumn;
+        public string PrimarykeyColumn;
+        public List<string> TableCoulmnsNameWithoutIDentity;
+
         public TableStructureHelper(string dxmlStructure)
-        { 
+        {
+            InitializeDataTables(dxmlStructure);
+        }
+ 
+
+        private void InitializeDataTables(string dxmlStructure)
+        {
+            TableCoulmnsNameWithoutIDentity = new List<string>();
             xmlDataSet = new DataSet();
             xmlDataSet.ReadXml(XmlReader.Create(new StringReader(dxmlStructure)));
             table = xmlDataSet.Tables["Table"];
             tableCoulmns = table.ChildRelations["Table_Column"].ChildTable;
-            tableIndexs = table.ChildRelations["Table_Index"]==null?null:table.ChildRelations["Table_Index"].ChildTable;
-            tableCoulmnsRelation = table.ChildRelations["Table_Relation"]==null?null:table.ChildRelations["Table_Relation"].ChildTable;
+            tableIndexs = table.ChildRelations["Table_Index"] == null ? null : table.ChildRelations["Table_Index"].ChildTable;
+            tableCoulmnsRelation = table.ChildRelations["Table_Relation"] == null ? null : table.ChildRelations["Table_Relation"].ChildTable;
             tableUniqueConstraints = table.ChildRelations["Table_UniqueConstraint"] == null ? null : table.ChildRelations["Table_UniqueConstraint"].ChildTable;
             tableCoulmnsConstraint = tableCoulmns.ChildRelations["Column_Constraints"].ChildTable;
-         }
- 
+        }
         public string GetTableStructure(string tableName)
         {
 
-            string TableStructure = InitializeTableStructure(tableName);
-            TableStructure += GetTableStructurCoulmns();
-            TableStructure += GetTableStructurePrimartKey(tableName);
-            TableStructure += GetTableStructureIndexs(tableName);
-            return TableStructure;
+            string tableStructure = InitializeTableStructure(tableName);
+            tableStructure += GetTableStructurCoulmns();
+            tableStructure += GetTableStructurePrimartKey(tableName);
+            tableStructure += GetTableStructureIndexs(tableName);
+            return tableStructure;
 
         }
 
         private string InitializeTableStructure(string tableName)
         {
-            string TableStructure = "If not exists (select * from sysobjects where name='" + tableName + "' and xtype='U')\n" +
+            string tableStructure = "If not exists (select * from sysobjects where name='" + tableName + "' and xtype='U')\n" +
                                   "BEGIN \n" +
                                   "CREATE TABLE [dbo].[" + tableName + "]( \n";
 
-            return TableStructure;
+            return tableStructure;
 
         }
 
         private string GetTableStructurCoulmns()
         {
-            string TableStructure = "";
+            string tableStructure = "";
             for (int i = 0; i < tableCoulmns.Rows.Count; i++)
             {
                 if (tableCoulmns.Columns.Contains("Name") && tableCoulmns.Columns.Contains("Type"))
-                    TableStructure += "[" + tableCoulmns.Rows[i]["Name"] + "] " + tableCoulmns.Rows[i]["Type"];
+                    tableStructure += "[" + tableCoulmns.Rows[i]["Name"] + "] " + tableCoulmns.Rows[i]["Type"];
                 if (tableCoulmns.Columns.Contains("Size"))
-                    TableStructure += GetCoulmnSize(tableCoulmns.Rows[i]["Size"]);
-                if(tableCoulmns.Columns.Contains("Identity"))
-                  TableStructure += GetIsCoulmnIdentity(tableCoulmns.Rows[i]["Identity"]);
+                    tableStructure += GetCoulmnSize(tableCoulmns.Rows[i]["Size"]);
+                if (tableCoulmns.Columns.Contains("Identity"))
+                {   string identityText = GetIsCoulmnIdentity(tableCoulmns.Rows[i]["Identity"]);
+                    tableStructure += identityText;
+                    if (string.IsNullOrEmpty(identityText))
+                        TableCoulmnsNameWithoutIDentity.Add((string)tableCoulmns.Rows[i]["Name"]);
+                }
+                else
+                    TableCoulmnsNameWithoutIDentity.Add((string)tableCoulmns.Rows[i]["Name"]);
                 if (tableCoulmnsConstraint.Columns.Contains("Nullable"))
-                    TableStructure += GetIsCoulmnNullable(tableCoulmnsConstraint.Rows[i]["Nullable"]);
+                    tableStructure += GetIsCoulmnNullable(tableCoulmnsConstraint.Rows[i]["Nullable"]);
                 if (tableCoulmnsConstraint.Columns.Contains("PrimaryKey") && tableCoulmns.Columns.Contains("Name"))
                     SetPrimartKeyCoulmn(tableCoulmnsConstraint.Rows[i]["PrimaryKey"], (string)tableCoulmns.Rows[i]["Name"]);
-                TableStructure += ",\n";
+                tableStructure += ",\n";
             }
-            return TableStructure;
+            return tableStructure;
         }
+
+     
+        public string GetTableName()
+        {           
+            string tableName = (string)table.Rows[0]["Name"];
+            return tableName;
+        }
+ 
+
         private string GetCoulmnSize(object coulmnnSize)
         {
-            string TableCoulmnnSize = null;
+            string tableCoulmnnSize = null;
             double? size = 0;
             try { size = double.Parse((string)coulmnnSize); }
             catch (Exception e) { size = 0; }
             if (size != null && size != 0)
                 if(size==-1)
-                    TableCoulmnnSize =  " (Max) ";
+                    tableCoulmnnSize =  " (Max) ";
                 else
-                    TableCoulmnnSize = " (" + size + ") ";
+                    tableCoulmnnSize = " (" + size + ") ";
 
-            return TableCoulmnnSize;
+            return tableCoulmnnSize;
         }
         private string GetIsCoulmnNullable( object  coulmnnNullable)
         {
-            string TableIsCoulmnNullable = null;
-            bool? Nullable = true;
-            try { Nullable = bool.Parse((string)coulmnnNullable); }
-            catch (Exception e) { Nullable = true; }
-            if (Nullable == true) { TableIsCoulmnNullable += " null "; }
-            else { TableIsCoulmnNullable += " not null "; }
+            string tableIsCoulmnNullable = null;
+            bool? nullable = true;
+            try { nullable = bool.Parse((string)coulmnnNullable); }
+            catch (Exception e) { nullable = true; }
+            if (nullable == true) { tableIsCoulmnNullable += " null "; }
+            else { tableIsCoulmnNullable += " not null "; }
 
-            return TableIsCoulmnNullable;
+            return tableIsCoulmnNullable;
         }
 
         private string GetIsCoulmnIdentity(object coulmnnIdentity)
         {
-            string TableIsCoulmnIdentity = null;
-            bool? IsIdentity = false;
-            try { IsIdentity = bool.Parse((string)coulmnnIdentity); }
-            catch (Exception e) { IsIdentity = false; }
-            if (IsIdentity == true) { TableIsCoulmnIdentity += " IDENTITY(1,1) "; }
+            string tableIsCoulmnIdentity = null;
+            bool? isIdentity = false;
+            try { isIdentity = bool.Parse((string)coulmnnIdentity); }
+            catch (Exception e) { isIdentity = false; }
+            if (isIdentity == true) { tableIsCoulmnIdentity += " IDENTITY(1,1) "; }
 
-            return TableIsCoulmnIdentity;
+            return tableIsCoulmnIdentity;
         }
 
         private  void SetPrimartKeyCoulmn(object coulmnnPrimarykey,string columnName)
         {
-            bool? IsPrimartKey = false;
-            try { IsPrimartKey = bool.Parse((string)coulmnnPrimarykey); }
-            catch (Exception e) { IsPrimartKey = false; }
-            if (IsPrimartKey == true) { primarykeyColumn = columnName; }
+            bool? isPrimartKey = false;
+            try { isPrimartKey = bool.Parse((string)coulmnnPrimarykey); }
+            catch (Exception e) { isPrimartKey = false; }
+            if (isPrimartKey == true) { PrimarykeyColumn = columnName; }
         }
 
         private string GetTableStructurePrimartKey(string tableName)
         {
-            string TablePrimaryKey = null;
-            if (!string.IsNullOrEmpty(primarykeyColumn))
+            string tablePrimaryKey = null;
+
+            if (!string.IsNullOrEmpty(PrimarykeyColumn))
             {
-                TablePrimaryKey  = "CONSTRAINT[PK_" + tableName + "] PRIMARY KEY([" + primarykeyColumn + "]) )\n";
+                tablePrimaryKey  = "CONSTRAINT[PK_" + tableName + "] PRIMARY KEY([" + PrimarykeyColumn + "]) )\n";
             }
 
-            return TablePrimaryKey;
+            return tablePrimaryKey;
         }
 
         public string GetTableStructureIndexs(string tableName)
         {
-            string TableIndexs = "";
+            string tableIndexsCommand = "";
             if (tableIndexs!=null)
             {
                 for (int j = 0; j < tableIndexs.Rows.Count; j++)
                 {
                     if (tableIndexs.Columns.Contains("Columns"))
                     {
-                        string CoulmnIndexs = (string)tableIndexs.Rows[j]["Columns"];
-                        TableIndexs += "CREATE NONCLUSTERED INDEX [IX_" + tableName + "_" + CoulmnIndexs.Replace(',', '_') + "] ON [dbo].[" + tableName + "](" + CoulmnIndexs + ")\n";
-                        TableIndexs += "ALTER INDEX [IX_" + tableName + "_" + CoulmnIndexs.Replace(',', '_') + "] ON [dbo].[" + tableName + "] DISABLE \n";
+                        string coulmnIndexs = (string)tableIndexs.Rows[j]["Columns"];
+                        tableIndexsCommand += "CREATE NONCLUSTERED INDEX [IX_" + tableName + "_" + coulmnIndexs.Replace(',', '_') + "] ON [dbo].[" + tableName + "](" + coulmnIndexs + ")\n";
+                        tableIndexsCommand += "ALTER INDEX [IX_" + tableName + "_" + coulmnIndexs.Replace(',', '_') + "] ON [dbo].[" + tableName + "] DISABLE \n";
 
                     }
                
                 }
             }
-            TableIndexs += " End \n";
-            return TableIndexs;
+            tableIndexsCommand += " End \n";
+            return tableIndexsCommand;
         }
 
         public string GetTableStructureReBuildIndexs(string tableName)
         {
-            string TableIndexs = "";
-            if (tableIndexs!=null)
+            string tableIndexs = "";
+            if (this.tableIndexs!=null)
             {
-                for (int j = 0; j < tableIndexs.Rows.Count; j++)
+                for (int j = 0; j < this.tableIndexs.Rows.Count; j++)
                 {
-                    if (tableIndexs.Columns.Contains("Columns"))
+                    if (this.tableIndexs.Columns.Contains("Columns"))
                     {
-                        string CoulmnIndexs = (string)tableIndexs.Rows[j]["Columns"];
-                        TableIndexs += "ALTER INDEX [IX_" + tableName + "_" + CoulmnIndexs.Replace(',', '_') + "] ON [dbo].[" + tableName + "] REBUILD \n";
+                        string coulmnIndexs = (string)this.tableIndexs.Rows[j]["Columns"];
+                        tableIndexs += "ALTER INDEX [IX_" + tableName + "_" + coulmnIndexs.Replace(',', '_') + "] ON [dbo].[" + tableName + "] REBUILD \n";
 
                     }
                         
@@ -167,12 +191,12 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
 
             }
            
-            return TableIndexs;
+            return tableIndexs;
         }
 
         public string GetTableStructureRelations(string tableName)
         {
-            string TableStructureRelations = "";
+            string tableStructureRelations = "";
             if (tableCoulmnsRelation!=null)
             {
                 for (int j = 0; j < tableCoulmnsRelation.Rows.Count; j++)
@@ -181,51 +205,51 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
                         tableCoulmnsRelation.Columns.Contains("ReferencedTable") &&
                         tableCoulmnsRelation.Columns.Contains("ReferencedColumn"))
                     {
-                        string ForeignKeyColumn = (string)tableCoulmnsRelation.Rows[j]["ForeignKeyColumn"];
-                        string ReferencedTable = (string)tableCoulmnsRelation.Rows[j]["ReferencedTable"];
-                        string ReferencedColumn = (string)tableCoulmnsRelation.Rows[j]["ReferencedColumn"];
-                        TableStructureRelations += "ALTER TABLE [dbo].[" + tableName + "] ADD CONSTRAINT [FK_" + tableName + "_" + ReferencedTable + "_" + ForeignKeyColumn + "] FOREIGN KEY([" + ForeignKeyColumn + "]) REFERENCES [dbo].[" + ReferencedTable + "]([" + ReferencedColumn + "])\n";
-                        TableStructureRelations += "CREATE NONCLUSTERED INDEX [IX_" + tableName + "_" + ForeignKeyColumn + "] ON [dbo].[" + tableName + "]([" + ForeignKeyColumn + "])\n";
+                        string foreignKeyColumn = (string)tableCoulmnsRelation.Rows[j]["ForeignKeyColumn"];
+                        string referencedTable = (string)tableCoulmnsRelation.Rows[j]["ReferencedTable"];
+                        string referencedColumn = (string)tableCoulmnsRelation.Rows[j]["ReferencedColumn"];
+                        tableStructureRelations += "ALTER TABLE [dbo].[" + tableName + "] ADD CONSTRAINT [FK_" + tableName + "_" + referencedTable + "_" + foreignKeyColumn + "] FOREIGN KEY([" + foreignKeyColumn + "]) REFERENCES [dbo].[" + referencedTable + "]([" + referencedColumn + "])\n";
+                        tableStructureRelations += "CREATE NONCLUSTERED INDEX [IX_" + tableName + "_" + foreignKeyColumn + "] ON [dbo].[" + tableName + "]([" + foreignKeyColumn + "])\n";
                     }
                 }
 
             }
             
-            return TableStructureRelations;
+            return tableStructureRelations;
         }
 
         public string GetTableStructureChangeNameScript(string oldTableName, string newTableName)
         {
-            string TableStructureChaneNameScript = "";
-            TableStructureChaneNameScript = "EXEC sp_rename '" + oldTableName + "', '" + newTableName + "' \n ";
-            TableStructureChaneNameScript += " exec sp_rename 'PK_" + oldTableName + "', 'PK_" + newTableName + "', 'object' \n ";
-            TableStructureChaneNameScript += GetTableStructureChaneNameScriptFromRelations(oldTableName, newTableName);
-            TableStructureChaneNameScript += GetTableStructureChaneNameScriptFromUniqueConstraints(oldTableName, newTableName);
+            string tableStructureChaneNameScript = "";
+            tableStructureChaneNameScript = "EXEC sp_rename '" + oldTableName + "', '" + newTableName + "' \n ";
+            tableStructureChaneNameScript += " exec sp_rename 'PK_" + oldTableName + "', 'PK_" + newTableName + "', 'object' \n ";
+            tableStructureChaneNameScript += GetTableStructureChaneNameScriptFromRelations(oldTableName, newTableName);
+            tableStructureChaneNameScript += GetTableStructureChaneNameScriptFromUniqueConstraints(oldTableName, newTableName);
 
 
-            return TableStructureChaneNameScript;
+            return tableStructureChaneNameScript;
         }
         private string GetTableStructureChaneNameScriptFromUniqueConstraints(string oldTableName, string newTableName)
         {
-            string TableStructureChaneNameScriptFromUniqueConstraints= "";
+            string tableStructureChaneNameScriptFromUniqueConstraints= "";
             if (tableUniqueConstraints != null && tableUniqueConstraints.Rows != null && tableUniqueConstraints.Rows.Count > 0)
             {
                 for (int j = 0; j < tableUniqueConstraints.Rows.Count; j++)
                 {
                     if (tableUniqueConstraints.Columns.Contains("Columns")){
-                        string UniqeConstraintFields = (string)tableUniqueConstraints.Rows[j]["Columns"];
-                        TableStructureChaneNameScriptFromUniqueConstraints += " exec sp_rename 'UQ_" + oldTableName + "_" + UniqeConstraintFields.Replace(',', '_') + "', 'UQ_" + newTableName + "_" + UniqeConstraintFields.Replace(',', '_') + "', 'object' \n ";
+                        string uniqeConstraintFields = (string)tableUniqueConstraints.Rows[j]["Columns"];
+                        tableStructureChaneNameScriptFromUniqueConstraints += " exec sp_rename 'UQ_" + oldTableName + "_" + uniqeConstraintFields.Replace(',', '_') + "', 'UQ_" + newTableName + "_" + uniqeConstraintFields.Replace(',', '_') + "', 'object' \n ";
 
                     }
 
                 }
             }
 
-            return TableStructureChaneNameScriptFromUniqueConstraints;
+            return tableStructureChaneNameScriptFromUniqueConstraints;
         }
         private string GetTableStructureChaneNameScriptFromRelations(string oldTableName, string newTableName)
         {
-            string TableStructureChaneNameScriptFromRelations = "";
+            string tableStructureChaneNameScriptFromRelations = "";
             if (tableCoulmnsRelation != null && tableCoulmnsRelation.Rows != null && tableCoulmnsRelation.Rows.Count > 0)
             {
 
@@ -235,34 +259,34 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
                            tableCoulmnsRelation.Columns.Contains("ReferencedTable") &&
                            tableCoulmnsRelation.Columns.Contains("ReferencedColumn"))
                     {
-                        string ForeignKeyColumn = (string)tableCoulmnsRelation.Rows[j]["ForeignKeyColumn"];
-                        string ReferencedTable = (string)tableCoulmnsRelation.Rows[j]["ReferencedTable"];
-                        TableStructureChaneNameScriptFromRelations += " exec sp_rename 'FK_" + oldTableName + "_" + ReferencedTable + "_" + ForeignKeyColumn + "', 'FK_" + newTableName + "_" + ReferencedTable + "_" + ForeignKeyColumn + "', 'object' \n ";
+                        string foreignKeyColumn = (string)tableCoulmnsRelation.Rows[j]["ForeignKeyColumn"];
+                        string referencedTable = (string)tableCoulmnsRelation.Rows[j]["ReferencedTable"];
+                        tableStructureChaneNameScriptFromRelations += " exec sp_rename 'FK_" + oldTableName + "_" + referencedTable + "_" + foreignKeyColumn + "', 'FK_" + newTableName + "_" + referencedTable + "_" + foreignKeyColumn + "', 'object' \n ";
                     }
                      
                 }
             }
 
-            return TableStructureChaneNameScriptFromRelations;
+            return tableStructureChaneNameScriptFromRelations;
         }
 
         public string GetTableStructureUniqueConstraints(string tableName)
         {
-            string UniqueConstraints = "";
+            string uniqueConstraints = "";
             if (tableUniqueConstraints!=null)
             {
                 for (int j = 0; j < tableUniqueConstraints.Rows.Count; j++)
                 {
                     if (tableUniqueConstraints.Columns.Contains("Columns"))
                     {
-                        string UniqeConstraintFields = (string)tableUniqueConstraints.Rows[j]["Columns"];
-                        UniqueConstraints += "ALTER TABLE [dbo].[" + tableName + "] ADD CONSTRAINT [UQ_" + tableName + "_" + UniqeConstraintFields.Replace(',', '_') + "] UNIQUE(" + UniqeConstraintFields + ")\n";
+                        string uniqeConstraintFields = (string)tableUniqueConstraints.Rows[j]["Columns"];
+                        uniqueConstraints += "ALTER TABLE [dbo].[" + tableName + "] ADD CONSTRAINT [UQ_" + tableName + "_" + uniqeConstraintFields.Replace(',', '_') + "] UNIQUE(" + uniqeConstraintFields + ")\n";
                     }
                  
                 }
             }
            
-            return UniqueConstraints;
+            return uniqueConstraints;
         }
 
 

@@ -36,7 +36,7 @@
   MaxNumberOfCustomFields="0"
   ParentTableName="Shipment"
   DefaultText="&quot;Shipment Payable&quot;"
-  Code="&quot;1580&quot;"
+  Code="&quot;e912&quot;"
   Name="&quot;ShipmentPayable&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Shipment&quot;"
@@ -5952,11 +5952,12 @@
         IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;Vendor&quot;"
+        DCVersion="&quot;ApiV1&quot;"
         FieldName="&quot;VendorId&quot;"
         IsKey="false"
         IsManualMapping="false"
         IsMulti="false"
-        FieldsDataType="&quot;Vendor&quot;"
+        FieldsDataType="&quot;Card&quot;"
         IsNullable="false"
         IsSpecialField="false"
         IsCustomType="true"

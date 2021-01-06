@@ -198,6 +198,7 @@ namespace WebFreight.Web
             RouteTable.Routes.MapHttpRoute("Route1", "api/{controller}/getsinglepmwithoutcomposition/{id}/{tenant}", new { controller = "Shipments", action = "GetSingleShipmentPMWithoutComposition" });
             RouteTable.Routes.MapHttpRoute("Route2", "api/{controller}/getsinglepm/{id}/{tenant}", new { controller = "Shipments", action = "GetSingleShipmentPM" });
             RouteTable.Routes.MapHttpRoute("Route3", "api/{controller}/getsinglepmbykey/{securitykey}/{id}/{tenant}", new { controller = "Shipments", action = "GetSingleShipmentPMByKey" });
+            RouteTable.Routes.MapHttpRoute("Route4", "api/{controller}/getsinglepmbykeyandtenant/{securitykey}/{tenant}", new { controller = "Shipments", action = "GetSingleShipmentPMByKeyAndTenant" });
 
             RouteTable.Routes.Ignore("{resource}.axd/{*pathInfo}");
 

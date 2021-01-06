@@ -8725,6 +8725,7 @@ namespace WebFreight.Web.ReportsWebServices
                     record.OurReference = invoice.MainEntityReference;
                     record.CustomerReference = invoice.CustomerRef;
                     record.BillToCode = invoice.BillToCode;
+                    record.InvoiceDueDate = invoice.DueDate;
 
                     if (shipment != null)
                     {
@@ -8754,7 +8755,7 @@ namespace WebFreight.Web.ReportsWebServices
                         record.GrandTotal = invoice.SubTotalInInvoiceCurrency + myTotalVats.Sum(d => d.InvoiceCurrencyVATAmount);
                         record.Currency = invoice.InvoiceCurrencyCode;
                     }
-
+                   
                     totalData.ARInvoiceVATRoutingList.Add(record);
                 }
 

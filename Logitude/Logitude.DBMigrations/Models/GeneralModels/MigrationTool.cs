@@ -1371,6 +1371,11 @@ namespace Logitude.DBMigrations.Models
                 }
             }
 
+            if(ToolConfigurations.DatabaseType.ToLower() == "oracle")
+            {
+                scriptDefinitions = scriptDefinitions.Where(s => !s.AOT).ToList();
+            }
+
             return scriptDefinitions;
         }
 
@@ -1472,7 +1477,7 @@ namespace Logitude.DBMigrations.Models
                     }
                     else
                     {
-                        UpdateIntoDBMigrationsDataScripts(scriptDefinition);
+                        UpdateDBMigrationsDataScripts(scriptDefinition);
                     }
                 }
             }
@@ -2034,7 +2039,7 @@ namespace Logitude.DBMigrations.Models
                 ExitTool("Error: Cannot Find SystemLogsConnectionString in Configuration File");
             }
 
-            if (databaseType.ToLower() == "oracle" && ToolArguments.IsArgumentProvided(Arguments.ZERODOWNTIME))
+            if (databaseType.ToLower() == "oracle" && (ToolArguments.IsArgumentProvided(Arguments.ZERODOWNTIME) || ToolArguments.IsArgumentProvided(Arguments.DEV)))
             {
                 ExitTool("Error: Zero Down Time Mode For Oracle Not Ready To Use");
             }
@@ -2275,9 +2280,12 @@ namespace Logitude.DBMigrations.Models
                 }
             }
         }
-
-        protected void UpdateIntoDBMigrationsDataScripts(ScriptDefinition scriptDefinition)
+        
+        protected void UpdateDBMigrationsDataScripts(ScriptDefinition scriptDefinition)
         {
+            UpdateDataScriptCounter(scriptDefinition.TargetTableName);
+            int scriptExecutionNumber = GetDataScriptCounter(scriptDefinition.TargetTableName);
+
             if (ToolConfigurations.DatabaseType.ToLower() == "oracle")
             {
 
@@ -2288,7 +2296,7 @@ namespace Logitude.DBMigrations.Models
                 int sxmlVersion = scriptDefinition.Sql.Version;
                 string sxmlScriptHashValue = GenerateHashString(scriptDefinition.Sql.Script);
 
-                string queryString = "UPDATE [dbo].[DBMigrationsDataScripts] SET [SxmlScript] = '" + sxmlScript + "', [Status] = 'Waiting', [StartDate] = NULL, [EndDate] = NULL, " +
+                string queryString = "UPDATE [dbo].[DBMigrationsDataScripts] SET [SxmlScript] = '" + sxmlScript + "', [Status] = 'Waiting', [ScriptExecutionNumber] = " + scriptExecutionNumber + ", [StartDate] = NULL, [EndDate] = NULL, " +
                     "[LastBatchElapsedTime] = 0, [ScriptVersion] = " + sxmlVersion + ", [ScriptHashValue] = '" + sxmlScriptHashValue + "', " +
                     "[ScriptHistoryAction] = '" + scriptDefinition.ScriptHistoryAction + "' WHERE [SxmlFileName] = '" + scriptDefinition.SxmlFileName + "'";
 

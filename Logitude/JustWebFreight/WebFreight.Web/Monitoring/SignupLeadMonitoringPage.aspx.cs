@@ -66,16 +66,16 @@ namespace WebFreight.Web.Monitoring
         private static bool CheckIfSignupLeadProcessFailed()
         {
             bool isSignupLeadProcessFailed = false;
-            IGlobalContext globalContext = GlobalContext.GetContext(0);
 
-            var logitudelead = (from a in globalContext.LogitudeLeads
-                                where a.StatusCode == "InProgress" && (a.IsEmailVerified || (a.IsEmailVerified == false && a.IsSentToCustomer == false)) //&& (a.IsEmailVerified == true || a.IsSentToCustomer == false)
-                                select a).FirstOrDefault();
-
-            if (logitudelead != null)
+            using (TransactionScope scope = TransactionFactory.GetNewTransaction())
             {
-                TimeSpan timeSpan = DateTime.Now - logitudelead.CreateDate;
-                if (timeSpan.Minutes > 10) isSignupLeadProcessFailed = true;
+
+                DateTime twoDaysBefore = TenantServerConfigration.GetCurrentDateTime(0).AddDays(-2);
+                ICommonDataContext commonDataContext = CommonDataContext.GetContext(0);
+                isSignupLeadProcessFailed = (from d in commonDataContext.CommunicationLogs
+                                             where d.CommunicationStatusTypeCode == "f" && d.CommunicationLogTypeCode == "Lead" && (d.CreateDate > twoDaysBefore)
+                                             select d).Any();
+                scope.Complete();
             }
 
             return isSignupLeadProcessFailed;

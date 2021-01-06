@@ -300,21 +300,21 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
 
         public void SentQuoteStatusMessageToUnifreight(string objectTableId)
         {
-            TenantQuery tenantQuery = new TenantQuery(tenant);
-            TenantPM tenantPM = tenantQuery.GetSinglePM(entityPM.Tenant);
-            bool IsQuoteStageChange = false;
-
-                if (tenantPM.ExportQuotationsToIntegratedSystem)
+            //TenantQuery tenantQuery = new TenantQuery(tenant);
+            //TenantPM tenantPM = tenantQuery.GetSinglePM(entityPM.Tenant);
+         
+            if (CanSendQuoteToIntegratedSystem())
+            {
+                bool IsQuoteStageChange = false;
+                if (entityPM.StageId != entityPoco.StageId || entityPM.IsCancelled)
                 {
-                    if (entityPM.StageId != entityPoco.StageId || entityPM.IsCancelled)
-                    {
-                        TraceEventRepository traceEventRepository = new TraceEventRepository(entityPM.Tenant);
-                        QuoteStatus quoteStatus = new QuoteStatus();
-                        quoteStatus.Stage = new APIDataContract.Stage();
-                        quoteStatus.QuoteDeclineReason = new QuoteDeclineReason();
-                        quoteStatus.QuoteCancelNote = "";
-                        quoteStatus.QuoteNumber = entityPM.QuoteNumber;
-                        quoteStatus.DueDate = entityPM.StageDueDate;
+                    TraceEventRepository traceEventRepository = new TraceEventRepository(entityPM.Tenant);
+                    QuoteStatus quoteStatus = new QuoteStatus();
+                    quoteStatus.Stage = new APIDataContract.Stage();
+                    quoteStatus.QuoteDeclineReason = new QuoteDeclineReason();
+                    quoteStatus.QuoteCancelNote = "";
+                    quoteStatus.QuoteNumber = entityPM.QuoteNumber;
+                    quoteStatus.DueDate = entityPM.StageDueDate;
                     #region IsCancelled 
                     if (entityPM.IsCancelled)
                     {
@@ -335,36 +335,36 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
 
                     #region StatusChange
                     if (entityPoco.StageId != entityPM.StageId)
+                    {
+                        QuoteStageRepository quoteStageRepository = new QuoteStageRepository(entityPM.Tenant);
+                        QuoteStage stage = quoteStageRepository.GetSingleQuoteStage(entityPM.StageId, entityPM.Tenant);
+                        if (stage != null)
                         {
-                            QuoteStageRepository quoteStageRepository = new QuoteStageRepository(entityPM.Tenant);
-                            QuoteStage stage = quoteStageRepository.GetSingleQuoteStage(entityPM.StageId, entityPM.Tenant);
-                            if (stage != null)
+                            if (stage.Code == "QTAC" || stage.Code == "QTST" || stage.Code == "QTDC")
                             {
-                                if (stage.Code == "QTAC" || stage.Code == "QTST" || stage.Code == "QTDC")
+                                IsQuoteStageChange = true;
+                                quoteStatus.Stage.Code = stage.Code;
+                                quoteStatus.Stage.Id = stage.Id;
+                                quoteStatus.Stage.Name = stage.Name;
+                                quoteStatus.Stage.StageDate = entityPM.LastStageDate;
+                                if (stage.Code == "QTAC") quoteStatus.QuoteAcceptNote = entityPM.EventNote;
+                                if (stage.Code == "QTDC")
                                 {
-                                    IsQuoteStageChange = true;
-                                    quoteStatus.Stage.Code = stage.Code;
-                                    quoteStatus.Stage.Id = stage.Id;
-                                    quoteStatus.Stage.Name = stage.Name;
-                                    quoteStatus.Stage.StageDate = entityPM.LastStageDate;
-                                    if (stage.Code == "QTAC") quoteStatus.QuoteAcceptNote = entityPM.EventNote;
-                                    if (stage.Code == "QTDC")
+                                    QuoteClosingReasonRepository closingReasonRepository = new QuoteClosingReasonRepository(tenant);
+                                    QuoteClosingReason myQuoteClosingReason = closingReasonRepository.GetSingleQuoteClosingReason(entityPM.QuoteClosingReasonId, tenant);
+                                    if (myQuoteClosingReason != null)
                                     {
-                                        QuoteClosingReasonRepository closingReasonRepository = new QuoteClosingReasonRepository(tenant);
-                                        QuoteClosingReason myQuoteClosingReason = closingReasonRepository.GetSingleQuoteClosingReason(entityPM.QuoteClosingReasonId, tenant);
-                                        if (myQuoteClosingReason != null)
-                                        {
-                                            quoteStatus.QuoteDeclineReason.Code = myQuoteClosingReason.Code;
-                                            quoteStatus.QuoteDeclineReason.Name = myQuoteClosingReason.Name;
-                                            quoteStatus.QuoteDeclineReason.Note = entityPM.EventNote;
-                                        }
+                                        quoteStatus.QuoteDeclineReason.Code = myQuoteClosingReason.Code;
+                                        quoteStatus.QuoteDeclineReason.Name = myQuoteClosingReason.Name;
+                                        quoteStatus.QuoteDeclineReason.Note = entityPM.EventNote;
                                     }
-
-
                                 }
-                            }
 
+
+                            }
                         }
+
+                    }
                     #endregion
 
                     #region Send Quote Status Message 
@@ -439,7 +439,7 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
 
         private bool CanSendQuoteToIntegratedSystem()
         {
-            bool isSendQuote = false;
+            bool canSendQuote = false;
 
             TenantQuery tenantQuery = new TenantQuery(tenant);
             TenantPM tenantPM = tenantQuery.GetSinglePM(entityPM.Tenant);
@@ -455,11 +455,11 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
                 if ((tenantPM?.TransferQuotationsToUnifreightTrigger == "OnSend" && quoteStatusChangedToSent)
                     || (tenantPM?.TransferQuotationsToUnifreightTrigger == "OnAccept" && quoteStatusChangedAccept))
                 {
-                    isSendQuote = true;
+                    canSendQuote = true;
                 }
             }
 
-            return isSendQuote;
+            return canSendQuote;
         }
         private CommunicationsParams GetQuotationDocumentCommunicationsParams(string objectTableId)
         {

@@ -12,28 +12,28 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.ValidateRecor
     public class CargoTrackingValidateRecordsService
     {
 
-        public static bool ValidateRecords(string TableName, SqlDataReader reader)
+        public static bool ValidateRecords(string tableName, SqlDataReader reader)
         {
-            bool  IsValid = true;
-            if (TableName == "CargoTrackingShipments" || TableName == "CargoTrackingShipmentSearches")
+            bool  isValid = true;
+            if (tableName == "CargoTrackingShipments" || tableName == "CargoTrackingShipmentSearches")
             {
-                IsValid= IsRecordFieldsValid("ShipmentLevelCode", "C", reader); // C Equal Consol not custom
-                if(IsValid)
-                IsValid = IsRecordFieldsValid("IsCancelled", true, reader); // C Equal Consol not custom
+                isValid= IsRecordFieldsValid("ShipmentLevelCode", "C", reader); // C Equal Consol not custom
+                if(isValid)
+                isValid = IsRecordFieldsValid("IsCancelled", true, reader); // C Equal Consol not custom
 
             }
 
-            return IsValid;
+            return isValid;
         }
 
 
 
-        private static bool IsRecordFieldsValid<T>(string CoulmnName, T FieldValue, SqlDataReader reader)
+        private static bool IsRecordFieldsValid<T>(string coulmnName, T fieldValue, SqlDataReader reader)
         {
 
             for (int i = 0; i < reader.FieldCount; i++)
             {
-                if (reader.GetName(i) == CoulmnName && reader.GetValue(i).Equals(FieldValue))
+                if (reader.GetName(i) == coulmnName && reader.GetValue(i).Equals(fieldValue))
                 {
                     return false;
                 }

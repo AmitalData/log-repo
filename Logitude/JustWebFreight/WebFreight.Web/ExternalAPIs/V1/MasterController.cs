@@ -180,6 +180,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
                     IShipmentsContext MyContext = ShipmentsContext.GetContext(authToken.Tenant);
                     MasterQueryService mappingService = new MasterQueryService(authToken.Tenant);
                     ShipmentPM entityPM = mappingService.MasterCustomDataMappingAndValidatin(entity, authToken.Tenant, computingPartnerCode);
+                    entityPM.IsExternalAPI = true;
 
                     if (string.IsNullOrEmpty(entityPM.VolumeUnitCode))
                     {
