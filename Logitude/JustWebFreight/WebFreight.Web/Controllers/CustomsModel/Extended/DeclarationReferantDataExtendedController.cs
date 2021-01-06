@@ -1,21 +1,34 @@
 ﻿
-using Logitude.Customs.BL.DataContracts;
+using Logitude.Customs.Def.EntityPMs;
 using Logitude.Customs.BL.EntityQueryServices;
+using Logitude.Customs.BL.Messaging.Amital;
 using Logitude.Customs.Data;
-using Logitude.Customs.Data.EntityListQueryServices;
+using Logitude.Customs.Data.Repsitories;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web;
 using System.Web.Http;
+using Unifreight.BL.EntityPMs.UGenerated;
+using Unifreight.BL.EntityQueryServices;
+using Unifreight.Data.AmitalModel;
 using WebFreight.Web.Helpers;
+using WebFreight.Web.Security;
+using Logitude.Customs.BL.CloseTables;
+using Logitude.CustomsMessaging.Common.RequestParams;
+using Logitude.CustomsMessaging.Common.ResponseData;
+using Logitude.CustomsMessaging.FakeMessagingServices;
+using Logitude.Customs.BL.EntityUpdateServices;
+using Simplog.Server.Infrastructure;
+using Logitude.Customs.BL.DataContracts;
 
-namespace WebFreight.Web.Controllers.CustomsModel.WebServices
+namespace WebFreight.Web.Controllers.CustomsModel.Extended
 {
-    public class DeclarationReferantDataWebServiceController : ApiController
+    public class DeclarationReferantDataExtendedController : ApiController
     {
 
         public HttpResponseMessage GetDeclarationReferantDataDashBoard(int tenant)
@@ -39,25 +52,5 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
         }
 
 
-
-        public HttpResponseMessage GetQueriesCounts()
-        {
-            try
-            {
-                string token = HttpContext.Current.Request.Headers["Token"];
-                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                int tenant = authToken.Tenant;
-
-                ICustomContext context = CustomContext.GetContext(tenant);
-                DeclarationReferantDataListQueryService declarationCourierStatusQueryService = new DeclarationReferantDataListQueryService(context);
-                var counts = declarationCourierStatusQueryService.GetQueriesCounts(tenant);
-                return Request.CreateResponse(HttpStatusCode.OK, counts);
-            }
-            catch (Exception ex)
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-            }
-
-        }
     }
 }

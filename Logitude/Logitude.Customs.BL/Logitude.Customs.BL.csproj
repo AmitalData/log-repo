@@ -278,6 +278,7 @@
     <Compile Include="CloseTables\EnumGenerated\UIMessageStruct.Generated.cs" />
     <Compile Include="CloseTables\EnumGenerated\UpdateCodeStruct.Generated.cs" />
     <Compile Include="CloseTables\EnumGenerated\VendorTypeStruct.Generated.cs" />
+    <Compile Include="DataContracts\DeclarationReferantDataChartingClass.cs" />
     <Compile Include="EntityDataMappings\AcceptanceStatusDataMapping.cs" />
     <Compile Include="EntityDataMappings\AccumalationStateDataMapping.cs" />
     <Compile Include="EntityDataMappings\ActionCodeDataMapping.cs" />
@@ -959,6 +960,7 @@
     <Compile Include="EntityDataMappings\VendorTransactionTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\VendorTypeDataMapping.cs" />
     <Compile Include="EntityQueryServiceExt\CustomsDocumentQueryServiceExt.cs" />
+    <Compile Include="EntityQueryServices\DeclarationReferantDataQueryService.cs" />
     <Compile Include="EntityQueryServices\Generated\AmendCancellRequestInitiatorQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\AmendmentFieldStatusTypeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\AmendmentRequestRejectReasonTypeQueryService.Generated.cs" />

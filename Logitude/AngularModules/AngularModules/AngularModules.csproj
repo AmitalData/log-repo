@@ -1375,6 +1375,7 @@
     <TypeScriptCompile Include="Customs\Services\DataChange\SpotlightSharedDataService.ts" />
     <TypeScriptCompile Include="Customs\Services\ExtendedLists\CourierMasterExtendedListService.ts" />
     <TypeScriptCompile Include="Customs\Services\ExtendedLists\CustomsRequiredFieldExtendedListService.ts" />
+    <TypeScriptCompile Include="Customs\Services\ExtendedLists\DeclarationReferantDataExtendedListService.ts" />
     <TypeScriptCompile Include="Customs\Services\ExtendedLists\ExceptionReasonExtendedListService.ts" />
     <TypeScriptCompile Include="Customs\Services\ExtendedLists\CourierPendingReasonExtendedListService.ts" />
     <TypeScriptCompile Include="Customs\Services\ExtendedLists\CustomsCollateralExtendedListService.ts" />

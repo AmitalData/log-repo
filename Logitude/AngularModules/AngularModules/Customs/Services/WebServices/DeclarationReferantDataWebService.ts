@@ -5,6 +5,7 @@ import { defer } from 'rxjs';
 import { SessionInfo } from '../../../Infrastructure/Utilities/SessionInfo';
 import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
 import { catchError, map } from 'rxjs/operators';
+import { ChartingDataClass } from '../../../Infrastructure/DataContracts/Dashboard/ChartingDataClass';
 
 @Injectable()
 
@@ -35,4 +36,46 @@ export class DeclarationReferantDataWebService {
 
         );
     }
+
+
+    GetDeclarationReferantDataDashBoard(Tenant: number) {
+
+        var url = this._apiUrl + '/GetDeclarationReferantDataDashBoard?tenant=' + Tenant;
+
+        return defer(() => {
+            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+
+                var allLists: any = response;
+                var myList: Array<ChartingDataClass> = new Array<ChartingDataClass>();
+                for (var key in allLists) {
+                    var entity: ChartingDataClass;
+                    entity = this.MapJsonToEntityListChartingDataClass(allLists[key]);
+                    myList.push(entity);
+                }
+
+
+                var serviceResponse: ServiceResponse;
+                serviceResponse = new ServiceResponse();
+                serviceResponse.Result = myList;
+                return serviceResponse;
+
+            }), catchError(ServiceHelper.HandleServiceError));
+        });
+    }
+
+    MapJsonToEntityListChartingDataClass(jsonList: any) {
+
+        var entityList: ChartingDataClass;
+        entityList = new ChartingDataClass();
+        var jsonListKeys = Object.keys(jsonList);
+
+        for (var key in jsonListKeys) {
+            var property = jsonListKeys[key];
+            entityList[property] = jsonList[property];
+        }
+
+
+        return entityList;
+    }
+
 }
