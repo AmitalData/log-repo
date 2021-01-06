@@ -122,6 +122,9 @@ namespace WebFreight.Web.DataProviders
         public DateTime? ATD_DateTime { get; set; }
         public DateTime? ATA_DateTime { get; set; }
         public string BranchName { get; set; }
+
+        public bool IsAccrualsApproved { get; set; }
+        public DateTime? AccrualsApprovalDate { get; set; }
     }
 
     public class ProfitDetailsClass
