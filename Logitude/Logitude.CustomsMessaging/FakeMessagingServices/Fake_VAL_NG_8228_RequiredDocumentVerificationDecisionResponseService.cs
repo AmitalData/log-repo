@@ -48,14 +48,23 @@ namespace Logitude.CustomsMessaging.FakeMessagingServices
 
             response.VerificationDecision = new VAL_NG_8228_MSG550_RequiredDocumentVerificationDecisionMessageVerificationDecision();
 
-          //if(  data.rejectVerificationReason != null)
-          //  {
-          //      response.VerificationDecision.rejectVerificationReason = data.rejectVerificationReason;
-          //      response.VerificationDecision.rejectVerificationReasonSpecified = true;
-          //  }
+            if (!string.IsNullOrEmpty(data.rejectVerificationReason.ToString()))
+            {
+                response.VerificationDecision.rejectVerificationReason = data.rejectVerificationReason;
+                response.VerificationDecision.rejectVerificationReasonSpecified = true;
+            }
+
+           
 
             response.VerificationDecision.rejectVerificationRemark = data.rejectVerificationRemark;
             response.VerificationDecision.verificationDecisionType = data.verificationDecisionType;
+
+            if(response.VerificationDecision.verificationDecisionType== 4 )
+            {
+                response.VerificationDecision.replacingDocumentId = int.Parse(DateTime.Now.ToString("MMddhhmm"));
+                response.VerificationDecision.replacingDocumentIdSpecified = true;
+
+            }
 
             response.GeneralDetails = new VAL_NG_8228_MSG550_RequiredDocumentVerificationDecisionMessageGeneralDetails()
             {
