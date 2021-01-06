@@ -8,9 +8,10 @@ import {ShipmentDomainService} from '../../Services/ShipmentDomainService';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 import {SpotLightDateComponent} from './SpotLightDateComponent';
+import { FeatureLocator } from '../../../Infrastructure/Utilities/FeatureLocator';
+import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
 
-@Component({
-    
+@Component({    
     templateUrl: './ShipmentSpotlightComponent.html',
 })
 
@@ -225,25 +226,30 @@ export class ShipmentSpotlightComponent {
     }
 
     ViewEntityClicked() {
-        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
-            .then(cmpRef => {
-                cmpRef.instance.ComponentRef = cmpRef;
-                cmpRef.instance.Run({ EntityId: this.EntityId, ObjectTableName: 'Shipment' });
+        var myCodes: string[] = [];
+        myCodes.push("EAWB");
+        myCodes.push("BUBK");
 
-                //let isEditComponentSaved = false;
-                //cmpRef.instance.BackCompleted.subscribe(bk => {
-                //    if (isEditComponentSaved) {
-                //        this.isLoadHousesRequested = true;
-                //        this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
-                //    }
-                //});
+        if (FeatureLocator.IsPackageOneOf(myCodes)) {
+            var logWindow = new LogitudeWindow();
+            logWindow.Width = 960;
+            logWindow.Height = 600;
+            logWindow.Title = ShipmentTool.GetAWBWizardHeader(this.EntityPM.ShipmentLevelCode, this.EntityPM.DirectionId);
+            logWindow.WindowArgs = this.EntityId;
+            logWindow.Show('./ShipmentModules/ShipmentAWB/Components/AWBWizard/AWBWizardLoadComponent');
 
-                //cmpRef.instance.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
-                //    if (isSaveSuccess) {
-                //        isEditComponentSaved = true;
-                //    }
-                //});
+            logWindow.WindowClosed.subscribe(($event: any) => {
+                //this.BuildItemsCollection();
             });
+        }
+
+        else {
+            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
+                .then(cmpRef => {
+                    cmpRef.instance.ComponentRef = cmpRef;
+                    cmpRef.instance.Run({ EntityId: this.EntityId, ObjectTableName: 'Shipment' });
+                });
+        }
     }
 
     OnDateComponentClosed(dateComponent: SpotLightDateComponent, legItem: LegItem) {
