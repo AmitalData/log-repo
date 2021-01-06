@@ -15,7 +15,7 @@ Scenario: Create New Charge Type
 	Given Charge type with the following properties
 		| name             | value                                                 |
 		| Code             | {RandomString(3)}                                     |
-		| EnglishName      | Test Charge Type 2                                    |
+		| EnglishName      | Test Charge Type                                      |
 		| ChargesGroupCode | NONE                                                  |
 		| MeasurementId    | Get {Id} from {Code} {FIXD} using {MeasurementViews}  |
 		| ChargesGroupId   | Get {Id} from {Code} {NONE} using {ChargesGroupViews} |

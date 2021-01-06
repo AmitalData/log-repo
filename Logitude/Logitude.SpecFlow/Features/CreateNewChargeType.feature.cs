@@ -141,7 +141,7 @@ this.FeatureBackground();
                             "{RandomString(3)}"});
                 table2.AddRow(new string[] {
                             "EnglishName",
-                            "Test Charge Type 2"});
+                            "Test Charge Type"});
                 table2.AddRow(new string[] {
                             "ChargesGroupCode",
                             "NONE"});
