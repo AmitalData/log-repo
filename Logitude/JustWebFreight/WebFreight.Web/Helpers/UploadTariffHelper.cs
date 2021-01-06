@@ -1673,7 +1673,9 @@ namespace WebFreight.Web.Helpers
                     FileSize = document.FileSize,
                 };
 
-                storageservice.Write(ByteData, fileInfo);
+                //storageservice.Write(ByteData, fileInfo);
+                string[] blockIdlist = { Convert.ToBase64String(Guid.NewGuid().ToByteArray()) };
+                storageservice.WriteBlock(ByteData, fileData.Length, blockIdlist, 0, fileInfo);
             }
 
             return document != null ? document.Id : null;
