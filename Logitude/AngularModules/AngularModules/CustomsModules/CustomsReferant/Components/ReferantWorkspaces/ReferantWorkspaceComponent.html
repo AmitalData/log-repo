@@ -90,7 +90,65 @@
                     <td style="width:15px;">
                         <div></div>
                     </td>
+ 
+                    <td>
+                        <div class="GeneratedGridContainer" style="padding:5px;vertical-align:top;top:0;position:absolute">
+                            <SectionBox>
+                                <SectionHead>
+                                    <table>
+                                        <tr>
+                                            <td style="width:160px;">
+                                                <label>In Progress Bookings</label>
+                                            </td>
+
+                                            <td>
+                                                <div></div>
+                                            </td>
+
+                                            <td style="width: 165px; vertical-align:middle;">
+                                                <div class="SquareIcon" style="background: #487E9F; display:inline-block;"></div>
+                                                <span style="width:135px; max-width:135px; font-size: 11px; color: #282E30; text-indent: 15px;" class="TextTrimming">Waiting for Transmission</span>
+                                            </td>
+
+                                            <td style="width: 200px; vertical-align:middle;">
+                                                <div class="SquareIcon" style="background: #DA7B38; display:inline-block;"></div>
+                                                <span style="width:175px; max-width:175px; font-size: 11px; color: #282E30; text-indent: 15px;" class="TextTrimming">Waiting for Airline Confirmation</span>
+                                            </td>
+
+                                            <td style="width: 185px; vertical-align:middle;">
+                                                <div class="SquareIcon" style="background: #21782E; display:inline-block;"></div>
+                                                <span style="width:155px; max-width:155px; font-size: 11px; color: #282E30; text-indent: 15px;" class="TextTrimming">Confirmed Without Shipment</span>
+                                            </td>
+
+                                            <td style="width: 135px; vertical-align:middle;">
+                                                <div class="SquareIcon" style="background: #FF0000; display:inline-block;"></div>
+                                                <span style="width:115px; max-width:115px; font-size: 11px; color: #282E30; text-indent: 15px;" class="TextTrimming">Errors and Rejections</span>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </SectionHead>
+
+                                <SectionBody>
+                                    <div class="MediaFill" [id]="ChartID" (mousedown)="OnMyMouseDown($event,'null')">
+                                        <div class="MediaFill">
+                                            <div #InProgressBookingDashboard></div>
+                                            <div [attr.id]="InProgressBookingId" style="height:95%;width:100%" (click)="BarClicking()"></div>
+                                        </div>
+                                    </div>
+                                </SectionBody>
+                            </SectionBox>
+                        </div>
+                    </td>
+              
+
+</tr>
+                <tr style="height: 10px;">
+                    <td>
+                        <div></div>
+                    </td>
                 </tr>
+
+
             </table>
         </td>
     </tr>

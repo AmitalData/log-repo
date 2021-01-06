@@ -5,6 +5,11 @@ import { EntityResourceService } from '../../../../Infrastructure/Services/Entit
 import { DeclarationReferantDataWebService } from '../../../../Customs/Services/WebServices/DeclarationReferantDataWebService';
 import { ListComponentArgs } from '../../../../Infrastructure/Args';
 import { TextCodeTranslator } from '../../../../Infrastructure/Utilities/TextCodeTranslator';
+import { ChartingDataClass } from '../../../../Infrastructure/DataContracts/Dashboard/ChartingDataClass';
+import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
+import { FormatTool } from '../../../../Infrastructure/Tools';
+import { DeclarationReferantDataExtendedListService } from '../../../../Customs/Services/ExtendedLists/DeclarationReferantDataExtendedListService';
+declare var makeAmBarChart, BarClick, ResetItem: any;
 
 @Component({
     templateUrl: './ReferantWorkspaceComponent.html',
@@ -29,10 +34,34 @@ export class ReferantWorkspaceComponent implements AfterViewInit {
     public FilesAvailableFreeOfChargeVisibility: boolean = true;
     public AllCasesVisibility: boolean = true;
     public isRTL: boolean = false;
+    public ChartID: string = null;
+    public InProgressBookingId: string = "InProgressBookingId_";
+    public InProgressBookingDashboard: Array<ChartingDataClass>;
+    public InProgressBookingYAxis: any[] = [];
+    public InProgressBookingYAxisFilterd = [];
+    public InProgressBookingXAxis: string[] = [];
+    public filterAgrs: ApiQueryFilters;
+
+
+    barChartColors: any[] = [
+        {
+            backgroundColor1: '#599DDB',
+            backgroundColor2: '#c8d8e2',
+            borderWidth: 0
+        },
+
+        {
+            backgroundColor1: '#F27824',
+            backgroundColor2: '#ecbd9b',
+            borderWidth: 0,
+        },
+ 
+    ]
+
 
     ngAfterViewInit(): void {
     }
-    constructor(public _declarationReferantDataWebService: DeclarationReferantDataWebService) {
+    constructor(public _declarationReferantDataWebService: DeclarationReferantDataWebService ) {
         this.CurrentSession.StartBusyIndicatorLoading();
         _declarationReferantDataWebService.GetQueriesCounts().subscribe(
             (data: any) => {
@@ -40,9 +69,204 @@ export class ReferantWorkspaceComponent implements AfterViewInit {
                 this.isScreenLoaded = true;
                 this.CurrentSession.StopBusyIndicator();
 
+                if (this.CurrentSession == null) {
+                    this.ChartID = "ChartID_-1_-1";
+                }
+
+                else {
+                    this.ChartID = "ChartID_" + this.CurrentSession.GetChartId();
+                }
+
+                this.InProgressBookingId = this.InProgressBookingId + this.CurrentSession.GetChartId();
+                this.LoadInProgressBookingsDashboard();
             });
 
     }
+
+
+    LoadInProgressBookingsDashboard() {
+        this._declarationReferantDataWebService.GetDeclarationReferantDataDashBoard(SessionLocator.TenantPM.Id).subscribe((myResult: any) => {
+            this.InProgressBookingDashboard = new Array<ChartingDataClass>();
+            var myResponse: ServiceResponse = myResult;
+            this.InProgressBookingDashboard = myResponse.Result;
+            this.FillInProgressBookingDashboardData();
+        });
+    }
+
+
+    FillInProgressBookingDashboardData() {
+        var index = 0;
+        this.InProgressBookingXAxis = [];
+
+        this.InProgressBookingDashboard.sort((a, b) => { return (a.DateTimeProperty === b.DateTimeProperty) ? 0 : (a.DateTimeProperty < b.DateTimeProperty) ? -1 : 1 });
+        var StringArr: Array<string> = new Array<string>();
+        var j = 0;
+
+        this.InProgressBookingDashboard.forEach(element => {
+            if (!StringArr.includes(element.StringProperty) && element.StringProperty != null) {
+                StringArr.push(element.StringProperty);
+                this.InProgressBookingYAxis[j] = { data: [], label: null, BindingElement: [], OwnerIds: [] };
+                this.InProgressBookingYAxis[j].data = [];
+                j++;
+            }
+        });
+
+        StringArr.sort((a, b) => { return (a === b) ? 0 : (a < b) ? -1 : 1 });
+        var Graphs = [];
+        var index = 0;
+        this.InProgressBookingDashboard.forEach(element => {
+            for (var i = 0; i < StringArr.length; i++) {
+                if (element.StringProperty == StringArr[i]) {
+                    this.InProgressBookingYAxis[i].data.push(element.IntegerProperty);
+                    this.InProgressBookingYAxis[i].label = element.DataTypeCode;
+                    this.InProgressBookingYAxis[i].BindingElement.push(element.DataTypeCode);
+                    this.InProgressBookingYAxis[i].OwnerIds.push(element.OwnerId);
+                    if (!this.InProgressBookingXAxis.includes(element.StringProperty) && element.StringProperty != null) {
+                        if (this.InProgressBookingXAxis[i] == null)
+                            this.InProgressBookingXAxis[i] = (element.StringProperty);
+
+                    }
+                }
+            }
+        });
+
+        this.InProgressBookingYAxisFilterd = [];
+        var DataProvider = [];
+        var objectArray = [];
+        var maximum = 0;
+        if (this.InProgressBookingYAxis.length > 0)
+            maximum = this.InProgressBookingYAxis[0].data[0];
+        this.InProgressBookingYAxis.forEach(element => {
+            for (var i = 0; i < element.data.length; i++) {
+                if (this.InProgressBookingYAxisFilterd[i] == null) {
+                    this.InProgressBookingYAxisFilterd[i] = { data: [], label: null, BindingElement: [], OwnerIds: [] };
+                }
+                if (element.data[i] > maximum)
+                    maximum = element.data[i];
+                this.InProgressBookingYAxisFilterd[i].data.push(element.data[i]);
+                this.InProgressBookingYAxisFilterd[i].BindingElement.push(element.BindingElement[i]);
+                this.InProgressBookingYAxisFilterd[i].OwnerIds.push(element.OwnerIds[i]);
+                if (index == 0) {
+                    Graphs[i] = {
+                        "balloonText": FormatTool.FormatBigNumbersToExtension("[[value]]") + "",
+                        "fillAlphas": 1,
+                        "lineAlpha": 0,
+                        "id": "AmGraph-1" + i,
+                        "title": element.BindingElement[i] + "",
+                        "type": "column",
+                        "valueField": "col" + (i + 1),
+                        // "bulletBorderColor": "#FFFFFF",
+                        "fillColors": [this.barChartColors[i].backgroundColor1 + "", this.barChartColors[i].backgroundColor2 + ""],
+                        //  "fillColors": ["#ff0000", "#00ff00"],
+                        "gradientOrientation": "horizontal",
+                        "borderAlpha": 0,
+                        "showHandOnHover": true,
+
+                        //   "plotAreaFillColors": ["#ff0000", "#f1783e", "#00ff00"],
+                    };
+                }
+                objectArray[i] = (element.data[i]);
+
+            }
+            DataProvider[index] = { "category": this.InProgressBookingXAxis[index], "col1": objectArray[0], "col2": objectArray[1], "col3": objectArray[2], "col4": objectArray[3] };
+            index++;
+        });
+
+        var InProgressBookingDashboardFilterd: Array<ChartingDataClass> = new Array<ChartingDataClass>();
+        try {
+            if (this.InProgressBookingXAxis.length != 0) {
+
+                maximum += 1;
+                while (maximum % 5 != 0) {
+                    maximum += 1;
+
+                }
+                makeAmBarChart(this.InProgressBookingId, Graphs, DataProvider, maximum);
+            }
+        }
+        catch (e) {
+
+        }
+    }
+
+
+    isResizing: boolean = false;
+    ChartLeft: number = 0;
+    lastDownX: number = 0;
+    lastDownY: number = 0;
+
+    OnMyMouseDown($event, arg) {
+        this.isResizing = true;
+        var grid = document.getElementById(this.ChartID);
+        var rec = grid.getBoundingClientRect();
+        this.ChartLeft = rec.left;
+        this.lastDownY = ($event.clientY - rec.bottom);
+        this.lastDownX = ($event.clientX - this.ChartLeft);
+    }
+    OnBarClick(e) {
+        var flag = false;
+        let item: any;
+        if (e.item != null && e.target != null)
+            flag = true;
+        item = e.item;
+        var Key = e.target.columnIndex;
+        var myQueryCode: string = "";
+        var displayName: string = "";
+        var myTableName: string = "Booking";
+        this.filterAgrs = new ApiQueryFilters();
+        if (flag) {
+            switch (Key + "") {
+                case "0":
+                    {
+                        displayName = "Waiting for Transmission";
+                        myQueryCode = "CreatedBookings";
+                        break;
+                    }
+
+                case "1":
+                    {
+                        displayName = "Waiting for Airline Confirmation";
+                        myQueryCode = "WatingForResponse";
+                        break;
+                    }
+
+
+                case "2":
+                    {
+                        displayName = "Confirmed Without Shipment";
+                        myQueryCode = "ConfirmedBookings";
+                        break;
+                    }
+
+                case "3":
+                    {
+                        displayName = "Errors and Rejections";
+                        myQueryCode = "RejectedBookings";
+                        break;
+                    }
+            }
+
+            this.filterAgrs.addAdditionalFilter("IsCancelled", false, null, null, "Equals", false, false, false, "Boolean");
+            this.filterAgrs.addAdditionalFilter("MainCarriageCarrierId", this.InProgressBookingYAxisFilterd[e.target.columnIndex].OwnerIds[e.index], null, null, "Equals", false, false, false, "String");
+
+            var listArgs = new ListComponentArgs();
+            listArgs.Filters = this.filterAgrs;
+            listArgs.QueryCode = myQueryCode;
+            listArgs.ObjectTableName = myTableName;
+            listArgs.DisplayTitle = displayName;
+            listArgs.BackButtonTitle = "Operations";
+
+            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
+                .then(cmpRef => {
+                    cmpRef.instance.BackCompleted.subscribe(($event: any) => this.LoadAllScreenData());
+                    cmpRef.instance.ComponentRef = cmpRef;
+                    cmpRef.instance.Run(listArgs);
+                    this.CurrentSession.AddMenuReference(cmpRef);
+                });
+        }
+    }
+
+
     ViewReferantQuery(myQueryCode: string) {
         if (myQueryCode != null) {
             var displayTitle = "";
