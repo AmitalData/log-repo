@@ -129,18 +129,14 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             JournalLinePM firstJournalLine = entityPM.JournalLines.FirstOrDefault();
             if (firstJournalLine != null)
             {
-                JournalLineQueryService journalLineQueryService = new JournalLineQueryService(firstJournalLine.Tenant);
-                JournalLinePM journalLine = journalLineQueryService.GetSingle(firstJournalLine.JournalId, firstJournalLine.Line, false, false);
+                JournalLinePM journalLine = GetOldJournalLineFromDB(firstJournalLine);
 
                 if (firstJournalLine.Notes != journalLine.Notes)
                 {
-                    List<string> debitAccountIds = entityPM.JournalLines.Where(s => s.DebitAccountId != null).Select(a => a.DebitAccountId).ToList();
-                    List<string> creditAccountIds = entityPM.JournalLines.Where(s => s.CreditAccountId != null).Select(a => a.CreditAccountId).ToList();
-                    List<string> accountIds = debitAccountIds.Union(creditAccountIds).ToList();
                     LedgerTransactionQueryService ledgerTransactionQueryService = new LedgerTransactionQueryService(entityPM.Tenant);
-                    List<LedgerTransactionPM> allTransactionRelatedToJournal = ledgerTransactionQueryService.GetLedgerTransactionsByAccountIdListAndJournalId(accountIds, entityPM.Id, entityPM.Tenant).ToList();
+                    List<LedgerTransactionPM> allTransactionsRelatedToJournal = ledgerTransactionQueryService.GetByJournalId(entityPM.Id, entityPM.Tenant).ToList();
                     var ledgerTransactionUpdateService = new LedgerTransactionUpdateService(this.MainContext as IAccountingContext, new Dictionary<string, IContext>(), entityPM.Tenant);
-                    foreach (LedgerTransactionPM transaction in allTransactionRelatedToJournal)
+                    foreach (LedgerTransactionPM transaction in allTransactionsRelatedToJournal)
                     {
                         transaction.Notes = firstJournalLine.Notes;
                         transaction.ChangeSetOp = ChangeSetOperation.Update;
@@ -149,6 +145,13 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 }
 
             }
+        }
+
+        private static JournalLinePM GetOldJournalLineFromDB(JournalLinePM firstJournalLine)
+        {
+            JournalLineQueryService journalLineQueryService = new JournalLineQueryService(firstJournalLine.Tenant);
+            JournalLinePM journalLine = journalLineQueryService.GetSingle(firstJournalLine.JournalId, firstJournalLine.Line, false, false);
+            return journalLine;
         }
 
         protected override void OnUpdating(JournalPM entityPM, Journal entityPOCO)
