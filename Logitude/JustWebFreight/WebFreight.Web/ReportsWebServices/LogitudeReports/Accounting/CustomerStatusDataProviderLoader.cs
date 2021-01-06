@@ -219,9 +219,12 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                 CustomerPaymentTerm = customerPeriods.First().AccountTermName,
                 CustomerLocalPaymentTerm = customerPeriods.First().AccountTermLocalName,
                 CustomerPhone = customerPeriods.First().AccountPhone,
+                CurrencyCode = customerPeriods.First().CurrencyCode,
+                ChartOfAccountLocalName = customerPeriods.First().ChartOfAccountLocalName,
+
+
 
                 //credit details
-
                 CreditLimit = (decimal)customerPeriods.First().CreditLimitAmount,
                 CreditStatus = customerPeriods.First().CreditStatusAmount ?? 0,
                 TotalFutureOpenCheques = customerPeriods.First().TotalFutureOpenCheques ?? 0,
@@ -229,33 +232,34 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                 TotalOpenShipments = customerPeriods.First().TotalOpenShipments ?? 0,
                 ExternalTransactionsTotal = ExternalTransactions.Where(d => d.AccountId == customerPeriods.First().AccountId).Sum(d => d.LocalAmountCredit),
 
-                AccountingBalance = GetBalanceSummationForSpliitedAccounts(customerPeriods) ?? 0,
-                Periods = GetStatusPeriods(customerPeriods)
-                AccountSalesmanName = customer.First().AccountSalesmanName,
-                AccountSalesmanLocalName = customer.First().AccountSalesmanLocalName,
-                AccountCollectorName = customer.First().AccountCollectorName,
-                AccountCollectorLocalName = customer.First().AccountCollectorLocalName,
-                Category1Name = customer.First().Category1Name,
-                Category2Name = customer.First().Category2Name,
-                Category3Name = customer.First().Category3Name,
-                Category4Name = customer.First().Category4Name,
-                Category5Name = customer.First().Category5Name,
-                Category6Name = customer.First().Category6Name,
-                Category1LocalName = customer.First().Category1LocalName,
-                Category2LocalName = customer.First().Category2LocalName,
-                Category3LocalName = customer.First().Category3LocalName,
-                Category4LocalName = customer.First().Category4LocalName,
-                Category5LocalName = customer.First().Category5LocalName,
-                Category6LocalName = customer.First().Category6LocalName,
+                AccountingBalance = GetBalanceSummationForSplittedAccounts(customerPeriods) ?? 0,
+                TotalForeign = customerPeriods.Sum(d => d.Total),
+                TotalLocal = GetBalanceSummationForSplittedAccounts(customerPeriods) ?? 0,
+                Periods = GetStatusPeriods(customerPeriods),
 
-
+                AccountSalesmanName = customerPeriods.First().AccountSalesmanName,
+                AccountSalesmanLocalName = customerPeriods.First().AccountSalesmanLocalName,
+                AccountCollectorName = customerPeriods.First().AccountCollectorName,
+                AccountCollectorLocalName = customerPeriods.First().AccountCollectorLocalName,
+                Category1Name = customerPeriods.First().Category1Name,
+                Category2Name = customerPeriods.First().Category2Name,
+                Category3Name = customerPeriods.First().Category3Name,
+                Category4Name = customerPeriods.First().Category4Name,
+                Category5Name = customerPeriods.First().Category5Name,
+                Category6Name = customerPeriods.First().Category6Name,
+                Category1LocalName = customerPeriods.First().Category1LocalName,
+                Category2LocalName = customerPeriods.First().Category2LocalName,
+                Category3LocalName = customerPeriods.First().Category3LocalName,
+                Category4LocalName = customerPeriods.First().Category4LocalName,
+                Category5LocalName = customerPeriods.First().Category5LocalName,
+                Category6LocalName = customerPeriods.First().Category6LocalName,
 
                 Periods = GetStatusPeriods(periodsByDate)
             };
             return customerStatus;
         }
 
-        private static decimal? GetBalanceSummationForSpliitedAccounts(IGrouping<string, PeriodMExtended> customerPeriods)
+        private static decimal? GetBalanceSummationForSplittedAccounts(IGrouping<string, PeriodMExtended> customerPeriods)
         {
             return customerPeriods
                             .GroupBy(d => new { d.CurrencyId, d.SplitAccountId })

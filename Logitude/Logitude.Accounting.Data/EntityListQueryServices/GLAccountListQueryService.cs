@@ -376,7 +376,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                                                               select a);
 
             IQueryable<GLAccountList> accountListQuery = this.GetIqueryableList(accountQuery);
-            var xxx = accountListQuery.ToList();
+            //var xxx = accountListQuery.ToList();
 
             return accountListQuery;
         }

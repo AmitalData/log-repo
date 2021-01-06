@@ -511,6 +511,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                          AccountInternalNumber = acc.InternalNumber,
                          InterestCreditLimit = acc.InterestCreditLimit,
                          AccountTermName = card.PaymentTerm.EnglishName,
+                         ChartOfAccountLocalName = acc.ChartOfAccountsName,
 
                          CurrencyId = acc.ReconcileMethodCode == "0" ? tenant.CurrencyId : acc.CurrencyId,
 
@@ -640,6 +641,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                         AccountSalesmanLocalName = r.AccountSalesmanLocalName,
                         AccountCollectorName = r.AccountCollectorName,
                         AccountCollectorLocalName = r.AccountCollectorLocalName,
+                        ChartOfAccountLocalName = r.ChartOfAccountLocalName,
 
                         Category1Name = r.Category1Name,
                         Category2Name = r.Category2Name,
@@ -763,6 +765,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                                                       AccountSalesmanLocalName = account.AccountSalesmanLocalName,
                                                       AccountCollectorName = account.AccountCollectorName,
                                                       AccountCollectorLocalName = account.AccountCollectorLocalName,
+                                                      ChartOfAccountLocalName =account.ChartOfAccountLocalName,
 
                                                       Category1Name = account.Category1Name,
                                                       Category2Name = account.Category2Name,
@@ -1534,6 +1537,7 @@ Period	Acc	Currency	Total
 
 
         public string AccountDisplayNumber { get; set; }
+        public string ChartOfAccountLocalName { get; set; }
         public string AccountInternalNumber { get; set; }
         public string AccountCurrencyCode { get; set; }
         //accountCardlist.Payment Term: //PaymentTermName = card.PaymentTerm == null ? null : card.PaymentTerm.EnglishName,
