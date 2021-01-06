@@ -966,7 +966,7 @@ export class NewAirFreightCostComponent extends BaseComponent implements OnInit 
             if (containersArray.length > 0) {
                 var index: number = 1;
                 containersArray.forEach(item => {
-                    var packageType: PackageTypeList = this.allPackageTypes.filter(d => d.Code == item.trim())[0];
+                    var packageType: PackageTypeList = this.allPackageTypes.filter(d => d.Code == item.trim() && d.Tenant == InfraSettings.TenantPM.Id)[0];
                     if (packageType != null) {
                         this['ContainerType' + index++ + 'Id'] = packageType.Id;
                     }

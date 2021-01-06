@@ -1488,10 +1488,8 @@ namespace Logitude.TariffModule.BL.Helpers
         }
         private decimal GetMeasurement(string id, int tenant)
         {
-            MeasurementQuery measurementQuery = new MeasurementQuery(tenant);
             PackageTypeQuery packageTypeQuery = new PackageTypeQuery(tenant);
-            var measurement = measurementQuery.GetSingleMeasurementPM(id);
-            var packageType = packageTypeQuery.GetSinglePMByCode(measurement.Code, tenant);
+            var packageType = packageTypeQuery.GetSinglePM(id, tenant);
             return (decimal) (packageType != null ? packageType.TEU : 0);
         }
         private decimal CalculateLocalAmount(decimal amount, string convertedCurrencyId, string currencyId, int tenant)
