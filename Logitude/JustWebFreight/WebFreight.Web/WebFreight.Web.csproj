@@ -2594,6 +2594,7 @@
     <Compile Include="Helpers\DataProviderHelpers\CrossDockEntryShipmentService.cs" />
     <Compile Include="Helpers\DataProviderHelpers\CrossDockReleaseShipmentService.cs" />
     <Compile Include="Helpers\DataProviderHelpers\ShipmentsEventsListDataProvider.cs" />
+    <Compile Include="Helpers\AutomationDocumentHelper.cs" />
     <Compile Include="Helpers\DocumentTypeTemplateDefultAttachmentService.cs" />
     <Compile Include="Helpers\DWQueryBuilderHelper.cs" />
     <Compile Include="Helpers\AgentSharedManifestHelper.cs" />
@@ -2648,6 +2649,7 @@
     <Compile Include="Helpers\ResetPasswordHelper.cs" />
     <Compile Include="Helpers\SchedulerHelper.cs" />
     <Compile Include="Helpers\SecurityDocumentHelper.cs" />
+    <Compile Include="Helpers\SendDocumentDataExernalService.cs" />
     <Compile Include="Helpers\SendGrid\SendGridAnalyzer.cs" />
     <Compile Include="Helpers\SharedLogisticContactHelper.cs" />
     <Compile Include="Helpers\SignUpHelper.cs" />

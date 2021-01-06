@@ -179,8 +179,22 @@
     <Constraints
       Nullable="true" />
   </Column>
-
-
+  <Column
+      Name="SendDocumentAutomationFailedXml"
+      ShortName="SendDocumentFailedXml"
+      Type="nvarchar"
+      Size="-1">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="SendDocumentAutomationSsucceedXml"
+    ShortName="SendDocumentSsucceedXml"
+    Type="nvarchar"
+    Size="-1">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="CreateByUserId"
     ReferencedTable="Users"
