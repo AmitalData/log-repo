@@ -27,6 +27,7 @@ import { ServiceResponse } from '../../../DataContracts/ServiceResponse';
 import { FeatureLocator } from '../../../../Infrastructure/Utilities/FeatureLocator';
 import { EntityResourceService } from '../../../../Infrastructure/Services/EntityResourceService';
 import { HttpClient } from '@angular/common/http';
+import { MessageWindow } from '../../../../Controls/Windows/MessageWindow';
 
 
 @Component({
@@ -365,30 +366,38 @@ export class QueryListComponent implements OnInit, AfterViewInit {
     }
 
     DeleteButtonClicked(Item) {
-        var confirmWindow = new ConfirmWindow();
-        confirmWindow.Title = TextCodeTranslator.Translate("General.O.DeletQuery");
-        confirmWindow.Show(TextCodeTranslator.Translate("General.M.WantToDeleteThisQuery"));
-        confirmWindow.WindowClosed.subscribe((event: any) => {
-            if (confirmWindow.Yes) {
-                this.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Saving"));
 
-                var query = window.Queries.filter(q => q.UniqueCode == Item.UniqueCode)[0];
-                var myService: QueriesPMService = new QueriesPMService();
-                myService.setServiceArgs(this.serviceArgs);
+        if (Item.SharedByUserId && Item.SharedByUserId != SessionLocator.LoggedUserId && Item.IsViewOnly) {
+            var messageWindow = new MessageWindow();
+            messageWindow.Width = 450;
+            messageWindow.Height = 190;
+            messageWindow.Show("You are not allowed to remove this view. It was shared with view only mode.");
+        } else {
 
-                myService.delete(query, SessionInfo.LoggedUserId).subscribe((myResult:any) => {
-                    this.CurrentSession.StopBusyIndicator();
-                    window.Queries = window.Queries.filter(a => a.UniqueCode != query.UniqueCode);
-                    var ObjectTable = window.ObjectTables.filter(x => x.Name === this.ObjectTableName)[0];
-                    var Query = window.Queries.filter(a => a.ObjectTableId === ObjectTable.Id && a.IndexOrder == 0)[0];
-                    this.UserItemSource = this.UserItemSource.filter(a => a.UniqueCode != query.UniqueCode);
-                    this.ComputeListHeight(this.ItemsSource.length + this.UserItemSource.length);
-                    this.FillUserItemSource_Share();
-                    this.QueriesChangedEvent.emit(Query);
-                });
-            }
-        });
+            var confirmWindow = new ConfirmWindow();
+            confirmWindow.Title = TextCodeTranslator.Translate("General.O.DeletQuery");
+            confirmWindow.Show(TextCodeTranslator.Translate("General.M.WantToDeleteThisQuery"));
+            confirmWindow.WindowClosed.subscribe((event: any) => {
+                if (confirmWindow.Yes) {
+                    this.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Saving"));
 
+                    var query = window.Queries.filter(q => q.UniqueCode == Item.UniqueCode)[0];
+                    var myService: QueriesPMService = new QueriesPMService();
+                    myService.setServiceArgs(this.serviceArgs);
+
+                    myService.delete(query, SessionInfo.LoggedUserId).subscribe((myResult: any) => {
+                        this.CurrentSession.StopBusyIndicator();
+                        window.Queries = window.Queries.filter(a => a.UniqueCode != query.UniqueCode);
+                        var ObjectTable = window.ObjectTables.filter(x => x.Name === this.ObjectTableName)[0];
+                        var Query = window.Queries.filter(a => a.ObjectTableId === ObjectTable.Id && a.IndexOrder == 0)[0];
+                        this.UserItemSource = this.UserItemSource.filter(a => a.UniqueCode != query.UniqueCode);
+                        this.ComputeListHeight(this.ItemsSource.length + this.UserItemSource.length);
+                        this.FillUserItemSource_Share();
+                        this.QueriesChangedEvent.emit(Query);
+                    });
+                }
+            });
+        }
 
         
 
@@ -458,34 +467,44 @@ export class QueryListComponent implements OnInit, AfterViewInit {
     }
 
     EditButtonClicked(Item) {
-        this.ignoreItemClicked = true;
-        this.ignoreMouseDown = false;
-        var windowArgs: any = {};
-        windowArgs.queryId = Item.Id;
-        windowArgs.queryCode = Item.UniqueCode;
-        windowArgs.pubSubAdvanceQueryFiltersService = this.pubSubAdvanceQueryFiltersService;
-        windowArgs.currentObjectTable = this.ObjectTableName;
-        windowArgs.IsNew = false;
-        windowArgs.QueryName = TextCodeTranslator.Translate(Item[this.Binding]);
-        var logitudeWindow = new LogitudeWindow();
-        logitudeWindow.Width = 960;
-        logitudeWindow.Height = 610;
-        logitudeWindow.Title = TextCodeTranslator.Translate("General.B.EditView");
-        logitudeWindow.WindowArgs = windowArgs;
-        logitudeWindow.Show('./Infrastructure/Components/NewViewComponent/NewViewComponent');
-        logitudeWindow.WindowClosed.subscribe(($event: any) => {
-            var ObjectTable = window.ObjectTables.filter(x => x.Name === this.ObjectTableName)[0];
-            var Query = window.Queries.filter(a => a.ObjectTableId === ObjectTable.Id && a.UniqueCode == $event)[0];
 
-            if (!Query) {
-                Query = window.Queries.filter(a => a.ObjectTableId === ObjectTable.Id && a.IndexOrder == 0 && a.UniqueCode != $event)[0];
-            }
+        if (Item.SharedByUserId && Item.SharedByUserId != SessionLocator.LoggedUserId && Item.IsViewOnly) {
+            var messageWindow = new MessageWindow();
+            messageWindow.Width = 450;
+            messageWindow.Height = 190;
+            messageWindow.Show("You are not allowed to edit this view. It was shared with view only mode.");
+        }
+        else {
 
-            this.SetDisplayText();
-            this.QueriesChangedEvent.emit(Query);
-            this.FillUserItemSource_Share();
-            this.NewViewClosedEvent.emit("");            
-            this.CD.detectChanges();            
-        });
+            this.ignoreItemClicked = true;
+            this.ignoreMouseDown = false;
+            var windowArgs: any = {};
+            windowArgs.queryId = Item.Id;
+            windowArgs.queryCode = Item.UniqueCode;
+            windowArgs.pubSubAdvanceQueryFiltersService = this.pubSubAdvanceQueryFiltersService;
+            windowArgs.currentObjectTable = this.ObjectTableName;
+            windowArgs.IsNew = false;
+            windowArgs.QueryName = TextCodeTranslator.Translate(Item[this.Binding]);
+            var logitudeWindow = new LogitudeWindow();
+            logitudeWindow.Width = 960;
+            logitudeWindow.Height = 610;
+            logitudeWindow.Title = TextCodeTranslator.Translate("General.B.EditView");
+            logitudeWindow.WindowArgs = windowArgs;
+            logitudeWindow.Show('./Infrastructure/Components/NewViewComponent/NewViewComponent');
+            logitudeWindow.WindowClosed.subscribe(($event: any) => {
+                var ObjectTable = window.ObjectTables.filter(x => x.Name === this.ObjectTableName)[0];
+                var Query = window.Queries.filter(a => a.ObjectTableId === ObjectTable.Id && a.UniqueCode == $event)[0];
+
+                if (!Query) {
+                    Query = window.Queries.filter(a => a.ObjectTableId === ObjectTable.Id && a.IndexOrder == 0 && a.UniqueCode != $event)[0];
+                }
+
+                this.SetDisplayText();
+                this.QueriesChangedEvent.emit(Query);
+                this.FillUserItemSource_Share();
+                this.NewViewClosedEvent.emit("");
+                this.CD.detectChanges();
+            });
+        }
     }
 }

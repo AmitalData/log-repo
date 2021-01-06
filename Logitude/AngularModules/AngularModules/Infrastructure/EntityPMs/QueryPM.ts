@@ -187,7 +187,11 @@ export class QueryPM {
     public get FeatureUniqeCode() { return this.featureUniqeCode; }
     public set FeatureUniqeCode(newValue: string) { this.featureUniqeCode = newValue; }
 
-    
+    private isViewOnly: boolean;
+    public get IsViewOnly() { return this.isViewOnly; }
+    public set IsViewOnly(newValue: boolean) { this.isViewOnly = newValue; }
+
+
     private sharedUserQueries: SharedUserQueryPM[];
     get SharedUserQueries() {
         if (this.sharedUserQueries == null) {

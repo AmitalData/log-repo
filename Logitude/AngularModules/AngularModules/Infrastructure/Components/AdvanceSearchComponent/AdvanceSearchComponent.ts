@@ -56,6 +56,8 @@ export class AdvanceSearchComponent implements OnInit {
     private serviceArgs: ServiceArgs;
     public BooleanValues = ["True", "False", "No Filter"];
     LayoutDirection: string = 'ltr';
+    public IsShowWarringMessage: boolean = false;
+    public  IsQueryViewOnly: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(fb: FormBuilder, private pubSubService: PubSubService, private CD: ChangeDetectorRef) {
         this.serviceArgs = new ServiceArgs();
@@ -142,6 +144,7 @@ export class AdvanceSearchComponent implements OnInit {
             }
         });
 
+        var query = window.qyer
         //this.textChange.subscribe((res) => {
         //    this.onTextChange(res);
         //});
@@ -206,7 +209,8 @@ export class AdvanceSearchComponent implements OnInit {
     noFiltersField: FilterField;
     objectField: ObjectFieldPM;
     QueryFilterChangedAction(QueryCode: string) {
-
+        this.IsShowWarringMessage = false;
+        this.IsQueryViewOnly = false;
         this.allFilterFields = [];
         this.constantFilterFieldsList = [];
         this.CurrentFilters = [];
@@ -239,6 +243,12 @@ export class AdvanceSearchComponent implements OnInit {
 
             else {
                 //newGrid = new Grid() { Background = new SolidColorBrush(Colors.Transparent) };
+
+                if (this.currentQuery.SharedByUserId && this.currentQuery.SharedByUserId != SessionLocator.LoggedUserId && this.currentQuery.IsViewOnly ) {
+                    this.IsShowWarringMessage = true;
+                    this.IsQueryViewOnly = true;
+                }
+
                 if (this.currentQuery.UserId != null) {
                     this.IsUserQuery = true;
                 }
@@ -431,6 +441,8 @@ export class AdvanceSearchComponent implements OnInit {
 
 
     }
+
+
 
     SaveChangesAndRecreate() {
         //searchControl.SaveChanges();
