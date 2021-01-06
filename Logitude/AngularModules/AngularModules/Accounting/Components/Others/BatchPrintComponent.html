@@ -201,7 +201,7 @@
                     <td colspan="12" style="width:242px">
                         <div [attr.id]="'printbutton'">
                             <span style="display:inline" class="x-split-button">
-                                <button (click)="PrintInvoicesAndAttachedReports()"
+                                <button (click)="GetNumberOfDocumentNotPrinted(true)"
                                         class="RedButton"
                                         style="width:220px;border-radius: 0px 5px 5px 0px;float:right">
                                     &nbsp;{{'InterestReport.O.PrintInvoicesAndAttachedReports' | TextCodeTranslationPipe}}
@@ -216,7 +216,7 @@
                                      style="position: fixed;z-index: 1;background-color : whitesmoke;width:200px;">
                                     <ul class="x-button-drop-menu">
                                         <li>
-                                            <span (click)="GetNumberOfDocumentNotPrinted()">{{'InterestReport.O.PrintInvoicesAlone' | TextCodeTranslationPipe}}</span>
+                                            <span (click)="GetNumberOfDocumentNotPrinted(false)">{{'InterestReport.O.PrintInvoicesAlone' | TextCodeTranslationPipe}}</span>
                                         </li>
                                     </ul>
                                 </div>

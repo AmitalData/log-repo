@@ -471,7 +471,8 @@ var interestReportArgs: InterestReportArguments=  this.FillInterestReportArgs();
  
 // }
 
-GetNumberOfDocumentNotPrinted() {
+GetNumberOfDocumentNotPrinted(isReportsAttached: boolean) {
+  this.AttachReportWithEachInvoice = isReportsAttached ? true: false;
   this.ValidationErrorsList = [];
   if (this.SelectedItemsCount == 0) {
     this.ValidationErrorsList.push(TextCodeTranslator.Translate("InterestReport.O.SelectAtLeastOnLine"));
@@ -514,10 +515,6 @@ GetNumberOfDocumentNotPrinted() {
     this.DropdownClose();
     }
 
-    PrintInvoicesAndAttachedReports() {
-        this.AttachReportWithEachInvoice = true;
-        this.GetNumberOfDocumentNotPrinted();
-    }
 
 // public newWindow:any;
 
