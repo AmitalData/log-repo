@@ -46,19 +46,18 @@
       <HintPath>..\packages\CommonServiceLocator.2.0.2\lib\net45\CommonServiceLocator.dll</HintPath>
     </Reference>
     <Reference Include="GalaSoft.MvvmLight.Extras.WPF45, Version=4.1.27.22784, Culture=neutral, PublicKeyToken=0e27b6f8be9b2ef7, processorArchitecture=MSIL">
-      <HintPath>..\packages\DWEditorGalaSoft.1.0.0\lib\Net40\GalaSoft.MvvmLight.Extras.WPF45.dll</HintPath>
+      <HintPath>..\packages\DWEditorGalaSoft.1.1.0\lib\Net40\GalaSoft.MvvmLight.Extras.WPF45.dll</HintPath>
     </Reference>
     <Reference Include="GalaSoft.MvvmLight.WPF45, Version=4.1.27.22784, Culture=neutral, PublicKeyToken=eabbf6a5f5af5004, processorArchitecture=MSIL">
-      <HintPath>..\packages\DWEditorGalaSoft.1.0.0\lib\Net40\GalaSoft.MvvmLight.WPF45.dll</HintPath>
+      <HintPath>..\packages\DWEditorGalaSoft.1.1.0\lib\Net40\GalaSoft.MvvmLight.WPF45.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Practices.ServiceLocation, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\DWEditorGalaSoft.1.0.0\lib\Net40\Microsoft.Practices.ServiceLocation.dll</HintPath>
+      <HintPath>..\packages\DWEditorGalaSoft.1.1.0\lib\Net40\Microsoft.Practices.ServiceLocation.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>D:\System.Windows.Interactivity.dll</HintPath>
+      <HintPath>..\packages\DWEditorGalaSoft.1.1.0\lib\Net40\System.Windows.Interactivity.dll</HintPath>
     </Reference>
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />

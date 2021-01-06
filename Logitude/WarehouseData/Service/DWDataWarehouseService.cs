@@ -201,6 +201,13 @@ namespace WarehouseData.Service
                         + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "ShipmentPayableStatusCode DEFAULT '-1' FOR ShipmentPayableStatusCode;"
                         + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "ShipmentReceivableStatusCode DEFAULT '-1' FOR ShipmentReceivableStatusCode;"
 
+                        + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "PreCarriageTransportModeId DEFAULT '1' FOR PreCarriageTransportModeId"
+                      + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "PreCarriageFromPortId DEFAULT '-1' FOR PreCarriageFromPortId"
+                        + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "PreCarriageToPortId DEFAULT '-1' FOR PreCarriageToPortId"
+                        + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "OnCarriageToPortId DEFAULT '-1' FOR OnCarriageToPortId"
+                       + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "OnCarriageFromPortId DEFAULT '-1' FOR OnCarriageFromPortId"
+                        + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "OnCarriageCarrierId DEFAULT '-1' FOR OnCarriageCarrierId"
+                      + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "PreCarriageCarrierId DEFAULT '-1' FOR PreCarriageCarrierId"
 
 
                         ;
@@ -236,7 +243,12 @@ namespace WarehouseData.Service
                     + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "MainCarriageVesselId DEFAULT '-1' FOR MainCarriageVesselId;"
                     + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "Transshipment1VesselId DEFAULT '-1' FOR Transshipment1VesselId"
                     + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "Transshipment1CarrierId DEFAULT '-1' FOR Transshipment1CarrierId"
-                    + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "OBLTypeCode DEFAULT '-1' FOR OBLTypeCode;"
+                    + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "OBLTypeCode DEFAULT '-1' FOR OBLTypeCode;" 
+                    + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "Transshipment1FromPortId DEFAULT '-1' FOR Transshipment1FromPortId;"
+                    + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "Transshipment2FromPortId DEFAULT '-1' FOR Transshipment2FromPortId;"
+                    + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "Transshipment3FromPortId DEFAULT '-1' FOR Transshipment3FromPortId;"
+                    + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "Transshipment2CarrierId DEFAULT '-1' FOR Transshipment2CarrierId"
+                    + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "Transshipment3CarrierId DEFAULT '-1' FOR Transshipment3CarrierId"
 
                         ;
 
