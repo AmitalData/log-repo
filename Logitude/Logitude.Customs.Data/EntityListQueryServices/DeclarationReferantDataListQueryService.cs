@@ -14,6 +14,7 @@ using System.Xml.Serialization;
 using Logitude.Customs.Data.EntityPOCOs;
 using Logitude.Customs.Data.EntityLists;
 using Logitude.Customs.Data.CustomFilters;
+using Logitude.Customs.Data.DataContracts;
 
 namespace Logitude.Customs.Data.EntityListQueryServices
 {
@@ -125,6 +126,37 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             return iQueryable;
 
         }
+
+        public DeclarationReferantDataSummary GetQueriesCounts(int tenant)
+        {
+            DeclarationReferantDataSummary declarationReferantDataSummary = new DeclarationReferantDataSummary();
+            IQueryable<DeclarationReferantDataList> declarationReferantDatas = (from a in context.DeclarationReferantDatas
+                                                                                join d in context.Declarations
+                                                                                on a.DeclarationId equals d.Id
+                                                                                where a.Tenant == tenant && d.IsCancelled == false
+                                                                                select new DeclarationReferantDataList()
+                                                                                {
+                                                                                    IsClosedForFollowUp = a.IsClosedForFollowUp,
+                                                                                    FollowUpDate = a.FollowUpDate,
+                                                                                    PreClassification = a.PreClassification,
+                                                                                    ClassificationStatus = a.ClassificationStatus,
+                                                                                    ControllerStatus = a.ControllerStatus,
+                                                                                    CollectionOfMoneyStatus = a.CollectionOfMoneyStatus,
+                                                                                    IsAvailabilityDateNull = d.AvailabilityDate == null,
+                                                                                    IsPaymentDateNull = d.PaymentDate == null,
+                                                                                });
+
+            declarationReferantDataSummary.FilesInProcess = declarationReferantDatas.Where(x => x.IsClosedForFollowUp != "1").Count();
+            declarationReferantDataSummary.TrackingCases = declarationReferantDatas.Where(x => x.FollowUpDate == DateTime.Today).Count();
+            declarationReferantDataSummary.FilesInOCR = declarationReferantDatas.Where(x => x.PreClassification == "P").Count();
+            declarationReferantDataSummary.FilesInSivug = declarationReferantDatas.Where(x => x.ClassificationStatus == "P").Count();
+            declarationReferantDataSummary.FilesInReview = declarationReferantDatas.Where(x => x.ControllerStatus == "P").Count();
+            declarationReferantDataSummary.FilesInCreditControl = declarationReferantDatas.Where(x => x.CollectionOfMoneyStatus == "P").Count();
+            declarationReferantDataSummary.FilesAvailableFreeOfCharge = declarationReferantDatas.Where(x => x.IsPaymentDateNull == true && !x.IsAvailabilityDateNull == false).Count();
+            declarationReferantDataSummary.AllCases = declarationReferantDatas.Count();
+            return declarationReferantDataSummary;
+        }
+
     }
 
 

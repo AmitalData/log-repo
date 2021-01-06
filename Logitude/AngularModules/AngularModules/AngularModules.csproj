@@ -1482,6 +1482,8 @@
     <TypeScriptCompile Include="Customs\Services\StandardPMs\TPGFileTypePMService.ts" />
     <TypeScriptCompile Include="Customs\Services\WebServices\CustomDocumentViewerService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardPMs\DeficitsPMService.ts" />
+    <TypeScriptCompile Include="Customs\Services\WebServices\DeclarationCourierStatusWebService.ts" />
+    <TypeScriptCompile Include="Customs\Services\WebServices\DeclarationReferantDataWebService.ts" />
     <TypeScriptCompile Include="Customs\Services\WebServices\InvoiceQueueWebService.ts" />
     <TypeScriptCompile Include="Customs\Services\WebServices\SupplierInvioceItemCertificatsService.ts" />
     <TypeScriptCompile Include="Customs\Utilities\LuhnAlgorithm.ts" />
