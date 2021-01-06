@@ -596,8 +596,8 @@
                                                                     <Hyperlink [IsEnabled]="IsSaveButtonEnabled" style="margin-left:5px;" (click)="ChooseUsers()" [FontSize]="12" [Text]="'Choose'"></Hyperlink>
                                                                 </td>
                                                                 <!--<td *ngIf="IsChooseUsersVisible">
-                                                                    <div style="margin-left:5px;color: #1E8DC4">( {{ShareWithUsersCount}} selected )</div>
-                                                                </td>-->
+                        <div style="margin-left:5px;color: #1E8DC4">( {{ShareWithUsersCount}} selected )</div>
+                    </td>-->
                                                                 <td>
                                                                     <div></div>
                                                                 </td>
@@ -605,7 +605,24 @@
                                                         </table>
                                                     </td>
                                                 </tr>
-
+                                                <tr class="FormFieldRow">
+                                                    <td>
+                                                        <table>
+                                                            <tr>
+                                                                <td style="width:100px" class="Label">
+                                                                    <label> View Only:</label>
+                                                                </td>
+                                                                <td style="width:20px">
+                                                                    <CheckBox [IsChecked]="IsViewOnly" (Checked)="IsViewOnly = $event"></CheckBox>
+                                                                </td>
+                                                                <td style="width:18px;">
+                                                                    <HelpIcon [Text]="ViewOnlyHelpText"></HelpIcon>
+                                                                </td>
+                                                                <td></td>
+                                                            </tr>
+                                                        </table>
+                                                    </td>
+                                                </tr>
                                                 <tr style="height:10px;">
                                                     <td>
                                                         <div></div>

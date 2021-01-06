@@ -51,6 +51,7 @@ namespace Logitude.BL.InfrastructureModel.EntityPMs
         public string SharedByUserEmail { get; set; }
         public string FeatureUniqeCode { get; set; }
         public string DisplayText { get; set; }
+        public bool IsViewOnly { get; set; }
 
 
         private List<SharedUserQueryPM> sharedUserQueries;

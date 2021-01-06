@@ -88,6 +88,8 @@ export class NewViewComponent {
     public IsSaveButtonEnabled: boolean = false;
     public IsSharedByVisible: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
+    public ViewOnlyHelpText: string = "View only shared views can't by edited or changed";
+
     constructor(fb: FormBuilder, private CD: ChangeDetectorRef) {
         this.serviceArgs = new ServiceArgs();
         this.serviceArgs.http = ServiceHelper.HttpClient;
@@ -333,6 +335,10 @@ export class NewViewComponent {
                 this.ShowInSpotLight = currentQuery.SpotlightModeActivated;
             }
 
+
+            this.IsViewOnly = currentQuery.IsViewOnly;
+
+
             this._http.get(ServiceHelper.GetLogitudeURL() + "api/ngMetaData?tenant=" + SessionInfo.LoggedUserTenant + "&queryCode=" + this.QueryCode + "&objecttableid=" + this.ObjectTable.Id + "&userid=" + SessionInfo.LoggedUserId)
                 .subscribe((response: any) => {
                     this.queryColumnsList = response;
@@ -473,6 +479,10 @@ export class NewViewComponent {
         }
     }
 
+
+
+
+
     public ShareWithUsersCount: number;
     public SharedByUserName: string;
     public SharedByUserEmail: string;
@@ -581,6 +591,18 @@ export class NewViewComponent {
     public set IsbtnDownEnabled(newValue: boolean) {
         this.isbtnDownEnabled = newValue;
     }
+
+
+    private isViewOnly: boolean;
+    public get IsViewOnly() { return this.isViewOnly; }
+    public set IsViewOnly(newValue: boolean) {
+        if (this.isViewOnly != newValue) {
+            this.isViewOnly = newValue;
+        }
+    }
+
+
+
 
     onSelectedItemChanged(item) {
         this.SelectedItem = item;
@@ -1176,6 +1198,7 @@ export class NewViewComponent {
                 this.EntityPM.Perspective = theCurrentQuery.Perspective;
                 this.EntityPM.EditWizardName = theCurrentQuery.EditWizardName;
                 this.EntityPM.SpotlightModeActivated = this.ShowInSpotLight;
+                this.EntityPM.IsViewOnly = this.IsViewOnly;
 
                 if (this.ShareValueSelectedItem) {
                     switch (this.ShareValueSelectedItem.Code) {
@@ -1401,6 +1424,7 @@ export class NewViewComponent {
         if (DoSaving == true) {
             this.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Saving"));
             this.EntityPM.NewViewName = queryName;
+            this.EntityPM.IsViewOnly = this.IsViewOnly;
 
             this.EntityPM.SpotlightModeActivated = this.ShowInSpotLight;
             var spotlightTemplate: string = "";

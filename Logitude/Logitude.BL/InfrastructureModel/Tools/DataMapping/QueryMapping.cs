@@ -43,6 +43,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.DataMapping
             entityPOCO.SpotlightModeActivated = entityPM.SpotlightModeActivated;
             entityPOCO.NameTextCodeCode = entityPM.NameTextCodeCode;
             entityPOCO.FeatureUniqeCode = entityPM.FeatureUniqeCode;
+            entityPOCO.IsViewOnly = entityPM.IsViewOnly;
 
 
         }
