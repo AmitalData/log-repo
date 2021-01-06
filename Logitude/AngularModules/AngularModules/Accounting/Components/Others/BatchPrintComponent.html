@@ -213,10 +213,10 @@
                                 </button>
                                 <div [attr.id]="'dropdowmenu'"
                                      [ngStyle]="{'display': dropdownDisplay  }"
-                                     style="position: fixed;z-index: 1;background-color : whitesmoke;width:200px;">
+                                     style="position: fixed;z-index: 1;background-color : whitesmoke;width:280px; ">
                                     <ul class="x-button-drop-menu">
                                         <li>
-                                            <span (click)="GetNumberOfDocumentNotPrinted(false)">{{'InterestReport.O.PrintInvoicesAlone' | TextCodeTranslationPipe}}</span>
+                                            <span style="width: 190px;margin-right:25px;" (click)="GetNumberOfDocumentNotPrinted(false)">{{'InterestReport.O.PrintInvoicesAlone' | TextCodeTranslationPipe}}</span>
                                         </li>
                                     </ul>
                                 </div>
