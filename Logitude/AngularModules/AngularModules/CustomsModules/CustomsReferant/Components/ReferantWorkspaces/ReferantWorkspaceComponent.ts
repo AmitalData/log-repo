@@ -76,9 +76,9 @@ export class ReferantWorkspaceComponent implements AfterViewInit {
                     this.ChartID = "ChartID_-1_-1";
                 }
 
-                else {
-                    this.ChartID = "ChartID_" + this.CurrentSession.GetChartId();
-                }
+                    else {
+                        this.ChartID = "ChartID_" + this.CurrentSession.GetChartId();
+                    }
 
                 this.InProgressDeclarationReferantDataId = this.InProgressDeclarationReferantDataId + this.CurrentSession.GetChartId();
                 this.LoadInProgressDeclarationReferantDatasDashboard();
@@ -284,14 +284,16 @@ export class ReferantWorkspaceComponent implements AfterViewInit {
         var query = this.dec_queries.Item(Key);
         this.ViewReferantQuery(query);
     }
+    public  filters = new ApiQueryFilters();
 
-   
-    FilterChange($eevnt) {
+    FilterChange($event) {
+        if ($event != null) {
+            this.filters = $event.Filters;
+        }
     }
     ViewReferantQuery(myQueryCode: string) {
         if (myQueryCode != null) {
             var displayTitle = "";
-            var filters = new ApiQueryFilters();
             switch (myQueryCode) {
                 case "FilesInProcess":
                     {
@@ -341,7 +343,7 @@ export class ReferantWorkspaceComponent implements AfterViewInit {
 
             var listArgs = new ListComponentArgs();
             listArgs.QueryCode = myQueryCode;
-            listArgs.Filters = filters;
+            listArgs.Filters = this.filters;
             listArgs.ObjectTableName = "Customs.DeclarationReferantData";
             listArgs.DisplayTitle = displayTitle;
             listArgs.BackButtonTitle = TextCodeTranslator.Translate("General.MH.ReferantWorkspace");
