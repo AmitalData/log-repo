@@ -9,6 +9,7 @@ import { ChartingDataClass } from '../../../../Infrastructure/DataContracts/Dash
 import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
 import { FormatTool } from '../../../../Infrastructure/Tools';
 import { DeclarationReferantDataExtendedListService } from '../../../../Customs/Services/ExtendedLists/DeclarationReferantDataExtendedListService';
+ import { Dictionary  } from '../../../../Infrastructure/GenericTypes/Dictionary';
 declare var makeAmBarChart, BarClick, ResetItem: any;
 
 @Component({
@@ -42,6 +43,7 @@ export class ReferantWorkspaceComponent implements AfterViewInit {
     public InProgressDeclarationReferantDataXAxis: string[] = [];
     public filterAgrs: ApiQueryFilters;
 
+    dec_queries: Dictionary<string> ;
 
     barChartColors: any[] = [
         {
@@ -63,11 +65,12 @@ export class ReferantWorkspaceComponent implements AfterViewInit {
     }
     constructor(public _declarationReferantDataWebService: DeclarationReferantDataWebService ) {
         this.CurrentSession.StartBusyIndicatorLoading();
+        this._entityResourceService.getEntityResourceByTableName("Customs.DeclarationReferantData").subscribe((response: any) => {
+
         _declarationReferantDataWebService.GetQueriesCounts().subscribe(
             (data: any) => {
                 this.counters = data.Result;
-                this.isScreenLoaded = true;
-                this.CurrentSession.StopBusyIndicator();
+         
 
                 if (this.CurrentSession == null) {
                     this.ChartID = "ChartID_-1_-1";
@@ -79,8 +82,11 @@ export class ReferantWorkspaceComponent implements AfterViewInit {
 
                 this.InProgressDeclarationReferantDataId = this.InProgressDeclarationReferantDataId + this.CurrentSession.GetChartId();
                 this.LoadInProgressDeclarationReferantDatasDashboard();
-            });
 
+                this.isScreenLoaded = true;
+                this.CurrentSession.StopBusyIndicator();
+            });
+        });
     }
 
     BarClicking() {
@@ -90,40 +96,71 @@ export class ReferantWorkspaceComponent implements AfterViewInit {
         }
 
     }
+    i: number = 0;
     LoadInProgressDeclarationReferantDatasDashboard() {
 
         this.InProgressDeclarationReferantDataDashboard = new Array<ChartingDataClass>();
-
-        var ele1 = new ChartingDataClass();
-        ele1.Id = "FilesInProcess";
-        ele1.StringProperty = "תיקים בתהליך";
-        ele1.IntegerProperty = this.counters.FilesInProcess;
-        ele1.DataTypeCode = "FilesInProcess";
-        this.InProgressDeclarationReferantDataDashboard.push(ele1);
-
-        ele1 = new ChartingDataClass();
-         ele1.Id = "FilesInProcess_1";
-        ele1.StringProperty = "תיקים בתהליך";
-        ele1.IntegerProperty = this.counters.FilesInProcess;
-        ele1.DataTypeCode = "FilesInProcess1";
-        this.InProgressDeclarationReferantDataDashboard.push(ele1);
-
-        ele1 = new ChartingDataClass();
-        ele1.Id = "TrackingCases";
-        ele1.StringProperty = "תיקים XXX";
-        ele1.IntegerProperty = this.counters.FilesInProcess;
-        ele1.DataTypeCode = "TrackingCases";
-        this.InProgressDeclarationReferantDataDashboard.push(ele1);
-
-            this.FillInProgressDeclarationReferantDataDashboardData();
  
+ 
+        this._declarationReferantDataWebService.GetDeclarationReferantDataDashBoard(SessionLocator.TenantPM.Id).subscribe((myResult: any) => {
+            this.InProgressDeclarationReferantDataDashboard = new Array<ChartingDataClass>();
+            var myResponse: ServiceResponse = myResult;
+            this.InProgressDeclarationReferantDataDashboard = myResponse.Result;
+            this.dec_queries = new Dictionary();
+            this.i = 0;
 
-        //this._declarationReferantDataWebService.GetDeclarationReferantDataDashBoard(SessionLocator.TenantPM.Id).subscribe((myResult: any) => {
-        //    this.InProgressDeclarationReferantDataDashboard = new Array<ChartingDataClass>();
-        //    var myResponse: ServiceResponse = myResult;
-        //    this.InProgressDeclarationReferantDataDashboard = myResponse.Result;
-        //    this.FillInProgressDeclarationReferantDataDashboardData();
-        //});
+            this.InProgressDeclarationReferantDataDashboard.push(this.createChartingItem("FilesInProcess"));
+            this.InProgressDeclarationReferantDataDashboard.push(this.createChartingItem("FilesInProcess", true));
+
+            this.InProgressDeclarationReferantDataDashboard.push(this.createChartingItem("TrackingCases"));
+            this.InProgressDeclarationReferantDataDashboard.push(this.createChartingItem("TrackingCases", true));
+
+            this.InProgressDeclarationReferantDataDashboard.push(this.createChartingItem("FilesInOCR"));
+            this.InProgressDeclarationReferantDataDashboard.push(this.createChartingItem("FilesInOCR", true));
+
+            this.InProgressDeclarationReferantDataDashboard.push(this.createChartingItem("FilesInSivug"));
+            this.InProgressDeclarationReferantDataDashboard.push(this.createChartingItem("FilesInSivug", true));
+
+            this.InProgressDeclarationReferantDataDashboard.push(this.createChartingItem("FilesInReview"));
+            this.InProgressDeclarationReferantDataDashboard.push(this.createChartingItem("FilesInReview", true));
+
+            this.InProgressDeclarationReferantDataDashboard.push(this.createChartingItem("FilesInCreditControl"));
+            this.InProgressDeclarationReferantDataDashboard.push(this.createChartingItem("FilesInCreditControl", true));
+
+            this.InProgressDeclarationReferantDataDashboard.push(this.createChartingItem("FilesAvailableFreeOfCharge"));
+            this.InProgressDeclarationReferantDataDashboard.push(this.createChartingItem("FilesAvailableFreeOfCharge", true));
+
+            this.InProgressDeclarationReferantDataDashboard.push(this.createChartingItem("AllCases"));
+            this.InProgressDeclarationReferantDataDashboard.push(this.createChartingItem("AllCases", true));
+
+             this.FillInProgressDeclarationReferantDataDashboardData();
+        });
+    }
+
+
+    createChartingItem(queryCode: string, withAvailabilityDate: boolean = false) {
+        this.dec_queries.Add(this.i.toString(), queryCode);
+        this.i++;
+        var ele1 = new ChartingDataClass();
+        if (withAvailabilityDate)
+            ele1.Id = queryCode + "_A";
+        else
+            ele1.Id = queryCode ;
+
+        ele1.StringProperty = TextCodeTranslator.Translate("Customs.DeclarationReferantData.O." + queryCode);
+        if (withAvailabilityDate)
+            ele1.IntegerProperty = this.counters[queryCode + "_A"];
+        else
+            ele1.IntegerProperty = this.counters[queryCode];
+
+        ele1.DataTypeCode =  queryCode;
+        ele1.DateTimeProperty = new Date();
+        ele1.DecimalProperty = 0;
+        ele1.DoubleProperty = 0;
+        ele1.GroupedId = null;
+        ele1.LabelProperty = null;
+        ele1.TypeIndex = 0;
+        return ele1;
     }
 
 
@@ -237,78 +274,18 @@ export class ReferantWorkspaceComponent implements AfterViewInit {
         this.lastDownX = ($event.clientX - this.ChartLeft);
     }
     OnBarClick(e) {
+        debugger;
         var flag = false;
         let item: any;
         if (e.item != null && e.target != null)
             flag = true;
         item = e.item;
-        var Key = e.target.columnIndex;
-        var myQueryCode: string = "";
-        var displayName: string = "";
-        var myTableName: string = "DeclarationReferantData";
-        this.filterAgrs = new ApiQueryFilters();
-        if (flag) {
-            switch (Key + "") {
-                case "0":
-                    {
-                        displayName = "Waiting for Transmission";
-                        myQueryCode = "CreatedDeclarationReferantDatas";
-                        break;
-                    }
-
-                case "1":
-                    {
-                        displayName = "Waiting for Airline Confirmation";
-                        myQueryCode = "WatingForResponse";
-                        break;
-                    }
-
-
-                case "2":
-                    {
-                        displayName = "Confirmed Without Shipment";
-                        myQueryCode = "ConfirmedDeclarationReferantDatas";
-                        break;
-                    }
-
-                case "3":
-                    {
-                        displayName = "Errors and Rejections";
-                        myQueryCode = "RejectedDeclarationReferantDatas";
-                        break;
-                    }
-            }
-
-            this.filterAgrs.addAdditionalFilter("IsCancelled", false, null, null, "Equals", false, false, false, "Boolean");
-            this.filterAgrs.addAdditionalFilter("MainCarriageCarrierId", this.InProgressDeclarationReferantDataYAxisFilterd[e.target.columnIndex].OwnerIds[e.index], null, null, "Equals", false, false, false, "String");
-
-            var listArgs = new ListComponentArgs();
-            listArgs.Filters = this.filterAgrs;
-            listArgs.QueryCode = myQueryCode;
-            listArgs.ObjectTableName = myTableName;
-            listArgs.DisplayTitle = displayName;
-            listArgs.BackButtonTitle = "Operations";
-
-            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
-                .then(cmpRef => {
-                    cmpRef.instance.BackCompleted.subscribe(($event: any) => this.LoadAllScreenData());
-                    cmpRef.instance.ComponentRef = cmpRef;
-                    cmpRef.instance.Run(listArgs);
-                    this.CurrentSession.AddMenuReference(cmpRef);
-                });
-        }
+        var Key = item.index;
+        var query = this.dec_queries.Item(Key);
+        this.ViewReferantQuery(query);
     }
 
-
-        this._entityResourceService.getEntityResourceByTableName("Customs.DeclarationReferantData").subscribe((response: any) => {
-            _declarationReferantDataWebService.GetQueriesCounts().subscribe(
-                (data: any) => {
-                    this.counters = data.Result;
-                    this.isScreenLoaded = true;
-                    this.CurrentSession.StopBusyIndicator();
-                });
-        });
-    }
+   
     FilterChange($eevnt) {
     }
     ViewReferantQuery(myQueryCode: string) {
@@ -359,6 +336,9 @@ export class ReferantWorkspaceComponent implements AfterViewInit {
                 default: { break;}
             }
             this.BuildFiltersForQuery(filters);
+            if (myQueryCode.endsWith("_A"))
+                filters.addAdditionalFilter("IsAvailabilityDateNull", false, null, null, "Equals", false, false, false, "number");
+
             var listArgs = new ListComponentArgs();
             listArgs.QueryCode = myQueryCode;
             listArgs.Filters = filters;

@@ -42,50 +42,50 @@ namespace Logitude.Customs.BL.EntityQueryServices
                 List<DeclarationReferantDataChartingClass> myData = new List<DeclarationReferantDataChartingClass>();
 
              
-                    myResult.Add(new DeclarationReferantDataChartingClass()
-                    {
-                        Id = "WAT",
-                        DataTypeCode = "WAT",
-                        StringProperty = "aaa",
-                        IntegerProperty = data_WAT.Count(),
-                       // MainCarriageCarrierId = item.Id,
-                    });
+                    //myResult.Add(new DeclarationReferantDataChartingClass()
+                    //{
+                    //    Id = "WAT",
+                    //    DataTypeCode = "WAT",
+                    //    StringProperty = "aaa",
+                    //    IntegerProperty = data_WAT.Count(),
+                    //   // MainCarriageCarrierId = item.Id,
+                    //});
 
-                myResult.Add(new DeclarationReferantDataChartingClass()
-                {
-                    Id = "WAT1",
-                    DataTypeCode = "WAT",
-                    StringProperty = "aaa",
-                    IntegerProperty = data_WAT.Count(),
-                    // MainCarriageCarrierId = item.Id,
-                });
+                //myResult.Add(new DeclarationReferantDataChartingClass()
+                //{
+                //    Id = "WAT1",
+                //    DataTypeCode = "WAT",
+                //    StringProperty = "aaa",
+                //    IntegerProperty = data_WAT.Count(),
+                //    // MainCarriageCarrierId = item.Id,
+                //});
 
-                myResult.Add(new DeclarationReferantDataChartingClass()
-                    {
-                        Id ="WAC",
-                        DataTypeCode = "WAC",
-                        StringProperty = "bbb",
-                        IntegerProperty = data_WAC.Count(),
-                      //  MainCarriageCarrierId = item.Id,
-                    });
+                //myResult.Add(new DeclarationReferantDataChartingClass()
+                //    {
+                //        Id ="WAC",
+                //        DataTypeCode = "WAC",
+                //        StringProperty = "bbb",
+                //        IntegerProperty = data_WAC.Count(),
+                //      //  MainCarriageCarrierId = item.Id,
+                //    });
 
-                    myResult.Add(new DeclarationReferantDataChartingClass()
-                    {
-                        Id = "CNF",
-                        DataTypeCode = "CNF",
-                        StringProperty = "ccc",
-                        IntegerProperty = data_CNF.Count(),
-                      //  MainCarriageCarrierId = item.Id,
-                    });
+                //    myResult.Add(new DeclarationReferantDataChartingClass()
+                //    {
+                //        Id = "CNF",
+                //        DataTypeCode = "CNF",
+                //        StringProperty = "ccc",
+                //        IntegerProperty = data_CNF.Count(),
+                //      //  MainCarriageCarrierId = item.Id,
+                //    });
 
-                    myResult.Add(new DeclarationReferantDataChartingClass()
-                    {
-                        Id = "ERR",
-                        DataTypeCode = "ERR",
-                        StringProperty = "ddd",
-                        IntegerProperty = data_ERR.Count(),
-                      //  MainCarriageCarrierId = item.Id,
-                    });
+                //    myResult.Add(new DeclarationReferantDataChartingClass()
+                //    {
+                //        Id = "ERR",
+                //        DataTypeCode = "ERR",
+                //        StringProperty = "ddd",
+                //        IntegerProperty = data_ERR.Count(),
+                //      //  MainCarriageCarrierId = item.Id,
+                //    });
                
             }
 

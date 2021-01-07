@@ -22,6 +22,16 @@ namespace Logitude.Customs.Data.DataContracts
         public int FilesAvailableFreeOfCharge { get; set; }
         public int AllCases { get; set; }
 
+        public int FilesInProcess_A { get; set; }
+        public int TrackingCases_A { get; set; }
+        public int FilesInOCR_A { get; set; }
+        public int FilesInSivug_A { get; set; }
+        public int FilesInReview_A { get; set; }
+        public int FilesInCreditControl_A { get; set; }
+        public int FilesAvailableFreeOfCharge_A { get; set; }
+        public int AllCases_A { get; set; }
+
+
 
     }
 }
