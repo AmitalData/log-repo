@@ -78,7 +78,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Models\Constants\RegularExpressions.cs" />
+    <Compile Include="Constants\RegularExpressions.cs" />
+    <Compile Include="Extensions\TableExtensions.cs" />
     <Compile Include="Models\Login\LoginParameters.cs" />
     <Compile Include="Models\Login\MultiLoginParameters.cs" />
     <Compile Include="Models\Login\User.cs" />

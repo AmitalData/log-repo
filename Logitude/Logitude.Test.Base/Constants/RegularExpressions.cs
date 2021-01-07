@@ -1,6 +1,6 @@
 ﻿using System.Text.RegularExpressions;
 
-namespace Logitude.Test.Base.Models.Constants
+namespace Logitude.Test.Base.Constants
 {
     public static class RegularExpressions
     {
