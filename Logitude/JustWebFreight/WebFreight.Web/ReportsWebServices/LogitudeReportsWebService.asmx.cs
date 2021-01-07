@@ -10516,11 +10516,19 @@ namespace WebFreight.Web.ReportsWebServices
                 revenueExpenseReportParam.MyRevenueExpenseReportLevel = ReportLevel.GLAccount;
 
 
+                try
+                {
+                    servce.Execute();
 
-                servce.Execute();
+                    result = servce.result;
 
-                result = servce.result;
-                servce.Dispose();
+                }
+                finally
+                {
+                    servce.Dispose();
+                }
+                
+                
                 GLAccountQueryService queryService = new GLAccountQueryService(tenant);
                 ChartOfAccountQueryService chartQuaryService = new ChartOfAccountQueryService(tenant);
 
@@ -10556,15 +10564,23 @@ namespace WebFreight.Web.ReportsWebServices
             revenueExpenseReportParam.MyCardFilter = CardFilterEnum.DoNotShowCardWithZeroBalance;
             RevenueExpenseReportService service = new RevenueExpenseReportService(revenueExpenseReportParam, 5);
             revenueExpenseReportParam.MyRevenueExpenseReportLevel = ReportLevel.Chartofaccount;
-            var res = service.Execute();
+            try
+            {
+                var res = service.Execute();
 
-            var bytes = LogitudeXmlSerializer.SerializeObject<List<RevenueExpenseReportM>>(res);
-            var ds = new DataSet();
+                var bytes = LogitudeXmlSerializer.SerializeObject<List<RevenueExpenseReportM>>(res);
+                var ds = new DataSet();
 
-            ds.ReadXml(new MemoryStream(bytes));
+                ds.ReadXml(new MemoryStream(bytes));
 
-            result = service.result;
-            service.Dispose();
+                result = service.result;
+            }
+            finally
+            {
+                service.Dispose();
+            }
+           
+            
 
             List<RevenueExpenseReportM> ChartOfAccount5s = result.Where(d => d.ChartOfAcountName5 != "").ToList();
             if (ChartOfAccount5s.Count > 0)
@@ -10744,10 +10760,18 @@ namespace WebFreight.Web.ReportsWebServices
             }
 
             revenueExpenseReportParam.MyRevenueExpenseReportLevel = ReportLevel.ChartofaccountType;
-            service.Execute();
+            try
+            {
+                service.Execute();
 
-            result = service.result;
-            service.Dispose();
+                result = service.result;
+            }
+            finally
+            {
+                service.Dispose();
+            }
+            
+            
             foreach (var item in result)
             {
                 ResultList record = new ResultList()
@@ -11065,8 +11089,17 @@ namespace WebFreight.Web.ReportsWebServices
                 trailReportParam.Category5 = null;
                 trailReportParam.MyTrailReportLevel = ReportLevel.ChartofaccountType;
                 var typeservice = TrailReportFactory.CreateNew(trailReportParam);
-                var res1 = typeservice.Execute();
-                typeservice.Dispose();
+                List<TrailReportM> res1;
+                try
+                {
+                    res1 = typeservice.Execute();
+                }
+                finally
+                {
+                    typeservice.Dispose();
+                }
+                
+                
 
 
 
@@ -11138,8 +11171,17 @@ namespace WebFreight.Web.ReportsWebServices
                 trailReportParam.Category5 = null;
                 trailReportParam.MyTrailReportLevel = ReportLevel.Chartofaccount;
                 var service = TrailReportFactory.CreateNew(trailReportParam);
-                var res = service.Execute();
-                service.Dispose();
+                List<TrailReportM> res;
+                try
+                {
+                    res = service.Execute();
+                }
+                finally
+                {
+                    service.Dispose();
+                }
+                
+                
 
 
                 List<TrailReportM> ChartOfAccount5s = res.Where(d => !string.IsNullOrEmpty(d != null ? d.ChartOfAcountName5 : null)).ToList();
@@ -11582,10 +11624,19 @@ namespace WebFreight.Web.ReportsWebServices
                 trailReportParam.DoNotShowCardWithLocalCloseBalanceEqualZero =dontShowCardsWith0Balance;
                 var servce = TrailReportFactory.CreateNew(trailReportParam);
 
+                List<TrailReportM> list;
+                try
+                {
+                    list = servce.Execute();
 
+                }
+                finally
+                {
+                    servce.Dispose();
 
-                var list = servce.Execute();
-                servce.Dispose();
+                }
+                
+                
 
                 List<CurrencyPM> currencies = GetCurrenciesByTenant(tenant);
                 List<ChartOfAccountsTypePM> chartOfAccountTypes = GetChartOfAccountTypes(tenant);
