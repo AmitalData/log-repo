@@ -61,26 +61,27 @@ export class ReferantWorkspaceComponent implements AfterViewInit {
 
     ngAfterViewInit(): void {
     }
-    constructor(public _declarationReferantDataWebService: DeclarationReferantDataWebService ) {
-        this.CurrentSession.StartBusyIndicatorLoading();
-        _declarationReferantDataWebService.GetQueriesCounts().subscribe(
-            (data: any) => {
-                this.counters = data.Result;
-                this.isScreenLoaded = true;
-                this.CurrentSession.StopBusyIndicator();
+    constructor(public _declarationReferantDataWebService: DeclarationReferantDataWebService) {
+        this._entityResourceService.getEntityResourceByTableName("Customs.DeclarationReferantData").subscribe((response: any) => {
+            _declarationReferantDataWebService.GetQueriesCounts().subscribe(
+                (data: any) => {
+                    this.counters = data.Result;
+                    this.isScreenLoaded = true;
+                    this.CurrentSession.StopBusyIndicator();
 
-                if (this.CurrentSession == null) {
-                    this.ChartID = "ChartID_-1_-1";
-                }
+                    if (this.CurrentSession == null) {
+                        this.ChartID = "ChartID_-1_-1";
+                    }
 
-                else {
-                    this.ChartID = "ChartID_" + this.CurrentSession.GetChartId();
-                }
+                    else {
+                        this.ChartID = "ChartID_" + this.CurrentSession.GetChartId();
+                    }
 
-                this.InProgressDeclarationReferantDataId = this.InProgressDeclarationReferantDataId + this.CurrentSession.GetChartId();
-                this.LoadInProgressDeclarationReferantDatasDashboard();
-            });
-
+                    this.InProgressDeclarationReferantDataId = this.InProgressDeclarationReferantDataId + this.CurrentSession.GetChartId();
+                    this.LoadInProgressDeclarationReferantDatasDashboard();
+                });
+            
+        });
     }
 
     BarClicking() {
@@ -298,23 +299,16 @@ export class ReferantWorkspaceComponent implements AfterViewInit {
                 });
         }
     }
+    public  filters = new ApiQueryFilters();
 
-
-        this._entityResourceService.getEntityResourceByTableName("Customs.DeclarationReferantData").subscribe((response: any) => {
-            _declarationReferantDataWebService.GetQueriesCounts().subscribe(
-                (data: any) => {
-                    this.counters = data.Result;
-                    this.isScreenLoaded = true;
-                    this.CurrentSession.StopBusyIndicator();
-                });
-        });
-    }
-    FilterChange($eevnt) {
+    FilterChange($event) {
+        if ($event != null) {
+            this.filters = $event.Filters;
+        }
     }
     ViewReferantQuery(myQueryCode: string) {
         if (myQueryCode != null) {
             var displayTitle = "";
-            var filters = new ApiQueryFilters();
             switch (myQueryCode) {
                 case "FilesInProcess":
                     {
@@ -358,10 +352,10 @@ export class ReferantWorkspaceComponent implements AfterViewInit {
                     }
                 default: { break;}
             }
-            this.BuildFiltersForQuery(filters);
+            this.BuildFiltersForQuery(this.filters);
             var listArgs = new ListComponentArgs();
             listArgs.QueryCode = myQueryCode;
-            listArgs.Filters = filters;
+            listArgs.Filters = this.filters;
             listArgs.ObjectTableName = "Customs.DeclarationReferantData";
             listArgs.DisplayTitle = displayTitle;
             listArgs.BackButtonTitle = TextCodeTranslator.Translate("General.MH.ReferantWorkspace");
