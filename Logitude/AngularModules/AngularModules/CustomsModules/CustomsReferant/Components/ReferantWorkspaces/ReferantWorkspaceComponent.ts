@@ -139,13 +139,18 @@ export class ReferantWorkspaceComponent implements AfterViewInit {
 
 
     createChartingItem(queryCode: string, withAvailabilityDate: boolean = false) {
-        this.dec_queries.Add(this.i.toString(), queryCode);
-        this.i++;
+
         var ele1 = new ChartingDataClass();
-        if (withAvailabilityDate)
+        if (withAvailabilityDate) {
+            this.dec_queries.Add(this.i.toString(), queryCode + "_A");
             ele1.Id = queryCode + "_A";
-        else
-            ele1.Id = queryCode ;
+
+        }
+        else {
+        ele1.Id = queryCode;
+            this.dec_queries.Add(this.i.toString(), queryCode);
+        }
+        this.i++;
 
         ele1.StringProperty = TextCodeTranslator.Translate("Customs.DeclarationReferantData.O." + queryCode);
         if (withAvailabilityDate)
@@ -168,7 +173,7 @@ export class ReferantWorkspaceComponent implements AfterViewInit {
         var index = 0;
         this.InProgressDeclarationReferantDataXAxis = [];
 
-        this.InProgressDeclarationReferantDataDashboard.sort((a, b) => { return (a.DateTimeProperty === b.DateTimeProperty) ? 0 : (a.DateTimeProperty < b.DateTimeProperty) ? -1 : 1 });
+     //   this.InProgressDeclarationReferantDataDashboard.sort((a, b) => { return (a.DateTimeProperty === b.DateTimeProperty) ? 0 : (a.DateTimeProperty < b.DateTimeProperty) ? -1 : 1 });
         var StringArr: Array<string> = new Array<string>();
         var j = 0;
 
@@ -181,7 +186,7 @@ export class ReferantWorkspaceComponent implements AfterViewInit {
             }
         });
 
-        StringArr.sort((a, b) => { return (a === b) ? 0 : (a < b) ? -1 : 1 });
+      //  StringArr.sort((a, b) => { return (a === b) ? 0 : (a < b) ? -1 : 1 });
         var Graphs = [];
         var index = 0;
         this.InProgressDeclarationReferantDataDashboard.forEach(element => {
@@ -274,14 +279,14 @@ export class ReferantWorkspaceComponent implements AfterViewInit {
         this.lastDownX = ($event.clientX - this.ChartLeft);
     }
     OnBarClick(e) {
-        debugger;
-        var flag = false;
+         var flag = false;
         let item: any;
         if (e.item != null && e.target != null)
             flag = true;
+        if (!flag) return;
         item = e.item;
         var Key = item.index;
-        var query = this.dec_queries.Item(Key);
+        var query = this.dec_queries.Item((Key * 2 + e.target.columnIndex ).toString());
         this.ViewReferantQuery(query);
     }
     public  filters = new ApiQueryFilters();
@@ -294,7 +299,7 @@ export class ReferantWorkspaceComponent implements AfterViewInit {
     ViewReferantQuery(myQueryCode: string) {
         if (myQueryCode != null) {
             var displayTitle = "";
-            switch (myQueryCode) {
+            switch (myQueryCode.replace("_A","")) {
                 case "FilesInProcess":
                     {
                         displayTitle = TextCodeTranslator.Translate("Customs.DeclarationReferantData.O.FilesInProcess");
@@ -337,12 +342,12 @@ export class ReferantWorkspaceComponent implements AfterViewInit {
                     }
                 default: { break;}
             }
-            this.BuildFiltersForQuery(filters);
-            if (myQueryCode.endsWith("_A"))
-                filters.addAdditionalFilter("IsAvailabilityDateNull", false, null, null, "Equals", false, false, false, "number");
+            this.BuildFiltersForQuery(this.filters);
+             if (myQueryCode.endsWith("_A"))
+                this.filters.addAdditionalFilter("IsAvailabilityDateNull", false, null, null, "Equals", false, false, false, "number");
 
             var listArgs = new ListComponentArgs();
-            listArgs.QueryCode = myQueryCode;
+            listArgs.QueryCode = myQueryCode.replace("_A", "");
             listArgs.Filters = this.filters;
             listArgs.ObjectTableName = "Customs.DeclarationReferantData";
             listArgs.DisplayTitle = displayTitle;
