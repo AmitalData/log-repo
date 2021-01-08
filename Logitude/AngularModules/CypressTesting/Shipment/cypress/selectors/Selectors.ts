@@ -25,5 +25,6 @@ export class Selectors
     public static readonly AddNewReceivableLine = '#Add';
     public static readonly ReceivableChargesType = '#ShipmentReceivable_ChargesTypeId';
     public static readonly ReceivableUnitPrice = '#ShipmentReceivable_UnitPrice';
+    public static readonly ReceivableTotalAmount = '#ShipmentReceivable_TotalAmount';
     public static readonly AddReceivableOkButton = '#Ok-AddReceivableBtn';
 }

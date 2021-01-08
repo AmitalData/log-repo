@@ -90,11 +90,8 @@ export function FillReceivablesTab() {
     cy.Click(Selectors.AddNewReceivableLine, null)
     cy.get(Selectors.ReceivableChargesType).focus().clear().type("{downarrow}{downarrow}{enter}")
     cy.FillRandomNumber(Selectors.ReceivableUnitPrice, 100, 100)
-    cy.wait(100)
-    cy.Click(Selectors.AddReceivableOkButton, null)
-    cy.wait(100)
-
-    
+    cy.get(Selectors.ReceivableTotalAmount).should('have.value', '100.00')
+    cy.Click(Selectors.AddReceivableOkButton, null) 
 }
 
 function AddPackagesOrContainersForOrdersTab(shipmentTypeCode:string){
