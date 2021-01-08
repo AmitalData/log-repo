@@ -11,7 +11,7 @@ using Xunit;
 namespace Logitude.ShipmentTests.Steps
 {
     [Binding]
-    public class UpdateShipment
+    public class UpdateShipmentSteps
     {
         protected User User;
         protected ShipmentPM _masterPM, _housePM;
@@ -19,61 +19,10 @@ namespace Logitude.ShipmentTests.Steps
         protected ShipmentPayablesPM _shipmentPayablesPM;
         protected Exception exceptionForHouse, exceptionForMaster, exceptionForPayables;
 
-        public UpdateShipment(MultiUsers multiUsers)
+        public UpdateShipmentSteps(MultiUsers multiUsers)
         {
             User = multiUsers.Users[0];
         }
-
-        [Given(@"The master shipment fields")]
-        public void GivenTheMasterShipmentFields(Table table)
-        {
-            _masterPM = table.CreateInstance<ShipmentPM>();
-            _masterPM.Tenant = User.Tenant;
-            _masterPM.NewConcurrencyGUID = Guid.NewGuid().ToString();
-        }
-
-        [When(@"The post API sent to create master shipment")]
-        public void WhenTheShipmentCreateAPISent()
-        {
-            _masterPM = APICaller.CallPost<ShipmentPM>(_masterPM, "Shipment", User.Token);
-        }
-
-        [Then(@"A new master created successfully")]
-        public void ThenANewMasterCreatedSuccessfully()
-        {
-            _masterPM.Id.Should().NotBeNull();
-        }
-
-        ////////////////////////////////////////////////////////////////////////////////////////////
-
-        [Given(@"The house shipment fields")]
-        public void GivenTheHouseShipmentFields(Table table)
-        {
-            _housePM = table.CreateInstance<ShipmentPM>();
-            _housePM.Tenant = User.Tenant;
-            _housePM.NewConcurrencyGUID = Guid.NewGuid().ToString();
-        }
-
-        [Given(@"MasterShipmentDataId is (.*) and MasterShipmentNumber is (.*)")]
-        public void GivenHouseMasterIdIs(string masterShipmentDataId, string MasterShipmentNumber)
-        {
-            _housePM.MasterShipmentDataId = masterShipmentDataId; // "1-1997645"
-            _housePM.MasterShipmentNumber = MasterShipmentNumber; // "M1304"
-        }
-
-        [When(@"The post API sent to create house shipment")]
-        public void WhenThePostAPISentToCreateHouseShipment()
-        {
-            _housePM = APICaller.CallPost<ShipmentPM>(_housePM, "Shipment", User.Token);
-        }
-
-        [Then(@"A new house created successfully")]
-        public void ThenANewHouseCreatedSuccessfully()
-        {
-            _housePM.Id.Should().NotBeNull();
-        }
-
-        /////////////////////////////////////////////////////////////////////////////////////////////////
 
         [Given(@"The master shipment packages fields")]
         public void GivenTheMasterShipmentPackagesFields(Table table)
@@ -108,8 +57,6 @@ namespace Logitude.ShipmentTests.Steps
             exceptionForMaster.Should().BeNull();
         }
 
-        ///////////////////////////////////////////////////////////////////////////////
-
         [Given(@"The house shipment packages fields")]
         public void GivenTheHouseShipmentPackagesFields(Table table)
         {
@@ -143,8 +90,6 @@ namespace Logitude.ShipmentTests.Steps
         {
             exceptionForHouse.Should().BeNull();
         }
-
-        ////////////////////////////////////////////////////////////////////////////
 
         [Given(@"The Payable Charge Type fields")]
         public void GivenThePayableChargeTypeFields(Table table)
