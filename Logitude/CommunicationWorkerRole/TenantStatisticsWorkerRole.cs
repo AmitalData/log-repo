@@ -219,6 +219,12 @@ namespace CommunicationWorkerRole
 
                     tenantManagement.ShipmentTotalLastWeek = shipments.Where(s => s.CreateDateTime >= lastweek).Count();
                     tenantManagement.ShipmentTotalLastMonth = shipments.Where(s => s.CreateDateTime >= lastmonth).Count();
+
+                    tenantManagement.LastEbookingSentDate = shipments.Where(a=> !string.IsNullOrEmpty(a.INTTRALastBookingResponse)).Max(s => s.LastUpdateDate);
+                    tenantManagement.LastSISentDate = shipments.Max(s => s.INTTRALastStatusDate);
+                    tenantManagement.NumberOfBookingSentLastWeek = shipments.Where(s => !string.IsNullOrEmpty(s.INTTRABookingStatusCode) && s.CreateDateTime >= lastweek).Count();
+                    tenantManagement.NumberOfSISentLastWeek = shipments.Where(d => d.INTTRASIStatusCode != "NSEN" && (d.INTTRASIStatusDate >= lastweek || d.INTTRALastStatusDate >= lastweek)).Count();
+                    tenantManagement.LastContainerStatusReceived = shipments.Where(d => d.INTTRASIStatusCode != "NSEN" && (d.INTTRALastStatusDate >= lastweek)).Select(a => a.INTTRASIStatus != null ? a.INTTRASIStatus.Name : "").FirstOrDefault();
                 }
 
                 if (quotes.Count() > 0)

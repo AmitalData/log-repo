@@ -150,6 +150,10 @@ namespace Logitude.BL.GlobalModel.EntityLists
         public double? AveragePrice { get; set; }
         public double? TotalPaymentamount { get; set; }
         public bool NoPaymentForChildTenants { get; set; }
-
+        public DateTime? LastEbookingSentDate { get; set; }
+        public DateTime? LastSISentDate { get; set; }
+        public int NumberOfBookingSentLastWeek { get; set; }
+        public int NumberOfSISentLastWeek { get; set; }
+        public string LastContainerStatusReceived { get; set; }
     }
 }

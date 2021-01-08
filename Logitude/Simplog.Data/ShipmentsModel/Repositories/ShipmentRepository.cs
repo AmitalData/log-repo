@@ -214,7 +214,7 @@ namespace Simplog.Data.ShipmentsModel.Repositories
         }
         public IQueryable<Shipment> GetShipmentsWithMasterData(int tenant)
         {
-            return (from record in context.Shipments.Include("ShipmentMasterData").Include("FromPort").Include("ToPort").Include("ProfitCurrency").Include("CustomerCard").Include("EntityStatus").Include("ShipmentType").Include("Incoterm").Include("ShipmentReceivableStatus").Include("ShipmentLevel").Include("NextLeg").Include("ShipmentType") where record.Tenant == tenant select record);
+            return (from record in context.Shipments.Include("ShipmentMasterData").Include("FromPort").Include("ToPort").Include("ProfitCurrency").Include("CustomerCard").Include("EntityStatus").Include("ShipmentType").Include("Incoterm").Include("ShipmentReceivableStatus").Include("ShipmentLevel").Include("NextLeg").Include("ShipmentType").Include("INTTRASIStatus") where record.Tenant == tenant select record);
         }
 
         public int GetShipmentsCountByQuoteId(string quoteId, int tenant)
