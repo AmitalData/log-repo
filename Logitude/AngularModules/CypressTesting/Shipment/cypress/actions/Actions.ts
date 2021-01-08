@@ -86,6 +86,16 @@ export function FillPackagesTab(transportModeCode:string, shipmentTypeCode?:stri
     AddPackagesOrContainersForPackagesTab(transportModeCode, shipmentTypeCode)
 }
 
+export function FillReceivablesTab() {
+    cy.Click(Selectors.AddNewReceivableLine, null)
+    cy.get(Selectors.ReceivableChargesType).focus().clear().type("{downarrow}{downarrow}{enter}")
+    cy.FillRandomNumber(Selectors.ReceivableUnitPrice, 100, 100)
+    cy.wait(100)
+    cy.Click(Selectors.AddReceivableOkButton, null)
+    cy.wait(100)
+
+    
+}
 
 function AddPackagesOrContainersForOrdersTab(shipmentTypeCode:string){
     let numberOfPackages = gr.GenerateRandomNumber(1, 3)

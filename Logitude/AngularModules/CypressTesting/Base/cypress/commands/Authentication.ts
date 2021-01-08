@@ -55,11 +55,11 @@ function CompleteLoginProcess(Email:string, Password:string, URL: string, Tenant
     if (Tenant !== null) {
         cy.get("input[name='cmbTenants_input']").clear().type('(' + Tenant + ')')
         cy.get("#cmbTenants_listbox").children().contains('(' + Tenant + ')').eq(0).click({force:true})
+        cy.get("#cmdContinue").click()
     }
 
-    cy.get("#cmdContinue").click()
-    cy.intercept("**/ObjectTableLastUpdate/**").as("LoadDataCompleted")
     cy.window().then(win => { win.sessionStorage.setItem("ControlledByCypress", "true") })
+    cy.intercept("**/ObjectTableLastUpdate/**").as("LoadDataCompleted")
     cy.wait("@LoadDataCompleted")
 }
 

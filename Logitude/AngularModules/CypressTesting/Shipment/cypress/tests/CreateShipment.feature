@@ -2,13 +2,13 @@ Feature: Create Shipment Tests
 
   Scenario: Login And Open Shipments Workspace
     Given User logged in
-    And He is in shipments workspace
+    And Go to shipments workspace
 
   Scenario Outline: Create Shipments
     Given A shipment details
       | LevelCode   | DirectionCode   | TransportModeCode   | ShipmentTypeCode   |
       | <LevelCode> | <DirectionCode> | <TransportModeCode> | <ShipmentTypeCode> |
-    When He Click create shipment button
+    When Click create shipment button
     Then The create operation complete successfully
     Examples:
       | LevelCode | DirectionCode | TransportModeCode | ShipmentTypeCode |
