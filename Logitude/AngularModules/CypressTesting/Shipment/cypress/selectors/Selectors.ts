@@ -5,6 +5,7 @@ export class Selectors
     public static readonly OrdersTab = '#ShipmentTHOrders';
     public static readonly PartnersTab = '#ShipmentTHPartners';
     public static readonly PackagesTab = '#ShipmentTHPackages';
+    public static readonly ReceivablesTab = '#ShipmentTHReceivables';
     public static readonly ShipmentSaveButton = '#Shipment-Save';
     public static readonly ShipmentSearchBar = '#Shipment_Search';
     public static readonly ShipmentGrossWeight = '#Shipment_GrossWeightInKG';
@@ -21,4 +22,9 @@ export class Selectors
     public static readonly PackageWeight = '#ShipmentPackage_Weight';
     public static readonly AirPackageOKButton = '#OkAirPackage';
     public static readonly OceanPackageOKButton = '#OkOceanPackage';
+    public static readonly AddNewReceivableLine = '#Add';
+    public static readonly ReceivableChargesType = '#ShipmentReceivable_ChargesTypeId';
+    public static readonly ReceivableUnitPrice = '#ShipmentReceivable_UnitPrice';
+    public static readonly ReceivableTotalAmount = '#ShipmentReceivable_TotalAmount';
+    public static readonly AddReceivableOkButton = '#Ok-AddReceivableBtn';
 }

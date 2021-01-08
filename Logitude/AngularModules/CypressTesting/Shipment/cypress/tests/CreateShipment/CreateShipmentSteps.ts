@@ -1,5 +1,5 @@
-import * as shipmentActions from "../../actions/Actions";
-import * as shipmentAssertions from "../../actions/Assertions";
+import * as Actions from "../../actions/Actions";
+import * as Assertions from "../../actions/Assertions";
 import { Given, When, Then } from "cypress-cucumber-preprocessor/steps";
 import { ShipmentDetails } from "../../models/ShipmentDetails";
 import { BaseSelectors } from "../../../../Base/cypress/selectors/BaseSelectors"
@@ -14,7 +14,7 @@ Given("User logged in", () => {
   cy.Login();
 });
 
-Given("He is in shipments workspace", () => {
+Given("Go to shipments workspace", () => {
   cy.Click(BaseSelectors.OperationsMenu, null);
   cy.Click(Selectors.ShipmentTab, null);
 });
@@ -26,15 +26,15 @@ Given("A shipment details",
    DirectionCode = shipmentDetails.DirectionCode;
    TransportModeCode = shipmentDetails.TransportModeCode;
    ShipmentTypeCode = shipmentDetails.ShipmentTypeCode;
-   shipmentActions.OpenNewShipmentWizard(LevelCode);
-   shipmentActions.FillShipmentDefaultFields(DirectionCode, TransportModeCode, ShipmentTypeCode);
+   Actions.OpenNewShipmentWizard(LevelCode);
+   Actions.FillShipmentDefaultFields(DirectionCode, TransportModeCode, ShipmentTypeCode);
 });
 
-When("He Click create shipment button", () => {
-  shipmentActions.CreateShipment();
+When("Click create shipment button", () => {
+  Actions.CreateShipment();
 });
 
 Then("The create operation complete successfully", () => {
   let resultFile = "CreatedShipmentsData/" + LevelCode + DirectionCode + TransportModeCode + ShipmentTypeCode + ".json";
-  shipmentAssertions.ValidateCreatedShipment(resultFile);
+  Assertions.ValidateCreatedShipment(resultFile);
 });
