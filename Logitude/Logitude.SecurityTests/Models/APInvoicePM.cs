@@ -1,0 +1,13 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Logitude.SecurityTests.Models
+{
+    public class APInvoicePM
+    {
+        public string Id { get; set; }
+    }
+}

@@ -100,15 +100,22 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Models\APInvoicePM.cs" />
+    <Compile Include="Models\SecurityAccessStepsContext.cs" />
+    <Compile Include="Models\APPaymentPM.cs" />
     <Compile Include="Models\Shipment\ShipmentSecurityAccessStepsContext.cs" />
     <Compile Include="Models\Shipment\ShipmentPackagePM.cs" />
     <Compile Include="Models\Shipment\ShipmentPM.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Steps\Invoice\GetAPInvoiceSecurityAccessSteps.cs" />
+    <Compile Include="Steps\Payment\GetAPPaymentSecurityAccessSteps.cs" />
     <Compile Include="Steps\Shipment\CreateAndUpdateShipmentSecurityAccessSteps.cs" />
     <Compile Include="Steps\Shipment\GetShipmentSecurityAccessSteps.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <None Include="Features\Invoice\GetAPInvoice.feature" />
+    <None Include="Features\Payment\GetAPPayment.feature" />
     <None Include="Features\Shipment\CreateAndUpdateShipmentSecurityAccess.feature" />
     <None Include="Features\Shipment\GetShipmentSecurityAccess.feature" />
     <None Include="packages.config" />
