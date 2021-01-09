@@ -159,7 +159,7 @@
                                         [DataContext]="DataContext"
                                         [LookUpTableName]="'Currency'"
                                        [SelectedValue]="CurrencyId"
-                                      
+
                                         [HideColumns]="true">
                                 </LogLov>
                                 <!-- (SelectedItemChanged)="Currency = $event" -->
@@ -585,7 +585,7 @@
                   <!-- ForeignAmount -->
                   <log-column [width]="'100'" [Alignment]="isRTL ? 'right' : 'left'" [binding]="'ForeignAmount'" [header]="'JournalLine.F.ForeignAmount' | TextCodeTranslationPipe">
                     <ng-template let-item>
-                      <log-cell-template #logcelltemplate [TabIndex]="item.ActionCode ? 0 : -1" [IsEnabled]="item.ActionCode ? true : false">
+                      <log-cell-template #logcelltemplate [TabIndex]="item.ActionCode&&item.enableForeighAmountField ? 0 : -1" [IsEnabled]="item.enableForeighAmountField && item.ActionCode ? true : false">
                         <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align: right;direction: ltr !important;">
                           <div [attr.id]="'tooltip-' + item.Line" id="t" class="small-tooltip" (mouseover)="item.OnMouseOver()" (mouseleave)="item.OnMouseLeave()">
                             <span>{{item.ForeignAmount | NumbersPipe:'N2'}}</span>

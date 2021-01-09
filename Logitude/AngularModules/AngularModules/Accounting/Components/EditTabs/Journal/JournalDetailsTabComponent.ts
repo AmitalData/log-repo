@@ -130,7 +130,7 @@ export class JournalDetailsTabComponent extends BaseComponent implements OnInit 
     private SetDatesDefaultValues() {
         if (this.AccountingDate == null)
             this.AccountingDate = new Date();
-        
+
 
     }
     public CurrentEditComponentId: string;
@@ -254,7 +254,7 @@ export class JournalDetailsTabComponent extends BaseComponent implements OnInit 
             }
         });
         this.GetDefaultValues();
-         
+
 
         //set focus on accounting date
         var t = setTimeout(() => { this.forceFocus = true; }, 1);
@@ -551,7 +551,7 @@ getHeaderCurrency(CurrencyId:string){
             if (myResponse != null) {
                 if (!myResponse.HasError) {
                     this.Currency = myResponse.Result;
-                    this.FillGrid();        
+                    this.FillGrid();
                     this.localAmountHeader = "Amount (" + myResponse.Result.Code + ")";
                     console.log(">>Tenant Currency: ", myResponse.Result);
 
@@ -619,7 +619,7 @@ getHeaderCurrency(CurrencyId:string){
                     var header_year = headerDate.getFullYear();
                     var header_month = headerDate.getMonth() + 1;
                     var header_day = headerDate.getDate();
- 
+
                     var lineDate = new Date(line.AccountingDate.toString()); // somtimes this.AccountingDate contains string date o.O
 
                     var line_year = lineDate.getFullYear();
@@ -674,7 +674,7 @@ getHeaderCurrency(CurrencyId:string){
           if (!line.DocumentDate) line.DocumentDate = this.DocumentDate;
         }});
 
-        
+
     }
 
   }
@@ -718,7 +718,11 @@ class JournalLineModel extends BaseComponent {
             var date = new Date(this.AccountingDate.toString());
             this.accDay = date.getDate();
         }
-        
+
+        setTimeout(() => {
+            this.enableForeighAmountField = this.JournalLinePM.CurrencyId !=SessionLocator.TenantPM.CurrencyId;
+        }, 2000);
+
         //if (this.Currency.Id == SessionLocator.TenantPM.CurrencyId) {
         //    this.UIProperties.SetEnabled("ForeignAmount", this.ObjectTableName, false);
         //}
@@ -1310,7 +1314,7 @@ class JournalLineModel extends BaseComponent {
             return null;
         }
     }
-
+    enableForeighAmountField: boolean = true;
     currency: CurrencyList;
     get Currency() { return this.currency; }
     set Currency(value: CurrencyList) {
@@ -1319,12 +1323,13 @@ class JournalLineModel extends BaseComponent {
             if (!AppTool.IsNullOrEmpty(value)) {
                 this.CurrencyCode = value.Code;
                 this.CurrencyId = value.Id;
+                this.enableForeighAmountField = this.Currency.Id !=SessionLocator.TenantPM.CurrencyId;
                  if(this.Currency.Id ==SessionLocator.TenantPM.CurrencyId) {
                      this.UIProperties.SetEnabled("ForeignAmount", this.ObjectTableName, false);
                     this.ForeignAmount = this.LocalAmount;
                     }
                  else this.UIProperties.SetEnabled("ForeignAmount", this.ObjectTableName, true);
-                  
+
                 } else {
                 this.CurrencyCode = null;
             }
