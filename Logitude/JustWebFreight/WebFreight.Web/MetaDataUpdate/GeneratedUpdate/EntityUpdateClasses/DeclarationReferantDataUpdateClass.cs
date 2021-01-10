@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class DeclarationReferantDataUpdateClass
    {  		
-		public const string HashString = "4f22012baddde121ebd4bf8a0b702fab";
+		public const string HashString = "2a8100e78153b31d8661e45521a3ad24";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -4155,11 +4155,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   Feature DeclarationReferantDataFeature_8 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DeclarationReferantData.Q.FilesInAllInclusive", ObjectTableId = DeclarationReferantDataObjectTable.Id, Tenant = 0, NameTextCodeCode = "DeclarationReferantDataFeatures.FilesInAllInclusive", NameTextCodeDefaultText = "FilesInAllInclusive", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,DeclarationReferantDataObjectTable, addedFeatures, addedTextCodes);
  
 
-			   TextCode DeclarationReferantDataTextCode_9 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DeclarationReferantData.Q.FilesRejectedByController", DefaultText = @"Files Rejected By Controller",LocalDefaultText = "תיקים שנדחו ע"י מבקר", ObjectTableId = DeclarationReferantDataObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   TextCode DeclarationReferantDataTextCode_9 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DeclarationReferantData.Q.FilesRejectedByController", DefaultText = @"Files Rejected By Controller",LocalDefaultText = "תיקים שנדחו עי מבקר", ObjectTableId = DeclarationReferantDataObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
 			   Feature DeclarationReferantDataFeature_9 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DeclarationReferantData.Q.FilesRejectedByController", ObjectTableId = DeclarationReferantDataObjectTable.Id, Tenant = 0, NameTextCodeCode = "DeclarationReferantDataFeatures.FilesRejectedByController", NameTextCodeDefaultText = "FilesRejectedByController", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,DeclarationReferantDataObjectTable, addedFeatures, addedTextCodes);
  
 
-			   TextCode DeclarationReferantDataTextCode_10 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DeclarationReferantData.Q.FilesRejectedByClassification", DefaultText = @"Files Rejected By Classification",LocalDefaultText = "תיקים שנדחו ע"י מסווג", ObjectTableId = DeclarationReferantDataObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   TextCode DeclarationReferantDataTextCode_10 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DeclarationReferantData.Q.FilesRejectedByClassification", DefaultText = @"Files Rejected By Classification",LocalDefaultText = "תיקים שנדחו עי מסווג", ObjectTableId = DeclarationReferantDataObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
 			   Feature DeclarationReferantDataFeature_10 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DeclarationReferantData.Q.FilesRejectedByClassification", ObjectTableId = DeclarationReferantDataObjectTable.Id, Tenant = 0, NameTextCodeCode = "DeclarationReferantDataFeatures.FilesRejectedByClassification", NameTextCodeDefaultText = "FilesRejectedByClassification", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,DeclarationReferantDataObjectTable, addedFeatures, addedTextCodes);
 
 	        //TextCodeRepository.SubmitChanges();
@@ -4212,10 +4212,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			 QueryColumn FilesInProcessQueryColumn_21 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FilesInProcessQuery.Id,QueryCode = FilesInProcessQuery.UniqueCode, IndexOrder = 21, ObjectFieldCode = "Customs.DeclarationReferantData.Actions" , ColumnWidth = 68 }, addedQueryColumns);
 
-             AdvancedQueryFilter FilesInProcessQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customs.DeclarationReferantData.IsClosedForFollowUp", PredefinedValue = "1",PredefinedValue2 = null, QueryId = FilesInProcessQuery.Id,QueryCode = FilesInProcessQuery.UniqueCode, Tenant = 0,Operator = "NotEqual"}, addedQueryFilters);
+             AdvancedQueryFilter FilesInProcessQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customs.DeclarationReferantData.IsCancelled", PredefinedValue = "true",PredefinedValue2 = null, QueryId = FilesInProcessQuery.Id,QueryCode = FilesInProcessQuery.UniqueCode, Tenant = 0,Operator = "NotEqual"}, addedQueryFilters);
 
 
-             AdvancedQueryFilter FilesInProcessQueryFilter_1 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customs.DeclarationReferantData.IsCancelled", PredefinedValue = "true",PredefinedValue2 = null, QueryId = FilesInProcessQuery.Id,QueryCode = FilesInProcessQuery.UniqueCode, Tenant = 0,Operator = "NotEqual"}, addedQueryFilters);
+             AdvancedQueryFilter FilesInProcessQueryFilter_1 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customs.DeclarationReferantData.HatraDate", PredefinedValue = "null",PredefinedValue2 = null, QueryId = FilesInProcessQuery.Id,QueryCode = FilesInProcessQuery.UniqueCode, Tenant = 0,Operator = "NotEqual"}, addedQueryFilters);
 
   
 	      
