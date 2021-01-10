@@ -33,15 +33,15 @@ Scenario: xxxxxxxxxx
 	Given User adding main carriage legs to last direct shipment
 		| LegIndex | Carrier.Code | FromPort.Code | ToPort.Code |
 		| 1        | CA20         | DE222         | DE223       |
-	When UpdateShipmentWithInvalidFutureATD
-	Then assert
+	When User Update Shipment With Invalid Future ATD
+	Then Update should not be done
 
-Scenario: xxxxxxxxxx
+Scenario: Invalid Future ATA
 	Given User adding main carriage legs to last direct shipment
 		| LegIndex | Carrier.Code | FromPort.Code | ToPort.Code |
 		| 1        | CA20         | DE222         | DE223       |
-	When UpdateShipmentWithInvalidFutureATA
-	Then assert ATA
+	When User Update Shipment With Invalid Future ATA
+	Then Update should not be done
 
 Scenario: xxxxxxxxxx
 	Given User adding main carriage legs to last direct shipment

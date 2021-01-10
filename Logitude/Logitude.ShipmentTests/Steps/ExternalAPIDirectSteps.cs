@@ -3,6 +3,7 @@ using Logitude.ShipmentTests.Models;
 using Logitude.Test.Base.Extensions;
 using Logitude.Test.Base.Models.Login;
 using Logitude.Test.Base.Services;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using TechTalk.SpecFlow;
@@ -13,6 +14,7 @@ namespace Logitude.ShipmentTests.Steps
     public class ExternalAPIDirectSteps
     {
         protected ExternalAPIDirectContext Context;
+        private Exception exp1; 
 
         public ExternalAPIDirectSteps(MultiUsers multiUsers, ExternalAPIDirectContext context)
         {
@@ -38,13 +40,6 @@ namespace Logitude.ShipmentTests.Steps
             Context.Direct.OceanOrInlandPackages.AddRange(oceanOrInlandPackages);
         }
 
-        [Given(@"List of main carriage legs for direct shipment")]
-        public void GivenListOfMainCarriageLegsForDirectShipment(Table mainCarriageLegsTable)
-        {
-            IEnumerable<MainCarriageLeg> mainCarriageLegs = mainCarriageLegsTable.CreateComplexSet<MainCarriageLeg>();
-            Context.Direct.MainCarriageLegs = new List<MainCarriageLeg>();
-            Context.Direct.MainCarriageLegs.AddRange(mainCarriageLegs);
-        }
 
         [When(@"User create direct shipment using external API")]
         public void WhenUserCreateDirectShipmentUsingExternalAPI()
@@ -60,9 +55,39 @@ namespace Logitude.ShipmentTests.Steps
         }
 
 
-        //no need for this step .. just you want to use the code inside it for other steps .. I recommend to use a function as protected
-        [Given(@"User get the last direct shipment")]
-        public void WhenUserGetTheLastDirectShipment()
+      //ATA
+
+        [Given(@"User adding main carriage legs to last direct shipment")]
+        public void UserAddingMainCarriageLegsToLastDirectShipment(Table mainCarriageLegsTable)
+        {
+            IEnumerable<MainCarriageLeg> mainCarriageLegs = mainCarriageLegsTable.CreateComplexSet<MainCarriageLeg>();
+            GetTheLastDirectShipment();
+            Context.Direct.MainCarriageLegs = new List<MainCarriageLeg>();
+            Context.Direct.MainCarriageLegs.AddRange(mainCarriageLegs);
+        }
+
+        [When(@"User Update Shipment With Invalid Future ATA")]
+        public void WhenUpdateShipmentWithInvalidFutureATA()
+        {
+            Context.Direct.MainCarriageLegs.Last().ATA = new DateTime(2021, 10, 4);
+
+            //shipmentPM = await service.UpdateDirect(shipmentPM, false);
+
+            //Assert.IsTrue(service.HasException == true);
+            //Assert.IsTrue(service.ExceptionMessage == "Can't set MainCarriageATA to future date");
+            //shipmentPM.MainCarriageLegs.First().ATA = null;
+        }
+
+        [Then(@"Update should not be done")]
+        public void UpdateShouldNotBeDone()
+        {
+            ScenarioContext.Current.Pending();
+        }
+
+
+      
+   
+        private void GetTheLastDirectShipment()
         {
             string directShipmentsRequestUrl = "ShipmentViews/GetByFilters?ForceCacheRefresh=false&GetAll=false&GetCount=false&PageIndex=0&PageSize=1" +
                 "&Filter1Name=ShipmentLevelCode&Filter1Operator=equals&Filter1Value=D" +
@@ -80,5 +105,8 @@ namespace Logitude.ShipmentTests.Steps
                 Context.Direct = directShipment;
             }
         }
+
+
+
     }
 }
