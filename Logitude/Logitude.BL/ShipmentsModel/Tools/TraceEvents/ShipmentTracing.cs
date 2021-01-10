@@ -18,6 +18,7 @@ using Simplog.Data.ShipmentsModel;
 using Simplog.Data.ShipmentsModel.Repositories;
 using Simplog.Server.Infrastructure.Helpers;
 using Logitude.BL.DataContracts;
+using Simplog.Server.Infrastructure;
 
 namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
 {
@@ -2067,7 +2068,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
         {
             bool output = true;
 
-            if(shipmentPM.ShipmentPickUps.Where(d => d.ATA == null).Any())
+            if(shipmentPM.ShipmentPickUps.Where(d => d.ATA == null && d.ChangeSetOp != ChangeSetOperation.Delete).Any())
             {
                 output = false;
             }
@@ -2079,7 +2080,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
         {
             bool output = true;
 
-            if (shipmentPM.ShipmentDeliveries.Where(d => d.ATA == null).Any())
+            if (shipmentPM.ShipmentDeliveries.Where(d => d.ATA == null && d.ChangeSetOp != ChangeSetOperation.Delete).Any())
             {
                 output = false;
             }
