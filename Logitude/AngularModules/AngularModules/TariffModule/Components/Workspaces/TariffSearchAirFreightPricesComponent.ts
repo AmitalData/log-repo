@@ -1330,9 +1330,9 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
                     var costAmount = AppTool.Round(item.ActualPrice, 3);
                     chargePM.CostTotalAmount = costAmount;
                     if (isOFC) {
-                        var bcntCharge = this.FatherComponent.AllMeasurements.filter(d => d.Code == "BCNT")[0];
-                        measurementCode = bcntCharge.Code;
-                        measurementId = bcntCharge.Id;
+                        //var bcntCharge = this.FatherComponent.AllMeasurements.filter(d => d.Code == "BCNT")[0];
+                        //measurementCode = bcntCharge.Code;
+                        //measurementId = bcntCharge.Id;
                         this.FillQuoteFCLCharges(this.ContainerType1Id, chargePM, item);
                         this.FillQuoteFCLCharges(this.ContainerType2Id, chargePM, item);
                         this.FillQuoteFCLCharges(this.ContainerType3Id, chargePM, item);
