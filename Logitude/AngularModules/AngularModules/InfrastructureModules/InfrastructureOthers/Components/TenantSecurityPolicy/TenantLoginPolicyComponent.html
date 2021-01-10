@@ -21,14 +21,18 @@
                             <LogLabel [ObjectFieldName]="'LoginPolicyCode'" [ObjectTableName]="ObjectTableName" [DataContext]="EntityPM"></LogLabel>
                         </td>
 
-                        <td style="width:230px; "> 
-                            <LogLov [ObjectFieldName]="'LoginPolicyCode'"
+                        <td style="width:230px; ">
+
+                            <ComboBox [ItemsSource]="LoginPolicyLists" [Binding]="'Name'" [SelectedItem]="SelectedLoginPolicy" (SelectedItemChanged)="SelectedLoginPolicy = $event"></ComboBox>
+
+
+                            <!--<LogLov [ObjectFieldName]="'LoginPolicyCode'"
                                     [ObjectTableName]="ObjectTableName"
                                     [DataContext]="EntityPM"
                                     [SelectedValue]="EntityPM.LoginPolicyCode"
                                     [LookUpTableName]="'LoginPolicy'"
                                     [HideColumns]="true">
-                            </LogLov>
+                            </LogLov>-->
                         </td>
 
                         <td>
@@ -251,7 +255,7 @@
              
 
 
-                    <tr class="FormFieldRow">
+                    <!--<tr class="FormFieldRow">
                         <td style="width:200px; ">
                             <LogLabel [ObjectFieldName]="'KeepUserLoggedIn'" [ObjectTableName]="ObjectTableName" [DataContext]="EntityPM"></LogLabel>
                         </td>
@@ -262,7 +266,7 @@
                          <td>
                             <div></div>
                         </td>
-                    </tr>
+                    </tr>-->
 
                     <tr class="FormFieldRow">
                         <td style="width:200px; ">
