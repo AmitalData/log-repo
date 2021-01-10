@@ -4,6 +4,7 @@ using Logitude.Test.Base.Models.Login;
 using Logitude.Test.Base.Services;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using TechTalk.SpecFlow;
 using TechTalk.SpecFlow.Assist;
 using Xunit;
@@ -11,69 +12,19 @@ using Xunit;
 namespace Logitude.ShipmentTests.Steps
 {
     [Binding]
-    public class UpdateShipment
+    public class UpdateShipmentSteps
     {
         protected User User;
-        protected ShipmentPM _masterPM, _housePM;
+        protected readonly ShipmentContext ShipmentContext;
         protected ShipmentPackagePM _housePackage, _masterPackages;
         protected ShipmentPayablesPM _shipmentPayablesPM;
         protected Exception exceptionForHouse, exceptionForMaster, exceptionForPayables;
 
-        public UpdateShipment(MultiUsers multiUsers)
+        public UpdateShipmentSteps(MultiUsers multiUsers, ShipmentContext shipmentContext)
         {
+            ShipmentContext = shipmentContext;
             User = multiUsers.Users[0];
         }
-
-        [Given(@"The master shipment fields")]
-        public void GivenTheMasterShipmentFields(Table table)
-        {
-            _masterPM = table.CreateInstance<ShipmentPM>();
-            _masterPM.Tenant = User.Tenant;
-            _masterPM.NewConcurrencyGUID = Guid.NewGuid().ToString();
-        }
-
-        [When(@"The post API sent to create master shipment")]
-        public void WhenTheShipmentCreateAPISent()
-        {
-            _masterPM = APICaller.CallPost<ShipmentPM>(_masterPM, "Shipment", User.Token);
-        }
-
-        [Then(@"A new master created successfully")]
-        public void ThenANewMasterCreatedSuccessfully()
-        {
-            _masterPM.Id.Should().NotBeNull();
-        }
-
-        ////////////////////////////////////////////////////////////////////////////////////////////
-
-        [Given(@"The house shipment fields")]
-        public void GivenTheHouseShipmentFields(Table table)
-        {
-            _housePM = table.CreateInstance<ShipmentPM>();
-            _housePM.Tenant = User.Tenant;
-            _housePM.NewConcurrencyGUID = Guid.NewGuid().ToString();
-        }
-
-        [Given(@"MasterShipmentDataId is (.*) and MasterShipmentNumber is (.*)")]
-        public void GivenHouseMasterIdIs(string masterShipmentDataId, string MasterShipmentNumber)
-        {
-            _housePM.MasterShipmentDataId = masterShipmentDataId; // "1-1997645"
-            _housePM.MasterShipmentNumber = MasterShipmentNumber; // "M1304"
-        }
-
-        [When(@"The post API sent to create house shipment")]
-        public void WhenThePostAPISentToCreateHouseShipment()
-        {
-            _housePM = APICaller.CallPost<ShipmentPM>(_housePM, "Shipment", User.Token);
-        }
-
-        [Then(@"A new house created successfully")]
-        public void ThenANewHouseCreatedSuccessfully()
-        {
-            _housePM.Id.Should().NotBeNull();
-        }
-
-        /////////////////////////////////////////////////////////////////////////////////////////////////
 
         [Given(@"The master shipment packages fields")]
         public void GivenTheMasterShipmentPackagesFields(Table table)
@@ -82,33 +33,29 @@ namespace Logitude.ShipmentTests.Steps
             _masterPackages.Tenant = User.Tenant;
         }
 
-        [Given(@"MasterShipmentId is (.*)")] 
-        public void GivenShipmentMasterIdIs(string masterShipmentId)
-        {
-            string singleShipmentUrl = "Shipment/GetSingle?id=" + masterShipmentId;
-            _masterPM = APICaller.CallGet<ShipmentPM>(singleShipmentUrl, User.Token, null);
-        }
-
         [When(@"The put API sent to add master packages")]
         public void TheputAPIsenttoaddmasterpackages()
         {
-            _masterPM.NewConcurrencyGUID = Guid.NewGuid().ToString();
-            _masterPackages.ShipmentNumber = _masterPM.MasterShipmentNumber;
-            _masterPackages.ShipmentId = _masterPM.Id; 
-            _masterPM.ShipmentPackages = new List<ShipmentPackagePM>();
-            _masterPM.PackagesQuantity = _masterPackages.Quantity;
-            _masterPM.ShipmentPackages.Add(_masterPackages);
+            ShipmentContext.MasterShipment.NewConcurrencyGUID = Guid.NewGuid().ToString();
+            ShipmentContext.MasterShipment.ShipmentPackages = new List<ShipmentPackagePM>();
+            ShipmentContext.MasterShipment.FreightPrepaidCollectId = "P";
+            ShipmentContext.MasterShipment.OtherPrepaidCollectId = "C";
+            ShipmentContext.MasterShipment.CreatedByUserId = User.UserId;
+            ShipmentContext.MasterShipment.UpdatedByUserId = User.UserId;
 
-            exceptionForMaster = Record.Exception(() => APICaller.CallPut<ShipmentPM>(_masterPM, "Shipment", User.Token));
+            _masterPackages.ShipmentNumber = ShipmentContext.MasterShipment.MasterShipmentNumber;
+            _masterPackages.ShipmentId = ShipmentContext.MasterShipment.Id;
+            ShipmentContext.MasterShipment.PackagesQuantity = _masterPackages.Quantity;
+            ShipmentContext.MasterShipment.ShipmentPackages.Add(_masterPackages);
+
+            ShipmentContext.MasterShipment = APICaller.CallPut<ShipmentPM>(ShipmentContext.MasterShipment, "Shipment", User.Token);
         }
 
         [Then(@"A new master packages added successfully")]
         public void ThenANewMasterPackagesAddedSuccessfully()
         {
-            exceptionForMaster.Should().BeNull();
+            ShipmentContext.MasterShipment.Id.Should().NotBeNull();
         }
-
-        ///////////////////////////////////////////////////////////////////////////////
 
         [Given(@"The house shipment packages fields")]
         public void GivenTheHouseShipmentPackagesFields(Table table)
@@ -117,34 +64,29 @@ namespace Logitude.ShipmentTests.Steps
             _housePackage.Tenant = User.Tenant;
         }
 
-        [Given(@"HouseShipmentId is (.*)")]
-        public void GivenShipmentHouseIdIs(string houseShipmentId)
-        {
-            string singleShipmentUrl = "Shipment/GetSingle?id=" + houseShipmentId;
-            _housePM = APICaller.CallGet<ShipmentPM>(singleShipmentUrl, User.Token, null);
-        }
-
         [When(@"The put API sent to add house packages")]
         public void TheputAPIsenttoaddhousepackages()
         {
-            _housePM.NewConcurrencyGUID = Guid.NewGuid().ToString();
+            ShipmentContext.HouseShipment.NewConcurrencyGUID = Guid.NewGuid().ToString();
+            ShipmentContext.HouseShipment.ShipmentPackages = new List<ShipmentPackagePM>();
+            ShipmentContext.HouseShipment.FreightPrepaidCollectId = "P";
+            ShipmentContext.HouseShipment.OtherPrepaidCollectId = "C";
+            ShipmentContext.HouseShipment.CreatedByUserId = User.UserId;
+            ShipmentContext.HouseShipment.UpdatedByUserId = User.UserId;
 
-            _housePM.ShipmentPackages = new List<ShipmentPackagePM>();
-            _housePM.PackagesQuantity = _housePackage.Quantity;
-            _housePackage.ShipmentNumber = _housePM.ShipmentNumber;
-            _housePackage.ShipmentId = _housePM.Id;
-            _housePM.ShipmentPackages.Add(_housePackage);
+            _housePackage.ShipmentNumber = ShipmentContext.HouseShipment.ShipmentNumber;
+            _housePackage.ShipmentId = ShipmentContext.HouseShipment.Id;
+            ShipmentContext.HouseShipment.PackagesQuantity = _housePackage.Quantity;
+            ShipmentContext.HouseShipment.ShipmentPackages.Add(_housePackage);
 
-            exceptionForHouse = Record.Exception(() => APICaller.CallPut<ShipmentPM>(_housePM, "Shipment", User.Token));
+            ShipmentContext.HouseShipment = APICaller.CallPut<ShipmentPM>(ShipmentContext.HouseShipment, "Shipment", User.Token);
         }
 
         [Then(@"A new house packages added successfully")]
         public void ThenANewHousePackagesAddedSuccessfully()
         {
-            exceptionForHouse.Should().BeNull();
+            ShipmentContext.HouseShipment.Id.Should().NotBeNull();
         }
-
-        ////////////////////////////////////////////////////////////////////////////
 
         [Given(@"The Payable Charge Type fields")]
         public void GivenThePayableChargeTypeFields(Table table)
@@ -156,18 +98,22 @@ namespace Logitude.ShipmentTests.Steps
         [When(@"The put API sent to add master Payable")]
         public void WhenThePutAPISentToAddMasterPayable()
         {
-            _masterPM.ShipmentPayables = new List<ShipmentPayablesPM>();
-            _shipmentPayablesPM.ShipmentId = _masterPM.Id;
-            _masterPM.ShipmentPayables.Add(_shipmentPayablesPM);
+            ShipmentContext.MasterShipment.ShipmentPayables = new List<ShipmentPayablesPM>();
+            ShipmentContext.MasterShipment.FreightPrepaidCollectId = "P";
+            ShipmentContext.MasterShipment.OtherPrepaidCollectId = "C";
+            ShipmentContext.MasterShipment.CreatedByUserId = User.UserId;
+            ShipmentContext.MasterShipment.UpdatedByUserId = User.UserId;
 
-            exceptionForPayables = Record.Exception(() => APICaller.CallPut<ShipmentPM>(_masterPM, "Shipment", User.Token));
+            _shipmentPayablesPM.ShipmentId = ShipmentContext.MasterShipment.Id;
+            ShipmentContext.MasterShipment.ShipmentPayables.Add(_shipmentPayablesPM);
+
+            ShipmentContext.MasterShipment = APICaller.CallPut<ShipmentPM>(ShipmentContext.MasterShipment, "Shipment", User.Token);
         }
 
         [Then(@"The payable cherge type added successfully")]
         public void ThenThePayableChergeTypeAddedSuccessfully()
         {
-            exceptionForPayables.Should().BeNull();
-
+            ShipmentContext.MasterShipment.Id.Should().NotBeNull();
         }
     }
 }
