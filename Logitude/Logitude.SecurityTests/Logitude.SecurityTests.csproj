@@ -100,14 +100,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< master
     <Compile Include="Models\Invoice\APInvoicePM.cs" />
     <Compile Include="Models\Payment\APPaymentPM.cs" />
     <Compile Include="Models\Contact\ContactContext.cs" />
     <Compile Include="Models\Contact\ContactPM.cs" />
     <Compile Include="Models\FTPDetail\FTPDetailContext.cs" />
     <Compile Include="Models\FTPDetail\FTPDetailPM.cs" />
-========================================================================
     <Compile Include="Models\CompanyAddressSetting\AddressPM.cs" />
     <Compile Include="Models\CompanyAddressSetting\AddressSettingSecurityAccessStepsContext.cs" />
     <Compile Include="Models\ARInvoice\ARInvoicePM.cs" />
