@@ -26,8 +26,26 @@ Scenario: Create Direct Shipment Using External API
 	And List of ocean or inland packages for direct shipment
 		| PackageType.Code | Pieces | GrossWeight |
 		| 20BU             | 1      | 250         |
-	And List of main carriage legs for direct shipment
-		| LegIndex | Carrier.Code | FromPort.Code | ToPort.Code |
-		| 1        | CA20         | DE222         | DE223       |
 	When User create direct shipment using external API
 	Then The direct shipment should be created successfully
+
+Scenario: xxxxxxxxxx
+	Given User adding main carriage legs to last direct shipment
+		| LegIndex | Carrier.Code | FromPort.Code | ToPort.Code |
+		| 1        | CA20         | DE222         | DE223       |
+	When UpdateShipmentWithInvalidFutureATD
+	Then assert
+
+Scenario: xxxxxxxxxx
+	Given User adding main carriage legs to last direct shipment
+		| LegIndex | Carrier.Code | FromPort.Code | ToPort.Code |
+		| 1        | CA20         | DE222         | DE223       |
+	When UpdateShipmentWithInvalidFutureATA
+	Then assert ATA
+
+Scenario: xxxxxxxxxx
+	Given User adding main carriage legs to last direct shipment
+		| LegIndex | Carrier.Code | FromPort.Code | ToPort.Code |
+		| 1        | CA20         | DE222         | DE223       |
+	When UpdateShipmentWithValidDates
+	Then assert *

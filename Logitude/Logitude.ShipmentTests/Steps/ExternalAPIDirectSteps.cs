@@ -4,6 +4,7 @@ using Logitude.Test.Base.Extensions;
 using Logitude.Test.Base.Models.Login;
 using Logitude.Test.Base.Services;
 using System.Collections.Generic;
+using System.Linq;
 using TechTalk.SpecFlow;
 
 namespace Logitude.ShipmentTests.Steps
@@ -23,7 +24,7 @@ namespace Logitude.ShipmentTests.Steps
         public void GivenDirectShipmentWithTheFollowingProperties(Table directShipmentTable)
         {
             Direct directShipment = directShipmentTable.CreateComplexInstance<Direct>();
-            if(directShipment != null)
+            if (directShipment != null)
             {
                 Context.Direct = directShipment;
             }
@@ -56,6 +57,28 @@ namespace Logitude.ShipmentTests.Steps
         public void ThenTheDirectShipmentShouldBeCreatedSuccessfully()
         {
             Context.Direct.Id.Should().NotBeNull();
+        }
+
+
+        //no need for this step .. just you want to use the code inside it for other steps .. I recommend to use a function as protected
+        [Given(@"User get the last direct shipment")]
+        public void WhenUserGetTheLastDirectShipment()
+        {
+            string directShipmentsRequestUrl = "ShipmentViews/GetByFilters?ForceCacheRefresh=false&GetAll=false&GetCount=false&PageIndex=0&PageSize=1" +
+                "&Filter1Name=ShipmentLevelCode&Filter1Operator=equals&Filter1Value=D" +
+                "&Filter2Name=CreatedByUserId&Filter2Operator=equals&Filter2Value=" + Context.User.UserId +
+                "&SortBy=CreateDateTime&SortDirection=descending";
+
+            IEnumerable<ShipmentPM> directShipments = APICaller.CallGet<IEnumerable<ShipmentPM>>(directShipmentsRequestUrl, Context.User.Token, "Result");
+
+            string lastDirectShipmentId = directShipments?.FirstOrDefault()?.Id;
+
+            Direct directShipment = APICaller.CallGet<Direct>(("Direct/GetSingleDirect?id=" + lastDirectShipmentId), Context.User.Token, null);
+
+            if (directShipment != null)
+            {
+                Context.Direct = directShipment;
+            }
         }
     }
 }
