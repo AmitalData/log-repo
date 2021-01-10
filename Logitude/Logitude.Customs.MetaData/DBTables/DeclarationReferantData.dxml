@@ -225,4 +225,8 @@
     ReferencedTable="ReferantTeams"
     ReferencedColumn="Code"
     ReferencedTableSchema="Customs" />
+  <Index
+    Columns="ControllerStatus" />
+  <Index
+    Columns="ClassificationStatus" />
 </Table>

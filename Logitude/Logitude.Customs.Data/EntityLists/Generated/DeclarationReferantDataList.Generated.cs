@@ -130,6 +130,12 @@ namespace Logitude.Customs.Data.EntityLists
        public bool IsPaymentDateNull  { get; set; }
        [DataMember]
        public bool IsAvailabilityDateNull  { get; set; }
+       [DataMember]
+       public string DeclarationNumber  { get; set; }
+       [DataMember]
+       public bool IsHatraDateNull  { get; set; }
+       [DataMember]
+       public string RequestedCustomsDocId  { get; set; }
    }
 
 }
