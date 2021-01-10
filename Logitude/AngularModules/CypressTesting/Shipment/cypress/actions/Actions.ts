@@ -12,7 +12,7 @@ export function FillShipmentDefaultFields(levelCode:string, directionCode: strin
     
     if(shipmentTypeCode){
         if(shipmentTypeCode === "Groupage"){
-            cy.ClickRadio("#ShipmentTypeRadio_0MyGO");
+            cy.ClickRadio("#ShipmentTypeRadio_0MyG" + transportModCode);
         }else{
             cy.ClickRadio("#ShipmentTypeRadio_0" + shipmentTypeCode)
         }
@@ -48,9 +48,10 @@ export function SaveShipment(resultFile: string) {
     cy.SaveClick("#ShipmentCreatebtn", null, "**/shipment", resultFile)
 }
 
-export function CreateShipment(){
+export function CreateShipment(levelCode: string){
+    let createPreSelector = levelCode === "Master" ? "#Master" : "#Shipment";
     cy.DefineRequestWait("POST", "**/shipment", "WaitPostShipmentRequest")
-    cy.Click("#ShipmentCreatebtn", null)
+    cy.Click(createPreSelector + "Createbtn", null)
 }
 
 export function OpenShipment(dataFile: string){

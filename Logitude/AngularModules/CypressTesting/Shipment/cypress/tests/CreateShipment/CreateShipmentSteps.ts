@@ -31,7 +31,7 @@ Given("Shipment details",
 });
 
 When("Click create shipment button", () => {
-  Actions.CreateShipment();
+  Actions.CreateShipment(LevelCode);
 });
 
 Then("The create operation completed successfully", () => {
