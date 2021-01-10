@@ -31,7 +31,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
 
         protected IEnumerable //IQueryable
             <RevenueExpenseReportM> _QBaseRevenueExpenseReportFull = null;
-        private DbContextBase.IDbContextLogger _DbLogger;
+        //private DbContextBase.IDbContextLogger _DbLogger;
 
 
 
@@ -83,7 +83,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
             _TransactionScope = TransactionFactory.GetNewTransaction(TimeSpan.FromMinutes(__TimeOutInMinutes)); //snapshot isolation performance
 
             _AccountingContext = AccountingContext.GetContext(_RevenueExpenseReportParam.Tenant);
-            _DbLogger = (_AccountingContext as DbContextBase).CreateLogger();
+            //_DbLogger = (_AccountingContext as DbContextBase).CreateLogger();
 
             _FullAccountingSetting = //Hope From Cache
                 FullAccountingSettingQueryService
@@ -528,7 +528,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                 throw new Exception("(_QBaseRevenueExpenseReportFull==null)");
             }
             var l = _QBaseRevenueExpenseReportFull.ToList();
-            DbLog = _DbLogger.ToString();
+            DbLog = "";// _DbLogger.ToString();
             result = l;
             return l;
         }
@@ -864,12 +864,12 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
 
         public void Dispose()
         {
-            bool testTimeout = false;
-            if (testTimeout)
-            {
-                Thread.Sleep(TimeSpan.FromMinutes(10));
-            } 
-            _DbLogger.Dispose();
+            //bool testTimeout = false;
+            //if (testTimeout)
+            //{
+            //    Thread.Sleep(TimeSpan.FromMinutes(10));
+            //} 
+            ///_DbLogger.Dispose();
             _TransactionScope.Dispose();
         }
 

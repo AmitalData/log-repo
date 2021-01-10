@@ -27,7 +27,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
 
         protected IEnumerable //IQueryable
             <TrailReportM> _QBaseTrailReportFull=null;
-        protected DbContextBase.IDbContextLogger _DbLogger;
+        //protected DbContextBase.IDbContextLogger _DbLogger;
 
 
 
@@ -73,7 +73,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
             _TransactionScope = TransactionFactory.GetNewTransaction(TimeSpan.FromMinutes(__TimeOutInMinutes)); //snapshot isolation performance
 
             _AccountingContext = AccountingContext.GetContext(_TrailReportParam.Tenant);
-            _DbLogger = (_AccountingContext as DbContextBase).CreateLogger();
+            //_DbLogger = (_AccountingContext as DbContextBase).CreateLogger();
 
             _FullAccountingSetting = //Hope From Cache
                 FullAccountingSettingQueryService
@@ -117,7 +117,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
             myOutputReport.Add(myTotalRow);
 
 
-            DbLog = _DbLogger.ToString();
+            DbLog = "";// _DbLogger.ToString();
             return myOutputReport;
         }
 
@@ -579,7 +579,7 @@ into groupBy_currency
 
         public void Dispose()
         {
-            _DbLogger.Dispose();
+            //_DbLogger.Dispose();
             _TransactionScope.Dispose();
         }
 
