@@ -13,25 +13,20 @@ namespace Logitude.Test.Base.Services
 
         public static T CallPost<T>(object requestBody, string url, string token)
         {
-            return CallAPIProcess<T>(Method.POST, requestBody, url, token, null);
+            return CallAPIProcess<T>(Method.POST, requestBody, url, token, null, null);
         }
 
-        public static T CallPut<T>(object requestBody, string url, string token)
+        public static T CallPut<T>(object requestBody, string url, string token, HttpStatusCode? stausCode = null)
         { 
-            return CallAPIProcess<T>(Method.PUT, requestBody, url, token, null);  
+            return CallAPIProcess<T>(Method.PUT, requestBody, url, token, null, stausCode);  
         }
 
         public static T CallGet<T>(string url, string token, string jsonElement)
         {
-            return CallAPIProcess<T>(Method.GET, null, url, token, jsonElement);
+            return CallAPIProcess<T>(Method.GET, null, url, token, jsonElement, null);
         }
 
-        public static dynamic CallGet(string url, string token, string jsonElement)
-        {
-            return CallAPIProcess<dynamic>(Method.GET, null, url, token, jsonElement);
-        }
-
-        protected static T CallAPIProcess<T>(Method method, object requestBody, string url, string token, string jsonElement)
+        protected static T CallAPIProcess<T>(Method method, object requestBody, string url, string token, string jsonElement, HttpStatusCode? statusCode)
         {
             string restClientUrl = GetRequestUrl(url);
             RestClient restClient = new RestClient(restClientUrl);
@@ -49,7 +44,7 @@ namespace Logitude.Test.Base.Services
 
             IRestResponse<T> restResponse = restClient.Execute<T>(restRequest);
 
-            if (restResponse.StatusCode == HttpStatusCode.OK)
+            if (restResponse.StatusCode == (statusCode == null ? HttpStatusCode.OK : statusCode))
             {
                 if (jsonElement != null)
                 {
@@ -64,8 +59,8 @@ namespace Logitude.Test.Base.Services
             }
             else
             {
-                //return default;
-                throw new Exception(method.ToString() + " Request To " + restClientUrl + " Faild With Message " + restResponse.Content);
+                return default;
+                //throw new Exception(method.ToString() + " Request To " + restClientUrl + " Faild With Message " + restResponse.Content);
             }
         }
 
