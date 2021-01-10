@@ -1,4 +1,4 @@
-﻿using Logitude.Test.Base.Models.Constants;
+﻿using Logitude.Test.Base.Constants;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,20 +27,27 @@ namespace Logitude.Test.Base.ValueRetrievers
 
         public object Retrieve(KeyValuePair<string, string> keyValuePair, Type targetType, Type propertyType)
         {
-            if(RandomType == "String")
+            try
             {
-                int stringLength = GetStringLengthFromRandomStringRegex(keyValuePair.Value);
-                string randomString = GenerateRandomString(stringLength);
-                return randomString;
+                if (RandomType == "String")
+                {
+                    int stringLength = GetStringLengthFromRandomStringRegex(keyValuePair.Value);
+                    string randomString = GenerateRandomString(stringLength);
+                    return randomString;
+                }
+                else if (RandomType == "Number")
+                {
+                    int minNumber = GetDataInFromRandomNumberRegex(keyValuePair.Value, "min");
+                    int maxNumber = GetDataInFromRandomNumberRegex(keyValuePair.Value, "max");
+                    int randomNumber = GenerateRandomNumber(minNumber, maxNumber);
+                    return randomNumber;
+                }
+                else
+                {
+                    return null;
+                }
             }
-            else if(RandomType == "Number")
-            {
-                int minNumber = GetDataInFromRandomNumberRegex(keyValuePair.Value, "min");
-                int maxNumber = GetDataInFromRandomNumberRegex(keyValuePair.Value, "max");
-                int randomNumber = GenerateRandomNumber(minNumber, maxNumber);
-                return randomNumber;
-            }
-            else
+            catch (Exception)
             {
                 return null;
             }

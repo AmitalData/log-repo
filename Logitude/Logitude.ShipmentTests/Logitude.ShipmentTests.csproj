@@ -97,14 +97,29 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Models\Card.cs" />
+    <Compile Include="Models\Direct.cs" />
+    <Compile Include="Models\Direction.cs" />
+    <Compile Include="Models\ExternalAPIDirectContext.cs" />
+    <Compile Include="Models\Incoterm.cs" />
+    <Compile Include="Models\MainCarriageLeg.cs" />
+    <Compile Include="Models\OceanOrInlandPackage.cs" />
+    <Compile Include="Models\PackageType.cs" />
+    <Compile Include="Models\Port.cs" />
     <Compile Include="Models\ShipmentPackagePM.cs" />
     <Compile Include="Models\ShipmentPayablesPM.cs" />
     <Compile Include="Models\ShipmentPM.cs" />
+    <Compile Include="Models\ShipmentType.cs" />
+    <Compile Include="Models\TransportMode.cs" />
+    <Compile Include="Models\VolumeUnit.cs" />
+    <Compile Include="Models\WeightUnit.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Steps\ExternalAPIDirectSteps.cs" />
     <Compile Include="Steps\UpdateShipmentSteps.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <None Include="Features\ExternalAPIDirect.feature" />
     <None Include="Features\UpdateShipments.feature" />
     <None Include="packages.config" />
   </ItemGroup>
