@@ -111,11 +111,12 @@ namespace Logitude.ShipmentTests.Steps
         [When(@"The User Updates Shipment With valid Future ETD,ATD,ETA and ATA")]
         public void WhenTheUserUpdatesShipmentWithValidFutureETDATDETAAndATA()
         {
-            Context.Direct.MainCarriageLegs.First().ETD = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day).AddMonths(-1).AddDays(1);
-            Context.Direct.MainCarriageLegs.First().ATD = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day).AddMonths(-1).AddDays(2);
-            Context.Direct.MainCarriageLegs.First().ETA = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day).AddMonths(-1).AddDays(3);
-            Context.Direct.MainCarriageLegs.First().ATA = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day).AddMonths(-1).AddDays(4);
 
+            Context.Direct.MainCarriageLegs.Last().ETD = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day).AddMonths(-1).AddDays(1);
+            Context.Direct.MainCarriageLegs.Last().ATD = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day).AddMonths(-1).AddDays(2);
+            Context.Direct.MainCarriageLegs.Last().ETA = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day).AddMonths(-1).AddDays(3);
+            Context.Direct.MainCarriageLegs.Last().ATA = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day).AddMonths(-1).AddDays(4);
+            Context.Direct.NewConcurrencyGUID = Guid.NewGuid().ToString();
             Context.Direct = APICaller.CallPut<Direct>(Context.Direct, "Direct", Context.User.Token);
         }
 
@@ -127,6 +128,7 @@ namespace Logitude.ShipmentTests.Steps
 
         private void GetTheLastDirectShipment()
         {
+            Context.Direct = null;
             string directShipmentsRequestUrl = "ShipmentViews/GetByFilters?ForceCacheRefresh=false&GetAll=false&GetCount=false&PageIndex=0&PageSize=10" +
                 "&Filter1Name=ShipmentLevelCode&Filter1Operator=equals&Filter1Value=D" +
                 "&Filter3Name=TransportModeId&Filter3Operator=equals&Filter3Value=O" +
@@ -144,8 +146,6 @@ namespace Logitude.ShipmentTests.Steps
                 Context.Direct = directShipment;
             }
         }
-
-
 
     }
 }

@@ -20,6 +20,8 @@ namespace Logitude.ShipmentTests.Models
         public Card MainCarriageCarrier { get; set; }
         public string MainCarriageCarrierNumber { get; set; }
         public DateTime? MainCarriageATD { get; set; }
+        public string NewConcurrencyGUID { get; set; }
+        public string ConcurrencyGUID { get; set; }
         public List<OceanOrInlandPackage> OceanOrInlandPackages { get; set; }
         public List<MainCarriageLeg> MainCarriageLegs { get; set; }
     }
