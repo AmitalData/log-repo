@@ -587,8 +587,14 @@ export class TaxReportDetailsTabComponent extends BaseComponent implements OnIni
         filters.PageIndex = skip;
         filters.GetCount = true;
 
-        filters.SortBy = sortingCol;
-        filters.SortDirection = sortingDir;
+        if (sortingDir != "") {
+            filters.SortBy = sortingCol;
+            filters.SortDirection = sortingDir;
+        }
+        else {
+            filters.SortBy = "Line";
+            filters.SortDirection = "Ascending";
+        }
 
         // filters.addAdditionalFilter("BankAccountId", this.EntityPM.Id, null, null, "Equals", false, false, false, "string");
         //filters.addAdditionalFilter("IsCancelled", false, null, null, "Equals", false, false, false, "boolean");
