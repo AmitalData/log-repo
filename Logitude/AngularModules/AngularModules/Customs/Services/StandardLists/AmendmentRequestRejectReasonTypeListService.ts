@@ -10,202 +10,202 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
 import { defer, of } from 'rxjs';
-import {ApiQueryFilters} from '../../../Infrastructure/DataContracts/ApiQueryFilters';
-import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
-import {InfraGenericFilter} from '../../../Infrastructure/Utilities/InfraGenericFilter';
-import {CachedDataManager} from '../../../Infrastructure/Utilities/CachedDataManager';
-import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
-import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
-import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
-import {PerformanceLogger} from '../../../Infrastructure/Utilities/PerformanceLogger';
-import {LocalStorageManager} from '../../../Infrastructure/Utilities/LocalStorageManager';
-import {AmendRequestRejectReasonTypeList} from '../../EntityLists/AmendRequestRejectReasonTypeList';
+import { ApiQueryFilters } from '../../../Infrastructure/DataContracts/ApiQueryFilters';
+import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
+import { InfraGenericFilter } from '../../../Infrastructure/Utilities/InfraGenericFilter';
+import { CachedDataManager } from '../../../Infrastructure/Utilities/CachedDataManager';
+import { ServiceHelper } from '../../../Infrastructure/Utilities/ServiceHelper';
+import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator';
+import { SessionInfo } from '../../../Infrastructure/Utilities/SessionInfo';
+import { PerformanceLogger } from '../../../Infrastructure/Utilities/PerformanceLogger';
+import { LocalStorageManager } from '../../../Infrastructure/Utilities/LocalStorageManager';
+import { AmendRequestRejectReasonTypeList } from '../../EntityLists/AmendmentRequestRejectReasonTypeList';
 
 @Injectable()
 
 export class AmendRequestRejectReasonTypeListService {
-	private _http: HttpClient;
-    private _apiUrl: string;   
-	public static CachedData: Array<AmendRequestRejectReasonTypeList> = [];
+    private _http: HttpClient;
+    private _apiUrl: string;
+    public static CachedData: Array<AmendRequestRejectReasonTypeList> = [];
     constructor() {
         this._http = ServiceHelper.HttpClient;
-        this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/amendrequestrejectreasontypeviews';  
+        this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/amendrequestrejectreasontypeviews';
     }
 
-	getSingle(code: string) {
+    getSingle(code: string) {
 
-		var callTime = new Date();
+        var callTime = new Date();
 
-		return defer(() => {
-			return this._http.get(this._apiUrl + '/getsingle/?' + 'code=' + code, ServiceHelper.GetHttpFullHeaders())
-				.pipe(
-					map((response: HttpResponse<any>) => {
+        return defer(() => {
+            return this._http.get(this._apiUrl + '/getsingle/?' + 'code=' + code, ServiceHelper.GetHttpFullHeaders())
+                .pipe(
+                    map((response: HttpResponse<any>) => {
 
-						var list = response.body;                    
-						var entity: AmendRequestRejectReasonTypeList;
-						if (list) {
-							entity = this.MapJsonToEntityList(list);
-						}
+                        var list = response.body;
+                        var entity: AmendRequestRejectReasonTypeList;
+                        if (list) {
+                            entity = this.MapJsonToEntityList(list);
+                        }
 
-						var serviceResponse: ServiceResponse = new ServiceResponse(); 
-						serviceResponse.Result = entity;  
-						serviceResponse.CallTime = callTime;
+                        var serviceResponse: ServiceResponse = new ServiceResponse();
+                        serviceResponse.Result = entity;
+                        serviceResponse.CallTime = callTime;
 
-						var servertime = response.headers.get('ServerExecutionTime');
-						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "AmendRequestRejectReasonType", "GetSingleList", 'code=' + code); 
+                        var servertime = response.headers.get('ServerExecutionTime');
+                        PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "AmendRequestRejectReasonType", "GetSingleList", 'code=' + code);
 
-						return serviceResponse;
-					}),
-					
-					catchError(ServiceHelper.HandleServiceError));
-		});
-	}
+                        return serviceResponse;
+                    }),
 
-	getAll() {
+                    catchError(ServiceHelper.HandleServiceError));
+        });
+    }
 
-		var callTime = new Date();
+    getAll() {
 
-		return defer(() => {
-			return this._http.get(this._apiUrl + '/getall', ServiceHelper.GetHttpFullHeaders())
-				.pipe(
-					map((response: HttpResponse<any>) => {
+        var callTime = new Date();
 
-						var allLists = response.body;
-						var _mappedListsArray: Array<AmendRequestRejectReasonTypeList> = [];
-						if (allLists) {
-							for (var key in allLists) {			
-								var entity: AmendRequestRejectReasonTypeList = this.MapJsonToEntityList(allLists[key]);
-								_mappedListsArray.push(entity);
-							}
-						}
+        return defer(() => {
+            return this._http.get(this._apiUrl + '/getall', ServiceHelper.GetHttpFullHeaders())
+                .pipe(
+                    map((response: HttpResponse<any>) => {
 
-						var serviceResponse: ServiceResponse = new ServiceResponse(); 
-						serviceResponse.Result = _mappedListsArray;  
-						serviceResponse.CallTime = callTime;
+                        var allLists = response.body;
+                        var _mappedListsArray: Array<AmendRequestRejectReasonTypeList> = [];
+                        if (allLists) {
+                            for (var key in allLists) {
+                                var entity: AmendRequestRejectReasonTypeList = this.MapJsonToEntityList(allLists[key]);
+                                _mappedListsArray.push(entity);
+                            }
+                        }
 
-						var servertime = response.headers.get('ServerExecutionTime');
-						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "AmendRequestRejectReasonType", "GetAll", ""); 
+                        var serviceResponse: ServiceResponse = new ServiceResponse();
+                        serviceResponse.Result = _mappedListsArray;
+                        serviceResponse.CallTime = callTime;
 
-						return serviceResponse;
-					}),
+                        var servertime = response.headers.get('ServerExecutionTime');
+                        PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "AmendRequestRejectReasonType", "GetAll", "");
 
-					catchError(ServiceHelper.HandleServiceError));
-		});
-	}
-	
-	getByFilters(filters: ApiQueryFilters) {
+                        return serviceResponse;
+                    }),
 
-		var callTime = new Date();       
-		var urlparameters = '/getbyfilters?';
+                    catchError(ServiceHelper.HandleServiceError));
+        });
+    }
+
+    getByFilters(filters: ApiQueryFilters) {
+
+        var callTime = new Date();
+        var urlparameters = '/getbyfilters?';
         var mykeys = Object.keys(filters);
         var addtionalFiltersValues = null;
 
         for (var i in mykeys) {
-			var propName = mykeys[i];
-			var propValue = filters[propName];
-			var ignoreFilter = ((propName.indexOf("Operator") > 0 && propValue == "Equals") || propName == "AdditionalFilters");
+            var propName = mykeys[i];
+            var propValue = filters[propName];
+            var ignoreFilter = ((propName.indexOf("Operator") > 0 && propValue == "Equals") || propName == "AdditionalFilters");
 
             if (urlparameters != "?") {
                 urlparameters = urlparameters.concat('&');
             }
 
-			if (!ignoreFilter) {
-				propValue = encodeURIComponent(propValue);
-				urlparameters = urlparameters.concat(propName.concat('=').concat(propValue));
-			}
+            if (!ignoreFilter) {
+                propValue = encodeURIComponent(propValue);
+                urlparameters = urlparameters.concat(propName.concat('=').concat(propValue));
+            }
 
-			if (propName == "AdditionalFilters" && propValue.length > 0) {
-				addtionalFiltersValues = JSON.stringify(propValue);
-			}
+            if (propName == "AdditionalFilters" && propValue.length > 0) {
+                addtionalFiltersValues = JSON.stringify(propValue);
+            }
         }
 
         if (addtionalFiltersValues) {
             urlparameters = urlparameters.concat("&AdditionalFilters=").concat(addtionalFiltersValues);
         }
 
-		var callUrl = this._apiUrl.concat(urlparameters);
-        		
-		return defer(() => {
-			return this._http.get(callUrl, ServiceHelper.GetHttpFullHeaders())
-				.pipe(
-					map((response: HttpResponse<any>) => {
+        var callUrl = this._apiUrl.concat(urlparameters);
 
-						var serviceResponse: ServiceResponse = response.body;
-						var _mappedListsArray: Array<AmendRequestRejectReasonTypeList> = [];
+        return defer(() => {
+            return this._http.get(callUrl, ServiceHelper.GetHttpFullHeaders())
+                .pipe(
+                    map((response: HttpResponse<any>) => {
 
-						if (serviceResponse.Result) {
-							for (var key in serviceResponse.Result) {				
-								var entity: AmendRequestRejectReasonTypeList = this.MapJsonToEntityList(serviceResponse.Result[key]);
-								_mappedListsArray.push(entity);
-							}
-						}   
+                        var serviceResponse: ServiceResponse = response.body;
+                        var _mappedListsArray: Array<AmendRequestRejectReasonTypeList> = [];
 
-						serviceResponse.Result = _mappedListsArray;      
-						serviceResponse.CallTime = callTime;
+                        if (serviceResponse.Result) {
+                            for (var key in serviceResponse.Result) {
+                                var entity: AmendRequestRejectReasonTypeList = this.MapJsonToEntityList(serviceResponse.Result[key]);
+                                _mappedListsArray.push(entity);
+                            }
+                        }
 
-						var servertime = response.headers.get('ServerExecutionTime');
-						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "AmendRequestRejectReasonType", "GetByFilters", "PageIndex:" +filters.PageIndex +", PageSize:"+filters.PageSize + ", GetAll:" + filters.GetAll); 
-                 								            
-						return serviceResponse;
-					}),
+                        serviceResponse.Result = _mappedListsArray;
+                        serviceResponse.CallTime = callTime;
 
-					catchError(ServiceHelper.HandleServiceError));
-		});
-	}
+                        var servertime = response.headers.get('ServerExecutionTime');
+                        PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "AmendRequestRejectReasonType", "GetByFilters", "PageIndex:" + filters.PageIndex + ", PageSize:" + filters.PageSize + ", GetAll:" + filters.GetAll);
 
-	getSingleFromCache(code: string) {
+                        return serviceResponse;
+                    }),
 
-		var callTime = new Date(); 	    
+                    catchError(ServiceHelper.HandleServiceError));
+        });
+    }
 
-		if (!SessionLocator.UseCachedData) {
+    getSingleFromCache(code: string) {
+
+        var callTime = new Date();
+
+        if (!SessionLocator.UseCachedData) {
             return this.getSingle(code);
         }
 
         var serviceResponse: ServiceResponse = new ServiceResponse();
 
-		if (AmendRequestRejectReasonTypeListService.CachedData.length > 0) {
-			return defer(() => {
-				var filteredData = AmendRequestRejectReasonTypeListService.CachedData.filter(a => a.Code === code)[0];
-				serviceResponse.CallTime = callTime;
-				serviceResponse.Result = filteredData; 
+        if (AmendRequestRejectReasonTypeListService.CachedData.length > 0) {
+            return defer(() => {
+                var filteredData = AmendRequestRejectReasonTypeListService.CachedData.filter(a => a.Code === code)[0];
+                serviceResponse.CallTime = callTime;
+                serviceResponse.Result = filteredData;
                 return of(serviceResponse);
             });
         }
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.AmendRequestRejectReasonType").pipe(
-				map((cachedJson:any) => {
+                map((cachedJson: any) => {
 
-					var _mappedListsArray: Array<AmendRequestRejectReasonTypeList> = [];
+                    var _mappedListsArray: Array<AmendRequestRejectReasonTypeList> = [];
 
-					if (cachedJson) {
-						for (var key in cachedJson) {
-							var entity: AmendRequestRejectReasonTypeList = this.MapJsonToEntityList(cachedJson[key]);
-							_mappedListsArray.push(entity);
-						}
-					}
+                    if (cachedJson) {
+                        for (var key in cachedJson) {
+                            var entity: AmendRequestRejectReasonTypeList = this.MapJsonToEntityList(cachedJson[key]);
+                            _mappedListsArray.push(entity);
+                        }
+                    }
 
-					AmendRequestRejectReasonTypeListService.CachedData = _mappedListsArray;
+                    AmendRequestRejectReasonTypeListService.CachedData = _mappedListsArray;
 
-					var filteredData = AmendRequestRejectReasonTypeListService.CachedData.filter(a => a.Code === code)[0];
-					serviceResponse.Result = filteredData; 
-					serviceResponse.CallTime = callTime;
-			     
-					PerformanceLogger.InsertPerformanceLog(callTime, new Date(), 0, "AmendRequestRejectReasonType", "GetSingleListFromCache", 'code=' + code); 
+                    var filteredData = AmendRequestRejectReasonTypeListService.CachedData.filter(a => a.Code === code)[0];
+                    serviceResponse.Result = filteredData;
+                    serviceResponse.CallTime = callTime;
 
-					return serviceResponse;
-				}),
+                    PerformanceLogger.InsertPerformanceLog(callTime, new Date(), 0, "AmendRequestRejectReasonType", "GetSingleListFromCache", 'code=' + code);
 
-				catchError(ServiceHelper.HandleServiceError));
+                    return serviceResponse;
+                }),
+
+                catchError(ServiceHelper.HandleServiceError));
         }
     }
 
-    getAllFromCache(filters: ApiQueryFilters= new ApiQueryFilters(true)) {
+    getAllFromCache(filters: ApiQueryFilters = new ApiQueryFilters(true)) {
 
-		var callTime = new Date();
+        var callTime = new Date();
 
-		if (!SessionLocator.UseCachedData) {
-			return this.getByFilters(filters);
+        if (!SessionLocator.UseCachedData) {
+            return this.getByFilters(filters);
         }
 
         var mykeys = Object.keys(filters);
@@ -217,7 +217,7 @@ export class AmendRequestRejectReasonTypeListService {
 
             if (propName == "AdditionalFilters" && propValue.length > 0) {
                 addtionalFiltersValues = JSON.stringify(propValue);
-			}
+            }
         }
 
         var serviceResponse: ServiceResponse = new ServiceResponse();
@@ -225,14 +225,14 @@ export class AmendRequestRejectReasonTypeListService {
         if (AmendRequestRejectReasonTypeListService.CachedData.length > 0) {
             return defer(() => {
                 if (filters.GetAll) {
-					serviceResponse.Result = AmendRequestRejectReasonTypeListService.CachedData; 
-				}
+                    serviceResponse.Result = AmendRequestRejectReasonTypeListService.CachedData;
+                }
 
-				else {
-					var filteredData = InfraGenericFilter.GetFilteredArray(AmendRequestRejectReasonTypeListService.CachedData, filters);
-					serviceResponse.Result = filteredData; 
-					serviceResponse.CallTime = callTime;
-				}
+                else {
+                    var filteredData = InfraGenericFilter.GetFilteredArray(AmendRequestRejectReasonTypeListService.CachedData, filters);
+                    serviceResponse.Result = filteredData;
+                    serviceResponse.CallTime = callTime;
+                }
 
                 return of(serviceResponse);
             });
@@ -240,50 +240,50 @@ export class AmendRequestRejectReasonTypeListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.AmendRequestRejectReasonType").pipe(
-				map((cachedJson:any) => {
+                map((cachedJson: any) => {
 
-					var _mappedListsArray: Array<AmendRequestRejectReasonTypeList> = [];
-					if (cachedJson) {
-						for (var key in cachedJson) {
-							var entity: AmendRequestRejectReasonTypeList = this.MapJsonToEntityList(cachedJson[key]);
-							_mappedListsArray.push(entity);
-						}
-					}
+                    var _mappedListsArray: Array<AmendRequestRejectReasonTypeList> = [];
+                    if (cachedJson) {
+                        for (var key in cachedJson) {
+                            var entity: AmendRequestRejectReasonTypeList = this.MapJsonToEntityList(cachedJson[key]);
+                            _mappedListsArray.push(entity);
+                        }
+                    }
 
-					AmendRequestRejectReasonTypeListService.CachedData = _mappedListsArray;
+                    AmendRequestRejectReasonTypeListService.CachedData = _mappedListsArray;
 
-					if (filters.GetAll) {
-						serviceResponse.Result = _mappedListsArray; 
-					}
+                    if (filters.GetAll) {
+                        serviceResponse.Result = _mappedListsArray;
+                    }
 
-					else {
+                    else {
 
-						_mappedListsArray = InfraGenericFilter.GetFilteredArray(_mappedListsArray, filters);
+                        _mappedListsArray = InfraGenericFilter.GetFilteredArray(_mappedListsArray, filters);
 
-						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), 0, "AmendRequestRejectReasonType", "GetAllFromCache", "PageIndex:" + filters.PageIndex + ", PageSize:" + filters.PageSize + ", GetAll:" + filters.GetAll); 
-                 	
-						serviceResponse.Result = _mappedListsArray; 
-						serviceResponse.CallTime = callTime;
-					}
+                        PerformanceLogger.InsertPerformanceLog(callTime, new Date(), 0, "AmendRequestRejectReasonType", "GetAllFromCache", "PageIndex:" + filters.PageIndex + ", PageSize:" + filters.PageSize + ", GetAll:" + filters.GetAll);
 
-					return serviceResponse;
-				}),
-			
-				catchError(ServiceHelper.HandleServiceError));
-        }		 
+                        serviceResponse.Result = _mappedListsArray;
+                        serviceResponse.CallTime = callTime;
+                    }
+
+                    return serviceResponse;
+                }),
+
+                catchError(ServiceHelper.HandleServiceError));
+        }
     }
-	
-	    MapJsonToEntityList(jsonList: any) {
-       
-            var entityList: AmendRequestRejectReasonTypeList;
-            entityList = new AmendRequestRejectReasonTypeList();
-            var jsonListKeys = Object.keys(jsonList);
 
-            for (var key in jsonListKeys) {
-                var property = jsonListKeys[key];
-                entityList[property] = jsonList[property];
-            }
-			
+    MapJsonToEntityList(jsonList: any) {
+
+        var entityList: AmendRequestRejectReasonTypeList;
+        entityList = new AmendRequestRejectReasonTypeList();
+        var jsonListKeys = Object.keys(jsonList);
+
+        for (var key in jsonListKeys) {
+            var property = jsonListKeys[key];
+            entityList[property] = jsonList[property];
+        }
+
 
         return entityList;
     }
