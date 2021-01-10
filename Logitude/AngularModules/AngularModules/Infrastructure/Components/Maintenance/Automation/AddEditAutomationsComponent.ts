@@ -463,7 +463,7 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
 
         this.DocumentTypeLists = this.AllDocumentTypeLists.filter(a => a.IsDocOut && a.TemplateFormatCode == "M");
 
-        if (this.ResultCodeSelected && this.ResultCodeSelected.Code == "EMAIL") {
+        if (this.ResultCodeSelected && (this.ResultCodeSelected.Code == "EMAIL" || this.ResultCodeSelected.Code == "SENDDOCUMENT")) {
             this.DocumentTypeLists = this.AllDocumentTypeLists.filter(a => a.IsDocOut);
         }
 
