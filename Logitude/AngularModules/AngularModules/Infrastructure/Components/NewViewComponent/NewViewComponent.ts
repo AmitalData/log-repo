@@ -88,7 +88,7 @@ export class NewViewComponent {
     public IsSaveButtonEnabled: boolean = false;
     public IsSharedByVisible: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
-    public ViewOnlyHelpText: string = "View only shared views can't by edited or changed";
+    public ViewOnlyHelpText: string = "View only shared views can't be edited or changed";
 
     constructor(fb: FormBuilder, private CD: ChangeDetectorRef) {
         this.serviceArgs = new ServiceArgs();
