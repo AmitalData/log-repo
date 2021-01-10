@@ -131,19 +131,21 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             {
                 JournalLinePM journalLine = GetOldJournalLineFromDB(firstJournalLine);
 
-                if (firstJournalLine.Notes != journalLine.Notes)
+                if (journalLine != null)
                 {
-                    LedgerTransactionQueryService ledgerTransactionQueryService = new LedgerTransactionQueryService(entityPM.Tenant);
-                    List<LedgerTransactionPM> allTransactionsRelatedToJournal = ledgerTransactionQueryService.GetByJournalId(entityPM.Id, entityPM.Tenant).ToList();
-                    var ledgerTransactionUpdateService = new LedgerTransactionUpdateService(this.MainContext as IAccountingContext, new Dictionary<string, IContext>(), entityPM.Tenant);
-                    foreach (LedgerTransactionPM transaction in allTransactionsRelatedToJournal)
+                    if (firstJournalLine.Notes != journalLine.Notes)
                     {
-                        transaction.Notes = firstJournalLine.Notes;
-                        transaction.ChangeSetOp = ChangeSetOperation.Update;
-                        ledgerTransactionUpdateService.Update(transaction, false, null);
+                        LedgerTransactionQueryService ledgerTransactionQueryService = new LedgerTransactionQueryService(entityPM.Tenant);
+                        List<LedgerTransactionPM> allTransactionsRelatedToJournal = ledgerTransactionQueryService.GetByJournalId(entityPM.Id, entityPM.Tenant).ToList();
+                        var ledgerTransactionUpdateService = new LedgerTransactionUpdateService(this.MainContext as IAccountingContext, new Dictionary<string, IContext>(), entityPM.Tenant);
+                        foreach (LedgerTransactionPM transaction in allTransactionsRelatedToJournal)
+                        {
+                            transaction.Notes = firstJournalLine.Notes;
+                            transaction.ChangeSetOp = ChangeSetOperation.Update;
+                            ledgerTransactionUpdateService.Update(transaction, false, null);
+                        }
                     }
                 }
-
             }
         }
 

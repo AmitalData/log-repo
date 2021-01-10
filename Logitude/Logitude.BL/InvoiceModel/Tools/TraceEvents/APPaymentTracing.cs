@@ -32,17 +32,6 @@ namespace Logitude.BL.InvoiceModel.Tools.TraceEvents
                 });
             }
 
-            else
-            {
-                EventTracer.CreateTraceEvent(new EventTracerArgs()
-                {
-                    Tenant = entityPM.Tenant,
-                    EventTypeCode = "UPAP",
-                    UserId = loggedContact.Id,
-                    EntityId = entityPM.Id,
-                    ObjectTableName = myEntityName,
-                });
-            }
 
             if (entityPM.SetApproved)
             {
@@ -113,6 +102,18 @@ namespace Logitude.BL.InvoiceModel.Tools.TraceEvents
                     EntityId = entityPM.Id,
                     ObjectTableName = myEntityName,
                     Notes = TranslateTextsClass.Translate("Accounting.General.O.OldValue", entityPM.Tenant, showLocals) + payment.PrintNotes + TranslateTextsClass.Translate("Accounting.General.O.NewValue", entityPM.Tenant, showLocals) + entityPM.PrintNotes
+                });
+            }
+
+            else
+            {
+                EventTracer.CreateTraceEvent(new EventTracerArgs()
+                {
+                    Tenant = entityPM.Tenant,
+                    EventTypeCode = "UPAP",
+                    UserId = loggedContact.Id,
+                    EntityId = entityPM.Id,
+                    ObjectTableName = myEntityName,
                 });
             }
 
