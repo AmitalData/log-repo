@@ -1658,7 +1658,7 @@ namespace WebFreight.Web.Helpers
                     Tenant = tenant,
                     Id = IdCounter.GetNumber("Document", tenant),
                     HasFile = true,
-                    Folder = "Tariff",
+                    Folder = "tariff",
                 };
 
                 documentRepository.Add(document);
@@ -1667,15 +1667,13 @@ namespace WebFreight.Web.Helpers
                 BlobFileInfo fileInfo = new BlobFileInfo()
                 {
                     FileName = document.Id,
-                    FolderName = "Tariff",
+                    FolderName = "tariff",
                     Extension = document.Extension,
                     Tenant = tenant,
                     FileSize = document.FileSize,
                 };
 
-                //storageservice.Write(ByteData, fileInfo);
-                string[] blockIdlist = { Convert.ToBase64String(Guid.NewGuid().ToByteArray()) };
-                storageservice.WriteBlock(ByteData, fileData.Length, blockIdlist, 0, fileInfo);
+                storageservice.Write(ByteData, fileInfo);
             }
 
             return document != null ? document.Id : null;
