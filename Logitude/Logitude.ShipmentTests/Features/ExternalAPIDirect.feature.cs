@@ -188,38 +188,25 @@ this.FeatureBackground();
 #line 26
  testRunner.And("List of ocean or inland packages for direct shipment", ((string)(null)), table3, "And ");
 #line hidden
-                TechTalk.SpecFlow.Table table4 = new TechTalk.SpecFlow.Table(new string[] {
-                            "LegIndex",
-                            "Carrier.Code",
-                            "FromPort.Code",
-                            "ToPort.Code"});
-                table4.AddRow(new string[] {
-                            "1",
-                            "CA20",
-                            "DE222",
-                            "DE223"});
 #line 29
- testRunner.And("List of main carriage legs for direct shipment", ((string)(null)), table4, "And ");
-#line hidden
-#line 32
  testRunner.When("User create direct shipment using external API", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 33
+#line 30
  testRunner.Then("The direct shipment should be created successfully", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="Get Last Direct Shipment Created By User")]
+        [Xunit.SkippableFactAttribute(DisplayName="Invalid Future ATA")]
         [Xunit.TraitAttribute("FeatureTitle", "External API Direct")]
-        [Xunit.TraitAttribute("Description", "Get Last Direct Shipment Created By User")]
-        public virtual void GetLastDirectShipmentCreatedByUser()
+        [Xunit.TraitAttribute("Description", "Invalid Future ATA")]
+        public virtual void InvalidFutureATA()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get Last Direct Shipment Created By User", null, tagsOfScenario, argumentsOfScenario);
-#line 35
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Invalid Future ATA", null, tagsOfScenario, argumentsOfScenario);
+#line 34
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             bool isScenarioIgnored = default(bool);
@@ -242,11 +229,24 @@ this.ScenarioInitialize(scenarioInfo);
 #line 3
 this.FeatureBackground();
 #line hidden
-#line 36
- testRunner.When("User get the last direct shipment", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+                TechTalk.SpecFlow.Table table4 = new TechTalk.SpecFlow.Table(new string[] {
+                            "LegIndex",
+                            "Carrier.Code",
+                            "FromPort.Code",
+                            "ToPort.Code"});
+                table4.AddRow(new string[] {
+                            "1",
+                            "CA20",
+                            "DE222",
+                            "DE223"});
+#line 35
+ testRunner.Given("User adding main carriage legs to last direct shipment", ((string)(null)), table4, "Given ");
 #line hidden
-#line 37
- testRunner.Then("The direct shipment should be exists", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 38
+ testRunner.When("User Update Shipment With Invalid Future ATA", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+#line 39
+ testRunner.Then("Update should not be done", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();

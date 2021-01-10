@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using TechTalk.SpecFlow;
+using Xunit;
 
 namespace Logitude.ShipmentTests.Steps
 {
@@ -14,7 +15,6 @@ namespace Logitude.ShipmentTests.Steps
     public class ExternalAPIDirectSteps
     {
         protected ExternalAPIDirectContext Context;
-        private Exception exp1; 
 
         public ExternalAPIDirectSteps(MultiUsers multiUsers, ExternalAPIDirectContext context)
         {
@@ -69,19 +69,15 @@ namespace Logitude.ShipmentTests.Steps
         [When(@"User Update Shipment With Invalid Future ATA")]
         public void WhenUpdateShipmentWithInvalidFutureATA()
         {
-            Context.Direct.MainCarriageLegs.Last().ATA = new DateTime(2021, 10, 4);
-
-            //shipmentPM = await service.UpdateDirect(shipmentPM, false);
-
-            //Assert.IsTrue(service.HasException == true);
-            //Assert.IsTrue(service.ExceptionMessage == "Can't set MainCarriageATA to future date");
-            //shipmentPM.MainCarriageLegs.First().ATA = null;
+            Context.Direct.MainCarriageLegs.Last().ATA = new DateTime(2025, 10, 4);
+            //exp1 = Record.Exception(() => APICaller.CallPut<Direct>(Context.Direct, "Direct", Context.User.Token));
+            Context.Direct = APICaller.CallPut<Direct>(Context.Direct, "Direct", Context.User.Token);
         }
 
         [Then(@"Update should not be done")]
         public void UpdateShouldNotBeDone()
         {
-            ScenarioContext.Current.Pending();
+            Context.Direct.Should().BeNull();
         }
 
 

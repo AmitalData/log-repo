@@ -29,12 +29,7 @@ Scenario: Create Direct Shipment Using External API
 	When User create direct shipment using external API
 	Then The direct shipment should be created successfully
 
-Scenario: xxxxxxxxxx
-	Given User adding main carriage legs to last direct shipment
-		| LegIndex | Carrier.Code | FromPort.Code | ToPort.Code |
-		| 1        | CA20         | DE222         | DE223       |
-	When User Update Shipment With Invalid Future ATD
-	Then Update should not be done
+
 
 Scenario: Invalid Future ATA
 	Given User adding main carriage legs to last direct shipment
@@ -43,9 +38,3 @@ Scenario: Invalid Future ATA
 	When User Update Shipment With Invalid Future ATA
 	Then Update should not be done
 
-Scenario: xxxxxxxxxx
-	Given User adding main carriage legs to last direct shipment
-		| LegIndex | Carrier.Code | FromPort.Code | ToPort.Code |
-		| 1        | CA20         | DE222         | DE223       |
-	When UpdateShipmentWithValidDates
-	Then assert *
