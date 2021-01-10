@@ -66,6 +66,9 @@ export class DeclarationReferantDataList {
 	ProcedureCurrentName: string;
 	IsPaymentDateNull: boolean;
 	IsAvailabilityDateNull: boolean;
+	DeclarationNumber: string;
+	IsHatraDateNull: boolean;
+	RequestedCustomsDocId: string;
 	
 }
  

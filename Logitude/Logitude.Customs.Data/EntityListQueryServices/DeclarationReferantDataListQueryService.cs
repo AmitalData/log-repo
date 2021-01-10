@@ -104,6 +104,12 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                                  ImporterName = d.Importer != null ? d.Importer.FullName : d.ImporterName,
                                                                  IsAvailabilityDateNull= d.AvailabilityDate == null,
                                                                  IsPaymentDateNull = d.PaymentDate == null,
+
+                                                                 DeclarationNumber = d.DeclarationNumber,
+                                                                 IsHatraDateNull= d.HatraDate== null,
+                                                                 RequestedCustomsDocId = "1",// waiting 4 elisheva task 
+
+
                                                              }) ;
                                                                 
                                               return query;
@@ -144,6 +150,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                                                     CollectionOfMoneyStatus = a.CollectionOfMoneyStatus,
                                                                                     IsAvailabilityDateNull = d.AvailabilityDate == null,
                                                                                     IsPaymentDateNull = d.PaymentDate == null,
+                                                                                    IsHatraDateNull = d.HatraDate == null,
                                                                                 });
 
             declarationReferantDataSummary.FilesInProcess = declarationReferantDatas.Where(x => x.IsClosedForFollowUp != "1").Count();
@@ -153,6 +160,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             declarationReferantDataSummary.FilesInReview = declarationReferantDatas.Where(x => x.ControllerStatus == "P").Count();
             declarationReferantDataSummary.FilesInCreditControl = declarationReferantDatas.Where(x => x.CollectionOfMoneyStatus == "P").Count();
             declarationReferantDataSummary.FilesAvailableFreeOfCharge = declarationReferantDatas.Where(x => x.IsPaymentDateNull == true && !x.IsAvailabilityDateNull == false).Count();
+        
             declarationReferantDataSummary.AllCases = declarationReferantDatas.Count();
 
             declarationReferantDataSummary.FilesInProcess_A = declarationReferantDatas.Where(x => x.IsClosedForFollowUp != "1" && x.IsAvailabilityDateNull == false).Count();
@@ -163,6 +171,22 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             declarationReferantDataSummary.FilesInCreditControl_A = declarationReferantDatas.Where(x => x.CollectionOfMoneyStatus == "P" && x.IsAvailabilityDateNull == false).Count();
             declarationReferantDataSummary.FilesAvailableFreeOfCharge_A = declarationReferantDatas.Where(x => x.IsPaymentDateNull == true &&   x.IsAvailabilityDateNull == false).Count();
             declarationReferantDataSummary.AllCases_A = declarationReferantDatas.Where(x =>   x.IsAvailabilityDateNull == false).Count();
+
+
+
+
+            declarationReferantDataSummary.FilesInAllInclusive = declarationReferantDatas.Where(x => x.IsHatraDateNull == false && x.RequestedCustomsDocId=="1").Count();
+            declarationReferantDataSummary.FilesInAllInclusive_A = declarationReferantDatas.Where(x => x.IsHatraDateNull == false && x.RequestedCustomsDocId == "1" && x.IsAvailabilityDateNull == false).Count();
+
+            
+
+                
+            declarationReferantDataSummary.FilesRejectedByController = declarationReferantDatas.Where(x => x.ControllerStatus == "X" ).Count();
+            declarationReferantDataSummary.FilesRejectedByController_A = declarationReferantDatas.Where(x => x.ControllerStatus == "X" && x.IsAvailabilityDateNull == false).Count();
+
+
+            declarationReferantDataSummary.FilesRejectedByClassification = declarationReferantDatas.Where(x => x.ClassificationStatus == "X").Count();
+            declarationReferantDataSummary.FilesRejectedByClassification_A = declarationReferantDatas.Where(x => x.ClassificationStatus == "X" && x.IsAvailabilityDateNull == false).Count();
 
             return declarationReferantDataSummary;
         }
