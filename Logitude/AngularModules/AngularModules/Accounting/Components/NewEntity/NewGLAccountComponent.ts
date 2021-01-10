@@ -18,7 +18,7 @@ import { AccountingPartners } from 'Accounting/DataContracts/AccountingPartners'
 
 @Component({
     selector: 'NewGLAccountComponent',
-    
+
     providers: [EntityListService],
     templateUrl: './NewGLAccountComponent.html',
 })
@@ -61,16 +61,17 @@ export class NewGLAccountComponent extends BaseComponent {
         this.BuildParentsGLAccountApiFilters();
     }
 
-    
+
     partnerType: string;
     private BuildChartOfAccountTypeApiFilters()
     {
         this.ChartOfAccountTypeFilterItems = new ApiQueryFilters();
         const isAccountingPartner = this.partnerType == AccountingPartners.AccountingPartner;
+        const isAgent = this.partnerType == AccountingPartners.Agent;
         const isCustomer = this.partnerType == AccountingPartners.Customer;
         const isVendor = this.partnerType == AccountingPartners.Vendor;
 
-        if (isAccountingPartner) {
+        if (isAccountingPartner || isAgent) {
             var excludedTypes = [ChartOfAccountTypes.Works, ChartOfAccountTypes.Banks].join(',');
             this.ChartOfAccountTypeFilterItems.addAdditionalFilter("CodeFilter", excludedTypes, null, null, "Exclude", false, false, false, "string", false, true);
         }
@@ -380,7 +381,7 @@ export class NewGLAccountComponent extends BaseComponent {
             }
         }
 
-     
+
 
         Validator.TryValidateObject(this.EntityPM, this.ObjectTableName, errors);
         this.ValidationErrorsList = errors;
