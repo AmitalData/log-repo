@@ -10,7 +10,7 @@
 // ------------------------------------------------------------------------------
 #region Designer generated code
 #pragma warning disable
-namespace Logitude.SecurityTests.Features.Shipment
+namespace Logitude.SecurityTests.Features.AddressSetting
 {
     using TechTalk.SpecFlow;
     using System;
@@ -19,7 +19,7 @@ namespace Logitude.SecurityTests.Features.Shipment
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("TechTalk.SpecFlow", "3.5.0.0")]
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public partial class CreateAndUpdateShipmentSecurityAccessFeature : object, Xunit.IClassFixture<CreateAndUpdateShipmentSecurityAccessFeature.FixtureData>, System.IDisposable
+    public partial class AddressSettingSecurityAccessFeature : object, Xunit.IClassFixture<AddressSettingSecurityAccessFeature.FixtureData>, System.IDisposable
     {
         
         private static TechTalk.SpecFlow.ITestRunner testRunner;
@@ -28,10 +28,10 @@ namespace Logitude.SecurityTests.Features.Shipment
         
         private Xunit.Abstractions.ITestOutputHelper _testOutputHelper;
         
-#line 1 "CreateAndUpdateShipmentSecurityAccess.feature"
+#line 1 "AddressSettingSecurityAccess.feature"
 #line hidden
         
-        public CreateAndUpdateShipmentSecurityAccessFeature(CreateAndUpdateShipmentSecurityAccessFeature.FixtureData fixtureData, Logitude_SecurityTests_XUnitAssemblyFixture assemblyFixture, Xunit.Abstractions.ITestOutputHelper testOutputHelper)
+        public AddressSettingSecurityAccessFeature(AddressSettingSecurityAccessFeature.FixtureData fixtureData, Logitude_SecurityTests_XUnitAssemblyFixture assemblyFixture, Xunit.Abstractions.ITestOutputHelper testOutputHelper)
         {
             this._testOutputHelper = testOutputHelper;
             this.TestInitialize();
@@ -40,7 +40,7 @@ namespace Logitude.SecurityTests.Features.Shipment
         public static void FeatureSetup()
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
-            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features/Shipment", "Create and Update Shipment Security Access", null, ProgrammingLanguage.CSharp, ((string[])(null)));
+            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features/AddressSetting", "Address Setting Security Access", null, ProgrammingLanguage.CSharp, ((string[])(null)));
             testRunner.OnFeatureStart(featureInfo);
         }
         
@@ -79,17 +79,17 @@ namespace Logitude.SecurityTests.Features.Shipment
         {
 #line 3
 #line hidden
-            TechTalk.SpecFlow.Table table4 = new TechTalk.SpecFlow.Table(new string[] {
+            TechTalk.SpecFlow.Table table1 = new TechTalk.SpecFlow.Table(new string[] {
                         "Email",
                         "Password"});
-            table4.AddRow(new string[] {
+            table1.AddRow(new string[] {
                         "ahmadb123@mail.com",
                         "ahmed13!A15"});
-            table4.AddRow(new string[] {
+            table1.AddRow(new string[] {
                         "protractor@test.com",
                         "!P123t456"});
 #line 4
- testRunner.Given("Users with following credentials", ((string)(null)), table4, "Given ");
+ testRunner.Given("Users with following credentials", ((string)(null)), table1, "Given ");
 #line hidden
 #line 8
  testRunner.When("Users make login request", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
@@ -104,14 +104,14 @@ namespace Logitude.SecurityTests.Features.Shipment
             this.TestTearDown();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="Create Shipment for User\'s Tenant")]
-        [Xunit.TraitAttribute("FeatureTitle", "Create and Update Shipment Security Access")]
-        [Xunit.TraitAttribute("Description", "Create Shipment for User\'s Tenant")]
-        public virtual void CreateShipmentForUsersTenant()
+        [Xunit.SkippableFactAttribute(DisplayName="Get Address Settings for User\'s Tenant")]
+        [Xunit.TraitAttribute("FeatureTitle", "Address Setting Security Access")]
+        [Xunit.TraitAttribute("Description", "Get Address Settings for User\'s Tenant")]
+        public virtual void GetAddressSettingsForUsersTenant()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Create Shipment for User\'s Tenant", null, tagsOfScenario, argumentsOfScenario);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get Address Settings for User\'s Tenant", null, tagsOfScenario, argumentsOfScenario);
 #line 11
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -136,23 +136,23 @@ this.ScenarioInitialize(scenarioInfo);
 this.FeatureBackground();
 #line hidden
 #line 12
- testRunner.When("Create shipment request sent for User\'s Tenant", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("Get Address Settings request sent for User\'s Tenant", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
 #line 13
- testRunner.Then("Shipment should be added successfully", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then("Address Settings should be exists", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="Create Shipment for other Tenant")]
-        [Xunit.TraitAttribute("FeatureTitle", "Create and Update Shipment Security Access")]
-        [Xunit.TraitAttribute("Description", "Create Shipment for other Tenant")]
-        public virtual void CreateShipmentForOtherTenant()
+        [Xunit.SkippableFactAttribute(DisplayName="Get Address Settings for other Tenant")]
+        [Xunit.TraitAttribute("FeatureTitle", "Address Setting Security Access")]
+        [Xunit.TraitAttribute("Description", "Get Address Settings for other Tenant")]
+        public virtual void GetAddressSettingsForOtherTenant()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Create Shipment for other Tenant", null, tagsOfScenario, argumentsOfScenario);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get Address Settings for other Tenant", null, tagsOfScenario, argumentsOfScenario);
 #line 15
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -177,23 +177,23 @@ this.ScenarioInitialize(scenarioInfo);
 this.FeatureBackground();
 #line hidden
 #line 16
- testRunner.When("Create shipment request sent for other Tenant", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("Get Address Settings request sent for other Tenant", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
 #line 17
- testRunner.Then("Shipment should not be added", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then("Address Settings should not be exists", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="Update Shipment for User\'s Tenant")]
-        [Xunit.TraitAttribute("FeatureTitle", "Create and Update Shipment Security Access")]
-        [Xunit.TraitAttribute("Description", "Update Shipment for User\'s Tenant")]
-        public virtual void UpdateShipmentForUsersTenant()
+        [Xunit.SkippableFactAttribute(DisplayName="Update Address Settings for User\'s Tenant")]
+        [Xunit.TraitAttribute("FeatureTitle", "Address Setting Security Access")]
+        [Xunit.TraitAttribute("Description", "Update Address Settings for User\'s Tenant")]
+        public virtual void UpdateAddressSettingsForUsersTenant()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Update Shipment for User\'s Tenant", null, tagsOfScenario, argumentsOfScenario);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Update Address Settings for User\'s Tenant", null, tagsOfScenario, argumentsOfScenario);
 #line 19
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -218,23 +218,23 @@ this.ScenarioInitialize(scenarioInfo);
 this.FeatureBackground();
 #line hidden
 #line 20
- testRunner.When("Update shipment request sent for User\'s Tenant", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("Update Address Settings request sent for User\'s Tenant", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
 #line 21
- testRunner.Then("Shipment should be Updated successfully", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then("Address Settings should be Updated successfully", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="Update Shipment for other Tenant")]
-        [Xunit.TraitAttribute("FeatureTitle", "Create and Update Shipment Security Access")]
-        [Xunit.TraitAttribute("Description", "Update Shipment for other Tenant")]
-        public virtual void UpdateShipmentForOtherTenant()
+        [Xunit.SkippableFactAttribute(DisplayName="Update Address Settings for other Tenant")]
+        [Xunit.TraitAttribute("FeatureTitle", "Address Setting Security Access")]
+        [Xunit.TraitAttribute("Description", "Update Address Settings for other Tenant")]
+        public virtual void UpdateAddressSettingsForOtherTenant()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Update Shipment for other Tenant", null, tagsOfScenario, argumentsOfScenario);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Update Address Settings for other Tenant", null, tagsOfScenario, argumentsOfScenario);
 #line 23
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -259,10 +259,10 @@ this.ScenarioInitialize(scenarioInfo);
 this.FeatureBackground();
 #line hidden
 #line 24
- testRunner.When("Update shipment request sent for other Tenant", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("Update Address Settings request sent for other Tenant", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
 #line 25
- testRunner.Then("Shipment should not be Updated", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then("Address Settings should not be Updated", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();
@@ -275,12 +275,12 @@ this.FeatureBackground();
             
             public FixtureData()
             {
-                CreateAndUpdateShipmentSecurityAccessFeature.FeatureSetup();
+                AddressSettingSecurityAccessFeature.FeatureSetup();
             }
             
             void System.IDisposable.Dispose()
             {
-                CreateAndUpdateShipmentSecurityAccessFeature.FeatureTearDown();
+                AddressSettingSecurityAccessFeature.FeatureTearDown();
             }
         }
     }

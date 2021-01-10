@@ -100,12 +100,21 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< master
     <Compile Include="Models\Invoice\APInvoicePM.cs" />
     <Compile Include="Models\Payment\APPaymentPM.cs" />
     <Compile Include="Models\Contact\ContactContext.cs" />
     <Compile Include="Models\Contact\ContactPM.cs" />
     <Compile Include="Models\FTPDetail\FTPDetailContext.cs" />
     <Compile Include="Models\FTPDetail\FTPDetailPM.cs" />
+========================================================================
+    <Compile Include="Models\CompanyAddressSetting\AddressPM.cs" />
+    <Compile Include="Models\CompanyAddressSetting\AddressSettingSecurityAccessStepsContext.cs" />
+    <Compile Include="Models\ARInvoice\ARInvoicePM.cs" />
+    <Compile Include="Models\ARInvoice\ARInvoiceAccessStepsContext.cs" />
+    <Compile Include="Models\ARPayment\ARPaymenteAccessStepsContext.cs" />
+    <Compile Include="Models\ARPayment\ARPaymentPM.cs" />
+    <Compile Include="Models\CompanyAddressSetting\TenantPM.cs" />
     <Compile Include="Models\Shipment\ShipmentSecurityAccessStepsContext.cs" />
     <Compile Include="Models\Shipment\ShipmentPackagePM.cs" />
     <Compile Include="Models\Shipment\ShipmentPM.cs" />
@@ -114,6 +123,9 @@
     <Compile Include="Steps\Payment\GetAPPaymentSecurityAccessSteps.cs" />
     <Compile Include="Steps\Contact\GetContactSecurityAccessSteps.cs" />
     <Compile Include="Steps\FTPDetail\GetFTPDetailSecurityAccessSteps.cs" />
+    <Compile Include="Steps\AddressSetting\AddressSettingSecurityAccessSteps.cs" />
+    <Compile Include="Steps\ARInvoice\ARInvoiceSecurityAccessSteps.cs" />
+    <Compile Include="Steps\ARPayment\ARPaymentSecurityAccessSteps.cs" />
     <Compile Include="Steps\Shipment\CreateAndUpdateShipmentSecurityAccessSteps.cs" />
     <Compile Include="Steps\Shipment\GetShipmentSecurityAccessSteps.cs" />
   </ItemGroup>
@@ -123,6 +135,9 @@
     <None Include="Features\Payment\GetAPPayment.feature" />
     <None Include="Features\Contact\GetContactSecurityAccess.feature" />
     <None Include="Features\FTPDetail\GetFTPDetailSecurityAccess.feature" />
+    <None Include="Features\AddressSetting\AddressSettingSecurityAccess.feature" />
+    <None Include="Features\ARInvoice\ARInvoiceSecurityAccess.feature" />
+    <None Include="Features\ARPayment\ARPaymentSecurityAccess.feature" />
     <None Include="Features\Shipment\CreateAndUpdateShipmentSecurityAccess.feature" />
     <None Include="Features\Shipment\GetShipmentSecurityAccess.feature" />
     <None Include="packages.config" />
