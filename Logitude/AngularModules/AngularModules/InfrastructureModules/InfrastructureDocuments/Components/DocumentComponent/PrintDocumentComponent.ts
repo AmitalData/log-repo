@@ -87,12 +87,18 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
     public PrintAllCopiesBtnDisable: boolean;
     IsBuildDocumentViaWorkerRole: boolean = false;
 
+    IsEnableEditDocument: boolean = false;
+
     public SelectedAsDefaultBtnVisible: boolean;
     private CurrentSession = SessionLocator.SelectedSession;
     private documentsExecutionLogListExtendedService: DocumentsExecutionLogListExtendedService;
     constructor(public _documentTypeCustomFieldService: DocumentTypeCustomFieldService, public _documentOutPMService: DocumentOutPMService, public _documentTypePMService: DocumentTypePMExtendedService, public _exportDocumentService: ExportDocumentService, public _documentTypeTemplateListExtendedService: DocumentTypeTemplateListExtendedService, public _htmlEditorService: HtmlEditorService) {
         super();
 
+
+        if (FeatureLocator.HasFeaturePermession("DocumentType", "EDITPRINTEDDOCUMENTS")) {
+            this.IsEnableEditDocument = true;
+        }
     }
 
 
