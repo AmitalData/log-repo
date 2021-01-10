@@ -75,6 +75,29 @@ declare @DIM_ChargesTypesInActiveNewId varchar(15)
 execute usp_GetNextTableIdValue @DIM_ChargesTypesInActiveNewId OUTPUT,'DWObjectField' 
 insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,HideTree,CannotFilter,IsCustom,DontDisplayInView,IsMultipleSelection) Values(@DIM_ChargesTypesInActiveNewId,0,'DIM_ChargesTypes','[InActive]','InActive','Boolean','false',0,0,'false','false','true','false','false','false','false','false')  
 ------------------------------------------------------------------------------------
+declare @DIM_CountriesNewId varchar(15)
+execute usp_GetNextTableIdValue @DIM_CountriesNewId OUTPUT,'DWObjectTable' 
+insert into DWObjectTables(Id,Tenant,IndexesXml,Code,Name,TypeCode,IsClosed,DefaultFilterBy,HasPivotColumn) Values(@DIM_CountriesNewId,0,'','DIM_Countries','DIM_Countries','Dimension','false','[Name]','false')  
+--Fields --
+declare @DIM_CountriesId_NumberNewId varchar(15)
+execute usp_GetNextTableIdValue @DIM_CountriesId_NumberNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,HideTree,CannotFilter,IsCustom,DontDisplayInView,IsMultipleSelection) Values(@DIM_CountriesId_NumberNewId,0,'DIM_Countries','[Id_Number]','Id_Number','Integer','true',0,0,'true','false','false','false','false','false','false','false')  
+declare @DIM_CountriesIdNewId varchar(15)
+execute usp_GetNextTableIdValue @DIM_CountriesIdNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,HideTree,CannotFilter,IsCustom,DontDisplayInView,IsMultipleSelection) Values(@DIM_CountriesIdNewId,0,'DIM_Countries','[Id]','Id','Text','true',0,15,'false','false','true','false','false','false','true','false')  
+declare @DIM_CountriesNameNewId varchar(15)
+execute usp_GetNextTableIdValue @DIM_CountriesNameNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,LOVAdditionalColumns,HideTree,CannotFilter,IsCustom,DontDisplayInView,IsMultipleSelection) Values(@DIM_CountriesNameNewId,0,'DIM_Countries','[Name]','Name','nText','false',0,120,'false','false','true','[Code]','false','true','false','false','false')  
+declare @DIM_CountriesCodeNewId varchar(15)
+execute usp_GetNextTableIdValue @DIM_CountriesCodeNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,LOVAdditionalColumns,HideTree,CannotFilter,IsCustom,DontDisplayInView,IsMultipleSelection) Values(@DIM_CountriesCodeNewId,0,'DIM_Countries','[Code]','Code','Text','false',0,2,'false','false','true','[Name],[Local Name]','false','false','false','true','false')  
+declare @DIM_CountriesTenantNewId varchar(15)
+execute usp_GetNextTableIdValue @DIM_CountriesTenantNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,HideTree,CannotFilter,IsCustom,ViewFieldDisplayName,DontDisplayInView,IsMultipleSelection) Values(@DIM_CountriesTenantNewId,0,'DIM_Countries','[Tenant]','Tenant','Integer','true',0,0,'false','false','true','false','false','false','Tenant','false','false')  
+declare @DIM_CountriesAutomaticLastUpdateDateNewId varchar(15)
+execute usp_GetNextTableIdValue @DIM_CountriesAutomaticLastUpdateDateNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,HideTree,CannotFilter,IsCustom,DontDisplayInView,IsMultipleSelection) Values(@DIM_CountriesAutomaticLastUpdateDateNewId,0,'DIM_Countries','[Automatic Last Update Date]','Last Update Date','DateTime','false',0,0,'false','false','true','false','false','false','false','false')  
+------------------------------------------------------------------------------------
 declare @DIM_CurrenciesNewId varchar(15)
 execute usp_GetNextTableIdValue @DIM_CurrenciesNewId OUTPUT,'DWObjectTable' 
 insert into DWObjectTables(Id,Tenant,IndexesXml,Code,Name,TypeCode,IsClosed,DefaultFilterBy,HasPivotColumn) Values(@DIM_CurrenciesNewId,0,'','DIM_Currencies','DIM_Currencies','Dimension','false','[Name]','false')  

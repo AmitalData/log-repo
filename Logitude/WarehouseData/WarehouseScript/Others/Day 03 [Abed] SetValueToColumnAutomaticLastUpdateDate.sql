@@ -44,6 +44,8 @@ update  OBLTypes set AutomaticLastUpdateDate =GETDATE() where AutomaticLastUpdat
  update  ARInvoiceLines set AutomaticLastUpdateDate =GETDATE() where AutomaticLastUpdateDate is null
  update  ARInvoices set AutomaticLastUpdateDate =GETDATE() where AutomaticLastUpdateDate is null
  update  ChargesTypes set AutomaticLastUpdateDate =GETDATE() where AutomaticLastUpdateDate is null
+
  update  QuoteStages set AutomaticLastUpdateDate =GETDATE() where AutomaticLastUpdateDate is null
- update  DIM_QuoteClosingReasons set AutomaticLastUpdateDate =GETDATE() where AutomaticLastUpdateDate is null
-  --update  ChargesGroups set AutomaticLastUpdateDate =GETDATE() where AutomaticLastUpdateDate is null
+ update  QuoteClosingReasons set AutomaticLastUpdateDate =GETDATE() where AutomaticLastUpdateDate is null
+ --update  Countries set AutomaticLastUpdateDate =GETDATE() where AutomaticLastUpdateDate is null
+ --update  ChargesGroups set AutomaticLastUpdateDate =GETDATE() where AutomaticLastUpdateDate is null
