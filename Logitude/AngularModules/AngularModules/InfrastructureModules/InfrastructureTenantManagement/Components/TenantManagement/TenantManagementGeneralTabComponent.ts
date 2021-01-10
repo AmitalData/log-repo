@@ -43,7 +43,7 @@ export class TenantManagementGeneralTabComponent extends BaseComponent implement
     private tenantLoginPolicyPMService: TenantLoginPolicyPMService;
     private CurrentSession = SessionLocator.SelectedSession;
 
-    private IsLogBoxTenant: boolean = false;
+    public IsLogBoxTenant: boolean = false;
 
 
 
