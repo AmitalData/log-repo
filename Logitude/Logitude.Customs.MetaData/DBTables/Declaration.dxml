@@ -1180,4 +1180,9 @@
     Columns="AmendmentOriginalDeclartation" />
   <Index
     Columns="CourierHAWB" />
+
+  
+  <Index
+    Columns="IsCancelled" />
+
 </Table>
