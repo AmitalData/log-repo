@@ -76,7 +76,9 @@ namespace WebFreight.Web.AccountingWebServices.Testers
         {
 
             var param = JsonConvert.DeserializeObject<TrailReportParam>(_TextBoxParam.Text);
-            using (var trailReportService = TrailReportFactory.CreateNew(param))
+            //using (
+            var trailReportService = TrailReportFactory.CreateNew(param);//)
+            try
             {
 
                 var res = trailReportService.Execute();
@@ -88,6 +90,10 @@ namespace WebFreight.Web.AccountingWebServices.Testers
 
                 ds.ReadXml(new MemoryStream(bytes));
                 ReloadGrid(ds);
+            }
+            finally
+            {
+                trailReportService.Dispose();
             }
 
         }
@@ -113,7 +119,8 @@ namespace WebFreight.Web.AccountingWebServices.Testers
         protected void _RevenueExpenseReport_Click(object sender, EventArgs e)
         {
             var param = JsonConvert.DeserializeObject<RevenueExpenseReportParam>(_TextBoxParam.Text);
-            using (var trailReportService = new RevenueExpenseReportService(param ,10))
+            var trailReportService = new RevenueExpenseReportService(param, 10);
+            try
             {
                 trailReportService.InteractiveCheck();
                 var res = trailReportService.Execute();
@@ -125,6 +132,12 @@ namespace WebFreight.Web.AccountingWebServices.Testers
                 ds.ReadXml(new MemoryStream(bytes));
                 ReloadGrid(ds);
             }
+            finally
+            {
+                trailReportService.Dispose();
+            }
+            
+            
         }
     }
 }
