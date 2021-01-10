@@ -59,6 +59,8 @@ namespace Logitude.Test.Base.Services
                 }
                 else
                 {
+                    //JObject jObject = JObject.Parse(restResponse.Content);
+                    //return JsonConvert.DeserializeObject<T>(jObject.ToString());
                     return restResponse.Data;
                 }
             }

@@ -1,7 +1,6 @@
 ﻿Feature: Create and Update Shipment Security Access
 
-Background:
-	Successful login with valid credentials for set of users
+Background: Login and get a token
 	Given Users with following credentials
 		| Email               | Password    |
 		| ahmadb123@mail.com  | ahmed13!A15 |
