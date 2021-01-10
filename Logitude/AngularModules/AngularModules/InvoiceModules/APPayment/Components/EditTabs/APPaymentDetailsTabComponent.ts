@@ -1762,20 +1762,22 @@ export class APPaymentInvoiceArgs extends BaseComponent {
     SetUIProperties_CurrencyMatched() {
         this.isCurrencyMatched = false;
 
-        if (this.PaymentPM.PaymentCurrencyId == this.CurrencyId) {
-            this.isCurrencyMatched = true;
-        }
+        if (this.PaymentPM.PaymentCurrencyId) {
+            if (this.PaymentPM.PaymentCurrencyId == this.CurrencyId) {
+                this.isCurrencyMatched = true;
+            }
 
-        else {
-            if (this.trigger.IsMultiCurrency) {
-                if (this.PaymentPM.PaymentCurrencyId == SessionLocator.LocalCurrencyId) {
-                    this.isCurrencyMatched = true;
-                    this.IsAdvancedButtonVisible = true;
-                }
+            else {
+                if (this.trigger.IsMultiCurrency) {
+                    if (this.PaymentPM.PaymentCurrencyId == SessionLocator.LocalCurrencyId) {
+                        this.isCurrencyMatched = true;
+                        this.IsAdvancedButtonVisible = true;
+                    }
 
-                else if (this.CurrencyId == SessionLocator.LocalCurrencyId) {
-                    this.isCurrencyMatched = true;
-                    this.IsAdvancedButtonVisible = true;
+                    else if (this.CurrencyId == SessionLocator.LocalCurrencyId) {
+                        this.isCurrencyMatched = true;
+                        this.IsAdvancedButtonVisible = true;
+                    }
                 }
             }
         }

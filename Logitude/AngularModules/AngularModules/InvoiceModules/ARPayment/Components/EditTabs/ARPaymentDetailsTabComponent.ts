@@ -1723,47 +1723,49 @@ export class ARPaymentInvoiceArgs extends BaseComponent {
     SetUIProperties_CurrencyMatched() {
         this.isCurrencyMatched = false;
 
-        if (this.PaymentPM.PaymentCurrencyId == this.CurrencyId) {
-            this.isCurrencyMatched = true;
-        }
+        if (this.PaymentPM.PaymentCurrencyId) {
+            if (this.PaymentPM.PaymentCurrencyId == this.CurrencyId) {
+                this.isCurrencyMatched = true;
+            }
 
-        else {
-            if (this.trigger.IsMultiCurrency) {
-                if (this.PaymentPM.PaymentCurrencyId == SessionLocator.LocalCurrencyId) {
-                    this.isCurrencyMatched = true;
-                    this.IsAdvancedButtonVisible = true;
-                }
+            else {
+                if (this.trigger.IsMultiCurrency) {
+                    if (this.PaymentPM.PaymentCurrencyId == SessionLocator.LocalCurrencyId) {
+                        this.isCurrencyMatched = true;
+                        this.IsAdvancedButtonVisible = true;
+                    }
 
-                else if (this.CurrencyId == SessionLocator.LocalCurrencyId) {
-                    this.isCurrencyMatched = true;
-                    this.IsAdvancedButtonVisible = true;
+                    else if (this.CurrencyId == SessionLocator.LocalCurrencyId) {
+                        this.isCurrencyMatched = true;
+                        this.IsAdvancedButtonVisible = true;
+                    }
                 }
             }
         }
     }
-  SetUIProperties_AllowedToConnect() {
-    this.isAllowedToConnect = true;
+    SetUIProperties_AllowedToConnect() {
+        this.isAllowedToConnect = true;
 
-    if (this.IsConnected == false) {
-      if (this.Invoice.StatusCode == "DR") {
-        this.isAllowedToConnect = false;
-      }
+        if (this.IsConnected == false) {
+            if (this.Invoice.StatusCode == "DR") {
+                this.isAllowedToConnect = false;
+            }
 
-      if (this.isCurrencyMatched == false) {
-        this.isAllowedToConnect = false;
-      }
+            if (this.isCurrencyMatched == false) {
+                this.isAllowedToConnect = false;
+            }
 
-      if (AppTool.IsNullOrZero(this.AmountDue)) {
-        this.isAllowedToConnect = false;
-      }
+            if (AppTool.IsNullOrZero(this.AmountDue)) {
+                this.isAllowedToConnect = false;
+            }
 
-      if (SessionLocator.SATInterfaceSettings.SATInterfaceCode != "NONE") {
-        if ((this.Invoice.MetodoPagoCode != this.PaymentPM.MetodoPagoCode && !AppTool.IsNullOrEmpty(this.PaymentPM.MetodoPagoCode)) || (this.PaymentPM.MetodoPagoCode == "PUE" && this.Invoice.StatusCode != "AD") && this.PaymentPM.OpenAmount >= this.Invoice.AmountPaid) {
-          this.isAllowedToConnect = false;
+            if (SessionLocator.SATInterfaceSettings.SATInterfaceCode != "NONE") {
+                if ((this.Invoice.MetodoPagoCode != this.PaymentPM.MetodoPagoCode && !AppTool.IsNullOrEmpty(this.PaymentPM.MetodoPagoCode)) || (this.PaymentPM.MetodoPagoCode == "PUE" && this.Invoice.StatusCode != "AD") && this.PaymentPM.OpenAmount >= this.Invoice.AmountPaid) {
+                    this.isAllowedToConnect = false;
+                }
+            }
         }
-      }
     }
-  }
     SetUIProperties_AmountPaidEnabled() {
         var isEnabled: boolean = true;
 
