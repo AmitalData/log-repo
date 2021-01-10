@@ -499,6 +499,10 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommDec
                             ChangeSetOp = ChangeSetOperation.Insert,
 
                         };
+                        if (this._MyDeclarationPM.Consignments[0].ChangeSetOp != ChangeSetOperation.Insert)
+                        {
+                            this._MyDeclarationPM.Consignments[0].ChangeSetOp = ChangeSetOperation.Update;
+                        }
                         this._MyDeclarationPM.Consignments[0].ConsignmentInternalTransitions.Add(transitionPM);
                     }
                 }
