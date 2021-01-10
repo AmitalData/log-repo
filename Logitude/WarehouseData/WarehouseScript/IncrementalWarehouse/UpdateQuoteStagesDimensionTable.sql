@@ -12,7 +12,7 @@
    declare @Key as varchar(15)
    declare @Id as varchar(15) 
    declare @Name as varchar(40)
-   declare @Code as varchar(15)   
+   declare @Code as varchar(4)   
    declare @Tenant int
    declare @AutomaticLastUpdateDate as datetime
 

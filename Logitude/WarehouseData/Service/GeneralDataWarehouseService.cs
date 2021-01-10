@@ -171,6 +171,7 @@ namespace WarehouseData.Helper
             tableNameLists.Add(new TableClass() { IsCloseTable = true, TableName = "ShipmentReceivableStatus", DBTableName = "ShipmentReceivableStatus", DispayInScreen = true, Dw_TableName = "dw_ShipmentReceivableStatuses", KeyName = "Code", HasDimensionTable = true, DWObjectTableCode = "DIM_ShipmentReceivableStatuses", BuildScriptName = "BuildShipmentReceivableStatusDimensionTable", IncrementalScriptName = "UpdateShipmentReceivableStatusDimensionTable" });
 
             tableNameLists.Add(new TableClass() { TableName = "QuoteStage", DBTableName = "QuoteStages", DispayInScreen = false, Dw_TableName = "dw_QuoteStages", KeyName = "Id", HasDimensionTable = true, DWObjectTableCode = "DIM_QuoteStages", BuildScriptName = "BuildQuoteStagesDimensionTable", IncrementalScriptName = "UpdateQuoteStagesDimensionTable" });
+            tableNameLists.Add(new TableClass() { TableName = "QuoteClosingReason", DBTableName = "QuoteClosingReasons", DispayInScreen = false, Dw_TableName = "dw_QuoteClosingReasons", KeyName = "Id", HasDimensionTable = true, DWObjectTableCode = "DIM_QuoteClosingReasons", BuildScriptName = "BuildQuoteClosingReasonsDimensionTable", IncrementalScriptName = "UpdateQuoteClosingReasonsDimensionTable" });
 
 
             //Fact Table

@@ -481,6 +481,29 @@ declare @DIM_PortsInActiveNewId varchar(15)
 execute usp_GetNextTableIdValue @DIM_PortsInActiveNewId OUTPUT,'DWObjectField' 
 insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,HideTree,CannotFilter,IsCustom,DontDisplayInView,IsMultipleSelection) Values(@DIM_PortsInActiveNewId,0,'DIM_Ports','[InActive]','InActive','Boolean','false',0,0,'false','false','true','false','false','false','false','false')  
 ------------------------------------------------------------------------------------
+declare @DIM_QuoteClosingReasonsNewId varchar(15)
+execute usp_GetNextTableIdValue @DIM_QuoteClosingReasonsNewId OUTPUT,'DWObjectTable' 
+insert into DWObjectTables(Id,Tenant,IndexesXml,Code,Name,TypeCode,IsClosed,DefaultFilterBy,HasPivotColumn) Values(@DIM_QuoteClosingReasonsNewId,0,'','DIM_QuoteClosingReasons','DIM_QuoteClosingReasons','Dimension','false','[Name]','false')  
+--Fields --
+declare @DIM_QuoteClosingReasonsId_NumberNewId varchar(15)
+execute usp_GetNextTableIdValue @DIM_QuoteClosingReasonsId_NumberNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,HideTree,CannotFilter,IsCustom,DontDisplayInView,IsMultipleSelection) Values(@DIM_QuoteClosingReasonsId_NumberNewId,0,'DIM_QuoteClosingReasons','[Id_Number]','Id_Number','Integer','true',0,0,'true','false','true','false','false','false','false','false')  
+declare @DIM_QuoteClosingReasonsIdNewId varchar(15)
+execute usp_GetNextTableIdValue @DIM_QuoteClosingReasonsIdNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,HideTree,CannotFilter,IsCustom,DontDisplayInView,IsMultipleSelection) Values(@DIM_QuoteClosingReasonsIdNewId,0,'DIM_QuoteClosingReasons','[Id]','Id','Text','true',0,15,'false','false','true','false','false','false','true','false')  
+declare @DIM_QuoteClosingReasonsNameNewId varchar(15)
+execute usp_GetNextTableIdValue @DIM_QuoteClosingReasonsNameNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,LOVAdditionalColumns,HideTree,CannotFilter,IsCustom,DontDisplayInView,IsMultipleSelection) Values(@DIM_QuoteClosingReasonsNameNewId,0,'DIM_QuoteClosingReasons','[Name]','Name','Text','false',0,60,'false','false','true','[Code]','false','false','false','false','false')  
+declare @DIM_QuoteClosingReasonsCodeNewId varchar(15)
+execute usp_GetNextTableIdValue @DIM_QuoteClosingReasonsCodeNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,LOVAdditionalColumns,HideTree,CannotFilter,IsCustom,DontDisplayInView,IsMultipleSelection) Values(@DIM_QuoteClosingReasonsCodeNewId,0,'DIM_QuoteClosingReasons','[Code]','Code','Text','false',0,2,'false','false','true','[Name],[Local Name]','false','false','false','true','false')  
+declare @DIM_QuoteClosingReasonsTenantNewId varchar(15)
+execute usp_GetNextTableIdValue @DIM_QuoteClosingReasonsTenantNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,HideTree,CannotFilter,IsCustom,ViewFieldDisplayName,DontDisplayInView,IsMultipleSelection) Values(@DIM_QuoteClosingReasonsTenantNewId,0,'DIM_QuoteClosingReasons','[Tenant]','Tenant','Integer','true',0,0,'false','false','true','false','false','false','Tenant','false','false')  
+declare @DIM_QuoteClosingReasonsAutomaticLastUpdateDateNewId varchar(15)
+execute usp_GetNextTableIdValue @DIM_QuoteClosingReasonsAutomaticLastUpdateDateNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,HideTree,CannotFilter,IsCustom,DontDisplayInView,IsMultipleSelection) Values(@DIM_QuoteClosingReasonsAutomaticLastUpdateDateNewId,0,'DIM_QuoteClosingReasons','[Automatic Last Update Date]','Last Update Date','DateTime','false',0,0,'false','false','true','false','false','false','false','false')  
+------------------------------------------------------------------------------------
 declare @DIM_QuoteStagesNewId varchar(15)
 execute usp_GetNextTableIdValue @DIM_QuoteStagesNewId OUTPUT,'DWObjectTable' 
 insert into DWObjectTables(Id,Tenant,IndexesXml,Code,Name,TypeCode,IsClosed,DefaultFilterBy,HasPivotColumn) Values(@DIM_QuoteStagesNewId,0,'','DIM_QuoteStages','DIM_QuoteStages','Dimension','false','[Name]','false')  

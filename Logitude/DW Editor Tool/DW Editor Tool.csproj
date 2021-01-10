@@ -132,6 +132,7 @@
     </EmbeddedResource>
     <None Include="DIM_QuoteStatges.dwml" />
     <None Include="Files\DIM_OBLType.dwml" />
+    <None Include="Files\DIM_QuoteClosingReasons.dwml" />
     <None Include="Files\DIM_QuoteStages.dwml" />
     <None Include="Files\DIM_ShipmentReceivableStatuses.dwml">
       <SubType>Designer</SubType>
