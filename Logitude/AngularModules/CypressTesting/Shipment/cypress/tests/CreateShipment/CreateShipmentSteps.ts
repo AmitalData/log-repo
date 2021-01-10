@@ -19,7 +19,7 @@ Given("Go to shipments workspace", () => {
   cy.Click(Selectors.ShipmentTab, null);
 });
 
-Given("A shipment details",
+Given("Shipment details",
   (dataTable) => {
    const shipmentDetails = dataTable.hashes()[0] as ShipmentDetails;
    LevelCode = shipmentDetails.LevelCode;
@@ -27,14 +27,14 @@ Given("A shipment details",
    TransportModeCode = shipmentDetails.TransportModeCode;
    ShipmentTypeCode = shipmentDetails.ShipmentTypeCode;
    Actions.OpenNewShipmentWizard(LevelCode);
-   Actions.FillShipmentDefaultFields(DirectionCode, TransportModeCode, ShipmentTypeCode);
+   Actions.FillShipmentDefaultFields(LevelCode, DirectionCode, TransportModeCode, ShipmentTypeCode);
 });
 
 When("Click create shipment button", () => {
   Actions.CreateShipment();
 });
 
-Then("The create operation complete successfully", () => {
+Then("The create operation completed successfully", () => {
   let resultFile = "CreatedShipmentsData/" + LevelCode + DirectionCode + TransportModeCode + ShipmentTypeCode + ".json";
   Assertions.ValidateCreatedShipment(resultFile);
 });
