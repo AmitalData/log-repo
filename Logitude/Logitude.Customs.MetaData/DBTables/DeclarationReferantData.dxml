@@ -226,11 +226,14 @@
     ReferencedColumn="Code"
     ReferencedTableSchema="Customs" />
   
-  <Index
-   Columns="IsClosedForFollowUp" />
+  <Index  Columns="IsClosedForFollowUp" />
 
   
+  <Index  Columns="FollowUpDate" />
+
+
   <Index
+    Columns="NewFile,Favorite" />
  Columns="FollowUpDate" />
   <Index
     Columns="ControllerStatus" />
