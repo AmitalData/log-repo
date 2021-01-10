@@ -160,6 +160,7 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
         public string DirectionName { get; set; }
         public string TransportModeName { get; set; }
         public string QuoteId { get; set; }
+        public string QuoteNumber { get; set; }
         public string ShipmentReceivableStatusCode { get; set; }
         public string ShipmentPayableStatusCode { get; set; }
 

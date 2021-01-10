@@ -134,6 +134,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.PreCarriageVesselId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.OnCarriageVesselId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.QuoteId).HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.QuoteNumber).HasMaxLength(20).IsUnicode(false);
             this.Property(t => t.BookingId).HasMaxLength(15).IsUnicode(false);            
             this.Property(t => t.ShipmentReceivableStatusCode).HasMaxLength(4).IsUnicode(false);
             this.Property(t => t.ShipmentPayableStatusCode).HasMaxLength(4).IsUnicode(false);
@@ -491,6 +492,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.ShipmentPickUpIndex).HasColumnName("ShipmentPickUpIndex");
             this.Property(t => t.ShipmentDeliveryIndex).HasColumnName("ShipmentDeliveryIndex");
             this.Property(t => t.QuoteId).HasColumnName("QuoteId");
+            this.Property(t => t.QuoteNumber).HasColumnName("QuoteNumber");
             this.Property(t => t.BookingId).HasColumnName("BookingId");
             this.Property(t => t.ShipmentReceivableStatusCode).HasColumnName("ShipmentReceivableStatusCode");
             this.Property(t => t.ShipmentPayableStatusCode).HasColumnName("ShipmentPayableStatusCode");

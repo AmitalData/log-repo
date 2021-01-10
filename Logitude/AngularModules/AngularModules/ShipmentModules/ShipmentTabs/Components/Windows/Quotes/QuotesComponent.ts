@@ -192,6 +192,7 @@ export class QuotesComponent {
         if (this.BaseQuote) {
 
             this.EntityPM.QuoteId = this.BaseQuote.Id;
+            this.EntityPM.QuoteNumber = this.BaseQuote.QuoteNumber;
 
             var Generator = new ShipmentGenerator(this.EntityPM, this.AllRates);
 

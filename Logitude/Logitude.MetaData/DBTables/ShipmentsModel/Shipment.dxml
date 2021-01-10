@@ -3101,6 +3101,13 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="QuoteNumber"
+    Type="varchar"
+    Size="20">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="CountryForStatisticsId"
     ReferencedTable="Countries"

@@ -1713,6 +1713,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     }
 
                     myShipment.QuoteId = null;
+                    myShipment.QuoteNumber = null;
                     shipmentRepository.Update(myShipment);
 
                     shipmentsContext.SaveChanges();
