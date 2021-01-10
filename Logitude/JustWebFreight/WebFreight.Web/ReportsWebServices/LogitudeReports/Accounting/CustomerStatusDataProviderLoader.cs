@@ -254,7 +254,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                 Category5LocalName = customerPeriods.First().Category5LocalName,
                 Category6LocalName = customerPeriods.First().Category6LocalName,
 
-                Periods = GetStatusPeriods(periodsByDate)
+                Periods = GetStatusPeriods(customerPeriods)
             };
             return customerStatus;
         }
