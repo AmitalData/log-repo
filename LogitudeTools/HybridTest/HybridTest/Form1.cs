@@ -3243,7 +3243,7 @@ namespace HypredTest
         {
             ShipmentProxy.ShipmentPM consolepm = new ShipmentPM()
             {
-                ShipmentNumber = "SHIP_718741",
+                ShipmentNumber = "SHIP_7777",
                 DirectionId = "R",
                 ShipmentLevelCode = "A",
                 Tenant = 1,
@@ -3309,33 +3309,33 @@ namespace HypredTest
                     TruckNumber = "1111",
                     Driver = "My driver",
 
-                    ETA = DateTime.Now.AddDays(-2),
-                    ETD = DateTime.Now.AddDays(-1),
+                    //ETA = DateTime.Now.AddDays(-2),
+                    //ETD = DateTime.Now.AddDays(-1),
                     ATA = DateTime.Now,
                 },
             };
 
            
-            consolepm.ShipmentDeliveries = new ShipmentDeliveryPM[]
-           {
-                 new ShipmentDeliveryPM()
-                {
-                    CarrierId = "MTR",
+           // consolepm.ShipmentDeliveries = new ShipmentDeliveryPM[]
+           //{
+           //      new ShipmentDeliveryPM()
+           //     {
+           //         CarrierId = "MTR",
 
-                    FromAddressCity = "Marseille",
-                    FromAddressCountryId = "FR",
+           //         FromAddressCity = "Marseille",
+           //         FromAddressCountryId = "FR",
 
-                    ToAddressCountryId = "GB",
-                    ToAddressCity = "Bristol",
+           //         ToAddressCountryId = "GB",
+           //         ToAddressCity = "Bristol",
 
-                    TruckNumber = "1111",
-                    Driver = "Baker driver",
+           //         TruckNumber = "1111",
+           //         Driver = "Baker driver",
 
-                    ETA = DateTime.Now.AddDays(-2),
-                    ETD = DateTime.Now.AddDays(-1),
-                    ATA = DateTime.Now,
-                },
-           };
+           //         ETA = DateTime.Now.AddDays(-2),
+           //         ETD = DateTime.Now.AddDays(-1),
+           //         ATA = DateTime.Now,
+           //     },
+           //};
 
 
             ShipmentProxy.ShipmentWcfServiceClient shipmentservice = new ShipmentProxy.ShipmentWcfServiceClient();
