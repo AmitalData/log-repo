@@ -6,30 +6,40 @@ export function OpenNewShipmentWizard(levelCode: string){
     cy.Click(".LogitudeToggleButtonItem", levelCode)
 }
 
-export function FillShipmentDefaultFields(directionCode: string, transportModCode: string, shipmentTypeCode: string = null){
+export function FillShipmentDefaultFields(levelCode:string, directionCode: string, transportModCode: string, shipmentTypeCode: string){
     cy.ClickRadio("#DirectionRadio_0" + directionCode)
     cy.ClickRadio("#TransportModeRadio_0" + transportModCode)
-
+    
     if(shipmentTypeCode){
-        cy.ClickRadio("#ShipmentTypeRadio_0" + shipmentTypeCode)
+        if(shipmentTypeCode === "Groupage"){
+            cy.ClickRadio("#ShipmentTypeRadio_0MyG" + transportModCode);
+        }else{
+            cy.ClickRadio("#ShipmentTypeRadio_0" + shipmentTypeCode)
+        }
     }
 
     if(directionCode === "D" && transportModCode === "I"){
         cy.SelectLogLovFirstElement("#Shipment_ShipperId", false)
         cy.SelectLogLovFirstElement("#Shipment_ConsigneeId", false)
     }else{
-        if(directionCode === "I"){
-            cy.SelectLogLovRandomElement("#Shipment_ConsigneeId", false, 5)
+        if(levelCode === "Master"){
+            cy.SelectLogLovRandomElement("#Master_AgentId", false, 5)
         }else{
-            cy.SelectLogLovRandomElement("#Shipment_ShipperId", false, 5)
+            if(directionCode === "I"){
+                cy.SelectLogLovRandomElement("#Shipment_ConsigneeId", false, 5)
+            }else{
+                cy.SelectLogLovRandomElement("#Shipment_ShipperId", false, 5)
+            }
         }
 
+        let portsPreSelector = levelCode === "Master" ? "#Master" : "#Shipment";
+
         if(directionCode === "D"){
-            cy.SelectLogLovFirstElement("#Shipment_MainCarriageFromPortId", false)
-            cy.SelectLogLovFirstElement("#Shipment_MainCarriageToPortId", false)
+            cy.SelectLogLovFirstElement(portsPreSelector + "_MainCarriageFromPortId", false)
+            cy.SelectLogLovFirstElement(portsPreSelector + "_MainCarriageToPortId", false)
         }else{
-            cy.SelectLogLovRandomElement("#Shipment_MainCarriageFromPortId", false, 5)
-            cy.SelectLogLovRandomElement("#Shipment_MainCarriageToPortId", false, 5)
+            cy.SelectLogLovRandomElement(portsPreSelector + "_MainCarriageFromPortId", false, 5)
+            cy.SelectLogLovRandomElement(portsPreSelector + "_MainCarriageToPortId", false, 5)
         }
     }
 }
@@ -38,9 +48,10 @@ export function SaveShipment(resultFile: string) {
     cy.SaveClick("#ShipmentCreatebtn", null, "**/shipment", resultFile)
 }
 
-export function CreateShipment(){
+export function CreateShipment(levelCode: string){
+    let createPreSelector = levelCode === "Master" ? "#Master" : "#Shipment";
     cy.DefineRequestWait("POST", "**/shipment", "WaitPostShipmentRequest")
-    cy.Click("#ShipmentCreatebtn", null)
+    cy.Click(createPreSelector + "Createbtn", null)
 }
 
 export function OpenShipment(dataFile: string){

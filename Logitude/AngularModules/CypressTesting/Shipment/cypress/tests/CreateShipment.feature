@@ -5,11 +5,11 @@ Feature: Create Shipment Tests
     And Go to shipments workspace
 
   Scenario Outline: Create Shipments
-    Given A shipment details
+    Given Shipment details
       | LevelCode   | DirectionCode   | TransportModeCode   | ShipmentTypeCode   |
       | <LevelCode> | <DirectionCode> | <TransportModeCode> | <ShipmentTypeCode> |
     When Click create shipment button
-    Then The create operation complete successfully
+    Then The create operation completed successfully
     Examples:
       | LevelCode | DirectionCode | TransportModeCode | ShipmentTypeCode |
       | Direct    | E             | A                 |                  |
@@ -50,3 +50,28 @@ Feature: Create Shipment Tests
       | House     | I             | I                 | LTL              |
       | House     | R             | I                 | FTL              |
       | House     | R             | I                 | LTL              |
+      | Master    | E             | A                 |                  |
+      | Master    | I             | A                 |                  |
+      | Master    | D             | A                 |                  |
+      | Master    | R             | A                 |                  |
+      | Master    | E             | O                 | FCLD             |
+      | Master    | E             | O                 | LCLD             |
+      | Master    | E             | O                 | Groupage         |
+      | Master    | I             | O                 | FCLD             |
+      | Master    | I             | O                 | LCLD             |
+      | Master    | I             | O                 | Groupage         |
+      | Master    | D             | O                 | FCLD             |
+      | Master    | D             | O                 | LCLD             |
+      | Master    | D             | O                 | Groupage         |
+      | Master    | R             | O                 | FCLD             |
+      | Master    | R             | O                 | LCLD             |
+      | Master    | R             | O                 | Groupage         |
+      | Master    | E             | I                 | FTL              |
+      | Master    | E             | I                 | LTL              |
+      | Master    | E             | I                 | Groupage         |
+      | Master    | I             | I                 | FTL              |
+      | Master    | I             | I                 | LTL              |
+      | Master    | I             | I                 | Groupage         |
+      | Master    | R             | I                 | FTL              |
+      | Master    | R             | I                 | LTL              |
+      | Master    | R             | I                 | Groupage         |
