@@ -188,47 +188,6 @@ this.FeatureBackground();
 #line 26
  testRunner.And("List of ocean or inland packages for direct shipment", ((string)(null)), table3, "And ");
 #line hidden
-#line 29
- testRunner.When("User create direct shipment using external API", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line hidden
-#line 30
- testRunner.Then("The direct shipment should be created successfully", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line hidden
-            }
-            this.ScenarioCleanup();
-        }
-        
-        [Xunit.SkippableFactAttribute(DisplayName="xxxxxxxxxx1")]
-        [Xunit.TraitAttribute("FeatureTitle", "External API Direct")]
-        [Xunit.TraitAttribute("Description", "xxxxxxxxxx1")]
-        public virtual void Xxxxxxxxxx1()
-        {
-            string[] tagsOfScenario = ((string[])(null));
-            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("xxxxxxxxxx1", null, tagsOfScenario, argumentsOfScenario);
-#line 32
-this.ScenarioInitialize(scenarioInfo);
-#line hidden
-            bool isScenarioIgnored = default(bool);
-            bool isFeatureIgnored = default(bool);
-            if ((tagsOfScenario != null))
-            {
-                isScenarioIgnored = tagsOfScenario.Where(__entry => __entry != null).Where(__entry => String.Equals(__entry, "ignore", StringComparison.CurrentCultureIgnoreCase)).Any();
-            }
-            if ((this._featureTags != null))
-            {
-                isFeatureIgnored = this._featureTags.Where(__entry => __entry != null).Where(__entry => String.Equals(__entry, "ignore", StringComparison.CurrentCultureIgnoreCase)).Any();
-            }
-            if ((isScenarioIgnored || isFeatureIgnored))
-            {
-                testRunner.SkipScenario();
-            }
-            else
-            {
-                this.ScenarioStart();
-#line 3
-this.FeatureBackground();
-#line hidden
                 TechTalk.SpecFlow.Table table4 = new TechTalk.SpecFlow.Table(new string[] {
                             "LegIndex",
                             "Carrier.Code",
@@ -239,28 +198,28 @@ this.FeatureBackground();
                             "CA20",
                             "DE222",
                             "DE223"});
+#line 29
+ testRunner.And("User adding main carriage legs to last direct shipmentd", ((string)(null)), table4, "And ");
+#line hidden
+#line 32
+ testRunner.When("User create direct shipment using external API", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
 #line 33
- testRunner.Given("User adding main carriage legs to last direct shipment", ((string)(null)), table4, "Given ");
-#line hidden
-#line 36
- testRunner.When("UpdateShipmentWithInvalidFutureATD", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line hidden
-#line 37
- testRunner.Then("assert", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then("The direct shipment should be created successfully", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="xxxxxxxxxx2")]
+        [Xunit.SkippableFactAttribute(DisplayName="Update shipment with Invalid Future ATA")]
         [Xunit.TraitAttribute("FeatureTitle", "External API Direct")]
-        [Xunit.TraitAttribute("Description", "xxxxxxxxxx2")]
-        public virtual void Xxxxxxxxxx2()
+        [Xunit.TraitAttribute("Description", "Update shipment with Invalid Future ATA")]
+        public virtual void UpdateShipmentWithInvalidFutureATA()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("xxxxxxxxxx2", null, tagsOfScenario, argumentsOfScenario);
-#line 39
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Update shipment with Invalid Future ATA", null, tagsOfScenario, argumentsOfScenario);
+#line 35
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             bool isScenarioIgnored = default(bool);
@@ -293,28 +252,28 @@ this.FeatureBackground();
                             "CA20",
                             "DE222",
                             "DE223"});
+#line 36
+ testRunner.Given("The main carriage legs are added to last direct shipment", ((string)(null)), table5, "Given ");
+#line hidden
+#line 39
+ testRunner.When("User Update Shipment With Invalid Future ATA", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
 #line 40
- testRunner.Given("User adding main carriage legs to last direct shipment", ((string)(null)), table5, "Given ");
-#line hidden
-#line 43
- testRunner.When("UpdateShipmentWithInvalidFutureATA", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line hidden
-#line 44
- testRunner.Then("assert ATA", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then("Update should not be done", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="xxxxxxxxxx3")]
+        [Xunit.SkippableFactAttribute(DisplayName="Update shipment with Invalid Future ATD")]
         [Xunit.TraitAttribute("FeatureTitle", "External API Direct")]
-        [Xunit.TraitAttribute("Description", "xxxxxxxxxx3")]
-        public virtual void Xxxxxxxxxx3()
+        [Xunit.TraitAttribute("Description", "Update shipment with Invalid Future ATD")]
+        public virtual void UpdateShipmentWithInvalidFutureATD()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("xxxxxxxxxx3", null, tagsOfScenario, argumentsOfScenario);
-#line 46
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Update shipment with Invalid Future ATD", null, tagsOfScenario, argumentsOfScenario);
+#line 43
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             bool isScenarioIgnored = default(bool);
@@ -347,14 +306,68 @@ this.FeatureBackground();
                             "CA20",
                             "DE222",
                             "DE223"});
+#line 44
+    testRunner.Given("The main carriage legs are added to last direct shipment", ((string)(null)), table6, "Given ");
+#line hidden
 #line 47
- testRunner.Given("User adding main carriage legs to last direct shipment", ((string)(null)), table6, "Given ");
+    testRunner.When("The User Updates Shipment With Invalid Future ATD", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
+#line 48
+    testRunner.Then("The excption massage that\'s related to this case is shown", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            }
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.SkippableFactAttribute(DisplayName="Update shipment with vaild dates")]
+        [Xunit.TraitAttribute("FeatureTitle", "External API Direct")]
+        [Xunit.TraitAttribute("Description", "Update shipment with vaild dates")]
+        public virtual void UpdateShipmentWithVaildDates()
+        {
+            string[] tagsOfScenario = ((string[])(null));
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Update shipment with vaild dates", null, tagsOfScenario, argumentsOfScenario);
 #line 50
- testRunner.When("UpdateShipmentWithValidDates", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+this.ScenarioInitialize(scenarioInfo);
 #line hidden
+            bool isScenarioIgnored = default(bool);
+            bool isFeatureIgnored = default(bool);
+            if ((tagsOfScenario != null))
+            {
+                isScenarioIgnored = tagsOfScenario.Where(__entry => __entry != null).Where(__entry => String.Equals(__entry, "ignore", StringComparison.CurrentCultureIgnoreCase)).Any();
+            }
+            if ((this._featureTags != null))
+            {
+                isFeatureIgnored = this._featureTags.Where(__entry => __entry != null).Where(__entry => String.Equals(__entry, "ignore", StringComparison.CurrentCultureIgnoreCase)).Any();
+            }
+            if ((isScenarioIgnored || isFeatureIgnored))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                this.ScenarioStart();
+#line 3
+this.FeatureBackground();
+#line hidden
+                TechTalk.SpecFlow.Table table7 = new TechTalk.SpecFlow.Table(new string[] {
+                            "LegIndex",
+                            "Carrier.Code",
+                            "FromPort.Code",
+                            "ToPort.Code"});
+                table7.AddRow(new string[] {
+                            "1",
+                            "CA20",
+                            "DE222",
+                            "DE223"});
 #line 51
- testRunner.Then("assert *", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+    testRunner.Given("The main carriage legs are added to last direct shipment", ((string)(null)), table7, "Given ");
+#line hidden
+#line 54
+    testRunner.When("The User Updates Shipment With valid Future ETD,ATD,ETA and ATA", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+#line 55
+    testRunner.Then("The shipment is updated succesfully", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();

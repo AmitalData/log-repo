@@ -3,9 +3,12 @@ using Logitude.ShipmentTests.Models;
 using Logitude.Test.Base.Extensions;
 using Logitude.Test.Base.Models.Login;
 using Logitude.Test.Base.Services;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using TechTalk.SpecFlow;
+using Xunit;
 
 namespace Logitude.ShipmentTests.Steps
 {
@@ -13,6 +16,7 @@ namespace Logitude.ShipmentTests.Steps
     public class ExternalAPIDirectSteps
     {
         protected ExternalAPIDirectContext Context;
+        string ExceptionMessage;
 
         public ExternalAPIDirectSteps(MultiUsers multiUsers, ExternalAPIDirectContext context)
         {
@@ -38,13 +42,14 @@ namespace Logitude.ShipmentTests.Steps
             Context.Direct.OceanOrInlandPackages.AddRange(oceanOrInlandPackages);
         }
 
-        [Given(@"List of main carriage legs for direct shipment")]
-        public void GivenListOfMainCarriageLegsForDirectShipment(Table mainCarriageLegsTable)
+        [Given(@"User adding main carriage legs to last direct shipmentd")]
+        public void GivenUserAddingMainCarriageLegsToLastDirectShipmentd(Table table)
         {
-            IEnumerable<MainCarriageLeg> mainCarriageLegs = mainCarriageLegsTable.CreateComplexSet<MainCarriageLeg>();
+            IEnumerable<MainCarriageLeg> mainCarriageLegs = table.CreateComplexSet<MainCarriageLeg>();
             Context.Direct.MainCarriageLegs = new List<MainCarriageLeg>();
             Context.Direct.MainCarriageLegs.AddRange(mainCarriageLegs);
         }
+
 
         [When(@"User create direct shipment using external API")]
         public void WhenUserCreateDirectShipmentUsingExternalAPI()
@@ -59,13 +64,74 @@ namespace Logitude.ShipmentTests.Steps
             Context.Direct.Id.Should().NotBeNull();
         }
 
-
-        //no need for this step .. just you want to use the code inside it for other steps .. I recommend to use a function as protected
-        [Given(@"User get the last direct shipment")]
-        public void WhenUserGetTheLastDirectShipment()
+        [Given(@"The main carriage legs are added to last direct shipment")]
+        public void GivenTheMainCarriageLegsAreAddedToLastDirectShipment(Table mainCarriageLegsTable)
         {
-            string directShipmentsRequestUrl = "ShipmentViews/GetByFilters?ForceCacheRefresh=false&GetAll=false&GetCount=false&PageIndex=0&PageSize=1" +
+            IEnumerable<MainCarriageLeg> mainCarriageLegs = mainCarriageLegsTable.CreateComplexSet<MainCarriageLeg>();
+            GetTheLastDirectShipment();
+            Context.Direct.MainCarriageLegs = new List<MainCarriageLeg>();
+            Context.Direct.MainCarriageLegs.AddRange(mainCarriageLegs);
+        }
+
+        [When(@"User Update Shipment With Invalid Future ATA")]
+        public void WhenUpdateShipmentWithInvalidFutureATA()
+        {
+            DateTime FutureDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day).AddYears(1);
+
+            Context.Direct.MainCarriageLegs.Last().ATA = FutureDate;
+            dynamic response = APICaller.CallPut<dynamic>(Context.Direct, "Direct", Context.User.Token, HttpStatusCode.BadRequest);
+
+            ExceptionMessage = (response["ErrorMessage"] as string).Replace("\r", string.Empty).Replace("\n", string.Empty).Trim();
+        }
+
+        [Then(@"Update should not be done")]
+        public void UpdateShouldNotBeDone()
+        {
+            ExceptionMessage.Should().Be("Can't set MainCarriageATA to future date");
+        }
+
+        [When(@"The User Updates Shipment With Invalid Future ATD")]
+        public void WhenTheUserUpdatesShipmentWithInvalidFutureATD()
+        {
+            DateTime FutureDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day).AddYears(1);
+
+            Context.Direct.MainCarriageLegs.Last().ATD = FutureDate;
+            dynamic response = APICaller.CallPut<dynamic>(Context.Direct, "Direct", Context.User.Token, HttpStatusCode.BadRequest);
+
+            ExceptionMessage = (response["ErrorMessage"] as string).Replace("\r", string.Empty).Replace("\n", string.Empty).Trim();
+        }
+
+        [Then(@"The excption massage that's related to this case is shown")]
+        public void ThenTheExcptionMassageThatSRelatedToThisCaseIsShown()
+        {
+            ExceptionMessage.Should().Be("Can't set MainCarriageATD to future date");
+            
+        }
+
+        [When(@"The User Updates Shipment With valid Future ETD,ATD,ETA and ATA")]
+        public void WhenTheUserUpdatesShipmentWithValidFutureETDATDETAAndATA()
+        {
+
+            Context.Direct.MainCarriageLegs.Last().ETD = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day).AddMonths(-1).AddDays(1);
+            Context.Direct.MainCarriageLegs.Last().ATD = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day).AddMonths(-1).AddDays(2);
+            Context.Direct.MainCarriageLegs.Last().ETA = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day).AddMonths(-1).AddDays(3);
+            Context.Direct.MainCarriageLegs.Last().ATA = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day).AddMonths(-1).AddDays(4);
+            Context.Direct.NewConcurrencyGUID = Guid.NewGuid().ToString();
+            Context.Direct = APICaller.CallPut<Direct>(Context.Direct, "Direct", Context.User.Token);
+        }
+
+        [Then(@"The shipment is updated succesfully")]
+        public void ThenTheShipmentIsUpdatedSuccesfully()
+        {
+            Context.Direct.Should().NotBeNull();
+        }
+
+        private void GetTheLastDirectShipment()
+        {
+            Context.Direct = null;
+            string directShipmentsRequestUrl = "ShipmentViews/GetByFilters?ForceCacheRefresh=false&GetAll=false&GetCount=false&PageIndex=0&PageSize=10" +
                 "&Filter1Name=ShipmentLevelCode&Filter1Operator=equals&Filter1Value=D" +
+                "&Filter3Name=TransportModeId&Filter3Operator=equals&Filter3Value=O" +
                 "&Filter2Name=CreatedByUserId&Filter2Operator=equals&Filter2Value=" + Context.User.UserId +
                 "&SortBy=CreateDateTime&SortDirection=descending";
 
@@ -80,5 +146,6 @@ namespace Logitude.ShipmentTests.Steps
                 Context.Direct = directShipment;
             }
         }
+
     }
 }

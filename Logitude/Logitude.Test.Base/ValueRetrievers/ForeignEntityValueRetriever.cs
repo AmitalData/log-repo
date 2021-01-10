@@ -38,7 +38,7 @@ namespace Logitude.Test.Base.ValueRetrievers
                 string requestUrl = entityControllerName + "/GetByFilters?ForceCacheRefresh=false&GetAll=false&GetCount=false&PageIndex=0&PageSize=1" +
                                           "&Filter1Name=" + filterPropertyName + "&Filter1Operator=equals&Filter1Value=" + filterPropertyValue;
 
-                dynamic requestResult = APICaller.CallGet(requestUrl, User.Token, "Result");
+                dynamic requestResult = APICaller.CallGet<dynamic>(requestUrl, User.Token, "Result");
 
                 if (requestResult != null)
                 {
