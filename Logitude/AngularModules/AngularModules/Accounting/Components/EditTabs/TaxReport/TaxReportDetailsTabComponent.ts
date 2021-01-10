@@ -468,6 +468,7 @@ export class TaxReportDetailsTabComponent extends BaseComponent implements OnIni
             HtmlListComponentUrl: './Accounting/Components/ListTemplates/TaxReportListTemplate',
             IsCustomTemplate: true
         });
+        // this
         this.columns.push({
           FieldName: 'TotalInvoiceAmount',
             DataTypeCode: 'Number',

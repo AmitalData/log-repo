@@ -69,7 +69,7 @@
     </div>
 
     <!-- CumulativeLocalAmount -->
-    <div class="TextTrimming" *ngIf="fieldName == 'CumulativeLocalAmount'" style="color:#00a24d; text-align: right; padding: 0px 2px; direction: ltr;" [class.red]='rowData["IsCumulativeLocalAmountPos"] '>
+    <div class="TextTrimming" *ngIf="fieldName == 'CumulativeLocalAmount'" style="color:#000; text-align: right; padding: 0px 2px; direction: ltr;">
         {{ rowData[fieldName] | NumbersPipe:'N2' }}
     </div>
 
@@ -84,7 +84,7 @@
     </div>
 
     <!-- CumulativeForeignAmount -->
-    <div class="TextTrimming" *ngIf="fieldName == 'CumulativeForeignAmount'" style="color:#00a24d; text-align: right; padding: 0px 2px;direction: ltr;" [class.red]='rowData["IsCumulativeForeignAmountPos"]'>
+    <div class="TextTrimming" *ngIf="fieldName == 'CumulativeForeignAmount'" style="color:#000; text-align: right; padding: 0px 2px;direction: ltr;">
         {{ rowData[fieldName] | NumbersPipe:'N2'  }} {{rowData['CurrencySign']}}
     </div>
 
