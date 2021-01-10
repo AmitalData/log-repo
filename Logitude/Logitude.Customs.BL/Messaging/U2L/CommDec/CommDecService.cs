@@ -102,7 +102,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommDec
                         if (!declarationUpdateService.CheckIfUpdatingAllowed(this._MyDeclarationPM))
                         {
                             CheckMasterToUpdate(MoreParams);
-                            AppendLogLine("Updating Not Allowed For Declaration " + this._MyDeclarationPM.CustomFileNo + Environment.NewLine + Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.ToString(2000));
+                            AppendLogLine("Updating Not Allowed For Declaration " + this._MyDeclarationPM.CustomFileNo + Environment.NewLine + Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.ToString(1000));
                             return;
                         }
                     }
@@ -123,21 +123,21 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommDec
             catch (DbEntityValidationException ex)
             {
                 var FormatedException = ExceptionFormatUtil.GetFormated(ex);
-                AppendLogLine("Declaration Upsert Error " + Environment.NewLine + Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.ToString(2000));
+                AppendLogLine("Declaration Upsert Error " + Environment.NewLine + Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.ToString(1000));
                 AppendLogLine("ProccessRequest():Exception " + FormatedException.ToString() + Environment.NewLine + "---------------------------------------------");
                 MyGenericResponseObj.StatusType = GenericResponseObj.StatusEnum.BusinessError;
                 return;
             }
             catch (Exception e)
             {
-                AppendLogLine("Declaration Upsert Error " + Environment.NewLine + Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.ToString(2000));
+                AppendLogLine("Declaration Upsert Error " + Environment.NewLine + Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.ToString(1000));
                 AppendLogLine("ProccessRequest():Exception " + e.ToString() + Environment.NewLine + "---------------------------------------------");
                 MyGenericResponseObj.StatusType = GenericResponseObj.StatusEnum.BusinessError;
                 return;
             }
             if(!String.IsNullOrWhiteSpace(MyGenericResponseObj.StatusType.ToString()) && MyGenericResponseObj.StatusType != GenericResponseObj.StatusEnum.Success)
             {
-                AppendLogLine("Declaration Upsert Error " + Environment.NewLine + Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.ToString(2000));
+                AppendLogLine("Declaration Upsert Error " + Environment.NewLine + Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.ToString(1000));
                 return;
             }
             //Delete Supplier Invoice
@@ -155,7 +155,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommDec
             this._MyDeclarationPM = myQueryService.GetSingle(this._LogitudeCommDecFile.Id, true, false);
             if (this._MyDeclarationPM == null)
             {
-                AppendLogLine("Declaration Get Single Error " + Environment.NewLine + Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.ToString(2000));
+                AppendLogLine("Declaration Get Single Error " + Environment.NewLine + Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.ToString(1000));
                 MyGenericResponseObj.StatusType = GenericResponseObj.StatusEnum.BusinessError;
                 throw new BusinessErrorException("LOGITUDE FILE is " + this._LogitudeCommDecFile.Id + " but not found");
             }
@@ -397,21 +397,17 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommDec
             }
             else
             {
-                AppendLogLine("ProcedureCurrentCode 1 " + this._MyDeclarationPM.ProcedureCurrentCode);
                 this._AmitalCustomsFile = _LOGICUSTFILE.LogitudeCustomsFile[0];
                 if (_MyDeclarationPM.IsCourierDeclaration == true)
                 {
-                    AppendLogLine("ProcedureCurrentCode 2 " + this._MyDeclarationPM.ProcedureCurrentCode);
                     UpdateNoIdUnder150();
                     CalcIsAutonomy();
                     CalcProcedureCurrentCode();
-                    AppendLogLine("ProcedureCurrentCode 3 " + this._MyDeclarationPM.ProcedureCurrentCode);
                     CalcInternalTransitionSite();
                     if (this.IsAutonomy)
                     {
                         UpdateDeclarationPending("901");
                     }
-                    AppendLogLine("ProcedureCurrentCode 4 " + this._MyDeclarationPM.ProcedureCurrentCode);
                 }
             }
 
@@ -474,7 +470,6 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommDec
 
         private void CalcInternalTransitionSite()
         {
-            AppendLogLine("ProcedureCurrentCode at start of CalcInternalTransitionSite " + this._MyDeclarationPM.ProcedureCurrentCode);
             if (new[] { "4000005", "4000512", "4000505", "4000012" }.Contains(this._MyDeclarationPM.ProcedureCurrentCode))
             {
                 AppendLogLine("_LogitudeCommDecFile.SiteCode at CalcInternalTransitionSite " + _LogitudeCommDecFile.SiteCode);
