@@ -2023,10 +2023,17 @@ namespace WebFreight.Web.WebServices
                     myDataProvider.CustomVolume = packageVolumeBuilder.ToString().StartsWith("00.00") == false ? packageVolumeBuilder.ToString() : "";
                 }
 
-                int numberofpackages = shipment.NumberOfPackages != null ? shipment.NumberOfPackages.Value : 0;
-                int numberofcontainers = shipment.NumberOfContainers != null ? shipment.NumberOfContainers.Value : 0;
-                myDataProvider.TotalQuantity = (numberofpackages + numberofcontainers).ToString();
-                myDataProvider.TotalQuantity_Double = numberofpackages + numberofcontainers;
+                //int numberofpackages = shipment.NumberOfPackages != null ? shipment.NumberOfPackages.Value : 0;
+                //int numberofcontainers = shipment.NumberOfContainers != null ? shipment.NumberOfContainers.Value : 0;
+                //myDataProvider.TotalQuantity = (numberofpackages + numberofcontainers).ToString();
+                //myDataProvider.TotalQuantity_Double = numberofpackages + numberofcontainers;
+
+                if (shipment.PackagesQuantity != null)
+                {
+                    myDataProvider.TotalQuantity = shipment.PackagesQuantity.ToString();
+                    myDataProvider.TotalQuantity_Double = shipment.PackagesQuantity;
+                }
+
                 myDataProvider.TotalVolume = shipment.Volume != null && shipment.Volume != 0 ? (shipment.Volume + " " + volumeUnitCode) : "";
                 myDataProvider.TotalWeight = shipment.GrossWeight != null && shipment.GrossWeight != 0 ? String.Format("{0:#,0.00}", shipment.GrossWeight.Value) + " " + (shipment.GrossWeightUnitCode != null ? shipment.GrossWeightUnitCode : "") : "";
 
