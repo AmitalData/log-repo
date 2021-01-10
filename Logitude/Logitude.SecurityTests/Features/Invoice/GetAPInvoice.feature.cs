@@ -40,7 +40,8 @@ namespace Logitude.SecurityTests.Features.Invoice
         public static void FeatureSetup()
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
-            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features/Invoice", "Get AP Invoice Security Access", null, ProgrammingLanguage.CSharp, ((string[])(null)));
+            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features/Invoice", "Get AP Invoice Security Access", "        In order to get an APInvoice from the APInvoices list \r\n\t\tIt should be re" +
+                    "lated to the user\'s tenant ", ProgrammingLanguage.CSharp, ((string[])(null)));
             testRunner.OnFeatureStart(featureInfo);
         }
         
@@ -77,7 +78,7 @@ namespace Logitude.SecurityTests.Features.Invoice
         
         public virtual void FeatureBackground()
         {
-#line 3
+#line 5
 #line hidden
             TechTalk.SpecFlow.Table table1 = new TechTalk.SpecFlow.Table(new string[] {
                         "Email",
@@ -88,13 +89,13 @@ namespace Logitude.SecurityTests.Features.Invoice
             table1.AddRow(new string[] {
                         "protractor@test.com",
                         "!P123t456"});
-#line 5
+#line 7
  testRunner.Given("Users with following credentials", ((string)(null)), table1, "Given ");
 #line hidden
-#line 9
+#line 11
  testRunner.When("Users make login request", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 10
+#line 12
  testRunner.Then("Users should have token", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
         }
@@ -104,15 +105,15 @@ namespace Logitude.SecurityTests.Features.Invoice
             this.TestTearDown();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="Get AP Invoice From User\'s Tenant")]
+        [Xunit.SkippableFactAttribute(DisplayName="An AP Invoice From A User\'s Tenant is Gotten")]
         [Xunit.TraitAttribute("FeatureTitle", "Get AP Invoice Security Access")]
-        [Xunit.TraitAttribute("Description", "Get AP Invoice From User\'s Tenant")]
-        public virtual void GetAPInvoiceFromUsersTenant()
+        [Xunit.TraitAttribute("Description", "An AP Invoice From A User\'s Tenant is Gotten")]
+        public virtual void AnAPInvoiceFromAUsersTenantIsGotten()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get AP Invoice From User\'s Tenant", null, tagsOfScenario, argumentsOfScenario);
-#line 12
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("An AP Invoice From A User\'s Tenant is Gotten", null, tagsOfScenario, argumentsOfScenario);
+#line 14
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             bool isScenarioIgnored = default(bool);
@@ -132,28 +133,28 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 this.ScenarioStart();
-#line 3
+#line 5
 this.FeatureBackground();
 #line hidden
-#line 13
- testRunner.When("First user get the first AP Invoice from AP Invoices list", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 15
+ testRunner.When("The First user gets the first AP Invoice from AP Invoices list", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 14
- testRunner.Then("AP Invoice for first user should be exists", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 16
+ testRunner.Then("The AP Invoice which is related to the first user tanent is existed", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="Get AP Invoice From Other Tenant")]
+        [Xunit.SkippableFactAttribute(DisplayName="An AP Invoice From  From Other Tenant isn\'t Gotten Get")]
         [Xunit.TraitAttribute("FeatureTitle", "Get AP Invoice Security Access")]
-        [Xunit.TraitAttribute("Description", "Get AP Invoice From Other Tenant")]
-        public virtual void GetAPInvoiceFromOtherTenant()
+        [Xunit.TraitAttribute("Description", "An AP Invoice From  From Other Tenant isn\'t Gotten Get")]
+        public virtual void AnAPInvoiceFromFromOtherTenantIsntGottenGet()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get AP Invoice From Other Tenant", null, tagsOfScenario, argumentsOfScenario);
-#line 16
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("An AP Invoice From  From Other Tenant isn\'t Gotten Get", null, tagsOfScenario, argumentsOfScenario);
+#line 18
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             bool isScenarioIgnored = default(bool);
@@ -173,14 +174,14 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 this.ScenarioStart();
-#line 3
+#line 5
 this.FeatureBackground();
 #line hidden
-#line 17
- testRunner.When("Second user get the AP Invoice that requested by first user", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 19
+ testRunner.When("The Second user gets the AP Invoice that was requested by the first user", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 18
- testRunner.Then("AP Invoice for second user should not be exists", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 20
+ testRunner.Then("The AP Invoice that was requested by the second user isn\'t existed", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();

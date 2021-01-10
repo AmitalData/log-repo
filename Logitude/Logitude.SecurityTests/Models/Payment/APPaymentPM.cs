@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Logitude.SecurityTests.Models
+namespace Logitude.SecurityTests.Models.Payment
 {
-    public class APInvoicePM
+    public class APPaymentPM
     {
-        public string Id { get; set; }
+        public string Id { set; get; }
     }
 }

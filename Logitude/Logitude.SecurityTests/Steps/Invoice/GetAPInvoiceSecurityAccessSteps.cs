@@ -1,11 +1,12 @@
 ﻿using FluentAssertions;
-using Logitude.SecurityTests.Models;
 using Logitude.Test.Base.Models.Login;
 using Logitude.Test.Base.Services;
+using Logitude.Test.Base.Context;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using TechTalk.SpecFlow;
+using Logitude.SecurityTests.Models.Invoice;
 
 namespace Logitude.SecurityTests.Steps.Invoice
 {
@@ -26,7 +27,7 @@ namespace Logitude.SecurityTests.Steps.Invoice
             Context.FirstUserPMData.Id = firstUserAPInvociesList?.FirstOrDefault()?.Id;
         }
         
-        [When(@"Second user get the AP Invoice that requested by first user")]
+        [When(@"The Second user gets the AP Invoice that was requested by the first user")]
         public void WhenSecondUserGetTheAPInvoiceThatRequestedByFirstUser()
         {
             IEnumerable<APInvoicePM> firstUserAPInvoicesList = GetAPInvoiceListForFirstUser();
@@ -41,7 +42,7 @@ namespace Logitude.SecurityTests.Steps.Invoice
             Context.FirstUserPMData.Id.Should().NotBeNull();
         }
         
-        [Then(@"AP Invoice for second user should not be exists")]
+        [Then(@"The AP Invoice that was requested by the second user isn't existed")]
         public void ThenAPInvoiceForSecondUserShouldNotBeExists()
         {
             Context.SecondUserPMData.Id.Should().BeNull();

@@ -1,8 +1,8 @@
 ﻿using Logitude.Test.Base.Models.Login;
 
-namespace Logitude.SecurityTests.Models
+namespace Logitude.Test.Base.Context
 {
-    public  class SecurityAccessStepsContext<T>  where T : class , new()
+    public class SecurityAccessStepsContext<T> where T : class, new()
     {
         public SecurityAccessStepsContext()
         {
@@ -16,5 +16,5 @@ namespace Logitude.SecurityTests.Models
         public User FirstUser { get; set; }
         public User SecondUser { get; set; }
     }
-  }
+}
 

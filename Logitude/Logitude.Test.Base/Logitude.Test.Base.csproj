@@ -78,6 +78,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Context\SecurityAccessStepsContext.cs" />
     <Compile Include="Models\Constants\RegularExpressions.cs" />
     <Compile Include="Models\Login\LoginParameters.cs" />
     <Compile Include="Models\Login\MultiLoginParameters.cs" />

@@ -1,11 +1,12 @@
-﻿using Logitude.SecurityTests.Models;
-using Logitude.Test.Base.Models.Login;
+﻿using Logitude.Test.Base.Models.Login;
 using TechTalk.SpecFlow;
 using System;
+using Logitude.Test.Base.Context;
 using System.Collections.Generic;
 using Logitude.Test.Base.Services;
 using System.Linq;
 using FluentAssertions;
+using Logitude.SecurityTests.Models.Payment;
 
 namespace Logitude.SecurityTests.Steps.Payment
 {

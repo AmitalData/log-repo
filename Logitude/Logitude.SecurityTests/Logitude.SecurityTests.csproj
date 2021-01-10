@@ -100,9 +100,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Models\APInvoicePM.cs" />
-    <Compile Include="Models\SecurityAccessStepsContext.cs" />
-    <Compile Include="Models\APPaymentPM.cs" />
+    <Compile Include="Models\Invoice\APInvoicePM.cs" />
+    <Compile Include="Models\Payment\APPaymentPM.cs" />
     <Compile Include="Models\Shipment\ShipmentSecurityAccessStepsContext.cs" />
     <Compile Include="Models\Shipment\ShipmentPackagePM.cs" />
     <Compile Include="Models\Shipment\ShipmentPM.cs" />
