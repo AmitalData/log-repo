@@ -53,8 +53,7 @@ namespace Logitude.ShipmentTests.Steps
         [When(@"Create house shipment API request sent")]
         public void WhenCreateHouseShipmentAPIRequestSent()
         {
-            ShipmentContext.HouseShipment.MasterShipmentDataId = ShipmentContext.MasterShipment.MasterShipmentDataId;
-            ShipmentContext.HouseShipment.MasterShipmentNumber = ShipmentContext.MasterShipment.MasterShipmentNumber;
+            ShipmentContext.HouseShipment.MasterShipmentDataId = ShipmentContext.MasterShipment.Id;
             ShipmentContext.HouseShipment = APICaller.CallPost<ShipmentPM>(ShipmentContext.HouseShipment, "Shipment", User.Token);
         }
 
