@@ -472,9 +472,6 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommDec
         {
             if (new[] { "4000005", "4000512", "4000505", "4000012" }.Contains(this._MyDeclarationPM.ProcedureCurrentCode))
             {
-                AppendLogLine("_LogitudeCommDecFile.SiteCode at CalcInternalTransitionSite " + _LogitudeCommDecFile.SiteCode);
-                if(this._MyDeclarationPM.Consignments != null) AppendLogLine("this._MyDeclarationPM.Consignments.Count() at CalcInternalTransitionSite " + this._MyDeclarationPM.Consignments.Count());
-                if (this._MyDeclarationPM.Consignments[0].ConsignmentInternalTransitions != null) AppendLogLine("this._MyDeclarationPM.Consignments[0].ConsignmentInternalTransitions.Count() at CalcInternalTransitionSite " + this._MyDeclarationPM.Consignments[0].ConsignmentInternalTransitions.Count());
                 if (!string.IsNullOrWhiteSpace(_LogitudeCommDecFile.SiteCode) && this._MyDeclarationPM.Consignments != null && this._MyDeclarationPM.Consignments.Count() > 0 && (this._MyDeclarationPM.Consignments[0].ConsignmentInternalTransitions == null || (this._MyDeclarationPM.Consignments[0].ConsignmentInternalTransitions != null && this._MyDeclarationPM.Consignments[0].ConsignmentInternalTransitions.Count() < 1)))
                 {
                     var internalBorderSiteType = new InternalBorderSiteTypeRepository(ResolvedTenant());
@@ -483,12 +480,10 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommDec
                     if (myinternalBorderSiteType == null)
                     {
                         PackageTypeCode = GetTranslationL2P("IIGC", "CTBBONDED", _LogitudeCommDecFile.SiteCode);
-                        AppendLogLine("PackageTypeCode at CalcInternalTransitionSite1 " + PackageTypeCode);
                     }
                     else
                     {
                         PackageTypeCode = myinternalBorderSiteType.Code.ToString();
-                        AppendLogLine("PackageTypeCode at CalcInternalTransitionSite2 " + PackageTypeCode);
                     }
                     if (!string.IsNullOrWhiteSpace(PackageTypeCode))
                     {
@@ -504,11 +499,6 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommDec
                             ChangeSetOp = ChangeSetOperation.Insert,
 
                         };
-                        if (this._MyDeclarationPM.Consignments[0].ChangeSetOp != ChangeSetOperation.Insert)
-                        {
-                            this._MyDeclarationPM.Consignments[0].ChangeSetOp = ChangeSetOperation.Update;
-                        }
-                        AppendLogLine("transitionPM.SiteCode at CalcInternalTransitionSite " + transitionPM.SiteCode);
                         this._MyDeclarationPM.Consignments[0].ConsignmentInternalTransitions.Add(transitionPM);
                     }
                 }

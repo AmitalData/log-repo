@@ -7,7 +7,6 @@ using Logitude.Customs.Def.EntityPMs;
 using Logitude.Customs.Data.EntityPOCOs;
 using Logitude.Server.Tools;
 using Simplog.Server.Infrastructure;
-using Logitude.Server.Tools.Helpers;
 
 namespace Logitude.Customs.BL.EntityUpdateServices
 {
@@ -20,7 +19,6 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
             entityParentPM.ConsignmentInternalTransitionLastLineNumber += 1;
             entityPM.LineNumber = entityParentPM.ConsignmentInternalTransitionLastLineNumber;
-            LogMessagingUtil.Instance.AppendLine("SiteCode at ConsignmentInternalTransitionUpdateService.OnCreating - " + entityPM.SiteCode);
         }
 
 
