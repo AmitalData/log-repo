@@ -185,4 +185,6 @@
     ReferencedTable="TMDayOffTypes"
     ReferencedColumn="Code"
     ReferencedTableSchema="dbo" />
+<UniqueConstraint
+    Columns="ProjectNumber" />
 </Table>
