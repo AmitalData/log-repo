@@ -225,4 +225,11 @@
     ReferencedTable="ReferantTeams"
     ReferencedColumn="Code"
     ReferencedTableSchema="Customs" />
+  
+  <Index
+   Columns="IsClosedForFollowUp" />
+
+  
+  <Index
+ Columns="FollowUpDate" />
 </Table>
