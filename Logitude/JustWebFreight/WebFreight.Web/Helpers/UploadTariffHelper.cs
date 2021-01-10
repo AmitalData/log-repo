@@ -1658,7 +1658,7 @@ namespace WebFreight.Web.Helpers
                     Tenant = tenant,
                     Id = IdCounter.GetNumber("Document", tenant),
                     HasFile = true,
-                    Folder = "Tariff",
+                    Folder = "tariff",
                 };
 
                 documentRepository.Add(document);
@@ -1667,7 +1667,7 @@ namespace WebFreight.Web.Helpers
                 BlobFileInfo fileInfo = new BlobFileInfo()
                 {
                     FileName = document.Id,
-                    FolderName = "Tariff",
+                    FolderName = "tariff",
                     Extension = document.Extension,
                     Tenant = tenant,
                     FileSize = document.FileSize,
