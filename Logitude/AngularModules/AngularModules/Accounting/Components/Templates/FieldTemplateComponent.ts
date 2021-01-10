@@ -9,6 +9,10 @@ import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceRe
 import { JournalList } from '../../EntityLists/JournalList';
 import { ObjectsLocator } from '../../../Infrastructure/Locators/ObjectsLocator';
 import { TextCodeTranslator } from '../../../Infrastructure/Utilities/TextCodeTranslator';
+import { GLAccountPM } from '../../EntityPMs/GLAccountPM';
+import { ObservableCollection } from '../../../Infrastructure/Utilities/ObservableCollection';
+import { GLAccountExtendedListService } from '../../Services/ExtendedLists/GLAccountExtendedListService';
+import { GLAccountChild } from '../EditTabs/GLAccount/GLAccountAdditionalDataTabComponent';
 
 @Component({
     
@@ -33,6 +37,9 @@ export class FieldTemplateComponent {
     public isRTL: boolean = false;
     public showLocal: boolean = !SessionLocator.LoggedUserPM.DontShowLocal;
     public tenantCurrency: string = "";
+    public ChildrenGLAccounts: GLAccountPM[]=[];
+    public numberOfChildren : number = 0;
+    glAccountExtendedListService: GLAccountExtendedListService = new GLAccountExtendedListService();
     private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         this.TenantCurrencySign = SessionLocator.TenantPM.CurrencySign;
@@ -168,6 +175,10 @@ export class FieldTemplateComponent {
                 this.FieldValue = this.Entity.StatusLocalName;
             }
         }
+
+        if (this.ObjectTableName == "GLAccount") {
+            this.BuildChildrenGLAccountsList();
+        }
     }
 
     Abs(num: number) {
@@ -286,5 +297,21 @@ export class FieldTemplateComponent {
         }
 
         return color;
+    }
+
+    BuildChildrenGLAccountsList() {
+        //ChildrenGLAccounts = new List<GLAccountPM>();
+        this.glAccountExtendedListService.GetChildrenGLAccounts(this.Entity.Id).subscribe((myResponse: ServiceResponse) => {
+            if (myResponse) {
+                if (!myResponse.HasError) {
+                    for (let item of myResponse.Result) {
+                        this.ChildrenGLAccounts.push(item);
+                        this.numberOfChildren += 1;
+                    }
+                }
+            }
+        });
+
+
     }
 }
