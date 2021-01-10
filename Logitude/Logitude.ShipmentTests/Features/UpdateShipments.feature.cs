@@ -148,7 +148,7 @@ this.FeatureBackground();
  testRunner.Given("The master shipment packages fields", ((string)(null)), table5, "Given ");
 #line hidden
 #line 15
- testRunner.And("MasterShipmentId is 1-1997648", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("A master shipment", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
 #line 16
  testRunner.When("The put API sent to add master packages", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
@@ -207,7 +207,7 @@ this.FeatureBackground();
  testRunner.Given("The house shipment packages fields", ((string)(null)), table6, "Given ");
 #line hidden
 #line 23
- testRunner.And("HouseShipmentId is 1-1997665", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("A house shipment", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
 #line 24
  testRunner.When("The put API sent to add house packages", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
@@ -272,7 +272,7 @@ this.FeatureBackground();
  testRunner.Given("The Payable Charge Type fields", ((string)(null)), table7, "Given ");
 #line hidden
 #line 31
- testRunner.And("MasterShipmentId is 1-1997648", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("A master shipment", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
 #line 32
  testRunner.When("The put API sent to add master Payable", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");

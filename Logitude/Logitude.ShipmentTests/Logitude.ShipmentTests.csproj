@@ -97,11 +97,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Models\ShipmentContext.cs" />
     <Compile Include="Models\ShipmentPackagePM.cs" />
     <Compile Include="Models\ShipmentPayablesPM.cs" />
     <Compile Include="Models\ShipmentPM.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Steps\CreateShipmentSteps.cs" />
+    <Compile Include="Steps\SharedShipmentSteps.cs" />
     <Compile Include="Steps\UpdateShipmentSteps.cs" />
   </ItemGroup>
   <ItemGroup>
