@@ -645,7 +645,8 @@ export class HomeComponent implements OnDestroy{
         });
     }
   initializeBadjCountTimer() {
-    return interval(60000).pipe(timeInterval());
+    //return interval(60000).pipe(timeInterval());
+      return interval(120000).pipe(timeInterval());
   }
   onBellButtonClicked() {
     this.BellClicked = true;
