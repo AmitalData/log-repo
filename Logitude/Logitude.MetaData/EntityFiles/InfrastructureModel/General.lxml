@@ -35,7 +35,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;General&quot;"
-  Code="&quot;0173&quot;"
+  Code="&quot;7059&quot;"
   Name="&quot;General&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Generals&quot;"
@@ -4184,7 +4184,7 @@
     <TextCode
       Code="&quot;General.B.New&quot;"
       DefaultText="&quot;New&quot;"
-      LocalDefaultText="&quot;אישור&quot;"
+      LocalDefaultText="&quot;חדש&quot;"
       TextCodeTypeCode="&quot;B&quot;"
       IsSpellChecked="false" />
     <TextCode
