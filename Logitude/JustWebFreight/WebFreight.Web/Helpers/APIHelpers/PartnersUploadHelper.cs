@@ -1044,7 +1044,10 @@ namespace WebFreight.Web.Helpers.APIHelpers
                                       on user.Id equals db_Contacts.Id
                                       into db_UsersContacts
                                       from contact in db_UsersContacts.DefaultIfEmpty()
-                                      where emails.Contains(contact.Email)
+                                      where 
+                                      user.Tenant == tenant
+                                      && contact.Tenant == tenant
+                                      && emails.Contains(contact.Email)
                                       select new
                                       {
                                           Id = contact.Id,
@@ -1058,11 +1061,6 @@ namespace WebFreight.Web.Helpers.APIHelpers
 
                     if (systemUser == null)
                     {
-                        if (count > 0)
-                        {
-                            cardRepository.SubmitChanges();
-                            customerRepository.SubmitChanges();
-                        }
                         throw new ApplicationException("Salesman " + item.SalesmanEmail + " is not a system user,");
                     }
 
