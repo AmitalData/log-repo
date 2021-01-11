@@ -44,14 +44,15 @@ export function FillShipmentDefaultFields(levelCode:string, directionCode: strin
     }
 }
 
-export function SaveShipment(resultFile: string) {
-    cy.SaveClick("#ShipmentCreatebtn", null, "**/shipment", resultFile)
-}
-
 export function CreateShipment(levelCode: string){
     let createPreSelector = levelCode === "Master" ? "#Master" : "#Shipment";
     cy.DefineRequestWait("POST", "**/shipment", "WaitPostShipmentRequest")
     cy.Click(createPreSelector + "Createbtn", null)
+}
+
+export function UpdateShipment(saveButtonSelector: string){
+    cy.DefineRequestWait("PUT", "**/shipment", "WaitPutShipmentRequest")
+    cy.Click(saveButtonSelector, null)
 }
 
 export function OpenShipment(dataFile: string){
@@ -103,6 +104,67 @@ export function FillReceivablesTab() {
     cy.FillRandomNumber(Selectors.ReceivableUnitPrice, 100, 100)
     cy.get(Selectors.ReceivableTotalAmount).should('have.value', '100.00')
     cy.Click(Selectors.AddReceivableOkButton, null) 
+}
+
+export function FillPickupRouting(){
+    cy.Click(Selectors.RoutingToggle, null)
+    cy.DefineRequestWait("GET", "**/cardviews/**", "WaitCardViewsRequest")
+    cy.DefineRequestWait("GET", "**/addressviews/**", "WaitAddressViewsRequest")
+    cy.Click(Selectors.PickUp, null)
+    cy.AssertResponseStatusCode("WaitCardViewsRequest", 200, null)
+    cy.AssertResponseStatusCode("WaitAddressViewsRequest", 200, null)
+}
+
+export function FillDeliveryRouting(){
+    cy.Click(Selectors.RoutingToggle, null)
+    cy.DefineRequestWait("GET", "**/cardviews/**", "WaitCardViewsRequest")
+    cy.DefineRequestWait("GET", "**/addressviews/**", "WaitAddressViewsRequest")
+    cy.Click(Selectors.Delivery, null)
+    cy.AssertResponseStatusCode("WaitCardViewsRequest", 200, null)
+    cy.AssertResponseStatusCode("WaitAddressViewsRequest", 200, null)
+    cy.get(Selectors.ShipmentPickUpDelivery_ToPartnerCardId).then((input) => {
+        if(input.text() === "" || input.text() === null) {
+            cy.SelectLogLovRandomElement(Selectors.ShipmentPickUpDelivery_ToPartnerCardId, false, 5)
+        }
+    })
+}
+
+export function FillPreCarriageRouting(transportModeCode:string){
+    cy.Click(Selectors.RoutingToggle, null)
+    cy.get(Selectors.PreCarriage).then((btn) => {
+        if(!btn.is('[disabled]')) {
+            cy.Click(Selectors.PreCarriage, null)
+            cy.FillLogLov(Selectors.Shipment_PreCarriageTransportModeId, transportModeCode, true)
+            cy.SelectLogLovFirstElement(Selectors.Shipment_PreCarriageFromPortId, false)
+            cy.SelectLogLovFirstElement(Selectors.Shipment_PreCarriageToPortId, false)
+            cy.Click(Selectors.PreCarriageOKBtn, null)
+        }else{
+            cy.Click(Selectors.RoutingsTab, null)
+        }
+    })
+}
+
+export function FillOnCarriageRouting(transportModeCode:string){
+    cy.Click(Selectors.RoutingToggle, null)
+    cy.get(Selectors.OnCarriage).then((btn) => {
+        if(!btn.is('[disabled]')) {
+            cy.Click(Selectors.OnCarriage, null)
+            cy.FillLogLov(Selectors.Shipment_OnCarriageTransportModeId, transportModeCode, true)
+            cy.SelectLogLovFirstElement(Selectors.Shipment_OnCarriageFromPortId, false)
+            cy.SelectLogLovFirstElement(Selectors.Shipment_OnCarriageToPortId, false)
+            cy.Click(Selectors.OnCarriageOKBtn, null)    
+        }else{
+            cy.Click(Selectors.RoutingsTab, null)
+        }
+    })
+}
+
+export function FillPayablesTab() {
+    cy.Click(Selectors.AddNewPayableLine , null)
+    cy.SelectLogLovFirstElement(Selectors.ShipmentPayable_ChargesTypeId, true)
+    cy.SelectLogLovFirstElement(Selectors.ShipmentPayable_MeasurementId, true)
+    cy.SelectLogLovFirstElement(Selectors.ShipmentPayable_CurrencyId, true)
+    cy.Click(Selectors.AddPayableOkButton , null)
 }
 
 function AddPackagesOrContainersForOrdersTab(shipmentTypeCode:string){

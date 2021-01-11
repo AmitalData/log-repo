@@ -2,10 +2,6 @@ export function ValidateCreatedShipment(resultFile: string){
     cy.AssertResponseStatusCode("WaitPostShipmentRequest", 200, resultFile)
 }
 
-export function SaveOperationCompletedSuccessfully(){
-    cy.intercept('PUT', '/test/api/shipment', (req) => {
-        req.reply((response) => {
-            assert.equal(response.statusCode, 200);
-        })
-    })
+export function ValidateUpdatedShipment(resultFile: string){
+    cy.AssertResponseStatusCode("WaitPutShipmentRequest", 200, resultFile)
 }

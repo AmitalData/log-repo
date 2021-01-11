@@ -39,19 +39,16 @@ Scenario: Update shipment with Invalid Future ATA
 	When User Update Shipment With Invalid Future ATA
 	Then Update should not be done
 
-
 Scenario: Update shipment with Invalid Future ATD
-    Given The main carriage legs are added to last direct shipment
-        | LegIndex | Carrier.Code | FromPort.Code | ToPort.Code |
-        | 1        | CA20         | DE222         | DE223       |
-    When The User Updates Shipment With Invalid Future ATD
-    Then The excption massage that's related to this case is shown
+	Given The main carriage legs are added to last direct shipment
+		| LegIndex | Carrier.Code | FromPort.Code | ToPort.Code |
+		| 1        | CA20         | DE222         | DE223       |
+	When The User Updates Shipment With Invalid Future ATD
+	Then The excption massage that's related to this case is shown
 
 Scenario:Update shipment with vaild dates
-    Given The main carriage legs are added to last direct shipment
-        | LegIndex | Carrier.Code | FromPort.Code | ToPort.Code |
-        | 1        | CA20         | DE222         | DE223       |
-    When The User Updates Shipment With valid Future ETD,ATD,ETA and ATA
-    Then The shipment is updated succesfully
-
-
+	Given The main carriage legs are added to last direct shipment
+		| LegIndex | Carrier.Code | FromPort.Code | ToPort.Code |
+		| 1        | CA20         | DE222         | DE223       |
+	When The User Updates Shipment With valid Future ETD,ATD,ETA and ATA
+	Then The shipment is updated succesfully
