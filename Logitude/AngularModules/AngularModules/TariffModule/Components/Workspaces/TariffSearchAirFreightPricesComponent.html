@@ -888,7 +888,7 @@
                                             <tr *ngFor="let item of AvailableTariffs" style="height:1px">
                                                 <td>
                                                     <table>
-                                                        <tr style="height:110px;">
+                                                        <tr style="height:130px;">
                                                             <td>
                                                                 <table>
                                                                     <tr style="height:3px">
@@ -896,6 +896,7 @@
                                                                             <div></div>
                                                                         </td>
                                                                     </tr>
+
                                                                     <tr>
                                                                         <td>
                                                                             <table style="border-radius: 8px; border:1px solid rgba(149, 149, 149, 0.5);">
@@ -906,7 +907,7 @@
                                                                                         </div>
                                                                                     </td>
 
-                                                                                    <td style="width:180px;min-width:180px; max-width:180px; vertical-align:central">
+                                                                                    <td style="width:190px;min-width:190px; max-width:190px; vertical-align:central">
                                                                                         <table>
                                                                                             <tr>
                                                                                                 <td>
@@ -928,7 +929,25 @@
 
                                                                                             <tr>
                                                                                                 <td>
-                                                                                                    <div></div>
+                                                                                                    <div>
+                                                                                                        <table *ngIf="item.NoteMissingContainers" style="vertical-align:bottom">
+                                                                                                            <tr style="height:28px;">
+                                                                                                                <td style="width:18px;">
+                                                                                                                    <div>
+                                                                                                                        <img class="CenterCenter" src="./Images/ValidationError.png" />
+                                                                                                                    </div>
+                                                                                                                </td>
+
+                                                                                                                <td style="width:2px;">
+                                                                                                                    <div></div>
+                                                                                                                </td>
+
+                                                                                                                <td class="TextTrimming" style="width:160px;min-width:160px; max-width:160px; color:darkred" [title]="item.NoteMissingContainers">
+                                                                                                                    {{item.NoteMissingContainers}}
+                                                                                                                </td>
+                                                                                                            </tr>
+                                                                                                        </table>
+                                                                                                    </div>
                                                                                                 </td>
                                                                                             </tr>
                                                                                         </table>
@@ -1007,7 +1026,9 @@
                                                                                     <td style="width:140px;">
                                                                                         <table>
                                                                                             <tr style="height:5px;">
-                                                                                                <td><div></div></td>
+                                                                                                <td>
+                                                                                                    <div></div>
+                                                                                                </td>
                                                                                             </tr>
 
                                                                                             <tr style="height:20px;">
@@ -1015,7 +1036,9 @@
                                                                                                     <table>
                                                                                                         <tr>
                                                                                                             <td class="Label" style="font-size:10px;">Last Used</td>
-                                                                                                            <td style="width:2px;"><div></div></td>
+                                                                                                            <td style="width:2px;">
+                                                                                                                <div></div>
+                                                                                                            </td>
                                                                                                             <td class="Label" style="font-size:10px; width:70px;">{{item.LastUsedDate | DateTimePipe:'SD'}}</td>
                                                                                                         </tr>
                                                                                                     </table>
@@ -1027,7 +1050,9 @@
                                                                                                     <table>
                                                                                                         <tr>
                                                                                                             <td class="Label" style="font-size:10px;">Last Updated</td>
-                                                                                                            <td style="width:2px;"><div></div></td>
+                                                                                                            <td style="width:2px;">
+                                                                                                                <div></div>
+                                                                                                            </td>
                                                                                                             <td class="Label" style="font-size:10px; width:70px;">{{item.UpdateDate | DateTimePipe:'SD'}}</td>
                                                                                                         </tr>
                                                                                                     </table>
@@ -1081,7 +1106,9 @@
                                                             <td>
                                                                 <table>
                                                                     <tr style="height:15px;">
-                                                                        <td><div></div></td>
+                                                                        <td>
+                                                                            <div></div>
+                                                                        </td>
                                                                     </tr>
 
                                                                     <tr>
@@ -1125,7 +1152,9 @@
                                                                             <ScrollViewer [Small]="true">
                                                                                 <table>
                                                                                     <tr style="height:5px;">
-                                                                                        <td><div></div></td>
+                                                                                        <td>
+                                                                                            <div></div>
+                                                                                        </td>
                                                                                     </tr>
 
                                                                                     <tr *ngFor="let allInItem of item.AllInSurcharges" style="height:22px;">
@@ -1172,10 +1201,10 @@
                                                                                 </tr>
 
                                                                                 <tr class="FormFieldRow">
-                                                                                  <td>
-                                                                                    <Hyperlink [IsEnabled]="item.SurchargesWithoutAllIn != null && item.SurchargesWithoutAllIn.length != 0" (click)="ViewSurchargesClicked(item)">View Tariff</Hyperlink>
-                                                                                    <!--<p class="hyperlink" [class.HyperlinkDisabled]="!IsViewSurchargesClickedEnabled">View Tariff</p>-->
-                                                                                  </td>
+                                                                                    <td>
+                                                                                        <Hyperlink [IsEnabled]="item.SurchargesWithoutAllIn != null && item.SurchargesWithoutAllIn.length != 0" (click)="ViewSurchargesClicked(item)">View Tariff</Hyperlink>
+                                                                                        <!--<p class="hyperlink" [class.HyperlinkDisabled]="!IsViewSurchargesClickedEnabled">View Tariff</p>-->
+                                                                                    </td>
                                                                                 </tr>
 
                                                                                 <tr>
@@ -1194,7 +1223,9 @@
                                                                             <ScrollViewer [Small]="true">
                                                                                 <table>
                                                                                     <tr style="height:5px;">
-                                                                                        <td><div></div></td>
+                                                                                        <td>
+                                                                                            <div></div>
+                                                                                        </td>
                                                                                     </tr>
 
                                                                                     <tr *ngFor="let surcharge of item.SurchargesWithoutAllIn" style="height:22px;">
@@ -1256,7 +1287,9 @@
                                                                                     <td style="vertical-align:central;">
                                                                                         <table>
                                                                                             <tr>
-                                                                                                <td><div></div></td>
+                                                                                                <td>
+                                                                                                    <div></div>
+                                                                                                </td>
                                                                                             </tr>
 
                                                                                             <tr style="height:28px;">
@@ -1269,7 +1302,9 @@
                                                                                             </tr>
 
                                                                                             <tr>
-                                                                                                <td><div></div></td>
+                                                                                                <td>
+                                                                                                    <div></div>
+                                                                                                </td>
                                                                                             </tr>
                                                                                         </table>
                                                                                     </td>
@@ -1287,6 +1322,7 @@
                                                     </table>
                                                 </td>
                                             </tr>
+
                                             <tr>
                                                 <td></td>
                                             </tr>
