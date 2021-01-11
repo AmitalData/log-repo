@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace Logitude.Accounting.BL.CoreBL.Reports
 {
-    public class RevenueExpenseReportService :IDisposable
+    public class RevenueExpenseReportService //:IDisposable
     {
         /*
 לתאריך - כמובן כולל היום 
@@ -23,8 +23,8 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
 
         protected RevenueExpenseReportParam _RevenueExpenseReportParam = null;
         protected readonly int __TimeOutInMinutes = 129;
-        private System.Transactions.TransactionScope _TransactionScope;
-        protected IAccountingContext _AccountingContext;
+        //private System.Transactions.TransactionScope _TransactionScope;
+        //protected IAccountingContext _AccountingContext;
         private FullAccountingSettingPM _FullAccountingSetting;
         protected IQueryable<AccountCOAM> QAllRevenueExpenseCardsCOAM;
         private IQueryable<ChartOfAccount5LevelM> _QAllChartOfAccountFlattenBy5LevelofHierarchy;
@@ -79,220 +79,224 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
 
             }
 
-
-            _TransactionScope = TransactionFactory.GetNewTransaction(TimeSpan.FromMinutes(__TimeOutInMinutes)); //snapshot isolation performance
-
-            _AccountingContext = AccountingContext.GetContext(_RevenueExpenseReportParam.Tenant);
-            //_DbLogger = (_AccountingContext as DbContextBase).CreateLogger();
-
-            _FullAccountingSetting = //Hope From Cache
-                FullAccountingSettingQueryService
-                .Get(_RevenueExpenseReportParam.Tenant);
+            using (var transactionScope = TransactionFactory.GetNewTransaction(TimeSpan.FromMinutes(__TimeOutInMinutes)) //snapshot isolation performance
+                )
+            {
 
 
-            var repoGLAccount = new GLAccountRepository(_AccountingContext);
-            var myQAllRevenueExpenseCards = repoGLAccount.GetQAllRevenueExpenseCards(_RevenueExpenseReportParam.Tenant)
-                //.Where(a => !a.Inactive)
-                ;
 
 
-            QAllRevenueExpenseCardsCOAM = (
-                from a in myQAllRevenueExpenseCards
-                select new AccountCOAM //Made 4 Short(Projoction) +Algant+Fast SQL
+               var accountingContext = AccountingContext.GetContext(_RevenueExpenseReportParam.Tenant);
+                //_DbLogger = (_AccountingContext as DbContextBase).CreateLogger();
+
+                _FullAccountingSetting = //Hope From Cache
+                    FullAccountingSettingQueryService
+                    .Get(_RevenueExpenseReportParam.Tenant);
+
+
+                var repoGLAccount = new GLAccountRepository(accountingContext);
+                var myQAllRevenueExpenseCards = repoGLAccount.GetQAllRevenueExpenseCards(_RevenueExpenseReportParam.Tenant)
+                    //.Where(a => !a.Inactive)
+                    ;
+
+
+                QAllRevenueExpenseCardsCOAM = (
+                    from a in myQAllRevenueExpenseCards
+                    select new AccountCOAM //Made 4 Short(Projoction) +Algant+Fast SQL
                 {
-                    Id = a.Id,
-                    Tenant = a.Tenant,
-                    AccountTypeCode = a.AccountTypeCode,
-                    EnglishName = a.EnglishName,
-                    ChartOfAccountsTypeCode = a.ChartOfAccountsTypeCode,
-                    ChartOfAccountsId = a.ChartOfAccountsId,
-                    ParentId = a.ParentAccountId,
-                    DisplayNumber = a.DisplayNumber,
-                    LocalName = a.LocalName,
-                }
-                );
+                        Id = a.Id,
+                        Tenant = a.Tenant,
+                        AccountTypeCode = a.AccountTypeCode,
+                        EnglishName = a.EnglishName,
+                        ChartOfAccountsTypeCode = a.ChartOfAccountsTypeCode,
+                        ChartOfAccountsId = a.ChartOfAccountsId,
+                        ParentId = a.ParentAccountId,
+                        DisplayNumber = a.DisplayNumber,
+                        LocalName = a.LocalName,
+                    }
+                    );
 
-            var qsChartOfAccount = new ChartOfAccountQueryService(_AccountingContext);
-            _QAllChartOfAccountFlattenBy5LevelofHierarchy = //Flatten ChartOfAccount By 5 Level hierarchy
-                qsChartOfAccount
-                .GetQChartOfAccount5LevelM(_RevenueExpenseReportParam.Tenant,
-                new List<string>()
-                {
+                var qsChartOfAccount = new ChartOfAccountQueryService(accountingContext);
+                _QAllChartOfAccountFlattenBy5LevelofHierarchy = //Flatten ChartOfAccount By 5 Level hierarchy
+                    qsChartOfAccount
+                    .GetQChartOfAccount5LevelM(_RevenueExpenseReportParam.Tenant,
+                    new List<string>()
+                    {
                     //Code	EnglishName	LocalName
 "1",//	Revenues	הכנסות
 "2",//	Expenses	הוצאות
-                }
+                    }
 
-                );
-            QBaseAllCardsAndDetialsAccTypeBy5LevelHierarchy =
-            JoinEachAccountWithisChartOfAccount5hierarchy(QAllRevenueExpenseCardsCOAM);
+                    );
+                QBaseAllCardsAndDetialsAccTypeBy5LevelHierarchy =
+                JoinEachAccountWithisChartOfAccount5hierarchy(QAllRevenueExpenseCardsCOAM);
 
-            IQueryable <TrailReportTemp> QUnionAllCurrSummary = GetMoneyDataPerDate(
-                _RevenueExpenseReportParam.FromDate, _RevenueExpenseReportParam.ToDate,
+                IQueryable<TrailReportTemp> QUnionAllCurrSummary = GetMoneyDataPerDate(
+                    _RevenueExpenseReportParam.FromDate, _RevenueExpenseReportParam.ToDate,
 
-                _RevenueExpenseReportParam.Tenant, _AccountingContext);
+                    _RevenueExpenseReportParam.Tenant, accountingContext);
 
-            string debugAccId = "";//"1-216621"
-            if (!string.IsNullOrWhiteSpace(debugAccId))
-            {
-                var myData = QUnionAllCurrSummary.Where(r => r.AccountId_COAType == debugAccId).ToList();
-            }
-            IQueryable<RevenueExpenseReportM> qAllMoneySideRevenueExpenseReportM
-                =
-                (from r in QUnionAllCurrSummary
-                 group r by new
-                 {
-                     AccountId = r.AccountId_COAType,
-                     //r.CurrencyId
-                 } into g
-                 select new RevenueExpenseReportM()
-                 {
-
-                     ChartOfAcountType = "",
-                     ChartOfAcount1 = "",
-                     ChartOfAcount2 = "",
-                     ChartOfAcount3 = "",
-                     ChartOfAcount4 = "",
-                     ChartOfAcount5 = "",
-                     ChartOfAcountName1 = "",
-                     ChartOfAcountName2 = "",
-                     ChartOfAcountName3 = "",
-                     ChartOfAcountName4 = "",
-                     ChartOfAcountName5 = "",
-                     ChartOfAcountCode1 = "",
-                     ChartOfAcountCode2 = "",
-                     ChartOfAcountCode3 = "",
-                     ChartOfAcountCode4 = "",
-                     ChartOfAcountCode5 = "",
-
-
-
-                     GLAccountName = "",
-                     GLAccountNumber = "",
-                     GLAccountId = g.Key.AccountId,
-                     ChartOfAccountId = "",
-
-                     LocalCloseBalancePeriod1 =
-                     (
-                     +g.Sum(x => x.LocalAmountDebitTransStart)
-                     - g.Sum(x => x.LocalAmountCreditTransStart)
-
-                     + g.Sum(x => x.LocalAmountDebitTotalDelta2End)
-                     - g.Sum(x => x.LocalAmountCreditTotalDelta2End)
-                     + g.Sum(x => x.LocalAmountDebitTransEnd)
-                     - g.Sum(x => x.LocalAmountCreditTransEnd)
-                     ),
-                     LocalCloseBalancePeriod2=0
-
-                 });
-
-
-
-            IQueryable<TrailReportTemp> QUnionAllCurrSummaryPeriod2 = Enumerable.Empty<TrailReportTemp>().AsQueryable();
-            if (_RevenueExpenseReportParam.FromDatePeriod2.HasValue)
-            {
-                QUnionAllCurrSummaryPeriod2 = GetMoneyDataPerDate(
-                    _RevenueExpenseReportParam.FromDatePeriod2.GetValueOrDefault(), _RevenueExpenseReportParam.ToDatePeriod2.GetValueOrDefault(),
-                    _RevenueExpenseReportParam.Tenant, _AccountingContext);
-
-
+                string debugAccId = "";//"1-216621"
                 if (!string.IsNullOrWhiteSpace(debugAccId))
                 {
-                    var myData = QUnionAllCurrSummaryPeriod2.Where(r => r.AccountId_COAType == debugAccId).ToList();
+                    var myData = QUnionAllCurrSummary.Where(r => r.AccountId_COAType == debugAccId).ToList();
                 }
-
-                IQueryable<RevenueExpenseReportM> qAllMoneySideRevenueExpenseReportMPeriod2
-       =
-       (from r in QUnionAllCurrSummaryPeriod2
-        group r by new
-        {
-            AccountId = r.AccountId_COAType,
+                IQueryable<RevenueExpenseReportM> qAllMoneySideRevenueExpenseReportM
+                    =
+                    (from r in QUnionAllCurrSummary
+                     group r by new
+                     {
+                         AccountId = r.AccountId_COAType,
                      //r.CurrencyId
                  } into g
-        select new RevenueExpenseReportM()
-        {
-
-            ChartOfAcountType = "",
-            ChartOfAcount1 = "",
-            ChartOfAcount2 = "",
-            ChartOfAcount3 = "",
-            ChartOfAcount4 = "",
-            ChartOfAcount5 = "",
-            ChartOfAcountName1 = "",
-            ChartOfAcountName2 = "",
-            ChartOfAcountName3 = "",
-            ChartOfAcountName4 = "",
-            ChartOfAcountName5 = "",
-            ChartOfAcountCode1 = "",
-            ChartOfAcountCode2 = "",
-            ChartOfAcountCode3 = "",
-            ChartOfAcountCode4 = "",
-            ChartOfAcountCode5 = "",
-
-
-
-            GLAccountName = "",
-            GLAccountNumber = "",
-            GLAccountId = g.Key.AccountId,
-            ChartOfAccountId = "",
-
-            LocalCloseBalancePeriod1 =0 ,
-            LocalCloseBalancePeriod2 = (
-            +g.Sum(x => x.LocalAmountDebitTransStart)
-            - g.Sum(x => x.LocalAmountCreditTransStart)
-
-            + g.Sum(x => x.LocalAmountDebitTotalDelta2End)
-            - g.Sum(x => x.LocalAmountCreditTotalDelta2End)
-            + g.Sum(x => x.LocalAmountDebitTransEnd)
-            - g.Sum(x => x.LocalAmountCreditTransEnd)
-            )
-
-        });
-
-
-                qAllMoneySideRevenueExpenseReportM =
-                    (from a in qAllMoneySideRevenueExpenseReportM.Union(qAllMoneySideRevenueExpenseReportMPeriod2)
-                     group a by a.GLAccountId into gbGLAccountId
-
                      select new RevenueExpenseReportM()
-                      {
+                     {
 
-                          ChartOfAcountType = "",
-                          ChartOfAcount1 = "",
-                          ChartOfAcount2 = "",
-                          ChartOfAcount3 = "",
-                          ChartOfAcount4 = "",
-                          ChartOfAcount5 = "",
-                          ChartOfAcountName1 = "",
-                          ChartOfAcountName2 = "",
-                          ChartOfAcountName3 = "",
-                          ChartOfAcountName4 = "",
-                          ChartOfAcountName5 = "",
-                          ChartOfAcountCode1 = "",
-                          ChartOfAcountCode2 = "",
-                          ChartOfAcountCode3 = "",
-                          ChartOfAcountCode4 = "",
-                          ChartOfAcountCode5 = "",
-
-
-
-                          GLAccountName = "",
-                          GLAccountNumber = "",
-                          GLAccountId = gbGLAccountId.Key,
-                          ChartOfAccountId = "",
-
-                          LocalCloseBalancePeriod1 = gbGLAccountId.Sum(a=>a.LocalCloseBalancePeriod1),
-                          LocalCloseBalancePeriod2 = gbGLAccountId.Sum(a => a.LocalCloseBalancePeriod2)
-            
-
-                      });
+                         ChartOfAcountType = "",
+                         ChartOfAcount1 = "",
+                         ChartOfAcount2 = "",
+                         ChartOfAcount3 = "",
+                         ChartOfAcount4 = "",
+                         ChartOfAcount5 = "",
+                         ChartOfAcountName1 = "",
+                         ChartOfAcountName2 = "",
+                         ChartOfAcountName3 = "",
+                         ChartOfAcountName4 = "",
+                         ChartOfAcountName5 = "",
+                         ChartOfAcountCode1 = "",
+                         ChartOfAcountCode2 = "",
+                         ChartOfAcountCode3 = "",
+                         ChartOfAcountCode4 = "",
+                         ChartOfAcountCode5 = "",
 
 
-            }
+
+                         GLAccountName = "",
+                         GLAccountNumber = "",
+                         GLAccountId = g.Key.AccountId,
+                         ChartOfAccountId = "",
+
+                         LocalCloseBalancePeriod1 =
+                         (
+                         +g.Sum(x => x.LocalAmountDebitTransStart)
+                         - g.Sum(x => x.LocalAmountCreditTransStart)
+
+                         + g.Sum(x => x.LocalAmountDebitTotalDelta2End)
+                         - g.Sum(x => x.LocalAmountCreditTotalDelta2End)
+                         + g.Sum(x => x.LocalAmountDebitTransEnd)
+                         - g.Sum(x => x.LocalAmountCreditTransEnd)
+                         ),
+                         LocalCloseBalancePeriod2 = 0
+
+                     });
 
 
-            IQueryable<RevenueExpenseReportM> _QTrailReportFull = null;
-            _QTrailReportFull =
+
+                IQueryable<TrailReportTemp> QUnionAllCurrSummaryPeriod2 = Enumerable.Empty<TrailReportTemp>().AsQueryable();
+                if (_RevenueExpenseReportParam.FromDatePeriod2.HasValue)
+                {
+                    QUnionAllCurrSummaryPeriod2 = GetMoneyDataPerDate(
+                        _RevenueExpenseReportParam.FromDatePeriod2.GetValueOrDefault(), _RevenueExpenseReportParam.ToDatePeriod2.GetValueOrDefault(),
+                        _RevenueExpenseReportParam.Tenant, accountingContext);
+
+
+                    if (!string.IsNullOrWhiteSpace(debugAccId))
+                    {
+                        var myData = QUnionAllCurrSummaryPeriod2.Where(r => r.AccountId_COAType == debugAccId).ToList();
+                    }
+
+                    IQueryable<RevenueExpenseReportM> qAllMoneySideRevenueExpenseReportMPeriod2
+           =
+           (from r in QUnionAllCurrSummaryPeriod2
+            group r by new
+            {
+                AccountId = r.AccountId_COAType,
+            //r.CurrencyId
+        } into g
+            select new RevenueExpenseReportM()
+            {
+
+                ChartOfAcountType = "",
+                ChartOfAcount1 = "",
+                ChartOfAcount2 = "",
+                ChartOfAcount3 = "",
+                ChartOfAcount4 = "",
+                ChartOfAcount5 = "",
+                ChartOfAcountName1 = "",
+                ChartOfAcountName2 = "",
+                ChartOfAcountName3 = "",
+                ChartOfAcountName4 = "",
+                ChartOfAcountName5 = "",
+                ChartOfAcountCode1 = "",
+                ChartOfAcountCode2 = "",
+                ChartOfAcountCode3 = "",
+                ChartOfAcountCode4 = "",
+                ChartOfAcountCode5 = "",
+
+
+
+                GLAccountName = "",
+                GLAccountNumber = "",
+                GLAccountId = g.Key.AccountId,
+                ChartOfAccountId = "",
+
+                LocalCloseBalancePeriod1 = 0,
+                LocalCloseBalancePeriod2 = (
+                +g.Sum(x => x.LocalAmountDebitTransStart)
+                - g.Sum(x => x.LocalAmountCreditTransStart)
+
+                + g.Sum(x => x.LocalAmountDebitTotalDelta2End)
+                - g.Sum(x => x.LocalAmountCreditTotalDelta2End)
+                + g.Sum(x => x.LocalAmountDebitTransEnd)
+                - g.Sum(x => x.LocalAmountCreditTransEnd)
+                )
+
+            });
+
+
+                    qAllMoneySideRevenueExpenseReportM =
+                        (from a in qAllMoneySideRevenueExpenseReportM.Union(qAllMoneySideRevenueExpenseReportMPeriod2)
+                         group a by a.GLAccountId into gbGLAccountId
+
+                         select new RevenueExpenseReportM()
+                         {
+
+                             ChartOfAcountType = "",
+                             ChartOfAcount1 = "",
+                             ChartOfAcount2 = "",
+                             ChartOfAcount3 = "",
+                             ChartOfAcount4 = "",
+                             ChartOfAcount5 = "",
+                             ChartOfAcountName1 = "",
+                             ChartOfAcountName2 = "",
+                             ChartOfAcountName3 = "",
+                             ChartOfAcountName4 = "",
+                             ChartOfAcountName5 = "",
+                             ChartOfAcountCode1 = "",
+                             ChartOfAcountCode2 = "",
+                             ChartOfAcountCode3 = "",
+                             ChartOfAcountCode4 = "",
+                             ChartOfAcountCode5 = "",
+
+
+
+                             GLAccountName = "",
+                             GLAccountNumber = "",
+                             GLAccountId = gbGLAccountId.Key,
+                             ChartOfAccountId = "",
+
+                             LocalCloseBalancePeriod1 = gbGLAccountId.Sum(a => a.LocalCloseBalancePeriod1),
+                             LocalCloseBalancePeriod2 = gbGLAccountId.Sum(a => a.LocalCloseBalancePeriod2)
+
+
+                         });
+
+
+                }
+
+
+                IQueryable<RevenueExpenseReportM> _QTrailReportFull = null;
+                _QTrailReportFull =
             ///join 
             (from chartf in QBaseAllCardsAndDetialsAccTypeBy5LevelHierarchy
              join data in qAllMoneySideRevenueExpenseReportM
@@ -332,24 +336,24 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
 
 
              });
-            if (_RevenueExpenseReportParam.MyRevenueExpenseReportLevel == ReportLevel.GLAccount)
-            {
-                switch (_RevenueExpenseReportParam.MyCardFilter)
+                if (_RevenueExpenseReportParam.MyRevenueExpenseReportLevel == ReportLevel.GLAccount)
                 {
-                    case RevenueExpenseReportParam.CardFilterEnum.DoNotShowCardWithZeroBalance:
-                        _QTrailReportFull =
-                            _QTrailReportFull
-                            //.Where(r => r.LocalCloseBalancePeriod1 != null)
-                            //.Where(r => r.LocalCloseBalancePeriod1 != 0m)
-                            .Where(r =>
-                            (r.LocalCloseBalancePeriod1 != null  &&  r.LocalCloseBalancePeriod1 != 0m) 
-                            ||
-                            (r.LocalCloseBalancePeriod2 != null && r.LocalCloseBalancePeriod2 != 0m)
-                            )
-                           ;
-                        break;
-                    case RevenueExpenseReportParam.CardFilterEnum.ShowCardsWithActivity_EvenBalanceItsZero:
-                        _QTrailReportFull =
+                    switch (_RevenueExpenseReportParam.MyCardFilter)
+                    {
+                        case RevenueExpenseReportParam.CardFilterEnum.DoNotShowCardWithZeroBalance:
+                            _QTrailReportFull =
+                                _QTrailReportFull
+                                //.Where(r => r.LocalCloseBalancePeriod1 != null)
+                                //.Where(r => r.LocalCloseBalancePeriod1 != 0m)
+                                .Where(r =>
+                                (r.LocalCloseBalancePeriod1 != null && r.LocalCloseBalancePeriod1 != 0m)
+                                ||
+                                (r.LocalCloseBalancePeriod2 != null && r.LocalCloseBalancePeriod2 != 0m)
+                                )
+                               ;
+                            break;
+                        case RevenueExpenseReportParam.CardFilterEnum.ShowCardsWithActivity_EvenBalanceItsZero:
+                            _QTrailReportFull =
             ///join 
             (from data in qAllMoneySideRevenueExpenseReportM
              join chartf in QBaseAllCardsAndDetialsAccTypeBy5LevelHierarchy
@@ -382,32 +386,32 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                  LocalCloseBalancePeriod2 = data.LocalCloseBalancePeriod2,
 
              });
-                        break;
-                    case RevenueExpenseReportParam.CardFilterEnum.ShowAllCard:
-                    default:
-                        //already Put all
-                        break;
+                            break;
+                        case RevenueExpenseReportParam.CardFilterEnum.ShowAllCard:
+                        default:
+                            //already Put all
+                            break;
+                    }
                 }
-            }
-            else
-            {
-                if (_RevenueExpenseReportParam.MyCardFilter != RevenueExpenseReportParam.CardFilterEnum.DoNotShowCardWithZeroBalance)
+                else
                 {
-                    throw new Exception("5");
+                    if (_RevenueExpenseReportParam.MyCardFilter != RevenueExpenseReportParam.CardFilterEnum.DoNotShowCardWithZeroBalance)
+                    {
+                        throw new Exception("5");
+                    }
                 }
-            }
 
 
-            var _QTrailReportCOALevel = _QTrailReportFull;
+                var _QTrailReportCOALevel = _QTrailReportFull;
 
-            switch (_RevenueExpenseReportParam.MyRevenueExpenseReportLevel)
-            {
-                case ReportLevel.ChartofaccountType:
-                    _QTrailReportCOALevel = (from row in _QTrailReportCOALevel
-                                             group row by
-                                             new
-                                             {
-                                                 row.ChartOfAcountType,
+                switch (_RevenueExpenseReportParam.MyRevenueExpenseReportLevel)
+                {
+                    case ReportLevel.ChartofaccountType:
+                        _QTrailReportCOALevel = (from row in _QTrailReportCOALevel
+                                                 group row by
+                                                 new
+                                                 {
+                                                     row.ChartOfAcountType,
                                                  //row.ChartOfAcount1,
                                                  //row.ChartOfAcount2,
                                                  //row.ChartOfAcount3,
@@ -418,63 +422,63 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                                                  //row.CurrencyId,
 
                                              }
-                                                 into groupTrailOnlyCOAType
-                                             select new RevenueExpenseReportM()
-                                             {
-                                                 ChartOfAcountType = groupTrailOnlyCOAType.Key.ChartOfAcountType,
-                                                 ChartOfAcount1 = "",//groupTrailOnlyCOAType.Key.ChartOfAcount1,
-                                                 ChartOfAcount2 = "",//groupTrailOnlyCOAType.Key.ChartOfAcount2,
-                                                 ChartOfAcount3 = "",//groupTrailOnlyCOAType.Key.ChartOfAcount3,
-                                                 ChartOfAcount4 = "",//groupTrailOnlyCOAType.Key.ChartOfAcount4,
-                                                 ChartOfAcount5 = "",//groupTrailOnlyCOAType.Key.ChartOfAcount5,
-                                                 ChartOfAcountName1 = "",
-                                                 ChartOfAcountName2 = "",
-                                                 ChartOfAcountName3 = "",
-                                                 ChartOfAcountName4 = "",
-                                                 ChartOfAcountName5 = "",
-                                                 ChartOfAcountCode1 = "",
-                                                 ChartOfAcountCode2 = "",
-                                                 ChartOfAcountCode3 = "",
-                                                 ChartOfAcountCode4 = "",
-                                                 ChartOfAcountCode5 = "",
+                                                     into groupTrailOnlyCOAType
+                                                 select new RevenueExpenseReportM()
+                                                 {
+                                                     ChartOfAcountType = groupTrailOnlyCOAType.Key.ChartOfAcountType,
+                                                     ChartOfAcount1 = "",//groupTrailOnlyCOAType.Key.ChartOfAcount1,
+                                                     ChartOfAcount2 = "",//groupTrailOnlyCOAType.Key.ChartOfAcount2,
+                                                     ChartOfAcount3 = "",//groupTrailOnlyCOAType.Key.ChartOfAcount3,
+                                                     ChartOfAcount4 = "",//groupTrailOnlyCOAType.Key.ChartOfAcount4,
+                                                     ChartOfAcount5 = "",//groupTrailOnlyCOAType.Key.ChartOfAcount5,
+                                                     ChartOfAcountName1 = "",
+                                                     ChartOfAcountName2 = "",
+                                                     ChartOfAcountName3 = "",
+                                                     ChartOfAcountName4 = "",
+                                                     ChartOfAcountName5 = "",
+                                                     ChartOfAcountCode1 = "",
+                                                     ChartOfAcountCode2 = "",
+                                                     ChartOfAcountCode3 = "",
+                                                     ChartOfAcountCode4 = "",
+                                                     ChartOfAcountCode5 = "",
 
 
-                                                 GLAccountName = "",//= groupTrailOnlyCOAType.Key.GLAccountName,
-                                                 GLAccountNumber = "",
-                                                 GLAccountId = "",// groupTrailOnlyCOAType.Key.GLAccountId,
+                                                     GLAccountName = "",//= groupTrailOnlyCOAType.Key.GLAccountName,
+                                                     GLAccountNumber = "",
+                                                     GLAccountId = "",// groupTrailOnlyCOAType.Key.GLAccountId,
 
-                                                 ChartOfAccountId = "",
+                                                     ChartOfAccountId = "",
 
 
-                                                 LocalCloseBalancePeriod1 = groupTrailOnlyCOAType.Sum(x => x.LocalCloseBalancePeriod1),
-                                                 LocalCloseBalancePeriod2 = groupTrailOnlyCOAType.Sum(x => x.LocalCloseBalancePeriod2),
+                                                     LocalCloseBalancePeriod1 = groupTrailOnlyCOAType.Sum(x => x.LocalCloseBalancePeriod1),
+                                                     LocalCloseBalancePeriod2 = groupTrailOnlyCOAType.Sum(x => x.LocalCloseBalancePeriod2),
 
-                                             }
-            );
+                                                 }
+                );
 
-                    break;
-                case ReportLevel.Chartofaccount:
-                    //tenantChartOfAccount5Level
-                    _QTrailReportCOALevel = (from row in _QTrailReportCOALevel
-                                             group row by
-                                             new
-                                             {
-                                                 row.ChartOfAcountType,
-                                                 row.ChartOfAcount1,
-                                                 row.ChartOfAcount2,
-                                                 row.ChartOfAcount3,
-                                                 row.ChartOfAcount4,
-                                                 row.ChartOfAcount5,
-                                                 row.ChartOfAcountName1,
-                                                 row.ChartOfAcountName2,
-                                                 row.ChartOfAcountName3,
-                                                 row.ChartOfAcountName4,
-                                                 row.ChartOfAcountName5,
-                                                 row.ChartOfAcountCode1,
-                                                 row.ChartOfAcountCode2,
-                                                 row.ChartOfAcountCode3,
-                                                 row.ChartOfAcountCode4,
-                                                 row.ChartOfAcountCode5,
+                        break;
+                    case ReportLevel.Chartofaccount:
+                        //tenantChartOfAccount5Level
+                        _QTrailReportCOALevel = (from row in _QTrailReportCOALevel
+                                                 group row by
+                                                 new
+                                                 {
+                                                     row.ChartOfAcountType,
+                                                     row.ChartOfAcount1,
+                                                     row.ChartOfAcount2,
+                                                     row.ChartOfAcount3,
+                                                     row.ChartOfAcount4,
+                                                     row.ChartOfAcount5,
+                                                     row.ChartOfAcountName1,
+                                                     row.ChartOfAcountName2,
+                                                     row.ChartOfAcountName3,
+                                                     row.ChartOfAcountName4,
+                                                     row.ChartOfAcountName5,
+                                                     row.ChartOfAcountCode1,
+                                                     row.ChartOfAcountCode2,
+                                                     row.ChartOfAcountCode3,
+                                                     row.ChartOfAcountCode4,
+                                                     row.ChartOfAcountCode5,
 
 
                                                  //row.GLAccountName,
@@ -482,55 +486,56 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                                                  //row.CurrencyId,
 
                                              }
-                                                 into groupTrailOnlyCOAType
-                                             select new RevenueExpenseReportM()
-                                             {
-                                                 ChartOfAcountType = groupTrailOnlyCOAType.Key.ChartOfAcountType,
-                                                 ChartOfAcount1 = groupTrailOnlyCOAType.Key.ChartOfAcount1,
-                                                 ChartOfAcount2 = groupTrailOnlyCOAType.Key.ChartOfAcount2,
-                                                 ChartOfAcount3 = groupTrailOnlyCOAType.Key.ChartOfAcount3,
-                                                 ChartOfAcount4 = groupTrailOnlyCOAType.Key.ChartOfAcount4,
-                                                 ChartOfAcount5 = groupTrailOnlyCOAType.Key.ChartOfAcount5,
-                                                 ChartOfAcountName1 = groupTrailOnlyCOAType.Key.ChartOfAcountName1,
-                                                 ChartOfAcountName2 = groupTrailOnlyCOAType.Key.ChartOfAcountName2,
-                                                 ChartOfAcountName3 = groupTrailOnlyCOAType.Key.ChartOfAcountName3,
-                                                 ChartOfAcountName4 = groupTrailOnlyCOAType.Key.ChartOfAcountName4,
-                                                 ChartOfAcountName5 = groupTrailOnlyCOAType.Key.ChartOfAcountName5,
-                                                 ChartOfAcountCode1 = groupTrailOnlyCOAType.Key.ChartOfAcountCode1,
-                                                 ChartOfAcountCode2 = groupTrailOnlyCOAType.Key.ChartOfAcountCode2,
-                                                 ChartOfAcountCode3 = groupTrailOnlyCOAType.Key.ChartOfAcountCode3,
-                                                 ChartOfAcountCode4 = groupTrailOnlyCOAType.Key.ChartOfAcountCode4,
-                                                 ChartOfAcountCode5 = groupTrailOnlyCOAType.Key.ChartOfAcountCode5,
+                                                     into groupTrailOnlyCOAType
+                                                 select new RevenueExpenseReportM()
+                                                 {
+                                                     ChartOfAcountType = groupTrailOnlyCOAType.Key.ChartOfAcountType,
+                                                     ChartOfAcount1 = groupTrailOnlyCOAType.Key.ChartOfAcount1,
+                                                     ChartOfAcount2 = groupTrailOnlyCOAType.Key.ChartOfAcount2,
+                                                     ChartOfAcount3 = groupTrailOnlyCOAType.Key.ChartOfAcount3,
+                                                     ChartOfAcount4 = groupTrailOnlyCOAType.Key.ChartOfAcount4,
+                                                     ChartOfAcount5 = groupTrailOnlyCOAType.Key.ChartOfAcount5,
+                                                     ChartOfAcountName1 = groupTrailOnlyCOAType.Key.ChartOfAcountName1,
+                                                     ChartOfAcountName2 = groupTrailOnlyCOAType.Key.ChartOfAcountName2,
+                                                     ChartOfAcountName3 = groupTrailOnlyCOAType.Key.ChartOfAcountName3,
+                                                     ChartOfAcountName4 = groupTrailOnlyCOAType.Key.ChartOfAcountName4,
+                                                     ChartOfAcountName5 = groupTrailOnlyCOAType.Key.ChartOfAcountName5,
+                                                     ChartOfAcountCode1 = groupTrailOnlyCOAType.Key.ChartOfAcountCode1,
+                                                     ChartOfAcountCode2 = groupTrailOnlyCOAType.Key.ChartOfAcountCode2,
+                                                     ChartOfAcountCode3 = groupTrailOnlyCOAType.Key.ChartOfAcountCode3,
+                                                     ChartOfAcountCode4 = groupTrailOnlyCOAType.Key.ChartOfAcountCode4,
+                                                     ChartOfAcountCode5 = groupTrailOnlyCOAType.Key.ChartOfAcountCode5,
 
 
-                                                 GLAccountName = "",//= groupTrailOnlyCOAType.Key.GLAccountName,
-                                                 GLAccountNumber = "",
-                                                 GLAccountId = "",// groupTrailOnlyCOAType.Key.GLAccountId,
-                                                 ChartOfAccountId = "",
-                                                 // CurrencyId = groupTrailOnlyCOAType.Key.CurrencyId,
+                                                     GLAccountName = "",//= groupTrailOnlyCOAType.Key.GLAccountName,
+                                                     GLAccountNumber = "",
+                                                     GLAccountId = "",// groupTrailOnlyCOAType.Key.GLAccountId,
+                                                     ChartOfAccountId = "",
+                                                     // CurrencyId = groupTrailOnlyCOAType.Key.CurrencyId,
 
 
-                                                 LocalCloseBalancePeriod1 = groupTrailOnlyCOAType.Sum(x => x.LocalCloseBalancePeriod1),
-                                                 LocalCloseBalancePeriod2 = groupTrailOnlyCOAType.Sum(x => x.LocalCloseBalancePeriod2),
+                                                     LocalCloseBalancePeriod1 = groupTrailOnlyCOAType.Sum(x => x.LocalCloseBalancePeriod1),
+                                                     LocalCloseBalancePeriod2 = groupTrailOnlyCOAType.Sum(x => x.LocalCloseBalancePeriod2),
 
-                                             }
-            );
-                    break;
-                case ReportLevel.GLAccount:
+                                                 }
+                );
+                        break;
+                    case ReportLevel.GLAccount:
 
 
-                default:
-                    break;
+                    default:
+                        break;
+                }
+                _QBaseRevenueExpenseReportFull = _QTrailReportCOALevel;
+                if (_QBaseRevenueExpenseReportFull == null)
+                {
+                    throw new Exception("(_QBaseRevenueExpenseReportFull==null)");
+                }
+                var l = _QBaseRevenueExpenseReportFull.ToList();
+                DbLog = "";// _DbLogger.ToString();
+                result = l;
+                return l;
             }
-            _QBaseRevenueExpenseReportFull = _QTrailReportCOALevel;
-            if (_QBaseRevenueExpenseReportFull == null)
-            {
-                throw new Exception("(_QBaseRevenueExpenseReportFull==null)");
-            }
-            var l = _QBaseRevenueExpenseReportFull.ToList();
-            DbLog = "";// _DbLogger.ToString();
-            result = l;
-            return l;
         }
 
         private  static IQueryable<TrailReportTemp> GetMoneyDataPerDate(
@@ -862,16 +867,16 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
 
 
 
-        public void Dispose()
-        {
-            //bool testTimeout = false;
-            //if (testTimeout)
-            //{
-            //    Thread.Sleep(TimeSpan.FromMinutes(10));
-            //} 
-            ///_DbLogger.Dispose();
-            _TransactionScope.Dispose();
-        }
+        //public void Dispose()
+        //{
+        //    //bool testTimeout = false;
+        //    //if (testTimeout)
+        //    //{
+        //    //    Thread.Sleep(TimeSpan.FromMinutes(10));
+        //    //} 
+        //    ///_DbLogger.Dispose();
+        //    //_TransactionScope.Dispose();
+        //}
 
         public string DbLog { get; set; }
     }

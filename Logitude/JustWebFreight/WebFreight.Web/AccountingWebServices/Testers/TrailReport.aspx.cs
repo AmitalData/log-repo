@@ -93,7 +93,7 @@ namespace WebFreight.Web.AccountingWebServices.Testers
             }
             finally
             {
-                trailReportService.Dispose();
+               // trailReportService.Dispose();
             }
 
         }
@@ -134,7 +134,7 @@ namespace WebFreight.Web.AccountingWebServices.Testers
             }
             finally
             {
-                trailReportService.Dispose();
+                //trailReportService.Dispose();
             }
             
             
