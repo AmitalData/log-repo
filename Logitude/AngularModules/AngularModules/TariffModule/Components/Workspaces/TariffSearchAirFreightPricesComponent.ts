@@ -837,12 +837,13 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
 
                 // FCL Shipment 
                 if (this.TariffType == "OFC") {
+                    var teuPrice: number = 0;
                     // Generate FCL Frieght
                     var shipmentContainer = this.BCNTGrouped.filter(f => f.PackageTypeId == this.ContainerType1Id)[0];
                     if (this.ContainerType1Id && shipmentContainer) {
                         this.AddNewTariffPayable(item, notes, this.ContainerType1Id);
                         if (item != null && item.SurchargesWithoutAllIn != null) {
-                            item.SurchargesWithoutAllIn.forEach(surcharge => {
+                            item.SurchargesWithoutAllIn.filter(a => a.UnitOfMesurmentCode != 'FIXD' && a.UnitOfMesurmentCode != 'BTEU').forEach(surcharge => {
                                 this.AddNewTariffPayable(surcharge, null, this.ContainerType1Id);
                             });
                         }
@@ -851,7 +852,7 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
                     if (this.ContainerType2Id && shipmentContainer) {
                         this.AddNewTariffPayable(item, notes, this.ContainerType2Id);
                         if (item != null && item.SurchargesWithoutAllIn != null) {
-                            item.SurchargesWithoutAllIn.forEach(surcharge => {
+                            item.SurchargesWithoutAllIn.filter(a => a.UnitOfMesurmentCode != 'FIXD' && a.UnitOfMesurmentCode != 'BTEU').forEach(surcharge => {
                                 this.AddNewTariffPayable(surcharge, null, this.ContainerType2Id);
                             });
                         }
@@ -860,7 +861,7 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
                     if (this.ContainerType3Id && shipmentContainer) {
                         this.AddNewTariffPayable(item, notes, this.ContainerType3Id);
                         if (item != null && item.SurchargesWithoutAllIn != null) {
-                            item.SurchargesWithoutAllIn.forEach(surcharge => {
+                            item.SurchargesWithoutAllIn.filter(a => a.UnitOfMesurmentCode != 'FIXD' && a.UnitOfMesurmentCode != 'BTEU').forEach(surcharge => {
                                 this.AddNewTariffPayable(surcharge, null, this.ContainerType3Id);
                             });
                         }
@@ -869,7 +870,7 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
                     if (this.ContainerType4Id && shipmentContainer) {
                         this.AddNewTariffPayable(item, notes, this.ContainerType4Id);
                         if (item != null && item.SurchargesWithoutAllIn != null) {
-                            item.SurchargesWithoutAllIn.forEach(surcharge => {
+                            item.SurchargesWithoutAllIn.filter(a => a.UnitOfMesurmentCode != 'FIXD' && a.UnitOfMesurmentCode != 'BTEU').forEach(surcharge => {
                                 this.AddNewTariffPayable(surcharge, null, this.ContainerType4Id);
                             });
                         }
@@ -878,11 +879,16 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
                     if (this.ContainerType5Id && shipmentContainer) {
                         this.AddNewTariffPayable(item, notes, this.ContainerType5Id);
                         if (item != null && item.SurchargesWithoutAllIn != null) {
-                            item.SurchargesWithoutAllIn.forEach(surcharge => {
+                            item.SurchargesWithoutAllIn.filter(a => a.UnitOfMesurmentCode != 'FIXD' && a.UnitOfMesurmentCode != 'BTEU').forEach(surcharge => {
                                 this.AddNewTariffPayable(surcharge, null, this.ContainerType5Id);
                             });
                         }
                     }
+
+                    // Generate one line for TEU & Fixed 
+                    item.SurchargesWithoutAllIn.filter(a => a.UnitOfMesurmentCode == 'FIXD' || a.UnitOfMesurmentCode == 'BTEU').forEach(surcharge => {
+                        this.AddNewTariffPayable(surcharge, null, null);
+                    });
                 }
 
                 else {
@@ -1121,16 +1127,16 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
             }
 
 
-            this.AddNewTariffQuoteCharge(item, isOFC);
+            this.AddNewTariffQuoteCharge(item, isOFC, false);
             if (item != null && item.SurchargesWithoutAllIn != null) {
                 item.SurchargesWithoutAllIn.forEach(surcharge => {
-                    this.AddNewTariffQuoteCharge(surcharge, isOFC);
+                    this.AddNewTariffQuoteCharge(surcharge, isOFC, true);
                 });
             }
             // Generate AllIn Surcharges
             if (item != null && item.AllInSurcharges != null) {
                 item.AllInSurcharges.forEach(surcharge => {
-                    this.AddNewTariffQuoteCharge(surcharge, false);
+                    this.AddNewTariffQuoteCharge(surcharge, false, true);
                 });
             }
 
@@ -1294,7 +1300,7 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
         });
         return isDuplicate;
     }
-    AddNewTariffQuoteCharge(item: any, isOFC: boolean) {
+    AddNewTariffQuoteCharge(item: any, isOFC: boolean, isSurcharge : boolean) {
         this.myChargesTypeListService.getSingleFromCache(item.ChargeTypeId).subscribe((myResponse: ServiceResponse) => {
             if (!myResponse.HasError) {
                 var chargesType: ChargesTypeList = myResponse.Result;
@@ -1330,14 +1336,35 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
                     var costAmount = AppTool.Round(item.ActualPrice, 3);
                     chargePM.CostTotalAmount = costAmount;
                     if (isOFC) {
-                        //var bcntCharge = this.FatherComponent.AllMeasurements.filter(d => d.Code == "BCNT")[0];
-                        //measurementCode = bcntCharge.Code;
-                        //measurementId = bcntCharge.Id;
-                        this.FillQuoteFCLCharges(this.ContainerType1Id, chargePM, item);
-                        this.FillQuoteFCLCharges(this.ContainerType2Id, chargePM, item);
-                        this.FillQuoteFCLCharges(this.ContainerType3Id, chargePM, item);
-                        this.FillQuoteFCLCharges(this.ContainerType4Id, chargePM, item);
-                        this.FillQuoteFCLCharges(this.ContainerType5Id, chargePM, item);
+                        if (!isSurcharge) {
+                            var bcntCharge = this.FatherComponent.AllMeasurements.filter(d => d.Code == "BCNT")[0];
+                            measurementCode = bcntCharge.Code;
+                            measurementId = bcntCharge.Id;
+                        }
+
+                        if (measurementCode != 'FIXD' && measurementCode != 'BTEU') {
+
+                            this.FillQuoteFCLCharges(this.ContainerType1Id, chargePM, item);
+                            this.FillQuoteFCLCharges(this.ContainerType2Id, chargePM, item);
+                            this.FillQuoteFCLCharges(this.ContainerType3Id, chargePM, item);
+                            this.FillQuoteFCLCharges(this.ContainerType4Id, chargePM, item);
+                            this.FillQuoteFCLCharges(this.ContainerType5Id, chargePM, item);
+                        }
+                        else {
+                            chargePM.CostUnitPrice = item.ActualPrice;
+                            if (measurementCode == 'FIXD') {
+                                chargePM.CostQuantity = 1;
+                            }
+                            else {
+                                var teuQantity = 0;
+                                item.ContainersPrices.forEach(item => {
+                                    var container = this.allPackageTypes.filter(d => d.Id == item.ContainerId)[0];
+                                    if (container != null)
+                                        teuQantity = teuQantity + container.TEU;
+                                });
+                                chargePM.CostQuantity = teuQantity;
+                            }
+                        }
                     }
                 }
               
