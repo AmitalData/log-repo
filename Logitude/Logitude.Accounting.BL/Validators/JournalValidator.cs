@@ -497,7 +497,7 @@ namespace Logitude.Accounting.BL.Validators
                 }
             }
 
-            if (debitTotal != creditTotal)
+            if (Math.Round(debitTotal,2) != Math.Round(creditTotal,2))
             {
                 if ((myJournalPM.StatusCode == "1") || (myJournalPM.StatusCode == "2"))//Draft = 0,//WaitingforApprove = 1,//Approved = 2,//Voided = 3
                 {
