@@ -143,24 +143,26 @@ export class TariffGeneralTabComponent extends BaseComponent implements OnDestro
         }
     }
 
-    SetDefaultUOM(index: number) {
-        if (this.EntityPM.TypeCode != "OFS") {
-            this.chargesTypePMService.getSingleFromCache(this[this.IdProps[index]]).subscribe((res:any) => {
+      SetDefaultUOM(index: number) {
+            this.chargesTypePMService.getSingleFromCache(this[this.IdProps[index]]).subscribe((res: any) => {
                 if (!res.HasError) {
                     if (res.Result) {
                         var ChargesType: ChargesTypeList = res.Result;
-                        this[this.UOMProps[index]] = ChargesType.MeasurementId;
+                        if (this.EntityPM.TypeCode == "OFS") {
+                            if (!AppTool.IsNullOrEmpty(ChargesType.ContainerMeasurementId)) {
+                                this[this.UOMProps[index]] = ChargesType.ContainerMeasurementId;
+                            }
+                            else {
+                                this[this.UOMProps[index]] = this.BCNTmeasurementId;
+                            }
+                        }
+                        else {
+                            this[this.UOMProps[index]] = ChargesType.MeasurementId;
+                        }
                     }
                 }
             });
         }
-
-        else {
-            if (!AppTool.IsNullOrEmpty(this.BCNTmeasurementId)) {
-                this[this.UOMProps[index]] = this.BCNTmeasurementId;
-            }
-        }
-    }
 
     get Surcharge1Id() {
         return this.EntityPM.Surcharge1Id;
