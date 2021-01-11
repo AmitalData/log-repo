@@ -231,7 +231,11 @@
   
   <Index  Columns="FollowUpDate" />
 
-
+  <Index
+     Columns="NewFile" />
+  
+<Index
+     Columns="Favorite" />
   <Index
     Columns="NewFile,Favorite" />
  Columns="FollowUpDate" />
