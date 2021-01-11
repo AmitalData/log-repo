@@ -1,17 +1,16 @@
 import {Component, ViewChild, ViewContainerRef} from '@angular/core';
-import {Validator} from '../../../../Infrastructure/Validators/Validator';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 import {ContactPM} from '../../../../Common/EntityPMs/ContactPM';
 import {ContactItemClass} from '../../../../CommonModules/CommonPartners/Components/EditTabs/ContactsTabComponent';
 import {ContactInputTemplate, ContactInputTemplateArgs} from '../../../../CommonModules/CommonPartners/Components/Templates/ContactInputTemplate';
 import {AppTool} from '../../../../Infrastructure/Tools';
-import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeTranslator';
 import {PartnersDomainService, PartnerServicePM} from '../../../../Common/Services/PartnersDomainService';
 import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
 import {Cloner} from '../../../../Infrastructure/Utilities/Cloner';
+import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
+import { ConfirmWindow } from '../../../../Controls/Windows/ConfirmWindow';
 
-@Component({
-    
+@Component({    
     templateUrl: './AddEditContactComponent.html',
 })
 
@@ -111,34 +110,76 @@ export class AddEditContactComponent {
     }
 
     OkButtonClicked() {
+
         this.CurrentSession.StartBusyIndicatorSaving();
 
         this.ValidationErrorsList = this.ContactTemplate.Validate();
+
         if (this.ValidationErrorsList.length > 0) {
             this.CurrentSession.StopBusyIndicator();
         }
 
         else {
+
             if (!this.EntityPM.IsDirty) {
+                this.CurrentSession.StopBusyIndicator();
                 this.CurrentSession.CloseCurrentWindowEmit(this.EntityPM.Id);
             }
 
             else {
-                if (this.DataContext.IsNewEntity) {
-                    if (this.DataContext.fatherComponent && this.DataContext.fatherComponent.ItemsSource.length == 0) {
-                        this.DataContext.fatherComponent.EntityPM.IsFirstContactToAdd = true;
-                        this.DataContext.fatherComponent.EntityPM.PrimaryContactId = this.EntityPM.Id;
-                    }
+
+                if (this.ContactTemplate.IsInactiveContactExists()) {
+
+                    this.CurrentSession.StopBusyIndicator();
+
+                    var args = new PartnerServicePM();
+                    args.IsConnectingInactiveContact = true;
+                    args.InactiveContactId = this.ContactTemplate.LoadedContactId;
+
+                    var confirmWindow = new ConfirmWindow();
+                    confirmWindow.Title = "Activate Contact";
+                    confirmWindow.NoButtonText = "Re-activate";
+                    confirmWindow.YesButtonText = "Keep inactive";
+                    confirmWindow.ShowCancelButton = true;
+
+                    confirmWindow.WindowClosed.subscribe((event: any) => {
+                        if (confirmWindow.No) {
+                            this.CurrentSession.StartBusyIndicatorSaving();                            
+                            args.IsReactivatingContact = true;
+                            this.Save(args);
+                        }
+
+                        else if (confirmWindow.Yes) {
+                            this.CurrentSession.StartBusyIndicatorSaving();
+                            this.Save(args);
+                        }
+                    });
+
+                    confirmWindow.Show("Please note that this contact is inactive, after adding to the partner");
                 }
 
-                this.Save();
+                else {
+
+                    if (this.DataContext.IsNewEntity) {
+                        if (this.DataContext.fatherComponent && this.DataContext.fatherComponent.ItemsSource.length == 0) {
+                            this.DataContext.fatherComponent.EntityPM.IsFirstContactToAdd = true;
+                            this.DataContext.fatherComponent.EntityPM.PrimaryContactId = this.EntityPM.Id;
+                        }
+                    }
+
+                    this.Save();
+                }
             }
-        }        
+        }
     }
 
     private LoadCompletedEvent: any = null;
-    private Save() {
-        var args = new PartnerServicePM();
+    private Save(args: PartnerServicePM = null) {
+
+        if (!args) {
+            args = new PartnerServicePM();
+        }
+
         args.Tenant = this.EntityPM.Tenant;
         args.ContactId = this.EntityPM.Id;
         args.PartnerId = this.EntityPM.CardId;
