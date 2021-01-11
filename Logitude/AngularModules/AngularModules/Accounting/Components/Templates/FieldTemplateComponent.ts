@@ -10,9 +10,7 @@ import { JournalList } from '../../EntityLists/JournalList';
 import { ObjectsLocator } from '../../../Infrastructure/Locators/ObjectsLocator';
 import { TextCodeTranslator } from '../../../Infrastructure/Utilities/TextCodeTranslator';
 import { GLAccountPM } from '../../EntityPMs/GLAccountPM';
-import { ObservableCollection } from '../../../Infrastructure/Utilities/ObservableCollection';
 import { GLAccountExtendedListService } from '../../Services/ExtendedLists/GLAccountExtendedListService';
-import { GLAccountChild } from '../EditTabs/GLAccount/GLAccountAdditionalDataTabComponent';
 
 @Component({
     
