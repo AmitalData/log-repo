@@ -1180,4 +1180,24 @@
     Columns="AmendmentOriginalDeclartation" />
   <Index
     Columns="CourierHAWB" />
+
+  <Index
+      Columns="IsCancelled" />
+
+  <Index
+       Columns="PaymentDate" />
+
+  <Index
+         Columns="AvailabilityDate" />
+
+
+  <!--<Index
+      Columns="IsCancelled,PaymentDate,AvailabilityDate" />-->
+
+  <Index
+    Columns="HatraDate" />
+
+  <!--<Index
+    Columns="IsCancelled,HatraDate" />-->
+
 </Table>

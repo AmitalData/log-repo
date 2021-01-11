@@ -30,8 +30,11 @@ namespace Logitude.Customs.Data.DataContracts
         public int FilesInCreditControl_A { get; set; }
         public int FilesAvailableFreeOfCharge_A { get; set; }
         public int AllCases_A { get; set; }
-
-
-
+        public int FilesInAllInclusive { get; internal set; }
+        public int FilesInAllInclusive_A { get; internal set; }
+        public int FilesRejectedByController { get; internal set; }
+        public int FilesRejectedByController_A { get; internal set; }
+        public int FilesRejectedByClassification { get; internal set; }
+        public int FilesRejectedByClassification_A { get; internal set; }
     }
 }
