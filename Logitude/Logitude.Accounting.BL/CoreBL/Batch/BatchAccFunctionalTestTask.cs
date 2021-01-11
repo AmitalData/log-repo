@@ -222,7 +222,7 @@ $">>BAD Expected:{r.ExpectedLocalCloseBalance.GetValueOrDefault()}!=Real:{r.Loca
             }
             finally
             {
-                trailReportService.Dispose();
+                //trailReportService.Dispose();
             }
         }
 

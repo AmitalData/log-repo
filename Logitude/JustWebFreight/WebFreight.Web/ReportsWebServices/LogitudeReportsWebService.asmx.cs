@@ -10525,7 +10525,7 @@ namespace WebFreight.Web.ReportsWebServices
                 }
                 finally
                 {
-                    servce.Dispose();
+                    //servce.Dispose();
                 }
                 
                 
@@ -10577,7 +10577,7 @@ namespace WebFreight.Web.ReportsWebServices
             }
             finally
             {
-                service.Dispose();
+                //service.Dispose();
             }
            
             
@@ -10768,7 +10768,7 @@ namespace WebFreight.Web.ReportsWebServices
             }
             finally
             {
-                service.Dispose();
+                //service.Dispose();
             }
             
             
@@ -11096,7 +11096,7 @@ namespace WebFreight.Web.ReportsWebServices
                 }
                 finally
                 {
-                    typeservice.Dispose();
+                   // typeservice.Dispose();
                 }
                 
                 
@@ -11178,7 +11178,7 @@ namespace WebFreight.Web.ReportsWebServices
                 }
                 finally
                 {
-                    service.Dispose();
+                    //service.Dispose();
                 }
                 
                 
@@ -11632,7 +11632,7 @@ namespace WebFreight.Web.ReportsWebServices
                 }
                 finally
                 {
-                    servce.Dispose();
+                   // servce.Dispose();
 
                 }
                 

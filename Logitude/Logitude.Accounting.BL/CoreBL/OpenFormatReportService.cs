@@ -521,7 +521,7 @@ namespace Logitude.Accounting.BL.CoreBL
             }
             finally
             {
-                typeservice.Dispose();
+                //typeservice.Dispose();
             }
             
             
