@@ -1121,16 +1121,16 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
             }
 
 
-            this.AddNewTariffQuoteCharge(item, isOFC);
+            this.AddNewTariffQuoteCharge(item, isOFC, false);
             if (item != null && item.SurchargesWithoutAllIn != null) {
                 item.SurchargesWithoutAllIn.forEach(surcharge => {
-                    this.AddNewTariffQuoteCharge(surcharge, isOFC);
+                    this.AddNewTariffQuoteCharge(surcharge, isOFC, true);
                 });
             }
             // Generate AllIn Surcharges
             if (item != null && item.AllInSurcharges != null) {
                 item.AllInSurcharges.forEach(surcharge => {
-                    this.AddNewTariffQuoteCharge(surcharge, false);
+                    this.AddNewTariffQuoteCharge(surcharge, false, true);
                 });
             }
 
@@ -1294,7 +1294,7 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
         });
         return isDuplicate;
     }
-    AddNewTariffQuoteCharge(item: any, isOFC: boolean) {
+    AddNewTariffQuoteCharge(item: any, isOFC: boolean, isSurcharge : boolean) {
         this.myChargesTypeListService.getSingleFromCache(item.ChargeTypeId).subscribe((myResponse: ServiceResponse) => {
             if (!myResponse.HasError) {
                 var chargesType: ChargesTypeList = myResponse.Result;
@@ -1330,14 +1330,35 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
                     var costAmount = AppTool.Round(item.ActualPrice, 3);
                     chargePM.CostTotalAmount = costAmount;
                     if (isOFC) {
-                        //var bcntCharge = this.FatherComponent.AllMeasurements.filter(d => d.Code == "BCNT")[0];
-                        //measurementCode = bcntCharge.Code;
-                        //measurementId = bcntCharge.Id;
-                        this.FillQuoteFCLCharges(this.ContainerType1Id, chargePM, item);
-                        this.FillQuoteFCLCharges(this.ContainerType2Id, chargePM, item);
-                        this.FillQuoteFCLCharges(this.ContainerType3Id, chargePM, item);
-                        this.FillQuoteFCLCharges(this.ContainerType4Id, chargePM, item);
-                        this.FillQuoteFCLCharges(this.ContainerType5Id, chargePM, item);
+                        if (!isSurcharge) {
+                            var bcntCharge = this.FatherComponent.AllMeasurements.filter(d => d.Code == "BCNT")[0];
+                            measurementCode = bcntCharge.Code;
+                            measurementId = bcntCharge.Id;
+                        }
+
+                        if (measurementCode != 'FIXD' && measurementCode != 'BTEU') {
+
+                            this.FillQuoteFCLCharges(this.ContainerType1Id, chargePM, item);
+                            this.FillQuoteFCLCharges(this.ContainerType2Id, chargePM, item);
+                            this.FillQuoteFCLCharges(this.ContainerType3Id, chargePM, item);
+                            this.FillQuoteFCLCharges(this.ContainerType4Id, chargePM, item);
+                            this.FillQuoteFCLCharges(this.ContainerType5Id, chargePM, item);
+                        }
+                        else {
+                            chargePM.CostUnitPrice = item.ActualPrice;
+                            if (measurementCode == 'FIXD') {
+                                chargePM.CostQuantity = 1;
+                            }
+                            else {
+                                var teuQantity = 0;
+                                item.ContainersPrices.forEach(item => {
+                                    var container = this.allPackageTypes.filter(d => d.Id == item.ContainerId)[0];
+                                    if (container != null)
+                                        teuQantity = teuQantity + container.TEU;
+                                });
+                                chargePM.CostQuantity = teuQantity;
+                            }
+                        }
                     }
                 }
               

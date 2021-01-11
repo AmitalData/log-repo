@@ -1407,7 +1407,7 @@ export class OceanFCLSurchargeTariffLineData extends BaseComponent {
 
                         else {
                             myValue = item.Price1.toString();
-                        }                                                            
+                        }
                     }
 
                     if (!AppTool.IsNullOrEmpty(this.TariffPM.ContainerType2Id)) {
@@ -1449,6 +1449,15 @@ export class OceanFCLSurchargeTariffLineData extends BaseComponent {
                             myValue = myValue + " / " + item.Price5.toString();
                         }
                     }
+
+                    if (AppTool.IsNullOrZero(item.CostPrice)) {
+                        myValue = myValue + " / -";
+                    }
+
+                    else {
+                        myValue = myValue + " / " + item.CostPrice.toString();
+                    }
+
                 });
             }
         }
