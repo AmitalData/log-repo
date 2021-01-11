@@ -23,7 +23,17 @@ namespace Logitude.Customs.Data.EntityListQueryServices
         private IQueryable<DeclarationReferantDataList> GetIqueryableList(IQueryable<DeclarationReferantData> iQueryable)
         {
             IQueryable<DeclarationReferantDataList> query = (from a in iQueryable.Include("CustomsVendor")
-                                                             join d in context.Declarations.Include("CustomerCard").Include("DeclarationOffice").Include("DeclarationStatusType").Include("Importer")
+                                                             join d in context.Declarations
+                                                             /*
+LEFT OUTER JOIN AMINETNXT_MAIN.Cards Extent3 ON Extent2.CustomerId = Extent3.Id
+LEFT OUTER JOIN AMINETNXT_MAIN.Customers Extent7 ON Extent3.Id = Extent7.Id
+due Extent7.LogBoxActivated,
+*/
+
+                                                             .Include("CustomerCard")
+                                                             .Include("DeclarationOffice")
+                                                             .Include("DeclarationStatusType")
+                                                             .Include("Importer")
                                                              on a.DeclarationId equals d.Id
                                                              select new DeclarationReferantDataList()
                                                              {
@@ -78,12 +88,20 @@ namespace Logitude.Customs.Data.EntityListQueryServices
  
                                                                  NewFile = a.NewFile,
                                                                  Favorite = a.Favorite,
+                                                                 ///itzik : 
                                                                   IsCustomerLogBoxActivated = d.CustomerCard.Customer.LogBoxActivated,
                                                                  SortedColumns = (a.NewFile && a.Favorite ? 1 : (a.NewFile ? 2 : (a.Favorite ? 3 : 4))),
                                                                  IsCancelled = d.IsCancelled,
+
+                                                                 /*
+LEFT OUTER JOIN AMINETNXT_MAIN.Contacts Extent8 ON Extent1.ClassifiedUserId = Extent8.Id
+LEFT OUTER JOIN AMINETNXT_MAIN.Contacts Extent9 ON Extent9.Id = Extent1.CollectorUserId
+LEFT OUTER JOIN AMINETNXT_MAIN.Contacts Extent10 ON Extent10.Id = Extent1.ControllerUserId
+                                                                  */
                                                                  ClassifiedUserName = a.ClassifiedUser.Contact.LocalName,
                                                                  CollectorUserName = a.CollectorUser.Contact.LocalName,
                                                                  ControllerUserName= a.ControllerUser.Contact.LocalName, 
+
                                                                  LastStatusDate = a.LastStatusDate,
                                                                  LastStatusName = a.LastStatusName,
                                                                  OrderMoney = a.OrderMoney,
