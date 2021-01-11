@@ -137,7 +137,7 @@ export class AddEditTariffLineComponent  {
                 if (this.DataContext.ContainerPricesItemsSource) {
                     this.DataContext.ContainerPricesItemsSource.forEach((item) => {
                         if (item.IsNewEntity && (!AppTool.IsNullOrZero(item.Price1) || !AppTool.IsNullOrZero(item.Price2) || !AppTool.IsNullOrZero(item.Price3)
-                            || !AppTool.IsNullOrZero(item.Price4) || !AppTool.IsNullOrZero(item.Price5))) {
+                            || !AppTool.IsNullOrZero(item.Price4) || !AppTool.IsNullOrZero(item.Price5)) || !AppTool.IsNullOrZero(item.CostPrice)) {
 
                             if (this.EntityPM.ContainersPrices.indexOf(item.EntityPM) == -1) {
                                 this.EntityPM.AddTariffLinesContainersPrice(item.EntityPM);

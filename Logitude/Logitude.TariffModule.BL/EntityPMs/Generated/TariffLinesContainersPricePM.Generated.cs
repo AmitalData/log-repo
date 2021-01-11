@@ -250,6 +250,29 @@ namespace Logitude.TariffModule.BL.EntityPMs
 			
 		 }
 	   }
+	  private decimal? costPrice ;
+	  	  
+       
+	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public decimal? CostPrice  
+	   {
+	    
+	     get
+		{
+		   return costPrice;
+		 }
+		 set
+		 {
+		   if(costPrice != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CostPrice",OldValue=costPrice,NewValue=value,PropertyType="decimal?"};
+		    NotifyPropertyChanged(values);
+		   costPrice=value;
+		   }
+			
+		 }
+	   }
    }
    
 }
