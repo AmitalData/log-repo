@@ -301,6 +301,7 @@ export class ShipmentTool {
         shipmentPM.SalesmanUserId = oldShipment.SalesmanUserId;
         shipmentPM.AWBCurrencyId = oldShipment.AWBCurrencyId;
         shipmentPM.QuoteId = oldShipment.QuoteId;
+        shipmentPM.QuoteNumber = oldShipment.QuoteNumber;
         shipmentPM.IncotermId = oldShipment.IncotermId;
         shipmentPM.FreightPrepaidCollectId = oldShipment.FreightPrepaidCollectId;
         shipmentPM.OtherPrepaidCollectId = oldShipment.OtherPrepaidCollectId;

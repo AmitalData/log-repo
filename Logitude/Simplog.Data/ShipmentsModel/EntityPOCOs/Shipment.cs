@@ -114,8 +114,8 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public int ShipmentPickUpIndex { get; set; }
         public int ShipmentDeliveryIndex { get; set; }
         public int ShipmentContainerReturnIndex { get; set; }
-
         public string QuoteId { get; set; }
+        public string QuoteNumber { get; set; }
         public string BookingId { get; set; }
         public bool IsCancelled { get; set; }
         public bool IsAccountingClosed { get; set; }
