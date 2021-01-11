@@ -494,7 +494,7 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
         public string INTTRABookingStatusCode { get; set; }
         public string INTTRABookingTransStatusName { get; set; }
         public string INTTRABookingStatusName { get; set; }
-
+        public DateTime? INTTRALastEBbookingSendDate { get; set; }
         public string From { get; set; }
         public string To { get; set; }
         public string Origin { get; set; }

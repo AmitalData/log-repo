@@ -234,6 +234,11 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                                      ComapnylogoId = a.ComapnylogoId,
                                                      BrowserIconId = a.BrowserIconId,
                                                      NoPaymentForChildTenants = a.NoPaymentForChildTenants,
+                                                     LastEbookingSentDate = a.LastEbookingSentDate,
+                                                     LastSISentDate = a.LastSISentDate,
+                                                     NumberOfBookingSentLastWeek = a.NumberOfBookingSentLastWeek,
+                                                     NumberOfSISentLastWeek = a.NumberOfSISentLastWeek,
+                                                     LastContainerStatusReceived = a.LastContainerStatusReceived,
                                                  }).FirstOrDefault();
                     if (tenant != null)
                     {
@@ -418,6 +423,12 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                                   ComapnylogoId = a.ComapnylogoId,
                                                   BrowserIconId = a.BrowserIconId,
                                                   NoPaymentForChildTenants = a.NoPaymentForChildTenants,
+                                                  LastEbookingSentDate = a.LastEbookingSentDate,
+                                                  LastSISentDate = a.LastSISentDate,
+                                                  NumberOfBookingSentLastWeek = a.NumberOfBookingSentLastWeek,
+                                                  NumberOfSISentLastWeek = a.NumberOfSISentLastWeek,
+                                                  LastContainerStatusReceived = a.LastContainerStatusReceived,
+
                                               }).FirstOrDefault();
 
                 if (tenant1 != null)
@@ -596,6 +607,12 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                         AveragePrice = a.AveragePrice,
                         TotalPaymentamount = a.TotalPaymentamount,
                         NoPaymentForChildTenants = a.NoPaymentForChildTenants,
+                        LastEbookingSentDate = a.LastEbookingSentDate,
+                        LastSISentDate = a.LastSISentDate,
+                        NumberOfBookingSentLastWeek = a.NumberOfBookingSentLastWeek,
+                        NumberOfSISentLastWeek = a.NumberOfSISentLastWeek,
+                        LastContainerStatusReceived = a.LastContainerStatusReceived,
+
                     });
         }
         public TenantManagementList MapSingleList(TenantManagement entity)
@@ -724,6 +741,11 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                     MainAdditionalPackageApplied = entity.MainAdditionalPackageApplied,
                     TotalPrice = entity.TotalPrice,
                     NoPaymentForChildTenants = entity.NoPaymentForChildTenants,
+                    LastEbookingSentDate = entity.LastEbookingSentDate,
+                    LastSISentDate = entity.LastSISentDate,
+                    NumberOfBookingSentLastWeek = entity.NumberOfBookingSentLastWeek,
+                    NumberOfSISentLastWeek = entity.NumberOfSISentLastWeek,
+                    LastContainerStatusReceived = entity.LastContainerStatusReceived,
                 };
             }
 
@@ -851,6 +873,12 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                        MainAdditionalPackageApplied = a.MainAdditionalPackageApplied,
                        TotalPrice = a.TotalPrice,
                        NoPaymentForChildTenants = a.NoPaymentForChildTenants,
+                       LastEbookingSentDate = a.LastEbookingSentDate,
+                       LastSISentDate = a.LastSISentDate,
+                       NumberOfBookingSentLastWeek = a.NumberOfBookingSentLastWeek,
+                       NumberOfSISentLastWeek = a.NumberOfSISentLastWeek,
+                       LastContainerStatusReceived = a.LastContainerStatusReceived,
+
                    };
         }
 
@@ -1115,6 +1143,12 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                              AveragePrice = a.AveragePrice,
                                              TotalPaymentamount = a.TotalPaymentamount,
                                              NoPaymentForChildTenants = a.NoPaymentForChildTenants,
+                                             LastEbookingSentDate = a.LastEbookingSentDate,
+                                             LastSISentDate = a.LastSISentDate,
+                                             NumberOfBookingSentLastWeek = a.NumberOfBookingSentLastWeek,
+                                             NumberOfSISentLastWeek = a.NumberOfSISentLastWeek,
+                                             LastContainerStatusReceived = a.LastContainerStatusReceived,
+
                                          }).FirstOrDefault();
 
             return tenant;

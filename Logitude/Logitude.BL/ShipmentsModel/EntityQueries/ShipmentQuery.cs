@@ -2384,6 +2384,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             shipmentPM.INTTRABookingTransStatusCode = shipment.INTTRABookingTransStatusCode;
             shipmentPM.INTTRABookingError = shipment.INTTRABookingError;
             shipmentPM.INTTRALastBookingResponse = shipment.INTTRALastBookingResponse;
+            shipmentPM.INTTRALastEBbookingSendDate = shipment.INTTRALastEBbookingSendDate;
 
             if (!string.IsNullOrEmpty(shipmentPM.INTTRALastBookingResponse))
             {

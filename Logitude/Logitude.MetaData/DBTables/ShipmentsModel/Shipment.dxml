@@ -3108,6 +3108,12 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="INTTRALastEBbookingSendDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="CountryForStatisticsId"
     ReferencedTable="Countries"

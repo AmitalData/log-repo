@@ -1,4 +1,4 @@
-﻿
+
 <style type="text/css">
     .FieldSet {
         display: block;
@@ -770,14 +770,13 @@
                                 <td></td>
                             </tr>
 
-
-
                             <tr style="height:10px;">
                                 <td>
                                     <div></div>
                                 </td>
                             </tr>
-                            <!--SharedAgent-->
+
+                            <!--SharedAgent + INTTRA -->
                             <tr>
                                 <td style="width:420px;">
                                     <fieldset class="FieldSet">
@@ -826,6 +825,18 @@
                                                 </td>
                                             </tr>
 
+                                            <tr class="StatRow">
+                                                <td>
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+
+                                            <tr class="StatRow">
+                                                <td>
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+
                                         </table>
                                     </fieldset>
                                 </td>
@@ -833,7 +844,84 @@
                                 <td style="width:10px;"></td>
 
                                 <td style="width:420px;">
-                                 
+                                    <fieldset class="FieldSet">
+                                        <legend style="color:#1B90CB; margin-left:5px; font-size:11px;">INTTRA Statistics</legend>
+
+                                        <table style="margin:5px;">
+                                            <tr class="StatRow">
+                                                <td style="width:265px;">
+                                                    <LogLabel [ObjectFieldName]="'LastEbookingSentDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td style="width: 65px;">{{LastEbookingSentDate | DateTimeToDatePipe}}</td>
+
+                                                <td style="width:10px;">
+                                                    <div></div>
+                                                </td>
+
+                                                <td style="width: 30px; text-align: right;">{{LastEbookingSentDate | DateTimeToTimePipe: 'S12'}}</td>
+
+                                                <td>
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+                                            <tr class="StatRow">
+                                                <td style="width:265px;">
+                                                    <LogLabel [ObjectFieldName]="'LastSISentDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td style="width: 65px;">{{LastSISentDate | DateTimeToDatePipe}}</td>
+
+                                                <td style="width:10px;">
+                                                    <div></div>
+                                                </td>
+
+                                                <td style="width: 30px; text-align: right;">{{LastSISentDate | DateTimeToTimePipe: 'S12'}}</td>
+
+                                                <td>
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+                                            <tr class="StatRow">
+                                                <td style="width:265px;">
+                                                    <LogLabel [ObjectFieldName]="'LastContainerStatusReceived'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                </td>
+                                                <td style="width: 65px;">{{LastContainerStatusReceived | DateTimeToDatePipe}}</td>
+
+                                                <td style="width:10px;">
+                                                    <div></div>
+                                                </td>
+
+                                                <td style="width: 30px; text-align: right;">{{LastContainerStatusReceived | DateTimeToTimePipe: 'S12'}}</td>
+
+                                                <td>
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+                                            <tr class="StatRow">
+                                                <td style="width:265px;">
+                                                    <LogLabel [ObjectFieldName]="'NumberOfBookingSentLastWeek'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td colspan="3">{{NumberOfBookingSentLastWeek}}</td>
+
+                                                <td>
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+                                            <tr class="StatRow">
+                                                <td style="width:265px;">
+                                                    <LogLabel [ObjectFieldName]="'NumberOfSISentLastWeek'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td colspan="3">{{NumberOfSISentLastWeek}}</td>
+
+                                                <td>
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </fieldset>
                                 </td>
 
                                 <td></td>
