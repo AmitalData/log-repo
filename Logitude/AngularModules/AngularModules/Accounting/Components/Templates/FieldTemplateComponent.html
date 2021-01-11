@@ -119,7 +119,7 @@
                                                 <a href="javascript:;" (click)="OpenGLAccount(ChildrenGLAccounts[0].Id)">{{ChildrenGLAccounts[0].LocalName}}</a>({{'GLAccounts.O.Child' | TextCodeTranslationPipe}})
                                             </div>
 
-                                            <LogToolTip [bottom]="5" [Scrollable]="true" [float]="'left'" *ngIf="numberOfChildren > 1 " [direction]="showLocal?'bottomleft':'bottomright'" [name]="'OpenShipments'"
+                                            <LogToolTip [bottom]="5" [Scrollable]="true" [float]="isRTL ? 'right' : 'left'" *ngIf="numberOfChildren > 1 " [direction]="showLocal?'bottomleft':'bottomright'" [name]="'OpenShipments'"
                                                         [mode]="'Info'">
                                                 <div *ngFor="let item of ChildrenGLAccounts">
                                                     <a href="javascript:;" (click)="OpenGLAccount(item.Id)">{{item.LocalName}}</a>({{'GLAccounts.O.Child' | TextCodeTranslationPipe}})

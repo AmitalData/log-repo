@@ -427,7 +427,7 @@ export class GLAccountChild extends BaseComponent {
             }
 
             this.CurrentSession.StopBusyIndicator();
-
+            this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
         });
     }
 

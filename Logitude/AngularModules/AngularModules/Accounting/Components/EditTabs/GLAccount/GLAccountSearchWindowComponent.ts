@@ -102,12 +102,13 @@ export class GLAccountSearchWindowComponent extends BaseComponent implements OnI
                     if (myResponse) {
                         if (!myResponse.HasError) {
                             this.CurrentSession.CloseCurrentWindowEmit(entityList);
+                            this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
                         }
                         else
                         {
                             this.ValidationErrorsList = myResponse.ErrorsArray;
                         }
-
+                     
                     }
 
                 });
