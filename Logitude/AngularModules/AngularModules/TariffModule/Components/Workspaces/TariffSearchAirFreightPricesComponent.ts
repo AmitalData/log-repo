@@ -837,12 +837,13 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
 
                 // FCL Shipment 
                 if (this.TariffType == "OFC") {
+                    var teuPrice: number = 0;
                     // Generate FCL Frieght
                     var shipmentContainer = this.BCNTGrouped.filter(f => f.PackageTypeId == this.ContainerType1Id)[0];
                     if (this.ContainerType1Id && shipmentContainer) {
                         this.AddNewTariffPayable(item, notes, this.ContainerType1Id);
                         if (item != null && item.SurchargesWithoutAllIn != null) {
-                            item.SurchargesWithoutAllIn.forEach(surcharge => {
+                            item.SurchargesWithoutAllIn.filter(a => a.UnitOfMesurmentCode != 'FIXD' && a.UnitOfMesurmentCode != 'BTEU').forEach(surcharge => {
                                 this.AddNewTariffPayable(surcharge, null, this.ContainerType1Id);
                             });
                         }
@@ -851,7 +852,7 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
                     if (this.ContainerType2Id && shipmentContainer) {
                         this.AddNewTariffPayable(item, notes, this.ContainerType2Id);
                         if (item != null && item.SurchargesWithoutAllIn != null) {
-                            item.SurchargesWithoutAllIn.forEach(surcharge => {
+                            item.SurchargesWithoutAllIn.filter(a => a.UnitOfMesurmentCode != 'FIXD' && a.UnitOfMesurmentCode != 'BTEU').forEach(surcharge => {
                                 this.AddNewTariffPayable(surcharge, null, this.ContainerType2Id);
                             });
                         }
@@ -860,7 +861,7 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
                     if (this.ContainerType3Id && shipmentContainer) {
                         this.AddNewTariffPayable(item, notes, this.ContainerType3Id);
                         if (item != null && item.SurchargesWithoutAllIn != null) {
-                            item.SurchargesWithoutAllIn.forEach(surcharge => {
+                            item.SurchargesWithoutAllIn.filter(a => a.UnitOfMesurmentCode != 'FIXD' && a.UnitOfMesurmentCode != 'BTEU').forEach(surcharge => {
                                 this.AddNewTariffPayable(surcharge, null, this.ContainerType3Id);
                             });
                         }
@@ -869,7 +870,7 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
                     if (this.ContainerType4Id && shipmentContainer) {
                         this.AddNewTariffPayable(item, notes, this.ContainerType4Id);
                         if (item != null && item.SurchargesWithoutAllIn != null) {
-                            item.SurchargesWithoutAllIn.forEach(surcharge => {
+                            item.SurchargesWithoutAllIn.filter(a => a.UnitOfMesurmentCode != 'FIXD' && a.UnitOfMesurmentCode != 'BTEU').forEach(surcharge => {
                                 this.AddNewTariffPayable(surcharge, null, this.ContainerType4Id);
                             });
                         }
@@ -878,11 +879,16 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
                     if (this.ContainerType5Id && shipmentContainer) {
                         this.AddNewTariffPayable(item, notes, this.ContainerType5Id);
                         if (item != null && item.SurchargesWithoutAllIn != null) {
-                            item.SurchargesWithoutAllIn.forEach(surcharge => {
+                            item.SurchargesWithoutAllIn.filter(a => a.UnitOfMesurmentCode != 'FIXD' && a.UnitOfMesurmentCode != 'BTEU').forEach(surcharge => {
                                 this.AddNewTariffPayable(surcharge, null, this.ContainerType5Id);
                             });
                         }
                     }
+
+                    // Generate one line for TEU & Fixed 
+                    item.SurchargesWithoutAllIn.filter(a => a.UnitOfMesurmentCode == 'FIXD' || a.UnitOfMesurmentCode == 'BTEU').forEach(surcharge => {
+                        this.AddNewTariffPayable(surcharge, null, null);
+                    });
                 }
 
                 else {
