@@ -127,14 +127,14 @@ namespace WebFreight.Web.Helpers
                     };
 
                     logitudeLeadService.Create(LogitudeLeadpm);
-                    AddCommunicationLog(LogitudeLeadpm);
+                    AddCommunicationLog(LogitudeLeadpm , "Logitude Lead");
                 }
             }
             return null;
         }
 
 
-        public void AddCommunicationLog(LogitudeLeadPM leadPM)
+        public void AddCommunicationLog(LogitudeLeadPM leadPM , string subject)
         {
             byte[] documentXML = LogitudeXmlSerializer.SerializeObject(leadPM);
 
@@ -149,7 +149,7 @@ namespace WebFreight.Web.Helpers
                     Priority = 1,
                     InOut = "O",
                     Status = "W",
-                    Subject = "Logitude Lead",
+                    Subject = subject,
                     FolderName = "LogitudeLeadQueue",
                     ByteData = documentXML,
 
@@ -171,7 +171,7 @@ namespace WebFreight.Web.Helpers
         {
             LogitudeLeadQuery logitudeLeadQuery = new LogitudeLeadQuery();
             LogitudeLeadPM entityPM = logitudeLeadQuery.GetSinglePM(leadPM.Id);
-            if (entityPM != null)
+            if (entityPM != null )
             {
                 entityPM.LastUpdateDate = DateTime.Now;
                 entityPM.Email = leadPM.Email;
@@ -274,7 +274,7 @@ namespace WebFreight.Web.Helpers
                     opportunityRepository.SubmitChanges();
                 }
 
-
+                AddCommunicationLog(entityPM, "Verifiy Logitude Lead");
             }
 
 
