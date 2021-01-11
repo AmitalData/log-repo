@@ -820,5 +820,7 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public double? HousesOpenReceivablesInProfit { get; set; }
         public double? HousesACCTReceivablesInLocal { get; set; }
         public double? HousesACCTReceivablesInProfit { get; set; }
+
+        public DateTime? INTTRALastEBbookingSendDate { get; set; }
     }
 }

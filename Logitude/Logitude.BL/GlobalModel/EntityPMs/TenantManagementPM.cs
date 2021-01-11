@@ -369,7 +369,7 @@ namespace Logitude.BL.GlobalModel.EntityPMs
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public int NumberOfSISentLastWeek { get; set; }
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public string LastContainerStatusReceived { get; set; }
+        public DateTime? LastContainerStatusReceived { get; set; }
 
     }
 }

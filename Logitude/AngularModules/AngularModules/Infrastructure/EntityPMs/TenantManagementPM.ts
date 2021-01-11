@@ -870,9 +870,9 @@ export class TenantManagementPM {
     public set NumberOfSISentLastWeek(newValue: number) { if (this.numberOfSISentLastWeek != newValue) { this.numberOfSISentLastWeek = newValue; this.MarkAsDirty("NumberOfSISentLastWeek"); } }
        
 	 
-    private lastContainerStatusReceived: string;
+    private lastContainerStatusReceived: Date;
     public get LastContainerStatusReceived() { return this.lastContainerStatusReceived; }
-    public set LastContainerStatusReceived(newValue: string) { if (this.lastContainerStatusReceived != newValue) { this.lastContainerStatusReceived = newValue; this.MarkAsDirty("LastContainerStatusReceived"); } }
+    public set LastContainerStatusReceived(newValue: Date) { if (this.lastContainerStatusReceived != newValue) { this.lastContainerStatusReceived = newValue; this.MarkAsDirty("LastContainerStatusReceived"); } }
        
 	 
 

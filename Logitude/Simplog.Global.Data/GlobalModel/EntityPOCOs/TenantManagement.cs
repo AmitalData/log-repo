@@ -201,7 +201,7 @@ namespace Simplog.Global.Data.GlobalModel.EntityPOCOs
         public DateTime? LastSISentDate { get; set; }
         public int NumberOfBookingSentLastWeek { get; set; }
         public int NumberOfSISentLastWeek { get; set; }
-        public string LastContainerStatusReceived { get; set; }
+        public DateTime? LastContainerStatusReceived { get; set; }
 
     }
 }

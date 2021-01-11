@@ -891,20 +891,21 @@
   </Column>
   <Column
     Name="NumberOfBookingSentLastWeek"
-    Type="int" DefaultValue="0">
+    Type="int"
+    DefaultValue="0">
     <Constraints
       Nullable="false" />
   </Column>
   <Column
     Name="NumberOfSISentLastWeek"
-    Type="int" DefaultValue="0">
+    Type="int"
+    DefaultValue="0">
     <Constraints
       Nullable="false" />
   </Column>
   <Column
     Name="LastContainerStatusReceived"
-    Type="varchar"
-    Size="100">
+    Type="datetime">
     <Constraints
       Nullable="true" />
   </Column>

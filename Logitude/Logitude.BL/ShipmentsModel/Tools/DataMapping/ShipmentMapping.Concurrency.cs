@@ -123,6 +123,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             entityPoco.INTTRALastBookingResponse = entityPM.INTTRALastBookingResponse;
             entityPoco.INTTRABookingStatusCode = entityPM.INTTRABookingStatusCode;
             entityPoco.INTTRABookingTransStatusCode = entityPM.INTTRABookingTransStatusCode;
+            entityPoco.INTTRALastEBbookingSendDate = entityPM.INTTRALastEBbookingSendDate;
 
             if (entityPM.ShipmentLevelCode != "H")
             {

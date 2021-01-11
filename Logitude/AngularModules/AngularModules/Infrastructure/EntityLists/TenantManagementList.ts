@@ -147,6 +147,6 @@ export class TenantManagementList {
 		LastSISentDate: Date;
 		NumberOfBookingSentLastWeek: number;
 		NumberOfSISentLastWeek: number;
-		LastContainerStatusReceived: string;
+		LastContainerStatusReceived: Date;
 	
 }
