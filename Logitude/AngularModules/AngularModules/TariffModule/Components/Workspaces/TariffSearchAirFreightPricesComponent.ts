@@ -965,11 +965,10 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
             if (!myResponse.HasError) {
                 var chargesType: ChargesTypeList = myResponse.Result;
                 var shipmentPayable: ShipmentPayablePM = this.Generator.GeneratePayablesFromTariff(chargesType);
-                shipmentPayable.TariffId = newRecord.TariffId;
-                shipmentPayable.TariffNumber = newRecord.TariffNumber;
-                shipmentPayable.TariffVersion = newRecord.VersionId != null ? newRecord.VersionId.toString() : newRecord.VersionId;
+               
                 shipmentPayable.CurrencyId = newRecord.CurrencyId;
                 this.Generator.GetCurrencyCode(shipmentPayable);
+
                 shipmentPayable.Rate = this.Generator.GetCurrencyRate(shipmentPayable.CurrencyId);
                 shipmentPayable.ProfitCurrencyExchangeRate = this.Generator.GetCurrencyRate(this.FatherComponent.EntityPM.ProfitCurrencyId);
                 shipmentPayable.MeasurementId = newRecord.UnitOfMesurmentId;
@@ -992,6 +991,12 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
                 else {
                     expectedAmount = newRecord.ActualPrice;
                     newQuantity = this.GetQuantity(newRecord.UnitOfMesurmentCode)
+                }
+
+                if (!AppTool.IsNullOrZero(expectedAmount)) {
+                    shipmentPayable.TariffId = newRecord.TariffId;
+                    shipmentPayable.TariffNumber = newRecord.TariffNumber;
+                    shipmentPayable.TariffVersion = newRecord.VersionId != null ? newRecord.VersionId.toString() : newRecord.VersionId;
                 }
 
                 var rate = this.Generator.GetCurrencyRate(newRecord.CurrencyId);
@@ -1354,13 +1359,18 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
     }
 
     FillQuoteFCLCharges(packageId: string, chargePM: QuoteChargePM, item: any) {
-        var costAmount = AppTool.Round(item.ActualPrice, 3);
-        var quantity;
+        var costAmount: number = AppTool.Round(item.ActualPrice, 3);
+        var quantity: number;
+
         if (item.ContainersPrices) {
             var container = item.ContainersPrices.filter(d => d.TariffId == item.TariffId && d.ContainerId == packageId)[0];
             if (container) {
                 quantity = container.Quantity;
                 costAmount = container.Price_WithoutQuantity;
+            }
+
+            else {
+                costAmount = 0;
             }
         }
   
