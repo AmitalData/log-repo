@@ -566,8 +566,8 @@ export class QuoteChargesBehaviours {
         }
 
         else {
-            if (!AppTool.IsNullOrEmpty(itemCostPrice) && !AppTool.IsNullOrEmpty(itemPM.CostExchangeRate) && !AppTool.IsNullOrEmpty(this.EntityPM.ExchangeRate)) {
-                output = itemCostPrice * itemPM.CostExchangeRate / this.EntityPM.ExchangeRate;
+            if (!AppTool.IsNullOrEmpty(itemCostPrice) && !AppTool.IsNullOrEmpty(itemPM.CostExchangeRate) && !AppTool.IsNullOrEmpty(itemPM.SaleExchangeRate)) {
+                output = itemCostPrice * itemPM.CostExchangeRate / itemPM.SaleExchangeRate;
             }
         }
 

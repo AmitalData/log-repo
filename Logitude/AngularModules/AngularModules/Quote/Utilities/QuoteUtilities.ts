@@ -280,7 +280,7 @@ export class QuoteUtilities {
         entityPM.TransitTime = copiedEntityPM.TransitTime;
         entityPM.ProfitCurrencyId = copiedEntityPM.ProfitCurrencyId;
         entityPM.ProfitExchangeRate = copiedEntityPM.ProfitExchangeRate;
-       
+        entityPM.IsMultiCurrency = copiedEntityPM.IsMultiCurrency;       
     }
     public static CopyQuotePackages(entityPM: QuotePM, copiedEntityPM: QuotePM) {
         copiedEntityPM.QuotePackages.forEach(item => {

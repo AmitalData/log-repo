@@ -1750,6 +1750,8 @@ export class QuoteChargeItem extends BaseComponent {
         if (this.EntityPM.CostCurrencyId != value) {
             this.EntityPM.CostCurrencyId = value;
             this.SetUIProperties_CostRate();
+            this.SetUIProperties_AllIn_CostCurrency();
+            this.SetUIProperties_AllIn_SaleCurrency();
 
             this.CostCurrencyCode = this.fatherComponent.Behaviours.GetCurrencyCode(value);
             this.CostExchangeRate = this.fatherComponent.Behaviours.GetCurrencyRate(value);
@@ -2001,8 +2003,8 @@ export class QuoteChargeItem extends BaseComponent {
         }
 
         else {
-            if (!AppTool.IsNullOrEmpty(this.CostTotalAmountLocal) && !AppTool.IsNullOrEmpty(this.fatherComponent.ExchangeRate)) {
-                myResult = this.CostTotalAmountLocal / this.fatherComponent.ExchangeRate;
+            if (!AppTool.IsNullOrEmpty(this.CostTotalAmountLocal) && !AppTool.IsNullOrEmpty(this.SaleExchangeRate)) {
+                myResult = this.CostTotalAmountLocal / this.SaleExchangeRate;
             }
         }
 
@@ -2058,6 +2060,8 @@ export class QuoteChargeItem extends BaseComponent {
             this.EntityPM.SaleCurrencyId = value;
             this.SaleCurrencyCode = this.fatherComponent.Behaviours.GetCurrencyCode(value);
             this.SaleExchangeRate = this.fatherComponent.Behaviours.GetCurrencyRate(value);
+            this.SetUIProperties_AllIn_CostCurrency();
+            this.SetUIProperties_AllIn_SaleCurrency();
         }
     }
 
@@ -2552,14 +2556,27 @@ export class QuoteChargeItem extends BaseComponent {
     public SalePriceHeader: any = [];
     public SaleAmountHeader: any = [];
     SetEditScreenGridHeaders() {
-        if (this.fatherComponent.IsSaleCurrencySameAsCost || this.fatherComponent.IsMultiCurrency) {
-            var myCurrencyCode = AppTool.IsNullOrEmpty(this.CostCurrencyCode) ? "" : this.CostCurrencyCode;
-            this.SalePriceHeader = TextCodeTranslator.Translate("Quote.O.Charges.SalePrice", false).replace("%SaleCurrencyCode", myCurrencyCode).split('%n');
-            this.SaleAmountHeader = TextCodeTranslator.Translate("Quote.O.Charges.SaleAmount", false).replace("%SaleCurrencyCode", myCurrencyCode).split('%n');
+
+        var myCurrencyCode: string = "";
+
+        if (this.fatherComponent.IsMultiCurrency) {
+            myCurrencyCode = "";
+        }
+
+        else if (this.fatherComponent.IsSaleCurrencySameAsCost) {
+            myCurrencyCode = AppTool.IsNullOrEmpty(this.CostCurrencyCode) ? "" : this.CostCurrencyCode;
         }
 
         else {
-            var myCurrencyCode = AppTool.IsNullOrEmpty(this.fatherComponent.SaleCurrencyCode) ? "" : this.fatherComponent.SaleCurrencyCode;
+            myCurrencyCode = AppTool.IsNullOrEmpty(this.fatherComponent.SaleCurrencyCode) ? "" : this.fatherComponent.SaleCurrencyCode;
+        }
+
+        if (AppTool.IsNullOrEmpty(myCurrencyCode)) {
+            this.SalePriceHeader = TextCodeTranslator.Translate("Quote.O.Charges.SalePrice", false).replace("%SaleCurrencyCode", myCurrencyCode).replace("(", "").replace(")", "").split('%n');
+            this.SaleAmountHeader = TextCodeTranslator.Translate("Quote.O.Charges.SaleAmount", false).replace("%SaleCurrencyCode", myCurrencyCode).replace("(", "").replace(")", "").split('%n');
+        }
+
+        else {
             this.SalePriceHeader = TextCodeTranslator.Translate("Quote.O.Charges.SalePrice", false).replace("%SaleCurrencyCode", myCurrencyCode).split('%n');
             this.SaleAmountHeader = TextCodeTranslator.Translate("Quote.O.Charges.SaleAmount", false).replace("%SaleCurrencyCode", myCurrencyCode).split('%n');
         }
