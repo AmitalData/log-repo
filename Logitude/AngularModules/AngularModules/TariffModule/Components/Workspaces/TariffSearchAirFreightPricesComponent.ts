@@ -1343,7 +1343,6 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
                         }
 
                         if (measurementCode != 'FIXD' && measurementCode != 'BTEU') {
-
                             this.FillQuoteFCLCharges(this.ContainerType1Id, chargePM, item);
                             this.FillQuoteFCLCharges(this.ContainerType2Id, chargePM, item);
                             this.FillQuoteFCLCharges(this.ContainerType3Id, chargePM, item);
@@ -1351,18 +1350,13 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
                             this.FillQuoteFCLCharges(this.ContainerType5Id, chargePM, item);
                         }
                         else {
-                            chargePM.CostUnitPrice = item.ActualPrice;
                             if (measurementCode == 'FIXD') {
+                                chargePM.CostUnitPrice = item.ActualPrice;
                                 chargePM.CostQuantity = 1;
                             }
                             else {
-                                var teuQantity = 0;
-                                item.ContainersPrices.forEach(item => {
-                                    var container = this.allPackageTypes.filter(d => d.Id == item.ContainerId)[0];
-                                    if (container != null)
-                                        teuQantity = teuQantity + container.TEU;
-                                });
-                                chargePM.CostQuantity = teuQantity;
+                                 chargePM.CostUnitPrice= item.ContainersPrices[0].Price_WithoutQuantity;
+                                chargePM.CostQuantity = this.FatherComponent.EntityPM.TEU;
                             }
                         }
                     }
