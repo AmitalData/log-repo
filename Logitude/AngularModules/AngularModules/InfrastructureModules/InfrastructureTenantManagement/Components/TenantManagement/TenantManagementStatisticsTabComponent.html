@@ -886,8 +886,13 @@
                                                 <td style="width:265px;">
                                                     <LogLabel [ObjectFieldName]="'LastContainerStatusReceived'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                                 </td>
+                                                <td style="width: 65px;">{{LastContainerStatusReceived | DateTimeToDatePipe}}</td>
 
-                                                <td colspan="3">{{LastContainerStatusReceived}}</td>
+                                                <td style="width:10px;">
+                                                    <div></div>
+                                                </td>
+
+                                                <td style="width: 30px; text-align: right;">{{LastContainerStatusReceived | DateTimeToTimePipe: 'S12'}}</td>
 
                                                 <td>
                                                     <div></div>
