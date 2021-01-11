@@ -8,178 +8,175 @@
 //------------------------------------------------------------------------------
 
 
-import {AutomationResultEmailRecipientPM} from './AutomationResultEmailRecipientPM';
-import {UIProperties, UIProperty} from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
-import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
-import {ServiceLocator} from '../../Infrastructure/Locators/ServiceLocator';
-import {Output, EventEmitter}  from '@angular/core';
-import {PropertyChangedArgs} from '../../Infrastructure/EventEmitterArgs/PropertyChangedArgs';
-import {CustomFieldClass} from '../../Infrastructure/DataContracts/CustomFieldClass';
+import { AutomationResultEmailRecipientPM } from './AutomationResultEmailRecipientPM';
+import { UIProperties, UIProperty } from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
+import { ServiceHelper } from '../../Infrastructure/Utilities/ServiceHelper';
+import { ServiceLocator } from '../../Infrastructure/Locators/ServiceLocator';
+import { Output, EventEmitter } from '@angular/core';
+import { PropertyChangedArgs } from '../../Infrastructure/EventEmitterArgs/PropertyChangedArgs';
+import { CustomFieldClass } from '../../Infrastructure/DataContracts/CustomFieldClass';
 
 
 export class AutomationPM {
 
-      @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
-      public UIProperties: UIProperties;
-	  constructor() {
-          this.UIProperties = new UIProperties(this); 
-          this.IsDirty = false;
-      }
- 	 
-    
+    @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
+    public UIProperties: UIProperties;
+    constructor() {
+        this.UIProperties = new UIProperties(this);
+        this.IsDirty = false;
+    }
+
+
     private id: string;
     public get Id() { return this.id; }
     public set Id(newValue: string) { if (this.id != newValue) { this.id = newValue; this.MarkAsDirty("Id"); } }
-       
-	 
+
+
     private tenant: number;
     public get Tenant() { return this.tenant; }
     public set Tenant(newValue: number) { if (this.tenant != newValue) { this.tenant = newValue; this.MarkAsDirty("Tenant"); } }
-       
-	 
+
+
     private name: string;
     public get Name() { return this.name; }
     public set Name(newValue: string) { if (this.name != newValue) { this.name = newValue; this.MarkAsDirty("Name"); } }
-       
-	 
+
+
     private objectTableId: string;
     public get ObjectTableId() { return this.objectTableId; }
     public set ObjectTableId(newValue: string) { if (this.objectTableId != newValue) { this.objectTableId = newValue; this.MarkAsDirty("ObjectTableId"); } }
-       
-	 
+
+
     private type: string;
     public get Type() { return this.type; }
     public set Type(newValue: string) { if (this.type != newValue) { this.type = newValue; this.MarkAsDirty("Type"); } }
-       
-	 
+
+
     private resultCode: string;
     public get ResultCode() { return this.resultCode; }
     public set ResultCode(newValue: string) { if (this.resultCode != newValue) { this.resultCode = newValue; this.MarkAsDirty("ResultCode"); } }
-       
-	 
+
+
     private description: string;
     public get Description() { return this.description; }
     public set Description(newValue: string) { if (this.description != newValue) { this.description = newValue; this.MarkAsDirty("Description"); } }
-       
-	 
+
+
     private inactive: boolean;
     public get Inactive() { return this.inactive; }
     public set Inactive(newValue: boolean) { if (this.inactive != newValue) { this.inactive = newValue; this.MarkAsDirty("Inactive"); } }
-       
-	 
+
+
     private createDate: Date;
     public get CreateDate() { return this.createDate; }
     public set CreateDate(newValue: Date) { if (this.createDate != newValue) { this.createDate = newValue; this.MarkAsDirty("CreateDate"); } }
-       
-	 
+
+
     private updateDate: Date;
     public get UpdateDate() { return this.updateDate; }
     public set UpdateDate(newValue: Date) { if (this.updateDate != newValue) { this.updateDate = newValue; this.MarkAsDirty("UpdateDate"); } }
-       
-	 
+
+
     private createdByUserId: string;
     public get CreatedByUserId() { return this.createdByUserId; }
     public set CreatedByUserId(newValue: string) { if (this.createdByUserId != newValue) { this.createdByUserId = newValue; this.MarkAsDirty("CreatedByUserId"); } }
-       
-	 
+
+
     private updatedByUserId: string;
     public get UpdatedByUserId() { return this.updatedByUserId; }
     public set UpdatedByUserId(newValue: string) { if (this.updatedByUserId != newValue) { this.updatedByUserId = newValue; this.MarkAsDirty("UpdatedByUserId"); } }
-       
-	 
+
+
     private documentTypeId: string;
     public get DocumentTypeId() { return this.documentTypeId; }
     public set DocumentTypeId(newValue: string) { if (this.documentTypeId != newValue) { this.documentTypeId = newValue; this.MarkAsDirty("DocumentTypeId"); } }
-       
-	 
+
+
     private templateId: string;
     public get TemplateId() { return this.templateId; }
     public set TemplateId(newValue: string) { if (this.templateId != newValue) { this.templateId = newValue; this.MarkAsDirty("TemplateId"); } }
-       
-	 
+
+
     private createdByUserName: string;
     public get CreatedByUserName() { return this.createdByUserName; }
     public set CreatedByUserName(newValue: string) { if (this.createdByUserName != newValue) { this.createdByUserName = newValue; this.MarkAsDirty("CreatedByUserName"); } }
-       
-	 
+
+
     private updatedByUserName: string;
     public get UpdatedByUserName() { return this.updatedByUserName; }
     public set UpdatedByUserName(newValue: string) { if (this.updatedByUserName != newValue) { this.updatedByUserName = newValue; this.MarkAsDirty("UpdatedByUserName"); } }
-       
-	 
+
+
     private from: string;
     public get From() { return this.from; }
     public set From(newValue: string) { if (this.from != newValue) { this.from = newValue; this.MarkAsDirty("From"); } }
-       
-	 
+
+
     private fromEmail: string;
     public get FromEmail() { return this.fromEmail; }
     public set FromEmail(newValue: string) { if (this.fromEmail != newValue) { this.fromEmail = newValue; this.MarkAsDirty("FromEmail"); } }
-       
-	 
+
+
     private automationXML: string;
     public get AutomationXML() { return this.automationXML; }
     public set AutomationXML(newValue: string) { if (this.automationXML != newValue) { this.automationXML = newValue; this.MarkAsDirty("AutomationXML"); } }
-       
-	 
+
+
     private version: number;
     public get Version() { return this.version; }
     public set Version(newValue: number) { if (this.version != newValue) { this.version = newValue; this.MarkAsDirty("Version"); } }
-       
-	 
+
+
     private order: number;
     public get Order() { return this.order; }
     public set Order(newValue: number) { if (this.order != newValue) { this.order = newValue; this.MarkAsDirty("Order"); } }
-       
-	 
+
+
     private automatedDataBackup: string;
     public get AutomatedDataBackup() { return this.automatedDataBackup; }
     public set AutomatedDataBackup(newValue: string) { if (this.automatedDataBackup != newValue) { this.automatedDataBackup = newValue; this.MarkAsDirty("AutomatedDataBackup"); } }
-       
-	 
+
+
     private code: string;
     public get Code() { return this.code; }
     public set Code(newValue: string) { if (this.code != newValue) { this.code = newValue; this.MarkAsDirty("Code"); } }
-       
-	 
-     
-	private automationResultEmailRecipientLists: AutomationResultEmailRecipientPM[];
-    get  AutomationResultEmailRecipientLists() {
+
+
+
+    private automationResultEmailRecipientLists: AutomationResultEmailRecipientPM[];
+    get AutomationResultEmailRecipientLists() {
         if (this.automationResultEmailRecipientLists == null) {
             this.automationResultEmailRecipientLists = [];
         }
 
         return this.automationResultEmailRecipientLists;
     }
-    set  AutomationResultEmailRecipientLists(newValue: AutomationResultEmailRecipientPM[]) {
+    set AutomationResultEmailRecipientLists(newValue: AutomationResultEmailRecipientPM[]) {
         if (this.automationResultEmailRecipientLists != newValue) {
             this.automationResultEmailRecipientLists = newValue;
         }
     }
     //public AutomationResultEmailRecipientLists: Array<AutomationResultEmailRecipientPMPM>= [];
-     private isChangeAutomationXaml: boolean;
+    private isChangeAutomationXaml: boolean;
     public get IsChangeAutomationXaml() { return this.isChangeAutomationXaml; }
     public set IsChangeAutomationXaml(newValue: boolean) { if (this.isChangeAutomationXaml != newValue) { this.isChangeAutomationXaml = newValue; this.MarkAsDirty("IsChangeAutomationXaml"); } }
-       
-	 
 
-    public DocumentTypeTemplateIds: Array<string>= [];
-		 
+
+
     public OldEntityPM: AutomationPM;
-		
+
     public IsDirty: boolean;
     public DisableMarkAsDirty: boolean = false;
-    MarkAsDirty(propertyName:string = null) {
-       if(!this.DisableMarkAsDirty)
-       {
-        this.IsDirty = true;
-		  	
-        if (propertyName != null) {
-            this.PropertyChanged.emit(new PropertyChangedArgs(propertyName,this));
-            ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "Automation");
-           
+    MarkAsDirty(propertyName: string = null) {
+        if (!this.DisableMarkAsDirty) {
+            this.IsDirty = true;
+
+            if (propertyName != null) {
+                this.PropertyChanged.emit(new PropertyChangedArgs(propertyName, this));
+                ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "Automation");
+
+            }
         }
-	 }
     }
     private MyClone: AutomationPM;
 

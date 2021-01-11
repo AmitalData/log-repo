@@ -10,168 +10,166 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
 import { defer, of } from 'rxjs';
-import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
-import {ClassLevelValidator} from '../../../Infrastructure/Validators/ClassLevelValidator';
-import {Guid} from '../../../Infrastructure/Utilities/Guid';
-import {InfraSettings} from '../../../Infrastructure/Utilities/InfraSettings';
-import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
-import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
-import {CustomFieldClass} from '../../../Infrastructure/DataContracts/CustomFieldClass'
-import {PerformanceLogger} from '../../../Infrastructure/Utilities/PerformanceLogger';
+import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
+import { ClassLevelValidator } from '../../../Infrastructure/Validators/ClassLevelValidator';
+import { Guid } from '../../../Infrastructure/Utilities/Guid';
+import { InfraSettings } from '../../../Infrastructure/Utilities/InfraSettings';
+import { ServiceHelper } from '../../../Infrastructure/Utilities/ServiceHelper';
+import { SessionInfo } from '../../../Infrastructure/Utilities/SessionInfo';
+import { CustomFieldClass } from '../../../Infrastructure/DataContracts/CustomFieldClass'
+import { PerformanceLogger } from '../../../Infrastructure/Utilities/PerformanceLogger';
 
-import {FilingInboxPM} from '../../EntityPMs/FilingInboxPM';
+import { FilingInboxPM } from '../../EntityPMs/FilingInboxPM';
 
-import {FilingInboxAttachmentPM} from '../../EntityPMs/FilingInboxAttachmentPM';
+import { FilingInboxAttachmentPM } from '../../EntityPMs/FilingInboxAttachmentPM';
 
 @Injectable()
 
 export class FilingInboxPMService {
- private _http: HttpClient;
- private _apiUrl: string;
- constructor() {
+    private _http: HttpClient;
+    private _apiUrl: string;
+    constructor() {
         this._http = ServiceHelper.HttpClient;
-        this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/filinginboxes';      
+        this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/filinginboxes';
     }
 
-	get(id: string) {       
+    get(id: string) {
 
-		var callTime = new Date();		
+        var callTime = new Date();
 
-		return defer(() => {
-			return this._http.get(this._apiUrl + '/getsingle?' + 'id=' + id, ServiceHelper.GetHttpFullHeaders())
-				.pipe(
-					map((response: HttpResponse<any>) => {
-						var pm = response.body;
-				
-						var entity: FilingInboxPM;
-						if (pm) {
-							entity = this.MapJsonToEntityPM(pm);
-						}
+        return defer(() => {
+            return this._http.get(this._apiUrl + '/getsingle?' + 'id=' + id, ServiceHelper.GetHttpFullHeaders())
+                .pipe(
+                    map((response: HttpResponse<any>) => {
+                        var pm = response.body;
 
-						var serviceResponse: ServiceResponse = new ServiceResponse();
-						serviceResponse.Result = entity;
-              
-						var servertime = response.headers.get('ServerExecutionTime');
-						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "FilingInbox", "GetSinglePM", 'id=' + id);
-				 
-						return serviceResponse;
+                        var entity: FilingInboxPM;
+                        if (pm) {
+                            entity = this.MapJsonToEntityPM(pm);
+                        }
 
-					}),
-					
-					catchError(ServiceHelper.HandleServiceError));
-		});                    
-	}
+                        var serviceResponse: ServiceResponse = new ServiceResponse();
+                        serviceResponse.Result = entity;
 
-	insert(entityPM: FilingInboxPM) {
- 
-		var callTime = new Date();  
-		
-		return defer(() => {
+                        var servertime = response.headers.get('ServerExecutionTime');
+                        PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "FilingInbox", "GetSinglePM", 'id=' + id);
 
-			var serviceResponse: ServiceResponse = new ServiceResponse();
-			var validator: ClassLevelValidator = new ClassLevelValidator();                
-			var errorsArray = validator.Validate("FilingInbox", entityPM);
+                        return serviceResponse;
 
+                    }),
 
-			if (errorsArray.length == 0) {
+                    catchError(ServiceHelper.HandleServiceError));
+        });
+    }
 
-				var mappedEntity: FilingInboxPM = this.MapJsonToEntityPM(entityPM, false);
-				
-				return this._http.post(this._apiUrl, JSON.stringify(mappedEntity), ServiceHelper.GetHttpFullHeaders())
-					.pipe(
-						map((response: HttpResponse<any>) => {
+    insert(entityPM: FilingInboxPM) {
 
-							var pm = response.body;
-							if (pm) {
-								var mappedResult: FilingInboxPM = this.MapJsonToEntityPM(pm, true, entityPM);
-								serviceResponse.Result = mappedResult;
-							}						
+        var callTime = new Date();
 
-							var servertime = response.headers.get('ServerExecutionTime');
-							PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "FilingInbox", "SaveChanges", "");                    
-												                             
-							return serviceResponse;
-						}),
+        return defer(() => {
 
-						catchError(ServiceHelper.HandleServiceError));
-			}
-
-			else {
-				serviceResponse.HasError = true;
-				serviceResponse.ErrorsArray = errorsArray;
-				return of(serviceResponse);
-			}
-		});
-	}
-
-	update(entityPM: FilingInboxPM) {
-
-		var callTime = new Date();     
-		
-		return defer(() => {
-
-			var serviceResponse: ServiceResponse = new ServiceResponse();
-			var validator: ClassLevelValidator = new ClassLevelValidator();               
-			var errorsArray = validator.Validate("FilingInbox", entityPM);
+            var serviceResponse: ServiceResponse = new ServiceResponse();
+            var validator: ClassLevelValidator = new ClassLevelValidator();
+            var errorsArray = validator.Validate("FilingInbox", entityPM);
 
 
-			if (errorsArray.length == 0) {
+            if (errorsArray.length == 0) {
 
-				var mappedEntity: FilingInboxPM = this.MapJsonToEntityPM(entityPM, false);
-				
-				return this._http.put(this._apiUrl, JSON.stringify(mappedEntity), ServiceHelper.GetHttpFullHeaders())
-					.pipe(
-						map((response: HttpResponse<any>) => {
-                 
-							var pm = response.body;
-							if (pm) {
-								var mappedResult: FilingInboxPM = this.MapJsonToEntityPM(pm, true, entityPM);
-								serviceResponse.Result = mappedResult;
-							}
-							 
-							var servertime = response.headers.get('ServerExecutionTime');
-							PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "FilingInbox", "SaveChanges", "");                    
-					                           
-							return serviceResponse;
-						}),
+                var mappedEntity: FilingInboxPM = this.MapJsonToEntityPM(entityPM, false);
 
-						catchError(ServiceHelper.HandleServiceError));
-			}
+                return this._http.post(this._apiUrl, JSON.stringify(mappedEntity), ServiceHelper.GetHttpFullHeaders())
+                    .pipe(
+                        map((response: HttpResponse<any>) => {
 
-			else {
-				serviceResponse.HasError = true;
-				serviceResponse.ErrorsArray = errorsArray;
-				return of(serviceResponse);
-			}
-		});
-	}
+                            var pm = response.body;
+                            if (pm) {
+                                var mappedResult: FilingInboxPM = this.MapJsonToEntityPM(pm, true, entityPM);
+                                serviceResponse.Result = mappedResult;
+                            }
 
-   
+                            var servertime = response.headers.get('ServerExecutionTime');
+                            PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "FilingInbox", "SaveChanges", "");
 
-	  MapJsonToEntityPM(jsonPM: any, mapParent: boolean = true, entityPM: FilingInboxPM = null) {
+                            return serviceResponse;
+                        }),
 
-         
+                        catchError(ServiceHelper.HandleServiceError));
+            }
+
+            else {
+                serviceResponse.HasError = true;
+                serviceResponse.ErrorsArray = errorsArray;
+                return of(serviceResponse);
+            }
+        });
+    }
+
+    update(entityPM: FilingInboxPM) {
+
+        var callTime = new Date();
+
+        return defer(() => {
+
+            var serviceResponse: ServiceResponse = new ServiceResponse();
+            var validator: ClassLevelValidator = new ClassLevelValidator();
+            var errorsArray = validator.Validate("FilingInbox", entityPM);
+
+
+            if (errorsArray.length == 0) {
+
+                var mappedEntity: FilingInboxPM = this.MapJsonToEntityPM(entityPM, false);
+
+                return this._http.put(this._apiUrl, JSON.stringify(mappedEntity), ServiceHelper.GetHttpFullHeaders())
+                    .pipe(
+                        map((response: HttpResponse<any>) => {
+
+                            var pm = response.body;
+                            if (pm) {
+                                var mappedResult: FilingInboxPM = this.MapJsonToEntityPM(pm, true, entityPM);
+                                serviceResponse.Result = mappedResult;
+                            }
+
+                            var servertime = response.headers.get('ServerExecutionTime');
+                            PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "FilingInbox", "SaveChanges", "");
+
+                            return serviceResponse;
+                        }),
+
+                        catchError(ServiceHelper.HandleServiceError));
+            }
+
+            else {
+                serviceResponse.HasError = true;
+                serviceResponse.ErrorsArray = errorsArray;
+                return of(serviceResponse);
+            }
+        });
+    }
+
+
+
+    MapJsonToEntityPM(jsonPM: any, mapParent: boolean = true, entityPM: FilingInboxPM = null) {
+
+
         if (!entityPM) {
-            
+
             entityPM = new FilingInboxPM();
-			entityPM.DisableMarkAsDirty = true;
         }
 
-		var customFields: Array<string> = [];
+        var customFields: Array<string> = [];
         for (var i = 1; i < 11; i++) {
             customFields.push("Field" + i);
         }
-            var jsonPMKeys = Object.keys(jsonPM);
+        var jsonPMKeys = Object.keys(jsonPM);
 
-            for (var key in jsonPMKeys) {
-			 if (jsonPMKeys[key] === "UIProperties" || jsonPMKeys[key] === "PropertyChanged") {
+        for (var key in jsonPMKeys) {
+            if (jsonPMKeys[key] === "UIProperties" || jsonPMKeys[key] === "PropertyChanged") {
 
                 continue;
             }
-                var property = jsonPMKeys[key];
-				
-			  if(customFields.indexOf(property) > -1)
-                {
+            var property = jsonPMKeys[key];
+
+            if (customFields.indexOf(property) > -1) {
                 if (jsonPM[property]) {
                     var customFieldClass: CustomFieldClass = new CustomFieldClass(jsonPM[property].Value, jsonPM[property].FieldName, jsonPM[property].TableName);
                     entityPM[property] = customFieldClass;
@@ -180,33 +178,31 @@ export class FilingInboxPMService {
             else {
                 entityPM[property] = jsonPM[property];
             }
-                 
-            }
-			
-               this.MapFilingInboxAttachments(entityPM, jsonPM, mapParent); // Call composition tables map methods
-			 
-            
 
-		if (mapParent) {
-                entityPM.OldEntityPM = this.clone(entityPM);
-			   			   
+        }
+
+        this.MapFilingInboxAttachments(entityPM, jsonPM, mapParent); // Call composition tables map methods
+
+
+
+        if (mapParent) {
+            entityPM.OldEntityPM = this.clone(entityPM);
+
             entityPM.OldEntityPM.FilingInboxAttachments = [];
             for (var item in entityPM.FilingInboxAttachments) {
-            var myFilingInboxAttachmentPM = entityPM.FilingInboxAttachments[item];
-            var newFilingInboxAttachmentPM: FilingInboxAttachmentPM = this.clone(myFilingInboxAttachmentPM);
-						
-							 
-            entityPM.OldEntityPM.FilingInboxAttachments.push(newFilingInboxAttachmentPM);
+                var myFilingInboxAttachmentPM = entityPM.FilingInboxAttachments[item];
+                var newFilingInboxAttachmentPM: FilingInboxAttachmentPM = this.clone(myFilingInboxAttachmentPM);
+
+
+                entityPM.OldEntityPM.FilingInboxAttachments.push(newFilingInboxAttachmentPM);
             }
-			   
-		}
+
+        }
         else {
 
             entityPM.OldEntityPM = null;
         }
-		entityPM.IsDirty = false;
-	    entityPM.DisableMarkAsDirty = false;
-
+        entityPM.IsDirty = false;
         return entityPM;
     }
 
@@ -221,29 +217,28 @@ export class FilingInboxPMService {
             }
             var newFilingInboxAttachmentPM: FilingInboxAttachmentPM;
             newFilingInboxAttachmentPM = new FilingInboxAttachmentPM();
-		    newFilingInboxAttachmentPM.DisableMarkAsDirty = true;                
+
             var pmKeysArray = Object.keys(jItem);
             for (var pmKey in pmKeysArray) {
-			
-                if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
+
+                if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM") || pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
                     continue;
                 }
                 var pmProperty = pmKeysArray[pmKey];
                 newFilingInboxAttachmentPM[pmProperty] = jItem[pmProperty];
             }
-			newFilingInboxAttachmentPM.DisableMarkAsDirty = false;
             newFilingInboxAttachmentPM.IsDirty = false;
             entityPM.FilingInboxAttachments.push(newFilingInboxAttachmentPM);
         }
     }
 
-	  public clone(jsonPM: any) {
+    public clone(jsonPM: any) {
         var entityPM: any;
         entityPM = {};
 
         var jsonPMKeys = Object.keys(jsonPM);
         for (var key in jsonPMKeys) {
-            
+
             if ((jsonPMKeys[key] === "entityParentPM") || jsonPMKeys[key] === "UIProperties" || jsonPMKeys[key] === "OldEntityPM" || jsonPMKeys[key] === "PropertyChanged") {
                 continue;
             }
@@ -255,12 +250,12 @@ export class FilingInboxPMService {
         return entityPM;
     }
 
-	  public GetNewEntityPM() {		 
-		    var entityPM: FilingInboxPM;
-			entityPM = new FilingInboxPM();
-			entityPM.Tenant = InfraSettings.TenantPM.Id;
-			return entityPM;
+    public GetNewEntityPM() {
+        var entityPM: FilingInboxPM;
+        entityPM = new FilingInboxPM();
+        entityPM.Tenant = InfraSettings.TenantPM.Id;
+        return entityPM;
     }
-		 
+
 
 }
