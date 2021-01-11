@@ -66,7 +66,7 @@ export class FilingInboxAttachmentPM {
             this.attachLogs = newValue;
         }
     }
-    //public AttachLogs: Array<FilingInboxAttachToolTipPM>= [];
+    public AttachLogs: Array<FilingInboxAttachToolTipPM>= [];
  
     public OldEntityPM: FilingInboxAttachmentPM;
 		
