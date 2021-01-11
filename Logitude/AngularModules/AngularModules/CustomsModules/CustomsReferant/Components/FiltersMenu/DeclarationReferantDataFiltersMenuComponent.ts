@@ -7,6 +7,8 @@ import { FeatureLocator } from '../../../../Infrastructure/Utilities/FeatureLoca
 import { UserList } from '../../../../Common/EntityLists/UserList';
 import { AppTool } from '../../../../Infrastructure/Tools';
 import { AmitalGatewayUtil, UnifreightMessageM } from '../../../../Infrastructure/Utilities/AmitalGatewayUtil';
+import { UserListService } from '../../../../Common/Services/StandardLists/UserListService';
+import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
 
 @Component({
     selector: 'DeclarationReferantDataFiltersMenuComponent',
@@ -20,6 +22,7 @@ export class DeclarationReferantDataFiltersMenuComponent
     apiQueryFilters: ApiQueryFilters = new ApiQueryFilters();
     public itmImportDeclarationReferantDatas: boolean = false;
     public DirectionWidth: number = 140;
+    public UserFilers: ApiQueryFilters;
     private CurrentSession = SessionLocator.SelectedSession;
     public DataContext: DeclarationReferantDataFiltersMenuComponent = this;
     public ObjectTableName: string = "Customs.DeclarationReferantData";
@@ -30,12 +33,12 @@ export class DeclarationReferantDataFiltersMenuComponent
     public myViewChildrenMultiSelectLOVComponent: QueryList<MultiSelectLOVComponent> = null;
 
     constructor(private _CD: ChangeDetectorRef) {
-        super(); 
+        super();
         if (this.CurrentSession == null) {
             this.TransportFilter_A = "TransportFilter_A_-1_-1";
             this.TransportFilter_O = "TransportFilter_O_-1_-1";
             this.TransportFilter_I = "TransportFilter_I_-1_-1";
-        } else { 
+        } else {
             var index_T = this.CurrentSession.GetNewId("ShipmentTransportFilterMenu");
             this.TransportFilter_A = "TransportFilter_A" + index_T;
             this.TransportFilter_O = "TransportFilter_O" + index_T;
@@ -51,38 +54,52 @@ export class DeclarationReferantDataFiltersMenuComponent
         }
     }
 
+    SetFiltersMenu(args: any) {/*
+        this.UserFilers = new ApiQueryFilters();
+        var TransportFilters = new ApiQueryFilters();
+        this.UserFilers = args;
+        TransportFilters = args;
+        TransportFilters.AdditionalFilters = this.UserFilers.AdditionalFilters.filter(a => a.FieldName == "TransportModeId");
+        this.transportmodeId = this.UserFilers.AdditionalFilters.map(({ FieldValue }) => FieldValue)[0];
+        debugger;
+        this.itemClicked(this.transportmodeId);
+        this.UserFilers.AdditionalFilters = this.UserFilers.AdditionalFilters.filter(a => a.FieldName == "ReferentUserId");
+        var UserList = this.UserFilers.AdditionalFilters.map(({ FieldValue }) => FieldValue);
+        var myService: UserListService = new UserListService();
+        UserList.forEach(function (value) {
+            myService.getSingleFromCache(value).subscribe((resp: ServiceResponse) => {
+                if (!resp.HasError) {
+                    var result: ServiceResponse = resp;
+                    var list: UserList = resp.Result;
+                    this._LOVListUsers.push(list);
+                    this.myViewChildrenMultiSelectLOVComponent.first.Invalidate();
+                }
+            });
+        });
+         */
+
+    }
     OnChosenListItemsChanged() {
         this.SelectedValueChangedEmitUser();
     }
-    //public LoadingContactFilterItems: ApiQueryFilters;
-    //InitLOVFilters() {//38388
-   //     this.LoadingContactFilterItems.removeAdditionalFilter("InActive");
- //       this.LoadingContactFilterItems.addAdditionalFilter("InActive","True", null, null, "Equals", false, false, false, "Boolean", false, true);
-     //   ("ReferentUserId", UsersListString, null, null, "InListExact", false, false, false, "string", this._LOVListUsers.length == 0);
-  //  }
-    ngAfterViewInit() {
-        this.ApplyTransportSelectedStyle();
-        //
-        //this.LOVListUsers.push(SessionLocator.LoggedUserPM); // by default is the grid filtered by the current user
-        //let myUserListService: UserListService = new UserListService();
-        //myUserListService.getSingleFromCache(SessionLocator.LoggedUserId)
-        //    .subscribe(r => {
-        //        let myUserList: UserList = r.Result;
-        //        if (!AppTool.IsNullOrEmpty(myUserList)) {
-        //            this.myViewChildrenMultiSelectLOVComponent.first.AddUserList(myUserList);
-        //        }
-        //    });
-        let ul = new UserList();
-        ul.Id = (SessionLocator.LoggedUserPM.Id == null || SessionLocator.LoggedUserPM.Id == "0") ? "9999999" : SessionLocator.LoggedUserPM.Id ;
-        ul.LocalName = SessionLocator.LoggedUserPM.LocalName; 
-        if (AppTool.IsNullOrEmpty(ul.LocalName)) {
-            ul.LocalName = SessionLocator.LoggedUserPM.EnglishName;
-        }
-        this.LOVListUsers.push(ul);
-        this.myViewChildrenMultiSelectLOVComponent.first.Invalidate();
-        this.SelectedValueChangedEmitUser();
 
-        this._CD.detectChanges();
+    ngAfterViewInit() {
+        if (this.UserFilers != null) {
+
+        } else {
+            this.ApplyTransportSelectedStyle();
+            let ul = new UserList();
+            ul.Id = (SessionLocator.LoggedUserPM.Id == null || SessionLocator.LoggedUserPM.Id == "0") ? "9999999" : SessionLocator.LoggedUserPM.Id;
+            ul.LocalName = SessionLocator.LoggedUserPM.LocalName;
+            if (AppTool.IsNullOrEmpty(ul.LocalName)) {
+                ul.LocalName = SessionLocator.LoggedUserPM.EnglishName;
+            }
+            this.LOVListUsers.push(ul);
+            this.myViewChildrenMultiSelectLOVComponent.first.Invalidate();
+            this.SelectedValueChangedEmitUser();
+
+            this._CD.detectChanges();
+        }
     }
 
     SetTransport(itemValue: string) {
@@ -90,7 +107,7 @@ export class DeclarationReferantDataFiltersMenuComponent
         this.ApplyTransportSelectedStyle();
     }
 
-    _LOVListUsers :any[] = [];
+    _LOVListUsers: any[] = [];
     get LOVListUsers() { return this._LOVListUsers; }
     set LOVListUsers(value) {
         if (this._LOVListUsers != value) {
@@ -193,7 +210,7 @@ export class DeclarationReferantDataFiltersMenuComponent
             }
         }
     }
-    
+
     SelectedValueChangedEmitUser() {
         var RemoveFilter = false;
         if (this.apiQueryFilters.AdditionalFilters.length > 0) {
@@ -232,21 +249,23 @@ export class DeclarationReferantDataFiltersMenuComponent
         this.SelectedValueChanged.emit({ Filters: this.apiQueryFilters, RemoveFilter: RemoveFilter });
     }
 
+    transportmodeId: string="All";
     itemClicked(itemValue: string) {
+        this.transportmodeId = itemValue;
         var RemoveFilter = false;
         if (this.SelectedValue != itemValue) {
             this.SelectedValue = itemValue;
         }
         if (this.apiQueryFilters.AdditionalFilters.length > 0) {
-           this.apiQueryFilters.AdditionalFilters = this.apiQueryFilters.AdditionalFilters.filter(a => a.FieldName != "TransportModeId")
-                this.apiQueryFilters.addAdditionalFilter("TransportModeId", itemValue, null, null, "Equals", false, true, false, "string", (itemValue == "All" ? true : false));
+            this.apiQueryFilters.AdditionalFilters = this.apiQueryFilters.AdditionalFilters.filter(a => a.FieldName != "TransportModeId")
+            this.apiQueryFilters.addAdditionalFilter("TransportModeId", itemValue, null, null, "Equals", false, true, false, "string", (itemValue == "All" ? true : false));
         }
         this.SelectedValueChanged.emit({ Filters: this.apiQueryFilters, RemoveFilter: RemoveFilter });
         this.ApplyTransportSelectedStyle();
     }
 
     ShowQueueManagmentAQ1() {
-        
+
         let myViewModelName = "DeclarationReferantDataFiltersMenuComponent.ts-ShowQueueManagmentAQ1";
         if (AmitalGatewayUtil.Instance.AmitalBrowserInUse) {
             SessionLocator.SelectedSession.StartBusyIndicatorLoading();

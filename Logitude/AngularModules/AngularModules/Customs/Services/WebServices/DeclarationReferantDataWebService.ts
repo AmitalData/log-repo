@@ -16,7 +16,7 @@ export class DeclarationReferantDataWebService {
         this._http = ServiceHelper.HttpClient;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/DeclarationReferantDataWebService';
     }
-    GetQueriesCounts() {
+    GetQueriesCounts(refId:string, depId:string, transportMode:string) {
         return defer(() => {
 
             var authHeader = new Headers();
@@ -26,7 +26,7 @@ export class DeclarationReferantDataWebService {
             var serviceResponse: ServiceResponse;
             serviceResponse = new ServiceResponse();
 
-            return this._http.get(this._apiUrl + "/GetQueriesCounts", ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+            return this._http.get(this._apiUrl + "/GetQueriesCounts?refId=" + refId + "&depId=" + depId + "&transportMode=" + transportMode, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                 var serviceResponse: ServiceResponse = new ServiceResponse();
                 serviceResponse.Result = response;

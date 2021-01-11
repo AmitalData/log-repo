@@ -1,4 +1,4 @@
-import { Component, OnDestroy, AfterViewInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnDestroy, AfterViewInit, Output, EventEmitter, ViewChild} from '@angular/core';
 import { ApiQueryFilters } from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
 import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
 import { EntityResourceService } from '../../../../Infrastructure/Services/EntityResourceService';
@@ -9,7 +9,8 @@ import { ChartingDataClass } from '../../../../Infrastructure/DataContracts/Dash
 import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
 import { FormatTool } from '../../../../Infrastructure/Tools';
 import { DeclarationReferantDataExtendedListService } from '../../../../Customs/Services/ExtendedLists/DeclarationReferantDataExtendedListService';
- import { Dictionary  } from '../../../../Infrastructure/GenericTypes/Dictionary';
+import { Dictionary } from '../../../../Infrastructure/GenericTypes/Dictionary';
+import { DeclarationReferantDataFiltersMenuComponent } from '../FiltersMenu/DeclarationReferantDataFiltersMenuComponent';
 declare var makeAmBarChart, BarClick, ResetItem: any;
 
 @Component({
@@ -42,8 +43,11 @@ export class ReferantWorkspaceComponent implements AfterViewInit {
     public InProgressDeclarationReferantDataYAxisFilterd = [];
     public InProgressDeclarationReferantDataXAxis: string[] = [];
     public filterAgrs: ApiQueryFilters;
+    public RefId: string;
+    public DepId: string;
+    public TransportModeId: string;
 
-    dec_queries: Dictionary<string> ;
+    dec_queries: Dictionary<string>;
 
     barChartColors: any[] = [
         {
@@ -57,35 +61,43 @@ export class ReferantWorkspaceComponent implements AfterViewInit {
             backgroundColor2: '#ecbd9b',
             borderWidth: 0,
         },
- 
-    ]
 
+    ]
 
     ngAfterViewInit(): void {
     }
-    constructor(public _declarationReferantDataWebService: DeclarationReferantDataWebService ) {
+
+    @ViewChild(DeclarationReferantDataFiltersMenuComponent) declarationReferantDataFiltersMenuComponent: DeclarationReferantDataFiltersMenuComponent;
+
+    setFilters() {
+        this.RefId = (SessionLocator.LoggedUserPM.Id == null || SessionLocator.LoggedUserPM.Id == "0") ? "9999999" : SessionLocator.LoggedUserPM.Id;
+        this.DepId = "";
+        this.TransportModeId = "ALL";
+    }
+    constructor(public _declarationReferantDataWebService: DeclarationReferantDataWebService) {
+        this.setFilters();
         this.CurrentSession.StartBusyIndicatorLoading();
         this._entityResourceService.getEntityResourceByTableName("Customs.DeclarationReferantData").subscribe((response: any) => {
 
-        _declarationReferantDataWebService.GetQueriesCounts().subscribe(
-            (data: any) => {
-                this.counters = data.Result;
-         
+            _declarationReferantDataWebService.GetQueriesCounts(this.RefId, this.DepId, this.TransportModeId).subscribe(
+                (data: any) => {
+                    this.counters = data.Result;
 
-                if (this.CurrentSession == null) {
-                    this.ChartID = "ChartID_-1_-1";
-                }
+
+                    if (this.CurrentSession == null) {
+                        this.ChartID = "ChartID_-1_-1";
+                    }
 
                     else {
                         this.ChartID = "ChartID_" + this.CurrentSession.GetChartId();
                     }
 
-                this.InProgressDeclarationReferantDataId = this.InProgressDeclarationReferantDataId + this.CurrentSession.GetChartId();
-                this.LoadInProgressDeclarationReferantDatasDashboard();
+                    this.InProgressDeclarationReferantDataId = this.InProgressDeclarationReferantDataId + this.CurrentSession.GetChartId();
+                    this.LoadInProgressDeclarationReferantDatasDashboard();
 
-                this.isScreenLoaded = true;
-                this.CurrentSession.StopBusyIndicator();
-            });
+                    this.isScreenLoaded = true;
+                    this.CurrentSession.StopBusyIndicator();
+                });
         });
     }
 
@@ -100,8 +112,8 @@ export class ReferantWorkspaceComponent implements AfterViewInit {
     LoadInProgressDeclarationReferantDatasDashboard() {
 
         this.InProgressDeclarationReferantDataDashboard = new Array<ChartingDataClass>();
- 
- 
+
+
         this._declarationReferantDataWebService.GetDeclarationReferantDataDashBoard(SessionLocator.TenantPM.Id).subscribe((myResult: any) => {
             this.InProgressDeclarationReferantDataDashboard = new Array<ChartingDataClass>();
             var myResponse: ServiceResponse = myResult;
@@ -133,7 +145,7 @@ export class ReferantWorkspaceComponent implements AfterViewInit {
             this.InProgressDeclarationReferantDataDashboard.push(this.createChartingItem("AllCases"));
             this.InProgressDeclarationReferantDataDashboard.push(this.createChartingItem("AllCases", true));
 
-             this.FillInProgressDeclarationReferantDataDashboardData();
+            this.FillInProgressDeclarationReferantDataDashboardData();
         });
     }
 
@@ -147,7 +159,7 @@ export class ReferantWorkspaceComponent implements AfterViewInit {
 
         }
         else {
-        ele1.Id = queryCode;
+            ele1.Id = queryCode;
             this.dec_queries.Add(this.i.toString(), queryCode);
         }
         this.i++;
@@ -158,7 +170,7 @@ export class ReferantWorkspaceComponent implements AfterViewInit {
         else
             ele1.IntegerProperty = this.counters[queryCode];
 
-        ele1.DataTypeCode =  queryCode;
+        ele1.DataTypeCode = queryCode;
         ele1.DateTimeProperty = new Date();
         ele1.DecimalProperty = 0;
         ele1.DoubleProperty = 0;
@@ -173,7 +185,7 @@ export class ReferantWorkspaceComponent implements AfterViewInit {
         var index = 0;
         this.InProgressDeclarationReferantDataXAxis = [];
 
-     //   this.InProgressDeclarationReferantDataDashboard.sort((a, b) => { return (a.DateTimeProperty === b.DateTimeProperty) ? 0 : (a.DateTimeProperty < b.DateTimeProperty) ? -1 : 1 });
+        //   this.InProgressDeclarationReferantDataDashboard.sort((a, b) => { return (a.DateTimeProperty === b.DateTimeProperty) ? 0 : (a.DateTimeProperty < b.DateTimeProperty) ? -1 : 1 });
         var StringArr: Array<string> = new Array<string>();
         var j = 0;
 
@@ -186,7 +198,7 @@ export class ReferantWorkspaceComponent implements AfterViewInit {
             }
         });
 
-      //  StringArr.sort((a, b) => { return (a === b) ? 0 : (a < b) ? -1 : 1 });
+        //  StringArr.sort((a, b) => { return (a === b) ? 0 : (a < b) ? -1 : 1 });
         var Graphs = [];
         var index = 0;
         this.InProgressDeclarationReferantDataDashboard.forEach(element => {
@@ -279,27 +291,38 @@ export class ReferantWorkspaceComponent implements AfterViewInit {
         this.lastDownX = ($event.clientX - this.ChartLeft);
     }
     OnBarClick(e) {
-         var flag = false;
+        var flag = false;
         let item: any;
         if (e.item != null && e.target != null)
             flag = true;
         if (!flag) return;
         item = e.item;
         var Key = item.index;
-        var query = this.dec_queries.Item((Key * 2 + e.target.columnIndex ).toString());
+        var query = this.dec_queries.Item((Key * 2 + e.target.columnIndex).toString());
         this.ViewReferantQuery(query);
     }
-    public  filters = new ApiQueryFilters();
+    public filters = new ApiQueryFilters();
 
     FilterChange($event) {
         if ($event != null) {
             this.filters = $event.Filters;
         }
+        this.RefId = this.declarationReferantDataFiltersMenuComponent.LOVListUsers.map(({ Id }) => Id).toString();
+        this.DepId = this.declarationReferantDataFiltersMenuComponent.LOVListDepartment.map(({ Id }) => Id).toString();
+        this.TransportModeId = this.declarationReferantDataFiltersMenuComponent.transportmodeId;
+        this._declarationReferantDataWebService.GetQueriesCounts(this.RefId, this.DepId, this.TransportModeId).subscribe(
+            (data: any) => {
+                this.counters = data.Result;
+                this.InProgressDeclarationReferantDataId = this.InProgressDeclarationReferantDataId + this.CurrentSession.GetChartId();
+                this.LoadInProgressDeclarationReferantDatasDashboard();
+            });
     }
+
+
     ViewReferantQuery(myQueryCode: string) {
         if (myQueryCode != null) {
             var displayTitle = "";
-            switch (myQueryCode.replace("_A","")) {
+            switch (myQueryCode.replace("_A", "")) {
                 case "FilesInProcess":
                     {
                         displayTitle = TextCodeTranslator.Translate("Customs.DeclarationReferantData.O.FilesInProcess");
@@ -340,10 +363,10 @@ export class ReferantWorkspaceComponent implements AfterViewInit {
                         displayTitle = TextCodeTranslator.Translate("Customs.DeclarationReferantData.O.AllCases");
                         break;
                     }
-                default: { break;}
+                default: { break; }
             }
             this.BuildFiltersForQuery(this.filters);
-             if (myQueryCode.endsWith("_A"))
+            if (myQueryCode.endsWith("_A"))
                 this.filters.addAdditionalFilter("IsAvailabilityDateNull", false, null, null, "Equals", false, false, false, "number");
 
             var listArgs = new ListComponentArgs();
@@ -360,7 +383,7 @@ export class ReferantWorkspaceComponent implements AfterViewInit {
                         cmpRef.instance.Run(listArgs);
                         cmpRef.instance.BackCompleted.subscribe(($event: any) => {
                             this.LoadAllScreenData();
-                            this._declarationReferantDataWebService.GetQueriesCounts().subscribe(
+                            this._declarationReferantDataWebService.GetQueriesCounts(this.RefId, this.DepId, this.TransportModeId).subscribe(
                                 (data: any) => {
                                     this.counters = data.Result;
                                     this.CurrentSession.AddMenuReference(cmpRef);
@@ -382,6 +405,6 @@ export class ReferantWorkspaceComponent implements AfterViewInit {
         filters = new ApiQueryFilters();
         filters.addAdditionalFilter("Tenant", SessionLocator.Tenant, null, null, "Equals", false, false, false, "number");
     }
-
 }
+
 

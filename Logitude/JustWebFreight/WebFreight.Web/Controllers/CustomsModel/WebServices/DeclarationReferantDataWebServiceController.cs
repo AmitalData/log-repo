@@ -7,6 +7,7 @@ using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web;
@@ -40,17 +41,18 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
 
 
 
-        public HttpResponseMessage GetQueriesCounts()
+        public HttpResponseMessage GetQueriesCounts (string refId, string depId,string transportMode)
         {
             try
             {
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
-
                 ICustomContext context = CustomContext.GetContext(tenant);
                 DeclarationReferantDataListQueryService declarationCourierStatusQueryService = new DeclarationReferantDataListQueryService(context);
-                var counts = declarationCourierStatusQueryService.GetQueriesCounts(tenant);
+                var refList = refId != null ? refId.Split(',').ToList() : new List<string>();
+                var depList = depId != null ? depId.Split(',').ToList() : new List<string>();
+                var counts = declarationCourierStatusQueryService.GetQueriesCounts(tenant, refList, depList, transportMode);
                 return Request.CreateResponse(HttpStatusCode.OK, counts);
             }
             catch (Exception ex)

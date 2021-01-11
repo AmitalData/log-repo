@@ -858,9 +858,11 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                             }
                             SessionLocator.DynamicLoader.Load(myComponentPath, myLocation.viewContainerRef)
                                 .then(cmpRef => {
-
+                                    
                                     this.FiltersBarLoaded.emit(cmpRef.instance);
-
+                                    if (this.listArgs.Filters != null && myObjectTableName == "DeclarationReferantData") {
+                                        cmpRef.instance.SetFiltersMenu(this.listArgs.Filters);
+                                    }
                                     cmpRef.instance.SelectedValueChanged.subscribe(($event: any) => {
                                         this.FiltersMenu = new ApiQueryFilters();
                                         this.FiltersMenu = $event.Filters;

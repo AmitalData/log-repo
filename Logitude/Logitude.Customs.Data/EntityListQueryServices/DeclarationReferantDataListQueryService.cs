@@ -127,7 +127,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 
         }
 
-        public DeclarationReferantDataSummary GetQueriesCounts(int tenant)
+        public DeclarationReferantDataSummary GetQueriesCounts(int tenant , List<string> refId,List<string> depId,string transportMode)
         {
             DeclarationReferantDataSummary declarationReferantDataSummary = new DeclarationReferantDataSummary();
             IQueryable<DeclarationReferantDataList> declarationReferantDatas = (from a in context.DeclarationReferantDatas
@@ -144,7 +144,24 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                                                     CollectionOfMoneyStatus = a.CollectionOfMoneyStatus,
                                                                                     IsAvailabilityDateNull = d.AvailabilityDate == null,
                                                                                     IsPaymentDateNull = d.PaymentDate == null,
+                                                                                    TransportModeId = d.TransportModeId,
+                                                                                    ReferentUserId = d.ReferentUserId,
+                                                                                    DepartmentId = d.DepartmentId,
                                                                                 });
+
+            if (refId.Count>0)
+            {
+                declarationReferantDatas = declarationReferantDatas.Where(x => refId.Contains(x.ReferentUserId));
+            }
+            if (transportMode != "All")
+            {
+                declarationReferantDatas = declarationReferantDatas.Where(x => x.TransportModeId == transportMode);
+            }
+            if (depId.Count > 0)
+            {
+                declarationReferantDatas = declarationReferantDatas.Where(x => depId.Contains(x.DepartmentId));
+            }
+
 
             declarationReferantDataSummary.FilesInProcess = declarationReferantDatas.Where(x => x.IsClosedForFollowUp != "1").Count();
             declarationReferantDataSummary.TrackingCases = declarationReferantDatas.Where(x => x.FollowUpDate == DateTime.Today).Count();
