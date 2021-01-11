@@ -269,7 +269,7 @@ export class TenantManagementStatisticsTabComponent extends BaseComponent implem
     public LastSISentDate: Date;
     public NumberOfBookingSentLastWeek: number;
     public NumberOfSISentLastWeek: number;
-    public LastContainerStatusReceived: string;
+    public LastContainerStatusReceived: Date;
 
     RefreshClicked() {
         this.CurrentSession.StartBusyIndicator("Refreshing....");
