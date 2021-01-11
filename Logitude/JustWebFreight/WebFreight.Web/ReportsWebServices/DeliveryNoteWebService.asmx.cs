@@ -870,6 +870,15 @@ namespace WebFreight.Web.ReportsWebServices
                         dataProvider.Telephone = address != null ? (address.PhoneNumber != null ? address.PhoneNumber : "") : "";
                     }
 
+                    if (!string.IsNullOrEmpty(card.PrimaryContactId))
+                    {
+                        Contact primaryContact = ContactRepository.GetSingleContact(card.PrimaryContactId, tenant, true);
+                        if(primaryContact != null)
+                        {
+                            dataProvider.TruckerCompanyContactName = primaryContact.EnglishName;
+                        }
+                    }
+
                     CardContact cardContact = (from cc in commonContext.CardContacts where cc.CardId == card.Id select cc).FirstOrDefault();
                     if (cardContact != null)
                     {
