@@ -471,7 +471,8 @@ var interestReportArgs: InterestReportArguments=  this.FillInterestReportArgs();
  
 // }
 
-GetNumberOfDocumentNotPrinted() {
+GetNumberOfDocumentNotPrinted(isReportsAttached: boolean) {
+  this.AttachReportWithEachInvoice = isReportsAttached ? true: false;
   this.ValidationErrorsList = [];
   if (this.SelectedItemsCount == 0) {
     this.ValidationErrorsList.push(TextCodeTranslator.Translate("InterestReport.O.SelectAtLeastOnLine"));
@@ -510,8 +511,10 @@ GetNumberOfDocumentNotPrinted() {
     }
 
   });
-}
-}
+    }
+    this.DropdownClose();
+    }
+
 
 // public newWindow:any;
 
@@ -623,17 +626,29 @@ public SelectedItems :SelectItem[]=[];
     interestReportArgs.SelectedItems = this.SelectedItems;
     interestReportArgs.ExcludedIds = this.ExcludedItems.Collection;
     return interestReportArgs;
-  }
+    }
+
     CancelButtonClicked() {
         this.SelectedItemsCount = 0;
         this.selectedItems.Clear();
         this.CurrentSession.CloseCurrentWindow();
+    }
 
-}
+    dropdownDisplay: string = 'none';
+    DropdowndisplayToggle() {
+    
+        if (this.dropdownDisplay == 'none') {
+            this.dropdownDisplay = 'block';
+        }
+        else {
+            this.dropdownDisplay = 'none';
+        }
+    }
 
+    DropdownClose() {
+        this.dropdownDisplay = 'none';
+    }
  
-
-
 }
 
 

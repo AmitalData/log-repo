@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class InterestReportUpdateClass
    {  		
-		public const string HashString = "4ac51c37d7d4da40ee6e68a465b54a5a";
+		public const string HashString = "f6527fcdd4683b49cbf9296f7c2a0885";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -3223,6 +3223,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode InterestReportTextCode_InterestReportOCloseAllSelectedWithoutInvoice = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.CloseAllSelectedWithoutInvoice", DefaultText = "Confirm closing all selected reports without invoices.",LocalDefaultText = @"אישור סגירת כל הדוחות המסומנים ללא חשבוניות ", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode InterestReportTextCode_InterestReportOCloseWithoutInvoice = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.CloseWithoutInvoice", DefaultText = "Close Without Invoice",LocalDefaultText = @"סגירה ללא חשבונית", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode InterestReportTextCode_InterestReportOPrintInvoicesAndAttachedReports = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.PrintInvoicesAndAttachedReports", DefaultText = "Print Invoices and Attached Reports",LocalDefaultText = @"הדפס את החשבוניות עם דוחות הריבית", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode InterestReportTextCode_InterestReportOPrintInvoicesAlone = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.PrintInvoicesAlone", DefaultText = "Print Invoices Alone",LocalDefaultText = @"הדפס חשבוניות בלבד", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    
