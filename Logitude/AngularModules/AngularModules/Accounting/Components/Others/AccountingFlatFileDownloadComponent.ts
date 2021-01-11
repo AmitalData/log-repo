@@ -21,7 +21,7 @@ declare var window;
 
 @Component({
     selector: 'AccountingFlatFileDownloadComponent',
-    
+
     templateUrl: './AccountingFlatFileDownloadComponent.html',
 })
 export class AccountingFlatFileDownloadComponent extends BaseComponent implements OnDestroy {
@@ -122,7 +122,7 @@ export class AccountingFlatFileDownloadComponent extends BaseComponent implement
                                 this.Success = false;
                                 this.Failed = true;
                                this.ShowError(myResult.ErrorsArray);
-                                this.CurrentSession.CloseCurrentWindow();
+                                // this.CurrentSession.CloseCurrentWindow();
                             }
                         });
                     } else
@@ -257,13 +257,23 @@ export class AccountingFlatFileDownloadComponent extends BaseComponent implement
     DownloadButtonClicked() {
         DownloadManager.DownloadPage(null, this.docFilingPM.SecurityId);
     }
-    ShowError(error=null) {
-        var msg = this.bteList? this.bteList.ErrorLog : error;
-        var msgbox = new MessageWindow();
-        msgbox.Width = 500;
-        // msgbox.Height = 400;
-        msgbox.RTL = this.isRTL;
-        msgbox.Show(msg);
+
+    Errors: string[] = [];
+    ShowError(error:string[]=null) {
+
+        if(error){
+            this.Errors.push(...error);
+        }else{
+            var msg = this.bteList.ErrorLog;
+            this.Errors.push(msg);
+        }
+
+
+        // var msgbox = new MessageWindow();
+        // msgbox.Width = 500;
+        // // msgbox.Height = 400;
+        // msgbox.RTL = this.isRTL;
+        // msgbox.Show(msg);
     }
     //#endregion
 
@@ -327,6 +337,10 @@ export class AccountingFlatFileDownloadComponent extends BaseComponent implement
         }
     }
 
+
+    CloseWindow(){
+        this.CurrentSession.CloseCurrentWindow();
+    }
 
 
 
