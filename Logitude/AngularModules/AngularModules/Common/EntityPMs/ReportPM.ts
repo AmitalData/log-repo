@@ -139,7 +139,10 @@ export class ReportPM {
     public OldEntityPM: ReportPM;
 		
     public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
+       if(!this.DisableMarkAsDirty)
+       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -147,6 +150,7 @@ export class ReportPM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "Report");
            
         }
+	 }
     }
     private MyClone: ReportPM;
 

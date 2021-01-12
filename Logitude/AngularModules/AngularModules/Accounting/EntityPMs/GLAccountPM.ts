@@ -704,11 +704,24 @@ export class GLAccountPM {
     public set ReportingAsAnotherDocument(newValue: boolean) { if (this.reportingAsAnotherDocument != newValue) { this.reportingAsAnotherDocument = newValue; this.MarkAsDirty("ReportingAsAnotherDocument"); } }
        
 	 
+    private creditAllotmentPercentage: number;
+    public get CreditAllotmentPercentage() { return this.creditAllotmentPercentage; }
+    public set CreditAllotmentPercentage(newValue: number) { if (this.creditAllotmentPercentage != newValue) { this.creditAllotmentPercentage = newValue; this.MarkAsDirty("CreditAllotmentPercentage"); } }
+       
+	 
+    private relatedGLAccount: string;
+    public get RelatedGLAccount() { return this.relatedGLAccount; }
+    public set RelatedGLAccount(newValue: string) { if (this.relatedGLAccount != newValue) { this.relatedGLAccount = newValue; this.MarkAsDirty("RelatedGLAccount"); } }
+       
+	 
 
     public OldEntityPM: GLAccountPM;
 		
     public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
+       if(!this.DisableMarkAsDirty)
+       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -716,6 +729,7 @@ export class GLAccountPM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "GLAccount");
            
         }
+       }
     }
 
     private MyClone: GLAccountPM;

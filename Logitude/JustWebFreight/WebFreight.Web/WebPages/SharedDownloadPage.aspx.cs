@@ -112,50 +112,83 @@ namespace WebFreight.Web.WebPages
 
         }
 
-        public void DownloadAll(string entityId, int tenant, string partnerType,string token=null)
+        public void DownloadAllDocuments(DownloadAllDocumentsArgs downloadAllDocumentsArgs)
         {
             try
             {
+                Shipment shipment = null;
+                ShipmentRepository rep = new ShipmentRepository(downloadAllDocumentsArgs.Tenant);
 
+                if (downloadAllDocumentsArgs.Securitykey != null)
+                {
+                    shipment = rep.getSingleShipmentBySecurityIdAndId(downloadAllDocumentsArgs.EntityId, downloadAllDocumentsArgs.Securitykey, downloadAllDocumentsArgs.Tenant);
+                }
+
+                else
+                {
+                    shipment = rep.GetSingleShipment(downloadAllDocumentsArgs.EntityId, downloadAllDocumentsArgs.Tenant);
+                }
+
+                if (shipment == null)
+                {
+                    throw new ApplicationException("Sorry! you are not authorized to read shipment data");
+                }
+
+                bool isAuothenticatedRequest = true;
+                bool CheckForTenantAvailability = true;
 
                 string email = this.Context.User.Identity.Name;
 
-                ShipmentRepository rep = new ShipmentRepository(tenant);
-                Shipment shipment = rep.GetSingleShipment(entityId, tenant);
-                bool isAuothenticatedRequest=true;
-                bool CheckForTenantAvailability = true;
-
-                if (!string.IsNullOrEmpty(token))
+                if (string.IsNullOrEmpty(downloadAllDocumentsArgs.PartnerType))
                 {
-                    SecurityDocumentResult securityDocumentResult = SecurityDocumentHelper.ValidationDocumentToken(token);
+                    downloadAllDocumentsArgs.PartnerType = "CS";
+                }
+
+                if (!string.IsNullOrEmpty(downloadAllDocumentsArgs.Token))
+                {
+                    SecurityDocumentResult securityDocumentResult = SecurityDocumentHelper.ValidationDocumentToken(downloadAllDocumentsArgs.Token);
                     if (securityDocumentResult.IsValid)
                     {
                         email = securityDocumentResult.Email;
                         HttpContext.Current.User = new System.Security.Principal.GenericPrincipal(new System.Security.Principal.GenericIdentity(email), new string[0]);
-                        SecurityUtility.AuthenticationOnTenant((int)tenant);
-                        SecurityUtility.CheckContactFeature("Shipment", "READ", (int)tenant);
+                        SecurityUtility.AuthenticationOnTenant((int)downloadAllDocumentsArgs.Tenant);
+                        SecurityUtility.CheckContactFeature("Shipment", "READ", (int)downloadAllDocumentsArgs.Tenant);
                     }
-
                 }
+
+                else if (downloadAllDocumentsArgs.Securitykey != null)
+                {
+                    // security maybe needed
+                }
+
                 else
                 {
 
-                    isAuothenticatedRequest = CheckSharedContactAuthenticationForShipment(shipment.AgentId, shipment.CustomerId, tenant);
-                    CheckForTenantAvailability = CheckAvailablityTenantsForEmail(email, tenant);
+                    isAuothenticatedRequest = CheckSharedContactAuthenticationForShipment(shipment.AgentId, shipment.CustomerId, downloadAllDocumentsArgs.Tenant);
+                    CheckForTenantAvailability = CheckAvailablityTenantsForEmail(email, downloadAllDocumentsArgs.Tenant);
                 }
                 if (CheckForTenantAvailability && isAuothenticatedRequest)
                 {
                     Uploader up = new Uploader();
-                    List<DocumentsFilingPM> documents = up.GetDocumentByEntityAndTenant(entityId, tenant);
+                    List<DocumentsFilingPM> documents = null;
 
-                    if (string.IsNullOrEmpty(token))
+                    switch (downloadAllDocumentsArgs.EntityType)
                     {
-                        if (partnerType == "AG")
+                        case "master":
+                            documents = up.GetMasterDocumentsAndItsConnectedHousesDocuments(downloadAllDocumentsArgs.EntityId, downloadAllDocumentsArgs.Tenant);
+                            break;
+                        default:
+                            documents = up.GetDocumentByEntityAndTenant(downloadAllDocumentsArgs.EntityId, downloadAllDocumentsArgs.Tenant);
+                            break;
+                    }
+                    if (string.IsNullOrEmpty(downloadAllDocumentsArgs.Token))
+                    {
+                        if (downloadAllDocumentsArgs.PartnerType == "AG")
                         {
                             documents = documents.Where(d => d.IsAgentView).ToList();
                         }
 
-                        else if (partnerType == "CS")
+                        else if (downloadAllDocumentsArgs.PartnerType == "CS")
                         {
                             documents = documents.Where(d => d.IsCustomerView == true).ToList();
                         }
@@ -172,9 +205,9 @@ namespace WebFreight.Web.WebPages
                             continue;
                         }
 
-                        if (!string.IsNullOrEmpty(token))
+                        if (!string.IsNullOrEmpty(downloadAllDocumentsArgs.Token))
                         {
-                            if (partnerType == "O")
+                            if (downloadAllDocumentsArgs.PartnerType == "O")
                             {
                                 if (document.DirectionCode == "I")
                                     continue;
@@ -202,16 +235,20 @@ namespace WebFreight.Web.WebPages
                                 fileName += ("." + document.FileExtension);
                             }
                             ItemNum = 0;
-                            CompressedArray.Add(document.FileExtension + "@" + fileName, up.DownloadFile(document.DocumentId, document.FileExtension, "", tenant));
+                            CompressedArray.Add(document.FileExtension + "@" + fileName, up.DownloadFile(document.DocumentId, document.FileExtension, "", downloadAllDocumentsArgs.Tenant));
                         }
 
                     }
                     if (DocumentsExistance)
                     {
                         string name = "Documents";
-                        if(!string.IsNullOrEmpty(token))
+                        if(!string.IsNullOrEmpty(downloadAllDocumentsArgs.Token))
                         {
                             name = shipment.ShipmentNumber;
+                        }
+                        if (!string.IsNullOrEmpty(downloadAllDocumentsArgs.FileName))
+                        {
+                            name = downloadAllDocumentsArgs.FileName.Replace("_null", "");
                         }
                         byte[] CompressedData = CompressionData(name, CompressedArray, false);
                         HttpContext.Current.Response.Clear();
@@ -228,17 +265,14 @@ namespace WebFreight.Web.WebPages
 
                         }
                     }
-                }
-                
-
+                }               
             }
+
             catch(Exception e)
             {
-
+                throw e;
             }
         }
-
-
 
         public static byte[] CompressionData(string listKey, Dictionary<string, byte[]> dataBackList, bool saveetodisk = false)
         {
@@ -291,9 +325,6 @@ namespace WebFreight.Web.WebPages
 
         }
 
-
-
-
         protected void Page_Load(object sender, EventArgs e)
         {
             try
@@ -314,21 +345,33 @@ namespace WebFreight.Web.WebPages
                 //string url = "../WebPages/SharedDownloadPage.aspx?id=" + tenant + ":" + item.DocumentId +documenttype+ entityId;
 
 
+                string fileName = Request["filename"];
 
 
                 tenant = Convert.ToInt32(filestrings[0]);
                 if (filestrings[1] == "null")
                 {
-                    if (filestrings.Length==6)
+                    DownloadAllDocumentsArgs downloadAllDocumentsArgs = new DownloadAllDocumentsArgs
                     {
-                        DownloadAll(filestrings[3], int.Parse(filestrings[0]), filestrings[4], filestrings[5]);
+                        EntityId = filestrings[3],
+                        EntityType = filestrings[2],
+                        Tenant = int.Parse(filestrings[0]),
+                        PartnerType = filestrings[4],
+                        Token = filestrings.Length == 6 ? filestrings[5] : null,
+                    };
 
-                    }
-                    else
+                    if (headerRequest.Contains("securitykey"))
                     {
-                        DownloadAll(filestrings[3], int.Parse(filestrings[0]), filestrings[4]);
+                        downloadAllDocumentsArgs.Securitykey = filestrings[6];
                     }
+
+                    if (!string.IsNullOrEmpty(fileName))
+                    {
+                        downloadAllDocumentsArgs.FileName = fileName;
+                    }
+                    DownloadAllDocuments(downloadAllDocumentsArgs);                    
                 }
+
                 else
                 {
                     filename = filestrings[1].ToString();
@@ -368,6 +411,7 @@ namespace WebFreight.Web.WebPages
                     switch (entityType)
                     {
                         case "ship":
+                        case "master":
                             ShipmentRepository rep = new ShipmentRepository(tenant);
                             Shipment shipment = rep.GetSingleShipment(entityId, tenant);
                             isAuothenticatedRequest = CheckSharedContactAuthenticationForShipment(shipment.AgentId, shipment.CustomerId, tenant);
@@ -500,5 +544,16 @@ namespace WebFreight.Web.WebPages
             }
 
         }
+    }
+
+    public class DownloadAllDocumentsArgs
+    {
+        public string EntityId { get; set; }
+        public string EntityType { get; set; }
+        public int Tenant { get; set; }
+        public string PartnerType { get; set; }
+        public string Token { get; set; }
+        public string Securitykey { get; set; }
+        public string FileName { get; set; }
     }
 }

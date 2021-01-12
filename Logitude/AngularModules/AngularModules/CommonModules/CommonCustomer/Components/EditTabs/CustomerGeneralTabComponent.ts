@@ -73,6 +73,7 @@ export class CustomerGeneralTabComponent extends BaseComponent   {
     public ScreenCode: string = "Customer.AdditionalFields";
     @ViewChild('Child', { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
     private CurrentSession = SessionLocator.SelectedSession;
+    private groupByPipe: GroupByPipe;
     constructor(public entityArgs: EntityArgs, public _imageLibraryService: ImageLibraryService, private CD: ChangeDetectorRef, private entityPMService: EntityPMService) {
         super();
         this.EntityPM = entityArgs.EntityPM;
@@ -84,6 +85,7 @@ export class CustomerGeneralTabComponent extends BaseComponent   {
         this.IsCustomer = this.EntityPM.IsCustomer;
         this.LeadSourceId = this.EntityPM.LeadSourceId;
 
+        this.groupByPipe = new GroupByPipe();
         this.Listen();
 
         var myService = new ProductTypeListService();
@@ -97,9 +99,8 @@ export class CustomerGeneralTabComponent extends BaseComponent   {
             if (!response.HasError) {
                 this.customerFieldsUpdateSettingList = response.Result;
             }
-
+                        
             this.SetUIProperties();
-            this.CloseScreen();
         });
 
        
@@ -118,7 +119,7 @@ export class CustomerGeneralTabComponent extends BaseComponent   {
 
             this.SessionEvent = this.CurrentSession.SessionEvent.subscribe(s => {
                 if (s == "EntityActivated") {
-                    this.CloseScreen();
+                    this.SetUIProperties();
                 }
             });
         }
@@ -409,11 +410,35 @@ export class CustomerGeneralTabComponent extends BaseComponent   {
 
     public isRAFieldsVisibile: boolean = false;
     public IsBlockMessageVisible: boolean = false;
+    public IsEditEnabled: boolean = true;
     SetUIProperties() {
         if (this.TenantPM.RegulatedAgentRegimeActivated) {
             this.isRAFieldsVisibile = true;
         }
-        
+
+        ///////////////////
+        var enabled: boolean = true;
+        if (this.TenantPM.IsHybrid && (this.EntityPM.CustomerStatusCode == "ACT" || this.EntityPM.CustomerStatusCode == "WAC")) {
+            enabled = false;
+            this.IsBlockMessageVisible = true;
+        }
+
+        this.UIProperties.SetEnabled("EnglishName", "Customer", enabled);
+        this.UIProperties.SetEnabled("LocalName", "Customer", enabled);
+        this.UIProperties.SetEnabled("VatNumber", "Customer", enabled);
+        this.UIProperties.SetEnabled("EORInumber", "Customer", enabled);
+        this.UIProperties.SetEnabled("PaymentTermId", "Customer", enabled);
+        this.UIProperties.SetEnabled("AccountManagerUserId", "Customer", enabled);
+        this.UIProperties.SetEnabled("ClassifierId", "Customer", enabled);
+        this.UIProperties.SetEnabled("CollectorId", "Customer", enabled);
+        this.UIProperties.SetEnabled("ForwarderId", "Customer", enabled);
+        this.UIProperties.SetEnabled("CustomsAgentId", "Customer", enabled);
+        this.UIProperties.SetEnabled("MediatorId", "Customer", enabled);
+        this.UIProperties.SetEnabled("KnownConsignor", "Customer", enabled);
+        this.UIProperties.SetEnabled("KCExpirationDate", "Customer", enabled);
+        this.IsEditEnabled = enabled;
+        //////////
+
         this.UIProperties.SetVisibility("KnownConsignor", this.ObjectTableName, this.isRAFieldsVisibile);
         this.UIProperties.SetVisibility("KCExpirationDate", this.ObjectTableName, this.isRAFieldsVisibile);
 
@@ -425,6 +450,7 @@ export class CustomerGeneralTabComponent extends BaseComponent   {
         this.SearchProductsModeCustomerId += this.CurrentSession.GetNewId("SearchProductsModeId_1");
 
         this.SetUIProperties_Partners();
+        this.SetLabels();
     }
 
     public IsSplitted_AccountManager: boolean = false;
@@ -444,14 +470,13 @@ export class CustomerGeneralTabComponent extends BaseComponent   {
         var isEnabled = false;
         var isSplitted = false;
 
-        var myPipe = new GroupByPipe();
-        var Forwarders = myPipe.transform(this.EntityPM.CustomerAccountManagerByProducts.filter(f => f.AccountManagerId != null), "AccountManagerId");
+        var accountManagers = this.groupByPipe.transform(this.EntityPM.CustomerAccountManagerByProducts.filter(f => f.AccountManagerId != null), "AccountManagerId");
 
-        if (Forwarders.length == 0) {
-            isEnabled = true;
+        if (accountManagers.length == 0) {
+            isEnabled = this.IsEditEnabled ? true : false;
         }
 
-        else if (Forwarders.length > 1) {
+        else {
             isSplitted = true;
         }
 
@@ -462,19 +487,17 @@ export class CustomerGeneralTabComponent extends BaseComponent   {
         var isEnabled = false;
         var isSplitted = false;
 
-        var myPipe = new GroupByPipe();
-        var Salesmens = myPipe.transform(this.EntityPM.CustomerSalesmanByProducts.filter(f => f.SalesmanUserId != null), "SalesmanUserId");
+        var salesmens = this.groupByPipe.transform(this.EntityPM.CustomerSalesmanByProducts.filter(f => f.SalesmanUserId != null), "SalesmanUserId");
 
-        if (Salesmens.length == 0) {
-            isEnabled = true;
+        if (salesmens.length == 0) {
+            isEnabled = this.IsEditEnabled ? true : false;
         }
 
-        else if (Salesmens.length > 1) {
+        else {
             isSplitted = true;
         }
 
-        this.IsSplitted_SalesmanUser = isSplitted;
-        //this.UIProperties.SetEnabled("SalesmanUserId", this.ObjectTableName, isEnabled);
+        this.IsSplitted_SalesmanUser = isSplitted;       
 
         var salesmanSettings: CustomerFieldsUpdateSettingList = this.customerFieldsUpdateSettingList.filter(f => f.ObjectFieldName == "SalesmanUserId")[0];
         if (salesmanSettings != null) {
@@ -482,20 +505,27 @@ export class CustomerGeneralTabComponent extends BaseComponent   {
                 this.IsUnifreightEditable = true;
                 this.UIProperties.SetEnabled("SalesmanUserId", this.ObjectTableName, false);
             }
+
+            else {
+                this.UIProperties.SetEnabled("SalesmanUserId", this.ObjectTableName, isEnabled);
+            }
+        }
+
+        else {
+             this.UIProperties.SetEnabled("SalesmanUserId", this.ObjectTableName, isEnabled);
         }
     }
     SetUIProperties_Forwarder() {
         var isEnabled = false;
         var isSplitted = false;
 
-        var myPipe = new GroupByPipe();
-        var Forwarders = myPipe.transform(this.EntityPM.CustomerForwarderByProducts.filter(f => f.ForwarderId != null), "ForwarderId");
+        var forwarders = this.groupByPipe.transform(this.EntityPM.CustomerForwarderByProducts.filter(f => f.ForwarderId != null), "ForwarderId");
 
-        if (Forwarders.length == 0) {
-            isEnabled = true;
+        if (forwarders.length == 0) {
+            isEnabled = this.IsEditEnabled ? true : false;
         }
 
-        else if (Forwarders.length > 1) {
+        else {
             isSplitted = true;
         }
 
@@ -506,14 +536,13 @@ export class CustomerGeneralTabComponent extends BaseComponent   {
         var isEnabled = false;
         var isSplitted = false;
 
-        var myPipe = new GroupByPipe();
-        var Forwarders = myPipe.transform(this.EntityPM.CustomerCustomsAgentByProducts.filter(f => f.CustomsAgentId != null), "CustomsAgentId");
+        var customsAgents = this.groupByPipe.transform(this.EntityPM.CustomerCustomsAgentByProducts.filter(f => f.CustomsAgentId != null), "CustomsAgentId");
 
-        if (Forwarders.length == 0) {
-            isEnabled = true;
+        if (customsAgents.length == 0) {
+            isEnabled = this.IsEditEnabled ? true : false;
         }
 
-        else if (Forwarders.length > 1) {
+        else {
             isSplitted = true;
         }
 
@@ -524,14 +553,13 @@ export class CustomerGeneralTabComponent extends BaseComponent   {
         var isEnabled = false;
         var isSplitted = false;
 
-        var myPipe = new GroupByPipe();
-        var Forwarders = myPipe.transform(this.EntityPM.CustomerMediatorByProducts.filter(f => f.MediatorId != null), "MediatorId");
+        var mediators = this.groupByPipe.transform(this.EntityPM.CustomerMediatorByProducts.filter(f => f.MediatorId != null), "MediatorId");
 
-        if (Forwarders.length == 0) {
-            isEnabled = true;
+        if (mediators.length == 0) {
+            isEnabled = this.IsEditEnabled ? true : false;
         }
 
-        else if (Forwarders.length > 1) {
+        else {
             isSplitted = true;
         }
 
@@ -539,25 +567,43 @@ export class CustomerGeneralTabComponent extends BaseComponent   {
         this.UIProperties.SetEnabled("MediatorId", this.ObjectTableName, isEnabled);
     }
 
-    private CloseScreen() {
-        var enabled: boolean = true;
-        if (this.TenantPM.IsHybrid && (this.EntityPM.CustomerStatusCode == "ACT" || this.EntityPM.CustomerStatusCode == "WAC")) {
-            enabled = false;
-            this.IsBlockMessageVisible = true;
+    public AccountManagerMoreLabel: string;
+    public SalesmanMoreLabel: string;
+    public ForwarderMoreLabel: string;
+    public CustomsAgentMoreLabel: string;
+    public MediatorMoreLabel: string;
+    private SetLabels() {
+        var accountManagerMoreLabel: string = "More";
+        var salesmanMoreLabel: string = "More";
+        var forwarderMoreLabel: string = "More";
+        var customsAgentMoreLabel: string = "More";
+        var mediatorMoreLabel: string = "More";
+
+        if (this.IsSplitted_AccountManager) {
+            accountManagerMoreLabel = "Splitted by Product";
         }
 
-        this.UIProperties.SetEnabled("EnglishName", "Customer", enabled);
-        this.UIProperties.SetEnabled("LocalName", "Customer", enabled);
-        this.UIProperties.SetEnabled("VatNumber", "Customer", enabled);
-        this.UIProperties.SetEnabled("PaymentTermId", "Customer", enabled);
-        this.UIProperties.SetEnabled("AccountManagerUserId", "Customer", enabled);
-        this.UIProperties.SetEnabled("ClassifierId", "Customer", enabled);
-        this.UIProperties.SetEnabled("CollectorId", "Customer", enabled);
-        this.UIProperties.SetEnabled("ForwarderId", "Customer", enabled);
-        this.UIProperties.SetEnabled("CustomsAgentId", "Customer", enabled);
-        this.UIProperties.SetEnabled("MediatorId", "Customer", enabled);
-        this.UIProperties.SetEnabled("KnownConsignor", "Customer", enabled);
-        this.UIProperties.SetEnabled("KCExpirationDate", "Customer", enabled);
+        if (this.IsSplitted_SalesmanUser) {
+            salesmanMoreLabel = "Splitted by Product";
+        }
+
+        if (this.IsSplitted_Forwarder) {
+            forwarderMoreLabel = "Splitted by Product";
+        }
+
+        if (this.IsSplitted_CustomsAgent) {
+            customsAgentMoreLabel = "Splitted by Product";
+        }
+
+        if (this.IsSplitted_Mediator) {
+            mediatorMoreLabel = "Splitted by Product";
+        }
+
+        this.AccountManagerMoreLabel = accountManagerMoreLabel;
+        this.SalesmanMoreLabel = salesmanMoreLabel;
+        this.ForwarderMoreLabel = forwarderMoreLabel;
+        this.CustomsAgentMoreLabel = customsAgentMoreLabel;
+        this.MediatorMoreLabel = mediatorMoreLabel;
     }
 
     public get StartWorkingDate() { return this.EntityPM.StartWorkingDate; }
@@ -1012,6 +1058,12 @@ export class CustomerGeneralTabComponent extends BaseComponent   {
         }
     }
 
+    get EORInumber() { return this.EntityPM.EORInumber; }
+    set EORInumber(newValue: string) {
+        if (this.EntityPM.EORInumber != newValue) {
+            this.EntityPM.EORInumber = newValue;
+        }
+    }
     get PaymentTermId() { return this.EntityPM.PaymentTermId; }
     set PaymentTermId(newValue: string) {
         if (this.EntityPM.PaymentTermId != newValue) {
@@ -1180,9 +1232,8 @@ export class CustomerGeneralTabComponent extends BaseComponent   {
             window.WindowArgs = { EntityPM: this.EntityPM, ProductTypes: this.AllProductTypes, IsUnifreightEditable :this.IsUnifreightEditable }
             window.Show(windowComponent);
             window.WindowClosed.subscribe(s => {
-                if (s == "OK") {
-                    this.SetUIProperties_Partners();
-                    this.CloseScreen();
+                if (s == "OK") {         
+                    this.SetUIProperties();
                 }
             });
         }

@@ -789,11 +789,19 @@ export class APInvoicePM {
     public set VendorVatNumber(newValue: string) { if (this.vendorVatNumber != newValue) { this.vendorVatNumber = newValue; this.MarkAsDirty("VendorVatNumber"); } }
        
 	 
+    private paidDate: Date;
+    public get PaidDate() { return this.paidDate; }
+    public set PaidDate(newValue: Date) { if (this.paidDate != newValue) { this.paidDate = newValue; this.MarkAsDirty("PaidDate"); } }
+       
+	 
 
     public OldEntityPM: APInvoicePM;
 		
     public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
+       if(!this.DisableMarkAsDirty)
+       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -802,6 +810,7 @@ export class APInvoicePM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "APInvoice");
            
         }
+	 }
     }
     private MyClone: APInvoicePM;
 

@@ -4276,6 +4276,15 @@ export class ShipmentPM {
     public get ConvertShipmentToFCL() { return this.convertShipmentToFCL; }
     public set ConvertShipmentToFCL(newValue: boolean) { if (this.convertShipmentToFCL != newValue) { this.convertShipmentToFCL = newValue; this.MarkAsDirty("ConvertShipmentToFCL"); } }
 
+    private convertShipmentToLTL: boolean;
+    public get ConvertShipmentToLTL() { return this.convertShipmentToLTL; }
+    public set ConvertShipmentToLTL(newValue: boolean) { if (this.convertShipmentToLTL != newValue) { this.convertShipmentToLTL = newValue; this.MarkAsDirty("ConvertShipmentToLTL"); } }
+
+    private convertShipmentToFTL: boolean;
+    public get ConvertShipmentToFTL() { return this.convertShipmentToFTL; }
+    public set ConvertShipmentToFTL(newValue: boolean) { if (this.convertShipmentToFTL != newValue) { this.convertShipmentToFTL = newValue; this.MarkAsDirty("ConvertShipmentToFTL"); } }
+
+
     private shipmentDirectionConverted: boolean;
     public get ShipmentDirectionConverted() { return this.shipmentDirectionConverted; }
     public set ShipmentDirectionConverted(newValue: boolean) { if (this.shipmentDirectionConverted != newValue) { this.shipmentDirectionConverted = newValue; this.MarkAsDirty("ShipmentDirectionConverted"); } }
@@ -4631,6 +4640,20 @@ export class ShipmentPM {
     private weightRoundingCode: string;
     public get WeightRoundingCode() { return this.weightRoundingCode; }
     public set WeightRoundingCode(newValue: string) { if (this.weightRoundingCode != newValue) { this.weightRoundingCode = newValue; this.MarkAsDirty("WeightRoundingCode"); } }
+
+    private viewSharedDocuments: string;
+    public get ViewSharedDocuments() { return this.viewSharedDocuments; }
+    public set ViewSharedDocuments(newValue: string) { if (this.viewSharedDocuments != newValue) { this.viewSharedDocuments = newValue; this.MarkAsDirty("ViewSharedDocuments"); } }
+
+    private isAccrualsApproved: boolean;
+    public get IsAccrualsApproved() { return this.isAccrualsApproved; }
+    public set IsAccrualsApproved(newValue: boolean) { if (this.isAccrualsApproved != newValue) { this.isAccrualsApproved = newValue; this.MarkAsDirty("IsAccrualsApproved"); } }
+
+    private accrualsApprovalDate: Date;
+    public get AccrualsApprovalDate() { return this.accrualsApprovalDate; }
+    public set AccrualsApprovalDate(newValue: Date) { if (this.accrualsApprovalDate != newValue) { this.accrualsApprovalDate = newValue; this.MarkAsDirty("AccrualsApprovalDate"); } }
+
+
 
     public OldEntityPM: ShipmentPM;
 
@@ -5069,12 +5092,15 @@ export class ShipmentPM {
     public ShipmentAPInvoices: Array<any>;
     public ShipmentCarrierStatuses: Array<any>;
 
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName: string = null) {
-        this.IsDirty = true;
-        if (propertyName != null) {
-            this.PropertyChanged.emit(new PropertyChangedArgs(propertyName, this));
-            ShipmentPMCustomCode.ApplyEntityChanged(propertyName, this);
-            ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "Shipment");
+        if (!this.DisableMarkAsDirty) {
+            this.IsDirty = true;
+            if (propertyName != null) {
+                this.PropertyChanged.emit(new PropertyChangedArgs(propertyName, this));
+                ShipmentPMCustomCode.ApplyEntityChanged(propertyName, this);
+                ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "Shipment");
+            }
         }
     }
 

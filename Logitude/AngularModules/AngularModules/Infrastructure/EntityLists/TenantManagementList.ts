@@ -136,10 +136,17 @@ export class TenantManagementList {
 		SecondaryColor: string;
 		Opacity: number;
 		BackgroundId: string;
+		ComapnylogoId: string;
+		BrowserIconId: string;
 		TotalNumberOfUsers: number;
 		TotalFreeUsers: number;
 		AveragePrice: number;
 		TotalPaymentamount: number;
 		NoPaymentForChildTenants: boolean;
+		LastEbookingSentDate: Date;
+		LastSISentDate: Date;
+		NumberOfBookingSentLastWeek: number;
+		NumberOfSISentLastWeek: number;
+		LastContainerStatusReceived: Date;
 	
 }

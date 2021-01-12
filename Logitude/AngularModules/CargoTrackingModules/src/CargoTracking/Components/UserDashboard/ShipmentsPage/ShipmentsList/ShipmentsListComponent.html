@@ -1,0 +1,303 @@
+<style>
+    .FlipImgVert {
+        transform: rotate(180deg);
+    }
+    .FlipImgDiagonal {
+        transform: rotate(225deg) !important;
+    }
+</style>
+<div class="dashboard-container">
+
+
+    <h1>Shipments</h1>
+
+    <div class="toolbar">
+
+        <div class="search-bar">
+            <form [formGroup]="searchForm" (ngSubmit)="LoadScreenData()">
+
+                <div class="search-text ">
+                    <input #input type="text " class="gray " [(ngModel)]="SearchText" placeholder="Free search ..."
+                        formControlName="SearchText" name="SearchText " />
+                    <!-- [(ngModel)]="SearchText " -->
+
+                    <div class="icon ">
+                        <!-- <img src="./assets/search.png " alt=" " /> -->
+                        <img *ngIf="!SearchText" src="./assets/images/icons/search.svg " alt=" " />
+                        <img *ngIf="SearchText" (click)="Clear()" class="delete" src="./assets/images/icons/delete.svg "
+                            alt=" " />
+                    </div>
+
+                </div>
+
+                <button class="search-button" type="submit"
+                    (onsubmit)="LoadScreenData()">{{isLoading?'Loading...': 'Search'}}</button>
+            </form>
+        </div>
+
+        <div class="filters hide-mobile">
+            <ul class="toolbar-filters">
+                <li *ngFor="let filter of ToggleFilters" (click)="SelectFilter(filter)">{{filter.Name}}
+                    ({{filter.Count}})</li>
+            </ul>
+        </div>
+
+        <div class="actions-buttons hide-mobile">
+            <div (click)="isFiltersSideBarOpened = !isFiltersSideBarOpened"><img
+                    src="./assets/images/icons/filter@1x.png" alt=" " /></div>
+            <div (click)="SortClicked()" ><img src="./assets/images/icons/sort@1x.png" [class.FlipImgVert]="!isSortDescending" alt=" " /></div>
+        </div>
+
+
+    </div>
+    <div class="clearFix hide-mobile"></div>
+
+    <!-- PC: Search Filters -->
+    <div class="selected-filters" *ngIf="SelectedFilters.length > 0">
+        <ul>
+            <li *ngFor="let filter of SelectedFilters" (click)="DeselectFilter(filter)">
+                {{filter.Name}}
+                <span style=" font-size: 24px;
+                            font-weight: 400;
+                            position: absolute;
+                            padding-left: 9px; ">×</span>
+            </li>
+
+            <li class="clear" (click)="ClearFilters()">Clear</li>
+        </ul>
+    </div>
+
+    <!-- No Result -->
+    <div class="no-result-div" *ngIf="noResult">
+        <img src="./assets/images/misc/No results@1x.png" alt=" " />
+        <div class="title">There are no search results</div>
+        <p>
+            Make sure to enter the entire reference - or choose your shipment from the search suggestions we provide.
+            Just start typing to start your new search.
+        </p>
+
+    </div>
+
+    <div class="error" *ngIf="ShipmentsLoadingError">
+        Something went wrong! Please try again later.
+    </div>
+    <!-- Row Count -->
+    <div class="row-count" *ngIf="ShipmentsCount != 0"> 
+        {{ShipmentsCount}} {{SelectedFilters.length == 0 ? 'Orders' : 'Filtered search results'}}
+    </div>
+
+    <!-- Shipments List -->
+    <div class="scrollable-table" *ngIf="!noResult" style="height: calc(100vh - 274px)">
+        <div class="table" style="height: calc(100vh - 274px)">
+            
+            <cdk-virtual-scroll-viewport *ngIf="ShipmentsDataSource" class="shipment-cards-holder" [itemSize]="170" style="height: calc(100vh - 274px)">
+            
+            
+                <div *cdkVirtualFor="let shipment of ShipmentsDataSource" class="row record-row" (click)="ItemClicked(shipment)"
+                    style="cursor: pointer;">
+            
+                    <!-- Shipment Skelton -->
+                    <div *ngIf="!shipment" class="shipment-skelton">
+            
+                        <div class="skelton-wrapper">
+                            <div class="circle"></div>
+                            <div class="label1"></div>
+                            <div class="label2"></div>
+                            <div class="label3"></div>
+                            <div class="label4"></div>
+                        </div>
+            
+                    </div>
+            
+                    <!-- Shipment Data -->
+                    <div *ngIf="shipment" style="width: 100%; height: 100%;">
+                        <div class="column mode-icon" style="width: 8%;">
+                            <div class="circle-image">
+                                <img class="path " [attr.src]="GetModeIcon(shipment.TransportModeId)" alt=" " />
+                                <svg [class.FlipImgDiagonal]="shipment.DirectionId=='E'" width="14" height="14" version="1.1" viewBox="0 0 512.17 512.17"
+                                 xml:space="preserve" xmlns="http://www.w3.org/2000/svg"
+                                 class="direction-icon">
+                                    <g xmlns="http://www.w3.org/2000/svg">
+                                            <path class="" d="m479.05 283.92c-1.664-3.989-5.547-6.592-9.856-6.592h-116.88v-266.67c0-5.888-4.779-10.667-10.667-10.667h-170.67c-5.888 0-10.667 4.779-10.667 10.667v266.67h-117.33c-4.309 0-8.192 2.603-9.856 6.571-1.643 3.989-0.747 8.576 2.304 11.627l212.8 213.5c2.005 2.005 4.715 3.136 7.552 3.136s5.547-1.131 7.552-3.115l213.42-213.5c3.051-3.052 3.968-7.638 2.304-11.628z" 
+                                            fill="var(--MainColor)" data-original="#000000"/>
+                                    </g>
+                                </svg>
+
+                            </div>
+                        </div>
+                        <!-- References -->
+                        <div class="column col-md-2 reference" style="width: 14%;">
+                            <div>
+                                <div [attr.src]="SplitReference(shipment.CustomerReference)" class="subtitle">
+                                    Reference NO.
+                                    <span *ngIf="shipment.IsFavorite">&nbsp;<img src="/assets/images/icons/favoritesicon@1x.png"
+                                            alt=""></span>
+                                </div>
+                                <div class="truncateText" *ngFor="let item of references; let i = index">
+                                    <span [ngClass]="{'hide-mobile': i > 0}">
+                                        {{item}}
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+            
+                        <div class="column seperator"></div>
+            
+                        <!-- Sender -->
+                        <div class="column col-md-2 sender" style="width: 14%;">
+                            <div>
+                                <div class="subtitle">Origin Port</div>
+                                <div class="value truncateText">
+                                    <img src="./assets/images/icons/info.png" alt=" " /> {{ shipment.FromPortName }} ,
+                                    {{shipment.FromPortCountryCode}}
+                                </div>
+            
+            
+                                <div class="subtitle hide-mobile">Destination Port</div>
+                                <div class="value truncateText hide-mobile">
+                                    <img src="./assets/images/icons/info.png" alt=" " /> {{ shipment.ToPortName }} ,
+                                    {{shipment.ToPortCountryCode}}
+                                </div>
+            
+                            </div>
+                        </div>
+                        <!-- Pickup -->
+                        <!--<div class="column col-md-2 hide-mobile" style="width: 14%;">
+                                            <div>
+                                                <div class="subtitle">Pickup</div>
+                                                <div class="value uppercase">
+                                                    <img src="./assets/images/icons/info.png" alt=" " /> {{ shipment.PickupDone }}
+                                                </div>
+                    
+                                                <div class="subtitle">Delivery Location</div>
+                                                <div class="value uppercase">
+                                                    <img src="./assets/images/icons/info.png" alt=" " /> {{ shipment.Delivery }}
+                                                </div>
+                    
+                                            </div>
+                                        </div>-->
+            
+            
+                        <!-- Shipment Id -->
+                        <div class="column col-md-2 hide-mobile" style="width: 12%;">
+                            <div>
+                                <div class="subtitle">Shipment ID</div>
+                                <div class="value uppercase truncateText">{{ shipment.ShipmentNumber }}</div>
+            
+                            </div>
+                        </div>
+            
+                        <div class="column seperator"></div>
+            
+                        <!-- From -->
+                        <!-- <div class="column col-md-2">
+                                            <div>
+                                                <div class="header subtitle">From</div>
+                                                {{ shipment.From | date: " MMMM d, y, h:mm" }}
+                                            </div>
+                                        </div> -->
+            
+                        <!-- To -->
+                        <!-- <div class="column col-md-2">
+                                            <div>
+                                                <div class="header subtitle">To</div>
+                                                {{ shipment.To | date: " MMMM d, y, h:mm" }}
+                                            </div>
+                                        </div> -->
+            
+                        <!-- Status -->
+                        <div class="column col-md-1 status" style="width: 17%;">
+                            <div>
+                                <div class="subtitle">Status</div>
+                                <div class="value truncateText">{{ shipment.CurrentMilestoneName }}</div>
+            
+            
+                                <div class="subtitle hide-mobile">Last Updated</div>
+                                <div class="value hide-mobile">{{ shipment.CurrentMilestoneDate | date: "d-MMM-y, h:mm" }}</div>
+                            </div>
+                        </div>
+            
+                        <div class="more-btn mobile-only" (click)="ShipmentMoreButtonClicked(shipment,$event)">
+                            <img src="/assets/images/icons/more.png" alt="">
+                        </div>
+                    </div>
+                </div>
+                
+            </cdk-virtual-scroll-viewport>
+
+
+        </div>
+    </div>
+
+    <!-- Filters Sidebar -->
+    <div class="filters-sidebar" *ngIf="isFiltersSideBarOpened">
+        <div class="header">
+            <div class="title">Advanced Filters</div>
+            <div class="close-btn hide-mobile" (click)="isFiltersSideBarOpened = false">×</div>
+        </div>
+        <ul>
+            <!-- <li [class.expanded]="isFilter1Expanded">
+                <div class="filter-title" (click)="isFilter1Expanded = !isFilter1Expanded">Filter 1</div>
+                <div class="expand-icon" (click)="isFilter1Expanded = !isFilter1Expanded"><img
+                        src="./assets/images/icons/down-arrow.png" alt=" " [class.expanded]="isFilter1Expanded" /></div>
+                <div class="expanded-list" [class.show]="isFilter1Expanded">
+                    Hi
+                    <br>
+                    <div class="chesjkd checked"></div>
+                </div>
+            </li> -->
+            <li [class.expanded]="isFilter2Expanded">
+                <div class="filter-title" (click)="isFilter2Expanded = !isFilter2Expanded">Customers</div>
+                <div class="expand-icon" (click)="isFilter2Expanded = !isFilter2Expanded"><img
+                        src="./assets/images/icons/down-arrow.png" alt=" " [class.expanded]="isFilter2Expanded" /></div>
+                <div class="expanded-list" [class.show]="isFilter2Expanded">
+
+
+                    <div class="checkbox-filteritem" *ngFor="let customer of InvitedCustomers">
+                        <CheckBox [Bind]="'IsSelected'" [Value]="customer.IsSelected"
+                            [Text]="customer.CompanyName" [DataContext]="customer"></CheckBox>
+                        <!-- <div style="float: right;" class="counter">0</div> -->
+                    </div>
+
+                </div>
+            </li>
+
+            <li class="filters-footer">
+                <a href="javascript:;" (click)="ClearAdvancedFilters()">Clear Selection</a>
+                <button (click)="ApplyFilterButtonClicked()">Apply Filters</button>
+            </li>
+        </ul>
+    </div>
+
+    <!-- Progress Indicator -->
+    <div class="spinner" *ngIf="isLoading">
+        <div class="rect1"></div>
+        <div class="rect2"></div>
+        <div class="rect3"></div>
+        <div class="rect4"></div>
+        <div class="rect5"></div>
+      </div>
+
+    <!-- Details Menu - sort -->
+    <details-menu [Show]="showSortDetailsMenu" [Toggle]="'showSortDetailsMenu'" [DataContext]="this" [MenuTitle]="'Sort'"
+        [Buttons]="[{Code: 'asc', Name:'Ascending'}, {Code: 'desc', Name:'Descending'}]"
+        (ButtonClicked)="SortMenuClicked($event)"></details-menu>
+    
+    <!-- Details Menu - shipment more -->
+    <details-menu [Show]="showShipmentDetailsMenu" [Toggle]="'showShipmentDetailsMenu'" [DataContext]="this"
+        [MenuTitle]="'Sort By'"
+        [Buttons]="[{Code: 'set', Name:'Set as favorite'}, {Code: 'share', Name:'Share'}, {Code: 'copyRef', Name:'Copy Reference #'}]"
+        (ButtonClicked)="ShipmentDetailsMenuClicked($event)"></details-menu>
+
+</div>
+
+ <!-- Mobile: floating bar -->
+ <div class="floating-bar mobile-only">
+    <ul>
+        <li ><img src="./assets/images/icons/star@1x.png" alt=""></li>
+        <li (click)="FocusOnSearchInput()"><img src="./assets/images/icons/search@1x.png" alt=""></li>
+        <li (click)="isFiltersSideBarOpened = !isFiltersSideBarOpened"><img src="./assets/images/icons/filter@1x-white.png" alt=""></li>
+        <li (click)="showSortDetailsMenu = !showSortDetailsMenu"><img src="./assets/images/icons/sort@1x-white.png" [class.FlipImgVert]="!isSortDescending" alt=""></li>
+    </ul>
+</div>
+

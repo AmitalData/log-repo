@@ -25,6 +25,7 @@ import {ServiceLocator} from '../../../Infrastructure/Locators/ServiceLocator';
 import {DownloadManager} from '../../../Infrastructure/Utilities/DownloadManager';
 import {GeneralPrintHelper} from '../../../Infrastructure/Helpers/GeneralPrintHelper';
 import {JournalExtendedPMService} from '../../Services/ExtendedPMs/JournalExtendedPMService';
+import { TextCodeTranslator } from '../../../Infrastructure/Utilities/TextCodeTranslator';
 
 export class JournalMenuButtonsHandler {
     public EntityPM: JournalPM;
@@ -103,20 +104,7 @@ export class JournalMenuButtonsHandler {
                                 // the VOID button is only available on this case:          BUG #44819
                                 //    - Approved Journal, not storno
 
-                                if (this.EntityPM.StatusCode == "2"                 // 2- Approved
-                                    && this.EntityPM.AccountingEntityCode == "1"    // 1- Journal
-                                    && this.EntityPM.OriginalJournalId == null)     // Not Storno
-                                {
-                                    button.IsDisabled = false;
-                                }
-                                else
-                                {
-                                    button.IsDisabled = true;
-                                }
-
-                                if(this.EntityPM.ExternalSystem)
-                                    button.IsDisabled = true;
-
+                                this.SetVoidButtonEnability(button);
 
                                 // if (this.EntityPM.StatusCode == "3" || this.EntityPM.AccountingEntityCode != "1") { // 3- Voided | 1- Journal
                                 //     button.IsDisabled = true;
@@ -142,12 +130,49 @@ export class JournalMenuButtonsHandler {
                                 //}
                                 break;
                             }
+                        case "CopyJournal":
+                            {
+                                if (this.EntityPM.StatusCode == "2"   && this.EntityPM.AccountingEntityCode == "1") {
+                                    button.IsDisabled = false;
+
+                                }
+                                else {
+                                    button.IsDisabled = true;
+                                }
+                                break;
+                            }
                     }
                 }
             }
         }
 
         return menuButtons;
+    }
+
+    private SetVoidButtonEnability(button: MenuButtonPM) {
+        const JournalAccountingEntity = "1";
+        const RevaluationAccountingEntity = "8";
+        const AdjustmentAccountingEntity = "10";
+        const ApprovedStatusCode = "2";
+
+        let IsVoidButtonEnabled: Boolean = this.EntityPM.AccountingEntityCode == JournalAccountingEntity ||
+            this.EntityPM.AccountingEntityCode == RevaluationAccountingEntity ||
+            this.EntityPM.AccountingEntityCode == AdjustmentAccountingEntity;
+
+        let IsApprovedAndNotStorno: Boolean = this.EntityPM.StatusCode == ApprovedStatusCode
+            && this.EntityPM.AccountingEntityCode == JournalAccountingEntity
+            && this.EntityPM.OriginalJournalId == null; // Not Storno
+
+        if (IsVoidButtonEnabled || IsApprovedAndNotStorno) {
+            button.IsDisabled = false;
+        }
+
+        else {
+            button.IsDisabled = true;
+        }
+
+        if (this.EntityPM.ExternalSystem)
+            button.IsDisabled = true;
     }
 
     public MenuButtonClick(menuButton: MenuButtonPM) {
@@ -219,7 +244,11 @@ export class JournalMenuButtonsHandler {
                     //}
                     break;
                 }
-
+            case "CopyJournal":
+                {
+                    this.OpenCopyJournalScreen();
+                    break;
+                }
         }
 
 
@@ -237,7 +266,20 @@ export class JournalMenuButtonsHandler {
             }
         });
     }
-
+    OpenCopyJournalScreen() {
+        var windowTitle = TextCodeTranslator.Translate("Journal.B.CopyJournal");
+        var windowArgs: any = {};
+        windowArgs.JournalPM = this.EntityPM;
+        var logWindow = new LogitudeWindow();
+        logWindow.Width = 700;
+        logWindow.Height = 250;
+        logWindow.Title = windowTitle;
+        logWindow.WindowArgs = windowArgs;
+        logWindow.WindowClosed.subscribe(($event: any) => {
+            this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+        });
+        logWindow.Show('./Accounting/Components/Others/CopyJournalComponent');
+    }
     copyAccountingDates() {
         // Copy AccountingDate from journal to journal lines:
         for (let line of this.EntityPM.JournalLines) {

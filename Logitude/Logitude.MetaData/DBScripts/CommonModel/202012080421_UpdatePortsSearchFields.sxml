@@ -1,0 +1,9 @@
+﻿<Script DBType="Main" Module="Common" AOT="true" TargetTableName="Ports">
+  <Sql Version="1">
+    <![CDATA[
+
+     	update Ports set SearchFields = SearchFields+ ',' + CombinedCode  where $LastCounterWhere$
+     
+    ]]>
+  </Sql>
+</Script>

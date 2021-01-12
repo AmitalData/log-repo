@@ -36,6 +36,10 @@ using System.Net.Http;
 using Json2KeyValue;
 using HypredTest.CurrencyProxy;
 using Logitude.Server.Tools;
+using HypredTest.VendorProxy;
+using HypredTest.AirlineProxy;
+using HypredTest.ShippingAgentProxy;
+using HypredTest.ShippingLineProxy;
 
 namespace HypredTest
 {
@@ -227,6 +231,7 @@ namespace HypredTest
         {
 
             Login();
+            TestShipmentService();
             //this.GetExternalTasksFromFastQueue();
             //IncotermProxy.IncotermWcfServiceClient incotermservice = new IncotermProxy.IncotermWcfServiceClient();
             //using (new System.ServiceModel.OperationContextScope((System.ServiceModel.IClientChannel)incotermservice.InnerChannel))
@@ -1123,7 +1128,7 @@ namespace HypredTest
         private void btnUploadQuoteDocument_Click(object sender, EventArgs e)
         {
 
-			string m = "hello word ya manyak";
+			string m = "hello word";
 			var s = m.Split("word".ToArray());
 
 			OpenFileDialog openFileDialog = new OpenFileDialog();
@@ -1149,17 +1154,18 @@ namespace HypredTest
                     //Read block of bytes from stream into the byte array
                     filestream.Read(fileData, 0, System.Convert.ToInt32(filestream.Length));
                     filestream.Position = 0;
-					//LoginProxy.LoginWcfServiceClient loginService = new LoginProxy.LoginWcfServiceClient();
-					//LoginProxy.Response loginResponse = loginService.Login("customercare@logitudeworld.com", "!C123456");
-					//if (!loginResponse.HasError)
-					//{
-					//    Token = loginResponse.Result;
-					//}
+                    //LoginProxy.LoginWcfServiceClient loginService = new LoginProxy.LoginWcfServiceClient();
+                    //LoginProxy.Response loginResponse = loginService.Login("customercare@logitudeworld.com", "!C123456");
+                    //if (!loginResponse.HasError)
+                    //{
+                    //    Token = loginResponse.Result;
+                    //}
 
-					// LoginToCustoms();
-				
+                    // LoginToCustoms();
+
                     // Login("yaronc@amital.co.il", "!Y123456");
-                    LoginByCredential("3969c070-65c7-4f4a-bc69-785d0b4fc300", 1071);
+                    //LoginByCredential("3969c070-65c7-4f4a-bc69-785d0b4fc300", 1071);
+                    Token = "z6VGJluczfJoScdV1F+/01ZSxShUxCjS2Fc=";
                     ShipmentProxy.ShipmentWcfServiceClient shipmentService = new ShipmentWcfServiceClient();
 
                     using (new System.ServiceModel.OperationContextScope((System.ServiceModel.IClientChannel)shipmentService.InnerChannel))
@@ -1778,7 +1784,8 @@ namespace HypredTest
         private void btnTest_Click(object sender, EventArgs e)
         {
             Login();
-            TestShipmentService();
+            TestCustomerService(Token);
+            //TestShipmentService();
 
             //decimal mydec = 1298989741233.8784431545454999m;
             //mydec = Math.Truncate(mydec * 1000000m) / 1000000m;
@@ -2346,19 +2353,20 @@ namespace HypredTest
 
                 Response resultResponse = new Response();
                 // CustomerPM pm = customerservice.GetCustomerPM(new CustomerApiFilters() { ByCode = true, SearchCode = "10107933" }, 8, ref resultResponse);
-                CustomerPM newCustomer = new CustomerPM()
+                CustomerProxy.CustomerPM newCustomer = new CustomerProxy.CustomerPM()
                 {
-                    Code = "HBRDTSTCustE",
+                    Code = "HBRDTST888",
                     EnglishName = "hybrid customer E",
                     Tenant = 1,
                     PartnerTypeId = "CS",
                     SalesmanUserId = "HybridU1",
-                    VatNumber = "98956454",
-                    CustomerStatusCode = "ACT",
+                    VatNumber = "123456",
+                    CustomerStatusCode = "POT",
                     //SetActivated = true,
                     CreditLimitAmount = 50.65,
                     CountryCode = "IL",
                     PaymentTermId = paymentTermId,
+                     
 
                 };
 
@@ -2393,6 +2401,7 @@ namespace HypredTest
         //public string SalesmanUserName { get; set; }
         }
 
+      
         private void TestQuoteEvents()
         {
             QuoteProxy.QuoteWcfServiceClient quoteservice = new QuoteWcfServiceClient();
@@ -2741,6 +2750,51 @@ namespace HypredTest
                 AccountManagerUserId = "HybridU1",
                 QuoteNumber = "1000",
             };
+
+            consolepm.ShipmentPickUps = new ShipmentPickUpPM[]
+            {
+                new ShipmentPickUpPM()
+                { 
+                    CarrierId = "TK",
+                    FromAddressCity = "London",
+                    FromAddressCountryId = "GB",
+
+                    ToAddressCountryId = "FR",
+                    ToAddressCity = "Paris",
+                    
+                    TruckNumber = "1111",
+                    Driver = "My driver",
+
+                    ETA = DateTime.Now.AddDays(-1),
+                    ETD = DateTime.Now.AddDays(-1),
+                    ATA = DateTime.Now,
+                },
+            };
+
+           // TK
+//RTR
+//MTR
+            consolepm.ShipmentDeliveries = new ShipmentDeliveryPM[]
+           {
+                 new ShipmentDeliveryPM()
+                {
+                    CarrierId = "MTR",
+
+                    FromAddressCity = "Marseille",
+                    FromAddressCountryId = "FR",
+
+                    ToAddressCountryId = "GB",
+                    ToAddressCity = "Bristol",
+
+                    TruckNumber = "1111",
+                    Driver = "Baker driver",
+
+                    ETA = DateTime.Now.AddDays(-1),
+                    ETD = DateTime.Now.AddDays(-1),
+                    ATA = DateTime.Now,
+                },
+           };
+
 
             ShipmentProxy.ShipmentWcfServiceClient shipmentservice = new ShipmentProxy.ShipmentWcfServiceClient();
             using (new System.ServiceModel.OperationContextScope((System.ServiceModel.IClientChannel)shipmentservice.InnerChannel))
@@ -3136,18 +3190,167 @@ namespace HypredTest
         private void btnRunTest_Click(object sender, EventArgs e)
         {
             Login();
-
-            switch(cmdServices.SelectedItem)
+            var response = new Response();
+            var partnersTester = new PartnersTester();
+            switch (cmdServices.SelectedItem)
             {
                 case "Warehouse":
-                    TestWarehouseService(Token);
+                    response = partnersTester.TestWarehouseService(Token);
+                    break;
+                case "Customer":
+                    response = TestCustomerService(Token);
+                    break;
+                case "Vendor":
+                    response = partnersTester.TestVendorService(Token);
+                    break;
+                case "Agent":
+                    response = partnersTester.TestAgentService(Token);
+                    break;
+                case "Airline":
+                    response = partnersTester.TestAirlineService(Token);
+                    break;
+                case "ShippingAgent":
+                    response = partnersTester.TestShippingAgentService(Token);
+                    break;
+                case "Trucker":
+                    response = partnersTester.TestTruckerService(Token);
+                    break;
+                case "Vessel":
+                    response = partnersTester.TestVesselService(Token);
+                    break;
+                case "ShippingLine":
+                    response = partnersTester.TestShippingLineService(Token);
+                    break;
+                case "Shipment Pickups & Deliveries":
+                    response = TestShipmentPickupsDeliveriesService();
                     break;
                 default:
                     MessageBox.Show("select a service to test");
                     break;
             }
-            
+
+            if(response != null && response.HasError)
+            {
+                var errorMessage = response.ErrorMessage + (response.InnerErrorMessage ?? "");
+                MessageBox.Show(errorMessage);
+            }
+
+            MessageBox.Show("Success " + response?.Result);
+
         }
+
+        private Response TestShipmentPickupsDeliveriesService()
+        {
+            ShipmentProxy.ShipmentPM consolepm = new ShipmentPM()
+            {
+                ShipmentNumber = "SHIP_7777",
+                DirectionId = "R",
+                ShipmentLevelCode = "A",
+                Tenant = 1,
+                AccessDate = DateTime.Now,
+                AWBCurrencyId = "USD",
+                BranchId = "HybridB1",
+                DepartmentId = "HybridD1",
+                ChargeableWeightUnitCode = "KG",
+                ConsigneeId = "70000",
+                ShipperId = "70000",
+                ConsigneeReference1 = "PO35104",
+                CreateDateTime = DateTime.Now,
+                CreatedByUserId = "HybridU1",
+                CutoffDate = DateTime.Now,
+                DimensionsUnitCode = "CM",
+
+                FinalDistenationPortId = "TLV",
+                FreightPrepaidCollectId = "C",
+                FromPortId = "JFK",
+                GrossWeightUnitCode = "KG",
+                // House = "4545",
+                IncotermId = "CIF",
+                MainCarriageCarrierId = "LY",
+                MainCarriageFinalDestinationPortId = "TLV",
+                MainCarriageFromPortId = "FRD",
+                MainCarriageToPortId = "TLV",
+                OtherPrepaidCollectId = "C",
+                ProfitCurrencyId = "NIS",
+                ShipmentCustomerTypeCode = "SHI",
+
+
+                ShipmentTypeId = null,//"LCL",
+                //StatusId = "SHOR",
+                ToPortId = "ILTLV",
+                TransportModeId = "A",
+                VolumeUnitCode = "CBM",
+                ChargeableWeight = 0.9999984133,
+                GrossWeight = 0.9999984133,
+                Master = "123456789",
+                MainCarriageATA = DateTime.Now,
+                MainCarriageETA = DateTime.Now,
+                //ShipperReference1 = "saaaaaaaasdasdasdasaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaasaaaaaaaasdasdasdasaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaasaaaaaaaasdasdasdasaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaasaaaaaaaasdasdasdasaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaasaaaaaaaasdasdasdasaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaasaaaaaaaasdasdasdasaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaasaaaaaaaasdasdasdasaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaasaaaaaaaasdasdasdasaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaasaaaaaaaasdasdasdasaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaasaaaaaaaasdasdasdasaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                // ShipperReference2 
+                // IsCancelled = true,
+                IsCancelled = false,
+                Notes = "testing console via hybrid 123",
+                IsHybrid = true,
+                AccountManagerUserId = "HybridU1",
+                QuoteNumber = "1000",
+            };
+
+            consolepm.ShipmentPickUps = new ShipmentPickUpPM[]
+            {
+                new ShipmentPickUpPM()
+                {
+                    CarrierId = "TK",
+                    FromAddressCity = "London",
+                    FromAddressCountryId = "GB",
+
+                    ToAddressCountryId = "FR",
+                    ToAddressCity = "Paris",
+
+                    TruckNumber = "1111",
+                    Driver = "My driver",
+
+                    //ETA = DateTime.Now.AddDays(-2),
+                    //ETD = DateTime.Now.AddDays(-1),
+                    ATA = DateTime.Now,
+                },
+            };
+
+           
+           // consolepm.ShipmentDeliveries = new ShipmentDeliveryPM[]
+           //{
+           //      new ShipmentDeliveryPM()
+           //     {
+           //         CarrierId = "MTR",
+
+           //         FromAddressCity = "Marseille",
+           //         FromAddressCountryId = "FR",
+
+           //         ToAddressCountryId = "GB",
+           //         ToAddressCity = "Bristol",
+
+           //         TruckNumber = "1111",
+           //         Driver = "Baker driver",
+
+           //         ETA = DateTime.Now.AddDays(-2),
+           //         ETD = DateTime.Now.AddDays(-1),
+           //         ATA = DateTime.Now,
+           //     },
+           //};
+
+
+            ShipmentProxy.ShipmentWcfServiceClient shipmentservice = new ShipmentProxy.ShipmentWcfServiceClient();
+            using (new System.ServiceModel.OperationContextScope((System.ServiceModel.IClientChannel)shipmentservice.InnerChannel))
+            {
+                System.ServiceModel.Web.WebOperationContext.Current.OutgoingRequest.Headers.Add("Token", Token);
+                Response response = new Response();
+                response = shipmentservice.Upsert(consolepm, false);
+
+                return response;
+            }
+
+
+        }
+
 
         private void btnPaymentTerms_Click(object sender, EventArgs e)
         {
@@ -3174,6 +3377,11 @@ namespace HypredTest
                     MessageBox.Show("Failed: " + response.ErrorMessage);
                 }
             }
+
+        }
+
+        private void cmdServices_SelectedIndexChanged(object sender, EventArgs e)
+        {
 
         }
 

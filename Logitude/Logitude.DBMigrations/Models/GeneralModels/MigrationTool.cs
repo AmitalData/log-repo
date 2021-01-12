@@ -410,10 +410,12 @@ namespace Logitude.DBMigrations.Models
         {
             Console.WriteLine("Saving The Generated Scripts ...");
 
-            string globalScript = !String.IsNullOrEmpty(generatedScript.GlobalScript) ? generatedScript.GlobalScript.Replace(ScriptSemicolonCode, ";") : "";
-            string mainScript = !String.IsNullOrEmpty(generatedScript.MainScript) ? generatedScript.MainScript.Replace(ScriptSemicolonCode, ";") : "";
-            string systemLogsScript = !String.IsNullOrEmpty(generatedScript.SystemLogsScript) ? generatedScript.SystemLogsScript.Replace(ScriptSemicolonCode, ";") : "";
-            string cargoTrackingScript = !String.IsNullOrEmpty(generatedScript.CargoTrackingScript) ? generatedScript.CargoTrackingScript.Replace(ScriptSemicolonCode, ";") : "";
+            bool isScriptsArgumentProvided = ToolArguments.IsArgumentProvided(Arguments.SCRIPTS);
+
+            string globalScript = isScriptsArgumentProvided ? (!String.IsNullOrEmpty(generatedScript.GlobalScript) ? generatedScript.GlobalScript.Replace(ScriptSemicolonCode, ";") : "") : null;
+            string mainScript = isScriptsArgumentProvided ? (!String.IsNullOrEmpty(generatedScript.MainScript) ? generatedScript.MainScript.Replace(ScriptSemicolonCode, ";") : "") : null;
+            string systemLogsScript = isScriptsArgumentProvided ? (!String.IsNullOrEmpty(generatedScript.SystemLogsScript) ? generatedScript.SystemLogsScript.Replace(ScriptSemicolonCode, ";") : "") : null;
+            string cargoTrackingScript = isScriptsArgumentProvided ? (!String.IsNullOrEmpty(generatedScript.CargoTrackingScript) ? generatedScript.CargoTrackingScript.Replace(ScriptSemicolonCode, ";") : "") : null;
 
             string projectDirectory = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
             if (ToolArguments.IsArgumentProvided(Arguments.DEPLOYMENT))
@@ -1369,6 +1371,11 @@ namespace Logitude.DBMigrations.Models
                 }
             }
 
+            if(ToolConfigurations.DatabaseType.ToLower() == "oracle")
+            {
+                scriptDefinitions = scriptDefinitions.Where(s => !s.AOT).ToList();
+            }
+
             return scriptDefinitions;
         }
 
@@ -1467,6 +1474,10 @@ namespace Logitude.DBMigrations.Models
                     if (!IsSxmlInDBMigrationsDataScripts(scriptDefinition.SxmlFileName))
                     {
                         InsertIntoDBMigrationsDataScripts(scriptDefinition);
+                    }
+                    else
+                    {
+                        UpdateDBMigrationsDataScripts(scriptDefinition);
                     }
                 }
             }
@@ -2028,7 +2039,7 @@ namespace Logitude.DBMigrations.Models
                 ExitTool("Error: Cannot Find SystemLogsConnectionString in Configuration File");
             }
 
-            if (databaseType.ToLower() == "oracle" && ToolArguments.IsArgumentProvided(Arguments.ZERODOWNTIME))
+            if (databaseType.ToLower() == "oracle" && (ToolArguments.IsArgumentProvided(Arguments.ZERODOWNTIME) || ToolArguments.IsArgumentProvided(Arguments.DEV)))
             {
                 ExitTool("Error: Zero Down Time Mode For Oracle Not Ready To Use");
             }
@@ -2250,6 +2261,44 @@ namespace Logitude.DBMigrations.Models
                     "[StartDate], [EndDate], [LastBatchElapsedTime], [ScriptVersion], [ScriptHashValue], [ScriptHistoryAction], [TargetTableName], [BatchSize]) " +
                     "VALUES('" + Guid.NewGuid().ToString() + "', '" + scriptDefinition.SxmlFileName + "', '" + scriptDefinition.DBType + "', '" + sxmlScript + "', " +
                     (scriptDefinition.Pre ? "1" : "0") + ", 'Waiting', " + scriptExecutionNumber + ", NULL, NULL, 0, " + sxmlVersion + ", '" + sxmlScriptHashValue + "', '" + scriptDefinition.ScriptHistoryAction + "', '" + scriptDefinition.TargetTableName + "', " + (scriptDefinition.BatchSize > 0 ? scriptDefinition.BatchSize.ToString() : "NULL") + ");";
+
+                SqlConnection sqlConnection = new SqlConnection(ToolConfigurations.MainConnectionString);
+
+                try
+                {
+                    sqlConnection.Open();
+                    SqlCommand sqlCommand = new SqlCommand();
+                    sqlCommand.Connection = sqlConnection;
+                    sqlCommand.CommandText = queryString;
+                    sqlCommand.ExecuteNonQuery();
+                    sqlConnection.Close();
+                }
+                catch (Exception exception)
+                {
+                    sqlConnection.Close();
+                    ExitTool(exception.Message);
+                }
+            }
+        }
+        
+        protected void UpdateDBMigrationsDataScripts(ScriptDefinition scriptDefinition)
+        {
+            UpdateDataScriptCounter(scriptDefinition.TargetTableName);
+            int scriptExecutionNumber = GetDataScriptCounter(scriptDefinition.TargetTableName);
+
+            if (ToolConfigurations.DatabaseType.ToLower() == "oracle")
+            {
+
+            }
+            else
+            {
+                string sxmlScript = GetScriptFromCDataSection(scriptDefinition.Sql.Script).Replace("'", "''").TrimEnd(new char[] { '\r', '\n' });
+                int sxmlVersion = scriptDefinition.Sql.Version;
+                string sxmlScriptHashValue = GenerateHashString(scriptDefinition.Sql.Script);
+
+                string queryString = "UPDATE [dbo].[DBMigrationsDataScripts] SET [SxmlScript] = '" + sxmlScript + "', [Status] = 'Waiting', [ScriptExecutionNumber] = " + scriptExecutionNumber + ", [StartDate] = NULL, [EndDate] = NULL, " +
+                    "[LastBatchElapsedTime] = 0, [ScriptVersion] = " + sxmlVersion + ", [ScriptHashValue] = '" + sxmlScriptHashValue + "', " +
+                    "[ScriptHistoryAction] = '" + scriptDefinition.ScriptHistoryAction + "' WHERE [SxmlFileName] = '" + scriptDefinition.SxmlFileName + "'";
 
                 SqlConnection sqlConnection = new SqlConnection(ToolConfigurations.MainConnectionString);
 

@@ -143,6 +143,18 @@
 
                                             </tr>
 
+                                            <!-- EORI number -->
+                                            <tr class="FormFieldRow">
+                                                <td>
+                                                    <LogLabel [ObjectFieldName]="'EORInumber'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td>
+                                                    <LogTextBox [ObjectFieldName]="'EORInumber'" [Text]="EORInumber" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
+                                                </td>
+
+                                            </tr>
+
                                             <!-- PaymentTermId -->
                                             <tr class="FormFieldRow">
                                                 <td>
@@ -845,7 +857,7 @@
 
                                                         <!-- AccountManagerUserId -->
                                                         <tr class="FormFieldRow">
-                                                            <td style="width:145px;">
+                                                            <td style="width:130px;">
                                                                 <LogLabel [ObjectFieldName]="'AccountManagerUserId'" [ObjectTableName]="'Customer'" [DataContext]="DataContext"></LogLabel>
                                                             </td>
 
@@ -858,13 +870,13 @@
                                                                             [LookUpTableName]="'User'"
                                                                             [HideColumns]="true">
                                                                     </LogLov>
-
-                                                                    <div class="SplittedText" *ngIf="IsSplitted_AccountManager">Splitted By Product</div>
                                                                 </div>
                                                             </td>
 
                                                             <td>
-                                                                <a *ngIf="IsMoreButtonVisible_AccountManager" style="font-size:x-small;color:blue;text-decoration:underline;margin-left:10px" (click)="MoreButtonClicked('AccountManagerUserId')">More</a>
+                                                                <div style="margin-left: 10px; width:1px;">
+                                                                    <span class="hyperlink" *ngIf="IsMoreButtonVisible_AccountManager" (click)="MoreButtonClicked('AccountManagerUserId')">{{AccountManagerMoreLabel}}</span>
+                                                                </div>
                                                             </td>
                                                         </tr>
 
@@ -884,13 +896,13 @@
                                                                             [HideColumns]="true"
                                                                             [DependencyFilter3Value]="true">
                                                                     </LogLov>
-
-                                                                    <div class="SplittedText" *ngIf="IsSplitted_SalesmanUser">Splitted By Product</div>
                                                                 </div>
                                                             </td>
 
                                                             <td>
-                                                                <a *ngIf="IsMoreButtonVisible_Salesman" style="font-size:x-small;color:blue;text-decoration:underline;margin-left:10px" (click)="MoreButtonClicked('SalesmanUserId')">More</a>
+                                                                <div style="margin-left: 10px; width:1px;">
+                                                                    <span class="hyperlink" *ngIf="IsMoreButtonVisible_Salesman" (click)="MoreButtonClicked('SalesmanUserId')">{{SalesmanMoreLabel}}</span>
+                                                                </div>
                                                             </td>
                                                         </tr>
 
@@ -961,7 +973,7 @@
 
                                                         <!-- ForwarderId -->
                                                         <tr class="FormFieldRow">
-                                                            <td style="width:145px;">
+                                                            <td style="width:130px;">
                                                                 <LogLabel [ObjectFieldName]="'ForwarderId'" [ObjectTableName]="'Customer'" [DataContext]="DataContext"></LogLabel>
                                                             </td>
 
@@ -974,13 +986,13 @@
                                                                             [LookUpTableName]="'Card'"
                                                                             [DependencyFilter1Value]="'AG'">
                                                                     </LogLov>
-
-                                                                    <div class="SplittedText" *ngIf="IsSplitted_Forwarder">Splitted By Product</div>
                                                                 </div>
                                                             </td>
 
                                                             <td>
-                                                                <a *ngIf="IsMoreButtonVisible_Forwarder" style="font-size:x-small;color:blue;text-decoration:underline;margin-left:10px" (click)="MoreButtonClicked('ForwarderId')">More</a>
+                                                                <div style="width:1px;">
+                                                                    <span class="hyperlink" *ngIf="IsMoreButtonVisible_Forwarder" (click)="MoreButtonClicked('ForwarderId')">{{ForwarderMoreLabel}}</span>
+                                                                </div>
                                                             </td>
                                                         </tr>
 
@@ -999,13 +1011,13 @@
                                                                             [LookUpTableName]="'Card'"
                                                                             [DependencyFilter1Value]="'CG'">
                                                                     </LogLov>
-
-                                                                    <div class="SplittedText" *ngIf="IsSplitted_CustomsAgent">Splitted By Product</div>
                                                                 </div>
                                                             </td>
 
                                                             <td>
-                                                                <a *ngIf="IsMoreButtonVisible_CustomsAgent" style="font-size:x-small;color:blue;text-decoration:underline;margin-left:10px" (click)="MoreButtonClicked('CustomsAgentId')">More</a>
+                                                                <div style="width:1px;">
+                                                                    <span class="hyperlink" *ngIf="IsMoreButtonVisible_CustomsAgent" (click)="MoreButtonClicked('CustomsAgentId')">{{CustomsAgentMoreLabel}}</span>
+                                                                </div>
                                                             </td>
                                                         </tr>
 
@@ -1024,13 +1036,13 @@
                                                                             [LookUpTableName]="'Card'"
                                                                             [DependencyFilter1Value]="'CS'">
                                                                     </LogLov>
-
-                                                                    <div class="SplittedText" *ngIf="IsSplitted_Mediator">Splitted By Product</div>
                                                                 </div>
                                                             </td>
 
                                                             <td>
-                                                                <a *ngIf="IsMoreButtonVisible_Mediator" style="font-size:x-small;color:blue;text-decoration:underline;margin-left:10px" (click)="MoreButtonClicked('MediatorId')">More</a>
+                                                                <div style="width:1px;">
+                                                                    <span class="hyperlink" *ngIf="IsMoreButtonVisible_Mediator" (click)="MoreButtonClicked('MediatorId')">{{MediatorMoreLabel}}</span>
+                                                                </div>
                                                             </td>
                                                         </tr>
                                                     </table>
@@ -1059,7 +1071,7 @@
 
                                                         <!-- Customer Rank -->
                                                         <tr class="FormFieldRow">
-                                                            <td style="width: 145px; padding-left: 10px;" class="Label">
+                                                            <td style="width: 130px; padding-left: 10px;" class="Label">
                                                                 Customer Rank:
                                                             </td>
 

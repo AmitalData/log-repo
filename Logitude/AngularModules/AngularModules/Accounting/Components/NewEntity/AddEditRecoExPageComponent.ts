@@ -177,6 +177,7 @@ export class AddEditRecoExPageComponent extends BaseComponent
 
         if (this.additionalDataPM && this.additionalDataPM.LastPageEndDate) {
             newEntity.FromDate = this.GetLastPageDatePlusOneDay(args);
+            newEntity.StartBalance = this.additionalDataPM.LastPageCloseBalance;
         }
 
         return newEntity;

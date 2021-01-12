@@ -101,5 +101,10 @@ namespace Simplog.Data.CommonDataModel.Repositories
         {
             throw new System.NotImplementedException();
         }
+
+        public CountryCity GetSingleCountryCityByNameAndCountry(string cityName, string countryId, int tenant)
+        {
+            return (from record in context.CountryCities where record.EnglishName == cityName && record.CountryId == countryId && record.Tenant == tenant select record).FirstOrDefault();
+        }
     }
 }

@@ -64,7 +64,10 @@ export class AutomationResultEmailRecipientPM {
     public OldEntityPM: AutomationResultEmailRecipientPM;
 		
     public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
+       if(!this.DisableMarkAsDirty)
+       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -72,6 +75,7 @@ export class AutomationResultEmailRecipientPM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "AutomationResultEmailRecipient");
            
         }
+	 }
     }
     private MyClone: AutomationResultEmailRecipientPM;
 

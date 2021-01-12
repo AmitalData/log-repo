@@ -58,7 +58,10 @@ export class Category5PM {
     public OldEntityPM: Category5PM;
 		
     public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
+       if(!this.DisableMarkAsDirty)
+       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -66,6 +69,7 @@ export class Category5PM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "Category5");
            
         }
+       }
     }
 
     private MyClone: Category5PM;

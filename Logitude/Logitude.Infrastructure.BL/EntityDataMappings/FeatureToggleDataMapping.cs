@@ -50,7 +50,17 @@ namespace Logitude.Infrastructure.BL.EntityDataMappings
         private void BuildSearchFields(FeatureTogglePM entityPM, FeatureToggle entityPOCO)
         {
             string mySearchFields = "";
-            MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.ToggleName);
+
+            if (!string.IsNullOrEmpty(entityPM.ToggleCode))
+            {
+                ToggleRepository toggleRepository = new ToggleRepository(entityPM.Tenant);
+                Toggle toggle = toggleRepository.GetSingle(entityPM.ToggleCode);
+                if (toggle != null)
+                {
+                    MethodHelper.AddToSearchFields(ref mySearchFields, toggle.Name);
+                }
+            }
+
             MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.TenantNumber.ToString());
             entityPM.SearchFields = mySearchFields;
             entityPOCO.SearchFields = mySearchFields;

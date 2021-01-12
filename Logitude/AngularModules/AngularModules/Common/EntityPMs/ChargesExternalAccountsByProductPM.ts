@@ -89,7 +89,10 @@ export class ChargesExternalAccountsByProductPM {
     public OldEntityPM: ChargesExternalAccountsByProductPM;
 		
     public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
+       if(!this.DisableMarkAsDirty)
+       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -97,6 +100,7 @@ export class ChargesExternalAccountsByProductPM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "ChargesExternalAccountsByProduct");
            
         }
+	 }
     }
     private MyClone: ChargesExternalAccountsByProductPM;
 

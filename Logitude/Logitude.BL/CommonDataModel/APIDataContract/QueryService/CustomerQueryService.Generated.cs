@@ -40,7 +40,7 @@ using Simplog.Data.CommonDataModel;
         }
 
 		
-		public Customer GetCustomerById(string Id,int Tenant)
+		public Customer GetCustomerById(string Id,int Tenant,string ComputingPartnerName = "")
         { 
 		    try
             {
@@ -50,7 +50,7 @@ using Simplog.Data.CommonDataModel;
 				 if (temp == null)
                     throw new ApplicationException("Card with Id " + Id + " doesn't exist");
 
-				return CustomerDataMapping(temp,Tenant);
+				return CustomerDataMapping(temp,Tenant,ComputingPartnerName);
 			}
             catch (Exception ex)
             {
@@ -74,7 +74,7 @@ using Simplog.Data.CommonDataModel;
 				   if(MyEntityPM.PaymentTermId != null)
 				   {
 					   PaymentTermQueryService PaymentTermService0 = new PaymentTermQueryService(Tenant);
-					   					   temp.PaymentTerm = PaymentTermService0.GetPaymentTermById(MyEntityPM.PaymentTermId,Tenant); 
+					   					   temp.PaymentTerm = PaymentTermService0.GetPaymentTermById(MyEntityPM.PaymentTermId,Tenant,ComputingPartnerName); 
 			       
 					   				   }
 				    
@@ -83,14 +83,14 @@ using Simplog.Data.CommonDataModel;
 				   if(MyEntityPM.MainAddressId != null)
 				   {
 					   AddressQueryService AddressService1 = new AddressQueryService(Tenant);
-					   					   temp.MainAddress = AddressService1.GetAddressById(MyEntityPM.MainAddressId,Tenant); 
+					   					   temp.MainAddress = AddressService1.GetAddressById(MyEntityPM.MainAddressId,Tenant,ComputingPartnerName); 
 			       
 					   				   }
 				   
 				if(MyEntityPM.Contacts != null && MyEntityPM.Contacts.Count > 0)
 				{
 					 ContactQueryService ContactService2 = new ContactQueryService(Tenant);
-					 temp.Contacts = ContactService2.ContactCustomDataMapping(MyEntityPM,MyEntityPM.Contacts,Tenant);
+					 temp.Contacts = ContactService2.ContactCustomDataMapping(MyEntityPM,MyEntityPM.Contacts,Tenant,ComputingPartnerName);
 				}
 
 							  
@@ -99,7 +99,7 @@ using Simplog.Data.CommonDataModel;
 				   if(MyEntityPM.BillingAddressId != null)
 				   {
 					   AddressQueryService AddressService2 = new AddressQueryService(Tenant);
-					   					   temp.BillingAddress = AddressService2.GetAddressById(MyEntityPM.BillingAddressId,Tenant); 
+					   					   temp.BillingAddress = AddressService2.GetAddressById(MyEntityPM.BillingAddressId,Tenant,ComputingPartnerName); 
 			       
 					   				   }
 				    
@@ -108,7 +108,7 @@ using Simplog.Data.CommonDataModel;
 				   if(MyEntityPM.GLAccountId != null)
 				   {
 					   GLAccountQueryService GLAccountService3 = new GLAccountQueryService(Tenant);
-					   					   temp.GLAccount = GLAccountService3.GLAccountCustomDataMapping(MyEntityPM.GLAccountId,Tenant); 
+					   					   temp.GLAccount = GLAccountService3.GLAccountCustomDataMapping(MyEntityPM.GLAccountId,Tenant,ComputingPartnerName); 
 			       
 					   				   }
 				   

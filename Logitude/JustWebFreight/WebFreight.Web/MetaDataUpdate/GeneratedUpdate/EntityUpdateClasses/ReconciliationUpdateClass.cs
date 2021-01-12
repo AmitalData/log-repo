@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class ReconciliationUpdateClass
    {  		
-		public const string HashString = "a127397efc8a6a43d0001aa71f1975de";
+		public const string HashString = "8c61fb993beceee4f5bc6356c449ad28";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -122,7 +122,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    MaxNumberOfCustomFields =  0,
 			      				    LocalDefaultText =  "התאמה",
 			      				    DefaultText =  "Reconciliation",
-			      				    Code =  "b6f0",
+			      				    Code =  "eb7b",
 			      				    Name =  "Reconciliation Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Accounting",
@@ -1228,6 +1228,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   ObjectTable ReconciliationObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Reconciliation" && d.Tenant == 0).FirstOrDefault(); 
 
  		   TextCode ReconciliationTextCode_ReconciliationOCantReconcileCreditInvoiceOnly = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Reconciliation.O.CantReconcileCreditInvoiceOnly", DefaultText = "You can't reconcile an AR Payment with a credit-invoice only, The credit invoice can be offset along with AR Invoice. and Then reconciled with the AR Payment",LocalDefaultText = @"לא ניתן להתאים קבלה עם חשבונית זיכוי בלבד, חשבונית הזיכוי יכולה להתקזז עם חשבונית חיוב ואז להיות מותאמת לקבלה", ObjectTableId = ReconciliationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ReconciliationTextCode_ReconciliationOCantReconcileMutipleARPayment = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Reconciliation.O.CantReconcileMutipleARPayment", DefaultText = "Can’t include more than one AR payment in the same reconciliation",LocalDefaultText = @"לא ניתן לכלול יותר מקבלה אחת באותה התאמה", ObjectTableId = ReconciliationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ReconciliationTextCode_ReconciliationOCantReconcileMutipleAPPayment = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Reconciliation.O.CantReconcileMutipleAPPayment", DefaultText = "Can’t include more than one AP payment in the same reconciliation",LocalDefaultText = @"לא ניתן לכלול יותר מתשלום אחד באותה התאמה", ObjectTableId = ReconciliationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

@@ -69,7 +69,10 @@ export class DocumentFolderPM {
     public OldEntityPM: DocumentFolderPM;
 		
     public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
+       if(!this.DisableMarkAsDirty)
+       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -77,6 +80,7 @@ export class DocumentFolderPM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "DocumentFolder");
            
         }
+	 }
     }
     private MyClone: DocumentFolderPM;
 

@@ -1281,6 +1281,7 @@ namespace WebFreight.Web.InfrastructureModel
                 CreateTenantFromSignUp = true,
                 TimeZoneOffset = null,
                 CheckDigitControlAlgorithmCode = "NONE",
+                TransferQuotationsToUnifreightTrigger = "OnSend",
             };
 
             return newTenant;
@@ -1947,9 +1948,9 @@ namespace WebFreight.Web.InfrastructureModel
             List<DocumentTypeTemplatePM> documentTypeTemplateList = theDocumentTypeTemplateQuery.GetDocumentTypeTemplatePMsByTenant(0).ToList();
             bool sameCountry = false;
             AutomationHelper automationHelper = new AutomationHelper();
-            List<string> automationDocumentTypeIds = automationHelper.GetAutomationDocumentTypeIds(tenant);
+            List<string> automationDocumentTypeTemplateIds = automationHelper.GetAutomationDocumentTypeTemplateIds(tenant);
 
-            documentTypeTemplateList = documentTypeTemplateList.Where(d => (d.IsCopiedAtSignup && d.IsEnabledForCustomers) || automationDocumentTypeIds.Contains(d.Id)).ToList();
+            documentTypeTemplateList = documentTypeTemplateList.Where(d => (d.IsCopiedAtSignup && d.IsEnabledForCustomers) || automationDocumentTypeTemplateIds.Contains(d.Id)).ToList();
             
             foreach (DocumentTypePM documenttype in tenantZeroDocumentType)
             {
@@ -2041,7 +2042,7 @@ namespace WebFreight.Web.InfrastructureModel
                 From = documentTypeTemplatePM.From,
                 CC = documentTypeTemplatePM.CC,
                 ReplyTo = documentTypeTemplatePM.ReplyTo,
-
+                To = documentTypeTemplatePM.To,
             };
         }
 

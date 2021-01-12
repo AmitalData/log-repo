@@ -184,11 +184,13 @@
 
                         <td>
                             <div *ngIf="HasActionBar()" style="width: 5px;"></div>
-                            <div *ngIf="HasActionBar()" id="ActionBar"  LocationDirective Code="MNA" ></div>
-                            <div *ngIf="!HasActionBar()" ></div>
+                            <div *ngIf="HasActionBar()" id="ActionBar" LocationDirective Code="MNA"></div>
+                            <div *ngIf="!HasActionBar()"></div>
                         </td>
 
-                       
+                        <td style="width: 480px;">
+                            <div LocationDirective Code="MNH"></div>
+                        </td>
                     </tr>
                 </table>
             </td>
@@ -268,7 +270,7 @@
                             <span *ngIf="ShowViews">{{'General.O.View' | TextCodeTranslationPipe}}:</span>
                         </td>
 
-                        <td style="vertical-align: middle;">
+                        <td style="vertical-align: middle;width:170px">
                             <QueryList *ngIf="ShowViews && ResourcesLoaded" [ItemsSource]="Queries" [UserItemSource]="UserQueries" [Binding]="'NameTextCodeCode'" [onSelectedQueryChangeEvent]="onSelectedQueryChangeEvent" [SelectedItem]="SelectedQuery" [ObjectTableName]="ObjectTableName" (itemSelectedEvent)="QueryValueChanged($event)" [QueryListSourceChanged]="QueryListSourceChanged" (QueriesChangedEvent)="QueriesChangedEvent($event)" [LoadResourceCompleted]="LoadResourceCompleted" [pubSubAdvanceQueryFiltersService]="AdvanceQFiltersService" (NewViewClosedEvent)="NewViewClosedEvent($event)"></QueryList>
 
 
@@ -296,13 +298,17 @@
         </div>-->
                         </td>
 
+
+                        <td *ngIf="(dataSource && dataSource.rowCount == ConstantPageSize && DontApplyVirtualization)" style="color: #666666; font-size: 11px; padding-left:5px;padding-right:5px;width:1px;background-color:#FFFBDA">
+                            <div>  <span >Showing the first {{ConstantPageSize}} rows, use the search field to find more results.</span></div>
+                        </td>
+
+
                         <td>
                             <div></div>
                         </td>
 
-                        <td style="width: 650px; left:50PX;"> 
-                            <div LocationDirective Code="MNH"></div>
-                        </td>
+
                         <td style="width: 1px;" *ngIf="IsNavigateButtonVisible">
                             <button *ngIf="IsNavigateButtonVisible" style="min-width: 95px; padding-left: 5px; padding-right: 5px;" class="Button" (click)="Navigate()">Navigate</button>
                         </td>
@@ -399,7 +405,7 @@
                     <logitude-grid-v2 *ngIf="true" [dataSource]="dataSource" [QueryChangeEvent]="onQueryChangeEvent" [pubSubAdvanceQueryFiltersServiceRecived]="pubSubAdvanceQueryFiltersServiceRecived" [Filterchangeevent]="Filterchangeevent"
                                       [rows]="items" [SearchFieldchangeevent]="SearchFieldchangeevent" [MenuHeaderchangeevent]="MenuHeaderchangeevent"
                                       [columns]="columns" (ColumnResisedevent)="ColumnResisedevent($event)" (MenuHeaderchanged)="onMenuHeaderchanged($event)"
-                                      [ObjectTable]="ObjectTable" [ColumnsReady]="ColumnsReady" [HasPermition]="HasPermition"
+                                      [ObjectTable]="ObjectTable" [ColumnsReady]="ColumnsReady" [HasPermition]="HasPermition" [DontApplyVirtualization]="DontApplyVirtualization"
                                       [rowCount]="rowCount" [searchFields]="searchFields" [queryId]="SelectedQueryId" [queryCode]="SelectedQueryCode" (rowSelectedEvent)="onRowSelected($event)"
                                       (AfterViewInitCompleted)="ViewInitCompleted($event)" [ReattachToDetection]="ReattachToDetection" [MyScrollTop]="MyScrollTop" [MySelectedRowIndex]="MySelectedRowIndex" [SortServerProp]="SortServerProp" (SortInvoked)="OnSortInvoked($event)"
                                       [FilterChangedEvent]="FilterChangedEvent">

@@ -477,6 +477,7 @@ export class ShipmentPMService {
         }
         if (!entityPM) {
             entityPM = new ShipmentPM();
+            entityPM.DisableMarkAsDirty = true;
         }
 
         var jsonPMKeys = Object.keys(jsonPM);
@@ -652,7 +653,7 @@ export class ShipmentPMService {
         else {
             entityPM.OldEntityPM = null;
         }
-
+        entityPM.DisableMarkAsDirty = false;
         return entityPM;
     }
     MapShipmentOCIs(entityPM: ShipmentPM, jsonPM: any, mapParent: boolean = true) {
@@ -677,7 +678,7 @@ export class ShipmentPMService {
             else {
                 itemPM = new AWBOCIPM(null);
             }
-
+            itemPM.DisableMarkAsDirty = true;
             var pmKeys = Object.keys(itemJson);
             for (var key in pmKeys) {
 
@@ -690,7 +691,7 @@ export class ShipmentPMService {
             }
 
             itemPM.IsDirty = false;
-
+            itemPM.DisableMarkAsDirty = false;
             if (mapParent) {
                 itemPM.OldEntityPM = this.clone(itemPM);
                 itemPM.UniqueKey = Guid.newGuid();
@@ -750,7 +751,7 @@ export class ShipmentPMService {
             else {// update mapping             
                 itemPM = new ShipmentPackagePM(null);               
             }
-
+            itemPM.DisableMarkAsDirty = true;
             var pmKeys = Object.keys(itemJson);
             for (var key in pmKeys) {
 
@@ -812,7 +813,7 @@ export class ShipmentPMService {
                 itemPM.OldEntityPM = null;
             }
 
-          
+            itemPM.DisableMarkAsDirty = false;
             itemPM.IsDirty = false;
             entityPM.ShipmentPackages.push(itemPM);             
         }
@@ -824,6 +825,7 @@ export class ShipmentPMService {
                     if (oldCollection[pack]) {
                         var oldpackageJson = oldCollection[pack];
                         var deletedPM: ShipmentPackagePM = new ShipmentPackagePM(null);
+                        deletedPM.DisableMarkAsDirty = true;
                         var pmKeys = Object.keys(oldpackageJson);
                         for (var key in pmKeys) {
 
@@ -835,7 +837,7 @@ export class ShipmentPMService {
                             deletedPM[property] = oldpackageJson[property];
                         }
 
-                      
+                        deletedPM.DisableMarkAsDirty = false;
                         deletedPM.IsDirty = false;
                         deletedPM.ChangeSetOp = "Delete";
 

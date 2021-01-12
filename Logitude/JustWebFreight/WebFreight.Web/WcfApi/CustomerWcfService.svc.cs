@@ -57,6 +57,11 @@ namespace WebFreight.Web.WcfApi
                 using (TransactionScope scope = TransactionFactory.GetTransaction())
                 {
 
+                    if (string.IsNullOrEmpty(entityPM.PaymentTermId))
+                    {
+                        entityPM.PaymentTermId = "--";
+                    }
+                   
                     ClassLevelValidator validationClass = new ClassLevelValidator("Customer", entityPM.Tenant) { IsHybrid = true };
                     if (!validationClass.IsValid(entityPM, entityPM, null))
                     {
@@ -79,6 +84,7 @@ namespace WebFreight.Web.WcfApi
                     ContactRepository contactRepository = new ContactRepository(objectContext);
                     RankRepository rankRepository = new RankRepository(objectContext);
                     Tenant tenantEntity = tenantRepository.GetSingleTenantOnly(entityPM.Tenant);
+                    PaymentTermRepository paymentTermRepository = new PaymentTermRepository(entityPM.Tenant);
 
                     CustomerService service = new CustomerService(objectContext, entityPM);
 
@@ -240,6 +246,23 @@ namespace WebFreight.Web.WcfApi
                             return response;
                         }
                     }
+
+                    if (entityPM.PaymentTermId != null)
+                    {
+                        var paymentTerm = paymentTermRepository.GetSinglePaymentTermByCode(entityPM.PaymentTermId, entityPM.Tenant);
+                        if (paymentTerm != null)
+                        {
+                            entityPM.PaymentTermId = paymentTerm.Id;
+                        }
+                        else
+                        {
+                            response.HasError = true;
+                            response.ErrorMessage = "PaymentTermId field doesn't exist in the database,Upsert this entity before using it.";
+                            return response;
+                        }
+                    }
+                   
+
 
 
 
@@ -441,7 +464,15 @@ namespace WebFreight.Web.WcfApi
 
                     if (entity == null && !string.IsNullOrEmpty(entityPM.VatNumber))
                     {
-                        entity = GetCustomerByVatNumber(entityPM, customerRepository, countryRepository, tenantEntity);
+                        bool isPotentialCustomerReceived = (entityPM.CustomerStatusCode == "POT" || entityPM.CustomerStatusCode == "WAC" || entityPM.SetReady);
+                        List<Customer> varCustomers = customerRepository.GetCustomersByVat(entityPM.VatNumber, entityPM.Tenant);
+                        Customer cloudPotentailCustomer = varCustomers.FirstOrDefault(c => c.CustomerStatusCode == "WAC" || c.CustomerStatusCode == "POT");//customerRepository.GetSingleCustomerByVatForHybrid(entityPM.VatNumber, entityPM.Tenant, false);
+                        if (cloudPotentailCustomer != null && isPotentialCustomerReceived) //merge only potential customer with potentials item#75761
+                        {
+                            entity = cloudPotentailCustomer;
+                        }
+                        else
+                           ValidateCustomerByVatNumber(entityPM, customerRepository, countryRepository, tenantEntity);
                     }
 
                     if (entity == null)
@@ -582,7 +613,7 @@ namespace WebFreight.Web.WcfApi
 
         }
 
-        private Customer GetCustomerByVatNumber(CustomerPM entityPM, CustomerRepository customerRepository, CountryRepository countryRepository, Tenant tenantEntity)
+        private void ValidateCustomerByVatNumber(CustomerPM entityPM, CustomerRepository customerRepository, CountryRepository countryRepository, Tenant tenantEntity)
         {
             Customer entity = null;
             if (tenantEntity.VatUniqueTypeCode == "UFA")
@@ -595,18 +626,12 @@ namespace WebFreight.Web.WcfApi
                 if (customerCountry != null && tenantEntity.VatUniqueCountryId == customerCountry.Id)
                 {
                     entity = GetCustomerByVatUniquePartnerType(entityPM, customerRepository, tenantEntity);
-                    //entity = customerRepository.GetSingleCustomerByVatForHybrid(entityPM.VatNumber, entityPM.Tenant, false);
-                    if (entity != null && (entity.Card.Code != entityPM.Code))
-                    {
-                        throw new ApplicationException("A customer with the same vat and different code already exists.");
-                        //response.HasError = true;
-                        //response.ErrorMessage = "A customer with the same vat and different code already exists.";
-                        //return response;
-                    }
                 }
             }
-
-            return entity;
+            if (entity != null && (entity.Card.Code != entityPM.Code))
+            {
+                throw new ApplicationException("A customer with the same vat and different code already exists.");
+            }
         }
 
         private Customer GetCustomerByVatUniquePartnerType(CustomerPM entityPM, CustomerRepository customerRepository, Tenant tenantEntity)
@@ -849,6 +874,7 @@ namespace WebFreight.Web.WcfApi
                 ContactRepository contactRepository = new ContactRepository(objectContext);
                 CountryRepository countryRepository = new CountryRepository(objectContext);
                 RankRepository rankRepository = new RankRepository(objectContext);
+                PaymentTermRepository paymentTermRepository = new PaymentTermRepository(objectContext);
                 CustomerQuery query = new CustomerQuery(tenant);
                 if (filters.ById)
                 {
@@ -970,6 +996,16 @@ namespace WebFreight.Web.WcfApi
                         {
                             entityPM.RankCode = rank.Code;
                             entityPM.RankName = rank.Name;
+                        }
+                    }
+
+                    if (entityPM.PaymentTermId != null)
+                    {
+                        PaymentTerm paymentTerm = paymentTermRepository.GetSinglePaymentTerm(entityPM.PaymentTermId, entityPM.Tenant);
+                        if (paymentTerm != null)
+                        {
+                            entityPM.PaymentTermId = paymentTerm.Code;
+                            
                         }
                     }
 

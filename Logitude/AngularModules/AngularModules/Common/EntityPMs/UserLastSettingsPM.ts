@@ -59,7 +59,10 @@ export class UserLastSettingsPM {
     public OldEntityPM: UserLastSettingsPM;
 		
     public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
+       if(!this.DisableMarkAsDirty)
+       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -67,6 +70,7 @@ export class UserLastSettingsPM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "UserLastSettings");
            
         }
+	 }
     }
     private MyClone: UserLastSettingsPM;
 

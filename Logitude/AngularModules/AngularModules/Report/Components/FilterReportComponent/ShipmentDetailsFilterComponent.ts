@@ -5,6 +5,7 @@ import { ReportFliter } from '../../Components/Filters/ReportFliter';
 import { QueryFilterItem } from '../../Components/Filters/QueryFilterItem';
 import { Component } from '@angular/core';
 import { AppTool, DateTool } from '../../../Infrastructure/Tools';
+import { AdvancedDatePickerResolverComponent } from '../../../Infrastructure/Components/LogitudeComponents/AdvancedDatePickerResolverComponent';
 
 @Component({
     selector: 'ShipmentDetailsFilterComponent',
@@ -29,11 +30,31 @@ export class ShipmentDetailsFilterComponent extends BaseComponent {
     public RunReportTitle: string = 'Run Report';
     InitializeComponent(myReportsPreview: ReportsPreviewComponent) {
         this.ReportsPreview = myReportsPreview;
-        this.FromDate = DateTool.GetCurrentDateAsUtc();
-        this.FromDate.setMonth(this.FromDate.getMonth() - 1);
-        this.ToDate = DateTool.GetCurrentDateAsUtc();
-        //this.RunReport(false);
+        this.FillDefaultDateDetails();
     }
+
+    FillDefaultDateDetails() {
+        var month = new Date().getMonth();
+        var Year = new Date().getFullYear();
+        if (AppTool.IsNullOrEmpty(this.ToDate)) {
+            this.ToDate = this.SetDate(Year, month);
+        }
+
+        if (AppTool.IsNullOrEmpty(this.FromDate)) {
+            this.FromDate = this.SetDate(Year, month - 1);
+        }
+    }
+  
+    SetDate(year: number, month: number) {
+        var date = new Date();
+        date.setUTCFullYear(year);
+        date.setUTCMonth(month);
+        date.setUTCHours(0);
+        date.setUTCMinutes(0);
+        date.setUTCSeconds(0);
+        return date;
+    }
+
     SetRunReportTitle() {
         this.RunReportTitle = 'Preview';
     }
@@ -105,8 +126,8 @@ export class ShipmentDetailsFilterComponent extends BaseComponent {
             if (this.ToDate == null) {
                 this.ValidationErrorsList.push('To Date is required');
             }
-
-            if (this.FromDate > this.ToDate) {
+            var advancedDatePickerResolverComponent: AdvancedDatePickerResolverComponent = new AdvancedDatePickerResolverComponent();
+            if (!advancedDatePickerResolverComponent.SetValidityBetweenTwoDateOptions(this.FromDate, this.ToDate)) {
                 this.ValidationErrorsList.push(
                     'From Date cannot be greater than To Date'
                 );

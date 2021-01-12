@@ -154,6 +154,7 @@ export class QuoteTemplatePMService {
         if (!entityPM) {
             
             entityPM = new QuoteTemplatePM();
+			entityPM.DisableMarkAsDirty = true;
         }
 
 		var customFields: Array<string> = [];
@@ -204,6 +205,8 @@ export class QuoteTemplatePMService {
             entityPM.OldEntityPM = null;
         }
 		entityPM.IsDirty = false;
+	    entityPM.DisableMarkAsDirty = false;
+
         return entityPM;
     }
 
@@ -218,7 +221,7 @@ export class QuoteTemplatePMService {
             }
             var newQuoteTemplateSectionPM: QuoteTemplateSectionPM;
             newQuoteTemplateSectionPM = new QuoteTemplateSectionPM();
-				                
+		    newQuoteTemplateSectionPM.DisableMarkAsDirty = true;                
             var pmKeysArray = Object.keys(jItem);
             for (var pmKey in pmKeysArray) {
 			
@@ -228,6 +231,7 @@ export class QuoteTemplatePMService {
                 var pmProperty = pmKeysArray[pmKey];
                 newQuoteTemplateSectionPM[pmProperty] = jItem[pmProperty];
             }
+			newQuoteTemplateSectionPM.DisableMarkAsDirty = false;
             newQuoteTemplateSectionPM.IsDirty = false;
             entityPM.TemplateSections.push(newQuoteTemplateSectionPM);
         }

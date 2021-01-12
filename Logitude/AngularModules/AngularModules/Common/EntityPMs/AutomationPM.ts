@@ -166,7 +166,10 @@ export class AutomationPM {
     public OldEntityPM: AutomationPM;
 		
     public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
+       if(!this.DisableMarkAsDirty)
+       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -174,6 +177,7 @@ export class AutomationPM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "Automation");
            
         }
+	 }
     }
     private MyClone: AutomationPM;
 

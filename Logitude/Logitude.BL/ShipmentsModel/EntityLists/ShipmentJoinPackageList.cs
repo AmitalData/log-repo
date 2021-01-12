@@ -45,6 +45,7 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
         public string CustomerReference2 { get; set; }
         public bool IsCancelled { get; set; }
         public string DescriptionofGoods { get; set; }
+        public string AirlinePrefix { get; set; }
 
         public string Field1 { get; set; }
         public string Field2 { get; set; }
@@ -157,9 +158,11 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
         public string CustomAgentImportId { get; set; }
         public string CustomAgentImportName { get; set; }
         public string CommodityNumber { get; set; }
+        public string CommodityName { get; set; }
         public int? PackageQuantity { get; set; }
         public string MoveTypeName { get; set; }
         public double? PackageVolumeitricWeight { get; set; }
+        public double? PackageChargeableWeight { get; set; } 
         public string MainCarriageCarrierCode { get; set; }
         public string MainCarriageCarrierNumber { get; set; }
         public DateTime? MainCarriageDateFilter { get; set; }
@@ -167,5 +170,6 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
         public double? PackageLength { get; set; }
         public double? PackageHeight { get; set; }
         public string ConsigneeId { get; set; }
+        public string Routing { get; set; }
     }
 }

@@ -1385,6 +1385,7 @@ namespace WebFreight.Web
 
                                 string encryptedTicket = FormsAuthentication.Encrypt(ticket);
                                 HttpCookie authCookie = new HttpCookie(FormsAuthentication.FormsCookieName, encryptedTicket);
+                                authCookie.SameSite = SameSiteMode.None;
                                 HttpContext.Current.Response.Cookies.Add(authCookie);
 
                             }
@@ -2368,7 +2369,7 @@ namespace WebFreight.Web
         }
 
         PasswordCheckService passwordChkService = new PasswordCheckService();
-        List<string> CustomerCareEmails = new List<string>() {"fajr@logitudeworld.com", "eman@logitudeworld.com", "azhar@logitudeworld.com", "balqees@logitudeworld.com", "isra@logitudeworld.com", "mujahed@logitudeworld.com", "maram@logitudeworld.com", "diaa@logitudeworld.com", "zaki@logitudeworld.com", "ahmada@logitudeworld.com", "ihab@logitudeworld.com" };
+        List<string> CustomerCareEmails = new List<string>();// {"fajr@logitudeworld.com", "eman@logitudeworld.com", "azhar@logitudeworld.com", "balqees@logitudeworld.com", "isra@logitudeworld.com", "mujahed@logitudeworld.com", "maram@logitudeworld.com", "diaa@logitudeworld.com", "zaki@logitudeworld.com", "ahmada@logitudeworld.com", "ihab@logitudeworld.com" };
         private UserData CheckUserState(string email, string password, ref ContactPassword contactPassword, bool byToken, string clientType)
         {
 
@@ -2525,7 +2526,14 @@ namespace WebFreight.Web
         public UserData GetRequestResetUserPassword(string email, bool ischamplogin)
         {
             ResetPasswordHelper resetPasswordHelper = new ResetPasswordHelper();
-            UserData userData = resetPasswordHelper.ForgetPassword(email.ToLower(), ischamplogin, false,false);
+            ResetPasswordParameters resetPasswordParameters = new ResetPasswordParameters
+            {
+                Email = email.ToLower(),
+                IsChampLogin = ischamplogin,
+                IsMobile = false,
+                UseCaptcha = false,
+            };
+            UserData userData = resetPasswordHelper.ForgetPassword(resetPasswordParameters);
 
             return userData;
         }
@@ -2553,7 +2561,14 @@ namespace WebFreight.Web
         public UserData GetRequestResetUserPassword(bool ismobile, string email)
         {
             ResetPasswordHelper resetPasswordHelper = new ResetPasswordHelper();
-            UserData userData = resetPasswordHelper.ForgetPassword(email.ToLower(), false, ismobile, false);
+            ResetPasswordParameters resetPasswordParameters = new ResetPasswordParameters
+            {
+                Email = email.ToLower(),
+                IsChampLogin = false,
+                IsMobile = ismobile,
+                UseCaptcha = false,
+            };
+            UserData userData = resetPasswordHelper.ForgetPassword(resetPasswordParameters);
 
             return userData;
         }
@@ -2562,7 +2577,17 @@ namespace WebFreight.Web
         public UserData GetRequestResetUserPassword(string email, string appEnvironment)//New Method
         {
             ResetPasswordHelper resetPasswordHelper = new ResetPasswordHelper();
-            UserData userData = resetPasswordHelper.ForgetPassword(email.ToLower(), false, true, false,null,null, appEnvironment);
+            ResetPasswordParameters resetPasswordParameters = new ResetPasswordParameters
+            {
+                Email = email.ToLower(),
+                IsChampLogin = false,
+                IsMobile= true,
+                UseCaptcha = false,
+                CaptchaCode = null,
+                CaptchaKey = null,
+                AppEnvironment = appEnvironment,
+            };
+            UserData userData = resetPasswordHelper.ForgetPassword(resetPasswordParameters);
 
             return userData;
         }

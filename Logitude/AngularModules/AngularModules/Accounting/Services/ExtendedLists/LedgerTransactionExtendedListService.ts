@@ -286,12 +286,12 @@ export class LedgerTransactionExtendedListService {
     }
 
 
-    getFirst100LedgerForReconciliation(accountId: string, filters: ApiQueryFilters) {
+    GetFirst500LedgerForReconciliation(accountId: string, filters: ApiQueryFilters) {
 
 
-        var url = this._reconciliationUrl + "/GetFirst100LedgerForReconciliation";
+        var url = this._reconciliationUrl + "/GetFirst500LedgerForReconciliation";
 
-        var callUrl = this.ParseFiltersIntoURL(accountId, filters, url);
+        var callUrl = this.ParseFiltersIntoURL(accountId, filters, url); 
 
         return this.httpClient.get(callUrl, ServiceHelper.GetHttpHeaders()).pipe(
             map((response: ServiceResponse) => {

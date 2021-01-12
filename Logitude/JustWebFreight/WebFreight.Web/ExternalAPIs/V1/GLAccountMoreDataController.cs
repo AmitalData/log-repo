@@ -38,6 +38,9 @@ namespace WebFreight.Web.ExternalAPIs.V1
                 return CreateResponse(ex, null);
             }
         }
+
+
+
         private AuthenticationToken GetAuthenticationToken()
         {
             string token = HttpContext.Current.Request.Headers["Token"];
@@ -82,9 +85,31 @@ namespace WebFreight.Web.ExternalAPIs.V1
                 accountMoreData.AccountId = null;
                 accountMoreData.GLAccountTotalsByCurrencies = GetTotalByCurrencies(account);
 
+                accountMoreData.TotFutureOpenChequesInLocalCur += GetAccountExternalTransactionTotal(account.Tenant, account.Id);
+
                 return accountMoreData;
             }
 
+        }
+
+        private decimal GetAccountExternalTransactionTotal(int tenant, string accountId)
+        {
+            LedgerTransactionListQueryService ledgerQuery = InitLedgerQuery(tenant);
+
+            var externalTransactions = ledgerQuery.GetExternalTransactionsForAccount(accountId, tenant).ToList();
+
+            decimal externalTransactionsTotal = 0;
+            if (externalTransactions != null && externalTransactions.Count > 0)
+                externalTransactionsTotal = externalTransactions.Sum(d => d.LocalAmountCredit);
+
+            return externalTransactionsTotal;
+        }
+
+        private static LedgerTransactionListQueryService InitLedgerQuery(int tenant)
+        {
+            IAccountingContext accountingContext = AccountingContext.GetContext(tenant);
+            LedgerTransactionListQueryService ledgerQuery = new LedgerTransactionListQueryService(accountingContext);
+            return ledgerQuery;
         }
 
         private List<GLAccountTotalsByCurrency> GetTotalByCurrencies(GLAccount account)

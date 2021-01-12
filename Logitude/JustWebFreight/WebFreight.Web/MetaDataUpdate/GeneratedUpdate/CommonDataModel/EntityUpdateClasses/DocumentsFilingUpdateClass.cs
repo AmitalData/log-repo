@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 {
    public class DocumentsFilingUpdateClass
    {  		
-		public const string HashString = "fcba53891f466655ccb1a82e31fcbd18";
+		public const string HashString = "a961a9d273340ca04cfce2b6bf300c94";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -439,7 +439,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInSearchWindowFilters =  true,
 					  						DisplayInSearchWindowFiltersIndex =  1,
-					  						DisplayInDocumentReferences =  false,
+					  						DisplayInDocumentReferences =  true,
 					  						NumberOfDigits =  0,
 					  						DigitsAfterPoint =  0,
 					  						InActive =  false,

@@ -50,7 +50,7 @@ namespace WebFreight.Web.WebServices
         private ShipmentPM shipment;
         private AddressRepository addressRepository;
         private CountryRepository countryRepository;
-
+        
         [WebMethod]
         public byte[] GetShippingDeclarationData(string shipmentId, int tenant, string documentTypeCode, string documentTypeCopyId)
         {
@@ -599,7 +599,7 @@ namespace WebFreight.Web.WebServices
                         Address shipperClientAddress = addressRepository.GetSingleAddress(shipment.ShipperAddressId, tenant);
 
                         if (shipperClientAddress != null)
-                        {
+                       { 
                             if (shipperClientAddress.IsLocalLanguage)
                             {
                                 if (shipperClient != null && !string.IsNullOrEmpty(shipperClient.LocalName))
@@ -739,7 +739,37 @@ namespace WebFreight.Web.WebServices
                     Card consignee = (from a in commonContext.Cards
                                       where a.Id == shipment.ConsigneeId
                                       select a).FirstOrDefault();
+                    if (consignee != null)
+                    {
+                        string myResultConsignee = "";
 
+                        myResultConsignee = consignee.EnglishName != null ? consignee.EnglishName : "";
+
+                        if (shipment.ConsigneeAddressId != null)
+                        {
+                            Address consigneeAddress = addressRepository.GetSingleAddress(shipment.ConsigneeAddressId, tenant);
+
+
+                            if (consigneeAddress != null)
+                            {
+                                if (consigneeAddress.IsLocalLanguage && !string.IsNullOrEmpty(consignee.LocalName))
+                                {
+                                    myResultConsignee = consignee.LocalName;
+                                }
+
+                                myResultConsignee += Environment.NewLine + DataProviders.General.GetAddress(consigneeAddress);
+
+                                if (consigneeAddress.PhoneNumber != null || consigneeAddress.FaxNumber != null)
+                                {
+                                    myResultConsignee += Environment.NewLine + (consigneeAddress.PhoneNumber != null ? "Tel: " + consigneeAddress.PhoneNumber + " " : "") + (consigneeAddress.FaxNumber != null ? "Fax: " + consigneeAddress.FaxNumber + " " : "");
+                                }
+
+
+                            }
+                        }
+
+                        myDataProvider.ConsigneeNameAddress = myResultConsignee;
+                    }
                     myDataProvider.ConsigneeName = consignee != null ? consignee.EnglishName : "";
                     myDataProvider.ConsigneeVAT = consignee != null ? consignee.VatNumber : "";
 
@@ -2393,7 +2423,7 @@ namespace WebFreight.Web.WebServices
                 #region Pickup Details                
                 ShipmentPickUpPM myPickup = shipmentPickUpQuery.GetShipmentPickUpPMsByTenantAndShipment(shipmentId, tenant).Where(a => a.PickUpDeliveryNumber == shipment.ShipmentNumber + "/" + shipment.ShipmentPickUpIndex).FirstOrDefault();
                 myDataProvider.Instructions = this.GetInstructionsField(shipment, myPickup, cardQuery);
-
+                   
                 if (myPickup == null)
                 {
                     if (!string.IsNullOrEmpty(shipment.ShipperNotExporterAddressId))
@@ -2414,8 +2444,8 @@ namespace WebFreight.Web.WebServices
 
                 else
                 {
+                    myDataProvider.PickupTo = FillPickUpToAddress(myPickup);
                     myDataProvider.PickUpAddress = myServicHelper.GetPickUpDeliveryFromCityOrPortName(myPickup);
-
                     if (myPickup.ToAddressId != null)
                     {
                         Address toAddress = addressRepository.GetSingleAddress(myPickup.ToAddressId, tenant);
@@ -2500,15 +2530,7 @@ namespace WebFreight.Web.WebServices
 
                 if (!string.IsNullOrEmpty(shipment.CustomerId))
                 {
-                    if (shipment.CustomerId == shipment.ShipperId)
-                    {
-                        myDataProvider.CustomerReferenceNumber = shipment.ShipperReference1 != null ? shipment.ShipperReference1 : "";
-                    }
-
-                    else if (shipment.CustomerId == shipment.ConsigneeId)
-                    {
-                        myDataProvider.CustomerReferenceNumber = shipment.ConsigneeReference1 != null ? shipment.ConsigneeReference1 : "";
-                    }
+                    myDataProvider.CustomerReferenceNumber = shipment.CustomerReference1 != null ? shipment.CustomerReference1: "";
 
                     Card customer = CardRepository.GetSingleCard(shipment.CustomerId, tenant, false);
                     if (customer != null)
@@ -3991,7 +4013,18 @@ namespace WebFreight.Web.WebServices
             }
             #endregion
         }
-         
+        private string FillPickUpToAddress(ShipmentPickUpPM myPickup)
+        {
+            PickUpAndDeliveriesArguments pickUpAndDeliveriesArguments = new PickUpAndDeliveriesArguments();
+            pickUpAndDeliveriesArguments.PartnerCardId = myPickup.ToPartnerCardId;
+            pickUpAndDeliveriesArguments.PortId = myPickup.ToPortId;
+            pickUpAndDeliveriesArguments.TypeCode = myPickup.PickUpDeliveryToTypeCode;
+            pickUpAndDeliveriesArguments.AddressCity = myPickup.ToAddressCity;
+            pickUpAndDeliveriesArguments.AddressCountryId = myPickup.ToAddressCountryId;
+            pickUpAndDeliveriesArguments.AddressId = myPickup.ToAddressId;
+            pickUpAndDeliveriesArguments.AddressZipCode = myPickup.ToAddressZipCode;
+            return myServicHelper.GetDeliveryPickUpAddress(pickUpAndDeliveriesArguments);
+        }
         private ShipmentPickUpDelivery GetLastPickUp(string shipmentId)
         {
             return (from pickUp in shipmentsContext.ShipmentPickUpDeliveries

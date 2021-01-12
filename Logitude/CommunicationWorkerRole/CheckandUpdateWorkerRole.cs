@@ -178,7 +178,7 @@ namespace CommunicationWorkerRole
                                 EmailCommunicationParams emailParams = new EmailCommunicationParams()
                                 {
                                     From = "admin@fnarsoft.com",
-                                    To = "jalal@logitudeworld.com",
+                                    To = "ahmada@logitudeworld.com",
                                     CC = "",
                                     BCC = "",
                                     Subject = "Update All Tenants History",

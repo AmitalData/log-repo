@@ -96,7 +96,10 @@ export class OpportunityCompetitorPM {
     public UniqueKey: string;
 	 	
     public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
+       if(!this.DisableMarkAsDirty)
+       {
         this.IsDirty = true;
 		  if (this.EntityParentPM) {
             this.EntityParentPM.MarkAsDirty();
@@ -106,6 +109,7 @@ export class OpportunityCompetitorPM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "OpportunityCompetitor");
            
         }
+       }
     }
 
     private MyClone: OpportunityCompetitorPM;

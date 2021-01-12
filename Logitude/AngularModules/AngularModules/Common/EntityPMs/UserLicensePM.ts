@@ -54,7 +54,10 @@ export class UserLicensePM {
     public OldEntityPM: UserLicensePM;
 		
     public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
+       if(!this.DisableMarkAsDirty)
+       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -62,6 +65,7 @@ export class UserLicensePM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "UserLicense");
            
         }
+	 }
     }
     private MyClone: UserLicensePM;
 

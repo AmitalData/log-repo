@@ -49,6 +49,7 @@
   ApplyOnPropertyChangedCode="false"
   HasApiHelper="false"
   AllowedForComputingPartners="false"
+  IsBusinessUnitEnabled="false"
   Code1="&quot;e848&quot;"
   Name1="&quot; Query Group&quot;"
   CustomFieldsCount="0"
@@ -2579,7 +2580,7 @@
     AllowedInCustomerFieldsSettings="false"
     DisplayInSearchWindowFilters="true"
     DisplayInSearchWindowFiltersIndex="1"
-    DisplayInDocumentReferences="false"
+    DisplayInDocumentReferences="true"
     NumberOfDigits="0"
     DigitsAfterPoint="0"
     InActive="false"
@@ -8394,7 +8395,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;Code&quot;"
         FieldName="&quot;Code&quot;"
@@ -8408,7 +8410,8 @@
         IsAttribute="true"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;CreatedByUser&quot;"
         DCVersion="&quot;Api1&quot;"
@@ -8423,7 +8426,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;EntityNumber&quot;"
         FieldName="&quot;EntityReference&quot;"
@@ -8437,7 +8441,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;EntityType&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -8452,7 +8457,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;DocumentType&quot;"
         DCVersion="&quot;Api1&quot;"
@@ -8467,7 +8473,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;BlobId&quot;"
         DCVersion="&quot;&quot;"
@@ -8482,7 +8489,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;IsDigitallySigned&quot;"
         FieldName="&quot;IsDigitallySigned&quot;"
@@ -8496,7 +8504,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;SignersList&quot;"
         FieldName="&quot;SignersList&quot;"
@@ -8510,7 +8519,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;BlobName&quot;"
         FieldName="&quot;FileName&quot;"
@@ -8524,7 +8534,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;Description&quot;"
         FieldName="&quot;Description&quot;"
@@ -8538,7 +8549,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;IsSharedWithCustomer&quot;"
         FieldName="&quot;IsSharedWithCustomer&quot;"
@@ -8552,7 +8564,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
     </DataContract>
   </DataContracts>
   <AdditionalTextCodes />
@@ -8560,20 +8573,20 @@
     <Feature
       Code="&quot;DOCUMENTSFILING&quot;"
       FeatureTypeCode="&quot;QUER&quot;"
+      FeatureTextCodeCode="&quot;DocumentsFiling.Features.DocumentsFilings&quot;"
+      FeatureDefaultText="&quot;Document Filing&quot;"
       IsPackagable="true"
-      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      FeatureTextCodeCode="&quot;DocumentsFiling.Features.DocumentsFilings&quot;"
-      FeatureDefaultText="&quot;Document Filing&quot;" />
+      IsBusinessUnitEnabled="false" />
     <Feature
       Code="&quot;DocumentsFiling.M.DocumentsFiling&quot;"
       FeatureTypeCode="&quot;MENU&quot;"
+      FeatureTextCodeCode="&quot;DocumentsFilingObjectTable.Features.DocumentsFilingObjectTable&quot;"
+      FeatureDefaultText="&quot;Documents Filing&quot;"
       IsPackagable="true"
-      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      FeatureTextCodeCode="&quot;DocumentsFilingObjectTable.Features.DocumentsFilingObjectTable&quot;"
-      FeatureDefaultText="&quot;Documents Filing&quot;" />
+      IsBusinessUnitEnabled="false" />
   </AdditionalFeatures>
 </entity>

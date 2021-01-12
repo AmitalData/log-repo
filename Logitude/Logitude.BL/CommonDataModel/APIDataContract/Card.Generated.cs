@@ -38,6 +38,10 @@ namespace Logitude.BL.CommonDataModel.APIDataContract.ApiV1
     public string PartnerCode { get; set; }
     
     public bool IsDisconnectedFromGLAccount { get; set; }
+    
+    public string ReceivablesAccountingCard { get; set; }
+    
+    public string PayablesAccountingCard { get; set; }
 
     public  string  ComputingPartnerCode { get; set; }
 

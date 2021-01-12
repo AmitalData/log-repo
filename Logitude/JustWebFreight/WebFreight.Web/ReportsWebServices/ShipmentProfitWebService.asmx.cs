@@ -218,7 +218,8 @@ namespace WebFreight.Web.ReportsWebServices
                 provider.DifferenceInProfitCurrency = String.Format("{0:#,0.00}", differenceInProfitCurrency);
                 provider.ShipmentVolume = shipmentPM.Volume;
                 provider.VolumeUnitCode = shipmentPM.VolumeUnitCode;
-
+                provider.IsAccrualsApproved = shipmentPM.IsAccrualsApproved;
+                provider.AccrualsApprovalDate = shipmentPM.AccrualsApprovalDate;
                 #endregion
 
                 #region Group by ChargeType
@@ -249,6 +250,7 @@ namespace WebFreight.Web.ReportsWebServices
                          ChargeTypeId = g.Select(s => s.ChargesTypeId).FirstOrDefault(),
                          ChargeTypeCode = g.Select(s => s.ChargesTypeCode).FirstOrDefault(),
                          ChargeTypeName = g.Select(s => s.ChargesTypeName).FirstOrDefault(),
+                         IsExpenseCharge = g.Select(s => s.IsExpenseCharge).FirstOrDefault(),
                          OpenPayablesInLocal = g.Sum(s => s.OpenAmountInLocalCurrency),
                          OpenPayablesInProfit = g.Sum(s => s.OpenAmountInProfitCurrency),
                          ACCTPayablesInLocal = g.Sum(s => s.AccountedAmountInLocalCurrency),
@@ -265,6 +267,7 @@ namespace WebFreight.Web.ReportsWebServices
                          ChargeTypeId = g.Select(s => s.ChargesTypeId).FirstOrDefault(),
                          ChargeTypeCode = g.Select(s => s.ChargesTypeCode).FirstOrDefault(),
                          ChargeTypeName = g.Select(s => s.ChargesTypeName).FirstOrDefault(),
+                         IsExpenseCharge = g.Select(s => s.IsExpenseCharge).FirstOrDefault(),
                          ReceivablesInLocalCurrency = String.Format("{0:#,0.00}", g.Sum(s => s.TotalAmountLocal)),
                          ReceivablesInProfitCurrency = String.Format("{0:#,0.00}", g.Sum(s => s.AmountInProfitCurrency)),
                      }).ToList();
@@ -275,6 +278,7 @@ namespace WebFreight.Web.ReportsWebServices
                     record.ChargeTypeId = item.ChargeTypeId;
                     record.ChargeTypeCode = item.ChargeTypeCode;
                     record.ChargeTypeName = item.ChargeTypeName;
+                    record.IsExpenseCharge = item.IsExpenseCharge;
                     record.Vendor = item.Vendor;
 
                     double? theOpenPayablesLocal = item.OpenPayablesInLocal;
@@ -348,6 +352,7 @@ namespace WebFreight.Web.ReportsWebServices
                     record.ChargeTypeId = item.ChargeTypeId;
                     record.ChargeTypeCode = item.ChargeTypeCode;
                     record.ChargeTypeName = item.ChargeTypeName;
+                    record.IsExpenseCharge = item.IsExpenseCharge;
                     record.ReceivablesInLocalCurrency = item.ReceivablesInLocalCurrency;
                     record.ReceivablesInProfitCurrency = item.ReceivablesInProfitCurrency;
                     record.ProfitInLocalCurrency = item.ReceivablesInLocalCurrency;

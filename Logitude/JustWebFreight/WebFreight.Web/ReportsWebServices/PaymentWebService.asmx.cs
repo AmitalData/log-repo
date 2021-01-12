@@ -332,6 +332,9 @@ namespace WebFreight.Web.ReportsWebServices
                     //payment Lines
                     if (currentPayment.AccountingPaymentMethod != null)
                     {
+                        TenantRepository tenantRepository = new TenantRepository(tenant);
+                        Tenant tenantPOCO = tenantRepository.GetSingleTenant(tenant);
+
                         if (currentPayment.AccountingPaymentMethod.Name == "Cash")
                         {
                             paymentDataProvider.ChequeOrPaymentRef = "Cash";
@@ -339,7 +342,7 @@ namespace WebFreight.Web.ReportsWebServices
                             paymentDataProvider.Branch = "Cash";
                             paymentDataProvider.Account = "Cash";
                         }
-                        else if (currentPayment.AccountingPaymentMethod.Name.ToLower() == "bank transfer")
+                        else if (tenantPOCO.AccountingActivated && currentPayment.AccountingPaymentMethod.Name.ToLower() == "bank transfer")
                         {
                             paymentDataProvider = SetBankData(currentPayment, paymentDataProvider);
                         }

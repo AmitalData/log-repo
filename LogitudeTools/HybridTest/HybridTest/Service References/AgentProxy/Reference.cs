@@ -1328,6 +1328,57 @@ namespace HypredTest.AgentProxy {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAgentWcfService/Upsert", ReplyAction="http://tempuri.org/IAgentWcfService/UpsertResponse")]
         System.Threading.Tasks.Task<Logitude.Server.Tools.Response> UpsertAsync(HypredTest.AgentProxy.AgentPM entityPM, bool batch);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAgentWcfService/GetAgentPM", ReplyAction="http://tempuri.org/IAgentWcfService/GetAgentPMResponse")]
+        HypredTest.AgentProxy.GetAgentPMResponse GetAgentPM(HypredTest.AgentProxy.GetAgentPMRequest request);
+        
+        // CODEGEN: Generating message contract since the operation has multiple return values.
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAgentWcfService/GetAgentPM", ReplyAction="http://tempuri.org/IAgentWcfService/GetAgentPMResponse")]
+        System.Threading.Tasks.Task<HypredTest.AgentProxy.GetAgentPMResponse> GetAgentPMAsync(HypredTest.AgentProxy.GetAgentPMRequest request);
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="GetAgentPM", WrapperNamespace="http://tempuri.org/", IsWrapped=true)]
+    public partial class GetAgentPMRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://tempuri.org/", Order=0)]
+        public string code;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://tempuri.org/", Order=1)]
+        public int tenant;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://tempuri.org/", Order=2)]
+        public Logitude.Server.Tools.Response response;
+        
+        public GetAgentPMRequest() {
+        }
+        
+        public GetAgentPMRequest(string code, int tenant, Logitude.Server.Tools.Response response) {
+            this.code = code;
+            this.tenant = tenant;
+            this.response = response;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="GetAgentPMResponse", WrapperNamespace="http://tempuri.org/", IsWrapped=true)]
+    public partial class GetAgentPMResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://tempuri.org/", Order=0)]
+        public HypredTest.AgentProxy.AgentPM GetAgentPMResult;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://tempuri.org/", Order=1)]
+        public Logitude.Server.Tools.Response response;
+        
+        public GetAgentPMResponse() {
+        }
+        
+        public GetAgentPMResponse(HypredTest.AgentProxy.AgentPM GetAgentPMResult, Logitude.Server.Tools.Response response) {
+            this.GetAgentPMResult = GetAgentPMResult;
+            this.response = response;
+        }
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -1363,6 +1414,25 @@ namespace HypredTest.AgentProxy {
         
         public System.Threading.Tasks.Task<Logitude.Server.Tools.Response> UpsertAsync(HypredTest.AgentProxy.AgentPM entityPM, bool batch) {
             return base.Channel.UpsertAsync(entityPM, batch);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        HypredTest.AgentProxy.GetAgentPMResponse HypredTest.AgentProxy.IAgentWcfService.GetAgentPM(HypredTest.AgentProxy.GetAgentPMRequest request) {
+            return base.Channel.GetAgentPM(request);
+        }
+        
+        public HypredTest.AgentProxy.AgentPM GetAgentPM(string code, int tenant, ref Logitude.Server.Tools.Response response) {
+            HypredTest.AgentProxy.GetAgentPMRequest inValue = new HypredTest.AgentProxy.GetAgentPMRequest();
+            inValue.code = code;
+            inValue.tenant = tenant;
+            inValue.response = response;
+            HypredTest.AgentProxy.GetAgentPMResponse retVal = ((HypredTest.AgentProxy.IAgentWcfService)(this)).GetAgentPM(inValue);
+            response = retVal.response;
+            return retVal.GetAgentPMResult;
+        }
+        
+        public System.Threading.Tasks.Task<HypredTest.AgentProxy.GetAgentPMResponse> GetAgentPMAsync(HypredTest.AgentProxy.GetAgentPMRequest request) {
+            return base.Channel.GetAgentPMAsync(request);
         }
     }
 }

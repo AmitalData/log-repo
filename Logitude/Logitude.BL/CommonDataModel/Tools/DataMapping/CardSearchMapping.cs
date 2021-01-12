@@ -28,6 +28,7 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             poco.CardId = entityPM.CardId;
             poco.PartnerTypeId = entityPM.PartnerTypeId;
             poco.InActive = entityPM.InActive;
+            poco.IsCustomer = entityPM.IsCustomer;
 
         }
     }

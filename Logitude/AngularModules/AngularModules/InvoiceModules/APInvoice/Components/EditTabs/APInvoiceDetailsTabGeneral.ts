@@ -53,7 +53,9 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
     private CurrentSession = SessionLocator.SelectedSession;
     InvoiceLineHeader: string;
     accountingActivated: boolean= false;
-  
+    DisplayFieldsFromList:string;
+    DisplayLocalFieldsFromList:string;
+    VendorLovSizeForFullAccounting:number;
     constructor(private entityArgs: EntityArgs) {
         super();
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
@@ -75,6 +77,15 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
          }
         if (FeatureLocator.HasFeaturePermession("General", "General.Features.SystemCurrencies")) {
             this.IsEditExchangeRateVisible = true;
+        }
+        this.InitializeVendorLov();
+    }
+
+    private InitializeVendorLov() {
+        if (this.accountingActivated) {
+            this.DisplayFieldsFromList = "Code,CalculatedEnglishName,GLAccountDisplayNumber,CityName,CountryCode,PartnerTypeName";
+            this.DisplayLocalFieldsFromList = "Code,CalculatedLocalName,GLAccountDisplayNumber,CityName,CountryCode,PartnerTypeName";
+            this.VendorLovSizeForFullAccounting = 550;
         }
     }
 
@@ -890,10 +901,10 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
     set InvoiceNumber(newValue: string) {
         if (this.EntityPM.InvoiceNumber != newValue) {
             this.EntityPM.InvoiceNumber = newValue;
-
+          
         }
     }
-
+    
     get PaymentTermId() {
         if (this.EntityPM == null) {
             return null;

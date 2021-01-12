@@ -17,13 +17,13 @@ namespace Logitude.CargoTracking.Data.EntityLists
        [DataMember]
        public string Id  { get; set; }
        [DataMember]
-       public string LocalName  { get; set; }
+       public int Tenant  { get; set; }
        [DataMember]
        public string Code  { get; set; }
        [DataMember]
        public string EnglishName  { get; set; }
        [DataMember]
-       public int Tenant  { get; set; }
+       public string LocalName  { get; set; }
    }
 
 }

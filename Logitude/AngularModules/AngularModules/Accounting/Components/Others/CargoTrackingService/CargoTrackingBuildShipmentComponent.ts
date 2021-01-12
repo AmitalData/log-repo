@@ -24,6 +24,7 @@ export class CargoTrackingBuildShipmentComponent extends BaseComponent implement
   constructor() {
        super();
        this.LayoutDirection = ObjectsLocator.GlobalSetting == undefined ? "ltr" : ObjectsLocator.GlobalSetting.LayoutDirection;
+       this.SetUIProperty();
    } 
   ngOnInit(): void {
      this.InitializeDate();
@@ -33,20 +34,28 @@ export class CargoTrackingBuildShipmentComponent extends BaseComponent implement
   }
 
   OkButtonClicked(){
+    this.ValidateCargoTrackingBuildScreen();
+    if(this.ValidationErrorsList == null || this.ValidationErrorsList.length==0){
+         this.OpenConfirmMessage();
+    }
+ }
+ 
+ ValidateCargoTrackingBuildScreen(){
     this.ValidationErrorsList=[];
     if(this.SelectedValue ==="S" && AppTool.IsNullOrEmpty(this.Tenant)){
         this.ValidationErrorsList.push("Please enter the number of an existing Tenant");
     }
     else{
-        this.ValidateDate(null);
+        this.ValidateDate(true);
     }
+ }
 
-    if(this.ValidationErrorsList == null || this.ValidationErrorsList.length==0){
+ private OpenConfirmMessage(){
 
-var MessageText:string = "This action will delete all cargo tracking shipments and their related records from all tenants in the system and will create new ones for all tenants only for the selected dates";
-if(this.SelectedValue ==="S"){
-     MessageText = "This action will delete all cargo tracking shipments and their related records from (Tenant "+this.Tenant+") in the system and will create new ones in that Tenant only for the selected dates";
-}
+    var MessageText:string = "This action will delete all cargo tracking shipments and their related records from all tenants in the system and will create new ones for all tenants only for the selected dates";
+    if(this.SelectedValue ==="S"){
+        MessageText = "This action will delete all cargo tracking shipments and their related records from (Tenant "+this.Tenant+") in the system and will create new ones in that Tenant only for the selected dates";
+    }
 
       var confirmWindow = new ConfirmWindow();
       confirmWindow.Width = 390;
@@ -54,19 +63,16 @@ if(this.SelectedValue ==="S"){
       confirmWindow.WindowClosed.subscribe((event: any) => {
           if (confirmWindow.Yes) {
             this.CargoTrackingBuilder();
-          } else if (confirmWindow.No) {
-
           }
       });
-    }
  }
- 
+
   private fromDate: Date;
     public get FromDate() { return this.fromDate; }
     public set FromDate(value: Date) {
         if (this.fromDate != value) {
             this.fromDate = value;
-            this.ValidateDate("FromDate");
+            this.ValidateDate();
 
         }
     }
@@ -82,7 +88,7 @@ if(this.SelectedValue ==="S"){
     public set ToDate(value: Date) {
         if (this.toDate != value) {
             this.toDate = value;
-            this.ValidateDate("ToDate");
+            this.ValidateDate();
            
 
         }
@@ -104,26 +110,49 @@ if(this.SelectedValue ==="S"){
      }
 }
  
-  ValidateDate(fieldName: any) {
-    
-    if (DateTool.GetDateFromDate(this.FromDate, true) > DateTool.GetDateFromDate(this.ToDate, true)) {
-        if (fieldName == null) {
-            this.ValidationErrorsList.push("''To date'' field must be greater than or equal to ''From date'' field");
-        }
-        
-            this.UIProperties.SetValidity("ToDate", this.ObjectTableName, false, "''To date'' field must be greater than or equal to ''From date'' field");
-            this.UIProperties.SetValidity("FromDate", this.ObjectTableName, false, "''From date'' field must be less than or equal to ''To date'' field");
-         
+  ValidateDate(fromButtonClick: boolean=false) {
+    if(!this.FromDate || !this.ToDate){
+      this.ValidateIsToDateAndFromDateFilled(fromButtonClick);
     }
-     else {
-    
-        this.UIProperties.SetValidity("ToDate", this.ObjectTableName, true, "");
-        this.UIProperties.SetValidity("FromDate", this.ObjectTableName, true, "");
-         
-    }
-       
+    else if (DateTool.GetDateFromDate(this.FromDate, true) > DateTool.GetDateFromDate(this.ToDate, true)) {
+        this.ValidateIsToDateGreaterOrEqualFromDate(fromButtonClick);
+     }
+     else{
+        this.SetUIPropertiesDateValidation(true);
+     }
     
 }
+ValidateIsToDateAndFromDateFilled(fromButtonClick: boolean){
+    var toDateValidationText="''To date'' field is required";
+    var fromDateValidationText="''From date'' field is required";
+    var fromtoDateValidationText="Please Fill All Dates Fields";
+    if (fromButtonClick) {
+        this.ValidationErrorsList.push(fromtoDateValidationText);
+    }
+    this.SetUIPropertiesDateValidation(false,toDateValidationText,fromDateValidationText);
+        
+}
+
+ValidateIsToDateGreaterOrEqualFromDate(fromButtonClick: boolean){
+    var toDateValidationText="''To date'' field must be greater than or equal to ''From date'' field";
+    var fromDateValidationText="''From date'' field must be less than or equal to ''To date'' field";
+    var fromtoDateValidationText="''To date'' field must be greater than or equal to ''From date'' field";
+    if (fromButtonClick) {
+        this.ValidationErrorsList.push(fromtoDateValidationText);
+    }
+    this.SetUIPropertiesDateValidation(false,toDateValidationText,fromDateValidationText);
+        
+}
+
+SetUIPropertiesDateValidation(isValid:boolean,toDateText:string=null,fromDateText:string=null){
+    this.UIProperties.SetValidity("ToDate", this.ObjectTableName, isValid, toDateText);
+    this.UIProperties.SetValidity("FromDate", this.ObjectTableName, isValid, fromDateText);
+}
+
+SetUIProperty() {
+     
+}
+ 
 
 CargoTrackingBuilder() {
     var iCargoTrackingArgs:CargoTrackingArgs=  new CargoTrackingArgs();  
@@ -133,12 +162,12 @@ CargoTrackingBuilder() {
     this.CurrentSession.StartBusyIndicatorLoading();
     this.iCargoTrackingExtendedPMService.PostCargoTrackingBuilder(iCargoTrackingArgs).subscribe((response: ServiceResponse) => {
     this.CurrentSession.StopBusyIndicator();
-      var mm: ServiceResponse = response;
-      if (!mm.HasError) {
-          
+    var  response: ServiceResponse = response;
+      if (!response.HasError) {
+          this.CurrentSession.CloseCurrentWindow();
       }
       else {
-
+        this.ValidationErrorsList.push(response.ErrorsArray.toString());
       }
 
     });
@@ -151,7 +180,7 @@ InitializeDate(){
     var Day = new Date().getDate();
     this.ToDate = this.SetDate(Year, month, Day);
     this.FromDate = this.SetDate(Year, month, Day);
-    this.FromDate.setUTCDate(this.ToDate.getDate() - 30);
+    this.FromDate.setMonth(this.ToDate.getMonth()- 6);
   }
 
   SetDate(year: number, month: number, day: number) {

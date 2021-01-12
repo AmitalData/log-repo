@@ -42,13 +42,13 @@ namespace Logitude.BL.CommonDataModel.APIDataContract.ApiV1
 
 
 
-        public VatType VatTypeCustomDataMapping(string Id, int Tenant)
+        public VatType VatTypeCustomDataMapping(string Id, int Tenant, string ComputingPartnerName = "")
         {
             try
             {
 
                 VatTypeQueryService VatTypeService0 = new VatTypeQueryService(Tenant);
-                var VatType = VatTypeService0.GetVatTypeById(Id, Tenant);
+                var VatType = VatTypeService0.GetVatTypeById(Id, Tenant,ComputingPartnerName);
                 return VatType;
             }
             catch (Exception ex)

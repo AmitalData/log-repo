@@ -474,11 +474,24 @@ export class CardPM {
     public set AccountingVATSplit(newValue: boolean) { if (this.accountingVATSplit != newValue) { this.accountingVATSplit = newValue; this.MarkAsDirty("AccountingVATSplit"); } }
        
 	 
+    private address1: string;
+    public get Address1() { return this.address1; }
+    public set Address1(newValue: string) { if (this.address1 != newValue) { this.address1 = newValue; this.MarkAsDirty("Address1"); } }
+       
+	 
+    private address2: string;
+    public get Address2() { return this.address2; }
+    public set Address2(newValue: string) { if (this.address2 != newValue) { this.address2 = newValue; this.MarkAsDirty("Address2"); } }
+       
+	 
 
     public OldEntityPM: CardPM;
 		
     public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
+       if(!this.DisableMarkAsDirty)
+       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -486,6 +499,7 @@ export class CardPM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "Card");
            
         }
+	 }
     }
     private MyClone: CardPM;
 

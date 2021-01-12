@@ -119,6 +119,7 @@ namespace Logitude.XSD.CW_API.ABM
             CWXSD.Transport iTransportItem = new Transport()
             {
                 Conveyance = this.Context.TransportConveyance,
+                TPMode = this.Context.TransportTPMode,
                 TransportType = TransportTransportType.Border,
                 TransportTypeSpecified = true,
             };
@@ -144,6 +145,8 @@ namespace Logitude.XSD.CW_API.ABM
                 RefText = this.Context.MasterNumber,
             });
 
+            
+
             myItem.ConsignmentHeader.Reference = references.ToArray<Reference>();
             #endregion
 
@@ -165,7 +168,7 @@ namespace Logitude.XSD.CW_API.ABM
 
             myItem.ConsignmentHeader.Country = countries.ToArray<Country>();
             #endregion
-
+            
             #region  Port
             List<Port> ports = new List<Port>();
             ports.Add(new Port()
@@ -201,10 +204,11 @@ namespace Logitude.XSD.CW_API.ABM
 
             #region Measure
             List<ApplicationUnitsOfMeasure> measures = new List<ApplicationUnitsOfMeasure>();
+            var uomValue = this.Context.Shipment.NumberOfInsidePackages > 0 ? this.Context.Shipment.NumberOfInsidePackages.ToString() : this.Context.NumberOfPackages;
             measures.Add(new ApplicationUnitsOfMeasure()
             {
                 UOMCode = "DocumentPieces",
-                UOMValue = new UOMValue() { Value = this.Context.NumberOfPackages },
+                UOMValue = new UOMValue() { Value = uomValue },
             });
 
             measures.Add(new ApplicationUnitsOfMeasure()

@@ -46,6 +46,11 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public string ReplyTo { get; set; }
         public string CC { get; set; }
         public string BCC { get; set; }
+        public string To { get; set; }
+
+        public string AutomationId { get; set; }
+
+
 
         public string DefultAttachmentsXML { get; set; }
         //public bool IsDuplex { get; set; }
@@ -56,6 +61,15 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
 
         [ForeignKey("OriginalTemplateId")]
         public virtual DocumentTypeTemplate OriginalTemplate { get; set; }
+
+
+
+        [ForeignKey("AutomationId")]
+        public virtual Automation Automation { get; set; }
+
+
+
+
 
     }
 }

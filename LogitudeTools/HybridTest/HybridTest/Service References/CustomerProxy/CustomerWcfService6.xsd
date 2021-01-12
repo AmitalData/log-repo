@@ -15,7 +15,6 @@
       <xs:element minOccurs="0" name="ActivationRequestDate" nillable="true" type="xs:dateTime" />
       <xs:element minOccurs="0" name="ActivationRequestedByUserId" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="ActivationRequestedByUserName" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="Activity" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="ActivityWatch" type="xs:boolean" />
       <xs:element minOccurs="0" name="Address1" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Address2" nillable="true" type="xs:string" />

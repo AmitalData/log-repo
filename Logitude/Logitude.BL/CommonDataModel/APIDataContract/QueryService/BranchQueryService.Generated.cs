@@ -40,7 +40,7 @@ using Simplog.Data.CommonDataModel;
         }
 
 		
-		public Branch GetBranchById(string Id,int Tenant)
+		public Branch GetBranchById(string Id,int Tenant,string ComputingPartnerName = "")
         { 
 		    try
             {
@@ -50,7 +50,7 @@ using Simplog.Data.CommonDataModel;
 				 if (temp == null)
                     throw new ApplicationException("Branch with Id " + Id + " doesn't exist");
 
-				return BranchDataMapping(temp,Tenant);
+				return BranchDataMapping(temp,Tenant,ComputingPartnerName);
 			}
             catch (Exception ex)
             {
@@ -59,7 +59,7 @@ using Simplog.Data.CommonDataModel;
             }
         }
 		
-		public Branch GetBranchByCode(string Code,int Tenant)
+		public Branch GetBranchByCode(string Code,int Tenant,string ComputingPartnerName = "")
         { 
 		    try
             {
@@ -69,7 +69,7 @@ using Simplog.Data.CommonDataModel;
 				 if (temp == null)
                     throw new ApplicationException("Branch with Code " + Code + " doesn't exist");
 
-				return BranchDataMapping(temp,Tenant);
+				return BranchDataMapping(temp,Tenant,ComputingPartnerName);
 			}
             catch (Exception ex)
             {

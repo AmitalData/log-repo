@@ -5,6 +5,7 @@ using Logitude.Accounting.Data;
 using Logitude.Accounting.Data.EntityListQueryServices;
 using Logitude.Accounting.Data.EntityLists;
 using Logitude.Accounting.Data.Repositories;
+using Logitude.Accounting.Data.Utilities;
 using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
@@ -45,7 +46,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
         }
 
 
-        public void Run()
+        public void Run(bool isFromExcelGenerater=false)
         {
             var sw = Stopwatch.StartNew();
             _sw = Stopwatch.StartNew();
@@ -89,7 +90,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                     var hashsetallIdAccounts = myGLAccountQueryService.GetQAllIdAccounts(_Param.Tenant, _Param.GLAccountId, _Param.IncludeRelatedCurrenciesAccount, _Param.IncludeChildAccounts);
                     _allIdAccounts = hashsetallIdAccounts;//new List<string>(hashsetallIdAccounts);
                 }
-                IQueryable<Data.EntityPOCOs.LedgerTransaction> QOrderAccDateAndIdByAccIdBetweenAccDateMaxCreateLimit_AndCurrencyId = GetQOrderAccDateAndIdByAccIdBetweenAccDateMaxCreateLimit_AndCurrencyId(maxCreateDate, ledgerTransactionRepository);
+                IQueryable<Data.EntityPOCOs.LedgerTransaction> qOrderAccDateAndIdByAccIdBetweenAccDateMaxCreateLimit_AndCurrencyId = GetQOrderAccDateAndIdByAccIdBetweenAccDateMaxCreateLimit_AndCurrencyId(maxCreateDate, ledgerTransactionRepository);
 
                 if (_Param.CallBack == null)
                 {
@@ -104,9 +105,9 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                     LogIt("GetEndAccountBalance");
                     this.Response.YearTransferLedgerTransactionIds = startAccountBalanceService.YearTransferLedgerTransactionIds;
 
-                    QOrderAccDateAndIdByAccIdBetweenAccDateMaxCreateLimit_AndCurrencyId = RemoveYearTransferLedgerTrans(QOrderAccDateAndIdByAccIdBetweenAccDateMaxCreateLimit_AndCurrencyId);
+                    qOrderAccDateAndIdByAccIdBetweenAccDateMaxCreateLimit_AndCurrencyId = RemoveYearTransferLedgerTrans(qOrderAccDateAndIdByAccIdBetweenAccDateMaxCreateLimit_AndCurrencyId);
 
-                    BuildCallBack(QOrderAccDateAndIdByAccIdBetweenAccDateMaxCreateLimit_AndCurrencyId,
+                    BuildCallBack(qOrderAccDateAndIdByAccIdBetweenAccDateMaxCreateLimit_AndCurrencyId,
                         startAccountBalanceService, endAccountBalanceService);
                     LogIt("BuildCallBack");
 
@@ -114,12 +115,12 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                 else // if callback
                 {
                     ReCopyCallBack();
-                    QOrderAccDateAndIdByAccIdBetweenAccDateMaxCreateLimit_AndCurrencyId = RemoveYearTransferLedgerTrans(QOrderAccDateAndIdByAccIdBetweenAccDateMaxCreateLimit_AndCurrencyId);
+                    qOrderAccDateAndIdByAccIdBetweenAccDateMaxCreateLimit_AndCurrencyId = RemoveYearTransferLedgerTrans(qOrderAccDateAndIdByAccIdBetweenAccDateMaxCreateLimit_AndCurrencyId);
 
                 }
 
                 //int pageSize = 100; int curPageZeroBase = 0;
-                var list = Translate2ListMode(QOrderAccDateAndIdByAccIdBetweenAccDateMaxCreateLimit_AndCurrencyId);
+                var list = Translate2ListMode(qOrderAccDateAndIdByAccIdBetweenAccDateMaxCreateLimit_AndCurrencyId, isFromExcelGenerater);
                 LogIt("Translate2ListMode");
                 if (!this.Response.OmitAllBalance)
                 {
@@ -135,10 +136,10 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                     decimal CumulativeLocalAmount = this.Response.StartBalanceLocal.GetValueOrDefault();
                     //if (!this.Response.SuppressCumulativeDueMultiCurrencyInPeriod)
                     //{
-                    MyBlance myBlance = GetStartBalanceOfCurrPage(QOrderAccDateAndIdByAccIdBetweenAccDateMaxCreateLimit_AndCurrencyId);
+                    MyBlance myBlance = GetStartBalanceOfCurrPage(qOrderAccDateAndIdByAccIdBetweenAccDateMaxCreateLimit_AndCurrencyId);
                     CumulativeLocalAmount += myBlance.SumLocalAmount;
                     CumulativeForeignAmount += myBlance.SumForeignAmount;
-
+                    LedgerTransactionHelper ledgerTransactionHelper = new LedgerTransactionHelper();
                     LogIt("b4 list");
                     list.ForEach(rec =>
                     {
@@ -147,13 +148,13 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
 
                         CumulativeLocalAmount += (LocalAmountDebit - LocalAmountCredit);
                         rec.CumulativeLocalAmount = CumulativeLocalAmount;
-
                         if (!this.Response.SuppressCumulativeDueMultiCurrencyInPeriod.GetValueOrDefault())
                         {
                             CumulativeForeignAmount += (rec.ForeignAmountDebit - rec.ForeignAmountCredit);
                             rec.CumulativeForeignAmount = CumulativeForeignAmount;
                         }
 
+                        MapLedgerTransactionLine(rec, ledgerTransactionHelper, isFromExcelGenerater);
                     });
                     LogIt("after list");
                     //}
@@ -164,7 +165,30 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
             Debug.WriteLine("Response.TookMS:" + Response.TookMS.ToString());
         }
 
-        
+        private void MapLedgerTransactionLine(LedgerTransactionList rec , LedgerTransactionHelper ledgerTransactionHelper, bool isFromExcelGenerater)
+        {
+
+            rec.OriginalAmount = ledgerTransactionHelper.CalculateOriginalAmount(rec);
+            rec.IconCode = ledgerTransactionHelper.getEntityIcon(rec.SourceTypeCode);
+            rec.Source = rec.IconCode + " " + rec.SourceNumber;
+            rec.IsLocalAmountCreditPos = rec.LocalAmountCredit != 0;
+            rec.CalculatedLocalAmount = rec.LocalAmountCredit != 0 ? rec.LocalAmountCredit : rec.LocalAmountDebit;
+            //rec.LocalAmountCredit = rec.LocalAmountCredit != 0 ? rec.LocalAmountCredit : rec.LocalAmountDebit;
+            rec.IsCumulativeLocalAmountPos = rec.CumulativeLocalAmount < 0;
+            rec.IsForeignAmountCreditPos = rec.ForeignAmountCredit != 0;
+            rec.CalculatedForeignAmount = rec.ForeignAmountCredit != 0 ? rec.ForeignAmountCredit : rec.ForeignAmountDebit;
+            //rec.ForeignAmountCredit = rec.ForeignAmountCredit != 0 ? rec.ForeignAmountCredit : rec.ForeignAmountDebit;
+            rec.IsCumulativeForeignAmountPos = rec.CumulativeForeignAmount < 0;
+            rec.IsOriginalAmountPos = rec.OpenAmount < 0;
+            rec.IsForeignAmountPos = rec.ForeignAmountCredit != 0;
+            rec.ForeignAmountCreditWithSign = rec.CalculatedForeignAmount + " " + rec.CurrencySign;
+            rec.CumulativeForeignAmountSign = rec.CumulativeForeignAmount + " " + rec.CurrencySign;
+            if (isFromExcelGenerater)
+            {
+                ledgerTransactionHelper.MapAmountWithNegativeValue(rec);
+            }
+        }
+ 
         private void LogIt(string mess)
         {
 
@@ -506,12 +530,11 @@ AccountBalanceM endAccountBalanceService)
 
         }
 
-        public virtual List<LedgerTransactionList> Translate2ListMode(IQueryable<Data.EntityPOCOs.LedgerTransaction> QOrderAccDateAndIdByAccIdBetweenAccDateMaxCreateLimit_AndCurrencyId)
+        public virtual List<LedgerTransactionList> Translate2ListMode(IQueryable<Data.EntityPOCOs.LedgerTransaction> qOrderAccDateAndIdByAccIdBetweenAccDateMaxCreateLimit_AndCurrencyId,bool isFromExcelGenerater)
         {
             var ledgerTransactionListQueryService = new LedgerTransactionListQueryService(_AccountingContext);
-            var list = ledgerTransactionListQueryService.GetLedgerTransactionListForceOrderByDateTypeCodeAndId(QOrderAccDateAndIdByAccIdBetweenAccDateMaxCreateLimit_AndCurrencyId,
-                _Param.DateTypeCode,
-                _Param.PageSize, _Param.PageStartAtRecordIndex);
+            var list = ledgerTransactionListQueryService.GetLedgerTransactionListForceOrderByDateTypeCodeAndId(qOrderAccDateAndIdByAccIdBetweenAccDateMaxCreateLimit_AndCurrencyId,
+                _Param, isFromExcelGenerater);
             return list;
         }
 

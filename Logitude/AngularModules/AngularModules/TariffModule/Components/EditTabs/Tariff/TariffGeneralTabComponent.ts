@@ -116,7 +116,13 @@ export class TariffGeneralTabComponent extends BaseComponent implements OnDestro
         }
 
         this.MeasurementsQueryFilters = new ApiQueryFilters();
-        this.MeasurementsQueryFilters.addAdditionalFilter("Code", "STFE", null, null, "NotContains", false, false, false, "string", false, true, true);
+
+        if (this.EntityPM.TypeCode == "OFS") {
+            this.MeasurementsQueryFilters.addAdditionalFilter("Code", "BCNT,BTEU,FIXD", null, null, "InList", false, true, false, "string", false, true, true);
+        }
+        else {
+            this.MeasurementsQueryFilters.addAdditionalFilter("Code", "STFE", null, null, "NotContains", false, false, false, "string", false, true, true);
+        }
 
         this.ChargeTypesQueryFilters = new ApiQueryFilters();
         this.ChargeTypesQueryFilters.addAdditionalFilter("InActive", false, null, null, "Equals", false, false, false, "Boolean");
@@ -137,24 +143,26 @@ export class TariffGeneralTabComponent extends BaseComponent implements OnDestro
         }
     }
 
-    SetDefaultUOM(index: number) {
-        if (this.EntityPM.TypeCode != "OFS") {
-            this.chargesTypePMService.getSingleFromCache(this[this.IdProps[index]]).subscribe((res:any) => {
+      SetDefaultUOM(index: number) {
+            this.chargesTypePMService.getSingleFromCache(this[this.IdProps[index]]).subscribe((res: any) => {
                 if (!res.HasError) {
                     if (res.Result) {
                         var ChargesType: ChargesTypeList = res.Result;
-                        this[this.UOMProps[index]] = ChargesType.MeasurementId;
+                        if (this.EntityPM.TypeCode == "OFS") {
+                            if (!AppTool.IsNullOrEmpty(ChargesType.ContainerMeasurementId)) {
+                                this[this.UOMProps[index]] = ChargesType.ContainerMeasurementId;
+                            }
+                            else {
+                                this[this.UOMProps[index]] = this.BCNTmeasurementId;
+                            }
+                        }
+                        else {
+                            this[this.UOMProps[index]] = ChargesType.MeasurementId;
+                        }
                     }
                 }
             });
         }
-
-        else {
-            if (!AppTool.IsNullOrEmpty(this.BCNTmeasurementId)) {
-                this[this.UOMProps[index]] = this.BCNTmeasurementId;
-            }
-        }
-    }
 
     get Surcharge1Id() {
         return this.EntityPM.Surcharge1Id;

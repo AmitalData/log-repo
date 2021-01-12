@@ -311,7 +311,7 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
     BuildShipmentSubTypes() {
         this.ShipmentSubTypesList = [];
 
-        this.allShipmentSubTypes.filter(d => d.ShipmentTypeCode == this.ShipmentTypeId).forEach(item => {
+        this.allShipmentSubTypes.filter(d => d.ShipmentTypeCode == this.ShipmentTypeId && !d.Inactive).forEach(item => {
             this.ShipmentSubTypesList.push(new FilterClass(item.Id, item.Name));
         });
 
@@ -3621,6 +3621,7 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
             newPickUp.FromAddressId = this.PickUpAddressId;
             newPickUp.PickUpDeliveryToTypeCode = "PORT";
             newPickUp.ToPortId = this.MainCarriageFromPortId;
+            newPickUp.TransportModeCode = "BYTR";
             this.EntityPM.AddPickUp(newPickUp);
         }
 
@@ -3641,6 +3642,7 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
             newDelivery.ToAddressZipCode = this.ToAddressZipCode;
             newDelivery.ToPartnerCardId = this.ConsigneeId;
             newDelivery.ToAddressId = this.DeliveryAddressId;
+            newDelivery.TransportModeCode = "BYTR";
             this.EntityPM.AddDelivery(newDelivery);
         }
     }

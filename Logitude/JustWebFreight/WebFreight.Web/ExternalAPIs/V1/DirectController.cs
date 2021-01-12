@@ -228,13 +228,14 @@ namespace WebFreight.Web.ExternalAPIs.V1
                         IShipmentsContext MyContext = ShipmentsContext.GetContext(authToken.Tenant);
                         DirectQueryService mappingService = new DirectQueryService(authToken.Tenant);
                         ShipmentPM entityPM = mappingService.DirectCustomDataMappingAndValidatin(entity, authToken.Tenant, computingPartnerCode);
+                        entityPM.IsExternalAPI = true;
 
                         this.ValidateUnitCodes(entityPM);
                         this.ValidateAirShipmentCarrier(entityPM, authToken.Tenant);
                         this.ValidateShipmentClosure(entity, entityPM, authToken.Tenant);
 
                         AddressRepository addressRepository = new AddressRepository(entityPM.Tenant);
-                        this.SetPartnersAddresses(entityPM, addressRepository, authToken.Tenant);
+                        //this.SetPartnersAddresses(entityPM, addressRepository, authToken.Tenant);
                         this.ValidateAndSetCustomerData(entityPM, addressRepository, authToken.Tenant);
 
                         if (!string.IsNullOrEmpty(entityPM.IncotermId))
@@ -494,71 +495,73 @@ namespace WebFreight.Web.ExternalAPIs.V1
                 }
             }
         }
-        private void SetPartnersAddresses(ShipmentPM entityPM, AddressRepository addressRepository, int tenant)
-        {
-            if (!string.IsNullOrEmpty(entityPM.ShipperId))
-            {
-                Address address = addressRepository.GetMainAddressByCardId(entityPM.ShipperId, tenant);
-                if (address != null)
-                {
-                    entityPM.ShipperAddressId = address.Id;
-                }
-            }
 
-            if (!string.IsNullOrEmpty(entityPM.ConsigneeId))
-            {
-                Address address = addressRepository.GetMainAddressByCardId(entityPM.ConsigneeId, tenant);
-                if (address != null)
-                {
-                    entityPM.ConsigneeAddressId = address.Id;
-                }
-            }
+        // Ayman Handled in Shipment Service (keep it DRY)
+        //private void SetPartnersAddresses(ShipmentPM entityPM, AddressRepository addressRepository, int tenant)
+        //{
+        //    if (!string.IsNullOrEmpty(entityPM.ShipperId))
+        //    {
+        //        Address address = addressRepository.GetMainAddressByCardId(entityPM.ShipperId, tenant);
+        //        if (address != null)
+        //        {
+        //            entityPM.ShipperAddressId = address.Id;
+        //        }
+        //    }
 
-            if (!string.IsNullOrEmpty(entityPM.ShipperNotExporterId))
-            {
-                Address address = addressRepository.GetMainAddressByCardId(entityPM.ShipperNotExporterId, tenant);
-                if (address != null)
-                {
-                    entityPM.ShipperNotExporterAddressId = address.Id;
-                }
-            }
+        //    if (!string.IsNullOrEmpty(entityPM.ConsigneeId))
+        //    {
+        //        Address address = addressRepository.GetMainAddressByCardId(entityPM.ConsigneeId, tenant);
+        //        if (address != null)
+        //        {
+        //            entityPM.ConsigneeAddressId = address.Id;
+        //        }
+        //    }
 
-            if (!string.IsNullOrEmpty(entityPM.AgentId))
-            {
-                Address address = addressRepository.GetMainAddressByCardId(entityPM.AgentId, tenant);
-                if (address != null)
-                {
-                    entityPM.AgentAddressId = address.Id;
-                }
-            }
+        //    if (!string.IsNullOrEmpty(entityPM.ShipperNotExporterId))
+        //    {
+        //        Address address = addressRepository.GetMainAddressByCardId(entityPM.ShipperNotExporterId, tenant);
+        //        if (address != null)
+        //        {
+        //            entityPM.ShipperNotExporterAddressId = address.Id;
+        //        }
+        //    }
 
-            if (!string.IsNullOrEmpty(entityPM.CustomAgentImportId))
-            {
-                Address address = addressRepository.GetMainAddressByCardId(entityPM.CustomAgentImportId, tenant);
-                if (address != null)
-                {
-                    entityPM.CustomAgentImportAddressId = address.Id;
-                }
-            }
+        //    if (!string.IsNullOrEmpty(entityPM.AgentId))
+        //    {
+        //        Address address = addressRepository.GetMainAddressByCardId(entityPM.AgentId, tenant);
+        //        if (address != null)
+        //        {
+        //            entityPM.AgentAddressId = address.Id;
+        //        }
+        //    }
 
-            if (!string.IsNullOrEmpty(entityPM.ReleasingAgentId))
-            {
-                Address address = addressRepository.GetMainAddressByCardId(entityPM.ReleasingAgentId, tenant);
-                if (address != null)
-                {
-                    entityPM.ReleasingAgentAddressId = address.Id;
-                }
-            }
+        //    if (!string.IsNullOrEmpty(entityPM.CustomAgentImportId))
+        //    {
+        //        Address address = addressRepository.GetMainAddressByCardId(entityPM.CustomAgentImportId, tenant);
+        //        if (address != null)
+        //        {
+        //            entityPM.CustomAgentImportAddressId = address.Id;
+        //        }
+        //    }
 
-            if (!string.IsNullOrEmpty(entityPM.FreightForwarderId))
-            {
-                Address address = addressRepository.GetMainAddressByCardId(entityPM.FreightForwarderId, tenant);
-                if (address != null)
-                {
-                    entityPM.FreightForwarderAddressId = address.Id;
-                }
-            }
-        }
+        //    if (!string.IsNullOrEmpty(entityPM.ReleasingAgentId))
+        //    {
+        //        Address address = addressRepository.GetMainAddressByCardId(entityPM.ReleasingAgentId, tenant);
+        //        if (address != null)
+        //        {
+        //            entityPM.ReleasingAgentAddressId = address.Id;
+        //        }
+        //    }
+
+        //    if (!string.IsNullOrEmpty(entityPM.FreightForwarderId))
+        //    {
+        //        Address address = addressRepository.GetMainAddressByCardId(entityPM.FreightForwarderId, tenant);
+        //        if (address != null)
+        //        {
+        //            entityPM.FreightForwarderAddressId = address.Id;
+        //        }
+        //    }
+        //}
         private void ValidateAndSetCustomerData(ShipmentPM entityPM, AddressRepository addressRepository, int tenant)
         {
             if (!string.IsNullOrEmpty(entityPM.CustomerId))
@@ -606,7 +609,8 @@ namespace WebFreight.Web.ExternalAPIs.V1
 
             else
             {
-                if (entityPM.DirectionId == "I")
+                if (entityPM.
+                    Id == "I")
                 {
                     entityPM.CustomerId = entityPM.ConsigneeId;
                     entityPM.ShipmentCustomerTypeCode = "CON";
@@ -681,6 +685,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
                         if (directPM != null)
                         {
                             directPM.ConcurrencyGUID = entity.ConcurrencyGUID;
+                            directPM.IsExternalAPI = true;
 
                             if (directPM.IsOperationalClosed)
                             {
@@ -696,10 +701,15 @@ namespace WebFreight.Web.ExternalAPIs.V1
                             aPITransshipmentHelper.ValidateTransshipments();
                             aPITransshipmentHelper.MapTransshipments();
 
+                            AddressRepository addressRepository = new AddressRepository(authToken.Tenant);
+                            this.ValidateAndSetCustomerData(directPM, addressRepository, authToken.Tenant);
+
                             ShipmentService service = new ShipmentService(MyContext, directPM, SecurityUtility.GetAuthenticatedUser());
                             service.Update(true);
                         }
 
+                        MyContext = ShipmentsContext.GetContext(authToken.Tenant);
+                        mappingService = new DirectQueryService(authToken.Tenant);
                         var result = mappingService.GetDirectById(directPM.Id, authToken.Tenant);
                         APIHelper.AddCommunicationLog("D", entity, result, "Shipment", directPM.Id, "Direct API", authToken.Tenant);
                         return Request.CreateResponse(HttpStatusCode.OK, result);

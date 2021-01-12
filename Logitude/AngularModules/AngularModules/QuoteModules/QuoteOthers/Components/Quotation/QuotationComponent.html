@@ -358,12 +358,12 @@
                         <td style="width:100%;height:22px">
 
 
-                            <div [class.ToggleButtonDisabled]="!IsSendButtonEnabled" tabindex="0" class="ToggleButton" style="margin: auto;text-align:left; width: 100% !important; height: 100% !important">
+                            <div id="{{'SendOption' | IdGeneratorPipe}}" [class.ToggleButtonDisabled]="!IsSendButtonEnabled" tabindex="0" class="ToggleButton" style="margin: auto;text-align:left; width: 100% !important; height: 100% !important">
                                 <label>{{'Quote.Quotation.B.Send' | TextCodeTranslationPipe}} </label>
                                 <img src="./Images/ToggleIcon.png" />
                                 <div class="ToggleButtonMenu" style="width: 100%;">
-                                    <button (click)="OnSendToCustomer('Send to Customer')">{{'Quote.Quotation.B.SendtoCustomer' | TextCodeTranslationPipe}} </button>
-                                    <button (click)="OnSendToCustomer('Send Internally')">{{'Quote.Quotation.B.SendInternally' | TextCodeTranslationPipe}} </button>
+                                    <button id="{{'SendToCustomer' | IdGeneratorPipe}}" (click)="OnSendToCustomer('Send to Customer')">{{'Quote.Quotation.B.SendtoCustomer' | TextCodeTranslationPipe}} </button>
+                                    <button id="{{'SendInternally' | IdGeneratorPipe}}" (click)="OnSendToCustomer('Send Internally')">{{'Quote.Quotation.B.SendInternally' | TextCodeTranslationPipe}} </button>
                                 </div>
                             </div>
 
@@ -436,8 +436,8 @@
                                                                             <button style="display:inline;width:80px;margin-top:2px" id="{{'EditSection1' | IdGeneratorPipe}}" class="QuoteTemplateSettingButton" (click)="OnEditSectionButtonClicked(item)" [disabled]="!IsEditEnabled">
                                                                                 <table>
                                                                                     <tr>
-                                                                                        <td style="width:20px;">id="{{'EdittSectionn' | IdGeneratorPipe}}" <img src="./Images/Buttons/EditBlack.png" />  </td>
-                                                                                        <td style="width:30px;">{{'QuoteTemplate.B.Edit' | TextCodeTranslationPipe}} id="{{'EditSection' | IdGeneratorPipe}}" </td>
+                                                                                        <td style="width:20px;"> <img src="./Images/Buttons/EditBlack.png" />  </td>
+                                                                                        <td style="width:30px;">{{'QuoteTemplate.B.Edit' | TextCodeTranslationPipe}}  </td>
                                                                                         <td></td>
                                                                                     </tr>
                                                                                 </table>

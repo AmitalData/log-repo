@@ -51,7 +51,7 @@ namespace CargoTrackingWinService
                 ApplicationInfo.RunCargoTrackingImmediately = GetIsBuildCargoTrackingFromConfigurationSettings();
 
 
-                CargoTrackingHeadService cargoTrackingHeadService = new CargoTrackingHeadService();
+                CargoTrackingMainWinService cargoTrackingHeadService = new CargoTrackingMainWinService();
                 Thread updateWarehouseDataThread = new Thread(() => cargoTrackingHeadService.UpdateCargoTracking());
                 updateWarehouseDataThread.IsBackground = true;
                 updateWarehouseDataThread.Start();

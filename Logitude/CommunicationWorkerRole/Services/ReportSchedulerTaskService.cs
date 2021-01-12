@@ -1,6 +1,10 @@
-﻿using CommunicationWorkerRole.Tasks;
+﻿using CommunicationWorkerRole.ReportScheduler;
+using CommunicationWorkerRole.Tasks;
+using Logitude.Accounting.BL.EntityQueryServices;
+using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.BL.CommonDataModel.CustomFilters;
 using Logitude.BL.CommonDataModel.EntityLists;
+using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.InfrastructureModel.DataContracts;
 using Logitude.BL.InfrastructureModel.EntityPMs;
@@ -22,6 +26,7 @@ using Simplog.Server.Infrastructure.Azure;
 using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Server.Infrastructure.Helpers;
 using Stimulsoft.Report;
+using Stimulsoft.Report.Export;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -68,7 +73,7 @@ namespace CommunicationWorkerRole.Services
                 }
                 else if(reportTask.ResultType == "FTP")
                 {
-                    SendPdfReportToFTP(reportTask, schedulerDetails, reportFilter);
+                    SendReportToFTP(reportTask, schedulerDetails, reportFilter);
                 }
 
 
@@ -84,13 +89,10 @@ namespace CommunicationWorkerRole.Services
             }
         }
 
-        private void SendPdfReportToFTP(TasksSchedulerPM reportTask, SchedulerDetails schedulerDetails, ReportFliter reportFilter)
+        private void SendReportToFTP(TasksSchedulerPM reportTask, SchedulerDetails schedulerDetails, ReportFliter reportFilter)
         {
             this.currentTask.LogInfo(FTPLogBuilder.BuildLogLine("Preparing report data"));
-            StiReport stiReport = GetStimulReportByReportFilter(reportFilter);
-            MemoryStream memoryStream = new MemoryStream();
-            this.currentTask.LogInfo(FTPLogBuilder.BuildLogLine("Exporting report to pdf file"));
-            stiReport.ExportDocument(StiExportFormat.Pdf, memoryStream);
+            MemoryStream memoryStream = GetMemoryStreamAfterExportDocument(reportTask, reportFilter);
             this.trackerLogs[trackerCounter, 1] = DateTime.Now.ToString();
             this.trackerCounter += 1;
             if (memoryStream != null && schedulerDetails.FTPDetails != null)
@@ -102,7 +104,8 @@ namespace CommunicationWorkerRole.Services
 
                 string p_message = "";
                 string p_status = "";
-                var fileName = reportTask.Name + ".pdf";
+                string schedulerFormatExtension = reportTask.Format == "PDF" ? "pdf" : "xlsx";
+                var fileName = reportTask.Name + "." + schedulerFormatExtension;
                 FTPServiceMod ftpService = new FTPServiceMod(schedulerDetails.FTPDetails.Host, schedulerDetails.FTPDetails.UserName, schedulerDetails.FTPDetails.Password);
                 ftpService.Upload(fileName, schedulerDetails.FTPDetails.Folder, memoryStream.ToArray(), out p_message, out p_status, true, true);
 
@@ -114,39 +117,82 @@ namespace CommunicationWorkerRole.Services
                 {
                     currentTask.LogInfo(p_message);
                 }
-
-
             }
+        }
+
+        private MemoryStream GetMemoryStreamAfterExportDocument(TasksSchedulerPM reportTask, ReportFliter reportFilter)
+        {
+
+            string schedulerFormat = (string.IsNullOrEmpty(reportTask.Format) || reportTask.Format == "PDF") ? "pdf" : "Excel";
+            StiReport stiReport = GetStimulReportByReportFilter(reportFilter);
+            MemoryStream memoryStream = new MemoryStream();
+            this.currentTask.LogInfo(FTPLogBuilder.BuildLogLine("Exporting report to " + schedulerFormat + " file"));
+            if (schedulerFormat == "Excel")
+            {
+                StiExcel2007ExportSettings stiExcelSettings = new StiExcel2007ExportSettings();
+                bool useOnePageHeaderAndFooter = reportTask.Format == "EXCL" || reportTask.AdvancedFormat == "OP";
+                bool exportDataOnly =  reportTask.AdvancedFormat == "DO";
+                stiExcelSettings.ExportObjectFormatting = false;
+                stiExcelSettings.UseOnePageHeaderAndFooter = useOnePageHeaderAndFooter;
+                stiExcelSettings.ExportDataOnly = exportDataOnly;
+                StiExcel2007ExportService stiExcelService = new StiExcel2007ExportService();
+                stiExcelService.ExportExcel(stiReport, memoryStream, stiExcelSettings);
+            }
+            else
+            {
+                stiReport.ExportDocument(StiExportFormat.Pdf, memoryStream);
+            }
+
+            return memoryStream;
         }
 
         private void SendPdfReportToReceipent(TasksSchedulerPM reportTask, SchedulerDetails schedulerDetails, ReportFliter reportFilter)
         {
             this.currentTask.LogInfo(FTPLogBuilder.BuildLogLine("Preparing report data"));
-            
-            List<ContactList> allPermittedContacts = GetAllPermittedContacts(reportTask.Tenant, null);
-            string cardId = GetcardIdValueField(schedulerDetails);
-            List<ContactList> allPermittedCards = GetAllPermittedContacts(reportTask.Tenant, cardId);
-            allPermittedContacts = allPermittedContacts.Concat(allPermittedCards).ToList();
-            schedulerDetails.ReportDetails.Recepients = RemoveNonPermittedContacts(schedulerDetails.ReportDetails.Recepients, allPermittedContacts);
+            schedulerDetails.ReportDetails.Recepients = GetReportPermittedContacts(reportTask, schedulerDetails);
             if (schedulerDetails.ReportDetails.Recepients != null)
             {
                 StiReport stiReport = GetStimulReportByReportFilter(reportFilter);
                 this.currentTask.LogInfo(FTPLogBuilder.BuildLogLine("Exporting report to pdf file"));
                 string documentId = GetDocumentIdAfterExport(stiReport, reportTask.Name, reportTask.Tenant);
-                schedulerDetails.ReportDetails.Recepients = GetRecepientsAfterRemoveInActiveCustomer(cardId, reportTask.Tenant, schedulerDetails.ReportDetails.Recepients);
-                if (schedulerDetails.ReportDetails.Recepients != null)
-                {
-                    this.currentTask.LogInfo(FTPLogBuilder.BuildLogLine("Sending report to reciepents"));
-                    SendHtmlDocument(documentId, schedulerDetails.ReportDetails.Recepients, reportTask);
-                    this.currentTask.LogInfo(FTPLogBuilder.BuildLogLine("Sending report to reciepents finished successfully"));
-                }
-                else
-                {
-                    currentTask.LogWarning("The E-mail was not sent, the customer status is inactive.");
-                }
+                SendPdfReportIfIsValid(reportTask, schedulerDetails, documentId);
             }
         }
 
+        private ReportSchedulerRecepients GetReportPermittedContacts(TasksSchedulerPM reportTask, SchedulerDetails schedulerDetails)
+        {
+            List<ContactList> allPermittedContacts = GetAllPermittedContacts(reportTask.Tenant, null);
+            string gLAccountId = GetFilterFieldValueByName(schedulerDetails.ReportDetails.ReportFilterItems, "GLAccountId");
+            List<ContactList> allPermittedCards = GetAllPermittedContacts(reportTask.Tenant, gLAccountId);
+            allPermittedContacts = allPermittedContacts.Concat(allPermittedCards).ToList();
+            ReportSchedulerRecepients recepients =  RemoveNonPermittedContacts(schedulerDetails.ReportDetails.Recepients, allPermittedContacts);
+            return recepients;
+        }
+
+        private void SendPdfReportIfIsValid(TasksSchedulerPM reportTask, SchedulerDetails schedulerDetails, string documentId)
+        {
+            AdditionalValidate additionalValidate = new AdditionalValidate();
+            ReportSchedulerRecepients reportRecepients = schedulerDetails.ReportDetails.Recepients;
+            string gLAccountId = GetFilterFieldValueByName(schedulerDetails.ReportDetails.ReportFilterItems, "GLAccountId");
+            if (!string.IsNullOrEmpty(gLAccountId))
+            {
+                reportRecepients = GetActiveRecepientsForGLAccount(gLAccountId, reportTask.Tenant, reportRecepients);
+                additionalValidate.recepients = reportRecepients;
+            }
+            this.currentTask.LogInfo(FTPLogBuilder.BuildLogLine("Validate Selected Partners"));
+            ValidateResult result = ValidateSelectedPartners(schedulerDetails.ReportDetails.ReportFilterItems, reportTask.Tenant, additionalValidate);
+
+            if (result.IsValid)
+            {
+                this.currentTask.LogInfo(FTPLogBuilder.BuildLogLine("Sending report to reciepents"));
+                SendHtmlDocument(documentId, reportRecepients, reportTask);
+                this.currentTask.LogInfo(FTPLogBuilder.BuildLogLine("Sending report to reciepents finished successfully"));
+            }
+            else
+            {
+                currentTask.LogWarning(result.ErrorMessage);
+            }
+        }
 
         private SchedulerDetails GetSchedulerDetails(TasksSchedulerPM reportTask)
         {
@@ -158,18 +204,18 @@ namespace CommunicationWorkerRole.Services
             this.trackerCounter += 1;
             return schedulerDetails;
         }
-        
-        private string GetcardIdValueField(SchedulerDetails schedulerDetails)
+
+        private string GetFilterFieldValueByName(List<QueryFilterItem> reportFilterItems, string fieldName)
         {
-            string cardId = null;
-            schedulerDetails.ReportDetails.ReportFilterItems.ForEach(item => {
-                if (item.FieldName == "GLAccountId")
+            string fieldValue = null;
+            reportFilterItems.ForEach(item => {
+                if (item.FieldName == fieldName)
                 {
-                    if(item.FieldValue != null)
-                        cardId = item.FieldValue.ToString();
+                    if (item.FieldValue != null)
+                        fieldValue = item.FieldValue.ToString();
                 }
             });
-            return cardId;
+            return fieldValue;
         }
 
         private ReportSchedulerRecepients RemoveNonPermittedContacts(ReportSchedulerRecepients recepients, List<ContactList> allPermittedContacts)
@@ -407,31 +453,40 @@ namespace CommunicationWorkerRole.Services
             storageservice.Write(ByteData, fileInfo);
         }
 
-        private ReportSchedulerRecepients GetRecepientsAfterRemoveInActiveCustomer(string cardId, int tenant, ReportSchedulerRecepients recepients)
+        private ReportSchedulerRecepients GetActiveRecepientsForGLAccount(string gLAccountId, int tenant, ReportSchedulerRecepients recepients)
         {
-            if (string.IsNullOrEmpty(cardId)) return recepients;
+            ReportSchedulerRecepients myRecepients = recepients;
+            if (string.IsNullOrEmpty(gLAccountId)) return myRecepients;
             CardQuery cardQuery = new CardQuery(tenant);
-            List<ShortPartnersDetails> connectedPartners = cardQuery.GetConnectedPartnerIdsByGLAccountId(cardId, tenant);
+            List<ShortPartnersDetails> connectedPartners = cardQuery.GetConnectedPartnerIdsByGLAccountId(gLAccountId, tenant);
 
-            if (connectedPartners.Count() == 0) return recepients;
-            else if (GetInactivePartnerCounts(connectedPartners) == 0) return recepients;
+            if (connectedPartners.Count() == 0) return myRecepients;
+            else if (GetInactivePartnerCounts(connectedPartners) == 0) return myRecepients;
             else if (GetInactivePartnerCounts(connectedPartners) == connectedPartners.Count()) return null;
             else
             {
-                recepients = RemoveInActiveCustomerRecepients(recepients, connectedPartners, tenant);
-                if (string.IsNullOrEmpty(recepients.To))
+                myRecepients = RemoveInActiveCustomerRecepients(myRecepients, connectedPartners, tenant);
+                if (string.IsNullOrEmpty(myRecepients.To))
                     return null;
             }
 
-            return recepients;
+            return myRecepients;
+        }
+
+        private ValidateResult ValidateSelectedPartners(List<QueryFilterItem> reportFilterItems, int tenant, AdditionalValidate additionalValidate)
+        {
+            ReportSchedulerValidator reportSchedulerValidator = new ReportSchedulerValidator(reportFilterItems, tenant, additionalValidate);
+            ValidateResult result = reportSchedulerValidator.validate();
+            return result;
         }
 
         private ReportSchedulerRecepients RemoveInActiveCustomerRecepients(ReportSchedulerRecepients recepients, List<ShortPartnersDetails> connectedPartners, int tenant)
         {
+            ReportSchedulerRecepients myRecepients = recepients;
             CardContactRepository repositry = new CardContactRepository(tenant);
-            List<ActivatedEmail> toEmails = FillAllRecepients(recepients.To, true);
-            List<ActivatedEmail> ccEmails = FillAllRecepients(recepients.Cc, true);
-            List<ActivatedEmail> bccEmails = FillAllRecepients(recepients.Bcc, true);
+            List<ActivatedEmail> toEmails = FillAllRecepients(myRecepients.To, true);
+            List<ActivatedEmail> ccEmails = FillAllRecepients(myRecepients.Cc, true);
+            List<ActivatedEmail> bccEmails = FillAllRecepients(myRecepients.Bcc, true);
             string inActiveRecipients = "";
             connectedPartners.ForEach(connectedPartner =>
             {
@@ -469,11 +524,11 @@ namespace CommunicationWorkerRole.Services
             });
 
 
-            recepients.To = FillOnlyActiveRecepients(toEmails);
-            recepients.Cc = FillOnlyActiveRecepients(ccEmails);
-            recepients.Bcc = FillOnlyActiveRecepients(bccEmails);
+            myRecepients.To = FillOnlyActiveRecepients(toEmails);
+            myRecepients.Cc = FillOnlyActiveRecepients(ccEmails);
+            myRecepients.Bcc = FillOnlyActiveRecepients(bccEmails);
 
-            if (!string.IsNullOrEmpty(inActiveRecipients) && !string.IsNullOrEmpty(recepients.To))
+            if (!string.IsNullOrEmpty(inActiveRecipients) && !string.IsNullOrEmpty(myRecepients.To))
             {
                 inActiveRecipients = this.RemoveDuplicateEmails(inActiveRecipients);
                 string warningMessage = "The E-mail was not sent to " + inActiveRecipients;
@@ -481,7 +536,7 @@ namespace CommunicationWorkerRole.Services
                 currentTask.LogWarning(warningMessage);
             }
 
-            return recepients;
+            return myRecepients;
         }
 
         private int GetInactivePartnerCounts(List<ShortPartnersDetails> connectedPartners)

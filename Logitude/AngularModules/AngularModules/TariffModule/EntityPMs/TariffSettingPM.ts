@@ -78,7 +78,10 @@ export class TariffSettingPM {
     public OldEntityPM: TariffSettingPM;
 		
     public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
+       if(!this.DisableMarkAsDirty)
+       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -86,6 +89,7 @@ export class TariffSettingPM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "TariffSetting");
            
         }
+       }
     }
 
     private MyClone: TariffSettingPM;

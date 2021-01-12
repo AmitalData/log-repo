@@ -153,6 +153,7 @@ export class CustomsShipperPMService {
         if (!entityPM) {
             
             entityPM = new CustomsShipperPM();
+			entityPM.DisableMarkAsDirty = true;
         }
 
 		var customFields: Array<string> = [];
@@ -193,6 +194,8 @@ export class CustomsShipperPMService {
             entityPM.OldEntityPM = null;
         }
 		entityPM.IsDirty = false;
+	    entityPM.DisableMarkAsDirty = false;
+
         return entityPM;
     }
 

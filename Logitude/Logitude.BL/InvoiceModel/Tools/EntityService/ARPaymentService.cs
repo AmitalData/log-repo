@@ -41,8 +41,10 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 {
     public class ARPaymentService
     {
+        const string PartnerTypeId_Customer = "CS";
+
         private int tenant;
-        public ARPayment newPayment { get; set; }
+        public ARPayment paymentPoco { get; set; }
         private ARPaymentPM entityPM;
         private IInvoiceContext objectContext;
         private ICommonDataContext myCommonContext;
@@ -121,12 +123,12 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             isVoidingInvoice = entityPM.SetVoided;
             changedList = _arpaymentPM.PaymentInvoices;
 
-            newPayment = new ARPayment();
+            paymentPoco = new ARPayment();
 
             InitializeComponent();
 
-            ARPaymentValidator.Validate(entityPM, newPayment, isNewEntity, objectContext, cashBook);
-            ARPaymentTracing.Trace(_arpaymentPM, newPayment, isNewEntity);
+            ARPaymentValidator.Validate(entityPM, paymentPoco, isNewEntity, objectContext, cashBook);
+            ARPaymentTracing.Trace(_arpaymentPM, paymentPoco, isNewEntity);
 
             InitializeTransferComponents();
 
@@ -135,16 +137,16 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             var setCancelApproved = _arpaymentPM.SetCancelApproval;
             var setVoided = _arpaymentPM.SetVoided;
 
-            ARPaymentMapping.MapEntity(_arpaymentPM, newPayment, isNewEntity);
+            ARPaymentMapping.MapEntity(_arpaymentPM, paymentPoco, isNewEntity);
 
-            paymentRepository.Add(newPayment);
+            paymentRepository.Add(paymentPoco);
             paymentRepository.SubmitChanges();
             SubmitPaymentInvoices(_arpaymentPM);
 
             UpdatePaymentOpenAmount();
 
             ARPaymentHelper service = new ARPaymentHelper();
-            service.ARPaymentQuickbooksValidating(_arpaymentPM, setApproved, false, newPayment, objectContext, myCommonContext, isVoidingInvoice, setCancelApproved, _arpaymentPM.SetReSendQBO,false);
+            service.ARPaymentQuickbooksValidating(_arpaymentPM, setApproved, false, paymentPoco, objectContext, myCommonContext, isVoidingInvoice, setCancelApproved, _arpaymentPM.SetReSendQBO,false);
 
             BuildSearchFields();
 
@@ -165,8 +167,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
             // PaymentCheque And CashBook
             AddARPaymentChequeAndCashBook(_arpaymentPM, setApproved);
-            newPayment.ValueDate = _arpaymentPM.ValueDate;
-            paymentRepository.Update(newPayment);
+            paymentPoco.ValueDate = _arpaymentPM.ValueDate;
+            paymentRepository.Update(paymentPoco);
             paymentRepository.SubmitChanges();
             if (_arpaymentPM.IsFullAccounting)
             {
@@ -259,7 +261,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         private AccountingPaymentMethod GetARPaymentMethod()
         {
             AccountingPaymentMethodRepository ARPaymentMethodRepository = new AccountingPaymentMethodRepository(objectContext);
-            AccountingPaymentMethod ARPaymentMethod = ARPaymentMethodRepository.GetSingleAccountingPaymentMethod(newPayment.AccountingPaymentMethodId, tenant);
+            AccountingPaymentMethod ARPaymentMethod = ARPaymentMethodRepository.GetSingleAccountingPaymentMethod(paymentPoco.AccountingPaymentMethodId, tenant);
             return ARPaymentMethod;
         }
 
@@ -306,20 +308,20 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             GLAccountPM gla = FillGLAccountFields(theEntityPm);
 
             this.isNewEntity = false;
-         
+
             this.SetVoided = theEntityPm.SetVoided;
 
-            this.newPayment = paymentRepository.GetSingleARPayment(theEntityPm.Id);
+            this.paymentPoco = paymentRepository.GetSingleARPayment(theEntityPm.Id);
 
-            bool isErrorInTransfer = this.newPayment.TransferStatusCode == "ET" ? true : false;
+            bool isErrorInTransfer = this.paymentPoco.TransferStatusCode == "ET" ? true : false;
 
             this.ValidateHigherStatus();
 
             this.InitializeComponent();
 
-            ARPaymentValidator.Validate(entityPM, newPayment, isNewEntity, objectContext, cashBook);
+            ARPaymentValidator.Validate(entityPM, paymentPoco, isNewEntity, objectContext, cashBook);
 
-            ARPaymentTracing.Trace(theEntityPm, newPayment, isNewEntity);
+            ARPaymentTracing.Trace(theEntityPm, paymentPoco, isNewEntity);
 
             if (mapComposition)
             {
@@ -363,29 +365,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 }
             }
 
-
-            SATInterfaceSettingRepository sATInterfaceSettingRepository = new SATInterfaceSettingRepository(entityPM.Tenant);
-            SATInterfaceSetting satSetting = sATInterfaceSettingRepository.GetSingleSATInterfaceSetting(entityPM.Tenant);
-            if (satSetting.SATInterfaceCode == "PROF33")
-            {
-                if (this.entityPM.SetCancelApproval)
-                {
-                    if (newPayment.SATTransferStatusCode == "TD")
-                        this.sATInterfaceHelper.SendPaymentSATCancellationRequest(entityPM, newPayment);
-                    else if (newPayment.SATTransferStatusCode == "TG")
-                        throw new ApplicationException("You are not allowed to cancel the payment while its status is Transferring to SAT");
-                }
-
-                if (theEntityPm.SetVoided)
-                {
-                    if (newPayment.SATTransferStatusCode == "TG")
-                        throw new ApplicationException("You are not allowed to void the payment while its status is Transferring to SAT");
-                    else if (newPayment.SATTransferStatusCode == "TE" && !string.IsNullOrEmpty(newPayment.SATXML))
-                        throw new ApplicationException("Can't void payment because it wasn't cancelled by SAT");
-
-                }
-            }
-
+            HandleSATTranserStatus(theEntityPm);
 
             var setApproved = theEntityPm.SetApproved;
             var setCancelApproved = theEntityPm.SetCancelApproval;
@@ -403,8 +383,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
             this.InitializeTransferComponents();
 
-            ARPaymentMapping.MapEntity(theEntityPm, newPayment, isNewEntity);
-            paymentRepository.Update(newPayment);
+            ARPaymentMapping.MapEntity(theEntityPm, paymentPoco, isNewEntity);
+            paymentRepository.Update(paymentPoco);
             paymentRepository.SubmitChanges();
             invoicePaymentRepository.SubmitChanges();
 
@@ -413,13 +393,13 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
 
             ARPaymentHelper service = new ARPaymentHelper();
-            if (newPayment.ExternalAccountingEntityId != null || SetReSendQBO)
+            if (paymentPoco.ExternalAccountingEntityId != null || SetReSendQBO)
             {
-                service.ARPaymentQuickbooksValidating(theEntityPm, true, false, newPayment, this.objectContext, this.myCommonContext, this.SetVoided, setCancelApproved, SetReSendQBO, isErrorInTransfer);
+                service.ARPaymentQuickbooksValidating(theEntityPm, true, false, paymentPoco, this.objectContext, this.myCommonContext, this.SetVoided, setCancelApproved, SetReSendQBO, isErrorInTransfer);
             }
             else
             {
-                service.ARPaymentQuickbooksValidating(theEntityPm, setApproved, false, newPayment, this.objectContext, this.myCommonContext, this.SetVoided, setCancelApproved, SetReSendQBO, isErrorInTransfer);
+                service.ARPaymentQuickbooksValidating(theEntityPm, setApproved, false, paymentPoco, this.objectContext, this.myCommonContext, this.SetVoided, setCancelApproved, SetReSendQBO, isErrorInTransfer);
             }
             this.BuildSearchFields();
 
@@ -427,7 +407,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             this.CreateARPaymentMessage(setApproved);
 
             theEntityPm.VoidedByJournalNumber = entityPM.VoidedByJournalNumber;
-            paymentRepository.Update(newPayment);
+            paymentRepository.Update(paymentPoco);
             paymentRepository.SubmitChanges();
 
             // Full Accounting => Reconciliation
@@ -445,6 +425,39 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             this.BuildEntitiesNumbers();
         }
 
+        private void HandleSATTranserStatus(ARPaymentPM theEntityPm)
+        {
+            SATInterfaceSettingRepository sATInterfaceSettingRepository = new SATInterfaceSettingRepository(entityPM.Tenant);
+            SATInterfaceSetting satSetting = sATInterfaceSettingRepository.GetSingleSATInterfaceSetting(entityPM.Tenant);
+            if (satSetting.SATInterfaceCode == "PROF33")
+            {
+                if (this.entityPM.SetCancelApproval)
+                {
+                    if (paymentPoco.SATTransferStatusCode == "TD")
+                        this.sATInterfaceHelper.HandlePaymentSATCancellation(entityPM, paymentPoco);
+                    else if (paymentPoco.SATTransferStatusCode == "TG")
+                        throw new ApplicationException("You are not allowed to cancel the payment while its status is Transferring to SAT");
+                }
+
+                if (theEntityPm.SetVoided)
+                {
+                    if (paymentPoco.SATTransferStatusCode == "TG")
+                        throw new ApplicationException("You are not allowed to void the payment while its status is Transferring to SAT");
+                    else if (paymentPoco.SATTransferStatusCode == "TE" && !string.IsNullOrEmpty(paymentPoco.SATXML))
+                        throw new ApplicationException("Can't void payment because it wasn't cancelled by SAT");
+
+                    if(paymentPoco.SATXML == null && paymentPoco.SATTransferStatusCode == "TE")
+                    {
+                        paymentPoco.SATTransferStatusCode = theEntityPm.SATTransferStatusCode = "NT";
+                        paymentPoco.TransmissionError = theEntityPm.TransmissionError = null;
+                    }
+
+                }
+
+                
+            }
+        }
+
         private JournalPM GetApprovedJournalByAccountingEntityId(ARPaymentPM aRPaymentPM)
         {
             IJournalQueryServiceExt journalQuery = ContainerAccessor.Container.Resolve(typeof(IJournalQueryServiceExt), "JournalQueryServiceExt", new ParameterOverride("", 1)) as IJournalQueryServiceExt;
@@ -455,7 +468,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         {
             if (!isNewEntity)
             {
-                if (this.newPayment.StatusCode == "AD")
+                if (this.paymentPoco.StatusCode == "AD")
                 {
                     bool throwException = false;
 
@@ -518,11 +531,11 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                         bool isDropBox = this.isTransferToDropbox && this.TransferToDropboxActivated;
                         bool isFTP = this.canTransferToFTP && this.transferToFTPActivated;
 
-                        this.newPayment = paymentRepository.GetSingleARPayment(this.entityPM.Id);
+                        this.paymentPoco = paymentRepository.GetSingleARPayment(this.entityPM.Id);
                         List<ARPayment> entities = new List<ARPayment>();
-                        entities.Add(this.newPayment);
+                        entities.Add(this.paymentPoco);
 
-                        ARPaymentMessageHelper myHelper = new ARPaymentMessageHelper(entities, this.newPayment.PaymentNo + ".xml", tenant, isDropBox, isFTP);
+                        ARPaymentMessageHelper myHelper = new ARPaymentMessageHelper(entities, this.paymentPoco.PaymentNo + ".xml", tenant, isDropBox, isFTP);
                         myHelper.Transfer();
                     }
                 }
@@ -637,31 +650,42 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             ////    CreateInterestTransactionLine(item);
             //}
         }
-        int lineNumber = 0;
-        private void CreateInterestTransactionLine(ARPaymentPM payment)
+        private int originalEntityLineNumber = 0;
+        private void CreateInterestTransactionLine(ARPaymentPM payment,bool isFromVoidARPayment=false)
         {
-            GLAccountPM account = getGLAccount(payment.BillToId, payment.Tenant);
-            if (tenantPOCO != null && tenantPOCO.AccountingActivated && payment.BillToPartnerTypeId == "CS")
+            if (tenantPOCO != null && 
+                tenantPOCO.AccountingActivated && 
+                payment.BillToPartnerTypeId == PartnerTypeId_Customer)
             {
-                DateTime? dateForInterest = payment.ValueDate == null ? DateTime.Now : payment.ValueDate;
-                InterestTransactionPM interestTransaction = new InterestTransactionPM()
-                {
-                    InterestEntityTypeCode = "2",
-                    EntityId = payment.Id,
-                    OriginalEntityLineNumber = ++lineNumber,
-                    LocalAmount = (decimal)payment.AmountInLocalCurrency *-1,
-                    ForeignAmount = (decimal?)payment.AmountInPaymentCurrency *-1,
-                    InterestValueDate = (DateTime)dateForInterest,
-                    Tenant = entityPM.Tenant,
-                    GLAccountId = account!= null? account.Id:null,
-                ChangeSetOp = ChangeSetOperation.Insert,
-                CurrencyId = payment.PaymentCurrencyId,
-            };
+            InterestTransactionPM interestTransaction = MapInterestTransactionPMFromARPaymentPM(payment, isFromVoidARPayment);
             IInterestTransactionUpdateServiceExt interestTransactionUpdateService = ContainerAccessor.Container.Resolve(typeof(IInterestTransactionUpdateServiceExt), "InterestTransactionUpdateServiceExt", new ParameterOverride("", 1)) as IInterestTransactionUpdateServiceExt;
             interestTransactionUpdateService.Create(interestTransaction);
 
             }
         }
+
+        private InterestTransactionPM MapInterestTransactionPMFromARPaymentPM(ARPaymentPM payment, bool isFromVoidARPayment)
+        {
+            DateTime? dateForInterest = payment.ValueDate == null ? DateTime.Now : payment.ValueDate;
+            GLAccountPM account = getGLAccount(payment.BillToId, payment.Tenant);
+            InterestTransactionPM interestTransaction = new InterestTransactionPM()
+            {
+                InterestEntityTypeCode = "2",
+                EntityId = payment.Id,
+                OriginalEntityLineNumber = isFromVoidARPayment ? 2 : 1,
+                LocalAmount = isFromVoidARPayment ? (decimal)payment.AmountInLocalCurrency :
+                                                                     (decimal)payment.AmountInLocalCurrency * -1,
+                ForeignAmount = isFromVoidARPayment ? (decimal?)payment.AmountInPaymentCurrency :
+                                                                     (decimal?)payment.AmountInPaymentCurrency * -1,
+                InterestValueDate = (DateTime)dateForInterest,
+                Tenant = entityPM.Tenant,
+                GLAccountId = account != null ? account.Id : null,
+                ChangeSetOp = ChangeSetOperation.Insert,
+                CurrencyId = payment.PaymentCurrencyId,
+            };
+            return interestTransaction;
+        }
+ 
         private void UpdatePaymentInvoice(ARPaymentInvoicePM item)
         {
             ARInvoicePayment invoicePayment = invoicePaymentRepository.GetSingleARInvoicePayment(item.Id, entityPM.Tenant);
@@ -759,10 +783,10 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 }
             }
 
-            newPayment.IsClosed = entityPM.IsClosed = isClosed;
-            newPayment.StatusCode = entityPM.StatusCode = StatusCode;
-            newPayment.OpenAmount = entityPM.OpenAmount = OpenAmount;
-            newPayment.AmountInPaymentCurrency = entityPM.AmountInPaymentCurrency = Amount;
+            paymentPoco.IsClosed = entityPM.IsClosed = isClosed;
+            paymentPoco.StatusCode = entityPM.StatusCode = StatusCode;
+            paymentPoco.OpenAmount = entityPM.OpenAmount = OpenAmount;
+            paymentPoco.AmountInPaymentCurrency = entityPM.AmountInPaymentCurrency = Amount;
 
             if (this.SetVoided)
             {
@@ -920,6 +944,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.ChequeOrPaymentRef);
             MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.PrintNotes);
 
+
+           
             #region Card
             if (!string.IsNullOrEmpty(entityPM.BillToId))
             {
@@ -927,6 +953,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 if (myCard != null)
                 {
                     MethodHelper.AddToSearchFields(ref mySearchFields, myCard.EnglishName);
+                    MethodHelper.AddToSearchFields(ref mySearchFields, myCard.LocalName);
                 }
             }
             #endregion
@@ -955,7 +982,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.InternalNotes);
 
             entityPM.SearchFields = mySearchFields;
-            newPayment.SearchFields = mySearchFields;
+            paymentPoco.SearchFields = mySearchFields;
         }
         #endregion
 
@@ -1361,8 +1388,18 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                         {
                             reference = reference + cheque.ChequeNumber + ",";
                         }
+                        if (count == 2)
+                        {
+                            break;
+                        }
 
                     }
+
+                    if(count==2 && reference.Length > 30)
+                    {
+                        reference = reference.Split(',')[0].Trim();
+                    }
+
 
                     journalLine.Reference2 = reference;
                 }
@@ -1592,17 +1629,17 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
         private void GetPaymentForeignFields()
         {
-            if (newPayment.StatusCode != null)
+            if (paymentPoco.StatusCode != null)
             {
                 ARPaymentStatusRepository myRepository = new ARPaymentStatusRepository(objectContext);
-                ARPaymentStatus status = myRepository.GetSingleARPaymentStatus(newPayment.StatusCode);
+                ARPaymentStatus status = myRepository.GetSingleARPaymentStatus(paymentPoco.StatusCode);
                 entityPM.StatusName = status.Name;
             }
 
-            if (newPayment.TransferStatusCode != null)
+            if (paymentPoco.TransferStatusCode != null)
             {
                 ARPaymentTransferStatusRepository myRepository = new ARPaymentTransferStatusRepository(objectContext);
-                ARPaymentTransferStatus status = myRepository.GetSingleARPaymentTransferStatus(newPayment.TransferStatusCode);
+                ARPaymentTransferStatus status = myRepository.GetSingleARPaymentTransferStatus(paymentPoco.TransferStatusCode);
                 entityPM.TransferStatusName = status.Name;
             }
 
@@ -1642,9 +1679,9 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             {
                 entityPM.InvoiceNumber = invoiceNumber;
                 entityPM.ShipmentNumber = shipmentNumber;
-                newPayment.InvoiceNumber = entityPM.InvoiceNumber;
-                newPayment.ShipmentNumber = entityPM.ShipmentNumber;
-                paymentRepository.Update(newPayment);
+                paymentPoco.InvoiceNumber = entityPM.InvoiceNumber;
+                paymentPoco.ShipmentNumber = entityPM.ShipmentNumber;
+                paymentRepository.Update(paymentPoco);
                 paymentRepository.SubmitChanges();
             }
         }
@@ -1671,14 +1708,14 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 isInitializing = true;
             }
 
-            else if (newPayment.TransferStatusCode == "TR")
+            else if (paymentPoco.TransferStatusCode == "TR")
             {
                 isInitializing = false;
                 entityPM.TransferError = null;
                 entityPM.TransferStatusCode = "TR";
             }
 
-            else if (newPayment.TransferStatusCode == "IP")
+            else if (paymentPoco.TransferStatusCode == "IP")
             {
                 isInitializing = false;
                 entityPM.TransferError = null;
@@ -1696,10 +1733,10 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 #region
                 bool isReady = true;
                 string myError = null;
-                CardRepository cardRep = new CardRepository(newPayment.Tenant);
-                CurrencyRepository currencyRep = new CurrencyRepository(newPayment.Tenant);
+                CardRepository cardRep = new CardRepository(paymentPoco.Tenant);
+                CurrencyRepository currencyRep = new CurrencyRepository(paymentPoco.Tenant);
                 Card card = cardRep.GetSingleCard(entityPM.BillToId, entityPM.Tenant);
-                Currency currency = currencyRep.GetSingleCurrency(newPayment.PaymentCurrencyId, newPayment.Tenant);
+                Currency currency = currencyRep.GetSingleCurrency(paymentPoco.PaymentCurrencyId, paymentPoco.Tenant);
                 string currencyError = "Currency External Id is missing";
                 if (currency != null && !string.IsNullOrEmpty(currency.Code))
                 {
@@ -1754,7 +1791,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         private void UpdateDocOutNeedsRebuild()
         {
             DocumentOutRepository documentOutRepository = new DocumentOutRepository(myCommonContext);
-            DocumentOut docOut = documentOutRepository.GetDocumentOutByEntityAndChildEntity(newPayment.Id, null);
+            DocumentOut docOut = documentOutRepository.GetDocumentOutByEntityAndChildEntity(paymentPoco.Id, null);
             if (docOut != null)
             {
                 docOut.NeedsRebuild = true;
@@ -1805,7 +1842,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                                     cashBookUpdate.Update(cashBook);
                                     CreateVoidedARPaymentEvent("ARPayment Cancel");
                                     CancelJournal(entityPm);
-                                    CancelledInterestTransactions(entityPm);
+                                    //CancelledInterestTransactions(entityPm);
+                                    CreateInterestTransactionLine(entityPm,true);
                                 }
                             }
                         }
@@ -1845,7 +1883,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                                     cashBookUpdate.Update(cashBook);
                                     CreateVoidedARPaymentEvent("ARPayment Cancel");
                                     CancelJournal(entityPm);
-                                    CancelledInterestTransactions(entityPm);
+                                    //CancelledInterestTransactions(entityPm);
+                                    CreateInterestTransactionLine(entityPm, true);
                                 }
                             }
                         }
@@ -1853,7 +1892,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                         {
                             CreateVoidedARPaymentEvent("ARPayment Cancel");
                             CancelJournal(entityPm);
-                            CancelledInterestTransactions(entityPm);
+                            //CancelledInterestTransactions(entityPm);
+                            CreateInterestTransactionLine(entityPm, true);
                         }
                     }
                 }
@@ -1945,6 +1985,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                     AccountingEntityCode = "3",
                     LineNotes = entityPM.CancelationNotes,
                     AccountingEntityId = entityPM.Id,
+                    AccountingDate = entityPm.AccountingCancelationDate,
                     AccountingEntityReference = entityPM.PaymentNo
                 });
                 JournalPM voidedByJournal = GetApprovedJournalByAccountingEntityId(entityPm);

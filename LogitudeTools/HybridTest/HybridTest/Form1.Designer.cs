@@ -192,11 +192,22 @@
             // 
             this.cmdServices.FormattingEnabled = true;
             this.cmdServices.Items.AddRange(new object[] {
-            "Warehouse"});
+            "Warehouse",
+            "Customer",
+            "Vendor",
+            "Agent",
+            "Airline",
+            "ShippingAgent",
+            "ShippingLine",
+            "Trucker",
+            "Vessel",
+            "Warehouse",
+            "Shipment Pickups & Deliveries"});
             this.cmdServices.Location = new System.Drawing.Point(37, 41);
             this.cmdServices.Name = "cmdServices";
             this.cmdServices.Size = new System.Drawing.Size(298, 21);
             this.cmdServices.TabIndex = 14;
+            this.cmdServices.SelectedIndexChanged += new System.EventHandler(this.cmdServices_SelectedIndexChanged);
             // 
             // btnPaymentTerms
             // 

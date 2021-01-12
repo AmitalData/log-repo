@@ -217,7 +217,7 @@ namespace CommunicationWorkerRole
                                             {
                                                 ShipmentNumber = ForwarderShipment.ShipmentNumber,
                                                 Tenant = ForwarderShipment.Tenant,
-                                                Code = "VAD",
+                                                Code = "VAP",
                                                 //Date = Data.ApproveDateTime != null ? Data.ApproveDateTime.Value.ToShortDateString() : "",
                                                 //Time = Data.ApproveDateTime != null ? Data.ApproveDateTime.Value.ToShortTimeString() : "",
                                                 Remarks = ApprovedByUserName,

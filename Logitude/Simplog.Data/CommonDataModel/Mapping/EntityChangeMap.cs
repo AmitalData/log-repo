@@ -96,7 +96,24 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.FollowUpAutomationSsucceedXml)
                 .IsMaxLength()
                 .IsUnicode(true);
+                      
+            
+            this.Property(t => t.SendInterfaceAutomationFailedXml)
+            .IsMaxLength()
+            .IsUnicode(true);
 
+            this.Property(t => t.SendInterfaceAutomationSsucceedXml)
+
+                .IsMaxLength()
+                .IsUnicode(true);
+
+            this.Property(t => t.SendDocumentAutomationFailedXml)
+                .IsMaxLength()
+                .IsUnicode(true);
+
+            this.Property(t => t.SendDocumentAutomationSsucceedXml)
+                .IsMaxLength()
+                .IsUnicode(true);
 
             // Table & Column Mappings
             this.ToTable("EntityChanges");
@@ -127,6 +144,11 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.FollowUpAutomationFailedXml).HasColumnName("FollowUpAutomationFailedXml");
             this.Property(t => t.FollowUpAutomationSsucceedXml).HasColumnName("FollowUpAutomationSsucceedXml");
 
+
+            this.Property(t => t.SendInterfaceAutomationFailedXml).HasColumnName("SendInterfaceAutomationFailedXml");
+            this.Property(t => t.SendInterfaceAutomationSsucceedXml).HasColumnName("SendInterfaceAutomationSsucceedXml");
+            this.Property(t => t.SendDocumentAutomationFailedXml).HasColumnName("SendDocumentAutomationFailedXml");
+            this.Property(t => t.SendDocumentAutomationSsucceedXml).HasColumnName("SendDocumentAutomationSsucceedXml");
 
             //#if ORACLE_DB
             string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");

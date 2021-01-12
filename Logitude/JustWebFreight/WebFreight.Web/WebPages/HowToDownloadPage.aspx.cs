@@ -2,6 +2,9 @@ using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.Repositories;
 using System;
 using System.Web;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.Repositories;
+using WebFreight.Web.Helpers;
 
 using WebFreight.Web.WebServices;
 
@@ -11,7 +14,29 @@ namespace WebFreight.Web.WebPages
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            string headerRequest = Request["id"];
+            string headerRequest = Request["Code"];
+            int? tenant = null;
+            string token = Request["Token"] ?? "";
+            SecurityDocumentResult securityDocumentResult = SecurityDocumentHelper.ValidationDocumentToken(token);
+            bool isValid = securityDocumentResult.IsValid;
+            string email = securityDocumentResult.Email;
+            string exceptionMessage = securityDocumentResult.ExceptionResult;
+            tenant = securityDocumentResult.Tenant;
+            if (!string.IsNullOrEmpty(email))
+            {
+                int tenant1 = tenant == null ? 0 : tenant.Value;
+
+                ContactRepository contactRepository = new ContactRepository(tenant1);
+                Contact contact = contactRepository.GetSingleContactByEmail(email, tenant1);
+                if (contact == null)
+                {
+                    this.Context.Response.Redirect("../Login.aspx");
+                }
+            }
+            else
+            {
+                this.Context.Response.Redirect("../Login.aspx");
+            }
 
             Uploader manager = new Uploader();
             byte[] data = null;

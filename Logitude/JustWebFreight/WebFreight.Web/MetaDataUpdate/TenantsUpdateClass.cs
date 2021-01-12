@@ -1514,7 +1514,10 @@ namespace WebFreight.Web.MetaDataUpdate
 
             foreach (ObjectTable objectTable in ObjectTableList)
             {
+                if(objectTable.DBTableName == "ShipmentStoragePricings")
+                {
 
+                }
                 // if(objectTable.HashString == )
                 List<ObjectFieldPM> fieldsList = objectFieldLists.Where(d => d.ObjectTableId == objectTable.Id).ToList();
                 if (fieldsList != null)
@@ -2251,8 +2254,8 @@ namespace WebFreight.Web.MetaDataUpdate
                                        CC  = a.CC,
                                        From = a.From,
                                        ReplyTo = a.ReplyTo,
-                                       
-                                       
+                                       To =  a.To,
+
 
                                     };
                                     if (isDefault)

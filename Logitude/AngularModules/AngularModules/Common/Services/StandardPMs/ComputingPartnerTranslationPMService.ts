@@ -153,6 +153,7 @@ export class ComputingPartnerTranslationPMService {
         if (!entityPM) {
             
             entityPM = new ComputingPartnerTranslationPM();
+			entityPM.DisableMarkAsDirty = true;
         }
 
 		var customFields: Array<string> = [];
@@ -193,6 +194,8 @@ export class ComputingPartnerTranslationPMService {
             entityPM.OldEntityPM = null;
         }
 		entityPM.IsDirty = false;
+	    entityPM.DisableMarkAsDirty = false;
+
         return entityPM;
     }
 

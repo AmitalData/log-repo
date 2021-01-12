@@ -541,6 +541,14 @@
                                                     <div  [style.float]="isRTL ? 'left' : 'right'">
                                                         <IconButton [Name]="'Refresh'" (click)="RefreshButtonClicked()"></IconButton>
                                                     </div>
+                                                    <div style="width: 30px;" [style.float]="isRTL ? 'left' : 'right'">
+                                                        <!--<IconButton [Name]="'Excel'" (click)="Export2ExcelClicked()" [disabled]="true"></IconButton>-->
+                                                    </div>
+
+                                                    <div  [style.float]="isRTL ? 'left' : 'right'">
+                                                        <IconButton style="margin: 0 5px;"  [style.float]="isRTL ? 'right' : 'left'" [Name]="'excel'"  [Left]="isRTL ? 3:-3"   (click)="ExportToExcelClick()"></IconButton>
+                                                    </div>
+
                                                 </td>
                                             </tr>
 

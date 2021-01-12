@@ -10,6 +10,7 @@ namespace Logitude.HybridTest.ServicesTest
     [TestClass]
     public class PackageTypeTest
     {
+        private static EntityWcfCaller entityWcfCaller = new EntityWcfCaller();
         [TestMethod]
         public void Test_PackageType_UPSERT()
         {
@@ -31,7 +32,7 @@ namespace Logitude.HybridTest.ServicesTest
                 PrintAs = HybridData.PackageTypeCodeHPT,
                 Tenant = EnvironmentGlobalParams.MainTenant,
             };
-            ServiceOutcome serviceOutcome = EntityWcfCaller.CallEntityUpsert(packageTypePM);
+            ServiceOutcome serviceOutcome = entityWcfCaller.CallEntityUpsert(packageTypePM);
             Assert.IsFalse(serviceOutcome.Response.HasError, "Upsert Failed! " + serviceOutcome.Response.ErrorMessage);
             Assert.IsNotNull(serviceOutcome.Response.Result, "Upsert Failed! " + serviceOutcome.Response.ErrorMessage);
         }

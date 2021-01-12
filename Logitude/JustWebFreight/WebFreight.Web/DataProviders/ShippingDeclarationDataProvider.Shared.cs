@@ -26,6 +26,7 @@ namespace WebFreight.Web.DataProviders
         /// </summary>
         public string TenantCountryCode { get; set; }
         public string ConsigneeAddress { get; set; }
+        public string ConsigneeNameAddress { get; set; }
         public string TenantLogo { get; set; }
         /// <summary>
         /// If notify exists,show notify.Else show importer
@@ -418,6 +419,8 @@ namespace WebFreight.Web.DataProviders
         public double? ChargeableWeight { get; set; }
         public string ChargeableWeightUnitCode { get; set; }
 
+        public string PickupTo { get; set; }
+     
         public string IssuingCarrierAgentName { get; set; }
         public string ARInvoices { get; set; }
         public string SpecialServicesTypeName { get; set; }

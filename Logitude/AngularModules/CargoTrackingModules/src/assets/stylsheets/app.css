@@ -4,6 +4,9 @@
     --TitleColor:#000;
     --busyIndicatorColor:#002664;
     --BGColor:#F5F6FF;
+    --PasswordLenghtColor: gray;
+    --PasswordContainsCharacters: gray;
+    --PasswordContainsNumber: gray;
 }
 
 * {

@@ -1,4 +1,4 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, EventEmitter } from '@angular/core';
 import { BaseComponent } from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { ServiceHelper } from '../../../../Infrastructure/Utilities/ServiceHelper';
 import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
@@ -44,12 +44,14 @@ export class OceanFCLVersionTabComponent extends BaseComponent implements OnDest
     public IsDraftVersion: boolean = true;
     public CurrentVersion: TariffVersionPM;
     private FileName: string;
+    private FileExtension: string;
     private CurrentSession = SessionLocator.SelectedSession;
     public IsFirstDraft = false;
     public SelectedVersionNumber: number;    
-  public AllInCharges: string;
-  public LinesCount: number;
-
+    public AllInCharges: string;
+    public LinesCount: number;
+    public selectedRow: any;
+    public changeScrollPosition: EventEmitter<any> = new EventEmitter();
     constructor(public entityArgs: EntityArgs) {
         super();
         this.EntityPM = entityArgs.EntityPM;
@@ -310,40 +312,38 @@ export class OceanFCLVersionTabComponent extends BaseComponent implements OnDest
     }
     
     private ItemsCollection: OceanFCLFreightTariffLineData[] = [];
-  FillTariffLines(tariffLines: TariffLinePM[]) {
-    this.LinesCount = tariffLines.length;
+    FillTariffLines(tariffLines: TariffLinePM[]) {
+        this.LinesCount = tariffLines.length;
 
-    if (this.TariffsLinesSource != null) {
-      this.TariffsLinesSource.Clear();
-    }
+        if (this.TariffsLinesSource != null) {
+            this.TariffsLinesSource.Clear();
+        }
 
-    this.ItemsCollection = [];
+        this.ItemsCollection = [];
 
-    tariffLines.sort((a, b) => a.Index - b.Index).forEach(item => {
-      this.ItemsCollection.push(new OceanFCLFreightTariffLineData(item, this));
-    });
+        var count = 0; var selectedIndexRow = 0; var isItemSelectExist = false;
+        tariffLines.sort((a, b) => a.Index - b.Index).forEach(item => {
+            var itemOceanFCL = new OceanFCLFreightTariffLineData(item, this)
+            count++;
+            this.ItemsCollection.push(itemOceanFCL);
+            if (!AppTool.IsNullOrEmpty(this.LineIdFromPriceCheck) && itemOceanFCL.EntityPM.Id == this.LineIdFromPriceCheck) {
+                this.selectedRow = itemOceanFCL;
+                selectedIndexRow = count;
+                isItemSelectExist = true;
+            }
+        });
 
     this.TariffsLinesSource.InsertCollection(this.ItemsCollection);
 
     //this.InitializePager();
     //this.FillGridPagerItems();
-    this.DoCompare();
+      this.DoCompare();
+      if (isItemSelectExist) {
+          this.changeScrollPosition.emit({
+              RowIndex: selectedIndexRow
+          });
+      }
   }
-
-//FillGridPagerItems() {
-
-//    var items: OceanFCLFreightTariffLineData[] = [];
-
-//    if (this.ItemsCollection) {
-//      var start = (this.PageIndex - 1) * this.PageSize;
-//      var end = start + this.PageSize;
-
-//      items = this.ItemsCollection.slice(start, end);
-//    }
-
-//    this.TariffsLinesSource.Clear();
-//    this.TariffsLinesSource.InsertCollection(items);
-//  }
 
     private DoCompare() {
         this.DeletedTariffsLines = [];
@@ -500,14 +500,17 @@ export class OceanFCLVersionTabComponent extends BaseComponent implements OnDest
             }
         }
     }
-  UploadExcel(file: any) {
+    UploadExcel(file: any) {
     this.CurrentSession.StartBusyIndicator("Uploading...");
 
         this.FileName = null;
+        this.FileExtension = null;
+
         if (!AppTool.IsNullOrEmpty(file.name)) {
             var name = file.name.split('.');
             if (name.length == 2) {
                 this.FileName = name[0];
+                this.FileExtension = name[1];
             }
         }
         if (file && file.size > 0) {
@@ -545,6 +548,7 @@ export class OceanFCLVersionTabComponent extends BaseComponent implements OnDest
             filter.TariffType = context.EntityPM.TypeCode;
             filter.TariffType = context.EntityPM.TypeCode;
             filter.FileName = context.FileName;
+            filter.FileExtension = context.FileExtension;
             context.SendExcelToServer(filter);
         };
 
@@ -812,6 +816,15 @@ export class OceanFCLVersionTabComponent extends BaseComponent implements OnDest
                 }
             });
         }
+    }
+
+    ViewUploadedExcelFilesClicked() {
+        var logWindow = new LogitudeWindow();
+        logWindow.Title = "Uploaded Excel Files";
+        logWindow.Width = 600;
+        logWindow.Height = 500;
+        logWindow.WindowArgs = { TariffId: this.EntityPM.Id, Version: this.CurrentVersion.Version };
+        logWindow.Show('./TariffModule/Components/EditTabs/Tariff/UploadedExcelsComponent');
     }
 }
 

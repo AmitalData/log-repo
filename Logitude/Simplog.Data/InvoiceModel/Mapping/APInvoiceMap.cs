@@ -127,6 +127,7 @@ namespace Simplog.Data.InvoiceModel.Mapping
             this.Property(t => t.Field9).HasColumnName("Field9");
             this.Property(t => t.Field10).HasColumnName("Field10");
             this.Property(t => t.TotalVATOnly).HasColumnName("TotalVATOnly");
+            this.Property(t => t.PaidDate).HasColumnName("PaidDate");
 
 
             // Relationships

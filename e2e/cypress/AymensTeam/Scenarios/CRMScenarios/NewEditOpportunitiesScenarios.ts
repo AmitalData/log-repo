@@ -28,7 +28,7 @@ export class NewEditOpportunitiesScenarios {
     private CreateOpportunity(EntityNumber: string) {
         Resolvers.LOVResolver.Selector('#Opportunity_OpportunityTypeId').SelectFirst();
         Resolvers.TextBoxResolver.Selector('#Opportunity_Subject').Type('Opportunity # : ' + EntityNumber);
-        Resolvers.LOVResolver.Selector('#Opportunity_CustomerId').SelectFirst();
+        Resolvers.LOVResolver.Selector('#Opportunity_CustomerId').Type('Customer Activity');
 
     }
 

@@ -23,10 +23,10 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
           { 
 		     None,  
 	         Id, 
-	         LocalName, 
+	         Tenant, 
 	         Code, 
 	         EnglishName, 
-	         Tenant,
+	         LocalName,
 	      }
 
 
@@ -34,10 +34,10 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
           { 
 		     None,  
 	         Id, 
-	         LocalName, 
+	         Tenant, 
 	         Code, 
 	         EnglishName, 
-	         Tenant,
+	         LocalName,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -46,9 +46,9 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 	    public void PMToPOCO(CargoTrackingCountryPM entityPM, CargoTrackingCountry entityPOCO)
         {
 			 
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LocalName))
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Tenant))
             {
-				entityPOCO.LocalName = entityPM.LocalName;
+				entityPOCO.Tenant = entityPM.Tenant;
 			}
 			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Code))
@@ -61,9 +61,9 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 				entityPOCO.EnglishName = entityPM.EnglishName;
 			}
 			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Tenant))
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LocalName))
             {
-				entityPOCO.Tenant = entityPM.Tenant;
+				entityPOCO.LocalName = entityPM.LocalName;
 			}
 			}
 
@@ -75,9 +75,9 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 					entityPM.Id = entityPOCO.Id;
             }
 
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.LocalName))
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Tenant))
             {
-					entityPM.LocalName = entityPOCO.LocalName;
+					entityPM.Tenant = entityPOCO.Tenant;
             }
 
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Code))
@@ -90,9 +90,9 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 					entityPM.EnglishName = entityPOCO.EnglishName;
             }
 
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Tenant))
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.LocalName))
             {
-					entityPM.Tenant = entityPOCO.Tenant;
+					entityPM.LocalName = entityPOCO.LocalName;
             }
 
 		}
@@ -101,9 +101,9 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
         {
 		     oldEntityPM.ChangedProperties.Clear();
 			 
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LocalName))
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Tenant))
             {
-                oldEntityPM.LocalName = entityPM.LocalName;
+                oldEntityPM.Tenant = entityPM.Tenant;
             }
 			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Code))
@@ -116,9 +116,9 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
                 oldEntityPM.EnglishName = entityPM.EnglishName;
             }
 			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Tenant))
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LocalName))
             {
-                oldEntityPM.Tenant = entityPM.Tenant;
+                oldEntityPM.LocalName = entityPM.LocalName;
             }
 			
 		}

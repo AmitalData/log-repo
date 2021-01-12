@@ -13,7 +13,7 @@ namespace WebFreight.Web.DataProviders
         public string Origin { get; set; }
         public string Destination { get; set; }
         public string CustomAgent { get; set; }
-
+        public string UserName { get; set; }
         public List<ReportGroup> CommodityAgentGroupList { get; set; }
         public List<ReportGroup> MasterCommodityAgentGroupList { get; set; }
         public List<ReportGroup> Reference4GroupList { get; set; }
@@ -29,6 +29,10 @@ namespace WebFreight.Web.DataProviders
     public class ReportGroup
     {
         public string CommodityNumber { get; set; }
+        public string CommodityName { get; set; }
+        public string MasterLong { get; set; }
+        public DateTime? ETD { get; set; }
+        public DateTime? ATD { get; set; }
         public string MasterNumber { get; set; }
         public string Reference4 { get; set; }
         public string CustomAgentImportId { get; set; }
@@ -45,13 +49,18 @@ namespace WebFreight.Web.DataProviders
     {
         public string House { get; set; }
         public string CommodityNumber { get; set; }
+        public string CommodityName { get; set; }
         public string Master { get; set; }
         public string Shipper { get; set; }
         public string Consignee { get; set; }
+        public string ShipperId { get; set; }
+        public string ConsigneeId { get; set; }
+        public string Routing { get; set; }
         public int? Quantity { get; set; }
         public double? Weight { get; set; }
         public double? Volume { get; set; }
-        public double? VolumetricWeight { get; set; }        
+        public double? VolumetricWeight { get; set; }
+        public double? ChargeableWeight { get; set; }
         public string MoveType { get; set; }
         public string CustomAgentImportName { get; set; }
         public string CustomAgentImportId { get; set; }
@@ -60,7 +69,10 @@ namespace WebFreight.Web.DataProviders
         public string PackageReference3 { get; set; }
         public string PackageReference4 { get; set; }
         public string Dimensions { get; set; }
-
+        public string MasterLong { get; set; }
+        public DateTime? ETD { get; set; }
+        public DateTime? ATD { get; set; }
+        public DateTime? ETA { get; set; }
         public string ShipmentField1 { get; set; }
         public string ShipmentField2 { get; set; }
         public string ShipmentField3 { get; set; }

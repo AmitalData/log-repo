@@ -1,0 +1,61 @@
+<style>
+    .Link {
+        cursor: pointer;
+        font-size: 13px;
+        color: #0094ff;
+        height: 21px;
+        white-space: nowrap;
+    }
+    .Link:hover {
+        cursor: pointer;
+        color: #1C59FC;
+    }
+</style>
+
+<div style="height:30px;width:100%;margin-top:5px;  vertical-align:top">
+    <table style="border :none;vertical-align:top;">
+        <tr style="height: 25px">
+            <td>
+                <table>
+                    <tr>
+                        <td style="width:10px">
+                            <div> </div>
+                        </td>
+                        <td style="width:100px">
+                            <p style="font-size:11px;margin-top:1px;color:#6E7172"> Via</p>
+                        </td>
+                        <td style="width:200px">
+                            <div style="text-align:left;width:200px;">
+                                <ComboBox style="width:200px;" (SelectedItemChanged)="SendViaSelected = $event" [ItemsSource]="SendViaClassLists" [SelectedItem]="SendViaSelected" [Binding]="'Name'"> </ComboBox>
+                            </div>
+                        </td>
+                        <td>
+                            <div>
+                                <table>
+                                    <tr>
+                                        <td style="width:20px">
+                                            <div style="width:20px"> </div>
+                                        </td>
+                                        <td>
+                                            <div>
+                                                <table>
+                                                    <tr>
+                                                        <td style="width:70px">
+                                                            <a *ngIf="SendViaSelected && SendViaSelected.Code == 'FTP'" [class.HyperlinkDisabled]="!IsCustomerCare" class="Link" style="font-size:13px;" (click)="ShowFTPDetails()"> FTP Details</a>
+                                                        </td>
+                                                        <td> </td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr style="height:5px"> <td style="height:5px"> </td> </tr>
+    </table>
+</div>

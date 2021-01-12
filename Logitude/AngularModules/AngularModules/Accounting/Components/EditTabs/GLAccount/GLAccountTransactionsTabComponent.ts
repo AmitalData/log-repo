@@ -25,6 +25,9 @@ import {EntityListService} from '../../../../Infrastructure/Services/EntityListS
 import {CurrencyListService} from '../../../../Common/Services/StandardLists/CurrencyListService';
 import {RatesTableListService} from '../../../../Infrastructure/Services/StandardLists/RatesTableListService';
 import { MessageWindow } from '../../../../Controls/Windows/MessageWindow';
+import { LogitudeGridExportToExcelComponent } from 'Common/Components/LogitudeGridExportToExcel/LogitudeGridExportToExcelComponent';
+import { QueryColumnPM } from 'Infrastructure/EntityPMs/QueryColumnPM';
+import { EntityResourceService } from 'Infrastructure/Services/EntityResourceService';
 
 @Component({
 
@@ -37,16 +40,18 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
     public EntityPM: GLAccountPM = null;
     public ObjectTableName = "GLAccount";
     public DataContext = this;
-
+    public filterAgrs: ApiQueryFilters;
+ 
     // Services
     private _entityListService: EntityListService;
+    public LogitudeGridExportToExcelComponent:LogitudeGridExportToExcelComponent;
     private _CurrencyListService: CurrencyListService = new CurrencyListService();
     private _RatesTableListService: RatesTableListService = new RatesTableListService();
     private ledgerTransactionListService: LedgerTransactionListService = new LedgerTransactionListService();
     private ledgerTransactionListExtendedService: LedgerTransactionExtendedListService = new LedgerTransactionExtendedListService();
     private glAccountExtendedListService: GLAccountExtendedListService = new GLAccountExtendedListService();
     _LedgerTransactionExtendedListService: LedgerTransactionExtendedListService = new LedgerTransactionExtendedListService();
-
+    private _entityResourceService: EntityResourceService = new EntityResourceService();
     // Filters
     dateFilter: FilterItem;
     currencyFilter: FilterItem;
@@ -73,7 +78,7 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
         this.EntityPM = entityArgs.EntityPM;
         this.CurrencyId = this.EntityPM.CurrencyId;
         this.isControlAccount = this.EntityPM.IsControlAccount;
-
+        this.LogitudeGridExportToExcelComponent = new LogitudeGridExportToExcelComponent();
         this.GetCurrencies();
 
         this.LoadDefaultValues();
@@ -260,7 +265,7 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
 
     //#region Data Source
     public columns: any[] = null;
-
+    public QueryColumns: QueryColumnPM[] = [];
     BuildColumns() {
         this.columns = [];
         this.columns.push({
@@ -272,6 +277,7 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
             HtmlListComponentUrl: './Accounting/Components/ListTemplates/GlAccountLedgerTransactionsListTemplate',
             IsCustomTemplate: true
         });
+        
         this.columns.push({
             FieldName: 'AccountingDate',
             DataTypeCode: 'DateTime',
@@ -281,6 +287,8 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
             HtmlListComponentUrl: './Accounting/Components/ListTemplates/GlAccountLedgerTransactionsListTemplate',
             IsCustomTemplate: true
         });
+        this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("AccountingDate",'DateTime',TextCodeTranslator.Translate("LedgerTransaction.F.AccountingDate")));
+
         this.columns.push({
             FieldName: 'DocumentDate',
             DataTypeCode: 'DateTime',
@@ -290,6 +298,8 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
             HtmlListComponentUrl: './Accounting/Components/ListTemplates/GlAccountLedgerTransactionsListTemplate',
             IsCustomTemplate: true
         });
+        this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("DocumentDate",'DateTime',TextCodeTranslator.Translate("LedgerTransaction.F.DocumentDate")));
+
         this.columns.push({
             FieldName: 'DueDate',
             DataTypeCode: 'DateTime',
@@ -299,6 +309,8 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
             HtmlListComponentUrl: './Accounting/Components/ListTemplates/GlAccountLedgerTransactionsListTemplate',
             IsCustomTemplate: true
         });
+        this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("DueDate",'DateTime',TextCodeTranslator.Translate("LedgerTransaction.F.DueDate")));
+
         this.columns.push({
             FieldName: 'Source',
             DataTypeCode: 'String',
@@ -308,13 +320,8 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
             HtmlListComponentUrl: './Accounting/Components/ListTemplates/GlAccountLedgerTransactionsListTemplate',
             IsCustomTemplate: true
         });
-        //this.columns.push({
-        //    FieldName: 'SourceType',
-        //    DataTypeCode: 'String',
-        //    Display: 'Source Type',
-        //    Styles: { width: '113px' },
-        //    IsCustomTemplate: true
-        //});
+        this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("Source",'Text',TextCodeTranslator.Translate("LedgerTransaction.F.Source")));
+
         this.columns.push({
             FieldName: 'LocalAmountCredit',
             DataTypeCode: 'String',
@@ -324,6 +331,8 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
             HtmlListComponentUrl: './Accounting/Components/ListTemplates/GlAccountLedgerTransactionsListTemplate',
             IsCustomTemplate: true
         });
+        this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("CalculatedLocalAmount",'Text',TextCodeTranslator.Translate("LedgerTransaction.F.LocalAmountCredit")));
+
         this.columns.push({
             FieldName: 'CumulativeLocalAmount',
             DataTypeCode: 'String',
@@ -333,6 +342,8 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
             HtmlListComponentUrl: './Accounting/Components/ListTemplates/GlAccountLedgerTransactionsListTemplate',
             IsCustomTemplate: true
         });
+        this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("CumulativeLocalAmount",'Text',TextCodeTranslator.Translate("LedgerTransaction.F.CumulativeLocalAmount")));
+
         //this.columns.push({
         //    FieldName: 'CurrencyCode',
         //    DataTypeCode: 'String',
@@ -350,6 +361,9 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
                 HtmlListComponentUrl: './Accounting/Components/ListTemplates/GlAccountLedgerTransactionsListTemplate',
                 IsCustomTemplate: true
             });
+            this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("ForeignAmountCreditWithSign",'Text',TextCodeTranslator.Translate("LedgerTransaction.F.ForeignAmountCredit")));
+
+
             if (this.EntityPM.IsMultiCurrency != true) {
                 this.columns.push({
                     FieldName: 'CumulativeForeignAmount',
@@ -360,6 +374,8 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
                     HtmlListComponentUrl: './Accounting/Components/ListTemplates/GlAccountLedgerTransactionsListTemplate',
                     IsCustomTemplate: true
                 });
+                this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("CumulativeForeignAmountSign",'Text',TextCodeTranslator.Translate("LedgerTransaction.F.CumulativeForeignAmount")));
+
             }
         }
         this.columns.push({
@@ -369,6 +385,8 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
             Styles: { width: '90px' },
             IsCustomTemplate: true
         });
+        this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("Reference1",'Text',TextCodeTranslator.Translate("LedgerTransaction.F.Reference1")));
+
         this.columns.push({
             FieldName: 'Reference2',
             DataTypeCode: 'String',
@@ -376,6 +394,8 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
             Styles: { width: '90px' },
             IsCustomTemplate: true
         });
+        this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("Reference2",'Text',TextCodeTranslator.Translate("LedgerTransaction.F.Reference2")));
+
         this.columns.push({
             FieldName: 'Reference3',
             DataTypeCode: 'String',
@@ -383,6 +403,7 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
             Styles: { width: '90px' },
             IsCustomTemplate: true
         });
+        this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("Reference3",'Text',TextCodeTranslator.Translate("LedgerTransaction.F.Reference3")));
 
         this.columns.push({
             FieldName: 'OppositeAccountLocalName',
@@ -393,6 +414,7 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
             HtmlListComponentUrl: './Accounting/Components/ListTemplates/GlAccountLedgerTransactionsListTemplate',
             IsCustomTemplate: true
         });
+        this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("OppositeAccountLocalName",'Text',TextCodeTranslator.Translate("LedgerTransaction.F.OppositeAccountLocalName")));
 
         this.columns.push({
             FieldName: 'JournalNumber',
@@ -403,6 +425,7 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
             HtmlListComponentUrl: './Accounting/Components/ListTemplates/GlAccountLedgerTransactionsListTemplate',
             IsCustomTemplate: true
         });
+        this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("JournalNumber",'Text',TextCodeTranslator.Translate("LedgerTransaction.F.JournalNumber")));
 
         this.columns.push({
             FieldName: 'Notes',
@@ -413,6 +436,7 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
             HtmlListComponentUrl: './Accounting/Components/ListTemplates/GlAccountLedgerTransactionsListTemplate',
             IsCustomTemplate: true
         });
+        this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("Notes",'Text',TextCodeTranslator.Translate("LedgerTransaction.F.Notes")));
 
         //this.CustomColumnsReady.emit(this.columns);
     }
@@ -430,38 +454,50 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
 
     @Output() MenuHeaderchangeevent = new EventEmitter();
 
-    getRows(skip, take, sortingCol, sortingDir, getCount: boolean, searchfields?: string, filters: ApiQueryFilters = null) {
-        var filters = new ApiQueryFilters();
+    getRows(skip, take, sortingCol, sortingDir, getCount: boolean, searchfields?: string,filters:ApiQueryFilters=null) {
+        this.filterAgrs = new ApiQueryFilters();
+ 
         if (this.dateFilter) {
-            filters.AdditionalFilters.push(this.dateFilter);
-        } else {
+            this.filterAgrs.AdditionalFilters.push(this.dateFilter);
+         } else {
             return new Promise((resolve, reject) => { });
         }
         if (this.currencyFilter) {
-            filters.AdditionalFilters.push(this.currencyFilter);
+            this.filterAgrs.AdditionalFilters.push(this.currencyFilter);
+ 
         }
         if (this.searchFieldFilter) {
-            filters.AdditionalFilters.push(this.searchFieldFilter);
+            this.filterAgrs.AdditionalFilters.push(this.searchFieldFilter);
+ 
         }
         if (this._dateTypeCode) {
             var dummyFilter =  new FilterItem("DateTypeCode", this._dateTypeCode, null, null, "Equals", false, false, false, "string", false);
-            filters.AdditionalFilters.push(dummyFilter);
+            this.filterAgrs.AdditionalFilters.push(dummyFilter);
         }else{
             var msg = new MessageWindow();
             msg.Show("No filter selected!!!!");
             return;
         }
 
-        filters.PageSize = take;
-        filters.PageIndex = skip;
-        filters.GetAll = false;
-        filters.GetCount = true;
+        this.filterAgrs.PageSize = take;
+        this.filterAgrs.PageIndex = skip;
+        this.filterAgrs.GetAll = false;
+        this.filterAgrs.GetCount = true;
 
-        filters.addAdditionalFilter("GLAccountId", this.EntityPM.Id, null, null, "Equals", false, false, false, "string");
-        filters.addAdditionalFilter("IncludeRelatedCurrenciesAccount", this.splittedByCurrencyCheckBox == null ? false : this.splittedByCurrencyCheckBox, null, null, "Equals", false, false, false, "boolean");
-        filters.addAdditionalFilter("IncludeChildAccounts", this.attachedGLAccountCheckBox == null ? false : this.attachedGLAccountCheckBox, null, null, "Equals", false, false, false, "boolean");
+        this.filterAgrs.addAdditionalFilter("GLAccountId", this.EntityPM.Id, null, null, "Equals", false, false, false, "string");
+ 
+        this.filterAgrs.addAdditionalFilter("IncludeRelatedCurrenciesAccount", this.splittedByCurrencyCheckBox == null ? false : this.splittedByCurrencyCheckBox, null, null, "Equals", false, false, false, "boolean");
+        this.filterAgrs.addAdditionalFilter("IncludeChildAccounts", this.attachedGLAccountCheckBox == null ? false : this.attachedGLAccountCheckBox, null, null, "Equals", false, false, false, "boolean");
 
-        return this._entityListService.getExtendedByFilters("LedgerTransaction", filters);//this.ledgerTransactionListExtendedService.getByFilters(filters);
+        return this._entityListService.getExtendedByFilters("LedgerTransaction", this.filterAgrs);//this.ledgerTransactionListExtendedService.getByFilters(filters);
+    }
+
+ 
+     
+    public ExportToExcelClick(){
+       // this._entityResourceService.getEntityResourceByTableName("LedgerTransaction", 0).subscribe((response: any) => {
+        this.LogitudeGridExportToExcelComponent.ExportToExcelExcute("GLAccountLedgerTransaction",this.filterAgrs,this.QueryColumns);
+      //  });
     }
 
     GetTransactions() {

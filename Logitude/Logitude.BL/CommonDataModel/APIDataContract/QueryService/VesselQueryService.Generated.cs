@@ -40,7 +40,7 @@ using Simplog.Data.CommonDataModel;
         }
 
 		
-		public Vessel GetVesselById(string Id,int Tenant)
+		public Vessel GetVesselById(string Id,int Tenant,string ComputingPartnerName = "")
         { 
 		    try
             {
@@ -50,7 +50,7 @@ using Simplog.Data.CommonDataModel;
 				 if (temp == null)
                     throw new ApplicationException("Vessel with Id " + Id + " doesn't exist");
 
-				return VesselDataMapping(temp,Tenant);
+				return VesselDataMapping(temp,Tenant,ComputingPartnerName);
 			}
             catch (Exception ex)
             {
@@ -59,7 +59,7 @@ using Simplog.Data.CommonDataModel;
             }
         }
 		
-		public Vessel GetVesselByCode(string Code,int Tenant)
+		public Vessel GetVesselByCode(string Code,int Tenant,string ComputingPartnerName = "")
         { 
 		    try
             {
@@ -69,7 +69,7 @@ using Simplog.Data.CommonDataModel;
 				 if (temp == null)
                     throw new ApplicationException("Vessel with Code " + Code + " doesn't exist");
 
-				return VesselDataMapping(temp,Tenant);
+				return VesselDataMapping(temp,Tenant,ComputingPartnerName);
 			}
             catch (Exception ex)
             {

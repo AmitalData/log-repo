@@ -2770,6 +2770,52 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
+	  private decimal? creditAllotmentPercentage ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public decimal? CreditAllotmentPercentage  
+	   {
+	    
+	     get
+		{
+		   return creditAllotmentPercentage;
+		 }
+		 set
+		 {
+		   if(creditAllotmentPercentage != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CreditAllotmentPercentage",OldValue=creditAllotmentPercentage,NewValue=value,PropertyType="decimal?"};
+		    NotifyPropertyChanged(values);
+		   creditAllotmentPercentage=value;
+		   }
+			
+		 }
+	   }
+	  private string relatedGLAccount ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string RelatedGLAccount  
+	   {
+	    
+	     get
+		{
+		   return relatedGLAccount;
+		 }
+		 set
+		 {
+		   if(relatedGLAccount != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="RelatedGLAccount",OldValue=relatedGLAccount,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   relatedGLAccount=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

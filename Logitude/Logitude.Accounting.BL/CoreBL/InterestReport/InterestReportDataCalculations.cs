@@ -111,9 +111,18 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
             List<InterestReportLinesByDatePM> interestReportLinesByDatePMs = CreateInterestReportLinesByDate();
             interestReportPM.CloseBalance = GetInterestReportCloseBalance(interestReportLinesByDatePMs);
             interestReportPM.TotalAmount = GetInterestReportTotalAmount(interestReportLinesByDatePMs);
+            SetGLAccountCreditAllotmentPercentageByGLAccountId(interestReportPM);
+            interestReportPM.CalCreditAllotmentCommission = (interestReportPM.GLAccountInterestCreditLimit== null? 0: interestReportPM.GLAccountInterestCreditLimit) * interestReportPM.CreditAllotmentPercentage * (decimal?) 0.01;
             SetInterestReportStatusDraft();
             SubmitInterestReportLinesByDate(interestReportLinesByDatePMs);
             SubmitChangesToInterestReport();
+        }
+
+        private void SetGLAccountCreditAllotmentPercentageByGLAccountId(InterestReportPM interestReportPM)
+        {
+            GLAccountQueryService gLAccountQueryService = new GLAccountQueryService(interestReportPM.Tenant);
+            GLAccountPM account=    gLAccountQueryService.GetSinglePM(interestReportPM.GLAccountId, interestReportPM.Tenant);
+            interestReportPM.CreditAllotmentPercentage = account != null ? account.CreditAllotmentPercentage : null;
         }
 
         private void CreateOpenBalanceInterestTransaction()
@@ -129,7 +138,7 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
                 {
                     if(latestInterestReport.InterestReportStatusCode == InterestReportStatusCodes.ClosedWithoutInvoice)
                     {
-                        CreateNewInterestTransactionPM(openBalanceInterestValueDate);
+                        CreateNewInterestTransactionPM(openBalanceInterestValueDate, latestInterestReport.Id);
                     }
                 }
                 else
@@ -154,20 +163,20 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
             return openBalanceInterestValueDate;
         }
 
-        private void CreateNewInterestTransactionPM(DateTime openBalanceInterestValueDate)
+        private void CreateNewInterestTransactionPM(DateTime openBalanceInterestValueDate , string latestInterestReportId=null)
         {
             TenantQuery tenantQuery = new TenantQuery(tenant);
             string localCurrencyId = tenantQuery.GetLocalCurrencyFromTenant(tenant);
 
             InterestTransactionPM openBalanceInterestTransaction = new InterestTransactionPM()
             {
-                EntityId = interestReportId,
+                EntityId = latestInterestReportId!=null?latestInterestReportId:interestReportId,
                 InterestEntityTypeCode = InterestEntities.OpenBalance,
                 InterestValueDate = openBalanceInterestValueDate,
                 GLAccountId = interestReportPM.GLAccountId,
                 LocalAmount = 0,
                 ForeignAmount = 0,
-                OriginalEntityLineNumber = 1,
+                OriginalEntityLineNumber = latestInterestReportId != null ? 2 : 1,
                 ChangeSetOp = ChangeSetOperation.Insert,
                 CurrencyId = localCurrencyId,
                 Tenant = tenant,
@@ -277,10 +286,18 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
             InterestReportLinesByDateCreationService interestReportLinesByDateCreationService = new InterestReportLinesByDateCreationService();
             List<GLAccountInterestPeriodPM> gLAccountInterestPeriodPMs =interestReportCalculationPreparations.GetGlaccountInterestPeriods(interestReportPM);
             List<InterestBasesPeriodPM> interestBasesPeriodPMs = interestReportCalculationPreparations.GetAllInterestBasesPeriodPMs(tenant);
+            DateTime? recentCalculationDate = GetRecentInterestReportCalculationDate();
             InterestReportLinesByDateCreationParams interestReportLinesByDateCreationParams = new InterestReportLinesByDateCreationParams(
-                interestReportPM,interestTransactionPMs,gLAccountInterestPeriodPMs,interestBasesPeriodPMs);
+                interestReportPM,interestTransactionPMs,gLAccountInterestPeriodPMs,interestBasesPeriodPMs, recentCalculationDate);
             List<InterestReportLinesByDatePM> interestReportLinesByDatePMs = interestReportLinesByDateCreationService.CreateInterestReportLinesByDate(interestReportLinesByDateCreationParams);
             return interestReportLinesByDatePMs;
+        }
+
+        private DateTime? GetRecentInterestReportCalculationDate()
+        {
+            InterestReportQueryService ReportQueryService = new InterestReportQueryService(tenant);
+            DateTime? recentCalculationDate = ReportQueryService.GetRecentCustomerReports(interestReportPM);
+            return recentCalculationDate;
         }
 
     }

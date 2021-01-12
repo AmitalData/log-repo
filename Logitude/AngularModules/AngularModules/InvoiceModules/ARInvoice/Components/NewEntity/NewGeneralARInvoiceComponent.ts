@@ -56,10 +56,13 @@ export class NewGeneralARInvoiceComponent extends BaseComponent {
     public isRTL: boolean = false;
     IsAccountingActivated:boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
+    DisplayFieldsFromList:string;
+    DisplayLocalFieldsFromList:string;
+    BillToLovSizeForFullAccounting:number;
     constructor(private entityResourceService: EntityResourceService) {
         super();
          this.IsAccountingActivated = SessionLocator.TenantPM.AccountingActivated;
-
+         this.InitializeBillToLov();
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
         this.entityResourceService.getEntityResourceByTableName(this.ObjectTableName).subscribe((res: any) => {
             this.InitializeServices();
@@ -75,6 +78,13 @@ export class NewGeneralARInvoiceComponent extends BaseComponent {
         }
     }
 
+    private InitializeBillToLov() {
+        if (this.IsAccountingActivated) {
+            this.DisplayFieldsFromList = "Code,CalculatedEnglishName,GLAccountDisplayNumber,CityName,CountryCode,PartnerTypeName";
+            this.DisplayLocalFieldsFromList = "Code,CalculatedLocalName,GLAccountDisplayNumber,CityName,CountryCode,PartnerTypeName";
+            this.BillToLovSizeForFullAccounting = 550;
+        }
+    }
     private TypeCode = "";
     SetWindowArgs(args: any) {
         this.TypeCode = args["InvoiceTypeCode"];

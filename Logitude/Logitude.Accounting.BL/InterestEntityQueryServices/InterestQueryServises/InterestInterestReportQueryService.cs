@@ -1,4 +1,5 @@
 ﻿using Logitude.Accounting.BL.EntityQueryServices;
+using Logitude.Accounting.Data.EntityLists;
 using Logitude.Accounting.Def.EntityPMs;
 using Logitude.BL.InvoiceModel.EntityPMs;
 using Logitude.BL.InvoiceModel.EntityQueries;
@@ -14,16 +15,16 @@ namespace Logitude.Accounting.BL.InterestEntityQueryServices.InterestQueryServis
 {
     public class InterestInterestReportQueryService : IInterestEntityQueryService
     {
-        public InterestEntityResult GetInterestEntity(string Id, int Tenant)
+        public InterestEntityResult GetInterestEntity(InterestTransactionList interestTransactionLists)
         {
-            InterestReportQueryService ReportQuery = new InterestReportQueryService(Tenant);
-            InterestReportPM  ReportPM = ReportQuery.GetSinglePMForInterest(Id, Tenant);
+            InterestReportQueryService reportQuery = new InterestReportQueryService(interestTransactionLists.Tenant);
+            InterestReportPM  reportPM = reportQuery.GetSinglePMForInterest(interestTransactionLists.EntityId, interestTransactionLists.Tenant);
             InterestEntityResult result = new InterestEntityResult();
 
-            if (ReportPM != null)
+            if (reportPM != null)
             {
-                result.EntityId = ReportPM.Id;
-                result.EntityNumber = ReportPM.ReportNumber;
+                result.EntityId = reportPM.Id;
+                result.EntityNumber = reportPM.ReportNumber;
                 result.JournalId = null;
                 result.JournalNumber = null;
                 result.AccountCode = "11";

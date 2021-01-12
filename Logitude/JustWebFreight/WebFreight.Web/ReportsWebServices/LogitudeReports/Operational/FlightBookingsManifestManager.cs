@@ -1,5 +1,6 @@
 ﻿using Logitude.BL.Helpers;
 using Logitude.BL.ShipmentsModel.EntityLists;
+using Logitude.Server.Tools.Helpers;
 using Simplog.Data.CommonDataModel;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
@@ -13,6 +14,8 @@ using System.Linq;
 using System.Web;
 using System.Xml.Serialization;
 using WebFreight.Web.DataProviders;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
+
 
 namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Operational
 {
@@ -28,6 +31,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Operational
         private string consigneeId = null;
         private PortRepository portRepository;
         private CardRepository cardRepository;
+        private ContactRepository contactRepository;
 
         public FlightBookingsManifestManager(byte[] xmlFilters, int tenant)
         {
@@ -36,6 +40,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Operational
             ICommonDataContext commonDataContext = CommonDataContext.GetContext(tenant);
             this.portRepository = new PortRepository(commonDataContext);
             this.cardRepository = new CardRepository(commonDataContext);
+            this.contactRepository = new ContactRepository(commonDataContext);
 
             DateTime todayDate = TenantServerConfigration.GetCurrentDateTime(tenant).Date;
             DateTime myStartDate = todayDate.AddMonths(-1);
@@ -109,7 +114,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Operational
         public byte[] GetData()
         {
             FlightBookingsManifestDataProvider myDataProvider = this.LoadDataProvider();
-
+                
             XmlSerializer xmlSerializer = new XmlSerializer(typeof(FlightBookingsManifestDataProvider));
             MemoryStream memoryStream = new MemoryStream();
             xmlSerializer.Serialize(memoryStream, myDataProvider);
@@ -136,24 +141,33 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Operational
                 foreach (ShipmentJoinPackageList shipmentPackage in filteredShipmentPackageList)
                 {
                     ReportGroupData myDataRecord = new ReportGroupData();
-                    myDataRecord.House = shipmentPackage.House;
+                    myDataRecord.House = shipmentPackage.House; 
                     myDataRecord.CommodityNumber = shipmentPackage.CommodityNumber;
+                    myDataRecord.CommodityName = shipmentPackage.CommodityName;
                     myDataRecord.Master = shipmentPackage.MasterNumber;
                     myDataRecord.Shipper = shipmentPackage.ShipperName;
                     myDataRecord.Consignee = shipmentPackage.ConsigneeName;
+                    myDataRecord.ShipperId = shipmentPackage.ShipperId;
+                    myDataRecord.ConsigneeId = shipmentPackage.ConsigneeId;
                     myDataRecord.Quantity = shipmentPackage.PackageQuantity;
                     myDataRecord.Weight = shipmentPackage.PackagesGrossWeight;
                     myDataRecord.Volume = shipmentPackage.PackageVolume;
                     myDataRecord.VolumetricWeight = shipmentPackage.PackageVolumeitricWeight;
+                    myDataRecord.ChargeableWeight = shipmentPackage.PackageChargeableWeight;
                     myDataRecord.MoveType = shipmentPackage.MoveTypeName;
                     myDataRecord.CustomAgentImportId = shipmentPackage.CustomAgentImportId;
+                    myDataRecord.MasterLong = shipmentPackage.AirlinePrefix + "-" + shipmentPackage.MasterNumber;
+                    myDataRecord.ATD = shipmentPackage.MainCarriageATD;
+                    myDataRecord.ETD = shipmentPackage.MainCarriageETD;
+                    myDataRecord.ETA = shipmentPackage.MainCarriageETA;
                     myDataRecord.CustomAgentImportName = shipmentPackage.CustomAgentImportName;
                     myDataRecord.PackageReference1 = shipmentPackage.ShipmentPackageReference1;
                     myDataRecord.PackageReference2 = shipmentPackage.ShipmentPackageReference2;
                     myDataRecord.PackageReference3 = shipmentPackage.ShipmentPackageReference3;
                     myDataRecord.PackageReference4 = shipmentPackage.ShipmentPackageReference4;
+                    myDataRecord.Routing = shipmentPackage.Routing;
 
-                    if(shipmentPackage.PackageWidth != null && shipmentPackage.PackageWidth != 0
+                    if (shipmentPackage.PackageWidth != null && shipmentPackage.PackageWidth != 0
                         && shipmentPackage.PackageLength != null && shipmentPackage.PackageLength != 0
                         && shipmentPackage.PackageHeight != null && shipmentPackage.PackageHeight != 0)
                     {
@@ -180,7 +194,8 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Operational
                                                                }).ToList();
 
                     List<ReportGroup> masterCommodityAgentResults = (from p in myDataList
-                                                                     group p by new { p.Master, p.CommodityNumber, p.CustomAgentImportId, p.CustomAgentImportName } 
+                                                                     group p by new { p.Master, p.CommodityNumber, p.CustomAgentImportId, p.CustomAgentImportName,
+                                                                     p.CommodityName ,p.MasterLong, p.ATD, p.ETD} 
                                                                      into g
                                                                      orderby g.Key.Master
                                                                      select new ReportGroup()
@@ -189,6 +204,10 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Operational
                                                                          CustomAgentImportId = g.Key.CustomAgentImportId,
                                                                          CustomAgentImportName = g.Key.CustomAgentImportName,
                                                                          CommodityNumber = g.Key.CommodityNumber,
+                                                                         CommodityName = g.Key.CommodityName,
+                                                                         MasterLong = g.Key.MasterLong,
+                                                                         ATD = g.Key.ATD,
+                                                                         ETD = g.Key.ETD,
                                                                          ReportGroupDataList = g.ToList(),
                                                                      }).ToList();
 
@@ -211,8 +230,8 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Operational
             myDataProvider.FromDate = fromDate;
             myDataProvider.ToDate = toDate;
             myDataProvider.FlightNumber = flightNumber;
-
-            if(!string.IsNullOrEmpty(mainCarriageFromPortId))
+            myDataProvider.UserName = GetLoggedContact(tenant).EnglishName;
+            if (!string.IsNullOrEmpty(mainCarriageFromPortId))
             {
                 Simplog.Data.CommonDataModel.EntityPOCOs.Port fromPort = portRepository.GetSinglePort(mainCarriageFromPortId, tenant);
                 if(fromPort != null)
@@ -264,6 +283,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Operational
                      ShipmentNumber = shipment.ShipmentNumber,
                      CreateDateTime = shipment.CreateDateTime,
                      ShipperName = shipment.ShipperName,
+                     ShipperId = shipment.ShipperId,
                      ConsigneeId = shipment.ConsigneeId,
                      ConsigneeName = shipment.ConsigneeName,
                      CustomAgentImportId = shipment.CustomAgentImportId,
@@ -310,7 +330,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Operational
                      Field38 = shipment.Field38,
                      Field39 = shipment.Field39,
                      Field40 = shipment.Field40,
-
+                     Routing = shipment.Routing,
                      //Master
                      MainCarriageFromPortId = master.MainCarriageFromPortId,
                      MainCarriageFromPortName = master.MainCarriageFromPort != null ? master.MainCarriageFromPort.EnglishName : null,
@@ -321,15 +341,18 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Operational
                      MainCarriageCarrierNumber = master.MainCarriageCarrierNumber,
                      MainCarriageETD = master.MainCarriageETD,
                      MainCarriageATD = master.MainCarriageATD,
+                     MainCarriageETA = master.MainCarriageETA,
                      MainCarriageDateFilter = master.MainCarriageATD != null ? master.MainCarriageATD : master.MainCarriageETD,
-
+                     AirlinePrefix = master.AirlinePrefix,
                      //Package
                      PackageId = package.Id,
                      CommodityNumber = package.CommodityNumber,
+                     CommodityName = package.CommodityName,
                      PackageQuantity = package.Quantity,
                      PackagesGrossWeight = package.Weight,
                      PackageVolume = package.Volume,
                      PackageVolumeitricWeight = package.VolumetricWeight,
+                     PackageChargeableWeight = (package.Weight == null)? package.VolumetricWeight : (package.VolumetricWeight == null) ? package.Weight : (package.VolumetricWeight> package.Weight)? package.VolumetricWeight : package.Weight,
                      ShipmentPackageReference1 = package.Reference1,
                      ShipmentPackageReference2 = package.Reference2,
                      ShipmentPackageReference3 = package.Reference3,
@@ -337,6 +360,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Operational
                      PackageWidth = package.Width,
                      PackageLength = package.Length,
                      PackageHeight = package.Height,
+                     
                  });
 
             return dataList;
@@ -385,6 +409,13 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Operational
             }
 
             return shipmentPackageList.ToList();
+        }
+
+        private Simplog.Data.CommonDataModel.EntityPOCOs.Contact GetLoggedContact(int tenant)
+        {
+            string email = AuthenticationUtil.GetLoggedUserEmail(tenant);
+            Simplog.Data.CommonDataModel.EntityPOCOs.Contact loggedContact = contactRepository.GetSingleContactByEmail(email, tenant);
+            return loggedContact;
         }
     }
 }

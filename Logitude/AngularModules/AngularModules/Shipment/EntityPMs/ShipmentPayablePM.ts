@@ -62,7 +62,7 @@ export class ShipmentPayablePM {
     public get ChargesGroupCode() { return this.chargesGroupCode; }
     public set ChargesGroupCode(newValue: string) { if (this.chargesGroupCode != newValue) { this.chargesGroupCode = newValue; this.MarkAsDirty("ChargesGroupCode"); } }
        
-	 
+
     private shipmentPayableLineStatusCode: string;
     public get ShipmentPayableLineStatusCode() { return this.shipmentPayableLineStatusCode; }
     public set ShipmentPayableLineStatusCode(newValue: string) { if (this.shipmentPayableLineStatusCode != newValue) { this.shipmentPayableLineStatusCode = newValue; this.MarkAsDirty("ShipmentPayableLineStatusCode"); } }
@@ -396,6 +396,11 @@ export class ShipmentPayablePM {
     public set TariffVersion(newValue: number) { if (this.tariffVersion != newValue) { this.tariffVersion = newValue; this.MarkAsDirty("TariffVersion"); } }
        
 	 
+    private tariffLineId: string;
+    public get TariffLineId() { return this.tariffLineId; }
+    public set TariffLineId(newValue: string) { if (this.tariffLineId != newValue) { this.tariffLineId = newValue; this.MarkAsDirty("TariffLineId"); } }
+       
+	 
     private payablesDisconnectedFromTariff: boolean;
     public get PayablesDisconnectedFromTariff() { return this.payablesDisconnectedFromTariff; }
     public set PayablesDisconnectedFromTariff(newValue: boolean) { if (this.payablesDisconnectedFromTariff != newValue) { this.payablesDisconnectedFromTariff = newValue; this.MarkAsDirty("PayablesDisconnectedFromTariff"); } }
@@ -411,7 +416,10 @@ export class ShipmentPayablePM {
     public UniqueKey: string;
 	 	
     public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
+       if(!this.DisableMarkAsDirty)
+       {
         this.IsDirty = true;
 		  if (this.EntityParentPM) {
             this.EntityParentPM.MarkAsDirty();
@@ -421,6 +429,7 @@ export class ShipmentPayablePM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "ShipmentPayable");
            
         }
+	 }
     }
     private MyClone: ShipmentPayablePM;
 

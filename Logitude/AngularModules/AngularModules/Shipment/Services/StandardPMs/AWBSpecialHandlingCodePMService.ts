@@ -153,6 +153,7 @@ export class AWBSpecialHandlingCodePMService {
         if (!entityPM) {
             
             entityPM = new AWBSpecialHandlingCodePM();
+			entityPM.DisableMarkAsDirty = true;
         }
 
 		var customFields: Array<string> = [];
@@ -193,6 +194,8 @@ export class AWBSpecialHandlingCodePMService {
             entityPM.OldEntityPM = null;
         }
 		entityPM.IsDirty = false;
+	    entityPM.DisableMarkAsDirty = false;
+
         return entityPM;
     }
 

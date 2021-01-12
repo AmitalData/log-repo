@@ -43,6 +43,24 @@ namespace WebFreight.Web.DataProviders
         public decimal CustomerCreditLimit { get; set; }
         public decimal GLAccountStandardInterestRate { get; set; }
 
+        public string AccountSalesmanName { get; set; }
+        public string AccountSalesmanLocalName { get; set; }
+
+        public string AccountCollectorName { get; set; }
+        public string AccountCollectorLocalName { get; set; }
+        public string Category1Name { get; set; }
+        public string Category2Name { get; set; }
+        public string Category3Name { get; set; }
+        public string Category4Name { get; set; }
+        public string Category5Name { get; set; }
+        public string Category6Name { get; set; }
+        public string Category1LocalName { get; set; }
+        public string Category2LocalName { get; set; }
+        public string Category3LocalName { get; set; }
+        public string Category4LocalName { get; set; }
+        public string Category5LocalName { get; set; }
+        public string Category6LocalName { get; set; }
+
 
     }
 

@@ -21,6 +21,7 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
     {
 
 	    
+	[XmlAttribute]
     public string Id { get; set; }
     
     public ChargesType ChargesType { get; set; }
@@ -38,6 +39,8 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
     public PrepaidCollect PrepaidCollect { get; set; }
     
     public double? Amount { get; set; }
+    
+    public Card Vendor { get; set; }
 
     public  string  ComputingPartnerCode { get; set; }
 

@@ -153,6 +153,7 @@ export class CustomerTenantAccessRequestPMService {
         if (!entityPM) {
             
             entityPM = new CustomerTenantAccessRequestPM();
+			entityPM.DisableMarkAsDirty = true;
         }
 
 		var customFields: Array<string> = [];
@@ -193,6 +194,8 @@ export class CustomerTenantAccessRequestPMService {
             entityPM.OldEntityPM = null;
         }
 		entityPM.IsDirty = false;
+	    entityPM.DisableMarkAsDirty = false;
+
         return entityPM;
     }
 

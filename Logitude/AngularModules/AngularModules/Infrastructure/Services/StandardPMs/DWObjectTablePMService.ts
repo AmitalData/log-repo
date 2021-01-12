@@ -153,6 +153,7 @@ export class DWObjectTablePMService {
         if (!entityPM) {
             
             entityPM = new DWObjectTablePM();
+			entityPM.DisableMarkAsDirty = true;
         }
 
 		var customFields: Array<string> = [];
@@ -193,6 +194,8 @@ export class DWObjectTablePMService {
             entityPM.OldEntityPM = null;
         }
 		entityPM.IsDirty = false;
+	    entityPM.DisableMarkAsDirty = false;
+
         return entityPM;
     }
 

@@ -153,6 +153,7 @@ export class QuoteStagePMService {
         if (!entityPM) {
             
             entityPM = new QuoteStagePM();
+			entityPM.DisableMarkAsDirty = true;
         }
 
 		var customFields: Array<string> = [];
@@ -193,6 +194,8 @@ export class QuoteStagePMService {
             entityPM.OldEntityPM = null;
         }
 		entityPM.IsDirty = false;
+	    entityPM.DisableMarkAsDirty = false;
+
         return entityPM;
     }
 

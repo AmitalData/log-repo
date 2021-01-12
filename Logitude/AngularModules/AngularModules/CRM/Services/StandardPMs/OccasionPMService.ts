@@ -154,6 +154,7 @@ export class OccasionPMService {
         if (!entityPM) {
             
             entityPM = new OccasionPM();
+			entityPM.DisableMarkAsDirty = true;
         }
 
 		var customFields: Array<string> = [];
@@ -214,6 +215,8 @@ export class OccasionPMService {
             entityPM.OldEntityPM = null;
         }
 		entityPM.IsDirty = false;
+	    entityPM.DisableMarkAsDirty = false;
+
         return entityPM;
     }
 
@@ -239,7 +242,8 @@ export class OccasionPMService {
             {
                 newOccasionInviteePM = new OccasionInviteePM(null);
             }
-                
+ 			newOccasionInviteePM.DisableMarkAsDirty = true;
+               
             var pmKeysArray = Object.keys(jItem);
             for (var pmKey in pmKeysArray) {
                 if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
@@ -271,7 +275,7 @@ export class OccasionPMService {
                 newOccasionInviteePM.OldEntityPM = null;
                 newOccasionInviteePM.EntityParentPM = null;
             }
-			
+			 newOccasionInviteePM.DisableMarkAsDirty = false;
 			 newOccasionInviteePM.IsDirty = false;
             entityPM.OccasionInvitees.push(newOccasionInviteePM);
         }
@@ -285,6 +289,7 @@ export class OccasionPMService {
                         //entityPM.OccasionInvitees.push(oldOccasionInvitees[itemKey]);
 						var oldItemJson = oldOccasionInvitees[itemKey];
                         var deletedPM: OccasionInviteePM = new OccasionInviteePM(null);
+						deletedPM.DisableMarkAsDirty = true;
                         var pmKeys = Object.keys(oldItemJson);
                         for (var key in pmKeys) {
 
@@ -296,7 +301,7 @@ export class OccasionPMService {
                             deletedPM[property] = oldItemJson[property];
                         }
 
-                      
+					    deletedPM.DisableMarkAsDirty = false;
                         deletedPM.IsDirty = false;
                         deletedPM.ChangeSetOp = "Delete";
                         
@@ -329,7 +334,8 @@ export class OccasionPMService {
             {
                 newOccasionInviteePM = new OccasionInviteePM(null);
             }
-                
+ 			newOccasionInviteePM.DisableMarkAsDirty = true;
+               
             var pmKeysArray = Object.keys(jItem);
             for (var pmKey in pmKeysArray) {
                 if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
@@ -361,7 +367,7 @@ export class OccasionPMService {
                 newOccasionInviteePM.OldEntityPM = null;
                 newOccasionInviteePM.EntityParentPM = null;
             }
-			
+			 newOccasionInviteePM.DisableMarkAsDirty = false;
 			 newOccasionInviteePM.IsDirty = false;
             entityPM.RemovedOccasionInvitees.push(newOccasionInviteePM);
         }
@@ -375,6 +381,7 @@ export class OccasionPMService {
                         //entityPM.RemovedOccasionInvitees.push(oldRemovedOccasionInvitees[itemKey]);
 						var oldItemJson = oldRemovedOccasionInvitees[itemKey];
                         var deletedPM: OccasionInviteePM = new OccasionInviteePM(null);
+						deletedPM.DisableMarkAsDirty = true;
                         var pmKeys = Object.keys(oldItemJson);
                         for (var key in pmKeys) {
 
@@ -386,7 +393,7 @@ export class OccasionPMService {
                             deletedPM[property] = oldItemJson[property];
                         }
 
-                      
+					    deletedPM.DisableMarkAsDirty = false;
                         deletedPM.IsDirty = false;
                         deletedPM.ChangeSetOp = "Delete";
                         

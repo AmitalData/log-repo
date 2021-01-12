@@ -359,6 +359,8 @@
     <Compile Include="ArtemusAnalyzerWorkerRole.cs" />
     <Compile Include="AutoSignUpMailWorkerRole.cs" />
     <Compile Include="AutoSignUpWorkerRole.cs" />
+    <Compile Include="Services\QuoteSchedulerTaskService.cs" />
+    <Compile Include="WarmCargoTracking.cs" />
     <Compile Include="BatchTaskExecutionWR.cs" />
     <Compile Include="BIReportsExecutionLogWorkerRole.cs" />
     <Compile Include="BluesnapPageAnalyzerWorkerRole.cs" />
@@ -381,13 +383,19 @@
     <Compile Include="LogBoxMailgunAnalyzerWorkerRole.cs" />
     <Compile Include="LogMessagesWorkerRole.cs" />
     <Compile Include="DocumentApprovalWorkerRole.cs" />
+    <Compile Include="QueryExportExecutionLogWR.cs" />
+    <Compile Include="ReportScheduler\GLAccountValidator.cs" />
+    <Compile Include="ReportScheduler\IReportSchedulerValidator.cs" />
+    <Compile Include="ReportScheduler\ReportSchedulerValidator.cs" />
     <Compile Include="Services\FTPSchedulerTaskService.cs" />
     <Compile Include="ImporterApprovalReceivedWorkerRole.cs" />
     <Compile Include="Services\FTPSchedulerTaskServiceBase.cs" />
+    <Compile Include="Services\QueryExportLogExecutionService.cs" />
     <Compile Include="Services\ReportSchedulerTaskService.cs" />
     <Compile Include="Services\SFTPSchedulerTaskService.cs" />
     <Compile Include="Tasks\CustomsSendManifestTask.cs" />
     <Compile Include="Tasks\CustomsCloseCourierMasterTask.cs" />
+    <Compile Include="Tasks\DeleteOldCargoTrackingData.cs" />
     <Compile Include="Tasks\DeleteOldCommunicationLogsTask.cs" />
     <Compile Include="Tasks\DeleteTaskSchedulerHistoriesTask.cs" />
     <Compile Include="Tasks\GLAccountsCSVTask.cs" />
@@ -412,7 +420,7 @@
     <Compile Include="CustomerTenantAccessRequestWorkerRole.cs" />
     <Compile Include="CustomerTenantAccessWorkerRole.cs" />
     <Compile Include="DataBackupWR.cs" />
-    <Compile Include="DelayAutomationWorkerRole.cs" />
+    <Compile Include="AutomationWorkerRole.cs" />
     <Compile Include="EmailingHelper.cs" />
     <Compile Include="EmailsWorkerRole.cs">
       <SubType>Code</SubType>
@@ -670,6 +678,10 @@
     <ProjectReference Include="..\Logitude.BookingLib.Data\Logitude.BookingLib.Data.csproj">
       <Project>{147a706d-221a-4fd1-8f27-c12e4ab276cf}</Project>
       <Name>Logitude.BookingLib.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Logitude.CargoTracking.Data\Logitude.CargoTracking.Data.csproj">
+      <Project>{7281A115-2213-41A3-A39A-22476F5A8DB8}</Project>
+      <Name>Logitude.CargoTracking.Data</Name>
     </ProjectReference>
     <ProjectReference Include="..\Logitude.CRM.BL\Logitude.CRM.BL.csproj">
       <Project>{40502295-5a7f-4a20-91d2-768ca7cd35ec}</Project>

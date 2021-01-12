@@ -153,6 +153,7 @@ export class DocumentFilingBackupBatchPMService {
         if (!entityPM) {
             
             entityPM = new DocumentFilingBackupBatchPM();
+			entityPM.DisableMarkAsDirty = true;
         }
 
 		var customFields: Array<string> = [];
@@ -193,6 +194,8 @@ export class DocumentFilingBackupBatchPMService {
             entityPM.OldEntityPM = null;
         }
 		entityPM.IsDirty = false;
+	    entityPM.DisableMarkAsDirty = false;
+
         return entityPM;
     }
 

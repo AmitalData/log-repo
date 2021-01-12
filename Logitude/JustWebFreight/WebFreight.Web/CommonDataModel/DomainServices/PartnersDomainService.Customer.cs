@@ -1040,18 +1040,25 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
                 customers = myBusinessUnitFilter.RunFilter(customers);
             }
 
-            if (!string.IsNullOrEmpty(mySearchText))
+            if (!string.IsNullOrEmpty(mySearchText) && FeatureToggleHelper.HasFeatureToggle("CQS", tenant))
             {
-                customers = customers.Where(d => d.SearchFields.ToLower().Contains(mySearchText.ToLower()));
+                myResult = GetCustomerListsByApplyCardSearchMechanizm(tenant, mySearchText, customers);
             }
-
-            if (customers.Count() > 0)
+            else
             {
-                customers = customers.OrderByDescending(d => d.EnglishName);
-                customers = customers.Take(11);
+                if (!string.IsNullOrEmpty(mySearchText))
+                {
+                    customers = customers.Where(d => d.SearchFields.ToLower().Contains(mySearchText.ToLower()));
+                }
 
-                IQueryable<CustomerList> myListQuery = customerQuery.GetIQueryableEntityList(customers);
-                myResult = myListQuery.ToList();
+                if (customers.Count() > 0)
+                {
+                    customers = customers.OrderByDescending(d => d.EnglishName);
+                    customers = customers.Take(11);
+
+                    IQueryable<CustomerList> myListQuery = customerQuery.GetIQueryableEntityList(customers);
+                    myResult = myListQuery.ToList();
+                }
             }
 
             if (setBlockedFlag)
@@ -1060,6 +1067,32 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
             }
 
             return myResult;
+        }
+
+        private List<CustomerList> GetCustomerListsByApplyCardSearchMechanizm(int tenant, string mySearchText, IQueryable<CustomersDataView> customers)
+        {
+            List<CustomerList> myResult;
+
+            IQueryable<CustomerList> myListQuery = customerQuery.GetIQueryableEntityList(customers);
+            CustomerSearchArgs customerSearchArgs = new CustomerSearchArgs()
+            {
+                Tenant = tenant,
+                SearchText = mySearchText,
+                PageSize = 11,
+                EntityLists = myListQuery,
+                FilterItems = GetQueryFilterItems(),
+            };
+            CustomerDataSearchService customerDataSearchService = new CustomerDataSearchService();
+            myResult = customerDataSearchService.Run(customerSearchArgs);
+
+            return myResult;
+        }
+
+        private List<QueryFilterItem>  GetQueryFilterItems()
+        {
+            var queryFilterItems = new List<QueryFilterItem>();
+            queryFilterItems.Add(new QueryFilterItem() { FieldName = "IsCustomer", FieldValue = true });
+            return queryFilterItems;
         }
 
         [Invoke]

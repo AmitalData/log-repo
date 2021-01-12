@@ -26,12 +26,12 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
     public partial class ContainerQueryService
     {
 
-        public List<Container> ContainerCustomDataMapping(ShipmentPM MyPM, List<ShipmentPackagePM> MyEntityPMs, int Tenant)
+        public List<Container> ContainerCustomDataMapping(ShipmentPM MyPM, List<ShipmentPackagePM> MyEntityPMs, int Tenant, string ComputingPartnerName = "")
         {
 
             if (MyPM.ShipmentTypeId == "FCL" || MyPM.ShipmentTypeId == "FTL" || MyPM.ShipmentTypeId == "FCLD")
             {
-                return this.ContainerDataMapping(MyEntityPMs, Tenant);
+                return this.ContainerDataMapping(MyEntityPMs, Tenant,ComputingPartnerName);
             }
             else
             {

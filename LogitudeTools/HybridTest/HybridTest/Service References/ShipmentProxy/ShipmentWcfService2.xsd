@@ -64,6 +64,7 @@
       <xs:element minOccurs="0" name="AccountingInformationIdentifierCode4" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="AccountingInformationIdentifierCode5" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="AccountingInformationIdentifierCode6" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="AccrualsApprovalDate" nillable="true" type="xs:dateTime" />
       <xs:element minOccurs="0" name="ActualFinalArrivalDate" nillable="true" type="xs:dateTime" />
       <xs:element minOccurs="0" name="AdditionalChargesId" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="AdditionalHandlingInfo" nillable="true" type="xs:string" />
@@ -124,6 +125,7 @@
       <xs:element minOccurs="0" name="CarrierLastStatusName" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="CarrierTransportDocumentNumber" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="ChargeStorage" type="xs:boolean" />
+      <xs:element minOccurs="0" name="ChargeStorageCurrencyCode" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="ChargeStorageCurrencyId" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="ChargeableWeight" nillable="true" type="xs:double" />
       <xs:element minOccurs="0" name="ChargeableWeightEdited" type="xs:boolean" />
@@ -171,6 +173,7 @@
       <xs:element minOccurs="0" name="ConsigneeReference1" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="ConsigneeReference2" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="ConsigneeStateId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ConsigneeVatNumber" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="ConsigneeZipCode" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="ConsolidatorAddressId" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="ConsolidatorContactId" nillable="true" type="xs:string" />
@@ -183,7 +186,9 @@
       <xs:element minOccurs="0" name="ConvertFromDirectToHouse" type="xs:boolean" />
       <xs:element minOccurs="0" name="ConvertFromHouseToDirect" type="xs:boolean" />
       <xs:element minOccurs="0" name="ConvertShipmentToFCL" type="xs:boolean" />
+      <xs:element minOccurs="0" name="ConvertShipmentToFTL" type="xs:boolean" />
       <xs:element minOccurs="0" name="ConvertShipmentToLCL" type="xs:boolean" />
+      <xs:element minOccurs="0" name="ConvertShipmentToLTL" type="xs:boolean" />
       <xs:element minOccurs="0" name="ConvertToCustomFile" type="xs:boolean" />
       <xs:element minOccurs="0" name="CopyFromShipmentId" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="CountryForStatisticsId" nillable="true" type="xs:string" />
@@ -252,6 +257,7 @@
       <xs:element minOccurs="0" name="DirectionId" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="DirectionName" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="DocsSentToAgent" type="xs:boolean" />
+      <xs:element minOccurs="0" name="DocumentsApprovedByUserName" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="DocumentsClosingDate" nillable="true" type="xs:dateTime" />
       <xs:element minOccurs="0" name="DocumentsSearchFields" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="DontAddToForwarderQueue" type="xs:boolean" />
@@ -397,8 +403,16 @@
       <xs:element minOccurs="0" name="HasOnCarriage" type="xs:boolean" />
       <xs:element minOccurs="0" name="HasPreCarriage" type="xs:boolean" />
       <xs:element minOccurs="0" name="House" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="HousesACCTPayablesInLocal" nillable="true" type="xs:double" />
+      <xs:element minOccurs="0" name="HousesACCTPayablesInProfit" nillable="true" type="xs:double" />
+      <xs:element minOccurs="0" name="HousesACCTReceivablesInLocal" nillable="true" type="xs:double" />
+      <xs:element minOccurs="0" name="HousesACCTReceivablesInProfit" nillable="true" type="xs:double" />
       <xs:element minOccurs="0" name="HousesDescriptionofGoods" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="HousesNumbers" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="HousesOpenPayablesInLocal" nillable="true" type="xs:double" />
+      <xs:element minOccurs="0" name="HousesOpenPayablesInProfit" nillable="true" type="xs:double" />
+      <xs:element minOccurs="0" name="HousesOpenReceivablesInLocal" nillable="true" type="xs:double" />
+      <xs:element minOccurs="0" name="HousesOpenReceivablesInProfit" nillable="true" type="xs:double" />
       <xs:element minOccurs="0" name="INTTRABookingError" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="INTTRABookingResponse_PODCCode" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="INTTRABookingResponse_PODCName" nillable="true" type="xs:string" />
@@ -446,13 +460,14 @@
       <xs:element minOccurs="0" name="IncotermName" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="InterlineId" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="IsAccountingClosed" type="xs:boolean" />
+      <xs:element minOccurs="0" name="IsAccrualsApproved" type="xs:boolean" />
       <xs:element minOccurs="0" name="IsAddingStackEvents" type="xs:boolean" />
       <xs:element minOccurs="0" name="IsAnyConversation" type="xs:boolean" />
       <xs:element minOccurs="0" name="IsAssembly" type="xs:boolean" />
-      <xs:element minOccurs="0" name="IsBondedWarehouse" type="xs:boolean" />
-      <xs:element minOccurs="0" name="IsBondedWarehouseChanged" type="xs:boolean" />
       <xs:element minOccurs="0" name="IsBuildFromBooking" type="xs:boolean" />
       <xs:element minOccurs="0" name="IsBuildFromQuote" type="xs:boolean" />
+      <xs:element minOccurs="0" name="IsCFSWarehouse" type="xs:boolean" />
+      <xs:element minOccurs="0" name="IsCFSWarehouseChanged" type="xs:boolean" />
       <xs:element minOccurs="0" name="IsCancelled" type="xs:boolean" />
       <xs:element minOccurs="0" name="IsCopyFromShipment" type="xs:boolean" />
       <xs:element minOccurs="0" name="IsCreatedFromAgentSharedManifest" type="xs:boolean" />
@@ -463,6 +478,7 @@
       <xs:element minOccurs="0" name="IsDepositionRequired" type="xs:boolean" />
       <xs:element minOccurs="0" name="IsDigitalSignRequired" type="xs:boolean" />
       <xs:element minOccurs="0" name="IsExceptionResolved" type="xs:boolean" />
+      <xs:element minOccurs="0" name="IsExternalAPI" type="xs:boolean" />
       <xs:element minOccurs="0" name="IsFSRSent" type="xs:boolean" />
       <xs:element minOccurs="0" name="IsFlightDateActual" type="xs:boolean" />
       <xs:element minOccurs="0" name="IsHybrid" type="xs:boolean" />
@@ -1019,6 +1035,7 @@
       <xs:element minOccurs="0" name="ValueOfGoodsCurrencyId" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="VersionApproved" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="ViaColoader" type="xs:boolean" />
+      <xs:element minOccurs="0" name="ViewSharedDocuments" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Volume" nillable="true" type="xs:double" />
       <xs:element minOccurs="0" name="VolumeInCBM" nillable="true" type="xs:double" />
       <xs:element minOccurs="0" name="VolumeUnitCode" nillable="true" type="xs:string" />
@@ -1824,6 +1841,7 @@
       <xs:element minOccurs="0" name="IsBackToBack" type="xs:boolean" />
       <xs:element minOccurs="0" name="IsChargeBySteps" type="xs:boolean" />
       <xs:element minOccurs="0" name="IsEditedByUser" type="xs:boolean" />
+      <xs:element minOccurs="0" name="IsExpenseCharge" nillable="true" type="xs:boolean" />
       <xs:element minOccurs="0" name="IsFromQuote" type="xs:boolean" />
       <xs:element minOccurs="0" name="MaxAmount" nillable="true" type="xs:double" />
       <xs:element minOccurs="0" name="MeasurementCode" nillable="true" type="xs:string" />
@@ -1977,6 +1995,7 @@
       <xs:element minOccurs="0" name="IsChargeBySteps" type="xs:boolean" />
       <xs:element minOccurs="0" name="IsExchangeRateFixed" type="xs:boolean" />
       <xs:element minOccurs="0" name="IsExpense" type="xs:boolean" />
+      <xs:element minOccurs="0" name="IsExpenseCharge" nillable="true" type="xs:boolean" />
       <xs:element minOccurs="0" name="IsFixedPrice" type="xs:boolean" />
       <xs:element minOccurs="0" name="IsFromQuote" type="xs:boolean" />
       <xs:element minOccurs="0" name="MeasurementCode" nillable="true" type="xs:string" />
@@ -2018,6 +2037,7 @@
     <xs:sequence>
       <xs:element minOccurs="0" name="Amount" nillable="true" type="xs:decimal" />
       <xs:element xmlns:q66="http://schemas.datacontract.org/2004/07/Simplog.Server.Infrastructure" minOccurs="0" name="ChangeSetOp" type="q66:ChangeSetOperation" />
+      <xs:element minOccurs="0" name="ChargeableDays" nillable="true" type="xs:int" />
       <xs:element minOccurs="0" name="Days" nillable="true" type="xs:int" />
       <xs:element minOccurs="0" name="Id" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="LineNumber" type="xs:int" />

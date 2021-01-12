@@ -35,7 +35,7 @@ namespace Logitude.Server.Tools.EntityChanges.AutomationResult
                     else if (automation.ResultCode == "DOCINFOLLOWUP") entityChangesAutomation.ResultCode = "Docs In F/U Creation";
 
                     var otherLastupdateautomation = (automationResultArgs.OtherAutomationObjectTable != null && !string.IsNullOrEmpty(automationResultArgs.OtherAutomationObjectTable.AutomationLastUpdate)) ? (automationResultArgs.OtherAutomationObjectTable.Id + "@" + automationResultArgs.OtherAutomationObjectTable.AutomationLastUpdate) : "";
-                    string lastUpdate = GetLastUpdateDate(automationResultArgs.AutomationObjectTable.AutomationLastUpdate, otherLastupdateautomation, automation);
+                    string lastUpdate = GetLastAuomationUpdateDate(automationResultArgs.AutomationObjectTable, automationResultArgs.OtherAutomationObjectTable, automation);
 
                     ValidateAutomationResultClass validateResult = ValidateAutomation(automation, automationResultArgs.EntityChange, automationResultArgs.AutomationFieldLists, lastUpdate, "");
 
@@ -47,7 +47,9 @@ namespace Logitude.Server.Tools.EntityChanges.AutomationResult
                     {
                         if (validateResult.Type == "Delayed")
                         {
-                           AddDelayedAutomationQueue(automationResultArgs.EntityChange.Id, automationResultArgs.EntityChangeArgs.ProcessType, automation.Tenant, automation.Id, validateResult, automationResultArgs.AutomationFieldLists, automationResultArgs.EntityChangeArgs.EntityId);
+                            DelaytimeDetails delaytimeDetails = new DelaytimeDetails() { Type = validateResult.Type, Delaytime = validateResult.Delaytime, DelaytimeIndicator = validateResult.DelaytimeIndicator, DelaytimeOp = validateResult.DelaytimeOp, SelectedDelaytimeFieldCode = validateResult.SelectedDelaytimeFieldCode };
+                            AddAutomationQueue(new AutomationQueueArgs() { EntityChangeId = automationResultArgs.EntityChange.Id, AutomationId = automation.Id, AutomationType = automationResultArgs.EntityChangeArgs.ProcessType, EntityId = automationResultArgs.EntityChangeArgs.EntityId, Tenant = automation.Tenant, AutomationDelayTime = GetAutomationDelayTime(delaytimeDetails, automationResultArgs.AutomationFieldLists) });
+
                         }
                         else AddAutomationFollowUp(automationResultArgs.EntityChangeArgs.EntityPM, automationResultArgs.EntityChange, automationResultArgs.AutomationFieldLists, lastUpdate, automationResultArgs.MainEntityChangeService.EntityChangesAutomationsSsucceedList, automation, entityChangesAutomation, dateBefore, true);
 

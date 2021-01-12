@@ -464,9 +464,8 @@
     });
 
     $(document).ready(function () {
-        var hash = $(location).attr('href');
-        var arr = hash.split('tempId=');
-        $.Token = arr[1];
+        var iToken = $("#TokenForResources").val();
+        $.Token = iToken;
 
         if ($.Token) {
             $.GetLogginData();

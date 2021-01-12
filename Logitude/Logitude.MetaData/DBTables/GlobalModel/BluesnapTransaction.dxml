@@ -5,17 +5,17 @@
   DBType="Global"
   Module="Infrastructure">
   <Column
+    Name="Tenant"
+    Type="int">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
     Name="Id"
     Type="varchar"
     Size="15">
     <Constraints
       PrimaryKey="true"
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="Tenant"
-    Type="int">
-    <Constraints
       Nullable="false" />
   </Column>
   <Column
@@ -43,5 +43,24 @@
     Size="50">
     <Constraints
       Nullable="false" />
+  </Column>
+  <Column
+    Name="InvoiceAmountInUSD"
+    Type="float">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="TaxAmountInUSD"
+    Type="float">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ContractNumber"
+    Type="nvarchar"
+    Size="200">
+    <Constraints
+      Nullable="true" />
   </Column>
 </Table>

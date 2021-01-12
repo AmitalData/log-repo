@@ -63,7 +63,7 @@ namespace Logitude.SystemLogs
             dbConnectionInfo =DbContextBaseUtil.GetConnectionStringWithAmitalNetRole(dbConnectionInfo);
             
             
-            DbConnection connection = DatabaseInitializer.GetConnection(dbConnectionInfo);
+            DbConnection connection = DatabaseInitializer.GetConnection(dbConnectionInfo,5);
             SystemLogContext context = new SystemLogContext(connection);
 
             return context;

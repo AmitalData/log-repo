@@ -75,7 +75,7 @@ namespace Logitude.DBMigrations.Models
 
             string queryString = "UPDATE TOP(1000) [" + schemaName + "].[" + tableName + "] SET [" + columnName + "] = " + defaultValue + ", " +
                 "[DBMigrationsLastDefaultValue] = " + updateNumber.ToString() + " WHERE [DBMigrationsLastDefaultValue] = " + (updateNumber - 1).ToString() +
-                (updateNumber - 1 == 0 ? " OR [DBMigrationsLastDefaultValue] IS NULL" : null) + ";";
+                " OR [DBMigrationsLastDefaultValue] IS NULL;";
 
             string connectionString = GetZeroDownTimeConnectionString(ToolConfigurations.GetConnectionString(databaseType));
             SqlConnection sqlConnection = new SqlConnection(connectionString);
@@ -267,9 +267,9 @@ namespace Logitude.DBMigrations.Models
             //string csvFileName = dbMigrationsDataScript.SxmlFileName.Replace(".sxml", String.Empty) + "_" + DateTime.Now.Ticks.ToString();
 
             queryString = Regex.Replace(queryString, "[$]LastCounterWhere[$]", targetTableName + ".[Id] IN (SELECT Id from @IdsTable)", RegexOptions.IgnoreCase);
-            queryString = "DECLARE @IdsTable TABLE (Id VARCHAR(20));\n" +
+            queryString = "DECLARE @IdsTable TABLE (Id VARCHAR(MAX));\n" +
                           "INSERT INTO @IdsTable SELECT TOP(" + batchSize.ToString() + ") [Id] FROM [" + targetTableName + "] WHERE [DBMigrationsLastScript] = " + (scriptExecutionNumber - 1).ToString() +
-                          (scriptExecutionNumber - 1 == 0 ? " OR [DBMigrationsLastScript] IS NULL" : null) + ";\n" +
+                          " OR [DBMigrationsLastScript] IS NULL;\n" +
                           queryString + "\n" +
                           "UPDATE [" + targetTableName + "] SET [DBMigrationsLastScript] = " + scriptExecutionNumber.ToString() + " WHERE [Id] IN (SELECT Id FROM @IdsTable);\n" +
                           "DELETE FROM @IdsTable;";
@@ -460,7 +460,7 @@ namespace Logitude.DBMigrations.Models
                                  "IF TRIGGER_NESTLEVEL() > 1 RETURN;\n" +
                                  "IF (SELECT program_name FROM sys.dm_exec_sessions WHERE session_id = (SELECT @@SPID)) <> ''ZeroDownTimeDBMigrationsTool''\n" +
                                  "BEGIN\n" +
-                                 "UPDATE [" + tableName + "] SET [DBMigrationsLastScript] = 0 WHERE Id IN (SELECT DISTINCT Id FROM Inserted);\n" +
+                                 "UPDATE [" + tableName + "] SET [DBMigrationsLastScript] = NULL WHERE Id IN (SELECT DISTINCT Id FROM Inserted);\n" +
                                  "END\n" +
                                  "END');\n" +
                                  "END";

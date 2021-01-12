@@ -11,6 +11,8 @@ using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Accounting.Def.EntityPMs; 
 using Logitude.Accounting.Data;
 using Simplog.Data.Helpers;
+using Logitude.BL.CommonDataModel.EntityPMs;
+using Logitude.BL.CommonDataModel.EntityQueries;
 
 namespace Logitude.Accounting.BL.EntityDataMappings
 {
@@ -35,9 +37,22 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 
         public void CustomPOCOToPM(UserDefinedReportPM entityPM, UserDefinedReport entityPOCO)
         {
-            //throw new NotImplementedException();
+            ContactQuery contactQuery = new ContactQuery(entityPOCO.Tenant);
+            if (entityPOCO.CreatedByUserId != null)
+            {
+                ContactPM CreatedByContact = contactQuery.GetSinglePMFromCacheWithSystemUser(entityPOCO.CreatedByUserId, entityPOCO.Tenant);
+                if (CreatedByContact == null)
+                    CreatedByContact = contactQuery.GetSinglePMFromCacheWithSystemUser(entityPOCO.CreatedByUserId, 0); // user is customer care, get it from tenant 0
+                if (CreatedByContact != null)
+                {
+                    entityPM.CreatedByLocalName = CreatedByContact.LocalName;
+                    entityPM.CreatedByEnglishName = CreatedByContact.EnglishName;
+
+                }
+            }
+
         }
-   }
+    }
 
 
 }

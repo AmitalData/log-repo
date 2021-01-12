@@ -79,7 +79,10 @@ export class CardExternalAccountsByProductPM {
     public OldEntityPM: CardExternalAccountsByProductPM;
 		
     public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
+       if(!this.DisableMarkAsDirty)
+       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -87,6 +90,7 @@ export class CardExternalAccountsByProductPM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "CardExternalAccountsByProduct");
            
         }
+	 }
     }
     private MyClone: CardExternalAccountsByProductPM;
 

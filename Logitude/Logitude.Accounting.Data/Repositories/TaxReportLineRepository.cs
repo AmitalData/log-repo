@@ -8,6 +8,8 @@ namespace Logitude.Accounting.Data.Repositories
 {
     public partial class TaxReportLineRepository:IRepository<TaxReportLine>
    {
+        const string TransmitStatus_ForTransmit = "1";
+
 
         public List<TaxReportLine> GetMulti(EntityKeyFields entityKeys)
         {
@@ -29,7 +31,11 @@ namespace Logitude.Accounting.Data.Repositories
            
             return (from a in context.TaxReportLines
                   
-                    where a.TaxReportId == taxReportId && a.Tenant == tenant && errorCodes.Contains(a.StatusCode)
+                    where a.TaxReportId == taxReportId && 
+                          a.TransmitStatusCode== TransmitStatus_ForTransmit &&
+                          a.Tenant == tenant && 
+                          errorCodes.Contains(a.StatusCode)
+
                     select   a.Line).ToList();
 
         }

@@ -44,7 +44,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Card&quot;"
-  Code="&quot;88fa&quot;"
+  Code="&quot;1da1&quot;"
   Name="&quot;Card&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Common&quot;"
@@ -58,7 +58,6 @@
   ApplyOnPropertyChangedCode="false"
   HasApiHelper="false"
   AllowedForComputingPartners="true"
-  IsBusinessUnitEnabled="false"
   Code1="&quot;573b&quot;"
   Name1="&quot; Query Group&quot;"
   CustomFieldsCount="0"
@@ -1068,11 +1067,11 @@
     InActive="false"
     DisplayLongName="false"
     FullFieldLable="&quot;CountryCode&quot;"
-    DefaultText="&quot;CountryCode&quot;"
-    FullLocalDefaultText="&quot;CountryCode&quot;"
+    DefaultText="&quot;Country&quot;"
+    FullLocalDefaultText="&quot;מדינה&quot;"
     ListFieldLable="&quot;CountryCodeListLable&quot;"
-    ListLableDefaultText="&quot;CountryCode&quot;"
-    ListLocalDefaultText="&quot;CountryCode&quot;"
+    ListLableDefaultText="&quot;Country&quot;"
+    ListLocalDefaultText="&quot;מדינה&quot;"
     IsNullable="false"
     IsForeignKey="false"
     DontBuildRelationOnDB="false"
@@ -1081,7 +1080,7 @@
     HasPMField="true"
     IsComposition="false"
     IsMaxLength="false"
-    NoMetaDataField="true"
+    NoMetaDataField="false"
     GenerateInList="true"
     IsFixedLength="false"
     EnableAutoFill="false"
@@ -1515,7 +1514,7 @@
     DisplayInSearchWindowList="true"
     PMPropertyPath="&quot;PartnerTypeName&quot;"
     ListPropertyPath="&quot;PartnerTypeName&quot;"
-    DisplayInLookUpIndex="4"
+    DisplayInLookUpIndex="5"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="5"
@@ -3707,10 +3706,10 @@
     DisplayInSearchWindowList="true"
     PMPropertyPath="&quot;CityName&quot;"
     ListPropertyPath="&quot;CityName&quot;"
-    DisplayInLookUpIndex="2"
+    DisplayInLookUpIndex="3"
     AutomaticField="false"
     UniqueField="false"
-    DisplayInSearchWindowListIndex="2"
+    DisplayInSearchWindowListIndex="3"
     IsMulti="false"
     DependencyFilter1IsList="false"
     DependencyFilter2IsList="false"
@@ -3783,10 +3782,10 @@
     DisplayInSearchWindowList="true"
     PMPropertyPath="&quot;CountryName&quot;"
     ListPropertyPath="&quot;CountryName&quot;"
-    DisplayInLookUpIndex="3"
+    DisplayInLookUpIndex="4"
     AutomaticField="false"
     UniqueField="false"
-    DisplayInSearchWindowListIndex="3"
+    DisplayInSearchWindowListIndex="4"
     IsMulti="false"
     DependencyFilter1IsList="false"
     DependencyFilter2IsList="false"
@@ -3804,8 +3803,10 @@
     DisplayLongName="false"
     FullFieldLable="&quot;CountryName&quot;"
     DefaultText="&quot;Country&quot;"
+    FullLocalDefaultText="&quot;מדינה&quot;"
     ListFieldLable="&quot;CountryNameListLable&quot;"
     ListLableDefaultText="&quot;Country&quot;"
+    ListLocalDefaultText="&quot;מדינה&quot;"
     IsNullable="false"
     IsForeignKey="false"
     DontBuildRelationOnDB="false"
@@ -6282,28 +6283,29 @@
     MaxLength="65"
     IsRequired="false"
     CopyToDW="true"
-    DisplayOnLookUp="false"
-    DisplayOnLookUpLocal="false"
+    DisplayOnLookUp="true"
+    DisplayOnLookUpLocal="true"
     CanFilter="false"
     DisplayOnly="false"
     SystemRequired="false"
     ObjectFieldNotRequired="false"
     SystemMaxLength="0"
-    DisplayInList="false"
+    DisplayInList="true"
     IsCustomFilter="false"
     MultiLine="false"
     IsTimeFrameFilter="false"
-    DisplayInSearchWindowList="false"
+    DisplayInSearchWindowList="true"
     PMPropertyPath="&quot;Address1&quot;"
     ListPropertyPath="&quot;Address1&quot;"
-    DisplayInLookUpIndex="0"
+    DisplayInLookUpIndex="2"
     AutomaticField="false"
     UniqueField="false"
-    DisplayInSearchWindowListIndex="0"
+    DisplayInSearchWindowListIndex="2"
     IsMulti="false"
     DependencyFilter1IsList="false"
     DependencyFilter2IsList="false"
     DependencyFilter3IsList="false"
+    ValidForQuerySection1="&quot;Card&quot;"
     IsRestrictable="false"
     DisplayInEntityVariables="false"
     AllowedInCustomerFieldsSettings="false"
@@ -6323,11 +6325,11 @@
     DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="true"
-    HasPMField="false"
+    HasPMField="true"
     IsComposition="false"
     IsMaxLength="false"
     NoMetaDataField="false"
-    GenerateInList="false"
+    GenerateInList="true"
     IsFixedLength="false"
     EnableAutoFill="false"
     IncludeInSearchField="false"
@@ -6362,7 +6364,7 @@
     SystemRequired="false"
     ObjectFieldNotRequired="false"
     SystemMaxLength="0"
-    DisplayInList="false"
+    DisplayInList="true"
     IsCustomFilter="false"
     MultiLine="false"
     IsTimeFrameFilter="false"
@@ -6377,6 +6379,7 @@
     DependencyFilter1IsList="false"
     DependencyFilter2IsList="false"
     DependencyFilter3IsList="false"
+    ValidForQuerySection1="&quot;Card&quot;"
     IsRestrictable="false"
     DisplayInEntityVariables="false"
     AllowedInCustomerFieldsSettings="false"
@@ -6386,21 +6389,21 @@
     InActive="false"
     DisplayLongName="false"
     FullFieldLable="&quot;Address2&quot;"
-    DefaultText="&quot;Address2&quot;"
-    FullLocalDefaultText="&quot;Address2&quot;"
+    DefaultText="&quot;Address 2&quot;"
+    FullLocalDefaultText="&quot;Address 2&quot;"
     ListFieldLable="&quot;Address2ListLable&quot;"
-    ListLableDefaultText="&quot;Address2&quot;"
-    ListLocalDefaultText="&quot;Address2&quot;"
+    ListLableDefaultText="&quot;Address 2&quot;"
+    ListLocalDefaultText="&quot;Address 2&quot;"
     IsNullable="false"
     IsForeignKey="false"
     DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="true"
-    HasPMField="false"
+    HasPMField="true"
     IsComposition="false"
     IsMaxLength="false"
     NoMetaDataField="false"
-    GenerateInList="false"
+    GenerateInList="true"
     IsFixedLength="false"
     EnableAutoFill="false"
     IncludeInSearchField="false"
@@ -8542,7 +8545,7 @@
     SystemRequired="false"
     ObjectFieldNotRequired="false"
     SystemMaxLength="15"
-    DisplayInList="false"
+    DisplayInList="true"
     IsCustomFilter="false"
     MultiLine="false"
     IsTimeFrameFilter="false"
@@ -8566,8 +8569,11 @@
     InActive="false"
     DisplayLongName="false"
     FullFieldLable="&quot;GLAccountDisplayNumber&quot;"
-    DefaultText="&quot;DisplayNumber&quot;"
+    DefaultText="&quot;Display Number&quot;"
     FullLocalDefaultText="&quot;מספר כרטיס&quot;"
+    ListFieldLable="&quot;GLAccountDisplayNumberListLable&quot;"
+    ListLableDefaultText="&quot;Display Number&quot;"
+    ListLocalDefaultText="&quot;מספר כרטיס&quot;"
     IsNullable="true"
     IsForeignKey="false"
     DontBuildRelationOnDB="false"
@@ -8647,8 +8653,7 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsCompositKey="false" />
       <DCField
         DCFieldName="&quot;EnglishName&quot;"
         FieldName="&quot;EnglishName&quot;"
@@ -8662,8 +8667,7 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsCompositKey="false" />
       <DCField
         DCFieldName="&quot;LocalName&quot;"
         FieldName="&quot;LocalName&quot;"
@@ -8677,8 +8681,7 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsCompositKey="false" />
       <DCField
         DCFieldName="&quot;Code&quot;"
         FieldName="&quot;Code&quot;"
@@ -8692,8 +8695,7 @@
         IsAttribute="true"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsCompositKey="false" />
       <DCField
         DCFieldName="&quot;MainAddress&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -8708,8 +8710,7 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsCompositKey="false" />
       <DCField
         DCFieldName="&quot;VatNumber&quot;"
         DCVersion="&quot;&quot;"
@@ -8724,8 +8725,7 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsCompositKey="false" />
       <DCField
         DCFieldName="&quot;PartnerCode&quot;"
         FieldName="&quot;Code&quot;"
@@ -8739,8 +8739,7 @@
         IsAttribute="true"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsCompositKey="false" />
       <DCField
         DCFieldName="&quot;IsDisconnectedFromGLAccount&quot;"
         FieldName="&quot;IsDisconnectedFromGLAccount&quot;"
@@ -8754,8 +8753,35 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsCompositKey="false" />
+      <DCField
+        DCFieldName="&quot;ReceivablesAccountingCard&quot;"
+        FieldName="&quot;ReceivablesAccountingCard&quot;"
+        IsKey="false"
+        IsManualMapping="false"
+        IsMulti="false"
+        FieldsDataType="&quot;Text&quot;"
+        IsNullable="false"
+        IsSpecialField="false"
+        IsCustomType="false"
+        IsAttribute="false"
+        IgnoreCustomTypeCheck="false"
+        IsCloseField="false"
+        IsCompositKey="false" />
+      <DCField
+        DCFieldName="&quot;PayablesAccountingCard&quot;"
+        FieldName="&quot;PayablesAccountingCard&quot;"
+        IsKey="false"
+        IsManualMapping="false"
+        IsMulti="false"
+        FieldsDataType="&quot;Text&quot;"
+        IsNullable="false"
+        IsSpecialField="false"
+        IsCustomType="false"
+        IsAttribute="false"
+        IgnoreCustomTypeCheck="false"
+        IsCloseField="false"
+        IsCompositKey="false" />
     </DataContract>
     <DataContract
       Name="&quot;Customer&quot;"
@@ -8773,8 +8799,7 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsCompositKey="false" />
       <DCField
         DCFieldName="&quot;EnglishName&quot;"
         FieldName="&quot;EnglishName&quot;"
@@ -8788,8 +8813,7 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsCompositKey="false" />
       <DCField
         DCFieldName="&quot;LocalName&quot;"
         FieldName="&quot;LocalName&quot;"
@@ -8803,8 +8827,7 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsCompositKey="false" />
       <DCField
         DCFieldName="&quot;VatNumber&quot;"
         FieldName="&quot;VatNumber&quot;"
@@ -8818,8 +8841,7 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsCompositKey="false" />
       <DCField
         DCFieldName="&quot;PaymentTerm&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -8834,8 +8856,7 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsCompositKey="false" />
       <DCField
         DCFieldName="&quot;MainAddress&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -8850,8 +8871,7 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsCompositKey="false" />
       <DCField
         DCFieldName="&quot;Contacts&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -8867,8 +8887,7 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsCompositKey="false" />
       <DCField
         DCFieldName="&quot;BillingAddress&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -8883,8 +8902,7 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsCompositKey="false" />
       <DCField
         DCFieldName="&quot;GLAccount&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -8899,8 +8917,7 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsCompositKey="false" />
       <DCField
         DCFieldName="&quot;Code&quot;"
         FieldName="&quot;Code&quot;"
@@ -8914,8 +8931,7 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsCompositKey="false" />
       <DCField
         DCFieldName="&quot;PartnerCode&quot;"
         FieldName="&quot;PartnerCode&quot;"
@@ -8929,8 +8945,7 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsCompositKey="false" />
     </DataContract>
     <DataContract
       Name="&quot;Vendor&quot;"
@@ -8948,8 +8963,7 @@
         IsAttribute="true"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsCompositKey="false" />
       <DCField
         DCFieldName="&quot;EnglishName&quot;"
         FieldName="&quot;EnglishName&quot;"
@@ -8963,8 +8977,7 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsCompositKey="false" />
       <DCField
         DCFieldName="&quot;LocalName&quot;"
         FieldName="&quot;LocalName&quot;"
@@ -8978,8 +8991,7 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsCompositKey="false" />
       <DCField
         DCFieldName="&quot;VatNumber&quot;"
         FieldName="&quot;VatNumber&quot;"
@@ -8993,8 +9005,7 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsCompositKey="false" />
       <DCField
         DCFieldName="&quot;CreateDate&quot;"
         FieldName="&quot;CreateDate&quot;"
@@ -9008,8 +9019,7 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsCompositKey="false" />
       <DCField
         DCFieldName="&quot;PaymentTerm&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -9024,8 +9034,7 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsCompositKey="false" />
       <DCField
         DCFieldName="&quot;MainAddress&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -9040,8 +9049,7 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsCompositKey="false" />
       <DCField
         DCFieldName="&quot;GLAccount&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -9056,8 +9064,7 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsCompositKey="false" />
       <DCField
         DCFieldName="&quot;Code&quot;"
         FieldName="&quot;Code&quot;"
@@ -9071,8 +9078,7 @@
         IsAttribute="true"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsCompositKey="false" />
       <DCField
         DCFieldName="&quot;PartnerCode&quot;"
         FieldName="&quot;Code&quot;"
@@ -9086,8 +9092,7 @@
         IsAttribute="true"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsCompositKey="false" />
     </DataContract>
   </DataContracts>
   <AdditionalTextCodes />

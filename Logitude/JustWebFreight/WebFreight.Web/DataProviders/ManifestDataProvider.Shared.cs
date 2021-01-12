@@ -252,6 +252,8 @@ namespace WebFreight.Web.DataProviders
 
     public class NewManifestDetailsClass
     {
+        public string OnCarriageToPort { get; set; }
+        public string OnCarriageFromPort{get; set;}
         public string AMSBL { get; set; }
         public string FileNumber { get; set; }
         public string HAWB { get; set; }
@@ -384,7 +386,6 @@ namespace WebFreight.Web.DataProviders
         public string Notes { get; set; }
         public string Harmonize { get; set; }
         public double? Tare { get; set; }
-
         public string HorseName { get; set; }
         public int? HorseYearOfBirth { get; set; }
         public string HorseColor { get; set; }
@@ -398,6 +399,7 @@ namespace WebFreight.Web.DataProviders
         public string HorseCurrentStable { get; set; }
         public string HorseOwner { get; set; }
         public string HorseRemarks { get; set; }
+        public string Dimensions { get; set; }
     }
 
     public class GroupedContainersClass

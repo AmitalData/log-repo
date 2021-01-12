@@ -1,0 +1,102 @@
+<style>
+    .fields-wrapper > div{
+        line-height: 30px;
+        padding: 0px 15px;
+    }
+    .fields-wrapper > div::after{
+        clear: both;
+        content: ' ';
+        display: flex;
+    }
+    .force-disable {
+        opacity: 0.5 !important;
+        pointer-events: none !important;
+    }
+</style>
+<table>
+    <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+        <td colspan="2">
+            <ValidationSummary [ItemsSource]="ValidationErrorsList" ></ValidationSummary>
+        </td>
+    </tr>
+    <tr style="height: 110px;">
+        <td class="fields-wrapper">
+            <div>
+                <div float-start style="width: 160px;">{{'Journal.O.AmountsAndCurrencies' | TextCodeTranslationPipe}}</div>
+                <div float-start style="width: 20px; padding-top: 5px;">
+                    <CheckBox [IsChecked]="AmountsAndCurrencies" (Checked)="AmountsAndCurrencies = $event"></CheckBox>
+                </div>
+            </div>
+            <div>
+                <div float-start style="width: 160px;">{{'Journal.O.Dates' | TextCodeTranslationPipe}}</div>
+                <div float-start style="width: 20px; padding-top: 5px;">
+                    <CheckBox [IsChecked]="Dates" (Checked)="Dates = $event"></CheckBox>
+                </div>
+            </div>
+            <div>
+                <div>
+                    <div float-start style="width: 160px;">{{'Journal.O.ReferencesAndNotes' | TextCodeTranslationPipe}}
+                    </div>
+                    <div float-start style="width: 20px; padding-top: 5px;">
+                        <CheckBox [IsChecked]="ReferencesAndNotes" (Checked)="ReferencesAndNotes = $event"></CheckBox>
+                    </div>
+                </div>
+            </div>
+        </td>
+        <td class="fields-wrapper" >
+            <div>
+                <div float-start style="width: 160px;">{{'Accounting.General.O.AccountingDate' | TextCodeTranslationPipe}}</div>
+                <div [class.force-disable]="disableDates" float-start style="width: 120px">
+                    <LogDatePicker  [ObjectFieldName]="'AccountingDate'" [ObjectTableName]="'cheese'"
+                        [DataContext]="DataContext" [HideColumns]="true"  [SelectedDateValue]="AccountingDate"></LogDatePicker>
+                </div>
+            </div>
+            <div>
+                <div float-start style="width: 160px;">{{'Journal.F.DocumentDate' | TextCodeTranslationPipe}}</div>
+                <div [class.force-disable]="disableDates" float-start style="width: 120px">
+                    <LogDatePicker [ObjectFieldName]="'DocumentDate'" [ObjectTableName]="ObjectTableName"
+                        [DataContext]="DataContext" [HideColumns]="true"  [SelectedDateValue]="DocumentDate"></LogDatePicker>
+                </div>
+            </div>
+            <div>
+                <div float-start style="width: 160px;">{{'Journal.F.DueDate' | TextCodeTranslationPipe}}</div>
+                <div [class.force-disable]="disableDates" float-start style="width: 120px">
+                    <LogDatePicker [ObjectFieldName]="'DueDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"
+                        [HideColumns]="true"  [SelectedDateValue]="DueDate"></LogDatePicker>
+                </div>
+            </div>
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            <div></div>
+        </td>
+    </tr>   
+
+    <tr style="height: 32px;">
+        <td colspan="4" style="vertical-align: bottom">
+            <table style="height: 22px;">
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="Button" (click)="CancelButtonClicked()">{{'Accounting.General.B.Cancel' | TextCodeTranslationPipe}}</button>
+                    </td>
+
+                    <td style="width: 5px;">
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button  class="RedButton" (click)="OkButtonClicked()">{{'Journal.O.Copy' | TextCodeTranslationPipe}}</button>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+
+</table>

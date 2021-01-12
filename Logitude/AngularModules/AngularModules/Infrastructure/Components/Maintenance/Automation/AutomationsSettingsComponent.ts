@@ -54,16 +54,26 @@ export class AutomationsSettingsComponent implements OnInit {
     IsAddAtomationEnable: boolean = false;
     OnUpdateTabVisibility: boolean = false;
     ScheduleTabVisibility: boolean = false;
+    IsShowSendInterfaceResult: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(public _automationExtendedPMService: AutomationExtendedPMService, public _automationPMService: AutomationPMService) {
 
         this.objectFieldPMExtendedService = new ObjectFieldPMExtendedService();
+
+
+        if (FeatureLocator.HasFeaturePermession("Automation", "SENDINTERFACERESULT") && SessionLocator.LoggedUserPM.IsCustomerCare) {
+            this.IsShowSendInterfaceResult = true;
+        }
+
+
+
     }
 
     ngOnInit(
 
 
     ) {
+
 
     }
     EntityDisplayName: string;
@@ -183,6 +193,12 @@ export class AutomationsSettingsComponent implements OnInit {
                     this.AutomationList.push(automationItemViewModel);
 
                 });
+
+                if (!this.IsShowSendInterfaceResult) {
+                    this.AutomationList = this.AutomationList.filter(d => d.ResultCode != "SENDINTERFACE");
+                }
+
+
 
                 this.RefreshAutomationList("OnCreate");
                 this.RefreshAutomationList("OnUpdate");

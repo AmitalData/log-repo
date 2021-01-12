@@ -569,7 +569,7 @@
                                                 </td>
 
                                                 <!--Measurements-->
-                                                <td *ngIf="EntityPM.TypeCode != 'OFS'">
+                                                <td>
                                                     <table>
                                                         <tr class="FormFieldRow">
                                                             <td>
@@ -601,7 +601,7 @@
 
                                                         <tr class="FormFieldRow">
                                                             <td>
-                                                                <LogLov [ObjectFieldName]="'Surcharge3UOM'"
+                                                                <LogLov [ObjectFieldName]="'Surcharge3UOM'" 
                                                                         [ObjectTableName]="ObjectTableName"
                                                                         [DataContext]="DataContext"
                                                                         [SelectedValue]="Surcharge3UOM"
@@ -717,9 +717,6 @@
                                                     </table>
                                                 </td>
 
-                                                <td *ngIf="EntityPM.TypeCode == 'OFS'">
-                                                    <div></div>
-                                                </td>
                                             </tr>
                                         </table>
                                     </td>

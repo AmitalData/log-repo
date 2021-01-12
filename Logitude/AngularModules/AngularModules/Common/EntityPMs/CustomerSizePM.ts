@@ -59,7 +59,10 @@ export class CustomerSizePM {
     public OldEntityPM: CustomerSizePM;
 		
     public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
+       if(!this.DisableMarkAsDirty)
+       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -67,6 +70,7 @@ export class CustomerSizePM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "CustomerSize");
            
         }
+	 }
     }
     private MyClone: CustomerSizePM;
 

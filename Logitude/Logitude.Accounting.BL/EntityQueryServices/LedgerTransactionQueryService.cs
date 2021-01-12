@@ -33,6 +33,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
         {
             return this.repository.GetAnyLedgerTransactionByJournalId(journalId, tenant);
         }
+
         public string GetCurrencyWhenMultiOff(string gLAccointId, int tenant)
         {
             string anyCurrencyId = this.repository.GetAnyLedgerTransactionCurrency(gLAccointId, tenant);
@@ -477,6 +478,13 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             return pms;
         }
 
+        public IQueryable<LedgerTransaction> GetIQueryableLedgerTransactionsByGLAccountIdsList(List<string> GLAccountIdsList, int tenant)
+        {
+            IQueryable<LedgerTransaction> ledgerTransactionPOCOs = null;
+            ledgerTransactionPOCOs = repository.GetAll(tenant).Where(s => GLAccountIdsList.Contains(s.AccountId));
+             return ledgerTransactionPOCOs;
+        }
+
         public LedgerTransaction GetCreditTransactionByJournalId(string journalId, int tenant)
         {
             IQueryable<LedgerTransaction> ledgerTransactionPOCOs = repository.GetByJournalId(journalId, tenant);
@@ -498,6 +506,14 @@ namespace Logitude.Accounting.BL.EntityQueryServices
         {
             List<LedgerTransaction> ledgerTransactionPOCOs = null;
             ledgerTransactionPOCOs = repository.GetLedgerTransactionsByIdList(idList, tenant);
+            List<LedgerTransactionPM> pms = ledgerTransactionPOCOs.Select(poco => this.GetEntityPM(poco)).ToList();
+            return pms;
+        }
+
+        public List<LedgerTransactionPM> GetLedgerTransactionsByAccountIdListAndJournalId(List<string> accountIdList,string journalId, int tenant)
+        {
+            List<LedgerTransaction> ledgerTransactionPOCOs = null;
+            ledgerTransactionPOCOs = repository.GetLedgerTransactionsByAccountIdListAndJournalId(accountIdList, journalId, tenant);
             List<LedgerTransactionPM> pms = ledgerTransactionPOCOs.Select(poco => this.GetEntityPM(poco)).ToList();
             return pms;
         }

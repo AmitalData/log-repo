@@ -197,6 +197,9 @@ namespace HypredTest.ShipmentProxy {
         private string AccountingInformationIdentifierCode6Field;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<System.DateTime> AccrualsApprovalDateField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private System.Nullable<System.DateTime> ActualFinalArrivalDateField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
@@ -377,6 +380,9 @@ namespace HypredTest.ShipmentProxy {
         private bool ChargeStorageField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ChargeStorageCurrencyCodeField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string ChargeStorageCurrencyIdField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
@@ -518,6 +524,9 @@ namespace HypredTest.ShipmentProxy {
         private string ConsigneeStateIdField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ConsigneeVatNumberField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string ConsigneeZipCodeField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
@@ -554,7 +563,13 @@ namespace HypredTest.ShipmentProxy {
         private bool ConvertShipmentToFCLField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool ConvertShipmentToFTLField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private bool ConvertShipmentToLCLField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool ConvertShipmentToLTLField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private bool ConvertToCustomFileField;
@@ -759,6 +774,9 @@ namespace HypredTest.ShipmentProxy {
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private bool DocsSentToAgentField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string DocumentsApprovedByUserNameField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private System.Nullable<System.DateTime> DocumentsClosingDateField;
@@ -1196,10 +1214,34 @@ namespace HypredTest.ShipmentProxy {
         private string HouseField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<double> HousesACCTPayablesInLocalField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<double> HousesACCTPayablesInProfitField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<double> HousesACCTReceivablesInLocalField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<double> HousesACCTReceivablesInProfitField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string HousesDescriptionofGoodsField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string HousesNumbersField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<double> HousesOpenPayablesInLocalField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<double> HousesOpenPayablesInProfitField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<double> HousesOpenReceivablesInLocalField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<double> HousesOpenReceivablesInProfitField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string INTTRABookingErrorField;
@@ -1343,6 +1385,9 @@ namespace HypredTest.ShipmentProxy {
         private bool IsAccountingClosedField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool IsAccrualsApprovedField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private bool IsAddingStackEventsField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
@@ -1352,16 +1397,16 @@ namespace HypredTest.ShipmentProxy {
         private bool IsAssemblyField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private bool IsBondedWarehouseField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private bool IsBondedWarehouseChangedField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private bool IsBuildFromBookingField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private bool IsBuildFromQuoteField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool IsCFSWarehouseField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool IsCFSWarehouseChangedField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private bool IsCancelledField;
@@ -1392,6 +1437,9 @@ namespace HypredTest.ShipmentProxy {
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private bool IsExceptionResolvedField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool IsExternalAPIField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private bool IsFSRSentField;
@@ -3062,6 +3110,9 @@ namespace HypredTest.ShipmentProxy {
         private bool ViaColoaderField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ViewSharedDocumentsField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private System.Nullable<double> VolumeField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
@@ -3919,6 +3970,19 @@ namespace HypredTest.ShipmentProxy {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<System.DateTime> AccrualsApprovalDate {
+            get {
+                return this.AccrualsApprovalDateField;
+            }
+            set {
+                if ((this.AccrualsApprovalDateField.Equals(value) != true)) {
+                    this.AccrualsApprovalDateField = value;
+                    this.RaisePropertyChanged("AccrualsApprovalDate");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public System.Nullable<System.DateTime> ActualFinalArrivalDate {
             get {
                 return this.ActualFinalArrivalDateField;
@@ -4699,6 +4763,19 @@ namespace HypredTest.ShipmentProxy {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ChargeStorageCurrencyCode {
+            get {
+                return this.ChargeStorageCurrencyCodeField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ChargeStorageCurrencyCodeField, value) != true)) {
+                    this.ChargeStorageCurrencyCodeField = value;
+                    this.RaisePropertyChanged("ChargeStorageCurrencyCode");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public string ChargeStorageCurrencyId {
             get {
                 return this.ChargeStorageCurrencyIdField;
@@ -5310,6 +5387,19 @@ namespace HypredTest.ShipmentProxy {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ConsigneeVatNumber {
+            get {
+                return this.ConsigneeVatNumberField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ConsigneeVatNumberField, value) != true)) {
+                    this.ConsigneeVatNumberField = value;
+                    this.RaisePropertyChanged("ConsigneeVatNumber");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public string ConsigneeZipCode {
             get {
                 return this.ConsigneeZipCodeField;
@@ -5466,6 +5556,19 @@ namespace HypredTest.ShipmentProxy {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool ConvertShipmentToFTL {
+            get {
+                return this.ConvertShipmentToFTLField;
+            }
+            set {
+                if ((this.ConvertShipmentToFTLField.Equals(value) != true)) {
+                    this.ConvertShipmentToFTLField = value;
+                    this.RaisePropertyChanged("ConvertShipmentToFTL");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public bool ConvertShipmentToLCL {
             get {
                 return this.ConvertShipmentToLCLField;
@@ -5474,6 +5577,19 @@ namespace HypredTest.ShipmentProxy {
                 if ((this.ConvertShipmentToLCLField.Equals(value) != true)) {
                     this.ConvertShipmentToLCLField = value;
                     this.RaisePropertyChanged("ConvertShipmentToLCL");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool ConvertShipmentToLTL {
+            get {
+                return this.ConvertShipmentToLTLField;
+            }
+            set {
+                if ((this.ConvertShipmentToLTLField.Equals(value) != true)) {
+                    this.ConvertShipmentToLTLField = value;
+                    this.RaisePropertyChanged("ConvertShipmentToLTL");
                 }
             }
         }
@@ -6358,6 +6474,19 @@ namespace HypredTest.ShipmentProxy {
                 if ((this.DocsSentToAgentField.Equals(value) != true)) {
                     this.DocsSentToAgentField = value;
                     this.RaisePropertyChanged("DocsSentToAgent");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string DocumentsApprovedByUserName {
+            get {
+                return this.DocumentsApprovedByUserNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.DocumentsApprovedByUserNameField, value) != true)) {
+                    this.DocumentsApprovedByUserNameField = value;
+                    this.RaisePropertyChanged("DocumentsApprovedByUserName");
                 }
             }
         }
@@ -8248,6 +8377,58 @@ namespace HypredTest.ShipmentProxy {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<double> HousesACCTPayablesInLocal {
+            get {
+                return this.HousesACCTPayablesInLocalField;
+            }
+            set {
+                if ((this.HousesACCTPayablesInLocalField.Equals(value) != true)) {
+                    this.HousesACCTPayablesInLocalField = value;
+                    this.RaisePropertyChanged("HousesACCTPayablesInLocal");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<double> HousesACCTPayablesInProfit {
+            get {
+                return this.HousesACCTPayablesInProfitField;
+            }
+            set {
+                if ((this.HousesACCTPayablesInProfitField.Equals(value) != true)) {
+                    this.HousesACCTPayablesInProfitField = value;
+                    this.RaisePropertyChanged("HousesACCTPayablesInProfit");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<double> HousesACCTReceivablesInLocal {
+            get {
+                return this.HousesACCTReceivablesInLocalField;
+            }
+            set {
+                if ((this.HousesACCTReceivablesInLocalField.Equals(value) != true)) {
+                    this.HousesACCTReceivablesInLocalField = value;
+                    this.RaisePropertyChanged("HousesACCTReceivablesInLocal");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<double> HousesACCTReceivablesInProfit {
+            get {
+                return this.HousesACCTReceivablesInProfitField;
+            }
+            set {
+                if ((this.HousesACCTReceivablesInProfitField.Equals(value) != true)) {
+                    this.HousesACCTReceivablesInProfitField = value;
+                    this.RaisePropertyChanged("HousesACCTReceivablesInProfit");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public string HousesDescriptionofGoods {
             get {
                 return this.HousesDescriptionofGoodsField;
@@ -8269,6 +8450,58 @@ namespace HypredTest.ShipmentProxy {
                 if ((object.ReferenceEquals(this.HousesNumbersField, value) != true)) {
                     this.HousesNumbersField = value;
                     this.RaisePropertyChanged("HousesNumbers");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<double> HousesOpenPayablesInLocal {
+            get {
+                return this.HousesOpenPayablesInLocalField;
+            }
+            set {
+                if ((this.HousesOpenPayablesInLocalField.Equals(value) != true)) {
+                    this.HousesOpenPayablesInLocalField = value;
+                    this.RaisePropertyChanged("HousesOpenPayablesInLocal");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<double> HousesOpenPayablesInProfit {
+            get {
+                return this.HousesOpenPayablesInProfitField;
+            }
+            set {
+                if ((this.HousesOpenPayablesInProfitField.Equals(value) != true)) {
+                    this.HousesOpenPayablesInProfitField = value;
+                    this.RaisePropertyChanged("HousesOpenPayablesInProfit");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<double> HousesOpenReceivablesInLocal {
+            get {
+                return this.HousesOpenReceivablesInLocalField;
+            }
+            set {
+                if ((this.HousesOpenReceivablesInLocalField.Equals(value) != true)) {
+                    this.HousesOpenReceivablesInLocalField = value;
+                    this.RaisePropertyChanged("HousesOpenReceivablesInLocal");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<double> HousesOpenReceivablesInProfit {
+            get {
+                return this.HousesOpenReceivablesInProfitField;
+            }
+            set {
+                if ((this.HousesOpenReceivablesInProfitField.Equals(value) != true)) {
+                    this.HousesOpenReceivablesInProfitField = value;
+                    this.RaisePropertyChanged("HousesOpenReceivablesInProfit");
                 }
             }
         }
@@ -8885,6 +9118,19 @@ namespace HypredTest.ShipmentProxy {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool IsAccrualsApproved {
+            get {
+                return this.IsAccrualsApprovedField;
+            }
+            set {
+                if ((this.IsAccrualsApprovedField.Equals(value) != true)) {
+                    this.IsAccrualsApprovedField = value;
+                    this.RaisePropertyChanged("IsAccrualsApproved");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public bool IsAddingStackEvents {
             get {
                 return this.IsAddingStackEventsField;
@@ -8924,32 +9170,6 @@ namespace HypredTest.ShipmentProxy {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public bool IsBondedWarehouse {
-            get {
-                return this.IsBondedWarehouseField;
-            }
-            set {
-                if ((this.IsBondedWarehouseField.Equals(value) != true)) {
-                    this.IsBondedWarehouseField = value;
-                    this.RaisePropertyChanged("IsBondedWarehouse");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public bool IsBondedWarehouseChanged {
-            get {
-                return this.IsBondedWarehouseChangedField;
-            }
-            set {
-                if ((this.IsBondedWarehouseChangedField.Equals(value) != true)) {
-                    this.IsBondedWarehouseChangedField = value;
-                    this.RaisePropertyChanged("IsBondedWarehouseChanged");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
         public bool IsBuildFromBooking {
             get {
                 return this.IsBuildFromBookingField;
@@ -8971,6 +9191,32 @@ namespace HypredTest.ShipmentProxy {
                 if ((this.IsBuildFromQuoteField.Equals(value) != true)) {
                     this.IsBuildFromQuoteField = value;
                     this.RaisePropertyChanged("IsBuildFromQuote");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool IsCFSWarehouse {
+            get {
+                return this.IsCFSWarehouseField;
+            }
+            set {
+                if ((this.IsCFSWarehouseField.Equals(value) != true)) {
+                    this.IsCFSWarehouseField = value;
+                    this.RaisePropertyChanged("IsCFSWarehouse");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool IsCFSWarehouseChanged {
+            get {
+                return this.IsCFSWarehouseChangedField;
+            }
+            set {
+                if ((this.IsCFSWarehouseChangedField.Equals(value) != true)) {
+                    this.IsCFSWarehouseChangedField = value;
+                    this.RaisePropertyChanged("IsCFSWarehouseChanged");
                 }
             }
         }
@@ -9101,6 +9347,19 @@ namespace HypredTest.ShipmentProxy {
                 if ((this.IsExceptionResolvedField.Equals(value) != true)) {
                     this.IsExceptionResolvedField = value;
                     this.RaisePropertyChanged("IsExceptionResolved");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool IsExternalAPI {
+            get {
+                return this.IsExternalAPIField;
+            }
+            set {
+                if ((this.IsExternalAPIField.Equals(value) != true)) {
+                    this.IsExternalAPIField = value;
+                    this.RaisePropertyChanged("IsExternalAPI");
                 }
             }
         }
@@ -16329,6 +16588,19 @@ namespace HypredTest.ShipmentProxy {
                 if ((this.ViaColoaderField.Equals(value) != true)) {
                     this.ViaColoaderField = value;
                     this.RaisePropertyChanged("ViaColoader");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ViewSharedDocuments {
+            get {
+                return this.ViewSharedDocumentsField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ViewSharedDocumentsField, value) != true)) {
+                    this.ViewSharedDocumentsField = value;
+                    this.RaisePropertyChanged("ViewSharedDocuments");
                 }
             }
         }
@@ -25316,6 +25588,9 @@ namespace HypredTest.ShipmentProxy {
         private bool IsEditedByUserField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<bool> IsExpenseChargeField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private bool IsFromQuoteField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
@@ -25828,6 +26103,19 @@ namespace HypredTest.ShipmentProxy {
                 if ((this.IsEditedByUserField.Equals(value) != true)) {
                     this.IsEditedByUserField = value;
                     this.RaisePropertyChanged("IsEditedByUser");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<bool> IsExpenseCharge {
+            get {
+                return this.IsExpenseChargeField;
+            }
+            set {
+                if ((this.IsExpenseChargeField.Equals(value) != true)) {
+                    this.IsExpenseChargeField = value;
+                    this.RaisePropertyChanged("IsExpenseCharge");
                 }
             }
         }
@@ -27548,6 +27836,9 @@ namespace HypredTest.ShipmentProxy {
         private bool IsExpenseField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<bool> IsExpenseChargeField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private bool IsFixedPriceField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
@@ -27954,6 +28245,19 @@ namespace HypredTest.ShipmentProxy {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<bool> IsExpenseCharge {
+            get {
+                return this.IsExpenseChargeField;
+            }
+            set {
+                if ((this.IsExpenseChargeField.Equals(value) != true)) {
+                    this.IsExpenseChargeField = value;
+                    this.RaisePropertyChanged("IsExpenseCharge");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public bool IsFixedPrice {
             get {
                 return this.IsFixedPriceField;
@@ -28343,6 +28647,9 @@ namespace HypredTest.ShipmentProxy {
         private Simplog.Server.Infrastructure.ChangeSetOperation ChangeSetOpField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<int> ChargeableDaysField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private System.Nullable<int> DaysField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
@@ -28401,6 +28708,19 @@ namespace HypredTest.ShipmentProxy {
                 if ((this.ChangeSetOpField.Equals(value) != true)) {
                     this.ChangeSetOpField = value;
                     this.RaisePropertyChanged("ChangeSetOp");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<int> ChargeableDays {
+            get {
+                return this.ChargeableDaysField;
+            }
+            set {
+                if ((this.ChargeableDaysField.Equals(value) != true)) {
+                    this.ChargeableDaysField = value;
+                    this.RaisePropertyChanged("ChargeableDays");
                 }
             }
         }
@@ -31345,6 +31665,9 @@ namespace HypredTest.ShipmentProxy {
         private System.Nullable<System.DateTime> AccountingCloseDateField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<System.DateTime> AccrualsApprovalDateField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string ActivityByUserNameField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
@@ -31565,6 +31888,9 @@ namespace HypredTest.ShipmentProxy {
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private System.Nullable<System.DateTime> CutoffDateField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string DangerousUnNumberField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private System.Nullable<System.DateTime> DeclarationDateField;
@@ -31981,6 +32307,9 @@ namespace HypredTest.ShipmentProxy {
         private bool IsAccountingClosedField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool IsAccrualsApprovedField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private bool IsAnyConversationField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
@@ -31991,6 +32320,9 @@ namespace HypredTest.ShipmentProxy {
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private bool IsCancelledField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool IsDangerousField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private bool IsDepositionRequiredField;
@@ -32201,6 +32533,9 @@ namespace HypredTest.ShipmentProxy {
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string MainCarriageVesselNameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string MainHarmonizeField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private System.Nullable<System.DateTime> ManifestLastSharingDateField;
@@ -32827,6 +33162,19 @@ namespace HypredTest.ShipmentProxy {
                 if ((this.AccountingCloseDateField.Equals(value) != true)) {
                     this.AccountingCloseDateField = value;
                     this.RaisePropertyChanged("AccountingCloseDate");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<System.DateTime> AccrualsApprovalDate {
+            get {
+                return this.AccrualsApprovalDateField;
+            }
+            set {
+                if ((this.AccrualsApprovalDateField.Equals(value) != true)) {
+                    this.AccrualsApprovalDateField = value;
+                    this.RaisePropertyChanged("AccrualsApprovalDate");
                 }
             }
         }
@@ -33789,6 +34137,19 @@ namespace HypredTest.ShipmentProxy {
                 if ((this.CutoffDateField.Equals(value) != true)) {
                     this.CutoffDateField = value;
                     this.RaisePropertyChanged("CutoffDate");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string DangerousUnNumber {
+            get {
+                return this.DangerousUnNumberField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.DangerousUnNumberField, value) != true)) {
+                    this.DangerousUnNumberField = value;
+                    this.RaisePropertyChanged("DangerousUnNumber");
                 }
             }
         }
@@ -35588,6 +35949,19 @@ namespace HypredTest.ShipmentProxy {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool IsAccrualsApproved {
+            get {
+                return this.IsAccrualsApprovedField;
+            }
+            set {
+                if ((this.IsAccrualsApprovedField.Equals(value) != true)) {
+                    this.IsAccrualsApprovedField = value;
+                    this.RaisePropertyChanged("IsAccrualsApproved");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public bool IsAnyConversation {
             get {
                 return this.IsAnyConversationField;
@@ -35635,6 +36009,19 @@ namespace HypredTest.ShipmentProxy {
                 if ((this.IsCancelledField.Equals(value) != true)) {
                     this.IsCancelledField = value;
                     this.RaisePropertyChanged("IsCancelled");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool IsDangerous {
+            get {
+                return this.IsDangerousField;
+            }
+            set {
+                if ((this.IsDangerousField.Equals(value) != true)) {
+                    this.IsDangerousField = value;
+                    this.RaisePropertyChanged("IsDangerous");
                 }
             }
         }
@@ -36545,6 +36932,19 @@ namespace HypredTest.ShipmentProxy {
                 if ((object.ReferenceEquals(this.MainCarriageVesselNameField, value) != true)) {
                     this.MainCarriageVesselNameField = value;
                     this.RaisePropertyChanged("MainCarriageVesselName");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string MainHarmonize {
+            get {
+                return this.MainHarmonizeField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.MainHarmonizeField, value) != true)) {
+                    this.MainHarmonizeField = value;
+                    this.RaisePropertyChanged("MainHarmonize");
                 }
             }
         }

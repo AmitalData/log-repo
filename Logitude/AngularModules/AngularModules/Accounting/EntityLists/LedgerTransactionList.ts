@@ -60,6 +60,19 @@ export class LedgerTransactionList {
 	ReconciliationId: string;
 	PaymentReconciledAmount: number;
 	InProgressExternalReconcile: boolean;
+	OriginalAmount: number;
+	ReconcileMethodCode: string;
+	IsCumulativeForeignAmountPos: boolean;
+	IsForeignAmountCreditPos: boolean;
+	IsCumulativeLocalAmountPos: boolean;
+	IsLocalAmountCreditPos: boolean;
+	IsForeignAmountPos: boolean;
+	IsOriginalAmountPos: boolean;
+	IconCode: string;
+	ForeignAmountCreditWithSign: string;
+	CumulativeForeignAmountSign: string;
+	CalculatedLocalAmount: number;
+	CalculatedForeignAmount: number;
 	
 }
  

@@ -1,0 +1,308 @@
+h1 {
+    margin: 0;
+    text-transform: uppercase;
+    padding-top: 60px;
+    padding-bottom: 20px;
+    font-size: 28px;
+}
+.FlipImgHoriz {
+    -moz-transform: scaleX(-1);
+    -o-transform: scaleX(-1);
+    -webkit-transform: scaleX(-1);
+    transform: scaleX(-1);
+    filter: FlipH;
+    -ms-filter: "FlipH";
+}
+.circle-image {
+    background: #e5e9ef; /*#F2F4F7;*/
+    border-radius: 50%;
+    width: 80px !important;
+    height: 80px;
+    padding: 0 !important;
+    margin: 0 auto;
+    /* top: 50%; */
+    position: relative;
+    text-align: center;
+}
+
+.circle-image img {
+    width: 30px;
+    height: 24px;
+    position: relative;
+    top: calc(50% - 9px);
+}
+.shipment-header::after,
+.slider::after {
+    content: "";
+    display: block;
+    clear: both;
+}
+.slider-wrapper {
+    padding: 10px 0 50px 0;
+    background: RGB(242, 244, 247);
+    margin-bottom: 40px;
+    text-align: center;
+}
+.shipment-header {
+    padding: 40px 90px 20px 90px;
+    background: RGB(242, 244, 247);
+}
+.shipment-header > div {
+    float: left;
+    margin: 5px 30px;
+}
+
+.shipment-header .title {
+    font-size: 16px;
+    font-weight: bold;
+    color: var(--MainColor);
+}
+.shipment-header .title > a {
+    font-size: 14px;
+    font-weight: normal;
+}
+.shipment-header ul {
+    padding: 0;
+    margin: 0;
+}
+.shipment-header ul li {
+    list-style: none;
+    font-size: 15px;
+}
+.slider-wrapper {
+    height: 190px;
+}
+.pager.dim {
+    opacity: 0.3;
+    pointer-events: none;
+    cursor: auto;
+}
+.slider {
+    width: 1400px;
+    overflow: hidden;
+    /* box-sizing: border-box; */
+    /* margin: 0 50px; */
+    display: inline-block;
+    padding: 15px 0px;
+    /* float: left; */
+}
+.slider .cards {
+    width: 2500px;
+    height: 160px;
+    transition: margin-left 1s;
+    text-align: left;
+}
+.slider .cards::after,
+.cards::before {
+    content: "";
+    clear: both;
+}
+.pager {
+    width: 100px;
+    /* height: 160px; */
+    display: inline-block;
+    cursor: pointer;
+    /* float: left; */
+    /* padding: 15px 0px; */
+    position: relative;
+    height: 100%;
+    user-select: none;
+}
+.pager:active {
+    transform: scale(0.9);
+}
+.pager img {
+    overflow: auto;
+    margin: auto;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+}
+.slider .card.empty {
+    background: none;
+    box-shadow: none;
+    border: none;
+}
+.slider .card {
+    position: relative;
+    float: left;
+    width: 150px;
+    height: 130px;
+    background: white;
+    color: #444444;
+    border-radius: 5px;
+    margin: 0 10px;
+    padding: 15px;
+
+    box-shadow: 0px 0px 8px 0px #00000030;
+}
+.slider .card + .active {
+    background: var(--MainColor);
+    color: white;
+}
+.slider .card + .warning::after {
+    content: "!";
+    display: block;
+    width: 25px;
+    height: 25px;
+    border: 3px solid white;
+    background: red;
+    position: absolute;
+    top: -12px;
+    right: -9px;
+    border-radius: 50%;
+    text-align: center;
+    font-weight: bold;
+    font-size: 18px;
+    /* z-index: 1; */
+    color: white;
+}
+.slider .card + .dim {
+    background: none;
+    box-shadow: none;
+    border: 1px solid gray;
+    color: gray;
+}
+.slider .card:hover {
+    box-shadow: 0px 0px 8px 0px #00000060;
+}
+.slider .card .code {
+    height: 22px;
+    width: 100%;
+    color: black;
+    text-align: right;
+    font-weight: bold;
+}
+.slider .card .date {
+    font-size: 45px;
+    margin-bottom: 10px;
+}
+.slider .card .date > span {
+    font-size: 16px;
+    font-weight: bold;
+}
+.slider .card .title {
+    font-size: 15px;
+    font-weight: 600;
+}
+.slider .card .desc {
+    font-size: 13px;
+    line-height: 18px;
+}
+
+.data-cards::after,
+.data-cards::before {
+    content: "";
+    clear: both;
+    display: table;
+}
+.data-cards > div {
+    width: 180px;
+    min-height: 60px;
+    line-height: 24px;
+    margin: 10px;
+    float: left;
+    font-size: 16px;
+}
+
+.data-cards .title {
+    font-size: 12px;
+    color: var(--MainColor);
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.PanelsNavigator {
+    margin: 25px 75px;
+    /* width: 1000px;
+    overflow: hidden; */
+}
+
+.PanelsNavigator button {
+    padding: 8px 20px;
+    border-radius: 25px;
+    box-shadow: 0px 0px 8px 0px #00000025;
+    color: rgb(66, 66, 66);
+    background: white;
+    border: none;
+    cursor: pointer;
+    margin-right: 20px;
+    margin-bottom: 5px;
+}
+.PanelsNavigator button:hover {
+    box-shadow: 0px 0px 8px 0px #00000040;
+}
+.PanelsNavigator button:active {
+    border: none;
+    outline: none;
+    transform: scale(0.96);
+}
+.PanelsNavigator button:focus {
+    border: none;
+    outline: none;
+}
+
+@media screen and (max-width: 479px) {
+    .shipment-details-container {
+        display: flex;
+        flex-direction: column;
+        padding-top: 50px;
+    }
+    .slider-wrapper {
+        height: 110px;
+        background: none;
+        margin: 0 -15px;
+    }
+    .slider {
+        width: 100% !important;
+    }
+    .slider .card {
+        width: 115px;
+        height: 90px;
+    }
+    .slider .card .code {
+        height: 15px;
+        font-size: 11px;
+    }
+    .slider .card .date {
+        font-size: 33px;
+    }
+    .slider .card .title {
+        font-size: 14px;
+        line-height: 18px;
+    }
+
+    .data-cards {
+        /* background: white;
+            box-shadow: 0px 0px 8px 0px #00000025;
+            border-radius: 8px; */
+    }
+    .data-cards > div {
+        width: calc(50% - 20px);
+    }
+
+    .PanelsNavigator {
+        width: 100%;
+        margin: 20px 0 0 0;
+        overflow: auto;
+        height: 60px;
+    }
+    .panels-wrapper {
+        width: 650px;
+    }
+    .PanelsNavigator button {
+        box-shadow: none;
+        background: none;
+        border: 1px solid gray;
+        padding: 4px 14px;
+        margin-right: 10px;
+    }
+    .PanelsNavigator button.active {
+        border: none;
+        background: #e9f2ff;
+        box-shadow: 6px 4px 10px 0px #00000020;
+        font-weight: bold;
+    }
+}

@@ -951,6 +951,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 IsFollowUp = true,
                 FollowUpEnglishName = "Warehouse Release",
                 FollowUpLocalName = "Warehouse Release",
+                EntityStatusId = tenantEntityStatus.Where(d => d.Tenant == 0 && d.Code == "SRIM").FirstOrDefault().Id,
                 ObjectTableId = shipmentObject.Id,
                 ShortView = true,
                 EventTypeCategoryCode = "LEG",

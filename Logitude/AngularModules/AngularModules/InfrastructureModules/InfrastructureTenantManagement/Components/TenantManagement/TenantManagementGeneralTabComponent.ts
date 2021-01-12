@@ -19,6 +19,10 @@ import {GlobalDomainService} from '../../../../Common/Services/GlobalDomainServi
 import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
 import {TenantManagementList} from '../../../../Infrastructure/EntityLists/TenantManagementList';
 import {ApiQueryFilters} from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
+import { TenantLoginPolicyPMService } from '../../../../Common/Services/StandardPMs/TenantLoginPolicyPMService';
+import { TenantLoginPolicyPM } from '../../../../Common/EntityPMs/TenantLoginPolicyPM';
+import { TextCodeTranslator } from '../../../../Infrastructure/Utilities/TextCodeTranslator';
+import { ObjectsLocator } from '../../../../Infrastructure/Locators/ObjectsLocator';
 @Component({
     
     selector: 'TenantManagementGeneralTabComponent',
@@ -36,14 +40,31 @@ export class TenantManagementGeneralTabComponent extends BaseComponent implement
     public BluesnapCRMContractIdFilterItems: ApiQueryFilters;
     public BluesnapInttraStockContractIdFilterItems: ApiQueryFilters;
     public IsMainAdditionalPackageApplied: boolean = false;
+    private tenantLoginPolicyPMService: TenantLoginPolicyPMService;
+    private CurrentSession = SessionLocator.SelectedSession;
+
+    public IsLogBoxTenant: boolean = false;
+
+
+
+
+
+
+
     constructor(public entityArgs: EntityArgs, private entityResourceService: EntityResourceService) {
         super();
         this.EntityPM = this.entityArgs.EntityPM;
         this.IsMainAdditionalPackageApplied = this.EntityPM.MainAdditionalPackageApplied;
         this.iGlobalDomainService = new GlobalDomainService();
+        this.tenantLoginPolicyPMService = new TenantLoginPolicyPMService();
+
+        if (this.IsLogBoxEnvironment()){
+            this.IsLogBoxTenant = true;
+            this.LoadTenantLoginPolicy();
+        }
+
         this.LoadParentTenants();
         this.Listen();
-
         this.BluesnapContractIdFilterItems = new ApiQueryFilters();
         this.BluesnapContractIdFilterItems.addAdditionalFilter("BluesnapContractTypeCode", "BA", null, null, "Equals", false, false, false, "string", false, true);
 
@@ -71,6 +92,8 @@ export class TenantManagementGeneralTabComponent extends BaseComponent implement
             this.SaveCompletedEvent = this.entityArgs.EditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                 if (isSaveSuccess) {
                     this.EntityPM = this.entityArgs.EditComponent.EntityPM;
+                    if (this.IsTenantLoginPolicyPMChanged) this.SaveTenantLoginPolicy();
+
                     this.IsMainAdditionalPackageApplied = this.EntityPM.MainAdditionalPackageApplied;
                     this.BuildPackagesList();
                     this.BuildAddOnsList();
@@ -167,6 +190,15 @@ export class TenantManagementGeneralTabComponent extends BaseComponent implement
             this.UIProperties.SetEnabled("IsSystemSupportEnabled", this.ObjectTableName, false);
         }
     }
+
+    IsLogBoxEnvironment() {
+        var deploymentStage = ObjectsLocator.GlobalSetting.DeploymentStage ? ObjectsLocator.GlobalSetting.DeploymentStage.toString().toLowerCase() : "";
+
+        return (deploymentStage == "logboxwe1" || deploymentStage == "test2" || deploymentStage == "logboxpre") ? true : false;
+    }
+
+
+
     private SetUIProperties_NumberOfUsers() {
         var isEditable = false;
 
@@ -352,6 +384,69 @@ export class TenantManagementGeneralTabComponent extends BaseComponent implement
                 this.BuildParentTenantsList(myList);
             }
         });
+    }
+
+    IsTenantLoginPolicyPMChanged: boolean = false;
+
+    private keepUserLoggedIn: boolean = false;
+    get KeepUserLoggedIn() {
+        if (this.tenantLoginPolicyPM) {
+            this.keepUserLoggedIn = this.tenantLoginPolicyPM.KeepUserLoggedIn;
+        }
+        return this.keepUserLoggedIn;
+    }
+    set KeepUserLoggedIn(value: boolean) {
+        if (this.tenantLoginPolicyPM) {
+            this.keepUserLoggedIn = value;
+
+            if (this.tenantLoginPolicyPM.KeepUserLoggedIn != value) {
+                this.tenantLoginPolicyPM.KeepUserLoggedIn = value;
+                this.IsTenantLoginPolicyPMChanged = true;
+                this.EntityPM.IsDirty = true;
+            }
+        }
+    }
+
+    IsNewTenantLoginPolicy: boolean = false;
+    public tenantLoginPolicyPM: TenantLoginPolicyPM = null;
+    LoadTenantLoginPolicy() {
+
+        this.tenantLoginPolicyPMService.get(SessionLocator.Tenant).subscribe((response: any) => {
+            if (!response.HasError) {
+                if (response.Result) {
+                    this.tenantLoginPolicyPM = response.Result;
+                } else {
+                    this.tenantLoginPolicyPM = this.tenantLoginPolicyPMService.GetNewEntityPM();
+                    this.tenantLoginPolicyPM.Tenant = SessionLocator.Tenant;
+                    this.tenantLoginPolicyPM.LoginPolicyCode = "NOREST";
+                    this.tenantLoginPolicyPM.IsEnabledForSpecificUsers = false;
+                    this.tenantLoginPolicyPM.TwoFactorInternalIPs = "";
+                    this.tenantLoginPolicyPM.AllowedIPs = "";
+                    this.tenantLoginPolicyPM.ExcludeInternalIPs = false;
+                    this.tenantLoginPolicyPM.SessionTimeout = 999;
+                    this.IsNewTenantLoginPolicy = true;
+                }
+            }
+            });
+    }
+
+    SaveTenantLoginPolicy() {
+        //this.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Saving"));
+        if (this.IsNewTenantLoginPolicy) {
+            this.tenantLoginPolicyPMService.insert(this.tenantLoginPolicyPM).subscribe((response: any) => {
+                //this.CurrentSession.CurrentWindow.StopBusyIndicator();
+                this.IsNewTenantLoginPolicy = false;
+                this.tenantLoginPolicyPM = response.Result;
+                this.IsTenantLoginPolicyPMChanged = false;
+            });
+        }
+        else {
+            this.tenantLoginPolicyPMService.update(this.tenantLoginPolicyPM).subscribe((response: any) => {
+                //this.CurrentSession.CurrentWindow.StopBusyIndicator();
+                this.IsTenantLoginPolicyPMChanged = false;
+
+            });
+        }
     }
 
     //Parent Tenant

@@ -1206,6 +1206,22 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                     });
                 }
 
+                if (entityPM.InterestCreditLimit != entityPOCO.InterestCreditLimit)
+                {
+                    String notes = TranslateTextsClass.Translate("Accounting.General.O.OldValue", entityPM.Tenant, showLocals) + entityPOCO.InterestCreditLimit.ToString() + TranslateTextsClass.Translate("Accounting.General.O.NewValue", entityPM.Tenant, showLocals) + entityPM.InterestCreditLimit.ToString();
+                    EventTracer.CreateTraceEvent(new EventTracerArgs()
+                    {
+                        EntityId = entityPM.Id,
+                        Tenant = entityPM.Tenant,
+                        UserId = contact.Id,
+                        ObjectTableName = "GLAccount",
+                        IsAddedManually = false,
+                        EventTypeCode = "IRCH",
+                        Notes = notes,
+
+                    });
+                }
+
                 if (entityPM.ActiveForInterestCreditInvoice != entityPOCO.ActiveForInterestCreditInvoice)
                 {
                     String notes = TranslateTextsClass.Translate("Accounting.General.O.OldValue", entityPM.Tenant, showLocals) + entityPOCO.ActiveForInterestCreditInvoice.ToString() + TranslateTextsClass.Translate("Accounting.General.O.NewValue", entityPM.Tenant, showLocals) + entityPM.ActiveForInterestCreditInvoice.ToString();

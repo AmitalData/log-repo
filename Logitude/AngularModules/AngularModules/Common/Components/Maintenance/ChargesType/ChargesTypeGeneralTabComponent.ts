@@ -25,6 +25,8 @@ export class ChargesTypeGeneralTabComponent extends BaseComponent implements OnI
     public DisplaySATSettings: boolean = false;
     public DisplayRegoinalTax: boolean = false;
     public MeasurementsQueryFilters: ApiQueryFilters;
+    public IsChargeTypesRestrictedFeatureToggleOn = false;
+
     constructor(public entityArgs: EntityArgs) {
         super();
         this.EntityPM = this.entityArgs.EntityPM;
@@ -34,14 +36,20 @@ export class ChargesTypeGeneralTabComponent extends BaseComponent implements OnI
         if (SessionLocator.AccountingSettingPM.AllowRegionalTaxManagement) {
             this.DisplayRegoinalTax = true;
         }
+        this.ReadChargeTypesRestrictedFeatureToggleFeature();
     }
 
     ngOnInit() {
         if (this.EntityPM != null) {
             this.SetUIProperties();
             this.CheckWarnings();
-            this.BuildQueryFilters(); 
+            this.BuildQueryFilters();
         }
+    }
+
+    ReadChargeTypesRestrictedFeatureToggleFeature() {
+        this.IsChargeTypesRestrictedFeatureToggleOn = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "CTR" && d.TenantNumber == SessionLocator.Tenant)[0]
+            != null ? true : false;
     }
 
     private BuildQueryFilters() {
@@ -101,9 +109,18 @@ export class ChargesTypeGeneralTabComponent extends BaseComponent implements OnI
         this.UIProperties.SetEnabled("ApplyRegionalTax", this.ObjectTableName, fieldsEnabled);
         this.UIProperties.SetEnabled("HasPickup", this.ObjectTableName, fieldsEnabled);
         this.UIProperties.SetEnabled("HasDelivery", this.ObjectTableName, fieldsEnabled);
-        //if (this.IsBackToBack) {
-        //    this.UIProperties.SetEnabled("IsReceivable", this.ObjectTableName, false);
-        //}
+        this.UIProperties.SetEnabled("IsDirectionRestricted", this.ObjectTableName, fieldsEnabled);
+        this.UIProperties.SetEnabled("IsActiveInExport", this.ObjectTableName, fieldsEnabled);
+        this.UIProperties.SetEnabled("IsActiveInImport", this.ObjectTableName, fieldsEnabled);
+        this.UIProperties.SetEnabled("IsActiveInDomestic", this.ObjectTableName, fieldsEnabled);
+        this.UIProperties.SetEnabled("IsActiveInDrop", this.ObjectTableName, fieldsEnabled);
+        this.SetUIProperties_DirectionFields();
+    }
+    private SetUIProperties_DirectionFields() {
+        this.UIProperties.SetEnabled("IsActiveInExport", this.ObjectTableName, this.IsDirectionRestricted);
+        this.UIProperties.SetEnabled("IsActiveInImport", this.ObjectTableName, this.IsDirectionRestricted);
+        this.UIProperties.SetEnabled("IsActiveInDomestic", this.ObjectTableName, this.IsDirectionRestricted);
+        this.UIProperties.SetEnabled("IsActiveInDrop", this.ObjectTableName, this.IsDirectionRestricted);
     }
 
     public ValidationWarningsList: string[];
@@ -396,5 +413,42 @@ export class ChargesTypeGeneralTabComponent extends BaseComponent implements OnI
         if (this.EntityPM.HasDelivery != newValue) {
             this.EntityPM.HasDelivery = newValue;
         }
+    }
+
+    get IsDirectionRestricted() { return this.EntityPM.IsDirectionRestricted; }
+    set IsDirectionRestricted(newValue: boolean) {
+        if (this.EntityPM.IsDirectionRestricted != newValue) {
+            this.EntityPM.IsDirectionRestricted = newValue;
+            this.SetUIProperties_DirectionFields();
+        }
+    }
+
+    get IsActiveInDomestic() { return this.EntityPM.IsActiveInDomestic; }
+    set IsActiveInDomestic(newValue: boolean) {
+        if (this.EntityPM.IsActiveInDomestic != newValue) {
+            this.EntityPM.IsActiveInDomestic = newValue;
+        }
+    }
+    get IsActiveInDrop() { return this.EntityPM.IsActiveInDrop; }
+    set IsActiveInDrop(newValue: boolean) {
+        if (this.EntityPM.IsActiveInDrop != newValue) {
+            this.EntityPM.IsActiveInDrop = newValue;
+        }
+    }
+    get IsActiveInExport() { return this.EntityPM.IsActiveInExport; }
+    set IsActiveInExport(newValue: boolean) {
+        if (this.EntityPM.IsActiveInExport != newValue) {
+            this.EntityPM.IsActiveInExport = newValue;
+        }
+    }
+    get IsActiveInImport() { return this.EntityPM.IsActiveInImport; }
+    set IsActiveInImport(newValue: boolean) {
+        if (this.EntityPM.IsActiveInImport != newValue) {
+            this.EntityPM.IsActiveInImport = newValue;
+        }
+    }
+
+    SetIsDirectionRestricted(value: boolean) {
+        this.IsDirectionRestricted = value;
     }
 }

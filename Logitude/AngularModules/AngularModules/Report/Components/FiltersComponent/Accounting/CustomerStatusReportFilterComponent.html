@@ -92,14 +92,14 @@
 
 <div style="overflow: auto;">
 
-    <table style="table-layout: fixed;">
+    <table style="table-layout: fixed;height:115px">
         <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
             <td>
                 <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
             </td>
         </tr>
 
-        <tr>
+        <tr  [hidden]="IsSchedulerReport && (ValidationErrorsList != null && ValidationErrorsList.length > 0)">
             <td style="color:#1B90CB; font-size:15px; line-height: 15px;padding-bottom: 7px;">{{ 'Accounting.General.O.FilterBy' | TextCodeTranslationPipe }}</td>
         </tr>
 
@@ -116,25 +116,24 @@
                             <td style="width: 200px;">
 
                                 <LogLabel [ObjectTableName]="'GLAccount'" [TextCode]="'GLAccount.O.Customer'"
-                                    [ObjectFieldName]="'Customer'" [NoObjectField]="true" [DataContext]="DataContext"></LogLabel>
+                                          [ObjectFieldName]="'Customer'" [NoObjectField]="true" [DataContext]="DataContext"></LogLabel>
 
                                 <!-- <ul class="FiltersMenu" [class.aboodRTLFilterMenu]="isRTL" float-start>
-                                    <li float-start id="filter_customer" (click)="FilterItemClicked('filter_customer')" style="height: 22px;"
-                                        [class.SelectedFilter]="filterSelectedValue === 'filter_customer'">
-                                        {{'GLAccount.O.Customer' | TextCodeTranslationPipe}}
-                                    </li>
-                                    <li float-start id="filter_chartOfAccount" (click)="FilterItemClicked('filter_chartOfAccount')" style="height: 22px;"
-                                        [class.SelectedFilter]="filterSelectedValue === 'filter_chartOfAccount'">
-                                        {{'GLAccount.F.ChartOfAccountsId' | TextCodeTranslationPipe}}
-                                    </li>
-                                </ul> -->
+                <li float-start id="filter_customer" (click)="FilterItemClicked('filter_customer')" style="height: 22px;"
+                    [class.SelectedFilter]="filterSelectedValue === 'filter_customer'">
+                    {{'GLAccount.O.Customer' | TextCodeTranslationPipe}}
+                </li>
+                <li float-start id="filter_chartOfAccount" (click)="FilterItemClicked('filter_chartOfAccount')" style="height: 22px;"
+                    [class.SelectedFilter]="filterSelectedValue === 'filter_chartOfAccount'">
+                    {{'GLAccount.F.ChartOfAccountsId' | TextCodeTranslationPipe}}
+                </li>
+            </ul> -->
 
                             </td>
 
                             <!-- 2 -->
                             <td style="width: 150px;">
-                                <LogLov
-                                        style="display: block;width: 130px;"
+                                <LogLov style="display: block;width: 130px;"
                                         [ObjectFieldName]="'Customer'"
                                         [ObjectTableName]="'GLAccount'"
                                         [DataContext]="DataContext"
@@ -146,15 +145,15 @@
                                 </LogLov>
 
                                 <!-- <LogLov *ngIf="filterSelectedValue === 'filter_chartOfAccount'"
-                                        style="display: block;width: 130px;"
-                                        [ObjectFieldName]="'ChartOfAccount'"
-                                        [ObjectTableName]="'GLAccount'"
-                                        [DependencyFilter2Value]="3"
-                                        [DataContext]="DataContext"
-                                        [SelectedValue]="ChartOfAccount"
-                                        [LookUpTableName]="'ChartOfAccount'"
-                                        [HideColumns]="true">
-                                </LogLov> -->
+                    style="display: block;width: 130px;"
+                    [ObjectFieldName]="'ChartOfAccount'"
+                    [ObjectTableName]="'GLAccount'"
+                    [DependencyFilter2Value]="3"
+                    [DataContext]="DataContext"
+                    [SelectedValue]="ChartOfAccount"
+                    [LookUpTableName]="'ChartOfAccount'"
+                    [HideColumns]="true">
+            </LogLov> -->
                             </td>
 
                             <!-- 3 -->
@@ -163,22 +162,22 @@
                             <!-- 4 -->
                             <td style="width: 150px;">
                                 <LogLabel [ObjectTableName]="'GLAccount'" [TextCode]="'GLAccount.O.Balance'"
-                                    [ObjectFieldName]="'Balance'" [NoObjectField]="true" [DataContext]="DataContext"></LogLabel>
+                                          [ObjectFieldName]="'Balance'" [NoObjectField]="true" [DataContext]="DataContext"></LogLabel>
                             </td>
 
                             <!-- 5 -->
                             <td style="width: 140px;">
                                 <ComboBox [ItemsSource]="BalanceTypes" (SelectedItemChanged)="BalanceTypeChanged($event)"
-                                style="display: block;width: 120px;" [SelectedItem]="SelectedBalanceTypeItem"
-                                [Binding]="showLocals ? 'LocalName' : 'EnglishName'" [IsDisabled]="IsBalanceTypeDisabled"></ComboBox>
+                                          style="display: block;width: 120px;" [SelectedItem]="SelectedBalanceTypeItem"
+                                          [Binding]="showLocals ? 'LocalName' : 'EnglishName'" [IsDisabled]="IsBalanceTypeDisabled"></ComboBox>
                             </td>
 
                             <!-- 6 -->
                             <td style="width: 180px;">
                                 <LogTextBox *ngIf="SelectedBalanceTypeCode === 'debt'" [ObjectFieldName]="'Balance'"
-                                    style="display: block;width: 130px;"
-                                    [InputType]="'decimal'" [DataContext]="DataContext" [Text]="Balance" [NoObjectField]="true"
-                                    [ObjectTableName]="'GLAccount'" [HideColumns]="true">
+                                            style="display: block;width: 130px;"
+                                            [InputType]="'decimal'" [DataContext]="DataContext" [Text]="Balance" [NoObjectField]="true"
+                                            [ObjectTableName]="'GLAccount'" [HideColumns]="true">
                                 </LogTextBox>
                             </td>
 
@@ -192,7 +191,7 @@
 
                             <!-- 1 -->
                             <td style="">
-                                <LogLabel [ObjectFieldName]="'SalesmanUserId'" [ObjectTableName]="'GLAccount'" [TextCode]="'Accounting.General.O.Salesman'"  [DataContext]="DataContext">
+                                <LogLabel [ObjectFieldName]="'SalesmanUserId'" [ObjectTableName]="'GLAccount'" [TextCode]="'Accounting.General.O.Salesman'" [DataContext]="DataContext">
                                 </LogLabel>
                             </td>
 
@@ -215,7 +214,7 @@
                             <!-- 4 -->
                             <td style="">
                                 <LogLabel [ObjectTableName]="'GLAccount'" [TextCode]="'GLAccount.O.IsCreditLimitSet'"
-                                    [ObjectFieldName]="'Balance'" [NoObjectField]="true" [DataContext]="DataContext"></LogLabel>
+                                          [ObjectFieldName]="'Balance'" [NoObjectField]="true" [DataContext]="DataContext"></LogLabel>
                             </td>
 
                             <!-- 5 -->
@@ -225,12 +224,10 @@
 
                             <!-- 6 -->
                             <td style="">
-
                             </td>
 
                             <!-- 7 -->
                             <td style="">
-
                             </td>
                         </tr>
 
@@ -240,7 +237,7 @@
                             <!-- 1 -->
                             <td style="">
                                 <LogLabel [ObjectFieldName]="'CollectorId'" [ObjectTableName]="'GLAccount'" [TextCode]="'Accounting.General.O.Collector'"
-                                        [DataContext]="DataContext"></LogLabel>
+                                          [DataContext]="DataContext"></LogLabel>
                             </td>
 
                             <!-- 2 -->
@@ -261,23 +258,21 @@
                             <!-- 4 -->
                             <td style="">
                                 <LogLabel [ObjectTableName]="'GLAccount'" [TextCode]="'AgingReport.O.CurrenciesDetailed'"
-                                        [DataContext]="DataContext"></LogLabel>
+                                          [DataContext]="DataContext"></LogLabel>
                             </td>
 
                             <!-- 5 -->
                             <td style="">
                                 <CheckBox [IsChecked]="CurrenciesDetailed"
-                                        (Checked)="CurrenciesDetailed = $event"></CheckBox>
+                                          (Checked)="CurrenciesDetailed = $event"></CheckBox>
                             </td>
 
                             <!-- 6 -->
                             <td style="">
-
                             </td>
 
                             <!-- 7 -->
                             <td style="">
-
                             </td>
                         </tr>
 
@@ -287,50 +282,50 @@
                             <!-- 1 -->
                             <td style="">
                                 <LogLabel [ObjectFieldName]="'Category'" [ObjectTableName]="'GLAccount'" [Text]="showLocals?'קטגוריה':'Category'"
-                                    [DataContext]="DataContext"></LogLabel>
+                                          [DataContext]="DataContext"></LogLabel>
                             </td>
 
                             <!-- 2 -->
                             <td style="">
                                 <ComboBox [ItemsSource]="CategoriesList"
-                                style="display: block;width: 130px;"
-                                (SelectedItemChanged)="SelectedItemChanged($event)" [IsDisabled]="IsCategoryDisabled"></ComboBox>
+                                          style="display: block;width: 130px;"
+                                          (SelectedItemChanged)="SelectedItemChanged($event)" [IsDisabled]="IsCategoryDisabled"></ComboBox>
                             </td>
 
                             <!-- 3 -->
                             <td style="">
                                 <div [ngSwitch]="SelectedCategory"
-                                style="display: block;width: 130px;"
-                                [class.disabled]="IsCategoryDisabled">
+                                     style="display: block;width: 130px;"
+                                     [class.disabled]="IsCategoryDisabled">
 
                                     <!-- Category 1 -->
                                     <LogLov *ngSwitchCase="'Category 1'" [ObjectFieldName]="'Category1'" [ObjectTableName]="'GLAccount'"
-                                        [DataContext]="DataContext" [DisplayMemberPath]="'LocalName'" [LookUpTableName]="'Category1'"
-                                        [HideColumns]="true">
+                                            [DataContext]="DataContext" [DisplayMemberPath]="'LocalName'" [LookUpTableName]="'Category1'"
+                                            [HideColumns]="true">
                                     </LogLov>
 
                                     <!-- Category 2 -->
                                     <LogLov *ngSwitchCase="'Category 2'" [ObjectFieldName]="'Category2'" [ObjectTableName]="'GLAccount'"
-                                        [DataContext]="DataContext" [DisplayMemberPath]="'LocalName'" [LookUpTableName]="'Category2'"
-                                        [HideColumns]="true">
+                                            [DataContext]="DataContext" [DisplayMemberPath]="'LocalName'" [LookUpTableName]="'Category2'"
+                                            [HideColumns]="true">
                                     </LogLov>
 
                                     <!-- Category 3 -->
                                     <LogLov *ngSwitchCase="'Category 3'" [ObjectFieldName]="'Category3'" [ObjectTableName]="'GLAccount'"
-                                        [DataContext]="DataContext" [DisplayMemberPath]="'LocalName'" [LookUpTableName]="'Category3'"
-                                        [HideColumns]="true">
+                                            [DataContext]="DataContext" [DisplayMemberPath]="'LocalName'" [LookUpTableName]="'Category3'"
+                                            [HideColumns]="true">
                                     </LogLov>
 
                                     <!-- Category 4 -->
                                     <LogLov *ngSwitchCase="'Category 4'" [ObjectFieldName]="'Category4'" [ObjectTableName]="'GLAccount'"
-                                        [DataContext]="DataContext" [DisplayMemberPath]="'LocalName'" [LookUpTableName]="'Category4'"
-                                        [HideColumns]="true">
+                                            [DataContext]="DataContext" [DisplayMemberPath]="'LocalName'" [LookUpTableName]="'Category4'"
+                                            [HideColumns]="true">
                                     </LogLov>
 
                                     <!-- Category 5 -->
                                     <LogLov *ngSwitchCase="'Category 5'" [ObjectFieldName]="'Category5'" [ObjectTableName]="'GLAccount'"
-                                        [DataContext]="DataContext" [DisplayMemberPath]="'LocalName'" [LookUpTableName]="'Category5'"
-                                        [HideColumns]="true">
+                                            [DataContext]="DataContext" [DisplayMemberPath]="'LocalName'" [LookUpTableName]="'Category5'"
+                                            [HideColumns]="true">
                                     </LogLov>
 
                                     <!-- Default -->
@@ -345,35 +340,37 @@
                             <!-- 4 -->
                             <td style="">
                                 <LogLabel [ObjectTableName]="'GLAccount'" [TextCode]="'GLAccount.O.SortBy'"
-                                    [ObjectFieldName]="'Balance'" [NoObjectField]="true" [DataContext]="DataContext"></LogLabel>
+                                          [ObjectFieldName]="'Balance'" [NoObjectField]="true" [DataContext]="DataContext"></LogLabel>
                             </td>
 
                             <!-- 5 -->
                             <td style="">
                                 <ComboBox [ItemsSource]="SortTypes" (SelectedItemChanged)="SortTypeChanged($event)" [SelectedItem]="SelectedSortTypeItem"
-                                    style="display: block;width: 120px;" [Binding]="showLocals ? 'LocalName' : 'EnglishName'"></ComboBox>
+                                          style="display: block;width: 120px;" [Binding]="showLocals ? 'LocalName' : 'EnglishName'"></ComboBox>
                             </td>
 
                             <!-- 6 -->
                             <td style="">
                                 <div style="display: inline-block;padding: 0px 7px;">
                                     <RadioButton float-start [Name]="'Ascending'" [IsChecked]="SelectedSortDirectionCode == 'Ascending'"
-                                        (Checked)="SelectedSortDirectionCode = 'Ascending'" [Text]="'Ascending'"></RadioButton>
+                                                 (Checked)="SelectedSortDirectionCode = 'Ascending'" [Text]="'Ascending'"></RadioButton>
                                 </div>
                                 <div style="display: inline-block;padding: 0px 7px;">
                                     <RadioButton float-start [Name]="'Descending'" [IsChecked]="SelectedSortDirectionCode == 'Descending'"
-                                        (Checked)="SelectedSortDirectionCode = 'Descending'" [Text]="'Descending'"></RadioButton>
+                                                 (Checked)="SelectedSortDirectionCode = 'Descending'" [Text]="'Descending'"></RadioButton>
                                 </div>
 
                                 <!-- <ComboBox [ItemsSource]="SortDirections" (SelectedItemChanged)="SortDirectionChanged($event)"
-                                    style="display: block;width: 120px;" [Binding]="showLocals ? 'LocalName' : 'EnglishName'"></ComboBox> -->
+                style="display: block;width: 120px;" [Binding]="showLocals ? 'LocalName' : 'EnglishName'"></ComboBox> -->
                             </td>
 
                             <!-- 7 -->
                             <td style="padding:  0 50px;">
                                 <div style="width: 90px;">
                                     <button class="GreenButton"
-                                        (click)="RunButtonClicked()">{{ 'AgingReport.O.RunReport' | TextCodeTranslationPipe }}</button>
+                                            (click)="RunButtonClicked()">
+                                        {{ RunReportTitle }}
+                                    </button>
                                 </div>
                             </td>
                         </tr>
@@ -381,7 +378,9 @@
                         <tr style="height: 15px;">
                             <td></td>
                         </tr>
-
+                        <tr [hidden]="IsSchedulerReport && (ValidationErrorsList != null && ValidationErrorsList.length > 0)" style="height: 15px;">
+                            <div></div>
+                        </tr>
                     </table>
                     <div *ngIf="!isReady" style="padding-top: 20px;padding-left: 20px;">
                         Loading...

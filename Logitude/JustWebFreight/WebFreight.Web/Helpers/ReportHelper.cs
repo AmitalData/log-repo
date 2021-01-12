@@ -763,6 +763,9 @@ namespace WebFreight.Web.Helpers
 
         public string BuildStimulReport(ReportFliter reportFliter)
         {
+            List<QueryFilterItem> reportFilterItems = ResolveDateValues(reportFliter);
+            reportFliter.QueryFilterItemLists = reportFilterItems;
+
             string result = string.Empty;
             StiReport stiReport = GetStimulReportByReportFilter(reportFliter);
             if (stiReport != null)
@@ -770,6 +773,20 @@ namespace WebFreight.Web.Helpers
                 result = WriteReportToStorage(reportFliter, stiReport);
             }
             return result;
+        }
+
+        private List<QueryFilterItem> ResolveDateValues(ReportFliter reportFliter)
+        {
+            AdvancedDateResolver advancedDateResolver = new AdvancedDateResolver();
+            List<QueryFilterItem> reportFilterItems = reportFliter.QueryFilterItemLists;
+            reportFilterItems.ForEach(reportFilter =>
+            {
+                if (reportFilter.FieldDataType == "Date")
+                {
+                    reportFilter.FieldValue = advancedDateResolver.GetDateValueByOptionCode(reportFilter.FieldValue?.ToString());
+                }
+            });
+            return reportFilterItems;
         }
 
         public StiReport GetStimulReportByReportFilter(ReportFliter reportFliter)
@@ -849,6 +866,12 @@ namespace WebFreight.Web.Helpers
                     {
                         ExternalReconciliationLinesReportManager ExternalReconciliationManager = new ExternalReconciliationLinesReportManager(filters, reportFliter.tenant);
                         dataProvider = ExternalReconciliationManager.GetData();
+                        break;
+                    }
+                case "URDR":
+                    {
+                        UserDefinedReportManager UserDefinedReportManager = new UserDefinedReportManager(filters, reportFliter.tenant);
+                        dataProvider = UserDefinedReportManager.GetData();
                         break;
                     }
                 case "UPTR":
@@ -1047,7 +1070,8 @@ namespace WebFreight.Web.Helpers
 
                 case "ARID":
                     {
-                        dataProvider = logitudeReportsWebService.LoadARInvoicesDepositReportData(filters, reportFliter.tenant);
+                        AccountingDepositReportManager accountingDepositReportManager = new AccountingDepositReportManager(filters, reportFliter.tenant);
+                        dataProvider = accountingDepositReportManager.GetData();
                         break;
                     }
 
@@ -1848,6 +1872,14 @@ namespace WebFreight.Web.Helpers
                         ExternalReconciliationLinesReportDataProvider reportDataProvider = (ExternalReconciliationLinesReportDataProvider)serializer.Deserialize(memorystream);
                         reportDataProvider.Today_DateTime = TenantServerConfigration.GetCurrentDateTime(stimulReportDataProviderDetails.Tenant);
                         stimulReportDataProviderDetails.CurrentBusinessObject = new StiBusinessObject() { Category = "ERLR", Name = "ExternalReconciliationLinesReportDataProvider", BusinessObjectValue = reportDataProvider };
+                        break;
+                    }
+                case "URDR":
+                    {
+                        XmlSerializer serializer = new XmlSerializer(typeof(UserDefinedReportDataProvider));
+                        UserDefinedReportDataProvider reportDataProvider = (UserDefinedReportDataProvider)serializer.Deserialize(memorystream);
+                        reportDataProvider.Today_DateTime = TenantServerConfigration.GetCurrentDateTime(stimulReportDataProviderDetails.Tenant);
+                        stimulReportDataProviderDetails.CurrentBusinessObject = new StiBusinessObject() { Category = "URDR", Name = "UserDefinedReportDataProvider", BusinessObjectValue = reportDataProvider };
                         break;
                     }
 

@@ -152,6 +152,21 @@ export class CalculatedChartsOfAccountsLinePM {
     public set ChartOfAccountIdForValidate(newValue: string) { if (this.chartOfAccountIdForValidate != newValue) { this.chartOfAccountIdForValidate = newValue; this.MarkAsDirty("ChartOfAccountIdForValidate"); } }
        
 	 
+    private chartOfAccountTypeCode: string;
+    public get ChartOfAccountTypeCode() { return this.chartOfAccountTypeCode; }
+    public set ChartOfAccountTypeCode(newValue: string) { if (this.chartOfAccountTypeCode != newValue) { this.chartOfAccountTypeCode = newValue; this.MarkAsDirty("ChartOfAccountTypeCode"); } }
+       
+	 
+    private gLAccountDisplayNumber: string;
+    public get GLAccountDisplayNumber() { return this.gLAccountDisplayNumber; }
+    public set GLAccountDisplayNumber(newValue: string) { if (this.gLAccountDisplayNumber != newValue) { this.gLAccountDisplayNumber = newValue; this.MarkAsDirty("GLAccountDisplayNumber"); } }
+       
+	 
+    private chartsofAccountCode: string;
+    public get ChartsofAccountCode() { return this.chartsofAccountCode; }
+    public set ChartsofAccountCode(newValue: string) { if (this.chartsofAccountCode != newValue) { this.chartsofAccountCode = newValue; this.MarkAsDirty("ChartsofAccountCode"); } }
+       
+	 
 
     public OldEntityPM: CalculatedChartsOfAccountsLinePM;
 	
@@ -166,7 +181,10 @@ export class CalculatedChartsOfAccountsLinePM {
     public UniqueKey: string;
 	 	
     public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
+       if(!this.DisableMarkAsDirty)
+       {
         this.IsDirty = true;
 		  if (this.EntityParentPM) {
             this.EntityParentPM.MarkAsDirty();
@@ -176,6 +194,7 @@ export class CalculatedChartsOfAccountsLinePM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "CalculatedChartsOfAccountsLine");
            
         }
+       }
     }
 
     private MyClone: CalculatedChartsOfAccountsLinePM;

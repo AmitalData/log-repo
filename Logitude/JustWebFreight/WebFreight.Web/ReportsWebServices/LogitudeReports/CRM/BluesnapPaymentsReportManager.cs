@@ -17,6 +17,9 @@ using System.Xml.Serialization;
 using WebFreight.Web.DataProviders;
 using System.Net;
 using System.Data.Entity;
+using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.BL.CommonDataModel.EntityPMs;
+using WebFreight.Web.Helpers;
 
 namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Bluesnap
 {
@@ -29,10 +32,11 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Bluesnap
         private BluesnapPaymentsDataProvider iDataProvider;
         private IQueryable<TenantJoinBluesnapTransactionList> iQueryable_JoinTenantBluesnapTransaction;
         private IQueryable<BluesnapTransaction> iQueryable_BluesnapTransactions;
+        ICommonDataContext commonDataContext;
         IBlobService storageservice;
         DocumentRepository documentRepository;
         private List<BlusnapTransactionsList> otherTenantsTransactions;
-
+        private List<CustomerCRMData> customers_CRM;
         public BluesnapPaymentsReportManager(byte[] xmlFilters, int tenant)
         {
             this.tenant = tenant;
@@ -43,6 +47,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Bluesnap
             QueryOperations iQueryOperations = (QueryOperations)xmlSerializer.Deserialize(memoryStream);
             this.FilterByDates(iQueryOperations);
             this.FilterByShowAllRecurringTenants(iQueryOperations);
+            commonDataContext = CommonDataContext.GetContext(tenant); 
         }
 
         private void FilterByDates(QueryOperations iQueryOperations)
@@ -113,13 +118,20 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Bluesnap
         private void BuildSourceData()
         {
             IGlobalContext globalObjectContext = GlobalContext.GetContext();
-            ICommonDataContext iContext = CommonDataContext.GetContext(tenant);
             IQueryable<TenantManagement> iQueryable_Tenantmanagements = (from a in globalObjectContext.TenantManagements.Include("GlobalTenant")
                                                                          where a.GlobalTenant.IsActive && a.IsRecurring == true && a.RecurringPeriodCode == "MO" && a.PaymentChannelCode == "PL"
                                                                          select a);
-            //IQueryable<TenantManagement> iQueryable_Tenantmanagements = globalObjectContext.TenantManagements.Where(a => a.IsRecurring == true && a.RecurringPeriodCode == "MO" && a.PaymentChannelCode == "PL");
             iQueryable_BluesnapTransactions = globalObjectContext.BluesnapTransactions;
             iQueryable_BluesnapTransactions = iQueryable_BluesnapTransactions.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.TransactionDate) >= System.Data.Entity.DbFunctions.TruncateTime(fromDate) && System.Data.Entity.DbFunctions.TruncateTime(d.TransactionDate) <= System.Data.Entity.DbFunctions.TruncateTime(toDate));
+            List<string> tenantsIds = iQueryable_Tenantmanagements.ToList().Select(e => e.Id.ToString()).ToList();
+            this.customers_CRM = (from a in commonDataContext.Cards.Include("Customer")
+                             where a.Tenant == 341 && !string.IsNullOrEmpty(a.ReceivablesAccountingCard) && tenantsIds.Contains(a.ReceivablesAccountingCard)  
+                                  select new CustomerCRMData
+                                  {
+                                      EnglishName = a.EnglishName,
+                                      Code = a.Code,
+                                      ReceivablesAccountingCard = a.ReceivablesAccountingCard
+                                  }).ToList();
 
             this.iQueryable_JoinTenantBluesnapTransaction = (from tenantmanagements in iQueryable_Tenantmanagements
                                                              select new TenantJoinBluesnapTransactionList()
@@ -138,12 +150,13 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Bluesnap
                                                                                      Tenant = a.Tenant,
                                                                                      DocumentId = a.DocumentId,
                                                                                      TransactionDate = a.TransactionDate,
+                                                                                     InvoiceAmountUSD = a.InvoiceAmountInUSD,
+                                                                                     TaxAmountUSD = a.TaxAmountInUSD,
+                                                                                     ContractId = a.ContractNumber
                                                                                  }).ToList(),
                                                              });
 
         }
-
-       
 
         private void BuildReportData()
         {
@@ -159,10 +172,10 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Bluesnap
             foreach (var item in otherTenantTransactions_List)
             {
                 bool isAddingTenant = true;
-                if(item.ParentTenantId != null)
+                if (item.ParentTenantId != null)
                 {
                     var parentTenant = (from a in iQueryable_JoinTenantBluesnapTransaction where a.Tenant == item.ParentTenantId select a).FirstOrDefault();
-                    if(parentTenant != null)
+                    if (parentTenant != null)
                     {
                         if (parentTenant.NoPaymentForChildTenants)
                         {
@@ -206,7 +219,6 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Bluesnap
                 itemRecord.Notes = "unmatched transaction";
                 tenantZeroTransactions.Add(itemRecord);
             }
-
             this.iDataProvider.BlusnapTransactionsList.AddRange(tenantZeroTransactions);
         }
 
@@ -223,7 +235,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Bluesnap
                     {
                         foreach (BluesnapTransactionItem transaction in item.Transactions)
                         {
-                            var queryParameters = DeserializeDocumentBody(transaction.DocumentId, transaction.Tenant);
+                            var queryParameters = BluesnapHelper.DeserializeDocumentBody(transaction.DocumentId, transaction.Tenant);
                             string shopperId = null;
                             if (queryParameters != null && queryParameters.Count > 0)
                             {
@@ -237,7 +249,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Bluesnap
                             {
                                 ShopperId = shopperId,
                                 DocumentId = transaction.DocumentId,
-                                Tenant = transaction.Tenant, 
+                                Tenant = transaction.Tenant,
                                 TransactionDate = transaction.TransactionDate,
                             });
                         }
@@ -251,6 +263,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Bluesnap
             var itemRecord = new BlusnapTransactionsList();
             itemRecord.Tenant = item.Tenant;
             itemRecord.TenantName = item.TenantName;
+
             itemRecord.ShopperId = item.ShopperId;
             itemRecord.AmountToPay = item.AmountToPay;
             itemRecord.TransactionCount = item.Transactions != null ? item.Transactions.Count() : 0;
@@ -265,6 +278,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Bluesnap
             {
                 otherTenantsTransactions.Add(itemRecord);
             }
+            itemRecord.CRMCustomer = this.customers_CRM.Where(e => e.ReceivablesAccountingCard == item.Tenant.ToString()).Select(a=>a.Code).FirstOrDefault();
         }
 
         private void CalculateContractCountAndTotalPayments(BlusnapTransactionsList itemRecord, List<BluesnapTransactionItem> transactions)
@@ -273,78 +287,14 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Bluesnap
             List<string> Contracts = new List<string>();
             foreach (var transaction in transactions)
             {
-                var queryParameters = DeserializeDocumentBody(transaction.DocumentId, transaction.Tenant);
-                if (queryParameters != null && queryParameters.Count > 0)
-                {
-                    if (queryParameters.ContainsKey("contractId"))
-                    {
-                        Contracts.Add(queryParameters["contractId"]);
-                    }
-
-                    if (queryParameters.ContainsKey("invoiceAmountUSD"))
-                    {
-                        if(queryParameters["invoiceAmountUSD"] != null)
-                        {
-                            double result = 0;
-                            Double.TryParse(queryParameters["invoiceAmountUSD"], out result);
-                            totalPayments += result;
-                        }
-                    }
-
-                    if (queryParameters.ContainsKey("taxAmountUSD"))
-                    {
-                        if (queryParameters["taxAmountUSD"] != null)
-                        {
-                            double result = 0;
-                            Double.TryParse(queryParameters["taxAmountUSD"], out result);
-                            totalPayments -= result;
-                        }
-                    }
-                }
+                Contracts.Add(transaction.ContractId);
+                totalPayments += transaction.InvoiceAmountUSD;
+                totalPayments = transaction.InvoiceAmountUSD < 0 ? totalPayments + transaction.TaxAmountUSD : totalPayments - transaction.TaxAmountUSD;
             }
             itemRecord.ContractCount = new HashSet<string>(Contracts).Count();
             itemRecord.TotalPayments = totalPayments;
         }
 
-        private Dictionary<string, string> DeserializeDocumentBody(string documentId, int tenant)
-        {
-            Dictionary<string, string> queryParameters = null;
-            Document document = documentRepository.GetSingleDocument(tenant, documentId);
-            if (document != null)
-            {
-                BlobFileInfo fileInfo = new BlobFileInfo()
-                {
-                    FileName = document.Id,
-                    FolderName = document.Folder,
-                    Extension = document.Extension,
-                    Tenant = tenant,
-                    FileSize = document.FileSize,
-                };
-
-                byte[] fileData = storageservice.Read(fileInfo);
-
-                if (fileData != null)
-                {
-                    string Stringdetails = Encoding.UTF8.GetString(fileData);
-                    queryParameters = new Dictionary<string, string>();
-                    string[] querySegments = Stringdetails.Split('&');
-                    foreach (string segment in querySegments)
-                    {
-                        string[] parts = segment.Split('=');
-                        if (parts.Length > 0)
-                        {
-                            string key = parts[0].Trim(new char[] { '?', ' ' });
-                            string val = parts[1].Trim();
-                            if (!queryParameters.ContainsKey(key))
-                            {
-                                queryParameters.Add(WebUtility.UrlDecode(key), WebUtility.UrlDecode(val));
-                            }
-                        }
-                    }
-                }
-            }
-            return queryParameters;
-        }
     }
 
     public class TenantJoinBluesnapTransactionList
@@ -370,5 +320,15 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Bluesnap
         public string DocumentId { get; set; }
         public DateTime? TransactionDate { get; set; }
         public string ShopperId { get; set; }
+        public double? InvoiceAmountUSD { get; set; }
+        public double? TaxAmountUSD { get; set; }
+        public string ContractId { get; set; }
+    }
+
+    public class CustomerCRMData
+    {
+        public string EnglishName { get; set; }
+        public string Code { get; set; }
+        public string ReceivablesAccountingCard { get; set; }
     }
 }

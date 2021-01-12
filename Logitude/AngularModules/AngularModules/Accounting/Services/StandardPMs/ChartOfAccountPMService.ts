@@ -153,6 +153,7 @@ export class ChartOfAccountPMService {
         if (!entityPM) {
             
             entityPM = new ChartOfAccountPM();
+			entityPM.DisableMarkAsDirty = true;
         }
 
 		var customFields: Array<string> = [];
@@ -193,6 +194,8 @@ export class ChartOfAccountPMService {
             entityPM.OldEntityPM = null;
         }
 		entityPM.IsDirty = false;
+	    entityPM.DisableMarkAsDirty = false;
+
         return entityPM;
     }
 

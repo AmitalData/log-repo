@@ -43,6 +43,7 @@ namespace WebFreight.Web.DataProviders
         public string TotalVolume { get; set; }
         public string PrepaidCollect { get; set; }
         public string PlaceAndDateOfIssue { get; set; }
+        public string PlaceAndDateOfIssue_Local { get; set; }
         public string NumberOfOriginals { get; set; }//custom
         public string Signature { get; set; }
         public string AgentInfo { get; set; }
@@ -218,6 +219,10 @@ namespace WebFreight.Web.DataProviders
         public string ConsigneeNotImporterAddress_NoState { get; set; }
         public double? TotalPrepaid { get; set; }
         public double? TotalCollect { get; set; }
+        public double? TotalPrepaidInProfitCurrency { get; set; }
+        public double? TotalPrepaidInLocalCurrency { get; set; }
+        public double? TotalCollectInProfitCurrency { get; set; }
+        public double? TotalCollectInLocalCurrency { get; set; }
 
         public string ShipperATTN { get; set; }
         public string ConsigneeATTN { get; set; }
@@ -250,7 +255,12 @@ namespace WebFreight.Web.DataProviders
         public string ChargeTypeEnglish { get; set; }
         public string ChargeTypeLocal { get; set; }
         public double? PrepaidChargeAmount { get; set; }
+        public double? PrepaidChargeAmountInProfitCurrency { get; set; }
+        public double? PrepaidChargeAmountInLocalCurrency { get; set; }
         public double? CollectChargeAmount { get; set; }
+        public double? CollectChargeAmountInProfitCurrency { get; set; }
+        public double? CollectChargeAmountInLocalCurrency { get; set; }
+
         public string Remark { get; set; }
         public string CurrencyCode { get; set; }
         public string CurrencyName { get; set; }

@@ -36,7 +36,7 @@ using Simplog.Data.ShipmentsModel;
         }
 
 		
-		public ShipmentLevel GetShipmentLevelByCode(string Code,int Tenant)
+		public ShipmentLevel GetShipmentLevelByCode(string Code,int Tenant,string ComputingPartnerName = "")
         { 
 		    try
             {
@@ -46,7 +46,7 @@ using Simplog.Data.ShipmentsModel;
 				 if (temp == null)
                     throw new ApplicationException("ShipmentLevel with Code " + Code + " doesn't exist");
 
-				return ShipmentLevelDataMapping(temp,Tenant);
+				return ShipmentLevelDataMapping(temp,Tenant,ComputingPartnerName);
 			}
             catch (Exception ex)
             {

@@ -124,9 +124,6 @@
     <Reference Include="Logitude.Customs.BL, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\LogitudeOldDlls.1.0.0\lib\Net40\Logitude.Customs.BL.dll</HintPath>
     </Reference>
-    <Reference Include="Logitude.XSD">
-      <HintPath>..\JustWebFreight\WebFreight.Web\bin\Logitude.XSD.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.Azure.KeyVault.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Azure.KeyVault.Core.1.0.0\lib\net40\Microsoft.Azure.KeyVault.Core.dll</HintPath>
       <Private>True</Private>
@@ -334,8 +331,10 @@
     <Compile Include="CommonDataModel\CloseTables\EnumGenerated\WeightUnitStruct.Generated.cs" />
     <Compile Include="CommonDataModel\CodePropertiesMapping\IncotermCodePropertiesMapping.cs" />
     <Compile Include="CommonDataModel\CustomFilters\AgentSharedManifestCustomFilter.cs" />
-    <Compile Include="CommonDataModel\CustomFilters\CardSearchFilter.cs" />
+    <Compile Include="CommonDataModel\CustomFilters\CardDataSearchService.cs" />
+    <Compile Include="CommonDataModel\CustomFilters\ChargesTypeCustomFilter.cs" />
     <Compile Include="CommonDataModel\CustomFilters\CommunicationLogCustomFilter.cs" />
+    <Compile Include="CommonDataModel\ExternalService\CustomerDataSearchService.cs" />
     <Compile Include="CommonDataModel\CustomFilters\CustomsShipperCustomFilter.cs" />
     <Compile Include="CommonDataModel\CustomFilters\AccountingPartnerCustomFilter.cs" />
     <Compile Include="CommonDataModel\EntityLists\AddressTypeList.cs" />
@@ -479,11 +478,14 @@
     <Compile Include="InvoiceModel\EntityPMs\ARPaymentChequeStatusReplicaPM.cs" />
     <Compile Include="InvoiceModel\EntityQueries\ARPaymentChequeReplicaQuery.cs" />
     <Compile Include="InvoiceModel\EntityQueries\ARPaymentChequeStatusReplicaQuery.cs" />
-    <Compile Include="InvoiceModel\Tools\Behaviours\APInvoiceFieldsBehaviour.cs" />
-    <Compile Include="InvoiceModel\Tools\Behaviours\APInvoiceLinesBehavior.cs" />
-    <Compile Include="InvoiceModel\Tools\Behaviours\APInvoiceTotalVatsBehavior.cs" />
+    <Compile Include="InvoiceModel\Tools\Behaviours\APInvoiceBehaviours\APInvoiceAmountDueBehaviour.cs" />
+    <Compile Include="InvoiceModel\Tools\Behaviours\APInvoiceBehaviours\APInvoiceFieldsBehaviour.cs" />
+    <Compile Include="InvoiceModel\Tools\Behaviours\APInvoiceBehaviours\APInvoiceLinesBehavior.cs" />
+    <Compile Include="InvoiceModel\Tools\Behaviours\APInvoiceBehaviours\APInvoiceTotalVatsBehavior.cs" />
     <Compile Include="ExternalService\EntityAutomationService.cs" />
+    <Compile Include="InvoiceModel\Tools\Behaviours\ARInvoiceBehaviours\ARInvoiceApproveBehaviour.cs" />
     <Compile Include="InvoiceModel\Tools\Behaviours\ARInvoiceBehaviours\ARInvoiceFieldsBehaviour.cs" />
+    <Compile Include="InvoiceModel\Tools\Behaviours\EntityAutomationAPInvoiceMappingPMFields.cs" />
     <Compile Include="InvoiceModel\Tools\Initializers\APInvoiceServiceInitializer.cs" />
     <Compile Include="InvoiceModel\Tools\Initializers\ARInvoiceServiceInitializer.cs" />
     <Compile Include="InvoiceModel\Tools\QuickbooksService.cs" />
@@ -604,9 +606,12 @@
     <Compile Include="QuoteModel\EntityQueries\Charts\TopFiveSalesmanQuery.cs" />
     <Compile Include="QuoteModel\EntityQueries\Charts\QuotesByCountryQuery.cs" />
     <Compile Include="QuoteModel\EntityQueries\Charts\StageFunnelQuery.cs" />
+    <Compile Include="QuoteModel\Tools\Behaviours\QuoteBehaviours\QuoteFieldsBehaviour.cs" />
+    <Compile Include="QuoteModel\Tools\Behaviours\QuoteBehaviours\QuoteSalesmanBehavior.cs" />
     <Compile Include="QuoteModel\Tools\DataMapping\QuoteMapping.QuoteClosingReasonService.cs" />
     <Compile Include="QuoteModel\Tools\EntityService\QuoteClosingReasonService.cs" />
     <Compile Include="QuoteModel\Tools\EntityService\QuoteSubjectService.cs" />
+    <Compile Include="QuoteModel\Tools\Initializers\QuoteServiceInitializer.cs" />
     <Compile Include="QuoteModel\Tools\TraceEvents\QuoteTracing.QuoteClosingReason.cs" />
     <Compile Include="Resolvers\LoggedContactResolver.cs" />
     <Compile Include="Mocks\MockLoggedContactUtil.cs" />
@@ -2414,6 +2419,7 @@
     <Compile Include="ShipmentsModel\APIDataContract\House.Generated.cs" />
     <Compile Include="ShipmentsModel\APIDataContract\InsidePackage.Generated.cs" />
     <Compile Include="ShipmentsModel\APIDataContract\Master.Generated.cs" />
+    <Compile Include="ShipmentsModel\APIDataContract\Messages\ShipmentNumbersXML.cs" />
     <Compile Include="ShipmentsModel\APIDataContract\OceanOrInlandPackage.Generated.cs" />
     <Compile Include="ShipmentsModel\APIDataContract\Payable.Generated.cs" />
     <Compile Include="ShipmentsModel\APIDataContract\PickUp.Generated.cs" />
@@ -2445,6 +2451,7 @@
     <Compile Include="ShipmentsModel\APIDataContract\QueryService\MainCarriageLegQueryService.cs" />
     <Compile Include="ShipmentsModel\APIDataContract\Receivable.Generated.cs" />
     <Compile Include="ShipmentsModel\APIDataContract\ShipmentLevel.Generated.cs" />
+    <Compile Include="ShipmentsModel\APIDataContract\GetShipmentNumbers.cs" />
     <Compile Include="ShipmentsModel\APIDataContract\ShipmentType.Generated.cs" />
     <Compile Include="ShipmentsModel\APIDataContract\SpecialServicesType.Generated.cs" />
     <Compile Include="ShipmentsModel\APIDataContract\MainCarriageLeg.cs" />
@@ -2681,9 +2688,20 @@
     <Compile Include="ShipmentsModel\Testing\General.cs" />
     <Compile Include="ShipmentsModel\Tools\Behaviours\IShipmentBehaviour.cs" />
     <Compile Include="ShipmentsModel\Tools\Behaviours\ShipmentBehaviourFacade.cs" />
+    <Compile Include="ShipmentsModel\Tools\Behaviours\ShipmentBehaviours\CompositionBehaviours\OrderPackagesBehaviour.cs" />
+    <Compile Include="ShipmentsModel\Tools\Behaviours\ShipmentBehaviours\MapCompositionBehaviour.cs" />
+    <Compile Include="ShipmentsModel\Tools\Behaviours\ShipmentBehaviours\ShipmentConversionBehaviour.cs" />
+    <Compile Include="ShipmentsModel\Tools\Behaviours\ShipmentBehaviours\ShipmentCustomerBehaviour.cs" />
+    <Compile Include="ShipmentsModel\Tools\Behaviours\ShipmentBehaviours\ShipmentCustomerUsersBehaviour.cs" />
+    <Compile Include="ShipmentsModel\Tools\Behaviours\ShipmentBehaviours\ShipmentCustomerWorkingDaysBehaviour.cs" />
+    <Compile Include="ShipmentsModel\Tools\Behaviours\ShipmentBehaviours\ShipmentFieldsBehaviour.cs" />
+    <Compile Include="ShipmentsModel\Tools\Behaviours\ShipmentBehaviours\ShipmentMasterEntityBehaviour.cs" />
+    <Compile Include="ShipmentsModel\Tools\Behaviours\ShipmentBehaviours\ShipmentNumberBehaviour.cs" />
+    <Compile Include="ShipmentsModel\Tools\Behaviours\ShipmentBehaviours\ShipmentPartnersBehaviour.cs" />
+    <Compile Include="ShipmentsModel\Tools\Behaviours\ShipmentBehaviours\ShipmentQuoteBehaviour.cs" />
+    <Compile Include="ShipmentsModel\Tools\Behaviours\ShipmentBehaviours\Validators\ShipmentMasterIsUsedValidator.cs" />
     <Compile Include="ShipmentsModel\Tools\Behaviours\ShipmentFinalArrivalDateBehaviour.cs" />
     <Compile Include="ShipmentsModel\Tools\Behaviours\UpdateCrossDockBehaviour.cs" />
-    <Compile Include="ShipmentsModel\Tools\Behaviours\UpdateMasterHousesBehaviour.cs" />
     <Compile Include="ShipmentsModel\Tools\Behaviours\UpdateShipmentComputedFieldsBehaviour.cs" />
     <Compile Include="ShipmentsModel\Tools\DataMapping\AWBSpecialHandlingCodeMapping.cs" />
     <Compile Include="ShipmentsModel\Tools\DataMapping\CustomsTransferHeaderMapping.cs" />
@@ -2725,9 +2743,6 @@
     <Compile Include="ShipmentsModel\Tools\EntityService\OceanInsightsRequestService.cs" />
     <Compile Include="ShipmentsModel\Tools\EntityService\ShipmentCarrierStatusService.cs" />
     <Compile Include="ShipmentsModel\Tools\EntityService\ShipmentService.cs" />
-    <Compile Include="ShipmentsModel\Tools\Behaviours\ShipmentFieldsBehaviour.cs" />
-    <Compile Include="ShipmentsModel\Tools\Behaviours\ShipmentNumberCounterBehaviour.cs" />
-    <Compile Include="ShipmentsModel\Tools\Behaviours\ShipmentQuoteUsageBehaviour.cs" />
     <Compile Include="ShipmentsModel\Tools\Initializers\ShipmentServiceInitializer.cs" />
     <Compile Include="ShipmentsModel\Tools\TraceEvents\CustomsTransferHeaderTracing.cs" />
     <Compile Include="ShipmentsModel\Tools\TraceEvents\MessagingStockTracing.cs" />
@@ -2832,7 +2847,6 @@
   <ItemGroup>
     <Folder Include="AccountingModel\APIDataContract\QueryService\" />
     <Folder Include="GlobalModel\APIDataContract\QueryService\" />
-    <Folder Include="InvoiceModel\Tools\Behaviours\APInvoiceBehaviours\" />
     <Folder Include="TaxesApprovalModel\" />
   </ItemGroup>
   <ItemGroup />

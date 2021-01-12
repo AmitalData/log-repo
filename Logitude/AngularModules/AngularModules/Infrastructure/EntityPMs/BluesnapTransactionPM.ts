@@ -55,11 +55,29 @@ export class BluesnapTransactionPM {
     public set LogitudeAmital(newValue: string) { if (this.logitudeAmital != newValue) { this.logitudeAmital = newValue; this.MarkAsDirty("LogitudeAmital"); } }
        
 	 
+    private invoiceAmountInUSD: number;
+    public get InvoiceAmountInUSD() { return this.invoiceAmountInUSD; }
+    public set InvoiceAmountInUSD(newValue: number) { if (this.invoiceAmountInUSD != newValue) { this.invoiceAmountInUSD = newValue; this.MarkAsDirty("InvoiceAmountInUSD"); } }
+       
+	 
+    private taxAmountInUSD: number;
+    public get TaxAmountInUSD() { return this.taxAmountInUSD; }
+    public set TaxAmountInUSD(newValue: number) { if (this.taxAmountInUSD != newValue) { this.taxAmountInUSD = newValue; this.MarkAsDirty("TaxAmountInUSD"); } }
+       
+	 
+    private contractNumber: string;
+    public get ContractNumber() { return this.contractNumber; }
+    public set ContractNumber(newValue: string) { if (this.contractNumber != newValue) { this.contractNumber = newValue; this.MarkAsDirty("ContractNumber"); } }
+       
+	 
 
     public OldEntityPM: BluesnapTransactionPM;
 		
     public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
+       if(!this.DisableMarkAsDirty)
+       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -67,6 +85,7 @@ export class BluesnapTransactionPM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "BluesnapTransaction");
            
         }
+	 }
     }
     private MyClone: BluesnapTransactionPM;
 

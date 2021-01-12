@@ -64,22 +64,18 @@
     <Compile Include="EntitiesInitializer\ShipmentReceivableInitializer.cs" />
     <Compile Include="Initialize.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\ExternalDirectAPITestService.cs" />
+    <Compile Include="Services\ShipmentIntegrationService.cs" />
     <Compile Include="Services\ShipmentTestService.cs" />
     <Compile Include="ShipmentPreperationCalls.cs" />
     <Compile Include="ShipmentVariables.cs" />
-    <Compile Include="Tests\CreateShipment.cs" />
-    <Compile Include="Tests\IntegrationShipmentPickUpDeliveriesPackages.cs" />
-    <Compile Include="Tests\IntegrationShipmentDeliveries.cs" />
-    <Compile Include="Tests\IntegrationShipmentPickUps.cs" />
-    <Compile Include="Tests\IntegrationShipmentPayable.cs" />
-    <Compile Include="Tests\IntegrationShipmentReceivable.cs" />
-    <Compile Include="Tests\IntegrationShipmentPackages.cs" />
-    <Compile Include="Tests\ShipmentOrderPackagesTest.cs" />
+    <Compile Include="Tests\ExternalAPIs\DirectTest.cs" />
+    <Compile Include="Tests\ExternalAPIs\HouseTest.cs" />
+    <Compile Include="Tests\ExternalAPIs\MasterTest.cs" />
     <Compile Include="Tests\ShipmentPackageTest.cs" />
     <Compile Include="Tests\ShipmentProfitTest.cs" />
     <Compile Include="Tests\ShipmentRoutingTest.cs" />
     <Compile Include="Tests\ShipmentStatusTest.cs" />
-    <Compile Include="Tests\ShipmentsTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="..\Logitude.IntegrationTest.Core\Config\Connection.appSettings.config">

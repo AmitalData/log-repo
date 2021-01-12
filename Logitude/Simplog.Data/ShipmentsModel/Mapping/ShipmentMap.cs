@@ -134,6 +134,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.PreCarriageVesselId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.OnCarriageVesselId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.QuoteId).HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.QuoteNumber).HasMaxLength(20).IsUnicode(false);
             this.Property(t => t.BookingId).HasMaxLength(15).IsUnicode(false);            
             this.Property(t => t.ShipmentReceivableStatusCode).HasMaxLength(4).IsUnicode(false);
             this.Property(t => t.ShipmentPayableStatusCode).HasMaxLength(4).IsUnicode(false);
@@ -491,6 +492,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.ShipmentPickUpIndex).HasColumnName("ShipmentPickUpIndex");
             this.Property(t => t.ShipmentDeliveryIndex).HasColumnName("ShipmentDeliveryIndex");
             this.Property(t => t.QuoteId).HasColumnName("QuoteId");
+            this.Property(t => t.QuoteNumber).HasColumnName("QuoteNumber");
             this.Property(t => t.BookingId).HasColumnName("BookingId");
             this.Property(t => t.ShipmentReceivableStatusCode).HasColumnName("ShipmentReceivableStatusCode");
             this.Property(t => t.ShipmentPayableStatusCode).HasColumnName("ShipmentPayableStatusCode");
@@ -756,8 +758,20 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.WeightRoundingCode).HasColumnName("WeightRoundingCode");
             this.Property(t => t.IsCFSWarehouse).HasColumnName("IsCFSWarehouse");
             this.Property(t => t.IsCFSWarehouseChanged).HasColumnName("IsCFSWarehouseChanged");
+            this.Property(t => t.IsAccrualsApproved).HasColumnName("IsAccrualsApproved");
+            this.Property(t => t.AccrualsApprovalDate).HasColumnName("AccrualsApprovalDate");
 
-            
+            this.Property(t => t.HousesOpenPayablesInLocal).HasColumnName("HousesOpenPayablesInLocal");
+            this.Property(t => t.HousesOpenPayablesInProfit).HasColumnName("HousesOpenPayablesInProfit");
+            this.Property(t => t.HousesACCTPayablesInLocal).HasColumnName("HousesACCTPayablesInLocal");
+            this.Property(t => t.HousesACCTPayablesInProfit).HasColumnName("HousesACCTPayablesInProfit");
+
+            this.Property(t => t.HousesOpenReceivablesInLocal).HasColumnName("HousesOpenReceivablesInLocal");
+            this.Property(t => t.HousesOpenReceivablesInProfit).HasColumnName("HousesOpenReceivablesInProfit");
+            this.Property(t => t.HousesACCTReceivablesInLocal).HasColumnName("HousesACCTReceivablesInLocal");
+            this.Property(t => t.HousesACCTReceivablesInProfit).HasColumnName("HousesACCTReceivablesInProfit");
+
+
             if (dbms == "oracle")
             {
                 this.Property(t => t.AccountedReceivablesInLocalCurrency).HasColumnName("AccountedReceivablesInLocal").IsRequired();

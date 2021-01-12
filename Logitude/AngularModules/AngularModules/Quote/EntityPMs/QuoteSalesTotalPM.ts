@@ -39,7 +39,10 @@ export class QuoteSalesTotalPM {
     public OldEntityPM: QuoteSalesTotalPM;
 		
     public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
+       if(!this.DisableMarkAsDirty)
+       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -47,6 +50,7 @@ export class QuoteSalesTotalPM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "QuoteSalesTotal");
            
         }
+	 }
     }
     private MyClone: QuoteSalesTotalPM;
 

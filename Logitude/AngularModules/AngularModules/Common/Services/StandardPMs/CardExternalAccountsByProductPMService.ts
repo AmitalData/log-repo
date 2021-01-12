@@ -153,6 +153,7 @@ export class CardExternalAccountsByProductPMService {
         if (!entityPM) {
             
             entityPM = new CardExternalAccountsByProductPM();
+			entityPM.DisableMarkAsDirty = true;
         }
 
 		var customFields: Array<string> = [];
@@ -193,6 +194,8 @@ export class CardExternalAccountsByProductPMService {
             entityPM.OldEntityPM = null;
         }
 		entityPM.IsDirty = false;
+	    entityPM.DisableMarkAsDirty = false;
+
         return entityPM;
     }
 

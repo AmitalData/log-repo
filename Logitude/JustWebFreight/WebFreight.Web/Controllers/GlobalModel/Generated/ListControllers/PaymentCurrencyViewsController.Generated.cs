@@ -174,7 +174,7 @@ namespace WebFreight.Web.Controllers.GlobalModel.Generated.ListControllers
                         else
                             queryOperations.SetFilter(filterName, filterValue1, false, filterOperator, filterValue2, true);
                     }
-
+					
 
 
                 }
@@ -211,6 +211,7 @@ namespace WebFreight.Web.Controllers.GlobalModel.Generated.ListControllers
                 GenericFilter genericFilter = new GenericFilter();
                 GenericSort sortClass = new GenericSort();
 
+								
                 IGlobalContext MyContext = GlobalContext.GetContext();
                 PaymentCurrencyRepository  paymentCurrencyRepository = new PaymentCurrencyRepository(MyContext);
                 IQueryable<PaymentCurrency> entityPocos = paymentCurrencyRepository.GetPaymentCurrencies();
@@ -228,7 +229,8 @@ namespace WebFreight.Web.Controllers.GlobalModel.Generated.ListControllers
 
                 entityLists = genericFilter.GetFilteredQuery<PaymentCurrencyList>(listQueryOperation, entityLists);
 
-		 
+		      
+			  								
                 if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
                  {
                    PropertyInfo propInfo = typeof(PaymentCurrencyList).GetProperty(queryOperations.SortByColumnName);
@@ -292,18 +294,18 @@ namespace WebFreight.Web.Controllers.GlobalModel.Generated.ListControllers
                     }
 				 }
                 }
-            }
-		    else
+            }					  						
+	       else
             {
                 entityLists = entityLists.OrderBy(d => d.Name);
-            }
+            } 
 
 			ServiceResponse response = new ServiceResponse();
 			
 			if (filters.GetCount)
               {
 					response.Count = entityLists.Count();
-			  }
+    		  }
 			  	if(!queryOperations.GetAll)
 				 {
 

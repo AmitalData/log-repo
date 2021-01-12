@@ -142,11 +142,18 @@ namespace Logitude.BL.GlobalModel.EntityLists
         public string SecondaryColor { get; set; }
         public decimal Opacity { get; set; }
         public string BackgroundId { get; set; }
+        public string ComapnylogoId { get; set; }
+        public string BrowserIconId { get; set; }
+
         public int? TotalNumberOfUsers { get; set; }
         public int? TotalFreeUsers { get; set; }
         public double? AveragePrice { get; set; }
         public double? TotalPaymentamount { get; set; }
         public bool NoPaymentForChildTenants { get; set; }
-
+        public DateTime? LastEbookingSentDate { get; set; }
+        public DateTime? LastSISentDate { get; set; }
+        public int NumberOfBookingSentLastWeek { get; set; }
+        public int NumberOfSISentLastWeek { get; set; }
+        public DateTime? LastContainerStatusReceived { get; set; }
     }
 }

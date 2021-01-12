@@ -309,7 +309,10 @@ export class ShipmentComputedFieldsPM {
     public OldEntityPM: ShipmentComputedFieldsPM;
 		
     public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
+       if(!this.DisableMarkAsDirty)
+       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -317,6 +320,7 @@ export class ShipmentComputedFieldsPM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "ShipmentComputedFields");
            
         }
+	 }
     }
     private MyClone: ShipmentComputedFieldsPM;
 

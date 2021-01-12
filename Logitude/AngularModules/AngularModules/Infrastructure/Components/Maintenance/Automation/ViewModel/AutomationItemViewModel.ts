@@ -1,4 +1,4 @@
-﻿
+
 import {AutomationPM} from '../../../../../Common/EntityPMs/AutomationPMExtended';
 import {AppTool} from '../../../../../Infrastructure/Tools';
 import {FeatureLocator} from '../../../../../Infrastructure/Utilities/FeatureLocator';
@@ -109,6 +109,8 @@ export class AutomationItemViewModel {
             else if (entityPM.ResultCode == "DOCOUTFOLLOWUP") this.ResultName = "Doc Out F/U Creation";
             else if (entityPM.ResultCode == "SETSLA") this.ResultName = "Set SLA";
             else if (entityPM.ResultCode == "QUEUE") this.ResultName = "Queued Task";
+            else if (entityPM.ResultCode == "SENDINTERFACE") this.ResultName = "Send Interface";
+
         }
 
         if (!FeatureLocator.HasFeaturePermession("Automation", "UPDATE")) this.IsEditAtomationEnable = false;

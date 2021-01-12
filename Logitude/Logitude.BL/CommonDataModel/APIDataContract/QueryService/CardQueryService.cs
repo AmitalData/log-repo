@@ -59,13 +59,13 @@ namespace Logitude.BL.CommonDataModel.APIDataContract.ApiV1
 
         
 
-        public Card CardCustomDataMapping(string Id, int Tenant)
+        public Card CardCustomDataMapping(string Id, int Tenant, string ComputingPartnerName = "")
         {
             try
             {
 
                 CardQueryService CardService0 = new CardQueryService(Tenant);
-                var ChargeType = CardService0.GetCardById(Id, Tenant);
+                var ChargeType = CardService0.GetCardById(Id, Tenant,ComputingPartnerName);
                 return ChargeType;
             }
             catch (Exception ex)

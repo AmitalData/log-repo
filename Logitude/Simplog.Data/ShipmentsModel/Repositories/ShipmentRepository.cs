@@ -214,7 +214,7 @@ namespace Simplog.Data.ShipmentsModel.Repositories
         }
         public IQueryable<Shipment> GetShipmentsWithMasterData(int tenant)
         {
-            return (from record in context.Shipments.Include("ShipmentMasterData").Include("FromPort").Include("ToPort").Include("ProfitCurrency").Include("CustomerCard").Include("EntityStatus").Include("ShipmentType").Include("Incoterm").Include("ShipmentReceivableStatus").Include("ShipmentLevel").Include("NextLeg").Include("ShipmentType") where record.Tenant == tenant select record);
+            return (from record in context.Shipments.Include("ShipmentMasterData").Include("FromPort").Include("ToPort").Include("ProfitCurrency").Include("CustomerCard").Include("EntityStatus").Include("ShipmentType").Include("Incoterm").Include("ShipmentReceivableStatus").Include("ShipmentLevel").Include("NextLeg").Include("ShipmentType").Include("INTTRASIStatus") where record.Tenant == tenant select record);
         }
 
         public int GetShipmentsCountByQuoteId(string quoteId, int tenant)
@@ -544,6 +544,7 @@ namespace Simplog.Data.ShipmentsModel.Repositories
         public Shipment GetShipmentByMasterAndAirline(string myMasterNumber, string myAirlineId, int myTenant)
         {
             Shipment myEntity = null;
+            DateTime lastYearDate = TenantServerConfigration.GetCurrentDateTime(myTenant).AddYears(-1);
 
             myEntity = (from myShipment in context.Shipments
                         join db_Masters in context.ShipmentMasterDatas on myShipment.MasterShipmentDataId equals db_Masters.Id into ShipmentsMasters
@@ -553,6 +554,7 @@ namespace Simplog.Data.ShipmentsModel.Repositories
                         && myShipment.IsCancelled == false
                         && myMasterData.Master == myMasterNumber
                         && myMasterData.InterlineId == myAirlineId
+                        && myShipment.OperationalDate >= lastYearDate
                         select myShipment).FirstOrDefault();
 
 
@@ -566,31 +568,63 @@ namespace Simplog.Data.ShipmentsModel.Repositories
                             && myShipment.IsCancelled == false
                             && myMasterData.Master == myMasterNumber
                             && myMasterData.MainCarriageCarrierId == myAirlineId
+                            && myShipment.OperationalDate >= lastYearDate
                             select myShipment).FirstOrDefault();
             }
 
             return myEntity;
         }
 
-        public Shipment GetShipmentByHouseAndAirline(string myMaster, string myHouse, string myAirlineId, int myTenant)
+        public Shipment GetShipmentByHouseAndAirline(string master, string house, string airlineId, int tenant)
         {
-            Shipment myEntity = null;
+            Shipment output = null;
 
-            Shipment myMasterData = this.GetShipmentByMasterAndAirline(myMaster, myAirlineId, myTenant);
+            Shipment parentShipment = this.GetShipmentByMasterAndAirline(master, airlineId, tenant);
 
-            if (myMasterData != null)
+            if (parentShipment != null)
             {
-                myEntity = (from a in context.Shipments
+                output = (from a in context.Shipments
                             where
-                            a.Tenant == myTenant
+                            a.Tenant == tenant
                             && a.IsCancelled == false
                             && a.ShipmentLevelCode == "H"
-                            && a.House == myHouse
-                            && a.MasterShipmentDataId == myMasterData.Id
+                            && a.House == house
+                            && a.MasterShipmentDataId == parentShipment.Id
                             select a).FirstOrDefault();
             }
 
-            return myEntity;
+            return output;
+        }
+
+        public Shipment GetHouseShipmentIfSingle(string master, string airlineId, int tenant)
+        {
+            Shipment output = null;
+
+            Shipment parentShipment = this.GetShipmentByMasterAndAirline(master, airlineId, tenant);
+
+            if (parentShipment != null)
+            {
+                int count = (from a in context.Shipments
+                             where
+                             a.Tenant == tenant
+                             && a.IsCancelled == false
+                             && a.ShipmentLevelCode == "H"
+                              && a.MasterShipmentDataId == parentShipment.Id
+                             select a).Count();
+
+                if (count == 1)
+                {
+                    output = (from a in context.Shipments
+                              where
+                              a.Tenant == tenant
+                              && a.IsCancelled == false
+                              && a.ShipmentLevelCode == "H"
+                              && a.MasterShipmentDataId == parentShipment.Id
+                              select a).FirstOrDefault();
+                }
+            }
+
+            return output;
         }
 
         public Shipment GetShipmentByFSRData(string master, string airlineId, string directionId, int tenant)

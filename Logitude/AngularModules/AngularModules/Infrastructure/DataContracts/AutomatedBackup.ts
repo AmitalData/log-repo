@@ -4,8 +4,10 @@ import {AutomationSetValue} from './AutomationSetValue';
 import {AutomationCondition} from './AutomationCondition';
 import {AutomationFollowUp} from './AutomationFollowUp';
 import {AutomationQueuedTask} from './AutomationQueuedTask';
+import {AutomationSendInterface} from './AutomationSendInterface';
+import {AutomationSendDocument} from './AutomationSendDocument';
 
-@Injectable()
+@Injectable() 
 
 export class AutomatedBackup {
 
@@ -22,15 +24,23 @@ export class AutomatedBackup {
     public DelaytimeIndicator: string;
     public Type: string;
     public IsAutomationResultEmailAllActiveUsers: boolean;
+    public ReportTemplateId: string;
+
     AautomationConditionLists: AutomationCondition[];
     AutomationSetValueLists: AutomationSetValue[];
     DelayAautomationConditionLists: AutomationCondition[];
     AutomationFollowUp: AutomationFollowUp;
     AutomationQueuedTask: AutomationQueuedTask;
     AutomationSetSLAValue: AutomationSetSLAValue;
+    AutomationSendInterface: AutomationSendInterface;
+    AutomationSendDocument: AutomationSendDocument;
+
 }
 
 export class AutomationSetSLAValue {
     SLAId: string;
     ObjectFieldCode: string;
 }
+
+
+

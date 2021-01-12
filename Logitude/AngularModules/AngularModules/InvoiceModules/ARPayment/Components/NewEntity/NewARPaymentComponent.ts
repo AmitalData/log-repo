@@ -60,13 +60,16 @@ export class NewARPaymentComponent extends BaseComponent implements OnInit {
     private _glaService: GLAccountListService = new GLAccountListService();
     _PartnerTypeListService: PartnerTypeListService = new PartnerTypeListService();
     private CurrentSession = SessionLocator.SelectedSession;
-
+    DisplayFieldsFromList:string;
+    DisplayLocalFieldsFromList:string;
+    BillToLovSizeForFullAccounting:number;
     @ViewChild('Child', { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
     constructor(private _entityResourceService: EntityResourceService) {
         super();
+        this.accountingActivated = SessionLocator.TenantPM.AccountingActivated;
         this._entityResourceService.getEntityResourceByTableName("ARPayment", 0).subscribe((response: any) => {});
         this._entityResourceService.getEntityResourceByTableName("ARInvoice", 0).subscribe((response: any) => {});
-
+        this.InitializeBillToLov();
         this.loadPartnerTypesFilter();
 
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
@@ -79,7 +82,7 @@ export class NewARPaymentComponent extends BaseComponent implements OnInit {
         if (this.invoicePm == null) {
             this.invoicePm = new ARInvoicePM();
         }
-        this.accountingActivated = SessionLocator.TenantPM.AccountingActivated;
+        
 
         if(SessionLocator.TenantPM.AccountingActivated)
             this.invoicePm.IsFullAccounting = true;
@@ -95,6 +98,14 @@ export class NewARPaymentComponent extends BaseComponent implements OnInit {
 
         if (FeatureLocator.HasFeaturePermession("General", "General.Features.SystemCurrencies")) {
             this.IsEditExchangeRateVisible = true;
+        }
+    }
+
+    private InitializeBillToLov() {
+        if (this.accountingActivated) {
+            this.DisplayFieldsFromList = "Code,CalculatedEnglishName,GLAccountDisplayNumber,CityName,CountryCode,PartnerTypeName";
+            this.DisplayLocalFieldsFromList = "Code,CalculatedLocalName,GLAccountDisplayNumber,CityName,CountryCode,PartnerTypeName";
+            this.BillToLovSizeForFullAccounting = 550;
         }
     }
 

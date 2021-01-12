@@ -70,6 +70,14 @@ namespace Logitude.Accounting.Data.EntityLists
        public string ReconciledWithTransactionId  { get; set; }
        [DataMember]
        public DateTime? AccountingDate  { get; set; }
+       [DataMember]
+       public string ReconciliationAmountWithSign  { get; set; }
+       [DataMember]
+       public bool IsAmountDebitNegative  { get; set; }
+       [DataMember]
+       public decimal TransactionAmount  { get; set; }
+       [DataMember]
+       public decimal ExcelTransactionAmount  { get; set; }
    }
 
 }

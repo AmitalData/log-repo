@@ -110,7 +110,15 @@
             {{'General.O.AdvancedFilters' | TextCodeTranslationPipe}}
         </div>
 
-        <div class="dropdown" [style.float]="LayoutDirection=='rtl' ? 'left' : 'right'">
+        <div *ngIf="IsShowWarringMessage" [style.float]="LayoutDirection=='rtl' ? 'right' : 'left'" style="height:28px;margin-right: 20px;margin-left:20px;margin-top:2px;border:1px solid orange;border-radius:3px;background-color:#FFFAB4">
+            <div style="margin:3px 7px;font-weight:500">
+                You are not allowed to edit or remove the filters of this view. It was shared with view only mode.  <Hyperlink  style="margin-left:5px;margin-right:5px;" (click)="IsShowWarringMessage = false" [FontSize]="12" [Text]="'close'"></Hyperlink>
+
+            </div>
+        </div>
+
+
+        <div class="dropdown" [style.float]="LayoutDirection=='rtl' ? 'left' : 'right'" [style.pointer-events]="IsQueryViewOnly ? 'none' : ''"  [style.opacity]="IsQueryViewOnly ? '0.7' : ''" >
             <div tabindex="0" class="ToggleButton" style="margin: auto; width: 80px !important; " [style.float]="LayoutDirection=='rtl' ? 'right' : 'left'">
                 <!--<div (click)="FiltersBtnClicked()">-->
                 <label [ngStyle]="LayoutDirection == 'rtl' ? {'right': '5px','left': 'initial'} : {'left': '5px'}">{{'General.B.AddFilter' | TextCodeTranslationPipe}}</label>
@@ -151,7 +159,7 @@
 
         </div>
     </div>
-    <div style="height:165px;overflow:auto;width:100%;">
+    <div style="height:165px;overflow:auto;width:100%;"  [style.pointer-events]="IsQueryViewOnly ? 'none' : ''"  [style.opacity]="IsQueryViewOnly ? '0.7' : ''">
         <div style="width:47%;max-width:500px;" [style.float]="LayoutDirection=='rtl' ? 'right' : 'left'">
             <div *ngFor="let item of SelectedObjectFields; let i = index" [hidden]="item.DataTypeCode == 'Constant'" style="margin:5px;">
                 <table class="FilterItem" *ngIf="i%2 == 0" [ngClass]="{FilterItemDisabled: item.IsPreDefined == true}">

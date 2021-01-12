@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="f2c514f7-cbec-494c-86b8-8a337879e1ff" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://localhost:9996/WcfApi/ShippingLineWcfService.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="ShippingLineWcfService.wsdl" MetadataType="Wsdl" ID="39ea35f9-5e50-40c1-9982-4f983ebb9052" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/ShippingLineWcfService.svc?wsdl" />
+    <MetadataFile FileName="ShippingLineWcfService.disco" MetadataType="Disco" ID="1feeca95-48ee-4273-b52b-c8c4df242bbc" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/ShippingLineWcfService.svc?disco" />
+    <MetadataFile FileName="ShippingLineWcfService.xsd" MetadataType="Schema" ID="5b5ae439-0d13-4ae2-b1fd-7a3c91aaeff5" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/ShippingLineWcfService.svc?xsd=xsd0" />
+    <MetadataFile FileName="ShippingLineWcfService1.xsd" MetadataType="Schema" ID="46617cb7-5ed9-4ea3-bcb1-2b6947d8f96f" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/ShippingLineWcfService.svc?xsd=xsd2" />
+    <MetadataFile FileName="ShippingLineWcfService2.xsd" MetadataType="Schema" ID="176575ac-2959-4406-b4c5-14da1cc6ea39" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/ShippingLineWcfService.svc?xsd=xsd5" />
+    <MetadataFile FileName="ShippingLineWcfService3.xsd" MetadataType="Schema" ID="980a6396-8a34-47e4-8021-04c74f0624ac" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/ShippingLineWcfService.svc?xsd=xsd1" />
+    <MetadataFile FileName="ShippingLineWcfService4.xsd" MetadataType="Schema" ID="925f4f0a-a48b-40e9-a5e6-ecb5749a6a89" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/ShippingLineWcfService.svc?xsd=xsd4" />
+    <MetadataFile FileName="ShippingLineWcfService5.xsd" MetadataType="Schema" ID="c6c252c9-ff18-4e38-bcd5-18294dac964c" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/ShippingLineWcfService.svc?xsd=xsd3" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

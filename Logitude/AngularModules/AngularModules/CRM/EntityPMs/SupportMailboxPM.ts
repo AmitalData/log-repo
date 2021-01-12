@@ -88,7 +88,10 @@ export class SupportMailboxPM {
     public OldEntityPM: SupportMailboxPM;
 		
     public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
+       if(!this.DisableMarkAsDirty)
+       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -96,6 +99,7 @@ export class SupportMailboxPM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "SupportMailbox");
            
         }
+       }
     }
 
     private MyClone: SupportMailboxPM;

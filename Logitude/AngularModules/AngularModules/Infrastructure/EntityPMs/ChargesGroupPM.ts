@@ -64,7 +64,10 @@ export class ChargesGroupPM {
     public OldEntityPM: ChargesGroupPM;
 		
     public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
+       if(!this.DisableMarkAsDirty)
+       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -72,6 +75,7 @@ export class ChargesGroupPM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "ChargesGroup");
            
         }
+	 }
     }
     private MyClone: ChargesGroupPM;
 

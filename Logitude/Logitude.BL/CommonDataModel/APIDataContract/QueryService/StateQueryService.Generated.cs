@@ -40,7 +40,7 @@ using Simplog.Data.CommonDataModel;
         }
 
 		
-		public State GetStateById(string Id,int Tenant)
+		public State GetStateById(string Id,int Tenant,string ComputingPartnerName = "")
         { 
 		    try
             {
@@ -50,7 +50,7 @@ using Simplog.Data.CommonDataModel;
 				 if (temp == null)
                     throw new ApplicationException("State with Id " + Id + " doesn't exist");
 
-				return StateDataMapping(temp,Tenant);
+				return StateDataMapping(temp,Tenant,ComputingPartnerName);
 			}
             catch (Exception ex)
             {

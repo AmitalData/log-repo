@@ -91,11 +91,11 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', end
 
                                                                             <td style="width: 45px;">
                                                                                 <div [style.opacity]="IsDisableEditButton?'0.5':'1'" [style.pointer-events]="IsDisableEditButton?'none':'all'" class="ToggleButton" tabindex="0">
-                                                                                    <label  style="left: 5px;">{{'QuoteTemplate.B.Add' | TextCodeTranslationPipe}} </label>
+                                                                                    <label id="{{'MainAdd' | IdGeneratorPipe}}" style="left: 5px;">{{'QuoteTemplate.B.Add' | TextCodeTranslationPipe}} </label>
                                                                                     <img style="right: 5px;margin-top:1px" src="./Images/ToggleIcon.png" />
                                                                                 
                                                                                     <div  class="ToggleButtonMenu">
-                                                                                        <button [disabled]="IsDisableEditButton"  (click)="AddEditSection(null)" >
+                                                                                        <button id="{{'AddSection' | IdGeneratorPipe}}" [disabled]="IsDisableEditButton"  (click)="AddEditSection(null)" >
                                                                                              
                                                                                             {{'QuoteTemplate.B.Section' | TextCodeTranslationPipe}}
                                                                                         </button>
@@ -171,8 +171,8 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', end
                                                                                                 <button   [disabled] = "IsDisableEditButton" style="display:inline;width:80px;margin-top:2px" id="{{'EditSection2' | IdGeneratorPipe}}" class="QuoteTemplateSettingButton" (click)="EditSectionButtonClicked(item)">
                                                                                                     <table>
                                                                                                         <tr>
-                                                                                                            <td style="width:20px;">id="{{'EdittSectionn' | IdGeneratorPipe}} <img src="./Images/Buttons/EditBlack.png" /></td>
-                                                                                                            <td style="width:30px;">{{'QuoteTemplate.B.Edit' | TextCodeTranslationPipe}} id="{{'EditSection' | IdGeneratorPipe}}" </td>
+                                                                                                            <td style="width:20px;"><img src="./Images/Buttons/EditBlack.png" /></td>
+                                                                                                            <td style="width:30px;">{{'QuoteTemplate.B.Edit' | TextCodeTranslationPipe}}</td>
                                                                                                             <td></td>
                                                                                                         </tr>
                                                                                                     </table>

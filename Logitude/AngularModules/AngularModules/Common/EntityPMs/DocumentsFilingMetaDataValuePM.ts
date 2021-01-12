@@ -1,4 +1,4 @@
-﻿import {DocumentsFilingPM} from './DocumentsFilingPM';
+import {DocumentsFilingPM} from './DocumentsFilingPM';
 import {UIProperties, UIProperty} from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
 export class DocumentsFilingMetaDataValuePM
 {
@@ -44,10 +44,13 @@ export class DocumentsFilingMetaDataValuePM
     public UniqueKey: string;
 
     public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty() {
-        this.IsDirty = true;
-        if (this.entityParentPM) {
-            this.entityParentPM.MarkAsDirty();
+        if (!this.DisableMarkAsDirty) {
+            this.IsDirty = true;
+            if (this.entityParentPM) {
+                this.entityParentPM.MarkAsDirty();
+            }
         }
     }
 }

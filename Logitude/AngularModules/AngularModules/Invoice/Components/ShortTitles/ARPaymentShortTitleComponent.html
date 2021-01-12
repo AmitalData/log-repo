@@ -27,7 +27,7 @@
                         </td>
 
                         <!-- SATTransferStatusName -->
-                        <td style="padding-left: 5px;" *ngIf="DisplaySATSettings == true">
+                        <td style="padding-left: 5px;" *ngIf="DisplaySATSettings == true && EntityPM.StatusCode != 'VD'">
                             <div float-start class="ShortTitleControl" style="background: #6E7172;">
                                 <span float-start style="color: white;">{{EntityPM.SATTransferStatusName}}</span>
                             </div>

@@ -24,6 +24,7 @@
         background-color: rgb(131, 176, 212);
         height: 100%;
         width: 4px;
+        margin: 0 2px;
         display: inline-block;
 
         -webkit-animation: sk-stretchdelay 1.2s infinite ease-in-out;
@@ -163,7 +164,10 @@
                                                         [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"
                                                         [SelectedValue]="BillToId" [LookUpTableName]="'Card'"
                                                         [DependencyFilter1Value]="'CS,AG,AL,CG,SG,SL,TR,VD,WH'"
-                                                        [DependencyFilter1IsList]="true">
+                                                        [DependencyFilter1IsList]="true"
+                                                        [DisplayFieldsFromList]="DisplayFieldsFromList"
+                                                        [DisplayLocalFieldsFromList]="DisplayLocalFieldsFromList"
+                                                        [CustomizedWidth]="BillToLovSizeForFullAccounting">
                                                     </LogLov>
                                                 </td>
 
@@ -819,7 +823,7 @@
                                     </log-column>
                                 </logitude-edit-grid>
 
-                                <div *ngIf="TransactionsList?.Length == 0 && !_loading" class="NoDataText">
+                                <div  *ngIf="TransactionsList?.Length == 0 && !_loading" id="{{'ARPaymentSpinner' | IdGeneratorPipe}}" class="NoDataText">
                                     {{'ARPayment.S.NoInvoicesFound' | TextCodeTranslationPipe}}
                                 </div>
                                 <div *ngIf="_loading" class="NoDataText">

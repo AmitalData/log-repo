@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class UserDefinedReportUpdateClass
    {  		
-		public const string HashString = "c8910157d4413dc8a794ff9b0598ba41";
+		public const string HashString = "762c0452cf3c9abcb046499a1e8fee6e";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -98,6 +98,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    HasFiltersMenu =  false,
 			      				    IsEditable =  false,
 			      				    IsNewWizard =  false,
+			      				    LookUp1 =  "LocalName",
+			      				    LookUp2 =  "EnglishName",
 			      				    KeyPropertyPath =  "Id",
 			      				    AutoCompleteSearchWindow =  false,
 			      				    IsClosed =  false,
@@ -119,7 +121,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    NewWizardControlName =  "./Accounting/Components/NewEntity/NewUserDefinedReportComponent",
-			      				    LocalDefaultText =  "הוגדר ע\"י משתמש",
+			      				    LocalDefaultText =  "קבוצות מאזן מחושבות",
 			      				    DefaultText =  "User Defined Reports",
 			      				    Code =  "c4c8",
 			      				    Name =  " Query Group",
@@ -403,7 +405,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						MaxLength =  100,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
-					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUp =  true,
 					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
@@ -414,13 +416,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						Operator =  "Contains",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
-					  						DisplayInSearchWindowList =  false,
+					  						DisplayInSearchWindowList =  true,
 					  						PMPropertyPath =  "EnglishName",
 					  						ListPropertyPath =  "EnglishName",
-					  						DisplayInLookUpIndex =  0,
+					  						DisplayInLookUpIndex =  1,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
-					  						DisplayInSearchWindowListIndex =  0,
+					  						DisplayInSearchWindowListIndex =  1,
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
@@ -465,7 +467,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						MaxLength =  100,
 					  						IsRequired =  true,
 					  						CopyToDW =  false,
-					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUp =  true,
 					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
@@ -476,7 +478,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						Operator =  "Contains",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
-					  						DisplayInSearchWindowList =  false,
+					  						DisplayInSearchWindowList =  true,
 					  						PMPropertyPath =  "LocalName",
 					  						ListPropertyPath =  "LocalName",
 					  						DisplayInLookUpIndex =  0,
@@ -1071,7 +1073,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			List<AdvancedQueryFilter> addedQueryFilters = new List<AdvancedQueryFilter>();
    
 
-			   TextCode UserDefinedReportTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "UserDefinedReport.Q.UserDefinedReports", DefaultText = @"User Defined Reports",LocalDefaultText = "הוגדר ע\"י משתמש", ObjectTableId = UserDefinedReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   TextCode UserDefinedReportTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "UserDefinedReport.Q.UserDefinedReports", DefaultText = @"User Defined Reports",LocalDefaultText = "קבוצות מאזן מחושבות", ObjectTableId = UserDefinedReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
 			   Feature UserDefinedReportFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UserDefinedReport.Q.UserDefinedReports", ObjectTableId = UserDefinedReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "UserDefinedReportFeatures.UserDefinedReports", NameTextCodeDefaultText = "User Defined Reports", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,UserDefinedReportObjectTable, addedFeatures, addedTextCodes);
 
 	        //TextCodeRepository.SubmitChanges();
@@ -1243,7 +1245,21 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
  		   TextCode UserDefinedReportTextCode_UserDefinedReportOParentCharofAccountAlreadyIncluded = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "UserDefinedReport.O.ParentCharofAccount AlreadyIncluded", DefaultText = "This GLAccount or its parent Chart of Account is already included in this report under calculated chart of account line",LocalDefaultText = @"כרטיס זה הוא חלק מקבוצת מאזן שכבר הוגדרה בדוח זה תחת קבוצת מאזן מחושבת בשורה", ObjectTableId = UserDefinedReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode UserDefinedReportTextCode_UserDefinedReportOChartOfAccountTypeforthislinediffersfromtheChartofAccount = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "UserDefinedReport.O.ChartOfAccountTypeforthislinediffersfromtheChartofAccount", DefaultText = "Chart Of Account Type for this line differs from the Chart of Account",LocalDefaultText = @"סוג קבוצת המאזן בשורה זאת שונה מהגדרת הסוג של קבוצת המאזן שנבחרה", ObjectTableId = UserDefinedReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode UserDefinedReportTextCode_UserDefinedReportOChartOfAccountTypeforthislinediffersfromtheChartofAccount = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "UserDefinedReport.O.ChartOfAccountTypeforthislinediffersfromtheChartofAccount", DefaultText = "Chart Of Account Type for this line differs from the Chart of Account Type for this calculated chart of account, please choose another GLAccount or Charts of Accounts.",LocalDefaultText = @"סוג קבוצת המאזן בשורה זאת שונה מהגדרת הסוג של קבוצת המאזן שנבחרה", ObjectTableId = UserDefinedReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode UserDefinedReportTextCode_UserDefinedReportOPeriod1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "UserDefinedReport.O.Period1", DefaultText = "Period 1",LocalDefaultText = @"תקופה 1", ObjectTableId = UserDefinedReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode UserDefinedReportTextCode_UserDefinedReportOPeriod2 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "UserDefinedReport.O.Period2", DefaultText = "Period 2",LocalDefaultText = @"תקופה 2", ObjectTableId = UserDefinedReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode UserDefinedReportTextCode_UserDefinedReportOFromToDates = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "UserDefinedReport.O.FromToDates", DefaultText = "From/To Dates",LocalDefaultText = @"מתאריך\עד תאריך", ObjectTableId = UserDefinedReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode UserDefinedReportTextCode_UserDefinedReportOIncludeOpeningBalance = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "UserDefinedReport.O.IncludeOpeningBalance", DefaultText = "Include Opening Balance",LocalDefaultText = @"כולל יתרת פתיחה", ObjectTableId = UserDefinedReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode UserDefinedReportTextCode_UserDefinedReportOReport = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "UserDefinedReport.O.Report", DefaultText = "Report",LocalDefaultText = "דו''ח", ObjectTableId = UserDefinedReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode UserDefinedReportTextCode_UserDefinedReportOExpandChartofAccounttoGLAccounts = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "UserDefinedReport.O.ExpandChartofAccounttoGLAccounts", DefaultText = "Expand Chart of Account to GLAccounts",LocalDefaultText = @"קבוצות מאזן מפורטות לחשבונות", ObjectTableId = UserDefinedReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode UserDefinedReportTextCode_UserDefinedReportOAtLeastOnePeriodIsRequired = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "UserDefinedReport.O.AtLeastOnePeriodIsRequired", DefaultText = "At least one period is required",LocalDefaultText = @"חובה להקליד לפחות תקופה אחת ", ObjectTableId = UserDefinedReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

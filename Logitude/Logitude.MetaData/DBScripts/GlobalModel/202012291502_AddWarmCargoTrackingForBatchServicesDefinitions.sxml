@@ -1,0 +1,13 @@
+﻿<Script DBType="Global" Module="Global">
+  <Sql Version="1">
+    <![CDATA[
+    
+      insert into BatchServicesDefinitions values ('WarmCargo','WarmCargoTracking',NULL,NULL,NULL)
+      insert into BatchServicesDefinitionMods values ('WarmCargo',0,1)
+      
+    ]]>
+  </Sql>
+</Script>
+
+
+ 

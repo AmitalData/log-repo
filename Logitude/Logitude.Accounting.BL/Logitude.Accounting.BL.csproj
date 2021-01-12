@@ -215,6 +215,7 @@
     <Compile Include="CoreBL\Batch\BatchReconciliationStageBTask.cs" />
     <Compile Include="CoreBL\Batch\BatchReconciliationStageCTask.cs" />
     <Compile Include="CoreBL\Batch\BatchRevaluationService.cs" />
+    <Compile Include="CoreBL\Batch\BatchSystem1000FlatFileAnalyser.cs" />
     <Compile Include="CoreBL\Batch\BatchTaxDeductionReportService.cs" />
     <Compile Include="CoreBL\Batch\BatchIntegrityCheckService.cs" />
     <Compile Include="CoreBL\Batch\BatchTaxReportService.cs" />
@@ -524,6 +525,7 @@
     <Compile Include="EntityQueryServiceExt\BankAccountQueryServiceExt.cs" />
     <Compile Include="EntityQueryServiceExt\BankCodeQueryServiceExt.cs" />
     <Compile Include="EntityQueryServiceExt\CashBookQueryServiceExt.cs" />
+    <Compile Include="EntityQueryServiceExt\InterestTransactionQueryServiceExt.cs" />
     <Compile Include="EntityQueryServiceExt\FullAccountingSettingQueryServiceExt.cs" />
     <Compile Include="EntityQueryServiceExt\GLAccountQueryServiceExt.cs" />
     <Compile Include="EntityQueryServiceExt\GLAccountWithholdingTaxQueryServiceExt.cs" />

@@ -180,6 +180,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
                     IShipmentsContext MyContext = ShipmentsContext.GetContext(authToken.Tenant);
                     MasterQueryService mappingService = new MasterQueryService(authToken.Tenant);
                     ShipmentPM entityPM = mappingService.MasterCustomDataMappingAndValidatin(entity, authToken.Tenant, computingPartnerCode);
+                    entityPM.IsExternalAPI = true;
 
                     if (string.IsNullOrEmpty(entityPM.VolumeUnitCode))
                     {
@@ -534,69 +535,70 @@ namespace WebFreight.Web.ExternalAPIs.V1
                             }
                         }
 
-                        AddressRepository addressRepository = new AddressRepository(entityPM.Tenant);
-                        if (!string.IsNullOrEmpty(entityPM.AgentId))
-                        {
-                            Address address = addressRepository.GetMainAddressByCardId(entityPM.AgentId, authToken.Tenant);
-                            if (address != null)
-                            {
-                                entityPM.AgentAddressId = address.Id;
-                            }
-                        }
+                        // Ayman Handled in Shipment Service (keep it DRY)
+                        //AddressRepository addressRepository = new AddressRepository(entityPM.Tenant);
+                        //if (!string.IsNullOrEmpty(entityPM.AgentId))
+                        //{
+                        //    Address address = addressRepository.GetMainAddressByCardId(entityPM.AgentId, authToken.Tenant);
+                        //    if (address != null)
+                        //    {
+                        //        entityPM.AgentAddressId = address.Id;
+                        //    }
+                        //}
 
-                        if (!string.IsNullOrEmpty(entityPM.ShipperId))
-                        {
-                            Address address = addressRepository.GetMainAddressByCardId(entityPM.ShipperId, authToken.Tenant);
-                            if (address != null)
-                            {
-                                entityPM.ShipperAddressId = address.Id;
-                            }
-                        }
+                        //if (!string.IsNullOrEmpty(entityPM.ShipperId))
+                        //{
+                        //    Address address = addressRepository.GetMainAddressByCardId(entityPM.ShipperId, authToken.Tenant);
+                        //    if (address != null)
+                        //    {
+                        //        entityPM.ShipperAddressId = address.Id;
+                        //    }
+                        //}
 
-                        if (!string.IsNullOrEmpty(entityPM.ConsigneeId))
-                        {
-                            Address address = addressRepository.GetMainAddressByCardId(entityPM.ConsigneeId, authToken.Tenant);
-                            if (address != null)
-                            {
-                                entityPM.ConsigneeAddressId = address.Id;
-                            }
-                        }
+                        //if (!string.IsNullOrEmpty(entityPM.ConsigneeId))
+                        //{
+                        //    Address address = addressRepository.GetMainAddressByCardId(entityPM.ConsigneeId, authToken.Tenant);
+                        //    if (address != null)
+                        //    {
+                        //        entityPM.ConsigneeAddressId = address.Id;
+                        //    }
+                        //}
 
-                        if (!string.IsNullOrEmpty(entityPM.ShipperNotExporterId))
-                        {
-                            Address address = addressRepository.GetMainAddressByCardId(entityPM.ShipperNotExporterId, authToken.Tenant);
-                            if (address != null)
-                            {
-                                entityPM.ShipperNotExporterAddressId = address.Id;
-                            }
-                        }
+                        //if (!string.IsNullOrEmpty(entityPM.ShipperNotExporterId))
+                        //{
+                        //    Address address = addressRepository.GetMainAddressByCardId(entityPM.ShipperNotExporterId, authToken.Tenant);
+                        //    if (address != null)
+                        //    {
+                        //        entityPM.ShipperNotExporterAddressId = address.Id;
+                        //    }
+                        //}
 
-                        if (!string.IsNullOrEmpty(entityPM.CustomAgentImportId))
-                        {
-                            Address address = addressRepository.GetMainAddressByCardId(entityPM.CustomAgentImportId, authToken.Tenant);
-                            if (address != null)
-                            {
-                                entityPM.CustomAgentImportAddressId = address.Id;
-                            }
-                        }
+                        //if (!string.IsNullOrEmpty(entityPM.CustomAgentImportId))
+                        //{
+                        //    Address address = addressRepository.GetMainAddressByCardId(entityPM.CustomAgentImportId, authToken.Tenant);
+                        //    if (address != null)
+                        //    {
+                        //        entityPM.CustomAgentImportAddressId = address.Id;
+                        //    }
+                        //}
 
-                        if (!string.IsNullOrEmpty(entityPM.ReleasingAgentId))
-                        {
-                            Address address = addressRepository.GetMainAddressByCardId(entityPM.ReleasingAgentId, authToken.Tenant);
-                            if (address != null)
-                            {
-                                entityPM.ReleasingAgentAddressId = address.Id;
-                            }
-                        }
+                        //if (!string.IsNullOrEmpty(entityPM.ReleasingAgentId))
+                        //{
+                        //    Address address = addressRepository.GetMainAddressByCardId(entityPM.ReleasingAgentId, authToken.Tenant);
+                        //    if (address != null)
+                        //    {
+                        //        entityPM.ReleasingAgentAddressId = address.Id;
+                        //    }
+                        //}
 
-                        if (!string.IsNullOrEmpty(entityPM.FreightForwarderId))
-                        {
-                            Address address = addressRepository.GetMainAddressByCardId(entityPM.FreightForwarderId, authToken.Tenant);
-                            if (address != null)
-                            {
-                                entityPM.FreightForwarderAddressId = address.Id;
-                            }
-                        }
+                        //if (!string.IsNullOrEmpty(entityPM.FreightForwarderId))
+                        //{
+                        //    Address address = addressRepository.GetMainAddressByCardId(entityPM.FreightForwarderId, authToken.Tenant);
+                        //    if (address != null)
+                        //    {
+                        //        entityPM.FreightForwarderAddressId = address.Id;
+                        //    }
+                        //}
 
                         if (entityPM.ShipmentPackages.Count > 0)
                         {
@@ -715,6 +717,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
                         if (MasterPM != null)
                         {
                             MasterPM.ConcurrencyGUID = entity.ConcurrencyGUID;
+                            MasterPM.IsExternalAPI = true;
 
                             if (MasterPM.IsOperationalClosed)
                             {
@@ -734,6 +737,8 @@ namespace WebFreight.Web.ExternalAPIs.V1
                             service.Update(true);
                         }
 
+                        MyContext = ShipmentsContext.GetContext(authToken.Tenant);
+                        mappingService = new MasterQueryService(authToken.Tenant);
                         var result = mappingService.GetMasterById(MasterPM.Id, authToken.Tenant);
                         APIHelper.AddCommunicationLog("D", entity, result, "Shipment", MasterPM.Id, "Master API", authToken.Tenant);
                         return Request.CreateResponse(HttpStatusCode.OK, result);

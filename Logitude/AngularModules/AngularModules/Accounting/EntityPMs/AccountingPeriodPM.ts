@@ -63,7 +63,10 @@ export class AccountingPeriodPM {
     public OldEntityPM: AccountingPeriodPM;
 		
     public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
+       if(!this.DisableMarkAsDirty)
+       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -71,6 +74,7 @@ export class AccountingPeriodPM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "AccountingPeriod");
            
         }
+       }
     }
 
     private MyClone: AccountingPeriodPM;

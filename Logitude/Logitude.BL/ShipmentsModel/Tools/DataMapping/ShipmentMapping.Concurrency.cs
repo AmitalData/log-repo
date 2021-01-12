@@ -10,8 +10,11 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
 {
     public partial class ShipmentMapping
     {
-        private static void MapConcurrencyFields(ShipmentPM entityPM, Shipment entityPoco, ShipmentMasterData entityMasterData, int packagesListCount, bool isNewEntity)
+        private static bool isMappingEntityPM;
+        public static void MapConcurrencyFields(ShipmentPM entityPM, Shipment entityPoco, ShipmentMasterData entityMasterData, int packagesListCount, bool isNewEntity, bool isMappingPM = true)
         {
+            isMappingEntityPM = isMappingPM;
+
             if (isNewEntity)
             {
                 MapConcurrencyFields_Champ(entityPM, entityPoco, entityMasterData);
@@ -120,6 +123,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             entityPoco.INTTRALastBookingResponse = entityPM.INTTRALastBookingResponse;
             entityPoco.INTTRABookingStatusCode = entityPM.INTTRABookingStatusCode;
             entityPoco.INTTRABookingTransStatusCode = entityPM.INTTRABookingTransStatusCode;
+            entityPoco.INTTRALastEBbookingSendDate = entityPM.INTTRALastEBbookingSendDate;
 
             if (entityPM.ShipmentLevelCode != "H")
             {
@@ -145,7 +149,11 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
         }
         private static void MapConcurrencyFields_Client(ShipmentPM entityPM, Shipment entityPoco, ShipmentMasterData entityMasterData)
         {
-            entityPM.ConcurrencyGUID = entityPM.NewConcurrencyGUID;
+            if (isMappingEntityPM)
+            {
+                entityPM.ConcurrencyGUID = entityPM.NewConcurrencyGUID;
+            }
+
             entityPoco.ConcurrencyGUID = entityPM.NewConcurrencyGUID;
 
 
@@ -232,9 +240,12 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
         }
         private static void MapCalculatedFields(ShipmentPM entityPM, Shipment entityPoco, ShipmentMasterData entityMasterData)
         {
-            entityPoco.GrossWeightInKG = entityPM.GrossWeightInKG = GetWeightInKG(entityPM.GrossWeightUnitCode, entityPM.GrossWeight);
-            entityPoco.GrossWeightPerTon = entityPM.GrossWeightPerTon = GetWeightInTon(entityPM.GrossWeightInKG);
-            entityPoco.ChargeableWeightInKG = entityPM.ChargeableWeightInKG = GetWeightInKG(entityPM.ChargeableWeightUnitCode, entityPM.ChargeableWeight);
+            if (isMappingEntityPM)
+            {
+                entityPoco.GrossWeightInKG = entityPM.GrossWeightInKG = GetWeightInKG(entityPM.GrossWeightUnitCode, entityPM.GrossWeight);
+                entityPoco.GrossWeightPerTon = entityPM.GrossWeightPerTon = GetWeightInTon(entityPM.GrossWeightInKG);
+                entityPoco.ChargeableWeightInKG = entityPM.ChargeableWeightInKG = GetWeightInKG(entityPM.ChargeableWeightUnitCode, entityPM.ChargeableWeight);
+            }
         }
 
         private static void CalculateFinalDestinationPort(ShipmentPM entityPM, ShipmentMasterData entityMasterData)
@@ -263,7 +274,11 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
                     myFinalDestinationPortId = entityMasterData.MainCarriageToPortId;
                 }
 
-                entityPM.MainCarriageFinalDestinationPortId = myFinalDestinationPortId;
+                if (isMappingEntityPM)
+                {
+                    entityPM.MainCarriageFinalDestinationPortId = myFinalDestinationPortId;
+                }
+
                 entityMasterData.MainCarriageFinalDestinationPortId = myFinalDestinationPortId;
             }
         }

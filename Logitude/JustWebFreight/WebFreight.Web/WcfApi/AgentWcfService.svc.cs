@@ -16,6 +16,7 @@ using Intuit.Ipp.Core;
 using Logitude.Server.Tools;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.Tools.EntityService;
+using Logitude.BL.CommonDataModel.EntityQueries;
 
 namespace WebFreight.Web.WcfApi
 {
@@ -24,22 +25,22 @@ namespace WebFreight.Web.WcfApi
     [AspNetCompatibilityRequirements(RequirementsMode = AspNetCompatibilityRequirementsMode.Allowed)]
     public class AgentWcfService : IAgentWcfService
     {
-       
-        public Response Upsert(AgentPM entityPM,bool batch)
+
+        public Response Upsert(AgentPM entityPM, bool batch)
         {
             if (CacheManager.CacheWrapper == null)
             {
                 CacheManager.CacheWrapper = new MockCacheWrapper();
             }
-           
+
             Response response = new Response();
             try
-            {                
+            {
                 SecurityUtility.AuthenticationOnTenant(entityPM.Tenant);
                 SecurityUtility.CheckContactFeature("Agent", "UPDATE", entityPM.Tenant);//UPDATE//READ
                 using (TransactionScope scope = TransactionFactory.GetTransaction())
                 {
-                    
+
 
                     ClassLevelValidator validationClass = new ClassLevelValidator("Agent", entityPM.Tenant) { IsHybrid = true };
                     if (!validationClass.IsValid(entityPM, entityPM, null))
@@ -113,7 +114,7 @@ namespace WebFreight.Web.WcfApi
                         service.SetChangeSet(entityPM.CardExternalCodeByCurrencies);
                         service.Update(entityPM);
                     }
-                 
+
                     response.Result = entityPM.Id;
                     scope.Complete();
                     return response;
@@ -150,6 +151,76 @@ namespace WebFreight.Web.WcfApi
                     response.ErrorMessage += Environment.NewLine + ex.StackTrace;
                 }
                 return response;
+            }
+        }
+
+        public AgentPM GetAgentPM(string code, int tenant, ref Response response)
+        {
+
+            try
+            {
+                AgentPM entityPM = null;
+                SecurityUtility.AuthenticationOnTenant(tenant);
+                SecurityUtility.CheckContactFeature("Agent", "READ", tenant);//UPDATE//READ
+                if (CacheManager.CacheWrapper == null)
+                {
+                    CacheManager.CacheWrapper = new MockCacheWrapper();
+                }
+
+                ICommonDataContext objectContext = CommonDataContext.GetContext(tenant);
+
+                ContactRepository contactRepository = new ContactRepository(objectContext);
+                PaymentTermRepository paymentTermRepository = new PaymentTermRepository(objectContext);
+                AgentQuery query = new AgentQuery(tenant);
+
+                entityPM = query.GetSinglePMByCode(code, tenant);
+
+                if (entityPM != null)
+                {
+
+                    if (entityPM.PrimaryContactId != null)
+                    {
+                        Contact contact = contactRepository.GetSingleContact(entityPM.PrimaryContactId, entityPM.Tenant);
+                        if (contact != null && !string.IsNullOrEmpty(contact.ExternalId))
+                        {
+                            entityPM.PrimaryContactId = contact.ExternalId;
+                            entityPM.PrimaryContactEmail = contact.Email;
+                            entityPM.PrimaryContactName = contact.EnglishName;
+                            entityPM.PrimaryContactPhone = contact.BusinessPhone;
+
+                        }
+                    }
+
+
+
+                    if (entityPM.PaymentTermId != null)
+                    {
+                        PaymentTerm paymentTerm = paymentTermRepository.GetSinglePaymentTerm(entityPM.PaymentTermId, entityPM.Tenant);
+                        if (paymentTerm != null)
+                        {
+                            entityPM.PaymentTermId = paymentTerm.Code;
+
+                        }
+                    }
+
+
+                }
+
+                return entityPM;
+            }
+            catch (Exception ex)
+            {
+                response.IsAuthenticationError = ex.GetType() == typeof(AutenticationException);
+                response.HasError = true;
+                response.ErrorMessage = ex.Message;
+                response.InnerErrorMessage = ex.InnerException != null ? ex.InnerException.Message : null;
+                if (!string.IsNullOrEmpty(ex.StackTrace))
+                {
+                    response.ErrorMessage += Environment.NewLine + ex.StackTrace;
+                }
+
+                return null;
+
             }
         }
     }

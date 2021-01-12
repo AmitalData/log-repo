@@ -77,7 +77,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         NameForPrintingCheques, 
 	         Smallcashbook, 
 	         MinimumInterestInvoiceBilling, 
-	         ReportingAsAnotherDocument,
+	         ReportingAsAnotherDocument, 
+	         CreditAllotmentPercentage,
 	      }
 
 
@@ -198,7 +199,9 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         SplitCurrencyAccount, 
 	         ParentName, 
 	         ParentCurrencyId, 
-	         ReportingAsAnotherDocument,
+	         ReportingAsAnotherDocument, 
+	         CreditAllotmentPercentage, 
+	         RelatedGLAccount,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -480,6 +483,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ReportingAsAnotherDocument))
             {
 				entityPOCO.ReportingAsAnotherDocument = entityPM.ReportingAsAnotherDocument;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CreditAllotmentPercentage))
+            {
+				entityPOCO.CreditAllotmentPercentage = entityPM.CreditAllotmentPercentage;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -768,6 +776,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 					entityPM.ReportingAsAnotherDocument = entityPOCO.ReportingAsAnotherDocument;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CreditAllotmentPercentage))
+            {
+					entityPM.CreditAllotmentPercentage = entityPOCO.CreditAllotmentPercentage;
+            }
+
 		}
 
 		public void PMToOldPM(GLAccountPM entityPM, GLAccountPM oldEntityPM)
@@ -1047,6 +1060,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ReportingAsAnotherDocument))
             {
                 oldEntityPM.ReportingAsAnotherDocument = entityPM.ReportingAsAnotherDocument;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CreditAllotmentPercentage))
+            {
+                oldEntityPM.CreditAllotmentPercentage = entityPM.CreditAllotmentPercentage;
             }
 			
 		}

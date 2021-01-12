@@ -1278,9 +1278,15 @@ export class LogTextBoxComponent implements BeforeOnDestroy, OnInit, AfterViewIn
                                 // else {
                                 txtNum = this.GetNumber(this.TextValue);
                                 // }
-
-                                if (this.DataContext[this.ObjectFieldName] != txtNum) {
-                                    this.TextValueChanges(this.TextValue);
+                                if (this.ObjectField?.IsCustom) {
+                                    const customField: CustomFieldClass = this.DataContext[this.ObjectFieldName];
+                                    if (customField?.ResolvedValue !== txtNum)
+                                        this.TextValueChanges(this.TextValue);
+                                }
+                                else {
+                                    if (this.DataContext[this.ObjectFieldName] != txtNum) {
+                                        this.TextValueChanges(this.TextValue);
+                                    }
                                 }
                                 //if (this.thousandsSeparator == ",") {
                                 var textWithCommas: string = numberWithSeparators(this.TextValue, this.thousandsSeparator);

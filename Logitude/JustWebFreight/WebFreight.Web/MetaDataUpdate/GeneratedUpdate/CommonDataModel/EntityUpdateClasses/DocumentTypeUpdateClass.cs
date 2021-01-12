@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 {
    public class DocumentTypeUpdateClass
    {  		
-		public const string HashString = "ea50945ad6ac5cabc7b23ef3bf79194a";
+		public const string HashString = "75f1f7d62f1518f43e33bf3e337ebea7";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -1513,7 +1513,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInSearchWindowFilters =  true,
 					  						DisplayInSearchWindowFiltersIndex =  0,
-					  						DisplayInDocumentReferences =  false,
+					  						DisplayInDocumentReferences =  true,
 					  						NumberOfDigits =  0,
 					  						DigitsAfterPoint =  0,
 					  						InActive =  false,
@@ -1577,7 +1577,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInSearchWindowFilters =  true,
 					  						DisplayInSearchWindowFiltersIndex =  1,
-					  						DisplayInDocumentReferences =  false,
+					  						DisplayInDocumentReferences =  true,
 					  						NumberOfDigits =  0,
 					  						DigitsAfterPoint =  0,
 					  						InActive =  false,
@@ -2528,6 +2528,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 		   Feature DocumentTypeFeature_CATEGORY = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CATEGORY", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = DocumentTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.DocumentTypesCategory", NameTextCodeDefaultText = @"Document Types Category" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,DocumentTypeObjectTable);
 
 		   Feature DocumentTypeFeature_LogBoxTab = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "LogBoxTab", FeatureTypeCode = "OTH", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = DocumentTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "DocumentType.Features.LogBoxTab", NameTextCodeDefaultText = @"Digital Sign Definitions" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,DocumentTypeObjectTable);
+
+		   Feature DocumentTypeFeature_EDITPRINTEDDOCUMENTS = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EDITPRINTEDDOCUMENTS", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = DocumentTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "DocumentType.Features.EDITPRINTEDDOCUMENTS", NameTextCodeDefaultText = @"Edit Printed Documents" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,DocumentTypeObjectTable);
 
    
 	    

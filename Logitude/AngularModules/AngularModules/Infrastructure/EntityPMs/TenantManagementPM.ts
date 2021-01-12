@@ -699,6 +699,16 @@ export class TenantManagementPM {
     public set BackgroundId(newValue: string) { if (this.backgroundId != newValue) { this.backgroundId = newValue; this.MarkAsDirty("BackgroundId"); } }
        
 	 
+    private comapnylogoId: string;
+    public get ComapnylogoId() { return this.comapnylogoId; }
+    public set ComapnylogoId(newValue: string) { if (this.comapnylogoId != newValue) { this.comapnylogoId = newValue; this.MarkAsDirty("ComapnylogoId"); } }
+       
+	 
+    private browserIconId: string;
+    public get BrowserIconId() { return this.browserIconId; }
+    public set BrowserIconId(newValue: string) { if (this.browserIconId != newValue) { this.browserIconId = newValue; this.MarkAsDirty("BrowserIconId"); } }
+       
+	 
     private privateLabelId: string;
     public get PrivateLabelId() { return this.privateLabelId; }
     public set PrivateLabelId(newValue: string) { if (this.privateLabelId != newValue) { this.privateLabelId = newValue; this.MarkAsDirty("PrivateLabelId"); } }
@@ -840,11 +850,39 @@ export class TenantManagementPM {
     public set NoPaymentForChildTenants(newValue: boolean) { if (this.noPaymentForChildTenants != newValue) { this.noPaymentForChildTenants = newValue; this.MarkAsDirty("NoPaymentForChildTenants"); } }
        
 	 
+    private lastEbookingSentDate: Date;
+    public get LastEbookingSentDate() { return this.lastEbookingSentDate; }
+    public set LastEbookingSentDate(newValue: Date) { if (this.lastEbookingSentDate != newValue) { this.lastEbookingSentDate = newValue; this.MarkAsDirty("LastEbookingSentDate"); } }
+       
+	 
+    private lastSISentDate: Date;
+    public get LastSISentDate() { return this.lastSISentDate; }
+    public set LastSISentDate(newValue: Date) { if (this.lastSISentDate != newValue) { this.lastSISentDate = newValue; this.MarkAsDirty("LastSISentDate"); } }
+       
+	 
+    private numberOfBookingSentLastWeek: number;
+    public get NumberOfBookingSentLastWeek() { return this.numberOfBookingSentLastWeek; }
+    public set NumberOfBookingSentLastWeek(newValue: number) { if (this.numberOfBookingSentLastWeek != newValue) { this.numberOfBookingSentLastWeek = newValue; this.MarkAsDirty("NumberOfBookingSentLastWeek"); } }
+       
+	 
+    private numberOfSISentLastWeek: number;
+    public get NumberOfSISentLastWeek() { return this.numberOfSISentLastWeek; }
+    public set NumberOfSISentLastWeek(newValue: number) { if (this.numberOfSISentLastWeek != newValue) { this.numberOfSISentLastWeek = newValue; this.MarkAsDirty("NumberOfSISentLastWeek"); } }
+       
+	 
+    private lastContainerStatusReceived: Date;
+    public get LastContainerStatusReceived() { return this.lastContainerStatusReceived; }
+    public set LastContainerStatusReceived(newValue: Date) { if (this.lastContainerStatusReceived != newValue) { this.lastContainerStatusReceived = newValue; this.MarkAsDirty("LastContainerStatusReceived"); } }
+       
+	 
 
     public OldEntityPM: TenantManagementPM;
 		
     public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
+       if(!this.DisableMarkAsDirty)
+       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -852,6 +890,7 @@ export class TenantManagementPM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "TenantManagement");
            
         }
+	 }
     }
     private MyClone: TenantManagementPM;
 

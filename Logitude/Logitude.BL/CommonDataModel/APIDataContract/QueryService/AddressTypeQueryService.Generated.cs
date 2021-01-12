@@ -36,7 +36,7 @@ using Simplog.Data.CommonDataModel;
         }
 
 		
-		public AddressType GetAddressTypeByCode(string Code,int Tenant)
+		public AddressType GetAddressTypeByCode(string Code,int Tenant,string ComputingPartnerName = "")
         { 
 		    try
             {
@@ -46,7 +46,7 @@ using Simplog.Data.CommonDataModel;
 				 if (temp == null)
                     throw new ApplicationException("AddressType with Code " + Code + " doesn't exist");
 
-				return AddressTypeDataMapping(temp,Tenant);
+				return AddressTypeDataMapping(temp,Tenant,ComputingPartnerName);
 			}
             catch (Exception ex)
             {
@@ -55,7 +55,7 @@ using Simplog.Data.CommonDataModel;
             }
         }
 		
-		public AddressType GetAddressTypeById(string Id,int Tenant)
+		public AddressType GetAddressTypeById(string Id,int Tenant,string ComputingPartnerName = "")
         { 
 		    try
             {
@@ -65,7 +65,7 @@ using Simplog.Data.CommonDataModel;
 				 if (temp == null)
                     throw new ApplicationException("AddressType with Id " + Id + " doesn't exist");
 
-				return AddressTypeDataMapping(temp,Tenant);
+				return AddressTypeDataMapping(temp,Tenant,ComputingPartnerName);
 			}
             catch (Exception ex)
             {

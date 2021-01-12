@@ -220,7 +220,10 @@ export class VatTypePM {
     public OldEntityPM: VatTypePM;
 		
     public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
+       if(!this.DisableMarkAsDirty)
+       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -228,6 +231,7 @@ export class VatTypePM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "VatType");
            
         }
+	 }
     }
     private MyClone: VatTypePM;
 

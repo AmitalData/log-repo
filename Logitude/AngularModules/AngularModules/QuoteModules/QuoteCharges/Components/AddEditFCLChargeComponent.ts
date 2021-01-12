@@ -12,6 +12,7 @@ import {QuotePM} from '../../../Quote/EntityPMs/QuotePM';
 import {VatTypesValidator} from '../../../Infrastructure/Validators/VatTypesValidator';
 import { QuoteValidator } from '../../../Quote/Validators/QuoteValidator';
 import { ConfirmWindow } from '../../../Controls/Windows/ConfirmWindow';
+import { CommonTool } from '../../../Common/Tools';
 
 @Component({
     
@@ -108,6 +109,8 @@ export class AddEditFCLChargeComponent implements OnDestroy {
                 break;
             }
         }
+        CommonTool.FilterChargeTypesByDirection(this.ChargeTypesQueryFilters, this.QuotePM.DirectionId); 
+
     }
 
     public SelectedRow: FCLQuoteChargeItem = null;

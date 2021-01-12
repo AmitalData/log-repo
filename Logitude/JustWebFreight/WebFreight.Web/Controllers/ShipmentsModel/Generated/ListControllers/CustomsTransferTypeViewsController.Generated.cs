@@ -174,7 +174,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.ListControllers
                         else
                             queryOperations.SetFilter(filterName, filterValue1, false, filterOperator, filterValue2, true);
                     }
-
+					
 
 
                 }
@@ -211,6 +211,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.ListControllers
                 GenericFilter genericFilter = new GenericFilter();
                 GenericSort sortClass = new GenericSort();
 
+								
                 IShipmentsContext MyContext = ShipmentsContext.GetContext(tenant);
                 CustomsTransferTypeRepository  customsTransferTypeRepository = new CustomsTransferTypeRepository(MyContext);
                 IQueryable<CustomsTransferType> entityPocos = customsTransferTypeRepository.GetCustomsTransferTypes();
@@ -228,7 +229,8 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.ListControllers
 
                 entityLists = genericFilter.GetFilteredQuery<CustomsTransferTypeList>(listQueryOperation, entityLists);
 
-		 
+		      
+			  								
                 if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
                  {
                    PropertyInfo propInfo = typeof(CustomsTransferTypeList).GetProperty(queryOperations.SortByColumnName);
@@ -292,18 +294,18 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.ListControllers
                     }
 				 }
                 }
-            }
-		    else
+            }					  						
+	       else
             {
                 entityLists = entityLists.OrderBy(d => d.Name);
-            }
+            } 
 
 			ServiceResponse response = new ServiceResponse();
 			
 			if (filters.GetCount)
               {
 					response.Count = entityLists.Count();
-			  }
+    		  }
 			  	if(!queryOperations.GetAll)
 				 {
 

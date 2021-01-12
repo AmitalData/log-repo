@@ -202,7 +202,7 @@ namespace WebFreight.Web.AccountingWebServices.Testers
                 Tenant = 989,
                 accoutingDate = DateTime.Now.AddMonths(-1),
                 GLAccountId = "1-1",
-                verbose = true
+                verbose = true,
             };
             try
             {
@@ -1004,7 +1004,10 @@ namespace WebFreight.Web.AccountingWebServices.Testers
                 Category5Id = "",
                 CollectorId = "",
                 SalesmanId = "",
-                BuildPivot= false,
+                ChartOfAccountsTypeCode = "",
+                ChartOfAccountsId = "",
+                
+                BuildPivot = false,
                 AgingMethod = AgingReportParam.MethodEnum.ReconcileOpenBalanceMethod.ToString(),
                 AgingMethod_Options = Enum.GetNames(typeof(AgingReportParam.MethodEnum)).ToList().Aggregate((b4, aftr) => string.Concat(b4, ";", aftr)),
                 GroupByDate = AgingReportParam.DateEnum.DueDate,
@@ -1874,7 +1877,7 @@ namespace WebFreight.Web.AccountingWebServices.Testers
                 string fileSystem1000 = _TextBoxParam.Text;
 
                 var mySystem1000FlatFileAnalyser = new System1000FlatFileAnalyser();
-                mySystem1000FlatFileAnalyser.Analyse(null, fileSystem1000);
+                mySystem1000FlatFileAnalyser.Analyse(null, fileSystem1000,null);
 
                 _LabelResult.Text = JsonConvert.SerializeObject(mySystem1000FlatFileAnalyser.MyResultLoadFlatFile); ;
 

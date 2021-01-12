@@ -49,7 +49,10 @@ export class FilingInboxAttachmentLogPM {
     public OldEntityPM: FilingInboxAttachmentLogPM;
 		
     public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
+       if(!this.DisableMarkAsDirty)
+       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -57,6 +60,7 @@ export class FilingInboxAttachmentLogPM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "FilingInboxAttachmentLog");
            
         }
+	 }
     }
     private MyClone: FilingInboxAttachmentLogPM;
 

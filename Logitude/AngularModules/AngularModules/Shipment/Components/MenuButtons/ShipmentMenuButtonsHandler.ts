@@ -231,9 +231,54 @@ export class ShipmentMenuButtonsHandler implements OnDestroy {
                         }
                     }
 
+                    if (button.EventCode == "ConvertShipmentToLTL") {
+                        if (buttonEnabled) {
+                            if (this.EntityPM.TransportModeId == "I" && this.EntityPM.ShipmentTypeId == "FTL") {
+                                if (this.EntityPM.IsCancelled) {
+                                    button.IsDisabled = true;
+                                }
+
+                                else {
+                                    button.IsHidden = false;
+                                    button.IsDisabled = false;
+                                }
+                            }
+
+                            else {
+                                button.IsHidden = true;
+                            }
+                        }
+
+                        else {
+                            button.IsHidden = true;
+                        }
+                    }
+
+                    if (button.EventCode == "ConvertShipmentToFTL") {
+                        if (buttonEnabled) {
+                            if (this.EntityPM.TransportModeId == "I" && this.EntityPM.ShipmentTypeId == "LTL") {
+                                if (this.EntityPM.IsCancelled) {
+                                    button.IsDisabled = true;
+                                }
+
+                                else {
+                                    button.IsHidden = false;
+                                    button.IsDisabled = false;
+                                }
+                            }
+
+                            else {
+                                button.IsHidden = true;
+                            }
+                        }
+                        else {
+                            button.IsHidden = true;
+                        }
+                    }
+
                     if (button.EventCode == "ConvertShipmentToLCL") {
                         if (buttonEnabled) {
-                            if (this.EntityPM.ShipmentTypeId == "FCLD") {
+                            if (this.EntityPM.TransportModeId == "O" && this.EntityPM.ShipmentTypeId == "FCLD") {
                                 if (this.EntityPM.IsCancelled) {
                                     button.IsDisabled = true;
                                 }
@@ -256,7 +301,7 @@ export class ShipmentMenuButtonsHandler implements OnDestroy {
 
                     if (button.EventCode == "ConvertShipmentToFCL") {
                         if (buttonEnabled) {
-                            if (this.EntityPM.ShipmentTypeId == "LCLD") {
+                            if (this.EntityPM.TransportModeId == "O" && this.EntityPM.ShipmentTypeId == "LCLD") {
                                 if (this.EntityPM.IsCancelled) {
                                     button.IsDisabled = true;
                                 }
@@ -386,10 +431,22 @@ export class ShipmentMenuButtonsHandler implements OnDestroy {
                         this.SplitShipmentClicked();
                         break;
                     }
+
+                    case "ConvertShipmentToLTL": {
+                        this.ConvertShipmentToLTLClicked();
+                        break;
+                    }
+
+                    case "ConvertShipmentToFTL": {
+                        this.ConvertShipmentToFTLClicked();
+                        break;
+                    }
+
                     case "ConvertShipmentToLCL": {
                         this.ConvertShipmentToLCLClicked();
                         break;
                     }
+
                     case "ConvertShipmentToFCL": {
                         this.ConvertShipmentToFCLClicked();
                         break;
@@ -445,6 +502,14 @@ export class ShipmentMenuButtonsHandler implements OnDestroy {
                             this.DoConvertShipmentType("ToFCL");
                         }
 
+                        if (this.IsConvertToLTLClicked) {
+                            this.DoConvertShipmentType("ToLTL");
+                        }
+
+                        if (this.IsConvertToFTLClicked) {
+                            this.DoConvertShipmentType("ToFTL");
+                        }
+
                         if (this.IsConvertDirectionClicked) {
                             this.DoConvertShipmentDirection();
                         }
@@ -490,6 +555,8 @@ export class ShipmentMenuButtonsHandler implements OnDestroy {
         this.Reload = false;
         this.IsConvertToLCLClicked = false;
         this.IsConvertToFCLClicked = false;
+        this.IsConvertToLTLClicked = false;
+        this.IsConvertToFTLClicked = false;
         this.IsConvertDirectionClicked = false;
         this.IsSendToAMANACClicked = false;
     }
@@ -1080,6 +1147,27 @@ export class ShipmentMenuButtonsHandler implements OnDestroy {
         });
     }
 
+    private IsConvertToLTLClicked: boolean = false;
+    private IsConvertToFTLClicked: boolean = false;
+    private ConvertShipmentToLTLClicked() {
+        var errors: string[] = [];
+        Validator.TryValidateObject(this.EntityPM, "Shipment", errors);
+
+        if (errors.length == 0) {
+            this.IsConvertToLTLClicked = true;
+            this.OkButton();
+        }
+    }
+    private ConvertShipmentToFTLClicked() {
+        var errors: string[] = [];
+        Validator.TryValidateObject(this.EntityPM, "Shipment", errors);
+
+        if (errors.length == 0) {
+            this.IsConvertToFTLClicked = true;
+            this.OkButton();
+        }
+    }
+
     private IsConvertToLCLClicked: boolean = false;
     private IsConvertToFCLClicked: boolean = false;
     private ConvertShipmentToLCLClicked() {
@@ -1100,6 +1188,7 @@ export class ShipmentMenuButtonsHandler implements OnDestroy {
             this.OkButton();
         }
     }
+
     private DoConvertShipmentType(type: string) {
         var errors: string[] = [];
 
@@ -1179,6 +1268,20 @@ export class ShipmentMenuButtonsHandler implements OnDestroy {
                     windowTitle = "Convert Shipment From LCL To FCL";
                     break;
                 }
+
+            case "ToLTL":
+                {
+                    this.currentActionName = "ConvertShipmentToLTL";
+                    windowTitle = "Convert Shipment From FTL To LTL";
+                    break;
+                }
+
+            case "ToFTL":
+                {
+                    this.currentActionName = "ConvertShipmentToFTL";
+                    windowTitle = "Convert Shipment From LTL To FTL";
+                    break;
+                }
         }
 
         var logWindow = new LogitudeWindow();
@@ -1206,6 +1309,20 @@ export class ShipmentMenuButtonsHandler implements OnDestroy {
                             {
                                 this.EntityPM.ConvertShipmentToLCL = false;
                                 this.EntityPM.ConvertShipmentToFCL = true;
+                                break;
+                            }
+
+                        case "ToLTL":
+                            {
+                                this.EntityPM.ConvertShipmentToLTL = true;
+                                this.EntityPM.ConvertShipmentToFTL = false;
+                                break;
+                            }
+
+                        case "ToFTL":
+                            {
+                                this.EntityPM.ConvertShipmentToLTL = false;
+                                this.EntityPM.ConvertShipmentToFTL = true;
                                 break;
                             }
                     }

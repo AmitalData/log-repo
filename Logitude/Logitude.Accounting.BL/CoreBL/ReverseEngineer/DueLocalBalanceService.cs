@@ -264,8 +264,8 @@ namespace Logitude.Accounting.BL.CoreBL
                                 {
 
                                 }
-                                var deltaLocalBalanceInDue = item2update.RealDueInLocal -pm.LocalBalanceInDue.GetValueOrDefault();
-                                pm.LocalBalanceInDue = pm.LocalBalanceInDue.GetValueOrDefault() + deltaLocalBalanceInDue;
+                                var deltaLocalBalanceInDue = item2update.RealDueInLocal -pm.LocalBalanceInDue;
+                                pm.LocalBalanceInDue = pm.LocalBalanceInDue + deltaLocalBalanceInDue;
                                 DateTime? nextDate = item2update.TransNextDueDate.Date;
                                 if (nextDate== DateTime.MinValue || nextDate == DateTime.MinValue.Date)
                                 {

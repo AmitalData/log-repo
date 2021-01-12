@@ -1,4 +1,5 @@
-﻿using Logitude.BL.ShipmentsModel.EntityPMs;
+﻿using Logitude.BL.DataContracts;
+using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.BL.ShipmentsModel.EntityQueries;
 using Logitude.BL.ShipmentsModel.Tools.EntityService;
 using Logitude.Server.Tools.Counters;
@@ -488,6 +489,7 @@ namespace Logitude.XSD.FSR
                         airlineRepository.Add(newAirline);
                         cardRepository.SubmitChanges();
                         airlineRepository.SubmitChanges();
+                        RunStoredProcedureClass.UpdateCardSearcsRecords(newCard.Id, newCard.Tenant);
 
                         airlineId = newAirline.Id;
                         airlineCode = newCard.Code;

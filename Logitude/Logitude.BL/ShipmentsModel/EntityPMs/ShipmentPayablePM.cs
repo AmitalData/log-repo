@@ -23,6 +23,7 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public string ChargesTypeCode { get; set; }
         public string ChargesTypeName { get; set; }
         public string ChargesGroupCode { get; set; }
+        public bool? IsExpenseCharge { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string ShipmentPayableLineStatusCode { get; set; }
@@ -201,6 +202,8 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public int TariffVersion { get; set; }
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public string TariffLineId { get; set; }
 
         public bool PayablesDisconnectedFromTariff { get; set; }
     }

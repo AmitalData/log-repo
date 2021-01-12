@@ -17,14 +17,8 @@ namespace Logitude.BL.CommonDataModel.CustomFilters
         {
             if (compactSeachvalue != null)
             {
-                if (FeatureToggleHelper.HasFeatureToggle("CST", tenant))
-                { 
-                    CardSearchFilter cardSearchFilter = new CardSearchFilter();
-                    entityLists =  cardSearchFilter.GetFilteredQuery(new CardSearchFilterArgs() { SeachText = compactSeachvalue != null ? compactSeachvalue.ToString() : "", Tenant = tenant, QueryOperations = queryOperations, EntityLists = entityLists , Filter = filter ,SortList = true});
-
-                }
-                else entityLists = GetCardCompactSearchResults(compactSeachvalue, queryOperations, filter, entityLists, tenant);
-
+                CardDataSearchService cardDataSearchService = new CardDataSearchService();
+                entityLists = cardDataSearchService.Run(new CardSearchArgs() { SearchText = compactSeachvalue != null ? compactSeachvalue.ToString() : "", Tenant = tenant, EntityLists = entityLists, SortByColumnName = queryOperations.SortByColumnName, SortDirectin = queryOperations.SortDirectin, PageSize = queryOperations.PageSize, FilterItems = queryOperations.QueryFilterItems });
             }
 
             return entityLists;

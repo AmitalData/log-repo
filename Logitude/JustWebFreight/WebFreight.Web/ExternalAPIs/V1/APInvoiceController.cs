@@ -159,18 +159,11 @@ namespace WebFreight.Web.ExternalAPIs.V1
                         if (isFullAccounting)
                         {
                             apinvoice.Tenant = tenant;
-
-
                             apinvoiceQuery.CustomeValidateAPInvoice(apinvoice);
-                            apinvoiceQuery.APInvoiceCustomDataMapping(apinvoice, tenant);
-
                             apinvoicePM = apinvoiceQuery.APInvoiceDataMappingAndValidatin(apinvoice, tenant);
+                            apinvoiceQuery.APInvoiceCustomDataMapping(apinvoice, tenant);
                             apinvoiceQuery.PaymentTermMapAndValidate(apinvoice, apinvoicePM, tenant);
                             CalculateTotalsIfEmpty(apinvoicePM);
-
-                            // VendorGLAccountId
-                            apinvoicePM.VendorGLAccountId = GetVendorGLAccountId(tenant, apinvoicePM);
-
                             // SET approved
                             apinvoicePM.SetVoided = false;
                             apinvoicePM.SetApproved = true;
@@ -185,12 +178,17 @@ namespace WebFreight.Web.ExternalAPIs.V1
                             apinvoicePM.InvoiceCurrencyExchangeRate = apinvoicePM.AmountInLocalCurrency / apinvoicePM.AmountInInvoiceCurrency;
                         }
 
-                        else
-                        {
-                            apinvoicePM = apinvoiceQuery.APInvoiceCustomDataMappingAndValidating(apinvoice, tenant, computingPartnerCode);
+                    
+                            apinvoicePM = apinvoiceQuery.APInvoiceCustomDataMappingAndValidating(apinvoice, tenant, computingPartnerCode,apinvoicePM);
                             apinvoicePM.CreatedFromAPI = true;
-                        }
                        
+
+                      
+                            
+                        // VendorGLAccountId
+                        apinvoicePM.VendorGLAccountId =isFullAccounting? GetVendorGLAccountId(tenant, apinvoicePM): null;
+
+
                         if (!string.IsNullOrEmpty(apinvoice.ComputingPartnerCode))
                         {
                             ComputingPartnerQuery computingPartnerQuery = new ComputingPartnerQuery(tenant);
@@ -245,7 +243,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
             if (!string.IsNullOrWhiteSpace(apinvoicePM.VendorGLAccountId))
             {
                 GLAccountPM glaccountPM = GetGLAccountById(tenant, apinvoicePM.VendorGLAccountId);
-                id = glaccountPM.Id;
+                id = glaccountPM != null? glaccountPM.Id: null;
             }
             else
             {

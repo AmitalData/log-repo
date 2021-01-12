@@ -156,6 +156,7 @@ export class QuoteClosingReasonPMService {
         if (!entityPM) {
             
             entityPM = new QuoteClosingReasonPM();
+			entityPM.DisableMarkAsDirty = true;
         }
 
 		var customFields: Array<string> = [];
@@ -196,6 +197,8 @@ export class QuoteClosingReasonPMService {
             entityPM.OldEntityPM = null;
         }
 		entityPM.IsDirty = false;
+	    entityPM.DisableMarkAsDirty = false;
+
         return entityPM;
     }
 

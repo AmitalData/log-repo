@@ -63,6 +63,8 @@ export class EditComponent implements OnDestroy {
     public IsSaveBtnDisable: boolean = false;
     public NeedRefresh: boolean = false;
 
+    public EditComponentArgument: any = null;
+
     EntityParentPM: any;
     ShowWindowsOverEditComponent: boolean = false;
 
@@ -158,7 +160,7 @@ export class EditComponent implements OnDestroy {
         if (this.EntityId || (this.EntityId && this.EntityPM.Id))
             isNewEntity = false;
 
-        if ((this.ObjectTableName == "ARPayment"  || this.ObjectTableName== "APPayment") && SessionLocator.TenantPM.AccountingActivated && isNewEntity) {
+        if ((this.ObjectTableName == "ARPayment" ) && SessionLocator.TenantPM.AccountingActivated && isNewEntity) {
             this.IsSaveBtnVisible = false;
         }
         //
@@ -954,9 +956,9 @@ export class EditComponent implements OnDestroy {
                 SessionLocator.DynamicLoader.Load("./Infrastructure/Components/EditComponent/EditTabComponent", this.TabControlBodyViewContainerRef)
                     .then(cmpRef => {
 
-                        if (this.PreSelectedTabCode != null) {
-                            this.entityArgs.PreSelectedTabCode = this.PreSelectedTabCode;
-                        }
+
+                        this.entityArgs.PreSelectedTabCode = this.PreSelectedTabCode;
+                        this.entityArgs.EditComponentArgument = this.EditComponentArgument;
 
                         cmpRef.instance.CurrentlySelected = true;
                         cmpRef.instance.Run(this.SingleDetailsTab.Code, this.SingleDetailsTab.HtmlComponentUrl);

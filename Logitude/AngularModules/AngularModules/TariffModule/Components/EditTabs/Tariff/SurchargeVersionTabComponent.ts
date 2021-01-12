@@ -1,4 +1,4 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, EventEmitter } from '@angular/core';
 import { BaseComponent } from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { ServiceHelper } from '../../../../Infrastructure/Utilities/ServiceHelper';
 import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
@@ -48,8 +48,10 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
     public OriginDependencyFilterValue: string = "A";
     public DestinationDependencyFilterValue = "A";
     public IsAir: boolean = false;
-  private deletedLinesExpirationDates: TariffLineExpirationDatePM[];
-  public LinesCount: number;
+    public selectedRow: any;
+    public changeScrollPosition: EventEmitter<any> = new EventEmitter();
+    private deletedLinesExpirationDates: TariffLineExpirationDatePM[];
+    public LinesCount: number;
 
     constructor(public entityArgs: EntityArgs) {
         super();
@@ -86,7 +88,6 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
         this.CurrentVersion = args['CurrentVersion'];
         this.SelectedVersionNumber = args['SelectedVersionNumber'];
         this.LineIdFromPriceCheck = args['LineIdFromPriceCheck'];
-
         if (this.CurrentVersion != null) {
             this.IsDraftVersion = this.CurrentVersion.IsDraft;
         }
@@ -312,14 +313,14 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
 
                 var item: CodeNameClass = new CodeNameClass();
                 item.Code = iChargeType.Id;
-                item.Name = iChargeType.Code;
-                item.DisplyText = iChargeType.Code;
+                item.Name = iChargeType.EnglishName;
+                item.DisplyText = iChargeType.EnglishName;
                 item.Code_Int = index;                
 
                 var isMeasurmentFixed: boolean = false;
                 var iMeasurement: MeasurementList = this.AllMeasurements.filter(f => f.Id == iMeasurementId)[0];
                 if (iMeasurement) {
-                    item.DisplyText = iChargeType.Code + " (" + iMeasurement.Code + ")";
+                    item.DisplyText = iChargeType.EnglishName + " (" + iMeasurement.Code + ")";
                     item.AdditionalField = iMeasurement.Code;
 
                     if (iMeasurement.Code == "FIXD") {
@@ -332,7 +333,7 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
                 this['Surcharge' + index + 'PriceLabel'] = item.DisplyText;
                 this['Surcharge' + index + 'PriceVisibility'] = true;
                 this['Surcharge' + index + 'MinPriceVisibility'] = !isMeasurmentFixed;
-                this['Surcharge' + index + 'MinPriceLabel'] = "Min " + iChargeType.Code;               
+                this['Surcharge' + index + 'MinPriceLabel'] = "Min " + iChargeType.EnglishName;               
             }
         }
     }
@@ -389,14 +390,27 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
         }
 
         this.ItemsCollection = [];        
-
+        var count = 0; var selectedIndexRow = 0; var isItemSelectExist = false;
         tariffLines.sort((a, b) => a.Index - b.Index).forEach(item => {
-            this.ItemsCollection.push(new AirSurchargeTariffLineData(item, this));
+            var itemSurchargeAir = new AirSurchargeTariffLineData(item, this)
+            count++;
+            this.ItemsCollection.push(itemSurchargeAir);
+            if (!AppTool.IsNullOrEmpty(this.LineIdFromPriceCheck) && itemSurchargeAir.EntityPM.Id == this.LineIdFromPriceCheck) {
+                this.selectedRow = itemSurchargeAir;
+                selectedIndexRow = count;
+                isItemSelectExist = true;
+            }
         });
 
         this.TariffsLinesSource.InsertCollection(this.ItemsCollection);
       this.LinesCount = this.TariffsLinesSource.Length;
-        this.DoCompare();    
+        this.DoCompare();
+
+        if (isItemSelectExist) {
+            this.changeScrollPosition.emit({
+                RowIndex: selectedIndexRow
+            });
+        }
     }
 
     private DoCompare() {

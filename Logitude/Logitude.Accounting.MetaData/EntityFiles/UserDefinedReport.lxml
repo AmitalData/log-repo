@@ -15,6 +15,8 @@
   HasCustomValidator="false"
   IsEditable="false"
   IsNewWizard="false"
+  LookUp1="&quot;LocalName&quot;"
+  LookUp2="&quot;EnglishName&quot;"
   KeyPropertyPath="&quot;Id&quot;"
   AutoCompleteSearchWindow="false"
   IsClosed="false"
@@ -37,7 +39,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   NewWizardControlName="&quot;./Accounting/Components/NewEntity/NewUserDefinedReportComponent&quot;"
-  LocalDefaultText="&quot;הוגדר ע\&quot;י משתמש&quot;"
+  LocalDefaultText="&quot;קבוצות מאזן מחושבות&quot;"
   DefaultText="&quot;User Defined Reports&quot;"
   Code="&quot;c4c8&quot;"
   Name="&quot; Query Group&quot;"
@@ -530,7 +532,7 @@
     MaxLength="100"
     IsRequired="false"
     CopyToDW="false"
-    DisplayOnLookUp="false"
+    DisplayOnLookUp="true"
     DisplayOnLookUpLocal="false"
     CanFilter="true"
     DisplayOnly="false"
@@ -542,13 +544,13 @@
     Operator="&quot;Contains&quot;"
     MultiLine="false"
     IsTimeFrameFilter="false"
-    DisplayInSearchWindowList="false"
+    DisplayInSearchWindowList="true"
     PMPropertyPath="&quot;EnglishName&quot;"
     ListPropertyPath="&quot;EnglishName&quot;"
-    DisplayInLookUpIndex="0"
+    DisplayInLookUpIndex="1"
     AutomaticField="false"
     UniqueField="false"
-    DisplayInSearchWindowListIndex="0"
+    DisplayInSearchWindowListIndex="1"
     IsMulti="false"
     DependencyFilter1IsList="false"
     DependencyFilter2IsList="false"
@@ -605,7 +607,7 @@
     MaxLength="100"
     IsRequired="true"
     CopyToDW="false"
-    DisplayOnLookUp="false"
+    DisplayOnLookUp="true"
     DisplayOnLookUpLocal="false"
     CanFilter="true"
     DisplayOnly="false"
@@ -617,7 +619,7 @@
     Operator="&quot;Contains&quot;"
     MultiLine="false"
     IsTimeFrameFilter="false"
-    DisplayInSearchWindowList="false"
+    DisplayInSearchWindowList="true"
     PMPropertyPath="&quot;LocalName&quot;"
     ListPropertyPath="&quot;LocalName&quot;"
     DisplayInLookUpIndex="0"
@@ -1324,7 +1326,7 @@
   <Query
     Code="&quot;User Defined Reports&quot;"
     TextCode="&quot;User Defined Reports&quot;"
-    LocalTextCode="&quot;הוגדר ע\&quot;י משתמש&quot;"
+    LocalTextCode="&quot;קבוצות מאזן מחושבות&quot;"
     QueryGroupCode="&quot;c4c8&quot;"
     IndexOrder="0"
     ObjectTableName="&quot;UserDefinedReport&quot;"
@@ -1518,8 +1520,50 @@
       IsSpellChecked="false" />
     <TextCode
       Code="&quot;UserDefinedReport.O.ChartOfAccountTypeforthislinediffersfromtheChartofAccount&quot;"
-      DefaultText="&quot;Chart Of Account Type for this line differs from the Chart of Account&quot;"
+      DefaultText="&quot;Chart Of Account Type for this line differs from the Chart of Account Type for this calculated chart of account, please choose another GLAccount or Charts of Accounts.&quot;"
       LocalDefaultText="&quot;סוג קבוצת המאזן בשורה זאת שונה מהגדרת הסוג של קבוצת המאזן שנבחרה&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;UserDefinedReport.O.Period1&quot;"
+      DefaultText="&quot;Period 1&quot;"
+      LocalDefaultText="&quot;תקופה 1&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;UserDefinedReport.O.Period2&quot;"
+      DefaultText="&quot;Period 2&quot;"
+      LocalDefaultText="&quot;תקופה 2&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;UserDefinedReport.O.FromToDates&quot;"
+      DefaultText="&quot;From/To Dates&quot;"
+      LocalDefaultText="&quot;מתאריך\עד תאריך&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;UserDefinedReport.O.IncludeOpeningBalance&quot;"
+      DefaultText="&quot;Include Opening Balance&quot;"
+      LocalDefaultText="&quot;כולל יתרת פתיחה&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;UserDefinedReport.O.Report&quot;"
+      DefaultText="&quot;Report&quot;"
+      LocalDefaultText="&quot;דו&quot;ח&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;UserDefinedReport.O.ExpandChartofAccounttoGLAccounts&quot;"
+      DefaultText="&quot;Expand Chart of Account to GLAccounts&quot;"
+      LocalDefaultText="&quot;קבוצות מאזן מפורטות לחשבונות&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;UserDefinedReport.O.AtLeastOnePeriodIsRequired&quot;"
+      DefaultText="&quot;At least one period is required&quot;"
+      LocalDefaultText="&quot;חובה להקליד לפחות תקופה אחת &quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>

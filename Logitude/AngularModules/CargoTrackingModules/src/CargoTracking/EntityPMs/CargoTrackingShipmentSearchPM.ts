@@ -54,11 +54,19 @@ export class CargoTrackingShipmentSearchPM {
     public set IsPublic(newValue: boolean) { if (this.isPublic != newValue) { this.isPublic = newValue; this.MarkAsDirty("IsPublic"); } }
        
 	 
+    private referenceType: string;
+    public get ReferenceType() { return this.referenceType; }
+    public set ReferenceType(newValue: string) { if (this.referenceType != newValue) { this.referenceType = newValue; this.MarkAsDirty("ReferenceType"); } }
+       
+	 
 
     public OldEntityPM: CargoTrackingShipmentSearchPM;
 		
     public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
+       if(!this.DisableMarkAsDirty)
+       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -66,6 +74,7 @@ export class CargoTrackingShipmentSearchPM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "CargoTrackingShipmentSearch");
            
         }
+       }
     }
 
     private MyClone: CargoTrackingShipmentSearchPM;

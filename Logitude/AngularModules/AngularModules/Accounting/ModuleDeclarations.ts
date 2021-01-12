@@ -82,6 +82,7 @@ import { InterestBasesTypeDetailsTabComponent } from './Components/EditTabs/Inte
 import {PrintedListHeaderTemplate} from './Components/ListTemplates/PrintedListHeaderTemplate'
 
 
+import { CopyJournalComponent } from './Components/Others/CopyJournalComponent';
 import {ReconcileComponent} from './Components/Others/ReconcileComponent';
 import {ReconciledMessage} from './Components/Others/ReconciledMessage';
 import {OutOfDepositMessage} from './Components/Others/OutOfDepositMessage';
@@ -235,6 +236,7 @@ export const Components =
         InterestInvoiceListTemplate,
         PrintedListHeaderTemplate,
         //Others
+        CopyJournalComponent,
         ReconcileComponent,
         ReconciledMessage,
         OutOfDepositMessage,
@@ -396,6 +398,7 @@ export class ModuleDeclarations {
 
 
             //Others
+            case "CopyJournalComponent": { myResult = CopyJournalComponent; break;}
             case "UserDefinedReportShortTitleComponent" :{myResult =UserDefinedReportShortTitleComponent; break;}
             case "CargoTrackingBuildShipmentComponent" :{myResult =CargoTrackingBuildShipmentComponent; break;}
             case "CargoTrackingIncrementalStatistics" :{myResult =CargoTrackingIncrementalStatistics; break;}

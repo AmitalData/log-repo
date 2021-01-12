@@ -114,6 +114,7 @@
     <Content Include="Accounting\Components\Others\CancelChequeComponent.html" />
     <Content Include="Accounting\Components\Others\CargoTrackingService\CargoTrackingBuildShipmentComponent.html" />
     <Content Include="Accounting\Components\Others\CargoTrackingService\CargoTrackingIncrementalStatistics.html" />
+    <Content Include="Accounting\Components\Others\CopyJournalComponent.html" />
     <Content Include="Accounting\Components\Others\DropdownButtonComponent.html" />
     <Content Include="Accounting\Components\Others\ExtReconcileAdjustBankFeeComponent.html" />
     <Content Include="Accounting\Components\Others\BatchInvoicesComponent.html" />
@@ -164,6 +165,7 @@
     <Content Include="CommonModules\CommonPartners\Components\EditTabs\Participant\ParticipantDocsInTabComponent.html" />
     <Content Include="CommonModules\CommonPartners\Components\EditTabs\ShippingAgent\ShippingAgentDocsInTabComponent.html" />
     <Content Include="CommonModules\CommonPartners\Components\EditTabs\ShippingLine\ShippingLineDocsInTabComponent.html" />
+    <Content Include="CommonModules\CommonPartners\Components\EditTabs\ShippingLine\ShippinglineGeneralTabComponent.html" />
     <Content Include="CommonModules\CommonPartners\Components\EditTabs\TariffTranslations\AddEditTariffTranslationComponent.html" />
     <Content Include="CommonModules\CommonPartners\Components\EditTabs\TariffTranslations\TariffTranslationsTabComponent.html" />
     <Content Include="CommonModules\CommonPartners\Components\EditTabs\Trucker\TruckerDocsInTabComponent.html" />
@@ -286,6 +288,13 @@
     <Content Include="CustomsModules\CustomsDeclarationModules\DeclarationTabs\Components\Classification\CasualSupplierDetailsComponent.html" />
     <Content Include="CustomsModules\CustomsDeclarationModules\DeclarationTabs\Components\DeclarationAmendment\DeclarationAmendmentComponent.html" />
     <Content Include="CustomsModules\CustomsDeclarationModules\DeclarationTabs\Components\General\ConsigmentTabContent\ExportConsigmentContentComponent.html" />
+    <TypeScriptCompile Include="App\DynamicLoader\LazyWidgetsLogitude.ts" />
+    <TypeScriptCompile Include="Accounting\Components\Others\CopyJournalComponent.ts" />
+    <TypeScriptCompile Include="CommonModules\CommonPartners\Components\EditTabs\ShippingLine\ShippinglineGeneralTabComponent.ts" />
+    <TypeScriptCompile Include="Common\CustomFilters\ChargesTypeCustomFilter.ts" />
+    <TypeScriptCompile Include="Common\CustomFilters\ChargesTypeCustomFilter.ts" />
+    <TypeScriptCompile Include="Common\CustomFilters\ChargesTypeCustomFilter.ts" />
+    <TypeScriptCompile Include="Common\Tools.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsDeclarationModules\DeclarationOthers\Components\DeclarationCancellation\DeclarationCancellationComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsDeclarationModules\DeclarationOthers\Components\DeclarationCancellation\Documents\DeclarationCancellationCustomsDocumentsController.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsDeclarationModules\DeclarationOthers\Components\NewEntity\NewExportDeclarationComponent.ts" />
@@ -907,7 +916,6 @@
     <TypeScriptCompile Include="App\ModuleDeclarations.ts" />
     <TypeScriptCompile Include="App\Directives\ChildDirective.ts" />
     <TypeScriptCompile Include="App\DynamicLoader\DynamicLoader.ts" />
-    <TypeScriptCompile Include="App\DynamicLoader\LazyWidgets.ts" />
     <TypeScriptCompile Include="App\DynamicLoader\LazyWidgetsTokens.ts" />
     <TypeScriptCompile Include="CommonModules\CommonAirline\Components\EditTabs\AirlineDocsInTabComponent.ts" />
     <TypeScriptCompile Include="CommonModules\CommonAirline\Components\EditTabs\AirlineGeneralTabComponent.ts" />
@@ -1704,13 +1712,18 @@
     <TypeScriptCompile Include="Infrastructure\Components\LogitudeComponents\DWLovComponent.ts" />
     <TypeScriptCompile Include="Infrastructure\Components\LogitudeComponents\DWLogSearchWindowComponent.ts" />
     <TypeScriptCompile Include="Infrastructure\Components\LogitudeComponents\ImageLibraryComponent.ts" />
+    <TypeScriptCompile Include="Infrastructure\Components\LogitudeComponents\AdvancedDatePickerComponent.ts" />
     <TypeScriptCompile Include="Infrastructure\Components\LogitudeComponents\LogGridComponent\LogGridComponentV2.ts" />
     <TypeScriptCompile Include="Infrastructure\Components\LogitudeComponents\LogGridComponent\VirtualRowControllerV2.ts" />
     <TypeScriptCompile Include="Infrastructure\Components\LogitudeComponents\LogTextBoxComponentV3.ts" />
     <TypeScriptCompile Include="Infrastructure\Components\LogitudeComponents\LogToolTip\LogToolTipComponent.ts" />
     <TypeScriptCompile Include="Infrastructure\Components\LogitudeComponents\MultilineTextBoxWindow.ts" />
     <TypeScriptCompile Include="Infrastructure\Components\LogitudeComponents\MultiSelectLOVComponent.ts" />
+    <TypeScriptCompile Include="Infrastructure\Components\LogitudeComponents\AdvancedDatePickerResolverComponent.ts" />
     <TypeScriptCompile Include="Infrastructure\Components\LogitudeCustomComponents\LastSuccessfulLoginComponent.ts" />
+    <TypeScriptCompile Include="Infrastructure\Components\Maintenance\Automation\AutomationResult\FTPAutomationDetailsComponent.ts" />
+    <TypeScriptCompile Include="Infrastructure\Components\Maintenance\Automation\AutomationResult\SendDocumentResultComponent.ts" />
+    <TypeScriptCompile Include="Infrastructure\Components\Maintenance\Automation\AutomationResult\SendInterfaceResultComponent.ts" />
     <TypeScriptCompile Include="Infrastructure\Components\Maintenance\Automation\ChooseSpecificUserComponent.ts" />
     <TypeScriptCompile Include="Infrastructure\Components\Maintenance\BatchTaskExecution\BTEGeneralTabComponent.ts" />
     <TypeScriptCompile Include="Infrastructure\Components\Maintenance\BatchTaskExecution\BTELogTabComponent.ts" />
@@ -1728,6 +1741,8 @@
     <TypeScriptCompile Include="Infrastructure\DataContracts\AutomationEventTypeArgs.ts" />
     <TypeScriptCompile Include="Infrastructure\DataContracts\AutomationFollowUp.ts" />
     <TypeScriptCompile Include="Infrastructure\DataContracts\AutomationQueuedTask.ts" />
+    <TypeScriptCompile Include="Infrastructure\DataContracts\AutomationSendDocument.ts" />
+    <TypeScriptCompile Include="Infrastructure\DataContracts\AutomationSendInterface.ts" />
     <TypeScriptCompile Include="Infrastructure\DataContracts\AutomationSetValue.ts" />
     <TypeScriptCompile Include="Infrastructure\DataContracts\ChangePasswordParameter.ts" />
     <TypeScriptCompile Include="Infrastructure\DataContracts\ComponentArgs.ts" />
@@ -1871,6 +1886,7 @@
     <TypeScriptCompile Include="Infrastructure\Helpers\DetectUserInActivity.ts" />
     <Content Include="Infrastructure\Components\LogitudeComponents\DWLogSearchWindowComponent.html" />
     <Content Include="Infrastructure\Components\LogitudeComponents\ImageLibraryComponent.html" />
+    <Content Include="Infrastructure\Components\LogitudeComponents\AdvancedDatePickerComponent.html" />
     <Content Include="Infrastructure\Components\LogitudeComponents\LogGridComponent\LogGridComponentV2.html" />
     <Content Include="Infrastructure\Components\LogitudeComponents\LogTextBoxComponentV3.html" />
     <Content Include="Infrastructure\Components\LogitudeComponents\LogToolTip\LogToolTipComponent.css" />
@@ -1881,6 +1897,9 @@
     <TypeScriptCompile Include="Infrastructure\Components\LogitudeComponents\MultiSelectLOVComponent.ts" />
     <Content Include="Infrastructure\Components\LogitudeComponents\TimeInput.html" />
     <Content Include="Infrastructure\Components\LogitudeCustomComponents\LastSuccessfulLoginComponent.html" />
+    <Content Include="Infrastructure\Components\Maintenance\Automation\AutomationResult\FTPAutomationDetailsComponent.html" />
+    <Content Include="Infrastructure\Components\Maintenance\Automation\AutomationResult\SendDocumentResultComponent.html" />
+    <Content Include="Infrastructure\Components\Maintenance\Automation\AutomationResult\SendInterfaceResultComponent.html" />
     <Content Include="Infrastructure\Components\Maintenance\Automation\ChooseSpecificUserComponent.html" />
     <Content Include="Infrastructure\Components\Maintenance\BatchTaskExecution\BTEGeneralTabComponent.html" />
     <Content Include="Infrastructure\Components\Maintenance\BatchTaskExecution\BTELogTabComponent.html" />
@@ -1970,6 +1989,7 @@
     <Content Include="ShipmentModules\ShipmentAMANAC\Components\BlockedShipmentsComponent.html" />
     <Content Include="ShipmentModules\ShipmentAMANAC\Components\EditTabs\CustomsTransferGeneralTabComponent.html" />
     <Content Include="ShipmentModules\ShipmentAMANAC\Components\NewEntity\AMANACExportTransferComponent.html" />
+    <Content Include="ShipmentModules\ShipmentAMANAC\Components\NewEntity\AMANACValidationComponent.html" />
     <Content Include="ShipmentModules\ShipmentAMANAC\Components\NewEntity\NewTransferComponent.html" />
     <Content Include="ShipmentModules\ShipmentINTTRA\Components\Wizard\AddEBookingVesselComponent.html" />
     <Content Include="ShipmentModules\ShipmentINTTRA\Components\Wizard\SimulatorBookingComponent.html" />
@@ -3070,6 +3090,7 @@
     <Content Include="TariffModule\Components\EditTabs\Tariff\TariffGeneralTabComponent.html" />
     <Content Include="TariffModule\Components\EditTabs\Tariff\TariffTabsContentComponent.html" />
     <Content Include="TariffModule\Components\EditTabs\Tariff\UpdateSurchargesComponent.html" />
+    <Content Include="TariffModule\Components\EditTabs\Tariff\UploadedExcelsComponent.html" />
     <Content Include="TariffModule\Components\EditTabs\Tariff\VersionHistoryTabComponent.html" />
     <Content Include="TariffModule\Components\EditTabs\Tariff\VersionTabComponent.html" />
     <Content Include="TariffModule\Components\Helpers\TariffHelperComponent.html" />
@@ -4326,10 +4347,8 @@
     <TypeScriptCompile Include="Accounting\Utilities\ReconcileEventManager.ts" />
     <TypeScriptCompile Include="App\AppComponent_Cust.ts" />
     <TypeScriptCompile Include="App\AppComponent.ts" />
-    <TypeScriptCompile Include="App\Bootstraper-Cust.ts" />
     <TypeScriptCompile Include="App\Bootstraper.ts" />
     <TypeScriptCompile Include="App\Module_APP.ts" />
-    <TypeScriptCompile Include="App\Module_APP_CUST.ts" />
     <TypeScriptCompile Include="Booking\Components\BookingWizard\NoRemainingStockComponent.ts" />
     <TypeScriptCompile Include="Booking\Services\ExtendedPMs\BookingProductExtendedPMService.ts" />
     <TypeScriptCompile Include="Booking\Services\StandardPMs\BookingProductPMService.ts" />
@@ -4448,6 +4467,7 @@
     <TypeScriptCompile Include="ShipmentModules\ShipmentAMANAC\Components\BlockedShipmentsComponent.ts" />
     <TypeScriptCompile Include="ShipmentModules\ShipmentAMANAC\Components\EditTabs\CustomsTransferGeneralTabComponent.ts" />
     <TypeScriptCompile Include="ShipmentModules\ShipmentAMANAC\Components\NewEntity\AMANACExportTransferComponent.ts" />
+    <TypeScriptCompile Include="ShipmentModules\ShipmentAMANAC\Components\NewEntity\AMANACValidationComponent.ts" />
     <TypeScriptCompile Include="ShipmentModules\ShipmentAMANAC\Components\NewEntity\NewTransferComponent.ts" />
     <TypeScriptCompile Include="ShipmentModules\ShipmentAMANAC\ModuleDeclarations.ts" />
     <TypeScriptCompile Include="ShipmentModules\ShipmentAMANAC\ModuleShipmentAMANAC.ts" />
@@ -7461,6 +7481,7 @@
     <TypeScriptCompile Include="TariffModule\Components\EditTabs\Tariff\TariffGeneralTabComponent.ts" />
     <TypeScriptCompile Include="TariffModule\Components\EditTabs\Tariff\TariffTabsContentComponent.ts" />
     <TypeScriptCompile Include="TariffModule\Components\EditTabs\Tariff\UpdateSurchargesComponent.ts" />
+    <TypeScriptCompile Include="TariffModule\Components\EditTabs\Tariff\UploadedExcelsComponent.ts" />
     <TypeScriptCompile Include="TariffModule\Components\EditTabs\Tariff\VersionHistoryTabComponent.ts" />
     <TypeScriptCompile Include="TariffModule\Components\EditTabs\Tariff\VersionTabComponent.ts" />
     <TypeScriptCompile Include="TariffModule\Components\Helpers\TariffHelperComponent.ts" />
@@ -7482,6 +7503,7 @@
     <TypeScriptCompile Include="TariffModule\EntityLists\TariffSettingList.ts" />
     <TypeScriptCompile Include="TariffModule\EntityLists\TariffTypeList.ts" />
     <TypeScriptCompile Include="TariffModule\EntityLists\TariffVersionList.ts" />
+    <TypeScriptCompile Include="TariffModule\EntityLists\TariffVersionUploadedExcelList.ts" />
     <TypeScriptCompile Include="TariffModule\EntityPMInitServices\TariffPMInitService.ts" />
     <TypeScriptCompile Include="TariffModule\EntityPMs\TariffLineExpirationDatePM.ts" />
     <TypeScriptCompile Include="TariffModule\EntityPMs\TariffLinePM.ts" />
@@ -7491,6 +7513,7 @@
     <TypeScriptCompile Include="TariffModule\EntityPMs\TariffTypePM.ts" />
     <TypeScriptCompile Include="TariffModule\EntityPMs\TariffVersionAllInChargePM.ts" />
     <TypeScriptCompile Include="TariffModule\EntityPMs\TariffVersionPM.ts" />
+    <TypeScriptCompile Include="TariffModule\EntityPMs\TariffVersionUploadedExcelPM.ts" />
     <TypeScriptCompile Include="TariffModule\ModuleDeclarations.ts" />
     <TypeScriptCompile Include="TariffModule\ModuleProviders.ts" />
     <TypeScriptCompile Include="TariffModule\Module_Tariff.ts" />
@@ -7498,9 +7521,11 @@
     <TypeScriptCompile Include="TariffModule\Services\StandardLists\TariffSettingListService.ts" />
     <TypeScriptCompile Include="TariffModule\Services\StandardLists\TariffSurchargesUpdateListService.ts" />
     <TypeScriptCompile Include="TariffModule\Services\StandardLists\TariffSurchargesUpdateMethodListService.ts" />
+    <TypeScriptCompile Include="TariffModule\Services\StandardLists\TariffVersionUploadedExcelListService.ts" />
     <TypeScriptCompile Include="TariffModule\Services\StandardPMs\TariffProductPMService.ts" />
     <TypeScriptCompile Include="TariffModule\Services\StandardPMs\TariffSettingPMService.ts" />
     <TypeScriptCompile Include="TariffModule\Services\StandardPMs\TariffSurchargesUpdatePMService.ts" />
+    <TypeScriptCompile Include="TariffModule\Services\StandardPMs\TariffVersionUploadedExcelPMService.ts" />
     <TypeScriptCompile Include="TariffModule\Services\TariffDomainService.ts" />
     <TypeScriptCompile Include="TariffModule\Services\StandardLists\TariffListService.ts" />
     <TypeScriptCompile Include="TariffModule\Services\StandardLists\TariffTypeListService.ts" />

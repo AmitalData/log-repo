@@ -166,7 +166,6 @@
                                             <div></div>
                                         </td>
                                     </tr>
-
                                     <!-- Step1Price -->
                                     <tr *ngIf="DataContext.FatherComponent.Step1PriceVisibility" class="FormFieldRow">
                                         <td>
@@ -262,7 +261,7 @@
                                             <div></div>
                                         </td>
                                     </tr>
-
+                                    
                                     <!-- Step7Price -->
                                     <tr *ngIf="DataContext.FatherComponent.Step7PriceVisibility" class="FormFieldRow">
                                         <td>
@@ -304,7 +303,7 @@
                                 <table>
                                     <!-- Surcharge1Price -->
                                     <tr *ngIf="DataContext.FatherComponent.Surcharge1PriceVisibility" class="FormFieldRow">
-                                        <td style="width:100px;">
+                                        <td style="width:100px;"  [title]="DataContext.FatherComponent.Surcharge1PriceLabel">
                                             <LogLabel [ObjectFieldName]="'Surcharge1Price'" [Text]="DataContext.FatherComponent.Surcharge1PriceLabel" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                         </td>
 
@@ -327,7 +326,7 @@
 
                                     <!-- Surcharge2Price -->
                                     <tr *ngIf="DataContext.FatherComponent.Surcharge2PriceVisibility" class="FormFieldRow">
-                                        <td>
+                                        <td  [title]="DataContext.FatherComponent.Surcharge2PriceLabel">
                                             <LogLabel [ObjectFieldName]="'Surcharge2Price'" [Text]="DataContext.FatherComponent.Surcharge2PriceLabel" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                         </td>
 
@@ -350,7 +349,7 @@
 
                                     <!-- Surcharge3Price -->
                                     <tr *ngIf="DataContext.FatherComponent.Surcharge3PriceVisibility" class="FormFieldRow">
-                                        <td>
+                                        <td  [title]="DataContext.FatherComponent.Surcharge3PriceLabel">
                                             <LogLabel [ObjectFieldName]="'Surcharge3Price'" [Text]="DataContext.FatherComponent.Surcharge3PriceLabel" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                         </td>
 
@@ -373,7 +372,7 @@
 
                                     <!-- Surcharge4Price -->
                                     <tr *ngIf="DataContext.FatherComponent.Surcharge4PriceVisibility" class="FormFieldRow">
-                                        <td>
+                                        <td  [title]="DataContext.FatherComponent.Surcharge4PriceLabel">
                                             <LogLabel [ObjectFieldName]="'Surcharge4Price'" [Text]="DataContext.FatherComponent.Surcharge4PriceLabel" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                         </td>
 
@@ -396,7 +395,7 @@
 
                                     <!-- Surcharge5Price -->
                                     <tr *ngIf="DataContext.FatherComponent.Surcharge5PriceVisibility" class="FormFieldRow">
-                                        <td>
+                                        <td  [title]="DataContext.FatherComponent.Surcharge5PriceLabel">
                                             <LogLabel [ObjectFieldName]="'Surcharge5Price'" [Text]="DataContext.FatherComponent.Surcharge5PriceLabel" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                         </td>
 
@@ -419,7 +418,7 @@
 
                                     <!-- Surcharge6Price -->
                                     <tr *ngIf="DataContext.FatherComponent.Surcharge6PriceVisibility" class="FormFieldRow">
-                                        <td>
+                                        <td  [title]="DataContext.FatherComponent.Surcharge6PriceLabel">
                                             <LogLabel [ObjectFieldName]="'Surcharge6Price'" [Text]="DataContext.FatherComponent.Surcharge6PriceLabel" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                         </td>
 
@@ -442,7 +441,7 @@
 
                                     <!-- Surcharge7Price -->
                                     <tr *ngIf="DataContext.FatherComponent.Surcharge7PriceVisibility" class="FormFieldRow">
-                                        <td>
+                                        <td  [title]="DataContext.FatherComponent.Surcharge7PriceLabel">
                                             <LogLabel [ObjectFieldName]="'Surcharge7Price'" [Text]="DataContext.FatherComponent.Surcharge7PriceLabel" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                         </td>
 
@@ -465,7 +464,7 @@
 
                                     <!-- Surcharge8Price -->
                                     <tr *ngIf="DataContext.FatherComponent.Surcharge8PriceVisibility" class="FormFieldRow">
-                                        <td>
+                                        <td  [title]="DataContext.FatherComponent.Surcharge8PriceLabel">
                                             <LogLabel [ObjectFieldName]="'Surcharge8Price'" [Text]="DataContext.FatherComponent.Surcharge8PriceLabel" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                         </td>
 
@@ -488,7 +487,7 @@
 
                                     <!-- Surcharge9Price -->
                                     <tr *ngIf="DataContext.FatherComponent.Surcharge9PriceVisibility" class="FormFieldRow">
-                                        <td>
+                                        <td  [title]="DataContext.FatherComponent.Surcharge9PriceLabel">
                                             <LogLabel [ObjectFieldName]="'Surcharge9Price'" [Text]="DataContext.FatherComponent.Surcharge9PriceLabel" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                         </td>
 
@@ -511,7 +510,7 @@
 
                                     <!-- Surcharge10Price -->
                                     <tr *ngIf="DataContext.FatherComponent.Surcharge10PriceVisibility" class="FormFieldRow">
-                                        <td>
+                                        <td  [title]="DataContext.FatherComponent.Surcharge10PriceLabel">
                                             <LogLabel [ObjectFieldName]="'Surcharge10Price'" [Text]="DataContext.FatherComponent.Surcharge10PriceLabel" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                         </td>
 
@@ -677,6 +676,7 @@
                                                                 <td style="width: 100px; min-width: 100px; max-width: 100px; text-align:center;" *ngIf="DataContext.FatherComponent.Container3Visibility">{{DataContext.FatherComponent.Container3Label}}</td>
                                                                 <td style="width: 100px; min-width: 100px; max-width: 100px; text-align:center;" *ngIf="DataContext.FatherComponent.Container4Visibility">{{DataContext.FatherComponent.Container4Label}}</td>
                                                                 <td style="width: 100px; min-width: 100px; max-width: 100px; text-align:center;" *ngIf="DataContext.FatherComponent.Container5Visibility">{{DataContext.FatherComponent.Container5Label}}</td>
+                                                                <td style="width: 100px; min-width: 100px; max-width: 100px; text-align:center;" >{{'TariffLinesContainersPrice.F.CostPrice' | TextCodeTranslationPipe}}</td>
                                                                 <td class="LastChild">
                                                                     <div></div>
                                                                 </td>
@@ -687,7 +687,7 @@
                                                     <div class="SimpleGridViewBody">
                                                         <table>
                                                             <tr class="SimpleGridViewRow" *ngFor="let item of DataContext.ContainerPricesItemsSource">
-                                                                <td class="GridViewCell" style="width: 100px; min-width: 100px; max-width: 100px; color:#6E7172">
+                                                                <td class="GridViewCell" [title]="item.ChargeLabel" style="width: 100px; min-width: 100px; max-width: 100px; color:#6E7172">
                                                                     {{item.ChargeLabel}}
                                                                 </td>
 
@@ -709,6 +709,10 @@
 
                                                                 <td class="CellStretched" style="width: 100px; min-width: 100px; max-width: 100px;" *ngIf="DataContext.FatherComponent.Container5Visibility">
                                                                     <LogTextBox [ObjectFieldName]="'Price5'" [Text]="item.Price5" [ObjectTableName]="item.ObjectTableName" [DataContext]="item" [HideColumns]="true"></LogTextBox>
+                                                                </td>
+
+                                                                <td class="CellStretched" style="width: 100px; min-width: 100px; max-width: 100px;">
+                                                                    <LogTextBox [ObjectFieldName]="'CostPrice'" [Text]="item.CostPrice" [ObjectTableName]="item.ObjectTableName" [DataContext]="item" [HideColumns]="true"></LogTextBox>
                                                                 </td>
 
                                                                 <td class="CellStretched">

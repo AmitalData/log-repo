@@ -6,6 +6,7 @@
 import  { CreateRandom } from './CreateRandom';
 
 import { LoginComp } from "../../login/Login.po";
+import { FullAccountingHelper } from './FullAccountingHelper';
 export class ARPAyemntSpec {
 
   private login: LoginComp = new LoginComp();
@@ -21,15 +22,14 @@ let R: CreateRandom= new CreateRandom();
   it('New ARPayment Created Successfully', function () {
 
       var str = R.createrandomnum();
-      cy.get('li[id=GeneralMHMaintenance]').click()
+
    
-      cy.get('li[id=PAR]')
-      cy.get('li[id=GeneralMHFullAccounting]').click();
     
-      cy.get('li[id=FACS]').click();
-      cy.get('button[id=NewARPayment]').click();
-      cy.get('input[id=ARPayment_BillToId]').type("Test Customer GLAccountAB36000WD").should("have.value", "Test Customer GLAccountAB36000WD")
-      cy.get('ul[id=mydatalist_ARPayment_BillToId]').contains("Test Customer GLAccountAB36000WD").then(a => {
+      cy.get('li[id=GeneralMHFullAccounting]').click({Force:true});    
+      cy.get('li[id=FACS]').click({Force:true});
+      cy.get('button[id=NewARPayment]').click({Force:true});
+      cy.get('input[id=ARPayment_BillToId]').type("Test Customer GLAccountXU805920XV").should("have.value", "Test Customer GLAccountXU805920XV")
+      cy.get('ul[id=mydatalist_ARPayment_BillToId]').contains("Test Customer GLAccountXU805920XV").then(a => {
           a[0].click();
       })
       cy.get('input[id=ARPayment_AmountInPaymentCurrency]').type("1000").should("have.value","1000")
@@ -42,7 +42,7 @@ let R: CreateRandom= new CreateRandom();
           a[0].click();
       })
       cy.get('button[id=ok-AddARPayment]').click();
-      cy.get('#ARPaymentSpinner').should("not.be.visible");
+      cy.get('#ARPaymentSpinner').should('not.exist');     
       cy.get('button[id=ARPaymentBApprove]').click();
       cy.contains('Approved') 
       cy.log('ARPayment Is Approved')

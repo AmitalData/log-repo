@@ -180,6 +180,11 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 GenericFilter genericFilter = new GenericFilter();
                 GenericSort sortClass = new GenericSort();
 
+                QueryFilterItem item = queryOperations.QueryFilterItems.Where(f => f.FieldName == "CardSearchField").FirstOrDefault();
+                queryOperations.QueryFilterItems.Remove(item);
+                string searchvalue = item != null ? item.FieldValue != null ? !string.IsNullOrEmpty(item.FieldValue.ToString()) ? item.FieldValue.ToString() : null : null : null;
+
+
                 ICommonDataContext MyContext = CommonDataContext.GetContext(tenant);
                 CustomerRepository customerRepository = new CustomerRepository(MyContext);
                 IQueryable<CustomersDataView> entityPocos = customerRepository.GetCustomersDataViews(tenant);
@@ -203,8 +208,14 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 
                 entityLists = genericFilter.GetFilteredQuery<CustomerList>(listQueryOperation, entityLists);
 
+                if (!string.IsNullOrEmpty(searchvalue))
+                {
+                    CustomerDataSearchService customerDataSearchService = new CustomerDataSearchService();
+                    entityLists = customerDataSearchService.Run(new CustomerSearchArgs() { SearchText = searchvalue, Tenant = tenant, EntityLists = entityLists, SortByColumnName = queryOperations.SortByColumnName, SortDirectin = queryOperations.SortDirectin, PageSize = queryOperations.PageSize, FilterItems = queryOperations.QueryFilterItems }).AsQueryable();
+                }
 
-                if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
+
+              else  if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
                 {
                     PropertyInfo propInfo = typeof(CustomerList).GetProperty(queryOperations.SortByColumnName);
 
@@ -277,6 +288,11 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 if (filters.GetCount)
                 {
                     response.Count = entityLists.Count();
+
+                    if (filters.DontApplyVirtualization)
+                    {
+                        if (response.Count > filters.PageSize) response.Count = filters.PageSize;
+                    }
                 }
                 if (!queryOperations.GetAll)
                 {

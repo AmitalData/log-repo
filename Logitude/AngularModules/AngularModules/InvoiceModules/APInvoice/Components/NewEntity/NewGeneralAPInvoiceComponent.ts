@@ -48,14 +48,25 @@ export class NewGeneralAPInvoiceComponent extends BaseComponent {
     public IsEditExchangeRateVisible: boolean = false;
     public isRTL: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
+    DisplayFieldsFromList:string;
+    DisplayLocalFieldsFromList:string;
+    VendorLovSizeForFullAccounting:number;
     constructor(private entityResourceService: EntityResourceService) {
         super();
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
         this.IsAccountingActivated = SessionLocator.TenantPM.AccountingActivated;
         this.InitializeServices();
-
+        this.InitializeVendorLov();
         if (FeatureLocator.HasFeaturePermession("General", "General.Features.SystemCurrencies")) {
             this.IsEditExchangeRateVisible = true;
+        }
+    }
+
+    private InitializeVendorLov() {
+        if (this.IsAccountingActivated) {
+            this.DisplayFieldsFromList = "Code,CalculatedEnglishName,GLAccountDisplayNumber,CityName,CountryCode,PartnerTypeName";
+            this.DisplayLocalFieldsFromList = "Code,CalculatedLocalName,GLAccountDisplayNumber,CityName,CountryCode,PartnerTypeName";
+            this.VendorLovSizeForFullAccounting = 550;
         }
     }
 
@@ -309,7 +320,16 @@ export class NewGeneralAPInvoiceComponent extends BaseComponent {
     set InvoiceNumber(value: string) {
         if (this.EntityPM.InvoiceNumber != value) {
             this.EntityPM.InvoiceNumber = value;
-            this.CheckDuplication();
+            this.CheckDuplication();          
+        }
+    }
+
+    CheckSpecialCharacters() {
+        if (FeatureLocator.HasFeaturePermession("APInvoice", "INSC")) {
+            var invoiceNumber_Check = /^[A-Za-z0-9]+$/i;
+            if (!invoiceNumber_Check.test(this.InvoiceNumber)) {
+                return TextCodeTranslator.Translate("APInvoice.O.ValidateInvoiceNumber");
+            }
         }
     }
 
@@ -605,11 +625,8 @@ export class NewGeneralAPInvoiceComponent extends BaseComponent {
     OkButtonClicked() {
         var errors: string[] = [];
        
-        var msg = TextCodeTranslator.Translate("General.M.FieldIsRequired");
-        var invoiceNumber_REGEXP1 = this.InvoiceNumber.match(/[^A-Za-z0-9]+/);
-        if (!this.InvoiceNumber.match(/[^A-Za-z0-9]+/))
-        {
-        }
+        var msg = TextCodeTranslator.Translate("General.M.FieldIsRequired");      
+        this.CheckSpecialCharacters() != null ? errors.push(this.CheckSpecialCharacters()) : null;
         if (AppTool.IsNullOrEmpty(this.EntityPM.VendorId)) {
             errors.push(msg.replace("%FieldName", TextCodeTranslator.Translate("APInvoice.F.VendorId")));
         }

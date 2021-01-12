@@ -38,17 +38,28 @@ export class TextBoxResolver extends AbstractResolver implements IResolver {
     public Type(value: string) {
         if (this.selector) {
 
+            //if (this.isEditGrid) {
+            //    cy.get(this.GetContainer())
+            //        .find(this.selector)
+            //        .eq(this.index)
+            //        .within((element) => {
+            //            cy.wrap(element).click({ force: true }).then(() => {
+            //                cy.get('input').type(value);
+            //            });
+            //        });
+            //}
             if (this.isEditGrid) {
                 cy.get(this.GetContainer())
-                    .find(this.selector)
+                    .find(this.selector) 
                     .eq(this.index)
-                    .within((element) => {
-                        cy.wrap(element).click({ force: true }).then(() => {
-                            cy.get('input').type(value);
+                    .within(function () {
+                        cy.get('div').within((element) => {
+                            cy.wrap(element).eq(3).click({ force: true }).then(() => {
+                                cy.get('input').type(value);
+                            });
                         });
                     });
             }
-
             else {
                 cy.get(this.GetContainer())
                     .find(this.selector)
@@ -57,17 +68,17 @@ export class TextBoxResolver extends AbstractResolver implements IResolver {
             }
         }
 
-        else {
+        //else {
 
-            const elementSelector = this.isTextArea ? "textarea" : "input";
+        //    const elementSelector = this.isTextArea ? "textarea" : "input";
 
-            cy.get(this.GetContainer())
-                .find('LogTextBox[ng-reflect--object-field-name=' + this.objectField + '][ng-reflect--object-table-name=' + this.objectTable + ']')
-                .eq(this.index)
-                .within(() => {
-                    cy.get(elementSelector).type(value);
-                });
-        }
+        //    cy.get(this.GetContainer())
+        //        .find('LogTextBox[ng-reflect--object-field-name=' + this.objectField + '][ng-reflect--object-table-name=' + this.objectTable + ']')
+        //        .eq(this.index)
+        //        .within(() => {
+        //            cy.get(elementSelector).type(value);
+        //        });
+        //}
 
         this.Reset();
     }

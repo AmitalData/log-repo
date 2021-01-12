@@ -179,6 +179,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
 
             List<MoneyStatusClass> datalistInvoice = (from a in invoices
                                                       where a.StatusCode != "DR" && a.StatusCode != "VD" && a.StatusCode != "LL" && a.InvoiceDate >= lastDate && a.Tenant == tenant //&& !a.IsAutoCredit && !a.IsClosed && !a.IsCancelled
+                                                     && !a.IsConstituentInvoice 
                                                       group a by new
                                                       {
                                                           a.InvoiceDate.Value.Day,

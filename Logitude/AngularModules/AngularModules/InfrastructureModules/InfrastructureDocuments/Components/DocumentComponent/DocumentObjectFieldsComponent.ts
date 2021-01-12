@@ -9,6 +9,7 @@ import {SessionInfo} from '../../../../Infrastructure/Utilities/SessionInfo';
 import {AppTool} from '../../../../Infrastructure/Tools';
 import {FormControl}   from '@angular/forms'; 
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
+import { EntityResourceService } from '../../../../Infrastructure/Services/EntityResourceService';
 
 @Component({
     
@@ -34,6 +35,7 @@ export class DocumentObjectFieldsComponent implements OnInit {
     public AllSystemDataSourceViewsLists: DocumentObjectFieldsRowViewModel[];
     public AllObjectDataSourceViewsLists: DocumentObjectFieldsRowViewModel[];
 
+    public EntityResourceService: EntityResourceService;
 
     IsShowTabObjectField = false;
     public SearchTextValue: FormControl;
@@ -73,7 +75,7 @@ export class DocumentObjectFieldsComponent implements OnInit {
         this.HideSystemDataTab = args.HideSystemDataTab;
 
      if (AppTool.IsNullOrEmpty(this.ObjectTypeField)) {
-         if (this.InSertDataFieldType == "From" || this.InSertDataFieldType == "ReplyTo" || this.InSertDataFieldType == "CC" || this.InSertDataFieldType == "BCC") this.ObjectTypeField = "Emails"; 
+         if (this.InSertDataFieldType == "From" || this.InSertDataFieldType == "ReplyTo" || this.InSertDataFieldType == "CC" || this.InSertDataFieldType == "BCC" || this.InSertDataFieldType == "To") this.ObjectTypeField = "Emails"; 
         } 
           
 
@@ -91,7 +93,7 @@ export class DocumentObjectFieldsComponent implements OnInit {
         this.SystemDataSource = new Array<DocumentObjectFieldsRowViewModel>();  
         this.AllSystemDataSourceViewsLists = new Array<DocumentObjectFieldsRowViewModel>();
         this.AllObjectDataSourceViewsLists = new Array<DocumentObjectFieldsRowViewModel>();
-      
+        this.EntityResourceService = new EntityResourceService();
         if (!this.ObjectTypeField) {
             this.ObjectTypeField = null;
         }
@@ -123,7 +125,10 @@ export class DocumentObjectFieldsComponent implements OnInit {
                     this.objectFieldsList = window.ObjectFields.filter(f => f.ObjectTableId == objectTable.Id && (f.PMPropertyPath || f.ListPropertyPath) && (f.FieldName == "TicketReplyto" || f.ObjectTable_LookUpTableName == "User" || f.ObjectTable_LookUpTableName == "Contact") && f.FieldName != "TimeFrameFilter" && !f.DisplayOnly && f.DisplayInEntityVariables == true);
                 }
                 else if (this.ObjectTypeField == "DocuemntFileName") {
-                    this.objectFieldsList = window.ObjectFields.filter(f => f.ObjectTableId == objectTable.Id && (f.PMPropertyPath != null || f.ListPropertyPath != null) && f.DisplayInDocumentReferences);
+                    this.CurrentSession.StartBusyIndicator("Loading...");
+                    this.EntityResourceService.getEntityResourceByTableName("DocumentsFiling").subscribe((response: any) => {
+                        this.FillDocumentTableObjectFieldsList(objectTable);
+                    });
                 }
             }
 
@@ -139,22 +144,11 @@ export class DocumentObjectFieldsComponent implements OnInit {
                 }
             }
 
-            this.objectFieldsList.forEach((field) => {
-
-                if (field.FieldName == "OBLTypeCode") {
-                    var d = "f";
-                }
-
-                var view = new DocumentObjectFieldsRowViewModel(field, field.FieldName, this.ObjectTypeField);
-                this.ObsList.push(view);
-                this.ObsListAll.push(view);
-            });
-            this.DataSource = this.ObsList;
+            this.FillDataSource();
         }
         else this.SelectedTabCode = "SAF";
 
-        if (this.objectFieldsList.length > 0) this.IsTextSearchEnabled = true;
-        else this.IsTextSearchEnabled = false;
+        this.TextSearchEnabled();
 
         //Tab SystemData
         if (!this.HideSystemDataTab) {
@@ -218,6 +212,41 @@ export class DocumentObjectFieldsComponent implements OnInit {
 
 
 
+    private FillDocumentTableObjectFieldsList(objectTable: ObjectTablePM) {
+        this.objectFieldsList = window.ObjectFields.filter(f => f.ObjectTableId == objectTable.Id && (f.PMPropertyPath != null || f.ListPropertyPath != null) && f.DisplayInDocumentReferences);
+        let documentsObjectTable = window.ObjectTables.filter(t => t.Name == "DocumentType" || t.Name == "DocumentsFiling");
+        documentsObjectTable.forEach(documentTable => {
+            let documentTableObjectFieldsList = window.ObjectFields.filter(f => f.ObjectTableId == documentTable.Id && f.DisplayInDocumentReferences);
+            this.objectFieldsList = this.objectFieldsList.concat(documentTableObjectFieldsList);
+        });
+        this.CurrentSession.StopBusyIndicator();
+        this.FillDataSource();
+        this.TextSearchEnabled();
+    }
+
+    private TextSearchEnabled() {
+        if (this.objectFieldsList.length > 0)
+            this.IsTextSearchEnabled = true;
+        else
+            this.IsTextSearchEnabled = false;
+    }
+
+    private FillDataSource() {
+        this.ObsList = [];
+        this.ObsListAll = [];
+        this.objectFieldsList.forEach((field) => {
+
+            if (field.FieldName == "OBLTypeCode") {
+                var d = "f";
+            }
+
+            var view = new DocumentObjectFieldsRowViewModel(field, field.FieldName, this.ObjectTypeField);
+            this.ObsList.push(view);
+            this.ObsListAll.push(view);
+            this.DataSource = this.ObsList;
+        });
+    }
+
     SystemDataSourceChangeSelected(selectedItem: DocumentObjectFieldsRowViewModel) {
 
         this.SelectSystemDataObjectFieldsRowViewModel = selectedItem;
@@ -270,7 +299,7 @@ export class DocumentObjectFieldsComponent implements OnInit {
         var views = new Array<DocumentObjectFieldsRowViewModel>(); 
 
         if (textsearch) {
-            this.DataSource = this.ObsList = this.ObsListAll.filter(d => TextCodeTranslator.Translate(d.FullNameTextCodeCode).toLowerCase().indexOf(textsearch.toLowerCase()) > -1);
+            this.DataSource = this.ObsList = this.ObsListAll.filter(d => this.IsExistInSearchText(d, textsearch));
         }
         else {
             this.DataSource = this.ObsListAll;
@@ -284,6 +313,17 @@ export class DocumentObjectFieldsComponent implements OnInit {
 
     displayListOnly: boolean = false;
   
+    private IsExistInSearchText(d: DocumentObjectFieldsRowViewModel, textsearch: string) {
+        let isExistField: boolean = false;
+        let fieldTextCode: string = TextCodeTranslator.Translate(d.FullNameTextCodeCode);
+        if (d.ObjectTableId != this.ObjectTableId) {
+            fieldTextCode = d.ObjectTableName + ' ' + TextCodeTranslator.Translate(d.FullNameTextCodeCode)
+        }
+        isExistField = fieldTextCode.toLowerCase().indexOf(textsearch.toLowerCase()) > -1
+
+        return isExistField;
+    }
+
     DisplayListFieldsOnly() {
 
         this.displayListOnly = true;
@@ -327,37 +367,44 @@ export class DocumentObjectFieldsComponent implements OnInit {
 
 
 
+    IsFieldInsideRoot(selectedField) {
+        var fieldInsideRoot = AppTool.IsNullOrEmpty(selectedField.ResultFieldName) ? false : selectedField.ResultFieldName.indexOf('.') != -1;
+        return fieldInsideRoot;
+    }
 
     TextSelected: string;
     SaveButtonClicked() {
         this.TextSelected = "";
 
-            if (this.SelectObjectDataFieldsRowViewModel) {
+        if (this.SelectObjectDataFieldsRowViewModel) {
 
-                var selectedField = this.SelectObjectDataFieldsRowViewModel;
+            var selectedField = this.SelectObjectDataFieldsRowViewModel;
+            if ((selectedField.ObjectTableId != this.ObjectTableId) && !this.IsFieldInsideRoot(selectedField))
+                this.TextSelected = "[" + selectedField.ObjectTableName + selectedField.ResultFieldName + "]";
+            else
                 this.TextSelected = "[" + selectedField.ResultFieldName + "]";
 
-                if (this.InSertDataFieldType == "FroalaEditor") this.TextSelected = "<span>" + this.TextSelected + "</span>";
-            }
-            else if (this.SelectSystemDataObjectFieldsRowViewModel) {
-                var selectedField = this.SelectSystemDataObjectFieldsRowViewModel;
+            if (this.InSertDataFieldType == "FroalaEditor") this.TextSelected = "<span>" + this.TextSelected + "</span>";
+        }
+        else if (this.SelectSystemDataObjectFieldsRowViewModel) {
+            var selectedField = this.SelectSystemDataObjectFieldsRowViewModel;
 
-                if (this.InSertDataFieldType != "FroalaEditor") {
-                    if (selectedField.FieldName && (selectedField.FieldName.toLowerCase() == "logo" || selectedField.FieldName.toLowerCase() == "smalllogo" || selectedField.FieldName.toLowerCase() == "signature")) {
-                        return;
-                    }
-                    this.TextSelected = "[SystemData." + selectedField.ResultFieldName + "]"
+            if (this.InSertDataFieldType != "FroalaEditor") {
+                if (selectedField.FieldName && (selectedField.FieldName.toLowerCase() == "logo" || selectedField.FieldName.toLowerCase() == "smalllogo" || selectedField.FieldName.toLowerCase() == "signature")) {
+                    return;
                 }
-
-                else {
-                    this.TextSelected = "[SystemData." + selectedField.ResultFieldName + "]"
-
-                    this.TextSelected=   "<span>" + this.TextSelected + "</span>"
-                }
-
+                this.TextSelected = "[SystemData." + selectedField.ResultFieldName + "]"
             }
 
-            this.CurrentSession.CurrentWindow.Close(this.TextSelected);
+            else {
+                this.TextSelected = "[SystemData." + selectedField.ResultFieldName + "]"
+
+                this.TextSelected=   "<span>" + this.TextSelected + "</span>"
+            }
+
+        }
+
+        this.CurrentSession.CurrentWindow.Close(this.TextSelected);
     }
 
 

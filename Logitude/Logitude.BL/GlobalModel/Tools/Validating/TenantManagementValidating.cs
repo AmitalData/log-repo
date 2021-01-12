@@ -1,5 +1,6 @@
 ﻿using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.GlobalModel.EntityPMs;
+using Logitude.BL.GlobalModel.EntityQueries;
 using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
@@ -35,19 +36,41 @@ namespace Logitude.BL.GlobalModel.Tools.Validating
         private static void ValidateCargoTracking(TenantManagementPM tenantManagement){
             if(tenantManagement.MainColor != null)
             {
-                ValidateHexCode(tenantManagement.MainColor);
+                ValidateRGBACode(tenantManagement.MainColor);
                
             }
             if (tenantManagement.SecondaryColor != null) {
-                ValidateHexCode(tenantManagement.SecondaryColor);
+                ValidateRGBACode(tenantManagement.SecondaryColor);
             }
-         }
-        private static void ValidateHexCode(string color)
-        {
-            Regex regex = new Regex("^#[A-Fa-f0-9]*$");
-            if (!regex.IsMatch(color) || color.Length>9 || color.Length <7)
+            if (tenantManagement.CustomerURL != null)
             {
-                string msg = "This is not a valid hex code";
+                ValidateIsDomainAlreadyExist(tenantManagement);
+            }
+        }
+        private static void ValidateIsDomainAlreadyExist(TenantManagementPM tenantManagement)
+        {
+            tenantManagement.CustomerURL = TrimDomainByRegex(tenantManagement.CustomerURL);
+            TenantManagementQuery tenantManagementQuery = new TenantManagementQuery();
+            bool IsExist = tenantManagementQuery.CheckIsdomainAlreadyExist(tenantManagement);
+            if (IsExist)
+            {
+                string msg = "This cargo tracking URL already exists";
+                throw new ApplicationException(msg);
+            }
+        }
+
+        private static string TrimDomainByRegex(string domain)
+        {
+            domain = domain.EndsWith("/") ? domain.Substring(0, domain.Length - 1) : domain;
+            domain = Regex.Replace(domain, @"^(?:http(?:s)?://)?(?:www(?:[0-9]+)?\.)?", string.Empty, RegexOptions.IgnoreCase);
+            return domain;
+        }
+        private static void ValidateRGBACode(string color)
+        {
+            Regex regex = new Regex(@"((rgba)\((\d{1,3}%?,\s?){3}(1|0?\.\d+)\))");
+            if (!regex.IsMatch(color))
+            {
+                string msg = "This is not a valid color code";
                 throw new ApplicationException(msg);
             }
         }

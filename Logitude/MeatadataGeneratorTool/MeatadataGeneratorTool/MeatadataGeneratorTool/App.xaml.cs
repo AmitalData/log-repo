@@ -139,6 +139,11 @@ namespace MeatadataGeneratorTool
                     }
                     catch (Exception err)
                     {
+                        LXMLFilesPaths = new List<string>();
+                        DXMLFilesPaths = new List<string>();
+
+                        Thread thread = new Thread(new ThreadStart(GetLXMLAndDXMLFilesPaths));
+                        thread.Start();
                         //MessageBox.Show(err.Message);
                         if (DirectOpenPath.Contains(".lxml"))
                         {

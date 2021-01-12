@@ -15,104 +15,146 @@ namespace WebFreight.Web.Helpers
 {
     public class ResetPasswordHelper
     {
-        public UserData ForgetPassword(string email, bool ischamplogin, bool ismobile, bool usecaptcha, string captchaCode =null, string captchaKey = null, string appEnvironment = "Unifreight")
+        public UserData ForgetPassword(ResetPasswordParameters resetPasswordParameters)
         {
-            CaptchaHelper captchaHelper = new CaptchaHelper();
-            PasswordCheckService passwordChkService = new PasswordCheckService();
-
-            string tenant = ResolveEmail(ref email);
             UserData userData = new UserData();
 
-            IGlobalContext globalObjectContext = GlobalContext.GetContext();
-            string iP = AuthenticationUtil.GetIP4Address();
-            DateTime dateNowBefor5Minutes = DateTime.Now.AddMinutes(-5);
-            int resetPasswordCount = 0;
-            bool checkCaptcha = false;
+            string email = resetPasswordParameters.Email;
+            string tenant = ResolveEmail(ref email);
+            resetPasswordParameters.Email = email;
 
-
-            if (usecaptcha)
-            {
-                resetPasswordCount = globalObjectContext.InvalidEmailResetPasswords.Where(a => a.IP == iP && a.CreateDate >= dateNowBefor5Minutes).Count();
-                if (resetPasswordCount < 4)
-                {
-                    resetPasswordCount += globalObjectContext.ChangePasswordLogs.Where(a => a.IP == iP && a.CreateDate >= dateNowBefor5Minutes).Count();
-                }
-
-                if (!string.IsNullOrEmpty(captchaCode) && !string.IsNullOrEmpty(captchaKey)) checkCaptcha = true;
-                if (!checkCaptcha)
-                {
-                    if (resetPasswordCount >= 5) checkCaptcha = true;
-                    else
-                    {
-                        int countCaptchaKey = globalObjectContext.CaptchaKeys.Where(a => a.IP == iP && a.CreateDate >= dateNowBefor5Minutes && a.Activity == "ResetPassword").Count();
-                        if (countCaptchaKey >= 5) checkCaptcha = true;
-                    }
-                }
-
-
-                if (checkCaptcha && !captchaHelper.CheckCaptchaCodeValidated(captchaCode, captchaKey)) captchaHelper.AddCaptchaKey(email, userData, "ResetPassword");
-            }
+            if (resetPasswordParameters.UseCaptcha)
+                userData = CheckForgotPasswordCaptchaCode(resetPasswordParameters);
 
             if (!userData.InValidCaptcha)
             {
-                List<GlobalContact> contacts = globalObjectContext.GlobalContacts.Where(m => m.Email == email && (m.IsUser == true || m.InternetAccess == true)).Include("GlobalTenant").ToList();
+                IGlobalContext globalObjectContext = GlobalContext.GetContext();
+                List<GlobalContact> contacts = globalObjectContext.GlobalContacts.Where(m => m.Email == resetPasswordParameters.Email && (m.IsUser == true || m.InternetAccess == true)).Include("GlobalTenant").ToList();
                 if (contacts.Count == 0)
                 {
-                    //userData.HasError = true;
-                    AddInvalidEmailResetPassword(email, 0);
-
-                    // userData.InValidMailOrPassword = true;
-
-                    //if (usecaptcha)
-                    //{
-                    //    if (checkCaptcha || (resetPasswordCount + 1) >= 5)
-                    //    {
-                    //        captchaHelper.AddCaptchaKey(email, userData, "ResetPassword");
-                    //    }
-                    //}
+                    AddInvalidEmailResetPassword(resetPasswordParameters.Email, 0);
                 }
                 else
                 {
-                    contacts = contacts.Where(m => m.GlobalTenant.IsActive == true && m.InActive == false).ToList();
-                    if (contacts.Count > 0)
-                    {
-                        bool result = false;
-                        if (!string.IsNullOrEmpty(tenant))
-                        {
-                            result = passwordChkService.RequestResetUserPassword(email, ischamplogin, ismobile, appEnvironment, tenant);
-                        }
-                        else
-                        {
-                            result = passwordChkService.RequestResetUserPassword(email, ischamplogin, ismobile, appEnvironment);
-                        }
-
-                        bool inValidEmail = false;
-                        bool isLocked = false;
-                        if (!result)
-                        {
-                            userData.HasError = true;
-                            isLocked = passwordChkService.CheckIfUserIsLocked(email, ref inValidEmail);
-                            userData.IsLocked = isLocked;
-                           // userData.InValidMailOrPassword = inValidEmail;
-                            CreateChangePasswordLog("(ForgetPassword) Email is not sent successfully", "", "", email);
-                        }
-                        else
-                        {
-                            CreateChangePasswordLog("(ForgetPassword) Email has been sent successfully", "", "", email);
-                        }
-
-
-
-                    }
-                    else
-                    {
-                        userData.HasError = true;
-                        userData.InActive = true;
-                        CreateChangePasswordLog("(ForgetPassword) Email is not sent successfully", "", "", email);
-                    }
+                    userData = RequestToResetUserPassword(resetPasswordParameters, contacts, tenant);
                 }
             }
 
+            return userData;
+        }
+
+        private UserData RequestToResetUserPassword(ResetPasswordParameters resetPasswordParameters, List<GlobalContact> contacts, string tenant)
+        {
+            UserData userData = new UserData();
+            bool hasActiveContact = HasActiveContact(contacts);
+            bool isValidContact = CheckIsValidContactByEmail(resetPasswordParameters.Email);
+            string logMessage;
+
+            if (hasActiveContact && isValidContact)
+            {
+                PerformUserPasswordReset(resetPasswordParameters, tenant);
+                logMessage = "(ForgetPassword) Email has been sent successfully";
+            }
+            else
+            {
+                userData = GetErrorUserDataDetails(resetPasswordParameters.Email, hasActiveContact);
+                logMessage = "(ForgetPassword) Email is not sent successfully";
+            }
+
+            CreateChangePasswordLog(logMessage, "", "", resetPasswordParameters.Email);
+            return userData;
+        }
+
+        private UserData GetErrorUserDataDetails(string email, bool hasActiveContact)
+        {
+            UserData userData = new UserData();
+            userData.HasError = true;
+
+            if (!hasActiveContact)
+            {
+                userData.InActive = true;
+            }
+            else
+            {
+                bool isLocked = CheckIsUserLockedByEmail(email);
+                userData.IsLocked = isLocked;
+            }
+
+            return userData;
+        }
+
+        private bool HasActiveContact(List<GlobalContact> contacts)
+        {
+            var activeContacts = contacts.Where(m => m.GlobalTenant.IsActive == true && m.InActive == false).ToList();
+
+            if (activeContacts.Count < 0 )
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        private bool CheckIsValidContactByEmail(string email)
+        {
+            IGlobalContext globalContext = GlobalContext.GetContext();
+            ContactPassword contactPassword = globalContext.ContactPasswords.Where(c => c.Email == email).FirstOrDefault();
+
+            if (contactPassword == null)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        private bool CheckIsUserLockedByEmail(string email)
+        {
+            bool isLocked = false;
+
+            IGlobalContext globalObjectContext = GlobalContext.GetContext();
+            isLocked = globalObjectContext.ContactPasswords.Where(c => c.Email == email).FirstOrDefault().IsLocked;
+            
+            return isLocked;
+        }
+        
+        private void PerformUserPasswordReset(ResetPasswordParameters resetPasswordParameters, string tenant)
+        {
+            if (string.IsNullOrEmpty(resetPasswordParameters.AppEnvironment))
+                resetPasswordParameters.AppEnvironment = "Unifreight";
+
+            ResetUserPasswordService resetUserPasswordService = new ResetUserPasswordService();
+            resetUserPasswordService.ResetUserPassword(resetPasswordParameters, tenant);
+        }
+
+        private static UserData CheckForgotPasswordCaptchaCode(ResetPasswordParameters resetPasswordParameters)
+        {
+            IGlobalContext globalObjectContext = GlobalContext.GetContext();
+            CaptchaHelper captchaHelper = new CaptchaHelper();
+            UserData userData = new UserData();
+            string iP = AuthenticationUtil.GetIP4Address();
+            DateTime dateNowBefor5Minutes = DateTime.Now.AddMinutes(-5);
+            bool checkCaptcha = false;
+
+            int resetPasswordCount = globalObjectContext.InvalidEmailResetPasswords.Where(a => a.IP == iP && a.CreateDate >= dateNowBefor5Minutes).Count();
+            if (resetPasswordCount < 4)
+            {
+                resetPasswordCount += globalObjectContext.ChangePasswordLogs.Where(a => a.IP == iP && a.CreateDate >= dateNowBefor5Minutes).Count();
+            }
+            if (!string.IsNullOrEmpty(resetPasswordParameters.CaptchaCode) && !string.IsNullOrEmpty(resetPasswordParameters.CaptchaKey)) 
+                checkCaptcha = true;
+            if (!checkCaptcha)
+            {
+                if (resetPasswordCount >= 5) checkCaptcha = true;
+                else
+                {
+                    int countCaptchaKey = globalObjectContext.CaptchaKeys.Where(a => a.IP == iP && a.CreateDate >= dateNowBefor5Minutes && a.Activity == "ResetPassword").Count();
+                    if (countCaptchaKey >= 5) checkCaptcha = true;
+                }
+            }
+
+            if (checkCaptcha && !captchaHelper.CheckCaptchaCodeValidated(resetPasswordParameters.CaptchaCode, resetPasswordParameters.CaptchaKey)) 
+                captchaHelper.AddCaptchaKey(resetPasswordParameters.Email, userData, "ResetPassword");
             return userData;
         }
 
@@ -163,14 +205,11 @@ namespace WebFreight.Web.Helpers
                 CreateDate = DateTime.Now,
                 log = log,
                 IP =AuthenticationUtil.GetIP4Address(),
-        };
+            };
 
             changePasswordlogRepository.Add(changePasswordLog);
             changePasswordlogRepository.SubmitChanges();
 
         }
-
-
-
     }
 }

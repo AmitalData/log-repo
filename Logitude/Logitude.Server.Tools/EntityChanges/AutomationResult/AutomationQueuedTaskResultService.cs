@@ -46,7 +46,7 @@ namespace Logitude.Server.Tools.EntityChanges.AutomationResult
                     EntityChangeAutomation entityChangesAutomation = CreateEntityChangeAutomation(automation);
                     entityChangesAutomation.ResultCode = "Queued Task";
 
-                    string lastUpdate = this.GetLastUpdateDate(lastupdateautomation, otherLastupdateautomation, automation);
+                    string lastUpdate = GetLastAuomationUpdateDate(automationResultArgs.AutomationObjectTable, automationResultArgs.OtherAutomationObjectTable, automation);
 
                     ValidateAutomationResultClass validateResult = this.ValidateAutomation(automation, entityChange, automationFieldLists, lastUpdate, "");
 
@@ -61,7 +61,8 @@ namespace Logitude.Server.Tools.EntityChanges.AutomationResult
                     {
                         if (validateResult.Type == "Delayed")
                         {
-                            this.AddDelayedAutomationQueue(entityChange.Id, processtype, automation.Tenant, automation.Id, validateResult, automationFieldLists, entityId);
+                            DelaytimeDetails delaytimeDetails = new DelaytimeDetails() { Type = validateResult.Type, Delaytime = validateResult.Delaytime, DelaytimeIndicator = validateResult.DelaytimeIndicator, DelaytimeOp = validateResult.DelaytimeOp, SelectedDelaytimeFieldCode = validateResult.SelectedDelaytimeFieldCode };
+                            AddAutomationQueue(new AutomationQueueArgs() { EntityChangeId = entityChange.Id, AutomationId = automation.Id, AutomationType = processtype, EntityId = entityId, Tenant = automation.Tenant, AutomationDelayTime = GetAutomationDelayTime(delaytimeDetails, automationFieldLists) });
                         }
 
                         else

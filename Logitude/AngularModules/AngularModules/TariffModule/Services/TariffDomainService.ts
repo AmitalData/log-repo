@@ -334,6 +334,19 @@ export class TariffDomainService {
             }), catchError(ServiceHelper.HandleServiceError));
         });
     }
+
+    GetUploadedExcelByTariffAndVersion(tariffId: string, version: number) {
+
+        var url = this._apiUrl + '/GetUploadedExcelByTariffAndVersion?tariffId=' + tariffId + "&version=" + version;
+        return defer(() => {
+            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var allLists = response;
+                var serviceResponse = new ServiceResponse();
+                serviceResponse.Result = allLists;
+                return serviceResponse;
+            }), catchError(ServiceHelper.HandleServiceError));
+        });
+    }
 }
 
 export class TariffSummery {
@@ -353,6 +366,7 @@ export class TariffFilterParameter {
     Version: number;
     TariffType: string;
     FileName: string;
+    FileExtension: string;
 }
 
 export class TariffSearchSummary {
@@ -389,6 +403,7 @@ export class TariffSearchSummary {
     UpdateDate: Date;
     ValidityDate: string;
     CurrencySign: string;
+    NoteMissingContainers: string;
 }
 
 export class ContainersPrice {

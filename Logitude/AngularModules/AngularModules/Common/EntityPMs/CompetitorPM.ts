@@ -144,7 +144,10 @@ export class CompetitorPM {
     public OldEntityPM: CompetitorPM;
 		
     public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
+       if(!this.DisableMarkAsDirty)
+       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -152,6 +155,7 @@ export class CompetitorPM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "Competitor");
            
         }
+	 }
     }
     private MyClone: CompetitorPM;
 
