@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<entity Id="&quot;abbd32f7-d3c5-4dd9-95eb-846feeb6899d&quot;" Code="&quot;Fact_Quotes&quot;" Name="&quot;Fact_Quotes&quot;" TypeCode="&quot;Fact&quot;" IsClosed="false" DataViewName="&quot;factQuotes&quot;" HasPivotColumn="false" RecordType="&quot;Quotes&quot;" DisplayName="&quot;Quotes&quot;">
+  <fields>
+    <field Id="&quot;ec27c466-1ddb-46be-b246-1fdb17cfeceb&quot;" Code="&quot;[Id_Number]&quot;" Name="&quot;Id_Number&quot;" DataTypeCode="&quot;Integer&quot;" IsRequired="true" MinLength="0" MaxLength="0" IsPrimaryKey="true" IsMeasurement="false" DisplayInQueryBuilder="false" HideTree="false" CannotFilter="false" IsCustom="false" DontDisplayInView="true" IsMultipleSelection="false" />
+  </fields>
+</entity>
