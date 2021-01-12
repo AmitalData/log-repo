@@ -171,40 +171,74 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             }
 
 
-            declarationReferantDataSummary.FilesInProcess = declarationReferantDatas.Where(x => x.IsClosedForFollowUp != "1").Count();
-            declarationReferantDataSummary.TrackingCases = declarationReferantDatas.Where(x => x.FollowUpDate == DateTime.Today).Count();
-            declarationReferantDataSummary.FilesInOCR = declarationReferantDatas.Where(x => x.PreClassification == "P").Count();
-            declarationReferantDataSummary.FilesInSivug = declarationReferantDatas.Where(x => x.ClassificationStatus == "P").Count();
-            declarationReferantDataSummary.FilesInReview = declarationReferantDatas.Where(x => x.ControllerStatus == "P").Count();
-            declarationReferantDataSummary.FilesInCreditControl = declarationReferantDatas.Where(x => x.CollectionOfMoneyStatus == "P").Count();
-            declarationReferantDataSummary.FilesAvailableFreeOfCharge = declarationReferantDatas.Where(x => x.IsPaymentDateNull == true && !x.IsAvailabilityDateNull == false).Count();
+
+            var qGroupIt = (from a in declarationReferantDatas
+                            group a by 1 into groupBy1
+                            select new DeclarationReferantDataSummary
+                            {
+                               FilesInProcess= groupBy1.Count(x => x.IsClosedForFollowUp != "1"),
+                               TrackingCases = groupBy1.Count(x => x.FollowUpDate == DateTime.Today),
+                                FilesInOCR = groupBy1.Count(x => x.PreClassification == "P"),
+                                FilesInSivug = groupBy1.Count(x => x.ClassificationStatus == "P"),
+                                FilesInReview = groupBy1.Count(x => x.ControllerStatus == "P"),
+                                FilesInCreditControl = groupBy1.Count(x => x.CollectionOfMoneyStatus == "P"),
+                                FilesAvailableFreeOfCharge = groupBy1.Count(x => x.IsPaymentDateNull == true && !x.IsAvailabilityDateNull == false),
+                                AllCases = declarationReferantDatas.Count(),
+                                FilesInProcess_A = groupBy1.Count(x => x.IsClosedForFollowUp != "1" && x.IsAvailabilityDateNull == false),
+                                TrackingCases_A = groupBy1.Count(x => x.FollowUpDate == DateTime.Today && x.IsAvailabilityDateNull == false),
+                                FilesInOCR_A = groupBy1.Count(x => x.PreClassification == "P" && x.IsAvailabilityDateNull == false),
+                                FilesInSivug_A = groupBy1.Count(x => x.ClassificationStatus == "P" && x.IsAvailabilityDateNull == false),
+                                FilesInReview_A = groupBy1.Count(x => x.ControllerStatus == "P" && x.IsAvailabilityDateNull == false),
+                                FilesInCreditControl_A = groupBy1.Count(x => x.CollectionOfMoneyStatus == "P" && x.IsAvailabilityDateNull == false),
+                                FilesAvailableFreeOfCharge_A = groupBy1.Count(x => x.IsPaymentDateNull == true && x.IsAvailabilityDateNull == false),
+                                AllCases_A = groupBy1.Count(x => x.IsAvailabilityDateNull == false),
+                                FilesInAllInclusive = groupBy1.Count(x => x.IsHatraDateNull == false && x.RequestedCustomsDocId == "1"),
+                                FilesInAllInclusive_A = groupBy1.Count(x => x.IsHatraDateNull == false && x.RequestedCustomsDocId == "1" && x.IsAvailabilityDateNull == false),
+                                FilesRejectedByController = groupBy1.Count(x => x.ControllerStatus == "X"),
+                                FilesRejectedByController_A = groupBy1.Count(x => x.ControllerStatus == "X" && x.IsAvailabilityDateNull == false),
+                                FilesRejectedByClassification = groupBy1.Count(x => x.ClassificationStatus == "X"),
+                                FilesRejectedByClassification_A = groupBy1.Count(x => x.ClassificationStatus == "X" && x.IsAvailabilityDateNull == false),
+
+                            }
+                            );
+            declarationReferantDataSummary = qGroupIt.FirstOrDefault() ?? new DeclarationReferantDataSummary(); ;
+           
+
+
+            //declarationReferantDataSummary.FilesInProcess = declarationReferantDatas.Where(x => x.IsClosedForFollowUp != "1").Count();
+            //declarationReferantDataSummary.TrackingCases = declarationReferantDatas.Where(x => x.FollowUpDate == DateTime.Today).Count();
+            //declarationReferantDataSummary.FilesInOCR = declarationReferantDatas.Where(x => x.PreClassification == "P").Count();
+            //declarationReferantDataSummary.FilesInSivug = declarationReferantDatas.Where(x => x.ClassificationStatus == "P").Count();
+            //declarationReferantDataSummary.FilesInReview = declarationReferantDatas.Where(x => x.ControllerStatus == "P").Count();
+            //declarationReferantDataSummary.FilesInCreditControl = declarationReferantDatas.Where(x => x.CollectionOfMoneyStatus == "P").Count();
+            //declarationReferantDataSummary.FilesAvailableFreeOfCharge = declarationReferantDatas.Where(x => x.IsPaymentDateNull == true && !x.IsAvailabilityDateNull == false).Count();
         
-            declarationReferantDataSummary.AllCases = declarationReferantDatas.Count();
+            ///declarationReferantDataSummary.AllCases = declarationReferantDatas.Count();
 
-            declarationReferantDataSummary.FilesInProcess_A = declarationReferantDatas.Where(x => x.IsClosedForFollowUp != "1" && x.IsAvailabilityDateNull == false).Count();
-            declarationReferantDataSummary.TrackingCases_A = declarationReferantDatas.Where(x => x.FollowUpDate == DateTime.Today && x.IsAvailabilityDateNull == false).Count();
-            declarationReferantDataSummary.FilesInOCR_A = declarationReferantDatas.Where(x => x.PreClassification == "P" && x.IsAvailabilityDateNull == false).Count();
-            declarationReferantDataSummary.FilesInSivug_A = declarationReferantDatas.Where(x => x.ClassificationStatus == "P" && x.IsAvailabilityDateNull == false).Count();
-            declarationReferantDataSummary.FilesInReview_A = declarationReferantDatas.Where(x => x.ControllerStatus == "P" && x.IsAvailabilityDateNull == false).Count();
-            declarationReferantDataSummary.FilesInCreditControl_A = declarationReferantDatas.Where(x => x.CollectionOfMoneyStatus == "P" && x.IsAvailabilityDateNull == false).Count();
-            declarationReferantDataSummary.FilesAvailableFreeOfCharge_A = declarationReferantDatas.Where(x => x.IsPaymentDateNull == true &&   x.IsAvailabilityDateNull == false).Count();
-            declarationReferantDataSummary.AllCases_A = declarationReferantDatas.Where(x =>   x.IsAvailabilityDateNull == false).Count();
-
-
+            //declarationReferantDataSummary.FilesInProcess_A = declarationReferantDatas.Where(x => x.IsClosedForFollowUp != "1" && x.IsAvailabilityDateNull == false).Count();
+            //declarationReferantDataSummary.TrackingCases_A = declarationReferantDatas.Where(x => x.FollowUpDate == DateTime.Today && x.IsAvailabilityDateNull == false).Count();
+            //declarationReferantDataSummary.FilesInOCR_A = declarationReferantDatas.Where(x => x.PreClassification == "P" && x.IsAvailabilityDateNull == false).Count();
+            //declarationReferantDataSummary.FilesInSivug_A = declarationReferantDatas.Where(x => x.ClassificationStatus == "P" && x.IsAvailabilityDateNull == false).Count();
+            //declarationReferantDataSummary.FilesInReview_A = declarationReferantDatas.Where(x => x.ControllerStatus == "P" && x.IsAvailabilityDateNull == false).Count();
+            //declarationReferantDataSummary.FilesInCreditControl_A = declarationReferantDatas.Where(x => x.CollectionOfMoneyStatus == "P" && x.IsAvailabilityDateNull == false).Count();
+            //declarationReferantDataSummary.FilesAvailableFreeOfCharge_A = declarationReferantDatas.Where(x => x.IsPaymentDateNull == true &&   x.IsAvailabilityDateNull == false).Count();
+            //declarationReferantDataSummary.AllCases_A = declarationReferantDatas.Where(x =>   x.IsAvailabilityDateNull == false).Count();
 
 
-            declarationReferantDataSummary.FilesInAllInclusive = declarationReferantDatas.Where(x => x.IsHatraDateNull == false && x.RequestedCustomsDocId=="1").Count();
-            declarationReferantDataSummary.FilesInAllInclusive_A = declarationReferantDatas.Where(x => x.IsHatraDateNull == false && x.RequestedCustomsDocId == "1" && x.IsAvailabilityDateNull == false).Count();
+
+
+            //declarationReferantDataSummary.FilesInAllInclusive = declarationReferantDatas.Where(x => x.IsHatraDateNull == false && x.RequestedCustomsDocId=="1").Count();
+            //declarationReferantDataSummary.FilesInAllInclusive_A = declarationReferantDatas.Where(x => x.IsHatraDateNull == false && x.RequestedCustomsDocId == "1" && x.IsAvailabilityDateNull == false).Count();
 
             
 
                 
-            declarationReferantDataSummary.FilesRejectedByController = declarationReferantDatas.Where(x => x.ControllerStatus == "X" ).Count();
-            declarationReferantDataSummary.FilesRejectedByController_A = declarationReferantDatas.Where(x => x.ControllerStatus == "X" && x.IsAvailabilityDateNull == false).Count();
+            //declarationReferantDataSummary.FilesRejectedByController = declarationReferantDatas.Where(x => x.ControllerStatus == "X" ).Count();
+            //declarationReferantDataSummary.FilesRejectedByController_A = declarationReferantDatas.Where(x => x.ControllerStatus == "X" && x.IsAvailabilityDateNull == false).Count();
 
 
-            declarationReferantDataSummary.FilesRejectedByClassification = declarationReferantDatas.Where(x => x.ClassificationStatus == "X").Count();
-            declarationReferantDataSummary.FilesRejectedByClassification_A = declarationReferantDatas.Where(x => x.ClassificationStatus == "X" && x.IsAvailabilityDateNull == false).Count();
+            //declarationReferantDataSummary.FilesRejectedByClassification = declarationReferantDatas.Where(x => x.ClassificationStatus == "X").Count();
+            //declarationReferantDataSummary.FilesRejectedByClassification_A = declarationReferantDatas.Where(x => x.ClassificationStatus == "X" && x.IsAvailabilityDateNull == false).Count();
 
             return declarationReferantDataSummary;
         }
