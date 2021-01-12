@@ -163,7 +163,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         FOBValueDollar, 
 	         TransshipmentApprovalDateTime, 
 	         FinalLoadingSite, 
-	         PalestinianCode,
+	         PalestinianCode, 
+	         RequestedCustomsDocId,
 	      }
 
 
@@ -387,7 +388,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         AmendmentRejectionReasonName, 
 	         TransshipmentApprovalDateTime, 
 	         FinalLoadingSite, 
-	         PalestinianCode,
+	         PalestinianCode, 
+	         RequestedCustomsDocId,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -1099,6 +1101,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.PalestinianCode))
             {
 				entityPOCO.PalestinianCode = entityPM.PalestinianCode;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.RequestedCustomsDocId))
+            {
+				entityPOCO.RequestedCustomsDocId = entityPM.RequestedCustomsDocId;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -1817,6 +1824,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.PalestinianCode = entityPOCO.PalestinianCode;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.RequestedCustomsDocId))
+            {
+					entityPM.RequestedCustomsDocId = entityPOCO.RequestedCustomsDocId;
+            }
+
 		}
 
 		public void PMToOldPM(DeclarationPM entityPM, DeclarationPM oldEntityPM)
@@ -2526,6 +2538,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.PalestinianCode))
             {
                 oldEntityPM.PalestinianCode = entityPM.PalestinianCode;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.RequestedCustomsDocId))
+            {
+                oldEntityPM.RequestedCustomsDocId = entityPM.RequestedCustomsDocId;
             }
 			
 		}

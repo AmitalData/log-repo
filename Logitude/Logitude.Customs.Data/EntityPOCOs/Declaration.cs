@@ -423,6 +423,8 @@ namespace Logitude.Customs.Data.EntityPOCOs
         public virtual LoadingSiteType LoadingSiteType { get; set; }
         [Column("PalestinianCode")]
 	    public string PalestinianCode { get; set; }
+        [Column("RequestedCustomsDocId")]
+	    public int? RequestedCustomsDocId { get; set; }
     }
 }
 	 
