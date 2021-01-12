@@ -176,6 +176,8 @@ namespace Logitude.BL.QuoteModel.EntityLists
         public string AgentName { get; set; }
         public double? TEU { get; set; }
         public bool IsSaleCurrencySameAsCost { get; set; }
+        public bool IsMultiCurrency { get; set; }
+
         public bool IsChargesByVAT { get; set; }
         public double? ValueOfGoods { get; set; }
 

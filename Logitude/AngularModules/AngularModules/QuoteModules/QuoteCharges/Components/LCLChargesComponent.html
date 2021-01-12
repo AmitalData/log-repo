@@ -291,6 +291,15 @@
                                         </ng-template>
                                     </log-column>
 
+                                    <!-- Sale Currency -->
+                                    <log-column [width]="'40'" [SortFieldName]="'SaleCurrencyCode'" [header]="'QuoteCharge.CH.SaleCurrencyIdListLable' | TextCodeTranslationPipe" [Alignment]="'center'" *ngIf="IsMultiCurrency">
+                                        <ng-template let-item>
+                                            <log-cell-template #logcelltemplate [Alignment]="'center'" [IsEnabled]="false">
+                                                {{item.SaleCurrencyCode}}
+                                            </log-cell-template>
+                                        </ng-template>
+                                    </log-column>
+
                                     <!-- Sale Quantity -->
                                     <log-column [SortFieldName]="'SaleQuantity'" [width]="'70'" *ngIf="IsAdhoc">
                                         <ng-template let-item>
@@ -856,11 +865,22 @@
                             <table>
                                 <tr style="height:25px;">
                                     <td style="width:150px;">
-                                        <LogLabel [ObjectFieldName]="'SaleCurrencyId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                        <LogLabel [ObjectFieldName]="'SaleCurrencyId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Text]="'Sale Currency Mode'"></LogLabel>
                                     </td>
 
                                     <td>
                                         <table>
+                                            <tr>
+                                                <td>
+                                                    <QuoteSaleCurrencyTypeComponent [EntityPM]="EntityPM" (SelectedValueChanged)="OnSaleCurrencyModeChanged()"></QuoteSaleCurrencyTypeComponent>
+                                                </td>
+
+                                                <td style="width: 36px;">
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                        <!--<table>
                                             <tr>
                                                 <td style="width:1px;">
                                                     <RadioButton [Name]="'SalesCurrencyRadio'" [IsEnabled]="IsEditingEnabled" [IsChecked]="IsFixedCurrency" (Checked)="SetFixedSameCurrency('F')" [Text]="'Quote.O.Charges.Fixed' | TextCodeTranslationPipe"></RadioButton>
@@ -874,7 +894,7 @@
                                                     <RadioButton [Name]="'SalesCurrencyRadio'" [IsEnabled]="IsEditingEnabled" [IsChecked]="IsSameCostCurrency" (Checked)="SetFixedSameCurrency('S')" [Text]="'Quote.O.Charges.SameAsCost' | TextCodeTranslationPipe"></RadioButton>
                                                 </td>
                                             </tr>
-                                        </table>
+                                        </table>-->
                                     </td>
                                 </tr>
 
@@ -914,7 +934,7 @@
                                     </td>
                                 </tr>
 
-                                <tr style="height:25px;" *ngIf="!IsRouteRate">
+                                <tr style="height:25px;" *ngIf="IsAdhoc">
                                     <td>
                                         <LogLabel [ObjectFieldName]="'IsFixedPrice'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                     </td>

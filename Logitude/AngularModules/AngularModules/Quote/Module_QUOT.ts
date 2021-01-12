@@ -1,12 +1,13 @@
-﻿import {NgModule} from '@angular/core';
-import {InfrastructureModule} from '../Infrastructure/Module_INFR';
-import {Components, ModuleDeclarations} from './ModuleDeclarations';
+import {NgModule} from '@angular/core';
+import { InfrastructureModule } from '../Infrastructure/Module_INFR';
+import { Components, SharedComponents, ModuleDeclarations } from './ModuleDeclarations';
 import {ModuleProviders} from './ModuleProviders';
 
 @NgModule({
     imports: [InfrastructureModule],
-    declarations: [...Components],
-    entryComponents: [...Components],
+    declarations: [...Components,...SharedComponents],
+    entryComponents: [...Components, ...SharedComponents],
+    exports: [...SharedComponents],
 })
 
 export class QuoteModule {
