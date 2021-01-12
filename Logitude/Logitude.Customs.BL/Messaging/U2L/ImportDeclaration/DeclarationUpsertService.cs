@@ -735,8 +735,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
                     if (_MyDeclarationPM.Consignments.Count == 1)
                     {
                         AppendLogLine("one Consignment1");
-                    
-                    _MyDeclarationPM.Consignments[0].CargoTypeCode = _AmitalCustomsFile.CargoTypeCode;
+                        _MyDeclarationPM.Consignments[0].CargoTypeCode = _AmitalCustomsFile.CargoTypeCode;
                         _MyDeclarationPM.Consignments[0].ManifestNumber = _AmitalCustomsFile.ManifestNumber;
                         _MyDeclarationPM.Consignments[0].SecondCargoID = _AmitalCustomsFile.SecondCargoID;
                         if (!string.IsNullOrWhiteSpace(_AmitalCustomsFile.ThirdCargoID))
@@ -748,7 +747,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
                         if (String.IsNullOrWhiteSpace(this._MyDeclarationPM.Consignments[0].UnloadPortCode))
                         {
                             AppendLogLine("one Consignment2");
-                            if (_CourierMasterPM == null)
+                            if (this._CourierMasterPM == null)
                             {
                                 AppendLogLine("one Consignment3");
                                 var myCourierMasterQueryService = new CourierMasterQueryService(_context);
