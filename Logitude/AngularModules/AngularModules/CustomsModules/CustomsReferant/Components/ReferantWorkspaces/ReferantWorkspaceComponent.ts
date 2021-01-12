@@ -34,6 +34,9 @@ export class ReferantWorkspaceComponent implements AfterViewInit {
     public FilesInReviewVisibility: boolean = true;
     public FilesInCreditControlVisibility: boolean = true;
     public FilesAvailableFreeOfChargeVisibility: boolean = true;
+    public FilesInAllInclusiveVisibility: boolean = true;
+    public FilesRejectedByControllerVisibility: boolean = true;
+    public FilesRejectedByClassificationVisibility: boolean = true;
     public AllCasesVisibility: boolean = true;
     public isRTL: boolean = false;
     public ChartID: string = null;
@@ -141,6 +144,15 @@ export class ReferantWorkspaceComponent implements AfterViewInit {
 
             this.InProgressDeclarationReferantDataDashboard.push(this.createChartingItem("FilesAvailableFreeOfCharge"));
             this.InProgressDeclarationReferantDataDashboard.push(this.createChartingItem("FilesAvailableFreeOfCharge", true));
+
+            this.InProgressDeclarationReferantDataDashboard.push(this.createChartingItem("FilesInAllInclusive"));
+            this.InProgressDeclarationReferantDataDashboard.push(this.createChartingItem("FilesInAllInclusive", true));
+
+            this.InProgressDeclarationReferantDataDashboard.push(this.createChartingItem("FilesRejectedByController"));
+            this.InProgressDeclarationReferantDataDashboard.push(this.createChartingItem("FilesRejectedByController", true));
+
+            this.InProgressDeclarationReferantDataDashboard.push(this.createChartingItem("FilesRejectedByClassification"));
+            this.InProgressDeclarationReferantDataDashboard.push(this.createChartingItem("FilesRejectedByClassification", true));
 
             this.InProgressDeclarationReferantDataDashboard.push(this.createChartingItem("AllCases"));
             this.InProgressDeclarationReferantDataDashboard.push(this.createChartingItem("AllCases", true));
@@ -356,6 +368,21 @@ export class ReferantWorkspaceComponent implements AfterViewInit {
                 case "FilesAvailableFreeOfCharge":
                     {
                         displayTitle = TextCodeTranslator.Translate("Customs.DeclarationReferantData.O.FilesAvailableFreeOfCharge");
+                        break;
+                    }
+                case "FilesInAllInclusive":
+                    {
+                        displayTitle = TextCodeTranslator.Translate("Customs.DeclarationReferantData.O.FilesInAllInclusive");
+                        break;
+                    }
+                case "FilesRejectedByController":
+                    {
+                        displayTitle = TextCodeTranslator.Translate("Customs.DeclarationReferantData.O.FilesRejectedByController");
+                        break;
+                    }
+                case "FilesRejectedByClassification":
+                    {
+                        displayTitle = TextCodeTranslator.Translate("Customs.DeclarationReferantData.O.FilesRejectedByClassification");
                         break;
                     }
                 case "AllCases":
