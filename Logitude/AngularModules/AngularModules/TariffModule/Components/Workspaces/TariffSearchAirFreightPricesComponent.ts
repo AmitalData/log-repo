@@ -1324,8 +1324,8 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
                 chargePM.MarkUpValue = 0;
                 chargePM.QuoteTypeCode = this.FatherComponent.EntityPM.QuoteTypeCode;
                 chargePM.CostCurrencyId = item.CurrencyId;
-                chargePM.CostCurrencyCode = this.FatherComponent.GetCurrencyCode(item.CurrencyId);
-                chargePM.CostExchangeRate = this.FatherComponent.GetCurrencyRate(item.CurrencyId);
+                chargePM.CostCurrencyCode = this.FatherComponent.Behaviours.GetCurrencyCode(item.CurrencyId);
+                chargePM.CostExchangeRate = this.FatherComponent.Behaviours.GetCurrencyRate(item.CurrencyId);
               
                 chargePM.SaleCurrencyId = this.FatherComponent.EntityPM.SaleCurrencyId;
                 chargePM.SaleCurrencyCode = this.FatherComponent.Behaviours.GetCurrencyCode(this.FatherComponent.EntityPM.SaleCurrencyId);
