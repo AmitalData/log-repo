@@ -1334,6 +1334,11 @@ export class DeclarationPM {
     public set PalestinianCode(newValue: string) { if (this.palestinianCode != newValue) { this.palestinianCode = newValue; this.MarkAsDirty("PalestinianCode"); } }
        
 	 
+    private requestedCustomsDocId: number;
+    public get RequestedCustomsDocId() { return this.requestedCustomsDocId; }
+    public set RequestedCustomsDocId(newValue: number) { if (this.requestedCustomsDocId != newValue) { this.requestedCustomsDocId = newValue; this.MarkAsDirty("RequestedCustomsDocId"); } }
+       
+	 
 
     public OldEntityPM: DeclarationPM;
 		
