@@ -1,4 +1,4 @@
-import { Component, OnDestroy, AfterViewInit, Output, EventEmitter, ViewChild} from '@angular/core';
+import { Component, OnDestroy, AfterViewInit, Output, EventEmitter, ViewChild } from '@angular/core';
 import { ApiQueryFilters } from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
 import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
 import { EntityResourceService } from '../../../../Infrastructure/Services/EntityResourceService';
@@ -301,12 +301,12 @@ export class ReferantWorkspaceComponent implements AfterViewInit {
         var query = this.dec_queries.Item((Key * 2 + e.target.columnIndex).toString());
         this.ViewReferantQuery(query);
     }
-    public filters = new ApiQueryFilters();
+    public filters: ApiQueryFilters;
 
     FilterChange($event) {
-        if ($event != null) {
-            this.filters = $event.Filters;
-        }
+        this.filters = new ApiQueryFilters();
+        this.filters = $event.Filters;
+
         this.RefId = this.declarationReferantDataFiltersMenuComponent.LOVListUsers.map(({ Id }) => Id).toString();
         this.DepId = this.declarationReferantDataFiltersMenuComponent.LOVListDepartment.map(({ Id }) => Id).toString();
         this.TransportModeId = this.declarationReferantDataFiltersMenuComponent.transportmodeId;
@@ -325,6 +325,7 @@ export class ReferantWorkspaceComponent implements AfterViewInit {
             switch (myQueryCode.replace("_A", "")) {
                 case "FilesInProcess":
                     {
+
                         displayTitle = TextCodeTranslator.Translate("Customs.DeclarationReferantData.O.FilesInProcess");
                         break;
                     }
@@ -368,7 +369,6 @@ export class ReferantWorkspaceComponent implements AfterViewInit {
             this.BuildFiltersForQuery(this.filters);
             if (myQueryCode.endsWith("_A"))
                 this.filters.addAdditionalFilter("IsAvailabilityDateNull", false, null, null, "Equals", false, false, false, "number");
-
             var listArgs = new ListComponentArgs();
             listArgs.QueryCode = myQueryCode.replace("_A", "");
             listArgs.Filters = this.filters;
@@ -382,6 +382,7 @@ export class ReferantWorkspaceComponent implements AfterViewInit {
                         cmpRef.instance.ComponentRef = cmpRef;
                         cmpRef.instance.Run(listArgs);
                         cmpRef.instance.BackCompleted.subscribe(($event: any) => {
+                            this.filters = new ApiQueryFilters(); 
                             this.LoadAllScreenData();
                             this._declarationReferantDataWebService.GetQueriesCounts(this.RefId, this.DepId, this.TransportModeId).subscribe(
                                 (data: any) => {

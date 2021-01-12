@@ -106,7 +106,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                                  IsPaymentDateNull = d.PaymentDate == null,
 
                                                                  DeclarationNumber = d.DeclarationNumber,
-                                                                 IsHatraDateNull= d.HatraDate== null,
+                                                                 IsHatraDateNull= false,
                                                                  RequestedCustomsDocId = "1",// waiting 4 elisheva task 
 
 
@@ -128,7 +128,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                 iQueryable = filters.GetFreelancerDeclarationReferantDatas(queryOperations, iQueryable, tenant,context);
             }
             iQueryable = filters.GetFreelancerDeclarationReferantDatas(queryOperations, iQueryable, tenant, context);
-
+           
             return iQueryable;
 
         }
@@ -150,10 +150,11 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                                                     CollectionOfMoneyStatus = a.CollectionOfMoneyStatus,
                                                                                     IsAvailabilityDateNull = d.AvailabilityDate == null,
                                                                                     IsPaymentDateNull = d.PaymentDate == null,
-                                                                                    IsHatraDateNull = d.HatraDate == null,
+                                                                                    IsHatraDateNull = false,
                                                                                     TransportModeId = d.TransportModeId,
                                                                                     ReferentUserId = d.ReferentUserId,
                                                                                     DepartmentId = d.DepartmentId,
+                                                                                    RequestedCustomsDocId = "1",
                                                                                 });
 
             if (refId.Count>0)
