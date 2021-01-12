@@ -5308,6 +5308,29 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private int? requestedCustomsDocId ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int? RequestedCustomsDocId  
+	   {
+	    
+	     get
+		{
+		   return requestedCustomsDocId;
+		 }
+		 set
+		 {
+		   if(requestedCustomsDocId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="RequestedCustomsDocId",OldValue=requestedCustomsDocId,NewValue=value,PropertyType="int?"};
+		    NotifyPropertyChanged(values);
+		   requestedCustomsDocId=value;
+		   }
+			
+		 }
+	   }
    }
    
 }
