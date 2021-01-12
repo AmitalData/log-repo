@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Table Name="DBMigrationSettings" Schema="dbo" DBType="Main" Module="Infrastructure">
+
+  <Column Name="Type" Type="varchar" Size="25">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+
+  <Column Name="Value" Type="varchar" Size="-1">
+    <Constraints Nullable="false" />
+  </Column>
+
+</Table> 

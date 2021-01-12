@@ -93,7 +93,7 @@ namespace Logitude.DBMigrations.Models
             Console.WriteLine("Preparing Required Data ...");
 
             GetIncludedModulesFromArguments();
-            GetIncludedModulesFromDB();
+            GetIncludedModulesFromDB(); //important
             GetDXMLHashesFromDB();
             GetExecutedSXMLFilesFromDB();
         }
