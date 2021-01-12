@@ -112,7 +112,7 @@
         border-bottom-left-radius: 3px;
     }
 </style>
-<table style="height:115px">
+<table style="height:140px">
     <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
         <td>
             <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
@@ -155,22 +155,22 @@
                     <!-- 3 -->
                     <td style="width:150px">
                         <LogLabel [ObjectFieldName]="'ChartOfAccountsTypeCode'"
-                                    [Text]="'GLAccount.F.ChartOfAccountsTypeCode' | TextCodeTranslationPipe"
-                                    [ObjectTableName]="ObjectTableName" [DataContext]="DataContext">
+                                  [Text]="'GLAccount.F.ChartOfAccountsTypeCode' | TextCodeTranslationPipe"
+                                  [ObjectTableName]="ObjectTableName" [DataContext]="DataContext">
                         </LogLabel>
                     </td>
 
                     <!-- 4 -->
                     <td style="width:200px">
                         <LogLov style="display: block;width: 150px;" float-start
-                            [ObjectFieldName]="'ChartOfAccountsTypeCode'"
-                            [ObjectTableName]="'GLAccount'"
-                            [DataContext]="DataContext"
-                            [QueryFilterItems]="ChartOfAccountTypeFilterItems"
-                            [LookUpTableName]="'ChartOfAccountsType'"
-                            [ForceShowAddLink]="true"
-                            [HideAddLink]="true"
-                            [HideColumns]="true">
+                                [ObjectFieldName]="'ChartOfAccountsTypeCode'"
+                                [ObjectTableName]="'GLAccount'"
+                                [DataContext]="DataContext"
+                                [QueryFilterItems]="ChartOfAccountTypeFilterItems"
+                                [LookUpTableName]="'ChartOfAccountsType'"
+                                [ForceShowAddLink]="true"
+                                [HideAddLink]="true"
+                                [HideColumns]="true">
                         </LogLov>
                     </td>
 
@@ -221,23 +221,23 @@
                     <!-- 3 -->
                     <td>
                         <LogLabel [ObjectFieldName]="'ChartOfAccountId'"
-                                    [Text]="'GLAccount.F.ChartOfAccountsId' | TextCodeTranslationPipe"
-                                    [ObjectTableName]="ObjectTableName" [DataContext]="DataContext">
+                                  [Text]="'GLAccount.F.ChartOfAccountsId' | TextCodeTranslationPipe"
+                                  [ObjectTableName]="ObjectTableName" [DataContext]="DataContext">
                         </LogLabel>
                     </td>
 
                     <!-- 4 -->
                     <td>
                         <LogLov style="display: block;width: 150px;" float-start
-                                [ObjectFieldName]="'ChartOfAccountId'" 
+                                [ObjectFieldName]="'ChartOfAccountId'"
                                 [ObjectTableName]="ObjectTableName"
-                                [DataContext]="DataContext" 
+                                [DataContext]="DataContext"
                                 [LookUpTableName]="'ChartOfAccount'"
-                                (SelectedItemChanged)="ChartOfAccount = $event" 
+                                (SelectedItemChanged)="ChartOfAccount = $event"
                                 [ForceShowAddLink]="true"
                                 [DependencyFilter1Value]="null"
                                 [DependencyFilter2Value]="ChartOfAccountsTypeCode"
-                                [HideAddLink]="true" 
+                                [HideAddLink]="true"
                                 [HideColumns]="true">
                         </LogLov>
                     </td>
@@ -340,7 +340,8 @@
                     <td>
                         <div style="width: 100px;" float-left>
                             <button class="GreenButton"
-                                    (click)="RunButtonClicked()">{{RunReportTitle}}
+                                    (click)="RunButtonClicked()">
+                                {{RunReportTitle}}
                             </button>
                         </div>
 
@@ -354,7 +355,7 @@
                     <!-- 1 -->
                     <td style="padding-right: 5px;" class="Label">
                         <LogLabel [ObjectFieldName]="'Category'" [ObjectTableName]="'GLAccount'" [Text]="'GLAccount.O.Category' | TextCodeTranslationPipe"
-                                [DataContext]="DataContext"></LogLabel>
+                                  [DataContext]="DataContext"></LogLabel>
                     </td>
 
                     <!-- 2 -->
@@ -416,7 +417,7 @@
                             <!-- Default -->
                             <div *ngSwitchDefault>
                                 <!--<span style="font-style: italic; color: #d1d1d1;font-size: 10px;">Select category first...</span>-->
-                                <ComboBox [ItemsSource]="[]" [IsDisabled]="true" ></ComboBox>
+                                <ComboBox [ItemsSource]="[]" [IsDisabled]="true"></ComboBox>
                             </div>
 
                         </div>
@@ -430,15 +431,15 @@
 
                     <!-- 4 -->
                     <td>
-                        <LogLov         style="display: block;width: 150px;" float-start
-                                        [ObjectFieldName]="'Salesman'"
-                                        [ObjectTableName]="'GLAccount'"
-                                        [DataContext]="DataContext"
-                                        [LookUpTableName]="'User'"
-                                        [SelectedValue]="Salesman"
-                                        [QueryFilterItems]="SalesmanFilterItems"
-                                        [HideColumns]="true">
-                                </LogLov>
+                        <LogLov style="display: block;width: 150px;" float-start
+                                [ObjectFieldName]="'Salesman'"
+                                [ObjectTableName]="'GLAccount'"
+                                [DataContext]="DataContext"
+                                [LookUpTableName]="'User'"
+                                [SelectedValue]="Salesman"
+                                [QueryFilterItems]="SalesmanFilterItems"
+                                [HideColumns]="true">
+                        </LogLov>
                     </td>
                     <td style=""></td>
 
