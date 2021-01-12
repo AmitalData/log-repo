@@ -62,7 +62,7 @@ export class ShipmentPayablePM {
     public get ChargesGroupCode() { return this.chargesGroupCode; }
     public set ChargesGroupCode(newValue: string) { if (this.chargesGroupCode != newValue) { this.chargesGroupCode = newValue; this.MarkAsDirty("ChargesGroupCode"); } }
        
-	 
+
     private shipmentPayableLineStatusCode: string;
     public get ShipmentPayableLineStatusCode() { return this.shipmentPayableLineStatusCode; }
     public set ShipmentPayableLineStatusCode(newValue: string) { if (this.shipmentPayableLineStatusCode != newValue) { this.shipmentPayableLineStatusCode = newValue; this.MarkAsDirty("ShipmentPayableLineStatusCode"); } }
@@ -394,6 +394,11 @@ export class ShipmentPayablePM {
     private tariffVersion: number;
     public get TariffVersion() { return this.tariffVersion; }
     public set TariffVersion(newValue: number) { if (this.tariffVersion != newValue) { this.tariffVersion = newValue; this.MarkAsDirty("TariffVersion"); } }
+       
+	 
+    private tariffLineId: string;
+    public get TariffLineId() { return this.tariffLineId; }
+    public set TariffLineId(newValue: string) { if (this.tariffLineId != newValue) { this.tariffLineId = newValue; this.MarkAsDirty("TariffLineId"); } }
        
 	 
     private payablesDisconnectedFromTariff: boolean;

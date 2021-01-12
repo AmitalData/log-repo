@@ -765,13 +765,16 @@ export class FCLChargesComponent extends BaseComponent implements OnDestroy {
             editWindow.Title = "Price Check";
             editWindow.Height = 770;
             editWindow.Width = 1500;
-            editWindow.ShowEditComponent(item.TariffId, "Tariff", item.TariffVersion + "");
+            var argumentsPriceCheck = { VersionId: item.TariffVersion, LineId: item.TariffLineId, ChargeableWeightInKG: this.EntityPM.ChargeableWeightInKG };
+            editWindow.EditComponentArguments = argumentsPriceCheck;
+            editWindow.ShowEditComponent(item.TariffId, "Tariff");
         }
     }
     DeleteTariff(item: FCLQuoteChargeItem) {
         if (item != null) {
             item.TariffId = null;
             item.TariffNumber = null;
+            item.TariffLineId = null;
             item.SetUIProperties();
         }
     }
@@ -2607,6 +2610,12 @@ export class FCLQuoteChargeItem extends BaseComponent {
     set TariffNumber(value: string) {
         if (value != this.EntityPM.TariffNumber) {
             this.EntityPM.TariffNumber = value;
+        }
+    }
+    get TariffLineId() { return this.EntityPM.TariffLineId; }
+    set TariffLineId(value: string) {
+        if (value != this.EntityPM.TariffLineId) {
+            this.EntityPM.TariffLineId = value;
         }
     }
     get TariffId() {

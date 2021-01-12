@@ -89,6 +89,7 @@ namespace Logitude.BL.QuoteModel.Tools.DataMapping
             itemPoco.IsCostAllIn = itemPM.IsCostAllIn;
             itemPoco.TariffId = itemPM.TariffId;
             itemPoco.TariffNumber = itemPM.TariffNumber;
+            itemPoco.TariffLineId = itemPM.TariffLineId;
             itemPoco.TariffVersion = itemPM.TariffVersion;
             itemPoco.IsRegionalTax = itemPM.IsRegionalTax;
         }

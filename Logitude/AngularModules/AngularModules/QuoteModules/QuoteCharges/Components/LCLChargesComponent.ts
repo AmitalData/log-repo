@@ -509,7 +509,9 @@ export class LCLChargesComponent extends BaseComponent implements OnDestroy {
             editWindow.Title = "Price Check";
             editWindow.Height = 770;
             editWindow.Width = 1500;
-            editWindow.ShowEditComponent(item.TariffId, "Tariff", item.TariffVersion + "");
+            var argumentsPriceCheck = { VersionId: item.TariffVersion, LineId: item.TariffLineId, ChargeableWeightInKG: this.EntityPM.ChargeableWeightInKG };
+            editWindow.EditComponentArguments = argumentsPriceCheck;
+            editWindow.ShowEditComponent(item.TariffId, "Tariff");
         }
     }
 
@@ -2250,6 +2252,12 @@ export class QuoteChargeItem extends BaseComponent {
     set TariffVersion(value: number) {
         if (value != this.EntityPM.TariffVersion) {
             this.EntityPM.TariffVersion = value;
+        }
+    }
+    get TariffLineId() { return this.EntityPM.TariffLineId; }
+    set TariffLineId(value: string) {
+        if (value != this.EntityPM.TariffLineId) {
+            this.EntityPM.TariffLineId = value;
         }
     }
 
