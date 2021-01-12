@@ -734,7 +734,9 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
                     _MyDeclarationPM.CasualImporterContact = _AmitalCustomsFile.CasualImporterContact;
                     if (_MyDeclarationPM.Consignments.Count == 1)
                     {
-                        _MyDeclarationPM.Consignments[0].CargoTypeCode = _AmitalCustomsFile.CargoTypeCode;
+                        AppendLogLine("one Consignment1");
+                    
+                    _MyDeclarationPM.Consignments[0].CargoTypeCode = _AmitalCustomsFile.CargoTypeCode;
                         _MyDeclarationPM.Consignments[0].ManifestNumber = _AmitalCustomsFile.ManifestNumber;
                         _MyDeclarationPM.Consignments[0].SecondCargoID = _AmitalCustomsFile.SecondCargoID;
                         if (!string.IsNullOrWhiteSpace(_AmitalCustomsFile.ThirdCargoID))
@@ -745,22 +747,31 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
                         _MyDeclarationPM.Consignments[0].UnloadDate = AmitalConvertUtil.GetUnifreightFormatedDate(_AmitalCustomsFile.UnloadDate, "AmitalCustomsFile.UnloadDate");
                         if (String.IsNullOrWhiteSpace(this._MyDeclarationPM.Consignments[0].UnloadPortCode))
                         {
+                            AppendLogLine("one Consignment2");
                             if (_CourierMasterPM == null)
                             {
+                                AppendLogLine("one Consignment3");
                                 var myCourierMasterQueryService = new CourierMasterQueryService(_context);
                                 _CourierMasterPM = myCourierMasterQueryService.GetByDeclarationId(this._MyDeclarationPM.Id, ResolvedTenant());
                             }
                             if (_CourierMasterPM != null)
                             {
+                                AppendLogLine("one Consignment4");
                                 CustomsAirlineQueryService customsAirlineQueryService = new CustomsAirlineQueryService(_CourierMasterPM.Tenant);
                                 CustomsAirlinePM customsAirline = customsAirlineQueryService.GetSingle(_CourierMasterPM.AirlineId, false, true);
                                 if (customsAirline != null)
                                 {
+                                    AppendLogLine("one Consignment5");
                                     if (!String.IsNullOrWhiteSpace(customsAirline.UnloadPortCode)) this._MyDeclarationPM.Consignments[0].UnloadPortCode = customsAirline.UnloadPortCode;
                                 }
                             }
                         }
                         _MyDeclarationPM.Consignments[0].StorageSiteCode = TranslateWarehouse(_AmitalCustomsFile.WarehouseId);
+                        AppendLogLine("one Consignment6 Consignment.UnloadPortCode=" + this._MyDeclarationPM.Consignments[0].UnloadPortCode);
+                        if (this._MyDeclarationPM.Consignments[0].ChangeSetOp != ChangeSetOperation.Insert)
+                        {
+                            this._MyDeclarationPM.Consignments[0].ChangeSetOp = ChangeSetOperation.Update;
+                        }
                     }
                     myDeclarationUpdateService.Update(_MyDeclarationPM, true);
 
