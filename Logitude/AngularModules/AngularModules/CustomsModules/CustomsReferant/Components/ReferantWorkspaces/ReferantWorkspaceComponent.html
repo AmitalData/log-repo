@@ -57,6 +57,11 @@
                                             <p class="QueryLink" *ngIf="FilesInReviewVisibility" (click)="ViewReferantQuery('FilesInReview')"> {{'Customs.DeclarationReferantData.O.FilesInReview' | TextCodeTranslationPipe}} ({{counters.FilesInReview}}) </p>
                                             <p class="QueryLink" *ngIf="FilesInCreditControlVisibility" (click)="ViewReferantQuery('FilesInCreditControl')"> {{'Customs.DeclarationReferantData.O.FilesInCreditControl' | TextCodeTranslationPipe}} ({{counters.FilesInCreditControl}}) </p>
                                             <p class="QueryLink" *ngIf="FilesAvailableFreeOfChargeVisibility" (click)="ViewReferantQuery('FilesAvailableFreeOfCharge')"> {{'Customs.DeclarationReferantData.O.FilesAvailableFreeOfCharge' | TextCodeTranslationPipe}} ({{counters.FilesAvailableFreeOfCharge}})</p>
+
+                                            <p class="QueryLink" *ngIf="FilesInAllInclusiveVisibility" (click)="ViewReferantQuery('FilesInAllInclusive')"> {{'Customs.DeclarationReferantData.O.FilesInAllInclusive' | TextCodeTranslationPipe}} ({{counters.FilesInAllInclusive}})</p>
+                                            <p class="QueryLink" *ngIf="FilesRejectedByControllerVisibility" (click)="ViewReferantQuery('FilesRejectedByController')"> {{'Customs.DeclarationReferantData.O.FilesRejectedByController' | TextCodeTranslationPipe}} ({{counters.FilesRejectedByController}})</p>
+                                            <p class="QueryLink" *ngIf="FilesRejectedByClassificationVisibility" (click)="ViewReferantQuery('FilesRejectedByClassification')"> {{'Customs.DeclarationReferantData.O.FilesRejectedByClassification' | TextCodeTranslationPipe}} ({{counters.FilesRejectedByClassification}})</p>
+
                                             <p class="QueryLink" *ngIf="AllCasesVisibility" (click)="ViewReferantQuery('AllCases')"> {{'Customs.DeclarationReferantData.O.AllCases' | TextCodeTranslationPipe}} ({{counters.AllCases}})</p>
 
                                         </div>
