@@ -1328,8 +1328,8 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
                 chargePM.CostExchangeRate = this.FatherComponent.GetCurrencyRate(item.CurrencyId);
               
                 chargePM.SaleCurrencyId = this.FatherComponent.EntityPM.SaleCurrencyId;
-                chargePM.SaleCurrencyCode = this.FatherComponent.GetCurrencyCode(this.FatherComponent.EntityPM.SaleCurrencyId);
-                chargePM.SaleExchangeRate = this.FatherComponent.GetCurrencyRate(this.FatherComponent.EntityPM.SaleCurrencyId);
+                chargePM.SaleCurrencyCode = this.FatherComponent.Behaviours.GetCurrencyCode(this.FatherComponent.EntityPM.SaleCurrencyId);
+                chargePM.SaleExchangeRate = this.FatherComponent.Behaviours.GetCurrencyRate(this.FatherComponent.EntityPM.SaleCurrencyId);
                 chargePM.ChargesGroupCode = chargesType.ChargesGroupCode;
 
                 var measurementCode = item.UnitOfMesurmentCode;
@@ -1342,7 +1342,7 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
                     chargePM.CostTotalAmount = costAmount;
                     if (isOFC) {
                         if (!isSurcharge) {
-                            var bcntCharge = this.FatherComponent.AllMeasurements.filter(d => d.Code == "BCNT")[0];
+                            var bcntCharge = this.FatherComponent.Behaviours.AllMeasurements.filter(d => d.Code == "BCNT")[0];
                             measurementCode = bcntCharge.Code;
                             measurementId = bcntCharge.Id;
                         }
