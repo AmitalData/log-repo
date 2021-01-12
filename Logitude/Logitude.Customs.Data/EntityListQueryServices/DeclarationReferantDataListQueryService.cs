@@ -154,6 +154,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                                                     TransportModeId = d.TransportModeId,
                                                                                     ReferentUserId = d.ReferentUserId,
                                                                                     DepartmentId = d.DepartmentId,
+                                                                                    RequestedCustomsDocId="1"// till elisheva will build the db
                                                                                 });
 
             if (refId.Count>0)
