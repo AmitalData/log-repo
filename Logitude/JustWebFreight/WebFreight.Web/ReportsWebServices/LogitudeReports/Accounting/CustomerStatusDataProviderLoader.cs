@@ -219,9 +219,12 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                 CustomerPaymentTerm = customerPeriods.First().AccountTermName,
                 CustomerLocalPaymentTerm = customerPeriods.First().AccountTermLocalName,
                 CustomerPhone = customerPeriods.First().AccountPhone,
+                CurrencyCode = customerPeriods.First().CurrencyCode,
+                ChartOfAccountLocalName = customerPeriods.First().ChartOfAccountLocalName,
+
+
 
                 //credit details
-
 
                 CreditLimit = (decimal)customerPeriods.First().CreditLimitAmount,
                 CreditStatus = customerPeriods.First().CreditStatusAmount ?? 0,
@@ -249,11 +252,12 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                 TotalOpenCheques = customerPeriods.First().TotalOpenCheques ?? 0,
                 TotalOpenShipments = customerPeriods.First().TotalOpenShipments ?? 0,
 
+
             };
             return customerStatus;
         }
 
-        private static decimal? GetBalanceSummationForSpliitedAccounts(IGrouping<string, PeriodMExtended> customerPeriods)
+        private static decimal? GetBalanceSummationForSplittedAccounts(IGrouping<string, PeriodMExtended> customerPeriods)
         {
             return customerPeriods
                             .GroupBy(d => new { d.CurrencyId, d.SplitAccountId })

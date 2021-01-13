@@ -191,6 +191,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                     AccountSalesmanLocalName = d.First().AccountSalesmanLocalName,
                     AccountCollectorName = d.First().AccountCollectorName,
                     AccountCollectorLocalName = d.First().AccountCollectorLocalName,
+                    ChartOfAccountLocalName = d.First().ChartOfAccountLocalName,
                     Category1Name = d.First().Category1Name,
                     Category2Name = d.First().Category2Name,
                     Category3Name = d.First().Category3Name,
@@ -223,6 +224,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                     AccountSalesmanLocalName = d.First().AccountSalesmanLocalName,
                     AccountCollectorName = d.First().AccountCollectorName,
                     AccountCollectorLocalName = d.First().AccountCollectorLocalName,
+                    ChartOfAccountLocalName = d.First().ChartOfAccountLocalName,
                     Category1Name = d.First().Category1Name,
                     Category2Name = d.First().Category2Name,
                     Category3Name = d.First().Category3Name,
@@ -265,6 +267,8 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                     AccountSalesmanLocalName = d.First().AccountSalesmanLocalName,
                     AccountCollectorName = d.First().AccountCollectorName,
                     AccountCollectorLocalName = d.First().AccountCollectorLocalName,
+                    ChartOfAccountLocalName = d.First().ChartOfAccountLocalName,
+
                     Category1Name = d.First().Category1Name,
                     Category2Name = d.First().Category2Name,
                     Category3Name = d.First().Category3Name,
@@ -331,6 +335,8 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                     AccountSalesmanLocalName = d.First().AccountSalesmanLocalName,
                     AccountCollectorName = d.First().AccountCollectorName,
                     AccountCollectorLocalName = d.First().AccountCollectorLocalName,
+                    ChartOfAccountLocalName = d.First().ChartOfAccountLocalName,
+
                     Category1Name = d.First().Category1Name,
                     Category2Name = d.First().Category2Name,
                     Category3Name = d.First().Category3Name,
@@ -508,6 +514,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                     record.CustomerVatNumber = item.CustomerVatNumber;
                     record.CustomerPaymentTerm = item.AccountTermLocalName;
                     record.GLAccountStandardInterestRate = item.GLAccountStandardInterestRate;
+                    record.ChartOfAccountLocalName = item.ChartOfAccountLocalName;
 
                     record.AccountSalesmanName = item.AccountSalesmanName;
                     record.AccountSalesmanLocalName = item.AccountSalesmanLocalName;
@@ -553,6 +560,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                     record.AccountSalesmanLocalName = item.AccountSalesmanLocalName;
                     record.AccountCollectorName = item.AccountCollectorName;
                     record.AccountCollectorLocalName = item.AccountCollectorLocalName;
+                    record.ChartOfAccountLocalName = item.ChartOfAccountLocalName;
                     record.Category1Name = item.Category1Name;
                     record.Category2Name = item.Category2Name;
                     record.Category3Name = item.Category3Name;
