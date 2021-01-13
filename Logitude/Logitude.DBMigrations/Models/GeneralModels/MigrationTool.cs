@@ -111,8 +111,8 @@ namespace Logitude.DBMigrations.Models
             bool isExecuteArgumentProvided = ToolArguments.IsArgumentProvided(Arguments.EXE) || (RunSettings.DebugMode && RunSettings.ExecuteScripts);
 
             List<ScriptDefinition> scriptDefinitions = GetScriptDefinitionsFromSxmlFiles(sxmlFiles);
+            scriptDefinitions = FilterScriptsByEnvCongiguration(scriptDefinitions);
             ValidateNotExecutedAOTScripts(scriptDefinitions);
-
             GeneratedScript toolTablesScript = HandleDXMLFiles(toolDxmlFiles, isExecuteArgumentProvided);
             GeneratedScript preGeneralScript = HandleSXMLFiles(scriptDefinitions, isExecuteArgumentProvided, true);
             GeneratedScript migrationsScript = HandleDXMLFiles(migrationDxmlFiles, isExecuteArgumentProvided);
@@ -1740,14 +1740,10 @@ namespace Logitude.DBMigrations.Models
                 OracleConnection connection = new OracleConnection(connectionString);
                 OracleCommand command = new OracleCommand(queryString, connection);
 
-
-               
                 try
                 {
                     connection.Open();
                     reader = command.ExecuteReader();
-
-                    reader.Read();
 
                     while (reader.Read())
                     {
@@ -1779,8 +1775,6 @@ namespace Logitude.DBMigrations.Models
                 {
                     connection.Open();
                     reader = command.ExecuteReader();
-
-                    reader.Read();
 
                     while (reader.Read())
                     {
@@ -2583,22 +2577,30 @@ namespace Logitude.DBMigrations.Models
             }
         }
 
-        protected void ExitTool(string message)
-        {
-            Console.WriteLine(message);
-            Environment.Exit(1);
-        }
-
         protected void ValidateDatabaseEnvConfiguration(string dbConfigurationsDxml)
         {
-            bool isEnvDBConfigurationExists = true;
-
-            if (!isEnvDBConfigurationExists)
+            if (!DBConfigurationsManager.IsDBConfigurationExists("Env"))
             {
                 string[] dxmlFiles = new string[] { dbConfigurationsDxml };
                 HandleDXMLFiles(dxmlFiles, true);
                 ExitTool("Error: Cannot Find Environment Configuration In Table [DBMigrationConfigurations] In Main Database, To Continue You Should Add It Using Insert Statement");
             }
         }
+
+        protected List<ScriptDefinition> FilterScriptsByEnvCongiguration(List<ScriptDefinition> scriptDefinitions)
+        {
+            string dbEnvConfig = DBConfigurationsManager.GetDBConfigurationValue("Env");
+            List<ScriptDefinition> filteredScriptDefinitions = scriptDefinitions.Where(script => script.Env == null || (script.Env != null && script.Env.Split(',').Contains(dbEnvConfig))).ToList();
+           return filteredScriptDefinitions;
+        }
+
+
+        protected void ExitTool(string message)
+        {
+            Console.WriteLine(message);
+            Environment.Exit(1);
+        }
+
+
     }
 }

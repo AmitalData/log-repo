@@ -1371,5 +1371,10 @@ namespace Logitude.DBMigrations.Models
 
             return type;
         }
+
+        protected override UniqueConstraintDefinition GetUniqueConstraintFromCurrentTable(UniqueConstraintDefinition uniqueConstraint)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
