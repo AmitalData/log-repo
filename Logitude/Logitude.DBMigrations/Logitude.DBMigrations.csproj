@@ -57,6 +57,8 @@
     <Compile Include="Models\GeneralModels\Arguments.cs" />
     <Compile Include="Models\GeneralModels\DatabaseMigrationSettings.cs" />
     <Compile Include="Models\GeneralModels\DatabaseMigrationsResult.cs" />
+    <Compile Include="Models\GeneralModels\DBConfigrationsList.cs" />
+    <Compile Include="Models\GeneralModels\DBMigrationConfigrations.cs" />
     <Compile Include="Models\GeneralModels\DBMigrationsDataScript.cs" />
     <Compile Include="Models\GeneralModels\EmailSender.cs" />
     <Compile Include="Models\GeneralModels\ToolArguments.cs" />

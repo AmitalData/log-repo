@@ -96,6 +96,7 @@ namespace Logitude.DBMigrations.Models
             GetIncludedModulesFromDB(); //important
             GetDXMLHashesFromDB();
             GetExecutedSXMLFilesFromDB();
+            GetEnviromentOfUniqueConstrainsFromDB();
         }
 
         protected GeneratedScript GenerateAndExecuteDBScripts(string[] dxmlFiles, string[] sxmlFiles)
@@ -1724,6 +1725,90 @@ namespace Logitude.DBMigrations.Models
             ExecutedSxmlFiles = executedSxmlFiles;
         }
 
+        protected void GetEnviromentOfUniqueConstrainsFromDB()
+        {
+            string connectionString = ToolConfigurations.GetConnectionString("Main");
+            if (ToolConfigurations.DatabaseType.ToLower() == "oracle")
+            {
+                string queryString = "SELECT * FROM \"DBMIGRATIONCONFIGRATIONS\"";
+
+                OracleDataReader reader = null;
+                OracleConnection connection = new OracleConnection(connectionString);
+                OracleCommand command = new OracleCommand(queryString, connection);
+
+
+                DBMigrationConfigrations dBMigrationConfigrations = null;
+                try
+                {
+                    connection.Open();
+                    reader = command.ExecuteReader();
+
+                    reader.Read();
+
+                    while (reader.Read())
+                    {
+                        dBMigrationConfigrations = new DBMigrationConfigrations
+                        {
+                            Type = reader["Type"].ToString(),
+                            Value = reader["Value"].ToString()
+                        };
+                        DBConfigrationsList.Configs.Add(dBMigrationConfigrations);
+                    }
+
+                    reader.Close();
+                    connection.Close();
+                }
+                catch (Exception)
+                {
+                    if (reader != null)
+                    {
+                        reader.Close();
+                    }
+                    connection.Close();
+                }
+
+            }
+            else
+            {
+                string queryString = "SELECT * FROM [dbo].[DBMigrationConfigrations]";
+
+                SqlDataReader reader = null;
+                SqlConnection connection = new SqlConnection(connectionString);
+                SqlCommand command = new SqlCommand(queryString, connection);
+
+                DBMigrationConfigrations dBMigrationConfigrations = null;
+
+                try
+                {
+                    connection.Open();
+                    reader = command.ExecuteReader();
+
+                    reader.Read();
+
+                    while (reader.Read())
+                    {
+                        dBMigrationConfigrations = new DBMigrationConfigrations
+                        {
+                            Type = reader["Type"].ToString(),
+                            Value = reader["Value"].ToString()
+                        };
+                        DBConfigrationsList.Configs.Add(dBMigrationConfigrations);
+                    }
+
+                    reader.Close();
+                    connection.Close();
+                }
+                catch (Exception)
+                {
+                    if (reader != null)
+                    {
+                        reader.Close();
+                    }
+                    connection.Close();
+                }
+            }
+        }
+
         protected ExecuteSxmlFileResult ShouldExecuteSxmlFile(string sxmlFileName, ScriptDefinition scriptDefinition)
         {
             if (!ExecutedSxmlFiles.Where(e => e.SxmlFileName.ToLower() == sxmlFileName.ToLower() && e.DBType.ToLower() == scriptDefinition.DBType.ToLower()).Any())
@@ -1949,7 +2034,9 @@ namespace Logitude.DBMigrations.Models
                 "DBMigrationsSetDefaultValues.dxml".ToLower(),
                 "DBMigrationsSetValueCounters.dxml".ToLower(),
                 "DBMigrationsDataScripts.dxml".ToLower(),
-                "DBMigrationsDataScriptCounters.dxml".ToLower()
+                "DBMigrationsDataScriptCounters.dxml".ToLower(),
+                "DBMigrationConfigrations.dxml".ToLower()
+
             };
 
             return toolDxmlFilesNames;

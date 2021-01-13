@@ -707,7 +707,7 @@
     <None Include="DBTables\InfrastructureModel\CustomTable.dxml" />
     <None Include="DBTables\InfrastructureModel\DataBaseProperty.dxml" />
     <None Include="DBTables\InfrastructureModel\DBIdCounter.dxml" />
-    <None Include="DBTables\InfrastructureModel\DBMigrationChanges.dxml" />
+    <None Include="DBTables\InfrastructureModel\DBMigrationConfigrations.dxml" />
     <None Include="DBTables\InfrastructureModel\DBMigrationsDataScriptCounters.dxml" />
     <None Include="DBTables\InfrastructureModel\DBMigrationsSetValueCounters.dxml" />
     <None Include="DBTables\InfrastructureModel\DBMigrationsDataScripts.dxml" />

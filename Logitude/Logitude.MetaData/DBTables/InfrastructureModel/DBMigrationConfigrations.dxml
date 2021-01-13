@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Table Name="DBMigrationSettings" Schema="dbo" DBType="Main" Module="Infrastructure">
+<Table Name="DBMigrationConfigrations" Schema="dbo" DBType="Main" Module="Infrastructure">
 
   <Column Name="Type" Type="varchar" Size="25">
     <Constraints PrimaryKey="true" Nullable="false" />
