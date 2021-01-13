@@ -1737,7 +1737,7 @@ namespace Logitude.DBMigrations.Models
                 OracleCommand command = new OracleCommand(queryString, connection);
 
 
-                DBMigrationConfigrations dBMigrationConfigrations = null;
+                DBConfiguration dBMigrationConfigrations = null;
                 try
                 {
                     connection.Open();
@@ -1747,12 +1747,12 @@ namespace Logitude.DBMigrations.Models
 
                     while (reader.Read())
                     {
-                        dBMigrationConfigrations = new DBMigrationConfigrations
+                        dBMigrationConfigrations = new DBConfiguration
                         {
                             Type = reader["Type"].ToString(),
                             Value = reader["Value"].ToString()
                         };
-                        DBConfigrationsList.Configs.Add(dBMigrationConfigrations);
+                        DBConfigurationsManager.AddDBConfiguration(dBMigrationConfigrations.Type , dBMigrationConfigrations.Value);
                     }
 
                     reader.Close();
@@ -1776,7 +1776,7 @@ namespace Logitude.DBMigrations.Models
                 SqlConnection connection = new SqlConnection(connectionString);
                 SqlCommand command = new SqlCommand(queryString, connection);
 
-                DBMigrationConfigrations dBMigrationConfigrations = null;
+                DBConfiguration dBMigrationConfigrations = null;
 
                 try
                 {
@@ -1787,12 +1787,12 @@ namespace Logitude.DBMigrations.Models
 
                     while (reader.Read())
                     {
-                        dBMigrationConfigrations = new DBMigrationConfigrations
+                        dBMigrationConfigrations = new DBConfiguration
                         {
                             Type = reader["Type"].ToString(),
                             Value = reader["Value"].ToString()
                         };
-                        DBConfigrationsList.Configs.Add(dBMigrationConfigrations);
+                        DBConfigurationsManager.AddDBConfiguration(dBMigrationConfigrations.Type, dBMigrationConfigrations.Value);
                     }
 
                     reader.Close();

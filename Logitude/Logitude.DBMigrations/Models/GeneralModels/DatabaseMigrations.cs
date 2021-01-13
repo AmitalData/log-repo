@@ -135,7 +135,7 @@ namespace Logitude.DBMigrations.Models
         public string GetUniqueConstraintsScript()
         {
             string tableUniqueConstraintsScript = "";
-            string dbEnvConfig = DBConfigrationsList.GetConfigrations("Environment");//online
+            string dbEnvConfig = DBConfigurationsManager.GetDBConfigurationValue("Env");//online
 
             if (CurrentTable == null)
             {
