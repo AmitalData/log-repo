@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class DocumentRejectTypeUpdateClass
    {  		
-		public const string HashString = "79caeb1b8d50befed7f161715df0cfcf";
+		public const string HashString = "2a82de00ebab940d53086acfb5a3f229";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -487,7 +487,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	      
 
 			  Query DocumentRejectTypeQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = DocumentRejectTypeTextCode_0.Id, NameTextCodeCode = DocumentRejectTypeTextCode_0.Code, ObjectTableName = "Customs.DocumentRejectType", Code = "DocumentRejectType",  QueryGroupCode = "d653", IndexOrder = 0, Tenant = 0, ObjectTableId = DocumentRejectTypeObjectTable.Id, QuerySection = "Customs.DocumentRejectType", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = DocumentRejectTypeFeature_0.Id,FeatureUniqeCode= DocumentRejectTypeFeature_0.FeatureUniqeCode, DefaultSortName = "Code", DefaultSortDirection = "Ascending", Perspective = null }, addedQueries);
-				SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
+	
+			 QueryColumn DocumentRejectTypeQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DocumentRejectTypeQuery.Id,QueryCode = DocumentRejectTypeQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.DocumentRejectType.Code" , ColumnWidth = 130 }, addedQueryColumns);
+
+			 QueryColumn DocumentRejectTypeQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DocumentRejectTypeQuery.Id,QueryCode = DocumentRejectTypeQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.DocumentRejectType.LocalName" , ColumnWidth = 130 }, addedQueryColumns);
+
+			 QueryColumn DocumentRejectTypeQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DocumentRejectTypeQuery.Id,QueryCode = DocumentRejectTypeQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.DocumentRejectType.EnglishName" , ColumnWidth = 130 }, addedQueryColumns);
+
+			 QueryColumn DocumentRejectTypeQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DocumentRejectTypeQuery.Id,QueryCode = DocumentRejectTypeQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.DocumentRejectType.Inactive" , ColumnWidth = 130 }, addedQueryColumns);
+			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);
 			SqlBulkInsert.BulkInsert("Queries", addedQueries);
 			SqlBulkInsert.BulkInsert("QueryColumns", addedQueryColumns);

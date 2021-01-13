@@ -454,7 +454,28 @@
     DefaultSortName="&quot;Code&quot;"
     DefaultSortDirection="&quot;Ascending&quot;"
     IsSpellChecked="false">
-    <QueryColumns />
+    <QueryColumns>
+      <QueryColumn
+        QueryCode="&quot;DocumentRejectType&quot;"
+        IndexOrder="0"
+        ObjectFieldName="&quot;Code&quot;"
+        ColumnWidth="130" />
+      <QueryColumn
+        QueryCode="&quot;DocumentRejectType&quot;"
+        IndexOrder="1"
+        ObjectFieldName="&quot;LocalName&quot;"
+        ColumnWidth="130" />
+      <QueryColumn
+        QueryCode="&quot;DocumentRejectType&quot;"
+        IndexOrder="2"
+        ObjectFieldName="&quot;EnglishName&quot;"
+        ColumnWidth="130" />
+      <QueryColumn
+        QueryCode="&quot;DocumentRejectType&quot;"
+        IndexOrder="3"
+        ObjectFieldName="&quot;Inactive&quot;"
+        ColumnWidth="130" />
+    </QueryColumns>
     <QueryFilters />
   </Query>
   <Screen
