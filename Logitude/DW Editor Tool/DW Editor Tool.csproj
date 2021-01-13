@@ -57,7 +57,9 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+ 
       <HintPath>..\packages\DWEditorGalaSoft.1.1.0\lib\Net40\System.Windows.Interactivity.dll</HintPath>
+ 
     </Reference>
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
@@ -129,7 +131,11 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="DIM_QuoteStatges.dwml" />
+    <None Include="Files\DIM_Countries.dwml" />
     <None Include="Files\DIM_OBLType.dwml" />
+    <None Include="Files\DIM_QuoteClosingReasons.dwml" />
+    <None Include="Files\DIM_QuoteStages.dwml" />
     <None Include="Files\DIM_ShipmentReceivableStatuses.dwml">
       <SubType>Designer</SubType>
     </None>

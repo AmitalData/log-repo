@@ -55,9 +55,11 @@ namespace DW_Editor_Tool.Helpers
 
                 entityElement.AppendChild(fieldsTagElement);
 
-                XmlNode newBook = doc.ImportNode(indexesXmlNode, true);
-                entityElement.AppendChild(newBook);
-
+                if (indexesXmlNode != null)
+                {
+                    XmlNode newBook = doc.ImportNode(indexesXmlNode, true);
+                    entityElement.AppendChild(newBook);
+                }
 
 
 
