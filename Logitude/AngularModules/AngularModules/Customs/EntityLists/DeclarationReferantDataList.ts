@@ -68,7 +68,7 @@ export class DeclarationReferantDataList {
 	IsAvailabilityDateNull: boolean;
 	DeclarationNumber: string;
 	IsHatraDateNull: boolean;
-	RequestedCustomsDocId: string;
+	RequestedCustomsDocId: number;
 	
 }
  

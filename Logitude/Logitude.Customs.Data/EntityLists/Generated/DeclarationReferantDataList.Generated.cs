@@ -135,7 +135,7 @@ namespace Logitude.Customs.Data.EntityLists
        [DataMember]
        public bool IsHatraDateNull  { get; set; }
        [DataMember]
-       public string RequestedCustomsDocId  { get; set; }
+       public int? RequestedCustomsDocId  { get; set; }
    }
 
 }
