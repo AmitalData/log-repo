@@ -578,6 +578,18 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
             }
 
+
+            if (entityPOCO.ChartOfAccountsTypeCode != entityPM.ChartOfAccountsTypeCode)
+            {
+                List<LedgerTransactionList> transactions = GetAccountTransactions(entityPM);
+                if (transactions.Count > 0)
+                {
+                    throw new ApplicationException("Can't change chart of account type while the account has a transactions");
+                }
+            }
+
+
+
             //CurrencyQuery currencyQuery = new CurrencyQuery(entityPM.Tenant);
             //if (entityPM.ConnectedItems != null)
             //{
@@ -645,6 +657,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
             ValidateCurrencyChange(entityPM, entityPOCO);
         }
+
         protected override void OnUpdating(GLAccountPM entityPM)
         {
             AddAcitivityLog(entityPM, "U");
