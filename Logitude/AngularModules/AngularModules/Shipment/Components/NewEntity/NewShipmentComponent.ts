@@ -204,6 +204,7 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
         this.myShipmentSubTypeListService.getAll().subscribe((myResponse: ServiceResponse) => {
             if (!myResponse.HasError) {
                 this.allShipmentSubTypes = myResponse.Result;
+                this.allShipmentSubTypes = this.allShipmentSubTypes.filter(d => !d.Inactive);
                 this.BuildShipmentSubTypes();
             }
         });
@@ -311,7 +312,7 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
     BuildShipmentSubTypes() {
         this.ShipmentSubTypesList = [];
 
-        this.allShipmentSubTypes.filter(d => d.ShipmentTypeCode == this.ShipmentTypeId && !d.Inactive).forEach(item => {
+        this.allShipmentSubTypes.filter(d => d.ShipmentTypeCode == this.ShipmentTypeId).forEach(item => {
             this.ShipmentSubTypesList.push(new FilterClass(item.Id, item.Name));
         });
 
@@ -356,6 +357,13 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
         var subType: ShipmentSubTypeList = this.allShipmentSubTypes.filter(d => d.Code == subTypeCode)[0];
         if (subType) {
             this.ShipmentSubTypeId = subType.Id;
+        }
+
+        else {
+            var defaultSubType: ShipmentSubTypeList = this.allShipmentSubTypes.filter(d => d.ShipmentTypeCode == this.ShipmentTypeId)[0];
+            if (defaultSubType) {
+                this.ShipmentSubTypeId = defaultSubType.Id;
+            }
         }
     }
 
