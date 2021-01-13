@@ -589,7 +589,11 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="EntityFiles\ReferantException.lxml" />
+
     <None Include="EntityFiles\AmendCancellRequestInitiator.lxml" />
+
+    <None Include="DBScripts\Pre\202101131441_DocumentsMetaDataTypeByCodeVER.sxml" />
+
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
