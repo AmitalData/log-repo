@@ -1581,7 +1581,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             return mytransmission;
         }
 
-        public bool CheckFileStatus(DeclarationPM dirtyDeclarationPM, string loggingUserId)
+        public bool CheckFileStatus(DeclarationPM dirtyDeclarationPM, string loggingUserId, string status)
         {
             var amitalCustomFileCommunicationModel = new Logitude.Customs.BL.Messaging.Amital.AmitalCommunicationModelBase(
                Logitude.Server.Tools.Models.AmitalStandardCommunicationModel.OperationMethod.DataAccess,
@@ -1598,7 +1598,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
             var myLOGIGENREQ = new LOGIGENREQ();
             myLOGIGENREQ.LogitudeGeneralRequest = new LogitudeGeneralRequest[] { new LogitudeGeneralRequest() };
-            myLOGIGENREQ.LogitudeGeneralRequest[0].Code = "VPA";
+            myLOGIGENREQ.LogitudeGeneralRequest[0].Code = status;
             myLOGIGENREQ.LogitudeGeneralRequest[0].Param1 = dirtyDeclarationPM.CustomFileNo;
             bool myImmediately = true;
             var myUServerCommunicationService = new Logitude.Customs.BL.Messaging.Amital.UServerCommunicationService
@@ -1641,6 +1641,72 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 LogMessagingUtil.Instance.AppendLine("CheckFileStatus>genericResponseObj>Message= " + genericResponseObj.Message);
             }
             LogMessagingUtil.Instance.AppendLine("CheckFileStatus>genericResponseObj>Status= " + genericResponseObj.Status);
+
+            return (genericResponseObj.Status == "1");
+
+        }
+
+
+        public bool CheckFileEvent(DeclarationPM dirtyDeclarationPM, string loggingUserId, string CFIEvent)
+        {
+            var amitalCustomFileCommunicationModel = new Logitude.Customs.BL.Messaging.Amital.AmitalCommunicationModelBase(
+               Logitude.Server.Tools.Models.AmitalStandardCommunicationModel.OperationMethod.DataAccess,
+               "CWSFLOGIFILE", "DeclarationCheckFileEvent")
+            {
+                Tenant = dirtyDeclarationPM.Tenant,
+                objectTableName = "Customs.Declaration",
+                CommunicationLoggingEntityReference = dirtyDeclarationPM.DeclarationNumber,
+                EntityId = dirtyDeclarationPM.Id,
+                UserId = loggingUserId,
+                CommunicationSubject = "Logitude Declaration check File Event",
+
+            };
+
+            var myLOGIGENREQ = new LOGIGENREQ();
+            myLOGIGENREQ.LogitudeGeneralRequest = new LogitudeGeneralRequest[] { new LogitudeGeneralRequest() };
+            myLOGIGENREQ.LogitudeGeneralRequest[0].Code = CFIEvent;
+            myLOGIGENREQ.LogitudeGeneralRequest[0].Param1 = dirtyDeclarationPM.CustomFileNo;
+            bool myImmediately = true;
+            var myUServerCommunicationService = new Logitude.Customs.BL.Messaging.Amital.UServerCommunicationService
+                <Logitude.Customs.BL.Messaging.Amital.AmitalCommunicationModelBase, LOGIGENREQ>(
+                amitalCustomFileCommunicationModel, myLOGIGENREQ);
+            var info = myUServerCommunicationService.Send(myImmediately);
+            if (String.IsNullOrWhiteSpace(info.ImmediatelyResponse))
+            {
+                throw new Exception("ImmediatelyResponse is null");
+            }
+            var GenericResponse = XmlGenericUtil<GenericResponse>.DeSerializeObject(info.ImmediatelyResponse);
+            var genericResponseObj = GenericResponse.GenericResponseObj.FirstOrDefault();
+            if (genericResponseObj == null)
+            {
+                throw new Exception("GenericResponse.GenericResponseObj is null");
+            }
+
+            if (!String.IsNullOrWhiteSpace(genericResponseObj.Status))
+            {
+                int sts;
+                int.TryParse(genericResponseObj.Status, out sts);
+                if (sts < 0)
+                {
+                    string mess = "Failed To check File Event in Unifreight";
+                    if (!String.IsNullOrWhiteSpace(genericResponseObj.ErrorDescription))
+                    {
+                        mess = mess + Environment.NewLine + genericResponseObj.ErrorDescription;
+                    }
+                    if (!String.IsNullOrWhiteSpace(genericResponseObj.Message))
+                    {
+                        mess = mess + Environment.NewLine + genericResponseObj.Message;
+                    }
+                    LogMessagingUtil.Instance.AppendLine("CheckFileEvent>genericResponseObj>Message= " + mess);
+                    throw new Exception(mess);
+                }
+            }
+
+            if (!String.IsNullOrWhiteSpace(genericResponseObj.Message))
+            {
+                LogMessagingUtil.Instance.AppendLine("CheckFileEvent>genericResponseObj>Message= " + genericResponseObj.Message);
+            }
+            LogMessagingUtil.Instance.AppendLine("CheckFileEvent>genericResponseObj>Status= " + genericResponseObj.Status);
 
             return (genericResponseObj.Status == "1");
 
