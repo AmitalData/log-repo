@@ -7,6 +7,7 @@ using Simplog.Data.InfrastructureModel.Repositories;
 using WebFreight.Web.Helpers;
 using WebFreight.Web.MetaDataUpdate.DetailClasses;
 using Logitude.Server.Tools.Counters;
+using System;
 
 namespace WebFreight.Web.MetaDataUpdate.AddClasses
 {
@@ -36,6 +37,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                 eventType.IsAgentView = eventTypeDetails.IsAgentView;
                 eventType.IsSharedLogisticsEnabled = eventTypeDetails.IsSharedLogisticsEnabled;
                 eventType.AllowedInAutomation = eventTypeDetails.AllowedInAutomation;
+                eventType.UpdateDate = DateTime.Now;
                 eventTypeRepository.Update(eventType);
             }
 
@@ -64,6 +66,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                     IsAgentView = eventTypeDetails.IsAgentView,
                     IsSharedLogisticsEnabled = eventTypeDetails.IsSharedLogisticsEnabled,
                     AllowedInAutomation = eventTypeDetails.AllowedInAutomation,
+                    UpdateDate = DateTime.Now,
             };
 
                 eventTypeRepository.Add(newEventType);
