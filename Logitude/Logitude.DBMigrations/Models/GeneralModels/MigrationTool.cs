@@ -74,6 +74,9 @@ namespace Logitude.DBMigrations.Models
             ValidateDBFiles(dxmlFiles, sxmlFiles);
             PrepareRequiredData();
 
+            string dbConfigurationsDxml = dxmlFiles.Where(d => Path.GetFileName(d).ToLower() == "DBMigrationConfigurations.dxml".ToLower()).FirstOrDefault();
+            ValidateDatabaseEnvConfiguration(dbConfigurationsDxml);
+
             GeneratedScript scriptsToSave = GenerateAndExecuteDBScripts(dxmlFiles, sxmlFiles);
             SaveScripts(scriptsToSave);
             ExportMissingIndexesWarnings();
@@ -96,7 +99,8 @@ namespace Logitude.DBMigrations.Models
             GetIncludedModulesFromDB(); //important
             GetDXMLHashesFromDB();
             GetExecutedSXMLFilesFromDB();
-            GetEnviromentOfUniqueConstrainsFromDB();
+            GetDBCongifrationsFromDB();
+
         }
 
         protected GeneratedScript GenerateAndExecuteDBScripts(string[] dxmlFiles, string[] sxmlFiles)
@@ -1725,19 +1729,19 @@ namespace Logitude.DBMigrations.Models
             ExecutedSxmlFiles = executedSxmlFiles;
         }
 
-        protected void GetEnviromentOfUniqueConstrainsFromDB()
+        protected void GetDBCongifrationsFromDB()
         {
             string connectionString = ToolConfigurations.GetConnectionString("Main");
             if (ToolConfigurations.DatabaseType.ToLower() == "oracle")
             {
-                string queryString = "SELECT * FROM \"DBMIGRATIONCONFIGRATIONS\"";
+                string queryString = "SELECT * FROM \"DBMIGRATIONCONFIGURATIONS\"";
 
                 OracleDataReader reader = null;
                 OracleConnection connection = new OracleConnection(connectionString);
                 OracleCommand command = new OracleCommand(queryString, connection);
 
 
-                DBConfiguration dBMigrationConfigrations = null;
+               
                 try
                 {
                     connection.Open();
@@ -1747,12 +1751,7 @@ namespace Logitude.DBMigrations.Models
 
                     while (reader.Read())
                     {
-                        dBMigrationConfigrations = new DBConfiguration
-                        {
-                            Type = reader["Type"].ToString(),
-                            Value = reader["Value"].ToString()
-                        };
-                        DBConfigurationsManager.AddDBConfiguration(dBMigrationConfigrations.Type , dBMigrationConfigrations.Value);
+                        DBConfigurationsManager.AddDBConfiguration(reader["Type"].ToString() , reader["Value"].ToString());
                     }
 
                     reader.Close();
@@ -1770,13 +1769,11 @@ namespace Logitude.DBMigrations.Models
             }
             else
             {
-                string queryString = "SELECT * FROM [dbo].[DBMigrationConfigrations]";
+                string queryString = "SELECT * FROM [dbo].[DBMigrationConfigurations]";
 
                 SqlDataReader reader = null;
                 SqlConnection connection = new SqlConnection(connectionString);
                 SqlCommand command = new SqlCommand(queryString, connection);
-
-                DBConfiguration dBMigrationConfigrations = null;
 
                 try
                 {
@@ -1787,12 +1784,7 @@ namespace Logitude.DBMigrations.Models
 
                     while (reader.Read())
                     {
-                        dBMigrationConfigrations = new DBConfiguration
-                        {
-                            Type = reader["Type"].ToString(),
-                            Value = reader["Value"].ToString()
-                        };
-                        DBConfigurationsManager.AddDBConfiguration(dBMigrationConfigrations.Type, dBMigrationConfigrations.Value);
+                        DBConfigurationsManager.AddDBConfiguration(reader["Type"].ToString(), reader["Value"].ToString());
                     }
 
                     reader.Close();
@@ -2035,7 +2027,7 @@ namespace Logitude.DBMigrations.Models
                 "DBMigrationsSetValueCounters.dxml".ToLower(),
                 "DBMigrationsDataScripts.dxml".ToLower(),
                 "DBMigrationsDataScriptCounters.dxml".ToLower(),
-                "DBMigrationConfigrations.dxml".ToLower()
+                "DBMigrationConfigurations.dxml".ToLower()
 
             };
 
@@ -2595,6 +2587,18 @@ namespace Logitude.DBMigrations.Models
         {
             Console.WriteLine(message);
             Environment.Exit(1);
+        }
+
+        protected void ValidateDatabaseEnvConfiguration(string dbConfigurationsDxml)
+        {
+            bool isEnvDBConfigurationExists = true;
+
+            if (!isEnvDBConfigurationExists)
+            {
+                string[] dxmlFiles = new string[] { dbConfigurationsDxml };
+                HandleDXMLFiles(dxmlFiles, true);
+                ExitTool("Error: Cannot Find Environment Configuration In Table [DBMigrationConfigurations] In Main Database, To Continue You Should Add It Using Insert Statement");
+            }
         }
     }
 }

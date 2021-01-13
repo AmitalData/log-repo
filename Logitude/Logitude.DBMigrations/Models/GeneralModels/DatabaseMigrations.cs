@@ -141,7 +141,7 @@ namespace Logitude.DBMigrations.Models
             {
                 foreach (var uniqueConstraint in DXMLTable.UniqueConstraints)
                 {
-                    if (uniqueConstraint.Enviroment == null || (uniqueConstraint.Enviroment != null && uniqueConstraint.Enviroment.Split(',').Contains(dbEnvConfig)))
+                    if (uniqueConstraint.Env == null || (uniqueConstraint.Env != null && uniqueConstraint.Env.Split(',').Contains(dbEnvConfig)))
                     {
                         tableUniqueConstraintsScript += GetCreateUniqueConstraintScript(uniqueConstraint);
                     }
@@ -163,14 +163,14 @@ namespace Logitude.DBMigrations.Models
                     {
                         if (!IsUniqueConstraintInCurrentTable(uniqueConstraint))
                         {
-                            if (uniqueConstraint.Enviroment == null || (uniqueConstraint.Enviroment != null && uniqueConstraint.Enviroment.Split(',').Contains(dbEnvConfig)))
+                            if (uniqueConstraint.Env == null || (uniqueConstraint.Env != null && uniqueConstraint.Env.Split(',').Contains(dbEnvConfig)))
                             {
                                 tableUniqueConstraintsScript += GetCreateUniqueConstraintScript(uniqueConstraint);
                             }
                         }
                         else
                         {
-                            if (uniqueConstraint.Enviroment != null && uniqueConstraint.Enviroment.Split(',').Contains(dbEnvConfig))
+                            if (uniqueConstraint.Env != null && uniqueConstraint.Env.Split(',').Contains(dbEnvConfig))
                             {
                                 tableUniqueConstraintsScript += GetDropUniqueConstraintScript(uniqueConstraint);
                             }

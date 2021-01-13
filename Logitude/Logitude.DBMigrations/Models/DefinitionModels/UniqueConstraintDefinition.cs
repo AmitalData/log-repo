@@ -21,6 +21,6 @@ namespace Logitude.DBMigrations.Models
         public int KeyOrder { get; set; }
 
         [XmlAttribute()]
-        public string Enviroment { get; set; }
+        public string Env { get; set; }
     }
 }
