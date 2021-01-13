@@ -164,7 +164,7 @@
                     <td style="width:200px">
                         <LogLov style="display: block;width: 150px;" float-start
                             [ObjectFieldName]="'ChartOfAccountsTypeCode'"
-                            [ObjectTableName]="'GLAccount'"
+                            [ObjectTableName]="'GLAccount0'"
                             [DataContext]="DataContext"
                             [QueryFilterItems]="ChartOfAccountTypeFilterItems"
                             [LookUpTableName]="'ChartOfAccountsType'"
@@ -229,15 +229,15 @@
                     <!-- 4 -->
                     <td>
                         <LogLov style="display: block;width: 150px;" float-start
-                                [ObjectFieldName]="'ChartOfAccountId'" 
+                                [ObjectFieldName]="'ChartOfAccountId'"
                                 [ObjectTableName]="ObjectTableName"
-                                [DataContext]="DataContext" 
+                                [DataContext]="DataContext"
                                 [LookUpTableName]="'ChartOfAccount'"
-                                (SelectedItemChanged)="ChartOfAccount = $event" 
+                                (SelectedItemChanged)="ChartOfAccount = $event"
                                 [ForceShowAddLink]="true"
                                 [DependencyFilter1Value]="null"
                                 [DependencyFilter2Value]="ChartOfAccountsTypeCode"
-                                [HideAddLink]="true" 
+                                [HideAddLink]="true"
                                 [HideColumns]="true">
                         </LogLov>
                     </td>
