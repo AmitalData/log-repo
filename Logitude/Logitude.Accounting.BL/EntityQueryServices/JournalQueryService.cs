@@ -449,14 +449,16 @@ namespace Logitude.Accounting.BL.EntityQueryServices
 
         public JournalPM GetSingleWithLinesByEntityIdAndCode(string entityId,string code, int tenant)
         {
-            Journal poco = null;
-            poco = repository.GetByJournalsAccountingEntityIdAndCode(entityId , code, tenant).FirstOrDefault();
-            JournalPM pm = this.GetEntityPM(poco);
-            JournalLineQueryService journalLineQueryService = new JournalLineQueryService(tenant);
-            List<JournalLinePM> lines = journalLineQueryService.GetJournalLinesByJournalId(poco.Id, tenant);
-            pm.JournalLines = lines;
-
-            return pm;
+            Journal journalPoco = null;
+            journalPoco = repository.GetByJournalsAccountingEntityIdAndCode(entityId , code, tenant).FirstOrDefault();
+            JournalPM journalPm = this.GetEntityPM(journalPoco);
+            if (journalPm != null)
+            {
+                JournalLineQueryService journalLineQueryService = new JournalLineQueryService(tenant);
+                List<JournalLinePM> lines = journalLineQueryService.GetJournalLinesByJournalId(journalPoco.Id, tenant);
+                journalPm.JournalLines = lines;
+            }
+            return journalPm;
         }
         public JournalPM GetSingleJournalByExternalNoAndExternalSystem(string externalNo,string externalSystem, int tenant)
         {
