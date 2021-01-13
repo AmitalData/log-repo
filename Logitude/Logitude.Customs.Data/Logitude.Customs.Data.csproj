@@ -156,6 +156,7 @@
     <Compile Include="EntityKeys\DeclarationPendingKeys.cs" />
     <Compile Include="EntityKeys\DeclarationReferantDataKeys.cs" />
     <Compile Include="EntityKeys\DeficitDecisionKeys.cs" />
+    <Compile Include="EntityKeys\DocumentRejectTypeKeys.cs" />
     <Compile Include="EntityKeys\DocumentTypeCustomsDataKeys.cs" />
     <Compile Include="EntityKeys\ExceptionReasonKeys.cs" />
     <Compile Include="EntityKeys\ExporterRoleTypeKeys.cs" />
@@ -177,6 +178,7 @@
     <Compile Include="EntityKeys\ReferantExceptionKeys.cs" />
     <Compile Include="EntityKeys\ReferantTeamKeys.cs" />
     <Compile Include="EntityKeys\RefundCustomerActivityTypeKeys.cs" />
+    <Compile Include="EntityKeys\ReleaseMessageTypeKeys.cs" />
     <Compile Include="EntityKeys\RequestTypeKeys.cs" />
     <Compile Include="EntityKeys\SealCompletenesKeys.cs" />
     <Compile Include="EntityKeys\SealTypeKeys.cs" />
@@ -251,6 +253,7 @@
     <Compile Include="EntityListQueryServices\DeclarationPendingListQueryService.cs" />
     <Compile Include="EntityListQueryServices\DeclarationReferantDataListQueryService.cs" />
     <Compile Include="EntityListQueryServices\DeficitDecisionListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\DocumentRejectTypeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\DocumentTypeCustomsDataListQueryService.cs" />
     <Compile Include="EntityListQueryServices\ExceptionReasonListQueryService.cs" />
     <Compile Include="EntityListQueryServices\ExporterRoleTypeListQueryService.cs" />
@@ -313,6 +316,7 @@
     <Compile Include="EntityListQueryServices\Generated\DeclarationPendingListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\DeclarationReferantDataListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\DeficitDecisionListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\DocumentRejectTypeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\DocumentTypeCustomsDataListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\ExceptionReasonListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\ExporterRoleTypeListQueryService.Generated.cs" />
@@ -334,6 +338,7 @@
     <Compile Include="EntityListQueryServices\Generated\ReferantExceptionListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\ReferantTeamListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\RefundCustomerActivityTypeListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\ReleaseMessageTypeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\RequestTypeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\SealCompletenesListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\SealTypeListQueryService.Generated.cs" />
@@ -367,6 +372,7 @@
     <Compile Include="EntityListQueryServices\ReferantExceptionListQueryService.cs" />
     <Compile Include="EntityListQueryServices\ReferantTeamListQueryService.cs" />
     <Compile Include="EntityListQueryServices\RefundCustomerActivityTypeListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\ReleaseMessageTypeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\RequestTypeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\SealCompletenesListQueryService.cs" />
     <Compile Include="EntityListQueryServices\SealTypeListQueryService.cs" />
@@ -441,6 +447,7 @@
     <Compile Include="EntityLists\Generated\DeclarationPendingList.Generated.cs" />
     <Compile Include="EntityLists\Generated\DeclarationReferantDataList.Generated.cs" />
     <Compile Include="EntityLists\Generated\DeficitDecisionList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\DocumentRejectTypeList.Generated.cs" />
     <Compile Include="EntityLists\Generated\DocumentTypeCustomsDataList.Generated.cs" />
     <Compile Include="EntityLists\Generated\ExceptionReasonList.Generated.cs" />
     <Compile Include="EntityLists\Generated\ExporterRoleTypeList.Generated.cs" />
@@ -463,6 +470,7 @@
     <Compile Include="EntityLists\Generated\ReferantExceptionList.Generated.cs" />
     <Compile Include="EntityLists\Generated\ReferantTeamList.Generated.cs" />
     <Compile Include="EntityLists\Generated\RefundCustomerActivityTypeList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\ReleaseMessageTypeList.Generated.cs" />
     <Compile Include="EntityLists\Generated\RequestTypeList.Generated.cs" />
     <Compile Include="EntityLists\Generated\SealCompletenesList.Generated.cs" />
     <Compile Include="EntityLists\Generated\SealTypeList.Generated.cs" />
@@ -537,6 +545,7 @@
     <Compile Include="EntityMapping\DeclarationPendingMap.cs" />
     <Compile Include="EntityMapping\DeclarationReferantDataMap.cs" />
     <Compile Include="EntityMapping\DeficitDecisionMap.cs" />
+    <Compile Include="EntityMapping\DocumentRejectTypeMap.cs" />
     <Compile Include="EntityMapping\DocumentTypeCustomsDataMap.cs" />
     <Compile Include="EntityMapping\ExceptionReasonMap.cs" />
     <Compile Include="EntityMapping\ExporterRoleTypeMap.cs" />
@@ -558,6 +567,7 @@
     <Compile Include="EntityMapping\ReferantExceptionMap.cs" />
     <Compile Include="EntityMapping\ReferantTeamMap.cs" />
     <Compile Include="EntityMapping\RefundCustomerActivityTypeMap.cs" />
+    <Compile Include="EntityMapping\ReleaseMessageTypeMap.cs" />
     <Compile Include="EntityMapping\RequestTypeMap.cs" />
     <Compile Include="EntityMapping\SealCompletenesMap.cs" />
     <Compile Include="EntityMapping\SealTypeMap.cs" />
@@ -632,6 +642,7 @@
     <Compile Include="EntityPOCOs\DeclarationPending.cs" />
     <Compile Include="EntityPOCOs\DeclarationReferantData.cs" />
     <Compile Include="EntityPOCOs\DeficitDecision.cs" />
+    <Compile Include="EntityPOCOs\DocumentRejectType.cs" />
     <Compile Include="EntityPOCOs\DocumentTypeCustomsData.cs" />
     <Compile Include="EntityPOCOs\ExceptionReason.cs" />
     <Compile Include="EntityPOCOs\ExporterRoleType.cs" />
@@ -654,6 +665,7 @@
     <Compile Include="EntityPOCOs\ReferantException.cs" />
     <Compile Include="EntityPOCOs\ReferantTeam.cs" />
     <Compile Include="EntityPOCOs\RefundCustomerActivityType.cs" />
+    <Compile Include="EntityPOCOs\ReleaseMessageType.cs" />
     <Compile Include="EntityPOCOs\RequestType.cs" />
     <Compile Include="EntityPOCOs\SealCompletenes.cs" />
     <Compile Include="EntityPOCOs\SealType.cs" />
@@ -728,6 +740,7 @@
     <Compile Include="Repsitories\DeclarationPendingRepository.cs" />
     <Compile Include="Repsitories\DeclarationReferantDataRepository.cs" />
     <Compile Include="Repsitories\DeficitDecisionRepository.cs" />
+    <Compile Include="Repsitories\DocumentRejectTypeRepository.cs" />
     <Compile Include="Repsitories\DocumentTypeCustomsDataRepository.cs" />
     <Compile Include="Repsitories\ExceptionReasonRepository.cs" />
     <Compile Include="Repsitories\ExporterRoleTypeRepository.cs" />
@@ -790,6 +803,7 @@
     <Compile Include="Repsitories\Generated\DeclarationPendingRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\DeclarationReferantDataRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\DeficitDecisionRepository.Generated.cs" />
+    <Compile Include="Repsitories\Generated\DocumentRejectTypeRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\DocumentTypeCustomsDataRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\ExceptionReasonRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\ExporterRoleTypeRepository.Generated.cs" />
@@ -811,6 +825,7 @@
     <Compile Include="Repsitories\Generated\ReferantExceptionRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\ReferantTeamRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\RefundCustomerActivityTypeRepository.Generated.cs" />
+    <Compile Include="Repsitories\Generated\ReleaseMessageTypeRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\RequestTypeRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\SealCompletenesRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\SealTypeRepository.Generated.cs" />
@@ -844,6 +859,7 @@
     <Compile Include="Repsitories\ReferantExceptionRepository.cs" />
     <Compile Include="Repsitories\ReferantTeamRepository.cs" />
     <Compile Include="Repsitories\RefundCustomerActivityTypeRepository.cs" />
+    <Compile Include="Repsitories\ReleaseMessageTypeRepository.cs" />
     <Compile Include="Repsitories\RequestTypeRepository.cs" />
     <Compile Include="Repsitories\SealCompletenesRepository.cs" />
     <Compile Include="Repsitories\SealTypeRepository.cs" />

@@ -310,6 +310,7 @@
     <None Include="DBTables\DepositCustomerActivity.dxml" />
     <None Include="DBTables\DepositEssenceType.dxml" />
     <None Include="DBTables\DepositFileType.dxml" />
+    <None Include="DBTables\DocumentRejectType.dxml" />
     <None Include="DBTables\DocumentTypeCustomsData.dxml" />
     <None Include="DBTables\EntitlementType.dxml" />
     <None Include="DBTables\EntityTypeLookup.dxml" />
@@ -397,6 +398,7 @@
     <None Include="DBTables\ReferantTeam.dxml" />
     <None Include="DBTables\RefundCustomerActivityType.dxml" />
     <None Include="DBTables\RegisteredWarehouseSiteType.dxml" />
+    <None Include="DBTables\ReleaseMessageType.dxml" />
     <None Include="DBTables\RequestStatus.dxml" />
     <None Include="DBTables\RequestType.dxml" />
     <None Include="DBTables\RequiredGuaranteeType.dxml" />
@@ -474,6 +476,7 @@
     <None Include="EntityFiles\CancellationReasonRequestType.lxml" />
     <None Include="EntityFiles\CancellationRequestStatus.lxml" />
     <None Include="EntityFiles\DeclarationReferantData.lxml" />
+    <None Include="EntityFiles\DocumentRejectType.lxml" />
     <None Include="EntityFiles\ExporterRoleType.lxml" />
     <None Include="EntityFiles\LoadingSiteType.lxml" />
     <None Include="EntityFiles\NbcDeclarationType.lxml" />
@@ -483,6 +486,7 @@
     <None Include="EntityFiles\ClaimsRelatedEntitiesRefund.lxml" />
     <None Include="EntityFiles\ClaimsRelatedEntitiesSeizure.lxml" />
     <None Include="EntityFiles\ReferantTeam.lxml" />
+    <None Include="EntityFiles\ReleaseMessageType.lxml" />
     <None Include="EntityFiles\SupplierInvoiceItemsPrice.lxml" />
     <None Include="EntityFiles\SuppInvoiceItemsAbachStatement.lxml" />
     <None Include="EntityFiles\SupplierInvoicePayment.lxml" />
@@ -585,7 +589,11 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="EntityFiles\ReferantException.lxml" />
+
     <None Include="EntityFiles\AmendCancellRequestInitiator.lxml" />
+
+    <None Include="DBScripts\Pre\202101131441_DocumentsMetaDataTypeByCodeVER.sxml" />
+
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

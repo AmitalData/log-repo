@@ -412,6 +412,8 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new DepositFileTypeMap());
 	
+            modelBuilder.Configurations.Add(new DocumentRejectTypeMap());
+	
             modelBuilder.Configurations.Add(new DocumentTypeCustomsDataMap());
 	
             modelBuilder.Configurations.Add(new EntitlementTypeMap());
@@ -589,6 +591,8 @@ namespace Logitude.Customs.Data
             modelBuilder.Configurations.Add(new RefundCustomerActivityTypeMap());
 	
             modelBuilder.Configurations.Add(new RegisteredWarehouseSiteTypeMap());
+	
+            modelBuilder.Configurations.Add(new ReleaseMessageTypeMap());
 	
             modelBuilder.Configurations.Add(new RequestStatusMap());
 	
@@ -2269,6 +2273,12 @@ namespace Logitude.Customs.Data
 	 
 	 }
 	
+	 public IDbSet<DocumentRejectType> DocumentRejectTypes 
+	 {
+	      get; set;
+	 
+	 }
+	
 	 public IDbSet<DocumentTypeCustomsData> DocumentTypeCustomsData 
 	 {
 	      get; set;
@@ -2798,6 +2808,12 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<RegisteredWarehouseSiteType> RegisteredWarehouseSiteTypes 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<ReleaseMessageType> ReleaseMessageTypes 
 	 {
 	      get; set;
 	 
