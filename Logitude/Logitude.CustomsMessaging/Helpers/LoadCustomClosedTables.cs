@@ -1052,6 +1052,16 @@ INSERT INTO   CustomsDocumentStatusTypes (     CODE, ENGLISHNAME, LOCALNAME,SEAR
             InsertClosedTableRecord(amendCancellRequestInitiatorTable, amendCancellRequestInitiatorObjectTable, customsClosedTables, customsClosedTableRepository);
             addedClosedTables.Add(amendCancellRequestInitiatorTable);
 
+            SYSTBL_NG_9001_MSG_SystemTablesResponseTableData documentRejectTypeInitiatorTable = closedSystemTables.Where(d => d.id == "1665").FirstOrDefault();
+            ObjectTable documentRejectTypeInitiatorObjectTable = objectTableRepository.GetObjectTableByName("Customs.DocumentRejectType", 0, false);
+            InsertClosedTableRecord(documentRejectTypeInitiatorTable, documentRejectTypeInitiatorObjectTable, customsClosedTables, customsClosedTableRepository);
+            addedClosedTables.Add(documentRejectTypeInitiatorTable);
+
+            SYSTBL_NG_9001_MSG_SystemTablesResponseTableData releaseMessageTypeInitiatorTable = closedSystemTables.Where(d => d.id == "1967").FirstOrDefault();
+            ObjectTable ReleaseMessageTypeInitiatorObjectTable = objectTableRepository.GetObjectTableByName("Customs.ReleaseMessageType", 0, false);
+            InsertClosedTableRecord(releaseMessageTypeInitiatorTable, ReleaseMessageTypeInitiatorObjectTable, customsClosedTables, customsClosedTableRepository);
+            addedClosedTables.Add(releaseMessageTypeInitiatorTable);
+
             //SYSTBL_NG_9001_MSG_SystemTablesResponseTableData collateralAnswerStatusTable = closedSystemTables.Where(d => d.id == "1553").FirstOrDefault();
             //ObjectTable collateralAnswerStatusObjectTable = objectTableRepository.GetObjectTableByName("Customs.CollateralAnswerStatus", 0, false);
             //InsertClosedTableRecord(collateralAnswerStatusTable, collateralAnswerStatusObjectTable, customsClosedTables, customsClosedTableRepository);

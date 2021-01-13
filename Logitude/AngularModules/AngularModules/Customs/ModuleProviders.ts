@@ -237,7 +237,8 @@ import { AutonomyRegionTypeListService } from './Services/StandardLists/Autonomy
 import { AmendmentStatusListService } from './Services/StandardLists/AmendmentStatusListService';
 import { ReferantTeamListService } from './Services/StandardLists/ReferantTeamListService';
 import { AmendRequestRejectReasonTypeListService } from './Services/StandardLists/AmendmentRequestRejectReasonTypeListService';
-
+import { ReleaseMessageTypeListService } from './Services/StandardLists/ReleaseMessageTypeListService';
+import { DocumentRejectTypeListService } from './Services/StandardLists/DocumentRejectTypeListService';
 
 
 //#endregion
@@ -630,6 +631,8 @@ export class ModuleProviders {
             case "AmendmentStatusListService": { myResult = new AmendmentStatusListService(); break; }
             case "ReferantTeamListService": { myResult = new ReferantTeamListService(); break; }
             case "AmendRequestRejectReasonTypeListService": { myResult = new AmendRequestRejectReasonTypeListService(); break; }
+            case "ReleaseMessageTypeListService": { myResult = new ReleaseMessageTypeListService(); break; }
+            case "DocumentRejectTypeListService": { myResult = new DocumentRejectTypeListService(); break; }
             case "AmendmentFieldStatusTypeListService": { myResult = new AmendmentFieldStatusTypeListService(); break; }
             case "LoadingSiteTypeListService": { myResult = new LoadingSiteTypeListService(); break; }
 
