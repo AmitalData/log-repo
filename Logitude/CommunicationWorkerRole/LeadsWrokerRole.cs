@@ -191,7 +191,7 @@ namespace CommunicationWorkerRole
              LogitudeLead lead = GetLogitudeLeads(commLog);
             if (lead != null && lead.StatusCode == "InProgress" && (lead.IsEmailVerified || (lead.IsEmailVerified == false && lead.IsSentToCustomer == false)))
             {
-                if (lead.Email.Contains("Raghad")) lead.LeadSource = "";
+      
                 CreateTenant(lead);
             }
 

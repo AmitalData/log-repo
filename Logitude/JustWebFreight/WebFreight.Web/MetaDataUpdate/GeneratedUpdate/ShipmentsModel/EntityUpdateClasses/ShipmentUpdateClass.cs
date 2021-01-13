@@ -79,7 +79,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 {
    public class ShipmentUpdateClass
    {  		
-		public const string HashString = "1caea7e357f896fb33664f3743103d54";
+
+		public const string HashString = "060d01be945a1b29124b40c4fbc6b444";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -3289,8 +3290,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
 					  						IsMulti =  false,
-					  						DependencyFilter1Value =  "Shipment",
-					  						DependencyFilter1Type =  "Constant",
+					  						DependencyFilter2Value =  "Shipment",
+					  						DependencyFilter2Type =  "Constant",
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
@@ -42077,6 +42078,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "QuoteNumber",
 					  						ListPropertyPath =  "QuoteNumber",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -42094,9 +42096,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "QuoteNumber",
-					  						DefaultText =  "Quote Number",
+					  						DefaultText =  "Connected Quote",
 					  						ListFieldLable =  "QuoteNumberListLable",
-					  						ListLableDefaultText =  "Quote Number",
+					  						ListLableDefaultText =  "Connected Quote",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
