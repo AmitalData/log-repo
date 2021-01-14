@@ -185,7 +185,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     _MyCustomsDocumentPM.CustomsDocId = customResponse.ResponseContentHeader.ApplicationID.ToString();
                 }
             }
-
+            
             //if there is an error - Log the error text
             if (_MyCustomsDocumentPM.DocumentStatusCode == "2")
             {
@@ -235,6 +235,20 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 {
                     if (!string.IsNullOrWhiteSpace(customsDocumentsTicket.RequestedCustomsDocId))
                     {
+                        if (_MyCustomsDocumentPM.DocumentStatusCode == "1")
+                        {
+                            DeclarationQueryService declarationQueryService = new DeclarationQueryService(context);
+                            DeclarationUpdateService declarationUpdateService = new DeclarationUpdateService(context, new Dictionary<string, IContext>(), requestParams.Tenant);
+                            var requestedCustomsDocId = myCustomsDocumentsTicketQueryService.CheckRequestedCustomsDocIdsByEntityIdAndChilds(requestParams.DeclaretionId, requestParams.Tenant, "", customsDocumentsTicket.RequestedCustomsDocId);
+
+                            var declaration = declarationQueryService.GetSingle(requestParams.DeclaretionId, false,false);
+                            if (requestedCustomsDocId != declaration.RequestedCustomsDocId)
+                                declaration.ChangeSetOp = ChangeSetOperation.Update;
+
+                            declarationUpdateService.Update(declaration, true);
+                        }
+
+
                         customsDocumentsTicket.VerificationStatusTypeCode = "8";
                         customsDocumentsTicket.ChangeSetOp = ChangeSetOperation.Update;
                         myCustomsDocumentsTicketUpdateService.Update(customsDocumentsTicket, true);
@@ -247,8 +261,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 }
             }
 
-
-              UpdateDeclarationCourierStatus(context, _MyCustomsDocumentPM, requestParams.DeclaretionId);
+          
+            UpdateDeclarationCourierStatus(context, _MyCustomsDocumentPM, requestParams.DeclaretionId);
             this.MyResponseData.ApplicationID = _MyCustomsDocumentPM.CustomsDocId;
             this.MyResponseData.DocumentNumber = _MyCustomsDocumentPM.ExternalAttachmentId;
             this.MyResponseData.CustomDocument = _MyCustomsDocumentPM.CustomsDocId;
