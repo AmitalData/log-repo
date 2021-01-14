@@ -88,7 +88,7 @@ namespace Logitude.Server.Tools.EntityChanges.AutomationResult
 
                 if (automationCondition.OperatorCode.Contains("F"))
                 {
-                    Field item = automationConditionFieldLists.Where(d => d.FieldCode == automationConditionvalue).FirstOrDefault();
+                    Field item = automationConditionFieldLists.Where(d => d.FieldCode.ToLower() == automationConditionvalue).FirstOrDefault();
 
                     if (item != null)
                     {
