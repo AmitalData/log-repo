@@ -51,7 +51,7 @@ namespace WebFreight.Web.Helpers.APIHelpers
         private CardRepository cardRepository;
         private AddressQuery addressQuery;
         private bool IsConfirmationByUser;
-
+        List<SystemUser> systemUsers;
         public PartnersUploadHelper(BatchTaskExecutionPM batchTaskExecution) : base(batchTaskExecution)
         {
             this.batchTaskExecutionPM = batchTaskExecution;
@@ -87,6 +87,7 @@ namespace WebFreight.Web.Helpers.APIHelpers
             cardRepository = new CardRepository(commonDataContext);
             addressQuery = new AddressQuery(tenant);
             batchTaskExecutionRepository = new BatchTaskExecutionRepository(infrastructureContext);
+            systemUsers = new List<SystemUser>();
         }
 
         private void FillDefaultValues()
@@ -463,6 +464,7 @@ namespace WebFreight.Web.Helpers.APIHelpers
                     this.PartnerExcelList.Add(partnerExcel);
                 }
 
+                this.ValidateSalesMan();
 
                 var checkDuplicates = from x in PartnerExcelList.Where(a => a.Code != null && (a.Type == "WH" || a.Type == "TR"))
                                       group x by (x.Code, x.Type) into g
@@ -491,6 +493,40 @@ namespace WebFreight.Web.Helpers.APIHelpers
                 {
                     RunPartnersGenerator_Validation();
                     scope.Complete();
+                }
+            }
+        }
+
+       
+        private void ValidateSalesMan()
+        {
+            var items = (from b in PartnerExcelList where (b.Type == "CS" || b.Type == "PO") && !string.IsNullOrEmpty(b.SalesmanEmail) select b).ToList();
+            if (items.Count > 0)
+            {
+                List<string> emails = (from b in items group b by b.SalesmanEmail into g select g.Key).ToList();
+                systemUsers = (from user in commonDataContext.Users
+                               join db_Contacts in commonDataContext.Contacts
+                               on user.Id equals db_Contacts.Id
+                               into db_UsersContacts
+                               from contact in db_UsersContacts.DefaultIfEmpty()
+                               where
+                               user.Tenant == tenant
+                               && contact.Tenant == tenant
+                               && emails.Contains(contact.Email)
+                               select new SystemUser
+                               {
+                                   Id = contact.Id,
+                                   Email = contact.Email,
+                               }).ToList();
+
+
+                foreach (PartnerExcel item in items)
+                {
+                    var systemUser = systemUsers.Where(d => d.Email == item.SalesmanEmail).FirstOrDefault();
+                    if (systemUser == null)
+                    {
+                        this.errorMsg += "Line " + item.RowIndex + ": " + "Salesman " + item.SalesmanEmail + " is not a system user " + ",";
+                    }
                 }
             }
         }
@@ -639,6 +675,7 @@ namespace WebFreight.Web.Helpers.APIHelpers
                 }
             }
 
+            this.UpdateCustomersSalesmen();
             this.HandelBatchTask();
         }
 
@@ -651,15 +688,12 @@ namespace WebFreight.Web.Helpers.APIHelpers
                 this.batchTaskExecutionPM.StatusCode = "F";
                 this.batchTaskExecutionPM.ProgressMessage = errorMsg;
                 throw new ApplicationException(errorMsg);
-
             }
 
             else
             {
                 try
                 {
-                    this.UpdateCustomersSalesmen();
-
                     this.batchTaskExecutionPM.StatusCode = "D";
                     msg = "Successfully Uploaded " + (PartnerExcelList.Count() - duplicateLinesCount) + " out of " + PartnerExcelList.Count() + " Partners. " +
                                                                duplicateLinesCount + " duplicate lines were found.";
@@ -1034,47 +1068,20 @@ namespace WebFreight.Web.Helpers.APIHelpers
         private void UpdateCustomersSalesmen()
         {
             var items = (from b in PartnerExcelList where (b.Type == "CS" || b.Type == "PO") && !string.IsNullOrEmpty(b.SalesmanEmail) select b).ToList();
-
-            if (items.Count > 0)
+            if (systemUsers.Count > 0)
             {
-                List<string> emails = (from b in items group b by b.SalesmanEmail into g select g.Key).ToList();
-
-                var systemUsers = (from user in commonDataContext.Users
-                                      join db_Contacts in commonDataContext.Contacts
-                                      on user.Id equals db_Contacts.Id
-                                      into db_UsersContacts
-                                      from contact in db_UsersContacts.DefaultIfEmpty()
-                                      where emails.Contains(contact.Email)
-                                      select new
-                                      {
-                                          Id = contact.Id,
-                                          Email = contact.Email,
-                                      }).ToList();
-
                 int count = 0;
+                this.errorMsg = "";
                 foreach (PartnerExcel item in items)
                 {
-                    var systemUser = systemUsers.Where(d => d.Email == item.SalesmanEmail).FirstOrDefault();
-
-                    if (systemUser == null)
-                    {
-                        if (count > 0)
-                        {
-                            cardRepository.SubmitChanges();
-                            customerRepository.SubmitChanges();
-                        }
-                        throw new ApplicationException("Salesman " + item.SalesmanEmail + " is not a system user,");
-                    }
-
-                    else
+                    try
                     {
                         Card card = cardRepository.GetSingleCardByUniqueCode(item.UniqueCode, tenant, false);
-                      
                         if (card != null)
                         {
                             if (card.SalesmanUserId == null)
                             {
-                                card.SalesmanUserId = systemUsers.Where(a=>a.Email == item.SalesmanEmail).Select(a=>a.Id).FirstOrDefault();
+                                card.SalesmanUserId = systemUsers.Where(a => a.Email == item.SalesmanEmail).Select(a => a.Id).FirstOrDefault();
                                 Customer customer = customerRepository.GetSingleCustomer(card.Id, tenant);
                                 customer.SalesmanUserId = card.SalesmanUserId;
                                 cardRepository.Update(card);
@@ -1082,12 +1089,15 @@ namespace WebFreight.Web.Helpers.APIHelpers
                                 count++;
                             }
                         }
+                        if (count >= 100)
+                        {
+                            cardRepository.SubmitChanges();
+                            customerRepository.SubmitChanges();
+                        }
                     }
-
-                    if(count >= 100)
+                    catch (Exception ex)
                     {
-                        cardRepository.SubmitChanges();
-                        customerRepository.SubmitChanges();
+                        this.errorMsg += "Line " + item.RowIndex + ": " + ex.Message + ",";
                     }
                 }
 
@@ -1098,7 +1108,6 @@ namespace WebFreight.Web.Helpers.APIHelpers
                 }
             }
         }
-
     }
     public class PartnerExcel
     {
@@ -1123,5 +1132,12 @@ namespace WebFreight.Web.Helpers.APIHelpers
         public string ReceivablesExternalID { get; set; }
         public string Code { get; set; }
         public string SalesmanEmail { get; set; }
+    }
+
+    public class SystemUser
+    {
+        public string Id { get; set; }
+        public string Email { get; set; }
+
     }
 }
