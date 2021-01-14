@@ -78,8 +78,28 @@ namespace Logitude.BL.InvoiceModel.Tools.TraceEvents
                 }
             }
 
-            else if(entityPM.InternalNotes != payment.InternalNotes)
+            else if(entityPM.InternalNotes != payment.InternalNotes || entityPM.PrintNotes != payment.PrintNotes)
             {
+                var isInternalNotesChanged  = entityPM.InternalNotes != payment.InternalNotes;
+                var isPrintNotesChanged = entityPM.PrintNotes != payment.PrintNotes;
+                var isBothChanged = isInternalNotesChanged && isPrintNotesChanged;
+                var oldValue = TranslateTextsClass.Translate("Accounting.General.O.OldValue", entityPM.Tenant, showLocals);
+                var newValue = TranslateTextsClass.Translate("Accounting.General.O.NewValue", entityPM.Tenant, showLocals);
+                var InternalNotes = "Internal Notes Updated: " + oldValue + payment.InternalNotes + newValue + entityPM.InternalNotes;
+                var PrintNotes = "Print Notes Updated: " + oldValue + payment.PrintNotes + newValue + entityPM.PrintNotes;
+                var notes = "";
+                if (isBothChanged)
+                {
+                    notes = InternalNotes + ", " + PrintNotes;
+                }
+                else if (isInternalNotesChanged)
+                {
+                    notes = InternalNotes;
+                }
+                else
+                {
+                    notes = PrintNotes;
+                }
                 EventTracer.CreateTraceEvent(new EventTracerArgs()
                 {
                     Tenant = entityPM.Tenant,
@@ -87,21 +107,7 @@ namespace Logitude.BL.InvoiceModel.Tools.TraceEvents
                     UserId = loggedContact.Id,
                     EntityId = entityPM.Id,
                     ObjectTableName = myEntityName,
-                    Notes = TranslateTextsClass.Translate("Accounting.General.O.OldValue", entityPM.Tenant, showLocals) + payment.InternalNotes + TranslateTextsClass.Translate("Accounting.General.O.NewValue", entityPM.Tenant, showLocals) + entityPM.InternalNotes
-                });
-            }
-
-
-            else if (entityPM.PrintNotes != payment.PrintNotes)
-            {
-                EventTracer.CreateTraceEvent(new EventTracerArgs()
-                {
-                    Tenant = entityPM.Tenant,
-                    EventTypeCode = "UPAP",
-                    UserId = loggedContact.Id,
-                    EntityId = entityPM.Id,
-                    ObjectTableName = myEntityName,
-                    Notes = TranslateTextsClass.Translate("Accounting.General.O.OldValue", entityPM.Tenant, showLocals) + payment.PrintNotes + TranslateTextsClass.Translate("Accounting.General.O.NewValue", entityPM.Tenant, showLocals) + entityPM.PrintNotes
+                    Notes = notes
                 });
             }
 
