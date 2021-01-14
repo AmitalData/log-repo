@@ -134,7 +134,7 @@ export class AreasTabComponent implements OnDestroy {
     private RunWindow(itemComponent: AreaItemClass, windowTitle: string) {
         var logWindow = new LogitudeWindow();
         logWindow.Width = 700;
-        logWindow.Height = 650;
+        logWindow.Height = 550;
         logWindow.Title = windowTitle;
         logWindow.DataContext = itemComponent;
         logWindow.Show("./CommonModules/CommonPartners/Components/AddEdit/AddEditAreaComponent");
