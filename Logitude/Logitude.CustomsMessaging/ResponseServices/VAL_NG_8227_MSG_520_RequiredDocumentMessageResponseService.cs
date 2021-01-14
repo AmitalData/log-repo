@@ -261,6 +261,9 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                     }
 
+                    myDeclarationPM.RequestedCustomsDocId = 1; 
+
+                    myDeclarationPM.ChangeSetOp = ChangeSetOperation.Update;
 
                 }
                 requestParams.LoggingObjectTableId = customsDocumentPointerPM.ParentEntityCode;
@@ -306,8 +309,16 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             break;
                         }
                     }
+
+                   var requestedCustomsDocId = myCustomsDocumentsTicketQueryService.CheckRequestedCustomsDocIdsByEntityIdAndChilds(myDeclarationPM.Id, myDeclarationPM.Tenant, "", customResponse.RequiredDocumentDetails.documentID.ToString());
+                    if(requestedCustomsDocId!= myDeclarationPM.RequestedCustomsDocId)
+                    myDeclarationPM.ChangeSetOp = ChangeSetOperation.Update;
                 }
             }
+
+
+            DeclarationUpdateService declarationUpdateService1 = new DeclarationUpdateService(dbContext, new Dictionary<string, IContext>(), requestParams.Tenant);
+            declarationUpdateService1.Update(myDeclarationPM, true);
 
             if (customsDocumentPointerPM != null)
             {
