@@ -2075,10 +2075,10 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
                                                             LocalAmount =Math.Round((decimal)g.Sum(a =>
                                                             (a.VatRecognizedPercentage == null) ? a.LocalCurrencyAmount :
-                                                              (a.LocalCurrencyAmount + ((1 - a.VatRecognizedPercentage) * Math.Round((double)((a.VatPercentage / 100) * a.LocalCurrencyAmount), 3)))),4)  ,
+                                                              (a.LocalCurrencyAmount + ((1 - a.VatRecognizedPercentage) * Math.Round((double)((a.VatPercentage / 100) * a.LocalCurrencyAmount), 2)))),2)  ,
 
                                                             CurrencyId = g.Key.ForiegnCurrencyId,
-                                                            ForeignAmount = Math.Round((decimal)g.Sum(a => a.ForiegnAmountWithRecognizedVat),4),
+                                                            ForeignAmount = Math.Round((decimal)g.Sum(a => a.ForiegnAmountWithRecognizedVat),2),
                                                             ExchangeRate = (decimal)g.Key.ForiegnExchangeRate,
                                                             Reference1 = theEntityPm.InvoiceNumber,
                                                             Reference2 = theEntityPm.MainEntityReference,
