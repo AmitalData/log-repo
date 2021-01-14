@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Logitude.DBMigrations.Models
 {
@@ -12,7 +9,7 @@ namespace Logitude.DBMigrations.Models
 
         public static string GetDBConfigurationValue(string dbConfigurationType)
         {
-            return DBConfigurations?.Where(c => c.Type.ToLower() == dbConfigurationType.ToLower()).FirstOrDefault()?.Value;
+            return DBConfigurations?.Where(c => c.Type?.ToLower() == dbConfigurationType?.ToLower()).FirstOrDefault()?.Value;
         }
 
         public static void AddDBConfiguration(string dbConfigurationType, string dbConfigurationValue)
@@ -38,7 +35,7 @@ namespace Logitude.DBMigrations.Models
             {
                 return false;
             }
-            return DBConfigurations.Where(c => c.Type.ToLower() == dbConfigurationType.ToLower()).Any();
+            return DBConfigurations.Where(c => c.Type?.ToLower() == dbConfigurationType?.ToLower()).Any();
         }
     }
 }

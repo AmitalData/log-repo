@@ -135,13 +135,12 @@ namespace Logitude.DBMigrations.Models
         public string GetUniqueConstraintsScript()
         {
             string tableUniqueConstraintsScript = "";
-            string dbEnvConfig = DBConfigurationsManager.GetDBConfigurationValue("Env");
 
             if (CurrentTable == null)
             {
                 foreach (var uniqueConstraint in DXMLTable.UniqueConstraints)
                 {
-                    if (uniqueConstraint.Env == null || (uniqueConstraint.Env != null && uniqueConstraint.Env.Split(',').Contains(dbEnvConfig)))
+                    if (IsContainDBConfigurationEnvironment(uniqueConstraint.Env))
                     {
                         tableUniqueConstraintsScript += GetCreateUniqueConstraintScript(uniqueConstraint);
                     }
@@ -163,14 +162,14 @@ namespace Logitude.DBMigrations.Models
                     {
                         if (!IsUniqueConstraintInCurrentTable(uniqueConstraint))
                         {
-                            if (uniqueConstraint.Env == null || (uniqueConstraint.Env != null && uniqueConstraint.Env.Split(',').Contains(dbEnvConfig)))
+                            if (IsContainDBConfigurationEnvironment(uniqueConstraint.Env))
                             {
                                 tableUniqueConstraintsScript += GetCreateUniqueConstraintScript(uniqueConstraint);
                             }
                         }
                         else
                         {
-                            if (uniqueConstraint.Env != null && !uniqueConstraint.Env.Split(',').Contains(dbEnvConfig))
+                            if (IsNotContainDBConfigurationEnvironment(uniqueConstraint.Env))
                             {
                                 UniqueConstraintDefinition currentTableUniqueConstraint = GetUniqueConstraintFromCurrentTable(uniqueConstraint);
                                 tableUniqueConstraintsScript += GetDropUniqueConstraintScript(currentTableUniqueConstraint);
@@ -1072,6 +1071,20 @@ namespace Logitude.DBMigrations.Models
             }
         }
 
+        protected bool IsContainDBConfigurationEnvironment(string envAttribute)
+        {
+            envAttribute = envAttribute?.ToLower();
+            string dbEnvConfig = DBConfigurationsManager.GetDBConfigurationValue("Env")?.ToLower();
+            return envAttribute == null || (envAttribute != null && envAttribute.Split(',').Contains(dbEnvConfig));
+        }
+
+        protected bool IsNotContainDBConfigurationEnvironment(string envAttribute)
+        {
+            envAttribute = envAttribute?.ToLower();
+            string dbEnvConfig = DBConfigurationsManager.GetDBConfigurationValue("Env")?.ToLower();
+            return envAttribute != null && !envAttribute.Split(',').Contains(dbEnvConfig);
+        }
+        
         protected void ExitTool(string message)
         {
             Console.WriteLine(message);
