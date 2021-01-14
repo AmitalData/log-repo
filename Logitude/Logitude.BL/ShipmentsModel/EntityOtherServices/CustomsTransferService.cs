@@ -355,11 +355,19 @@ namespace Logitude.BL.ShipmentsModel.EntityOtherServices
                     row[7] = item.MainCarriageVesselName;
                     row[8] = item.MainCarriageCarrierNumber;
                     row[9] = item.DirectionId == "E" ? "2" : "1";
-                    row[10] = item.House;
+
+                    if (!string.IsNullOrEmpty(item.House))
+                    {
+                        string house = item.House.Trim();
+                        house = Regex.Replace(item.House, @"[^0-9a-zA-Z.,+]+", "");
+
+                        row[10] = house;
+                    }
+
                     row[11] = item.ShipmentLevelCode == "H" ? item.FromPortCode : item.MainCarriageFromPortCode;
                     row[12] = item.ShipmentLevelCode == "H"? item.FromPortCountryCode : item.MainCarriageFromPortCountryCode;
                     row[13] = "H";
-                    row[14] = item.House;
+                    row[14] = item.Master;
                     row[15] = "2";
                     row[16] = item.ShipmentLevelCode == "H" ? item.ToPortCode : item.MainCarriageFinalDestinationPortCode;
                     row[17] = item.ShipmentLevelCode == "H"? item.ToPortCountryCode : item.MainCarriageFinalDestinationCountryCode;
