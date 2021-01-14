@@ -75,27 +75,6 @@ namespace Logitude.ShipmentTests.Features
             testRunner.CollectScenarioErrors();
         }
         
-        public virtual void FeatureBackground()
-        {
-#line 4
-#line hidden
-            TechTalk.SpecFlow.Table table1 = new TechTalk.SpecFlow.Table(new string[] {
-                        "Email",
-                        "Password"});
-            table1.AddRow(new string[] {
-                        "ahmadb123@mail.com",
-                        "ahmed13!A15"});
-#line 5
- testRunner.Given("Users with following credentials", ((string)(null)), table1, "Given ");
-#line hidden
-#line 8
- testRunner.When("Users make login request", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line hidden
-#line 9
- testRunner.Then("Users should have token", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line hidden
-        }
-        
         void System.IDisposable.Dispose()
         {
             this.TestTearDown();
@@ -129,37 +108,24 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 this.ScenarioStart();
-#line 4
-this.FeatureBackground();
-#line hidden
-                TechTalk.SpecFlow.Table table2 = new TechTalk.SpecFlow.Table(new string[] {
-                            "NewConcurrencyGUID",
-                            "DirectionId",
-                            "TransportModeId",
-                            "ShipmentLevelCode",
-                            "BranchId",
-                            "DepartmentId",
+                TechTalk.SpecFlow.Table table1 = new TechTalk.SpecFlow.Table(new string[] {
+                            "Direction",
+                            "TransportMode",
+                            "ShipmentLevel",
                             "FreightPrepaidCollectId",
                             "OtherPrepaidCollectId",
-                            "CreatedByUserId",
-                            "UpdatedByUserId",
-                            "MainCarriageToPortId",
-                            "MainCarriageFromPortId"});
-                table2.AddRow(new string[] {
-                            "Guid.NewGuid().ToString()",
+                            "MainCarriageToPort",
+                            "MainCarriageFromPort"});
+                table1.AddRow(new string[] {
                             "E",
                             "A",
                             "C",
-                            "1-1102",
-                            "1-2988",
                             "P",
                             "C",
-                            "1-108265",
-                            "1-108265",
-                            "1-300930",
-                            "1-303023"});
+                            "LHR",
+                            "MIA"});
 #line 12
- testRunner.Given("A master shipment fields", ((string)(null)), table2, "Given ");
+ testRunner.Given("A master shipment fields", ((string)(null)), table1, "Given ");
 #line hidden
 #line 15
  testRunner.When("Create master shipment API request sent", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
@@ -199,10 +165,7 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 this.ScenarioStart();
-#line 4
-this.FeatureBackground();
-#line hidden
-                TechTalk.SpecFlow.Table table3 = new TechTalk.SpecFlow.Table(new string[] {
+                TechTalk.SpecFlow.Table table2 = new TechTalk.SpecFlow.Table(new string[] {
                             "NewConcurrencyGUID",
                             "DirectionId",
                             "TransportModeId",
@@ -216,7 +179,7 @@ this.FeatureBackground();
                             "MainCarriageToPortId",
                             "MainCarriageFromPortId",
                             "CustomerId"});
-                table3.AddRow(new string[] {
+                table2.AddRow(new string[] {
                             "Guid.NewGuid().ToString()",
                             "E",
                             "A",
@@ -231,7 +194,7 @@ this.FeatureBackground();
                             "1-303023",
                             "1-200716"});
 #line 19
- testRunner.Given("A house shipment fields", ((string)(null)), table3, "Given ");
+ testRunner.Given("A house shipment fields", ((string)(null)), table2, "Given ");
 #line hidden
 #line 22
  testRunner.And("A master shipment", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");

@@ -1,4 +1,7 @@
 ﻿using Logitude.ShipmentTests.Models;
+using Logitude.ShipmentTests.TestData;
+using Logitude.ShipmentTests.TestDataMapping;
+using Logitude.Test.Base.TestData;
 using System;
 using System.Collections.Generic;
 using TechTalk.SpecFlow;
@@ -122,9 +125,21 @@ namespace Logitude.ShipmentTests.Builders
             return this;
         }
 
+        public ShipmentBuilder MainCarriageToPortIdByCode(string mainCarriageToPortCode)
+        {
+            _shipmentPM.MainCarriageToPortId = PortCodeMapping(mainCarriageToPortCode);//ShipmentMapping.Ports.ContainsKey(mainCarriageToPortCode) ? ShipmentMapping.Ports[mainCarriageToPortCode] : null;
+            return this;
+        }
+
         public ShipmentBuilder MainCarriageFromPortId(string mainCarriageFromPortId)
         {
             _shipmentPM.MainCarriageFromPortId = mainCarriageFromPortId;
+            return this;
+        }
+
+        public ShipmentBuilder MainCarriageFromPortIdByCode(string mainCarriageFromPortCode)
+        {
+            _shipmentPM.MainCarriageFromPortId = PortCodeMapping(mainCarriageFromPortCode);//ShipmentMapping.Ports.ContainsKey(mainCarriageFromPortCode) ? ShipmentMapping.Ports[mainCarriageFromPortCode] : null; ;
             return this;
         }
 
@@ -165,16 +180,12 @@ namespace Logitude.ShipmentTests.Builders
         {
             _shipmentPM = new ShipmentPM
             {
-                DirectionId = "E",
-                TransportModeId = "A",
-                ShipmentLevelCode = "C",
+                Tenant = BasePreparationVariables.Tenant,
                 NewConcurrencyGUID = Guid.NewGuid().ToString(),
-                MainCarriageToPortId = "1-300930",
-                MainCarriageFromPortId = "1-303023",
-                BranchId = "1-1102",
-                DepartmentId = "1-2988",
-                OtherPrepaidCollectId = "P",
-                FreightPrepaidCollectId = "P"
+                BranchId = BasePreparationVariables.BranchId,
+                DepartmentId = BasePreparationVariables.DepartmentId,
+                CreatedByUserId = LoginPreparationParameters.LoginUserId,
+                UpdatedByUserId = LoginPreparationParameters.LoginUserId
             };
             return this;
         }
@@ -183,6 +194,29 @@ namespace Logitude.ShipmentTests.Builders
         {
             _shipmentPM = chargeTypeData.CreateInstance<ShipmentPM>();
             return this;
+        }
+
+        private string PortCodeMapping(string portCode)
+        {
+            switch(portCode)
+            {
+                case "LHR":
+                    return ShipmentTestData.PortLHRId;
+                case "MIA":
+                    return ShipmentTestData.PortMIAId;
+                case "JFK":
+                    return ShipmentTestData.PortJFKId;
+                case "SOU":
+                    return ShipmentTestData.PortSOUId;
+                case "NYC":
+                    return ShipmentTestData.PortNYCId;
+                case "LON":
+                    return ShipmentTestData.PortLONId;
+                case "MAN":
+                    return ShipmentTestData.PortMANId;
+                default:
+                    return null;
+            }
         }
     }
 }

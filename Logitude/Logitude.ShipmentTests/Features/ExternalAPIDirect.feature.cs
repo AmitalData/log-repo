@@ -79,14 +79,14 @@ namespace Logitude.ShipmentTests.Features
         {
 #line 3
 #line hidden
-            TechTalk.SpecFlow.Table table4 = new TechTalk.SpecFlow.Table(new string[] {
+            TechTalk.SpecFlow.Table table3 = new TechTalk.SpecFlow.Table(new string[] {
                         "Email",
                         "Password"});
-            table4.AddRow(new string[] {
+            table3.AddRow(new string[] {
                         "ahmadb123@mail.com",
                         "ahmed13!A15"});
 #line 4
- testRunner.Given("Users with following credentials", ((string)(null)), table4, "Given ");
+ testRunner.Given("Users with following credentials", ((string)(null)), table3, "Given ");
 #line hidden
 #line 7
  testRunner.When("Users make login request", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
@@ -132,74 +132,74 @@ this.ScenarioInitialize(scenarioInfo);
 #line 3
 this.FeatureBackground();
 #line hidden
-                TechTalk.SpecFlow.Table table5 = new TechTalk.SpecFlow.Table(new string[] {
+                TechTalk.SpecFlow.Table table4 = new TechTalk.SpecFlow.Table(new string[] {
                             "Name",
                             "Value"});
-                table5.AddRow(new string[] {
+                table4.AddRow(new string[] {
                             "Agent.Code",
                             "10026"});
-                table5.AddRow(new string[] {
+                table4.AddRow(new string[] {
                             "Direction.Code",
                             "E"});
-                table5.AddRow(new string[] {
+                table4.AddRow(new string[] {
                             "TransportMode.Code",
                             "O"});
-                table5.AddRow(new string[] {
+                table4.AddRow(new string[] {
                             "ShipmentType.Code",
                             "FCLD"});
-                table5.AddRow(new string[] {
+                table4.AddRow(new string[] {
                             "Shipper.Code",
                             "10009"});
-                table5.AddRow(new string[] {
+                table4.AddRow(new string[] {
                             "ShipperReference1",
                             "SR1"});
-                table5.AddRow(new string[] {
+                table4.AddRow(new string[] {
                             "ShipperReference2",
                             "SR2"});
-                table5.AddRow(new string[] {
+                table4.AddRow(new string[] {
                             "GrossWeightUnit.Code",
                             "KG"});
-                table5.AddRow(new string[] {
+                table4.AddRow(new string[] {
                             "ChargeableWeightUnit.Code",
                             "KG"});
-                table5.AddRow(new string[] {
+                table4.AddRow(new string[] {
                             "VolumeUnit.Code",
                             "TES"});
-                table5.AddRow(new string[] {
+                table4.AddRow(new string[] {
                             "Incoterm.Code",
                             "CIF"});
-                table5.AddRow(new string[] {
+                table4.AddRow(new string[] {
                             "MainCarriageCarrier.Code",
                             "CA20"});
-                table5.AddRow(new string[] {
+                table4.AddRow(new string[] {
                             "MainCarriageATD",
                             "2021-01-07"});
 #line 11
- testRunner.Given("Direct shipment with the following properties", ((string)(null)), table5, "Given ");
+ testRunner.Given("Direct shipment with the following properties", ((string)(null)), table4, "Given ");
 #line hidden
-                TechTalk.SpecFlow.Table table6 = new TechTalk.SpecFlow.Table(new string[] {
+                TechTalk.SpecFlow.Table table5 = new TechTalk.SpecFlow.Table(new string[] {
                             "PackageType.Code",
                             "Pieces",
                             "GrossWeight"});
-                table6.AddRow(new string[] {
+                table5.AddRow(new string[] {
                             "20BU",
                             "1",
                             "250"});
 #line 26
- testRunner.And("List of ocean or inland packages for direct shipment", ((string)(null)), table6, "And ");
+ testRunner.And("List of ocean or inland packages for direct shipment", ((string)(null)), table5, "And ");
 #line hidden
-                TechTalk.SpecFlow.Table table7 = new TechTalk.SpecFlow.Table(new string[] {
+                TechTalk.SpecFlow.Table table6 = new TechTalk.SpecFlow.Table(new string[] {
                             "LegIndex",
                             "Carrier.Code",
                             "FromPort.Code",
                             "ToPort.Code"});
-                table7.AddRow(new string[] {
+                table6.AddRow(new string[] {
                             "1",
                             "CA20",
                             "DE222",
                             "DE223"});
 #line 29
- testRunner.And("User adding main carriage legs to last direct shipmentd", ((string)(null)), table7, "And ");
+ testRunner.And("User adding main carriage legs to last direct shipmentd", ((string)(null)), table6, "And ");
 #line hidden
 #line 32
  testRunner.When("User create direct shipment using external API", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
@@ -242,18 +242,18 @@ this.ScenarioInitialize(scenarioInfo);
 #line 3
 this.FeatureBackground();
 #line hidden
-                TechTalk.SpecFlow.Table table8 = new TechTalk.SpecFlow.Table(new string[] {
+                TechTalk.SpecFlow.Table table7 = new TechTalk.SpecFlow.Table(new string[] {
                             "LegIndex",
                             "Carrier.Code",
                             "FromPort.Code",
                             "ToPort.Code"});
-                table8.AddRow(new string[] {
+                table7.AddRow(new string[] {
                             "1",
                             "CA20",
                             "DE222",
                             "DE223"});
 #line 36
- testRunner.Given("The main carriage legs are added to last direct shipment", ((string)(null)), table8, "Given ");
+ testRunner.Given("The main carriage legs are added to last direct shipment", ((string)(null)), table7, "Given ");
 #line hidden
 #line 39
  testRunner.When("User Update Shipment With Invalid Future ATA", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
@@ -296,18 +296,18 @@ this.ScenarioInitialize(scenarioInfo);
 #line 3
 this.FeatureBackground();
 #line hidden
-                TechTalk.SpecFlow.Table table9 = new TechTalk.SpecFlow.Table(new string[] {
+                TechTalk.SpecFlow.Table table8 = new TechTalk.SpecFlow.Table(new string[] {
                             "LegIndex",
                             "Carrier.Code",
                             "FromPort.Code",
                             "ToPort.Code"});
-                table9.AddRow(new string[] {
+                table8.AddRow(new string[] {
                             "1",
                             "CA20",
                             "DE222",
                             "DE223"});
 #line 44
-    testRunner.Given("The main carriage legs are added to last direct shipment", ((string)(null)), table9, "Given ");
+    testRunner.Given("The main carriage legs are added to last direct shipment", ((string)(null)), table8, "Given ");
 #line hidden
 #line 47
     testRunner.When("The User Updates Shipment With Invalid Future ATD", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
@@ -350,18 +350,18 @@ this.ScenarioInitialize(scenarioInfo);
 #line 3
 this.FeatureBackground();
 #line hidden
-                TechTalk.SpecFlow.Table table10 = new TechTalk.SpecFlow.Table(new string[] {
+                TechTalk.SpecFlow.Table table9 = new TechTalk.SpecFlow.Table(new string[] {
                             "LegIndex",
                             "Carrier.Code",
                             "FromPort.Code",
                             "ToPort.Code"});
-                table10.AddRow(new string[] {
+                table9.AddRow(new string[] {
                             "1",
                             "CA20",
                             "DE222",
                             "DE223"});
 #line 51
-    testRunner.Given("The main carriage legs are added to last direct shipment", ((string)(null)), table10, "Given ");
+    testRunner.Given("The main carriage legs are added to last direct shipment", ((string)(null)), table9, "Given ");
 #line hidden
 #line 54
     testRunner.When("The User Updates Shipment With valid Future ETD,ATD,ETA and ATA", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");

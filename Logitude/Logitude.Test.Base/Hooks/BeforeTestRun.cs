@@ -12,7 +12,7 @@ namespace Logitude.Test.Base.Hooks
     [Binding]
     public class BeforeTestRun
     {
-        [BeforeTestRun]
+        [BeforeTestRun(Order = 0)]
         public static void SetupBasePreparationVariables()
         {
             GetLoginParameters();

@@ -1,7 +1,9 @@
 ﻿using FluentAssertions;
+using Logitude.ShipmentTests.Builders;
 using Logitude.ShipmentTests.Models;
 using Logitude.Test.Base.Models.Login;
 using Logitude.Test.Base.Services;
+using Logitude.Test.Base.TestData;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,21 +21,30 @@ namespace Logitude.ShipmentTests.Steps
         public CreateShipmentSteps(MultiUsers multiUsers, ShipmentContext shipmentContext)
         {
             ShipmentContext = shipmentContext;
-            User = multiUsers.Users[0];
+           // User = multiUsers.Users[0];
         }
 
         [Given(@"A master shipment fields")]
         public void GivenAMasterShipmentFields(Table table)
         {
-            ShipmentContext.MasterShipment = table.CreateInstance<ShipmentPM>();
-            ShipmentContext.MasterShipment.Tenant = User.Tenant;
-            ShipmentContext.MasterShipment.NewConcurrencyGUID = Guid.NewGuid().ToString();
+            dynamic dataTable = table.CreateDynamicInstance();
+
+            ShipmentBuilder shipmentBuilder = new ShipmentBuilder();
+            ShipmentContext.MasterShipment = shipmentBuilder.WithDefualtValues()
+                .DirectionId((string)dataTable.Direction)
+                .TransportModeId((string)dataTable.TransportMode)
+                .ShipmentLevelCode((string)dataTable.ShipmentLevel)
+                .OtherPrepaidCollectId((string)dataTable.OtherPrepaidCollectId)
+                .FreightPrepaidCollectId((string)dataTable.FreightPrepaidCollectId)
+                .MainCarriageToPortIdByCode((string)dataTable.MainCarriageToPort)
+                .MainCarriageFromPortIdByCode((string)dataTable.MainCarriageFromPort)
+                .Build();
         }
 
         [When(@"Create master shipment API request sent")]
         public void WhenCreateMasterShipmentAPIRequestSent()
         {
-            ShipmentContext.MasterShipment = APICaller.CallPost<ShipmentPM>(ShipmentContext.MasterShipment, "Shipment", User.Token);
+            ShipmentContext.MasterShipment = APICaller.CallPost<ShipmentPM>(ShipmentContext.MasterShipment, "Shipment", LoginPreparationParameters.Token);
         }
 
         [Then(@"A new master created successfully")]
