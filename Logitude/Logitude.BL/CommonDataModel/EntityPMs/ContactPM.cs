@@ -245,5 +245,7 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
                 }
             }
         }
+
+        public string OldSimilarInactiveContactId { get; set; }
     }
 }
