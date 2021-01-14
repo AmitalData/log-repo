@@ -83,10 +83,11 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="DBScripts\" />
+  </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="DBScripts\202101100950_FixTMProjectsDuplicateProjectNumbers.sxml" />
     <None Include="DBTables\Sprint.dxml" />
     <None Include="DBTables\TMBudget.dxml" />
     <None Include="DBTables\TMDayOffType.dxml" />
