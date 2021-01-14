@@ -339,13 +339,13 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
                 SecurityUtility.AuthenticationOnTenant(tenant);
                 string ObjectTableName = "Shipment";
-                var data = new ExportToExcelHelper().ExportBIQueryToExcel(bIReportXMLData, tenant);
+                var data = new ExportToExcelHelper().ExportBIQuery(bIReportXMLData, tenant);
 
                 BlobFileInfo fileInfo = new BlobFileInfo()
                 {
                     FileName = ObjectTableName + DateTime.Now.ToShortDateString(),
                     FolderName = "others",
-                    Extension = "xlsx",
+                    Extension =!string.IsNullOrEmpty(bIReportXMLData.ExportDataType) ? bIReportXMLData.ExportDataType :"xlsx",
                     Tenant = tenant,
                     FileSize = data.Length,
 

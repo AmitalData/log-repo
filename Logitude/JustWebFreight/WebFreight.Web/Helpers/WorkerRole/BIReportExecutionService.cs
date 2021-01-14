@@ -94,7 +94,7 @@ namespace WebFreight.Web.Helpers.WorkerRole
 
         private void DownloadExcel(BIReportXMLData bIReportXMLData)
         {
-            var data = new ExportToExcelHelper().ExportBIQueryToExcel(bIReportXMLData, tenant);
+            var data = new ExportToExcelHelper().ExportBIQuery(bIReportXMLData, tenant);
             BIReportExecutionLogArgs handleReportExecutionLogArgs = new BIReportExecutionLogArgs() { ReportExecutionLog = reportExecutionLog, ReportExecutionLogRepository = reportExecutionLogRepository, StatusCode = "F", response = queueResponse };
             if (data != null)
             {
@@ -102,7 +102,7 @@ namespace WebFreight.Web.Helpers.WorkerRole
                 {
                     FileName = bIReportXMLData.BIReportKey,
                     FolderName = "others",
-                    Extension = "xlsx",
+                    Extension =!string.IsNullOrEmpty(bIReportXMLData.ExportDataType)? bIReportXMLData.ExportDataType : "xlsx",
                     Tenant = tenant,
                     FileSize = data.Length,
                 };
