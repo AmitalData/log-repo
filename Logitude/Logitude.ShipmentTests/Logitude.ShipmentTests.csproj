@@ -97,6 +97,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Builders\ShipmentBuilder.cs" />
     <Compile Include="Models\Card.cs" />
     <Compile Include="Models\Direct.cs" />
     <Compile Include="Models\Direction.cs" />
@@ -119,6 +120,7 @@
     <Compile Include="Steps\CreateShipmentSteps.cs" />
     <Compile Include="Steps\SharedShipmentSteps.cs" />
     <Compile Include="Steps\UpdateShipmentSteps.cs" />
+    <Compile Include="TestData\ShipmentTestData.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

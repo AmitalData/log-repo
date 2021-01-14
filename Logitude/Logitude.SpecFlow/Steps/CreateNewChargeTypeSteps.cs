@@ -1,10 +1,10 @@
 ﻿using FluentAssertions;
+using Logitude.SpecFlow.Builders.ChargeType;
 using Logitude.SpecFlow.Models.ChargeType;
 using Logitude.Test.Base.Models.Login;
 using Logitude.Test.Base.Services;
+using Logitude.Test.Base.TestData;
 using Logitude.Test.Base.ValueRetrievers;
-using System;
-using System.Text.RegularExpressions;
 using TechTalk.SpecFlow;
 using TechTalk.SpecFlow.Assist;
 
@@ -27,19 +27,32 @@ namespace Logitude.SpecFlow.Steps
         [Given(@"Charge type with the following properties")]
         public void GivenUserAddAChargeTypeWithTheFollowingProperties(Table chargeTypeData)
         {
-            ChargeTypePM chargeTypePM = chargeTypeData.CreateInstance<ChargeTypePM>();
-            Context.ChargeTypePM.Tenant = Context.User.Tenant;
-            Context.ChargeTypePM.Code = chargeTypePM.Code;
-            Context.ChargeTypePM.EnglishName = chargeTypePM.EnglishName;
-            Context.ChargeTypePM.ChargesGroupCode = chargeTypePM.ChargesGroupCode;
-            Context.ChargeTypePM.MeasurementId = chargeTypePM.MeasurementId;
-            Context.ChargeTypePM.ChargesGroupId = chargeTypePM.ChargesGroupId;
+            ChargeTypeBuilder chargeTypeBuilder = new ChargeTypeBuilder();
+
+            //Context.ChargeTypePM = chargeTypeBuilder.FromDataTable(chargeTypeData).Build();
+            ChargeTypePM chargeTypePM = chargeTypeBuilder.FromDataTable(chargeTypeData).Build();
+            Context.ChargeTypePM = chargeTypeBuilder.WithDefualtValues()
+                                                          .Tenant(BasePreparationVariables.Tenant)
+                                                          .Code(chargeTypePM.Code)
+                                                          .EnglishName(chargeTypePM.EnglishName)
+                                                          .ChargesGroupCode(chargeTypePM.ChargesGroupCode)
+                                                          .MeasurementId(chargeTypePM.MeasurementId)
+                                                          .ChargesGroupId(chargeTypePM.ChargesGroupId)
+                                                          .Build();
+
+
+            //Context.ChargeTypePM.Tenant = Context.User.Tenant;
+            //Context.ChargeTypePM.Code = chargeTypePM.Code;
+            //Context.ChargeTypePM.EnglishName = chargeTypePM.EnglishName;
+            //Context.ChargeTypePM.ChargesGroupCode = chargeTypePM.ChargesGroupCode;
+            //Context.ChargeTypePM.MeasurementId = chargeTypePM.MeasurementId;
+            //Context.ChargeTypePM.ChargesGroupId = chargeTypePM.ChargesGroupId;
         }
 
         [When(@"Create charge type")]
         public void WhenTheUserCallCreateChargeTypeAPI()
         {
-            Context.ChargeTypePM = APICaller.CallPost<ChargeTypePM>(Context.ChargeTypePM, "ChargesTypes", Context.User.Token);
+            Context.ChargeTypePM = APICaller.CallPost<ChargeTypePM>(Context.ChargeTypePM, "ChargesTypes", LoginPreparationParameters.Token);
         }
         
         [Then(@"New charge type should be created")]
