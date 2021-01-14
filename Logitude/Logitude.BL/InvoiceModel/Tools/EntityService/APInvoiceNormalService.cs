@@ -2100,12 +2100,11 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
                     // Accounting settings 
                     FullAccountingSettingPM accountingSettings = getFullAccountingSettings(theEntityPm.Tenant);
-                    decimal  totalVatAmountWithVatRecognized = 0;
+                    
                     foreach (APInvoiceTotalVATPM vat in totalVats)
                     {
-                        vat.LocalVatAmountWithVatRecognized =  (vat.VatRecognizedPercentage != null ) ? (((decimal)vat.VatRecognizedPercentage / 100) * (decimal)vat.LocalVATAmount) : (decimal)vat.LocalVATAmount;
-                        totalVatAmountWithVatRecognized += vat.LocalVatAmountWithVatRecognized;
-                      journalLine = new JournalLinePM()
+                        vat.LocalVatAmountWithVatRecognized = Math.Round((vat.VatRecognizedPercentage != null) ? (((decimal)vat.VatRecognizedPercentage / 100) * (decimal)vat.LocalVATAmount) : (decimal)vat.LocalVATAmount, 2);
+                        journalLine = new JournalLinePM()
                         {
                             Tenant = tenant,
                             ActionCode = "2",
@@ -2126,12 +2125,12 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                             Reference3 = !string.IsNullOrEmpty(theEntityPm.HouseNumber) ? theEntityPm.HouseNumber : theEntityPm.MasterNumber,
                             CreditAccountId = theEntityPm.VendorGLAccountId,
                         };
-                        
+                        totalDebitLines = totalDebitLines + journalLine.LocalAmount;
+
                         journalDebitLines.Add(journalLine);
                         journal.JournalLines.Add(journalLine);
                     }
 
-                    totalDebitLines = Math.Round(Math.Round(totalDebitLines,2) + Math.Round(totalVatAmountWithVatRecognized,2),2);
                    var journalCreditAmount = journal.JournalLines.Where(d => d.ActionCode == "1").FirstOrDefault().LocalAmount;
                     var difference = journalCreditAmount - totalDebitLines  ;
 
