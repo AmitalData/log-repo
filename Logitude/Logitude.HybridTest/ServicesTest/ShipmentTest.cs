@@ -14,6 +14,7 @@ namespace Logitude.HybridTest.ServicesTest
     [TestClass]
     public class ShipmentTest {
         private static EntityWcfCaller entityWcfCaller = new EntityWcfCaller();
+        [DoNotParallelize]
         [TestMethod]
         public void Test_DirectAirExportShipment_UPSERT()
         {
@@ -23,6 +24,7 @@ namespace Logitude.HybridTest.ServicesTest
             Assert.IsNotNull(serviceOutcome.Response.Result, "Upsert Failed! " + serviceOutcome.Response.ErrorMessage);
         }
 
+        [DoNotParallelize]
         [TestMethod]
         public void Test_DirectShipmentWithDifferentToken_UPSERT()
         {
@@ -43,6 +45,7 @@ namespace Logitude.HybridTest.ServicesTest
             Assert.IsNotNull(serviceOutcome.Response.Result, "Upsert Failed! " + serviceOutcome.Response.ErrorMessage);
         }
 
+        [DoNotParallelize]
         [TestMethod]
         public void Test_Shipment_CANCEL()
         {
@@ -147,10 +150,11 @@ namespace Logitude.HybridTest.ServicesTest
         //    Shipment_BuildEventsList(shipmentPM.ShipmentNumber, events);
         //}
 
+        [DoNotParallelize]
         [TestMethod]
         public void Test_Shipment_DeleteShipmentEvent()
         {
-            Assert.Inconclusive("Problem! Object reference not set to an instance of an object.");
+            //Assert.Inconclusive("Problem! Object reference not set to an instance of an object.");
             ShipmentPM shipmentPM = ShipmentWcfFactory.GetShipmentPMWithNewNumber();
             ServiceOutcome upsertOutcome = entityWcfCaller.CallEntityUpsert(shipmentPM);
             string departedExternalId = Guid.NewGuid().ToString();
@@ -163,6 +167,7 @@ namespace Logitude.HybridTest.ServicesTest
             Shipment_DeleteShipmentEvent(shipmentPM.ShipmentNumber, departedExternalId);
         }
 
+        [DoNotParallelize]
         [TestMethod]
         public void Test_Shipment_ChangeStatusByEvents()
         {
@@ -191,6 +196,7 @@ namespace Logitude.HybridTest.ServicesTest
             }
         }
 
+        [DoNotParallelize]
         [TestMethod]
         public void Test_Shipment_AddRemovePackages()
         {
@@ -222,6 +228,7 @@ namespace Logitude.HybridTest.ServicesTest
             }
         }
 
+        [DoNotParallelize]
         [TestMethod]
         public void Test_Shipment_ConvertFromDirectToHouse()
         {
@@ -243,6 +250,7 @@ namespace Logitude.HybridTest.ServicesTest
             //upsertResponse = EntityWcfCaller.CallEntityUpsert(shipmentPM);
         }
 
+        [DoNotParallelize]
         [TestMethod]
         public void Test_Shipment_ConvertFromHouseToDirect()
         {
@@ -267,6 +275,7 @@ namespace Logitude.HybridTest.ServicesTest
             //upsertResponse = EntityWcfCaller.CallEntityUpsert(shipmentPM);
         }
 
+        [DoNotParallelize]
         [TestMethod]
         public void Test_Shipment_HasExceptionTrue()
         {
