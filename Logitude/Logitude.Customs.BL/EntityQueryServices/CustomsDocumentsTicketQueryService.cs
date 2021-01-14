@@ -28,8 +28,8 @@ namespace Logitude.Customs.BL.EntityQueryServices
 
 
             List<CustomsDocumentsTicketPM> customsDocumentsTicketPMList = GetCustomsDocumentsTicketPMsByEntityIdAndChilds(entityId, "", "", "", tenant, "Declaration");
-
-            if (customsDocumentsTicketPMList.Where(x=>string.IsNullOrEmpty(x.VerificationStatusTypeCode) && !string.IsNullOrEmpty(x.RequestedCustomsDocId) && x.RequestedCustomsDocId != requestedCustomsDocId) != null )
+            //var test = customsDocumentsTicketPMList.Where(x => string.IsNullOrEmpty(x.VerificationStatusTypeCode) && !string.IsNullOrEmpty(x.RequestedCustomsDocId) && x.RequestedCustomsDocId != requestedCustomsDocId);
+            if (customsDocumentsTicketPMList.Count(x=>string.IsNullOrEmpty(x.VerificationStatusTypeCode) && !string.IsNullOrEmpty(x.RequestedCustomsDocId) && x.RequestedCustomsDocId != requestedCustomsDocId) >0 )
             {
                 return 1;
             }
