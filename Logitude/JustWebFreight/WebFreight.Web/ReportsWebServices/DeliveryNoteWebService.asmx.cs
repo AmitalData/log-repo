@@ -200,8 +200,8 @@ namespace WebFreight.Web.ReportsWebServices
             dataProvider.DeclarationNumber = shipment.DeclarationNumber;
             dataProvider.CustomsClearancePointName = shipment.CustomClearancePointName;
             dataProvider.ValueOfGoods = shipment.ValueOfGoods;
-            dataProvider.BranchName = shipment.BranchName;
-            MapBranchAddress();
+
+            MapBranchData();
 
             if (shipment.ValueOfGoodsCurrencyId != null)
             {
@@ -230,13 +230,15 @@ namespace WebFreight.Web.ReportsWebServices
             this.MapShipmentInsidePackages();
             this.MapShipmentCustomFields();
         }
-        private void MapBranchAddress()
+        private void MapBranchData()
         {
             if (!string.IsNullOrEmpty(shipment.BranchId))
             {
                 Branch branch = branchRepository.GetSingleBranch(shipment.BranchId, tenant);
                 if (branch != null)
                 {
+                    dataProvider.BranchName = branch.EnglishName;
+                    dataProvider.BranchLocalName = branch.LocalName;
 
                     if (!string.IsNullOrEmpty(branch.AddressId))
                     {
