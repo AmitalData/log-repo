@@ -931,7 +931,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             bool isStatusVPA = false;
                             try
                             {
-                                isStatusVPA = myDeclarationUpdateService.CheckFileStatus(_MyDeclarationPM, requestParams.LoggingUserId);
+                                isStatusVPA = myDeclarationUpdateService.CheckFileStatus(_MyDeclarationPM, requestParams.LoggingUserId, "VPA");
                             }
                             catch (Exception e)
                             {
