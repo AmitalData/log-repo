@@ -93,12 +93,12 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     if (customResponse.RequiredDocumentDetails.requiredDocumentMessageType == 1)
                     {
                         DeclarationUpdateService declarationUpdateService = new DeclarationUpdateService(dbContext, new Dictionary<string, IContext>(), requestParams.Tenant);
-                        myDeclarationPM = declarationUpdateService.GetSertByConvertedDeclarationNumber(firstRelatedEntity.entityIdKey1, requestParams.Tenant);
+                        myDeclarationPM = declarationUpdateService.GetSertByConvertedDeclarationNumber(firstRelatedEntity.entityIdKey1, requestParams.Tenant,true);
                     }
                     else if (customResponse.RequiredDocumentDetails.requiredDocumentMessageType == 2)
                     {
                         //myDeclarationPM = myDeclarationQueryService.GetSingle(firstRelatedEntity.entityIdKey1, true, false);
-                        myDeclarationPM = myDeclarationQueryService.GetSingleDeclarationByNumber(firstRelatedEntity.entityIdKey1, requestParams.Tenant);
+                        myDeclarationPM = myDeclarationQueryService.GetSingleDeclarationByNumber(firstRelatedEntity.entityIdKey1, requestParams.Tenant,true);
                     }
                     if (myDeclarationPM == null || string.IsNullOrWhiteSpace(myDeclarationPM.Id))
                     {

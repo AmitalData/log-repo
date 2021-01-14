@@ -57,23 +57,17 @@ export class DeclarationReferantDataFiltersMenuComponent
     public OpenQueryThruWorkSpace: boolean = false;
     public UserFilters: ApiQueryFilters = new ApiQueryFilters();
     public TransportFilters: ApiQueryFilters = new ApiQueryFilters();
-    public isEmpty: boolean = false;
+
     SetFiltersMenu(args: any) {
         this.OpenQueryThruWorkSpace = true;
+        this.TransportFilters = new ApiQueryFilters();
+        this.UserFilters = new ApiQueryFilters();
         this.TransportFilters.AdditionalFilters = args.AdditionalFilters.filter(a => a.FieldName == "TransportModeId");
         this.UserFilters.AdditionalFilters = args.AdditionalFilters.filter(a => a.FieldName == "ReferentUserId");
         var myService: UserListService = new UserListService();
         var UserListFromFilters = this.UserFilters.AdditionalFilters.map(({ FieldValue }) => FieldValue);
         var myService: UserListService = new UserListService();
-        this.isEmpty = true;
-        let ul = new UserList();
-        ul.Id = (SessionLocator.LoggedUserPM.Id == null || SessionLocator.LoggedUserPM.Id == "0") ? "9999999" : SessionLocator.LoggedUserPM.Id;
-        ul.LocalName = SessionLocator.LoggedUserPM.LocalName;
-        if (AppTool.IsNullOrEmpty(ul.LocalName)) {
-            ul.LocalName = SessionLocator.LoggedUserPM.EnglishName;
-        }
-        this.LOVListUsers.push(ul);
-       /* if (UserListFromFilters[0] != "HowCare") {
+        if (UserListFromFilters[0] != "HowCare" || UserListFromFilters.length != 0) {
             UserListFromFilters.forEach(function (value) {
                 myService.getSingleFromCache(value).subscribe((resp: ServiceResponse) => {
                     if (!resp.HasError) {
@@ -87,15 +81,17 @@ export class DeclarationReferantDataFiltersMenuComponent
                                 ul.LocalName = list.EnglishName;
                             }
                             this.LOVListUsers.push(ul)
+                            this.ApplyTransportSelectedStyle();
+                            this.myViewChildrenMultiSelectLOVComponent.first.Invalidate();
+                            this.SelectedValueChangedEmitUser();
+                            this._CD.detectChanges();
                         }
                     }
                 });
             });
         } else{
-            this.OnChosenListItemsChanged();
+          
         }
-        */
-
     }
     OnChosenListItemsChanged() {
         this.SelectedValueChangedEmitUser();
@@ -103,7 +99,9 @@ export class DeclarationReferantDataFiltersMenuComponent
 
     ngAfterViewInit() {
         if (this.OpenQueryThruWorkSpace) {
-
+            this.apiQueryFilters.addAdditionalFilter("RetrievData", true, null, null, "Equal", true, false, false, "string");
+            this.SelectedValueChanged.emit({ Filters: this.apiQueryFilters, RemoveFilter: false });
+            this.myViewChildrenMultiSelectLOVComponent.first.Invalidate();
         } else {
             let ul = new UserList();
             ul.Id = (SessionLocator.LoggedUserPM.Id == null || SessionLocator.LoggedUserPM.Id == "0") ? "9999999" : SessionLocator.LoggedUserPM.Id;
@@ -112,11 +110,10 @@ export class DeclarationReferantDataFiltersMenuComponent
                 ul.LocalName = SessionLocator.LoggedUserPM.EnglishName;
             }
             this.LOVListUsers.push(ul);
-
+            this.ApplyTransportSelectedStyle();
+            this.myViewChildrenMultiSelectLOVComponent.first.Invalidate();
+            this.SelectedValueChangedEmitUser();
         }
-        this.ApplyTransportSelectedStyle();
-        this.myViewChildrenMultiSelectLOVComponent.first.Invalidate();
-        this.SelectedValueChangedEmitUser();
         this._CD.detectChanges();
     }
 
@@ -232,7 +229,6 @@ export class DeclarationReferantDataFiltersMenuComponent
     }
 
     SelectedValueChangedEmitUser() {
-        debugger;
         var RemoveFilter = false;
         if (this.apiQueryFilters.AdditionalFilters.length > 0) {
             this.apiQueryFilters.AdditionalFilters = this.apiQueryFilters.AdditionalFilters.filter(a => a.FieldName != "ReferentUserId");
@@ -247,8 +243,8 @@ export class DeclarationReferantDataFiltersMenuComponent
             UsersListString = "HowCare"
             RemoveFilter = true;
         }
-        this.apiQueryFilters.addAdditionalFilter("ReferentUserId", UsersListString, null, null, "InListExact", false, false, false, "string", this._LOVListUsers.length == 0 && !this.isEmpty);
-        this.apiQueryFilters.addAdditionalFilter("RetrievData", true, null, null, "Equal", true, false, false, "string", this._LOVListUsers.length == 0 &&  !this.isEmpty);
+        this.apiQueryFilters.addAdditionalFilter("ReferentUserId", UsersListString, null, null, "InListExact", false, false, false, "string", this._LOVListUsers.length == 0);
+        this.apiQueryFilters.addAdditionalFilter("RetrievData", true, null, null, "Equal", true, false, false, "string", this._LOVListUsers.length == 0);
         this.SelectedValueChanged.emit({ Filters: this.apiQueryFilters, RemoveFilter: RemoveFilter });
     }
 

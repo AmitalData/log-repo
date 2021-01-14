@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class DeclarationReferantDataUpdateClass
    {  		
-		public const string HashString = "be853f0854d659a179152cfa4dd5566f";
+		public const string HashString = "de609892f3f27744eebfe587f3a59666";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -4042,9 +4042,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "RequestedCustomsDocId",
 					  						ObjectTableName =  "Customs.DeclarationReferantData",
-					  						FieldsDataType =  "Text",
-					  						MinLength =  1,
-					  						MaxLength =  1,
+					  						FieldsDataType =  "Integer",
+					  						MinLength =  0,
+					  						MaxLength =  0,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
@@ -4052,7 +4052,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
-					  						SystemMaxLength =  1,
+					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
 					  						Operator =  "Equals",
@@ -4082,7 +4082,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DefaultText =  "Requested Customs Doc Id",
 					  						FullLocalDefaultText =  "מסמך נדרש",
 					  						ListFieldLable =  "RequestedCustomsDocIdListLable",
-					  						ListLableDefaultText =  "Requested Customs Doc Id",
+					  						ListLableDefaultText =  "מסמך נדרש",
+					  						ListLocalDefaultText =  "Requested Customs DocId",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,

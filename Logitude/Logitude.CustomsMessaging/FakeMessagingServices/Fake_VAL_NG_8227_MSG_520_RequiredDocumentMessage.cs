@@ -51,7 +51,7 @@ namespace Logitude.CustomsMessaging.FakeMessagingServices
             // CustomsDocumentsTicketQueryService customsDocumentsTicketQueryService = new CustomsDocumentsTicketQueryService(requestParamsData.Tenant);
           
 
-            if (data.requiredDocumentMessageType=="1")
+            if (data.requiredDocumentMessageType=="1" && string.IsNullOrEmpty(data.documentId.ToString()))
             {
                 response.RequiredDocumentDetails.documentID =    int.Parse(DateTime.Now.ToString("MMddhhmm"));
             }

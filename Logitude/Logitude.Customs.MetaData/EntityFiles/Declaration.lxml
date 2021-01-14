@@ -20008,6 +20008,19 @@
       AllowedInAutomation="false"
       ManualActivatedFollowUp="false"
       IsFollowUp="false" />
+    <EventType
+      Code="&quot;RDC&quot;"
+      ObjectTableName="&quot;Customs.Declaration&quot;"
+      EnglishName="&quot;Required Document Verified By Customer&quot;"
+      LocalName="&quot;מסמך נדרש אומת בנוכחות לקוח&quot;"
+      IsManualEntry="false"
+      ShortView="false"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
   </EventTypes>
   <Records />
   <MenuButtons

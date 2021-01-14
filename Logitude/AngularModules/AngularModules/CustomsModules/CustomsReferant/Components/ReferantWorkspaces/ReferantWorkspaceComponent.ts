@@ -409,7 +409,7 @@ export class ReferantWorkspaceComponent implements AfterViewInit {
                         cmpRef.instance.ComponentRef = cmpRef;
                         cmpRef.instance.Run(listArgs);
                         cmpRef.instance.BackCompleted.subscribe(($event: any) => {
-                            this.filters = new ApiQueryFilters(); 
+                            this.filters = $event.Filters;
                             this.LoadAllScreenData();
                             this._declarationReferantDataWebService.GetQueriesCounts(this.RefId, this.DepId, this.TransportModeId).subscribe(
                                 (data: any) => {

@@ -1412,7 +1412,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
         }
 
         //<--- Yuval Chalup 19.11.2015 TASK-17450
-        public DeclarationPM GetSertByConvertedDeclarationNumber(string declarationNumber, int tenant)
+        public DeclarationPM GetSertByConvertedDeclarationNumber(string declarationNumber, int tenant, bool getComposition=false)
         {
             if (String.IsNullOrWhiteSpace(declarationNumber)) return null;
 
@@ -1420,7 +1420,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
             //Check if the Declaration exists
             DeclarationQueryService declarationQueryService = new DeclarationQueryService(customContext);
-            DeclarationPM myDeclarationPM = declarationQueryService.GetSingleDeclarationByNumber(declarationNumber, tenant);
+            DeclarationPM myDeclarationPM = declarationQueryService.GetSingleDeclarationByNumber(declarationNumber, tenant, getComposition);
 
             //If the Declaration exists - return it
             if (myDeclarationPM != null)

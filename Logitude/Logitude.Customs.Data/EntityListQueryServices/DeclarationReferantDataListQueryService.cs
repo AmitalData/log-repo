@@ -125,7 +125,7 @@ LEFT OUTER JOIN AMINETNXT_MAIN.Contacts Extent10 ON Extent10.Id = Extent1.Contro
 
                                                                  DeclarationNumber = d.DeclarationNumber,
                                                                  IsHatraDateNull= d.HatraDate== null,
-                                                                 RequestedCustomsDocId = "1",// waiting 4 elisheva task 
+                                                                 RequestedCustomsDocId = d.RequestedCustomsDocId
 
 
                                                              }) ;
@@ -172,7 +172,7 @@ LEFT OUTER JOIN AMINETNXT_MAIN.Contacts Extent10 ON Extent10.Id = Extent1.Contro
                                                                                     TransportModeId = d.TransportModeId,
                                                                                     ReferentUserId = d.ReferentUserId,
                                                                                     DepartmentId = d.DepartmentId,
-                                                                                    RequestedCustomsDocId="1"// till elisheva will build the db
+                                                                                    RequestedCustomsDocId=d.RequestedCustomsDocId
                                                                                 });
 
             if (refId.Count>0)
@@ -210,8 +210,8 @@ LEFT OUTER JOIN AMINETNXT_MAIN.Contacts Extent10 ON Extent10.Id = Extent1.Contro
                                 FilesInCreditControl_A = groupBy1.Count(x => x.CollectionOfMoneyStatus == "P" && x.IsAvailabilityDateNull == false),
                                 FilesAvailableFreeOfCharge_A = groupBy1.Count(x => x.IsPaymentDateNull == true && x.IsAvailabilityDateNull == false),
                                 AllCases_A = groupBy1.Count(x => x.IsAvailabilityDateNull == false),
-                                FilesInAllInclusive = groupBy1.Count(x => x.IsHatraDateNull == false && x.RequestedCustomsDocId == "1"),
-                                FilesInAllInclusive_A = groupBy1.Count(x => x.IsHatraDateNull == false && x.RequestedCustomsDocId == "1" && x.IsAvailabilityDateNull == false),
+                                FilesInAllInclusive = groupBy1.Count(x => x.IsHatraDateNull == false && x.RequestedCustomsDocId == 1),
+                                FilesInAllInclusive_A = groupBy1.Count(x => x.IsHatraDateNull == false && x.RequestedCustomsDocId == 1 && x.IsAvailabilityDateNull == false),
                                 FilesRejectedByController = groupBy1.Count(x => x.ControllerStatus == "X"),
                                 FilesRejectedByController_A = groupBy1.Count(x => x.ControllerStatus == "X" && x.IsAvailabilityDateNull == false),
                                 FilesRejectedByClassification = groupBy1.Count(x => x.ClassificationStatus == "X"),

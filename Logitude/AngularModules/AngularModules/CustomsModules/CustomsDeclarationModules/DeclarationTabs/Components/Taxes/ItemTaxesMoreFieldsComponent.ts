@@ -50,6 +50,7 @@ export class ItemTaxesMoreFieldsComponent{// implements OnInit {
         this.EntityPM = windowArgs;
         this.EntityResourceService.getEntityResourceByTableName("Customs.SupplierInvoiceItem").subscribe((response: any) => {
             this.isExport = this.CurrentSession.CurrentEditComponent.EntityPM.Direction;
+            debugger;
             if (this.isExport == 'E') {
                 this.supplierInvoiceItemExtendedListService.getSingle(this.EntityPM.DeclarationId, this.EntityPM["InvoiceCounterKey"], this.EntityPM.LineNumber).subscribe((response: any) => {
                     this.supplierinvoiceitem = response.Result;

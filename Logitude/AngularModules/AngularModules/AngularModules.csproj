@@ -1287,6 +1287,7 @@
     <TypeScriptCompile Include="Customs\EntityLists\DeclarationPendingList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\DeclarationRefernatDataList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\DeficitDecisionList.ts" />
+    <TypeScriptCompile Include="Customs\EntityLists\DocumentRejectTypeList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\ExceptionReasonList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\ExporterRoleTypeList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\GatepassRequestList.ts" />
@@ -1300,6 +1301,7 @@
     <TypeScriptCompile Include="Customs\EntityLists\ReferantExceptionList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\ReferantTeamList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\RefundCustomerActivityTypeList.ts" />
+    <TypeScriptCompile Include="Customs\EntityLists\ReleaseMessageTypeList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\RequestTypeList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\SealCompletenesList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\SealTypeList.ts" />
@@ -1342,6 +1344,7 @@
     <TypeScriptCompile Include="Customs\EntityPMs\DeclarationPendingPM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\DeclarationRefernatDataPM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\DeficitDecisionPM.ts" />
+    <TypeScriptCompile Include="Customs\EntityPMs\DocumentRejectTypePM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\ExceptionReasonPM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\ExporterRoleTypePM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\Extended\InvoiceQueue.ts" />
@@ -1357,6 +1360,7 @@
     <TypeScriptCompile Include="Customs\EntityPMs\ReferantExceptionPM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\ReferantTeamPM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\RefundCustomerActivityTypePM.ts" />
+    <TypeScriptCompile Include="Customs\EntityPMs\ReleaseMessageTypePM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\RequestTypePM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\SealCompletenesPM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\SealTypePM.ts" />
@@ -1421,6 +1425,7 @@
     <TypeScriptCompile Include="Customs\Services\StandardLists\DeclarationReferantDataListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\DeficitDecisionListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\DeficitsListService.ts" />
+    <TypeScriptCompile Include="Customs\Services\StandardLists\DocumentRejectTypeListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\ExceptionReasonListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\DeclarationRefernatDataListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\DeficitDecisionListService.ts" />
@@ -1446,6 +1451,7 @@
     <TypeScriptCompile Include="Customs\Services\StandardLists\ReferantExceptionListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\ReferantTeamListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\RefundCustomerActivityTypeListService.ts" />
+    <TypeScriptCompile Include="Customs\Services\StandardLists\ReleaseMessageTypeListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\RequestTypeListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\SealCompletenesListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\SealTypeListService.ts" />
