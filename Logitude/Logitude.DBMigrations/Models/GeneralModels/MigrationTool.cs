@@ -96,11 +96,10 @@ namespace Logitude.DBMigrations.Models
             Console.WriteLine("Preparing Required Data ...");
 
             GetIncludedModulesFromArguments();
-            GetIncludedModulesFromDB(); //important
+            GetIncludedModulesFromDB();
             GetDXMLHashesFromDB();
             GetExecutedSXMLFilesFromDB();
-            GetDBCongifrationsFromDB();
-
+            GetDBConfigurationsFromDB();
         }
 
         protected GeneratedScript GenerateAndExecuteDBScripts(string[] dxmlFiles, string[] sxmlFiles)
@@ -111,7 +110,7 @@ namespace Logitude.DBMigrations.Models
             bool isExecuteArgumentProvided = ToolArguments.IsArgumentProvided(Arguments.EXE) || (RunSettings.DebugMode && RunSettings.ExecuteScripts);
 
             List<ScriptDefinition> scriptDefinitions = GetScriptDefinitionsFromSxmlFiles(sxmlFiles);
-            scriptDefinitions = FilterScriptsByEnvCongiguration(scriptDefinitions);
+            scriptDefinitions = FilterScriptsByEnvironmentConfiguration(scriptDefinitions);
             ValidateNotExecutedAOTScripts(scriptDefinitions);
             GeneratedScript toolTablesScript = HandleDXMLFiles(toolDxmlFiles, isExecuteArgumentProvided);
             GeneratedScript preGeneralScript = HandleSXMLFiles(scriptDefinitions, isExecuteArgumentProvided, true);
@@ -1729,7 +1728,7 @@ namespace Logitude.DBMigrations.Models
             ExecutedSxmlFiles = executedSxmlFiles;
         }
 
-        protected void GetDBCongifrationsFromDB()
+        protected void GetDBConfigurationsFromDB()
         {
             string connectionString = ToolConfigurations.GetConnectionString("Main");
             if (ToolConfigurations.DatabaseType.ToLower() == "oracle")
@@ -2583,24 +2582,24 @@ namespace Logitude.DBMigrations.Models
             {
                 string[] dxmlFiles = new string[] { dbConfigurationsDxml };
                 HandleDXMLFiles(dxmlFiles, true);
-                ExitTool("Error: Cannot Find Environment Configuration In Table [DBMigrationConfigurations] In Main Database, To Continue You Should Add It Using Insert Statement");
+                string validationMessage = "Error: Cannot Find Environment Configuration In Table [DBMigrationConfigurations] In Main Database, " +
+                                           "To Continue You Should Add It Using Insert Statement\n\n" +
+                                           "For Example: INSERT INTO [dbo].[DBMigrationConfigurations] VALUES('Env', 'MyLocalEnv')";
+                ExitTool(validationMessage);
             }
         }
-
-        protected List<ScriptDefinition> FilterScriptsByEnvCongiguration(List<ScriptDefinition> scriptDefinitions)
+        
+        protected List<ScriptDefinition> FilterScriptsByEnvironmentConfiguration(List<ScriptDefinition> scriptDefinitions)
         {
             string dbEnvConfig = DBConfigurationsManager.GetDBConfigurationValue("Env");
             List<ScriptDefinition> filteredScriptDefinitions = scriptDefinitions.Where(script => script.Env == null || (script.Env != null && script.Env.Split(',').Contains(dbEnvConfig))).ToList();
            return filteredScriptDefinitions;
         }
 
-
         protected void ExitTool(string message)
         {
             Console.WriteLine(message);
             Environment.Exit(1);
         }
-
-
     }
 }
