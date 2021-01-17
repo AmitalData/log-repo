@@ -2866,6 +2866,8 @@ namespace WebFreight.Web.ReportsWebServices
                 ContactRepository contactRepository = new ContactRepository(myCommonContext);
                 if (notify2Card != null)
                 {
+                    awbDp.Notify2NameAddress = notify2Card.EnglishName;
+
                     if (!string.IsNullOrEmpty(notify2AddressId))
                     {
                         Address notify2Address = addressRepository.GetSingleAddress(notify2AddressId, tenant);
@@ -2874,6 +2876,20 @@ namespace WebFreight.Web.ReportsWebServices
                         {
                             awbDp.NotifyAddress2_WithName = DataProviders.General.GetAddressWithName(notify2Address);
                             awbDp.Notify2ATTN = notify2Address.ATTN;
+
+                            if (notify2Address.IsLocalLanguage)
+                            {
+                                if (notify2Card != null && !string.IsNullOrEmpty(notify2Card.LocalName))
+                                {
+                                    awbDp.Notify2NameAddress = notify2Card.LocalName;
+                                }
+                            }
+
+                            awbDp.Notify2NameAddress = awbDp.Notify2NameAddress + Environment.NewLine + DataProviders.General.GetAddress(notify2Address);
+                            if (notify2Address.PhoneNumber != null || notify2Address.FaxNumber != null)
+                            {
+                                awbDp.Notify2NameAddress = awbDp.Notify2NameAddress + Environment.NewLine + (notify2Address.PhoneNumber != null ? "Tel: " + notify2Address.PhoneNumber + " " : "") + (notify2Address.FaxNumber != null ? "Fax: " + notify2Address.FaxNumber + " " : "");
+                            }
                         }
                     }
 
