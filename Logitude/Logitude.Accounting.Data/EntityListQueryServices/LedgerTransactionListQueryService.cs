@@ -222,6 +222,16 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
             return myList;
         }
 
+        public int GetTransactionsCountByAccountId(string AccountId, int tenant)
+        {
+            IQueryable<LedgerTransaction> LedgerTransactionQuery = (from a in context.LedgerTransactions
+                                                                    where a.Tenant == tenant && a.AccountId == AccountId
+                                                                    select a);
+
+            IQueryable<LedgerTransactionList> LedgerTransactionListQuery = GetIqueryableList(LedgerTransactionQuery);
+            return LedgerTransactionListQuery.Count();
+        }
+
 
 
         public List<LedgerTransactionList> GetOpenByAccountId(string accountId, int tenant)
