@@ -11,7 +11,7 @@ declare @FactCode varchar(50)
 	DECLARE DWObjectFieldsCursor CURSOR READ_ONLY
 	FOR	
 	SELECT Code,Category1,Category2,DWObjectTableCode
-	FROM DWObjectFields	where DWObjectTableCode = 'Fact_Shipments' or DWObjectTableCode = 'Fact_Charges'
+	FROM DWObjectFields	where DWObjectTableCode = 'Fact_Shipments' or DWObjectTableCode = 'Fact_Charges' or DWObjectTableCode = 'Fact_Quotes'
 	OPEN DWObjectFieldsCursor FETCH NEXT FROM DWObjectFieldsCursor INTO @Id,@Cat1Code,@Cat2Code,@FactCode
 	WHILE @@FETCH_STATUS = 0
 	BEGIN
