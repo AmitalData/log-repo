@@ -157,8 +157,8 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public int? ShipmentMasterDataStatusWeight { get; set; }
         public DateTime? ShipmentMasterDataStatusDate { get; set; }
         public string ShipmentMasterDataStatusLocation { get; set; }
-
         public string QuoteId { get; set; }
+        public string QuoteNumber { get; set; }
         public string TotalContainers { get; set; }
 
         public string ShipmentType { get; set; }

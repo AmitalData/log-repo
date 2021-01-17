@@ -35,9 +35,10 @@ namespace WebFreight.Web.DataProviders
         public decimal CreditLimit { get; set; }
         public string AccountSalesmanName { get; set; }
         public string AccountSalesmanLocalName { get; set; }
-
         public string AccountCollectorName { get; set; }
         public string AccountCollectorLocalName { get; set; }
+        public string ChartOfAccountLocalName { get; set; }
+        public string CurrencyCode { get; set; }
         public string Category1Name { get; set; }
         public string Category2Name { get; set; }
         public string Category3Name { get; set; }
@@ -57,6 +58,9 @@ namespace WebFreight.Web.DataProviders
         public decimal FutureChequesTotal { get { return TotalFutureOpenCheques + ExternalTransactionsTotal; } }
         public decimal Obligo { get { return TotalToCollect + FutureChequesTotal; } }
         public decimal CreditUsed { get { return CreditLimit - Obligo; } }
+
+        public decimal TotalLocal { get; set; } = 0;
+        public decimal TotalForeign { get; set; } = 0;
 
 
         public List<StatusPeriod> Periods { get; set; } = new List<StatusPeriod>();

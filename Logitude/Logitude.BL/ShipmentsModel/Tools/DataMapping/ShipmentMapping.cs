@@ -325,6 +325,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             entityPoco.ShipmentDeliveryIndex = entityPM.ShipmentDeliveryIndex;
             entityPoco.ShipmentContainerReturnIndex = entityPM.ShipmentContainerReturnIndex;
             entityPoco.QuoteId = entityPM.QuoteId;
+            entityPoco.QuoteNumber = entityPM.QuoteNumber;
             entityPoco.BookingId = entityPM.BookingId;
             entityPoco.CancelledDate = entityPM.CancelledDate;
             entityPoco.LastUpdateDate = entityPM.LastUpdateDate;
@@ -2189,9 +2190,10 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             #region Quote
             if (!string.IsNullOrEmpty(entityPM.QuoteId))
             {
-                QuoteRepository myQuoteRepository = new QuoteRepository(tenant);
-                string myQuoteNumber = myQuoteRepository.GetQuoteNumber(entityPM.QuoteId);
-                MethodHelper.AddToSearchFields(ref mySearchFields, myQuoteNumber);
+                //QuoteRepository myQuoteRepository = new QuoteRepository(tenant);
+                //string myQuoteNumber = myQuoteRepository.GetQuoteNumber(entityPM.QuoteId);
+                //MethodHelper.AddToSearchFields(ref mySearchFields, myQuoteNumber);
+                MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.QuoteNumber);
             }
             #endregion
 

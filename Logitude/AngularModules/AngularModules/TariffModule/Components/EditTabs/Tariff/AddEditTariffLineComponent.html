@@ -671,11 +671,12 @@
                                                         <table>
                                                             <tr>
                                                                 <td style="width: 100px; min-width: 100px; max-width: 100px; text-align:center;"></td>
-                                                                <td style="width: 100px; min-width: 100px; max-width: 100px; text-align:center;"   *ngIf="DataContext.FatherComponent.Container1Visibility">{{DataContext.FatherComponent.Container1Label}}</td>
-                                                                <td style="width: 100px; min-width: 100px; max-width: 100px; text-align:center;"   *ngIf="DataContext.FatherComponent.Container2Visibility">{{DataContext.FatherComponent.Container2Label}}</td>
-                                                                <td style="width: 100px; min-width: 100px; max-width: 100px; text-align:center;"   *ngIf="DataContext.FatherComponent.Container3Visibility">{{DataContext.FatherComponent.Container3Label}}</td>
-                                                                <td style="width: 100px; min-width: 100px; max-width: 100px; text-align:center;"   *ngIf="DataContext.FatherComponent.Container4Visibility">{{DataContext.FatherComponent.Container4Label}}</td>
-                                                                <td style="width: 100px; min-width: 100px; max-width: 100px; text-align:center;"   *ngIf="DataContext.FatherComponent.Container5Visibility">{{DataContext.FatherComponent.Container5Label}}</td>
+                                                                <td style="width: 100px; min-width: 100px; max-width: 100px; text-align:center;" *ngIf="DataContext.FatherComponent.Container1Visibility">{{DataContext.FatherComponent.Container1Label}}</td>
+                                                                <td style="width: 100px; min-width: 100px; max-width: 100px; text-align:center;" *ngIf="DataContext.FatherComponent.Container2Visibility">{{DataContext.FatherComponent.Container2Label}}</td>
+                                                                <td style="width: 100px; min-width: 100px; max-width: 100px; text-align:center;" *ngIf="DataContext.FatherComponent.Container3Visibility">{{DataContext.FatherComponent.Container3Label}}</td>
+                                                                <td style="width: 100px; min-width: 100px; max-width: 100px; text-align:center;" *ngIf="DataContext.FatherComponent.Container4Visibility">{{DataContext.FatherComponent.Container4Label}}</td>
+                                                                <td style="width: 100px; min-width: 100px; max-width: 100px; text-align:center;" *ngIf="DataContext.FatherComponent.Container5Visibility">{{DataContext.FatherComponent.Container5Label}}</td>
+                                                                <td style="width: 100px; min-width: 100px; max-width: 100px; text-align:center;" >{{'TariffLinesContainersPrice.F.CostPrice' | TextCodeTranslationPipe}}</td>
                                                                 <td class="LastChild">
                                                                     <div></div>
                                                                 </td>
@@ -708,6 +709,10 @@
 
                                                                 <td class="CellStretched" style="width: 100px; min-width: 100px; max-width: 100px;" *ngIf="DataContext.FatherComponent.Container5Visibility">
                                                                     <LogTextBox [ObjectFieldName]="'Price5'" [Text]="item.Price5" [ObjectTableName]="item.ObjectTableName" [DataContext]="item" [HideColumns]="true"></LogTextBox>
+                                                                </td>
+
+                                                                <td class="CellStretched" style="width: 100px; min-width: 100px; max-width: 100px;">
+                                                                    <LogTextBox [ObjectFieldName]="'CostPrice'" [Text]="item.CostPrice" [ObjectTableName]="item.ObjectTableName" [DataContext]="item" [HideColumns]="true"></LogTextBox>
                                                                 </td>
 
                                                                 <td class="CellStretched">

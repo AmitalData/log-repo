@@ -1985,6 +1985,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                     AccountingEntityCode = "3",
                     LineNotes = entityPM.CancelationNotes,
                     AccountingEntityId = entityPM.Id,
+                    AccountingDate = entityPm.AccountingCancelationDate,
                     AccountingEntityReference = entityPM.PaymentNo
                 });
                 JournalPM voidedByJournal = GetApprovedJournalByAccountingEntityId(entityPm);

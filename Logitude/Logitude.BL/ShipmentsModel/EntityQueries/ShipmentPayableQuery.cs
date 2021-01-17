@@ -128,6 +128,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                     QuoteCostMaxAmount = a.QuoteCostMaxAmount,
                                                     TariffId = a.TariffId, 
                                                     TariffNumber = a.TariffNumber,
+                                                    TariffLineId = a.TariffLineId,
                                                     TariffVersion = a.TariffVersion,
                                                 }).ToList();
 
@@ -203,6 +204,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                        QuoteCostMinAmount = a.QuoteCostMinAmount,
                        QuoteCostMaxAmount = a.QuoteCostMaxAmount,
                        TariffId = a.TariffId,
+                       TariffLineId = a.TariffLineId,
                        TariffNumber = a.TariffNumber,
                        TariffVersion = a.TariffVersion,
                    }).FirstOrDefault();

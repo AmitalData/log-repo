@@ -122,6 +122,7 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                                           IsCostAllIn = a.IsCostAllIn,
                                           TariffId = a.TariffId,
                                           TariffNumber = a.TariffNumber,
+                                          TariffLineId = a.TariffLineId,
                                           TariffVersion = a.TariffVersion,
                                           IsRegionalTax = a.IsRegionalTax,
                                           SaleRatio = (a.SaleMeasurement!=null && a.SaleMeasurement.Code == "PDCW") ? a.Quote.PickupDeliveryRatio : a.Quote.Ratio,
@@ -225,6 +226,7 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                                                 IsCostAllIn = a.IsCostAllIn,
                                                 TariffId = a.TariffId,
                                                 TariffNumber = a.TariffNumber,
+                                                TariffLineId = a.TariffLineId,
                                                 TariffVersion = a.TariffVersion,
                                                 IsRegionalTax = a.IsRegionalTax,
                                                 SaleRatio = (a.SaleMeasurement != null && a.SaleMeasurement.Code == "PDCW") ? a.Quote.PickupDeliveryRatio : a.Quote.Ratio,
@@ -406,6 +408,7 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                                                 IsCostAllIn = a.IsCostAllIn,
                                                 TariffId = a.TariffId,
                                                 TariffNumber = a.TariffNumber,
+                                                TariffLineId = a.TariffLineId,
                                                 TariffVersion = a.TariffVersion,
                                                 IsRegionalTax = a.IsRegionalTax,
                                             }).ToList();

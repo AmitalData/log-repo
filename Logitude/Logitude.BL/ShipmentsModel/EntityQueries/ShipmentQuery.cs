@@ -1764,6 +1764,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             //shipmentPM.OnCarriageSTD = shipment.OnCarriageSTD;            
 
             shipmentPM.QuoteId = shipment.QuoteId;
+            shipmentPM.QuoteNumber = shipment.QuoteNumber;
 
             shipmentPM.OnCarriageTransportModeId = shipment.OnCarriageTransportModeId;
 
@@ -2383,6 +2384,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             shipmentPM.INTTRABookingTransStatusCode = shipment.INTTRABookingTransStatusCode;
             shipmentPM.INTTRABookingError = shipment.INTTRABookingError;
             shipmentPM.INTTRALastBookingResponse = shipment.INTTRALastBookingResponse;
+            shipmentPM.INTTRALastEBbookingSendDate = shipment.INTTRALastEBbookingSendDate;
 
             if (!string.IsNullOrEmpty(shipmentPM.INTTRALastBookingResponse))
             {
@@ -4415,6 +4417,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                         VolumeUnitCode = s.VolumeUnitCode,
                                                         GrossWeightUnitCode = s.GrossWeightUnitCode,
                                                         QuoteId = s.QuoteId,
+                                                        QuoteNumber = s.QuoteNumber,
                                                         Ratio = s.Ratio,
                                                         DimFactor = s.DimFactor,
                                                         MainCarriageFullCarrierNumber = (m.MainCarriageCarrierNumber != null && m.MainCarriageCarrierCard != null) ? m.MainCarriageCarrierCard.Code + m.MainCarriageCarrierNumber : null,
@@ -11299,6 +11302,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                          VolumeInCBM = s.VolumeInCBM,
                                                          VolumetricWeight = s.VolumetricWeight,
                                                          QuoteId = s.QuoteId,
+                                                         QuoteNumber = s.QuoteNumber,
                                                          MainCarriageFullCarrierNumber = (m.MainCarriageCarrierNumber != null && m.MainCarriageCarrierCard != null) ? m.MainCarriageCarrierCard.Code + m.MainCarriageCarrierNumber : null,
                                                          Transshipment1FullCarrierNumber = (m.Transshipment1CarrierNumber != null && m.Transshipment1CarrierPrefix != null) ? m.Transshipment1CarrierPrefix + m.Transshipment1CarrierNumber : null,
                                                          Transshipment2FullCarrierNumber = (m.Transshipment2CarrierNumber != null && m.Transshipment2CarrierPrefix != null) ? m.Transshipment2CarrierPrefix + m.Transshipment2CarrierNumber : null,
@@ -11944,6 +11948,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                DangerousUnNumber = f.DangerousUnNumber,
                                ComputedStatusId = f.ComputedStatusId,
                                ComputedStatusDate = f.ComputedStatusDate,
+                               QuoteId = f.QuoteId,
+                               QuoteNumber = f.QuoteNumber,
                            };
             return myResult;
         }
@@ -12299,7 +12305,9 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     ShipmentSubTypeName = f.ShipmentSubTypeName,
                     ImportManifest = f.ImportManifest,
                     IsDangerous =f.IsDangerous,
-                    DangerousUnNumber = f.DangerousUnNumber,                   
+                    DangerousUnNumber = f.DangerousUnNumber,
+                    QuoteId = f.QuoteId,
+                    QuoteNumber = f.QuoteNumber,
                 };
 
                 List<ObjectField> customFields = ObjectFieldRepository.GetCustomObjectFieldsByObjectTableName("Shipment", tenant).ToList();
@@ -12993,6 +13001,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                          VolumeInCBM = s.VolumeInCBM,
                                                          VolumetricWeight = s.VolumetricWeight,
                                                          QuoteId = s.QuoteId,
+                                                         QuoteNumber = s.QuoteNumber,
                                                          MainCarriageFullCarrierNumber = (m.MainCarriageCarrierNumber != null && m.MainCarriageCarrierCard != null) ? m.MainCarriageCarrierCard.Code + m.MainCarriageCarrierNumber : null,
                                                          Transshipment1FullCarrierNumber = (m.Transshipment1CarrierNumber != null && m.Transshipment1CarrierPrefix != null) ? m.Transshipment1CarrierPrefix + m.Transshipment1CarrierNumber : null,
                                                          Transshipment2FullCarrierNumber = (m.Transshipment2CarrierNumber != null && m.Transshipment2CarrierPrefix != null) ? m.Transshipment2CarrierPrefix + m.Transshipment2CarrierNumber : null,

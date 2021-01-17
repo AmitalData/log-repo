@@ -243,12 +243,14 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
             {
                 if (this.isNewEntity)
                 {
-                    this.CreateTraceEvent("OFQT", "Built from quote number: " + new QuoteRepository(entityPM.Tenant).GetQuoteNumber(entityPM.QuoteId));
+                    //this.CreateTraceEvent("OFQT", "Built from quote number: " + new QuoteRepository(entityPM.Tenant).GetQuoteNumber(entityPM.QuoteId));
+                    this.CreateTraceEvent("OFQT", "Built from quote number: " + entityPM.QuoteNumber);
                 }
 
                 else if (entityPoco.QuoteId == null)
                 {
-                    this.CreateTraceEvent("CTQT", "Connected to quote number: " + new QuoteRepository(entityPM.Tenant).GetQuoteNumber(entityPM.QuoteId));
+                   //this.CreateTraceEvent("CTQT", "Connected to quote number: " + new QuoteRepository(entityPM.Tenant).GetQuoteNumber(entityPM.QuoteId));
+                    this.CreateTraceEvent("CTQT", "Connected to quote number: " + entityPM.QuoteNumber);
                 }
             }
 

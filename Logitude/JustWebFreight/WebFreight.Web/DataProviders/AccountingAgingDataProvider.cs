@@ -37,6 +37,7 @@ namespace WebFreight.Web.DataProviders
         public string AccountDisplayNumber { get; set; }
         public string AccountCurrencyCode { get; set; }
         public string CurrencyCode { get; set; }
+        public string ChartOfAccountLocalName { get; set; }
 
         public string CustomerVatNumber { get; set; }
         public string CustomerPaymentTerm { get; set; }

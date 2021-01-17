@@ -77,6 +77,11 @@ export class TariffLinesContainersPricePM {
     public set Price5(newValue: number) { if (this.price5 != newValue) { this.price5 = newValue; this.MarkAsDirty("Price5"); } }
        
 	 
+    private costPrice: number;
+    public get CostPrice() { return this.costPrice; }
+    public set CostPrice(newValue: number) { if (this.costPrice != newValue) { this.costPrice = newValue; this.MarkAsDirty("CostPrice"); } }
+       
+	 
 
     public OldEntityPM: TariffLinesContainersPricePM;
 	

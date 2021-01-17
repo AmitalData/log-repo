@@ -75,6 +75,29 @@ declare @DIM_ChargesTypesInActiveNewId varchar(15)
 execute usp_GetNextTableIdValue @DIM_ChargesTypesInActiveNewId OUTPUT,'DWObjectField' 
 insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,HideTree,CannotFilter,IsCustom,DontDisplayInView,IsMultipleSelection) Values(@DIM_ChargesTypesInActiveNewId,0,'DIM_ChargesTypes','[InActive]','InActive','Boolean','false',0,0,'false','false','true','false','false','false','false','false')  
 ------------------------------------------------------------------------------------
+declare @DIM_CountriesNewId varchar(15)
+execute usp_GetNextTableIdValue @DIM_CountriesNewId OUTPUT,'DWObjectTable' 
+insert into DWObjectTables(Id,Tenant,IndexesXml,Code,Name,TypeCode,IsClosed,DefaultFilterBy,HasPivotColumn) Values(@DIM_CountriesNewId,0,'','DIM_Countries','DIM_Countries','Dimension','false','[Name]','false')  
+--Fields --
+declare @DIM_CountriesId_NumberNewId varchar(15)
+execute usp_GetNextTableIdValue @DIM_CountriesId_NumberNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,HideTree,CannotFilter,IsCustom,DontDisplayInView,IsMultipleSelection) Values(@DIM_CountriesId_NumberNewId,0,'DIM_Countries','[Id_Number]','Id_Number','Integer','true',0,0,'true','false','false','false','false','false','false','false')  
+declare @DIM_CountriesIdNewId varchar(15)
+execute usp_GetNextTableIdValue @DIM_CountriesIdNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,HideTree,CannotFilter,IsCustom,DontDisplayInView,IsMultipleSelection) Values(@DIM_CountriesIdNewId,0,'DIM_Countries','[Id]','Id','Text','true',0,15,'false','false','false','false','false','false','true','false')  
+declare @DIM_CountriesNameNewId varchar(15)
+execute usp_GetNextTableIdValue @DIM_CountriesNameNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,LOVAdditionalColumns,HideTree,CannotFilter,IsCustom,DontDisplayInView,IsMultipleSelection) Values(@DIM_CountriesNameNewId,0,'DIM_Countries','[Name]','Name','nText','true',0,120,'false','false','true','[Code]','false','true','false','false','false')  
+declare @DIM_CountriesCodeNewId varchar(15)
+execute usp_GetNextTableIdValue @DIM_CountriesCodeNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,LOVAdditionalColumns,HideTree,CannotFilter,IsCustom,DontDisplayInView,IsMultipleSelection) Values(@DIM_CountriesCodeNewId,0,'DIM_Countries','[Code]','Code','Text','true',0,2,'false','false','true','[Name],[Local Name]','false','false','false','false','false')  
+declare @DIM_CountriesTenantNewId varchar(15)
+execute usp_GetNextTableIdValue @DIM_CountriesTenantNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,HideTree,CannotFilter,IsCustom,ViewFieldDisplayName,DontDisplayInView,IsMultipleSelection) Values(@DIM_CountriesTenantNewId,0,'DIM_Countries','[Tenant]','Tenant','Integer','true',0,0,'false','false','false','false','false','false','Tenant','false','false')  
+declare @DIM_CountriesAutomaticLastUpdateDateNewId varchar(15)
+execute usp_GetNextTableIdValue @DIM_CountriesAutomaticLastUpdateDateNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,HideTree,CannotFilter,IsCustom,DontDisplayInView,IsMultipleSelection) Values(@DIM_CountriesAutomaticLastUpdateDateNewId,0,'DIM_Countries','[Automatic Last Update Date]','Last Update Date','DateTime','false',0,0,'false','false','true','false','false','false','false','false')  
+------------------------------------------------------------------------------------
 declare @DIM_CurrenciesNewId varchar(15)
 execute usp_GetNextTableIdValue @DIM_CurrenciesNewId OUTPUT,'DWObjectTable' 
 insert into DWObjectTables(Id,Tenant,IndexesXml,Code,Name,TypeCode,IsClosed,DefaultFilterBy,HasPivotColumn) Values(@DIM_CurrenciesNewId,0,'','DIM_Currencies','DIM_Currencies','Dimension','false','[Name]','false')  
@@ -480,6 +503,52 @@ insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,Is
 declare @DIM_PortsInActiveNewId varchar(15)
 execute usp_GetNextTableIdValue @DIM_PortsInActiveNewId OUTPUT,'DWObjectField' 
 insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,HideTree,CannotFilter,IsCustom,DontDisplayInView,IsMultipleSelection) Values(@DIM_PortsInActiveNewId,0,'DIM_Ports','[InActive]','InActive','Boolean','false',0,0,'false','false','true','false','false','false','false','false')  
+------------------------------------------------------------------------------------
+declare @DIM_QuoteClosingReasonsNewId varchar(15)
+execute usp_GetNextTableIdValue @DIM_QuoteClosingReasonsNewId OUTPUT,'DWObjectTable' 
+insert into DWObjectTables(Id,Tenant,IndexesXml,Code,Name,TypeCode,IsClosed,DefaultFilterBy,HasPivotColumn) Values(@DIM_QuoteClosingReasonsNewId,0,'','DIM_QuoteClosingReasons','DIM_QuoteClosingReasons','Dimension','false','[Name]','false')  
+--Fields --
+declare @DIM_QuoteClosingReasonsId_NumberNewId varchar(15)
+execute usp_GetNextTableIdValue @DIM_QuoteClosingReasonsId_NumberNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,HideTree,CannotFilter,IsCustom,DontDisplayInView,IsMultipleSelection) Values(@DIM_QuoteClosingReasonsId_NumberNewId,0,'DIM_QuoteClosingReasons','[Id_Number]','Id_Number','Integer','true',0,0,'true','false','false','false','false','false','false','false')  
+declare @DIM_QuoteClosingReasonsIdNewId varchar(15)
+execute usp_GetNextTableIdValue @DIM_QuoteClosingReasonsIdNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,HideTree,CannotFilter,IsCustom,DontDisplayInView,IsMultipleSelection) Values(@DIM_QuoteClosingReasonsIdNewId,0,'DIM_QuoteClosingReasons','[Id]','Id','Text','true',0,15,'false','false','false','false','false','false','true','false')  
+declare @DIM_QuoteClosingReasonsNameNewId varchar(15)
+execute usp_GetNextTableIdValue @DIM_QuoteClosingReasonsNameNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,LOVAdditionalColumns,HideTree,CannotFilter,IsCustom,DontDisplayInView,IsMultipleSelection) Values(@DIM_QuoteClosingReasonsNameNewId,0,'DIM_QuoteClosingReasons','[Name]','Name','Text','true',0,60,'false','false','true','[Code]','false','true','false','false','false')  
+declare @DIM_QuoteClosingReasonsCodeNewId varchar(15)
+execute usp_GetNextTableIdValue @DIM_QuoteClosingReasonsCodeNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,LOVAdditionalColumns,HideTree,CannotFilter,IsCustom,DontDisplayInView,IsMultipleSelection) Values(@DIM_QuoteClosingReasonsCodeNewId,0,'DIM_QuoteClosingReasons','[Code]','Code','Text','true',0,2,'false','false','true','[Name],[Local Name]','false','false','false','false','false')  
+declare @DIM_QuoteClosingReasonsTenantNewId varchar(15)
+execute usp_GetNextTableIdValue @DIM_QuoteClosingReasonsTenantNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,HideTree,CannotFilter,IsCustom,ViewFieldDisplayName,DontDisplayInView,IsMultipleSelection) Values(@DIM_QuoteClosingReasonsTenantNewId,0,'DIM_QuoteClosingReasons','[Tenant]','Tenant','Integer','true',0,0,'false','false','true','false','false','false','Tenant','false','false')  
+declare @DIM_QuoteClosingReasonsAutomaticLastUpdateDateNewId varchar(15)
+execute usp_GetNextTableIdValue @DIM_QuoteClosingReasonsAutomaticLastUpdateDateNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,HideTree,CannotFilter,IsCustom,DontDisplayInView,IsMultipleSelection) Values(@DIM_QuoteClosingReasonsAutomaticLastUpdateDateNewId,0,'DIM_QuoteClosingReasons','[Automatic Last Update Date]','Last Update Date','DateTime','false',0,0,'false','false','true','false','false','false','false','false')  
+------------------------------------------------------------------------------------
+declare @DIM_QuoteStagesNewId varchar(15)
+execute usp_GetNextTableIdValue @DIM_QuoteStagesNewId OUTPUT,'DWObjectTable' 
+insert into DWObjectTables(Id,Tenant,IndexesXml,Code,Name,TypeCode,IsClosed,DefaultFilterBy,HasPivotColumn) Values(@DIM_QuoteStagesNewId,0,'','DIM_QuoteStages','DIM_QuoteStages','Dimension','false','[Name]','false')  
+--Fields --
+declare @DIM_QuoteStagesId_NumberNewId varchar(15)
+execute usp_GetNextTableIdValue @DIM_QuoteStagesId_NumberNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,HideTree,CannotFilter,IsCustom,DontDisplayInView,IsMultipleSelection) Values(@DIM_QuoteStagesId_NumberNewId,0,'DIM_QuoteStages','[Id_Number]','Id_Number','Integer','true',0,0,'true','false','false','false','false','false','false','false')  
+declare @DIM_QuoteStagesIdNewId varchar(15)
+execute usp_GetNextTableIdValue @DIM_QuoteStagesIdNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,HideTree,CannotFilter,IsCustom,DontDisplayInView,IsMultipleSelection) Values(@DIM_QuoteStagesIdNewId,0,'DIM_QuoteStages','[Id]','Id','Text','true',0,15,'false','false','false','false','false','false','true','false')  
+declare @DIM_QuoteStagesNameNewId varchar(15)
+execute usp_GetNextTableIdValue @DIM_QuoteStagesNameNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,LOVAdditionalColumns,HideTree,CannotFilter,IsCustom,DontDisplayInView,IsMultipleSelection) Values(@DIM_QuoteStagesNameNewId,0,'DIM_QuoteStages','[Name]','Name','Text','true',0,40,'false','false','true','[Code]','false','true','false','false','false')  
+declare @DIM_QuoteStagesCodeNewId varchar(15)
+execute usp_GetNextTableIdValue @DIM_QuoteStagesCodeNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,LOVAdditionalColumns,HideTree,CannotFilter,IsCustom,DontDisplayInView,IsMultipleSelection) Values(@DIM_QuoteStagesCodeNewId,0,'DIM_QuoteStages','[Code]','Code','Text','true',0,4,'false','false','true','[Name],[Local Name]','false','false','false','false','false')  
+declare @DIM_QuoteStagesTenantNewId varchar(15)
+execute usp_GetNextTableIdValue @DIM_QuoteStagesTenantNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,HideTree,CannotFilter,IsCustom,ViewFieldDisplayName,DontDisplayInView,IsMultipleSelection) Values(@DIM_QuoteStagesTenantNewId,0,'DIM_QuoteStages','[Tenant]','Tenant','Integer','true',0,0,'false','false','true','false','false','false','Tenant','false','false')  
+declare @DIM_QuoteStagesAutomaticLastUpdateDateNewId varchar(15)
+execute usp_GetNextTableIdValue @DIM_QuoteStagesAutomaticLastUpdateDateNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,HideTree,CannotFilter,IsCustom,DontDisplayInView,IsMultipleSelection) Values(@DIM_QuoteStagesAutomaticLastUpdateDateNewId,0,'DIM_QuoteStages','[Automatic Last Update Date]','Last Update Date','DateTime','false',0,0,'false','false','true','false','false','false','false','false')  
 ------------------------------------------------------------------------------------
 declare @DIM_ShipmentPayableStatusesNewId varchar(15)
 execute usp_GetNextTableIdValue @DIM_ShipmentPayableStatusesNewId OUTPUT,'DWObjectTable' 
@@ -924,6 +993,191 @@ declare @Fact_MastersNewId varchar(15)
 execute usp_GetNextTableIdValue @Fact_MastersNewId OUTPUT,'DWObjectTable' 
 insert into DWObjectTables(Id,Tenant,IndexesXml,Code,Name,TypeCode,IsClosed,DataViewName,HasPivotColumn,ParentFactCode,RecordType,DisplayName) Values(@Fact_MastersNewId,0,'','Fact_Masters','Fact_Masters','Fact','false','factMasters','false','Fact_Shipments','Master','Masters')  
 --Fields --
+------------------------------------------------------------------------------------
+declare @Fact_QuotesNewId varchar(15)
+execute usp_GetNextTableIdValue @Fact_QuotesNewId OUTPUT,'DWObjectTable' 
+insert into DWObjectTables(Id,Tenant,IndexesXml,Code,Name,TypeCode,IsClosed,DataViewName,HasPivotColumn,RecordType,DisplayName) Values(@Fact_QuotesNewId,0,'','Fact_Quotes','Fact_Quotes','Fact','false','factQuotes','false','Quotes','Quotes')  
+--Fields --
+declare @Fact_QuotesId_NumberNewId varchar(15)
+execute usp_GetNextTableIdValue @Fact_QuotesId_NumberNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,HideTree,CannotFilter,IsCustom,DontDisplayInView,IsMultipleSelection) Values(@Fact_QuotesId_NumberNewId,0,'Fact_Quotes','[Id_Number]','Id_Number','Integer','true',0,0,'true','false','false','false','false','false','true','false')  
+declare @Fact_QuotesIdNewId varchar(15)
+execute usp_GetNextTableIdValue @Fact_QuotesIdNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,HideTree,CannotFilter,IsCustom,DontDisplayInView,IsMultipleSelection) Values(@Fact_QuotesIdNewId,0,'Fact_Quotes','[Id]','Id','Text','true',0,15,'false','false','false','false','false','false','true','false')  
+declare @Fact_QuotesSourceTenantNewId varchar(15)
+execute usp_GetNextTableIdValue @Fact_QuotesSourceTenantNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,DimensionTableCode,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom,ViewFieldDisplayName,DontDisplayInView,IsMultipleSelection) Values(@Fact_QuotesSourceTenantNewId,0,'Fact_Quotes','[Source Tenant]','Source Tenant','Dimension','false',0,0,'DIM_Tenants','false','false','true','General','false','false','false','Tenant','false','false')  
+declare @Fact_QuotesParentTenantNewId varchar(15)
+execute usp_GetNextTableIdValue @Fact_QuotesParentTenantNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,DimensionTableCode,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom,OriginalObjectFieldCode,DontDisplayInView,IsMultipleSelection) Values(@Fact_QuotesParentTenantNewId,0,'Fact_Quotes','[Parent Tenant]','Parent Tenant','Dimension','false',0,0,'DIM_Tenants','false','false','true','General','false','false','false','DWHSetting.ParentTenant','true','false')  
+declare @Fact_QuotesDirectionNewId varchar(15)
+execute usp_GetNextTableIdValue @Fact_QuotesDirectionNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,DimensionTableCode,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom,OriginalObjectFieldCode,DontDisplayInView,IsMultipleSelection) Values(@Fact_QuotesDirectionNewId,0,'Fact_Quotes','[Direction]','Direction','Dimension','true',0,1,'DIM_Directions','false','false','true','General','false','false','false','Quote.DirectionId','false','false')  
+declare @Fact_QuotesTransportModeNewId varchar(15)
+execute usp_GetNextTableIdValue @Fact_QuotesTransportModeNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,DimensionTableCode,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom,OriginalObjectFieldCode,DontDisplayInView,IsMultipleSelection) Values(@Fact_QuotesTransportModeNewId,0,'Fact_Quotes','[Transport Mode]','Transport Mode','Dimension','true',0,1,'DIM_TransportModes','false','false','true','General','false','false','false','Quote.TransportModeId','false','false')  
+declare @Fact_QuotesTypeNewId varchar(15)
+execute usp_GetNextTableIdValue @Fact_QuotesTypeNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,DimensionTableCode,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom,OriginalObjectFieldCode,DontDisplayInView,IsMultipleSelection) Values(@Fact_QuotesTypeNewId,0,'Fact_Quotes','[Type]','Type','Dimension','false',0,4,'DIM_Types','false','false','true','General','false','false','false','Quote.ShipmentTypeId','false','false')  
+declare @Fact_QuotesDepartmentNewId varchar(15)
+execute usp_GetNextTableIdValue @Fact_QuotesDepartmentNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,DimensionTableCode,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom,OriginalObjectFieldCode,DontDisplayInView,IsMultipleSelection) Values(@Fact_QuotesDepartmentNewId,0,'Fact_Quotes','[Department ]','Department ','Dimension','false',0,15,'DIM_Departments','false','false','true','General','false','false','false','Quote.DepartmentId','false','false')  
+declare @Fact_QuotesBranchNewId varchar(15)
+execute usp_GetNextTableIdValue @Fact_QuotesBranchNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,DimensionTableCode,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom,OriginalObjectFieldCode,DontDisplayInView,IsMultipleSelection) Values(@Fact_QuotesBranchNewId,0,'Fact_Quotes','[Branch]','Branch','Dimension','false',0,15,'DIM_Branches','false','false','true','General','false','false','false','Quote.BranchId','false','false')  
+declare @Fact_QuotesQuoteNumberNewId varchar(15)
+execute usp_GetNextTableIdValue @Fact_QuotesQuoteNumberNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom,OriginalObjectFieldCode,DontDisplayInView,IsMultipleSelection) Values(@Fact_QuotesQuoteNumberNewId,0,'Fact_Quotes','[Quote Number]','Quote Number','nText','false',0,20,'false','false','true','General','false','false','false','Quote.QuoteNumber','false','false')  
+declare @Fact_QuotesShipperNewId varchar(15)
+execute usp_GetNextTableIdValue @Fact_QuotesShipperNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,DimensionTableCode,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom,OriginalObjectFieldCode,DontDisplayInView,IsMultipleSelection) Values(@Fact_QuotesShipperNewId,0,'Fact_Quotes','[Shipper]','Shipper','Dimension','false',0,15,'DIM_Partners','false','false','true','Partners','false','false','false','Quote.ShipperId','false','false')  
+declare @Fact_QuotesConsigneeNewId varchar(15)
+execute usp_GetNextTableIdValue @Fact_QuotesConsigneeNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,DimensionTableCode,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom,OriginalObjectFieldCode,DontDisplayInView,IsMultipleSelection) Values(@Fact_QuotesConsigneeNewId,0,'Fact_Quotes','[Consignee ]','Consignee ','Dimension','false',0,15,'DIM_Partners','false','false','true','Partners','false','false','false','Quote.ConsigneeId','false','false')  
+declare @Fact_QuotesCustomerNewId varchar(15)
+execute usp_GetNextTableIdValue @Fact_QuotesCustomerNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,DimensionTableCode,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom,OriginalObjectFieldCode,DontDisplayInView,IsMultipleSelection) Values(@Fact_QuotesCustomerNewId,0,'Fact_Quotes','[Customer]','Customer','Dimension','false',0,15,'DIM_Partners','false','false','true','Partners','false','false','false','Quote.CustomerId','false','false')  
+declare @Fact_QuotesAgentNewId varchar(15)
+execute usp_GetNextTableIdValue @Fact_QuotesAgentNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,DimensionTableCode,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom,OriginalObjectFieldCode,DontDisplayInView,IsMultipleSelection) Values(@Fact_QuotesAgentNewId,0,'Fact_Quotes','[Agent]','Agent','Dimension','false',0,15,'DIM_Partners','false','false','true','Partners','false','false','false','Quote.AgentId','false','false')  
+declare @Fact_QuotesIncotermsNewId varchar(15)
+execute usp_GetNextTableIdValue @Fact_QuotesIncotermsNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,DimensionTableCode,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom,OriginalObjectFieldCode,DontDisplayInView,IsMultipleSelection) Values(@Fact_QuotesIncotermsNewId,0,'Fact_Quotes','[Incoterms]','Incoterms','Dimension','false',0,15,'DIM_Incoterms','false','false','true','General','false','false','false','Quote.IncotermId','false','false')  
+declare @Fact_QuotesOpenedbyNewId varchar(15)
+execute usp_GetNextTableIdValue @Fact_QuotesOpenedbyNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,DimensionTableCode,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom,OriginalObjectFieldCode,DontDisplayInView,IsMultipleSelection) Values(@Fact_QuotesOpenedbyNewId,0,'Fact_Quotes','[Opened by]','Opened by','Dimension','true',0,15,'DIM_Users','false','false','true','Partners','false','false','false','Quote.CreatedByUserId','false','false')  
+declare @Fact_QuotesOpenDateNewId varchar(15)
+execute usp_GetNextTableIdValue @Fact_QuotesOpenDateNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,DimensionTableCode,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom,OriginalObjectFieldCode,DontDisplayInView,IsMultipleSelection) Values(@Fact_QuotesOpenDateNewId,0,'Fact_Quotes','[Open Date]','Open Date','Dimension','true',0,0,'DIM_Dates','false','false','true','Dates','false','false','false','Quote.OpenDate','false','false')  
+declare @Fact_QuotesSentDateNewId varchar(15)
+execute usp_GetNextTableIdValue @Fact_QuotesSentDateNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,DimensionTableCode,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom,OriginalObjectFieldCode,DontDisplayInView,IsMultipleSelection) Values(@Fact_QuotesSentDateNewId,0,'Fact_Quotes','[Sent Date]','Sent Date','Dimension','false',0,0,'DIM_Dates','false','false','true','Dates','false','false','false','Quote.SentDate','false','false')  
+declare @Fact_QuotesAcceptedDateNewId varchar(15)
+execute usp_GetNextTableIdValue @Fact_QuotesAcceptedDateNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,DimensionTableCode,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom,OriginalObjectFieldCode,DontDisplayInView,IsMultipleSelection) Values(@Fact_QuotesAcceptedDateNewId,0,'Fact_Quotes','[Accepted Date]','Accepted Date','Dimension','false',0,0,'DIM_Dates','false','false','true','Dates','false','false','false','Quote.AcceptedDate','false','false')  
+declare @Fact_QuotesDeclinedDateNewId varchar(15)
+execute usp_GetNextTableIdValue @Fact_QuotesDeclinedDateNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,DimensionTableCode,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom,OriginalObjectFieldCode,DontDisplayInView,IsMultipleSelection) Values(@Fact_QuotesDeclinedDateNewId,0,'Fact_Quotes','[Declined Date]','Declined Date','Dimension','false',0,0,'DIM_Dates','false','false','true','Dates','false','false','false','Quote.DeclinedDate','false','false')  
+declare @Fact_QuotesStartDateNewId varchar(15)
+execute usp_GetNextTableIdValue @Fact_QuotesStartDateNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,DimensionTableCode,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom,OriginalObjectFieldCode,DontDisplayInView,IsMultipleSelection) Values(@Fact_QuotesStartDateNewId,0,'Fact_Quotes','[Start Date]','Start Date','Dimension','false',0,0,'DIM_Dates','false','false','true','Daets','false','false','false','Quote.StartDate','false','false')  
+declare @Fact_QuotesLastActivityDateNewId varchar(15)
+execute usp_GetNextTableIdValue @Fact_QuotesLastActivityDateNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,DimensionTableCode,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom,OriginalObjectFieldCode,DontDisplayInView,IsMultipleSelection) Values(@Fact_QuotesLastActivityDateNewId,0,'Fact_Quotes','[Last Activity Date]','Last Activity Date','Dimension','false',0,0,'DIM_Dates','false','false','true','Dates','false','false','false','Quote.LastActivityDate','false','false')  
+declare @Fact_QuotesSalesmanNewId varchar(15)
+execute usp_GetNextTableIdValue @Fact_QuotesSalesmanNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,DimensionTableCode,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom,OriginalObjectFieldCode,DontDisplayInView,IsMultipleSelection) Values(@Fact_QuotesSalesmanNewId,0,'Fact_Quotes','[Salesman]','Salesman','Dimension','false',0,15,'DIM_Users','false','false','true','General','false','false','false','Quote.SalesmanUserId','false','false')  
+declare @Fact_QuotesStageNewId varchar(15)
+execute usp_GetNextTableIdValue @Fact_QuotesStageNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,DimensionTableCode,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom,OriginalObjectFieldCode,DontDisplayInView,IsMultipleSelection) Values(@Fact_QuotesStageNewId,0,'Fact_Quotes','[Stage]','Stage','Dimension','false',0,15,'DIM_QuoteStages','false','false','true','General','false','false','false','Quote.StageId','false','false')  
+declare @Fact_QuotesNotesNewId varchar(15)
+execute usp_GetNextTableIdValue @Fact_QuotesNotesNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom,OriginalObjectFieldCode,DontDisplayInView,IsMultipleSelection) Values(@Fact_QuotesNotesNewId,0,'Fact_Quotes','[Notes]','Notes','nText','false',0,500,'false','false','true','General','false','false','false','Quote.Notes','false','false')  
+declare @Fact_QuotesClosingReasonNewId varchar(15)
+execute usp_GetNextTableIdValue @Fact_QuotesClosingReasonNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,DimensionTableCode,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom,OriginalObjectFieldCode,DontDisplayInView,IsMultipleSelection) Values(@Fact_QuotesClosingReasonNewId,0,'Fact_Quotes','[Closing Reason]','Closing Reason','Dimension','false',0,15,'DIM_QuoteClosingReasons','false','false','true','General','false','false','false','Quote.QuoteClosingReasonId','false','false')  
+declare @Fact_QuotesEstimatedProfitinLocalCurrencyNewId varchar(15)
+execute usp_GetNextTableIdValue @Fact_QuotesEstimatedProfitinLocalCurrencyNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom,OriginalObjectFieldCode,DontDisplayInView,IsMultipleSelection) Values(@Fact_QuotesEstimatedProfitinLocalCurrencyNewId,0,'Fact_Quotes','[Estimated Profit in Local Currency]','Estimated Profit in Local Currency','Decimal','false',0,0,'false','false','true','Money','false','false','false','Quote.EstimatedProfitInLocal','false','false')  
+declare @Fact_QuotesSalesCurrencyNewId varchar(15)
+execute usp_GetNextTableIdValue @Fact_QuotesSalesCurrencyNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,DimensionTableCode,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom,OriginalObjectFieldCode,DontDisplayInView,IsMultipleSelection) Values(@Fact_QuotesSalesCurrencyNewId,0,'Fact_Quotes','[Sales Currency]','Sales Currency','Dimension','true',0,15,'DIM_Currencies','false','false','true','Money','false','false','false','Quote.SaleCurrencyId','false','false')  
+declare @Fact_QuotesSubjectNewId varchar(15)
+execute usp_GetNextTableIdValue @Fact_QuotesSubjectNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom,OriginalObjectFieldCode,DontDisplayInView,IsMultipleSelection) Values(@Fact_QuotesSubjectNewId,0,'Fact_Quotes','[Subject]','Subject','nText','false',0,200,'false','false','true','Routings','false','false','false','Quote.Subject','false','false')  
+declare @Fact_QuotesGrossWeightInKgNewId varchar(15)
+execute usp_GetNextTableIdValue @Fact_QuotesGrossWeightInKgNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom,OriginalObjectFieldCode,DontDisplayInView,IsMultipleSelection) Values(@Fact_QuotesGrossWeightInKgNewId,0,'Fact_Quotes','[Gross Weight In Kg]','Gross Weight In Kg','Decimal','false',0,0,'false','false','true','Packages','false','false','false','Quote.GrossWeightInKG','false','false')  
+declare @Fact_QuotesChargeableWeightinKgNewId varchar(15)
+execute usp_GetNextTableIdValue @Fact_QuotesChargeableWeightinKgNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom,OriginalObjectFieldCode,DontDisplayInView,IsMultipleSelection) Values(@Fact_QuotesChargeableWeightinKgNewId,0,'Fact_Quotes','[Chargeable Weight in Kg]','Chargeable Weight in Kg','Decimal','false',0,0,'false','false','true','Packages','false','false','false','Quote.ChargeableWeightInKG','false','false')  
+declare @Fact_QuotesVolumeinCBMNewId varchar(15)
+execute usp_GetNextTableIdValue @Fact_QuotesVolumeinCBMNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom,OriginalObjectFieldCode,DontDisplayInView,IsMultipleSelection) Values(@Fact_QuotesVolumeinCBMNewId,0,'Fact_Quotes','[Volume in CBM]','Volume in CBM','Decimal','false',0,0,'false','false','true','Packages','false','false','false','Quote.VolumeInCBM','false','false')  
+declare @Fact_QuotesNumberofPackagesNewId varchar(15)
+execute usp_GetNextTableIdValue @Fact_QuotesNumberofPackagesNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom,OriginalObjectFieldCode,DontDisplayInView,IsMultipleSelection) Values(@Fact_QuotesNumberofPackagesNewId,0,'Fact_Quotes','[Number of Packages]','Number of Packages','Integer','false',0,0,'false','false','true','Packages','false','false','false','Quote.NumberOfPackages','false','false')  
+declare @Fact_QuotesNumberofContainersNewId varchar(15)
+execute usp_GetNextTableIdValue @Fact_QuotesNumberofContainersNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom,OriginalObjectFieldCode,DontDisplayInView,IsMultipleSelection) Values(@Fact_QuotesNumberofContainersNewId,0,'Fact_Quotes','[Number of Containers]','Number of Containers','Integer','false',0,0,'false','false','true','Packages','false','false','false','Quote.NumberOfContainers','false','false')  
+declare @Fact_QuotesExpirationDateNewId varchar(15)
+execute usp_GetNextTableIdValue @Fact_QuotesExpirationDateNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom,OriginalObjectFieldCode,DontDisplayInView,IsMultipleSelection) Values(@Fact_QuotesExpirationDateNewId,0,'Fact_Quotes','[Expiration Date ]','Expiration Date ','DateTime','false',0,0,'false','false','true','Dates','false','false','false','Quote.ExpirationDate','false','false')  
+declare @Fact_QuotesCloseAutobySystemNewId varchar(15)
+execute usp_GetNextTableIdValue @Fact_QuotesCloseAutobySystemNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom,OriginalObjectFieldCode,DontDisplayInView,IsMultipleSelection) Values(@Fact_QuotesCloseAutobySystemNewId,0,'Fact_Quotes','[Close Auto by System]','Close Auto by System','Boolean','false',0,0,'false','false','true','General','false','false','false','Quote.IsAutomaticallyClosed','false','false')  
+declare @Fact_QuotesIncludePickupNewId varchar(15)
+execute usp_GetNextTableIdValue @Fact_QuotesIncludePickupNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom,OriginalObjectFieldCode,DontDisplayInView,IsMultipleSelection) Values(@Fact_QuotesIncludePickupNewId,0,'Fact_Quotes','[Include Pickup]','Include Pickup','Boolean','false',0,0,'false','false','true','Routings','false','false','false','Quote.IncludePickUp','false','false')  
+declare @Fact_QuotesIncludeDeliveryNewId varchar(15)
+execute usp_GetNextTableIdValue @Fact_QuotesIncludeDeliveryNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom,OriginalObjectFieldCode,DontDisplayInView,IsMultipleSelection) Values(@Fact_QuotesIncludeDeliveryNewId,0,'Fact_Quotes','[Include Delivery]','Include Delivery','Boolean','false',0,0,'false','false','true','Routings','false','false','false','Quote.IncludeDelivery','false','false')  
+declare @Fact_QuotesStageDueDateNewId varchar(15)
+execute usp_GetNextTableIdValue @Fact_QuotesStageDueDateNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom,OriginalObjectFieldCode,DontDisplayInView,IsMultipleSelection) Values(@Fact_QuotesStageDueDateNewId,0,'Fact_Quotes','[Stage Due Date]','Stage Due Date','DateTime','false',0,0,'false','false','true','Dates','false','false','false','Quote.StageDueDate','false','false')  
+declare @Fact_QuotesIsPotentialShipperNewId varchar(15)
+execute usp_GetNextTableIdValue @Fact_QuotesIsPotentialShipperNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom,OriginalObjectFieldCode,DontDisplayInView,IsMultipleSelection) Values(@Fact_QuotesIsPotentialShipperNewId,0,'Fact_Quotes','[Is Potential Shipper]','Is Potential Shipper','Boolean','false',0,0,'false','false','true','General','false','false','false','Quote.IsPotentialShipper','false','false')  
+declare @Fact_QuotesIsQuoteDataExternalNewId varchar(15)
+execute usp_GetNextTableIdValue @Fact_QuotesIsQuoteDataExternalNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom,OriginalObjectFieldCode,DontDisplayInView,IsMultipleSelection) Values(@Fact_QuotesIsQuoteDataExternalNewId,0,'Fact_Quotes','[Is Quote Data External]','Is Quote Data External','Boolean','false',0,0,'false','false','true','General','false','false','false','Quote.IsQuoteDataExternal','false','false')  
+declare @Fact_QuotesIsQuoteDocumentExternalNewId varchar(15)
+execute usp_GetNextTableIdValue @Fact_QuotesIsQuoteDocumentExternalNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom,OriginalObjectFieldCode,DontDisplayInView,IsMultipleSelection) Values(@Fact_QuotesIsQuoteDocumentExternalNewId,0,'Fact_Quotes','[Is Quote Document External]','Is Quote Document External','Boolean','false',0,0,'false','false','true','General','false','false','false','Quote.IsQuoteDocumentExternal','false','false')  
+declare @Fact_QuotesLocalCurrencyNewId varchar(15)
+execute usp_GetNextTableIdValue @Fact_QuotesLocalCurrencyNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,DimensionTableCode,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom,DontDisplayInView,IsMultipleSelection) Values(@Fact_QuotesLocalCurrencyNewId,0,'Fact_Quotes','[Local Currency]','Local Currency','Dimension','false',0,0,'DIM_Currencies','false','false','true','Money','false','false','false','false','false')  
+declare @Fact_QuotesDeliveryToNewId varchar(15)
+execute usp_GetNextTableIdValue @Fact_QuotesDeliveryToNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom,OriginalObjectFieldCode,DontDisplayInView,IsMultipleSelection) Values(@Fact_QuotesDeliveryToNewId,0,'Fact_Quotes','[Delivery To]','Delivery To','nText','false',0,250,'false','false','true','Routings','false','false','false','Quote.DeliveryAddress','false','false')  
+declare @Fact_QuotesPickupFromNewId varchar(15)
+execute usp_GetNextTableIdValue @Fact_QuotesPickupFromNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom,OriginalObjectFieldCode,DontDisplayInView,IsMultipleSelection) Values(@Fact_QuotesPickupFromNewId,0,'Fact_Quotes','[Pickup From]','Pickup From','nText','false',0,250,'false','false','true','Routings','false','false','false','Quote.PickUpAddress','false','false')  
+declare @Fact_QuotesConnectedtoTicketNewId varchar(15)
+execute usp_GetNextTableIdValue @Fact_QuotesConnectedtoTicketNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom,OriginalObjectFieldCode,DontDisplayInView,IsMultipleSelection) Values(@Fact_QuotesConnectedtoTicketNewId,0,'Fact_Quotes','[Connected to Ticket]','Connected to Ticket','Boolean','false',0,0,'false','false','true','General','false','false','false','Quote.IsCreatedFromTicket','false','false')  
+declare @Fact_QuotesConnectedtoShipmentNewId varchar(15)
+execute usp_GetNextTableIdValue @Fact_QuotesConnectedtoShipmentNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom,OriginalObjectFieldCode,DontDisplayInView,IsMultipleSelection) Values(@Fact_QuotesConnectedtoShipmentNewId,0,'Fact_Quotes','[Connected to Shipment ]','Connected to Shipment ','Boolean','false',0,0,'false','false','true','General','false','false','false','Quote.AcceptedWithoutShipments','false','false')  
+declare @Fact_QuotesFromNewId varchar(15)
+execute usp_GetNextTableIdValue @Fact_QuotesFromNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom,OriginalObjectFieldCode,DontDisplayInView,IsMultipleSelection) Values(@Fact_QuotesFromNewId,0,'Fact_Quotes','[From]','From','Text','false',0,100,'false','false','true','Routings','false','false','false','Quote.FromLocation','false','false')  
+declare @Fact_QuotesToNewId varchar(15)
+execute usp_GetNextTableIdValue @Fact_QuotesToNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom,OriginalObjectFieldCode,DontDisplayInView,IsMultipleSelection) Values(@Fact_QuotesToNewId,0,'Fact_Quotes','[To]','To','Text','false',0,100,'false','false','true','Routings','false','false','false','Quote.ToLocation','false','false')  
+declare @Fact_QuotesFromPortCountryNewId varchar(15)
+execute usp_GetNextTableIdValue @Fact_QuotesFromPortCountryNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom,OriginalObjectFieldCode,DontDisplayInView,IsMultipleSelection) Values(@Fact_QuotesFromPortCountryNewId,0,'Fact_Quotes','[From Port Country]','From Port Country','Text','false',0,120,'false','false','true','Routings','false','false','false','Quote.FromPortCountry','false','false')  
+declare @Fact_QuotesToPortCountryNewId varchar(15)
+execute usp_GetNextTableIdValue @Fact_QuotesToPortCountryNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom,OriginalObjectFieldCode,DontDisplayInView,IsMultipleSelection) Values(@Fact_QuotesToPortCountryNewId,0,'Fact_Quotes','[To Port Country]','To Port Country','Text','false',0,120,'false','false','true','Routings','false','false','false','Quote.ToPortCountry','false','false')  
+declare @Fact_QuotesEstimatedPayablesinSalesCurrencyNewId varchar(15)
+execute usp_GetNextTableIdValue @Fact_QuotesEstimatedPayablesinSalesCurrencyNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom,DontDisplayInView,IsMultipleSelection) Values(@Fact_QuotesEstimatedPayablesinSalesCurrencyNewId,0,'Fact_Quotes','[Estimated Payables in Sales Currency]','Estimated Payables in Sales Currency','Decimal','false',0,0,'false','false','true','Money','false','false','false','false','false')  
+declare @Fact_QuotesEstimatedReceivablesinLocalCurrencyNewId varchar(15)
+execute usp_GetNextTableIdValue @Fact_QuotesEstimatedReceivablesinLocalCurrencyNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom,DontDisplayInView,IsMultipleSelection) Values(@Fact_QuotesEstimatedReceivablesinLocalCurrencyNewId,0,'Fact_Quotes','[Estimated Receivables in Local Currency]','Estimated Receivables in Local Currency','Decimal','false',0,0,'false','false','true','Money','false','false','false','false','false')  
+declare @Fact_QuotesEstimatedReceivablesinSalesCurrencyNewId varchar(15)
+execute usp_GetNextTableIdValue @Fact_QuotesEstimatedReceivablesinSalesCurrencyNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom,DontDisplayInView,IsMultipleSelection) Values(@Fact_QuotesEstimatedReceivablesinSalesCurrencyNewId,0,'Fact_Quotes','[Estimated Receivables in Sales Currency]','Estimated Receivables in Sales Currency','Decimal','false',0,0,'false','false','true','Money','false','false','false','false','false')  
+declare @Fact_QuotesEstimatedProfitinSalesCurrencyNewId varchar(15)
+execute usp_GetNextTableIdValue @Fact_QuotesEstimatedProfitinSalesCurrencyNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom,DontDisplayInView,IsMultipleSelection) Values(@Fact_QuotesEstimatedProfitinSalesCurrencyNewId,0,'Fact_Quotes','[Estimated Profit in Sales Currency]','Estimated Profit in Sales Currency','Decimal','false',0,0,'false','false','true','Money','false','false','false','false','false')  
+declare @Fact_QuotesEstimatedPayablesinLocalCurrencyNewId varchar(15)
+execute usp_GetNextTableIdValue @Fact_QuotesEstimatedPayablesinLocalCurrencyNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom,DontDisplayInView,IsMultipleSelection) Values(@Fact_QuotesEstimatedPayablesinLocalCurrencyNewId,0,'Fact_Quotes','[Estimated Payables in Local Currency]','Estimated Payables in Local Currency','Decimal','false',0,0,'false','false','true','Money','false','false','false','false','false')  
+declare @Fact_QuotesCloseDateNewId varchar(15)
+execute usp_GetNextTableIdValue @Fact_QuotesCloseDateNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom,OriginalObjectFieldCode,DontDisplayInView,IsMultipleSelection) Values(@Fact_QuotesCloseDateNewId,0,'Fact_Quotes','[Close Date]','Close Date','DateTime','false',0,0,'false','false','true','Dates','false','false','false','Quote.AutomaticallyCloseDate','false','false')  
+declare @Fact_QuotesIsPotentialConsigneeNewId varchar(15)
+execute usp_GetNextTableIdValue @Fact_QuotesIsPotentialConsigneeNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom,DontDisplayInView,IsMultipleSelection) Values(@Fact_QuotesIsPotentialConsigneeNewId,0,'Fact_Quotes','[Is Potential Consignee]','Is Potential Consignee','Boolean','false',0,0,'false','false','true','General','false','false','false','false','false')  
+declare @Fact_QuotesIsPotentialCustomerNewId varchar(15)
+execute usp_GetNextTableIdValue @Fact_QuotesIsPotentialCustomerNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom,DontDisplayInView,IsMultipleSelection) Values(@Fact_QuotesIsPotentialCustomerNewId,0,'Fact_Quotes','[Is Potential Customer]','Is Potential Customer','Boolean','false',0,0,'false','false','true','General','false','false','false','false','false')  
+declare @Fact_QuotesConnectedtoOpportunityNewId varchar(15)
+execute usp_GetNextTableIdValue @Fact_QuotesConnectedtoOpportunityNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom,DontDisplayInView,IsMultipleSelection) Values(@Fact_QuotesConnectedtoOpportunityNewId,0,'Fact_Quotes','[Connected to Opportunity]','Connected to Opportunity','Boolean','false',0,0,'false','false','true','General','false','false','false','false','false')  
 ------------------------------------------------------------------------------------
 declare @Fact_ShipmentsNewId varchar(15)
 execute usp_GetNextTableIdValue @Fact_ShipmentsNewId OUTPUT,'DWObjectTable' 

@@ -433,6 +433,7 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string QuoteId { get; set; }
+        public string QuoteNumber { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string BookingId { get; set; }
@@ -571,7 +572,6 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public int? NumberOfFollowUps { get; set; }
 
-        public string QuoteNumber { get; set; }
         #endregion
 
         #region Partners
@@ -2235,6 +2235,9 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string INTTRABookingStatusCode { get; set; }
         public string INTTRABookingStatusName { get; set; }
+        
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public DateTime? INTTRALastEBbookingSendDate { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string INTTRABookingError { get; set; }

@@ -119,6 +119,8 @@
                                                             <td style="width: 120px; min-width: 120px; max-width: 120px; color : #6E7172;" *ngIf="Container3Visibility">{{Container3Label}}</td>
                                                             <td style="width: 120px; min-width: 120px; max-width: 120px; color : #6E7172;" *ngIf="Container4Visibility">{{Container4Label}}</td>
                                                             <td style="width: 120px; min-width: 120px; max-width: 120px; color : #6E7172;" *ngIf="Container5Visibility">{{Container5Label}}</td>
+                                                            <td style="width: 120px; min-width: 120px; max-width: 120px; color : #6E7172;">{{'TariffLinesContainersPrice.F.CostPrice' | TextCodeTranslationPipe}}</td>
+
                                                             <td class="LastChild">
                                                                 <div></div>
                                                             </td>
@@ -224,6 +226,24 @@
 
                                                                         <td style="width: 1px;">
                                                                             <span>{{containerItem.Price5 | NumbersPipe:'N3'}}</span>
+                                                                        </td>
+                                                                    </tr>
+                                                                </table>
+                                                            </td>
+
+                                                            <td class="GridViewCell" style="width: 120px; min-width: 120px; max-width: 120px; text-align: right;">
+                                                                <table>
+                                                                    <tr>
+                                                                        <td [ngStyle]="{color: containerItem.CostPriceComparingTextColor}" *ngIf="containerItem.ComparingCostPrice" style="width: 1px; font-size:10px; font-style:italic; padding-left:5px;">
+                                                                            {{containerItem.ComparingCostPrice| NumbersPipe:'N1'}} %
+                                                                        </td>
+
+                                                                        <td style="width: 2px;">
+                                                                            <div></div>
+                                                                        </td>
+
+                                                                        <td style="width: 1px;">
+                                                                            <span>{{containerItem.CostPrice | NumbersPipe:'N3'}}</span>
                                                                         </td>
                                                                     </tr>
                                                                 </table>

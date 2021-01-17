@@ -147,6 +147,12 @@ namespace Logitude.BL.GlobalModel.Tools.DataMapping
             entityPOCO.BrowserIconId = entityPM.BrowserIconId;
             entityPOCO.NoPaymentForChildTenants = entityPM.NoPaymentForChildTenants;
 
+            entityPOCO.LastEbookingSentDate = entityPM.LastEbookingSentDate;
+            entityPOCO.LastSISentDate = entityPM.LastSISentDate;
+            entityPOCO.NumberOfBookingSentLastWeek = entityPM.NumberOfBookingSentLastWeek;
+            entityPOCO.NumberOfSISentLastWeek = entityPM.NumberOfSISentLastWeek;
+            entityPOCO.LastContainerStatusReceived = entityPM.LastContainerStatusReceived;
+
             string packageName = null;
             using (TransactionScope scope = TransactionFactory.GetNewTransaction())
             {

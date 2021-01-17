@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -31,6 +32,8 @@ namespace Simplog.Global.Data.GlobalModel.EntityPOCOs
         public  GlobalDB GlobalDB { get; set; }
 
         public string PrivateLabelId { get; set; }
+
+        public DateTime? LastUpdateDate { get; set; }
 
         [ForeignKey("PrivateLabelId")]
         public TenantManagmentPrivateLabels TenantManagmentPrivateLabel { get; set; }

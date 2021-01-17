@@ -45,11 +45,11 @@ namespace Logitude.Accounting.Data.EntityMapping
 
             this.Property(t => t.DueDate).HasColumnName("DueDate").IsRequired();
 
-            this.Property(t => t.LocalAmount).HasColumnName("LocalAmount").HasPrecision(16, 2);
+            this.Property(t => t.LocalAmount).HasColumnName("LocalAmount").HasPrecision(18, 4);
 
             this.Property(t => t.CurrencyId).HasColumnName("CurrencyId").HasMaxLength(15).IsUnicode(false);
 
-            this.Property(t => t.ForeignAmount).HasColumnName("ForeignAmount").HasPrecision(16, 2);
+            this.Property(t => t.ForeignAmount).HasColumnName("ForeignAmount").HasPrecision(18, 4);
 
             this.Property(t => t.ExchangeRate).HasColumnName("ExchangeRate").HasPrecision(16, 5);
 

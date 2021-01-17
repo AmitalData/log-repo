@@ -848,7 +848,7 @@ export class PayablesTabComponent implements OnInit, OnDestroy {
                     feightPayable.TariffId = loadedResult.TariffId;
                     feightPayable.TariffNumber = loadedResult.TariffNumber;
                     feightPayable.TariffVersion = +loadedResult.VersionId;
-
+                    feightPayable.TariffLineId = loadedResult.LineId;
                     var quantity = 1;
                     var originalPayable: ShipmentPayablePM = originalPayables.filter(d => d.ChargesTypeCode == feightPayable.ChargesTypeCode)[0];
                     if (originalPayable) {
@@ -1204,13 +1204,18 @@ export class PayablesTabComponent implements OnInit, OnDestroy {
             editWindow.Title = "Price Check";
             editWindow.Height = 770;
             editWindow.Width = 1500;
-            editWindow.ShowEditComponent(item.TariffId, "Tariff", item.TariffVersion + "");
+
+
+            var argumentsPriceCheck = { VersionId: item.TariffVersion, LineId: item.TariffLineId, ChargeableWeightInKG: this.EntityPM.OrderChargeableWeight };
+            editWindow.EditComponentArguments = argumentsPriceCheck;
+            editWindow.ShowEditComponent(item.TariffId, "Tariff");
         }
     }
     DeleteTariff(item: ShipmentPayableItem) {
         if (item != null) {
             item.TariffId = null;
             item.TariffNumber = null;
+            item.TariffLineId = null;
             item.EntityPM.PayablesDisconnectedFromTariff = true;
             item.SetUIProperties();
         }
@@ -1782,7 +1787,15 @@ export class ShipmentPayableItem extends BaseComponent {
             this.EntityPM.TariffVersion = value;
         }
     }
-
+    get TariffLineId() {
+        return this.EntityPM.TariffLineId;
+    }
+    set TariffLineId(value: string) {
+        if (value != this.EntityPM.TariffLineId) {
+            this.EntityPM.TariffLineId = value;
+        }
+    }
+    
     get ChargesTypeId() { return this.EntityPM.ChargesTypeId; }
     set ChargesTypeId(value: string) {
         if (this.EntityPM.ChargesTypeId != value) {

@@ -422,6 +422,8 @@
                                                                                                 <td style="width: 70px; min-width: 70px; max-width: 70px; text-align:center;" *ngIf="FatherComponent.Container3Visibility">{{FatherComponent.Container3Label}}</td>
                                                                                                 <td style="width: 70px; min-width: 70px; max-width: 70px; text-align:center;" *ngIf="FatherComponent.Container4Visibility">{{FatherComponent.Container4Label}}</td>
                                                                                                 <td style="width: 70px; min-width: 70px; max-width: 70px; text-align:center;" *ngIf="FatherComponent.Container5Visibility">{{FatherComponent.Container5Label}}</td>
+                                                                                                <td style="width: 70px; min-width: 70px; max-width: 70px; text-align:center;">{{'TariffLinesContainersPrice.F.CostPrice' | TextCodeTranslationPipe}}</td>
+
                                                                                                 <td class="LastChild">
                                                                                                     <div></div>
                                                                                                 </td>
@@ -458,6 +460,10 @@
 
                                                                                                 <td class="CellStretched" style="width: 70px; min-width: 70px; max-width: 70px;" *ngIf="FatherComponent.Container5Visibility">
                                                                                                     <LogTextBox [InputType]="'double'" [Placeholder]="'No Update'" [NoObjectField]="true" [ObjectFieldName]="'Price5'" [DataContext]="item.DataContext" [HideColumns]="true"></LogTextBox>
+                                                                                                </td>
+
+                                                                                                <td class="CellStretched" style="width: 70px; min-width: 70px; max-width: 70px;">
+                                                                                                    <LogTextBox [InputType]="'double'" [Placeholder]="'No Update'" [NoObjectField]="true" [ObjectFieldName]="'CostPrice'" [DataContext]="item.DataContext" [HideColumns]="true"></LogTextBox>
                                                                                                 </td>
 
                                                                                                 <td class="CellStretched">

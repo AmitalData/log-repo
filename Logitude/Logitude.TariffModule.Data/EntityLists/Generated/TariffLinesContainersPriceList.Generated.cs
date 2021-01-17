@@ -34,6 +34,8 @@ namespace Logitude.TariffModule.Data.EntityLists
        public decimal? Price4  { get; set; }
        [DataMember]
        public decimal? Price5  { get; set; }
+       [DataMember]
+       public decimal? CostPrice  { get; set; }
    }
 
 }

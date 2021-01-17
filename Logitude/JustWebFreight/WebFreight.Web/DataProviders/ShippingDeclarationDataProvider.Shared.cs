@@ -389,6 +389,7 @@ namespace WebFreight.Web.DataProviders
         public string TenantName { get; set; }
         public string TenantPhone { get; set; }
         public string IssuedByUser { get; set; }
+        public string IssuedByUserPosition { get; set; }
 
         public DateTime? MainCarriageATD { get; set; }
 

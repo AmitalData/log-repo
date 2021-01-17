@@ -191,6 +191,7 @@ namespace CommunicationWorkerRole
              LogitudeLead lead = GetLogitudeLeads(commLog);
             if (lead != null && lead.StatusCode == "InProgress" && (lead.IsEmailVerified || (lead.IsEmailVerified == false && lead.IsSentToCustomer == false)))
             {
+      
                 CreateTenant(lead);
             }
 
@@ -234,7 +235,7 @@ namespace CommunicationWorkerRole
         private void CreateTenant(LogitudeLead lead)
         {
 
-            int crmTenant = LogitudeSettings.LogitudeCRMTenantNumber;
+                int crmTenant = LogitudeSettings.LogitudeCRMTenantNumber;
                 int demoTenant = GetDemoTenant(lead);
 
                 ICommonDataContext commonContext = CommonDataContext.GetContext(crmTenant);

@@ -146,6 +146,7 @@ export class ShipmentList {
 		DirectionName: string;
 		TransportModeName: string;
 		QuoteId: string;
+		QuoteNumber: string;
 		ShipmentReceivableStatusCode: string;
 		ShipmentPayableStatusCode: string;
 		ShipmentReceivableStatusName: string;
@@ -448,5 +449,8 @@ export class ShipmentList {
 		ShipmentSubTypeName: string;
 		IsDangerous: boolean;
 		DangerousUnNumber: string;
+		IsAccrualsApproved: boolean;
+		AccrualsApprovalDate: Date;
+		MainHarmonize: string;
 	
 }

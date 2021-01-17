@@ -31,7 +31,8 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 	         Price2, 
 	         Price3, 
 	         Price4, 
-	         Price5,
+	         Price5, 
+	         CostPrice,
 	      }
 
 
@@ -47,7 +48,8 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 	         Price2, 
 	         Price3, 
 	         Price4, 
-	         Price5,
+	         Price5, 
+	         CostPrice,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -99,6 +101,11 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Price5))
             {
 				entityPOCO.Price5 = entityPM.Price5;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CostPrice))
+            {
+				entityPOCO.CostPrice = entityPM.CostPrice;
 			}
 			}
 
@@ -155,6 +162,11 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 					entityPM.Price5 = entityPOCO.Price5;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CostPrice))
+            {
+					entityPM.CostPrice = entityPOCO.CostPrice;
+            }
+
 		}
 
 		public void PMToOldPM(TariffLinesContainersPricePM entityPM, TariffLinesContainersPricePM oldEntityPM)
@@ -204,6 +216,11 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Price5))
             {
                 oldEntityPM.Price5 = entityPM.Price5;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CostPrice))
+            {
+                oldEntityPM.CostPrice = entityPM.CostPrice;
             }
 			
 		}
