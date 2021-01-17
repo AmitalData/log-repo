@@ -487,6 +487,12 @@ namespace Logitude.DBMigrations.Models
             return CurrentTable.UniqueConstraints.Where(u => u.Columns == uniqueConstraintColumns).Any();
         }
 
+        protected override UniqueConstraintDefinition GetUniqueConstraintFromCurrentTable(UniqueConstraintDefinition uniqueConstraint)
+        {
+            string uniqueConstraintColumns = (!uniqueConstraint.Columns.Contains(",") ? FormatNameLength(uniqueConstraint.Columns, DXMLTable.Columns.Where(c => c.Name == uniqueConstraint.Columns).First().ShortName) : string.Join(",", uniqueConstraint.Columns.Split(',').Select(uc => FormatNameLength(uc, DXMLTable.Columns.Where(c => c.Name == uc).First().ShortName)).ToArray())).ToLower();
+            return CurrentTable.UniqueConstraints.Where(u => u.Columns == uniqueConstraintColumns).First();
+        }
+
         protected override bool IsUniqueConstraintInDXMLTable(UniqueConstraintDefinition uniqueConstraint)
         {
             return DXMLTable.UniqueConstraints.Where(u => (!u.Columns.Contains(",") ? FormatNameLength(u.Columns, DXMLTable.Columns.Where(c => c.Name == u.Columns).First().ShortName) : string.Join(",", u.Columns.Split(',').Select(uc => FormatNameLength(uc, DXMLTable.Columns.Where(c => c.Name == uc).First().ShortName)).ToArray())) == uniqueConstraint.Columns).Any();
