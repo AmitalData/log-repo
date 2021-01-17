@@ -25,6 +25,7 @@ namespace Logitude.Customs.BL.Validators
         public static CustomsRequiredFieldErrors GetRequiredFieldErrorsForDeclaration(string declarationId, int tenant, DeclarationPM declarationPM = null)
         {
             DeclarationPM declaration = null;
+            
             CustomsRequiredFieldErrors requiredErrors = new CustomsRequiredFieldErrors() { RequiredFields = new List<CustomsRequiredFieldsErrorItem>(), };
             ICustomContext context = CustomContext.GetContext(tenant);
             CustomsRequiredFieldQueryService customsRequiredFieldQueryService = new CustomsRequiredFieldQueryService(context);
@@ -42,6 +43,7 @@ namespace Logitude.Customs.BL.Validators
                 declaration = CacheManager.CacheWrapper.Remove(cacheKey) as DeclarationPM;
 
             }
+            declaration = declaration ?? declarationPM;//courier.CalcAll()
             if (declaration == null)
             {
                 declarationQueryService.LoadSupplierInvoicesWithItems = false;
