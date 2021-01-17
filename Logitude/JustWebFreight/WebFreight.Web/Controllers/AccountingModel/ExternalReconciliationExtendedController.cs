@@ -15,6 +15,7 @@ using Simplog.Server.Infrastructure.Helpers;
 using Logitude.Accounting.BL.CoreBL.ExternalReconcile;
 using Logitude.Accounting.BL.EntityUpdateServices;
 using Logitude.Accounting.Def.EntityPMs;
+using Logitude.Accounting.BL.CoreBL.ExternalReconcile.Utils;
 
 namespace WebFreight.Web.Controllers.AccountingModel
 {
@@ -54,13 +55,40 @@ namespace WebFreight.Web.Controllers.AccountingModel
                     int tenant = authToken.Tenant;
 
                     var accountingContext = AccountingContext.GetContext(authToken.Tenant);
-                    var externalReconcileAdjustBankFeesService = new ExternalReconcileAdjustBankFeesService();
                     var externalReconcileDataProvider = new ExternalReconcileDataProvider(accountingContext);
-                    externalReconcileAdjustBankFeesService.MustInit(externalReconcileDataProvider);
-                    externalReconcileAdjustBankFeesService
-                        .CreateJournalWithExtReconcile(tenant, createJournalReconcileAdjustBankFeeM.ReconcileExternalPageLineIdList, AdjustAccountId, Remarks, AccountDate, createJournalReconcileAdjustBankFeeM.LedgerTransactionIds);
 
-                    TheNewJournal = externalReconcileAdjustBankFeesService.TheNewJournal;
+                    var myExternalReconcileTypeService = new ExternalReconcileTypeService();
+                    myExternalReconcileTypeService.MustInit(externalReconcileDataProvider);
+                    ExternalReconcileType externalReconcileType= myExternalReconcileTypeService.GetExternalReconcileTypeFrom(tenant, createJournalReconcileAdjustBankFeeM.ReconcileExternalPageLineIdList,
+                        createJournalReconcileAdjustBankFeeM.LedgerTransactionIds);
+
+                    switch (externalReconcileType)
+                    {
+                        case ExternalReconcileType.MoveBankCheckFromTransferExternalReconcile:
+                            var externalReconcileMoveBankCheckFromTransfer2GLAccountService = new ExternalReconcileMoveBankCheckFromTransfer2GLAccountService();
+                            externalReconcileMoveBankCheckFromTransfer2GLAccountService.MustInit(externalReconcileDataProvider);
+                            externalReconcileMoveBankCheckFromTransfer2GLAccountService.OnAdjustMustInit(AdjustAccountId, Remarks);
+                            externalReconcileMoveBankCheckFromTransfer2GLAccountService.CreateJournalWithExtReconcile(
+                                tenant,
+                                createJournalReconcileAdjustBankFeeM.LedgerTransactionIds.First(),
+                                createJournalReconcileAdjustBankFeeM.ReconcileExternalPageLineIdList.First()
+                                );
+                            TheNewJournal = externalReconcileMoveBankCheckFromTransfer2GLAccountService.TheJournalPM;
+
+                            break;
+                        case ExternalReconcileType.AdjustExternalReconcile:
+                            var externalReconcileAdjustBankFeesService = new ExternalReconcileAdjustBankFeesService();
+                            externalReconcileAdjustBankFeesService.MustInit(externalReconcileDataProvider);
+                            externalReconcileAdjustBankFeesService
+                                .CreateJournalWithExtReconcile(tenant, createJournalReconcileAdjustBankFeeM.ReconcileExternalPageLineIdList, AdjustAccountId, Remarks, AccountDate, createJournalReconcileAdjustBankFeeM.LedgerTransactionIds);
+
+                            TheNewJournal = externalReconcileAdjustBankFeesService.TheNewJournal;
+
+                            break;
+                    }
+
+
+
                     var JournalUP = new JournalUpdateService(accountingContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), tenant);
                     JournalUP.Update(TheNewJournal, true);
 
