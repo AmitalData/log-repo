@@ -167,6 +167,7 @@
     <None Include="Files\Fact_Charges.dwml" />
     <None Include="Files\Fact_MasterCharges.dwml" />
     <None Include="Files\Fact_Masters.dwml" />
+    <None Include="Files\Fact_Quotes.dwml" />
     <None Include="Files\Fact_Shipments.dwml" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
