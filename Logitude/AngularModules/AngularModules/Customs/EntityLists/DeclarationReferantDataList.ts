@@ -69,6 +69,10 @@ export class DeclarationReferantDataList {
 	DeclarationNumber: string;
 	IsHatraDateNull: boolean;
 	RequestedCustomsDocId: number;
+	IsClose: boolean;
+	PaymentDate_Date: Date;
+	PaymentDate_Time: string;
+	PhysicalCheck: boolean;
 	
 }
  

@@ -779,6 +779,29 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private bool isClose ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsClose  
+	   {
+	    
+	     get
+		{
+		   return isClose;
+		 }
+		 set
+		 {
+		   if(isClose != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsClose",OldValue=isClose,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   isClose=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

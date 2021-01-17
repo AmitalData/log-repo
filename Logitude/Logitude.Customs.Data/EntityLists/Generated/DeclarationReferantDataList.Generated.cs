@@ -136,6 +136,14 @@ namespace Logitude.Customs.Data.EntityLists
        public bool IsHatraDateNull  { get; set; }
        [DataMember]
        public int? RequestedCustomsDocId  { get; set; }
+       [DataMember]
+       public bool IsClose  { get; set; }
+       [DataMember]
+       public DateTime? PaymentDate_Date  { get; set; }
+       [DataMember]
+       public string PaymentDate_Time  { get; set; }
+       [DataMember]
+       public bool? PhysicalCheck  { get; set; }
    }
 
 }
