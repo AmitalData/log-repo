@@ -4,6 +4,8 @@ using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.InfrastructureModel.EntityPMs;
 using Logitude.BL.InfrastructureModel.EntityQueries;
 using Logitude.BL.InfrastructureModel.Tools.EntityService;
+using Logitude.Infrastructure.BL.EntityQueryServices;
+using Logitude.Infrastructure.Data.EntityLists;
 using Logitude.Infrastructure.Data.EntityPOCOs;
 using Logitude.Infrastructure.Data.Repsitories;
 using Logitude.Server.Tools;
@@ -30,6 +32,7 @@ using System.Web.Http;
 using System.Web.Script.Serialization;
 using WebFreight.Web.DataContracts;
 using WebFreight.Web.Helpers;
+using WebFreight.Web.Helpers.BIReport;
 using WebFreight.Web.Security;
 using WebFreight.Web.WebServices;
 
@@ -339,13 +342,15 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
                 SecurityUtility.AuthenticationOnTenant(tenant);
                 string ObjectTableName = "Shipment";
-                var data = new ExportToExcelHelper().ExportBIQueryToExcel(bIReportXMLData, tenant);
+                var exportBIReportService = new ExportBIReportService();
+
+                var data = exportBIReportService.Run(bIReportXMLData, tenant);
 
                 BlobFileInfo fileInfo = new BlobFileInfo()
                 {
                     FileName = ObjectTableName + DateTime.Now.ToShortDateString(),
                     FolderName = "others",
-                    Extension = "xlsx",
+                    Extension = exportBIReportService.GetBIReportExtensionFile(bIReportXMLData.ExportDataType),
                     Tenant = tenant,
                     FileSize = data.Length,
 
@@ -402,6 +407,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     { "Tenant", bIReportExecutionLog.Tenant.ToString() }
                 }, tenant, null, null, null, null);
 
+                bIReportXMLData.BIReportsExecutionLogId = bIReportExecutionLog.Id;
                 return Request.CreateResponse(HttpStatusCode.OK, bIReportXMLData);
             }
 
@@ -411,16 +417,16 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             }
         }
 
-        public HttpResponseMessage GetBIReportLogStatus(string reportId)
+        public HttpResponseMessage GetBIReportLogStatus(string bIReportsExecutionLogId)
         {
             try
             {
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                BIReportsExecutionLogRepository reportExecutionLogRepository = new BIReportsExecutionLogRepository(authToken.Tenant);
-                BIReportsExecutionLog reportExecutionLog = reportExecutionLogRepository.GetSingleByBIReportId(reportId, authToken.Tenant);
-                return Request.CreateResponse(HttpStatusCode.OK, reportExecutionLog);
+                BIReportsExecutionLogQueryService bIReportsExecutionLogQueryService = new BIReportsExecutionLogQueryService(authToken.Tenant);
+                BIReportsExecutionLogList bIReportsExecutionLogList = bIReportsExecutionLogQueryService.GetBIReportsExecutionLogList(bIReportsExecutionLogId, authToken.Tenant);
+                return Request.CreateResponse(HttpStatusCode.OK, bIReportsExecutionLogList);
             }
             catch (Exception ex)
             {
