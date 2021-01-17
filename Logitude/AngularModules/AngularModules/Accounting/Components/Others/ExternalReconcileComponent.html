@@ -1,4 +1,4 @@
-﻿<style>
+<style>
     .tab-footer {
         background: white;
         height: 55px;
@@ -391,7 +391,11 @@
 <div style="padding: 10px;height: 100%;">
 
     <table>
-
+        <tr style="height:1px; float:isRTL ? right :left;">
+            <td>
+            <p style="width: 250px; margin-right:isRTL ? 150px : 0px; margin-left:isRTL ?0px:150px; text-align: center;">{{BankName}}</p>
+            </td>
+        </tr>
         <!-- Alert -->
         <tr *ngIf="showAlert" style="height:1px;">
             <td colspan="2">
