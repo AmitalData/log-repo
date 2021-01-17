@@ -92,7 +92,7 @@ namespace WebFreight.Web.Helpers
             string userid = queryFilters.userid;
             string ObjectTableName = queryFilters.ObjectTableName.Replace("Customs.", "");
 
-            SecurityUtility.IsWorkerRole = args.IsWorkerRoleCall;
+            SecurityUtility.IsWorkerRoleCall = args.IsWorkerRoleCall;
 
             var data = new ExportToExcelHelper().ExportQueryToExcel(new ExportToExcelArgs()
             {
