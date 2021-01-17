@@ -86,7 +86,7 @@ export class StatementFilterComponent extends BaseComponent implements OnInit {
 
     }
 
-    public IsByDueDate: boolean = false;
+    public IsByDueDate: boolean = true;
     public IsRegisterDate: boolean = false;
     public IsDueDate: boolean = true;
     public DateRadio: string = "DateRadio_";
