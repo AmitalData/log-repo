@@ -197,13 +197,13 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 {
                     case "AMAS":
                         {
-                            entityPM.FileName = "AirShipments" + entityPM.TransferNumber + ".xlsx";
+                            entityPM.FileName = "AirShipments" + entityPM.TransferNumber + ".xls";
                             break;
                         }
 
                     case "AMOS":
                         {
-                            entityPM.FileName = "OceanShipments" + entityPM.TransferNumber + ".xlsx";
+                            entityPM.FileName = "OceanShipments" + entityPM.TransferNumber + ".xls";
                             break;
                         }
                 }

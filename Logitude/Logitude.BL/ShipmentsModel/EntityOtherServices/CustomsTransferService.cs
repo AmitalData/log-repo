@@ -647,7 +647,7 @@ namespace Logitude.BL.ShipmentsModel.EntityOtherServices
                 {
                     FileName = fileProps[0],
                     HasExternalContainer = true,
-                    Extension = "xlsx",
+                    Extension = "xls",
                     Tenant = tenant,
                     FileSize = ComputedData.Length,
                 };
