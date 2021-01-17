@@ -139,6 +139,7 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public string StateName { get; set; }
         public string GLAccountId { get; set; }
         public string GLAccountDisplayNumber { get; set; }
+        public bool IsAutonomy { get; set; }
 
     }
 }

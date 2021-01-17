@@ -2354,8 +2354,8 @@ namespace HypredTest
                 // CustomerPM pm = customerservice.GetCustomerPM(new CustomerApiFilters() { ByCode = true, SearchCode = "10107933" }, 8, ref resultResponse);
                 CustomerProxy.CustomerPM newCustomer = new CustomerProxy.CustomerPM()
                 {
-                    Code = "HBRDTSTCustE",
-                    EnglishName = "hybrid customer E",
+                    Code = "HBRDWesam",
+                    EnglishName = "hybrid customer Wesam",
                     Tenant = 1,
                     PartnerTypeId = "CS",
                     SalesmanUserId = "HybridU1",
@@ -2365,8 +2365,9 @@ namespace HypredTest
                     CreditLimitAmount = 50.65,
                     CountryCode = "IL",
                     PaymentTermId = paymentTermId,
-                     
+                    IsAutonomy = false,
 
+                    
                 };
 
                 //CustomerSalesmanByProductPM[] salesmanbyproducts = new CustomerSalesmanByProductPM[] { 
@@ -2400,7 +2401,54 @@ namespace HypredTest
         //public string SalesmanUserName { get; set; }
         }
 
-      
+
+        public Response TestGetCustomerPMService(string token)
+        {
+
+
+            using (new System.ServiceModel.OperationContextScope((System.ServiceModel.IClientChannel)customerservice.InnerChannel))
+            {
+
+                System.ServiceModel.Web.WebOperationContext.Current.OutgoingRequest.Headers.Add("Token", token);
+
+                Response resultResponse = new Response();
+                CustomerProxy.CustomerPM customerPM = customerservice.GetCustomerPM(new CustomerApiFilters() { ByCode = true, SearchCode = "HBRDWesam" }, 1, ref resultResponse);
+               
+                return resultResponse;
+            }
+        }
+
+        public Response TestGetCustomerListByIdService(string token)
+        {
+
+
+            using (new System.ServiceModel.OperationContextScope((System.ServiceModel.IClientChannel)customerservice.InnerChannel))
+            {
+
+                System.ServiceModel.Web.WebOperationContext.Current.OutgoingRequest.Headers.Add("Token", token);
+
+                Response resultResponse = new Response();
+                CustomerProxy.CustomerList customerList = customerservice.GetCustomerListById("1-11108", 1, ref resultResponse);
+
+                return resultResponse;
+            }
+        }
+        public Response TestGetCustomerListByEmailService(string token)
+        {
+
+
+            using (new System.ServiceModel.OperationContextScope((System.ServiceModel.IClientChannel)customerservice.InnerChannel))
+            {
+
+                System.ServiceModel.Web.WebOperationContext.Current.OutgoingRequest.Headers.Add("Token", token);
+
+                Response resultResponse = new Response();
+                //CustomerProxy.CustomerList customerList = customerservice.GetCustomerListByEmail("1-11108", 1, ref resultResponse);
+
+                return resultResponse;
+            }
+        }
+        
         private void TestQuoteEvents()
         {
             QuoteProxy.QuoteWcfServiceClient quoteservice = new QuoteWcfServiceClient();
@@ -3197,7 +3245,7 @@ namespace HypredTest
                     response = partnersTester.TestWarehouseService(Token);
                     break;
                 case "Customer":
-                    response = TestCustomerService(Token);
+                    response = SetCustomerTests(Token);
                     break;
                 case "Vendor":
                     response = partnersTester.TestVendorService(Token);
@@ -3236,6 +3284,30 @@ namespace HypredTest
 
             MessageBox.Show("Success " + response?.Result);
 
+        }
+
+        private Response SetCustomerTests(string token)
+        {
+            Response response = new Response();
+            switch (ActionNames.SelectedItem)
+            {
+                case "upsert":
+                    response = TestCustomerService(token);
+                    break;
+                case "getCustomerPM":
+                    response = TestGetCustomerPMService(token);
+                    break;
+                case "getCustomerListById":
+                    response = TestGetCustomerListByIdService(token);
+                    break;
+                case "getCustomerListByEmail":
+                    response = TestGetCustomerListByEmailService(token);
+                    break;
+                default:
+                    MessageBox.Show("select an action to test");
+                    break;
+            }
+            return response;
         }
 
         private Response TestShipmentPickupsDeliveriesService()
@@ -3380,6 +3452,26 @@ namespace HypredTest
         }
 
         private void cmdServices_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (this.cmdServices.SelectedItem == "Customer")
+            {
+                this.ActionNames.Visible = true;
+                this.ActionNames.Items.AddRange(new object[] {
+                "upsert",
+                "getCustomerPM",
+                "getCustomerListById",
+                "getCustomerListByEmail",
+                });
+            }
+            else
+            {
+                this.ActionNames.Visible = false;
+                this.ActionNames.SelectedItem = "";
+                this.ActionNames.Items.Clear();
+            }
+        }
+
+        private void ActionNames_SelectedIndexChanged(object sender, EventArgs e)
         {
 
         }
