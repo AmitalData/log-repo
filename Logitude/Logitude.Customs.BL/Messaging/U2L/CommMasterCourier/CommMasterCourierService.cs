@@ -264,9 +264,13 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommMasterCourier
             }
             catch (DbEntityValidationException ex)
             {
+
                 var FormatedException = ExceptionFormatUtil.GetFormated(ex);
                 AppendLogLine("Master Courier Upsert Error " + Environment.NewLine + Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.ToString(1000));
                 AppendLogLine("ProccessRequest():Exception " + FormatedException.ToString() + Environment.NewLine + "---------------------------------------------");
+                MyGenericResponseObj.Message = "Master Courier Upsert Error ";
+                MyGenericResponseObj.InnerException = FormatedException.ToString();
+                MyGenericResponseObj.ExceptionType = ex.GetType().ToString();
                 MyGenericResponseObj.StatusType = GenericResponseObj.StatusEnum.BusinessError;
 
                 return;
@@ -275,6 +279,9 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommMasterCourier
             {
                 AppendLogLine("Master Courier Upsert Error " + Environment.NewLine + Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.ToString(1000));
                 AppendLogLine("ProccessRequest():Exception " + e.ToString() + Environment.NewLine + "---------------------------------------------");
+                MyGenericResponseObj.Message = "Master Courier Upsert Error ";
+                MyGenericResponseObj.InnerException = e.ToString();
+                MyGenericResponseObj.ExceptionType = e.GetType().ToString();
                 MyGenericResponseObj.StatusType = GenericResponseObj.StatusEnum.BusinessError;
                 return;
             }
