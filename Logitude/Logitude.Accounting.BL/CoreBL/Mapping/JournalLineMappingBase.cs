@@ -52,24 +52,24 @@ namespace Logitude.Accounting.BL.CoreBL.Mapping
 
 
 
-            MyLedgerTransaction.LocalAmountCredit = System.Math.Round(MyLedgerTransaction.LocalAmountCredit , 4);
-            MyLedgerTransaction.LocalAmountDebit = System.Math.Round(MyLedgerTransaction.LocalAmountDebit , 4);
-            MyLedgerTransaction.ForeignAmountCredit = System.Math.Round(MyLedgerTransaction.ForeignAmountCredit , 4);
-            MyLedgerTransaction.ForeignAmountDebit = System.Math.Round(MyLedgerTransaction.ForeignAmountDebit , 4);
+            MyLedgerTransaction.LocalAmountCredit = System.Math.Round(MyLedgerTransaction.LocalAmountCredit , 2);
+            MyLedgerTransaction.LocalAmountDebit = System.Math.Round(MyLedgerTransaction.LocalAmountDebit , 2);
+            MyLedgerTransaction.ForeignAmountCredit = System.Math.Round(MyLedgerTransaction.ForeignAmountCredit , 2);
+            MyLedgerTransaction.ForeignAmountDebit = System.Math.Round(MyLedgerTransaction.ForeignAmountDebit , 2);
 
 
 
-            MyLedgerTransaction.OpenAmount = System.Math.Round(MyLedgerTransaction.OpenAmount, 4);//new Code Not Test
+            MyLedgerTransaction.OpenAmount = System.Math.Round(MyLedgerTransaction.OpenAmount, 2);//new Code Not Test
             
 
 
             MyGLAccountTotalByMonth = DefaultMapGLAccountTotalByMounth(MyLedgerTransaction);
             AddGLAccountTotalByMounth(MyGLAccountTotalByMonth, MyLedgerTransaction);
 
-            MyGLAccountTotalByMonth.ForeignAmountCredit = System.Math.Round(MyGLAccountTotalByMonth.ForeignAmountCredit,4);
-            MyGLAccountTotalByMonth.ForeignAmountDebit = System.Math.Round(MyGLAccountTotalByMonth.ForeignAmountDebit,4);
-            MyGLAccountTotalByMonth.LocalAmountCredit = System.Math.Round(MyGLAccountTotalByMonth.LocalAmountCredit, 4);
-            MyGLAccountTotalByMonth.LocalAmountDebit = System.Math.Round(MyGLAccountTotalByMonth.LocalAmountDebit, 4);
+            MyGLAccountTotalByMonth.ForeignAmountCredit = System.Math.Round(MyGLAccountTotalByMonth.ForeignAmountCredit,2);
+            MyGLAccountTotalByMonth.ForeignAmountDebit = System.Math.Round(MyGLAccountTotalByMonth.ForeignAmountDebit,2);
+            MyGLAccountTotalByMonth.LocalAmountCredit = System.Math.Round(MyGLAccountTotalByMonth.LocalAmountCredit, 2);
+            MyGLAccountTotalByMonth.LocalAmountDebit = System.Math.Round(MyGLAccountTotalByMonth.LocalAmountDebit, 2);
 
 
         }
