@@ -121,6 +121,16 @@ LEFT OUTER JOIN AMINETNXT_MAIN.Contacts Extent10 ON Extent10.Id = Extent1.Contro
                                                                  ImporterName = d.Importer != null ? d.Importer.FullName : d.ImporterName,
                                                                  IsAvailabilityDateNull= d.AvailabilityDate == null,
                                                                  IsPaymentDateNull = d.PaymentDate == null,
+
+                                                                 DeclarationNumber = d.DeclarationNumber,
+                                                                 IsHatraDateNull= d.HatraDate== null,
+                                                                 RequestedCustomsDocId = d.RequestedCustomsDocId,
+                                                                 PaymentDate_Date= d.PaymentDate.Value.Date,
+                                                                 PaymentDate_Time= d.PaymentDate.Value.ToShortTimeString(),
+                                                                 IsClose=d.IsClose,
+                                                                 PhysicalCheck=true,
+
+
                                                              }) ;
                                                                 
                                               return query;

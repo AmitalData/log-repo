@@ -89,7 +89,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         OrderMoney, 
 	         Team, 
 	         ImporterFile, 
-	         FileOpenDate,
+	         FileOpenDate, 
+	         IsClose,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
