@@ -126,7 +126,7 @@ namespace Logitude.Accounting.BL.CoreBL.ExternalReconcile
             };
             reconcile_DebitPage_CreditGLAccount.ExternalReconciliationLines.Add(reconcileLine_DebitPage);
 
-
+            int l = 2;
             var reconcileLines_GLAccount_LedgerTransactionId=
             myNewLedgerTransactionBankListOfGLAccount.Select(myNewLedgerTransactionBankOfGLAccount =>
             new ExternalReconciliationLinePM()
@@ -135,7 +135,7 @@ namespace Logitude.Accounting.BL.CoreBL.ExternalReconcile
                 ChangeSetOp = ChangeSetOperation.Insert,
                 GroupNumber = 1,
                 ReconciliationId = reconcile_DebitPage_CreditGLAccount.Id,
-                Line = 2,
+                Line = l++,
 
                 LedgerTransactionId = myNewLedgerTransactionBankOfGLAccount.Id,
             }
