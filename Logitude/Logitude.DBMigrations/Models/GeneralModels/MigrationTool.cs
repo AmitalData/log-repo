@@ -2584,7 +2584,7 @@ namespace Logitude.DBMigrations.Models
                 HandleDXMLFiles(dxmlFiles, true);
                 string validationMessage = "Error: Cannot Find Environment Configuration In Table [DBMigrationConfigurations] In Main Database, " +
                                            "To Continue You Should Add It Using Insert Statement\n\n" +
-                                           "For Example: INSERT INTO [dbo].[DBMigrationConfigurations] VALUES('Env', 'MyLocalEnv')";
+                                           "For Example: INSERT INTO [dbo].[DBMigrationConfigurations] VALUES('Env', 'Local')";
                 ExitTool(validationMessage);
             }
         }
