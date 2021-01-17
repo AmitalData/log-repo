@@ -18,6 +18,7 @@ namespace Logitude.Accounting.BL.CoreBL.ExternalReconcile
         private IExternalReconcileDataProvider _ExternalReconcileDataProvider;
         private bool _AdjustAsBankFee;
         private string _OnAdjust_adjustGLAccountId;
+        private string _ScreenNotes;
         public const string M_LedgerNotInTransferBank = "התנועה איננה בחשבון בנק לשלם ";
         public const string M_InputPageLineNotInTransferBank = "הדף איננה בחשבון בנק לשלם ";
         public const string M_BankBelongtoDifferentBankThanLedger = "אין תאימות דף הבנק שייך לבנק אחר ";
@@ -43,6 +44,7 @@ namespace Logitude.Accounting.BL.CoreBL.ExternalReconcile
         {
             //screenNotes = "התאמת דף בנק (עמלה)";
             _OnAdjust_adjustGLAccountId = adjustGLAccountId;
+            _ScreenNotes = screenNotes;
         }
         /// <summary>
         // המחאה לשלם נתתי לספק המחאה דחויה  -paymentcheques
@@ -284,10 +286,10 @@ namespace Logitude.Accounting.BL.CoreBL.ExternalReconcile
                 new List<string>() { myReconcileExternalPageLinePM.Id }, new List<string>() { ledgerTransactionBankTransferId },
 
                 _OnAdjust_adjustGLAccountId,
-                "ScreenNotes", journal.AccountingDate
+                _ScreenNotes, journal.AccountingDate
 
                 );
-            bool testedAndFoundAllOK = false;
+            bool testedAndFoundAllOK = true;
             if (testedAndFoundAllOK)
             {
                 journal.StatusCodeEnum = JournalStatusTypePM.StatusCodeEnum.Approved;
