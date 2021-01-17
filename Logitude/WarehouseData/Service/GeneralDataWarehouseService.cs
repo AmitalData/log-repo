@@ -176,7 +176,6 @@ namespace WarehouseData.Helper
             //Fact Table
             tableNameLists.Add(new TableClass() { TableName = "Shipment", FieldIndexes = "Source Tenant,Parent Tenant,Id,DirectHouse", DWObjectTableCode = "Fact_Shipments", KeyName = "Id", DWTableKeyName = "Id", Dw_TableName = "dw_Shipments", HasFactTable = true, BuildScriptName = "BuildFactShipmentTable", IncrementalScriptName = "UpdateFactShipmentTable", HasCustomFields = true, CustomFieldsCount = 40, DispayInScreen = true });
             tableNameLists.Add(new TableClass() { TableName = "Shipment", FieldIndexes = "Source Tenant,Parent Tenant,Shipment Id,DirectHouse", DWObjectTableCode = "Fact_Charges", Dw_TableName = "dw_Shipments", KeyName = "[Shipment Id]", DWTableKeyName = "Id", HasFactTable = true, BuildScriptName = "BuildFactChargesTable", IncrementalScriptName = "UpdateFactChargesTable", DispayInScreen = true });
-            tableNameLists.Add(new TableClass() { TableName = "Quote", FieldIndexes = "Source Tenant,Parent Tenant,Quote Id", DWObjectTableCode = "Fact_Quotes", Dw_TableName = "dw_Quotes", KeyName = "[Quote Id]", DWTableKeyName = "Id", HasFactTable = true });
             
             //WaterMark
             tableNameLists.Add(new TableClass() { TableName = "WaterMark", DBTableName = "WaterMarks", Dw_TableName = "dw_WaterMarks", KeyName = "TableName", FieldsDBName = "TableName,LastUpdateDate" });
