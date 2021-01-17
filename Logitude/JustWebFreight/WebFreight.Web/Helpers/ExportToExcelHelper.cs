@@ -616,30 +616,6 @@ namespace WebFreight.Web.Helpers
             return memory.ToArray();
         }
 
-        public byte[] ExportBIQuery(BIReportXMLData bIReportXMLData, int tenant)
-        {
-            byte[] reportData = null;
-      
-
-            DWQueryBuilderHelper QBHelper = new DWQueryBuilderHelper(tenant);
-            SqlCommandDefinition sqlCommandDefinition = QBHelper.GetQuerySQL(bIReportXMLData.DWQueryData);
-            DataTable dataTable = QBHelper.GetDWQueryData(sqlCommandDefinition);
-            BIReportsSecurityIntegrationService bIReportsSecurityIntegrationService = new BIReportsSecurityIntegrationService(tenant);
-            bIReportsSecurityIntegrationService.CheckBIReportDataSecurity(dataTable);
-            if (bIReportXMLData.ExportDataType == "pdf")
-            {
-                reportData = new ExportBIReportToPDFService().Run(dataTable);
-            }
-            else
-            {
-
-                reportData = new ExportBIReportToExelService().Run(bIReportXMLData, dataTable, tenant);
-            }
-            return reportData;
-
-
-
-        }
 
 
         private string ConvertDataList2Xml(IEnumerator dataList, QueryPM query, List<QueryColumnPM> queryColumns, int tenant)

@@ -2592,8 +2592,9 @@
     <Compile Include="Helpers\AutomationModel\ReportTemplateDocOutService.cs" />
     <Compile Include="Helpers\AutomationModel\FTPAutomationService.cs" />
     <Compile Include="Helpers\BIReportsSecurityIntegrationService.cs" />
-    <Compile Include="Helpers\BIReport\ExportBIReportToExelService.cs" />
-    <Compile Include="Helpers\BIReport\ExportBIReportToPDFService.cs" />
+    <Compile Include="Helpers\BIReport\ExportBIReportService.cs" />
+    <Compile Include="Helpers\BIReport\ExportBIReportExcelService.cs" />
+    <Compile Include="Helpers\BIReport\ExportBIReportPdfService.cs" />
     <Compile Include="Helpers\BluesnapAnalyzer.cs" />
     <Compile Include="Helpers\BluesnapExecutionService.cs" />
     <Compile Include="Helpers\BluesnapHelper.cs" />
@@ -4892,6 +4893,7 @@
     </Content>
     <Content Include="WebhooksReceiver.aspx" />
     <Content Include="WebPages\APILogsDownLoadPage.aspx" />
+    <Content Include="WebPages\DawnloadBIReportPage.aspx" />
     <Content Include="WebPages\DawnLoadExcelPage.aspx" />
     <Content Include="WebPages\CorrespondenceDisplayPage.aspx" />
     <Content Include="WebPages\CorrespondenceDownloadpage.aspx" />
@@ -6578,6 +6580,13 @@
     </Compile>
     <Compile Include="WebPages\APILogsDownLoadPage.aspx.designer.cs">
       <DependentUpon>APILogsDownLoadPage.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="WebPages\DawnloadBIReportPage.aspx.cs">
+      <DependentUpon>DawnloadBIReportPage.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WebPages\DawnloadBIReportPage.aspx.designer.cs">
+      <DependentUpon>DawnloadBIReportPage.aspx</DependentUpon>
     </Compile>
     <Compile Include="WebPages\DawnLoadExcelPage.aspx.cs">
       <DependentUpon>DawnLoadExcelPage.aspx</DependentUpon>

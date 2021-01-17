@@ -15,6 +15,7 @@ using Logitude.Infrastructure.Data.Repsitories;
 using Logitude.Infrastructure.Data.EntityPOCOs;
 using Logitude.Server.Tools.StorageService;
 using Microsoft.Practices.Unity;
+using WebFreight.Web.Helpers.BIReport;
 
 namespace WebFreight.Web.Helpers.WorkerRole
 {
@@ -94,7 +95,8 @@ namespace WebFreight.Web.Helpers.WorkerRole
 
         private void DownloadExcel(BIReportXMLData bIReportXMLData)
         {
-            var data = new ExportToExcelHelper().ExportBIQuery(bIReportXMLData, tenant);
+            var exportBIReportService = new ExportBIReportService();
+            var data = exportBIReportService.Run(bIReportXMLData, tenant);
             BIReportExecutionLogArgs handleReportExecutionLogArgs = new BIReportExecutionLogArgs() { ReportExecutionLog = reportExecutionLog, ReportExecutionLogRepository = reportExecutionLogRepository, StatusCode = "F", response = queueResponse };
             if (data != null)
             {
@@ -102,7 +104,7 @@ namespace WebFreight.Web.Helpers.WorkerRole
                 {
                     FileName = bIReportXMLData.BIReportKey,
                     FolderName = "others",
-                    Extension =!string.IsNullOrEmpty(bIReportXMLData.ExportDataType)? bIReportXMLData.ExportDataType : "xlsx",
+                    Extension = exportBIReportService.GetBIReportExtensionFile(bIReportXMLData.ExportDataType),
                     Tenant = tenant,
                     FileSize = data.Length,
                 };

@@ -43,18 +43,22 @@ export class ExportBI2ExcelControl {
     userid: string;
     IncludeTotals: boolean;
     BIReportXMLData: BIReportXMLData = null;
+    ExportDataType: string;
     SetWindowArgs(args: any) {
         this.queryId = args.queryId;
         this.queryCode = args.queryCode;
-
+        
         this.reportId = args.reportId;
         this.queryName = args.reportName;
         this.BIReportXMLData = args.BIReportXMLData;
+        this.ExportDataType = args.BIReportXMLData ? args.BIReportXMLData.ExportDataType:"";
+
         this.IncludeTotals = args.IncludeTotals;
         this.BIReportXMLData.UserId = SessionInfo.LoggedUserId;
         this.StartBuildStimulReportViaWorkerRole();
     }
 
+    BIReportsExecutionLogId: string;
     StartBuildStimulReportViaWorkerRole() {
 
         this.StartBusyIndicator("Generating...");
@@ -66,10 +70,11 @@ export class ExportBI2ExcelControl {
         this.WebFreightDomainService.GetExportBIReportToExcel(this.BIReportXMLData).subscribe((myResponse: ServiceResponse) => {
             if (!myResponse.HasError) {
                 this.FileName = myResponse.Result.BIReportKey;
-                this.StartCheckBIReportBliudViaWorkerRoleTimer();
+                this.StartCheckBIReportBliudViaWorkerRoleTimer(myResponse.Result.BIReportsExecutionLogId);
             } else {
                 this.StopBusyIndicator();
                 if (myResponse.HasError && myResponse.ErrorsArray && myResponse.ErrorsArray.length > 0) {
+                    this.CancelButtonClicked();
                     var messageWindow = new MessageWindow();
                     messageWindow.Show(myResponse.ErrorsArray[0]);
                 }
@@ -108,7 +113,7 @@ export class ExportBI2ExcelControl {
 
     private StartCheckBIReportBliudViaWorkerRoleTimersub: any = null;
     IsStartCheckBIReportBliudViaWorkerRoleTimer: boolean = false;
-    StartCheckBIReportBliudViaWorkerRoleTimer() {
+    StartCheckBIReportBliudViaWorkerRoleTimer(bIReportLogId:string) {
         if (this.IsStartCheckBIReportBliudViaWorkerRoleTimer) {
             this.StartCheckBIReportBliudViaWorkerRoleTimersub.unsubscribe();
         }
@@ -127,7 +132,7 @@ export class ExportBI2ExcelControl {
                     this.WebFreightDomainService = new WebFreightDomainService();
                 }
 
-                this.WebFreightDomainService.GetBIReportLogStatus(this.reportId).subscribe((res: ServiceResponse) => {
+                this.WebFreightDomainService.GetBIReportLogStatus(bIReportLogId).subscribe((res: ServiceResponse) => {
                     var pmResponse: ServiceResponse = res;
                     if (this.IsStartCheckBIReportBliudViaWorkerRoleTimer) {
                         if (pmResponse.HasError || (pmResponse.Result && pmResponse.Result.ExceptionMessage) || (pmResponse.Result && pmResponse.Result.StatusCode == "D")) {
@@ -142,6 +147,8 @@ export class ExportBI2ExcelControl {
                             var result = pmResponse.Result;
                             if (result) {
                                 if (result.ExceptionMessage) {
+                                    this.CancelButtonClicked();
+
                                     var messageWindow = new MessageWindow();
                                     messageWindow.Show(result.ExceptionMessage);
                                 }
@@ -215,9 +222,11 @@ export class ExportBI2ExcelControl {
     }
 
     SaveExcelFile(tenant: number, FileName: string, OTName: string) {
+
+
         var tempDate = new Date();
         var MyDate = tempDate.getDate() + "-" + (tempDate.getMonth() + 1) + "-" + tempDate.getFullYear();
-        var url = ServiceHelper.GetLogitudeURL() + "WebPages/DawnLoadExcelPage.aspx?fileName=" + FileName + "&tempId=" + ServiceHelper.GetLDocumentDownloadToken() + "&qname=" + this.queryName + "_" + MyDate + "&Type=SaveToMicrosoftExcel2007"; //+ "&bireport=" + "bireport";
+        var url = ServiceHelper.GetLogitudeURL() + "WebPages/DawnloadBIReportPage.aspx?fileName=" + FileName + "&tempId=" + ServiceHelper.GetLDocumentDownloadToken() + "&qname=" + this.queryName + "_" + MyDate + "&fileType=" + this.ExportDataType  ; //+ "&bireport=" + "bireport";
         {
             window.open(url);
         }

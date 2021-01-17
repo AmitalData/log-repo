@@ -13,7 +13,7 @@ using WebFreight.Web.DataContracts;
 
 namespace WebFreight.Web.Helpers.BIReport
 {
-    public class ExportBIReportToExelService
+    public class ExportBIReportExcelService
     {
 
         public  byte[] Run(BIReportXMLData bIReportXMLData, DataTable dataTable, int tenant)
