@@ -16,7 +16,7 @@ import { EntityListService } from '../../../../Infrastructure/Services/EntityLis
 import { TenantPM } from '../../../../Common/EntityPMs/TenantPM';
 
 @Component({
-    
+
     templateUrl: './GLAccountGeneralTabComponent.html',
     providers: [GLAccountExtendedListService]
 })
@@ -33,12 +33,14 @@ export class GLAccountGeneralTabComponent extends BaseComponent {
     public ChartOfAccountTypeFilterItems: ApiQueryFilters;
     public ParentsFilterItems: ApiQueryFilters;
     public IsVendor: boolean = false;
-    private _GLAccountExtendedListService = new GLAccountExtendedListService();
-    private gLAccountExtendedPMService = new GLAccountExtendedPMService();
     public IsVendorChartOfAccount: boolean = false;
     public isRTL: boolean = false;
-    private FullAccountingSetting: FullAccountingSettingPM = new FullAccountingSettingPM();
     public TenantPM: TenantPM;
+    public AccountHasATransactions: boolean = false;
+
+    private _GLAccountExtendedListService = new GLAccountExtendedListService();
+    private gLAccountExtendedPMService = new GLAccountExtendedPMService();
+    private FullAccountingSetting: FullAccountingSettingPM = new FullAccountingSettingPM();
 
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(private entityArgs: EntityArgs, private CD: ChangeDetectorRef, public entityListService: EntityListService) {
@@ -56,7 +58,7 @@ export class GLAccountGeneralTabComponent extends BaseComponent {
         this.ChartOfAccountTypeFilterItems = new ApiQueryFilters();
         this.GetConnectedCards(this.EntityPM.Id).then((connectedCards: CardList[]) => {
             var firstConnectedCard = connectedCards[0];
-           
+
                 if (firstConnectedCard && firstConnectedCard.PartnerTypeId == "AC") {
                 this.ChartOfAccountTypeFilterItems.addAdditionalFilter("CodeFilter", "5,6", null, null, "Exclude", false, false, false, "string", false, true);
             }
@@ -64,11 +66,12 @@ export class GLAccountGeneralTabComponent extends BaseComponent {
                 this.ChartOfAccountTypeFilterItems.addAdditionalFilter("Code", "3,4", null, null, "Exclude", false, false, false, "string", false, true);
             }
         });
-    
-        
-      
-        
-          
+
+
+        this.CheckIfAccountHasTransactions();
+
+
+
         //this.ChartOfAccountTypeFilterItems.addAdditionalFilter("Code", "4", null, null, "NotEqual", false, false, false, "string", false, true);
         //#endregion
 
@@ -79,6 +82,19 @@ export class GLAccountGeneralTabComponent extends BaseComponent {
 
         this.Listen();
     }
+    private CheckIfAccountHasTransactions()
+    {
+        this._GLAccountExtendedListService.GetAccountTransactionsCount(this.EntityPM.Id).subscribe(res =>
+        {
+            var count = res.Result;
+            this.AccountHasATransactions = count > 0;
+            console.log("[GetAccountTransactionsCount]", res);
+
+            this.SetUIProperties();
+
+        });
+    }
+
   SetupFiels(){
     if (!AppTool.IsNullOrEmpty(this.EntityPM.Id)) {// Edit Mode
         if (this.ChartOfAccountsTypeCode == "4") { this.IsVendorChartOfAccount = true;}
@@ -515,6 +531,10 @@ export class GLAccountGeneralTabComponent extends BaseComponent {
             this.UIProperties.SetEnabled("IsMultiCurrency", this.ObjectTableName, false);
             this.UIProperties.SetEnabled("CurrencyId", this.ObjectTableName, false);
         }
+
+        if(this.AccountHasATransactions)
+            this.UIProperties.SetEnabled("ChartOfAccountsTypeCode", this.ObjectTableName, false);
+
     }
 
     SetFieldsEditablility(enable) {
