@@ -14,8 +14,8 @@ namespace Logitude.BL.InfrastructureModel.Tools.Validating
     {
         public static void Validate(TasksSchedulerPM taskPM, TasksScheduler taskPoco)
         {
-            if (taskPoco.Status == "In progress")
-                throw new Exception("The task is in progress. You are not allowed to edit it");
+            ////if (taskPoco.Status == "In progress") WR can edit
+            ////    throw new Exception("The task is in progress. You are not allowed to edit it");
 
             if (taskPM.StartDateTime != taskPoco.StartDateTime)
             {
