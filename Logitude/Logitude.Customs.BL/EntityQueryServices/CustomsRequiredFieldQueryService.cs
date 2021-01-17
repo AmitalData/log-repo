@@ -26,7 +26,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
             return res;
         }
 
-        private List<CustomsRequiredFieldPM> GetCustomRequiredFieldsByObjectTableCore(string ObjectTableId, int Tenant)
+        private List<CustomsRequiredFieldPM> GetCustomRequiredFieldsByObjectTableCore(string ObjectTableId, int Tenant, string type = "A")
         {
             CustomsRequiredFieldRepository rep = new CustomsRequiredFieldRepository(context);
             List<CustomsRequiredField> requiredFields = rep.GetCustomRequiredFieldsByObjectTable(ObjectTableId,Tenant, type);
