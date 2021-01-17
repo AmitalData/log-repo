@@ -14,3 +14,5 @@ update RoleFeatures set FeatureUniqeCode='BIReport.BIReport.Fact_Masters' where 
 update PackageFeatures set FeatureUniqeCode='BIReport.BIReport.Fact_MasterCharges' where FeatureUniqeCode='BIReport.BIReport.Fact.MasterCharges'
 update RoleFeatures set FeatureUniqeCode='BIReport.BIReport.Fact_MasterCharges' where FeatureUniqeCode='BIReport.BIReport.Fact.MasterCharges'
 
+update PackageFeatures set FeatureUniqeCode='BIReport.BIReport.Fact_Quotes' where FeatureUniqeCode='BIReport.BIReport.Fact.Quotes'
+update RoleFeatures set FeatureUniqeCode='BIReport.BIReport.Fact_Quotes' where FeatureUniqeCode='BIReport.BIReport.Fact.Quotes'

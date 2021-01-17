@@ -216,7 +216,7 @@ namespace Logitude.Infrastructure.BL
                 SearchFields = "SCV, Improved Search in Customers Views", 
                 Description = " Improved Search in Customers Views", 
 			});
-
+			 
             all.Add(new ToggleDetails()
             {    
                 Code = "TAR", 
