@@ -18,6 +18,7 @@ using Simplog.Data.ShipmentsModel;
 using Simplog.Data.ShipmentsModel.Repositories;
 using Simplog.Server.Infrastructure.Helpers;
 using Logitude.BL.DataContracts;
+using Simplog.Server.Infrastructure;
 
 namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
 {
@@ -536,8 +537,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
 
         public void TracePickUp(ShipmentPickUpPM itemPM, ShipmentPickUpDelivery itemPOCO, ShipmentPM shipmentPM)
         {
-            if (!entityPM.IsHybrid)
-            {
+            //if (!entityPM.IsHybrid)
+            //{
                 string DepartedCode = "PICD";
                 if (RoutingDate.IsDateAddedOrModified(itemPM.ATD, itemPOCO.ATD))
                 {
@@ -673,12 +674,12 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
                         this.DeleteTraceEvent(ArrivedCode);
                     }
                 }
-            }
+            //}
         }
         public void TraceDelivery(ShipmentDeliveryPM itemPM, ShipmentPickUpDelivery itemPOCO)
         {
-            if (!entityPM.IsHybrid)
-            {
+            //if (!entityPM.IsHybrid)
+            //{
                 if (itemPM.PickUpDeliveryTypeCode == "DELV")
                 {
                     string DepartedCode = "DELD";
@@ -821,12 +822,12 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
                         }
                     }
                 }
-            }
+           // }
         }
         public void TraceDeletedPickUp(ShipmentPickUpPM itemPM, ShipmentPickUpDelivery itemPOCO)
         {
-            if (!entityPM.IsHybrid)
-            {
+            //if (!entityPM.IsHybrid)
+            //{
                 if (itemPOCO.PickUpDeliveryTypeCode == "PICK")
                 {
                     if (itemPOCO.ATA != null)
@@ -846,12 +847,12 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
                         this.DeleteTraceEvent("PICD");
                     }
                 }
-            }
+            //}
         }
         public void TraceDeletedDelivery(ShipmentDeliveryPM itemPM, ShipmentPickUpDelivery itemPOCO)
         {
-            if (!entityPM.IsHybrid)
-            {
+            //if (!entityPM.IsHybrid)
+            //{
                 if (itemPM.PickUpDeliveryTypeCode == "DELV")
                 {
                     if (itemPOCO.ATA != null)
@@ -871,7 +872,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
                         this.DeleteTraceEvent("DELD");
                     }
                 }
-            }
+            //}
         }
         public void TraceShipmentOnCreateDoneFollowUp(FollowUp followUp)
         {
@@ -2067,7 +2068,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
         {
             bool output = true;
 
-            if(shipmentPM.ShipmentPickUps.Where(d => d.ATA == null).Any())
+            if(shipmentPM.ShipmentPickUps.Where(d => d.ATA == null && d.ChangeSetOp != ChangeSetOperation.Delete).Any())
             {
                 output = false;
             }
@@ -2079,7 +2080,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
         {
             bool output = true;
 
-            if (shipmentPM.ShipmentDeliveries.Where(d => d.ATA == null).Any())
+            if (shipmentPM.ShipmentDeliveries.Where(d => d.ATA == null && d.ChangeSetOp != ChangeSetOperation.Delete).Any())
             {
                 output = false;
             }
