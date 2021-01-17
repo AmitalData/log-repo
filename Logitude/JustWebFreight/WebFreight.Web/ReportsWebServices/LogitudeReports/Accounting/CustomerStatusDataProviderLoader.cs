@@ -231,7 +231,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                 TotalFutureOpenCheques = customerPeriods.First().TotalFutureOpenCheques ?? 0,
                 ExternalTransactionsTotal = ExternalTransactions.Where(d => d.AccountId == customerPeriods.First().AccountId).Sum(d => d.LocalAmountCredit),
 
-                AccountingBalance = GetBalanceSummationForSpliitedAccounts(customerPeriods) ?? 0,
+                AccountingBalance = GetBalanceSummationForSplittedAccounts(customerPeriods) ?? 0,
                 Periods = GetStatusPeriods(customerPeriods),
                 AccountSalesmanName = customerPeriods.First().AccountSalesmanName,
                 AccountSalesmanLocalName = customerPeriods.First().AccountSalesmanLocalName,
