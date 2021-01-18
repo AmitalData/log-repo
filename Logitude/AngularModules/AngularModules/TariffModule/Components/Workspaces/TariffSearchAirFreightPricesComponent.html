@@ -996,9 +996,17 @@
 
                                                                                             <tr style="height:22px;">
                                                                                                 <td style="width:500px;">
-                                                                                                    <div class="Label TextTrimming" style="font-size:11px; width:500px; max-width:500px;" [title]="item.Remarks">
-                                                                                                        {{item.Remarks}}
-                                                                                                    </div>
+                                                                                                    <table>
+                                                                                                        <tr>
+                                                                                                            <td class="Label TextTrimming" style="width:1px; max-width:500px; font-size:11px;" [title]="item.Remarks">
+                                                                                                                {{item.Remarks}}
+                                                                                                            </td>
+
+                                                                                                            <td style="width:15px;">
+                                                                                                                <img *ngIf="item.Remarks" (click)="ExpandNotesClicked(item.Remarks)" src="./Images/Icons/expand.png" style="cursor:pointer;width:12px;height:12px;"/>
+                                                                                                            </td>
+                                                                                                        </tr>
+                                                                                                    </table>
                                                                                                 </td>
                                                                                             </tr>
                                                                                             <tr style="height:22px;">
@@ -1074,7 +1082,7 @@
                                                                                                             </td>
 
                                                                                                             <td style="width:70px; color: #45494a;" class="Label">
-                                                                                                                More Details
+                                                                                                                {{item.MoreLessDetailsLabel}}
                                                                                                             </td>
 
                                                                                                             <td style="width:20px">

@@ -590,6 +590,27 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
 
     ShowTariffclicked(item: TariffSearchSummary) {
         item.IsShown = !item.IsShown;
+
+        if (item.IsShown) {
+            item.MoreLessDetailsLabel = "Less Details";
+        }
+
+        else {
+            item.MoreLessDetailsLabel = "More Details";
+        }
+    }
+
+    ExpandNotesClicked(notes: string) {
+        var windowArgs: any = {};
+        windowArgs.TextValue = notes;
+        windowArgs.DisplayMode = true;
+
+        var wind = new LogitudeWindow();
+        wind.Width = 960;
+        wind.Height = 570;
+        wind.WindowArgs = windowArgs;
+        wind.Title = "Remarks";
+        wind.Show("./Infrastructure/Component/LogitudeComponents/MultilineTextBoxWindow");
     }
 
     SearchButtonClicked() {
