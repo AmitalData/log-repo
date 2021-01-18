@@ -15,6 +15,7 @@ using Logitude.Customs.Data.EntityPOCOs;
 using Logitude.Customs.Data.EntityLists;
 using Logitude.Customs.Data.CustomFilters;
 using Logitude.Customs.Data.DataContracts;
+//using System.Data.Entity;
 
 namespace Logitude.Customs.Data.EntityListQueryServices
 {
@@ -124,7 +125,7 @@ LEFT OUTER JOIN AMINETNXT_MAIN.Contacts Extent10 ON Extent10.Id = Extent1.Contro
                                                                  IsHatraDateNull= d.HatraDate== null,
                                                                  RequestedCustomsDocId = d.RequestedCustomsDocId,
                                                                  PaymentDate_Date= d.PaymentDate,
-                                                                 PaymentDate_Time= "",
+                                                                 PaymentDate_Time= d.PaymentDate!= null ? System.Data.Entity.DbFunctions.CreateTime(d.PaymentDate.Value. Hour, d.PaymentDate.Value.Minute, d.PaymentDate.Value.Second).Value.Hours.ToString() +":" + System.Data.Entity.DbFunctions.CreateTime(d.PaymentDate.Value.Hour, d.PaymentDate.Value.Minute, d.PaymentDate.Value.Second).Value.Minutes.ToString() : "" ,
                                                                  IsClose=d.IsClose,
                                                                  PhysicalCheck=  1 ,
 
