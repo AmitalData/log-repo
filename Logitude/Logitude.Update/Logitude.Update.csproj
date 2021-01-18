@@ -308,6 +308,8 @@
     <Content Include="bin\Debug\JustWebFreightappSettings.config">
       <SubType>Designer</SubType>
     </Content>
+    <None Include="obj\Debug\JustWebFreightappSettings.config" />
+    <None Include="obj\Debug\JustWebFreightConnectionStrings.config" />
     <None Include="packages.config" />
     <None Include="Properties\DataSources\Logitude.Update.Sivug.CustomsBookEntities.datasource" />
     <None Include="Properties\Settings.settings">

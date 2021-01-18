@@ -10,7 +10,7 @@
 // ------------------------------------------------------------------------------
 #region Designer generated code
 #pragma warning disable
-namespace Logitude.ShipmentTests.Features
+namespace Logitude.SecurityTests.Features.Invoice
 {
     using TechTalk.SpecFlow;
     using System;
@@ -19,7 +19,7 @@ namespace Logitude.ShipmentTests.Features
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("TechTalk.SpecFlow", "3.5.0.0")]
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public partial class CreateShipmentsFeature : object, Xunit.IClassFixture<CreateShipmentsFeature.FixtureData>, System.IDisposable
+    public partial class GetAPInvoiceSecurityAccessFeature : object, Xunit.IClassFixture<GetAPInvoiceSecurityAccessFeature.FixtureData>, System.IDisposable
     {
         
         private static TechTalk.SpecFlow.ITestRunner testRunner;
@@ -28,10 +28,10 @@ namespace Logitude.ShipmentTests.Features
         
         private Xunit.Abstractions.ITestOutputHelper _testOutputHelper;
         
-#line 1 "CreateShipments.feature"
+#line 1 "GetAPInvoice.feature"
 #line hidden
         
-        public CreateShipmentsFeature(CreateShipmentsFeature.FixtureData fixtureData, Logitude_ShipmentTests_XUnitAssemblyFixture assemblyFixture, Xunit.Abstractions.ITestOutputHelper testOutputHelper)
+        public GetAPInvoiceSecurityAccessFeature(GetAPInvoiceSecurityAccessFeature.FixtureData fixtureData, Logitude_SecurityTests_XUnitAssemblyFixture assemblyFixture, Xunit.Abstractions.ITestOutputHelper testOutputHelper)
         {
             this._testOutputHelper = testOutputHelper;
             this.TestInitialize();
@@ -40,7 +40,8 @@ namespace Logitude.ShipmentTests.Features
         public static void FeatureSetup()
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
-            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features", "Create Shipments", "\tCreate master and house shipments.", ProgrammingLanguage.CSharp, ((string[])(null)));
+            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features/Invoice", "Get AP Invoice Security Access", "        In order to get an APInvoice from the APInvoices list \r\n\t\tIt should be re" +
+                    "lated to the user\'s tenant ", ProgrammingLanguage.CSharp, ((string[])(null)));
             testRunner.OnFeatureStart(featureInfo);
         }
         
@@ -75,20 +76,44 @@ namespace Logitude.ShipmentTests.Features
             testRunner.CollectScenarioErrors();
         }
         
+        public virtual void FeatureBackground()
+        {
+#line 5
+#line hidden
+            TechTalk.SpecFlow.Table table6 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Email",
+                        "Password"});
+            table6.AddRow(new string[] {
+                        "ahmadb123@mail.com",
+                        "ahmed13!A15"});
+            table6.AddRow(new string[] {
+                        "protractor@test.com",
+                        "!P123t456"});
+#line 7
+ testRunner.Given("Users with following credentials", ((string)(null)), table6, "Given ");
+#line hidden
+#line 11
+ testRunner.When("Users make login request", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+#line 12
+ testRunner.Then("Users should have token", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+        }
+        
         void System.IDisposable.Dispose()
         {
             this.TestTearDown();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="Create a master shipment")]
-        [Xunit.TraitAttribute("FeatureTitle", "Create Shipments")]
-        [Xunit.TraitAttribute("Description", "Create a master shipment")]
-        public virtual void CreateAMasterShipment()
+        [Xunit.SkippableFactAttribute(DisplayName="An AP Invoice From A User\'s Tenant is Gotten")]
+        [Xunit.TraitAttribute("FeatureTitle", "Get AP Invoice Security Access")]
+        [Xunit.TraitAttribute("Description", "An AP Invoice From A User\'s Tenant is Gotten")]
+        public virtual void AnAPInvoiceFromAUsersTenantIsGotten()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Create a master shipment", null, tagsOfScenario, argumentsOfScenario);
-#line 11
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("An AP Invoice From A User\'s Tenant is Gotten", null, tagsOfScenario, argumentsOfScenario);
+#line 14
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             bool isScenarioIgnored = default(bool);
@@ -108,43 +133,27 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 this.ScenarioStart();
-                TechTalk.SpecFlow.Table table1 = new TechTalk.SpecFlow.Table(new string[] {
-                            "Direction",
-                            "TransportMode",
-                            "ShipmentLevel",
-                            "FreightPrepaidCollectId",
-                            "OtherPrepaidCollectId",
-                            "MainCarriageToPort",
-                            "MainCarriageFromPort"});
-                table1.AddRow(new string[] {
-                            "E",
-                            "A",
-                            "C",
-                            "P",
-                            "C",
-                            "LHR",
-                            "MIA"});
-#line 12
- testRunner.Given("A master shipment fields", ((string)(null)), table1, "Given ");
+#line 5
+this.FeatureBackground();
 #line hidden
 #line 15
- testRunner.When("Create master shipment API request sent", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("The First user gets the first AP Invoice from AP Invoices list", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
 #line 16
- testRunner.Then("A new master created successfully", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then("The AP Invoice which is related to the first user tanent is existed", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="Create a house shipment")]
-        [Xunit.TraitAttribute("FeatureTitle", "Create Shipments")]
-        [Xunit.TraitAttribute("Description", "Create a house shipment")]
-        public virtual void CreateAHouseShipment()
+        [Xunit.SkippableFactAttribute(DisplayName="An AP Invoice From  From Other Tenant isn\'t Gotten Get")]
+        [Xunit.TraitAttribute("FeatureTitle", "Get AP Invoice Security Access")]
+        [Xunit.TraitAttribute("Description", "An AP Invoice From  From Other Tenant isn\'t Gotten Get")]
+        public virtual void AnAPInvoiceFromFromOtherTenantIsntGottenGet()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Create a house shipment", null, tagsOfScenario, argumentsOfScenario);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("An AP Invoice From  From Other Tenant isn\'t Gotten Get", null, tagsOfScenario, argumentsOfScenario);
 #line 18
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -165,45 +174,14 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 this.ScenarioStart();
-                TechTalk.SpecFlow.Table table2 = new TechTalk.SpecFlow.Table(new string[] {
-                            "NewConcurrencyGUID",
-                            "DirectionId",
-                            "TransportModeId",
-                            "ShipmentLevelCode",
-                            "BranchId",
-                            "DepartmentId",
-                            "FreightPrepaidCollectId",
-                            "OtherPrepaidCollectId",
-                            "CreatedByUserId",
-                            "UpdatedByUserId",
-                            "MainCarriageToPortId",
-                            "MainCarriageFromPortId",
-                            "CustomerId"});
-                table2.AddRow(new string[] {
-                            "Guid.NewGuid().ToString()",
-                            "E",
-                            "A",
-                            "H",
-                            "1-1102",
-                            "1-2988",
-                            "P",
-                            "C",
-                            "1-108265",
-                            "1-108265",
-                            "1-300930",
-                            "1-303023",
-                            "1-200716"});
+#line 5
+this.FeatureBackground();
+#line hidden
 #line 19
- testRunner.Given("A house shipment fields", ((string)(null)), table2, "Given ");
+ testRunner.When("The Second user gets the AP Invoice that was requested by the first user", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 22
- testRunner.And("A master shipment", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line hidden
-#line 23
- testRunner.When("Create house shipment API request sent", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line hidden
-#line 24
- testRunner.Then("A new house created successfully", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 20
+ testRunner.Then("The AP Invoice that was requested by the second user isn\'t existed", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();
@@ -216,12 +194,12 @@ this.ScenarioInitialize(scenarioInfo);
             
             public FixtureData()
             {
-                CreateShipmentsFeature.FeatureSetup();
+                GetAPInvoiceSecurityAccessFeature.FeatureSetup();
             }
             
             void System.IDisposable.Dispose()
             {
-                CreateShipmentsFeature.FeatureTearDown();
+                GetAPInvoiceSecurityAccessFeature.FeatureTearDown();
             }
         }
     }
