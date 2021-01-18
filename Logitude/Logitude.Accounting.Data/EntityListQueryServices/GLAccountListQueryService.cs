@@ -57,12 +57,18 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                                                         ReconcileMethodLocalName = a.ReconcileMethod != null ? a.ReconcileMethod.LocalName : null,
                                                         CurrencyName = a.Currency != null ? a.Currency.EnglishName : null,
                                                         ChartOfAccountsTypeName = a.ChartOfAccountsType != null ? a.ChartOfAccountsType.EnglishName : null,
+                                                        ChartOfAccountsTypeEnglishName = a.ChartOfAccountsType != null ? a.ChartOfAccountsType.EnglishName : null,
+                                                        ChartOfAccountsTypeLocalName = a.ChartOfAccountsType != null ? a.ChartOfAccountsType.LocalName : null,
+                                                        
                                                         CurrencyCode = a.IsMultiCurrency == true ? multi : a.Currency != null ? a.Currency.Code : null,
                                                         CurrencySign = a.IsMultiCurrency == true ? "" : a.Currency != null ? a.Currency.Sign : null,
                                                         ControlAccountName = a.ControlAccount != null ? a.ControlAccount.EnglishName : null,
                                                         ControlAccountId = a.ControlAccountId,
                                                         ControlAccountNumber = a.ControlAccount != null ? a.ControlAccount.DisplayNumber : null,
                                                         ChartOfAccountsName = a.ChartOfAccount != null ? a.ChartOfAccount.LocalName : null,
+                                                        ChartOfAccountsEnglishName = a.ChartOfAccount != null ? a.ChartOfAccount.EnglishName : null,
+                                                        ChartOfAccountsLocalName = a.ChartOfAccount != null ? a.ChartOfAccount.LocalName : null,
+
                                                         ActiveStatusName = a.Inactive == false ? active : inactive,
                                                         AutomaticReconcileId = a.AutomaticReconcileId,
                                                         AutomaticReconcileName = a.AutomaticReconcile != null ?

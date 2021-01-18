@@ -121,6 +121,10 @@ export class GLAccountList {
 	Category3LocalName: string;
 	Category4LocalName: string;
 	Category5LocalName: string;
+	ChartOfAccountsEnglishName: string;
+	ChartOfAccountsTypeEnglishName: string;
+	ChartOfAccountsTypeLocalName: string;
+	ChartOfAccountsLocalName: string;
 	
 }
  

@@ -525,6 +525,10 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                     record.Category4LocalName = item.Category4LocalName;
                     record.Category5LocalName = item.Category5LocalName;
                     record.Category6LocalName = item.Category6LocalName;
+                    record.ChartOfAccountsLocalName = item.ChartOfAccountsLocalName;
+                    record.ChartOfAccountsEnglishName = item.ChartOfAccountsEnglishName;
+                    record.ChartOfAccountsTypeEnglishName = item.ChartOfAccountsTypeEnglishName;
+                    record.ChartOfAccountsTypeLocalName = item.ChartOfAccountsTypeLocalName;
 
                     record.Total = item.Total;
 
@@ -565,6 +569,10 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                     record.Category4LocalName = item.Category4LocalName;
                     record.Category5LocalName = item.Category5LocalName;
                     record.Category6LocalName = item.Category6LocalName;
+                    record.ChartOfAccountsLocalName = item.ChartOfAccountsLocalName;
+                    record.ChartOfAccountsEnglishName = item.ChartOfAccountsEnglishName;
+                    record.ChartOfAccountsTypeEnglishName = item.ChartOfAccountsTypeEnglishName;
+                    record.ChartOfAccountsTypeLocalName = item.ChartOfAccountsTypeLocalName;
 
                     record.Total = item.Total;
 

@@ -240,6 +240,14 @@ namespace Logitude.Accounting.Data.EntityLists
        public string Category4LocalName  { get; set; }
        [DataMember]
        public string Category5LocalName  { get; set; }
+       [DataMember]
+       public string ChartOfAccountsEnglishName  { get; set; }
+       [DataMember]
+       public string ChartOfAccountsTypeEnglishName  { get; set; }
+       [DataMember]
+       public string ChartOfAccountsTypeLocalName  { get; set; }
+       [DataMember]
+       public string ChartOfAccountsLocalName  { get; set; }
    }
 
 }

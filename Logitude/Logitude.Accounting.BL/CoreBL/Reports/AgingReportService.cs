@@ -532,6 +532,13 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                          Category4LocalName = acc.Category4LocalName,
                          Category5LocalName = acc.Category5LocalName,
 
+                         ChartOfAccountsLocalName = acc.ChartOfAccountsLocalName,
+                         ChartOfAccountsEnglishName = acc.ChartOfAccountsEnglishName,
+                         ChartOfAccountsTypeEnglishName = acc.ChartOfAccountsTypeEnglishName,
+                         ChartOfAccountsTypeLocalName = acc.ChartOfAccountsTypeLocalName,
+
+
+
 
                          //CurrencyId = acc.ReconcileMethodCode == "0" ? tenant.CurrencyId : acc.CurrencyId,
 
@@ -652,6 +659,12 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                         Category3LocalName = r.Category3LocalName,
                         Category4LocalName = r.Category4LocalName,
                         Category5LocalName = r.Category5LocalName,
+
+
+                        ChartOfAccountsLocalName = r.ChartOfAccountsLocalName,
+                        ChartOfAccountsEnglishName = r.ChartOfAccountsEnglishName,
+                        ChartOfAccountsTypeEnglishName = r.ChartOfAccountsTypeEnglishName,
+                        ChartOfAccountsTypeLocalName = r.ChartOfAccountsTypeLocalName,
 
 
 
@@ -775,6 +788,12 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                                                       Category3LocalName = account.Category3LocalName,
                                                       Category4LocalName = account.Category4LocalName,
                                                       Category5LocalName = account.Category5LocalName,
+
+
+                                                      ChartOfAccountsLocalName = account.ChartOfAccountsLocalName,
+                                                      ChartOfAccountsEnglishName = account.ChartOfAccountsEnglishName,
+                                                      ChartOfAccountsTypeEnglishName = account.ChartOfAccountsTypeEnglishName,
+                                                      ChartOfAccountsTypeLocalName = account.ChartOfAccountsTypeLocalName,
 
 
                                                   }).ToList();
@@ -1604,6 +1623,11 @@ Period	Acc	Currency	Total
         public string Category4LocalName { get; set; }
         public string Category5LocalName { get; set; }
         public string Category6LocalName { get; set; }
+
+        public string ChartOfAccountsLocalName { get; set; }
+        public string ChartOfAccountsEnglishName { get; set; }
+        public string ChartOfAccountsTypeEnglishName { get; set; }
+        public string ChartOfAccountsTypeLocalName { get; set; }
     }
 
     public class AgingReportParam
