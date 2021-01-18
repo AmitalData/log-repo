@@ -424,5 +424,7 @@ namespace Logitude.BL.CommonDataModel.EntityLists
 
         public int SearchWeight { get; set; }
 
+        [DataMember]
+        public bool IsAutonomy { get; set; }
     }
 }

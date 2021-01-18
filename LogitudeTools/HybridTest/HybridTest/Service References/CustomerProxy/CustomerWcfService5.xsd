@@ -65,6 +65,7 @@
       <xs:element minOccurs="0" name="CustomerTenant" type="xs:int" />
       <xs:element minOccurs="0" name="CustomsAgentId" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="CustomsAgentName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="EORInumber" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="EnableConsolidationInvoices" type="xs:boolean" />
       <xs:element minOccurs="0" name="EnglishName" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="EventNote" nillable="true" type="xs:string" />
@@ -104,6 +105,7 @@
       <xs:element minOccurs="0" name="InvitationDate" nillable="true" type="xs:dateTime" />
       <xs:element minOccurs="0" name="InvoiceCurrencyId" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="IsActiveForMobile" type="xs:boolean" />
+      <xs:element minOccurs="0" name="IsAutonomy" type="xs:boolean" />
       <xs:element minOccurs="0" name="IsCreditLimitEnabled" type="xs:boolean" />
       <xs:element minOccurs="0" name="IsCustomer" type="xs:boolean" />
       <xs:element minOccurs="0" name="IsCustomerAllowed" type="xs:boolean" />
@@ -248,6 +250,8 @@
       <xs:element minOccurs="0" name="AccountManagerUserId" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="AccountNumber" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="AccountingVATSplit" type="xs:boolean" />
+      <xs:element minOccurs="0" name="Address1" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Address2" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Addresses" nillable="true" type="tns:ArrayOfAddressPM" />
       <xs:element minOccurs="0" name="Agent" nillable="true" type="tns:AgentPM" />
       <xs:element minOccurs="0" name="BankAddress" nillable="true" type="xs:string" />
