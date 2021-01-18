@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "1aa9ac73-6dab-4b25-9206-99de96d4f0e2",
+		"_postman_id": "abef41ab-571f-4d2e-8b51-c0684a87696c",
 		"name": "Quotes",
 		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
 	},
@@ -11,7 +11,6 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "d82322de-c772-48ca-8008-18e4efb28fc8",
 						"exec": [
 							"pm.test(\"CreateShipperIdTestShipperExport1\", function () {",
 							"   pm.response.to.have.status(200);",
@@ -37,7 +36,6 @@
 				{
 					"listen": "prerequest",
 					"script": {
-						"id": "cd8f1157-fb0b-4542-94ff-6a47ee8ec6ec",
 						"exec": [
 							""
 						],
@@ -74,7 +72,6 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "bb0981e9-319e-4577-b76d-69cf8d06bd00",
 						"exec": [
 							"pm.test(\"CreateExportAirQuotes\", function () {\r",
 							"    pm.response.to.have.status(200);\r",
@@ -125,7 +122,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"$id\": \"1\",\r\n  \"Tenant\": \"{{Tenant}}\",\r\n  \"IsSecured\": false,\r\n   \"ConcurrencyGUID\": \"{{ConcurrencyGUID}}\",\r\n  \"LastVersionNumber\": 0,\r\n  \"DirectionId\": \"E\",\r\n  \"TransportModeId\": \"A\",\r\n  \"IsCustomerSet\": false,\r\n  \"IsSubjectEdited\": false,\r\n  \"QuoteCustomerTypeCode\": \"SHI\",\r\n  \"CustomerId\": \"{{ShipperIdTest}}\",\r\n  \r\n  \"CustomerReference1\": \"CustomerRef 1\",\r\n  \"CustomerReference2\": null,\r\n  \"CustomerNote\": \"TestShipperExport1\",\r\n  \"ShipperId\": \"{{ShipperIdTest}}\",\r\n \r\n  \"ShipperReference1\": \"CustomerRef 1\",\r\n  \"ShipperReference2\": null,\r\n  \"ShipperMainAddressId\": \"{{ShipperAddressIdTest}}\",\r\n  \"BusinessUnitId\": \"1102\",\r\n  \"StageId\":\"{{DraftQuoteStage}}\",\r\n  \"StageDueDate\": \"2019-07-30T00:00:00Z\",\r\n  \"FromPortId\": \"{{PortIdLHR}}\",\r\n  \"ToPortId\": \"{{PortIdLHR}}\",\r\n  \"IncotermId\": null,\r\n  \"SalesmanUserId\": \"{{CreatedByUserId}}\",\r\n  \"SalesmanName\": null,\r\n  \"CreatedByUserId\": \"{{CreatedByUserId}}\",\r\n  \"UpdatedByUserId\": \"{{CreatedByUserId}}\",\r\n  \"Notes\": \"Created from API\",\r\n  \"DescriptionOfGoods\": null,\r\n  \"ChargeableWeight\": 0,\r\n  \"ChargeableWeightInKG\": 0,\r\n  \"GrossWeight\": null,\r\n  \"GrossWeightInKG\": null,\r\n  \"GrossWeightPerTon\": null,\r\n  \"VolumeInCBM\": null,\r\n  \"LastModified\": \"AAAAAAYIzF4=\",\r\n  \"IsClosed\": false,\r\n  \"IsFixedPrice\": false,\r\n  \"TotalReceivablesAmount\": null,\r\n  \"GrossWeightUnitCode\": \"KG\",\r\n  \"ChargeableWeightUnitCode\": \"KG\",\r\n  \"DimensionsUnitCode\": \"Cm\",\r\n  \"VolumetricWeight\": 0,\r\n  \"Volume\": null,\r\n  \"NumberOfPackages\": null,\r\n  \"NumberOfContainers\": null,\r\n  \"Ratio\": 6,\r\n  \"DimFactor\": 6000,\r\n  \"VolumeUnitCode\": \"CBM\",\r\n  \"IsDangerous\": false,\r\n    \"ExpirationDays\": 30,\r\n  \"ExpirationDate\": \"2019-10-02T00:00:00Z\",\r\n  \"StartDate\": \"2019-09-02T00:00:00Z\",\r\n  \"IsFreightBySteps\": false,\r\n  \"TotalPerContainer\": false,\r\n  \"DepartmentId\": \"{{DepId}}\",\r\n  \"BranchId\": \"{{BranchId}}\",\r\n \r\n  \"QuoteTypeCode\": \"A\",\r\n  \"QuoteTypeName\": null,\r\n  \"IsByKG\": false,\r\n  \"IsByContainer\": false,\r\n  \"MainCarriageCarrierId\": null,\r\n  \"IsCancelled\": false,\r\n  \"ActionType\": null,\r\n  \"EventNote\": null,\r\n  \"SaleCurrencyId\": \"{{CurrencyIdEUR}}\",\r\n  \"ExchangeRate\": 1.07,\r\n  \"IncludePickUp\": false,\r\n  \"IncludeDelivery\": false,\r\n \r\n  \"RatingCode\": \"N\",\r\n  \"IsAutomaticallyClosed\": false,\r\n  \"AutomaticallyCloseDate\": null,\r\n  \"AutomaticallyCloseDays\": null,\r\n\r\n  \"ProductCode\": \"AE\",\r\n  \"LastStageDate\": \"2019-07-23T09:48:38.7302025Z\",\r\n  \"TEU\": null,\r\n  \"IsChargesByVAT\": false,\r\n  \"IsCopy\": false,\r\n  \"ToCountryId\": \"{{CountryIdForPortLHR}}\",\r\n  \"FromCountryId\": \"{{CountryIdForPortJFK}}\",\r\n  \"IsPotentialShipper\": false,\r\n  \"IsPotentialConsignee\": false,\r\n  \"ConvertToFCL\": false,\r\n  \"ConvertToLCL\": false,\r\n  \"IsQuoteDataExternal\": false,\r\n  \"IsQuoteDocumentExternal\": false,\r\n  \"TransitTime\": null,\r\n  \"DepartureFrequency\": null,\r\n  \"ETD\": null,\r\n  \"ETA\": null,\r\n  \"MoveTypeId\": null,\r\n  \"ValueOfGoods\": null,\r\n \r\n  \"EstimateProfit\": null,\r\n  \"EstimateProfitEdited\": false,\r\n  \"CostTotalAmountInLocalCurrency\": null,\r\n  \"SaleTotalAmountInLocalCurrency\": null,\r\n  \"CostTotalAmountInSaleCurrency\": null,\r\n  \"SaleTotalAmountInSaleCurrency\": null,\r\n  \"EstimateProfitInSaleCurrency\": null,\r\n  \"IsHybrid\": false,\r\n  \"TotalSaleIncludingVATAmountInSaleCurrency\": null,\r\n  \"TotalSaleIncludingVATAmountInLocalCurrency\": null,\r\n  \"IsSaleCurrencySameAsCost\": false,\r\n  \"DontExportQuotationsToIntegratedSystem\": false,\r\n  \"QuotationSections\": null,\r\n  \"SameOrFixed\": null,\r\n  \"GrossWeightEdited\": false,\r\n  \"ChargeableWeightEdited\": false,\r\n  \"NumberOfFollowUps\": null,\r\n  \"FollowUps\": [],\r\n  \"QuoteDocumentVersions\": [],\r\n  \"QuoteCostCharges\": [],\r\n  \"QuoteSaleCharges\": [],\r\n  \"MarkFollowUpsAsDone\": false,\r\n  \"QuotePackages\": [],\r\n  \"SalesTotalAmounts\": null,\r\n  \"QuoteSalesTotals\": [],\r\n  \"TotalVATPerQuote\": [],\r\n  \"TotalVATs\": []\r\n}"
+					"raw": "{\r\n  \"$id\": \"1\",\r\n  \"Tenant\": \"{{Tenant}}\",\r\n  \"IsSecured\": false,\r\n   \"ConcurrencyGUID\": \"{{ConcurrencyGUID}}\",\r\n  \"LastVersionNumber\": 0,\r\n  \"DirectionId\": \"E\",\r\n  \"TransportModeId\": \"A\",\r\n  \"IsCustomerSet\": false,\r\n  \"IsSubjectEdited\": false,\r\n  \"QuoteCustomerTypeCode\": \"SHI\",\r\n  \"CustomerId\": \"{{ShipperIdTest}}\",\r\n  \r\n  \"CustomerReference1\": \"CustomerRef 1\",\r\n  \"CustomerReference2\": null,\r\n  \"CustomerNote\": \"TestShipperExport1\",\r\n  \"ShipperId\": \"{{ShipperIdTest}}\",\r\n \r\n  \"ShipperReference1\": \"CustomerRef 1\",\r\n  \"ShipperReference2\": null,\r\n  \"ShipperMainAddressId\": \"{{ShipperAddressIdTest}}\",\r\n  \"BusinessUnitId\": \"{{BusinessUnitId}}\",\r\n  \"StageId\":\"{{DraftQuoteStage}}\",\r\n  \"StageDueDate\": \"2019-07-30T00:00:00Z\",\r\n  \"FromPortId\": \"{{PortIdLHR}}\",\r\n  \"ToPortId\": \"{{PortIdLHR}}\",\r\n  \"IncotermId\": null,\r\n  \"SalesmanUserId\": \"{{CreatedByUserId}}\",\r\n  \"SalesmanName\": null,\r\n  \"CreatedByUserId\": \"{{CreatedByUserId}}\",\r\n  \"UpdatedByUserId\": \"{{CreatedByUserId}}\",\r\n  \"Notes\": \"Created from API\",\r\n  \"DescriptionOfGoods\": null,\r\n  \"ChargeableWeight\": 0,\r\n  \"ChargeableWeightInKG\": 0,\r\n  \"GrossWeight\": null,\r\n  \"GrossWeightInKG\": null,\r\n  \"GrossWeightPerTon\": null,\r\n  \"VolumeInCBM\": null,\r\n  \"LastModified\": \"AAAAAAYIzF4=\",\r\n  \"IsClosed\": false,\r\n  \"IsFixedPrice\": false,\r\n  \"TotalReceivablesAmount\": null,\r\n  \"GrossWeightUnitCode\": \"KG\",\r\n  \"ChargeableWeightUnitCode\": \"KG\",\r\n  \"DimensionsUnitCode\": \"Cm\",\r\n  \"VolumetricWeight\": 0,\r\n  \"Volume\": null,\r\n  \"NumberOfPackages\": null,\r\n  \"NumberOfContainers\": null,\r\n  \"Ratio\": 6,\r\n  \"DimFactor\": 6000,\r\n  \"VolumeUnitCode\": \"CBM\",\r\n  \"IsDangerous\": false,\r\n    \"ExpirationDays\": 30,\r\n  \"ExpirationDate\": \"2019-10-02T00:00:00Z\",\r\n  \"StartDate\": \"2019-09-02T00:00:00Z\",\r\n  \"IsFreightBySteps\": false,\r\n  \"TotalPerContainer\": false,\r\n  \"DepartmentId\": \"{{DepId}}\",\r\n  \"BranchId\": \"{{BranchId}}\",\r\n \r\n  \"QuoteTypeCode\": \"A\",\r\n  \"QuoteTypeName\": null,\r\n  \"IsByKG\": false,\r\n  \"IsByContainer\": false,\r\n  \"MainCarriageCarrierId\": null,\r\n  \"IsCancelled\": false,\r\n  \"ActionType\": null,\r\n  \"EventNote\": null,\r\n  \"SaleCurrencyId\": \"{{CurrencyIdEUR}}\",\r\n  \"ExchangeRate\": 1.07,\r\n  \"IncludePickUp\": false,\r\n  \"IncludeDelivery\": false,\r\n \r\n  \"RatingCode\": \"N\",\r\n  \"IsAutomaticallyClosed\": false,\r\n  \"AutomaticallyCloseDate\": null,\r\n  \"AutomaticallyCloseDays\": null,\r\n\r\n  \"ProductCode\": \"AE\",\r\n  \"LastStageDate\": \"2019-07-23T09:48:38.7302025Z\",\r\n  \"TEU\": null,\r\n  \"IsChargesByVAT\": false,\r\n  \"IsCopy\": false,\r\n  \"ToCountryId\": \"{{CountryIdForPortLHR}}\",\r\n  \"FromCountryId\": \"{{CountryIdForPortJFK}}\",\r\n  \"IsPotentialShipper\": false,\r\n  \"IsPotentialConsignee\": false,\r\n  \"ConvertToFCL\": false,\r\n  \"ConvertToLCL\": false,\r\n  \"IsQuoteDataExternal\": false,\r\n  \"IsQuoteDocumentExternal\": false,\r\n  \"TransitTime\": null,\r\n  \"DepartureFrequency\": null,\r\n  \"ETD\": null,\r\n  \"ETA\": null,\r\n  \"MoveTypeId\": null,\r\n  \"ValueOfGoods\": null,\r\n \r\n  \"EstimateProfit\": null,\r\n  \"EstimateProfitEdited\": false,\r\n  \"CostTotalAmountInLocalCurrency\": null,\r\n  \"SaleTotalAmountInLocalCurrency\": null,\r\n  \"CostTotalAmountInSaleCurrency\": null,\r\n  \"SaleTotalAmountInSaleCurrency\": null,\r\n  \"EstimateProfitInSaleCurrency\": null,\r\n  \"IsHybrid\": false,\r\n  \"TotalSaleIncludingVATAmountInSaleCurrency\": null,\r\n  \"TotalSaleIncludingVATAmountInLocalCurrency\": null,\r\n  \"IsSaleCurrencySameAsCost\": false,\r\n  \"DontExportQuotationsToIntegratedSystem\": false,\r\n  \"QuotationSections\": null,\r\n  \"SameOrFixed\": null,\r\n  \"GrossWeightEdited\": false,\r\n  \"ChargeableWeightEdited\": false,\r\n  \"NumberOfFollowUps\": null,\r\n  \"FollowUps\": [],\r\n  \"QuoteDocumentVersions\": [],\r\n  \"QuoteCostCharges\": [],\r\n  \"QuoteSaleCharges\": [],\r\n  \"MarkFollowUpsAsDone\": false,\r\n  \"QuotePackages\": [],\r\n  \"SalesTotalAmounts\": null,\r\n  \"QuoteSalesTotals\": [],\r\n  \"TotalVATPerQuote\": [],\r\n  \"TotalVATs\": []\r\n}"
 				},
 				"url": "{{LogitudeURL}}/api/quotes"
 			},
@@ -137,7 +134,6 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "18ac3e7e-7dbc-4622-8873-0694f3690f56",
 						"exec": [
 							"pm.test(\"CreateExportAirQuotes\", function () {\r",
 							"    pm.response.to.have.status(200);\r",
@@ -206,7 +202,6 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "3429b1e2-cec5-46a4-8c26-2026b8a6a265",
 						"exec": [
 							"pm.test(\"UpdateExportAirQuote\", function () {\r",
 							"    pm.response.to.have.status(200);\r",
@@ -244,6 +239,5 @@
 			},
 			"response": []
 		}
-	],
-	"protocolProfileBehavior": {}
+	]
 }
