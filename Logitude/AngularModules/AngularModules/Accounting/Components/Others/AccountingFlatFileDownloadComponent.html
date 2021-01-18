@@ -66,8 +66,16 @@
 
 
         .errors-box li{
-            white-space: break-spaces;
             margin-bottom: 10px;
+
+            white-space: -moz-pre-wrap !important;
+            white-space: -webkit-pre-wrap;
+            white-space: -pre-wrap;
+            white-space: -o-pre-wrap;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            word-break: break-all;
+            white-space: normal;
         }
 </style>
 <table>
@@ -76,8 +84,8 @@
         <td colspan="2" style="text-align:start;">
            <!-- <ValidationSummary [ItemsSource]="Errors" [SingleLine]="true"></ValidationSummary> -->
            <div class="errors-box">
-               <ul>
-                   <li *ngFor="let error of Errors">{{error}}</li>
+               <ul style="width: 440px;">
+                   <li *ngFor="let error of Errors" >{{error}}</li>
                </ul>
            </div>
            <button class="RedButton" style="width: 70px;display: block;width: 70px;margin: 0 auto; margin-top: 22px;"  (click)="CloseWindow()">{{'General.B.Close' | TextCodeTranslationPipe}}</button>
