@@ -396,7 +396,7 @@ export class BankDepositDetailsTabComponent extends BaseComponent {
     TextChanged(searchtext) {
 
         // Deposited cheque
-        if (!this.IsLinesSelection && !this.EntityPM.IsCashDeposit) {
+        if (!this.EntityPM.IsCashDeposit) {
             this.timerToken = setTimeout(() => {
                 this.searchText = searchtext;
                 this.FilterChequeDeposits();
@@ -894,4 +894,8 @@ export class BankDepositDetailsTabComponent extends BaseComponent {
     //         return false;
     //     }).length;
     // }
+
+    RefreshButtonClicked() {
+        this.GetDepositLines();
+        }
 }
