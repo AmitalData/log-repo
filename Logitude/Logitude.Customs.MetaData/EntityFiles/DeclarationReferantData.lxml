@@ -4841,8 +4841,8 @@
     DefaultText="&quot;Requested Customs Doc Id&quot;"
     FullLocalDefaultText="&quot;מסמך נדרש&quot;"
     ListFieldLable="&quot;RequestedCustomsDocIdListLable&quot;"
-    ListLableDefaultText="&quot;מסמך נדרש&quot;"
-    ListLocalDefaultText="&quot;Requested Customs DocId&quot;"
+    ListLableDefaultText="&quot;Requested Customs DocId&quot;"
+    ListLocalDefaultText="&quot;מסמך נדרש&quot;"
     IsNullable="true"
     IsForeignKey="false"
     DontBuildRelationOnDB="false"
@@ -5141,8 +5141,8 @@
     DefaultText="&quot;Physical Check&quot;"
     FullLocalDefaultText="&quot;בדיקה פיזית&quot;"
     ListFieldLable="&quot;PhysicalCheckListLable&quot;"
-    ListLableDefaultText="&quot;בדיקה פיזית&quot;"
-    ListLocalDefaultText="&quot;Physical Check&quot;"
+    ListLableDefaultText="&quot;Physical Check&quot;"
+    ListLocalDefaultText="&quot;בדיקה פיזית&quot;"
     IsNullable="true"
     IsForeignKey="false"
     DontBuildRelationOnDB="false"
@@ -6327,48 +6327,45 @@
     DefaultSortName="&quot;SortedColumns&quot;"
     DefaultSortDirection="&quot;Ascending&quot;"
     IsSpellChecked="false">
-    <QueryColumns>
-      <QueryColumn
-        QueryCode="&quot;FilesWithoutRelease&quot;"
-        IndexOrder="0"
-        ObjectFieldName="&quot;CustomFileNo&quot;"
-        ColumnWidth="150" />
-      <QueryColumn
-        QueryCode="&quot;FilesWithoutRelease&quot;"
-        IndexOrder="1"
-        ObjectFieldName="&quot;DeclarationNumber&quot;"
-        ColumnWidth="100" />
-      <QueryColumn
-        QueryCode="&quot;FilesWithoutRelease&quot;"
-        IndexOrder="2"
-        ObjectFieldName="&quot;CustomerName&quot;"
-        ColumnWidth="150" />
-      <QueryColumn
-        QueryCode="&quot;FilesWithoutRelease&quot;"
-        IndexOrder="3"
-        ObjectFieldName="&quot;StorageSiteName&quot;"
-        ColumnWidth="100" />
-      <QueryColumn
-        QueryCode="&quot;FilesWithoutRelease&quot;"
-        IndexOrder="4"
-        ObjectFieldName="&quot;PaymentDate_Date&quot;"
-        ColumnWidth="100" />
-      <QueryColumn
-        QueryCode="&quot;FilesWithoutRelease&quot;"
-        IndexOrder="5"
-        ObjectFieldName="&quot;PaymentDate_Time&quot;"
-        ColumnWidth="100" />
-      <QueryColumn
-        QueryCode="&quot;FilesWithoutRelease&quot;"
-        IndexOrder="6"
-        ObjectFieldName="&quot;PhysicalCheck&quot;"
-        ColumnWidth="50" />
-      <QueryColumn
-        QueryCode="&quot;FilesWithoutRelease&quot;"
-        IndexOrder="7"
-        ObjectFieldName="&quot;RequestedCustomsDocId&quot;"
-        ColumnWidth="50" />
-    </QueryColumns>
+      <QueryColumns>
+          <QueryColumn QueryCode="&quot;FilesWithoutRelease&quot;"
+                       IndexOrder="0"
+                       ObjectFieldName="&quot;CustomFileNo&quot;"
+                       ColumnWidth="100" />
+
+          <QueryColumn QueryCode="&quot;FilesWithoutRelease&quot;"
+                       IndexOrder="2"
+                       ObjectFieldName="&quot;DeclarationNumber&quot;"
+                       ColumnWidth="100" />
+          <QueryColumn QueryCode="&quot;FilesWithoutRelease&quot;"
+                       IndexOrder="3"
+                       ObjectFieldName="&quot;CustomerName&quot;"
+                       ColumnWidth="150" />
+          <QueryColumn QueryCode="&quot;FilesWithoutRelease&quot;"
+                       IndexOrder="4"
+                       ObjectFieldName="&quot;StorageSiteName&quot;"
+                       ColumnWidth="100" />
+          <QueryColumn QueryCode="&quot;FilesWithoutRelease&quot;"
+                       IndexOrder="5"
+                       ObjectFieldName="&quot;PaymentDate_Date&quot;"
+                       ColumnWidth="100" />
+          <QueryColumn QueryCode="&quot;FilesWithoutRelease&quot;"
+                       IndexOrder="6"
+                       ObjectFieldName="&quot;PaymentDate_Time&quot;"
+                       ColumnWidth="100" />
+          <QueryColumn QueryCode="&quot;FilesWithoutRelease&quot;"
+                       IndexOrder="7"
+                       ObjectFieldName="&quot;PhysicalCheck&quot;"
+                       ColumnWidth="50" />
+          <QueryColumn QueryCode="&quot;FilesWithoutRelease&quot;"
+                       IndexOrder="8"
+                       ObjectFieldName="&quot;RequestedCustomsDocId&quot;"
+                       ColumnWidth="50" />
+          <QueryColumn QueryCode="&quot;FilesWithoutRelease&quot;"
+                       IndexOrder="1"
+                       ObjectFieldName="&quot;Actions&quot;"
+                       ColumnWidth="50" />
+      </QueryColumns>
     <QueryFilters>
       <QueryFilter
         QueryCode="&quot;FilesWithoutRelease&quot;"
