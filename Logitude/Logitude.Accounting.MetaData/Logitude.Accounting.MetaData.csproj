@@ -77,6 +77,7 @@
     <None Include="DBScripts\202012021000_UpdateNullableGLAccountFields.sxml" />
     <None Include="DBScripts\202009041551_UpdateDisplayNumberFieldOnCards.sxml" />
     <None Include="DBScripts\202011101133_AvailableForScheduling.sxml" />
+    <None Include="DBScripts\202101141620_ UpdateStatusCodeFieldOnTaxReportLine.sxml" />
     <None Include="DBTables\AccountingCompanyType.dxml" />
     <None Include="DBTables\AccountingEntity.dxml" />
     <None Include="DBTables\AccountingIntegrityCheck.dxml" />
