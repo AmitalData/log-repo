@@ -646,13 +646,13 @@ export class ExternalPagesTabComponent extends BaseComponent implements OnInit, 
         windowArgs.EntityPM = this.EntityPM;
         windowArgs.openAmountCurrency = currency; // CurrencySign
         windowArgs.ObjectTableName = this.ObjectTableName;
-        windowArgs.BankName = this.DontShowLocal ? this.EntityPM.EnglishName : this.EntityPM.LocalName ;
         var logitudeWindow = new LogitudeWindow();
         logitudeWindow.Width = 900;
         logitudeWindow.Height = 800;
         logitudeWindow.IsFullScreen = true;
 
-        logitudeWindow.Title = TextCodeTranslator.Translate("Accounting.General.O.ExternalReconcile");
+        var BankName = this.DontShowLocal ? this.EntityPM.EnglishName : this.EntityPM.LocalName;
+        logitudeWindow.Title = TextCodeTranslator.Translate("Accounting.General.O.ExternalReconcile") + ' - ' + BankName;
 
         logitudeWindow.IsFullScreen = true;
         logitudeWindow.WindowArgs = windowArgs;

@@ -73,7 +73,6 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
     LoadGrids: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
     ExternalPagesTitle: string;
-    public BankName: string = "";
 
     entityListService: EntityListService = new EntityListService();
     ledgerTransactionExtendedListService: LedgerTransactionExtendedListService = new LedgerTransactionExtendedListService();
@@ -127,7 +126,6 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
             this.EntityPM = args.EntityPM;
             this.ObjectTableName = args.ObjectTableName;
             this.openAmountCurrency = args.openAmountCurrency;
-            this.BankName = args.BankName;
             this.SetTitles();
             this.SetUIProperty();
         }
