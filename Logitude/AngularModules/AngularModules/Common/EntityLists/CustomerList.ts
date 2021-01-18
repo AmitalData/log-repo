@@ -146,5 +146,6 @@ export class CustomerList {
 		StorageFreeDays: number;
 		GLAccountNumber: string;
 		SearchWeight: number;
+		IsAutonomy: boolean;
 	
 }

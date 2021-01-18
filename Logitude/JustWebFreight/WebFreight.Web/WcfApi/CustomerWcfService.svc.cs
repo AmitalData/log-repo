@@ -661,7 +661,7 @@ namespace WebFreight.Web.WcfApi
 
             return entity;
         }
-
+        
         public List<CustomerList> GetCustomerList(string searchText, string email, bool myCustomer, int tenant, int skip, int take, ref Response response)
         {
             if (CacheManager.CacheWrapper == null)
@@ -792,6 +792,7 @@ namespace WebFreight.Web.WcfApi
                                                                  //SharedLogisticsInvitationStatusName = customer.Card.SharedLogisticsInvitationStatus != null ? customer.Card.SharedLogisticsInvitationStatus.Name : null,
                                                                  LastLoginDate = customer.Card.LastLoginDate,
                                                                  InvitationDate = customer.Card.InvitationDate,
+                                                                 IsAutonomy = customer.Card.IsAutonomy,
                                                              }).FirstOrDefault();
 
 
@@ -852,7 +853,7 @@ namespace WebFreight.Web.WcfApi
 
             }
         }
-
+        
         public CustomerPM GetCustomerPM(DataContracts.CustomerApiFilters filters, int tenant, ref Response response)
         {
             // return null;
