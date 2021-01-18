@@ -380,7 +380,30 @@
                     </div>
                 </div>
 
+                <div *ngIf="FieldName == 'PhysicalCheck'" style="position:relative;width:100%; height: 100%;">
 
+                    <div *ngIf="!IsHeaderScreenTemplate">
+                        <div *ngIf="Entity['PhysicalCheck']=='0'">
+                        </div>
+                        <div *ngIf="Entity['PhysicalCheck']=='1'">
+                            <img class="CenterCenter" style="width:20px;height:20px;margin-top:6px" src="./Images/Icons/GreenV.png" />
+                        </div>
+                        <div *ngIf="Entity['PhysicalCheck']=='2'">
+                            <img class="CenterCenter" style="width:20px;height:20px;margin-top:6px" src="./Images/Icons/OrangeV.png" />
+                        </div>
+                    </div>
+                </div>
+
+                <div *ngIf="FieldName == 'RequestedCustomsDocId'" style="position:relative;width:100%; height: 100%;">
+
+                    <div *ngIf="!IsHeaderScreenTemplate">
+                        <div *ngIf="Entity['RequestedCustomsDocId']=='0'">
+                        </div>
+                        <div *ngIf="Entity['RequestedCustomsDocId']=='1'">
+                            <img class="CenterCenter" style="width:20px;height:20px;margin-top:6px" src="./Images/Icons/GreenV.png" />
+                        </div>
+                     </div>
+                </div>
                 <div *ngIf="FieldName == 'Actions'" (click)="ButtonClick()">
                     <div (click)="ButtonClick()">
                         <courier-filter-button #MyDropdownMenuFilterComponent

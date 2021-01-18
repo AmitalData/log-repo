@@ -22,14 +22,15 @@ namespace Logitude.Customs.BL.EntityQueryServices
             entityPM.CustomsDocumentPointers = pointerQueryService.GetPointersForTicket(entityPM.Id, entityPM.Tenant);
 
         }
-
+ 
+       
         public int CheckRequestedCustomsDocIdsByEntityIdAndChilds(string entityId , int tenant, string parentEntityCode, string requestedCustomsDocId)
         {
 
 
             List<CustomsDocumentsTicketPM> customsDocumentsTicketPMList = GetCustomsDocumentsTicketPMsByEntityIdAndChilds(entityId, "", "", "", tenant, "Declaration");
-
-            if (customsDocumentsTicketPMList.Where(x=>string.IsNullOrEmpty(x.VerificationStatusTypeCode) && !string.IsNullOrEmpty(x.RequestedCustomsDocId) && x.RequestedCustomsDocId != requestedCustomsDocId) != null )
+            //var test = customsDocumentsTicketPMList.Where(x => string.IsNullOrEmpty(x.VerificationStatusTypeCode) && !string.IsNullOrEmpty(x.RequestedCustomsDocId) && x.RequestedCustomsDocId != requestedCustomsDocId);
+            if (customsDocumentsTicketPMList.Count(x=>string.IsNullOrEmpty(x.VerificationStatusTypeCode) && !string.IsNullOrEmpty(x.RequestedCustomsDocId) && x.RequestedCustomsDocId != requestedCustomsDocId) >0 )
             {
                 return 1;
             }
@@ -38,7 +39,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
             return 0;
         }
 
-        public List<CustomsDocumentsTicketPM> GetCustomsDocumentsTicketPMsByEntityIdAndChilds(string entityId, string child1EntityId, string child2EntityId, string child3EntityId, int tenant, string parentEntityCode)
+         public List<CustomsDocumentsTicketPM> GetCustomsDocumentsTicketPMsByEntityIdAndChilds(string entityId, string child1EntityId, string child2EntityId, string child3EntityId, int tenant, string parentEntityCode)
         {
             List<CustomsDocumentsTicket> tickets = repository.GetCustomsDocumentsTicketPMsByEntityIdAndChilds(entityId, child1EntityId, child2EntityId, child3EntityId,tenant,parentEntityCode);
             ICustomContext context = MainContext as CustomContext;
