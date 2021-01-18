@@ -5100,7 +5100,7 @@
     IsChecked="true"
     IsDeleted="false"
     ObjectTableName="&quot;Customs.DeclarationReferantData&quot;"
-    FieldsDataType="&quot;Boolean&quot;"
+    FieldsDataType="&quot;Integer&quot;"
     MinLength="0"
     MaxLength="0"
     IsRequired="false"
