@@ -34,6 +34,7 @@ export class ReferantWorkspaceComponent implements AfterViewInit {
     public FilesInReviewVisibility: boolean = true;
     public FilesInCreditControlVisibility: boolean = true;
     public FilesAvailableFreeOfChargeVisibility: boolean = true;
+    public FilesWithoutReleaseVisibility: boolean = true;
     public FilesInAllInclusiveVisibility: boolean = true;
     public FilesRejectedByControllerVisibility: boolean = true;
     public FilesRejectedByClassificationVisibility: boolean = true;
@@ -144,6 +145,9 @@ export class ReferantWorkspaceComponent implements AfterViewInit {
 
             this.InProgressDeclarationReferantDataDashboard.push(this.createChartingItem("FilesAvailableFreeOfCharge"));
             this.InProgressDeclarationReferantDataDashboard.push(this.createChartingItem("FilesAvailableFreeOfCharge", true));
+
+            this.InProgressDeclarationReferantDataDashboard.push(this.createChartingItem("FilesWithoutRelease"));
+            this.InProgressDeclarationReferantDataDashboard.push(this.createChartingItem("FilesWithoutRelease", true));
 
             this.InProgressDeclarationReferantDataDashboard.push(this.createChartingItem("FilesInAllInclusive"));
             this.InProgressDeclarationReferantDataDashboard.push(this.createChartingItem("FilesInAllInclusive", true));

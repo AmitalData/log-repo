@@ -23,20 +23,17 @@ namespace Logitude.Customs.Data.EntityListQueryServices
     {
         private IQueryable<DeclarationReferantDataList> GetIqueryableList(IQueryable<DeclarationReferantData> iQueryable)
         {
+
+          
+
             IQueryable<DeclarationReferantDataList> query = (from a in iQueryable.Include("CustomsVendor")
                                                              join d in context.Declarations
-                                                             /*
-LEFT OUTER JOIN AMINETNXT_MAIN.Cards Extent3 ON Extent2.CustomerId = Extent3.Id
-LEFT OUTER JOIN AMINETNXT_MAIN.Customers Extent7 ON Extent3.Id = Extent7.Id
-due Extent7.LogBoxActivated,
-*/
-
                                                              .Include("CustomerCard")
                                                              .Include("DeclarationOffice")
                                                              .Include("DeclarationStatusType")
                                                              .Include("Importer")
                                                              on a.DeclarationId equals d.Id
-                                                             select new DeclarationReferantDataList()
+                                                              select new DeclarationReferantDataList()
                                                              {
                                                                  Tenant = a.Tenant,
 
@@ -126,10 +123,10 @@ LEFT OUTER JOIN AMINETNXT_MAIN.Contacts Extent10 ON Extent10.Id = Extent1.Contro
                                                                  DeclarationNumber = d.DeclarationNumber,
                                                                  IsHatraDateNull= d.HatraDate== null,
                                                                  RequestedCustomsDocId = d.RequestedCustomsDocId,
-                                                                 PaymentDate_Date= d.PaymentDate.Value.Date,
-                                                                 PaymentDate_Time= d.PaymentDate.Value.ToShortTimeString(),
+                                                                 PaymentDate_Date= d.PaymentDate,
+                                                                 PaymentDate_Time= "",
                                                                  IsClose=d.IsClose,
-                                                                 PhysicalCheck=true,
+                                                                 PhysicalCheck=  true ,
 
 
                                                              }) ;
@@ -147,7 +144,7 @@ LEFT OUTER JOIN AMINETNXT_MAIN.Contacts Extent10 ON Extent10.Id = Extent1.Contro
             {
 
                 iQueryable = filters.GetFilteredQuery(iQueryable);
-                iQueryable = filters.GetFreelancerDeclarationReferantDatas(queryOperations, iQueryable, tenant,context);
+                //iQueryable = filters.GetFreelancerDeclarationReferantDatas(queryOperations, iQueryable, tenant,context);
             }
             iQueryable = filters.GetFreelancerDeclarationReferantDatas(queryOperations, iQueryable, tenant, context);
 
@@ -176,7 +173,9 @@ LEFT OUTER JOIN AMINETNXT_MAIN.Contacts Extent10 ON Extent10.Id = Extent1.Contro
                                                                                     TransportModeId = d.TransportModeId,
                                                                                     ReferentUserId = d.ReferentUserId,
                                                                                     DepartmentId = d.DepartmentId,
-                                                                                    RequestedCustomsDocId=d.RequestedCustomsDocId
+                                                                                    RequestedCustomsDocId=d.RequestedCustomsDocId,
+                                                                                    IsCancelled= d.IsCancelled,
+                                                                                    IsClose= d.IsClose
                                                                                 });
 
             if (refId.Count>0)
@@ -206,6 +205,7 @@ LEFT OUTER JOIN AMINETNXT_MAIN.Contacts Extent10 ON Extent10.Id = Extent1.Contro
                                 FilesInCreditControl = groupBy1.Count(x => x.CollectionOfMoneyStatus == "P"),
                                 FilesAvailableFreeOfCharge = groupBy1.Count(x => x.IsPaymentDateNull == true && !x.IsAvailabilityDateNull == false),
                                 AllCases = declarationReferantDatas.Count(),
+                                FilesWithoutRelease = groupBy1.Count(x => x.IsPaymentDateNull == false && x.IsHatraDateNull ==true && x.IsCancelled!= true && x.IsClose==false),
                                 FilesInProcess_A = groupBy1.Count(x => x.IsClosedForFollowUp != "1" && x.IsAvailabilityDateNull == false),
                                 TrackingCases_A = groupBy1.Count(x => x.FollowUpDate == DateTime.Today && x.IsAvailabilityDateNull == false),
                                 FilesInOCR_A = groupBy1.Count(x => x.PreClassification == "P" && x.IsAvailabilityDateNull == false),
@@ -220,6 +220,7 @@ LEFT OUTER JOIN AMINETNXT_MAIN.Contacts Extent10 ON Extent10.Id = Extent1.Contro
                                 FilesRejectedByController_A = groupBy1.Count(x => x.ControllerStatus == "X" && x.IsAvailabilityDateNull == false),
                                 FilesRejectedByClassification = groupBy1.Count(x => x.ClassificationStatus == "X"),
                                 FilesRejectedByClassification_A = groupBy1.Count(x => x.ClassificationStatus == "X" && x.IsAvailabilityDateNull == false),
+                                FilesWithoutRelease_A = groupBy1.Count(x => x.IsPaymentDateNull == false && x.IsHatraDateNull == true && x.IsCancelled != true && x.IsClose == false && x.IsAvailabilityDateNull == false),
 
                             }
                             );
