@@ -21,7 +21,6 @@ namespace Logitude.Customs.Data.DataContracts
         public int FilesInCreditControl { get; set; }
         public int FilesAvailableFreeOfCharge { get; set; }
         public int AllCases { get; set; }
-        public int FilesWithoutRelease { get; set; }
 
         public int FilesInProcess_A { get; set; }
         public int TrackingCases_A { get; set; }
@@ -37,7 +36,5 @@ namespace Logitude.Customs.Data.DataContracts
         public int FilesRejectedByController_A { get; internal set; }
         public int FilesRejectedByClassification { get; internal set; }
         public int FilesRejectedByClassification_A { get; internal set; }
-        public int FilesWithoutRelease_A { get; internal set; }
-
     }
 }

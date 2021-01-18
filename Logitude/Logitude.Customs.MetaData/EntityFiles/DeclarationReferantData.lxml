@@ -4841,8 +4841,8 @@
     DefaultText="&quot;Requested Customs Doc Id&quot;"
     FullLocalDefaultText="&quot;מסמך נדרש&quot;"
     ListFieldLable="&quot;RequestedCustomsDocIdListLable&quot;"
-    ListLableDefaultText="&quot;Requested Customs DocId&quot;"
-    ListLocalDefaultText="&quot;מסמך נדרש&quot;"
+    ListLableDefaultText="&quot;מסמך נדרש&quot;"
+    ListLocalDefaultText="&quot;Requested Customs DocId&quot;"
     IsNullable="true"
     IsForeignKey="false"
     DontBuildRelationOnDB="false"
@@ -5141,8 +5141,8 @@
     DefaultText="&quot;Physical Check&quot;"
     FullLocalDefaultText="&quot;בדיקה פיזית&quot;"
     ListFieldLable="&quot;PhysicalCheckListLable&quot;"
-    ListLableDefaultText="&quot;Physical Check&quot;"
-    ListLocalDefaultText="&quot;בדיקה פיזית&quot;"
+    ListLableDefaultText="&quot;בדיקה פיזית&quot;"
+    ListLocalDefaultText="&quot;Physical Check&quot;"
     IsNullable="true"
     IsForeignKey="false"
     DontBuildRelationOnDB="false"
@@ -6687,36 +6687,31 @@
       <QueryColumn
         QueryCode="&quot;FilesWithoutRelease&quot;"
         IndexOrder="1"
-        ObjectFieldName="&quot;DeclarationNumber&quot;"
-        ColumnWidth="100" />
-      <QueryColumn
-        QueryCode="&quot;FilesWithoutRelease&quot;"
-        IndexOrder="2"
         ObjectFieldName="&quot;CustomerName&quot;"
         ColumnWidth="150" />
       <QueryColumn
         QueryCode="&quot;FilesWithoutRelease&quot;"
-        IndexOrder="3"
+        IndexOrder="2"
         ObjectFieldName="&quot;StorageSiteName&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;FilesWithoutRelease&quot;"
-        IndexOrder="4"
+        IndexOrder="3"
         ObjectFieldName="&quot;PaymentDate_Date&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;FilesWithoutRelease&quot;"
-        IndexOrder="5"
+        IndexOrder="4"
         ObjectFieldName="&quot;PaymentDate_Time&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;FilesWithoutRelease&quot;"
-        IndexOrder="6"
+        IndexOrder="5"
         ObjectFieldName="&quot;PhysicalCheck&quot;"
         ColumnWidth="50" />
       <QueryColumn
         QueryCode="&quot;FilesWithoutRelease&quot;"
-        IndexOrder="7"
+        IndexOrder="6"
         ObjectFieldName="&quot;RequestedCustomsDocId&quot;"
         ColumnWidth="50" />
     </QueryColumns>
@@ -6741,13 +6736,6 @@
         ObjectFieldName="&quot;IsHatraDateNull&quot;"
         IsPredefined="true"
         Operator="&quot;Equal&quot;"
-        IndexOrder="0" />
-      <QueryFilter
-        QueryCode="&quot;FilesWithoutRelease&quot;"
-        PredefinedValue="&quot;true&quot;"
-        ObjectFieldName="&quot;IsCancelled&quot;"
-        IsPredefined="true"
-        Operator="&quot;NotEqual&quot;"
         IndexOrder="0" />
     </QueryFilters>
   </Query>
@@ -6855,12 +6843,6 @@
       Code="&quot;Customs.DeclarationReferantData.O.FilesRejectedByClassification&quot;"
       DefaultText="&quot;Files Rejected By Classification&quot;"
       LocalDefaultText="&quot;תיקים שנדחו ע&quot;י מסווג&quot;"
-      TextCodeTypeCode="&quot;O&quot;"
-      IsSpellChecked="false" />
-    <TextCode
-      Code="&quot;Customs.DeclarationReferantData.O.FilesWithoutRelease&quot;"
-      DefaultText="&quot;Files Without Release&quot;"
-      LocalDefaultText="&quot;תיקים שהוגשו למכס ולא הותרו&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>

@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class DeclarationReferantDataUpdateClass
    {  		
-		public const string HashString = "e6bacea1154e7b276acab7c334ae803a";
+		public const string HashString = "b0d3cc6cdca9d3d134783110d14c666a";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -4082,8 +4082,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DefaultText =  "Requested Customs Doc Id",
 					  						FullLocalDefaultText =  "מסמך נדרש",
 					  						ListFieldLable =  "RequestedCustomsDocIdListLable",
-					  						ListLableDefaultText =  "Requested Customs DocId",
-					  						ListLocalDefaultText =  "מסמך נדרש",
+					  						ListLableDefaultText =  "מסמך נדרש",
+					  						ListLocalDefaultText =  "Requested Customs DocId",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -4330,8 +4330,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DefaultText =  "Physical Check",
 					  						FullLocalDefaultText =  "בדיקה פיזית",
 					  						ListFieldLable =  "PhysicalCheckListLable",
-					  						ListLableDefaultText =  "Physical Check",
-					  						ListLocalDefaultText =  "בדיקה פיזית",
+					  						ListLableDefaultText =  "בדיקה פיזית",
+					  						ListLocalDefaultText =  "Physical Check",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -4989,19 +4989,17 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	
 			 QueryColumn FilesWithoutReleaseQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FilesWithoutReleaseQuery.Id,QueryCode = FilesWithoutReleaseQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.DeclarationReferantData.CustomFileNo" , ColumnWidth = 150 }, addedQueryColumns);
 
-			 QueryColumn FilesWithoutReleaseQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FilesWithoutReleaseQuery.Id,QueryCode = FilesWithoutReleaseQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.DeclarationReferantData.DeclarationNumber" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn FilesWithoutReleaseQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FilesWithoutReleaseQuery.Id,QueryCode = FilesWithoutReleaseQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.DeclarationReferantData.CustomerName" , ColumnWidth = 150 }, addedQueryColumns);
 
-			 QueryColumn FilesWithoutReleaseQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FilesWithoutReleaseQuery.Id,QueryCode = FilesWithoutReleaseQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.DeclarationReferantData.CustomerName" , ColumnWidth = 150 }, addedQueryColumns);
+			 QueryColumn FilesWithoutReleaseQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FilesWithoutReleaseQuery.Id,QueryCode = FilesWithoutReleaseQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.DeclarationReferantData.StorageSiteName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn FilesWithoutReleaseQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FilesWithoutReleaseQuery.Id,QueryCode = FilesWithoutReleaseQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.DeclarationReferantData.StorageSiteName" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn FilesWithoutReleaseQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FilesWithoutReleaseQuery.Id,QueryCode = FilesWithoutReleaseQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.DeclarationReferantData.PaymentDate_Date" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn FilesWithoutReleaseQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FilesWithoutReleaseQuery.Id,QueryCode = FilesWithoutReleaseQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Customs.DeclarationReferantData.PaymentDate_Date" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn FilesWithoutReleaseQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FilesWithoutReleaseQuery.Id,QueryCode = FilesWithoutReleaseQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Customs.DeclarationReferantData.PaymentDate_Time" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn FilesWithoutReleaseQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FilesWithoutReleaseQuery.Id,QueryCode = FilesWithoutReleaseQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Customs.DeclarationReferantData.PaymentDate_Time" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn FilesWithoutReleaseQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FilesWithoutReleaseQuery.Id,QueryCode = FilesWithoutReleaseQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Customs.DeclarationReferantData.PhysicalCheck" , ColumnWidth = 50 }, addedQueryColumns);
 
-			 QueryColumn FilesWithoutReleaseQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FilesWithoutReleaseQuery.Id,QueryCode = FilesWithoutReleaseQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "Customs.DeclarationReferantData.PhysicalCheck" , ColumnWidth = 50 }, addedQueryColumns);
-
-			 QueryColumn FilesWithoutReleaseQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FilesWithoutReleaseQuery.Id,QueryCode = FilesWithoutReleaseQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "Customs.DeclarationReferantData.RequestedCustomsDocId" , ColumnWidth = 50 }, addedQueryColumns);
+			 QueryColumn FilesWithoutReleaseQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FilesWithoutReleaseQuery.Id,QueryCode = FilesWithoutReleaseQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "Customs.DeclarationReferantData.RequestedCustomsDocId" , ColumnWidth = 50 }, addedQueryColumns);
 
              AdvancedQueryFilter FilesWithoutReleaseQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customs.DeclarationReferantData.IsClose", PredefinedValue = "0",PredefinedValue2 = null, QueryId = FilesWithoutReleaseQuery.Id,QueryCode = FilesWithoutReleaseQuery.UniqueCode, Tenant = 0,Operator = "Equal"}, addedQueryFilters);
 
@@ -5010,9 +5008,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 
              AdvancedQueryFilter FilesWithoutReleaseQueryFilter_2 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customs.DeclarationReferantData.IsHatraDateNull", PredefinedValue = "true",PredefinedValue2 = null, QueryId = FilesWithoutReleaseQuery.Id,QueryCode = FilesWithoutReleaseQuery.UniqueCode, Tenant = 0,Operator = "Equal"}, addedQueryFilters);
-
-
-             AdvancedQueryFilter FilesWithoutReleaseQueryFilter_3 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customs.DeclarationReferantData.IsCancelled", PredefinedValue = "true",PredefinedValue2 = null, QueryId = FilesWithoutReleaseQuery.Id,QueryCode = FilesWithoutReleaseQuery.UniqueCode, Tenant = 0,Operator = "NotEqual"}, addedQueryFilters);
 
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);
@@ -5127,8 +5122,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode DeclarationReferantDataTextCode_CustomsDeclarationReferantDataOFilesRejectedByController = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.DeclarationReferantData.O.FilesRejectedByController", DefaultText = "Files Rejected By Controller",LocalDefaultText = "תיקים שנדחו ע''י מבקר", ObjectTableId = DeclarationReferantDataObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode DeclarationReferantDataTextCode_CustomsDeclarationReferantDataOFilesRejectedByClassification = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.DeclarationReferantData.O.FilesRejectedByClassification", DefaultText = "Files Rejected By Classification",LocalDefaultText = "תיקים שנדחו ע''י מסווג", ObjectTableId = DeclarationReferantDataObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
-
- 		   TextCode DeclarationReferantDataTextCode_CustomsDeclarationReferantDataOFilesWithoutRelease = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.DeclarationReferantData.O.FilesWithoutRelease", DefaultText = "Files Without Release",LocalDefaultText = @"תיקים שהוגשו למכס ולא הותרו", ObjectTableId = DeclarationReferantDataObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    
