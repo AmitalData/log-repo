@@ -273,7 +273,7 @@ this.FeatureBackground();
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Update shipment with Invalid Future ATD", null, tagsOfScenario, argumentsOfScenario);
-#line 43
+#line 42
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             bool isScenarioIgnored = default(bool);
@@ -306,14 +306,14 @@ this.FeatureBackground();
                             "CA20",
                             "DE222",
                             "DE223"});
-#line 44
-    testRunner.Given("The main carriage legs are added to last direct shipment", ((string)(null)), table8, "Given ");
+#line 43
+ testRunner.Given("The main carriage legs are added to last direct shipment", ((string)(null)), table8, "Given ");
+#line hidden
+#line 46
+ testRunner.When("The User Updates Shipment With Invalid Future ATD", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
 #line 47
-    testRunner.When("The User Updates Shipment With Invalid Future ATD", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line hidden
-#line 48
-    testRunner.Then("The excption massage that\'s related to this case is shown", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then("The excption massage that\'s related to this case is shown", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();
@@ -327,7 +327,7 @@ this.FeatureBackground();
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Update shipment with vaild dates", null, tagsOfScenario, argumentsOfScenario);
-#line 50
+#line 49
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             bool isScenarioIgnored = default(bool);
@@ -360,14 +360,14 @@ this.FeatureBackground();
                             "CA20",
                             "DE222",
                             "DE223"});
-#line 51
-    testRunner.Given("The main carriage legs are added to last direct shipment", ((string)(null)), table9, "Given ");
+#line 50
+ testRunner.Given("The main carriage legs are added to last direct shipment", ((string)(null)), table9, "Given ");
+#line hidden
+#line 53
+ testRunner.When("The User Updates Shipment With valid Future ETD,ATD,ETA and ATA", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
 #line 54
-    testRunner.When("The User Updates Shipment With valid Future ETD,ATD,ETA and ATA", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line hidden
-#line 55
-    testRunner.Then("The shipment is updated succesfully", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then("The shipment is updated succesfully", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();
