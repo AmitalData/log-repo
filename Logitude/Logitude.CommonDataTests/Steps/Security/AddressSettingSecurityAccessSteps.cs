@@ -74,16 +74,16 @@ namespace Logitude.CommonDataTests.Steps.Security
         protected TenantPM GetAddressSettings(int Tenant, string Token)
         {
             string TenantUrl = "tenants/getsingle?id=" + Tenant;
-            TenantPM tenant = APICaller.CallGet<TenantPM>(TenantUrl, Token, null);
-            return tenant;
+            var tenant = APICaller.CallGet<TenantPM>(TenantUrl, Token);
+            return tenant.Data;
         }
 
         protected AddressPM UpdateFirstUserAddressSettings(string Token)
         {
             AddressPM FirstUserAdressSettings = GetAFirstUserAdressSettings();
 
-            AddressPM UpdatedAddressSettings = APICaller.CallPut<AddressPM>(FirstUserAdressSettings, "addresses", Token);
-            return UpdatedAddressSettings;
+            var UpdatedAddressSettings = APICaller.CallPut<AddressPM>(FirstUserAdressSettings, "addresses", Token);
+            return UpdatedAddressSettings.Data;
         }
 
         protected AddressPM GetAFirstUserAdressSettings()
@@ -117,7 +117,8 @@ namespace Logitude.CommonDataTests.Steps.Security
                 IsStateRequired = true,
             };
 
-            return APICaller.CallPost<AddressPM>(AddressPM, "addresses", Context.FirstUser.Token);
+            var response = APICaller.CallPost<AddressPM>(AddressPM, "addresses", Context.FirstUser.Token);
+            return response.Data;
         }
     }
 }

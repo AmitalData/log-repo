@@ -37,10 +37,12 @@ namespace Logitude.ShipmentTests.Steps
 
         protected ShipmentPM GetAMaster_HouseShipment(string listURL)
         {
-            IEnumerable<ShipmentPM> MasterShipments = APICaller.CallGet<IEnumerable<ShipmentPM>>(listURL, User.Token, "Result");
+            //this method is waiting the CallGetByFilter to be implemented by Abd.M
+            //IEnumerable<ShipmentPM> MasterShipments = APICaller.CallGet<IEnumerable<ShipmentPM>>(listURL, User.Token, "Result");
 
-            string singleShipmentUrl = "Shipment/GetSingle?id=" + MasterShipments?.FirstOrDefault()?.Id;
-            return APICaller.CallGet<ShipmentPM>(singleShipmentUrl, User.Token, null);
+            //string singleShipmentUrl = "Shipment/GetSingle?id=" + MasterShipments?.FirstOrDefault()?.Id;
+            //return APICaller.CallGet<ShipmentPM>(singleShipmentUrl, User.Token, null);
+            return null;
         }
     }
 }

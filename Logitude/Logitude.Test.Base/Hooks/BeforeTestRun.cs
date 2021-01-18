@@ -6,6 +6,7 @@ using Logitude.Test.Base.Services;
 using System.Collections.Generic;
 using System.Linq;
 using TechTalk.SpecFlow;
+using Logitude.Test.Base.Models;
 
 namespace Logitude.Test.Base.Hooks
 {
@@ -29,11 +30,11 @@ namespace Logitude.Test.Base.Hooks
                 GetToken = true
             };
 
-            User user = APICaller.CallPost<User>(loginParameters, URLs.UserAuthentication, null);
-            UserTenant.Token = user.Token;
-            UserTenant.Tenant = user.Tenant;
-            UserTenant.LoginUserId = user.UserId;
-            UserTenant.LoginUserName = user.UserName;
+            APIResponse<User> user= APICaller.CallPost<User>(loginParameters, URLs.UserAuthentication, null);
+            UserTenant.Token = user.Data.Token;
+            UserTenant.Tenant = user.Data.Tenant;
+            UserTenant.LoginUserId = user.Data.UserId;
+            UserTenant.LoginUserName = user.Data.UserName;
         }
 
         private static void FillUserTenant()
@@ -45,23 +46,24 @@ namespace Logitude.Test.Base.Hooks
         private static void FillTenant()
         {
             string TenantUrl = URLs.TenantsGetSingle + UserTenant.Tenant;
-            TenantPM tenantPM = APICaller.CallGet<TenantPM>(TenantUrl, UserTenant.Token, null);
+            APIResponse<TenantPM> tenantPM = APICaller.CallGet<TenantPM>(TenantUrl, UserTenant.Token);
 
-            UserTenant.Tenant = tenantPM.Id;
-            UserTenant.LocalCurrencyId = tenantPM.CurrencyId;
-            UserTenant.ProfitCurrencyId = tenantPM.ProfitCurrencyId;
-            UserTenant.ProfitCurrencyRate = tenantPM.ProfitCurrencyRate;
+            UserTenant.Tenant = tenantPM.Data.Id;
+            UserTenant.LocalCurrencyId = tenantPM.Data.CurrencyId;
+            UserTenant.ProfitCurrencyId = tenantPM.Data.ProfitCurrencyId;
+            UserTenant.ProfitCurrencyRate = tenantPM.Data.ProfitCurrencyRate;
         }
 
         private static void FillUser()
         {
-            string UserListUrl = URLs.UserviewsGetbyfilters + BaseConfigurations.Email;
-            List<UserList> users = APICaller.CallGet<List<UserList>>(UserListUrl, UserTenant.Token, "Result");
+            //this method is waiting the CallGetByFilter to be implemented by Abd.M
+           /* string UserListUrl = URLs.UserviewsGetbyfilters + BaseConfigurations.Email;
+            List<UserList> users = APICaller.CallGetByFilter<List<UserList>>(UserListUrl, UserTenant.Token, "Result");
             var user = users.FirstOrDefault();
 
             UserTenant.BranchId = user.BranchId;
             UserTenant.DepartmentId = user.DepartmentId;
-            UserTenant.BusinessUnitId = user.BusinessUnitId;
+            UserTenant.BusinessUnitId = user.BusinessUnitId;*/
         }
     }
 }

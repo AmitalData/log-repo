@@ -15,6 +15,7 @@ namespace Logitude.ShipmentTests.Steps
     {
         protected User User;
         protected readonly ShipmentContext ShipmentContext;
+        protected APIResponse<ShipmentPM> Response;
 
         public CreateShipmentSteps(MultiUsers multiUsers, ShipmentContext shipmentContext)
         {
@@ -42,7 +43,8 @@ namespace Logitude.ShipmentTests.Steps
         [When(@"Create master shipment API request sent")]
         public void WhenCreateMasterShipmentAPIRequestSent()
         {
-            ShipmentContext.MasterShipment = APICaller.CallPost<ShipmentPM>(ShipmentContext.MasterShipment, "Shipment", UserTenant.Token);
+            var Response = APICaller.CallPost<ShipmentPM>(ShipmentContext.MasterShipment, "Shipment", UserTenant.Token);
+            ShipmentContext.MasterShipment =Response?.Data;
         }
 
         [Then(@"A new master created successfully")]
@@ -63,7 +65,8 @@ namespace Logitude.ShipmentTests.Steps
         public void WhenCreateHouseShipmentAPIRequestSent()
         {
             ShipmentContext.HouseShipment.MasterShipmentDataId = ShipmentContext.MasterShipment.Id;
-            ShipmentContext.HouseShipment = APICaller.CallPost<ShipmentPM>(ShipmentContext.HouseShipment, "Shipment", User.Token);
+            var response = APICaller.CallPost<ShipmentPM>(ShipmentContext.HouseShipment, "Shipment", User.Token);
+            ShipmentContext.HouseShipment = response?.Data;
         }
 
         [Then(@"A new house created successfully")]
@@ -72,6 +75,7 @@ namespace Logitude.ShipmentTests.Steps
             ShipmentContext.HouseShipment.Id.Should().NotBeNull();
             ShipmentContext.HouseShipment.MasterShipmentDataId.Should().NotBeNull();
             ShipmentContext.HouseShipment.MasterShipmentNumber.Should().NotBeNull();
+
         }
     }
 }

@@ -34,8 +34,8 @@ namespace Logitude.InvoiceTests.Steps.SecurityTests
         {
             ARPaymentPM firstUserARPayment = GetAnARPaymentForFirstUser(Context.FirstUser.Token);
             string singleARPaymentUrl = "arPayments/GetSingle?id=" + firstUserARPayment.Id;
-            ARPaymentPM ARPaymentPM = APICaller.CallGet<ARPaymentPM>(singleARPaymentUrl, Context.SecondUser.Token, null);
-            Context.SecondUserPMData.Id = ARPaymentPM?.Id;
+            var response = APICaller.CallGet<ARPaymentPM>(singleARPaymentUrl, Context.SecondUser.Token);
+            Context.SecondUserPMData.Id = response.Data?.Id;
         }
 
         [Then(@"AR Payment should be exists")]
@@ -52,9 +52,11 @@ namespace Logitude.InvoiceTests.Steps.SecurityTests
 
         private ARPaymentPM GetAnARPaymentForFirstUser(string Token)
         {
-            string ARPaymentsListUrl = "arpaymentviews/getbyfilters?ForceCacheRefresh=false&GetAll=false&Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value=&PageIndex=0&PageSize=22";
-            IEnumerable<ARPaymentPM> ARPaymentPMs = APICaller.CallGet<IEnumerable<ARPaymentPM>>(ARPaymentsListUrl, Token, "Result");
-            return ARPaymentPMs.FirstOrDefault();
+            //this method is waiting the CallGetByFilter to be implemented by Abd.M
+            //string ARPaymentsListUrl = "arpaymentviews/getbyfilters?ForceCacheRefresh=false&GetAll=false&Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value=&PageIndex=0&PageSize=22";
+            //IEnumerable<ARPaymentPM> ARPaymentPMs = APICaller.CallGet<IEnumerable<ARPaymentPM>>(ARPaymentsListUrl, Token, "Result");
+            //return ARPaymentPMs.FirstOrDefault();
+            return null;
         }
     }
 }
