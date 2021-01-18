@@ -32,8 +32,8 @@ namespace Logitude.InvoiceTests.Steps.SecurityTests
         {
             IEnumerable<APInvoicePM> firstUserAPInvoicesList = GetAPInvoiceListForFirstUser();
             string singleAPPaymentUrl = "apinvoices/getsingle?id=" + firstUserAPInvoicesList?.FirstOrDefault()?.Id;
-            APInvoicePM APPaymentPM = APICaller.CallGet<APInvoicePM>(singleAPPaymentUrl, Context.SecondUser.Token, null);
-            Context.SecondUserPMData.Id = APPaymentPM?.Id;
+            var response = APICaller.CallGet<APInvoicePM>(singleAPPaymentUrl, Context.SecondUser.Token);
+            Context.SecondUserPMData.Id = response?.Data.Id;
         }
 
         [Then(@"The AP Invoice which is related to the first user tanent is existed")]
@@ -50,9 +50,11 @@ namespace Logitude.InvoiceTests.Steps.SecurityTests
 
         private IEnumerable<APInvoicePM> GetAPInvoiceListForFirstUser()
         {
-            string APInvoicesListUrl = "apinvoiceviews/getbyfilters?ForceCacheRefresh=false&GetAll=false&Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value=&PageIndex=0&PageSize=1";
-            IEnumerable<APInvoicePM> APInvoicePMs = APICaller.CallGet<IEnumerable<APInvoicePM>>(APInvoicesListUrl, Context.FirstUser.Token, "Result");
-            return APInvoicePMs;
+            //this method is waiting the CallGetByFilter to be implemented by Abd.M
+            //string APInvoicesListUrl = "apinvoiceviews/getbyfilters?ForceCacheRefresh=false&GetAll=false&Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value=&PageIndex=0&PageSize=1";
+            //IEnumerable<APInvoicePM> APInvoicePMs = APICaller.CallGet<IEnumerable<APInvoicePM>>(APInvoicesListUrl, Context.FirstUser.Token, "Result");
+            //return APInvoicePMs;
+            return null;
         }
     }
 }

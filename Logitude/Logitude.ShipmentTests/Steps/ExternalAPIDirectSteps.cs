@@ -54,8 +54,8 @@ namespace Logitude.ShipmentTests.Steps
         [When(@"User create direct shipment using external API")]
         public void WhenUserCreateDirectShipmentUsingExternalAPI()
         {
-            Direct createdDirectShipment = APICaller.CallPost<Direct>(Context.Direct, "Direct", Context.User.Token);
-            Context.Direct.Id = createdDirectShipment?.Id;
+            var response = APICaller.CallPost<Direct>(Context.Direct, "Direct", Context.User.Token);
+            Context.Direct.Id = response.Data?.Id;
         }
 
         [Then(@"The direct shipment should be created successfully")]
@@ -79,9 +79,9 @@ namespace Logitude.ShipmentTests.Steps
             DateTime FutureDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day).AddYears(1);
 
             Context.Direct.MainCarriageLegs.Last().ATA = FutureDate;
-            dynamic response = APICaller.CallPut<dynamic>(Context.Direct, "Direct", Context.User.Token, HttpStatusCode.BadRequest);
+            var response = APICaller.CallPut<dynamic>(Context.Direct, "Direct", Context.User.Token);
 
-            ExceptionMessage = (response["ErrorMessage"] as string).Replace("\r", string.Empty).Replace("\n", string.Empty).Trim();
+            ExceptionMessage = response.ErrorMessage;
         }
 
         [Then(@"Update should not be done")]
@@ -96,9 +96,9 @@ namespace Logitude.ShipmentTests.Steps
             DateTime FutureDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day).AddYears(1);
 
             Context.Direct.MainCarriageLegs.Last().ATD = FutureDate;
-            dynamic response = APICaller.CallPut<dynamic>(Context.Direct, "Direct", Context.User.Token, HttpStatusCode.BadRequest);
+            var response = APICaller.CallPut<dynamic>(Context.Direct, "Direct", Context.User.Token);
 
-            ExceptionMessage = (response["ErrorMessage"] as string).Replace("\r", string.Empty).Replace("\n", string.Empty).Trim();
+            ExceptionMessage = response.ErrorMessage;
         }
 
         [Then(@"The excption massage that's related to this case is shown")]
@@ -117,7 +117,8 @@ namespace Logitude.ShipmentTests.Steps
             Context.Direct.MainCarriageLegs.Last().ETA = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day).AddMonths(-1).AddDays(3);
             Context.Direct.MainCarriageLegs.Last().ATA = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day).AddMonths(-1).AddDays(4);
             Context.Direct.NewConcurrencyGUID = Guid.NewGuid().ToString();
-            Context.Direct = APICaller.CallPut<Direct>(Context.Direct, "Direct", Context.User.Token);
+            var response = APICaller.CallPut<Direct>(Context.Direct, "Direct", Context.User.Token);
+            Context.Direct =response.Data;
         }
 
         [Then(@"The shipment is updated succesfully")]
@@ -135,16 +136,17 @@ namespace Logitude.ShipmentTests.Steps
                 "&Filter2Name=CreatedByUserId&Filter2Operator=equals&Filter2Value=" + Context.User.UserId +
                 "&SortBy=CreateDateTime&SortDirection=descending";
 
-            IEnumerable<ShipmentPM> directShipments = APICaller.CallGet<IEnumerable<ShipmentPM>>(directShipmentsRequestUrl, Context.User.Token, "Result");
+            //this method is waiting the CallGetByFilter to be implemented by Abd.M
+            //IEnumerable<ShipmentPM> directShipments = APICaller.CallGet<IEnumerable<ShipmentPM>>(directShipmentsRequestUrl, Context.User.Token, "Result");
 
-            string lastDirectShipmentId = directShipments?.FirstOrDefault()?.Id;
+            //string lastDirectShipmentId = directShipments?.FirstOrDefault()?.Id;
 
-            Direct directShipment = APICaller.CallGet<Direct>(("Direct/GetSingleDirect?id=" + lastDirectShipmentId), Context.User.Token, null);
+            //Direct directShipment = APICaller.CallGet<Direct>(("Direct/GetSingleDirect?id=" + lastDirectShipmentId), Context.User.Token, null);
 
-            if (directShipment != null)
-            {
-                Context.Direct = directShipment;
-            }
+            //if (directShipment != null)
+            //{
+            //    Context.Direct = directShipment;
+            //}
         }
 
     }

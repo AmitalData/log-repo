@@ -48,7 +48,8 @@ namespace Logitude.ShipmentTests.Steps
             ShipmentContext.MasterShipment.PackagesQuantity = _masterPackages.Quantity;
             ShipmentContext.MasterShipment.ShipmentPackages.Add(_masterPackages);
 
-            ShipmentContext.MasterShipment = APICaller.CallPut<ShipmentPM>(ShipmentContext.MasterShipment, "Shipment", User.Token);
+            var response = APICaller.CallPut<ShipmentPM>(ShipmentContext.MasterShipment, "Shipment", User.Token);
+            ShipmentContext.MasterShipment.Id = response.Data.Id;
         }
 
         [Then(@"A new master packages added successfully")]
@@ -79,7 +80,8 @@ namespace Logitude.ShipmentTests.Steps
             ShipmentContext.HouseShipment.PackagesQuantity = _housePackage.Quantity;
             ShipmentContext.HouseShipment.ShipmentPackages.Add(_housePackage);
 
-            ShipmentContext.HouseShipment = APICaller.CallPut<ShipmentPM>(ShipmentContext.HouseShipment, "Shipment", User.Token);
+            var response = APICaller.CallPut<ShipmentPM>(ShipmentContext.HouseShipment, "Shipment", User.Token);
+            ShipmentContext.HouseShipment.Id =response.Data.Id;
         }
 
         [Then(@"A new house packages added successfully")]
@@ -107,7 +109,8 @@ namespace Logitude.ShipmentTests.Steps
             _shipmentPayablesPM.ShipmentId = ShipmentContext.MasterShipment.Id;
             ShipmentContext.MasterShipment.ShipmentPayables.Add(_shipmentPayablesPM);
 
-            ShipmentContext.MasterShipment = APICaller.CallPut<ShipmentPM>(ShipmentContext.MasterShipment, "Shipment", User.Token);
+            var response = APICaller.CallPut<ShipmentPM>(ShipmentContext.MasterShipment, "Shipment", User.Token);
+            ShipmentContext.MasterShipment.Id =response.Data.Id;
         }
 
         [Then(@"The payable cherge type added successfully")]
