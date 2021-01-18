@@ -159,6 +159,12 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                     LogIt("after list");
                     //}
                 }
+                LedgerTransactionHelper ledgerTransactionHelper2 = new LedgerTransactionHelper();
+
+                list.ForEach(rec =>
+                {
+                    MapLedgerTransactionLine(rec, ledgerTransactionHelper2, isFromExcelGenerater);
+                });
                 Response.MyLedgerTransactionList = list;
             }
             this.Response.TookMS = sw.ElapsedMilliseconds;
