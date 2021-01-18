@@ -4526,6 +4526,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;IsPaymentDateNull&quot;"
     ListPropertyPath="&quot;IsPaymentDateNull&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -4597,6 +4598,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;IsAvailabilityDateNull&quot;"
     ListPropertyPath="&quot;IsAvailabilityDateNull&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -5098,7 +5100,7 @@
     IsChecked="true"
     IsDeleted="false"
     ObjectTableName="&quot;Customs.DeclarationReferantData&quot;"
-    FieldsDataType="&quot;Boolean&quot;"
+    FieldsDataType="&quot;Integer&quot;"
     MinLength="0"
     MaxLength="0"
     IsRequired="false"
@@ -6316,7 +6318,7 @@
     TextCode="&quot;Files Without Release&quot;"
     LocalTextCode="&quot;תיקים שהוגשו למכס ולא הותרו&quot;"
     QueryGroupCode="&quot;5277&quot;"
-    IndexOrder="11"
+    IndexOrder="8"
     ObjectTableName="&quot;Customs.DeclarationReferantData&quot;"
     QuerySection="&quot;Customs.DeclarationReferantData&quot;"
     SystemLevel="true"
@@ -6334,31 +6336,36 @@
       <QueryColumn
         QueryCode="&quot;FilesWithoutRelease&quot;"
         IndexOrder="1"
+        ObjectFieldName="&quot;DeclarationNumber&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;FilesWithoutRelease&quot;"
+        IndexOrder="2"
         ObjectFieldName="&quot;CustomerName&quot;"
         ColumnWidth="150" />
       <QueryColumn
         QueryCode="&quot;FilesWithoutRelease&quot;"
-        IndexOrder="2"
+        IndexOrder="3"
         ObjectFieldName="&quot;StorageSiteName&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;FilesWithoutRelease&quot;"
-        IndexOrder="3"
+        IndexOrder="4"
         ObjectFieldName="&quot;PaymentDate_Date&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;FilesWithoutRelease&quot;"
-        IndexOrder="4"
+        IndexOrder="5"
         ObjectFieldName="&quot;PaymentDate_Time&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;FilesWithoutRelease&quot;"
-        IndexOrder="5"
+        IndexOrder="6"
         ObjectFieldName="&quot;PhysicalCheck&quot;"
         ColumnWidth="50" />
       <QueryColumn
         QueryCode="&quot;FilesWithoutRelease&quot;"
-        IndexOrder="6"
+        IndexOrder="7"
         ObjectFieldName="&quot;RequestedCustomsDocId&quot;"
         ColumnWidth="50" />
     </QueryColumns>
@@ -6383,6 +6390,13 @@
         ObjectFieldName="&quot;IsHatraDateNull&quot;"
         IsPredefined="true"
         Operator="&quot;Equal&quot;"
+        IndexOrder="0" />
+      <QueryFilter
+        QueryCode="&quot;FilesWithoutRelease&quot;"
+        PredefinedValue="&quot;1&quot;"
+        ObjectFieldName="&quot;IsClosedForFollowUp&quot;"
+        IsPredefined="true"
+        Operator="&quot;NotEqual&quot;"
         IndexOrder="0" />
     </QueryFilters>
   </Query>

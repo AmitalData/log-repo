@@ -72,7 +72,7 @@ export class DeclarationReferantDataList {
 	IsClose: boolean;
 	PaymentDate_Date: Date;
 	PaymentDate_Time: string;
-	PhysicalCheck: boolean;
+	PhysicalCheck: number;
 	
 }
  

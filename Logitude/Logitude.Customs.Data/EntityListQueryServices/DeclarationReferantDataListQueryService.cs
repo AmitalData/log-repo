@@ -128,7 +128,7 @@ LEFT OUTER JOIN AMINETNXT_MAIN.Contacts Extent10 ON Extent10.Id = Extent1.Contro
                                                                  PaymentDate_Date= d.PaymentDate.Value.Date,
                                                                  PaymentDate_Time= d.PaymentDate.Value.ToShortTimeString(),
                                                                  IsClose=d.IsClose,
-                                                                 PhysicalCheck=true,
+                                                                 PhysicalCheck=1,
 
 
                                                              }) ;

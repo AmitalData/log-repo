@@ -143,7 +143,7 @@ namespace Logitude.Customs.Data.EntityLists
        [DataMember]
        public string PaymentDate_Time  { get; set; }
        [DataMember]
-       public bool? PhysicalCheck  { get; set; }
+       public int? PhysicalCheck  { get; set; }
    }
 
 }
