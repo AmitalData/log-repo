@@ -1195,5 +1195,5 @@
   <Index
     Columns="HatraDate" />
   <Index
-   Columns="IsClose" />
+    Columns="IsClose" />
 </Table>
