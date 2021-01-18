@@ -73,6 +73,8 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                                                            OppositeAccountLocalName = a.OppositeAccount != null ? a.OppositeAccount.LocalName : null,
                                                            OppositeAccountDisplayNumber = a.OppositeAccount != null ? a.OppositeAccount.DisplayNumber : null,
                                                            OriginalAmount = 0,
+                                                           CalculatedForeignAmount = a.ForeignAmountCredit != 0 ? a.ForeignAmountCredit : a.ForeignAmountDebit,
+                                                           CalculatedLocalAmount = a.LocalAmountCredit != 0 ? a.LocalAmountCredit : a.LocalAmountDebit
 
                                                        });
 
@@ -511,7 +513,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
             return mylist;
         }
  
-        private void MapLedgerTransactionnList (List<LedgerTransactionList> LedgerTransactions, bool  IsFromExcelGenerator)
+        public void MapLedgerTransactionnList (List<LedgerTransactionList> LedgerTransactions, bool  IsFromExcelGenerator)
         {
             LedgerTransactionHelper ledgerTransactionHelper = new LedgerTransactionHelper();
             LedgerTransactions.ForEach(rec =>
