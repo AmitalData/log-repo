@@ -278,6 +278,10 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 {
                     shipmentTracing.BeginTracing();
                 }
+                if (entityPM.IsHybrid)
+                {
+                    shipmentTracing.TraceTerminalData();
+                }
 
                 this.ComputeIsAssemblyField();
                 this.ComputeFinalDestination();
@@ -462,7 +466,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                         this.UpdateShipmentStoragePricingsCollection();
                     }
 
-                    if (shipmentBehaviourFacade.DatesUpdated_CrossDoc)
+                    if (shipmentBehaviourFacade.DatesUpdated_CrossDoc || entityPM.IsHybrid)
                     {
                         shipmentTracing.TraceTerminalData();
                     }

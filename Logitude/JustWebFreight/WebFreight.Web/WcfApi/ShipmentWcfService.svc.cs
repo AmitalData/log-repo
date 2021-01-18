@@ -91,6 +91,7 @@ namespace WebFreight.Web.WcfApi
                     TenantQuery tenantQuery = new TenantQuery(tenantRepository);
                     TenantPM tenantPM = tenantQuery.GetSinglePM(entityPM.Tenant);
                     CountryRepository countryRepository = new CountryRepository(commoncontext);
+                    AddressRepository addressRepository = new AddressRepository(commoncontext);
                     // ???????????
                     //"system@tenant1.com"
 
@@ -649,6 +650,10 @@ namespace WebFreight.Web.WcfApi
 
                     #endregion
 
+                    #region WarehouseLeg
+                    MapWarehouseLeg(entityPM, cardsReporistory, addressRepository);
+                    #endregion
+
                     if (response.HasError)
                     {
                         return response;
@@ -1022,6 +1027,33 @@ namespace WebFreight.Web.WcfApi
                         errorsStrBuilder.Append("ToAddressCity field is required");
                 }
 
+            }
+        }
+
+        private void MapWarehouseLeg(ShipmentPM entityPM, CardRepository cardsReporistory, AddressRepository addressRepository)
+        {
+            if (entityPM.WarehouseLegWarehouseId != null)
+            {
+                Card warehouseCard = cardsReporistory.GetSingleCardByCode(entityPM.WarehouseLegWarehouseId, entityPM.Tenant, false);
+                if (warehouseCard != null && !string.IsNullOrEmpty(warehouseCard.Id))
+                {
+                    entityPM.WarehouseLegWarehouseId = warehouseCard.Id;
+                    entityPM.WarehouseLegTerminalName = warehouseCard.EnglishName;
+                    //MapWarehouseLegAddressId(entityPM, addressRepository, warehouseCard.Id);
+                }
+                else
+                {
+                    throw new ApplicationException("WarehouseLegWarehouseId field doesn't exist in the database,Upsert this entity before using it.");
+                }
+            }
+        }
+
+        private static void MapWarehouseLegAddressId(ShipmentPM entityPM, AddressRepository addressRepository, string warehouseCardId)
+        {
+            Address warehouseAddress = addressRepository.GetMainAddressByCardId(warehouseCardId, entityPM.Tenant);
+            if (warehouseAddress != null)
+            {
+                entityPM.WarehouseLegAddressId = warehouseAddress.Id;
             }
         }
 

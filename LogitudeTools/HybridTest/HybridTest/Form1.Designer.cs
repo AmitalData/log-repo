@@ -202,7 +202,8 @@
             "Trucker",
             "Vessel",
             "Warehouse",
-            "Shipment Pickups & Deliveries"});
+            "Shipment Pickups & Deliveries",
+            "ShipmentWarehouseLeg"});
             this.cmdServices.Location = new System.Drawing.Point(37, 41);
             this.cmdServices.Name = "cmdServices";
             this.cmdServices.Size = new System.Drawing.Size(298, 21);
