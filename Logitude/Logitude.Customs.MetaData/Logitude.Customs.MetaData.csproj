@@ -112,6 +112,8 @@
     <None Include="DBScripts\Post\202007031145_DeclarationCancellationAddOn.sxml" />
     <None Include="DBScripts\Post\202010111400_UpdateRequiredFields.sxml" />
     <None Include="DBScripts\Post\202012211428_SetDeclarationDirection2I.sxml" />
+    <None Include="DBScripts\Post\2021011719372_UpdateREQUESTEDCUSTOMSDOCID2.sxml" />
+    <None Include="DBScripts\Post\2021011719371_UpdateREQUESTEDCUSTOMSDOCID.sxml" />
     <None Include="DBScripts\Post\2020122708949_SetOpenDeclarations.sxml" />
     <None Include="DBScripts\Pre\202005210104_DropUnneededTables_Global.sxml" />
     <None Include="DBScripts\Pre\202005210105_DropUnneededTables_Main.sxml" />
@@ -589,11 +591,8 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="EntityFiles\ReferantException.lxml" />
-
     <None Include="EntityFiles\AmendCancellRequestInitiator.lxml" />
-
     <None Include="DBScripts\Pre\202101131441_DocumentsMetaDataTypeByCodeVER.sxml" />
-
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

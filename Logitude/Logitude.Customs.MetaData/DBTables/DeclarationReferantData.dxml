@@ -225,17 +225,14 @@
     ReferencedTable="ReferantTeams"
     ReferencedColumn="Code"
     ReferencedTableSchema="Customs" />
-  
-  <Index  Columns="IsClosedForFollowUp" />
-
-  
-  <Index  Columns="FollowUpDate" />
-
   <Index
-     Columns="NewFile" />
-  
-<Index
-     Columns="Favorite" />
+    Columns="IsClosedForFollowUp" />
+  <Index
+    Columns="FollowUpDate" />
+  <Index
+    Columns="NewFile" />
+  <Index
+    Columns="Favorite" />
   <Index
     Columns="NewFile,Favorite" />
 </Table>
