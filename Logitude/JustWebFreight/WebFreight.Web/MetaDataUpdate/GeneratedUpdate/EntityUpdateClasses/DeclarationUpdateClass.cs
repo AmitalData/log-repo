@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class DeclarationUpdateClass
    {  		
-		public const string HashString = "fee81517db8646b1983314f378ed11a6";
+		public const string HashString = "e3b773f7175966726e3a8eb5c7913991";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -10262,7 +10262,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CourierPendingReasonList",
 					  						DefaultText =  "Courier Pending Reason List",
-					  						FullLocalDefaultText =  "רשימת קודי עיכובים",
+					  						FullLocalDefaultText =  "קוד PENDING",
 					  						ListFieldLable =  "CourierPendingReasonListListLable",
 					  						ListLableDefaultText =  "Courier Pending Reason List",
 					  						ListLocalDefaultText =  "רשימת קודי עיכובים",
@@ -14113,6 +14113,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "RequestedCustomsDocId",
 					  						ListPropertyPath =  "RequestedCustomsDocId",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,

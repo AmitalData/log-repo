@@ -5297,15 +5297,15 @@
     <QueryFilters>
       <QueryFilter
         QueryCode="&quot;FilesInProcess&quot;"
-        PredefinedValue="&quot;1&quot;"
-        ObjectFieldName="&quot;IsClosedForFollowUp&quot;"
+        PredefinedValue="&quot;true&quot;"
+        ObjectFieldName="&quot;IsCancelled&quot;"
         IsPredefined="true"
         Operator="&quot;NotEqual&quot;"
         IndexOrder="0" />
       <QueryFilter
         QueryCode="&quot;FilesInProcess&quot;"
-        PredefinedValue="&quot;true&quot;"
-        ObjectFieldName="&quot;IsCancelled&quot;"
+        PredefinedValue="&quot;1&quot;"
+        ObjectFieldName="&quot;IsClosedForFollowUp&quot;"
         IsPredefined="true"
         Operator="&quot;NotEqual&quot;"
         IndexOrder="0" />
@@ -6336,42 +6336,42 @@
       <QueryColumn
         QueryCode="&quot;FilesWithoutRelease&quot;"
         IndexOrder="1"
-        ObjectFieldName="&quot;Actions&quot;"
-        ColumnWidth="50" />
-      <QueryColumn
-        QueryCode="&quot;FilesWithoutRelease&quot;"
-        IndexOrder="2"
         ObjectFieldName="&quot;DeclarationNumber&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;FilesWithoutRelease&quot;"
-        IndexOrder="3"
+        IndexOrder="2"
         ObjectFieldName="&quot;CustomerName&quot;"
         ColumnWidth="150" />
       <QueryColumn
         QueryCode="&quot;FilesWithoutRelease&quot;"
-        IndexOrder="4"
+        IndexOrder="3"
         ObjectFieldName="&quot;StorageSiteName&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;FilesWithoutRelease&quot;"
-        IndexOrder="5"
+        IndexOrder="4"
         ObjectFieldName="&quot;PaymentDate_Date&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;FilesWithoutRelease&quot;"
-        IndexOrder="6"
+        IndexOrder="5"
         ObjectFieldName="&quot;PaymentDate_Time&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;FilesWithoutRelease&quot;"
-        IndexOrder="7"
+        IndexOrder="6"
         ObjectFieldName="&quot;PhysicalCheck&quot;"
         ColumnWidth="50" />
       <QueryColumn
         QueryCode="&quot;FilesWithoutRelease&quot;"
-        IndexOrder="8"
+        IndexOrder="7"
         ObjectFieldName="&quot;RequestedCustomsDocId&quot;"
+        ColumnWidth="50" />
+      <QueryColumn
+        QueryCode="&quot;FilesWithoutRelease&quot;"
+        IndexOrder="8"
+        ObjectFieldName="&quot;Actions&quot;"
         ColumnWidth="50" />
     </QueryColumns>
     <QueryFilters>
@@ -6398,10 +6398,361 @@
         IndexOrder="0" />
       <QueryFilter
         QueryCode="&quot;FilesWithoutRelease&quot;"
-        PredefinedValue="&quot;1&quot;"
-        ObjectFieldName="&quot;IsClosedForFollowUp&quot;"
+        PredefinedValue="&quot;true&quot;"
+        ObjectFieldName="&quot;IsCancelled&quot;"
         IsPredefined="true"
         Operator="&quot;NotEqual&quot;"
+        IndexOrder="0" />
+    </QueryFilters>
+  </Query>
+  <Query
+    Code="&quot;FilesInAllInclusive&quot;"
+    TextCode="&quot;Files All Inclusive&quot;"
+    LocalTextCode="&quot;תיקים בכוללת &quot;"
+    QueryGroupCode="&quot;5277&quot;"
+    IndexOrder="9"
+    ObjectTableName="&quot;Customs.DeclarationReferantData&quot;"
+    QuerySection="&quot;Customs.DeclarationReferantData&quot;"
+    SystemLevel="true"
+    IsAddNewEntity="true"
+    IsPackagable="true"
+    DefaultSortName="&quot;SortedColumns&quot;"
+    DefaultSortDirection="&quot;Ascending&quot;"
+    IsSpellChecked="false">
+    <QueryColumns>
+      <QueryColumn
+        QueryCode="&quot;FilesInAllInclusive&quot;"
+        IndexOrder="0"
+        ObjectFieldName="&quot;CustomFileNo&quot;"
+        ColumnWidth="92" />
+      <QueryColumn
+        QueryCode="&quot;FilesInAllInclusive&quot;"
+        IndexOrder="1"
+        ObjectFieldName="&quot;DeclarationNumber&quot;"
+        ColumnWidth="120" />
+      <QueryColumn
+        QueryCode="&quot;FilesInAllInclusive&quot;"
+        IndexOrder="2"
+        ObjectFieldName="&quot;ImporterName&quot;"
+        ColumnWidth="87" />
+      <QueryColumn
+        QueryCode="&quot;FilesInAllInclusive&quot;"
+        IndexOrder="3"
+        ObjectFieldName="&quot;DeclarationOfficeName&quot;"
+        ColumnWidth="157" />
+      <QueryColumn
+        QueryCode="&quot;FilesInAllInclusive&quot;"
+        IndexOrder="4"
+        ObjectFieldName="&quot;PaymentDate&quot;"
+        ColumnWidth="124" />
+    </QueryColumns>
+    <QueryFilters>
+      <QueryFilter
+        QueryCode="&quot;FilesInAllInclusive&quot;"
+        PredefinedValue="&quot;true&quot;"
+        ObjectFieldName="&quot;IsCancelled&quot;"
+        IsPredefined="true"
+        Operator="&quot;NotEqual&quot;"
+        IndexOrder="0" />
+      <QueryFilter
+        QueryCode="&quot;FilesInAllInclusive&quot;"
+        PredefinedValue="&quot;1&quot;"
+        ObjectFieldName="&quot;RequestedCustomsDocId&quot;"
+        IsPredefined="true"
+        Operator="&quot;Equal&quot;"
+        IndexOrder="1" />
+      <QueryFilter
+        QueryCode="&quot;FilesInAllInclusive&quot;"
+        PredefinedValue="&quot;false&quot;"
+        ObjectFieldName="&quot;IsHatraDateNull&quot;"
+        IsPredefined="true"
+        Operator="&quot;Equal&quot;"
+        IndexOrder="0" />
+    </QueryFilters>
+  </Query>
+  <Query
+    Code="&quot;FilesRejectedByController&quot;"
+    TextCode="&quot;Files Rejected By Controller&quot;"
+    LocalTextCode="&quot;תיקים שנדחו עי מבקר&quot;"
+    QueryGroupCode="&quot;5277&quot;"
+    IndexOrder="10"
+    ObjectTableName="&quot;Customs.DeclarationReferantData&quot;"
+    QuerySection="&quot;Customs.DeclarationReferantData&quot;"
+    SystemLevel="true"
+    IsAddNewEntity="true"
+    IsPackagable="true"
+    DefaultSortName="&quot;SortedColumns&quot;"
+    DefaultSortDirection="&quot;Ascending&quot;"
+    IsSpellChecked="false">
+    <QueryColumns>
+      <QueryColumn
+        QueryCode="&quot;FilesRejectedByController&quot;"
+        IndexOrder="0"
+        ObjectFieldName="&quot;Favorite&quot;"
+        ColumnWidth="80" />
+      <QueryColumn
+        QueryCode="&quot;FilesRejectedByController&quot;"
+        IndexOrder="1"
+        ObjectFieldName="&quot;CustomFileNo&quot;"
+        ColumnWidth="92" />
+      <QueryColumn
+        QueryCode="&quot;FilesRejectedByController&quot;"
+        IndexOrder="2"
+        ObjectFieldName="&quot;CustomerName&quot;"
+        ColumnWidth="146" />
+      <QueryColumn
+        QueryCode="&quot;FilesRejectedByController&quot;"
+        IndexOrder="3"
+        ObjectFieldName="&quot;OrderNumber&quot;"
+        ColumnWidth="87" />
+      <QueryColumn
+        QueryCode="&quot;FilesRejectedByController&quot;"
+        IndexOrder="4"
+        ObjectFieldName="&quot;TransportModeId&quot;"
+        ColumnWidth="58" />
+      <QueryColumn
+        QueryCode="&quot;FilesRejectedByController&quot;"
+        IndexOrder="5"
+        ObjectFieldName="&quot;DeclarationOfficeName&quot;"
+        ColumnWidth="157" />
+      <QueryColumn
+        QueryCode="&quot;FilesRejectedByController&quot;"
+        IndexOrder="6"
+        ObjectFieldName="&quot;VendorName&quot;"
+        ColumnWidth="124" />
+      <QueryColumn
+        QueryCode="&quot;FilesRejectedByController&quot;"
+        IndexOrder="7"
+        ObjectFieldName="&quot;ArrivalDate&quot;"
+        ColumnWidth="79" />
+      <QueryColumn
+        QueryCode="&quot;FilesRejectedByController&quot;"
+        IndexOrder="8"
+        ObjectFieldName="&quot;Weight&quot;"
+        ColumnWidth="75" />
+      <QueryColumn
+        QueryCode="&quot;FilesRejectedByController&quot;"
+        IndexOrder="9"
+        ObjectFieldName="&quot;DeclarationStatusTypeName&quot;"
+        ColumnWidth="255" />
+      <QueryColumn
+        QueryCode="&quot;FilesRejectedByController&quot;"
+        IndexOrder="10"
+        ObjectFieldName="&quot;PreClassification&quot;"
+        ColumnWidth="58" />
+      <QueryColumn
+        QueryCode="&quot;FilesRejectedByController&quot;"
+        IndexOrder="11"
+        ObjectFieldName="&quot;ClassificationStatus&quot;"
+        ColumnWidth="55" />
+      <QueryColumn
+        QueryCode="&quot;FilesRejectedByController&quot;"
+        IndexOrder="12"
+        ObjectFieldName="&quot;ControllerStatus&quot;"
+        ColumnWidth="44" />
+      <QueryColumn
+        QueryCode="&quot;FilesRejectedByController&quot;"
+        IndexOrder="13"
+        ObjectFieldName="&quot;CollectionOfMoneyStatus&quot;"
+        ColumnWidth="50" />
+      <QueryColumn
+        QueryCode="&quot;FilesRejectedByController&quot;"
+        IndexOrder="14"
+        ObjectFieldName="&quot;OrderMoney&quot;"
+        ColumnWidth="50" />
+      <QueryColumn
+        QueryCode="&quot;FilesRejectedByController&quot;"
+        IndexOrder="15"
+        ObjectFieldName="&quot;FollowUpDate&quot;"
+        ColumnWidth="108" />
+      <QueryColumn
+        QueryCode="&quot;FilesRejectedByController&quot;"
+        IndexOrder="16"
+        ObjectFieldName="&quot;AvailabilityDate&quot;"
+        ColumnWidth="108" />
+      <QueryColumn
+        QueryCode="&quot;FilesRejectedByController&quot;"
+        IndexOrder="17"
+        ObjectFieldName="&quot;ExceptionReasonsList&quot;"
+        ColumnWidth="34" />
+      <QueryColumn
+        QueryCode="&quot;FilesRejectedByController&quot;"
+        IndexOrder="18"
+        ObjectFieldName="&quot;WithPaper&quot;"
+        ColumnWidth="69" />
+      <QueryColumn
+        QueryCode="&quot;FilesRejectedByController&quot;"
+        IndexOrder="19"
+        ObjectFieldName="&quot;NewFile&quot;"
+        ColumnWidth="69" />
+      <QueryColumn
+        QueryCode="&quot;FilesRejectedByController&quot;"
+        IndexOrder="20"
+        ObjectFieldName="&quot;IsCustomerLogBoxActivated&quot;"
+        ColumnWidth="68" />
+      <QueryColumn
+        QueryCode="&quot;FilesRejectedByController&quot;"
+        IndexOrder="21"
+        ObjectFieldName="&quot;Actions&quot;"
+        ColumnWidth="68" />
+    </QueryColumns>
+    <QueryFilters>
+      <QueryFilter
+        QueryCode="&quot;FilesRejectedByController&quot;"
+        PredefinedValue="&quot;true&quot;"
+        ObjectFieldName="&quot;IsCancelled&quot;"
+        IsPredefined="true"
+        Operator="&quot;NotEqual&quot;"
+        IndexOrder="0" />
+      <QueryFilter
+        QueryCode="&quot;FilesRejectedByController&quot;"
+        PredefinedValue="&quot;X&quot;"
+        ObjectFieldName="&quot;ControllerStatus&quot;"
+        IsPredefined="true"
+        Operator="&quot;Equal&quot;"
+        IndexOrder="2" />
+    </QueryFilters>
+  </Query>
+  <Query
+    Code="&quot;FilesRejectedByClassification&quot;"
+    TextCode="&quot;Files Rejected By Classification&quot;"
+    LocalTextCode="&quot;תיקים שנדחו עי מסווג&quot;"
+    QueryGroupCode="&quot;5277&quot;"
+    IndexOrder="11"
+    ObjectTableName="&quot;Customs.DeclarationReferantData&quot;"
+    QuerySection="&quot;Customs.DeclarationReferantData&quot;"
+    SystemLevel="true"
+    IsAddNewEntity="true"
+    IsPackagable="true"
+    DefaultSortName="&quot;SortedColumns&quot;"
+    DefaultSortDirection="&quot;Ascending&quot;"
+    IsSpellChecked="false">
+    <QueryColumns>
+      <QueryColumn
+        QueryCode="&quot;FilesRejectedByClassification&quot;"
+        IndexOrder="0"
+        ObjectFieldName="&quot;Favorite&quot;"
+        ColumnWidth="80" />
+      <QueryColumn
+        QueryCode="&quot;FilesRejectedByClassification&quot;"
+        IndexOrder="1"
+        ObjectFieldName="&quot;CustomFileNo&quot;"
+        ColumnWidth="92" />
+      <QueryColumn
+        QueryCode="&quot;FilesRejectedByClassification&quot;"
+        IndexOrder="2"
+        ObjectFieldName="&quot;CustomerName&quot;"
+        ColumnWidth="146" />
+      <QueryColumn
+        QueryCode="&quot;FilesRejectedByClassification&quot;"
+        IndexOrder="3"
+        ObjectFieldName="&quot;OrderNumber&quot;"
+        ColumnWidth="87" />
+      <QueryColumn
+        QueryCode="&quot;FilesRejectedByClassification&quot;"
+        IndexOrder="4"
+        ObjectFieldName="&quot;TransportModeId&quot;"
+        ColumnWidth="58" />
+      <QueryColumn
+        QueryCode="&quot;FilesRejectedByClassification&quot;"
+        IndexOrder="5"
+        ObjectFieldName="&quot;DeclarationOfficeName&quot;"
+        ColumnWidth="157" />
+      <QueryColumn
+        QueryCode="&quot;FilesRejectedByClassification&quot;"
+        IndexOrder="6"
+        ObjectFieldName="&quot;VendorName&quot;"
+        ColumnWidth="124" />
+      <QueryColumn
+        QueryCode="&quot;FilesRejectedByClassification&quot;"
+        IndexOrder="7"
+        ObjectFieldName="&quot;ArrivalDate&quot;"
+        ColumnWidth="79" />
+      <QueryColumn
+        QueryCode="&quot;FilesRejectedByClassification&quot;"
+        IndexOrder="8"
+        ObjectFieldName="&quot;Weight&quot;"
+        ColumnWidth="75" />
+      <QueryColumn
+        QueryCode="&quot;FilesRejectedByClassification&quot;"
+        IndexOrder="9"
+        ObjectFieldName="&quot;DeclarationStatusTypeName&quot;"
+        ColumnWidth="255" />
+      <QueryColumn
+        QueryCode="&quot;FilesRejectedByClassification&quot;"
+        IndexOrder="10"
+        ObjectFieldName="&quot;PreClassification&quot;"
+        ColumnWidth="58" />
+      <QueryColumn
+        QueryCode="&quot;FilesRejectedByClassification&quot;"
+        IndexOrder="11"
+        ObjectFieldName="&quot;ClassificationStatus&quot;"
+        ColumnWidth="55" />
+      <QueryColumn
+        QueryCode="&quot;FilesRejectedByClassification&quot;"
+        IndexOrder="12"
+        ObjectFieldName="&quot;ControllerStatus&quot;"
+        ColumnWidth="44" />
+      <QueryColumn
+        QueryCode="&quot;FilesRejectedByClassification&quot;"
+        IndexOrder="13"
+        ObjectFieldName="&quot;CollectionOfMoneyStatus&quot;"
+        ColumnWidth="50" />
+      <QueryColumn
+        QueryCode="&quot;FilesRejectedByClassification&quot;"
+        IndexOrder="14"
+        ObjectFieldName="&quot;OrderMoney&quot;"
+        ColumnWidth="50" />
+      <QueryColumn
+        QueryCode="&quot;FilesRejectedByClassification&quot;"
+        IndexOrder="15"
+        ObjectFieldName="&quot;FollowUpDate&quot;"
+        ColumnWidth="108" />
+      <QueryColumn
+        QueryCode="&quot;FilesRejectedByClassification&quot;"
+        IndexOrder="16"
+        ObjectFieldName="&quot;AvailabilityDate&quot;"
+        ColumnWidth="108" />
+      <QueryColumn
+        QueryCode="&quot;FilesRejectedByClassification&quot;"
+        IndexOrder="17"
+        ObjectFieldName="&quot;ExceptionReasonsList&quot;"
+        ColumnWidth="34" />
+      <QueryColumn
+        QueryCode="&quot;FilesRejectedByClassification&quot;"
+        IndexOrder="18"
+        ObjectFieldName="&quot;WithPaper&quot;"
+        ColumnWidth="69" />
+      <QueryColumn
+        QueryCode="&quot;FilesRejectedByClassification&quot;"
+        IndexOrder="19"
+        ObjectFieldName="&quot;NewFile&quot;"
+        ColumnWidth="69" />
+      <QueryColumn
+        QueryCode="&quot;FilesRejectedByClassification&quot;"
+        IndexOrder="20"
+        ObjectFieldName="&quot;IsCustomerLogBoxActivated&quot;"
+        ColumnWidth="68" />
+      <QueryColumn
+        QueryCode="&quot;FilesRejectedByClassification&quot;"
+        IndexOrder="21"
+        ObjectFieldName="&quot;Actions&quot;"
+        ColumnWidth="68" />
+    </QueryColumns>
+    <QueryFilters>
+      <QueryFilter
+        QueryCode="&quot;FilesRejectedByClassification&quot;"
+        PredefinedValue="&quot;true&quot;"
+        ObjectFieldName="&quot;IsCancelled&quot;"
+        IsPredefined="true"
+        Operator="&quot;NotEqual&quot;"
+        IndexOrder="0" />
+      <QueryFilter
+        QueryCode="&quot;FilesRejectedByClassification&quot;"
+        PredefinedValue="&quot;X&quot;"
+        ObjectFieldName="&quot;ClassificationStatus&quot;"
+        IsPredefined="true"
+        Operator="&quot;Equal&quot;"
         IndexOrder="0" />
     </QueryFilters>
   </Query>
@@ -6444,6 +6795,79 @@
   </EventTypes>
   <Records />
   <DataContracts />
-  <AdditionalTextCodes />
+  <AdditionalTextCodes>
+    <TextCode
+      Code="&quot;Customs.DeclarationReferantData.O.FilesInProcess&quot;"
+      DefaultText="&quot;Files In Process&quot;"
+      LocalDefaultText="&quot;תיקים בטיפול&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.DeclarationReferantData.O.TrackingCases&quot;"
+      DefaultText="&quot;TrackingCases&quot;"
+      LocalDefaultText="&quot;תיקים במעקב&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.DeclarationReferantData.O.FilesInOCR&quot;"
+      DefaultText="&quot;FilesInOCR&quot;"
+      LocalDefaultText="&quot;תיקים ב-OCR&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.DeclarationReferantData.O.FilesInSivug&quot;"
+      DefaultText="&quot;FilesInSivug&quot;"
+      LocalDefaultText="&quot;תיקים בסיווג&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.DeclarationReferantData.O.FilesInReview&quot;"
+      DefaultText="&quot;FilesInReview&quot;"
+      LocalDefaultText="&quot;תיקים בביקורת&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.DeclarationReferantData.O.FilesInCreditControl&quot;"
+      DefaultText="&quot;Files In Credit Control&quot;"
+      LocalDefaultText="&quot;תיקים בבקרת אשראי&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.DeclarationReferantData.O.FilesAvailableFreeOfCharge&quot;"
+      DefaultText="&quot;FilesAvailableFreeOfCharge&quot;"
+      LocalDefaultText="&quot;תיקים זמינים ללא תשלום&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.DeclarationReferantData.O.AllCases&quot;"
+      DefaultText="&quot;AllCases&quot;"
+      LocalDefaultText="&quot;כל התיקים&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.DeclarationReferantData.O.FilesInAllInclusive&quot;"
+      DefaultText="&quot;Files All Inclusive&quot;"
+      LocalDefaultText="&quot;תיקים בכוללת&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.DeclarationReferantData.O.FilesRejectedByController&quot;"
+      DefaultText="&quot;Files Rejected By Controller&quot;"
+      LocalDefaultText="&quot;תיקים שנדחו ע&quot;י מבקר&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.DeclarationReferantData.O.FilesRejectedByClassification&quot;"
+      DefaultText="&quot;Files Rejected By Classification&quot;"
+      LocalDefaultText="&quot;תיקים שנדחו ע&quot;י מסווג&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.DeclarationReferantData.O.FilesWithoutRelease&quot;"
+      DefaultText="&quot;Files Without Release&quot;"
+      LocalDefaultText="&quot;תיקים שהוגשו למכס ולא הותרו&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+  </AdditionalTextCodes>
   <AdditionalFeatures />
 </entity>

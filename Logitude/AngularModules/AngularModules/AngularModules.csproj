@@ -378,12 +378,12 @@
     <TypeScriptCompile Include="CustomsModules\CustomsListTemplates\Components\ListHeaderTemplates\ArrivalDateListHeaderTemplate.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsListTemplates\Components\ListHeaderTemplates\ActionListHeaderTemplate.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsListTemplates\Components\ListHeaderTemplates\TransportModeListHeaderTemplate.ts" />
+    <TypeScriptCompile Include="CustomsModules\CustomsReferant\Components\FiltersMenu\DeclarationReferantDataFiltersMenuComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsReferant\Components\ReferantExceptionReason\AddExceptionReasonToUnifreightStatusComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsReferant\Components\ReferantWorkspaces\ReferantWorkspaceComponent.ts" />
-    <TypeScriptCompile Include="Customs\Components\FiltersMenu\DeclarationReferantDataFiltersMenuComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsReferant\Components\RemarksPopUp.ts" />
     <Content Include="CustomsModules\InvoiceQueue\Components\InvoiceQueueComponent.html" />
-    <Content Include="Customs\Components\FiltersMenu\DeclarationReferantDataFiltersMenuComponent.html" />
+    <Content Include="CustomsModules\CustomsReferant\Components\FiltersMenu\DeclarationReferantDataFiltersMenuComponent.html" />
     <Content Include="Customs\Components\ListActionBar\DeclarationReferantDataListActionBarComponent.html" />
     <TypeScriptCompile Include="Customs\Components\ListActionBar\DeclarationReferantDataListActionBarComponent.ts" />
     <Content Include="Customs\Components\ListTemplates\CourierWorksheetListTemplate.html" />
@@ -1250,7 +1250,6 @@
     <TypeScriptCompile Include="CustomsModules\CustomsDeclarationModules\DeclarationTabs\ModuleDeclarations.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsDeclarationModules\DeclarationTabs\ModuleDeclarationTabs.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsListTemplates\Components\CourierDeclarationWorkspaceListTemplate.ts" />
-    <TypeScriptCompile Include="Customs\Components\FiltersMenu\DeclarationReferantDataFiltersMenuComponent.ts" />
     <TypeScriptCompile Include="Customs\Components\ListTemplates\EndDateComponent.ts" />
     <TypeScriptCompile Include="Customs\Components\ListTemplates\SupplierInvoiceItemListTemplate.ts" />
     <TypeScriptCompile Include="Customs\Components\MenuButtons\PhysicalCheckMenuButtonsHandler.ts" />
@@ -1380,6 +1379,7 @@
     <TypeScriptCompile Include="Customs\Services\DataChange\SpotlightSharedDataService.ts" />
     <TypeScriptCompile Include="Customs\Services\ExtendedLists\CourierMasterExtendedListService.ts" />
     <TypeScriptCompile Include="Customs\Services\ExtendedLists\CustomsRequiredFieldExtendedListService.ts" />
+    <TypeScriptCompile Include="Customs\Services\ExtendedLists\DeclarationReferantDataExtendedListService.ts" />
     <TypeScriptCompile Include="Customs\Services\ExtendedLists\ExceptionReasonExtendedListService.ts" />
     <TypeScriptCompile Include="Customs\Services\ExtendedLists\CourierPendingReasonExtendedListService.ts" />
     <TypeScriptCompile Include="Customs\Services\ExtendedLists\CustomsCollateralExtendedListService.ts" />
@@ -1488,6 +1488,8 @@
     <TypeScriptCompile Include="Customs\Services\StandardPMs\TPGFileTypePMService.ts" />
     <TypeScriptCompile Include="Customs\Services\WebServices\CustomDocumentViewerService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardPMs\DeficitsPMService.ts" />
+    <TypeScriptCompile Include="Customs\Services\WebServices\DeclarationCourierStatusWebService.ts" />
+    <TypeScriptCompile Include="Customs\Services\WebServices\DeclarationReferantDataWebService.ts" />
     <TypeScriptCompile Include="Customs\Services\WebServices\InvoiceQueueWebService.ts" />
     <TypeScriptCompile Include="Customs\Services\WebServices\SupplierInvioceItemCertificatsService.ts" />
     <TypeScriptCompile Include="Customs\Utilities\LuhnAlgorithm.ts" />
@@ -8288,6 +8290,7 @@
     <Folder Include="Customs\Components\Courier\" />
     <Folder Include="Customs\Components\CustomsCollateral\" />
     <Folder Include="Customs\Components\DeclarationCargoSplit\" />
+    <Folder Include="Customs\Components\FiltersMenu\" />
     <Folder Include="Customs\CustomFilters\" />
     <Folder Include="Customs\EntityPMInitServices\" />
     <Folder Include="Dashboard\Components\Graphs\" />
@@ -8323,9 +8326,9 @@
     <TypeScriptCompile Include="TariffModule\Components\EditTabs\Tariff\TariffDatesValidationComponent.ts" />
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Data" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup Condition="$(VisualStudioVersion) == '16.0'">
     <Reference Include="Microsoft.Data.Tools.Schema.Sql, Version=15.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>$(SSDTPath)\Microsoft.Data.Tools.Schema.Sql.dll</HintPath>

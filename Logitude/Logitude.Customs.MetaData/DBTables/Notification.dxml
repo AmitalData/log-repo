@@ -229,8 +229,8 @@
   <Index
       Columns="BadjCount" />
 
-  <!--<Index
-      Columns="AssigneToId" />-->
+  <Index
+      Columns="AssigneToId" />
   <Index
       Columns="IsClosedByAssignee" />
 </Table>

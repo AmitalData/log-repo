@@ -988,6 +988,7 @@
     <Compile Include="Controllers\CommonDataModel\Generated\ListControllers\WarehouseWeightMeasurementViewsController.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\ListControllers\WarehouseWeightRoundingViewsController.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\PMControllers\HorseController.Generated.cs" />
+    <Compile Include="Controllers\CustomsModel\Extended\DeclarationReferantDataExtendedController.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\AmendmentRequestRejectReasonTypeViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\AutonomyRegionTypeViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\DocumentRejectTypeViewsController.Generated.cs" />
@@ -995,6 +996,7 @@
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\LoadingSiteTypeViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\ReleaseMessageTypeViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\AutonomyRegionTypeController.Generated.cs" />
+    <Compile Include="Controllers\CustomsModel\WebServices\DeclarationReferantDataWebServiceController.cs" />
     <Compile Include="Controllers\GlobalModel\Generated\ListControllers\HelpResourceViewsController.Generated.cs" />
     <Compile Include="Controllers\CargoTrackingModel\CargoTrackingBuildTablesController.cs" />
     <Compile Include="Controllers\CargoTrackingModel\CargoTrackingSearchController.cs" />
