@@ -281,6 +281,7 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
         this.TimeUnits.push(new CodeNameClass("II", "Minutes"));
         this.TimeUnits.push(new CodeNameClass("OO", "Hours"));
         this.TimeUnits.push(new CodeNameClass("DD", "Days"));
+        this.TimeUnitOps.push(new CodeNameClass("NL", ""));
         this.TimeUnitOps.push(new CodeNameClass("BF", "Before"));
         this.TimeUnitOps.push(new CodeNameClass("AF", "After"));
     }
@@ -1176,6 +1177,9 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
         if (value != this.delaytimeOpIndicator) {
             this.delaytimeOpIndicator = value;
             this.DelayTimeOp = value.Code;
+            if (value.Code == "NL") {
+                this.DelayTimeObjectFieldsIndicator = null;
+            }
         }
     }
 
@@ -1186,7 +1190,7 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
     set DelayTimeObjectFieldsIndicator(value: ObjectFieldPM) {
         if (value != this.delayTimeObjectFieldsIndicator) {
             this.delayTimeObjectFieldsIndicator = value;
-            this.SelectedDelaytimeFieldCode = value.FieldCode;
+            this.SelectedDelaytimeFieldCode = value?.FieldCode;
         }
     }
 
