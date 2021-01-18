@@ -76,14 +76,14 @@ namespace Logitude.Accounting.Def.EntityPMs
         public bool EnsureAllDecimalPrecisionIfChangeChangeUpdate()
         {
             var changed = false;
-            if (this.LocalAmount != Math.Round(this.LocalAmount, 2))
+            if (this.LocalAmount != Math.Round(this.LocalAmount, 4))
             {
-                this.LocalAmount = Math.Round(this.LocalAmount, 2);
+                this.LocalAmount = Math.Round(this.LocalAmount, 4);
                 changed = true;
             }
-            if (this.ForeignAmount != Math.Round(this.ForeignAmount, 2))
+            if (this.ForeignAmount != Math.Round(this.ForeignAmount, 4))
             {
-                this.ForeignAmount = Math.Round(this.ForeignAmount, 2);
+                this.ForeignAmount = Math.Round(this.ForeignAmount, 4);
                 changed = true;
             }
 
