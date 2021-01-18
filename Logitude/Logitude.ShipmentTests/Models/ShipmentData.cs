@@ -1,9 +1,8 @@
-﻿using Logitude.ShipmentTests.Models;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
-namespace Logitude.ShipmentTests.TestData
+namespace Logitude.ShipmentTests.Models
 {
-    public class ShipmentTestData
+    public class ShipmentData
     {
         public static string ShipmentNumber { get; set; }
         public static string CurrencyEURId { get; set; }

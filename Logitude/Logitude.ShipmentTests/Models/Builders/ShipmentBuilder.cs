@@ -1,13 +1,10 @@
-﻿using Logitude.ShipmentTests.Models;
-using Logitude.ShipmentTests.TestData;
-using Logitude.ShipmentTests.TestDataMapping;
-using Logitude.Test.Base.TestData;
+﻿using Logitude.Test.Base.Models;
 using System;
 using System.Collections.Generic;
 using TechTalk.SpecFlow;
 using TechTalk.SpecFlow.Assist;
 
-namespace Logitude.ShipmentTests.Builders
+namespace Logitude.ShipmentTests.Models.Builders
 {
     public class ShipmentBuilder
     {
@@ -180,12 +177,12 @@ namespace Logitude.ShipmentTests.Builders
         {
             _shipmentPM = new ShipmentPM
             {
-                Tenant = BasePreparationVariables.Tenant,
+                Tenant = UserTenant.Tenant,
                 NewConcurrencyGUID = Guid.NewGuid().ToString(),
-                BranchId = BasePreparationVariables.BranchId,
-                DepartmentId = BasePreparationVariables.DepartmentId,
-                CreatedByUserId = LoginPreparationParameters.LoginUserId,
-                UpdatedByUserId = LoginPreparationParameters.LoginUserId
+                BranchId = UserTenant.BranchId,
+                DepartmentId = UserTenant.DepartmentId,
+                CreatedByUserId = UserTenant.LoginUserId,
+                UpdatedByUserId = UserTenant.LoginUserId
             };
             return this;
         }
@@ -201,19 +198,19 @@ namespace Logitude.ShipmentTests.Builders
             switch(portCode)
             {
                 case "LHR":
-                    return ShipmentTestData.PortLHRId;
+                    return ShipmentData.PortLHRId;
                 case "MIA":
-                    return ShipmentTestData.PortMIAId;
+                    return ShipmentData.PortMIAId;
                 case "JFK":
-                    return ShipmentTestData.PortJFKId;
+                    return ShipmentData.PortJFKId;
                 case "SOU":
-                    return ShipmentTestData.PortSOUId;
+                    return ShipmentData.PortSOUId;
                 case "NYC":
-                    return ShipmentTestData.PortNYCId;
+                    return ShipmentData.PortNYCId;
                 case "LON":
-                    return ShipmentTestData.PortLONId;
+                    return ShipmentData.PortLONId;
                 case "MAN":
-                    return ShipmentTestData.PortMANId;
+                    return ShipmentData.PortMANId;
                 default:
                     return null;
             }

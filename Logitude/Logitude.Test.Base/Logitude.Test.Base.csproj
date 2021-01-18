@@ -85,7 +85,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Constants\BaseConfigurations.cs" />
-    <Compile Include="Constants\RegularExpressions.cs" />
+    <Compile Include="Constants\URLs.cs" />
     <Compile Include="Extensions\TableExtensions.cs" />
     <Compile Include="Context\SecurityAccessStepsContext.cs" />
     <Compile Include="Hooks\BeforeTestRun.cs" />
@@ -95,13 +95,10 @@
     <Compile Include="Models\Login\MultiUsers.cs" />
     <Compile Include="Models\Base\TenantPM.cs" />
     <Compile Include="Models\Base\UserList.cs" />
-    <Compile Include="TestData\BaseTestData.cs" />
-    <Compile Include="TestData\LoginTestData.cs" />
+    <Compile Include="Models\UserTenant.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\APICaller.cs" />
     <Compile Include="Steps\Login\LoginSteps.cs" />
-    <Compile Include="ValueRetrievers\RandomValueRetriever.cs" />
-    <Compile Include="ValueRetrievers\ForeignEntityValueRetriever.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

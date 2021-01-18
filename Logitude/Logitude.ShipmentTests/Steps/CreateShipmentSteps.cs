@@ -1,12 +1,10 @@
 ﻿using FluentAssertions;
-using Logitude.ShipmentTests.Builders;
 using Logitude.ShipmentTests.Models;
+using Logitude.ShipmentTests.Models.Builders;
+using Logitude.Test.Base.Models;
 using Logitude.Test.Base.Models.Login;
 using Logitude.Test.Base.Services;
-using Logitude.Test.Base.TestData;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using TechTalk.SpecFlow;
 using TechTalk.SpecFlow.Assist;
 
@@ -44,7 +42,7 @@ namespace Logitude.ShipmentTests.Steps
         [When(@"Create master shipment API request sent")]
         public void WhenCreateMasterShipmentAPIRequestSent()
         {
-            ShipmentContext.MasterShipment = APICaller.CallPost<ShipmentPM>(ShipmentContext.MasterShipment, "Shipment", LoginPreparationParameters.Token);
+            ShipmentContext.MasterShipment = APICaller.CallPost<ShipmentPM>(ShipmentContext.MasterShipment, "Shipment", UserTenant.Token);
         }
 
         [Then(@"A new master created successfully")]
