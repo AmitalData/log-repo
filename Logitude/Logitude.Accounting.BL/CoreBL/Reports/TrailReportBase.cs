@@ -14,20 +14,20 @@ using System.Threading.Tasks;
 
 namespace Logitude.Accounting.BL.CoreBL.Reports
 {
-    public abstract class TrailReportBase :Logitude.Accounting.BL.CoreBL.Reports.ITrailReportBase
+    public abstract class TrailReportBase : Logitude.Accounting.BL.CoreBL.Reports.ITrailReportBase
     {
         protected TrailReportParam _TrailReportParam = null;
         protected readonly int __TimeOutInMinutes = 129;
-        private System.Transactions.TransactionScope _TransactionScope;
+        //private System.Transactions.TransactionScope _TransactionScope;
         protected IAccountingContext _AccountingContext;
         private FullAccountingSettingPM _FullAccountingSetting;
-        protected string _AccountingCurrencyId ;
+        protected string _AccountingCurrencyId;
         protected IQueryable<AccountCOAM> QBaseAllCardsAndDetailsAccType;
         private IQueryable<ChartOfAccount5LevelM> _QAllChartOfAccountFlattenBy5LevelofHierarchy;
 
         protected IEnumerable //IQueryable
-            <TrailReportM> _QBaseTrailReportFull=null;
-        protected DbContextBase.IDbContextLogger _DbLogger;
+            <TrailReportM> _QBaseTrailReportFull = null;
+        //protected DbContextBase.IDbContextLogger _DbLogger;
 
 
 
@@ -36,7 +36,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
 
         DateTime _ToBeginOfMonth;
 
-        protected IQueryable<GLAccountTotalByMonthsDTO> 
+        protected IQueryable<GLAccountTotalByMonthsDTO>
             //מצטברים מתחילת חיי הכרטיסים עד תחילת החודש של FROMDATE לא כולל
             QBasePeriodGLATotalByMonths_TotalStart_From0BC_TilNotInclude_BeginOfMonth_FromDate;
 
@@ -53,7 +53,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
         protected IQueryable<Data.EntityPOCOs.LedgerTransaction> QBasePeriodTransaction_TransEnd_BeginOfMonthToDate_Till_ToDateInculde;
 
         protected IQueryable<ChartOfAccount5LevelM> QBaseAllCardsAndDetialsAccTypeBy5LevelHierarchy;
-        
+
 
         public TrailReportBase(TrailReportParam trailReportParam, int timeOutInMinutes)
         {
@@ -62,7 +62,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
 
         }
 
-   
+
         public List<TrailReportM> Execute()
         {
             _TrailReportParam.FromDate = _TrailReportParam.FromDate.Date;
@@ -70,57 +70,62 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
             _FromBeginOfMonth = new DateTime(_TrailReportParam.FromDate.Year, _TrailReportParam.FromDate.Month, 1);
 
             _ToBeginOfMonth = new DateTime(_TrailReportParam.ToDate.Year, _TrailReportParam.ToDate.Month, 1);
-            _TransactionScope = TransactionFactory.GetNewTransaction(TimeSpan.FromMinutes(__TimeOutInMinutes)); //snapshot isolation performance
-
-            _AccountingContext = AccountingContext.GetContext(_TrailReportParam.Tenant);
-            _DbLogger = (_AccountingContext as DbContextBase).CreateLogger();
-
-            _FullAccountingSetting = //Hope From Cache
-                FullAccountingSettingQueryService
-                .Get(_TrailReportParam.Tenant);
-
-            _AccountingCurrencyId = (new AccountingSettingResolver()).ResolveAccountingCurrencyId(_TrailReportParam.Tenant);
-
-            GetGLAccountCardPopulationByParam();
-
-            Create4MainQueriesPeriod();
-
-            CreateQBaseAllCardsAndDetialsAccTypeBy5LevelHierarchy();
-
-            AdjustTrailReportFull();
-
-            if (_QBaseTrailReportFull == null)
+            using (var transactionScope = TransactionFactory.GetNewTransaction(TimeSpan.FromMinutes(__TimeOutInMinutes)) //snapshot isolation performance
+                )
             {
-                throw new Exception("(_QBaseTrailReportFull==null)");
+
+
+
+
+                _AccountingContext = AccountingContext.GetContext(_TrailReportParam.Tenant);
+                //_DbLogger = (_AccountingContext as DbContextBase).CreateLogger();
+
+                _FullAccountingSetting = //Hope From Cache
+                    FullAccountingSettingQueryService
+                    .Get(_TrailReportParam.Tenant);
+
+                _AccountingCurrencyId = (new AccountingSettingResolver()).ResolveAccountingCurrencyId(_TrailReportParam.Tenant);
+
+                GetGLAccountCardPopulationByParam();
+
+                Create4MainQueriesPeriod();
+
+                CreateQBaseAllCardsAndDetialsAccTypeBy5LevelHierarchy();
+
+                AdjustTrailReportFull();
+
+                if (_QBaseTrailReportFull == null)
+                {
+                    throw new Exception("(_QBaseTrailReportFull==null)");
+                }
+                var myOutputReport = _QBaseTrailReportFull.ToList();
+                var myTotalRow =
+                    (from r in
+                         myOutputReport
+                     group r by 1 into g
+                     select new TrailReportM()
+                     {
+                         ChartOfAcount1 = "Total",
+                         LocalOpenBalance = g.Sum(r => r.LocalOpenBalance),
+                         LocalDebit = g.Sum(r => r.LocalDebit),
+                         LocalCredit = g.Sum(r => r.LocalCredit),
+                         LocalCloseBalance = g.Sum(r => r.LocalCloseBalance),
+
+
+                         ForeignOpenBalance = g.Sum(r => r.ForeignOpenBalance),
+                         ForeignDebit = g.Sum(r => r.ForeignDebit),
+                         ForeignCredit = g.Sum(r => r.ForeignCredit),
+                         ForeignCloseBalance = g.Sum(r => r.ForeignCloseBalance),
+
+                     }).FirstOrDefault();
+
+                myOutputReport.Add(myTotalRow);
+
+
+                DbLog = "";// _DbLogger.ToString();
+                return myOutputReport;
             }
-            var myOutputReport = _QBaseTrailReportFull.ToList();
-            var myTotalRow =
-                (from r in
-                     myOutputReport
-                 group r by 1 into g
-                 select new TrailReportM()
-                 {
-                     ChartOfAcount1 = "Total",
-                     LocalOpenBalance = g.Sum(r => r.LocalOpenBalance),
-                     LocalDebit = g.Sum(r => r.LocalDebit),
-                     LocalCredit = g.Sum(r => r.LocalCredit),
-                     LocalCloseBalance = g.Sum(r => r.LocalCloseBalance),
-
-
-                     ForeignOpenBalance = g.Sum(r => r.ForeignOpenBalance),
-                     ForeignDebit = g.Sum(r => r.ForeignDebit),
-                     ForeignCredit = g.Sum(r => r.ForeignCredit),
-                     ForeignCloseBalance = g.Sum(r => r.ForeignCloseBalance),
-
-                 }).FirstOrDefault();
-
-            myOutputReport.Add(myTotalRow);
-
-
-            DbLog = _DbLogger.ToString();
-            return myOutputReport;
         }
-
         private void CreateQBaseAllCardsAndDetialsAccTypeBy5LevelHierarchy()
         {
             var qsChartOfAccount = new ChartOfAccountQueryService(_AccountingContext);
@@ -577,11 +582,11 @@ into groupBy_currency
 
 
 
-        public void Dispose()
-        {
-            _DbLogger.Dispose();
-            _TransactionScope.Dispose();
-        }
+        //public void Dispose()
+        //{
+        //    //_DbLogger.Dispose();
+        //    //_TransactionScope.Dispose();
+        //}
 
         public string DbLog { get; set; }
 

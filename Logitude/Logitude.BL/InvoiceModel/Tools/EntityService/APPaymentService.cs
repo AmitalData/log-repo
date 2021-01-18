@@ -449,6 +449,10 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 theEntityPm.ChequeOrPaymentRef = paymentCheque.ChequeNumber;
 
             }
+
+            this.UpdatePrintNotesForJournalLines(theEntityPm);
+
+
             APPaymentMapping.MapEntity(theEntityPm, payment, isNewEntity);   
             paymentRepository.Update(payment);
             paymentRepository.SubmitChanges();           
@@ -475,13 +479,37 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             AddAPPaymentJournalAndJournalLines(theEntityPm, setApproved);
             VoidAPPaymentInFullAccounting(theEntityPm, setVoided);
             theEntityPm.VoidedByJournalNumber = entityPM.VoidedByJournalNumber;
+
+          
+            
             paymentRepository.Update(payment);
             paymentRepository.SubmitChanges();
             this.TraceConnected();
             this.GetForeignFields();
+
         }
 
-        private void ValidateHigherStatus()
+    private void UpdatePrintNotesForJournalLines(APPaymentPM theEntityPm)
+    {
+        if (theEntityPm.PrintNotes != payment.PrintNotes)
+        {
+            IJournalQueryServiceExt journalQuery = ContainerAccessor.Container.Resolve(typeof(IJournalQueryServiceExt), "JournalQueryServiceExt", new ParameterOverride("", 1)) as IJournalQueryServiceExt;
+            JournalPM journalPM = journalQuery.GetSingleWithLinesByEntityIdAndCode(theEntityPm.Id, "5", theEntityPm.Tenant);
+                if (journalPM != null)
+                {
+                    foreach (JournalLinePM journalLine in journalPM.JournalLines)
+                    {
+                        journalLine.Notes = theEntityPm.PrintNotes;
+                        journalLine.ChangeSetOp = ChangeSetOperation.Update;
+                    }
+                    journalPM.ChangeSetOp = ChangeSetOperation.Update;
+                    SubmitJournal(journalPM);
+                }
+        }
+    }
+   
+
+    private void ValidateHigherStatus()
         {
             if (!isNewEntity)
             {

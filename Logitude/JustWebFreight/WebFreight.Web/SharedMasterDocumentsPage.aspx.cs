@@ -38,9 +38,22 @@ namespace WebFreight.Web
             link = SplitString(link, "/sharedmasterdocumentspage", 0);
             link = SplitString(link, "https://", 1);
             link = SplitString(link, "http://", 1);
-            link = SplitString(link, ":", 0);
+            link = RemovePortNumber(link);
 
             this.Domain = link;
+        }
+
+        private string RemovePortNumber(string domainLink)
+        {
+            string link = domainLink;
+            if (link.IndexOf(":") != -1 && link.IndexOf("/") != -1)
+            {
+                string port = link.Substring(link.IndexOf(":"), link.IndexOf("/") - link.IndexOf(":"));
+                link = link.Replace(port, "");
+            }
+            else if (link.IndexOf(":") != -1)
+                link = SplitString(link, ":", 0);
+            return link;
         }
 
         private string SplitString(string allString, string splitString, int index)
@@ -92,11 +105,15 @@ namespace WebFreight.Web
         {
             TenantManagementQuery tenantManagementQuery = new TenantManagementQuery(0);
             TenantManagementPM tenantManagementPM = tenantManagementQuery.GetSinglePMByDomain(this.Domain);
+            if(tenantManagementPM == null)
+            {
+                tenantManagementPM = tenantManagementQuery.GetSinglePMByDomain(this.Domain + "/cargotracking");
+            }
             if (tenantManagementPM != null)
             {
                 this.Tenant = tenantManagementPM.Id;
-                this.MainColor = tenantManagementPM.MainColor == null ? this.MainColor : ConvertHexaToRGBA(tenantManagementPM.MainColor);
-                this.SecondaryColor = tenantManagementPM.SecondaryColor == null ? this.SecondaryColor : ConvertHexaToRGBA(tenantManagementPM.SecondaryColor);
+                this.MainColor = tenantManagementPM.MainColor == null ? this.MainColor : tenantManagementPM.MainColor;// ConvertHexaToRGBA(tenantManagementPM.MainColor);
+                this.SecondaryColor = tenantManagementPM.SecondaryColor == null ? this.SecondaryColor : tenantManagementPM.SecondaryColor;// ConvertHexaToRGBA(tenantManagementPM.SecondaryColor);
             }
         }
 

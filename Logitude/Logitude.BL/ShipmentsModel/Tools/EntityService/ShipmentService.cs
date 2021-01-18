@@ -278,6 +278,10 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 {
                     shipmentTracing.BeginTracing();
                 }
+                if (entityPM.IsHybrid)
+                {
+                    shipmentTracing.TraceTerminalData();
+                }
 
                 this.ComputeIsAssemblyField();
                 this.ComputeFinalDestination();
@@ -462,7 +466,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                         this.UpdateShipmentStoragePricingsCollection();
                     }
 
-                    if (shipmentBehaviourFacade.DatesUpdated_CrossDoc)
+                    if (shipmentBehaviourFacade.DatesUpdated_CrossDoc || entityPM.IsHybrid)
                     {
                         shipmentTracing.TraceTerminalData();
                     }
@@ -1191,7 +1195,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             {
                 CustomerRepository customerRepository = new CustomerRepository(tenant);
                 Customer customer = customerRepository.GetSingleCustomer(entityPM.CustomerId, tenant, true);
-                if (customer != null && customer.LogBoxActivated)
+                if (customer != null && (customer.LogBoxActivated || customer.IsPrivateLabelCustomer))
                     return true;
             }
 
@@ -4752,10 +4756,10 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 Id = itemPM.Id,
             };
 
-            if (!entityPM.IsHybrid)
-            {
+           //if (!entityPM.IsHybrid)
+           // {
                 shipmentTracing.TracePickUp(itemPM, itemPoco, entityPM);
-            }
+           // }
 
             ShipmentMapping.MapPickUp(itemPM, itemPoco, myCommonContext, true);
             shipmentPickUpDeliveryRepository.Add(itemPoco);
@@ -4774,10 +4778,10 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
             ShipmentPickUpDelivery itemPoco = shipmentPickUpDeliveryRepository.GetSingleShipmentPickUpDelivery(tenant, itemPM.Id);
 
-            if (!entityPM.IsHybrid)
-            {
+            //if (!entityPM.IsHybrid)
+            //{
                 shipmentTracing.TracePickUp(itemPM, itemPoco, entityPM);
-            }
+            //}
 
             ShipmentMapping.MapPickUp(itemPM, itemPoco, myCommonContext, true);
             shipmentPickUpDeliveryRepository.Update(itemPoco);
@@ -4815,10 +4819,10 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
         {
             ShipmentPickUpDelivery itemPoco = shipmentPickUpDeliveryRepository.GetSingleShipmentPickUpDelivery(tenant, itemPM.Id);
 
-            if (!entityPM.IsHybrid)
-            {
+            //if (!entityPM.IsHybrid)
+            //{
                 shipmentTracing.TraceDeletedPickUp(itemPM, itemPoco);
-            }
+           // }
 
             ShipmentPickUpDeliveryPackageQuery shipmentPickUpDeliveryPackageQuery = new ShipmentPickUpDeliveryPackageQuery(shipmentPickUpDeliveryPackageRepository);
 
@@ -4859,10 +4863,10 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 Id = itemPM.Id,
             };
 
-            if (!entityPM.IsHybrid)
-            {
+            //if (!entityPM.IsHybrid)
+            //{
                 shipmentTracing.TraceDelivery(itemPM, itemPoco);
-            }
+            //}
 
             ShipmentMapping.MapDelivery(itemPM, itemPoco, myCommonContext, true);
             shipmentPickUpDeliveryRepository.Add(itemPoco);
@@ -4881,10 +4885,10 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
             ShipmentPickUpDelivery itemPoco = shipmentPickUpDeliveryRepository.GetSingleShipmentPickUpDelivery(tenant, itemPM.Id);
 
-            if (!entityPM.IsHybrid)
-            {
+            //if (!entityPM.IsHybrid)
+           // {
                 shipmentTracing.TraceDelivery(itemPM, itemPoco);
-            }
+           // }
 
             this.UpdateShipmentPackageFromDelivery(itemPM);
 
@@ -4926,10 +4930,10 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
             if (itemPoco != null)
             {
-                if (!entityPM.IsHybrid)
-                {
+                //if (!entityPM.IsHybrid)
+                //{
                     shipmentTracing.TraceDeletedDelivery(itemPM, itemPoco);
-                }
+                //}
 
                 ShipmentPickUpDeliveryPackageQuery shipmentPickUpDeliveryPackageQuery = new ShipmentPickUpDeliveryPackageQuery(shipmentPickUpDeliveryPackageRepository);
                 PickUpDeliveryPackageHarmonizeQuery pickUpDeliveryPackageHarmonizeQuery = new PickUpDeliveryPackageHarmonizeQuery(pickUpDeliveryPackageHarmonizeRepository);

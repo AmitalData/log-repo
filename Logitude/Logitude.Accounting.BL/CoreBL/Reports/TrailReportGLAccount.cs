@@ -36,7 +36,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
             IQueryable<TrailReportTemp> qLocalAmountOnly_TotalStart_GroupByAccount = Init_LocalAmountOnly_TotalStart_JoinAccounts_GroupByAccount();
             if (!String.IsNullOrWhiteSpace(_accountId))
             {
-                _DbLogger.AddExplainLog("qAccumulateTotalsFrom0BCTilNotIncludeStartOfMonthFromDate:TotalStart:");
+                //_DbLogger.AddExplainLog("qAccumulateTotalsFrom0BCTilNotIncludeStartOfMonthFromDate:TotalStart:");
                 var l1 = qLocalAmountOnly_TotalStart_GroupByAccount.Where(r => r.AccountId_COAType == _accountId).ToList();
             }
 
@@ -44,7 +44,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
 
             if (!String.IsNullOrWhiteSpace(_accountId))
             {
-                _DbLogger.AddExplainLog("qAccumulateTotalsFromStartOfMonthFromTilStartOfMonthTo:TotalDelta2End:");
+                //_DbLogger.AddExplainLog("qAccumulateTotalsFromStartOfMonthFromTilStartOfMonthTo:TotalDelta2End:");
                 var l2 = qAccumulateLocalAmountOnly_TotalDelta2End_JoinAccounts_GroupByAccount.Where(r => r.AccountId_COAType == _accountId).ToList()
                     ;
             }
@@ -62,7 +62,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
 
             if (!String.IsNullOrWhiteSpace(_accountId))
             {
-                _DbLogger.AddExplainLog("qAccumulateTranactionBeginOfMonthFromTillFromDateNotInclude:");
+                //_DbLogger.AddExplainLog("qAccumulateTranactionBeginOfMonthFromTillFromDateNotInclude:");
                 var l3 = qAccumulateLocalAmountOnly_TransStart_GroupByAccount_All.Where(r => r.AccountId_COAType == _accountId).ToList();
             }
 
@@ -78,7 +78,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
             }
             if (!String.IsNullOrWhiteSpace(_accountId))
             {
-                _DbLogger.AddExplainLog("qAccumulateTranactionBeginOfMonthToDateTillToDateInculde:");
+                ///_DbLogger.AddExplainLog("qAccumulateTranactionBeginOfMonthToDateTillToDateInculde:");
                 var l4 = qLocalAmountOnly_LocalAmountTransEnd_GroupByAccount_All.Where(r => r.AccountId_COAType == _accountId).ToList();
             }
 

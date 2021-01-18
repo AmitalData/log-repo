@@ -44,7 +44,7 @@
             <div class="label">
                 References 
                 &nbsp;
-                <a *ngIf="ShipmentReferences.length > 2" 
+                <a *ngIf="ShipmentReferences && ShipmentReferences.length > 2" 
                     (click)="showMoreReferences=!showMoreReferences" 
                     style="cursor: pointer;text-decoration: underline; font-size: 11px;">
                     {{showMoreReferences?'Show Less':'See all'}}
@@ -57,10 +57,10 @@
                     Loading...
                 </div>
 
-                <ul *ngIf="showMoreReferences">
+                <ul *ngIf="showMoreReferences && ShipmentReferences">
                     <li *ngFor="let ref of ShipmentReferences, let i = index">{{ref}}</li>
                 </ul>
-                <ul *ngIf="!showMoreReferences">
+                <ul *ngIf="!showMoreReferences && ShipmentReferences">
                     <li *ngFor="let ref of ShipmentReferences.slice(0,2), let i = index">{{ref}}</li>
                 </ul>
 

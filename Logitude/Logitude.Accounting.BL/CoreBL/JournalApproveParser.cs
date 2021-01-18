@@ -670,7 +670,7 @@ namespace Logitude.Accounting.BL.CoreBL
                  .Sum(jl => jl.LocalAmount);
 
             var totalLocalAmountCredit = LedgerTransactions.Sum(rec => rec.LocalAmountCredit);
-            var totalLocalAmountDebit = LedgerTransactions.Sum(rec => rec.LocalAmountDebit);
+            var totalLocalAmountDebit =  LedgerTransactions.Sum(rec => rec.LocalAmountDebit) ;
             if (!totalLocalAmountCredit.Equals(totalLocalAmountDebit))
             {
                 ThrowExceptionAxiom("totalLocalAmountDebit != totalLocalAmountCredit");

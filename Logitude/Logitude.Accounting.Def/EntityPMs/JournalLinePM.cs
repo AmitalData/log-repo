@@ -76,7 +76,7 @@ namespace Logitude.Accounting.Def.EntityPMs
         public bool EnsureAllDecimalPrecisionIfChangeChangeUpdate()
         {
             var changed = false;
-            if (this.LocalAmount!= Math.Round(this.LocalAmount,2))
+            if (this.LocalAmount != Math.Round(this.LocalAmount, 2))
             {
                 this.LocalAmount = Math.Round(this.LocalAmount, 2);
                 changed = true;
@@ -94,7 +94,7 @@ namespace Logitude.Accounting.Def.EntityPMs
             }
             if (changed)
             {
-                if (this.ChangeSetOp== Simplog.Server.Infrastructure.ChangeSetOperation.None)
+                if (this.ChangeSetOp == Simplog.Server.Infrastructure.ChangeSetOperation.None)
                 {
                     this.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
                 }

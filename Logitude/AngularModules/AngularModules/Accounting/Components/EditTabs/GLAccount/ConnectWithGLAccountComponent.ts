@@ -9,6 +9,7 @@ import {GLAccountCurrencyExtendedPMService} from '../../../Services/ExtendedPMs/
 import {GLAccountCurrencyPM} from '../../../EntityPMs/GLAccountCurrencyPM';
 import { ApiQueryFilters } from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
 import { CardList } from '../../../../Common/EntityLists/CardList';
+import { AccountingPartners } from 'Accounting/DataContracts/AccountingPartners';
 
 @Component({
     templateUrl: './ConnectWithGLAccountComponent.html',
@@ -69,12 +70,14 @@ export class ConnectWithGLAccountComponent extends BaseComponent {
       }
 
       private AddAcountTypeFiler(PartnerTypeId:string){
+
         switch(PartnerTypeId){
-            case"CS":{
+            case AccountingPartners.Customer:{
               this.GLAccountCurrencyFilterItems.addAdditionalFilter("AccountTypeCode", "2", null, null, "Equals", false, false, false, "string", false, true);
                 break;
             }
-            case"AC":{
+            case AccountingPartners.Agent:
+            case AccountingPartners.AccountingPartner:{
               this.GLAccountCurrencyFilterItems.addAdditionalFilter("AccountTypeCode", "3", "2","1" ,"Equals", false, false, false, "string", false, true);
               break;
             }
@@ -105,13 +108,13 @@ export class ConnectWithGLAccountComponent extends BaseComponent {
                 });
         });
     }
-  
+
     private ValidateGLAccountCurrency(){
         var errors: string[] = [];
         if (!this.GLAccountId) {
                 errors.push(this.GetRequierdFieldErrorText("GLAccountCurrency.F.GLAccountId"));
         }
-        else {  
+        else {
           var ExistGLAccountSplited = this.ConnectedGLAccounts.filter(s=>s.CurrencyCode == this.selectedGLAccount.CurrencyCode);
           if(ExistGLAccountSplited && ExistGLAccountSplited.length > 0){
             errors.push(TextCodeTranslator.Translate("GLAccountCurrency.O.AlreadySplit")+" "+this.selectedGLAccount.CurrencyCode);
@@ -121,7 +124,7 @@ export class ConnectWithGLAccountComponent extends BaseComponent {
 
           this.ValidationErrorsList = errors;
       }
- 
+
 
 private CreateNewGLAccountCurrency(){
     var CurrencyGLAccount:GLAccountCurrencyPM = this.MappingAndGetCurrencyGlAccount();
@@ -129,7 +132,7 @@ private CreateNewGLAccountCurrency(){
     this.gLAccountCurrencyExtendedPMService.insert(CurrencyGLAccount).subscribe((response: ServiceResponse) => {
 
         if (response) {
-            if (!response.HasError) 
+            if (!response.HasError)
             {
                   this.CurrentSession.StopBusyIndicator();
                 this.CurrentSession.CloseCurrentWindowEmit("ok");
@@ -139,7 +142,7 @@ private CreateNewGLAccountCurrency(){
                 this.ValidationErrorsList = response.ErrorsArray;
             }
         }
-    
+
     });
 
 }
@@ -155,7 +158,7 @@ private MappingAndGetCurrencyGlAccount():GLAccountCurrencyPM{
 }
 
     OkButtonClicked() {
-       this.ValidateGLAccountCurrency();  
+       this.ValidateGLAccountCurrency();
        if (this.ValidationErrorsList.length == 0) {
            this.CreateNewGLAccountCurrency();
        }
@@ -169,10 +172,10 @@ private MappingAndGetCurrencyGlAccount():GLAccountCurrencyPM{
 
 
     SubmitChanges() {
-       
+
     }
 
-  
-    
-   
+
+
+
 }

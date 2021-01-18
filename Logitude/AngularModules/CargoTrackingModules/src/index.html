@@ -5,7 +5,7 @@
     <script>
         (function() {
             var MainFolder = "CargoTracking"
-            var base = window.location.href.substring(0, window.location.href.toLowerCase().indexOf(MainFolder.toLowerCase())) + MainFolder +'/';
+            var base = window.location.href.substring(0, window.location.href.toLowerCase().lastIndexOf(MainFolder.toLowerCase())) + MainFolder +'/';
             if(window.location.href.includes('localhost'))
                base ="/";
             document.write('<base href="' + base + '" />');
