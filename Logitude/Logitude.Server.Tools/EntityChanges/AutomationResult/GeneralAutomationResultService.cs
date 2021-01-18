@@ -311,7 +311,7 @@ namespace Logitude.Server.Tools.EntityChanges.AutomationResult
             if (delaytimeDetails.DelaytimeIndicator == "OO" && delaytimeDetails.Delaytime != 0) delay = delaytimeDetails.Delaytime * 60;
             if (delaytimeDetails.DelaytimeIndicator == "DD" && delaytimeDetails.Delaytime != 0) delay = delaytimeDetails.Delaytime * 60 * 24;
 
-            if (!string.IsNullOrEmpty(delaytimeDetails.SelectedDelaytimeFieldCode) && !string.IsNullOrEmpty(delaytimeDetails.DelaytimeOp))
+            if (!string.IsNullOrEmpty(delaytimeDetails.SelectedDelaytimeFieldCode) && !string.IsNullOrEmpty(delaytimeDetails.DelaytimeOp) && delaytimeDetails.DelaytimeOp != "NL")
             {
                 DateTime nextRunDateBeforeAddDelayed = DateTime.UtcNow;
                 Field field = automationFieldLists.Where(d => d.FieldCode == delaytimeDetails.SelectedDelaytimeFieldCode).FirstOrDefault();
