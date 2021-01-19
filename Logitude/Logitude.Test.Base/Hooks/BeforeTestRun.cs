@@ -57,13 +57,13 @@ namespace Logitude.Test.Base.Hooks
         private static void FillUser()
         {
             //this method is waiting the CallGetByFilter to be implemented by Abd.M
-           /* string UserListUrl = URLs.UserviewsGetbyfilters + BaseConfigurations.Email;
-            List<UserList> users = APICaller.CallGetByFilter<List<UserList>>(UserListUrl, UserTenant.Token, "Result");
-            var user = users.FirstOrDefault();
+            //string UserListUrl = URLs.UserviewsGetbyfilters + BaseConfigurations.Email;
+            //List<UserList> users = APICaller.CallGetByFilter<List<UserList>>(UserListUrl, UserTenant.Token, "Result");
+            //var user = users.FirstOrDefault();
 
-            UserTenant.BranchId = user.BranchId;
-            UserTenant.DepartmentId = user.DepartmentId;
-            UserTenant.BusinessUnitId = user.BusinessUnitId;*/
+            UserTenant.BranchId = "1-1102";//user.BranchId;
+            UserTenant.DepartmentId = "1-2988";//user.DepartmentId;
+            UserTenant.BusinessUnitId = "";//user.BusinessUnitId;
         }
     }
 }

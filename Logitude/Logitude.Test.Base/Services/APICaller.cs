@@ -65,8 +65,8 @@ namespace Logitude.Test.Base.Services
             }
             else
             {
-                dynamic responseException = restResponse.Content;
-                response.ErrorMessage = (responseException["ErrorMessage"] as string).Replace("\r", string.Empty).Replace("\n", string.Empty).Trim();
+                JObject jObject = JObject.Parse(restResponse.Content);
+                response.ErrorMessage = jObject["ErrorMessage"].ToString().Replace("\r", string.Empty).Replace("\n", string.Empty).Trim();
             }
 
             return response;

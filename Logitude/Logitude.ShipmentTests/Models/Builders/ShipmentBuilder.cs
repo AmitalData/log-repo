@@ -124,7 +124,7 @@ namespace Logitude.ShipmentTests.Models.Builders
 
         public ShipmentBuilder MainCarriageToPortIdByCode(string mainCarriageToPortCode)
         {
-            _shipmentPM.MainCarriageToPortId = PortCodeMapping(mainCarriageToPortCode);//ShipmentMapping.Ports.ContainsKey(mainCarriageToPortCode) ? ShipmentMapping.Ports[mainCarriageToPortCode] : null;
+            _shipmentPM.MainCarriageToPortId = PortCodeMapping(mainCarriageToPortCode);
             return this;
         }
 
@@ -136,7 +136,7 @@ namespace Logitude.ShipmentTests.Models.Builders
 
         public ShipmentBuilder MainCarriageFromPortIdByCode(string mainCarriageFromPortCode)
         {
-            _shipmentPM.MainCarriageFromPortId = PortCodeMapping(mainCarriageFromPortCode);//ShipmentMapping.Ports.ContainsKey(mainCarriageFromPortCode) ? ShipmentMapping.Ports[mainCarriageFromPortCode] : null; ;
+            _shipmentPM.MainCarriageFromPortId = PortCodeMapping(mainCarriageFromPortCode);
             return this;
         }
 
@@ -152,17 +152,29 @@ namespace Logitude.ShipmentTests.Models.Builders
             return this;
         }
 
-        public ShipmentBuilder ShipmentPackages(List<ShipmentPackagePM> shipmentPackages)
+        public ShipmentBuilder ShipmentPackages(List<PackagePM> shipmentPackages)
         {
             _shipmentPM.ShipmentPackages = new List<ShipmentPackagePM>();
             _shipmentPM.ShipmentPackages.AddRange(shipmentPackages);
             return this;
         }
 
-        public ShipmentBuilder ShipmentPayables(List<ShipmentPayablesPM> shipmentPayables)
+        public ShipmentBuilder ShipmentPackages(PackagePM shipmentPackage)
+        {
+            _shipmentPM.ShipmentPackages.Add(shipmentPackage);
+            return this;
+        }
+
+        public ShipmentBuilder ShipmentPayables(List<PayablesPM> shipmentPayables)
         {
             _shipmentPM.ShipmentPayables = new List<ShipmentPayablesPM>();
             _shipmentPM.ShipmentPayables.AddRange(shipmentPayables);
+            return this;
+        }
+
+        public ShipmentBuilder ShipmentPayables(PayablesPM shipmentPayable)
+        {
+            _shipmentPM.ShipmentPayables.Add(shipmentPayable);
             return this;
         }
 
@@ -175,6 +187,12 @@ namespace Logitude.ShipmentTests.Models.Builders
             return result;
         }
 
+        public ShipmentBuilder WithModel(ShipmentPM shipmentPM)
+        {
+            _shipmentPM = shipmentPM;
+            return this;
+        }
+
         public ShipmentBuilder WithDefualtValues()
         {
             _shipmentPM = new ShipmentPM
@@ -183,15 +201,40 @@ namespace Logitude.ShipmentTests.Models.Builders
                 NewConcurrencyGUID = Guid.NewGuid().ToString(),
                 BranchId = UserTenant.BranchId,
                 DepartmentId = UserTenant.DepartmentId,
+                CustomerId = ShipmentData.CustomerId,
                 CreatedByUserId = UserTenant.LoginUserId,
                 UpdatedByUserId = UserTenant.LoginUserId
             };
             return this;
         }
 
-        public ShipmentBuilder FromDataTable(Table chargeTypeData)
+        public ShipmentBuilder MasterShipment()
         {
-            _shipmentPM = chargeTypeData.CreateInstance<ShipmentPM>();
+            return WithDefualtValues()
+                .DirectionId("E")
+                .TransportModeId("A")
+                .ShipmentLevelCode("C")
+                .OtherPrepaidCollectId("P")
+                .FreightPrepaidCollectId("C")
+                .MainCarriageToPortIdByCode("LHR")
+                .MainCarriageFromPortIdByCode("MIA");
+        }
+
+        public ShipmentBuilder HouseShipment()
+        {
+            return WithDefualtValues()
+                .DirectionId("E")
+                .TransportModeId("A")
+                .ShipmentLevelCode("H")
+                .OtherPrepaidCollectId("C")
+                .FreightPrepaidCollectId("P")
+                .MainCarriageToPortIdByCode("LHR")
+                .MainCarriageFromPortIdByCode("MIA");
+        }
+
+        public ShipmentBuilder FromDataTable(Table dataTable)
+        {
+            _shipmentPM = dataTable.CreateInstance<ShipmentPM>();
             return this;
         }
 
