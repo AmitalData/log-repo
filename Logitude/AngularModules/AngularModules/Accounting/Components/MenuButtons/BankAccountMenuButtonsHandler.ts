@@ -25,6 +25,8 @@ export class BankAccountMenuButtonsHandler {
     private CurrentSession = SessionLocator.SelectedSession;
     _LedgerTransactionExtendedListService: LedgerTransactionExtendedListService = new LedgerTransactionExtendedListService();
     _CurrencyPMService: CurrencyPMService = new CurrencyPMService();
+    public DontShowLocal: boolean = SessionLocator.LoggedUserPM.DontShowLocal;;
+
 
 
     public SetEntityPM(entityArgs: EntityArgs) {
@@ -148,7 +150,8 @@ export class BankAccountMenuButtonsHandler {
         logitudeWindow.Height = (screenHeight > 768) ? (screenHeight > 850 ? 700 : screenHeight - 70) : screenHeight - 70;
 
         logitudeWindow.Title = TextCodeTranslator.Translate("Accounting.General.O.ExternalReconcile");
-
+        var BankName = this.DontShowLocal ? this.EntityPM.EnglishName : this.EntityPM.LocalName == null ? this.EntityPM.EnglishName : this.EntityPM.LocalName;
+        logitudeWindow.Title = TextCodeTranslator.Translate("Accounting.General.O.ExternalReconcile") + ' - ' + BankName;
         logitudeWindow.IsFullScreen = true;
         logitudeWindow.WindowArgs = windowArgs;
         logitudeWindow.Show('./Accounting/Components/Others/ExternalReconcileComponent');
