@@ -1627,47 +1627,8 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
         {
             ICommonDataContext objectContext = CommonDataContext.GetContext(args.Tenant);
 
-            if (args.Address != null)
-            {
-                if (args.IsAddressDirty)
-                {
-                    AddressService service = new AddressService(objectContext, args.Tenant);
-
-                    if (args.Address.Id == null)
-                    {
-                        service.Create(args.Address);
-                        args.AddressId = args.Address.Id;
-                    }
-
-                    else
-                    {
-                        service.Update(args.Address);
-                    }
-                }
-            }
-
-            if (args.Contact != null)
-            {
-                if (args.IsContactDirty)
-                {
-                    ContactService service = new ContactService(objectContext, args.Tenant);
-
-                    if (args.Contact.Id == null)
-                    {
-                        SecurityUtility.CheckContactFeature("Contact", "NEW", args.Tenant);
-
-                        service.Create(args.Contact);
-                        args.ContactId = args.Contact.Id;
-                    }
-
-                    else
-                    {
-                        SecurityUtility.CheckContactFeature("Contact", "UPDATE", args.Tenant);
-
-                        service.Update(args.Contact);
-                    }
-                }
-            }
+            this.UpdatePartnerAddress(args, objectContext);
+            this.UpdatePartnerContact(args, objectContext);
 
             if (args.IsPartnerDirty)
             {
@@ -1686,47 +1647,8 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
         {
             ICommonDataContext objectContext = CommonDataContext.GetContext(args.Tenant);
 
-            if (args.Address != null)
-            {
-                if (args.IsAddressDirty)
-                {
-                    AddressService service = new AddressService(objectContext, args.Tenant);
-
-                    if (args.Address.Id == null)
-                    {
-                        service.Create(args.Address);
-                        args.AddressId = args.Address.Id;
-                    }
-
-                    else
-                    {
-                        service.Update(args.Address);
-                    }
-                }
-            }
-
-            if (args.Contact != null)
-            {
-                if (args.IsContactDirty)
-                {
-                    ContactService service = new ContactService(objectContext, args.Tenant);
-
-                    if (args.Contact.Id == null)
-                    {
-                        SecurityUtility.CheckContactFeature("Contact", "NEW", args.Tenant);
-
-                        service.Create(args.Contact);
-                        args.ContactId = args.Contact.Id;
-                    }
-
-                    else
-                    {
-                        SecurityUtility.CheckContactFeature("Contact", "UPDATE", args.Tenant);
-
-                        service.Update(args.Contact);
-                    }
-                }
-            }
+            this.UpdatePartnerAddress(args, objectContext);
+            this.UpdatePartnerContact(args, objectContext);
 
             if (args.IsPartnerDirty)
             {
@@ -1745,47 +1667,8 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
         {
             ICommonDataContext objectContext = CommonDataContext.GetContext(args.Tenant);
 
-            if (args.Address != null)
-            {
-                if (args.IsAddressDirty)
-                {
-                    AddressService service = new AddressService(objectContext, args.Tenant);
-
-                    if (args.Address.Id == null)
-                    {
-                        service.Create(args.Address);
-                        args.AddressId = args.Address.Id;
-                    }
-
-                    else
-                    {
-                        service.Update(args.Address);
-                    }
-                }
-            }
-
-            if (args.Contact != null)
-            {
-                if (args.IsContactDirty)
-                {
-                    ContactService service = new ContactService(objectContext, args.Tenant);
-
-                    if (args.Contact.Id == null)
-                    {
-                        SecurityUtility.CheckContactFeature("Contact", "NEW", args.Tenant);
-
-                        service.Create(args.Contact);
-                        args.ContactId = args.Contact.Id;
-                    }
-
-                    else
-                    {
-                        SecurityUtility.CheckContactFeature("Contact", "UPDATE", args.Tenant);
-
-                        service.Update(args.Contact);
-                    }
-                }
-            }
+            this.UpdatePartnerAddress(args, objectContext);
+            this.UpdatePartnerContact(args, objectContext);
 
             if (args.IsPartnerDirty)
             {
@@ -1804,47 +1687,8 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
         {
             ICommonDataContext objectContext = CommonDataContext.GetContext(args.Tenant);
 
-            if (args.Address != null)
-            {
-                if (args.IsAddressDirty)
-                {
-                    AddressService service = new AddressService(objectContext, args.Tenant);
-
-                    if (args.Address.Id == null)
-                    {
-                        service.Create(args.Address);
-                        args.AddressId = args.Address.Id;
-                    }
-
-                    else
-                    {
-                        service.Update(args.Address);
-                    }
-                }
-            }
-
-            if (args.Contact != null)
-            {
-                if (args.IsContactDirty)
-                {
-                    ContactService service = new ContactService(objectContext, args.Tenant);
-
-                    if (args.Contact.Id == null)
-                    {
-                        SecurityUtility.CheckContactFeature("Contact", "NEW", args.Tenant);
-
-                        service.Create(args.Contact);
-                        args.ContactId = args.Contact.Id;
-                    }
-
-                    else
-                    {
-                        SecurityUtility.CheckContactFeature("Contact", "UPDATE", args.Tenant);
-
-                        service.Update(args.Contact);
-                    }
-                }
-            }
+            this.UpdatePartnerAddress(args, objectContext);
+            this.UpdatePartnerContact(args, objectContext);
 
             if (args.IsPartnerDirty)
             {
@@ -1863,47 +1707,8 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
         {
             ICommonDataContext objectContext = CommonDataContext.GetContext(args.Tenant);
 
-            if (args.Address != null)
-            {
-                if (args.IsAddressDirty)
-                {
-                    AddressService service = new AddressService(objectContext, args.Tenant);
-
-                    if (args.Address.Id == null)
-                    {
-                        service.Create(args.Address);
-                        args.AddressId = args.Address.Id;
-                    }
-
-                    else
-                    {
-                        service.Update(args.Address);
-                    }
-                }
-            }
-
-            if (args.Contact != null)
-            {
-                if (args.IsContactDirty)
-                {
-                    ContactService service = new ContactService(objectContext, args.Tenant);
-
-                    if (args.Contact.Id == null)
-                    {
-                        SecurityUtility.CheckContactFeature("Contact", "NEW", args.Tenant);
-
-                        service.Create(args.Contact);
-                        args.ContactId = args.Contact.Id;
-                    }
-
-                    else
-                    {
-                        SecurityUtility.CheckContactFeature("Contact", "UPDATE", args.Tenant);
-
-                        service.Update(args.Contact);
-                    }
-                }
-            }
+            this.UpdatePartnerAddress(args, objectContext);
+            this.UpdatePartnerContact(args, objectContext);
 
             if (args.IsPartnerDirty)
             {
@@ -1922,47 +1727,8 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
         {
             ICommonDataContext objectContext = CommonDataContext.GetContext(args.Tenant);
 
-            if (args.Address != null)
-            {
-                if (args.IsAddressDirty)
-                {
-                    AddressService service = new AddressService(objectContext, args.Tenant);
-
-                    if (args.Address.Id == null)
-                    {
-                        service.Create(args.Address);
-                        args.AddressId = args.Address.Id;
-                    }
-
-                    else
-                    {
-                        service.Update(args.Address);
-                    }
-                }
-            }
-
-            if (args.Contact != null)
-            {
-                if (args.IsContactDirty)
-                {
-                    ContactService service = new ContactService(objectContext, args.Tenant);
-
-                    if (args.Contact.Id == null)
-                    {
-                        SecurityUtility.CheckContactFeature("Contact", "NEW", args.Tenant);
-
-                        service.Create(args.Contact);
-                        args.ContactId = args.Contact.Id;
-                    }
-
-                    else
-                    {
-                        SecurityUtility.CheckContactFeature("Contact", "UPDATE", args.Tenant);
-
-                        service.Update(args.Contact);
-                    }
-                }
-            }
+            this.UpdatePartnerAddress(args, objectContext);
+            this.UpdatePartnerContact(args, objectContext);
 
             if (args.IsPartnerDirty)
             {
@@ -1981,47 +1747,8 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
         {
             ICommonDataContext objectContext = CommonDataContext.GetContext(args.Tenant);
 
-            if (args.Address != null)
-            {
-                if (args.IsAddressDirty)
-                {
-                    AddressService service = new AddressService(objectContext, args.Tenant);
-
-                    if (args.Address.Id == null)
-                    {
-                        service.Create(args.Address);
-                        args.AddressId = args.Address.Id;
-                    }
-
-                    else
-                    {
-                        service.Update(args.Address);
-                    }
-                }
-            }
-
-            if (args.Contact != null)
-            {
-                if (args.IsContactDirty)
-                {
-                    ContactService service = new ContactService(objectContext, args.Tenant);
-
-                    if (args.Contact.Id == null)
-                    {
-                        SecurityUtility.CheckContactFeature("Contact", "NEW", args.Tenant);
-
-                        service.Create(args.Contact);
-                        args.ContactId = args.Contact.Id;
-                    }
-
-                    else
-                    {
-                        SecurityUtility.CheckContactFeature("Contact", "UPDATE", args.Tenant);
-
-                        service.Update(args.Contact);
-                    }
-                }
-            }
+            this.UpdatePartnerAddress(args, objectContext);
+            this.UpdatePartnerContact(args, objectContext);
 
             if (args.IsPartnerDirty)
             {
@@ -2040,47 +1767,8 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
         {
             ICommonDataContext objectContext = CommonDataContext.GetContext(args.Tenant);
 
-            if (args.Address != null)
-            {
-                if (args.IsAddressDirty)
-                {
-                    AddressService service = new AddressService(objectContext, args.Tenant);
-
-                    if (args.Address.Id == null)
-                    {
-                        service.Create(args.Address);
-                        args.AddressId = args.Address.Id;
-                    }
-
-                    else
-                    {
-                        service.Update(args.Address);
-                    }
-                }
-            }
-
-            if (args.Contact != null)
-            {
-                if (args.IsContactDirty)
-                {
-                    ContactService service = new ContactService(objectContext, args.Tenant);
-
-                    if (args.Contact.Id == null)
-                    {
-                        SecurityUtility.CheckContactFeature("Contact", "NEW", args.Tenant);
-
-                        service.Create(args.Contact);
-                        args.ContactId = args.Contact.Id;
-                    }
-
-                    else
-                    {
-                        SecurityUtility.CheckContactFeature("Contact", "UPDATE", args.Tenant);
-
-                        service.Update(args.Contact);
-                    }
-                }
-            }
+            this.UpdatePartnerAddress(args, objectContext);
+            this.UpdatePartnerContact(args, objectContext);
 
             if (args.IsPartnerDirty)
             {
@@ -2099,6 +1787,24 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
         {
             ICommonDataContext objectContext = CommonDataContext.GetContext(args.Tenant);
 
+            this.UpdatePartnerAddress(args, objectContext);
+            this.UpdatePartnerContact(args, objectContext);
+
+            if (args.IsPartnerDirty)
+            {
+                SecurityUtility.CheckContactFeature("Trucker", "UPDATE", args.Tenant);
+
+                if (args.Trucker.IsFirstContactToAdd)
+                {
+                    args.Trucker.PrimaryContactId = args.ContactId;
+                }
+
+                TruckerService myPartnerService = new TruckerService(objectContext, args.Tenant);
+                myPartnerService.Update(args.Trucker);
+            }
+        }
+        private void UpdatePartnerAddress(PartnerServicePM args, ICommonDataContext objectContext)
+        {
             if (args.Address != null)
             {
                 if (args.IsAddressDirty)
@@ -2117,12 +1823,24 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     }
                 }
             }
-
+        }
+        private void UpdatePartnerContact(PartnerServicePM args, ICommonDataContext objectContext)
+        {
             if (args.Contact != null)
             {
                 if (args.IsContactDirty)
                 {
                     ContactService service = new ContactService(objectContext, args.Tenant);
+
+                    if (args.IsConnectingInactiveContact)
+                    {
+                        args.Contact.OldSimilarInactiveContactId = args.InactiveContactId;
+
+                        if (args.IsReactivatingContact)
+                        {
+                            args.Contact.InActive = false;
+                        }
+                    }
 
                     if (args.Contact.Id == null)
                     {
@@ -2135,26 +1853,11 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     else
                     {
                         SecurityUtility.CheckContactFeature("Contact", "UPDATE", args.Tenant);
-
                         service.Update(args.Contact);
                     }
                 }
             }
-
-            if (args.IsPartnerDirty)
-            {
-                SecurityUtility.CheckContactFeature("Trucker", "UPDATE", args.Tenant);
-
-                if (args.Trucker.IsFirstContactToAdd)
-                {
-                    args.Trucker.PrimaryContactId = args.ContactId;
-                }
-
-                TruckerService myPartnerService = new TruckerService(objectContext, args.Tenant);
-                myPartnerService.Update(args.Trucker);
-            }
         }
-
         private void CreateAccountingPartner(PartnerServicePM args)
         {
             SecurityUtility.CheckContactFeature("AccountingPartner", "NEW", args.Tenant);

@@ -904,6 +904,9 @@ export class BIReportXMLData {
     public UserId: string;
     public BIReportKey: string;
     public IncludeTotals: boolean;
+    public ExportDataType: string;
+    public BIReportsExecutionLogId: string;
+
 }
 
 export class BITabularViewSettings {

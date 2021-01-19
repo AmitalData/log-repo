@@ -34,8 +34,8 @@ export class SendWindowComponent {
     constructor() {
         this.ValidationErrorsList = [];
         this.ValidationWarningsList = [];
-        this.PurchaseStockUri = "https://www.plimus.com/jsp/buynow.jsp?contractId=3233898&language=ENGLISH&currency=USD&custom1=" + SessionLocator.Tenant + "&quantity=1";
-    }
+        this.PurchaseStockUri = "https://ws.bluesnap.com/buynow/checkout?sku3233898=1&language=ENGLISH&currency=USD&custom1=" + SessionLocator.Tenant + "&quantity=1";
+     }
 
     public SetWindowArgs(args: any) {
         this.Tenant = args.EnttiyPM.Tenant;

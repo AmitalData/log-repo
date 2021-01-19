@@ -63,57 +63,70 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             this.Initialize();
             this.ValidateContactExists();
 
-            if (this.oldSimilarContact == null)
+            if (entityPM.OldSimilarInactiveContactId != null)
             {
-                this.Poco = new Contact()
+                this.entityPM.Id = entityPM.OldSimilarInactiveContactId;
+                this.ConnectOldSimilar();
+            }
+
+            else
+            {
+                if (this.oldSimilarContact == null)
                 {
-                    Id = IdCounter.GetNumber("Contact", entityPM.Tenant).ToString(),
-                    UserType = "R",
-                    CreateDate = TenantServerConfigration.GetCurrentDateTime(tenant),
-                };
+                    this.Poco = new Contact()
+                    {
+                        Id = IdCounter.GetNumber("Contact", entityPM.Tenant).ToString(),
+                        UserType = "R",
+                        CreateDate = TenantServerConfigration.GetCurrentDateTime(tenant),
+                    };
 
-                this.entityPM.Id = this.Poco.Id;
+                    this.entityPM.Id = this.Poco.Id;
 
-                Random _Random = new Random();
-                Poco.IndexColor = _Random.Next(1, 20);
+                    Random _Random = new Random();
+                    Poco.IndexColor = _Random.Next(1, 20);
 
-                if (!entityPM.IsHybrid)
-                {
-                    ContactTracing.Trace(entityPM, Poco, isNewEntity);
+                    if (!entityPM.IsHybrid)
+                    {
+                        ContactTracing.Trace(entityPM, Poco, isNewEntity);
+                    }
+
+                    this.InitializeCustomerCard();
+                    this.InitializeContactTenant();
+                    this.InitializeGlobalContact();
+
+                    ContactMapping.MapEntity(entityPM, Poco, isNewEntity);
+                    entityRepository.Add(Poco);
+                    entityRepository.SubmitChanges();
+
+                    this.InitializePrimaryContact(this.entityPM.Id);
+                    this.InitializeNewCardContact(this.entityPM.Id);
+
+                    this.ComputeCompanyName();
+
+                    ContactMapping.MapEntity(entityPM, Poco, isNewEntity);
+                    entityRepository.Update(Poco);
+                    entityRepository.SubmitChanges();
+
+                    TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "Contact");
                 }
 
-                this.InitializeCustomerCard();
-                this.InitializeContactTenant();
-                this.InitializeGlobalContact();
-
-                ContactMapping.MapEntity(entityPM, Poco, isNewEntity);
-                entityRepository.Add(Poco);
-                entityRepository.SubmitChanges();
-
-                this.InitializePrimaryContact(this.entityPM.Id);
-                this.InitializeNewCardContact(this.entityPM.Id);
-
-                this.ComputeCompanyName();
-
-                ContactMapping.MapEntity(entityPM, Poco, isNewEntity);
-                entityRepository.Update(Poco);
-                entityRepository.SubmitChanges();
-
-                TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "Contact");
-            }
-
-            else if (isConnectedToCard)
-            {
-                string myContactId = this.oldSimilarContact.Id;
-                this.entityPM.Id = myContactId;
-
-                this.InitializePrimaryContact(this.entityPM.Id);
-                this.InitializeNewCardContact(this.entityPM.Id);
-
-                ContactService newContactService = new ContactService(this.objectContext, this.tenant);
-                newContactService.Update(entityPM);
+                else if (isConnectedToCard)
+                {
+                    this.entityPM.Id = this.oldSimilarContact.Id;
+                    this.ConnectOldSimilar();
+                }
             }
         }
+
+        private void ConnectOldSimilar()
+        {
+            this.InitializePrimaryContact(this.entityPM.Id);
+            this.InitializeNewCardContact(this.entityPM.Id);
+
+            ContactService newContactService = new ContactService(this.objectContext, this.tenant);
+            newContactService.Update(entityPM);
+        }
+
         public void Update(ContactPM entityPM)
         {
             this.isNewEntity = false;

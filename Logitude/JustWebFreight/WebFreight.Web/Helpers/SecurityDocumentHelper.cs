@@ -32,8 +32,7 @@ namespace WebFreight.Web.Helpers
                     else result.ExceptionResult = "Sorry, your download link has expired.";
                 }
             }
-           
-
+          
             return result;
         }
 

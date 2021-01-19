@@ -38,5 +38,8 @@ namespace Logitude.DBMigrations.Models
 
         [XmlElement]
         public OracleScriptDefinition Oracle { get; set; }
+
+        [XmlAttribute()]
+        public string Env { get; set; }
     }
 }

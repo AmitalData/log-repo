@@ -495,13 +495,16 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         {
             IJournalQueryServiceExt journalQuery = ContainerAccessor.Container.Resolve(typeof(IJournalQueryServiceExt), "JournalQueryServiceExt", new ParameterOverride("", 1)) as IJournalQueryServiceExt;
             JournalPM journalPM = journalQuery.GetSingleWithLinesByEntityIdAndCode(theEntityPm.Id, "5", theEntityPm.Tenant);
-            foreach (JournalLinePM journalLine in journalPM.JournalLines)
-            {
-                journalLine.Notes = theEntityPm.PrintNotes;
-                journalLine.ChangeSetOp = ChangeSetOperation.Update;
-            }
-            journalPM.ChangeSetOp = ChangeSetOperation.Update;
-            SubmitJournal(journalPM);
+                if (journalPM != null)
+                {
+                    foreach (JournalLinePM journalLine in journalPM.JournalLines)
+                    {
+                        journalLine.Notes = theEntityPm.PrintNotes;
+                        journalLine.ChangeSetOp = ChangeSetOperation.Update;
+                    }
+                    journalPM.ChangeSetOp = ChangeSetOperation.Update;
+                    SubmitJournal(journalPM);
+                }
         }
     }
    

@@ -497,8 +497,15 @@ export class BIReportPreviewComponent extends BaseComponent implements OnInit {
         };
         this.agGrid.api.exportDataAsExcel(params);
     }
-    ExportToExcelClicked() {
-        this.ComputeFiltersCommand.emit(this.DWQueryId);
+    ExportButtonClicked(type:string) {
+
+
+        var args: any = {};
+        args.DWQueryId = this.DWQueryId;
+        args.ExportType = type;
+
+
+        this.ComputeFiltersCommand.emit(args);
     }
     //#endregion
 
@@ -744,9 +751,12 @@ export class BIReportPreviewComponent extends BaseComponent implements OnInit {
 
     OnComputeFiltersComplete(MyData) {
         this.BIReportXMLData.DWQueryData = MyData;
+        this.BIReportXMLData.ExportDataType = MyData ? MyData.ExportType:"";
+
         this.ExportToExcelAction();
     }
     ExportToExcelAction() {
+
         var windowArgs: any = {};
         windowArgs.queryId = this.DWQueryId;
         windowArgs.reportId = this.EntityPM.Id;
@@ -755,7 +765,7 @@ export class BIReportPreviewComponent extends BaseComponent implements OnInit {
         var logitudeWindow = new LogitudeWindow();
         logitudeWindow.Width = 500;
         logitudeWindow.Height = 200;
-        logitudeWindow.Title = TextCodeTranslator.Translate("General.B.ExportingDataToExcel");
+        logitudeWindow.Title = "Exporting View Data List To " + this.BIReportXMLData.ExportDataType + " File";
         logitudeWindow.WindowArgs = windowArgs;
         logitudeWindow.Show('./Infrastructure/Components/ExportBI2ExcelControl/ExportBI2ExcelControl');
         logitudeWindow.WindowClosed.subscribe(() => {
@@ -838,3 +848,7 @@ export class BIReportPreviewComponent extends BaseComponent implements OnInit {
     }
     //#endregion
 }
+
+
+
+

@@ -1,4 +1,5 @@
 ﻿using CHAMP17;
+using Simplog.Server.Infrastructure.DataContracts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,6 +9,18 @@ namespace WebFreight.Web.Helpers
 {
     public class AdvancedDateResolver
     {
+        public List<QueryFilterItem> ResolveDateValues(List<QueryFilterItem> reportFilterItemLists)
+        {
+            List<QueryFilterItem> reportFilterItems = reportFilterItemLists;
+            reportFilterItems.ForEach(reportFilter =>
+            {
+                if (reportFilter.FieldDataType == "Date")
+                {
+                    reportFilter.FieldValue = GetDateValueByOptionCode(reportFilter.FieldValue?.ToString());
+                }
+            });
+            return reportFilterItems;
+        }
         public DateTime GetDateValueByOptionCode(string optionCode)
         {
             DateTime dateValue = new DateTime();

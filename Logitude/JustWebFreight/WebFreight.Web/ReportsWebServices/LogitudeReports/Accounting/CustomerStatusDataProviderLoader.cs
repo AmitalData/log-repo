@@ -219,16 +219,19 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                 CustomerPaymentTerm = customerPeriods.First().AccountTermName,
                 CustomerLocalPaymentTerm = customerPeriods.First().AccountTermLocalName,
                 CustomerPhone = customerPeriods.First().AccountPhone,
+                CurrencyCode = customerPeriods.First().CurrencyCode,
+                ChartOfAccountLocalName = customerPeriods.First().ChartOfAccountLocalName,
+
+
 
                 //credit details
-
 
                 CreditLimit = (decimal)customerPeriods.First().CreditLimitAmount,
                 CreditStatus = customerPeriods.First().CreditStatusAmount ?? 0,
                 TotalFutureOpenCheques = customerPeriods.First().TotalFutureOpenCheques ?? 0,
                 ExternalTransactionsTotal = ExternalTransactions.Where(d => d.AccountId == customerPeriods.First().AccountId).Sum(d => d.LocalAmountCredit),
 
-                AccountingBalance = GetBalanceSummationForSpliitedAccounts(customerPeriods) ?? 0,
+                AccountingBalance = GetBalanceSummationForSplittedAccounts(customerPeriods) ?? 0,
                 Periods = GetStatusPeriods(customerPeriods),
                 AccountSalesmanName = customerPeriods.First().AccountSalesmanName,
                 AccountSalesmanLocalName = customerPeriods.First().AccountSalesmanLocalName,
@@ -249,11 +252,12 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                 TotalOpenCheques = customerPeriods.First().TotalOpenCheques ?? 0,
                 TotalOpenShipments = customerPeriods.First().TotalOpenShipments ?? 0,
 
+
             };
             return customerStatus;
         }
 
-        private static decimal? GetBalanceSummationForSpliitedAccounts(IGrouping<string, PeriodMExtended> customerPeriods)
+        private static decimal? GetBalanceSummationForSplittedAccounts(IGrouping<string, PeriodMExtended> customerPeriods)
         {
             return customerPeriods
                             .GroupBy(d => new { d.CurrencyId, d.SplitAccountId })

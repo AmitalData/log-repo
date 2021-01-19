@@ -9,7 +9,7 @@
 
                 <li id="{{'TRANSFERAccounting' | IdGeneratorPipe}}" [style.float]="isRTL ? 'right':'left'" [class.SelectedPageMenu]="SelectedItem == 'TRANSFER'" (click)="SelectedItem = 'TRANSFER'">{{'General.O.AccountingTransfer' | TextCodeTranslationPipe}}</li>
 
-                <li id="{{'SETTINGSAccounting' | IdGeneratorPipe}}" [style.float]="isRTL ? 'right':'left'" [class.SelectedPageMenu]="SelectedItem == 'SETTINGS'" (click)="SelectedItem = 'SETTINGS'">{{'General.O.Settings' | TextCodeTranslationPipe}}</li>
+                <li *ngIf="IsVisible_Settings" id="{{'SETTINGSAccounting' | IdGeneratorPipe}}" [style.float]="isRTL ? 'right':'left'" [class.SelectedPageMenu]="SelectedItem == 'SETTINGS'" (click)="SelectedItem = 'SETTINGS'">{{'General.O.Settings' | TextCodeTranslationPipe}}</li>
             </ul>
         </td>
     </tr>

@@ -111,6 +111,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Builders\ChargeType\ChargeTypeBuilder.cs" />
     <Compile Include="Models\ChargeType\ChargeTypeContext.cs" />
     <Compile Include="Models\ChargeType\ChargeTypePM.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -191,6 +191,7 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
                         paymentElement.Card.City = address.City;
                         paymentElement.Card.ZipCode = address.ZipCode;
                         paymentElement.Card.Country = address.Country == null ? "" : address.Country.EnglishName;
+                        paymentElement.Card.CountryCode = address.Country == null ? "" : address.Country.Code;
                     }
                     paymentElement.Card.VatNumber = vendor.VatNumber;
                 }
@@ -418,6 +419,7 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
         public string City { get; set; }
         public string ZipCode { get; set; }
         public string Country { get; set; }
+        public string CountryCode { get; set; }
         public string VatNumber { get; set; }
     }
 

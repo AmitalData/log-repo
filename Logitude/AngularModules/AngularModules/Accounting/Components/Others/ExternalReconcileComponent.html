@@ -1,4 +1,4 @@
-﻿<style>
+<style>
     .tab-footer {
         background: white;
         height: 55px;
@@ -391,22 +391,22 @@
 <div style="padding: 10px;height: 100%;">
 
     <table>
-
         <!-- Alert -->
         <tr *ngIf="showAlert" style="height:1px;">
             <td colspan="2">
 
                 <div class="alert-animation SaveAlert" [style.text-align]="isRTL ? 'right' : 'left'"
-                    style="margin: 0 auto;margin-bottom: 8px;min-width: 325px;height: 24px;width: fit-content;background: #c0e8c2;border: 1px solid #54a758;color: #6a7769;position: relative;padding: 3px 5px;border-radius: 5px; padding-left: 40px;"
-                    [style.padding-left]="isRTL ? '40px' : 'initial'"
-                    [style.padding-right]="isRTL ? 'initial' : '40px'">
+                     style="margin: 0 auto;margin-bottom: 8px;min-width: 325px;height: 24px;width: fit-content;background: #c0e8c2;border: 1px solid #54a758;color: #6a7769;position: relative;padding: 3px 5px;border-radius: 5px; padding-left: 40px;"
+                     [style.padding-left]="isRTL ? '40px' : 'initial'"
+                     [style.padding-right]="isRTL ? 'initial' : '40px'">
 
                     <div class="alert-close" (click)="CloseAlert()" [style.right]="isRTL ? 'initial' : '5px'"
-                        [style.left]="isRTL ? '5px' : 'initial'"
-                        style="color: #439c47;text-decoration: underline;top: 3px;">
-                        {{'Accounting.General.B.Close' | TextCodeTranslationPipe}}</div>
+                         [style.left]="isRTL ? '5px' : 'initial'"
+                         style="color: #439c47;text-decoration: underline;top: 3px;">
+                        {{'Accounting.General.B.Close' | TextCodeTranslationPipe}}
+                    </div>
                     {{'Accounting.General.O.Reconciliation' | TextCodeTranslationPipe}} <a *ngIf="ExternalRecoPM"
-                        href="#" (click)="OpenReco()"> {{ExternalRecoPM.ReconciliationNumber }}</a>
+                                                                                           href="#" (click)="OpenReco()"> {{ExternalRecoPM.ReconciliationNumber }}</a>
                     {{'Accounting.General.O.wascreatedsuccessfully' | TextCodeTranslationPipe}}.
                     {{GetAutoRecoMSG()}}
                 </div>
@@ -434,46 +434,51 @@
                                 <li float-start [style.padding-left]="isRTL ? '40px' : 'initial'"
                                     [style.padding-right]="isRTL ? 'initial' : '40px'" style="padding-top: 4px;"
                                     (click)="LabelClicked()">
-                                    {{'Accounting.O.ReconcileAccordingTo' | TextCodeTranslationPipe}}:</li>
+                                    {{'Accounting.O.ReconcileAccordingTo' | TextCodeTranslationPipe}}:
+                                </li>
 
                                 <!-- Amount Checkbox -->
-                                <li float-start style="padding: 0 8px;padding-top: 5px;"> 
+                                <li float-start style="padding: 0 8px;padding-top: 5px;">
                                     <CheckBox [IsChecked]="AmountCheckBoxChecked"
-                                        (Checked)="AmountCheckBoxChecked = $event"></CheckBox>
-                                </li> 
+                                              (Checked)="AmountCheckBoxChecked = $event"></CheckBox>
+                                </li>
                                 <li float-start [style.padding-left]="isRTL ? '30px' : 'initial'"
                                     [style.padding-right]="isRTL ? 'initial' : '30px'" style="padding-top: 4px;">
-                                    {{'Accounting.General.O.Amount' | TextCodeTranslationPipe}}</li>
+                                    {{'Accounting.General.O.Amount' | TextCodeTranslationPipe}}
+                                </li>
 
                                 <!-- Reference Date Checkbox -->
                                 <li float-start style="padding: 0 8px;padding-top: 5px;">
                                     <CheckBox [IsChecked]="ReferenceDateCheckBoxChecked"
-                                        (Checked)="ReferenceDateCheckBoxChecked = $event"></CheckBox>
+                                              (Checked)="ReferenceDateCheckBoxChecked = $event"></CheckBox>
                                 </li>
                                 <li float-start [style.padding-left]="isRTL ? '30px' : 'initial'"
                                     [style.padding-right]="isRTL ? 'initial' : '30px'" style="padding-top: 4px;">
-                                    {{'ReconcileExternalPageLine.F.ReferenceDate' | TextCodeTranslationPipe}}</li>
+                                    {{'ReconcileExternalPageLine.F.ReferenceDate' | TextCodeTranslationPipe}}
+                                </li>
 
                                 <!-- Reference Checkbox -->
                                 <li float-start style="padding: 0 8px;padding-top: 5px;">
                                     <CheckBox [IsChecked]="ReferenceCheckBoxChecked"
-                                        (Checked)="ReferenceCheckBoxChecked = $event"></CheckBox>
+                                              (Checked)="ReferenceCheckBoxChecked = $event"></CheckBox>
                                 </li>
                                 <li float-start [style.padding-left]="isRTL ? '30px' : 'initial'"
                                     [style.padding-right]="isRTL ? 'initial' : '30px'" style="padding-top: 4px;">
-                                    {{'Accounting.General.O.Reference' | TextCodeTranslationPipe}}</li>
+                                    {{'Accounting.General.O.Reference' | TextCodeTranslationPipe}}
+                                </li>
 
                                 <!-- Auto Reco Button -->
-                                <li float-start style="padding: 0 15px;padding-top: 2px;"><button class="Button"
-                                        (click)="AutoReco()">{{'Accounting.General.O.AutomaticReconcile' | TextCodeTranslationPipe}}</button>
+                                <li float-start style="padding: 0 15px;padding-top: 2px;">
+                                    <button class="Button"
+                                            (click)="AutoReco()">
+                                        {{'Accounting.General.O.AutomaticReconcile' | TextCodeTranslationPipe}}
+                                    </button>
                                 </li>
 
                                 <!-- Refresh Button -->
                                 <!--<li float-start style="padding: 0 15px;padding-top: 2px;"><button class="Button" (click)="RefreshButtonClicked()">R</button></li>-->
                                 <!-- Seperator -->
                                 <!-- <li float-start class="seperator"></li> -->
-
-
                                 <!-- Seperator -->
                                 <li float-start class="seperator"></li>
 
@@ -495,7 +500,7 @@
                                     class="filter-button" (click)="FilterButtonClicked()">
                                     <div class="">
                                         <img [attr.src]="isFiltersSelected ? './Images/FilterGrayTransUsed.png' : './Images/FilterGrayTrans.png'"
-                                            [attr.title]="isFiltersSelected ? txt_FiltersSelected : ''">
+                                             [attr.title]="isFiltersSelected ? txt_FiltersSelected : ''">
                                         <img [class.FlipImgVert]="isFiltersVisible" src="./Images/FiltersOpen.png">
                                     </div>
 
@@ -516,13 +521,14 @@
 
                             <!-- Auto Reco Alert -->
                             <div *ngIf="IsAutoReconcile" class="alert-animation SaveAlert"
-                                [style.float]="isRTL ? 'right' : 'left'" [style.text-align]="isRTL ? 'right' : 'left'"
-                                style="margin: 3px 10px 0;min-width: 150px;height: 24px;width: fit-content;color: #6a7769;position: relative;padding: 2px 10px;border-radius: 5px;">
+                                 [style.float]="isRTL ? 'right' : 'left'" [style.text-align]="isRTL ? 'right' : 'left'"
+                                 style="margin: 3px 10px 0;min-width: 150px;height: 24px;width: fit-content;color: #6a7769;position: relative;padding: 2px 10px;border-radius: 5px;">
 
                                 {{GetAutoRecoBackMSG()}}
                                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                 <a href="#" (click)="AutoRecoBackButtonClicked()" style="font-size: 12px;">
-                                    {{'Accounting.O.BackFromAutoRecoBACK' | TextCodeTranslationPipe}}</a>
+                                    {{'Accounting.O.BackFromAutoRecoBACK' | TextCodeTranslationPipe}}
+                                </a>
 
                             </div>
 
@@ -536,38 +542,40 @@
 
                                 <!-- Date -->
                                 <li float-start style="padding-left: 20px;padding-top: 4px;">
-                                    {{'Accounting.General.O.Date' | TextCodeTranslationPipe}}:</li>
+                                    {{'Accounting.General.O.Date' | TextCodeTranslationPipe}}:
+                                </li>
                                 <li float-start style="padding: 0 5px;padding-top: 2px;width: 150px;">
                                     <ComboBox [ItemsSource]="DateFilterList" [Binding]="'LocalName'"
-                                        [SelectedItem]="SelectedDateOperator"
-                                        (SelectedItemChanged)="SelectedDateOperator = $event"></ComboBox>
+                                              [SelectedItem]="SelectedDateOperator"
+                                              (SelectedItemChanged)="SelectedDateOperator = $event"></ComboBox>
                                 </li>
                                 <li float-start style="padding: 0 5px;padding-top: 2px;width: 150px;">
                                     <LogDatePicker [ObjectFieldName]="'FromDate'" [ObjectTableName]="ExtRecoTable"
-                                        [NoObjectField]="true" [SelectedDateValue]="FromDate" [ForceSubscribe]="true"
-                                        [DataContext]="DataContext" [HideColumns]="true"></LogDatePicker>
+                                                   [NoObjectField]="true" [SelectedDateValue]="FromDate" [ForceSubscribe]="true"
+                                                   [DataContext]="DataContext" [HideColumns]="true"></LogDatePicker>
                                 </li>
                                 <li float-start style="padding: 0 5px;padding-top: 2px;width: 150px;">
                                     <LogDatePicker [ObjectFieldName]="'ToDate'" [ObjectTableName]="ExtRecoTable"
-                                        [NoObjectField]="true" [SelectedDateValue]="ToDate" [ForceSubscribe]="true"
-                                        [DataContext]="DataContext" [HideColumns]="true"></LogDatePicker>
+                                                   [NoObjectField]="true" [SelectedDateValue]="ToDate" [ForceSubscribe]="true"
+                                                   [DataContext]="DataContext" [HideColumns]="true"></LogDatePicker>
                                 </li>
 
                                 <li float-start style="width: 40px;height: 100%;"></li>
 
                                 <!-- ForeignAmount -->
                                 <li float-start style="padding-left: 20px;padding-top: 4px;">
-                                    {{'LedgerTransaction.F.ForeignAmount' | TextCodeTranslationPipe}}:</li>
+                                    {{'LedgerTransaction.F.ForeignAmount' | TextCodeTranslationPipe}}:
+                                </li>
                                 <li float-start style="padding: 0 5px;padding-top: 2px;width: 150px;">
                                     <ComboBox [ItemsSource]="OperatorsList" [Binding]="'LocalName'"
-                                        [SelectedItem]="SelectedOperator"
-                                        (SelectedItemChanged)="SelectedOperator = $event"></ComboBox>
+                                              [SelectedItem]="SelectedOperator"
+                                              (SelectedItemChanged)="SelectedOperator = $event"></ComboBox>
                                 </li>
                                 <li float-start style="padding: 0 5px;padding-top: 2px;width: 100px;">
                                     <LogTextBox [InputType]="'sigdouble'" [NoObjectField]="true"
-                                        [ObjectFieldName]="'OpenAmount'" [Text]="OpenAmount" [HideColumns]="true"
-                                        (ValueChanged)="OpenAmountTextChanged($event)"
-                                        [ObjectTableName]="ExtRecoTable" [DataContext]="DataContext"></LogTextBox>
+                                                [ObjectFieldName]="'OpenAmount'" [Text]="OpenAmount" [HideColumns]="true"
+                                                (ValueChanged)="OpenAmountTextChanged($event)"
+                                                [ObjectTableName]="ExtRecoTable" [DataContext]="DataContext"></LogTextBox>
                                 </li>
 
                                 <!-- Reset Filters Button -->
@@ -580,11 +588,12 @@
 
                                 <!-- Search -->
                                 <li float-start style="padding-left: 20px;padding-top: 4px;">
-                                    {{'Accounting.General.B.Search' | TextCodeTranslationPipe}}:</li>
+                                    {{'Accounting.General.B.Search' | TextCodeTranslationPipe}}:
+                                </li>
                                 <li float-start
                                     style="padding: 0 5px;padding-top: 2px;width: 170px;position: relative;">
                                     <SearchTextBox [ObjectTableName]="'LedgerTransaction'"
-                                        (SearchTextChangeEvent)="TextChanged($event)"></SearchTextBox>
+                                                   (SearchTextChangeEvent)="TextChanged($event)"></SearchTextBox>
                                 </li>
 
                                 <!-- Refresh Button -->
@@ -615,8 +624,10 @@
                     <!-- subtitle -->
                     <tr>
                         <td>
-                            <div class="SubTitle">{{'ReconcileExternalPage.O.Transactions' | TextCodeTranslationPipe}}
-                                ({{IsAutoReconcile ? TransactionSelectedLines.Length : transCount}})</div>
+                            <div class="SubTitle">
+                                {{'ReconcileExternalPage.O.Transactions' | TextCodeTranslationPipe}}
+                                ({{IsAutoReconcile ? TransactionSelectedLines.Length : transCount}})
+                            </div>
                         </td>
                     </tr>
 
@@ -624,21 +635,21 @@
                     <tr *ngIf="!IsAutoReconcile">
                         <td style="height: 100%; padding-bottom: 3px; vertical-align: top;">
                             <div class="GeneratedGridContainer" style="height: calc(100% - 20px)" *ngIf="LoadGrids">
-                                <logitude-grid GridWidth="100%" GridHeight="100%" 
-                                [ObjectTable]="'LedgerTransaction'"
-                                [dataSource]="TransactionDataSource" 
-                                [FireCheckBoxChecked]="TransactionFireCheckBoxChecked"
-                                [MenuHeaderchangeevent]="TransactionMenuHeaderchangeevent" 
-                                [columns]="TransactionsColumns" 
-                                [autoLoad]="true"
-                                [QueryChangeEvent]="TransactiononQueryChangeEvent" 
-                                [IsCustomTemplate]="true"
-                                (CountReady)="onCountReadyTrans($event)" 
-                                [PassAdditionalDataToTemplates]="true"
-                                [ColumnsReady]="TransactionColumnsReady" 
-                                [MarkIsChecked]="TransactionMarkIsChecked"
-                                (DataLoaded)="TransactiononDataLoaded()" 
-                                (SortInvoked)="OnSortInvoked($event)">
+                                <logitude-grid GridWidth="100%" GridHeight="100%"
+                                               [ObjectTable]="'LedgerTransaction'"
+                                               [dataSource]="TransactionDataSource"
+                                               [FireCheckBoxChecked]="TransactionFireCheckBoxChecked"
+                                               [MenuHeaderchangeevent]="TransactionMenuHeaderchangeevent"
+                                               [columns]="TransactionsColumns"
+                                               [autoLoad]="true"
+                                               [QueryChangeEvent]="TransactiononQueryChangeEvent"
+                                               [IsCustomTemplate]="true"
+                                               (CountReady)="onCountReadyTrans($event)"
+                                               [PassAdditionalDataToTemplates]="true"
+                                               [ColumnsReady]="TransactionColumnsReady"
+                                               [MarkIsChecked]="TransactionMarkIsChecked"
+                                               (DataLoaded)="TransactiononDataLoaded()"
+                                               (SortInvoked)="OnSortInvoked($event)">
                                 </logitude-grid>
                             </div>
                         </td>
@@ -650,115 +661,115 @@
                             [style.height]="IsAutoReconcile ? '100%' : ( getScreenHeight() < 670 ? '120px' : '160px')">
                             <div class="CellContent">
                                 <logitude-edit-grid GridWidth="100%" GridHeight="100%"
-                                    [ItemSource]="TransactionSelectedLines" [UseVirtuallization]="true">
+                                                    [ItemSource]="TransactionSelectedLines" [UseVirtuallization]="true">
 
                                     <log-column [Alignment]="isRTL ? 'right' : 'left'" [width]="'30'">
                                         <ng-template let-item>
-                                        <log-cell-template   [IgnoreMods]="true">
-                                            <img (click)="CheckBoxValueChanged(item)" class="trashIcon" title="Remove"
-                                                style="cursor: pointer;" src="./Images/Trash-can.png" />
-                                        </log-cell-template>
+                                            <log-cell-template [IgnoreMods]="true">
+                                                <img (click)="CheckBoxValueChanged(item)" class="trashIcon" title="Remove"
+                                                     style="cursor: pointer;" src="./Images/Trash-can.png" />
+                                            </log-cell-template>
                                         </ng-template>
                                     </log-column>
 
                                     <log-column *ngIf="IsAutoReconcile" [Alignment]="isRTL ? 'right' : 'left'"
-                                        [header]="'#'" [width]="'50'" [binding]="'GroupHash'">
+                                                [header]="'#'" [width]="'50'" [binding]="'GroupHash'">
                                         <ng-template let-item>
-                                        <log-cell-template   #logcelltemplate [IgnoreMods]="true">
-                                            <div class="TextTrimming" [style.text-align]="isRTL ? 'right' : 'left'">
-                                                <span>{{item.GroupHash}}</span>
-                                            </div>
-                                        </log-cell-template>
-                                    </ng-template>
+                                            <log-cell-template #logcelltemplate [IgnoreMods]="true">
+                                                <div class="TextTrimming" [style.text-align]="isRTL ? 'right' : 'left'">
+                                                    <span>{{item.GroupHash}}</span>
+                                                </div>
+                                            </log-cell-template>
+                                        </ng-template>
                                     </log-column>
 
-                                    <log-column [Alignment]="isRTL ? 'right' : 'left'"  [SortFieldName]="'DocumentDate'"
-                                        [header]="'LedgerTransaction.F.DocumentDate' | TextCodeTranslationPipe"
-                                        [width]="'100'" [binding]="'DocumentDate'">
+                                    <log-column [Alignment]="isRTL ? 'right' : 'left'" [SortFieldName]="'DocumentDate'"
+                                                [header]="'LedgerTransaction.F.DocumentDate' | TextCodeTranslationPipe"
+                                                [width]="'100'" [binding]="'DocumentDate'">
                                         <ng-template let-item>
-                                        <log-cell-template   #logcelltemplate [IgnoreMods]="true">
-                                            <div class="TextTrimming" [style.text-align]="isRTL ? 'right' : 'left'">
-                                                <span>{{item.DocumentDate | DateTimeToDatePipe }}</span>
-                                            </div>
-                                        </log-cell-template>
-                                    </ng-template>
+                                            <log-cell-template #logcelltemplate [IgnoreMods]="true">
+                                                <div class="TextTrimming" [style.text-align]="isRTL ? 'right' : 'left'">
+                                                    <span>{{item.DocumentDate | DateTimeToDatePipe }}</span>
+                                                </div>
+                                            </log-cell-template>
+                                        </ng-template>
                                     </log-column>
 
                                     <log-column [Alignment]="isRTL ? 'right' : 'left'" [SortFieldName]="'SourceNumber'"
-                                        [header]="'LedgerTransaction.F.Source' | TextCodeTranslationPipe"
-                                        [width]="'100'" [binding]="'Source'">
+                                                [header]="'LedgerTransaction.F.Source' | TextCodeTranslationPipe"
+                                                [width]="'100'" [binding]="'Source'">
                                         <ng-template let-item>
-                                        <log-cell-template   #logcelltemplate [IgnoreMods]="true">
-                                            <div class="TextTrimming" [style.text-align]="isRTL ? 'left' : 'left'">
-                                                <span title="{{item.SourceType}}" *ngIf="item.IconCode"
-                                                    (click)="OpenSource(item.SourceId, item.SourceTypeCode)"
-                                                    [class]="'SourceTypeIcon color-' + item.SourceTypeCode">{{item.IconCode}}</span>
-                                                <a href="javascript:;"
-                                                    (click)="OpenSource(item.SourceId, item.SourceTypeCode)">{{item.SourceNumber}}</a>
-                                            </div>
-                                        </log-cell-template>
-                                    </ng-template>
+                                            <log-cell-template #logcelltemplate [IgnoreMods]="true">
+                                                <div class="TextTrimming" [style.text-align]="isRTL ? 'left' : 'left'">
+                                                    <span title="{{item.SourceType}}" *ngIf="item.IconCode"
+                                                          (click)="OpenSource(item.SourceId, item.SourceTypeCode)"
+                                                          [class]="'SourceTypeIcon color-' + item.SourceTypeCode">{{item.IconCode}}</span>
+                                                    <a href="javascript:;"
+                                                       (click)="OpenSource(item.SourceId, item.SourceTypeCode)">{{item.SourceNumber}}</a>
+                                                </div>
+                                            </log-cell-template>
+                                        </ng-template>
                                     </log-column>
 
                                     <log-column [Alignment]="isRTL ? 'right' : 'left'" [SortFieldName]="'ForeignAmount'"
-                                        [header]="'LedgerTransaction.F.ForeignAmount' | TextCodeTranslationPipe"
-                                        [width]="'120'" [binding]="'ForeignAmount'">
+                                                [header]="'LedgerTransaction.F.ForeignAmount' | TextCodeTranslationPipe"
+                                                [width]="'120'" [binding]="'ForeignAmount'">
                                         <ng-template let-item>
-                                        <log-cell-template   #logcelltemplate [IgnoreMods]="true">
-                                            <div style="color:#00a24d;direction: ltr; text-align: right; padding: 0px 2px;"
-                                                [class.red]='item.IsCredit'>
-                                                <span>{{ item.ForeignAmount | NumbersPipe:'N2'  }}</span>
-                                            </div>
-                                        </log-cell-template>
-                                    </ng-template>
+                                            <log-cell-template #logcelltemplate [IgnoreMods]="true">
+                                                <div style="color:#00a24d;direction: ltr; text-align: right; padding: 0px 2px;"
+                                                     [class.red]='item.IsCredit'>
+                                                    <span>{{ item.ForeignAmount | NumbersPipe:'N2'  }}</span>
+                                                </div>
+                                            </log-cell-template>
+                                        </ng-template>
                                     </log-column>
 
                                     <log-column [Alignment]="isRTL ? 'right' : 'left'" [SortFieldName]="'Reference1'"
-                                        [header]="'LedgerTransaction.F.Reference1' | TextCodeTranslationPipe"
-                                        [width]="'80'" [binding]="'Reference1'">
+                                                [header]="'LedgerTransaction.F.Reference1' | TextCodeTranslationPipe"
+                                                [width]="'80'" [binding]="'Reference1'">
                                         <ng-template let-item>
-                                        <log-cell-template   #logcelltemplate [IgnoreMods]="true">
-                                            <div class="TextTrimming" [style.text-align]="isRTL ? 'right' : 'left'">
-                                                <span>{{item.Reference1}}</span>
-                                            </div>
-                                        </log-cell-template>
-                                    </ng-template>
+                                            <log-cell-template #logcelltemplate [IgnoreMods]="true">
+                                                <div class="TextTrimming" [style.text-align]="isRTL ? 'right' : 'left'">
+                                                    <span>{{item.Reference1}}</span>
+                                                </div>
+                                            </log-cell-template>
+                                        </ng-template>
                                     </log-column>
 
                                     <log-column [Alignment]="isRTL ? 'right' : 'left'" [SortFieldName]="'Reference2'"
-                                        [header]="'LedgerTransaction.F.Reference2' | TextCodeTranslationPipe"
-                                        [width]="'80'" [binding]="'Reference3'">
+                                                [header]="'LedgerTransaction.F.Reference2' | TextCodeTranslationPipe"
+                                                [width]="'80'" [binding]="'Reference3'">
                                         <ng-template let-item>
-                                        <log-cell-template   #logcelltemplate [IgnoreMods]="true">
-                                            <div class="TextTrimming" [style.text-align]="isRTL ? 'right' : 'left'">
-                                                <span>{{item.Reference2}}</span>
-                                            </div>
-                                        </log-cell-template>
-                                    </ng-template>
+                                            <log-cell-template #logcelltemplate [IgnoreMods]="true">
+                                                <div class="TextTrimming" [style.text-align]="isRTL ? 'right' : 'left'">
+                                                    <span>{{item.Reference2}}</span>
+                                                </div>
+                                            </log-cell-template>
+                                        </ng-template>
                                     </log-column>
 
                                     <log-column [Alignment]="isRTL ? 'right' : 'left'" [SortFieldName]="'Reference3'"
-                                        [header]="'LedgerTransaction.F.Reference3' | TextCodeTranslationPipe"
-                                        [width]="'80'" [binding]="'Reference4'">
+                                                [header]="'LedgerTransaction.F.Reference3' | TextCodeTranslationPipe"
+                                                [width]="'80'" [binding]="'Reference4'">
                                         <ng-template let-item>
-                                        <log-cell-template   #logcelltemplate [IgnoreMods]="true">
-                                            <div class="TextTrimming" [style.text-align]="isRTL ? 'right' : 'left'">
-                                                <span>{{item.Reference3}}</span>
-                                            </div>
-                                        </log-cell-template>
-                                    </ng-template>
+                                            <log-cell-template #logcelltemplate [IgnoreMods]="true">
+                                                <div class="TextTrimming" [style.text-align]="isRTL ? 'right' : 'left'">
+                                                    <span>{{item.Reference3}}</span>
+                                                </div>
+                                            </log-cell-template>
+                                        </ng-template>
                                     </log-column>
 
                                     <log-column [Alignment]="isRTL ? 'right' : 'left'" [SortFieldName]="'Notes'"
-                                        [header]="'LedgerTransaction.F.Notes' | TextCodeTranslationPipe" [width]="'120'"
-                                        [binding]="'Notes'">
+                                                [header]="'LedgerTransaction.F.Notes' | TextCodeTranslationPipe" [width]="'120'"
+                                                [binding]="'Notes'">
                                         <ng-template let-item>
-                                        <log-cell-template   #logcelltemplate [IgnoreMods]="true">
-                                            <div class="TextTrimming" [style.text-align]="isRTL ? 'right' : 'left'">
-                                                <span>{{item.Notes}}</span>
-                                            </div>
-                                        </log-cell-template>
-                                    </ng-template>
+                                            <log-cell-template #logcelltemplate [IgnoreMods]="true">
+                                                <div class="TextTrimming" [style.text-align]="isRTL ? 'right' : 'left'">
+                                                    <span>{{item.Notes}}</span>
+                                                </div>
+                                            </log-cell-template>
+                                        </ng-template>
                                     </log-column>
 
                                 </logitude-edit-grid>
@@ -798,7 +809,8 @@
                         <td colspan="3">
                             <div class="SubTitle">
                                 {{ExternalPagesTitle}}
-                                ({{IsAutoReconcile ? ExtPageSelectedLines.Length : extPageCount}})</div>
+                                ({{IsAutoReconcile ? ExtPageSelectedLines.Length : extPageCount}})
+                            </div>
                         </td>
                     </tr>
 
@@ -807,13 +819,13 @@
                         <td colspan="3" style="height: 100%; padding-bottom: 3px; vertical-align: top;">
                             <div class="GeneratedGridContainer" style="height: calc(100% - 20px)" *ngIf="LoadGrids">
                                 <logitude-grid GridWidth="100%" GridHeight="100%"
-                                    [ObjectTable]="'ReconcileExternalPageLine'" [dataSource]="ExtPageDataSource"
-                                    [FireCheckBoxChecked]="ExtPageFireCheckBoxChecked"
-                                    [MenuHeaderchangeevent]="ExtPageMenuHeaderchangeevent" [columns]="ExtPageColumns"
-                                    [autoLoad]="true" [QueryChangeEvent]="ExtPageonQueryChangeEvent"
-                                    [IsCustomTemplate]="true" [PassAdditionalDataToTemplates]="true"
-                                    (CountReady)="onCountReadyExtPage($event)" [ColumnsReady]="ExtPageColumnsReady"
-                                    [MarkIsChecked]="ExtPageMarkIsChecked" (DataLoaded)="ExtPageonDataLoaded()" (SortInvoked)="OnSortInvoked($event)">
+                                               [ObjectTable]="'ReconcileExternalPageLine'" [dataSource]="ExtPageDataSource"
+                                               [FireCheckBoxChecked]="ExtPageFireCheckBoxChecked"
+                                               [MenuHeaderchangeevent]="ExtPageMenuHeaderchangeevent" [columns]="ExtPageColumns"
+                                               [autoLoad]="true" [QueryChangeEvent]="ExtPageonQueryChangeEvent"
+                                               [IsCustomTemplate]="true" [PassAdditionalDataToTemplates]="true"
+                                               (CountReady)="onCountReadyExtPage($event)" [ColumnsReady]="ExtPageColumnsReady"
+                                               [MarkIsChecked]="ExtPageMarkIsChecked" (DataLoaded)="ExtPageonDataLoaded()" (SortInvoked)="OnSortInvoked($event)">
                                 </logitude-grid>
                             </div>
                         </td>
@@ -826,77 +838,79 @@
                             style="height: 160px;">
                             <div class="CellContent">
                                 <logitude-edit-grid GridWidth="100%" GridHeight="100%" [ItemSource]="ExtPageSelectedLines"
-                                    [UseVirtuallization]="true">
+                                                    [UseVirtuallization]="true">
 
                                     <log-column [Alignment]="isRTL ? 'right' : 'left'" [width]="'30'">
                                         <ng-template let-item>
-                                        <log-cell-template   [IgnoreMods]="true">
-                                            <img (click)="ExtPageCheckBoxValueChanged(item)" class="trashIcon"
-                                                title="Remove" style="cursor: pointer;" src="./Images/Trash-can.png" />
-                                        </log-cell-template>
-                                    </ng-template>
+                                            <log-cell-template [IgnoreMods]="true">
+                                                <img (click)="ExtPageCheckBoxValueChanged(item)" class="trashIcon"
+                                                     title="Remove" style="cursor: pointer;" src="./Images/Trash-can.png" />
+                                            </log-cell-template>
+                                        </ng-template>
                                     </log-column>
 
 
                                     <log-column *ngIf="IsAutoReconcile" [Alignment]="isRTL ? 'right' : 'left'"
-                                        [header]="'#'" [width]="'50'" [binding]="'GroupHash'">
+                                                [header]="'#'" [width]="'50'" [binding]="'GroupHash'">
                                         <ng-template let-item>
-                                        <log-cell-template   #logcelltemplate [IgnoreMods]="true">
-                                            <div class="TextTrimming" [style.text-align]="isRTL ? 'right' : 'left'">
-                                                <span>{{item.GroupHash}}</span>
-                                            </div>
-                                        </log-cell-template>
-                                    </ng-template>
+                                            <log-cell-template #logcelltemplate [IgnoreMods]="true">
+                                                <div class="TextTrimming" [style.text-align]="isRTL ? 'right' : 'left'">
+                                                    <span>{{item.GroupHash}}</span>
+                                                </div>
+                                            </log-cell-template>
+                                        </ng-template>
                                     </log-column>
 
-                                    <log-column [Alignment]="isRTL ? 'right' : 'left'"  [SortFieldName]="'ReferenceDate'"
-                                        [header]="'ReconcileExternalPageLine.F.ReferenceDate' | TextCodeTranslationPipe"
-                                        [width]="'100'" [binding]="'ReferenceDate'">
+                                    <log-column [Alignment]="isRTL ? 'right' : 'left'" [SortFieldName]="'ReferenceDate'"
+                                                [header]="'ReconcileExternalPageLine.F.ReferenceDate' | TextCodeTranslationPipe"
+                                                [width]="'100'" [binding]="'ReferenceDate'">
                                         <ng-template let-item>
-                                        <log-cell-template   #logcelltemplate [IgnoreMods]="true">
-                                            <div class="TextTrimming" [style.text-align]="isRTL ? 'right' : 'left'">
-                                                <span>{{item.ReferenceDate | DateTimeToDatePipe }}</span>
-                                            </div>
-                                        </log-cell-template>
-                                    </ng-template>
+                                            <log-cell-template #logcelltemplate [IgnoreMods]="true">
+                                                <div class="TextTrimming" [style.text-align]="isRTL ? 'right' : 'left'">
+                                                    <span>{{item.ReferenceDate | DateTimeToDatePipe }}</span>
+                                                </div>
+                                            </log-cell-template>
+                                        </ng-template>
                                     </log-column>
 
-                                    <log-column [Alignment]="isRTL ? 'right' : 'left'"  [SortFieldName]="'Amount'"
-                                        [header]="'ReconcileExternalPageLine.F.Amount' | TextCodeTranslationPipe"
-                                        [width]="'120'" [binding]="'Amount'">
+                                    <log-column [Alignment]="isRTL ? 'right' : 'left'" [SortFieldName]="'Amount'"
+                                                [header]="'ReconcileExternalPageLine.F.Amount' | TextCodeTranslationPipe"
+                                                [width]="'120'" [binding]="'Amount'">
                                         <ng-template let-item>
-                                        <log-cell-template   #logcelltemplate [IgnoreMods]="true">
-                                            <div style="color:#00a24d;direction: ltr; text-align: right; padding: 0px 2px;"
-                                                [class.red]='item.IsCredit'>
-                                                <span>{{ item.Amount | NumbersPipe:'N2'  }}
-                                                    {{item.OpenAmountCurrencySign}}</span>
-                                            </div>
-                                        </log-cell-template>
-                                    </ng-template>
+                                            <log-cell-template #logcelltemplate [IgnoreMods]="true">
+                                                <div style="color:#00a24d;direction: ltr; text-align: right; padding: 0px 2px;"
+                                                     [class.red]='item.IsCredit'>
+                                                    <span>
+                                                        {{ item.Amount | NumbersPipe:'N2'  }}
+                                                        {{item.OpenAmountCurrencySign}}
+                                                    </span>
+                                                </div>
+                                            </log-cell-template>
+                                        </ng-template>
                                     </log-column>
 
-                                    <log-column [Alignment]="isRTL ? 'right' : 'left'"  [SortFieldName]="'Reference'"
-                                        [header]="'ReconcileExternalPageLine.F.Reference' | TextCodeTranslationPipe"
-                                        [width]="'150'" [binding]="'Reference'">
+                                    <log-column [Alignment]="isRTL ? 'right' : 'left'" [SortFieldName]="'Reference'"
+                                                [header]="'ReconcileExternalPageLine.F.Reference' | TextCodeTranslationPipe"
+                                                [width]="'150'" [binding]="'Reference'">
                                         <ng-template let-item>
-                                        <log-cell-template   #logcelltemplate [IgnoreMods]="true">
-                                            <div class="TextTrimming" [style.text-align]="isRTL ? 'right' : 'left'">
-                                                <span>{{item.Reference}}</span>
-                                            </div>
-                                        </log-cell-template>
-                                    </ng-template>
+                                            <log-cell-template #logcelltemplate [IgnoreMods]="true">
+                                                <div class="TextTrimming" [style.text-align]="isRTL ? 'right' : 'left'">
+                                                    <span>{{item.Reference}}</span>
+                                                </div>
+                                            </log-cell-template>
+                                        </ng-template>
                                     </log-column>
 
-                                    <log-column [Alignment]="isRTL ? 'right' : 'left'"  [SortFieldName]="'Notes'"
-                                        [header]="'ReconcileExternalPageLine.F.Notes' | TextCodeTranslationPipe"
-                                        [width]="IsAutoReconcile ? '100' : '150'" [binding]="'Notes'">
+                                    <log-column [Alignment]="isRTL ? 'right' : 'left'" [SortFieldName]="'Notes'"
+                                                [header]="'ReconcileExternalPageLine.F.Notes' | TextCodeTranslationPipe"
+                                                [width]="IsAutoReconcile ? '100' : '150'" [binding]="'Notes'">
                                         <ng-template let-item>
-                                        <log-cell-template   #logcelltemplate [IgnoreMods]="true">
-                                            <div class="TextTrimming" [style.text-align]="isRTL ? 'right' : 'left'">
-                                                <span>{{item.Notes}}</span>
-                                            </div>
-                                        </log-cell-template>
-                                    </ng-template>
+                                            <log-cell-template #logcelltemplate [IgnoreMods]="true">
+                                                <div class="TextTrimming" [style.text-align]="isRTL ? 'right' : 'left'">
+                                                    <span>{{item.Notes}}</span>
+                                                </div>
+                                            </log-cell-template>
+                                        </ng-template>
                                     </log-column>
 
                                 </logitude-edit-grid>
@@ -954,7 +968,7 @@
                             <div *ngIf="IsGeneratePasswordVisible" style="width: 210px">
                                 <div style="float: left;width: 175px;">
                                     <input [(ngModel)]="GeneratePWD" type="password"
-                                        placeholder="Enter Generate Button Password" />
+                                           placeholder="Enter Generate Button Password" />
                                 </div>
                                 <div style="float: left;">
                                     <button class="Button" (click)="PasswordOkButtonClicked()">Ok</button>
@@ -962,15 +976,15 @@
                             </div>
 
                             <div *ngIf="IsGenerateButtonVisible"
-                                style="height:22px;padding: 0px 5px; width: 170px; position: absolute; top:0px; text-align:left;">
+                                 style="height:22px;padding: 0px 5px; width: 170px; position: absolute; top:0px; text-align:left;">
 
                                 <div tabindex="0" class="ToggleButton"
-                                    style="margin: auto;text-align:left; width: 100% !important; height: 100% !important">
+                                     style="margin: auto;text-align:left; width: 100% !important; height: 100% !important">
                                     <label>Generate test records</label>
                                     <img src="./Images/ToggleIcon.png" />
                                     <div [style.right]="isRTL ? 'initial' : '0'" [style.left]="isRTL ? '0' : 'initial'"
-                                        class="ToggleButtonMenu"
-                                        style="bottom:22px;top: unset !important;width: 160px;">
+                                         class="ToggleButtonMenu"
+                                         style="bottom:22px;top: unset !important;width: 160px;">
                                         <button (click)="GenerateTestLines('1')">One to One</button>
                                         <button (click)="GenerateTestLines('2')">One to More</button>
                                     </div>
@@ -982,17 +996,23 @@
 
                         <td style="width: 57px; padding-left: 5px;">
                             <button class="Button"
-                                (click)="CancelButtonClicked()">{{'Accounting.General.B.Close' | TextCodeTranslationPipe}}</button>
+                                    (click)="CancelButtonClicked()">
+                                {{'Accounting.General.B.Close' | TextCodeTranslationPipe}}
+                            </button>
                         </td>
 
                         <td style="width: 110px; padding-left: 5px;">
                             <button class="Button" (click)="SaveAsDraftButton()"
-                                disabled>{{'Accounting.General.O.Saveasdraft' | TextCodeTranslationPipe}}</button>
+                                    disabled>
+                                {{'Accounting.General.O.Saveasdraft' | TextCodeTranslationPipe}}
+                            </button>
                         </td>
 
                         <td style="width: 110px; padding-left: 5px;">
                             <button class="RedButton"
-                                (click)="ReconcileButtonClicked()">{{'Accounting.General.O.Reconcile' | TextCodeTranslationPipe}}</button>
+                                    (click)="ReconcileButtonClicked()">
+                                {{'Accounting.General.O.Reconcile' | TextCodeTranslationPipe}}
+                            </button>
                         </td>
                     </tr>
                 </table>

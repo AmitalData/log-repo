@@ -1,6 +1,7 @@
 ﻿using FakeItEasy;
 using Logitude.Accounting.BL.CoreBL.ExternalReconcile;
 using Logitude.Accounting.Data;
+using Logitude.Accounting.Data.EntityLists;
 using Logitude.Accounting.Def.EntityPMs;
 using Logitude.UnitTest.Utils;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -13,7 +14,7 @@ using System.Threading.Tasks;
 namespace Logitude.UnitTest.Accounting.UniTests
 {
     [TestClass]
-    public class ExternalReconcileJournalServiceUnitTest
+    public partial class ExternalReconcileJournalServiceUnitTest
     {
         int _Tenant = 1;
 
@@ -301,7 +302,7 @@ fakeExternalReconcileDataProvider.GetBankAccountFromReconcileExternalPageLineId(
         }
         ///have to teste
         [TestMethod]
-        public void MoveBankCheckFromTransfer2GLAccount_M_AmountInPageAndLedgerMustBeEqual_RaiseError()
+        public void MoveBankCheckFromTransfer2GLAccountAndBakFees_OnAdjustMustInit_RaiseError()
         {
             BankAccountPM myBankAccountPM;
             ReconcileExternalPageLinePM myReconcileExternalPageLinePM;
@@ -335,14 +336,15 @@ fakeExternalReconcileDataProvider.GetBankAccountFromReconcileExternalPageLineId(
 
 
 
-            myReconcileExternalPageLinePM.DebitAmount = 1234567677;
+            myReconcileExternalPageLinePM.DebitAmount += 2;//2 nis bank fees
+
 
             var myExternalReconcileJournalService = new ExternalReconcileMoveBankCheckFromTransfer2GLAccountService();
             myExternalReconcileJournalService.MustInit(fakeExternalReconcileDataProvider);
             TestsUtil.AssertThrows<Exception>(() =>
             {
                 myExternalReconcileJournalService.CreateJournalWithExtReconcile(_Tenant, myOrginalJournalTransaction.First().Id, myReconcileExternalPageLinePM.Id);
-            }, ExternalReconcileMoveBankCheckFromTransfer2GLAccountService.M_AmountInPageAndLedgerMustBeEqual, "");
+            }, ExternalReconcileMoveBankCheckFromTransfer2GLAccountService.M_OnAdjustMustInit, "");
 
         }
         ///have to teste
@@ -661,5 +663,7 @@ fakeExternalReconcileDataProvider.GetBankAccountFromReconcileExternalPageLineId(
             Assert.AreEqual(myReconcileExternalPageLinePM.Id, theCreatedJournal.JournalExternalReconciles[0].ReconcileExternalPageLineId);
             Assert.AreEqual(myOrginalJournalTransaction.First().Id, theCreatedJournal.JournalExternalReconciles[0].LedgerTransactionId);
         }
+
+       
     }
 }
