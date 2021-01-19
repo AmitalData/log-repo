@@ -18,7 +18,7 @@ namespace Logitude.SpecFlow.Steps
         {
             Context = context;
             Context.User = multiUsers.Users[0];
-    
+
         }
         
         [Given(@"Charge type with the following properties")]
