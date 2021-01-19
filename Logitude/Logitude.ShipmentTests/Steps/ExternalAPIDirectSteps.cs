@@ -37,13 +37,13 @@ namespace Logitude.ShipmentTests.Steps
         public void WhenCreateDirectShipmentUsingExternalAPI()
         {
             APIResponse<Direct> response = APICaller.CallPost<Direct>(Context.Direct, "Direct", UserTenant.Token);
-            Context.Direct.Id = response.Data?.Id;
+            Context.Direct = response.Data;
         }
 
         [Then(@"The direct shipment should be created successfully")]
         public void ThenTheDirectShipmentShouldBeCreatedSuccessfully()
         {
-            Context.Direct.Id.Should().NotBeNull();
+            Context.Direct.Should().NotBeNull();
         }
 
         [When(@"Update main carriage leg ATA to future date")]
@@ -87,7 +87,6 @@ namespace Logitude.ShipmentTests.Steps
             Context.Direct.MainCarriageLegs.First().ATD = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day).AddMonths(-1).AddDays(2);
             Context.Direct.MainCarriageLegs.First().ETA = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day).AddMonths(-1).AddDays(3);
             Context.Direct.MainCarriageLegs.First().ATA = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day).AddMonths(-1).AddDays(4);
-            //Context.Direct.NewConcurrencyGUID = Guid.NewGuid().ToString();
             APIResponse<Direct> response = APICaller.CallPut<Direct>(Context.Direct, "Direct", UserTenant.Token);
             Context.Direct = response.Data;
         }
@@ -149,12 +148,12 @@ namespace Logitude.ShipmentTests.Steps
                 string toPort = Convert.ToString(mainCarriageLeg.ToPort);
 
                 MainCarriageLegBuilder mainCarriageLegBuilder = new MainCarriageLegBuilder();
-                MainCarriageLeg newCarriageLeg = mainCarriageLegBuilder.LegIndex(legIndex)
+                MainCarriageLeg newMainCarriageLeg = mainCarriageLegBuilder.LegIndex(legIndex)
                 .Carrier(carrier)
                 .FromPort(fromPort)
                 .ToPort(toPort)
                 .Build();
-                mainCarriageLegsList.Add(newCarriageLeg);
+                mainCarriageLegsList.Add(newMainCarriageLeg);
             });
 
             Context.Direct.MainCarriageLegs = new List<MainCarriageLeg>();
