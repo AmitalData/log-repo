@@ -17,6 +17,7 @@ import {
 import { DateTimePipe } from '../../../Controls/Pipes/DateTimePipe';
 import { ObjectsLocator } from '../../../Infrastructure/Locators/ObjectsLocator';
 import { CodeNameClass } from '../../../Infrastructure/DataContracts/CodeNameClass';
+import { AddEditReportSchedulerComponent } from './AddEditReportSchedulerComponent';
 
 @Component({
     templateUrl: './AddEditReportTaskSchedulerComponent.html',
@@ -32,7 +33,7 @@ export class AddEditReportTaskSchedulerComponent {
     public SelectedFormat: CodeNameClass;
     public SelectedFormatAdvanced: string;
     schedulerExtendedPMService: SchedulerExtendedPMService;
-
+    private parentComponent: AddEditReportSchedulerComponent;
     private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         this.schedulerExtendedPMService = new SchedulerExtendedPMService();
@@ -41,7 +42,7 @@ export class AddEditReportTaskSchedulerComponent {
         }
     }
 
-    SetDataContext(DataContext: TaskReportSchedulerItemClass) {
+    SetDataContext(DataContext: any) {
         this.DataContext = DataContext['DataContext'];
         this.EntityPM = DataContext['DataContext'].EntityPM;
         this.EntityPM.EntityId = this.DataContext.fatherComponent.ReportList.Id;
@@ -49,12 +50,12 @@ export class AddEditReportTaskSchedulerComponent {
         this.SetSchedulerFormat();
         this.SetSchedulerResultType();
         this.EntityPM.ProcedureCode = 'ReportSchedulerTask';
-
+        this.parentComponent = DataContext['parentComponent'];
         this.BuildSchedulerDetailsData();
         this.Clone();
         this.SetTigger(this.DataContext.TriggerType);
     }
-
+     
     private FillSchedulerFormats() {
         this.SchedulerFormats.push(new CodeNameClass("PDF", "PDF"));
         this.SchedulerFormats.push(new CodeNameClass("EXCL", "Excel File"));
@@ -344,8 +345,10 @@ export class AddEditReportTaskSchedulerComponent {
                         if (this.DataContext.fatherComponent) {
                             this.DataContext.fatherComponent.RefreshButtonClicked();
                         }
+
+                        this.CurrentSession.CloseCurrentWindow();
                     } else {
-                        this.ValidationErrorsList = myResponse.ErrorsArray;
+                        this.HandleServiceError(myResponse);
                     }
                     this.CurrentSession.StopBusyIndicator();
                 });
@@ -363,8 +366,11 @@ export class AddEditReportTaskSchedulerComponent {
                             if (this.DataContext.fatherComponent) {
                                 this.DataContext.fatherComponent.RefreshButtonClicked();
                             }
+
+                            this.CurrentSession.CloseCurrentWindow();
                         } else {
-                            this.ValidationErrorsList = myResponse.ErrorsArray;
+
+                            this.HandleServiceError(myResponse);
                         }
                         this.CurrentSession.StopBusyIndicator();
                     });
@@ -372,6 +378,14 @@ export class AddEditReportTaskSchedulerComponent {
                 this.CurrentSession.StopBusyIndicator();
             }
         }
+    }
+
+
+
+    private HandleServiceError(myResponse: ServiceResponse) {
+        this.ValidationErrorsList = myResponse.ErrorsArray;
+        this.parentComponent.SelectedTabLocation = 0;
+        this.parentComponent.SetSelectedItem("RETASK");
     }
 
     SetReportDetails(
