@@ -79,14 +79,14 @@ namespace Logitude.ShipmentTests.Features
         {
 #line 4
 #line hidden
-            TechTalk.SpecFlow.Table table12 = new TechTalk.SpecFlow.Table(new string[] {
+            TechTalk.SpecFlow.Table table7 = new TechTalk.SpecFlow.Table(new string[] {
                         "Email",
                         "Password"});
-            table12.AddRow(new string[] {
+            table7.AddRow(new string[] {
                         "ahmadb123@mail.com",
                         "ahmed13!A15"});
 #line 5
- testRunner.Given("Users with following credentials", ((string)(null)), table12, "Given ");
+ testRunner.Given("Users with following credentials", ((string)(null)), table7, "Given ");
 #line hidden
 #line 8
  testRunner.When("Users make login request", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
@@ -132,20 +132,20 @@ this.ScenarioInitialize(scenarioInfo);
 #line 4
 this.FeatureBackground();
 #line hidden
-                TechTalk.SpecFlow.Table table13 = new TechTalk.SpecFlow.Table(new string[] {
+                TechTalk.SpecFlow.Table table8 = new TechTalk.SpecFlow.Table(new string[] {
                             "Quantity",
                             "Length",
                             "Width",
                             "Hight",
                             "Weight"});
-                table13.AddRow(new string[] {
+                table8.AddRow(new string[] {
                             "1",
                             "100",
                             "100",
                             "100",
                             "200"});
 #line 12
- testRunner.Given("The master shipment packages fields", ((string)(null)), table13, "Given ");
+ testRunner.Given("The master shipment packages fields", ((string)(null)), table8, "Given ");
 #line hidden
 #line 15
  testRunner.And("A master shipment", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
@@ -191,20 +191,20 @@ this.ScenarioInitialize(scenarioInfo);
 #line 4
 this.FeatureBackground();
 #line hidden
-                TechTalk.SpecFlow.Table table14 = new TechTalk.SpecFlow.Table(new string[] {
+                TechTalk.SpecFlow.Table table9 = new TechTalk.SpecFlow.Table(new string[] {
                             "Quantity",
                             "Length",
                             "Width",
                             "Hight",
                             "Weight"});
-                table14.AddRow(new string[] {
+                table9.AddRow(new string[] {
                             "1",
                             "100",
                             "100",
                             "100",
                             "200"});
 #line 20
- testRunner.Given("The house shipment packages fields", ((string)(null)), table14, "Given ");
+ testRunner.Given("The house shipment packages fields", ((string)(null)), table9, "Given ");
 #line hidden
 #line 23
  testRunner.And("A house shipment", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
@@ -250,7 +250,7 @@ this.ScenarioInitialize(scenarioInfo);
 #line 4
 this.FeatureBackground();
 #line hidden
-                TechTalk.SpecFlow.Table table15 = new TechTalk.SpecFlow.Table(new string[] {
+                TechTalk.SpecFlow.Table table10 = new TechTalk.SpecFlow.Table(new string[] {
                             "ChargesTypeName",
                             "ChargesTypeId",
                             "ChargesTypeCode",
@@ -259,7 +259,7 @@ this.FeatureBackground();
                             "UnitPrice",
                             "CurrencyId",
                             "ShipmentPayableLineStatusCode"});
-                table15.AddRow(new string[] {
+                table10.AddRow(new string[] {
                             "Air Freight",
                             "1-32",
                             "AFT",
@@ -269,7 +269,7 @@ this.FeatureBackground();
                             "1-7",
                             "OAMT"});
 #line 28
- testRunner.Given("The Payable Charge Type fields", ((string)(null)), table15, "Given ");
+ testRunner.Given("The Payable Charge Type fields", ((string)(null)), table10, "Given ");
 #line hidden
 #line 31
  testRunner.And("A master shipment", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");

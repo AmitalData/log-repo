@@ -6,7 +6,6 @@ using Logitude.Test.Base.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
 using TechTalk.SpecFlow;
 using TechTalk.SpecFlow.Assist;
 
@@ -37,7 +36,7 @@ namespace Logitude.ShipmentTests.Steps
         [When(@"Create direct shipment using external API")]
         public void WhenCreateDirectShipmentUsingExternalAPI()
         {
-            var response = APICaller.CallPost<Direct>(Context.Direct, "Direct", Context.User.Token);
+            APIResponse<Direct> response = APICaller.CallPost<Direct>(Context.Direct, "Direct", UserTenant.Token);
             Context.Direct.Id = response.Data?.Id;
         }
 
@@ -53,7 +52,7 @@ namespace Logitude.ShipmentTests.Steps
             DateTime futureDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day).AddYears(1);
             Context.Direct.MainCarriageLegs.First().ATA = futureDate;
 
-            var response = APICaller.CallPut<Direct>(Context.Direct, "Direct", Context.User.Token);
+            APIResponse<Direct> response = APICaller.CallPut<Direct>(Context.Direct, "Direct", UserTenant.Token);
 
             Context.ExceptionMessage = response.ErrorMessage;
         }
@@ -70,7 +69,7 @@ namespace Logitude.ShipmentTests.Steps
             DateTime futureDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day).AddYears(1);
             Context.Direct.MainCarriageLegs.First().ATD = futureDate;
 
-            var response = APICaller.CallPut<Direct>(Context.Direct, "Direct", Context.User.Token);
+            APIResponse<Direct> response = APICaller.CallPut<Direct>(Context.Direct, "Direct", UserTenant.Token);
 
             Context.ExceptionMessage = response.ErrorMessage;
         }
@@ -89,7 +88,7 @@ namespace Logitude.ShipmentTests.Steps
             Context.Direct.MainCarriageLegs.First().ETA = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day).AddMonths(-1).AddDays(3);
             Context.Direct.MainCarriageLegs.First().ATA = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day).AddMonths(-1).AddDays(4);
             //Context.Direct.NewConcurrencyGUID = Guid.NewGuid().ToString();
-            var response = APICaller.CallPut<Direct>(Context.Direct, "Direct", Context.User.Token);
+            APIResponse<Direct> response = APICaller.CallPut<Direct>(Context.Direct, "Direct", UserTenant.Token);
             Context.Direct = response.Data;
         }
 
@@ -100,25 +99,38 @@ namespace Logitude.ShipmentTests.Steps
         }
 
 
-
         private void BuildNewDirectShipment(Table directShipmentTable)
         {
             dynamic directShipment = directShipmentTable.CreateDynamicInstance();
 
+            string agent = Convert.ToString(directShipment.Agent);
+            string direction = Convert.ToString(directShipment.Direction);
+            string transportMode = Convert.ToString(directShipment.TransportMode);
+            string shipmentType = Convert.ToString(directShipment.ShipmentType);
+            string shipper = Convert.ToString(directShipment.Shipper);
+            string shipperReference1 = Convert.ToString(directShipment.ShipperReference1);
+            string shipperReference2 = Convert.ToString(directShipment.ShipperReference2);
+            string grossWeightUnit = Convert.ToString(directShipment.GrossWeightUnit);
+            string chargeableWeightUnit = Convert.ToString(directShipment.ChargeableWeightUnit);
+            string volumeUnit = Convert.ToString(directShipment.VolumeUnit);
+            string incoterm = Convert.ToString(directShipment.Incoterm);
+            string mainCarriageCarrier = Convert.ToString(directShipment.MainCarriageCarrier);
+            DateTime mainCarriageATD = Convert.ToDateTime(directShipment.MainCarriageATD);
+
             DirectBuilder directBuilder = new DirectBuilder();
-            directBuilder.Agent((string)directShipment.Agent)
-                .Direction((string)directShipment.Direction)
-                .TransportMode((string)directShipment.TransportMode)
-                .ShipmentType((string)directShipment.ShipmentType)
-                .Shipper((string)directShipment.Shipper)
-                .ShipperReference1((string)directShipment.ShipperReference1)
-                .ShipperReference2((string)directShipment.ShipperReference2)
-                .GrossWeightUnit((string)directShipment.GrossWeightUnit)
-                .ChargeableWeightUnit((string)directShipment.ChargeableWeightUnit)
-                .VolumeUnit((string)directShipment.VolumeUnit)
-                .Incoterm((string)directShipment.Incoterm)
-                .MainCarriageCarrier((string)directShipment.MainCarriageCarrier)
-                .MainCarriageATD((DateTime)directShipment.MainCarriageATD);
+            directBuilder.Agent(agent)
+                .Direction(direction)
+                .TransportMode(transportMode)
+                .ShipmentType(shipmentType)
+                .Shipper(shipper)
+                .ShipperReference1(shipperReference1)
+                .ShipperReference2(shipperReference2)
+                .GrossWeightUnit(grossWeightUnit)
+                .ChargeableWeightUnit(chargeableWeightUnit)
+                .VolumeUnit(volumeUnit)
+                .Incoterm(incoterm)
+                .MainCarriageCarrier(mainCarriageCarrier)
+                .MainCarriageATD(mainCarriageATD);
 
             Context.Direct = directBuilder.Build();
         }
@@ -131,11 +143,16 @@ namespace Logitude.ShipmentTests.Steps
 
             mainCarriageLegs.ToList().ForEach(mainCarriageLeg =>
             {
+                int legIndex = Convert.ToInt32(mainCarriageLeg.LegIndex);
+                string carrier = Convert.ToString(mainCarriageLeg.Carrier);
+                string fromPort = Convert.ToString(mainCarriageLeg.FromPort);
+                string toPort = Convert.ToString(mainCarriageLeg.ToPort);
+
                 MainCarriageLegBuilder mainCarriageLegBuilder = new MainCarriageLegBuilder();
-                MainCarriageLeg newCarriageLeg = mainCarriageLegBuilder.LegIndex((int)mainCarriageLeg.LegIndex)
-                .Carrier((string)mainCarriageLeg.Carrier)
-                .FromPort((string)mainCarriageLeg.FromPort)
-                .ToPort((string)mainCarriageLeg.ToPort)
+                MainCarriageLeg newCarriageLeg = mainCarriageLegBuilder.LegIndex(legIndex)
+                .Carrier(carrier)
+                .FromPort(fromPort)
+                .ToPort(toPort)
                 .Build();
                 mainCarriageLegsList.Add(newCarriageLeg);
             });
