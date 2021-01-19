@@ -1034,7 +1034,10 @@ namespace WebFreight.Web.WcfApi
 
         private void MapWarehouseLeg(ShipmentPM entityPM, CardRepository cardsReporistory, AddressRepository addressRepository)
         {
-            if (entityPM.WarehouseLegWarehouseId != null && entityPM.WarehouseLegWarehouseId != "--")
+            if (entityPM.WarehouseLegWarehouseId == "--")
+                entityPM.WarehouseLegWarehouseId = null;
+            
+            if (entityPM.WarehouseLegWarehouseId != null)
             {
                 Card warehouseCard = cardsReporistory.GetSingleCardByCode(entityPM.WarehouseLegWarehouseId, entityPM.Tenant, false);
                 if (warehouseCard != null && !string.IsNullOrEmpty(warehouseCard.Id))
