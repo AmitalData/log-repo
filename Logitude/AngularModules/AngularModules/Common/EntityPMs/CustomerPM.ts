@@ -1370,6 +1370,11 @@ export class CustomerPM {
     public set GLAccountNumber(newValue: string) { if (this.gLAccountNumber != newValue) { this.gLAccountNumber = newValue; this.MarkAsDirty("GLAccountNumber"); } }
        
 	 
+    private isAutonomy: boolean;
+    public get IsAutonomy() { return this.isAutonomy; }
+    public set IsAutonomy(newValue: boolean) { if (this.isAutonomy != newValue) { this.isAutonomy = newValue; this.MarkAsDirty("IsAutonomy"); } }
+       
+	 
 
     public OldEntityPM: CustomerPM;
 		

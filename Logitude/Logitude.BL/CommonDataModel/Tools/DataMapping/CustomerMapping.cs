@@ -139,6 +139,7 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
 
             entityCard.MetodoPagoCode = entityPM.MetodoPagoCode;
             entityCard.UsoCFDICode = entityPM.UsoCFDICode;
+            entityCard.IsAutonomy = entityPM.IsAutonomy;
             if (!entityPM.IsFirstContactToAdd)
             {
                 entityCard.PrimaryContactId = entityPM.PrimaryContactId;

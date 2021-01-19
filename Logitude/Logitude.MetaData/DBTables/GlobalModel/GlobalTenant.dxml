@@ -52,6 +52,12 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="LastUpdateDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="GlobalDBId"
     ReferencedTable="GlobalDBs"

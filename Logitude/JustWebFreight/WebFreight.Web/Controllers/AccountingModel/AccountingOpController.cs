@@ -146,7 +146,7 @@ namespace WebFreight.Web.Controllers.AccountingModel
                             scope.Complete();
                            
                         }
-                        var res1 = new { Success = true, Message = $"Send to Batch Task {batchTaskId}" };
+                        var res1 = new { Success = true, Message = "The System 1000 file load process will be performed in the background" };// $"Send to Batch Task {batchTaskId}" };
                         return Request.CreateResponse(HttpStatusCode.Accepted, res1);
                     }
                     //response.Result = bankAccountPageAnalyzer.MyResultLoadBankPage;

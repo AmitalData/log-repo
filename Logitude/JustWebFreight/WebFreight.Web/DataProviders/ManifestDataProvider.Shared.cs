@@ -247,7 +247,9 @@ namespace WebFreight.Web.DataProviders
         public string ValueOfGoodsCurrency { get; set; }
         public string ShipperRefernce1 { get; set; }
         public string PlaceOfReceipt { get; set; }
+        public string Dimensions { get; set; }
         public List<ShipmentAssemblyLine> Assemblies { get; set; }
+
     }
 
     public class NewManifestDetailsClass

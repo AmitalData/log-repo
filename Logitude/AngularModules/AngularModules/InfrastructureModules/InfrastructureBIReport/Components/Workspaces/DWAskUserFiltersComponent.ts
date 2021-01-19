@@ -85,8 +85,10 @@ export class DWAskUserFiltersComponent extends BaseComponent implements OnInit {
             });
         }
         if (this.ComputeFiltersCommand) {
-            this.ComputeFiltersCommand.subscribe((QueryId) => {
-                this.ComputeFilters();
+            this.ComputeFiltersCommand.subscribe((args) => {
+                this.ComputeFilters(args ? args.ExportType:"");
+
+
             });
         }
         if (this.ShowFixedFilters) {
@@ -97,7 +99,8 @@ export class DWAskUserFiltersComponent extends BaseComponent implements OnInit {
         }
     }
 
-    ComputeFilters() {
+    ComputeFilters(exportType: string) {
+        this.DWQueryData.ExportType = exportType;
         this.ComputeFiltersComplete.emit(this.DWQueryData);
     }
 

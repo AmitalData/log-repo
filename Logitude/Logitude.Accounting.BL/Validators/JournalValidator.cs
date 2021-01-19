@@ -497,7 +497,7 @@ namespace Logitude.Accounting.BL.Validators
                 }
             }
 
-            if (Math.Round(debitTotal,2) != Math.Round(creditTotal,2))
+            if (debitTotal != creditTotal)
             {
                 if ((myJournalPM.StatusCode == "1") || (myJournalPM.StatusCode == "2"))//Draft = 0,//WaitingforApprove = 1,//Approved = 2,//Voided = 3
                 {
@@ -624,7 +624,10 @@ accountingValidationContextServiceProvider
                 {
                     var myExternalReconcileMoveBankCheckFromTransfer2GLAccountService = new ExternalReconcileMoveBankCheckFromTransfer2GLAccountService();
                     myExternalReconcileMoveBankCheckFromTransfer2GLAccountService.MustInit(myIExternalReconcileDataProvider);
-
+                    if (myJournalPM.JournalLines.Count() == 4)//
+                    {
+                        myExternalReconcileMoveBankCheckFromTransfer2GLAccountService.OnAdjustMustInit(myJournalPM.JournalLines[3].DebitAccountId, "");
+                    }
                     LedgerTransactionPM myLedgerTransactionBankTransferPM;
                     BankAccountPM bankAccountFromTransfer;
                     ReconcileExternalPageLinePM myReconcileExternalPageLinePM;

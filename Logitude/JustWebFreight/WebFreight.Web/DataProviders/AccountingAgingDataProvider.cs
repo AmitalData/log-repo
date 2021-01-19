@@ -37,6 +37,7 @@ namespace WebFreight.Web.DataProviders
         public string AccountDisplayNumber { get; set; }
         public string AccountCurrencyCode { get; set; }
         public string CurrencyCode { get; set; }
+        public string ChartOfAccountLocalName { get; set; }
 
         public string CustomerVatNumber { get; set; }
         public string CustomerPaymentTerm { get; set; }
@@ -60,8 +61,10 @@ namespace WebFreight.Web.DataProviders
         public string Category4LocalName { get; set; }
         public string Category5LocalName { get; set; }
         public string Category6LocalName { get; set; }
-
-
+        public string ChartOfAccountsLocalName { get; set; }
+        public string ChartOfAccountsEnglishName { get; set; }
+        public string ChartOfAccountsTypeEnglishName { get; set; }
+        public string ChartOfAccountsTypeLocalName { get; set; }
     }
 
     public class AgingPeriodTotal

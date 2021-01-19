@@ -117,6 +117,7 @@ namespace WebFreight.Web.WebServices
             if (loggedContact != null)
             {
                 myDataProvider.IssuedByUser = loggedContact.EnglishName;
+                myDataProvider.IssuedByUserPosition = loggedContact.Position;
             }
 
             if (shipment != null)

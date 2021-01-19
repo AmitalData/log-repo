@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Logitude.Accounting.BL.CoreBL.ExternalReconcile.Utils;
 using Logitude.Accounting.BL.EntityQueryServices;
 using Logitude.Accounting.BL.Validators;
 using Logitude.Accounting.Data;
@@ -44,7 +45,13 @@ namespace Logitude.Accounting.BL.CoreBL.ExternalReconcile
                 return;//nothing to do !!!
             }
 
-            bool isCreateAutoExternalReconcileMoveBankCheckFromTransferService = TypeIs_CreateAutoExternalReconcileMoveBankCheckFromTransfer();
+            var myExternalReconcileTypeService = new ExternalReconcileTypeService();
+            myExternalReconcileTypeService.MustInit(_ExternalReconcileDataProvider);
+
+
+            bool isCreateAutoExternalReconcileMoveBankCheckFromTransferService = //TypeIs_CreateAutoExternalReconcileMoveBankCheckFromTransfer();
+                myExternalReconcileTypeService.GetExternalReconcileTypeFromJournal(_JournalPM)
+                == ExternalReconcileType.MoveBankCheckFromTransferExternalReconcile;
 
             //if (_JournalPM.JournalExternalReconciles.Any(r => string.IsNullOrWhiteSpace(r.LedgerTransactionId)))
             if (!isCreateAutoExternalReconcileMoveBankCheckFromTransferService)
@@ -65,9 +72,10 @@ namespace Logitude.Accounting.BL.CoreBL.ExternalReconcile
 
             }
         }
-
+#if true
         private bool TypeIs_CreateAutoExternalReconcileMoveBankCheckFromTransfer()
         {
+            
             if (_JournalPM.JournalExternalReconciles.Count() != 1)
             {
                 return false;
@@ -89,6 +97,8 @@ namespace Logitude.Accounting.BL.CoreBL.ExternalReconcile
             return BankAccountFromTransferAccount != null;
         }
 
+
+#endif
         public static string GetAdjustGLAccountId(JournalPM myJournalPM)
         {
             string adjustGLAccountId = "";

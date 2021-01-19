@@ -11,6 +11,6 @@ namespace Logitude.ShipmentTests.Models
         }
 
         public Direct Direct { get; set; }
-        public User User { get; set; }
+        public string ExceptionMessage { get; set; }
     }
 }

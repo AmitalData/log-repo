@@ -36,7 +36,7 @@ namespace Logitude.Test.Base.Steps.Login
         {
             MultiLoginParameters.Logins.ForEach(login =>
             {
-                User user = APICaller.CallPost<User>(login, "Authentication", null);
+                User user = APICaller.CallPost<User>(login, "Authentication", null).Data;
                 if (user != null)
                 {
                     MultiUsers.Users.Add(new User

@@ -88,7 +88,8 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
 
             this.Poco = new TasksScheduler();
             this.Poco.Id = this.entityPM.Id;
-           
+            TasksSchedulerValidator.Validate(this.entityPM, this.Poco);
+
             TasksSchedulerMapping.MapEntity(theEntityPm, Poco, isNewEntity);
             entityRepository.Add(Poco);
             entityRepository.SubmitChanges();
@@ -116,6 +117,8 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
 
 
             this.Poco = entityRepository.GetSingleTasksScheduler(theEntityPm.Id, theEntityPm.Tenant);
+            TasksSchedulerValidator.Validate(this.entityPM, this.Poco);
+
             if (theEntityPm.StartDateTime != Poco.StartDateTime)
             {
                 theEntityPm.Version = theEntityPm.Version + 1;
@@ -130,6 +133,8 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
             entityRepository.Update(Poco);
             entityRepository.SubmitChanges();
         }
+
+     
 
     }
 }

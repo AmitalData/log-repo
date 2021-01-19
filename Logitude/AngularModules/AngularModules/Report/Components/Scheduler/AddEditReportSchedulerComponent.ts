@@ -109,7 +109,7 @@ export class AddEditReportSchedulerComponent implements OnInit {
                         SessionLocator.DynamicLoader.Load('./Report/Components/Scheduler/AddEditReportTaskSchedulerComponent', myLocation.viewContainerRef)
                             .then(cmpRef => {
                                 this.PageChild_RETASK = cmpRef.instance;
-                                this.PageChild_RETASK.SetDataContext({ DataContext: this.DataContext });
+                                this.PageChild_RETASK.SetDataContext({ DataContext: this.DataContext, parentComponent: this});
                             });
                     }
                     break;
@@ -173,7 +173,7 @@ export class AddEditReportSchedulerComponent implements OnInit {
         this.PageChild_OPEMA.SetWindowArgs(windowArgs);
     }
 
-    private Retrie: number = 0;
+    private Retrie = 0;
     private RunBuildStimulsoftTimer() {
         this.Retrie++;
 
@@ -210,7 +210,11 @@ export class AddEditReportSchedulerComponent implements OnInit {
         var reportTemplateId = this.PageChild_PRREP.GetReportTemplate();
         var recepients = this.GetAllRecepients();
         this.PageChild_RETASK.SaveButtonClicked(reportFilterItems, reportTemplateId, recepients);
-        this.CurrentSession.CloseCurrentWindow();
+        //this.CurrentSession.CloseCurrentWindow();
+
+        //if (this.PageChild_RETASK?.ValidationErrorsList?.length > 0) {
+        //    this.SelectedTabLocation = 0;
+        //}
 
     }
 

@@ -80,17 +80,17 @@ namespace Logitude.SecurityTests.Features.Invoice
         {
 #line 5
 #line hidden
-            TechTalk.SpecFlow.Table table1 = new TechTalk.SpecFlow.Table(new string[] {
+            TechTalk.SpecFlow.Table table6 = new TechTalk.SpecFlow.Table(new string[] {
                         "Email",
                         "Password"});
-            table1.AddRow(new string[] {
+            table6.AddRow(new string[] {
                         "ahmadb123@mail.com",
                         "ahmed13!A15"});
-            table1.AddRow(new string[] {
+            table6.AddRow(new string[] {
                         "protractor@test.com",
                         "!P123t456"});
 #line 7
- testRunner.Given("Users with following credentials", ((string)(null)), table1, "Given ");
+ testRunner.Given("Users with following credentials", ((string)(null)), table6, "Given ");
 #line hidden
 #line 11
  testRunner.When("Users make login request", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");

@@ -52,7 +52,7 @@
   ApplyOnPropertyChangedCode="false"
   HasApiHelper="true"
   AllowedForComputingPartners="false"
-  IsBusinessUnitEnabled="false"
+  IsBusinessUnitEnabled="true"
   Code1="&quot;QFLU&quot;"
   Name1="&quot;Follow Ups&quot;"
   CustomFieldsCount="0"

@@ -198,7 +198,7 @@ namespace CommunicationWorkerRole
                             Task.LastRunStartTimeUTC = DateTime.UtcNow;
                             if (Task != null)
                             {
-                                if (Task.InActive)
+                                if (Task.InActive || Task.Status == "In progress")
                                 {
                                     queueservice.Complete();
                                 }

@@ -90,6 +90,7 @@ using Logitude.CargoTracking.Data;
 using Logitude.CargoTracking.Data.EntityPOCOs;
 using Logitude.BL.DataContracts;
 using Logitude.Update.Helper;
+using Logitude.Accounting.Data.Repositories;
 
 namespace Logitude.Update
 {
@@ -301,32 +302,32 @@ User/Pass",
             Stopwatch stopWatch = new Stopwatch();
             stopWatch.Start();
 
-            List<GlobalTenant> globalTenants;
-            using (TransactionScope scope = TransactionFactory.GetNewTransaction())
-            {
-                globalTenants = GlobalTenantRepository.GetGlobalTenants();
+            TenantsUpdateClass.UpdateTenants();
 
-            }
+            //List<GlobalTenant> globalTenants;
+            //using (TransactionScope scope = TransactionFactory.GetNewTransaction())
+            //{
+            //    globalTenants = GlobalTenantRepository.GetGlobalTenants();
 
-            if (globalTenants != null)
-            {
-                GlobalTenant tenantZero = globalTenants.Where(d => d.Id == 0).FirstOrDefault();
-                List<GlobalTenant> upgradableTenants = (from a in globalTenants
-                                                        where a.Version != tenantZero.Version && a.Id != 0 && a.Version != -1 && a.IsActive == true
-                                                        select a).ToList();
-                if (upgradableTenants.Count > 0)
-                {
-                    foreach (GlobalTenant tenant in upgradableTenants)
-                    {
-                        if (tenant.Id != 0)
-                        {
-                            TenantsUpdateClass.UpdateDataForTenant(tenant.Id, "");
-                        }
-                    }
+            //}
 
-
-                }
-            }
+            //if (globalTenants != null)
+            //{
+            //    GlobalTenant tenantZero = globalTenants.Where(d => d.Id == 0).FirstOrDefault();
+            //    List<GlobalTenant> upgradableTenants = (from a in globalTenants
+            //                                            where a.Version != tenantZero.Version && a.Id != 0 && a.Version != -1 && a.IsActive == true
+            //                                            select a).ToList();
+            //    if (upgradableTenants.Count > 0)
+            //    {
+            //        foreach (GlobalTenant tenant in upgradableTenants)
+            //        {
+            //            if (tenant.Id != 0)
+            //            {
+            //                TenantsUpdateClass.UpdateDataForTenant(tenant.Id, "");
+            //            }
+            //        }
+            //    }
+            //}
 
             stopWatch.Stop();
             TimeSpan ts = stopWatch.Elapsed;

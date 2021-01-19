@@ -78,6 +78,7 @@
       <xs:element minOccurs="0" name="InvoiceCurrencyId" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="InvoicesDue" type="xs:double" />
       <xs:element minOccurs="0" name="IsActiveForMobile" type="xs:boolean" />
+      <xs:element minOccurs="0" name="IsAutonomy" type="xs:boolean" />
       <xs:element minOccurs="0" name="IsBlockedBusinessUnit" type="xs:boolean" />
       <xs:element minOccurs="0" name="IsBlockedQuickSearch" type="xs:boolean" />
       <xs:element minOccurs="0" name="IsCreditLimitEnabled" type="xs:boolean" />

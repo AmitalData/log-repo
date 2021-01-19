@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class TaxReportUpdateClass
    {  		
-		public const string HashString = "1008d8a1fbddc22abf0b4d983483b9ff";
+		public const string HashString = "5e0325cce7927c860a88da3637d57f93";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -2375,7 +2375,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
  		   TextCode TaxReportTextCode_TaxReportOCantApprove = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TaxReport.O.CantApprove", DefaultText = "Can't approve report since there are lines without Transmit Status, please update",LocalDefaultText = @"קיימות שורות ללא סטטוס שידור , יש לעדכן אותן לפני אישור הדוח", ObjectTableId = TaxReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode TaxReportTextCode_TaxReportOCantDownload = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TaxReport.O.CantDownload", DefaultText = "Can't download the report. Line , has a wrong check digit error. Fix it then try again.",LocalDefaultText = "לא ניתן להוריד את הקובץ. שורה , ישנה הודעת שגיאה ''ח.פ שגוי'' .יש לתקן את השורה בטרם השידור", ObjectTableId = TaxReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode TaxReportTextCode_TaxReportOCantDownload = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TaxReport.O.CantDownload", DefaultText = "Can't download the report, Lines (#lines) has a wrong check digit error. Fix it then try again.",LocalDefaultText = "לא ניתן להוריד את הקובץ. שורה (#lines) , ישנה הודעת שגיאה ''ח.פ שגוי'' .יש לתקן את השורה בטרם השידור", ObjectTableId = TaxReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode TaxReportTextCode_TaxReportOInvoiceErrors = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TaxReport.O.InvoiceErrors", DefaultText = "Can't download the report. Lines (#lines) has an invalid invoice number error. Fix it then try again.",LocalDefaultText = ".לא ניתן להוריד את הקובץ שורה (#lines) ישנה הודעת שגיאה ''אסמכתא שגויה .יש לתקן את השורה בטרם השידור", ObjectTableId = TaxReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

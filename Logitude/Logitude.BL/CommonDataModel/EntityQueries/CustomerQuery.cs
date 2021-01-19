@@ -181,6 +181,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                   StorageFreeDays = a.Card.StorageFreeDays,
                                   GLAccountNumber = a.Card.GLAccountDisplayNumber,
                                   EORInumber = a.EORInumber,
+                                  IsAutonomy = a.Card.IsAutonomy,
                                   Card = new CardPM()
                                   {
                                       Id = a.Id,
@@ -341,6 +342,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                               StorageFreeDays = a.Card.StorageFreeDays,
                               GLAccountNumber = a.Card.GLAccountDisplayNumber,
                               EORInumber = a.EORInumber,
+                              IsAutonomy = a.Card.IsAutonomy,
                               Card = new CardPM
                               {
                                   Id = a.Id,
@@ -690,6 +692,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                   UsoCFDICode = a.Card.UsoCFDICode,
                                   CompetitorFields = a.CompetitorFields,
                                   CreatedByPartner = a.Card.CreatedByPartner,
+                                  IsAutonomy = a.Card.IsAutonomy,
                                   Card = new CardPM()
                                   {
                                       Id = a.Id,
@@ -822,6 +825,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                               UsoCFDICode = a.Card.UsoCFDICode,
                               CompetitorFields = a.CompetitorFields,
                               CreatedByPartner = a.Card.CreatedByPartner,
+                              IsAutonomy = a.Card.IsAutonomy,
                               Card = new CardPM()
                               {
                                   Id = a.Id,
@@ -1175,6 +1179,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                       UsoCFDICode = a.Card.UsoCFDICode,
                                       CompetitorFields = a.CompetitorFields,
                                       CreatedByPartner = a.Card.CreatedByPartner,
+                                      IsAutonomy = a.Card.IsAutonomy,
                                       Card = new CardPM()
                                       {
                                           Id = a.Id,
@@ -1308,6 +1313,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                   UsoCFDICode = a.Card.UsoCFDICode,
                                   CompetitorFields = a.CompetitorFields,
                                   CreatedByPartner = a.Card.CreatedByPartner,
+                                  IsAutonomy = a.Card.IsAutonomy,
                                   Card = new CardPM
                                   {
                                       Id = a.Id,
@@ -1428,6 +1434,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                               MetodoPagoCode = a.Card.MetodoPagoCode,
                               UsoCFDICode = a.Card.UsoCFDICode,
                               CreatedByPartner = a.Card.CreatedByPartner,
+                              IsAutonomy = a.Card.IsAutonomy,
                               Card = new CardPM()
                               {
                                   Id = a.Id,
@@ -1635,6 +1642,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                       UsoCFDICode = a.Card.UsoCFDICode,
                                       CompetitorFields = a.CompetitorFields,
                                       CreatedByPartner = a.Card.CreatedByPartner,
+                                      IsAutonomy = a.Card.IsAutonomy,
                                       Card = new CardPM()
                                       {
                                           Id = a.Id,
@@ -1768,6 +1776,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                   UsoCFDICode = a.Card.UsoCFDICode,
                                   CompetitorFields = a.CompetitorFields,
                                   CreatedByPartner = a.Card.CreatedByPartner,
+                                  IsAutonomy = a.Card.IsAutonomy,
                                   Card = new CardPM
                                   {
                                       Id = a.Id,
@@ -1893,6 +1902,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                               UsoCFDICode = a.Card.UsoCFDICode,
                               CompetitorFields = a.CompetitorFields,
                               CreatedByPartner = a.Card.CreatedByPartner,
+                              IsAutonomy = a.Card.IsAutonomy,
                               Card = new CardPM()
                               {
                                   Id = a.Id,
@@ -2102,6 +2112,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                    UsoCFDICode = a.Card.UsoCFDICode,
                                                    CreatedByPartner = a.Card.CreatedByPartner,
                                                    EORInumber = a.EORInumber,
+                                                   IsAutonomy = a.Card.IsAutonomy,
                                                    Card = new CardPM()
                                                    {
                                                        Id = a.Id,
@@ -2230,6 +2241,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                             UsoCFDICode = a.Card.UsoCFDICode,
                             CreatedByPartner = a.Card.CreatedByPartner,
                             EORInumber = a.EORInumber,
+                            IsAutonomy = a.Card.IsAutonomy,
                             Card = new CardPM()
                             {
                                 Id = a.Id,
@@ -2439,6 +2451,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                    CreatedByPartner = customer.CreatedByPartner,
                                                    StateName = customer.StateName,
                                                    GLAccountNumber = customer.GLAccountDisplayNumber,
+                                                   IsAutonomy = customer.IsAutonomy,
                                                });
 
 
@@ -2578,6 +2591,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                              ActivationRequestedByUserName = customer.ActivationRequestedByUser == null ? null : (customer.ActivationRequestedByUser.Contact == null ? null : customer.ActivationRequestedByUser.Contact.EnglishName),
                                              CreatedByPartner = customer.Card.CreatedByPartner,
                                              GLAccountNumber = customer.Card.GLAccountDisplayNumber,
+                                             IsAutonomy = customer.Card.IsAutonomy,
                                          }).FirstOrDefault();
 
             return customerList;
@@ -2749,6 +2763,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                              MetodoPagoCode = customer.Card.MetodoPagoCode,
                                              UsoCFDICode = customer.Card.UsoCFDICode,
                                              CreatedByPartner = customer.Card.CreatedByPartner,
+                                             IsAutonomy = customer.Card.IsAutonomy,
                                          }).FirstOrDefault();
 
             return customerList;
@@ -2871,7 +2886,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                              MetodoPagoCode = customer.Card.MetodoPagoCode,
                                              UsoCFDICode = customer.Card.UsoCFDICode,
                                              CreatedByPartner = customer.Card.CreatedByPartner,
-
+                                             IsAutonomy = customer.Card.IsAutonomy,
                                          }).FirstOrDefault();
 
             return customerList;
@@ -3007,6 +3022,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                         MetodoPagoCode = a.Card.MetodoPagoCode,
                         UsoCFDICode = a.Card.UsoCFDICode,
                         CreatedByPartner = a.Card.CreatedByPartner,
+                        IsAutonomy = a.Card.IsAutonomy,
                     };
 
                     entityList.Add(list);
@@ -3694,6 +3710,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                   MetodoPagoCode = a.Card.MetodoPagoCode,
                                   UsoCFDICode = a.Card.UsoCFDICode,
                                   CreatedByPartner = a.Card.CreatedByPartner,
+                                  IsAutonomy = a.Card.IsAutonomy,
                                   Card = new CardPM()
                                   {
                                       Id = a.Id,
@@ -3841,6 +3858,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                               MetodoPagoCode = a.Card.MetodoPagoCode,
                               UsoCFDICode = a.Card.UsoCFDICode,
                               CreatedByPartner = a.Card.CreatedByPartner,
+                              IsAutonomy = a.Card.IsAutonomy,
                               Card = new CardPM
                               {
                                   Id = a.Id,
@@ -4178,6 +4196,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                      MetodoPagoCode = a.Card.MetodoPagoCode,
                                      UsoCFDICode = a.Card.UsoCFDICode,
                                      CreatedByPartner = a.Card.CreatedByPartner,
+                                     IsAutonomy = a.Card.IsAutonomy,
                                      Card = new CardPM()
                                      {
                                          Id = a.Id,
@@ -4404,6 +4423,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                   GLAccountId = a.Card.GLAccountId,
                                   CreatedByPartner = a.Card.CreatedByPartner,
                                   StorageFreeDays = a.Card.StorageFreeDays,
+                                  IsAutonomy = a.Card.IsAutonomy,
                                   Card = new CardPM()
                                   {
                                       Id = a.Id,
@@ -4553,6 +4573,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                               GLAccountId = a.Card.GLAccountId,
                               CreatedByPartner = a.Card.CreatedByPartner,
                               StorageFreeDays = a.Card.StorageFreeDays,
+                              IsAutonomy = a.Card.IsAutonomy,
                               Card = new CardPM
                               {
                                   Id = a.Id,
@@ -4672,6 +4693,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                      MetodoPagoCode = a.Card.MetodoPagoCode,
                                      UsoCFDICode = a.Card.UsoCFDICode,
                                      CreatedByPartner = a.Card.CreatedByPartner,
+                                     IsAutonomy = a.Card.IsAutonomy,
                                      Card = new CardPM()
                                      {
                                          Id = a.Id,
