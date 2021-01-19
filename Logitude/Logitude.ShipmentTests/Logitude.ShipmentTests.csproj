@@ -103,6 +103,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Models\Builders\MainCarriageLegBuilder.cs" />
+    <Compile Include="Models\Builders\DirectBuilder.cs" />
     <Compile Include="Models\Builders\ShipmentBuilder.cs" />
     <Compile Include="Hooks\BeforeTestRun.cs" />
     <Compile Include="Models\Card.cs" />
