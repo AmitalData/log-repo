@@ -1,10 +1,9 @@
 ﻿using FluentAssertions;
 using Logitude.SpecFlow.Builders.ChargeType;
 using Logitude.SpecFlow.Models.ChargeType;
+using Logitude.Test.Base.Models;
 using Logitude.Test.Base.Models.Login;
 using Logitude.Test.Base.Services;
-using Logitude.Test.Base.TestData;
-using Logitude.Test.Base.ValueRetrievers;
 using TechTalk.SpecFlow;
 using TechTalk.SpecFlow.Assist;
 
@@ -20,8 +19,6 @@ namespace Logitude.SpecFlow.Steps
             Context = context;
             Context.User = multiUsers.Users[0];
 
-            Service.Instance.ValueRetrievers.Register(new ForeignEntityValueRetriever(Context.User));
-            Service.Instance.ValueRetrievers.Register(new RandomValueRetriever());
         }
         
         [Given(@"Charge type with the following properties")]
@@ -32,7 +29,7 @@ namespace Logitude.SpecFlow.Steps
             //Context.ChargeTypePM = chargeTypeBuilder.FromDataTable(chargeTypeData).Build();
             ChargeTypePM chargeTypePM = chargeTypeBuilder.FromDataTable(chargeTypeData).Build();
             Context.ChargeTypePM = chargeTypeBuilder.WithDefualtValues()
-                                                          .Tenant(BasePreparationVariables.Tenant)
+                                                          .Tenant(UserTenant.Tenant)
                                                           .Code(chargeTypePM.Code)
                                                           .EnglishName(chargeTypePM.EnglishName)
                                                           .ChargesGroupCode(chargeTypePM.ChargesGroupCode)
@@ -52,7 +49,7 @@ namespace Logitude.SpecFlow.Steps
         [When(@"Create charge type")]
         public void WhenTheUserCallCreateChargeTypeAPI()
         {
-            Context.ChargeTypePM = APICaller.CallPost<ChargeTypePM>(Context.ChargeTypePM, "ChargesTypes", LoginPreparationParameters.Token);
+            Context.ChargeTypePM = APICaller.CallPost<ChargeTypePM>(Context.ChargeTypePM, "ChargesTypes", UserTenant.Token);
         }
         
         [Then(@"New charge type should be created")]

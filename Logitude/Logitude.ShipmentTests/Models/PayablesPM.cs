@@ -1,6 +1,6 @@
 ﻿namespace Logitude.ShipmentTests.Models
 {
-    public class ShipmentPayablesPM
+    public class PayablesPM
     {
         public string Id { get; set; }
         public int Tenant { get; set; }

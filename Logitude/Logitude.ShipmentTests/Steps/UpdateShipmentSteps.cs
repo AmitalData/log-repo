@@ -1,54 +1,37 @@
 ﻿using FluentAssertions;
+using Logitude.ShipmentTests.Constants;
 using Logitude.ShipmentTests.Models;
-using Logitude.Test.Base.Models.Login;
+using Logitude.ShipmentTests.Models.Builders;
+using Logitude.Test.Base.Models;
 using Logitude.Test.Base.Services;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using TechTalk.SpecFlow;
 using TechTalk.SpecFlow.Assist;
-using Xunit;
 
 namespace Logitude.ShipmentTests.Steps
 {
     [Binding]
     public class UpdateShipmentSteps
     {
-        protected User User;
-        protected readonly ShipmentContext ShipmentContext;
-        protected ShipmentPackagePM _housePackage, _masterPackages;
-        protected ShipmentPayablesPM _shipmentPayablesPM;
-        protected Exception exceptionForHouse, exceptionForMaster, exceptionForPayables;
+        private readonly ShipmentContext ShipmentContext;
+        private PackagePM _housePackage, _masterPackages;
+        private PayablesPM _PayablesPM;
 
-        public UpdateShipmentSteps(MultiUsers multiUsers, ShipmentContext shipmentContext)
+        public UpdateShipmentSteps(ShipmentContext shipmentContext)
         {
             ShipmentContext = shipmentContext;
-            User = multiUsers.Users[0];
         }
 
         [Given(@"The master shipment packages fields")]
         public void GivenTheMasterShipmentPackagesFields(Table table)
         {
-            _masterPackages = table.CreateInstance<ShipmentPackagePM>();
-            _masterPackages.Tenant = User.Tenant;
+            _masterPackages = CreatePackageInstance(table);
         }
 
         [When(@"The put API sent to add master packages")]
         public void TheputAPIsenttoaddmasterpackages()
         {
-            ShipmentContext.MasterShipment.NewConcurrencyGUID = Guid.NewGuid().ToString();
-            ShipmentContext.MasterShipment.ShipmentPackages = new List<ShipmentPackagePM>();
-            ShipmentContext.MasterShipment.FreightPrepaidCollectId = "P";
-            ShipmentContext.MasterShipment.OtherPrepaidCollectId = "C";
-            ShipmentContext.MasterShipment.CreatedByUserId = User.UserId;
-            ShipmentContext.MasterShipment.UpdatedByUserId = User.UserId;
-
-            _masterPackages.ShipmentNumber = ShipmentContext.MasterShipment.MasterShipmentNumber;
-            _masterPackages.ShipmentId = ShipmentContext.MasterShipment.Id;
-            ShipmentContext.MasterShipment.PackagesQuantity = _masterPackages.Quantity;
-            ShipmentContext.MasterShipment.ShipmentPackages.Add(_masterPackages);
-
-            ShipmentContext.MasterShipment = APICaller.CallPut<ShipmentPM>(ShipmentContext.MasterShipment, "Shipment", User.Token);
+            ShipmentContext.MasterShipment = AddPackagesToShipment(ShipmentContext.MasterShipment, _masterPackages);
+            ShipmentContext.MasterShipment = APICaller.CallPut<ShipmentPM>(ShipmentContext.MasterShipment, URLs.Shipment, UserTenant.Token);
         }
 
         [Then(@"A new master packages added successfully")]
@@ -60,26 +43,14 @@ namespace Logitude.ShipmentTests.Steps
         [Given(@"The house shipment packages fields")]
         public void GivenTheHouseShipmentPackagesFields(Table table)
         {
-            _housePackage = table.CreateInstance<ShipmentPackagePM>();
-            _housePackage.Tenant = User.Tenant;
+            _housePackage = CreatePackageInstance(table);
         }
 
         [When(@"The put API sent to add house packages")]
         public void TheputAPIsenttoaddhousepackages()
         {
-            ShipmentContext.HouseShipment.NewConcurrencyGUID = Guid.NewGuid().ToString();
-            ShipmentContext.HouseShipment.ShipmentPackages = new List<ShipmentPackagePM>();
-            ShipmentContext.HouseShipment.FreightPrepaidCollectId = "P";
-            ShipmentContext.HouseShipment.OtherPrepaidCollectId = "C";
-            ShipmentContext.HouseShipment.CreatedByUserId = User.UserId;
-            ShipmentContext.HouseShipment.UpdatedByUserId = User.UserId;
-
-            _housePackage.ShipmentNumber = ShipmentContext.HouseShipment.ShipmentNumber;
-            _housePackage.ShipmentId = ShipmentContext.HouseShipment.Id;
-            ShipmentContext.HouseShipment.PackagesQuantity = _housePackage.Quantity;
-            ShipmentContext.HouseShipment.ShipmentPackages.Add(_housePackage);
-
-            ShipmentContext.HouseShipment = APICaller.CallPut<ShipmentPM>(ShipmentContext.HouseShipment, "Shipment", User.Token);
+            ShipmentContext.MasterShipment = AddPackagesToShipment(ShipmentContext.HouseShipment, _housePackage);
+            ShipmentContext.HouseShipment = APICaller.CallPut<ShipmentPM>(ShipmentContext.HouseShipment, URLs.Shipment, UserTenant.Token);
         }
 
         [Then(@"A new house packages added successfully")]
@@ -91,29 +62,74 @@ namespace Logitude.ShipmentTests.Steps
         [Given(@"The Payable Charge Type fields")]
         public void GivenThePayableChargeTypeFields(Table table)
         {
-            _shipmentPayablesPM = table.CreateInstance<ShipmentPayablesPM>();
-            _shipmentPayablesPM.Tenant = User.Tenant;
+            _PayablesPM = CreatePayablesInstance(table);
         }
 
         [When(@"The put API sent to add master Payable")]
         public void WhenThePutAPISentToAddMasterPayable()
         {
-            ShipmentContext.MasterShipment.ShipmentPayables = new List<ShipmentPayablesPM>();
-            ShipmentContext.MasterShipment.FreightPrepaidCollectId = "P";
-            ShipmentContext.MasterShipment.OtherPrepaidCollectId = "C";
-            ShipmentContext.MasterShipment.CreatedByUserId = User.UserId;
-            ShipmentContext.MasterShipment.UpdatedByUserId = User.UserId;
-
-            _shipmentPayablesPM.ShipmentId = ShipmentContext.MasterShipment.Id;
-            ShipmentContext.MasterShipment.ShipmentPayables.Add(_shipmentPayablesPM);
-
-            ShipmentContext.MasterShipment = APICaller.CallPut<ShipmentPM>(ShipmentContext.MasterShipment, "Shipment", User.Token);
+            ShipmentContext.MasterShipment = AddPayablesToShipment(ShipmentContext.MasterShipment, _PayablesPM);
+            ShipmentContext.MasterShipment = APICaller.CallPut<ShipmentPM>(ShipmentContext.MasterShipment, URLs.Shipment, UserTenant.Token);
         }
 
         [Then(@"The payable cherge type added successfully")]
         public void ThenThePayableChergeTypeAddedSuccessfully()
         {
             ShipmentContext.MasterShipment.Id.Should().NotBeNull();
+        }
+
+        private PackagePM CreatePackageInstance(Table DataTable)
+        {
+            dynamic dataTable = DataTable.CreateDynamicInstance();
+
+            return new PackageBuilder().WithDefualtValues()
+                .Quantity((int)dataTable.Quantity)
+                .Length((double)dataTable.Length)
+                .Width((double)dataTable.Width)
+                .Height((double)dataTable.Height)
+                .Weight((double)dataTable.Weight)
+                .Build();
+        }
+
+        private PayablesPM CreatePayablesInstance(Table DataTable)
+        {
+            dynamic dataTable = DataTable.CreateDynamicInstance();
+
+            return new PayableBuilder().WithDefualtValues()
+                .ChargesTypeName((string)dataTable.ChargesTypeName)
+                .ChargesTypeCode((string)dataTable.ChargesType)
+                .ChargesTypeIdByCode((string)dataTable.ChargesType)
+                .MeasurementCode((string)dataTable.Measurement)
+                .MeasurementIdByCode((string)dataTable.Measurement)
+                .UnitPrice((double)dataTable.UnitPrice)
+                .CurrencyCode((string)dataTable.Currency)
+                .CurrencyIdByCode((string)dataTable.Currency)
+                .ShipmentPayableLineStatusCode((string)dataTable.ShipmentPayableLineStatus)
+                .Build();
+        }
+
+        private ShipmentPM AddPackagesToShipment(ShipmentPM shipment, PackagePM package)
+        {
+            package = new PackageBuilder().WithModel(package)
+                .ShipmentNumber(shipment.MasterShipmentNumber)
+                .ShipmentId(shipment.Id)
+                .Build();
+
+            return new ShipmentBuilder().WithModel(shipment)
+                .PackagesQuantity(package.Quantity)
+                .ShipmentPackages(package)
+                .Build();
+        }
+
+        private ShipmentPM AddPayablesToShipment(ShipmentPM shipment, PayablesPM payable)
+        {
+            payable = new PayableBuilder().WithModel(payable)
+                .ShipmentId(shipment.Id)
+                .Build();
+
+            return new ShipmentBuilder().WithModel(shipment)
+                .ShipmentPayables(payable)
+                .Build();
         }
     }
 }
