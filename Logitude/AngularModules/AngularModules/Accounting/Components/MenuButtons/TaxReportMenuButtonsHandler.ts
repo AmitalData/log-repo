@@ -107,8 +107,8 @@ export class TaxReportMenuButtonsHandler {
                     windowArgs.TimerInterval = 1000; // wait time between requests
 
                     var logWindow = new LogitudeWindow();
-                    logWindow.Width = 350;
-                    logWindow.Height = 150;
+                    logWindow.Width = 500;
+                    logWindow.Height = 220;
                     logWindow.Title = windowTitle;
                     logWindow.ShowCloseButton = true;
                     logWindow.WindowArgs = windowArgs;
