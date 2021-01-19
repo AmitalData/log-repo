@@ -384,19 +384,31 @@ export class BankDepositDetailsTabComponent extends BaseComponent {
         if (this.FilterSelectedValue != itemValue) {
             this.FilterSelectedValue = itemValue;
             // this.FilterLines();
-
-            this.GetCashbookLines();
-
-            this.IsAllSelected = false;
-
+            if (this.SelectedTotal > 0) {
+                this.ShowConfirmMessageToToggleBetweenCashAndPostdated();
+            }
+            else
+                this.GetCashbookLines();
         }
+    }
+
+    ShowConfirmMessageToToggleBetweenCashAndPostdated() {
+        var myConfirmWindow = new ConfirmWindow();
+        myConfirmWindow.Width = 400;
+        myConfirmWindow.Show(TextCodeTranslator.Translate("Cashbook.O.ConfirmUncheckelines"));
+        myConfirmWindow.WindowClosed.subscribe(event => {
+            if (myConfirmWindow.Yes) {
+                this.GetCashbookLines();
+                this.IsAllSelected = false;
+            }
+        });
     }
 
     private timerToken: any;
     TextChanged(searchtext) {
 
         // Deposited cheque
-        if (!this.EntityPM.IsCashDeposit) {
+        if (this.LineSelection && !this.EntityPM.IsCashDeposit) {
             this.timerToken = setTimeout(() => {
                 this.searchText = searchtext;
                 this.FilterChequeDeposits();
@@ -405,8 +417,12 @@ export class BankDepositDetailsTabComponent extends BaseComponent {
 
     }
     FilterChequeDeposits() {
-        this.GetDepositLines();
-
+        if (!this.IsLinesSelection) {
+            this.GetDepositLines();
+        }
+        else {
+            this.GetCashbookLines();
+        }
         // if (AppTool.IsNullOrEmpty(this.searchText)) {
         //     this.BankDepositLines = new ObservableCollection(this.EntityPM.BankDepositLines);
 
@@ -519,6 +535,8 @@ export class BankDepositDetailsTabComponent extends BaseComponent {
         linesQueryFilters.addAdditionalFilter("IsDeposited", false, null, null, "Equals", true, false, false, "boolean");
         linesQueryFilters.addAdditionalFilter("ARPChequeStatusCode", "5", null, null, "NotEqual",false , false, false, "string");
 
+        if (this.searchText)
+            linesQueryFilters.addAdditionalFilter("SearchFields", this.searchText, null, null, "Contains", false, false, false, "string");
 
         linesQueryFilters.AdditionalFilters.push(this.GetDueDateFilter());
 
@@ -896,6 +914,12 @@ export class BankDepositDetailsTabComponent extends BaseComponent {
     // }
 
     RefreshButtonClicked() {
-        this.GetDepositLines();
+
+        if (!this.IsLinesSelection) {
+            this.GetDepositLines();
+        }
+        else {
+            this.GetCashbookLines();
+        }
         }
 }
