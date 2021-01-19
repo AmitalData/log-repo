@@ -66,7 +66,7 @@ export class ListComponent implements OnInit, AfterViewInit {
     RTL: boolean = ObjectsLocator.GlobalSetting == undefined ? false : (ObjectsLocator.GlobalSetting.LayoutDirection == 'rtl' ? true : false);
     public SeachBoxIsDisabled: boolean = false;
     //@Output() ShowTipEvent = new EventEmitter();
-    public IsNavigateButtonVisible: boolean = true;
+    public IsNavigateButtonVisible: boolean = false;
     public ComponentRef: ComponentRef<ListComponent>;
     public ReattachToDetection: boolean;
     public columnsObjectFields: any[] = [];
