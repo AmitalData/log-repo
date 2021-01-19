@@ -2571,6 +2571,7 @@
     <Compile Include="HealthProb.aspx.designer.cs">
       <DependentUpon>HealthProb.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\AdvancedDateResolver.cs" />
     <Compile Include="Helpers\APIHelpers\ApiExceptionFilter.cs" />
     <Compile Include="Helpers\APIHelpers\APIReceivablePayableHelper.cs" />
     <Compile Include="Helpers\APIHelpers\APITransshipmentHelper.cs" />

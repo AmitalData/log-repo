@@ -52,6 +52,7 @@ import {DWLovComponent} from './Components/LogitudeComponents/DWLovComponent';
 import {DWDateComponent} from './Components/LogitudeComponents/DWDateComponent'
 
 import {LogDatePickerComponent} from './Components/LogitudeComponents/LogDatePickerComponent';
+import { AdvancedDatePickerComponent } from './Components/LogitudeComponents/AdvancedDatePickerComponent';
 import {LogCalendarComponent} from './Components/LogitudeComponents/LogCalendarComponent';
 import {TimeSelectComponent} from './Components/LogitudeComponents/TimeSelectComponent';
 import {LogCheckboxComponent} from './Components/LogitudeComponents/LogCheckboxComponent';
@@ -242,6 +243,7 @@ export const ControlsComponents =
         DWLovComponent,
         DWDateComponent,
         LogDatePickerComponent,
+        AdvancedDatePickerComponent,
         LogCalendarComponent,
         TimeSelectComponent,
         LogCheckboxComponent,
