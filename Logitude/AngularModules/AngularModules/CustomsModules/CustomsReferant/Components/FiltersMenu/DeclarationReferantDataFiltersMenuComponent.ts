@@ -56,19 +56,26 @@ export class DeclarationReferantDataFiltersMenuComponent
 
     public OpenQueryThruWorkSpace: boolean = false;
     public UserFilters: ApiQueryFilters = new ApiQueryFilters();
+    public UserNameFilters: ApiQueryFilters = new ApiQueryFilters();
     public TransportFilters: ApiQueryFilters = new ApiQueryFilters();
 
     SetFiltersMenu(args: any) {
+        debugger;
         this.OpenQueryThruWorkSpace = true;
         this.TransportFilters = new ApiQueryFilters();
         this.UserFilters = new ApiQueryFilters();
+        this.UserNameFilters = new ApiQueryFilters();
         this.TransportFilters.AdditionalFilters = args.AdditionalFilters.filter(a => a.FieldName == "TransportModeId");
         this.UserFilters.AdditionalFilters = args.AdditionalFilters.filter(a => a.FieldName == "ReferentUserId");
+        this.UserNameFilters.AdditionalFilters = args.AdditionalFilters.filter(a => a.FieldName == "UserLocalName");
+
         var myService: UserListService = new UserListService();
         var UserListFromFilters = this.UserFilters.AdditionalFilters.map(({ FieldValue }) => FieldValue);
+        var UserListFromFilters = this.UserFilters.AdditionalFilters.map(({ FieldValue }) => FieldValue);
+
         var myService: UserListService = new UserListService();
-        if (UserListFromFilters[0] != "HowCare" || UserListFromFilters.length != 0) {
-            UserListFromFilters.forEach(function (value) {
+         if (UserListFromFilters[0] != "HowCare" || UserListFromFilters.length != 0) {
+             UserListFromFilters[0].split("%2C").forEach(function (value) {
                 myService.getSingleFromCache(value).subscribe((resp: ServiceResponse) => {
                     if (!resp.HasError) {
                         var result: ServiceResponse = resp;
@@ -80,7 +87,7 @@ export class DeclarationReferantDataFiltersMenuComponent
                             if (AppTool.IsNullOrEmpty(list.LocalName)) {
                                 ul.LocalName = list.EnglishName;
                             }
-                            this.LOVListUsers.push(ul)
+                           this.LOVListUsers.push(ul)
                             this.ApplyTransportSelectedStyle();
                             this.myViewChildrenMultiSelectLOVComponent.first.Invalidate();
                             this.SelectedValueChangedEmitUser();
@@ -88,7 +95,7 @@ export class DeclarationReferantDataFiltersMenuComponent
                         }
                     }
                 });
-            });
+            },this);
         } else{
           
         }

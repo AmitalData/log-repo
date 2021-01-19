@@ -322,7 +322,7 @@ export class ReferantWorkspaceComponent implements AfterViewInit {
     FilterChange($event) {
         this.filters = new ApiQueryFilters();
         this.filters = $event.Filters;
-
+    
         this.RefId = this.declarationReferantDataFiltersMenuComponent.LOVListUsers.map(({ Id }) => Id).toString();
         this.DepId = this.declarationReferantDataFiltersMenuComponent.LOVListDepartment.map(({ Id }) => Id).toString();
         this.TransportModeId = this.declarationReferantDataFiltersMenuComponent.transportmodeId;
@@ -397,6 +397,7 @@ export class ReferantWorkspaceComponent implements AfterViewInit {
                     }
                 default: { break; }
             }
+            debugger;
             this.BuildFiltersForQuery(this.filters);
             if (myQueryCode.endsWith("_A"))
                 this.filters.addAdditionalFilter("IsAvailabilityDateNull", false, null, null, "Equals", false, false, false, "number");
@@ -413,7 +414,7 @@ export class ReferantWorkspaceComponent implements AfterViewInit {
                         cmpRef.instance.ComponentRef = cmpRef;
                         cmpRef.instance.Run(listArgs);
                         cmpRef.instance.BackCompleted.subscribe(($event: any) => {
-                            this.filters = $event.Filters;
+                          //  this.filters = $event.Filters;
                             this.LoadAllScreenData();
                             this._declarationReferantDataWebService.GetQueriesCounts(this.RefId, this.DepId, this.TransportModeId).subscribe(
                                 (data: any) => {

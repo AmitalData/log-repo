@@ -55,7 +55,8 @@ namespace Simplog.Data.CommonDataModel.Repositories
           
                 if (CacheManager.CacheWrapper.Get(entityName) == null)
                 {
-                    entity = (from record in context.Users.Include("UserLastLogin").Include("Contact").Include("Department").Include("Branch").Include("BusinessUnit")
+         var x=    context.Users.FirstOrDefault();
+                   entity = (from record in context.Users.Include("UserLastLogin").Include("Contact").Include("Department").Include("Branch").Include("BusinessUnit")
                               where record.Id == id && record.Tenant == tenant
                               select record).FirstOrDefault();
 
