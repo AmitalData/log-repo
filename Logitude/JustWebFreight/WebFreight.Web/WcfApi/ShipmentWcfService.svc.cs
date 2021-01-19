@@ -1032,6 +1032,9 @@ namespace WebFreight.Web.WcfApi
 
         private void MapWarehouseLeg(ShipmentPM entityPM, CardRepository cardsReporistory, AddressRepository addressRepository)
         {
+            if (entityPM.WarehouseLegWarehouseId == "--")
+                entityPM.WarehouseLegWarehouseId = null;
+            
             if (entityPM.WarehouseLegWarehouseId != null)
             {
                 Card warehouseCard = cardsReporistory.GetSingleCardByCode(entityPM.WarehouseLegWarehouseId, entityPM.Tenant, false);
@@ -1045,6 +1048,10 @@ namespace WebFreight.Web.WcfApi
                 {
                     throw new ApplicationException("WarehouseLegWarehouseId field doesn't exist in the database,Upsert this entity before using it.");
                 }
+            }
+            else if(entityPM.WarehouseLegActualEntryDate != null)
+            {
+                throw new ApplicationException("WarehouseLegWarehouseId field doesn't exist in the database,Upsert WarehouseLegWarehouseId before using WarehouseLegActualEntryDate");
             }
         }
 
