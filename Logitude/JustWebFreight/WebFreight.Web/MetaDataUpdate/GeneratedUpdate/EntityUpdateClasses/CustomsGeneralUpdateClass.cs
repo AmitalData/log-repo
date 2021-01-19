@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CustomsGeneralUpdateClass
    {  		
-		public const string HashString = "c653bd0606be2d6938e5ca3ff388c5c1";
+		public const string HashString = "d5c12b51c1a6b2ae21f569c525836c35";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -498,7 +498,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
  		   TextCode CustomsGeneralTextCode_CustomsGeneralOBankAccountToRefundMessage = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.General.O.BankAccountToRefundMessage", DefaultText = "Bank Account To Refund",LocalDefaultText = @"בקשה להחזר פיקדון", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode CustomsGeneralTextCode_CustomsGeneralOBankAccountToRefundQuery = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.General.O.BankAccountToRefundQuery", DefaultText = "Bank Account To Refund Query",LocalDefaultText = @"שאילתא לבקשת החזר פיקדון", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode CustomsGeneralTextCode_CustomsGeneralOBankAccountToRefundQuery = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.General.O.BankAccountToRefundQuery", DefaultText = "Bank Account To Refund Query",LocalDefaultText = @"השלמת פרטי בנק להחזר פיקדון", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode CustomsGeneralTextCode_CustomsGeneralBAddDocumentVersion = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.General.B.AddDocumentVersion", DefaultText = "Add Version",LocalDefaultText = @"גרסה חדשה", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
