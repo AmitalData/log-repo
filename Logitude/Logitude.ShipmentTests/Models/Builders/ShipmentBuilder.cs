@@ -154,7 +154,6 @@ namespace Logitude.ShipmentTests.Models.Builders
 
         public ShipmentBuilder ShipmentPackages(List<PackagePM> shipmentPackages)
         {
-            _shipmentPM.ShipmentPackages = new List<ShipmentPackagePM>();
             _shipmentPM.ShipmentPackages.AddRange(shipmentPackages);
             return this;
         }
@@ -167,7 +166,6 @@ namespace Logitude.ShipmentTests.Models.Builders
 
         public ShipmentBuilder ShipmentPayables(List<PayablesPM> shipmentPayables)
         {
-            _shipmentPM.ShipmentPayables = new List<ShipmentPayablesPM>();
             _shipmentPM.ShipmentPayables.AddRange(shipmentPayables);
             return this;
         }

@@ -153,14 +153,12 @@ namespace Logitude.ShipmentTests.Models.Builders
 
         public DirectBuilder OceanOrInlandPackages(List<OceanOrInlandPackage> oceanOrInlandPackages)
         {
-            Direct.OceanOrInlandPackages = new List<OceanOrInlandPackage>();
             Direct.OceanOrInlandPackages.AddRange(oceanOrInlandPackages);
             return this;
         }
 
         public DirectBuilder MainCarriageLegs(List<MainCarriageLeg> mainCarriageLegs)
         {
-            Direct.MainCarriageLegs = new List<MainCarriageLeg>();
             Direct.MainCarriageLegs.AddRange(mainCarriageLegs);
             return this;
         }
