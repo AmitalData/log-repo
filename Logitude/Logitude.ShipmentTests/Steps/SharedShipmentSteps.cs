@@ -38,10 +38,13 @@ namespace Logitude.ShipmentTests.Steps
 
         private ShipmentPM CreateAndGetShipment(ShipmentPM shipmentPM)
         {
-            ShipmentPM shipment = APICaller.CallPost<ShipmentPM>(shipmentPM, URLs.Shipment, UserTenant.Token);
+            APIResponse<ShipmentPM> PostResponse = APICaller.CallPost<ShipmentPM>(shipmentPM, URLs.Shipment, UserTenant.Token);
+            ShipmentPM shipment = PostResponse.Data;
 
             string singleShipmentUrl = URLs.ShipmentGetSingle + shipment?.Id;
-            return APICaller.CallGet<ShipmentPM>(singleShipmentUrl, UserTenant.Token, null);
+
+            APIResponse<ShipmentPM> GetResponse = APICaller.CallGet<ShipmentPM>(singleShipmentUrl, UserTenant.Token);
+            return GetResponse.Data;
         }
     }
 }
