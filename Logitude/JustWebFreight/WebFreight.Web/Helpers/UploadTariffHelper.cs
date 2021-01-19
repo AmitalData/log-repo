@@ -1455,17 +1455,56 @@ namespace WebFreight.Web.Helpers
                     }
                 }
 
+                // Search for names
+                if (myPort == null)
+                {
+                    IQueryable<Port> ports = null;
+
+                    if (tariffType == "AFC")
+                    {
+                        ports = this.portRepository.GetAirlinePortsByName(code, tenant);
+                    }
+
+                    else if (tariffType == "OLC" || tariffType == "OFC")
+                    {
+                        ports = this.portRepository.GetOceanPortsByName(code, tenant);
+                    }
+
+                    if (ports != null && ports.Count() == 1)
+                    {
+                        myPort = ports.FirstOrDefault();
+                    }
+                }
+
                 if (myPort == null)
                 {
                     Port portZero = null;
                     if (tariffType == "AFC")
                     {
                         portZero = this.portRepository.GetAirlinePortByCode(0, code, true);
+
+                        if(portZero == null)
+                        {
+                            IQueryable<Port> ports = this.portRepository.GetAirlinePortsByName(code, 0);
+                            if (ports != null && ports.Count() == 1)
+                            {
+                                portZero = ports.FirstOrDefault();
+                            }
+                        }
                     }
 
                     else if (tariffType == "OLC" || tariffType == "OFC")
                     {
                         portZero = this.portRepository.GetOceanPortByCombinedCode(code, 0);
+
+                        if (portZero == null)
+                        {
+                            IQueryable<Port> ports = this.portRepository.GetOceanPortsByName(code, 0);
+                            if (ports != null && ports.Count() == 1)
+                            {
+                                portZero = ports.FirstOrDefault();
+                            }
+                        }
                     }
 
                     if (portZero != null)
@@ -1474,6 +1513,7 @@ namespace WebFreight.Web.Helpers
                     }
                 }
             }
+
             return myPort;
         }
         private Port GetPortCopyToCurrentTenant(Port ZeroPort, int tenant)
