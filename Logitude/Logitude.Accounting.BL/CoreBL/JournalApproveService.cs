@@ -332,11 +332,11 @@ namespace Logitude.Accounting.BL.CoreBL
                                         &&
                                         this._JournalPM.JournalExternalReconciles.Count > 0
                                         &&
-                                        myCreateAutoExternalReconcileWhileStreamingService.ExternalReconciliationList.Count == 1
+                                        myCreateAutoExternalReconcileWhileStreamingService.ExternalReconciliationList.Count >= 1
 
                                         )
             {
-                var myExternalReconciliation = myCreateAutoExternalReconcileWhileStreamingService.ExternalReconciliationList.First();
+                var myExternalReconciliation = myCreateAutoExternalReconcileWhileStreamingService.ExternalReconciliationList.Last();
 
                 var myJournalUpdateService = new JournalUpdateService(this._AccountingContext, new Dictionary<string, IContext>(), this._JournalPM.Tenant);
 
