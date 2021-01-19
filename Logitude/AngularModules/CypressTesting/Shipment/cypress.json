@@ -1,4 +1,6 @@
 {
+"viewportWidth": 1440,
+"viewportHeight": 900,
 "integrationFolder": "cypress/tests",
 "testFiles": "**/*.feature",
 "ignoreTestFiles": "*.ts",

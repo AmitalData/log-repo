@@ -91,6 +91,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             itemPoco.ReceivableId = itemPM.ReceivableId;
             itemPoco.TariffId = itemPM.TariffId;
             itemPoco.TariffNumber = itemPM.TariffNumber;
+            itemPoco.TariffLineId = itemPM.TariffLineId;
             itemPoco.TariffVersion = itemPM.TariffVersion;
         }
     }

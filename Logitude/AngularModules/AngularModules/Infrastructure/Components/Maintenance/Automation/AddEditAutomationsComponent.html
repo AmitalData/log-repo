@@ -237,6 +237,12 @@
                                                                                             </td>
                                                                                         </tr>
 
+                                                                                        <tr style="height:1px">
+                                                                                            <td colspan="4">
+                                                                                                <div class="LocationDirective" LocationDirective Code="SENDDOCUMENT"> </div>
+                                                                                            </td>
+                                                                                        </tr>
+
                                                                                         <tr *ngIf="ResultCodeSelected.Code !='SETSLA' && !(ResultCodeSelected.Code =='FIELDSET' && ObjectTableName == 'Shipment')" style="height:25px">
                                                                                             <td style="width:10px">
                                                                                                 <div></div>
@@ -334,7 +340,7 @@
                                                                                                                                         <td style="width:5px">
                                                                                                                                             <div style="width:5px"></div>
                                                                                                                                         </td>
-                                                                                                                                        <td style="width:60px;" *ngIf="DelaytimeIndicator && DelaytimeIndicator.Code == 'DD'">
+                                                                                                                                        <td style="width:60px;" *ngIf="DelaytimeIndicator">
                                                                                                                                             <div style="height:22px;width:60px">
                                                                                                                                                 <ComboBox style="width:60px;" (SelectedItemChanged)="DelaytimeOpIndicator = $event" [SelectedItem]="DelaytimeOpIndicator" [ItemsSource]="TimeUnitOps" [Binding]="'Name'"></ComboBox>
                                                                                                                                             </div>
@@ -342,7 +348,7 @@
                                                                                                                                         <td style="width:5px">
                                                                                                                                             <div style="width:5px"></div>
                                                                                                                                         </td>
-                                                                                                                                        <td style="width:130px;" *ngIf="DelaytimeIndicator && DelaytimeIndicator.Code == 'DD'">
+                                                                                                                                        <td style="width:130px;" *ngIf="DelaytimeIndicator && DelaytimeOpIndicator && DelaytimeOpIndicator.Code != 'NL'">
                                                                                                                                             <div style="height:22px;width:130px">
                                                                                                                                                 <ComboBox style="width:130px;" (SelectedItemChanged)="DelayTimeObjectFieldsIndicator = $event" [SelectedItem]="DelayTimeObjectFieldsIndicator" [ItemsSource]="DelayTimeObjectFields" [Binding]="'FullNameTextCodeDefaultText'"></ComboBox>
                                                                                                                                             </div>
@@ -404,18 +410,16 @@
                                                                                             </td>
                                                                                         </tr>
 
-
-
                                                                                         <!--Documen tType Area-->
-                                                                                        <tr *ngIf="IsResultEmail" style="height:2px;">
+                                                                                        <tr *ngIf="IsResultEmail || IsSendDocument" style="height:2px;">
                                                                                             <td colspan="4" style="height:2px">
 
                                                                                                 <div style="height:3px"></div>
                                                                                             </td>
                                                                                         </tr>
-                                                                                        <tr *ngIf="IsResultEmail" style="height:25px">
+                                                                                        <tr *ngIf="IsResultEmail || IsSendDocument" style="height:25px">
                                                                                             <td colspan="4">
-                                                                                                <div *ngIf="ResultCodeSelected.Code !='EMAIL'">
+                                                                                                <div *ngIf="ResultCodeSelected.Code !='EMAIL' && !IsSendDocument">
                                                                                                     <p style="font-size:11px;margin-top:1px;color:Gray;margin-left:10px">Email Body</p>
 
                                                                                                 </div>
@@ -493,7 +497,7 @@
 
                                                                                         <tr *ngIf="ResultCodeSelected.Code =='EMAIL' && DocumentTypeSelected && DocumentTypeSelected.TemplateFormatCode=='P'" style="height:25px">
                                                                                             <td colspan="4">
-                       
+
                                                                                                 <div>
 
                                                                                                     <table>

@@ -127,7 +127,7 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
             this.ObjectTableName = args.ObjectTableName;
             this.openAmountCurrency = args.openAmountCurrency;
             this.SetTitles();
-            this.SetUIProperty();
+            this.ResetFilters();
         }
     }
 
@@ -151,11 +151,6 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
                 break;
             }
         }
-    }
-
-    SetUIProperty() {
-        this.UIProperties.SetEnabled("FromDate", this.ExtRecoTable, false);
-        this.UIProperties.SetEnabled("ToDate", this.ExtRecoTable, false);
     }
 
     ngOnInit() {
@@ -1692,7 +1687,7 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
     ResetFilters() {
 
         // Date
-        this.SelectedDateOperator = null;
+        this.SelectedDateOperator = this.DateFilterList[4];
         this.FromDate = null;
         this.ToDate = null;
 

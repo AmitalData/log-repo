@@ -176,6 +176,7 @@
     <Content Include="WarehouseScript\BuildWarehouse\BuildChargesTypeDimensionTable.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="WarehouseScript\BuildWarehouse\BuildCountriesDimensionTable.sql" />
     <Content Include="WarehouseScript\BuildWarehouse\BuildCurrencyDimensionTable.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -206,6 +207,8 @@
     <Content Include="WarehouseScript\BuildWarehouse\BuildOBLTypeDimensionTable.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="WarehouseScript\BuildWarehouse\BuildQuoteClosingReasonsDimensionTable.sql" />
+    <Content Include="WarehouseScript\BuildWarehouse\BuildQuoteStagesDimensionTable.sql" />
     <Content Include="WarehouseScript\BuildWarehouse\BuildShipmentReceivableStatusDimensionTable.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -242,6 +245,7 @@
     <Content Include="WarehouseScript\IncrementalWarehouse\UpdateChargesTypeDimensionTable.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="WarehouseScript\IncrementalWarehouse\UpdateCountriesDimensionTable.sql" />
     <Content Include="WarehouseScript\IncrementalWarehouse\UpdateCustomPickListDimensionsTable.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -281,6 +285,8 @@
     <Content Include="WarehouseScript\IncrementalWarehouse\UpdateOBLTypeDimensionTable.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="WarehouseScript\IncrementalWarehouse\UpdateQuoteClosingReasonsDimensionTable.sql" />
+    <Content Include="WarehouseScript\IncrementalWarehouse\UpdateQuoteStagesDimensionTable.sql" />
     <Content Include="WarehouseScript\IncrementalWarehouse\UpdateShipmentPayableStatusDimensionTable.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

@@ -1,4 +1,5 @@
-﻿ 
+﻿
+using Logitude.CargoTracking.BL.CargoTrackingServices.HelperClasses;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -12,42 +13,37 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CustomMapping
     public class CargoTrackingCustomMappingService
     {
 
-        public static void MappingDB_CTDB(DataTable dataTable, SqlBulkCopy sbc, string CoulmnName, string TableName)
+        public static void MapCargoTrackingToDataBase(BulkDataPreperation bulkDataPreperation, SqlBulkCopy sqlBulkCopy, string tableName)
         {
-             AddCustomColumn(dataTable, sbc, CoulmnName, TableName);
+             AddCustomColumn(bulkDataPreperation, sqlBulkCopy, tableName);
         }
-        private static void AddCustomColumn(DataTable dataTable, SqlBulkCopy sbc, string ColumnName,string TableName)
+        private static void AddCustomColumn(BulkDataPreperation bulkDataPreperation, SqlBulkCopy sqlBulkCopy,string tableName)
         {
-            if (TableName == "CargoTrackingShipmentSearches"  )
+            if (tableName == "CargoTrackingShipmentSearches" ||
+                tableName == "CargoTrackingShipments")
             {
-                if (ColumnName != "Id")
+                if (bulkDataPreperation.CoulmnForCusstomMapping != "Id")
                 {
-                    AutoCoulmnMap(dataTable, sbc, ColumnName);
+                    AutoCoulmnMap(bulkDataPreperation.SelectedDataTable, sqlBulkCopy, bulkDataPreperation.CoulmnForCusstomMapping);
                 }
-            }
-            else if (TableName == "CargoTrackingShipments")
-            {
-                if (ColumnName != "Id")
-                {
-                    AutoCoulmnMap(dataTable, sbc, ColumnName);
-                }
+
             }
             else
             {
-                AutoCoulmnMap(dataTable, sbc, ColumnName);
+                AutoCoulmnMap(bulkDataPreperation.SelectedDataTable, sqlBulkCopy, bulkDataPreperation.CoulmnForCusstomMapping);
             }
            
 
         }
 
 
-        private static void AutoCoulmnMap(DataTable dataTable, SqlBulkCopy sbc, string ColumnName)
+        private static void AutoCoulmnMap(DataTable dataTable, SqlBulkCopy sqlBulkCopy, string columnName)
         {
-            if (!dataTable.Columns.Contains(ColumnName))
+            if (dataTable.Columns.IndexOf(columnName) ==-1)
             {
-                dataTable.Columns.Add(ColumnName);
+                dataTable.Columns.Add(columnName);
             }
-            sbc.ColumnMappings.Add(ColumnName, ColumnName);
+            sqlBulkCopy.ColumnMappings.Add(columnName, columnName);
         }
 
 

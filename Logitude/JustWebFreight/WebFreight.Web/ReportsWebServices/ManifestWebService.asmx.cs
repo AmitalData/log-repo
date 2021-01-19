@@ -787,6 +787,7 @@ namespace WebFreight.Web.ReportsWebServices
                     detail.DestinationPortCode = newDetail.DestinationPortCode = shipmentView.MainCarriageFinalDestinationPortCode != null ? shipmentView.MainCarriageFinalDestinationPortCode : "";
                     detail.DestinationPortName = newDetail.DestinationPortName = shipmentView.MainCarriageFinalDestinationPortName != null ? shipmentView.MainCarriageFinalDestinationPortName : "";
                     detail.AMSBL = newDetail.AMSBL = shipmentView.AMSBL;
+                    List<ShipmentPackagePM> shipmentPackagesList = packagesQuery.GetShipmentPackages(shipmentView.Id, shipmentView.ShipmentNumber, tenant);
 
                     if (shipmentView.TransportModeId == "A")
                     {
@@ -802,6 +803,7 @@ namespace WebFreight.Web.ReportsWebServices
                         newDetail.Quantity = shipmentView.NumberOfPackages;
                         totalPackagesQuantity = totalPackagesQuantity + (shipmentView.NumberOfPackages != null ? shipmentView.NumberOfPackages.Value : 0);
 
+                        detail.Dimensions = this.GetHousesPackagesDimensions(shipmentPackagesList);
                         #region custom fields
                         //----Freight Cusotmfield---//
                         FormCustomField freightField = (from a in customfieldsList
@@ -877,7 +879,6 @@ namespace WebFreight.Web.ReportsWebServices
                     this.BuildPackageDetails(newDetail, shipmentView, volumeUnitCode);
 
                     StringBuilder strGoods = new StringBuilder();
-                    List<ShipmentPackagePM> shipmentPackagesList = packagesQuery.GetShipmentPackages(shipmentView.Id, shipmentView.ShipmentNumber, tenant);
                     strGoods.Append(shipmentView.DescriptionOfGoods != null ? shipmentView.DescriptionOfGoods : "");
 
                     if (!string.IsNullOrEmpty(shipmentView.SLAC))
@@ -1247,6 +1248,47 @@ namespace WebFreight.Web.ReportsWebServices
             #endregion
         }
 
+        private string GetHousesPackagesDimensions(List<ShipmentPackagePM> packagse)
+        {
+            string dimensions = "";
+            string myDimensions = "";
+            foreach (ShipmentPackagePM item in packagse)
+            {
+                if (item.Length == null && item.Width == null && item.Height == null)
+                {
+                    myDimensions = " - - ";
+                }
+
+                else
+                {
+                    double? myLength = 0;
+                    double? myWidth = 0;
+                    double? myHeight = 0;
+
+                    if (item.Length != null)
+                    {
+                        myLength = item.Length;
+                    }
+
+                    if (item.Width != null)
+                    {
+                        myWidth = item.Width;
+                    }
+
+                    if (item.Height != null)
+                    {
+                        myHeight = item.Height;
+                    }
+
+                    myDimensions = myLength + "-" + myWidth + "-" + myHeight;
+                }
+
+                dimensions = dimensions + item.Quantity + " X "  + myDimensions + Environment.NewLine;
+            }
+
+            return dimensions;
+        }
+
         private void BuildPackageDetails(NewManifestDetailsClass newDetail, ShipmentDataView shipmentView, string volumeUnitCode)
         {
             ShipmentPackageQuery shipmentPackagesQuery = new ShipmentPackageQuery(tenant);
@@ -1270,8 +1312,12 @@ namespace WebFreight.Web.ReportsWebServices
 
                 packageDetail.Weight = package.Weight != null ? (package.Weight != 0 ? String.Format("{0:#,0.00}", package.Weight + " " + (shipmentView.GrossWeightUnitCode != null ? shipmentView.GrossWeightUnitCode : "")) : "") : "";
                 packageDetail.Volume = package.Volume != null ? (package.Volume != 0 ? package.Volume.ToString() + " " + volumeUnitCode : "") : "";
-
                 packageDetail.Quantity = package.Quantity == null ? "" : package.Quantity.ToString();
+
+                if (package.Length != null && package.Width != null && package.Height != null)
+                {
+                    packageDetail.Dimensions = package.Length + "x" + package.Width + "x" + package.Height;
+                }
 
                 if (package.PackageTypeId != null)
                 {

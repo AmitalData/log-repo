@@ -15,6 +15,8 @@ import { EntityPartner } from '../../../../Infrastructure/DataContracts/EntityPa
 import { AppTool} from '../../../../Infrastructure/Tools';
 import { TextCodeTranslator } from '../../../../Infrastructure/Utilities/TextCodeTranslator';
 import {UserExtendedPMService} from '../../../../Common/Services/ExtendedPMs/UserExtendedPMService';
+import { LoginPolicyList } from '../../../../Common/EntityLists/LoginPolicyList';
+import { FeatureLocator } from '../../../../Infrastructure/Utilities/FeatureLocator';
 
 
 @Component({
@@ -24,6 +26,7 @@ import {UserExtendedPMService} from '../../../../Common/Services/ExtendedPMs/Use
     providers: [TenantLoginPolicyPMService],
 })
 export class TenantLoginPolicyComponent extends BaseComponent {
+  
 
     public DataContext = this;
     public ObjectTableName: string = "TenantLoginPolicy";
@@ -36,6 +39,11 @@ export class TenantLoginPolicyComponent extends BaseComponent {
     userExtendedPMService: UserExtendedPMService;
     public EnabledForUsersCount: number = 0;
     private CurrentSession = SessionLocator.SelectedSession;
+    
+    public LoginPolicyLists: LoginPolicyList[];
+
+
+
     constructor(private entityResourceService: EntityResourceService, private TenantLoginPolicyPMService: TenantLoginPolicyPMService) {
         super();
 
@@ -44,14 +52,53 @@ export class TenantLoginPolicyComponent extends BaseComponent {
 
         var type1: EnabledForType = new EnabledForType("ALL", "All Users");
         this.EnabledForTypesList.push(type1);
-
+        if (this.IsHaveAdvancedLoginPolicyFeature()) {
         var type2: EnabledForType = new EnabledForType("SPCF", "Specific Users");
-        this.EnabledForTypesList.push(type2);
+            this.EnabledForTypesList.push(type2);
 
+        }
+
+        this.LoginPolicyLists = [];
+        this.FillLoginPolicyLists();
         this.LoadData();
     }
 
+    IsHaveAdvancedLoginPolicyFeature() {
 
+        return FeatureLocator.HasFeaturePermession("TenantLoginPolicy", "ADVANCEDLOGINPOLICIES");
+
+    }
+    FillLoginPolicyLists() {
+
+        this.LoginPolicyLists.push(this.GetNewLoginPolicyListInStance("NOREST", "No Restriction"));
+
+        this.LoginPolicyLists.push(this.GetNewLoginPolicyListInStance("COMPIP", "Specific IPs only"));
+
+        if (this.IsHaveAdvancedLoginPolicyFeature()) {
+            this.LoginPolicyLists.push(this.GetNewLoginPolicyListInStance("DISABLED", "Disabled"));
+            this.LoginPolicyLists.push(this.GetNewLoginPolicyListInStance("ENABLED", "Enabled"));
+            this.LoginPolicyLists.push(this.GetNewLoginPolicyListInStance("ENFEXIPO", "Enabled for External IPs only"));
+        }
+
+
+        this.LoginPolicyLists.push(this.GetNewLoginPolicyListInStance("TFAUTH", "Two Factor Authentication"));
+
+
+
+    }
+
+
+    
+
+
+
+
+    GetNewLoginPolicyListInStance(code:string , name:string) {
+        var loginPolicyList: LoginPolicyList = new LoginPolicyList();
+        loginPolicyList.Code = code;
+        loginPolicyList.Name = name;
+        return loginPolicyList;
+    }
     LoadData() {
         this.TenantLoginPolicyPMService.get(SessionLocator.Tenant).subscribe((response:any) => {
             if (!response.HasError) {
@@ -79,10 +126,37 @@ export class TenantLoginPolicyComponent extends BaseComponent {
                   
                 }
 
+                
+
+        
                
+
             }
         });
     }
+
+
+
+    public get SelectedLoginPolicy() {
+
+        if (this.EntityPM) {
+            return this.LoginPolicyLists.filter(t => t.Code === this.EntityPM.LoginPolicyCode)[0];
+        }
+    }
+    public set SelectedLoginPolicy(newValue: LoginPolicyList) {
+
+        if (this.EntityPM.LoginPolicyCode != newValue.Code) {
+            this.EntityPM.LoginPolicyCode = newValue.Code;
+        }
+    }
+
+
+
+
+
+
+
+
 
     public GetEnabledForUsersCount() {
         this.userExtendedPMService.GetUsersTwoFactorAuthenticationEnabled(SessionLocator.Tenant).subscribe((resp:any) => {
@@ -119,23 +193,7 @@ export class TenantLoginPolicyComponent extends BaseComponent {
         }
     }
 
-    private loginPolicyCode: string = "";
-    public get LoginPolicyCode() {
-        if (this.EntityPM) {
-            this.loginPolicyCode = this.EntityPM.LoginPolicyCode;
-        }
-
-        return this.loginPolicyCode;
-
-    }
-    public set LoginPolicyCode(newValue: string) {
-        if (this.loginPolicyCode != newValue) {
-            this.loginPolicyCode = newValue;
-            this.EntityPM.LoginPolicyCode = newValue;
-
-        }
-    }
-
+  
 
 
     private keepUserLoggedIn: boolean = false;

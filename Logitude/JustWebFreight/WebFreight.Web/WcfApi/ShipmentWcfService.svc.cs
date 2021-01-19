@@ -90,6 +90,8 @@ namespace WebFreight.Web.WcfApi
                     TenantRepository tenantRepository = new TenantRepository(entityPM.Tenant);
                     TenantQuery tenantQuery = new TenantQuery(tenantRepository);
                     TenantPM tenantPM = tenantQuery.GetSinglePM(entityPM.Tenant);
+                    CountryRepository countryRepository = new CountryRepository(commoncontext);
+                    AddressRepository addressRepository = new AddressRepository(commoncontext);
                     // ???????????
                     //"system@tenant1.com"
 
@@ -104,13 +106,13 @@ namespace WebFreight.Web.WcfApi
                     if (String.IsNullOrEmpty(entityPM.VolumeUnitCode))
                         entityPM.VolumeUnitCode = tenantPM.VolumeUnitCode;
 
-					if (String.IsNullOrEmpty(entityPM.GrossWeightUnitCode))
-						entityPM.GrossWeightUnitCode = tenantPM.GrossWeightUnitCode;
+                    if (String.IsNullOrEmpty(entityPM.GrossWeightUnitCode))
+                        entityPM.GrossWeightUnitCode = tenantPM.GrossWeightUnitCode;
 
-					if (String.IsNullOrEmpty(entityPM.ChargeableWeightUnitCode))
-						entityPM.ChargeableWeightUnitCode = tenantPM.ChargeableWeightUnitCode;
- 
-					if (string.IsNullOrEmpty(entityPM.StatusId))
+                    if (String.IsNullOrEmpty(entityPM.ChargeableWeightUnitCode))
+                        entityPM.ChargeableWeightUnitCode = tenantPM.ChargeableWeightUnitCode;
+
+                    if (string.IsNullOrEmpty(entityPM.StatusId))
                     {
                         EntityStatus status = EntityStatusRepository.GetSingleEntityStatusByCode("OPOP", entityPM.Tenant, true);
                         if (status == null)
@@ -158,10 +160,10 @@ namespace WebFreight.Web.WcfApi
                         response.ErrorMessage = "CreatedByUserId field doesn’t  exist!";
                         return response;
                     }
-					if (string.IsNullOrWhiteSpace(entityPM.MasterShipmentDataId))
-					{
-						entityPM.MasterShipmentDataId = null;
-					}
+                    if (string.IsNullOrWhiteSpace(entityPM.MasterShipmentDataId))
+                    {
+                        entityPM.MasterShipmentDataId = null;
+                    }
 
                     #region Resolving Keys
 
@@ -633,7 +635,7 @@ namespace WebFreight.Web.WcfApi
                                     return response;
                                 }
                             }
-                            ﻿else
+                            else
                             {
                                 response.HasError = true;
                                 response.ErrorMessage = "PackageTypeId field is required";
@@ -643,6 +645,13 @@ namespace WebFreight.Web.WcfApi
 
                     }
 
+                    MapShipmentPickUps(entityPM, cardsReporistory, countryRepository);
+                    MapShipmentDeliveries(entityPM, cardsReporistory, countryRepository);
+
+                    #endregion
+
+                    #region WarehouseLeg
+                    MapWarehouseLeg(entityPM, cardsReporistory, addressRepository);
                     #endregion
 
                     if (response.HasError)
@@ -660,7 +669,7 @@ namespace WebFreight.Web.WcfApi
                         entityPM.StatusDate = entityPM.CreateDateTime;
 
                         service = new ShipmentService(objectContext, entityPM, contact.Email);
-                        service.SetChangeSet(entityPM.ShipmentPackages, new List<ShipmentOrderPackagePM>(), new List<ShipmentPickUpPM>(), new List<ShipmentDeliveryPM>(), new List<ShipmentReceivablePM>(), new List<ShipmentPayablePM>(), new List<ShipmentFollowUpPM>(), new List<ShipmentAWBPrintOnlyPM>(), new List<ConsoleShipmentPM>(), new List<ShipmentCarrierStatusPM>(), new List<AWBOCIPM>(), new List<ShipmentCommodityPM>(), new List<ShipmentAssemblyPM>(), new List<ShipmentStoragePricingPM>());
+                        service.SetChangeSet(entityPM.ShipmentPackages, new List<ShipmentOrderPackagePM>(), entityPM.ShipmentPickUps, entityPM.ShipmentDeliveries, new List<ShipmentReceivablePM>(), new List<ShipmentPayablePM>(), new List<ShipmentFollowUpPM>(), new List<ShipmentAWBPrintOnlyPM>(), new List<ConsoleShipmentPM>(), new List<ShipmentCarrierStatusPM>(), new List<AWBOCIPM>(), new List<ShipmentCommodityPM>(), new List<ShipmentAssemblyPM>(), new List<ShipmentStoragePricingPM>());
 
                         service.Create();
 
@@ -724,7 +733,24 @@ namespace WebFreight.Web.WcfApi
                             entityPM.ShipmentPackages.Add(package);
                         }
 
-                        service.SetChangeSet(entityPM.ShipmentPackages, new List<ShipmentOrderPackagePM>(), new List<ShipmentPickUpPM>(), new List<ShipmentDeliveryPM>(), new List<ShipmentReceivablePM>(), new List<ShipmentPayablePM>(), new List<ShipmentFollowUpPM>(), new List<ShipmentAWBPrintOnlyPM>(), new List<ConsoleShipmentPM>(), new List<ShipmentCarrierStatusPM>(), new List<AWBOCIPM>(), new List<ShipmentCommodityPM>(), new List<ShipmentAssemblyPM>(), new List<ShipmentStoragePricingPM>());
+
+                        var shipmentPickUpQuery = new ShipmentPickUpQuery(new ShipmentPickUpDeliveryRepository(objectContext));
+                        List<ShipmentPickUpPM> shipmentPickUps = shipmentPickUpQuery.GetShipmentPickUpPMsByTenantAndShipment(entity.Id, entity.Tenant);
+                        foreach (var pickUpPM in shipmentPickUps)
+                        {
+                            pickUpPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Delete;
+                            entityPM.ShipmentPickUps.Add(pickUpPM);
+                        }
+
+                        var shipmentDeliveryQuery = new ShipmentDeliveryQuery(new ShipmentPickUpDeliveryRepository(objectContext));
+                        List<ShipmentDeliveryPM> shipmentDeliveries = shipmentDeliveryQuery.GetShipmentDeliveryPMsByTenantAndShipment(entity.Id, entity.Tenant);
+                        foreach (var deliveryPM in shipmentDeliveries)
+                        {
+                            deliveryPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Delete;
+                            entityPM.ShipmentDeliveries.Add(deliveryPM);
+                        }
+
+                        service.SetChangeSet(entityPM.ShipmentPackages, new List<ShipmentOrderPackagePM>(), entityPM.ShipmentPickUps, entityPM.ShipmentDeliveries, new List<ShipmentReceivablePM>(), new List<ShipmentPayablePM>(), new List<ShipmentFollowUpPM>(), new List<ShipmentAWBPrintOnlyPM>(), new List<ConsoleShipmentPM>(), new List<ShipmentCarrierStatusPM>(), new List<AWBOCIPM>(), new List<ShipmentCommodityPM>(), new List<ShipmentAssemblyPM>(), new List<ShipmentStoragePricingPM>());
 
 
                         
@@ -747,7 +773,7 @@ namespace WebFreight.Web.WcfApi
                                     shipment.ExceptionDate = entity.ExceptionDate;
                                     shipment.ExceptionDescription = entity.ExceptionDescription;
                                     shipment.LastExceptionDescription = entity.LastExceptionDescription;
-                                    
+
                                     shipmentRepository.Update(shipment);
                                 }
 
@@ -768,9 +794,9 @@ namespace WebFreight.Web.WcfApi
                             entityPM.NoFreightFile = !hasConnectedShipments;
                         }
 
-                        if(entityPM.DirectionId  != entity.DirectionId)
+                        if (entityPM.DirectionId != entity.DirectionId)
                         {
-                           var vResponse = ValidateDirectionConversion(entityPM);
+                            var vResponse = ValidateDirectionConversion(entityPM);
                             if (vResponse.HasError)
                             {
                                 return vResponse;
@@ -781,7 +807,7 @@ namespace WebFreight.Web.WcfApi
                                 var directionsList = directionRepository.GetDirections();
                                 var oldDirectionName = directionsList.FirstOrDefault(d => d.Id == entity.DirectionId);
                                 var currentDirectionName = directionsList.FirstOrDefault(d => d.Id == entityPM.DirectionId);
-                                
+
                                 entityPM.ShipmentDirectionConverted = true;
                                 entityPM.EventNote = "Converted from [" + oldDirectionName + "] to [" + currentDirectionName + "]";
                             }
@@ -806,6 +832,13 @@ namespace WebFreight.Web.WcfApi
                     scope.Complete();
                     return response;
                 }
+            }
+            catch (ApplicationException ex)
+            {
+                response.HasError = true;
+                response.ErrorMessage = ex.Message;
+                response.InnerErrorMessage = (ex.InnerException != null ? (ex.InnerException.InnerException != null ? ex.InnerException.InnerException.Message : ex.InnerException.Message) : null);
+                return response;
             }
             catch (System.Data.Entity.Validation.DbEntityValidationException e)
             {
@@ -845,6 +878,189 @@ namespace WebFreight.Web.WcfApi
 
 
 
+        }
+
+        private  void MapShipmentPickUps(ShipmentPM entityPM, CardRepository cardsReporistory, CountryRepository countryRepository)
+        {
+            foreach (var pickUp in entityPM.ShipmentPickUps)
+            {
+                pickUp.ChangeSetOp = ChangeSetOperation.Insert;
+                pickUp.PickUpDeliveryTypeCode = "PICK";
+                if (pickUp.CarrierId != null)
+                {
+                    string cardId = cardsReporistory.GetCardIdByCode(pickUp.CarrierId, entityPM.Tenant);
+                    if (!string.IsNullOrEmpty(cardId))
+                    {
+                        pickUp.CarrierId = cardId;
+                    }
+                    else
+                    {
+                        throw new ApplicationException($"Pickup CarrierId field ({pickUp.CarrierId}) doesn't exist in the database,Upsert this entity before using it.");
+                    }
+                }
+
+                if (pickUp.FromAddressCountryId != null)
+                {
+                    var entityId = countryRepository.GetCountryIdByCode(pickUp.FromAddressCountryId, entityPM.Tenant);
+                    if (!string.IsNullOrEmpty(entityId))
+                    {
+                        pickUp.FromAddressCountryId = entityId;
+                    }
+                    else
+                    {
+                        throw new ApplicationException($"Pickup FromAddressCountryId field ({pickUp.FromAddressCountryId}) doesn't exist in the database,Upsert this entity before using it.");
+                    }
+                }
+
+                if (pickUp.ToAddressCountryId != null)
+                {
+                    var entityId = countryRepository.GetCountryIdByCode(pickUp.ToAddressCountryId, entityPM.Tenant);
+                    if (!string.IsNullOrEmpty(entityId))
+                    {
+                        pickUp.ToAddressCountryId = entityId;
+                    }
+                    else
+                    {
+                        throw new ApplicationException($"Pickup ToAddressCountryId field ({pickUp.ToAddressCountryId}) doesn't exist in the database,Upsert this entity before using it.");
+                    }
+                }
+
+                if (string.IsNullOrEmpty(pickUp.PickUpDeliveryFromTypeCode))
+                {
+                    pickUp.PickUpDeliveryFromTypeCode = "CASL";
+                }
+                if (string.IsNullOrEmpty(pickUp.PickUpDeliveryToTypeCode))
+                {
+                    pickUp.PickUpDeliveryToTypeCode = "CASL";
+                }
+
+                if (string.IsNullOrEmpty(pickUp.TransportModeCode))
+                {
+                    pickUp.TransportModeCode = "BYTR";
+                }
+
+                if(pickUp.PickUpDeliveryFromTypeCode == "CASL")
+                {
+                    var errorsStrBuilder = new StringBuilder();
+                    if (pickUp.FromAddressCountryId == null)
+                        errorsStrBuilder.Append("FromAddressCountryId field is required");
+                    if (pickUp.FromAddressCity == null)
+                        errorsStrBuilder.Append("FromAddressCity field is required");
+
+                    if (pickUp.ToAddressCountryId == null)
+                        errorsStrBuilder.Append("ToAddressCountryId field is required");
+                    if (pickUp.ToAddressCity == null)
+                        errorsStrBuilder.Append("ToAddressCity field is required");
+                }
+
+            }
+        }
+
+        private void MapShipmentDeliveries(ShipmentPM entityPM, CardRepository cardsReporistory, CountryRepository countryRepository)
+        {
+            foreach (var deliveryPM in entityPM.ShipmentDeliveries)
+            {
+                deliveryPM.ChangeSetOp = ChangeSetOperation.Insert;
+                deliveryPM.PickUpDeliveryTypeCode = "DELV";
+                if (deliveryPM.CarrierId != null)
+                {
+                    string cardId = cardsReporistory.GetCardIdByCode(deliveryPM.CarrierId, entityPM.Tenant);
+                    if (!string.IsNullOrEmpty(cardId))
+                    {
+                        deliveryPM.CarrierId = cardId;
+                    }
+                    else
+                    {
+                        throw new ApplicationException($"Pickup CarrierId field ({deliveryPM.CarrierId}) doesn't exist in the database,Upsert this entity before using it.");
+                    }
+                }
+
+                if (deliveryPM.FromAddressCountryId != null)
+                {
+                    var entityId = countryRepository.GetCountryIdByCode(deliveryPM.FromAddressCountryId, entityPM.Tenant);
+                    if (!string.IsNullOrEmpty(entityId))
+                    {
+                        deliveryPM.FromAddressCountryId = entityId;
+                    }
+                    else
+                    {
+                        throw new ApplicationException($"Pickup FromAddressCountryId field ({deliveryPM.FromAddressCountryId}) doesn't exist in the database,Upsert this entity before using it.");
+                    }
+                }
+
+                if (deliveryPM.ToAddressCountryId != null)
+                {
+                    var entityId = countryRepository.GetCountryIdByCode(deliveryPM.ToAddressCountryId, entityPM.Tenant);
+                    if (!string.IsNullOrEmpty(entityId))
+                    {
+                        deliveryPM.ToAddressCountryId = entityId;
+                    }
+                    else
+                    {
+                        throw new ApplicationException($"Pickup ToAddressCountryId field ({deliveryPM.ToAddressCountryId}) doesn't exist in the database,Upsert this entity before using it.");
+                    }
+                }
+
+                if (string.IsNullOrEmpty(deliveryPM.PickUpDeliveryFromTypeCode))
+                {
+                    deliveryPM.PickUpDeliveryFromTypeCode = "CASL";
+                }
+                if (string.IsNullOrEmpty(deliveryPM.PickUpDeliveryToTypeCode))
+                {
+                    deliveryPM.PickUpDeliveryToTypeCode = "CASL";
+                }
+
+                if (string.IsNullOrEmpty(deliveryPM.TransportModeCode))
+                {
+                    deliveryPM.TransportModeCode = "BYTR";
+                }
+
+                if (deliveryPM.PickUpDeliveryFromTypeCode == "CASL")
+                {
+                    var errorsStrBuilder = new StringBuilder();
+                    if (deliveryPM.FromAddressCountryId == null)
+                        errorsStrBuilder.Append("FromAddressCountryId field is required");
+                    if (deliveryPM.FromAddressCity == null)
+                        errorsStrBuilder.Append("FromAddressCity field is required");
+
+                    if (deliveryPM.ToAddressCountryId == null)
+                        errorsStrBuilder.Append("ToAddressCountryId field is required");
+                    if (deliveryPM.ToAddressCity == null)
+                        errorsStrBuilder.Append("ToAddressCity field is required");
+                }
+
+            }
+        }
+
+        private void MapWarehouseLeg(ShipmentPM entityPM, CardRepository cardsReporistory, AddressRepository addressRepository)
+        {
+            if (entityPM.WarehouseLegWarehouseId != null && entityPM.WarehouseLegWarehouseId != "--")
+            {
+                Card warehouseCard = cardsReporistory.GetSingleCardByCode(entityPM.WarehouseLegWarehouseId, entityPM.Tenant, false);
+                if (warehouseCard != null && !string.IsNullOrEmpty(warehouseCard.Id))
+                {
+                    entityPM.WarehouseLegWarehouseId = warehouseCard.Id;
+                    entityPM.WarehouseLegTerminalName = warehouseCard.EnglishName;
+                    //MapWarehouseLegAddressId(entityPM, addressRepository, warehouseCard.Id);
+                }
+                else
+                {
+                    throw new ApplicationException("WarehouseLegWarehouseId field doesn't exist in the database,Upsert this entity before using it.");
+                }
+            }
+            else if(entityPM.WarehouseLegActualEntryDate != null)
+            {
+                throw new ApplicationException("WarehouseLegWarehouseId field doesn't exist in the database,Upsert WarehouseLegWarehouseId before using WarehouseLegActualEntryDate");
+            }
+        }
+
+        private static void MapWarehouseLegAddressId(ShipmentPM entityPM, AddressRepository addressRepository, string warehouseCardId)
+        {
+            Address warehouseAddress = addressRepository.GetMainAddressByCardId(warehouseCardId, entityPM.Tenant);
+            if (warehouseAddress != null)
+            {
+                entityPM.WarehouseLegAddressId = warehouseAddress.Id;
+            }
         }
 
         private static Response ValidateDirectionConversion(ShipmentPM entityPM)

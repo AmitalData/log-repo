@@ -1,23 +1,23 @@
-﻿Feature: CreateNewChargeType
+﻿Feature: Create New Charge Type
     In order to create a new charge type
 	As a user you have to login with your credentials,
 	then you can create a new charge type to your tenant
 
-Background: 
-	successful login with valid credentials
-	Given user have the following Login Properties
-	   | Email              | Password     |
-	   | ahmadb123@mail.com | ahmed13!A15 |
-	When the user call Login API
-	Then the user will have a token
-	
-Scenario: create new charge type
-	Given  user add a charge type with the following properties
-	    | name              | value            | 
-		| EnglishName       | Test Charge Type |
-		| ChargesGroupCode  | NONE             |
-		| MeasurementId     | 1-22383          |
-		| ChargesGroupId    | 1-889            |
+Background:
+	Successful login with valid credentials
+	Given Users with following credentials
+		| Email              | Password    |
+		| ahmadb123@mail.com | ahmed13!A15 |
+	When Users make login request
+	Then Users should have token
 
-	When the user call create charge type API
-	Then a new charge type should be added
+Scenario: Create New Charge Type
+	Given Charge type with the following properties
+		| name             | value                                                 |
+		| Code             | {RandomString(3)}                                     |
+		| EnglishName      | Test Charge Type                                      |
+		| ChargesGroupCode | NONE                                                  |
+		| MeasurementId    | Get {Id} from {Code} {FIXD} using {MeasurementViews}  |
+		| ChargesGroupId   | Get {Id} from {Code} {NONE} using {ChargesGroupViews} |
+	When Create charge type
+	Then New charge type should be created

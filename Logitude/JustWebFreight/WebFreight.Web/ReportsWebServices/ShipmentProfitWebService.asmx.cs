@@ -218,7 +218,8 @@ namespace WebFreight.Web.ReportsWebServices
                 provider.DifferenceInProfitCurrency = String.Format("{0:#,0.00}", differenceInProfitCurrency);
                 provider.ShipmentVolume = shipmentPM.Volume;
                 provider.VolumeUnitCode = shipmentPM.VolumeUnitCode;
-
+                provider.IsAccrualsApproved = shipmentPM.IsAccrualsApproved;
+                provider.AccrualsApprovalDate = shipmentPM.AccrualsApprovalDate;
                 #endregion
 
                 #region Group by ChargeType

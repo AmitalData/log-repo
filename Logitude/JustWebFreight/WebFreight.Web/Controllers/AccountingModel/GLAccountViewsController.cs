@@ -316,6 +316,44 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
             }
         }
 
+        public HttpResponseMessage GetAccountTransactionsCount(string accountId)
+        {
+            try
+            {
+                AuthenticationToken authToken = Authinticate();
+
+                int count = GetAccountTransactionsCount(accountId, authToken);
+
+                return Request.CreateResponse(HttpStatusCode.OK, count);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
+        private static int GetAccountTransactionsCount(string accountId, AuthenticationToken authToken)
+        {
+            IAccountingContext MyContext = AccountingContext.GetContext(authToken.Tenant);
+            GLAccountListQueryService glAccountQuery = new GLAccountListQueryService(MyContext);
+            LedgerTransactionListQueryService transactionsQuery = new LedgerTransactionListQueryService(MyContext);
+
+            var count = transactionsQuery.GetTransactionsCountByAccountId(accountId, authToken.Tenant);
+            return count;
+        }
+
+        private static AuthenticationToken Authinticate()
+        {
+            string token = HttpContext.Current.Request.Headers["Token"];
+            AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+            int tenant = authToken.Tenant;
+            string loggedUserEmail = authToken.Email;
+
+            SecurityUtility.AuthenticationOnTenant(tenant);
+            SecurityUtility.CheckContactFeature("GLAccount", "READ", tenant);
+            return authToken;
+        }
+
         public HttpResponseMessage GetAccountCurrencies(string accountId)
         {
             try

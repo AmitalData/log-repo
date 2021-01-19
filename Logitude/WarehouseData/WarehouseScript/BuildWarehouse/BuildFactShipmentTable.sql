@@ -245,7 +245,43 @@
  declare @ArrivalNoticeSent as datetime
 
  declare @ContainersNumbersAndTypesArray as nvarchar(1000)
- declare @UnNumber as  VARCHAR(4) 
+ declare @UnNumber as  VARCHAR(4)  
+ 
+    declare @PreCarriageFromPort as int
+	declare @PreCarriageToPort as int
+	declare @OnCarriageFromPort as int
+	declare @OnCarriageToPort as int
+	declare @Transshipment1FromPort as int
+	declare @Transshipment2FromPort as int
+	declare @Transshipment3FromPort as int
+	declare @Transshipment1ToPort as int
+	declare @Transshipment2ToPort as int
+	declare @Transshipment3ToPort as int
+	declare @PreCarriageCarrier as int
+	declare @OnCarriageCarrier as int
+   
+   declare @PreCarriageCarrierNumber as varchar(15)
+   declare @OnCarriageCarrierNumber as varchar(15)
+   declare @PreCarriageTransportMode as varchar(13)
+   declare @PreCarriageETA as datetime
+   declare @PreCarriageATD as datetime
+   declare @PreCarriageATA as datetime
+   declare @OnCarriageETD as datetime
+   declare @OnCarriageETA as datetime
+   declare @OnCarriageATD as datetime
+   declare @OnCarriageATA as datetime
+   declare @Transshipment2ATA as datetime
+   declare @Transshipment2ETA as datetime
+   declare @Transshipment2ATD as datetime
+   declare @Transshipment2ETD as datetime
+   declare @Transshipment3ATA as datetime
+   declare @Transshipment3ETA as datetime
+   declare @Transshipment3ATD as datetime
+   declare @Transshipment3ETD as datetime 
+   declare @Transshipment2Carrier as int
+   declare @Transshipment3Carrier as int
+   declare @Transshipment2AdditionalMAWBOBLBL as nvarchar(20)
+   declare @Transshipment3AdditionalMAWBOBLBL as nvarchar(20)
 
 	DECLARE ShipmentsCursor CURSOR READ_ONLY
 	FOR
@@ -269,7 +305,17 @@
     ShipmentPayableStatuses.Name, ShipmentReceivableStatuses.Name, dw_Shipments.CarrierLastStatusDate, dw_Shipments.AWBPrint, dw_Shipments.ExceptionDescription, dw_Shipments.HasException, dw_Shipments.ExceptionResolvedDescription, dw_Shipments.LastExceptionDescription, dw_Shipments.RegistryDate, dw_Shipments.GrossWeightPerTon, dw_Shipments.NextETA, dw_Shipments.NextETD,
     dw_ShipmentComputedFields.Commodity, dw_ShipmentMasterDatas.TrailerNumber, dw_ShipmentMasterDatas.MainCarriageFromAddressId, dw_ShipmentMasterDatas.MainCarriageToAddressId,
 	fisrtPickupTruckerPartners.Id_Number,dw_ShipmentComputedFields.PickupTruckerNumber,dw_ShipmentComputedFields.PickupDriver,dw_ShipmentComputedFields.PickupTrailerNumber,dw_ShipmentComputedFields.PickupNotes,finalDeliveryTruckerIdPartners.Id_Number, dw_ShipmentComputedFields.DeliveryTruckerNumber,dw_ShipmentComputedFields.DeliveryDriver,dw_ShipmentComputedFields.DeliveryTrailerNumber,dw_ShipmentComputedFields.DeliveryNotes ,dw_ShipmentMasterDatas.DocumentsClosingDate,dw_ShipmentComputedFields.DeliveryDate,dw_ShipmentComputedFields.OnHandDate,dw_ShipmentComputedFields.PODDate,dw_Shipments.WarehouseLegActualEntryDate, dw_ShipmentComputedFields.BookingConfirmationSent, dw_ShipmentComputedFields.PreAlertSent, dw_ShipmentComputedFields.DeliveryNoticeSent, dw_ShipmentComputedFields.ExpectedArrivalNoticeSent, dw_ShipmentComputedFields.T1Received, dw_ShipmentComputedFields.ArrivalNoticeSent, dw_ShipmentComputedFields.ContainersNumbersAndTypesArray
-	,NewDIM_ShipmentStatuses.Id_Number , dw_Shipments.ComputedStatusDate, dw_Shipments.DangerousUnNumber
+	,NewDIM_ShipmentStatuses.Id_Number , dw_Shipments.ComputedStatusDate, dw_Shipments.DangerousUnNumber,
+
+		dw_Shipments.PreCarriageCarrierNumber, dw_Shipments.OnCarriageCarrierNumber, PreCarriageTransportModes.Name,PreCarriageFromPort.Id_Number,
+	OnCarriageFromPort.Id_Number, PreCarriageToPort.Id_Number,OnCarriageToPort.Id_Number, Transshipment1FromPort.Id_Number,Transshipment2FromPort.Id_Number,
+	Transshipment3FromPort.Id_Number,Transshipment1ToPort.Id_Number, Transshipment2ToPort.Id_Number, Transshipment3ToPort.Id_Number,PreCarriageCarrier.Id_Number,
+	OnCarriageCarrier.Id_Number,dw_Shipments.PreCarriageETA, dw_Shipments.PreCarriageATD,dw_Shipments.PreCarriageATA,dw_Shipments.OnCarriageETD, dw_Shipments.OnCarriageETA, 
+	dw_Shipments.OnCarriageATD, dw_Shipments.OnCarriageATA, dw_ShipmentMasterDatas.Transshipment2ATA, dw_ShipmentMasterDatas.Transshipment3ATA, dw_ShipmentMasterDatas.Transshipment2ETA , 
+	dw_ShipmentMasterDatas.Transshipment3ETA,dw_ShipmentMasterDatas.Transshipment2ATD, dw_ShipmentMasterDatas.Transshipment3ATD, dw_ShipmentMasterDatas.Transshipment2ETD , 
+	dw_ShipmentMasterDatas.Transshipment3ETD,dw_ShipmentMasterDatas.Transshipment2AdditionalMAWBOBLBL, dw_ShipmentMasterDatas.Transshipment3AdditionalMAWBOBLBL,
+	Transshipment2Carrier.Id_Number,Transshipment3Carrier.Id_Number
+
 
 	 
 
@@ -340,6 +386,20 @@
 
     inner JOIN NewDIM_Partners fisrtPickupTruckerPartners ON dw_ShipmentComputedFields.PickupTruckerId = fisrtPickupTruckerPartners.Id
     inner JOIN NewDIM_Partners finalDeliveryTruckerIdPartners ON dw_ShipmentComputedFields.DeliveryTruckerId = finalDeliveryTruckerIdPartners.Id
+	 
+   inner JOIN NewDIM_TransportModes  PreCarriageTransportModes ON dw_Shipments.PreCarriageTransportModeId = PreCarriageTransportModes.Code
+   inner JOIN NewDIM_Ports PreCarriageFromPort  ON dw_Shipments.PreCarriageFromPortId = PreCarriageFromPort.Id
+   inner JOIN NewDIM_Ports PreCarriageToPort  ON dw_Shipments.PreCarriageToPortId = PreCarriageToPort.Id
+   inner JOIN NewDIM_Ports OnCarriageFromPort  ON dw_Shipments.OnCarriageFromPortId = OnCarriageFromPort.Id
+   inner JOIN NewDIM_Ports OnCarriageToPort  ON dw_Shipments.OnCarriageToPortId = OnCarriageToPort.Id
+
+   inner JOIN NewDIM_Ports Transshipment1FromPort  ON dw_ShipmentMasterDatas.Transshipment1FromPortId = Transshipment1FromPort.Id
+   inner JOIN NewDIM_Ports Transshipment2FromPort  ON dw_ShipmentMasterDatas.Transshipment2FromPortId = Transshipment2FromPort.Id
+   inner JOIN NewDIM_Ports Transshipment3FromPort  ON dw_ShipmentMasterDatas.Transshipment3FromPortId = Transshipment3FromPort.Id 
+   inner JOIN NewDIM_Partners PreCarriageCarrier  ON dw_Shipments.PreCarriageCarrierId = PreCarriageCarrier.Id
+   inner JOIN NewDIM_Partners OnCarriageCarrier  ON dw_Shipments.OnCarriageCarrierId = OnCarriageCarrier.Id   
+   inner JOIN NewDIM_Partners Transshipment2Carrier ON dw_ShipmentMasterDatas.Transshipment2CarrierId = Transshipment2Carrier.Id
+   inner JOIN NewDIM_Partners Transshipment3Carrier ON dw_ShipmentMasterDatas.Transshipment3CarrierId = Transshipment3Carrier.Id
 
 
 
@@ -362,8 +422,13 @@
     @ConsigneeNotImporter,@IssuingCarrierAgent,@OnCarriageTransportMode,@FirstARInvoiceApprovalDate,@BookingConfirmationNotes,@BookingConfirmedBy, @NumberOfDeliveries,@OperationallyClosedByUser,@LastPickupATA,@LastPickupATD,@LastPickupETA,@LastPickupETD,@DeliveryToPort,@DeliveryFrom,@DeliveryTo,@PickupFrom,@PickupTo,@FreightRelease,
     @PayableStatus, @ReceivableStatus, @CarrierLastStatusDate, @AWBPrint, @ExceptionDescription, @HasException, @ExceptionResolvedDescription, @LastExceptionDescription, @RegistryDate, @GrossWeightPerTon, @NextETA, @NextETD,
     @Commodity, @TrailerNumber, @FromLocation, @ToLocation,@FirstPickupTruckerId, @FirstPickupTruckerNumber, @FirstPickupDriver, @FirstPickupTrailerNumber, @FirstPickupNotes,@FinalDeliveryTruckerId, @FinalDeliveryTruckerNumber, @FinalDeliveryDriver, @FinalDeliveryTrailerNumber, @FinalDeliveryNotes,@DocumentsClosingDate,@DeliveryDate,@OnHandDate,@PODDate,@InWarehouseDate, @BookingConfirmationSent, @PreAlertSent, @DeliveryNoticeSent, @ExpectedArrivalNoticeSent, @T1Received, @ArrivalNoticeSent, @ContainersNumbersAndTypesArray
-	,@ComputedStatus , @ComputedStatusDate, @UnNumber
-
+	,@ComputedStatus , @ComputedStatusDate, @UnNumber,
+	
+	  @PreCarriageCarrierNumber, @OnCarriageCarrierNumber, @PreCarriageTransportMode, @PreCarriageFromPort, @OnCarriageFromPort, @PreCarriageToPort, @OnCarriageToPort,
+	  @Transshipment1FromPort, @Transshipment2FromPort, @Transshipment3FromPort, @Transshipment1ToPort, @Transshipment2ToPort,@Transshipment3ToPort, @PreCarriageCarrier, 
+	  @OnCarriageCarrier,@PreCarriageETA, @PreCarriageATD, @PreCarriageATA, @OnCarriageETD, @OnCarriageETA,@OnCarriageATD, @OnCarriageATA, @Transshipment2ATA,
+	  @Transshipment3ATA, @Transshipment2ETA, @Transshipment3ETA, @Transshipment2ATD, @Transshipment3ATD, @Transshipment2ETD, @Transshipment3ETD,
+      @Transshipment2AdditionalMAWBOBLBL, @Transshipment3AdditionalMAWBOBLBL, @Transshipment2Carrier,@Transshipment3Carrier
 
 
 
@@ -499,7 +564,15 @@
       ,[Payable Status],[Receivable Status],[Carrier Last Status Date],[AWB Print],[Exception Description],[Has Exception],[Exception Resolved Description],[Last Exception Description],[Registry Date],[Gross Weight Per Ton],[Next ETA],[Next ETD]
       ,[Commodity], [Trailer Number], [From Location], [To Location]
 	  ,[First Pickup Trucker], [First Pickup Trucker Number], [First Pickup Driver],[First Pickup Trailer Number], [First Pickup Notes],[Final Delivery Trucker], [Final Delivery Trucker Number], [Final Delivery Driver],[Final Delivery Trailer Number], [Final Delivery Notes],[Document Closing Date],[Order Gross Weight in Ton],[Delivery Date],[On Hand Date],[POD Date],[In Warehouse Date],[Booking Confirmation Sent],[Pre Alert Sent],[Delivery Notice Sent],[Expected Arrival Notice Sent],[T1 Received],[Arrival Notice Sent],[Containers Numbers and Types Array]
-	  ,[Un Number]
+	  ,[Un Number],
+	   
+	   [Pre Carriage Carrier Number], [On Carriage Carrier Number], [Pre Carriage Transport Mode], [Pre Carriage From Port],
+	   [On Carriage From Port], [Pre Carriage To Port], [On Carriage To Port],[Transshipment 1 From Port], [Transshipment 2 From Port], 
+	   [Transshipment 3 From Port],[Transshipment 1 To Port], [Transshipment 2 To Port], [Transshipment 3 To Port], [Pre Carriage Carrier],
+       [On Carriage Carrier], [Pre Carriage ETA], [Pre Carriage ATD], [Pre Carriage ATA], [On Carriage ETD],  [On Carriage ETA], [On Carriage ATD],
+       [On Carriage ATA], [Transshipment 2 ATA], [Transshipment 3 ATA],[Transshipment 2 ETA], [Transshipment 3 ETA], [Transshipment 2 ATD],
+       [Transshipment 3 ATD], [Transshipment 2 ETD], [Transshipment 3 ETD],[Transshipment 2 Master], [Transshipment 3 Master],
+	   [Transshipment 2 Carrier], [Transshipment 3 Carrier] 
 	  ) 
 
       values(@Id, @SourceTenant,@ParentTenant,@Direction,@TransportMode, @DirectHouse, @Type, @OBLType, @Department ,@Branch , @ShipmentNumber , @House ,@Master , @Shipper,  @Consignee , @Agent,@Customer,@Incoterm ,@TotalGrossWeightInKG,@TotalChargeableWeightInKG, @TotalVolumeInCBM,  @NumberOfPackages, @DangerousGoods, @NumberOfContainers, @Salesman , @AccountManager ,    @TotalProfitInLocalCurrency , @TotalProfitInProfitCurrency , @LocalCurrency,@ProfitCurrency ,@OperationallyClosed,@AccountingClosed, @ComputedStatus, @Location,  @MainCarriageFromPort , @FinalDestination , @IsDeparted , @MainCarriageATD  ,@IsArrived , @ArrivedDate   , @IsCustomsCleared , 1 ,dbo.GetDateFormateAsNumber(@CreateDate)    ,dbo.GetDateFormateAsNumber(@LastUpdateDate)   , dbo.GetDateFormateAsNumber(@OperationalDate),dbo.GetDateFormateAsNumber(@OperationalCloseDate),dbo.GetDateFormateAsNumber(@AccountingCloseDate) ,@OpenReceivablesInLocalCurrency , @OpenReceivablesInProfitCurrency ,@AccountedReceivablesInLocalCurrency,@AccountedReceivablesInProfitCurrency, @OpenPayablesInLocalCurrency ,@OpenPayablesInProfitCurrency , @AccountedPayablesInLocalCurrency ,@AccountedPayablesInProfitCurrency , @AgentReference1, @AgentReference2,@AMSBL ,@ConsigneeReference1,@ConsigneeReference2,@CreatedBy,@CustomAgent,@CustomerReference1,@CustomerReference2,dbo.GetDateFormateAsNumber(@FirstPickupDate)   ,@FreightPC, dbo.GetDateFormateAsNumber(@CarrierDate)   ,@Carrier,@CarrierNumber,@MainHarmonize,@OtherChargePC,@ProjectNumber,@ShipperReference1,@ShipperReference2,@TEU,@ValueOfGoods,@ValueOfGoodsCurrency,@Warehouse,@FreightForwarder ,  @BookingConfirmationNumber,@MainCarriageATA , dbo.GetDateFormateAsNumber(@MAWBOBLDate) ,@MAWBOBLDate , dbo.GetDateFormateAsNumber(@ComputedStatusDate) , @CustomsDeclarationNumber ,dbo.GetDateFormateAsNumber(@FirstOperationalCloseDate) ,  @EstimatedFinalArrivalDate , @ActualFinalArrivalDate , REPLACE(@Routing,',','>'), @DescriptionOfGoods, @PreCarriageETD ,  @MainCarriageETA , @MainCarriageETD,@MoveType ,@Vessel,@SpecialServices ,@FirstPickupETA, @FirstPickupETD, @MasterShipmentNumber , @ARInvoices,[CustomFieldValuesVariable],@CreateDate,@LastUpdateDate,@OperationalDate,@CutoffDate ,@Consolidator,@ConsolidatorRef1, @ShipmentNotes, @Notify1, @Notify1Ref1, @Notify2, @Notify2Ref1, @Coloader, @ColoaderRef1, @ShipperNotExporter, @ShipperNotExporterRef1, @ReleasingAgent , @ReleasingAgentRef1 ,
@@ -508,7 +581,16 @@
 	  @ConsigneeNotImporter,@IssuingCarrierAgent,@OnCarriageTransportMode,@FirstARInvoiceApprovalDate,@BookingConfirmationNotes,@BookingConfirmedBy,
 	   @NumberOfDeliveries,@OperationallyClosedByUser,@LastPickupATA,@LastPickupETA,@DeliveryToPort,@LastPickupETD,@LastPickupATD,@DeliveryFrom,@DeliveryTo,@PickupFrom,@PickupTo,@FreightRelease,
        @PayableStatus,@ReceivableStatus,@CarrierLastStatusDate,@AWBPrint,@ExceptionDescription,@HasException,@ExceptionResolvedDescription,@LastExceptionDescription,dbo.GetDateFormateAsNumber(@RegistryDate),@GrossWeightPerTon,@NextETA,@NextETD,
-       @Commodity,@TrailerNumber,@FromLocation,@ToLocation,@FirstPickupTruckerId, @FirstPickupTruckerNumber, @FirstPickupDriver, @FirstPickupTrailerNumber, @FirstPickupNotes,@FinalDeliveryTruckerId, @FinalDeliveryTruckerNumber, @FinalDeliveryDriver, @FinalDeliveryTrailerNumber, @FinalDeliveryNotes,@DocumentsClosingDate,@OrderGrossWeightinTon,@DeliveryDate,@OnHandDate,@PODDate,@InWarehouseDate,@BookingConfirmationSent, @PreAlertSent, @DeliveryNoticeSent, @ExpectedArrivalNoticeSent, @T1Received, @ArrivalNoticeSent, @ContainersNumbersAndTypesArray, @UnNumber)
+       @Commodity,@TrailerNumber,@FromLocation,@ToLocation,@FirstPickupTruckerId, @FirstPickupTruckerNumber, @FirstPickupDriver, @FirstPickupTrailerNumber, @FirstPickupNotes,@FinalDeliveryTruckerId, @FinalDeliveryTruckerNumber, @FinalDeliveryDriver, @FinalDeliveryTrailerNumber, @FinalDeliveryNotes,@DocumentsClosingDate,@OrderGrossWeightinTon,@DeliveryDate,@OnHandDate,@PODDate,@InWarehouseDate,@BookingConfirmationSent, @PreAlertSent, @DeliveryNoticeSent, @ExpectedArrivalNoticeSent, @T1Received, @ArrivalNoticeSent, @ContainersNumbersAndTypesArray, @UnNumber,
+	  
+	  @PreCarriageCarrierNumber, @OnCarriageCarrierNumber, @PreCarriageTransportMode,  @PreCarriageFromPort, 
+	   @OnCarriageFromPort, @PreCarriageToPort, @OnCarriageToPort,@Transshipment1FromPort, @Transshipment2FromPort,
+	  @Transshipment3FromPort, @Transshipment1ToPort, @Transshipment2ToPort, @Transshipment3ToPort, @PreCarriageCarrier, 
+	  @OnCarriageCarrier,@PreCarriageETA, @PreCarriageATD,  @PreCarriageATA, @OnCarriageETD,  @OnCarriageETA, @OnCarriageATD, 
+	  @OnCarriageATA, @Transshipment2ATA, @Transshipment3ATA, @Transshipment2ETA , @Transshipment3ETA , @Transshipment2ATD,
+      @Transshipment3ATD, @Transshipment2ETD, @Transshipment3ETD, @Transshipment2AdditionalMAWBOBLBL, @Transshipment3AdditionalMAWBOBLBL, 
+	  @Transshipment2Carrier,@Transshipment3Carrier
+	  	  )
 	END TRY 
 BEGIN CATCH  
 
@@ -538,7 +620,13 @@ END CATCH
     @ConsigneeNotImporter,@IssuingCarrierAgent,@OnCarriageTransportMode,@FirstARInvoiceApprovalDate,@BookingConfirmationNotes,@BookingConfirmedBy, @NumberOfDeliveries,@OperationallyClosedByUser,@LastPickupATA,@LastPickupATD,@LastPickupETA,@LastPickupETD,@DeliveryToPort,@DeliveryFrom,@DeliveryTo,@PickupFrom,@PickupTo,@FreightRelease,
     @PayableStatus,@ReceivableStatus,@CarrierLastStatusDate,@AWBPrint,@ExceptionDescription,@HasException,@ExceptionResolvedDescription,@LastExceptionDescription,@RegistryDate,@GrossWeightPerTon,@NextETA,@NextETD,
     @Commodity,@TrailerNumber,@FromLocation,@ToLocation,@FirstPickupTruckerId, @FirstPickupTruckerNumber, @FirstPickupDriver, @FirstPickupTrailerNumber, @FirstPickupNotes,@FinalDeliveryTruckerId, @FinalDeliveryTruckerNumber, @FinalDeliveryDriver, @FinalDeliveryTrailerNumber, @FinalDeliveryNotes,@DocumentsClosingDate,@DeliveryDate,@OnHandDate,@PODDate,@InWarehouseDate,@BookingConfirmationSent, @PreAlertSent, @DeliveryNoticeSent, @ExpectedArrivalNoticeSent, @T1Received, @ArrivalNoticeSent, @ContainersNumbersAndTypesArray
-	,@ComputedStatus , @ComputedStatusDate, @UnNumber
+	,@ComputedStatus , @ComputedStatusDate, @UnNumber, 
+	@PreCarriageCarrierNumber, @OnCarriageCarrierNumber, @PreCarriageTransportMode, @PreCarriageFromPort, @OnCarriageFromPort, @PreCarriageToPort,
+    @OnCarriageToPort,@Transshipment1FromPort, @Transshipment2FromPort, @Transshipment3FromPort,  @Transshipment1ToPort, @Transshipment2ToPort, 
+	@Transshipment3ToPort, @PreCarriageCarrier,  @OnCarriageCarrier,@PreCarriageETA, @PreCarriageATD,   @PreCarriageATA, @OnCarriageETD, @OnCarriageETA,
+	@OnCarriageATD, @OnCarriageATA, @Transshipment2ATA, @Transshipment3ATA, @Transshipment2ETA , @Transshipment3ETA , @Transshipment2ATD,
+    @Transshipment3ATD, @Transshipment2ETD, @Transshipment3ETD, @Transshipment2AdditionalMAWBOBLBL, @Transshipment3AdditionalMAWBOBLBL, 
+	@Transshipment2Carrier,@Transshipment3Carrier
 
 
 		End

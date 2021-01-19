@@ -1,7 +1,7 @@
 <div class="search-wrapper" [style.height]="Shipments.length>0 ? '100%' : ''">
     <div class="vertical-center" [class.vertical-center-withdata]="Shipments.length>0">
         <h1 class="page-title">Track Shipment</h1>
- 
+
         <router-outlet ></router-outlet>
 
 
@@ -21,7 +21,7 @@
 
                     </div>
 
-                    <button id="Button_Search" class="search-button" type="submit">{{isLoading?'Loading...': 'Search'}}</button>
+                    <button id="Button_Search" class="search-button" type="submit">Search</button>
                 </form>
             </div>
         </div>
@@ -29,12 +29,12 @@
         <div class="container ">
 
             <div class="info-text " *ngIf="Shipments.length==0  && !noResult && !hasError">
-               
+
                 <p *ngIf="1">
                     Keep track of the location and all details of your cargo and shipments using our Cargo Tracking site. You can search using the shipment number or reference, cargo identifiers or container number.
                 </p>
 
-              
+
             </div>
 
             <!-- No Result -->
@@ -56,11 +56,10 @@
 
             </div>
 
-
+         <!-- 
             <div class="path-image hide-mobile " *ngIf="Shipments.length==0  && !noResult  && !hasError">
 
                 <svg class="path "  viewBox="0 0 469 236" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-                    <title>DC9DEC39-248D-4509-8605-2BDDF4960E4D</title>
                     <g id="Desktop-DSV" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
                         <g id="Search" transform="translate(-1177.000000, -736.000000)" fill="var(--MainColor)" fill-rule="nonzero">
                             <g id="Background" transform="translate(0.000000, 70.000000)">
@@ -73,7 +72,6 @@
                 </svg>
 
                 <svg class="end "viewBox="0 0 43 89" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-                    <title>46A3DC18-30CA-4299-B6CB-F2417BF93792</title>
                     <g id="Desktop-DSV" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
                         <g id="Search" transform="translate(-1644.000000, -671.000000)" fill="var(--secondaryColor)">
                             <g id="Background" transform="translate(0.000000, 70.000000)">
@@ -88,9 +86,8 @@
                         </g>
                     </g>
                 </svg>
-             
+
                 <svg class="start "  viewBox="0 0 19 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-                    <title>F3502AC9-D4F3-47DA-9DA4-FC0BECC1B90D</title>
                     <g id="Desktop-DSV" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
                         <g id="Search" transform="translate(-1167.000000, -985.000000)" fill="var(--secondaryColor)">
                             <g id="Background" transform="translate(0.000000, 70.000000)">
@@ -106,7 +103,7 @@
                 </svg>
 
             </div>
-
+        -->
 
             <!-- Has Error -->
             <div class="no-result-div" *ngIf="hasError">
@@ -114,7 +111,7 @@
                 <p style="font-size: 14px;">
                     An error occurred while searching, please try again.
                 </p>
-                <a *ngIf="!showErrorMessage" (click)="showErrorMessage = true" style="cursor: pointer;text-decoration: underline;">Show Error</a>
+                <p *ngIf="!showErrorMessage" style="cursor: pointer;text-decoration: underline;">Show Error</p>
 
                 <p *ngIf="showErrorMessage">{{ServiceError.ErrorMessage}}</p>
 
@@ -143,7 +140,6 @@
             <div class="path-image hide-mobile " *ngIf="noResult">
 
                 <svg class="path " viewBox="0 0 469 236" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-                    <title>DC9DEC39-248D-4509-8605-2BDDF4960E4D</title>
                     <g id="Desktop-DSV" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
                         <g id="Search" transform="translate(-1177.000000, -736.000000)" fill="var(--MainColor)" fill-rule="nonzero">
                             <g id="Background" transform="translate(0.000000, 70.000000)">
@@ -156,7 +152,6 @@
                 </svg>
 
                 <svg class="end " viewBox="0 0 43 89" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-                    <title>46A3DC18-30CA-4299-B6CB-F2417BF93792</title>
                     <g id="Desktop-DSV" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
                         <g id="Search" transform="translate(-1644.000000, -671.000000)" fill="var(--secondaryColor)">
                             <g id="Background" transform="translate(0.000000, 70.000000)">
@@ -173,7 +168,6 @@
                 </svg>
 
                 <svg class="start " viewBox="0 0 19 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-                    <title>F3502AC9-D4F3-47DA-9DA4-FC0BECC1B90D</title>
                     <g id="Desktop-DSV" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
                         <g id="Search" transform="translate(-1167.000000, -985.000000)" fill="var(--secondaryColor)">
                             <g id="Background" transform="translate(0.000000, 70.000000)">
@@ -193,9 +187,9 @@
 
             <!-- Row count -->
             <div class="result-count dark-gray" *ngIf="Shipments.length>0">
-                {{Shipments.length}} 
+                {{Shipments.length}}
                 <span *ngIf="Shipments.length==1">result</span>
-                <span *ngIf="Shipments.length>1">results</span>       
+                <span *ngIf="Shipments.length>1">results</span>
             </div>
 
             <!-- Cards -->
@@ -232,7 +226,6 @@
                         <div class="column mode-icon" style="width: 8%;">
                             <div class="circle-image">
                                 <svg class="path " width="47px" height="24px" viewBox="0 0 39 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-                                    <title>1AA85C09-5F26-422B-B8DF-3A21F62D731B</title>
                                     <g id="Desktop-DSV" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
                                         <g id="Search-Results" transform="translate(-375.000000, -1009.000000)" fill="var(--secondaryColor)">
                                             <g transform="translate(308.000000, 934.000000)">
@@ -245,7 +238,7 @@
                                         </g>
                                     </g>
                                 </svg>
-                            
+
                             </div>
                         </div>
 
@@ -255,7 +248,7 @@
                               <div [attr.src]="SplitReference(shipment.CustomerReference)" class="subtitle">Reference NO.</div>
                                 <div class="truncateText" *ngFor="let item of references; let i = index">
                                    <span [ngClass]="{'hide-mobile': i > 1}" >
-                                      {{item}}  
+                                      {{item}}
                                    </span>
                                 </div>
                             </div>
@@ -294,7 +287,7 @@
 
                             </div>
                         </div>-->
-                      
+
 
                         <!-- Shipment Id -->
                         <div class="column col-md-2 hide-mobile" style="width: 12%;">
@@ -327,8 +320,8 @@
                         <div class="column col-md-1 status" style="width: 25%;">
                             <div>
                                 <div class="subtitle">Status</div>
-                                <div class="value">{{ shipment.CurrentMilestoneName != null? shipment.CurrentMilestoneName : shipment.FutureMilstoneName }} <span *ngIf="shipment.CurrentMilestoneName == null && shipment.FutureMilstoneName!=null"> on {{  shipment.CurrentMilestoneName != null? shipment.CurrentMilestoneDate : shipment.FutureMilstoneDate | date: "d-MMM-y, HH:MM" }}</span></div>   
-                           
+                                <div class="value">{{ shipment.CurrentMilestoneName != null? shipment.CurrentMilestoneName : shipment.FutureMilstoneName }} <span *ngIf="shipment.CurrentMilestoneName == null && shipment.FutureMilstoneName!=null"> on {{  shipment.CurrentMilestoneName != null? shipment.CurrentMilestoneDate : shipment.FutureMilstoneDate | date: "d-MMM-y, HH:MM" }}</span></div>
+
                                 <div class="subtitle">Last Updated</div>
                                 <div class="value">{{  shipment.CurrentMilestoneName != null? shipment.CurrentMilestoneDate : shipment.FutureMilstoneDate | date: "d-MMM-y, h:mm" }}</div>
                             </div>

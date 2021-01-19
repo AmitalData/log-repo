@@ -180,6 +180,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
                     IShipmentsContext MyContext = ShipmentsContext.GetContext(authToken.Tenant);
                     MasterQueryService mappingService = new MasterQueryService(authToken.Tenant);
                     ShipmentPM entityPM = mappingService.MasterCustomDataMappingAndValidatin(entity, authToken.Tenant, computingPartnerCode);
+                    entityPM.IsExternalAPI = true;
 
                     if (string.IsNullOrEmpty(entityPM.VolumeUnitCode))
                     {
@@ -736,6 +737,8 @@ namespace WebFreight.Web.ExternalAPIs.V1
                             service.Update(true);
                         }
 
+                        MyContext = ShipmentsContext.GetContext(authToken.Tenant);
+                        mappingService = new MasterQueryService(authToken.Tenant);
                         var result = mappingService.GetMasterById(MasterPM.Id, authToken.Tenant);
                         APIHelper.AddCommunicationLog("D", entity, result, "Shipment", MasterPM.Id, "Master API", authToken.Tenant);
                         return Request.CreateResponse(HttpStatusCode.OK, result);

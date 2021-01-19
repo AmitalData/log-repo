@@ -1713,6 +1713,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     }
 
                     myShipment.QuoteId = null;
+                    myShipment.QuoteNumber = null;
                     shipmentRepository.Update(myShipment);
 
                     shipmentsContext.SaveChanges();
@@ -2588,23 +2589,34 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         CustomsTransferLinePM myLine = myEntity.CustomsTransferLines.Where(d => d.ShipmentId == item.Id).FirstOrDefault();
                         if (myLine != null)
                         {
-                            if (string.IsNullOrEmpty(item.AirlinePrefix) || string.IsNullOrEmpty(item.Master)
-                            || string.IsNullOrEmpty(item.MainCarriageFromPortCode) || string.IsNullOrEmpty(item.MainCarriageFromPortName)
-                            || string.IsNullOrEmpty(item.MainCarriageFinalDestinationPortCode) || string.IsNullOrEmpty(item.MainCarriageFinalDestinationPortName)
-                            || string.IsNullOrEmpty(item.MainCarriageCarrierCode) || string.IsNullOrEmpty(item.MainCarriageCarrierName)
-                            || item.NumberOfPackages == null || item.NumberOfPackages == 0
-                            || item.GrossWeight == null || item.GrossWeight == 0
-                            || (item.DirectionId == "E" && string.IsNullOrEmpty(item.ShipperId))
-                            || (item.DirectionId == "I" && string.IsNullOrEmpty(item.ConsigneeId)))
+                            if (myEntity.CustomsTransferTypeCode == "AMAS")
                             {
-                                myLine.HasError = true;
-                                myLine.ErrorText = this.BuildAMANACErrorText(item);
+                                if (string.IsNullOrEmpty(item.AirlinePrefix) || string.IsNullOrEmpty(item.Master)
+                                || string.IsNullOrEmpty(item.MainCarriageFromPortCode) || string.IsNullOrEmpty(item.MainCarriageFromPortName)
+                                || string.IsNullOrEmpty(item.MainCarriageFinalDestinationPortCode) || string.IsNullOrEmpty(item.MainCarriageFinalDestinationPortName)
+                                || string.IsNullOrEmpty(item.MainCarriageCarrierCode) || string.IsNullOrEmpty(item.MainCarriageCarrierName)
+                                || item.NumberOfPackages == null || item.NumberOfPackages == 0
+                                || item.GrossWeight == null || item.GrossWeight == 0
+                                || (item.DirectionId == "E" && string.IsNullOrEmpty(item.ShipperId))
+                                || (item.DirectionId == "I" && string.IsNullOrEmpty(item.ConsigneeId)))
+                                {
+                                    myLine.HasError = true;
+                                    myLine.ErrorText = this.BuildAMANACErrorText(item, myEntity.CustomsTransferTypeCode);
+                                }
                             }
 
                             else
                             {
-                                myLine.HasError = false;
-                                myLine.ErrorText = null;
+                                if (string.IsNullOrEmpty(item.MainCarriageVesselName)
+                                || string.IsNullOrEmpty(item.House)
+                                || string.IsNullOrEmpty(item.MainCarriageCarrierNumber)
+                                || string.IsNullOrEmpty(item.MainCarriageCarrierId)
+                                || (item.DirectionId == "E" && string.IsNullOrEmpty(item.ShipperId))
+                                || (item.DirectionId == "I" && string.IsNullOrEmpty(item.ConsigneeId)))
+                                {
+                                    myLine.HasError = true;
+                                    myLine.ErrorText = this.BuildAMANACErrorText(item, myEntity.CustomsTransferTypeCode);
+                                }
                             }
                         }
                     }
@@ -2618,114 +2630,9 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
-        private string BuildAMANACErrorText(ShipmentDataView item)
+        private string BuildAMANACErrorText(ShipmentDataView item, string type)
         {
             string myResult = "";
-
-            if (string.IsNullOrEmpty(item.AirlinePrefix) && string.IsNullOrEmpty(item.Master))
-            {
-                myResult = "Missing Master B/L";
-            }
-            else
-            {
-                myResult = "Invalid Master B/L";
-            }
-
-            if (string.IsNullOrEmpty(item.MainCarriageFromPortCode))
-            {
-                if(string.IsNullOrEmpty(myResult))
-                {
-                    myResult = "Missing Origin Airport Code";
-                }
-                else
-                {
-                    myResult = myResult + ", Missing Origin Airport Code";
-                }
-            }
-
-            if (string.IsNullOrEmpty(item.MainCarriageFromPortName))
-            {
-                if (string.IsNullOrEmpty(myResult))
-                {
-                    myResult = "Missing Origin Airport";
-                }
-                else
-                {
-                    myResult = myResult + ", Missing Origin Airport";
-                }
-            }
-
-            if (string.IsNullOrEmpty(item.MainCarriageFinalDestinationPortCode))
-            {
-                if (string.IsNullOrEmpty(myResult))
-                {
-                    myResult = "Missing Destination Airport Code";
-                }
-                else
-                {
-                    myResult = myResult + ", Missing Destination Airport Code";
-                }
-            }
-
-            if (string.IsNullOrEmpty(item.MainCarriageFinalDestinationPortName))
-            {
-                if (string.IsNullOrEmpty(myResult))
-                {
-                    myResult = "Missing Destination Airport";
-                }
-                else
-                {
-                    myResult = myResult + ", Missing Destination Airport";
-                }
-            }
-
-            if (string.IsNullOrEmpty(item.MainCarriageCarrierCode))
-            {
-                if (string.IsNullOrEmpty(myResult))
-                {
-                    myResult = "Missing IATA Code of the Carrier";
-                }
-                else
-                {
-                    myResult = myResult + ", Missing IATA Code of the Carrier";
-                }
-            }
-
-            if (string.IsNullOrEmpty(item.MainCarriageCarrierName))
-            {
-                if (string.IsNullOrEmpty(myResult))
-                {
-                    myResult = "Missing Airline";
-                }
-                else
-                {
-                    myResult = myResult + ", Missing Airline";
-                }
-            }
-
-            if (item.NumberOfPackages == null || item.NumberOfPackages == 0)
-            {
-                if (string.IsNullOrEmpty(myResult))
-                {
-                    myResult = "Missing Pieces";
-                }
-                else
-                {
-                    myResult = myResult + ", Missing Pieces";
-                }
-            }
-
-            if (item.GrossWeight == null || item.GrossWeight == 0)
-            {
-                if (string.IsNullOrEmpty(myResult))
-                {
-                    myResult = "Missing Gross Weight";
-                }
-                else
-                {
-                    myResult = myResult + ", Missing Gross Weight";
-                }
-            }
 
             if (item.DirectionId == "E" && string.IsNullOrEmpty(item.ShipperId))
             {
@@ -2748,6 +2655,153 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 else
                 {
                     myResult = myResult + ", Missing Consignee";
+                }
+            }
+
+            if (type == "AMAS")
+            {
+                if (string.IsNullOrEmpty(item.AirlinePrefix) && string.IsNullOrEmpty(item.Master))
+                {
+                    myResult = "Missing Master B/L";
+                }
+                else
+                {
+                    myResult = "Invalid Master B/L";
+                }
+
+                if (string.IsNullOrEmpty(item.MainCarriageFromPortCode))
+                {
+                    if (string.IsNullOrEmpty(myResult))
+                    {
+                        myResult = "Missing Origin Airport Code";
+                    }
+                    else
+                    {
+                        myResult = myResult + ", Missing Origin Airport Code";
+                    }
+                }
+
+                if (string.IsNullOrEmpty(item.MainCarriageFromPortName))
+                {
+                    if (string.IsNullOrEmpty(myResult))
+                    {
+                        myResult = "Missing Origin Airport";
+                    }
+                    else
+                    {
+                        myResult = myResult + ", Missing Origin Airport";
+                    }
+                }
+
+                if (string.IsNullOrEmpty(item.MainCarriageFinalDestinationPortCode))
+                {
+                    if (string.IsNullOrEmpty(myResult))
+                    {
+                        myResult = "Missing Destination Airport Code";
+                    }
+                    else
+                    {
+                        myResult = myResult + ", Missing Destination Airport Code";
+                    }
+                }
+
+                if (string.IsNullOrEmpty(item.MainCarriageFinalDestinationPortName))
+                {
+                    if (string.IsNullOrEmpty(myResult))
+                    {
+                        myResult = "Missing Destination Airport";
+                    }
+                    else
+                    {
+                        myResult = myResult + ", Missing Destination Airport";
+                    }
+                }
+
+                if (string.IsNullOrEmpty(item.MainCarriageCarrierName))
+                {
+                    if (string.IsNullOrEmpty(myResult))
+                    {
+                        myResult = "Missing Airline";
+                    }
+                    else
+                    {
+                        myResult = myResult + ", Missing Airline";
+                    }
+                }
+
+                if (item.NumberOfPackages == null || item.NumberOfPackages == 0)
+                {
+                    if (string.IsNullOrEmpty(myResult))
+                    {
+                        myResult = "Missing Pieces";
+                    }
+                    else
+                    {
+                        myResult = myResult + ", Missing Pieces";
+                    }
+                }
+
+                if (item.GrossWeight == null || item.GrossWeight == 0)
+                {
+                    if (string.IsNullOrEmpty(myResult))
+                    {
+                        myResult = "Missing Gross Weight";
+                    }
+                    else
+                    {
+                        myResult = myResult + ", Missing Gross Weight";
+                    }
+                }
+            }
+            
+            else
+            {
+                if (string.IsNullOrEmpty(item.MainCarriageVesselName))
+                {
+                    if (string.IsNullOrEmpty(myResult))
+                    {
+                        myResult = "Missing Vessel";
+                    }
+                    else
+                    {
+                        myResult = myResult + ", Missing Vessel";
+                    }
+                }
+
+                if (string.IsNullOrEmpty(item.House))
+                {
+                    if (string.IsNullOrEmpty(myResult))
+                    {
+                        myResult = "Missing House";
+                    }
+                    else
+                    {
+                        myResult = myResult + ", Missing House";
+                    }
+                }
+
+                if (string.IsNullOrEmpty(item.MainCarriageCarrierNumber))
+                {
+                    if (string.IsNullOrEmpty(myResult))
+                    {
+                        myResult = "Missing Voyage";
+                    }
+                    else
+                    {
+                        myResult = myResult + ", Missing Voyage";
+                    }
+                }
+
+                if (string.IsNullOrEmpty(item.MainCarriageCarrierId))
+                {
+                    if (string.IsNullOrEmpty(myResult))
+                    {
+                        myResult = "Missing Carrier";
+                    }
+                    else
+                    {
+                        myResult = myResult + ", Missing Carrier";
+                    }
                 }
             }
 

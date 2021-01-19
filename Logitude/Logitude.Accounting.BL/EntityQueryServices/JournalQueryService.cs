@@ -295,7 +295,25 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             Journal poco = repository.GetByAccountingEntityId(entityId, accountingEntityCode, tenant);
             return base.GetEntityPM(poco);
         }
-        
+        public List<JournalPM> GetJournalsByAccountingEntityIdAndTypeCode(string entityId, string accountingEntityCode, int tenant)
+        {
+            List<Journal> journals = repository.GetJournalsByAccountingEntityIdAndTypeCode(entityId, accountingEntityCode, tenant);
+            List <JournalPM> journalPMList = new List<JournalPM>();
+            foreach(Journal journal in journals)
+            {
+                JournalPM journalPM = this.GetEntityPM(journal);
+                if (journalPM != null)
+                {
+                    JournalLineQueryService journalLineQueryService = new JournalLineQueryService(tenant);
+                    List<JournalLinePM> lines = journalLineQueryService.GetJournalLinesByJournalId(journal.Id, tenant);
+                    journalPM.JournalLines = lines;
+                }
+                journalPMList.Add(journalPM);
+            }
+           
+            return journalPMList;
+      
+        }
         public JournalPM GetApprovedJournalByAccountingEntityId(string entityId, string accountingEntityCode, int tenant)
         {
             Journal poco = repository.GetApprovedJournalByAccountingEntityId(entityId, accountingEntityCode, tenant);
@@ -444,6 +462,21 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             pm.JournalLines = lines;
 
             return pm;
+        }
+
+
+        public JournalPM GetSingleWithLinesByEntityIdAndCode(string entityId,string code, int tenant)
+        {
+            Journal journalPoco = null;
+            journalPoco = repository.GetByJournalsAccountingEntityIdAndCode(entityId , code, tenant).FirstOrDefault();
+            JournalPM journalPm = this.GetEntityPM(journalPoco);
+            if (journalPm != null)
+            {
+                JournalLineQueryService journalLineQueryService = new JournalLineQueryService(tenant);
+                List<JournalLinePM> lines = journalLineQueryService.GetJournalLinesByJournalId(journalPoco.Id, tenant);
+                journalPm.JournalLines = lines;
+            }
+            return journalPm;
         }
         public JournalPM GetSingleJournalByExternalNoAndExternalSystem(string externalNo,string externalSystem, int tenant)
         {

@@ -229,6 +229,14 @@
     <Constraints
       Nullable="true" />
   </Column>
+  
+    <Column
+    Name="IsViewOnly"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+    
   <Relation
     ForeignKeyColumn="UserId"
     ReferencedTable="Users"

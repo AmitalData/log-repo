@@ -372,6 +372,7 @@ export class UpdateSurchargesComponent extends BaseComponent {
             else {
                 if (this.ContainerPricesItemsSource.filter(d => d.IsChargeChecked &&
                     AppTool.IsNullOrZero(d.Price1) && AppTool.IsNullOrZero(d.Price2) && AppTool.IsNullOrZero(d.Price3) && AppTool.IsNullOrZero(d.Price4) && AppTool.IsNullOrZero(d.Price5)
+                    && AppTool.IsNullOrZero(d.CostPrice)
                 ).length > 0) {
                     errors.push("No surcharges updated");
                 }
@@ -410,7 +411,7 @@ export class UpdateSurchargesComponent extends BaseComponent {
 
             if (this.TypeCode == "OFS") {
                 this.ContainerPricesItemsSource.filter(d => d.IsChargeChecked).forEach(item => {
-                    args.Surcharge.push(item.ChargeId + "," + item.ChargeCode + "," + item.Price1 + "," + item.Price2 + "," + item.Price3 + "," + item.Price4 + "," + item.Price5);
+                    args.Surcharge.push(item.ChargeId + "," + item.ChargeCode + "," + item.Price1 + "," + item.Price2 + "," + item.Price3 + "," + item.Price4 + "," + item.Price5 + "," + item.CostPrice);
                 });
             }
 
@@ -622,23 +623,39 @@ export class ContainerPriceClass extends BaseComponent {
     public ChargeId: string;
     public ChargeCode: string;
     public DataContext: ContainerPriceClass = this;
+    private measurementCode: string;
+    private isEnabled: boolean;
     constructor(charge: CodeNameClass, public mainComponent: any) {
         super();
         this.ChargeLabel = charge.DisplyText;
         this.ChargeId = charge.Code;
         this.ChargeCode = charge.Name;
+        this.measurementCode = charge.AdditionalField;
         this.SetUIProperties();
     }
 
     SetUIProperties() {
+        if (this.measurementCode == "FIXD" || this.measurementCode == "BTEU") {
+            this.isEnabled = false;
+            this.SetUIProperties_TariffLinesContainersPrice();
+            this.UIProperties.SetEnabled("CostPrice", null, this.IsChargeChecked && true);
+        }
+        else if (this.measurementCode == "BCNT") {
+            this.isEnabled = true;
+            this.SetUIProperties_TariffLinesContainersPrice();
+            this.UIProperties.SetEnabled("CostPrice", null, false);
+        }
+    }
+
+    SetUIProperties_TariffLinesContainersPrice() {
         this.SetUIProperties_Price(1);
         this.SetUIProperties_Price(2);
         this.SetUIProperties_Price(3);
         this.SetUIProperties_Price(4);
-        this.SetUIProperties_Price(5);        
+        this.SetUIProperties_Price(5);
     }
     private SetUIProperties_Price(index: number) {        
-        this.UIProperties.SetEnabled(("Price" + index), null, this.IsChargeChecked);
+        this.UIProperties.SetEnabled(("Price" + index), null, this.IsChargeChecked && this.isEnabled);
     }
     
     private isChargeChecked: boolean;
@@ -650,6 +667,17 @@ export class ContainerPriceClass extends BaseComponent {
             this.isChargeChecked = value;
 
             this.SetUIProperties();
+        }
+    }
+
+    private costPrice: number;
+    get CostPrice() {
+        return this.costPrice;
+    }
+    set CostPrice(value: number) {
+        if (this.costPrice != value) {
+            this.costPrice = value;
+            this.UIProperties.SetEnabled("CostPrice", null, this.IsChargeChecked);
         }
     }
 

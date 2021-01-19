@@ -54,6 +54,39 @@
         });
     });
 
+    jQuery.GetCargoLoginTenant = (function (myDomain) {
+
+        var url = "api/CargoTrackingBranding/?domain=" + myDomain;
+
+        $.ajax({
+            url: url,
+            type: 'GET',
+            contentType: 'application/json',
+
+            success: function (result) {
+                if (result != null && result.Result != null) {
+                    $.CurrentTenant = result.Result;
+
+                    $.GetLogginData();
+                    $.GetCompanyLogo();
+                }
+                else {
+                    $("#DocumentsPageBusyIndicator").hide();
+                    $("#Container").hide();
+                    $("#InvalidKeyArea").show();
+                }
+            },
+
+            error: function (jqXHR, textStatus, errorThrown) {
+                $.CheckUserException(jqXHR);
+                $("#DocumentsPageBusyIndicator").hide();
+                $("#Container").hide();
+                $("#InvalidKeyArea").show();
+            }
+        });
+
+    });
+
     jQuery.GetLoginTenant = (function (myDomain) {
 
         var url = "api/CargoTrackingBranding/?domain=" + myDomain;
@@ -71,13 +104,13 @@
                     $.GetCompanyLogo();
                 }
                 else {
-                    $("#Container").hide();
-                    $("#InvalidKeyArea").show();
+                    $.GetCargoLoginTenant(myDomain + "/cargotracking");
                 }
             },
 
             error: function (jqXHR, textStatus, errorThrown) {
                 $.CheckUserException(jqXHR);
+                $("#DocumentsPageBusyIndicator").hide();
                 $("#Container").hide();
                 $("#InvalidKeyArea").show();
             }
@@ -122,7 +155,7 @@
         $("#DocumentsPageBusyIndicator").show();
 
         if ($.IsExternalURL) {
-            var url = "api/shipments/getsinglepmbykey/" + $.CurrentEntityKey + "/" + $.CurrentEntityId + "/" + $.CurrentTenant;
+            var url = "api/shipments/getsinglepmbykeyandtenant/" + $.CurrentEntityKey + "/" + $.CurrentTenant;
         }
 
         $.ajax({
@@ -300,7 +333,6 @@
 
         if ($.trim(link).indexOf("securitykey") != -1) {
             $.CurrentEntityKey = linkParameters[0];
-            $.CurrentEntityId = linkParameters[1];
             $.IsExternalURL = true;
 
             $("#DownloadAllConnectedDocuments").hide();

@@ -39,3 +39,24 @@ CREATE TYPE [dbo].[LedgerTransactionsType] AS TABLE(
 GO
 
 
+
+
+CREATE TYPE [dbo].[GLAccountTotalByMonthsType] AS TABLE(
+
+                                [AccountId] [varchar](15) NOT NULL,
+								[DateTypeCode] [varchar](1) NOT NULL,
+                                 
+                                 
+								[Year] [int] NOT NULL,
+								[Month] [int] NOT NULL,
+                                 
+								[CurrencyId] [varchar](15) NULL,
+                                [Tenant] [int] NOT NULL,
+
+								[LocalAmountDebit] [decimal](16, 2) NOT NULL,
+								[LocalAmountCredit] [decimal](16, 2) NOT NULL,
+
+								[ForeignAmountDebit] [decimal](16, 2) NOT NULL,
+								[ForeignAmountCredit] [decimal](16, 2) NOT NULL
+	)
+	go

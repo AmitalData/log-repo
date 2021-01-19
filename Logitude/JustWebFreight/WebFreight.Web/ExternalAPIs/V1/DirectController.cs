@@ -228,6 +228,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
                         IShipmentsContext MyContext = ShipmentsContext.GetContext(authToken.Tenant);
                         DirectQueryService mappingService = new DirectQueryService(authToken.Tenant);
                         ShipmentPM entityPM = mappingService.DirectCustomDataMappingAndValidatin(entity, authToken.Tenant, computingPartnerCode);
+                        entityPM.IsExternalAPI = true;
 
                         this.ValidateUnitCodes(entityPM);
                         this.ValidateAirShipmentCarrier(entityPM, authToken.Tenant);
@@ -707,6 +708,8 @@ namespace WebFreight.Web.ExternalAPIs.V1
                             service.Update(true);
                         }
 
+                        MyContext = ShipmentsContext.GetContext(authToken.Tenant);
+                        mappingService = new DirectQueryService(authToken.Tenant);
                         var result = mappingService.GetDirectById(directPM.Id, authToken.Tenant);
                         APIHelper.AddCommunicationLog("D", entity, result, "Shipment", directPM.Id, "Direct API", authToken.Tenant);
                         return Request.CreateResponse(HttpStatusCode.OK, result);

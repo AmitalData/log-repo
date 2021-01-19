@@ -34,7 +34,7 @@ it('OpenShipmentView', () => {
 
 
 it('CreateNewView ', () => {
-    // cy.wait(200)
+    cy.wait(200)
     cy.get('#QueryList_0_0').should('be.visible')
     cy.get('#QueryList_0_0').click({ force: true })
     cy.get('#NewViewId_0_0').click()
@@ -47,10 +47,10 @@ it('CreateNewView ', () => {
     cy.get('#BusyIndicator_0').should('not.exist')
 })
 
-it('EditShipmentView', () => {
+/*it('EditShipmentView', () => {
 
-    //  cy.wait(100)
-    //cy.get('#QueryList_0_0').should('be.visible')
+     cy.wait(100)
+    cy.get('#QueryList_0_0').should('be.visible')
     cy.get('#QueryList_0_0').click({ force: true })
     cy.get('#SearchFieldsId_0_0').click({ force: true })
     cy.wait(100)
@@ -84,5 +84,5 @@ it('DeleteShipmentView', () => {
     cy.get('#ConfirmWindow_Yes_0').click()
 
 
-})
+})*/
 

@@ -143,5 +143,10 @@ export class TenantManagementList {
 		AveragePrice: number;
 		TotalPaymentamount: number;
 		NoPaymentForChildTenants: boolean;
+		LastEbookingSentDate: Date;
+		LastSISentDate: Date;
+		NumberOfBookingSentLastWeek: number;
+		NumberOfSISentLastWeek: number;
+		LastContainerStatusReceived: Date;
 	
 }

@@ -1,10 +1,14 @@
+using System;
+using System.Collections.Generic;
+using System.Text;
 
 namespace Logitude.CargoTracking.BL.CargoTrackingServices.DBTablesCopy.Generated
 {
    public partial class CargoTrackingHeaderEntityTypeDxml  
    {    
+      
         public string  GetCargoTrackingHeaderEntityTypeDxml (){
-		    string DxmlFile = "<Table Name='CargoTrackingHeaderEntityTypes' Schema='dbo' DBType='CargoTracking' Module='CargoTracking'>"+
+		    string dxmlFile = "<Table Name='CargoTrackingHeaderEntityTypes' Schema='dbo' DBType='CargoTracking' Module='CargoTracking'>"+
 "  <Column Name='Code' Type='varchar' Size='1'>"+
 "    <Constraints PrimaryKey='true' Nullable='false' />"+
 "  </Column>"+
@@ -22,8 +26,9 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.DBTablesCopy.Generated
 "  </Column>"+
 "</Table>";
 		
-		   return DxmlFile;
+		   return dxmlFile;
 		}
+		 
    }
 
 }

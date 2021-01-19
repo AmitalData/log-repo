@@ -111,12 +111,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Models\LoginInfo.cs" />
-    <Compile Include="Models\LoginParameters.cs" />
-    <Compile Include="Models\UserData.cs" />
+    <Compile Include="Builders\ChargeType\ChargeTypeBuilder.cs" />
+    <Compile Include="Models\ChargeType\ChargeTypeContext.cs" />
+    <Compile Include="Models\ChargeType\ChargeTypePM.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Steps\CreateNewChargeTypeSteps.cs" />
-    <Compile Include="Steps\LoginSteps.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
@@ -127,13 +126,9 @@
     <Analyzer Include="..\packages\xunit.analyzers.0.10.0\analyzers\dotnet\cs\xunit.analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Logitude.BL\Logitude.BL.csproj">
-      <Project>{a663e7ef-b858-4bb6-bc33-e473f51b8e56}</Project>
-      <Name>Logitude.BL</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Logitude.Test.Services\Logitude.Test.Services.csproj">
-      <Project>{f1fa1ab7-b923-4f48-9f32-17bdefa1f30b}</Project>
-      <Name>Logitude.Test.Services</Name>
+    <ProjectReference Include="..\Logitude.Test.Base\Logitude.Test.Base.csproj">
+      <Project>{74fbc07e-5cbf-44c5-85c8-f86facaa06b6}</Project>
+      <Name>Logitude.Test.Base</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

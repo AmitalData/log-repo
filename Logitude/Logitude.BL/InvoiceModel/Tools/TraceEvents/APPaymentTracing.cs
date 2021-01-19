@@ -17,6 +17,8 @@ namespace Logitude.BL.InvoiceModel.Tools.TraceEvents
             string myEntityName = "APPayment";
 
             ContactPM loggedContact = LoggedContactResolver.GetLoggedContact(entityPM.Tenant);
+            bool showLocals = !loggedContact.DontShowLocal;
+
 
             if (isNewState)
             {
@@ -30,17 +32,6 @@ namespace Logitude.BL.InvoiceModel.Tools.TraceEvents
                 });
             }
 
-            else
-            {
-                EventTracer.CreateTraceEvent(new EventTracerArgs()
-                {
-                    Tenant = entityPM.Tenant,
-                    EventTypeCode = "UPAP",
-                    UserId = loggedContact.Id,
-                    EntityId = entityPM.Id,
-                    ObjectTableName = myEntityName,
-                });
-            }
 
             if (entityPM.SetApproved)
             {
@@ -87,8 +78,56 @@ namespace Logitude.BL.InvoiceModel.Tools.TraceEvents
                 }
             }
 
+            else if(entityPM.InternalNotes != payment.InternalNotes || entityPM.PrintNotes != payment.PrintNotes)
+            {
+                var isInternalNotesChanged  = entityPM.InternalNotes != payment.InternalNotes;
+                var isPrintNotesChanged = entityPM.PrintNotes != payment.PrintNotes;
+                var isBothChanged = isInternalNotesChanged && isPrintNotesChanged;
+                var oldValue = TranslateTextsClass.Translate("Accounting.General.O.OldValue", entityPM.Tenant, showLocals);
+                var newValue = TranslateTextsClass.Translate("Accounting.General.O.NewValue", entityPM.Tenant, showLocals);
+                var InternalNotes = "Internal Notes Updated: " + oldValue + payment.InternalNotes + newValue + entityPM.InternalNotes;
+                var PrintNotes = "Print Notes Updated: " + oldValue + payment.PrintNotes + newValue + entityPM.PrintNotes;
+                var notes = "";
+                if (isBothChanged)
+                {
+                    notes = InternalNotes + ", " + PrintNotes;
+                }
+                else if (isInternalNotesChanged)
+                {
+                    notes = InternalNotes;
+                }
+                else
+                {
+                    notes = PrintNotes;
+                }
+                EventTracer.CreateTraceEvent(new EventTracerArgs()
+                {
+                    Tenant = entityPM.Tenant,
+                    EventTypeCode = "UPAP",
+                    UserId = loggedContact.Id,
+                    EntityId = entityPM.Id,
+                    ObjectTableName = myEntityName,
+                    Notes = notes
+                });
+            }
+
+            else
+            {
+                EventTracer.CreateTraceEvent(new EventTracerArgs()
+                {
+                    Tenant = entityPM.Tenant,
+                    EventTypeCode = "UPAP",
+                    UserId = loggedContact.Id,
+                    EntityId = entityPM.Id,
+                    ObjectTableName = myEntityName,
+                });
+            }
+
             TraceExternalPayment(entityPM, payment, loggedContact.Id);
         }
+
+
+     
 
         private static void TraceExternalPayment(APPaymentPM entityPM, APPayment payment, string loggedContactId)
         {

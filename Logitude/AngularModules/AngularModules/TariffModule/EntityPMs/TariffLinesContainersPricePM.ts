@@ -77,6 +77,11 @@ export class TariffLinesContainersPricePM {
     public set Price5(newValue: number) { if (this.price5 != newValue) { this.price5 = newValue; this.MarkAsDirty("Price5"); } }
        
 	 
+    private costPrice: number;
+    public get CostPrice() { return this.costPrice; }
+    public set CostPrice(newValue: number) { if (this.costPrice != newValue) { this.costPrice = newValue; this.MarkAsDirty("CostPrice"); } }
+       
+	 
 
     public OldEntityPM: TariffLinesContainersPricePM;
 	
@@ -91,7 +96,10 @@ export class TariffLinesContainersPricePM {
     public UniqueKey: string;
 	 	
     public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
+       if(!this.DisableMarkAsDirty)
+       {
         this.IsDirty = true;
 		  if (this.EntityParentPM) {
             this.EntityParentPM.MarkAsDirty();
@@ -101,6 +109,7 @@ export class TariffLinesContainersPricePM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "TariffLinesContainersPrice");
            
         }
+       }
     }
 
     private MyClone: TariffLinesContainersPricePM;

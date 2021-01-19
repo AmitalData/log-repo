@@ -4852,5 +4852,14 @@
       IsOld="false"
       IsCoreFeature="false"
       IsBusinessUnitEnabled="false" />
+    <Feature
+      Code="&quot;EDITPRINTEDDOCUMENTS&quot;"
+      FeatureTypeCode="&quot;ACT&quot;"
+      FeatureTextCodeCode="&quot;DocumentType.Features.EDITPRINTEDDOCUMENTS&quot;"
+      FeatureDefaultText="&quot;Edit Printed Documents&quot;"
+      IsPackagable="true"
+      IsOld="false"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
   </AdditionalFeatures>
 </entity>

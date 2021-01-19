@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.SearchService
 {
 
-    public class CargoTrackingSearchService
+    public static class CargoTrackingSearchService
     {
 
         public static List<string> PrivateRefrencesList = new List<string>() { "ConsigneeName", "ShipperName" };
@@ -22,27 +22,67 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.SearchService
         {
             if (tableName == "CargoTrackingShipmentSearches" || tableName == "CargoTrackingShipments")
             {
-                if (bulkDataPreperation.dataTable2 == null)
-                {
-                    bulkDataPreperation.dataTable2 = bulkDataPreperation.dataTable.Clone();
-                }
+                if (bulkDataPreperation.InnerDataTable == null)
+                    bulkDataPreperation.InnerDataTable = bulkDataPreperation.MainDataTable.Clone();
 
-                AddShipmentNumberReference(tableRow, bulkDataPreperation.dataTable2);
-                AddSplittedData(tableRow, bulkDataPreperation.dataTable2, "CustomerReference1");
-                AddSplittedData(tableRow, bulkDataPreperation.dataTable2, "CustomerReference2");
-                AddNewRecord(tableRow, bulkDataPreperation.dataTable2, "Master");
-                AddNewRecord(tableRow, bulkDataPreperation.dataTable2, "House");
-                AddNewRecord(tableRow, bulkDataPreperation.dataTable2, "ForwarderShipmentNumber");
-                AddNewRecord(tableRow, bulkDataPreperation.dataTable2, "CustomFileNumber");
-                AddNewRecord(tableRow, bulkDataPreperation.dataTable2, "CustomsDeclarationNumber");
-                AddNewRecord(tableRow, bulkDataPreperation.dataTable2, "ShipperName");
-                AddNewRecord(tableRow, bulkDataPreperation.dataTable2, "ConsigneeName");
-                AddSplittedData(tableRow, bulkDataPreperation.dataTable2, "ContainersNumbers");
-
-
+                CreateShipmentRefences(tableRow, bulkDataPreperation);
             }
 
 
+        }
+        private static void CreateShipmentRefences(DataRow tableRow, BulkDataPreperation bulkDataPreperation)
+        {
+            bool isValidToCreateRefrences = IsShipmentValidToCreateRefrences(tableRow, bulkDataPreperation);
+            if (isValidToCreateRefrences)
+            {
+                AddShipmentNumberReference(tableRow, bulkDataPreperation.InnerDataTable);
+                AddSplittedData(tableRow, bulkDataPreperation.InnerDataTable, "CustomerReference1");
+                AddSplittedData(tableRow, bulkDataPreperation.InnerDataTable, "CustomerReference2");
+                AddNewRecord(tableRow, bulkDataPreperation.InnerDataTable, "Master");
+                AddNewRecord(tableRow, bulkDataPreperation.InnerDataTable, "House");
+                AddNewRecord(tableRow, bulkDataPreperation.InnerDataTable, "ForwarderShipmentNumber");
+                AddNewRecord(tableRow, bulkDataPreperation.InnerDataTable, "CustomFileNumber");
+                AddNewRecord(tableRow, bulkDataPreperation.InnerDataTable, "CustomsDeclarationNumber");
+                AddNewRecord(tableRow, bulkDataPreperation.InnerDataTable, "ShipperName");
+                AddNewRecord(tableRow, bulkDataPreperation.InnerDataTable, "ConsigneeName");
+                AddSplittedData(tableRow, bulkDataPreperation.InnerDataTable, "ContainersNumbers");
+            }
+
+        }
+
+        private static bool IsShipmentValidToCreateRefrences(DataRow tableRow, BulkDataPreperation bulkDataPreperation)
+        {
+            bool isShipmentValid = true;
+            if (bulkDataPreperation.CargoTrackingUpdateDataBaseArgs.CargoTrackingArguments!=null)
+            {
+                DateTime shipmetnCreateDate = (DateTime)(tableRow["CreateDateTime"]);
+                DateTime cargTrackingBuildToDate = (DateTime)bulkDataPreperation.CargoTrackingUpdateDataBaseArgs.CargoTrackingArguments.ToDate;
+                DateTime cargTrackingBuildFromDate = (DateTime)bulkDataPreperation.CargoTrackingUpdateDataBaseArgs.CargoTrackingArguments.FromDate;
+                int differenceMonthsBetweenBuildToAndFromDate = SetDifferenceMonthsBetweenBuildToAndFromDate(cargTrackingBuildToDate, cargTrackingBuildFromDate);
+                if(differenceMonthsBetweenBuildToAndFromDate>=6)
+                   cargTrackingBuildFromDate = cargTrackingBuildToDate.AddMonths(-differenceMonthsBetweenBuildToAndFromDate);
+                if (shipmetnCreateDate.Date < cargTrackingBuildFromDate.Date ||
+                    shipmetnCreateDate.Date > cargTrackingBuildToDate.Date)
+                {
+                    isShipmentValid = false;
+                }
+            }
+
+            return isShipmentValid;
+        }
+
+        private static int SetDifferenceMonthsBetweenBuildToAndFromDate( DateTime cargTrackingBuildToDate , DateTime cargTrackingBuildFromDate)
+        {
+            int differenceMonthsBetweenBuildToAndFromDate = MonthDifference(cargTrackingBuildToDate, cargTrackingBuildFromDate);
+            if (differenceMonthsBetweenBuildToAndFromDate >= 6)
+                differenceMonthsBetweenBuildToAndFromDate = 6;
+
+            return differenceMonthsBetweenBuildToAndFromDate;
+        }
+
+        private static int MonthDifference(this DateTime toDate, DateTime fromDate)
+        {
+            return (toDate.Month - fromDate.Month) + 12 * (toDate.Year - fromDate.Year);
         }
         private static void AddShipmentNumberReference(DataRow tableRow, DataTable dataTable)
         {

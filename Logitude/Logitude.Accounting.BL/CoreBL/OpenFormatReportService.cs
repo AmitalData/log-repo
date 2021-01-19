@@ -514,8 +514,17 @@ namespace Logitude.Accounting.BL.CoreBL
 
 
             var typeservice = TrailReportFactory.CreateNew(trailReportParam);
-            List<TrailReportM> res1 = typeservice.Execute();
-            typeservice.Dispose();
+            List<TrailReportM> res1;
+            try
+            {
+                res1 = typeservice.Execute();
+            }
+            finally
+            {
+                //typeservice.Dispose();
+            }
+            
+            
             List<string> includedGLAccounts = GetIncludedGLAccounts(res1, openFormatReportPM, tenant);          
 
             IEnumerable< IGrouping<string,TrailReportM>> res = res1.GroupBy(d => d.GLAccountId);

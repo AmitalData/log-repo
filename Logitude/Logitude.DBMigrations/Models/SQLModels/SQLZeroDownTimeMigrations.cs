@@ -460,7 +460,7 @@ namespace Logitude.DBMigrations.Models
                                  "IF TRIGGER_NESTLEVEL() > 1 RETURN;\n" +
                                  "IF (SELECT program_name FROM sys.dm_exec_sessions WHERE session_id = (SELECT @@SPID)) <> ''ZeroDownTimeDBMigrationsTool''\n" +
                                  "BEGIN\n" +
-                                 "UPDATE [" + tableName + "] SET [DBMigrationsLastScript] = 0 WHERE Id IN (SELECT DISTINCT Id FROM Inserted);\n" +
+                                 "UPDATE [" + tableName + "] SET [DBMigrationsLastScript] = NULL WHERE Id IN (SELECT DISTINCT Id FROM Inserted);\n" +
                                  "END\n" +
                                  "END');\n" +
                                  "END";

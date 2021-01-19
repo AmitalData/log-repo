@@ -230,6 +230,7 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
                         invoiceElement.Card.City = address.City;
                         invoiceElement.Card.ZipCode = address.ZipCode;
                         invoiceElement.Card.Country = address.CountryEnglishName;
+                        invoiceElement.Card.CountryCode = address.CountryCode;
                         invoiceElement.Card.State = address.StateEnglishName;
                     }
 

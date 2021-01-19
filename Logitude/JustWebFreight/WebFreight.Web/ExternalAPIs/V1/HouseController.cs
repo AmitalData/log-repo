@@ -229,6 +229,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
 
                     HouseQueryService mappingService = new HouseQueryService(authToken.Tenant);
                     ShipmentPM entityPM = mappingService.HouseCustomDataMappingAndValidatin(entity, authToken.Tenant, computingPartnerCode);
+                    entityPM.IsExternalAPI = true;
 
                     using (TransactionScope scope = TransactionFactory.GetTransaction())
                     {
@@ -661,6 +662,8 @@ namespace WebFreight.Web.ExternalAPIs.V1
                             service.Update(true);
                         }
 
+                        MyContext = ShipmentsContext.GetContext(authToken.Tenant);
+                        mappingService = new HouseQueryService(authToken.Tenant);
                         var result = mappingService.GetHouseById(HousePM.Id, authToken.Tenant);
                         APIHelper.AddCommunicationLog("D", entity, result, "Shipment", HousePM.Id, "House API", authToken.Tenant);
                         return Request.CreateResponse(HttpStatusCode.OK, result);

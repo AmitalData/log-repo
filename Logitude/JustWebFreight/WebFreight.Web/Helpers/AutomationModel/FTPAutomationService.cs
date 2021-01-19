@@ -28,6 +28,8 @@ namespace WebFreight.Web.Helpers.AutomationModel
         private FTPAutomationDetails fTPDetails;
         private string entityId = string.Empty;
         private string objectTableId = string.Empty;
+        private string additionalFolderDetails = string.Empty;
+        private string documentFileName = string.Empty;
         private Contact loggedContact = null;
         private string companyName = string.Empty;
         private string computingPartnerName = string.Empty;
@@ -38,6 +40,8 @@ namespace WebFreight.Web.Helpers.AutomationModel
             fTPDetails = ftpAutomationServiceArgs.FTPDetails;
             entityId = ftpAutomationServiceArgs.EntityId;
             objectTableId = ftpAutomationServiceArgs.ObjectTableId;
+            additionalFolderDetails = ftpAutomationServiceArgs.AdditionalFolderDetails;
+            documentFileName = ftpAutomationServiceArgs.DocumentFileName;
             loggedContact = GetLoggedContact();
             companyName = GetCompanyName();
             computingPartnerName = GetComputingPartnerName(ftpAutomationServiceArgs.ComputingPartnerId);
@@ -67,7 +71,7 @@ namespace WebFreight.Web.Helpers.AutomationModel
                 Id = IdCounter.GetNumber("CommunicationLog", tenant),
                 To = fTPDetails.Host,
                 From = companyName,
-                Subject =string.IsNullOrEmpty(computingPartnerName)? "Shipment Interface": ("Shipment Interface for "+ computingPartnerName),
+                Subject = string.IsNullOrEmpty(documentFileName) ? string.IsNullOrEmpty(computingPartnerName)? "Shipment Interface": ("Shipment Interface for "+ computingPartnerName):documentFileName,
                 LastStatusDate = TenantServerConfigration.GetCurrentDateTime(tenant),
                 LastStatusDateUTC = System.DateTime.UtcNow,
                 InOut = "O",
@@ -92,12 +96,12 @@ namespace WebFreight.Web.Helpers.AutomationModel
             CommunicationLogSettings communicationLogSettings = new CommunicationLogSettings()
             {
                 Host = fTPDetails.Host,
-                Folder = fTPDetails.Folder + "/fromlogitude",
+                Folder = fTPDetails.Folder + additionalFolderDetails,
                 Username = fTPDetails.UserName,
                 Password = fTPDetails.Password,
             };
 
-            communicationLogSettings.Filename = GetDocumentFileName();
+            communicationLogSettings.Filename = string.IsNullOrEmpty(documentFileName) ? GetDocumentFileName():documentFileName;
             myResult = JsonConvert.SerializeObject(communicationLogSettings);
 
             return myResult;
@@ -154,9 +158,8 @@ namespace WebFreight.Web.Helpers.AutomationModel
         public string EntityId { get; set; }
         public string ObjectTableId { get; set; }
         public string ComputingPartnerId { get; set; }
-
-        
-
+        public string AdditionalFolderDetails { get; set; }
+        public string DocumentFileName { get; set; }
     }
 
     public class CommunicationLogSettings

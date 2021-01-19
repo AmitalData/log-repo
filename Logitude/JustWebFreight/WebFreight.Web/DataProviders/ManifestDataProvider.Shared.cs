@@ -247,7 +247,9 @@ namespace WebFreight.Web.DataProviders
         public string ValueOfGoodsCurrency { get; set; }
         public string ShipperRefernce1 { get; set; }
         public string PlaceOfReceipt { get; set; }
+        public string Dimensions { get; set; }
         public List<ShipmentAssemblyLine> Assemblies { get; set; }
+
     }
 
     public class NewManifestDetailsClass
@@ -386,7 +388,6 @@ namespace WebFreight.Web.DataProviders
         public string Notes { get; set; }
         public string Harmonize { get; set; }
         public double? Tare { get; set; }
-
         public string HorseName { get; set; }
         public int? HorseYearOfBirth { get; set; }
         public string HorseColor { get; set; }
@@ -400,6 +401,7 @@ namespace WebFreight.Web.DataProviders
         public string HorseCurrentStable { get; set; }
         public string HorseOwner { get; set; }
         public string HorseRemarks { get; set; }
+        public string Dimensions { get; set; }
     }
 
     public class GroupedContainersClass

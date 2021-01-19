@@ -28,6 +28,7 @@ import { OceanFCLVersionTabComponent } from './Components/EditTabs/Tariff/OceanF
 import { OceanFCLSurchargeVersionTabComponent } from './Components/EditTabs/Tariff/OceanFCLSurchargeVersionTabComponent';
 import { AddTariffContainersComponent } from './Components/NewEntity/AddTariffContainersComponent';
 import { ChooseCountryComponent } from './Components/EditTabs/Tariff/ChooseCountryComponent';
+import { UploadedExcelsComponent } from './Components/EditTabs/Tariff/UploadedExcelsComponent';
 
 export const Components =
     [
@@ -59,6 +60,7 @@ export const Components =
         NewTariffProductsComponent,
         TariffShortTitleComponent,
         ChooseCountryComponent,
+        UploadedExcelsComponent,
     ];
 
 export const ControlsComponents =
@@ -72,12 +74,12 @@ export class ModuleDeclarations {
 
         switch (name) {
             case "CostWorkspaceComponent": { myResult = CostWorkspaceComponent; break; }
-            case "TariffSettingComponent": { myResult = TariffSettingComponent; break; }                
+            case "TariffSettingComponent": { myResult = TariffSettingComponent; break; }
             case "NewAirFreightCostComponent": { myResult = NewAirFreightCostComponent; break; }
             case "FieldTemplateComponent": { myResult = FieldTemplateComponent; break; }
             case "TariffDetailsTabComponent": { myResult = TariffDetailsTabComponent; break; }
-            case "VersionTabComponent": { myResult = VersionTabComponent; break; }                
-            case "VersionHistoryTabComponent": { myResult = VersionHistoryTabComponent; break; }                
+            case "VersionTabComponent": { myResult = VersionTabComponent; break; }
+            case "VersionHistoryTabComponent": { myResult = VersionHistoryTabComponent; break; }
             case "TariffGeneralTabComponent": { myResult = TariffGeneralTabComponent; break; }
             case "AddEditTariffLineComponent": { myResult = AddEditTariffLineComponent; break; }
             case "TariffTabsContentComponent": { myResult = TariffTabsContentComponent; break; }
@@ -99,6 +101,8 @@ export class ModuleDeclarations {
             case "NewTariffProductsComponent": { myResult = NewTariffProductsComponent; break; }
             case "TariffShortTitleComponent": { myResult = TariffShortTitleComponent; break; }
             case "ChooseCountryComponent": { myResult = ChooseCountryComponent; break; }
+            case "UploadedExcelsComponent": { myResult = UploadedExcelsComponent; break;}
+        
         }
 
         return myResult;

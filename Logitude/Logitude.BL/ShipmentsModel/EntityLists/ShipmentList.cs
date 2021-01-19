@@ -160,6 +160,7 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
         public string DirectionName { get; set; }
         public string TransportModeName { get; set; }
         public string QuoteId { get; set; }
+        public string QuoteNumber { get; set; }
         public string ShipmentReceivableStatusCode { get; set; }
         public string ShipmentPayableStatusCode { get; set; }
 
@@ -493,7 +494,7 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
         public string INTTRABookingStatusCode { get; set; }
         public string INTTRABookingTransStatusName { get; set; }
         public string INTTRABookingStatusName { get; set; }
-
+        public DateTime? INTTRALastEBbookingSendDate { get; set; }
         public string From { get; set; }
         public string To { get; set; }
         public string Origin { get; set; }

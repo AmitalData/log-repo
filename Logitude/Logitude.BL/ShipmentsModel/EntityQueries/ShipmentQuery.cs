@@ -1764,6 +1764,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             //shipmentPM.OnCarriageSTD = shipment.OnCarriageSTD;            
 
             shipmentPM.QuoteId = shipment.QuoteId;
+            shipmentPM.QuoteNumber = shipment.QuoteNumber;
 
             shipmentPM.OnCarriageTransportModeId = shipment.OnCarriageTransportModeId;
 
@@ -2383,6 +2384,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             shipmentPM.INTTRABookingTransStatusCode = shipment.INTTRABookingTransStatusCode;
             shipmentPM.INTTRABookingError = shipment.INTTRABookingError;
             shipmentPM.INTTRALastBookingResponse = shipment.INTTRALastBookingResponse;
+            shipmentPM.INTTRALastEBbookingSendDate = shipment.INTTRALastEBbookingSendDate;
 
             if (!string.IsNullOrEmpty(shipmentPM.INTTRALastBookingResponse))
             {
@@ -3768,24 +3770,47 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
                 if (shipment != null)
                 {
-                    ShipmentMasterData masterData = (from a in repository.context.ShipmentMasterDatas
-                                                     where a.Id == shipment.MasterShipmentDataId
-                                                     select a).FirstOrDefault();
-
-                    ShipmentPM shipmentPM = new ShipmentPM();
-
-                    shipmentPM = MapShipmentToShipmentPM(shipmentPM, shipment, null, masterData, true);
-
-                    ShipmentPM securedPM = new ShipmentPM();
-                    SecuredMapping.GetMappedPM(shipmentPM, securedPM, "Shipment", tenant);
-
-                    ShipmentPM returnShipment = BranchPermitionsFilter.AddUserBranchRestrictionFilters(new QueryOperations(), securedPM, tenant);//securedPM;
-                    returnShipment = ProductPermitionsFilter.AddUserProductRestrictionFilters(new QueryOperations(), securedPM, tenant);
-
+                    ShipmentPM returnShipment = MapShipmentToSecuredShipmentPMWithRestrictionFilters(shipment, tenant);
                     return returnShipment;
                 }
             }
             return null;
+        }
+
+        public ShipmentPM GetSinglePMBySecurityKeyAndTenant(string key, int tenant)
+        {
+            if (!string.IsNullOrEmpty(key))
+            {
+                Shipment shipment = (from a in repository.context.Shipments.Include("EntityStatus").Include("ShipmentType").Include("Incoterm").Include("ShipmentReceivableStatus").Include("ShipmentPayableStatus").Include("ShipmentLevel").Include("NextLeg").Include("ShipmentType").Include("MoveType")
+                                     where a.SecurityKey == key && a.Tenant == tenant
+                                     select a).FirstOrDefault();
+
+                if (shipment != null)
+                {
+                    ShipmentPM returnShipment = MapShipmentToSecuredShipmentPMWithRestrictionFilters(shipment, tenant);
+                    return returnShipment;
+                }
+            }
+            return null;
+        }
+
+        private ShipmentPM MapShipmentToSecuredShipmentPMWithRestrictionFilters(Shipment shipment, int tenant)
+        {
+            ShipmentMasterData masterData = (from a in repository.context.ShipmentMasterDatas
+                                             where a.Id == shipment.MasterShipmentDataId
+                                             select a).FirstOrDefault();
+
+            ShipmentPM shipmentPM = new ShipmentPM();
+
+            shipmentPM = MapShipmentToShipmentPM(shipmentPM, shipment, null, masterData, true);
+
+            ShipmentPM securedPM = new ShipmentPM();
+            SecuredMapping.GetMappedPM(shipmentPM, securedPM, "Shipment", tenant);
+
+            ShipmentPM returnShipment = BranchPermitionsFilter.AddUserBranchRestrictionFilters(new QueryOperations(), securedPM, tenant);//securedPM;
+            returnShipment = ProductPermitionsFilter.AddUserProductRestrictionFilters(new QueryOperations(), securedPM, tenant);
+
+            return returnShipment;
         }
 
         public ShipmentPM GetSinglePmForMobile(string id, int tenant)
@@ -4392,6 +4417,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                         VolumeUnitCode = s.VolumeUnitCode,
                                                         GrossWeightUnitCode = s.GrossWeightUnitCode,
                                                         QuoteId = s.QuoteId,
+                                                        QuoteNumber = s.QuoteNumber,
                                                         Ratio = s.Ratio,
                                                         DimFactor = s.DimFactor,
                                                         MainCarriageFullCarrierNumber = (m.MainCarriageCarrierNumber != null && m.MainCarriageCarrierCard != null) ? m.MainCarriageCarrierCard.Code + m.MainCarriageCarrierNumber : null,
@@ -11276,6 +11302,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                          VolumeInCBM = s.VolumeInCBM,
                                                          VolumetricWeight = s.VolumetricWeight,
                                                          QuoteId = s.QuoteId,
+                                                         QuoteNumber = s.QuoteNumber,
                                                          MainCarriageFullCarrierNumber = (m.MainCarriageCarrierNumber != null && m.MainCarriageCarrierCard != null) ? m.MainCarriageCarrierCard.Code + m.MainCarriageCarrierNumber : null,
                                                          Transshipment1FullCarrierNumber = (m.Transshipment1CarrierNumber != null && m.Transshipment1CarrierPrefix != null) ? m.Transshipment1CarrierPrefix + m.Transshipment1CarrierNumber : null,
                                                          Transshipment2FullCarrierNumber = (m.Transshipment2CarrierNumber != null && m.Transshipment2CarrierPrefix != null) ? m.Transshipment2CarrierPrefix + m.Transshipment2CarrierNumber : null,
@@ -11921,6 +11948,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                DangerousUnNumber = f.DangerousUnNumber,
                                ComputedStatusId = f.ComputedStatusId,
                                ComputedStatusDate = f.ComputedStatusDate,
+                               QuoteId = f.QuoteId,
+                               QuoteNumber = f.QuoteNumber,
                            };
             return myResult;
         }
@@ -12276,7 +12305,9 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     ShipmentSubTypeName = f.ShipmentSubTypeName,
                     ImportManifest = f.ImportManifest,
                     IsDangerous =f.IsDangerous,
-                    DangerousUnNumber = f.DangerousUnNumber,                   
+                    DangerousUnNumber = f.DangerousUnNumber,
+                    QuoteId = f.QuoteId,
+                    QuoteNumber = f.QuoteNumber,
                 };
 
                 List<ObjectField> customFields = ObjectFieldRepository.GetCustomObjectFieldsByObjectTableName("Shipment", tenant).ToList();
@@ -12970,6 +13001,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                          VolumeInCBM = s.VolumeInCBM,
                                                          VolumetricWeight = s.VolumetricWeight,
                                                          QuoteId = s.QuoteId,
+                                                         QuoteNumber = s.QuoteNumber,
                                                          MainCarriageFullCarrierNumber = (m.MainCarriageCarrierNumber != null && m.MainCarriageCarrierCard != null) ? m.MainCarriageCarrierCard.Code + m.MainCarriageCarrierNumber : null,
                                                          Transshipment1FullCarrierNumber = (m.Transshipment1CarrierNumber != null && m.Transshipment1CarrierPrefix != null) ? m.Transshipment1CarrierPrefix + m.Transshipment1CarrierNumber : null,
                                                          Transshipment2FullCarrierNumber = (m.Transshipment2CarrierNumber != null && m.Transshipment2CarrierPrefix != null) ? m.Transshipment2CarrierPrefix + m.Transshipment2CarrierNumber : null,

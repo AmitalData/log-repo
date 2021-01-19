@@ -118,6 +118,7 @@
     <Compile Include="EntityPMs\Generated\TogglePM.Generated.cs" />
     <Compile Include="EntityQueryServices\BIFoldersPermissionQueryService.cs" />
     <Compile Include="EntityQueryServices\BIReportQueryService.cs" />
+    <Compile Include="EntityQueryServices\BIReportsExecutionLogQueryService.cs" />
     <Compile Include="EntityQueryServices\Generated\BatchTaskExecutionQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\BatchTaskExecutionStatusQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\BIFoldersPermissionQueryService.Generated.cs" />

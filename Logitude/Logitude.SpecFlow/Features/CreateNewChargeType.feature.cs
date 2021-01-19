@@ -40,7 +40,7 @@ namespace Logitude.SpecFlow.Features
         public static void FeatureSetup()
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
-            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features", "CreateNewChargeType", "    In order to create a new charge type\r\n\tAs a user you have to login with your " +
+            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features", "Create New Charge Type", "    In order to create a new charge type\r\n\tAs a user you have to login with your " +
                     "credentials,\r\n\tthen you can create a new charge type to your tenant", ProgrammingLanguage.CSharp, ((string[])(null)));
             testRunner.OnFeatureStart(featureInfo);
         }
@@ -87,13 +87,13 @@ namespace Logitude.SpecFlow.Features
                         "ahmadb123@mail.com",
                         "ahmed13!A15"});
 #line 8
- testRunner.Given("user have the following Login Properties", ((string)(null)), table1, "Given ");
+ testRunner.Given("Users with following credentials", ((string)(null)), table1, "Given ");
 #line hidden
 #line 11
- testRunner.When("the user call Login API", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("Users make login request", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
 #line 12
- testRunner.Then("the user will have a token", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then("Users should have token", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
         }
         
@@ -102,14 +102,14 @@ namespace Logitude.SpecFlow.Features
             this.TestTearDown();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="create new charge type")]
-        [Xunit.TraitAttribute("FeatureTitle", "CreateNewChargeType")]
-        [Xunit.TraitAttribute("Description", "create new charge type")]
+        [Xunit.SkippableFactAttribute(DisplayName="Create New Charge Type")]
+        [Xunit.TraitAttribute("FeatureTitle", "Create New Charge Type")]
+        [Xunit.TraitAttribute("Description", "Create New Charge Type")]
         public virtual void CreateNewChargeType()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("create new charge type", null, tagsOfScenario, argumentsOfScenario);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Create New Charge Type", null, tagsOfScenario, argumentsOfScenario);
 #line 14
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -137,6 +137,9 @@ this.FeatureBackground();
                             "name",
                             "value"});
                 table2.AddRow(new string[] {
+                            "Code",
+                            "{RandomString(3)}"});
+                table2.AddRow(new string[] {
                             "EnglishName",
                             "Test Charge Type"});
                 table2.AddRow(new string[] {
@@ -144,18 +147,18 @@ this.FeatureBackground();
                             "NONE"});
                 table2.AddRow(new string[] {
                             "MeasurementId",
-                            "1-22383"});
+                            "Get {Id} from {Code} {FIXD} using {MeasurementViews}"});
                 table2.AddRow(new string[] {
                             "ChargesGroupId",
-                            "1-889"});
+                            "Get {Id} from {Code} {NONE} using {ChargesGroupViews}"});
 #line 15
- testRunner.Given("user add a charge type with the following properties", ((string)(null)), table2, "Given ");
+ testRunner.Given("Charge type with the following properties", ((string)(null)), table2, "Given ");
 #line hidden
 #line 22
- testRunner.When("the user call create charge type API", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("Create charge type", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
 #line 23
- testRunner.Then("a new charge type should be added", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then("New charge type should be created", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();

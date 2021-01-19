@@ -10,9 +10,9 @@ import {AutomationExtendedPMService} from '../../../../Common/Services/ExtendedP
 import {AutomationPMService} from '../../../../Common/Services/StandardPMs/AutomationPMService';
 import {AutomationPM} from '../../../../Common/EntityPMs/AutomationPMExtended';
 import {ObjectFieldPM} from '../../../../Infrastructure/EntityPMs/ObjectFieldPM';
-import { AutomatedBackup, AutomationSetSLAValue } from '../../../../Infrastructure/DataContracts/AutomatedBackup';
-import { AutomationSendInterface } from '../../../../Infrastructure/DataContracts/AutomationSendInterface';
-
+import {AutomatedBackup,AutomationSetSLAValue} from '../../../../Infrastructure/DataContracts/AutomatedBackup';
+import {AutomationSendInterface} from '../../../../Infrastructure/DataContracts/AutomationSendInterface';
+import {AutomationSendDocument} from '../../../../Infrastructure/DataContracts/AutomationSendDocument';
 import {AutomationSetValue} from '../../../../Infrastructure/DataContracts/AutomationSetValue';
 import {EventTypeArgs} from '../../../../Infrastructure/DataContracts/EventTypeArgs';
 import {AutomationFollowUp} from '../../../../Infrastructure/DataContracts/AutomationFollowUp';
@@ -66,6 +66,7 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
     AutomationQueuedTask: AutomationQueuedTask = new AutomationQueuedTask();
 
     AutomationSendInterface: AutomationSendInterface = new AutomationSendInterface();
+    AutomationSendDocument: AutomationSendDocument = new AutomationSendDocument();
     @ViewChildren(LocationDirective) public AllLocations: QueryList<LocationDirective>;
     ObjectFieldsLists: ObjectFieldPM[] = [];
     AllowedinAutomationConditionsFieldLists: ObjectFieldPM[] = [];
@@ -280,6 +281,7 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
         this.TimeUnits.push(new CodeNameClass("II", "Minutes"));
         this.TimeUnits.push(new CodeNameClass("OO", "Hours"));
         this.TimeUnits.push(new CodeNameClass("DD", "Days"));
+        this.TimeUnitOps.push(new CodeNameClass("NL", ""));
         this.TimeUnitOps.push(new CodeNameClass("BF", "Before"));
         this.TimeUnitOps.push(new CodeNameClass("AF", "After"));
     }
@@ -462,7 +464,7 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
 
         this.DocumentTypeLists = this.AllDocumentTypeLists.filter(a => a.IsDocOut && a.TemplateFormatCode == "M");
 
-        if (this.ResultCodeSelected && this.ResultCodeSelected.Code == "EMAIL") {
+        if (this.ResultCodeSelected && (this.ResultCodeSelected.Code == "EMAIL" || this.ResultCodeSelected.Code == "SENDDOCUMENT")) {
             this.DocumentTypeLists = this.AllDocumentTypeLists.filter(a => a.IsDocOut);
         }
 
@@ -895,6 +897,10 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
                 this.ResultCodeList.push(new ResultCode("Set SLA", "SETSLA"));
             }
 
+            if (this.ObjectTableName == "APInvoice") {
+                this.ResultCodeList.push(new ResultCode("Documents Send", "SENDDOCUMENT"));
+            }
+
             //Masters and Houses
             if (this.ObjectTableName == "Shipment") {
                 this.ResultCodeList.push(new ResultCode("F/U Creation", "FOLLOWUP"));
@@ -1024,6 +1030,9 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
             if (this.AutomatedBackupClass.AutomationSendInterface && this.ResultCodeSelected.Code == "SENDINTERFACE") {
                 this.MapAutomationSendInterface();
             }
+            if (this.AutomatedBackupClass.AutomationSendDocument && this.ResultCodeSelected.Code == "SENDDOCUMENT") {
+                this.MapAutomationSendDocument();
+            }
 
 
             this.LoadAuomationResultComponent(this.ResultCodeSelected.Code);
@@ -1045,9 +1054,23 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
 
     }
 
-    RunAuomationResultComponent(resultCode: string) {
+    MapAutomationSendDocument() {
+        this.AutomationSendDocument.FTBFolderId = this.AutomatedBackupClass.AutomationSendDocument.FTBFolderId;
+        this.AutomationSendDocument.FTPDetails = this.AutomatedBackupClass.AutomationSendDocument.FTPDetails;
+        this.AutomationSendDocument.SendVia = this.AutomatedBackupClass.AutomationSendDocument.SendVia;
 
-        this.LoadSendInterfaceResultComponent(resultCode);
+
+    }
+
+    RunAuomationResultComponent(resultCode: string) {
+        switch (resultCode) {
+            case "SENDINTERFACE":
+                this.LoadSendInterfaceResultComponent(resultCode);
+                break;
+            case "SENDDOCUMENT":
+                this.LoadSendDocumentResultComponent(resultCode);
+                break;
+        }
     }
 
     LoadNotifyBack() {
@@ -1060,7 +1083,7 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
 
     CheckIfAutomationResultHasLocations(resultCode: string) {
 
-        return resultCode == "SENDINTERFACE" ? true:false;
+        return (resultCode == "SENDINTERFACE" || resultCode == "SENDDOCUMENT") ? true:false;
 
     }
 
@@ -1154,6 +1177,9 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
         if (value != this.delaytimeOpIndicator) {
             this.delaytimeOpIndicator = value;
             this.DelayTimeOp = value.Code;
+            if (value.Code == "NL") {
+                this.DelayTimeObjectFieldsIndicator = null;
+            }
         }
     }
 
@@ -1164,7 +1190,7 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
     set DelayTimeObjectFieldsIndicator(value: ObjectFieldPM) {
         if (value != this.delayTimeObjectFieldsIndicator) {
             this.delayTimeObjectFieldsIndicator = value;
-            this.SelectedDelaytimeFieldCode = value.FieldCode;
+            this.SelectedDelaytimeFieldCode = value?.FieldCode;
         }
     }
 
@@ -1671,15 +1697,13 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
             this.ValidationErrorsList.push("Code field is required");
         }
 
-        if (this.CurrentEntityPM.ResultCode == "SENDINTERFACE") {
-
-            if (this.AutomationSendInterface.SendVia == "FTP" && (!this.AutomationSendInterface.FTPDetails || (this.AutomationSendInterface.FTPDetails && AppTool.IsNullOrEmpty(this.AutomationSendInterface.FTPDetails.Host)))) {
-                this.ValidationErrorsList.push("FTP Details are missing. Please contact your administrator.");
-
-            }
+        if (this.CurrentEntityPM.ResultCode == "SENDINTERFACE" && this.AutomationSendInterface.SendVia == "FTP") {
+            this.ValidateFTPDetails(this.AutomationSendInterface.FTPDetails);
         }
        
-
+        if (this.CurrentEntityPM.ResultCode == "SENDDOCUMENT" && this.AutomationSendDocument.SendVia == "FTP") {
+            this.ValidateFTPDetails(this.AutomationSendDocument.FTPDetails);
+        }
 
 
         if (this.ValidationErrorsList.length == 0) {
@@ -1716,7 +1740,7 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
             }
 
             else {
-                if ((this.IsChangeCondition || this.IsChangeSetValue || this.IsChangeAutomation) || (isFollowUp && this.CheckIfAutomationFollowUpChange()) || this.CheckIfAutomationSendInterFaceChange() || (this.CurrentEntityPM.ResultCode == "SETSLA" && this.CheckIfAutomationSetSLAValueChange()) || (this.CurrentEntityPM.ResultCode == "QUEUE" && this.CheckIfAutomationQueuedTaskChange())) {
+                if (this.IsEntityConditionsChanged(isFollowUp)) {
                     this.CurrentSession.CurrentWindow.StartBusyIndicator("Saving...");
                     this.CurrentEntityPM.Version += 1;
                     this.CurrentEntityPM.UpdateDate = DateTool.GetCurrentDateTimeAsUtc();
@@ -1746,7 +1770,19 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
         }
     }
 
+    private IsEntityConditionsChanged(isFollowUp) {
+        return (this.IsChangeCondition || this.IsChangeSetValue ||
+            this.IsChangeAutomation) || (isFollowUp && this.CheckIfAutomationFollowUpChange()) ||
+            this.CheckIfAutomationSendDocumentChange() || this.CheckIfAutomationSendInterFaceChange() ||
+            (this.CurrentEntityPM.ResultCode == "SETSLA" && this.CheckIfAutomationSetSLAValueChange()) ||
+            (this.CurrentEntityPM.ResultCode == "QUEUE" && this.CheckIfAutomationQueuedTaskChange());
+    }
 
+    private ValidateFTPDetails(ftpDetials) {
+        if (!ftpDetials || (ftpDetials && AppTool.IsNullOrEmpty(ftpDetials.Host))) {
+            this.ValidationErrorsList.push("FTP Details are missing. Please contact your administrator.");
+        }
+    }
 
     public ShowMessage(message: string, title: string = "") {
 
@@ -1762,6 +1798,14 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
         var isChange =false;
         if (this.AutomatedBackupClass.AutomationSendInterface) {
             isChange = this.AutomatedBackupClass.AutomationSendInterface.IsChanged;
+        }
+        return isChange;
+    }
+
+    CheckIfAutomationSendDocumentChange() {
+        var isChange = false;
+        if (this.AutomatedBackupClass.AutomationSendDocument) {
+            isChange = this.AutomatedBackupClass.AutomationSendDocument.IsChanged;
         }
         return isChange;
     }
@@ -1932,6 +1976,7 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
         automatedBackup.AutomationSetSLAValue = this.CurrentEntityPM.ResultCode == "SETSLA" ? this.AutomationSetSLAValue : null;
         automatedBackup.AutomationQueuedTask = this.CurrentEntityPM.ResultCode == "QUEUE" ? this.AutomationQueuedTask : null;
         automatedBackup.AutomationSendInterface = this.CurrentEntityPM.ResultCode == "SENDINTERFACE" ? this.AutomationSendInterface : null;
+        automatedBackup.AutomationSendDocument = this.CurrentEntityPM.ResultCode == "SENDDOCUMENT" ? this.AutomationSendDocument : null;
         automatedBackup.ReportTemplateId = this.CurrentEntityPM.ResultCode == "EMAIL" ? this.AutomatedBackupClass.ReportTemplateId : null;
 
 
@@ -2059,6 +2104,21 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
         }
     }
 
+    LoadSendDocumentResultComponent(resultCode: string) {
+
+        if (this.AllLocations && this.AllLocations.length > 0) {
+            let myGeneratedComponentLocation: LocationDirective = this.AllLocations.toArray().filter(d => d.Code == resultCode)[0];
+            if (myGeneratedComponentLocation != null) {
+                myGeneratedComponentLocation.viewContainerRef.clear();
+                SessionLocator.DynamicLoader.Load('./Infrastructure/Components/Maintenance/Automation/AutomationResult/SendDocumentResultComponent', myGeneratedComponentLocation.viewContainerRef)
+                    .then(cmpRef => {
+                        cmpRef.instance.Run(this.AutomationSendDocument);
+
+                    });
+            }
+        }
+    }
+
 
 
 
@@ -2067,11 +2127,22 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
     get IsResultEmail() {
         this.isResultEmail = false;
         if (this.ResultCodeSelected) {
-            if (this.ResultCodeSelected.Code == "EMAIL" || (this.ResultCodeSelected.Code == "SENDINTERFACE" && this.AutomationSendInterface && this.AutomationSendInterface.SendVia == "EMAIL")) {
+            if (this.ResultCodeSelected.Code == "EMAIL" || (this.ResultCodeSelected.Code == "SENDINTERFACE" && this.AutomationSendInterface && this.AutomationSendInterface.SendVia == "EMAIL") || (this.ResultCodeSelected.Code == "SENDDOCUMENT" && this.AutomationSendDocument && this.AutomationSendDocument.SendVia == "EMAIL")) {
                 this.isResultEmail = true;
             }
         }
         return this.isResultEmail;
+    }
+
+    private isSendDocument: boolean;
+    get IsSendDocument() {
+        this.isSendDocument = false;
+        if (this.ResultCodeSelected) {
+            if (this.ResultCodeSelected.Code == "SENDDOCUMENT") {
+                this.isSendDocument = true;
+            }
+        }
+        return this.isSendDocument;
     }
 
 

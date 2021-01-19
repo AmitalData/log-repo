@@ -221,8 +221,8 @@ export class WebFreightDomainService {
         });
     }
 
-    GetBIReportLogStatus(reportId: string) {
-        var url = this._apiUrl + '/GetBIReportLogStatus?reportId=' + reportId;
+    GetBIReportLogStatus(bIReportsExecutionLogId: string) {
+        var url = this._apiUrl + '/GetBIReportLogStatus?bIReportsExecutionLogId=' + bIReportsExecutionLogId;
 
         return defer(() => {
             return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {

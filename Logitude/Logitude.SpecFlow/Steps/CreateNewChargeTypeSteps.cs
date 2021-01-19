@@ -1,9 +1,9 @@
 ﻿using FluentAssertions;
-using Logitude.BL.CommonDataModel.EntityPMs;
-using Logitude.SpecFlow.Models;
-using Logitude.SpecFlow.Services;
-using System;
-using System.Text.RegularExpressions;
+using Logitude.SpecFlow.Builders.ChargeType;
+using Logitude.SpecFlow.Models.ChargeType;
+using Logitude.Test.Base.Models;
+using Logitude.Test.Base.Models.Login;
+using Logitude.Test.Base.Services;
 using TechTalk.SpecFlow;
 using TechTalk.SpecFlow.Assist;
 
@@ -12,41 +12,50 @@ namespace Logitude.SpecFlow.Steps
     [Binding]
     public class CreateNewChargeTypeSteps
     {
-        protected readonly UserData User;
-        protected ChargesTypePM ChargeTypePM;
+        protected ChargeTypeContext Context;
 
-        public CreateNewChargeTypeSteps(UserData user, ChargesTypePM chargeTypePM)
+        public CreateNewChargeTypeSteps(MultiUsers multiUsers, ChargeTypeContext context)
         {
-            User = user;
-            ChargeTypePM = chargeTypePM;
+            Context = context;
+            Context.User = multiUsers.Users[0];
+    
         }
-         
-        [Given(@"user add a charge type with the following properties")]
+        
+        [Given(@"Charge type with the following properties")]
         public void GivenUserAddAChargeTypeWithTheFollowingProperties(Table chargeTypeData)
         {
-            ChargesTypePM chargeTypePM = chargeTypeData.CreateInstance<ChargesTypePM>();
-            var myCode = Regex.Replace(Guid.NewGuid().ToString(), "[^a-zA-Z]+", "");
-            ChargeTypePM.Code = myCode.Substring(0,3);
-            ChargeTypePM.Tenant = User.Tenant;
-            ChargeTypePM.EnglishName = chargeTypePM.EnglishName;
-            ChargeTypePM.ChargesGroupCode = chargeTypePM.ChargesGroupCode;
-            ChargeTypePM.MeasurementId = chargeTypePM.MeasurementId;
-            ChargeTypePM.ChargesGroupId = chargeTypePM.ChargesGroupId;
+            ChargeTypeBuilder chargeTypeBuilder = new ChargeTypeBuilder();
 
+            //Context.ChargeTypePM = chargeTypeBuilder.FromDataTable(chargeTypeData).Build();
+            ChargeTypePM chargeTypePM = chargeTypeBuilder.FromDataTable(chargeTypeData).Build();
+            Context.ChargeTypePM = chargeTypeBuilder.WithDefualtValues()
+                                                          .Tenant(UserTenant.Tenant)
+                                                          .Code(chargeTypePM.Code)
+                                                          .EnglishName(chargeTypePM.EnglishName)
+                                                          .ChargesGroupCode(chargeTypePM.ChargesGroupCode)
+                                                          .MeasurementId(chargeTypePM.MeasurementId)
+                                                          .ChargesGroupId(chargeTypePM.ChargesGroupId)
+                                                          .Build();
+
+
+            //Context.ChargeTypePM.Tenant = Context.User.Tenant;
+            //Context.ChargeTypePM.Code = chargeTypePM.Code;
+            //Context.ChargeTypePM.EnglishName = chargeTypePM.EnglishName;
+            //Context.ChargeTypePM.ChargesGroupCode = chargeTypePM.ChargesGroupCode;
+            //Context.ChargeTypePM.MeasurementId = chargeTypePM.MeasurementId;
+            //Context.ChargeTypePM.ChargesGroupId = chargeTypePM.ChargesGroupId;
         }
 
-        [When(@"the user call create charge type API")]
+        [When(@"Create charge type")]
         public void WhenTheUserCallCreateChargeTypeAPI()
         {
-            ChargeTypePM = APICaller.CallPost<ChargesTypePM>(ChargeTypePM, "ChargesTypes", User.Token);
+            Context.ChargeTypePM = APICaller.CallPost<ChargeTypePM>(Context.ChargeTypePM, "ChargesTypes", UserTenant.Token).Data;
         }
         
-       
-        
-        [Then(@"a new charge type should be added")]
+        [Then(@"New charge type should be created")]
         public void ThenANewChargeTypeShouldBeAdded()
         {
-            ChargeTypePM.Id.Should().NotBeNullOrEmpty();
+            Context.ChargeTypePM?.Id.Should().NotBeNullOrEmpty();
         }
     }
 }

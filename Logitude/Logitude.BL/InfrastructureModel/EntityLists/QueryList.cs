@@ -35,6 +35,8 @@ namespace Logitude.BL.InfrastructureModel.EntityLists
         public bool IsNewFromTenantZeroOnly { get; set; }
         public string EditWizardComponentPath { get; set; }
         public string FeatureUniqeCode { get; set; }
+        public bool IsViewOnly { get; set; }
 
+        
     }
 }

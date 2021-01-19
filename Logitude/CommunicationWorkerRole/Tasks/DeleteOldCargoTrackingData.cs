@@ -22,7 +22,6 @@ namespace CommunicationWorkerRole.Tasks
         public override void StartTask()
         {
             DeleteCargoTrackingShipmentSearchesOlderOneYear();
-            DeleteCargoTrackingShipmentsOlderOneYear();
             DeleteCargoTrackingIncrementalStatsOlderOneYear();
 
         }
@@ -36,11 +35,7 @@ namespace CommunicationWorkerRole.Tasks
             string cmd = "DELETE FROM [dbo].[CargoTrackingShipmentSearches] WHERE DATEADD(year, 1, ShipmentDate) < getdate()";
             ExecuteCommand(cmd);
         }
-        private void DeleteCargoTrackingShipmentsOlderOneYear()
-        {
-            string cmd = "DELETE FROM [dbo].[CargoTrackingShipments] WHERE DATEADD(year, 1, CreateDate) < getdate()";
-            ExecuteCommand(cmd);
-        }
+
         private void ExecuteCommand(string sqlString)
         {
 

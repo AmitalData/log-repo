@@ -4,7 +4,8 @@ import {AutomationSetValue} from './AutomationSetValue';
 import {AutomationCondition} from './AutomationCondition';
 import {AutomationFollowUp} from './AutomationFollowUp';
 import {AutomationQueuedTask} from './AutomationQueuedTask';
-import { AutomationSendInterface } from './AutomationSendInterface';
+import {AutomationSendInterface} from './AutomationSendInterface';
+import {AutomationSendDocument} from './AutomationSendDocument';
 
 @Injectable() 
 
@@ -32,6 +33,7 @@ export class AutomatedBackup {
     AutomationQueuedTask: AutomationQueuedTask;
     AutomationSetSLAValue: AutomationSetSLAValue;
     AutomationSendInterface: AutomationSendInterface;
+    AutomationSendDocument: AutomationSendDocument;
 
 }
 

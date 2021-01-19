@@ -145,19 +145,6 @@ export class NewAirFreightCostComponent extends BaseComponent implements OnInit 
         this.UIProperties.SetRequired("StartDate", this.ObjectTableName, this.StartDate == null)
         this.UIProperties.SetRequired("ExpirationDate", this.ObjectTableName, false);
 
-        if (this.EntityPM.TypeCode == "OFS") {
-            this.UIProperties.SetVisibility("Surcharge1UOM", this.ObjectTableName, false);
-            this.UIProperties.SetVisibility("Surcharge2UOM", this.ObjectTableName, false);
-            this.UIProperties.SetVisibility("Surcharge3UOM", this.ObjectTableName, false);
-            this.UIProperties.SetVisibility("Surcharge4UOM", this.ObjectTableName, false);
-            this.UIProperties.SetVisibility("Surcharge5UOM", this.ObjectTableName, false);
-            this.UIProperties.SetVisibility("Surcharge6UOM", this.ObjectTableName, false);
-            this.UIProperties.SetVisibility("Surcharge7UOM", this.ObjectTableName, false);
-            this.UIProperties.SetVisibility("Surcharge8UOM", this.ObjectTableName, false);
-            this.UIProperties.SetVisibility("Surcharge9UOM", this.ObjectTableName, false);
-            this.UIProperties.SetVisibility("Surcharge10UOM", this.ObjectTableName, false);
-        }
-
         if (this.EntityPM.TypeCode == 'AFC') {
             this.UIProperties.SetRequired("TariffProductId", this.ObjectTableName, AppTool.IsNullOrEmpty(this.TariffProductId));
         }
@@ -195,7 +182,13 @@ export class NewAirFreightCostComponent extends BaseComponent implements OnInit 
         }
 
         this.MeasurementsQueryFilters = new ApiQueryFilters();
-        this.MeasurementsQueryFilters.addAdditionalFilter("Code", "STFE", null, null, "NotContains", false, false, false, "string", false, true, true);
+
+        if (this.EntityPM.TypeCode == "OFS") {
+            this.MeasurementsQueryFilters.addAdditionalFilter("Code", "BCNT,BTEU,FIXD", null, null, "InList", false, true, false, "string", false, true, true);
+        }
+        else {
+            this.MeasurementsQueryFilters.addAdditionalFilter("Code", "STFE", null, null, "NotContains", false, false, false, "string", false, true, true);
+        }
 
         this.ChargeTypesQueryFilters = new ApiQueryFilters();
         this.ChargeTypesQueryFilters.addAdditionalFilter("InActive", false, null, null, "Equals", false, false, false, "Boolean");
@@ -667,22 +660,24 @@ export class NewAirFreightCostComponent extends BaseComponent implements OnInit 
     }
 
     SetDefaultUOM(index: number) {
-        if (this.EntityPM.TypeCode != "OFS") {
-            this.chargesTypePMService.getSingleFromCache(this[this.IdProps[index]]).subscribe((res: any) => {
-                if (!res.HasError) {
-                    if (res.Result) {
-                        var ChargesType: ChargesTypeList = res.Result;
+        this.chargesTypePMService.getSingleFromCache(this[this.IdProps[index]]).subscribe((res: any) => {
+            if (!res.HasError) {
+                if (res.Result) {
+                    var ChargesType: ChargesTypeList = res.Result;
+                    if (this.EntityPM.TypeCode == "OFS") {
+                        if (!AppTool.IsNullOrEmpty(ChargesType.ContainerMeasurementId)) {
+                            this[this.UOMProps[index]] = ChargesType.ContainerMeasurementId;
+                        }
+                        else {
+                            this[this.UOMProps[index]] = this.BCNTmeasurementId;
+                        }
+                    }
+                    else {
                         this[this.UOMProps[index]] = ChargesType.MeasurementId;
                     }
                 }
-            });
-        }
-
-        else {
-            if (!AppTool.IsNullOrEmpty(this.BCNTmeasurementId)) {
-                this[this.UOMProps[index]] = this.BCNTmeasurementId;
             }
-        }
+        });
     }
 
     // Commands
@@ -971,7 +966,7 @@ export class NewAirFreightCostComponent extends BaseComponent implements OnInit 
             if (containersArray.length > 0) {
                 var index: number = 1;
                 containersArray.forEach(item => {
-                    var packageType: PackageTypeList = this.allPackageTypes.filter(d => d.Code == item.trim())[0];
+                    var packageType: PackageTypeList = this.allPackageTypes.filter(d => d.Code == item.trim() && d.Tenant == InfraSettings.TenantPM.Id)[0];
                     if (packageType != null) {
                         this['ContainerType' + index++ + 'Id'] = packageType.Id;
                     }

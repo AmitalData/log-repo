@@ -216,6 +216,14 @@ namespace Logitude.Infrastructure.BL
                 SearchFields = "SCV, Improved Search in Customers Views", 
                 Description = " Improved Search in Customers Views", 
 			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "TAR", 
+                Name = "All Tariffs", 
+                SearchFields = "TAR,All Tariffs", 
+                Description = "Hide Tariffs Menu", 
+			});
 			
             return all;
        }

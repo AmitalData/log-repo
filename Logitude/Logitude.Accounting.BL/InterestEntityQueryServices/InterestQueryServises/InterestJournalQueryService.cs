@@ -1,4 +1,5 @@
 ﻿using Logitude.Accounting.BL.EntityQueryServices;
+using Logitude.Accounting.Data.EntityLists;
 using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Accounting.Def.EntityPMs;
 using System;
@@ -11,10 +12,10 @@ namespace Logitude.Accounting.BL.InterestEntityQueryServices.InterestQueryServis
 {
     public class InterestJournalQueryService : IInterestEntityQueryService
     {
-        public InterestEntityResult GetInterestEntity(string Id, int Tenant)
+        public InterestEntityResult GetInterestEntity(InterestTransactionList interestTransactionLists)
         {
-            JournalQueryService journalQueryService = new JournalQueryService(Tenant);
-            JournalPM journalPM = journalQueryService.GetSinglePMForInterest(Id, Tenant);
+            JournalQueryService journalQueryService = new JournalQueryService(interestTransactionLists.Tenant);
+            JournalPM journalPM = journalQueryService.GetSinglePMForInterest(interestTransactionLists.EntityId, interestTransactionLists.Tenant);
             InterestEntityResult result = new InterestEntityResult();
             if (journalPM!=null)
             {

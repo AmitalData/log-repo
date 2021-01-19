@@ -73,6 +73,7 @@ export class CustomerGeneralTabComponent extends BaseComponent   {
     public ScreenCode: string = "Customer.AdditionalFields";
     @ViewChild('Child', { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
     private CurrentSession = SessionLocator.SelectedSession;
+    private groupByPipe: GroupByPipe;
     constructor(public entityArgs: EntityArgs, public _imageLibraryService: ImageLibraryService, private CD: ChangeDetectorRef, private entityPMService: EntityPMService) {
         super();
         this.EntityPM = entityArgs.EntityPM;
@@ -84,6 +85,7 @@ export class CustomerGeneralTabComponent extends BaseComponent   {
         this.IsCustomer = this.EntityPM.IsCustomer;
         this.LeadSourceId = this.EntityPM.LeadSourceId;
 
+        this.groupByPipe = new GroupByPipe();
         this.Listen();
 
         var myService = new ProductTypeListService();
@@ -97,9 +99,8 @@ export class CustomerGeneralTabComponent extends BaseComponent   {
             if (!response.HasError) {
                 this.customerFieldsUpdateSettingList = response.Result;
             }
-
+                        
             this.SetUIProperties();
-            this.CloseScreen();
         });
 
        
@@ -118,7 +119,7 @@ export class CustomerGeneralTabComponent extends BaseComponent   {
 
             this.SessionEvent = this.CurrentSession.SessionEvent.subscribe(s => {
                 if (s == "EntityActivated") {
-                    this.CloseScreen();
+                    this.SetUIProperties();
                 }
             });
         }
@@ -409,137 +410,13 @@ export class CustomerGeneralTabComponent extends BaseComponent   {
 
     public isRAFieldsVisibile: boolean = false;
     public IsBlockMessageVisible: boolean = false;
+    public IsEditEnabled: boolean = true;
     SetUIProperties() {
         if (this.TenantPM.RegulatedAgentRegimeActivated) {
             this.isRAFieldsVisibile = true;
         }
-        
-        this.UIProperties.SetVisibility("KnownConsignor", this.ObjectTableName, this.isRAFieldsVisibile);
-        this.UIProperties.SetVisibility("KCExpirationDate", this.ObjectTableName, this.isRAFieldsVisibile);
 
-        this.SearchTextCompetitorsDropButtonCustomerId += this.CurrentSession.GetNewId("SearchTextCompetitorsDropButtonId_1");
-        this.SearchTextCompetitorsCustomerId += this.CurrentSession.GetNewId("SearchTextCompetitorsId_1");
-        this.SearchTextAdditionalServiceModeDropButtonCustomerId += this.CurrentSession.GetNewId("SearchTextAdditionalServiceModeDropButtonId_1");
-        this.SearchTextAdditionalServiceCustomerId += this.CurrentSession.GetNewId("SearchTextAdditionalServiceId_1");
-        this.SearchProductDropButtonCustomerId += this.CurrentSession.GetNewId("SearchProductDropButtonId_1");
-        this.SearchProductsModeCustomerId += this.CurrentSession.GetNewId("SearchProductsModeId_1");
-
-        this.SetUIProperties_Partners();
-    }
-
-    public IsSplitted_AccountManager: boolean = false;
-    public IsSplitted_SalesmanUser: boolean = false;
-    public IsSplitted_Forwarder: boolean = false;
-    public IsSplitted_CustomsAgent: boolean = false;
-    public IsSplitted_Mediator: boolean = false;
-    SetUIProperties_Partners() {
-        this.SetUIProperties_AccountManager();
-        this.SetUIProperties_Salesman();
-        this.SetUIProperties_Forwarder();
-        this.SetUIProperties_CustomsAgent();
-        this.SetUIProperties_Mediator();
-
-    }
-    SetUIProperties_AccountManager() {
-        var isEnabled = false;
-        var isSplitted = false;
-
-        var myPipe = new GroupByPipe();
-        var Forwarders = myPipe.transform(this.EntityPM.CustomerAccountManagerByProducts.filter(f => f.AccountManagerId != null), "AccountManagerId");
-
-        if (Forwarders.length == 0) {
-            isEnabled = true;
-        }
-
-        else if (Forwarders.length > 1) {
-            isSplitted = true;
-        }
-
-        this.IsSplitted_AccountManager = isSplitted;
-        this.UIProperties.SetEnabled("AccountManagerUserId", this.ObjectTableName, isEnabled);
-    }
-    SetUIProperties_Salesman() {
-        var isEnabled = false;
-        var isSplitted = false;
-
-        var myPipe = new GroupByPipe();
-        var Salesmens = myPipe.transform(this.EntityPM.CustomerSalesmanByProducts.filter(f => f.SalesmanUserId != null), "SalesmanUserId");
-
-        if (Salesmens.length == 0) {
-            isEnabled = true;
-        }
-
-        else if (Salesmens.length > 1) {
-            isSplitted = true;
-        }
-
-        this.IsSplitted_SalesmanUser = isSplitted;
-        //this.UIProperties.SetEnabled("SalesmanUserId", this.ObjectTableName, isEnabled);
-
-        var salesmanSettings: CustomerFieldsUpdateSettingList = this.customerFieldsUpdateSettingList.filter(f => f.ObjectFieldName == "SalesmanUserId")[0];
-        if (salesmanSettings != null) {
-            if (salesmanSettings.UpdateDirection == "UNFU" && this.EntityPM.CustomerStatusCode != "POT") {
-                this.IsUnifreightEditable = true;
-                this.UIProperties.SetEnabled("SalesmanUserId", this.ObjectTableName, false);
-            }
-        }
-    }
-    SetUIProperties_Forwarder() {
-        var isEnabled = false;
-        var isSplitted = false;
-
-        var myPipe = new GroupByPipe();
-        var Forwarders = myPipe.transform(this.EntityPM.CustomerForwarderByProducts.filter(f => f.ForwarderId != null), "ForwarderId");
-
-        if (Forwarders.length == 0) {
-            isEnabled = true;
-        }
-
-        else if (Forwarders.length > 1) {
-            isSplitted = true;
-        }
-
-        this.IsSplitted_Forwarder = isSplitted;
-        this.UIProperties.SetEnabled("ForwarderId", this.ObjectTableName, isEnabled);
-    }
-    SetUIProperties_CustomsAgent() {
-        var isEnabled = false;
-        var isSplitted = false;
-
-        var myPipe = new GroupByPipe();
-        var Forwarders = myPipe.transform(this.EntityPM.CustomerCustomsAgentByProducts.filter(f => f.CustomsAgentId != null), "CustomsAgentId");
-
-        if (Forwarders.length == 0) {
-            isEnabled = true;
-        }
-
-        else if (Forwarders.length > 1) {
-            isSplitted = true;
-        }
-
-        this.IsSplitted_CustomsAgent = isSplitted;
-        this.UIProperties.SetEnabled("CustomsAgentId", this.ObjectTableName, isEnabled);
-    }
-    SetUIProperties_Mediator() {
-        var isEnabled = false;
-        var isSplitted = false;
-
-        var myPipe = new GroupByPipe();
-        var Forwarders = myPipe.transform(this.EntityPM.CustomerMediatorByProducts.filter(f => f.MediatorId != null), "MediatorId");
-
-        if (Forwarders.length == 0) {
-            isEnabled = true;
-        }
-
-        else if (Forwarders.length > 1) {
-            isSplitted = true;
-        }
-
-        this.IsSplitted_Mediator = isSplitted;
-        this.UIProperties.SetEnabled("MediatorId", this.ObjectTableName, isEnabled);
-    }
-
-    private CloseScreen() {
+        ///////////////////
         var enabled: boolean = true;
         if (this.TenantPM.IsHybrid && (this.EntityPM.CustomerStatusCode == "ACT" || this.EntityPM.CustomerStatusCode == "WAC")) {
             enabled = false;
@@ -559,6 +436,174 @@ export class CustomerGeneralTabComponent extends BaseComponent   {
         this.UIProperties.SetEnabled("MediatorId", "Customer", enabled);
         this.UIProperties.SetEnabled("KnownConsignor", "Customer", enabled);
         this.UIProperties.SetEnabled("KCExpirationDate", "Customer", enabled);
+        this.IsEditEnabled = enabled;
+        //////////
+
+        this.UIProperties.SetVisibility("KnownConsignor", this.ObjectTableName, this.isRAFieldsVisibile);
+        this.UIProperties.SetVisibility("KCExpirationDate", this.ObjectTableName, this.isRAFieldsVisibile);
+
+        this.SearchTextCompetitorsDropButtonCustomerId += this.CurrentSession.GetNewId("SearchTextCompetitorsDropButtonId_1");
+        this.SearchTextCompetitorsCustomerId += this.CurrentSession.GetNewId("SearchTextCompetitorsId_1");
+        this.SearchTextAdditionalServiceModeDropButtonCustomerId += this.CurrentSession.GetNewId("SearchTextAdditionalServiceModeDropButtonId_1");
+        this.SearchTextAdditionalServiceCustomerId += this.CurrentSession.GetNewId("SearchTextAdditionalServiceId_1");
+        this.SearchProductDropButtonCustomerId += this.CurrentSession.GetNewId("SearchProductDropButtonId_1");
+        this.SearchProductsModeCustomerId += this.CurrentSession.GetNewId("SearchProductsModeId_1");
+
+        this.SetUIProperties_Partners();
+        this.SetLabels();
+    }
+
+    public IsSplitted_AccountManager: boolean = false;
+    public IsSplitted_SalesmanUser: boolean = false;
+    public IsSplitted_Forwarder: boolean = false;
+    public IsSplitted_CustomsAgent: boolean = false;
+    public IsSplitted_Mediator: boolean = false;
+    SetUIProperties_Partners() {
+        this.SetUIProperties_AccountManager();
+        this.SetUIProperties_Salesman();
+        this.SetUIProperties_Forwarder();
+        this.SetUIProperties_CustomsAgent();
+        this.SetUIProperties_Mediator();
+
+    }
+    SetUIProperties_AccountManager() {
+        var isEnabled = false;
+        var isSplitted = false;
+
+        var accountManagers = this.groupByPipe.transform(this.EntityPM.CustomerAccountManagerByProducts.filter(f => f.AccountManagerId != null), "AccountManagerId");
+
+        if (accountManagers.length == 0) {
+            isEnabled = this.IsEditEnabled ? true : false;
+        }
+
+        else {
+            isSplitted = true;
+        }
+
+        this.IsSplitted_AccountManager = isSplitted;
+        this.UIProperties.SetEnabled("AccountManagerUserId", this.ObjectTableName, isEnabled);
+    }
+    SetUIProperties_Salesman() {
+        var isEnabled = false;
+        var isSplitted = false;
+
+        var salesmens = this.groupByPipe.transform(this.EntityPM.CustomerSalesmanByProducts.filter(f => f.SalesmanUserId != null), "SalesmanUserId");
+
+        if (salesmens.length == 0) {
+            isEnabled = this.IsEditEnabled ? true : false;
+        }
+
+        else {
+            isSplitted = true;
+        }
+
+        this.IsSplitted_SalesmanUser = isSplitted;       
+
+        var salesmanSettings: CustomerFieldsUpdateSettingList = this.customerFieldsUpdateSettingList.filter(f => f.ObjectFieldName == "SalesmanUserId")[0];
+        if (salesmanSettings != null) {
+            if (salesmanSettings.UpdateDirection == "UNFU" && this.EntityPM.CustomerStatusCode != "POT") {
+                this.IsUnifreightEditable = true;
+                this.UIProperties.SetEnabled("SalesmanUserId", this.ObjectTableName, false);
+            }
+
+            else {
+                this.UIProperties.SetEnabled("SalesmanUserId", this.ObjectTableName, isEnabled);
+            }
+        }
+
+        else {
+             this.UIProperties.SetEnabled("SalesmanUserId", this.ObjectTableName, isEnabled);
+        }
+    }
+    SetUIProperties_Forwarder() {
+        var isEnabled = false;
+        var isSplitted = false;
+
+        var forwarders = this.groupByPipe.transform(this.EntityPM.CustomerForwarderByProducts.filter(f => f.ForwarderId != null), "ForwarderId");
+
+        if (forwarders.length == 0) {
+            isEnabled = this.IsEditEnabled ? true : false;
+        }
+
+        else {
+            isSplitted = true;
+        }
+
+        this.IsSplitted_Forwarder = isSplitted;
+        this.UIProperties.SetEnabled("ForwarderId", this.ObjectTableName, isEnabled);
+    }
+    SetUIProperties_CustomsAgent() {
+        var isEnabled = false;
+        var isSplitted = false;
+
+        var customsAgents = this.groupByPipe.transform(this.EntityPM.CustomerCustomsAgentByProducts.filter(f => f.CustomsAgentId != null), "CustomsAgentId");
+
+        if (customsAgents.length == 0) {
+            isEnabled = this.IsEditEnabled ? true : false;
+        }
+
+        else {
+            isSplitted = true;
+        }
+
+        this.IsSplitted_CustomsAgent = isSplitted;
+        this.UIProperties.SetEnabled("CustomsAgentId", this.ObjectTableName, isEnabled);
+    }
+    SetUIProperties_Mediator() {
+        var isEnabled = false;
+        var isSplitted = false;
+
+        var mediators = this.groupByPipe.transform(this.EntityPM.CustomerMediatorByProducts.filter(f => f.MediatorId != null), "MediatorId");
+
+        if (mediators.length == 0) {
+            isEnabled = this.IsEditEnabled ? true : false;
+        }
+
+        else {
+            isSplitted = true;
+        }
+
+        this.IsSplitted_Mediator = isSplitted;
+        this.UIProperties.SetEnabled("MediatorId", this.ObjectTableName, isEnabled);
+    }
+
+    public AccountManagerMoreLabel: string;
+    public SalesmanMoreLabel: string;
+    public ForwarderMoreLabel: string;
+    public CustomsAgentMoreLabel: string;
+    public MediatorMoreLabel: string;
+    private SetLabels() {
+        var accountManagerMoreLabel: string = "More";
+        var salesmanMoreLabel: string = "More";
+        var forwarderMoreLabel: string = "More";
+        var customsAgentMoreLabel: string = "More";
+        var mediatorMoreLabel: string = "More";
+
+        if (this.IsSplitted_AccountManager) {
+            accountManagerMoreLabel = "Splitted by Product";
+        }
+
+        if (this.IsSplitted_SalesmanUser) {
+            salesmanMoreLabel = "Splitted by Product";
+        }
+
+        if (this.IsSplitted_Forwarder) {
+            forwarderMoreLabel = "Splitted by Product";
+        }
+
+        if (this.IsSplitted_CustomsAgent) {
+            customsAgentMoreLabel = "Splitted by Product";
+        }
+
+        if (this.IsSplitted_Mediator) {
+            mediatorMoreLabel = "Splitted by Product";
+        }
+
+        this.AccountManagerMoreLabel = accountManagerMoreLabel;
+        this.SalesmanMoreLabel = salesmanMoreLabel;
+        this.ForwarderMoreLabel = forwarderMoreLabel;
+        this.CustomsAgentMoreLabel = customsAgentMoreLabel;
+        this.MediatorMoreLabel = mediatorMoreLabel;
     }
 
     public get StartWorkingDate() { return this.EntityPM.StartWorkingDate; }
@@ -1187,9 +1232,8 @@ export class CustomerGeneralTabComponent extends BaseComponent   {
             window.WindowArgs = { EntityPM: this.EntityPM, ProductTypes: this.AllProductTypes, IsUnifreightEditable :this.IsUnifreightEditable }
             window.Show(windowComponent);
             window.WindowClosed.subscribe(s => {
-                if (s == "OK") {
-                    this.SetUIProperties_Partners();
-                    this.CloseScreen();
+                if (s == "OK") {         
+                    this.SetUIProperties();
                 }
             });
         }

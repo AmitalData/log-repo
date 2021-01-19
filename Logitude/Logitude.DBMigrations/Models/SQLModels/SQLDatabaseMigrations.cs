@@ -565,6 +565,11 @@ namespace Logitude.DBMigrations.Models
             return (!isUniqueConstraintColumnDataTypeChanged && isUniqueConstraintInCurrentTable);
         }
 
+        protected override UniqueConstraintDefinition GetUniqueConstraintFromCurrentTable(UniqueConstraintDefinition uniqueConstraint)
+        {
+            return CurrentTable.UniqueConstraints.Where(u => u.Columns.ToLower() == uniqueConstraint.Columns.ToLower()).FirstOrDefault();
+        }
+
         protected override bool IsUniqueConstraintInDXMLTable(UniqueConstraintDefinition uniqueConstraint)
         {
             return DXMLTable.UniqueConstraints.Where(u => u.Columns.ToLower() == uniqueConstraint.Columns.ToLower()).Any();

@@ -1,0 +1,11 @@
+﻿<Script DBType="Main" Module="Common" Pre="true">
+  <Sql Version="1">
+    <![CDATA[
+
+  update ChargesTypes
+    set ChargesGroupId = (select Id from ChargesGroups where Code = ChargesTypes.ChargesGroupCode and Tenant = ChargesTypes.Tenant)
+     where ChargesGroupId is null
+     
+    ]]>
+  </Sql>
+</Script>

@@ -239,6 +239,7 @@
     <Compile Include="EntityChanges\AutomationResult\AutomationEmailResultService.cs" />
     <Compile Include="EntityChanges\AutomationResult\AutomationFollowUpResultService.cs" />
     <Compile Include="EntityChanges\AutomationResult\AutomationQueuedTaskResultService.cs" />
+    <Compile Include="EntityChanges\AutomationResult\AutomationSendDocumentResultService.cs" />
     <Compile Include="EntityChanges\AutomationResult\AutomationSendInterfaceResultService.cs" />
     <Compile Include="EntityChanges\AutomationResult\AutomationSetValueResultService.cs" />
     <Compile Include="EntityChanges\AutomationResult\AutomationSLAResultService.cs" />

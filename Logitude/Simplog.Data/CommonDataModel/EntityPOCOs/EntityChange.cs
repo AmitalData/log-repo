@@ -43,6 +43,8 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
 
         public string SendInterfaceAutomationFailedXml { get; set; }
         public string SendInterfaceAutomationSsucceedXml { get; set; }
+        public string SendDocumentAutomationFailedXml { get; set; }
+        public string SendDocumentAutomationSsucceedXml { get; set; }
 
         public int ExecutionTime { get; set; }
 

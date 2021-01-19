@@ -89,7 +89,7 @@ export class AddEditDeliveryComponent implements AfterViewInit, OnDestroy {
         this.SavedEntityId = this.EntityPM.Id;
         this.SavedEntityNumber = this.EntityPM.PickUpDeliveryNumber;
 
-        if (!this.EntityPM.TransportModeCode) {
+        if (this.IsNewEntity && !this.EntityPM.TransportModeCode) {
             this.EntityPM.TransportModeCode = "BYTR";
         }
 
@@ -456,7 +456,9 @@ export class AddEditDeliveryComponent implements AfterViewInit, OnDestroy {
     OkButtonClicked() {
         this.Save(false);
     }
-
+    SaveChangesAndClose() {
+        this.Save(true);
+    }
     Save(isClosingWindow: boolean) {
 
         var isValid = this.Validate();

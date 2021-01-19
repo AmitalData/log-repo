@@ -48,13 +48,13 @@ export class DocumentObjectFieldsRowViewModel   {
                 result = objectField.FieldName;
             }
             else {
-                if (this.CurrentObjectField.ShortNameTextCodeCode) {
-                    result = TextCodeTranslator.Translate(objectField.ShortNameTextCodeCode)
+                //if (this.CurrentObjectField.ShortNameTextCodeCode) {
+                //    result = TextCodeTranslator.Translate(objectField.ShortNameTextCodeCode)
 
-                }
-                else {
+                //}
+                //else {
                     result = TextCodeTranslator.Translate(objectField.FullNameTextCodeCode)
-                }
+                //}
             }
 
             if (result) {

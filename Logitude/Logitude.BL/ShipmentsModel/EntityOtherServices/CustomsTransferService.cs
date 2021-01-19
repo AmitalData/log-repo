@@ -36,7 +36,8 @@ namespace Logitude.BL.ShipmentsModel.EntityOtherServices
         private ShipmentPackageRepository shipmentPackageRepository;
         private ShippingLineRepository shippingLineRepository;
         private AddressRepository addressRepository;
-        CountryCityRepository countryCityRepository;
+        private CountryCityRepository countryCityRepository;
+        private PortRepository PortRepository;
         public CustomsTransferService(List<ShipmentDataView> shipments, string filename, string type, int tenant)
         {
             this.tenant = tenant;
@@ -50,6 +51,7 @@ namespace Logitude.BL.ShipmentsModel.EntityOtherServices
             shippingLineRepository = new ShippingLineRepository(commoContext);
             addressRepository = new AddressRepository(commoContext);
             countryCityRepository = new CountryCityRepository(commoContext);
+            PortRepository = new PortRepository(commoContext);
 
             this.InitializeExcelFile();            
         }
@@ -244,6 +246,23 @@ namespace Logitude.BL.ShipmentsModel.EntityOtherServices
                     string containerType = "";
                     string shipmentType = item.ShipmentTypeName;
                     int totalInsidePackages = item.NumberOfInsidePackages;
+                    
+                    string portId = "";
+                    if (item.ShipmentLevelCode == "H")
+                    {
+                        portId = item.DirectionId == "E" ? item.FromPortId : item.ToPortId;
+                    }
+
+                    else
+                    {
+                        portId = item.DirectionId == "E" ? item.MainCarriageFromPortId : item.MainCarriageFinalDestinationPortId;
+                    }
+
+                    Port customsSectionPort = null;
+                    if(!string.IsNullOrEmpty(portId))
+                    {
+                        customsSectionPort = PortRepository.GetSinglePort(tenant, portId);
+                    }
 
                     #region packages
                     foreach (ShipmentPackage package in myShipmentPackages)
@@ -330,27 +349,25 @@ namespace Logitude.BL.ShipmentsModel.EntityOtherServices
                     //row[1] = ;
                     row[2] = myTenant == null ? "" : myTenant.CAAT;
                     row[3] = "8";
-
-                    if(item.ShipmentLevelCode == "H")
-                    {
-                        row[4] = item.DirectionId == "E" ? item.FromPortCode : item.ToPortCode;
-                    }
-
-                    else
-                    {
-                        row[4] = item.DirectionId == "E" ? item.MainCarriageFromPortCode : item.MainCarriageFinalDestinationPortCode;
-                    }
-                   
+                    row[4] = customsSectionPort == null ? "" : customsSectionPort.CombinedCode;
                     //row[5] = ;
                     row[6] = carrier == null ? "" : carrier.SCACCode;
                     row[7] = item.MainCarriageVesselName;
                     row[8] = item.MainCarriageCarrierNumber;
                     row[9] = item.DirectionId == "E" ? "2" : "1";
-                    row[10] = item.House;
+
+                    if (!string.IsNullOrEmpty(item.House))
+                    {
+                        string house = item.House.Trim();
+                        house = Regex.Replace(item.House, @"[^0-9a-zA-Z.,+]+", "");
+
+                        row[10] = house;
+                    }
+
                     row[11] = item.ShipmentLevelCode == "H" ? item.FromPortCode : item.MainCarriageFromPortCode;
                     row[12] = item.ShipmentLevelCode == "H"? item.FromPortCountryCode : item.MainCarriageFromPortCountryCode;
                     row[13] = "H";
-                    row[14] = item.House;
+                    row[14] = item.Master;
                     row[15] = "2";
                     row[16] = item.ShipmentLevelCode == "H" ? item.ToPortCode : item.MainCarriageFinalDestinationPortCode;
                     row[17] = item.ShipmentLevelCode == "H"? item.ToPortCountryCode : item.MainCarriageFinalDestinationCountryCode;
@@ -400,10 +417,18 @@ namespace Logitude.BL.ShipmentsModel.EntityOtherServices
                     dataTable.Rows.Add(row);
                 }
             }
-            
-            sheet1.ImportDataTable(dataTable, true, 1, 1);
-            workbook.SaveAs(memory);
-            return memory.ToArray();
+
+            try
+            {
+                sheet1.ImportDataTable(dataTable, true, 1, 1);
+                workbook.SaveAs(memory);
+                return memory.ToArray();
+            }
+
+            catch (Exception ex)
+            {
+                throw new ApplicationException(ex.Message);
+            }
         }
         public byte[] ExportAirAMANACShipmentToExcel()
         {   
