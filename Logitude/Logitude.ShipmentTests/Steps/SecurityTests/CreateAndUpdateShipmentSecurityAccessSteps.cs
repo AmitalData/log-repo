@@ -5,7 +5,6 @@ using Logitude.Test.Base.Context;
 using System;
 using TechTalk.SpecFlow;
 using Logitude.ShipmentTests.Models;
-using Logitude.Test.Base.Models;
 
 namespace Logitude.ShipmentTests.Steps.SecurityTests
 {

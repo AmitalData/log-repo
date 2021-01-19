@@ -106,6 +106,8 @@
     <Compile Include="Constants\URLs.cs" />
     <Compile Include="Models\Builders\PackageBuilder.cs" />
     <Compile Include="Models\Builders\PayableBuilder.cs" />
+    <Compile Include="Models\Builders\MainCarriageLegBuilder.cs" />
+    <Compile Include="Models\Builders\DirectBuilder.cs" />
     <Compile Include="Models\Builders\ShipmentBuilder.cs" />
     <Compile Include="Hooks\BeforeTestRun.cs" />
     <Compile Include="Models\Card.cs" />
