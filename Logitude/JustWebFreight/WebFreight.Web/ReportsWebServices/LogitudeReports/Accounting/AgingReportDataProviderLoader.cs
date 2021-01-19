@@ -532,6 +532,10 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                     record.Category4LocalName = item.Category4LocalName;
                     record.Category5LocalName = item.Category5LocalName;
                     record.Category6LocalName = item.Category6LocalName;
+                    record.ChartOfAccountsLocalName = item.ChartOfAccountsLocalName;
+                    record.ChartOfAccountsEnglishName = item.ChartOfAccountsEnglishName;
+                    record.ChartOfAccountsTypeEnglishName = item.ChartOfAccountsTypeEnglishName;
+                    record.ChartOfAccountsTypeLocalName = item.ChartOfAccountsTypeLocalName;
 
                     record.Total = item.Total;
 
@@ -573,6 +577,10 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                     record.Category4LocalName = item.Category4LocalName;
                     record.Category5LocalName = item.Category5LocalName;
                     record.Category6LocalName = item.Category6LocalName;
+                    record.ChartOfAccountsLocalName = item.ChartOfAccountsLocalName;
+                    record.ChartOfAccountsEnglishName = item.ChartOfAccountsEnglishName;
+                    record.ChartOfAccountsTypeEnglishName = item.ChartOfAccountsTypeEnglishName;
+                    record.ChartOfAccountsTypeLocalName = item.ChartOfAccountsTypeLocalName;
 
                     record.Total = item.Total;
 
@@ -651,6 +659,9 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
             reportParameters.GroupByDate = GetFilterValue<string>("GroupByDate") == "filter_Due" ? AgingReportParam.DateEnum.DueDate : AgingReportParam.DateEnum.AccountingDate;
             reportParameters.AgingMethod = GetFilterValue<string>("AgingMethod") == "Open Transaction" ? AgingReportParam.MethodEnum.ReconcileOpenBalanceMethod.ToString() : AgingReportParam.MethodEnum.TotalByMonthFIFOMethod.ToString();
             reportParameters.Aging4AccountTypeCode = (GetFilterValue<string>("GLAccountType") == "2") ? AgingReportParam.Aging4AccountTypeCodeEnum.Customer2 : AgingReportParam.Aging4AccountTypeCodeEnum.Vendor3;
+
+            reportParameters.ChartOfAccountsTypeCode = GetFilterValue<string>("ChartOfAccountsTypeCode");
+            reportParameters.ChartOfAccountsId = GetFilterValue<string>("ChartOfAccountId");
 
             SetReportCategoryParameters(reportParameters);
 

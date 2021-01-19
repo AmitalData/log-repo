@@ -37,8 +37,8 @@ namespace Logitude.ShipmentTests.Steps
         [When(@"Create direct shipment using external API")]
         public void WhenCreateDirectShipmentUsingExternalAPI()
         {
-            Direct createdDirectShipment = APICaller.CallPost<Direct>(Context.Direct, "Direct", UserTenant.Token);
-            Context.Direct.Id = createdDirectShipment?.Id;
+            var response = APICaller.CallPost<Direct>(Context.Direct, "Direct", Context.User.Token);
+            Context.Direct.Id = response.Data?.Id;
         }
 
         [Then(@"The direct shipment should be created successfully")]
@@ -53,9 +53,9 @@ namespace Logitude.ShipmentTests.Steps
             DateTime futureDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day).AddYears(1);
             Context.Direct.MainCarriageLegs.First().ATA = futureDate;
 
-            dynamic response = APICaller.CallPut<dynamic>(Context.Direct, "Direct", UserTenant.Token, HttpStatusCode.BadRequest);
+            var response = APICaller.CallPut<Direct>(Context.Direct, "Direct", Context.User.Token);
 
-            Context.ExceptionMessage = (response["ErrorMessage"] as string).Replace("\r", string.Empty).Replace("\n", string.Empty).Trim();
+            Context.ExceptionMessage = response.ErrorMessage;
         }
 
         [Then(@"Error message \(cannot set main carriage ATA to future date\) should received")]
@@ -70,9 +70,9 @@ namespace Logitude.ShipmentTests.Steps
             DateTime futureDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day).AddYears(1);
             Context.Direct.MainCarriageLegs.First().ATD = futureDate;
 
-            dynamic response = APICaller.CallPut<dynamic>(Context.Direct, "Direct", UserTenant.Token, HttpStatusCode.BadRequest);
+            var response = APICaller.CallPut<Direct>(Context.Direct, "Direct", Context.User.Token);
 
-            Context.ExceptionMessage = (response["ErrorMessage"] as string).Replace("\r", string.Empty).Replace("\n", string.Empty).Trim();
+            Context.ExceptionMessage = response.ErrorMessage;
         }
 
         [Then(@"Error message \(cannot set main carriage ATD to future date\) should received")]
@@ -89,7 +89,8 @@ namespace Logitude.ShipmentTests.Steps
             Context.Direct.MainCarriageLegs.First().ETA = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day).AddMonths(-1).AddDays(3);
             Context.Direct.MainCarriageLegs.First().ATA = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day).AddMonths(-1).AddDays(4);
             //Context.Direct.NewConcurrencyGUID = Guid.NewGuid().ToString();
-            Context.Direct = APICaller.CallPut<Direct>(Context.Direct, "Direct", UserTenant.Token);
+            var response = APICaller.CallPut<Direct>(Context.Direct, "Direct", Context.User.Token);
+            Context.Direct = response.Data;
         }
 
         [Then(@"The shipment should updated succesfully")]

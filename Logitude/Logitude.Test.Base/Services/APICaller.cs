@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Logitude.Test.Base.Models;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using RestSharp;
 using System;
@@ -11,59 +12,70 @@ namespace Logitude.Test.Base.Services
     {
         protected static readonly string ApiUrl = ConfigurationManager.AppSettings["Url"];
 
-        public static T CallPost<T>(object requestBody, string url, string token)
+        public static APIResponse<T> CallPost<T>(object requestBody, string url, string token)
         {
-            return CallAPIProcess<T>(Method.POST, requestBody, url, token, null, null);
+            APIRequestParameters request = new APIRequestParameters() {
+                method = Method.POST, 
+                requestBody = requestBody, 
+                token = token, 
+                URL = url };
+            return CallAPIProcess<T>(request);
         }
 
-        public static T CallPut<T>(object requestBody, string url, string token, HttpStatusCode? stausCode = null)
-        { 
-            return CallAPIProcess<T>(Method.PUT, requestBody, url, token, null, stausCode);  
+        public static APIResponse<T> CallPut<T>(object requestBody, string url, string token)
+        {
+            APIRequestParameters request = new APIRequestParameters() { 
+                method = Method.PUT, 
+                requestBody = requestBody, 
+                token = token, 
+                URL = url };
+            return CallAPIProcess<T>(request);
         }
 
-        public static T CallGet<T>(string url, string token, string jsonElement)
+        public static APIResponse<T> CallGet<T>(string url, string token)
         {
-            return CallAPIProcess<T>(Method.GET, null, url, token, jsonElement, null);
+            APIRequestParameters request = new APIRequestParameters() { 
+                method = Method.GET, 
+                token = token, 
+                URL = url };
+            return CallAPIProcess<T>(request);
         }
 
-        protected static T CallAPIProcess<T>(Method method, object requestBody, string url, string token, string jsonElement, HttpStatusCode? statusCode)
+        private static APIResponse<T> CallAPIProcess<T>(APIRequestParameters requestParameters)
         {
-            string restClientUrl = GetRequestUrl(url);
+            string restClientUrl = GetRequestUrl(requestParameters.URL);
             RestClient restClient = new RestClient(restClientUrl);
-            RestRequest restRequest = new RestRequest(method) { RequestFormat = DataFormat.Json };
+            RestRequest restRequest = new RestRequest(requestParameters.method) { RequestFormat = DataFormat.Json };
+            var response = new APIResponse<T>();
 
-            if (!string.IsNullOrEmpty(token))
+            if (!string.IsNullOrEmpty(requestParameters.token))
             {
-                restRequest.AddHeader("Token", token);
+                restRequest.AddHeader("Token", requestParameters.token);
             }
-
-            if (requestBody != null)
+            if (requestParameters.requestBody != null)
             {
-                restRequest.AddJsonBody(JsonConvert.SerializeObject(requestBody));
+                restRequest.AddJsonBody(JsonConvert.SerializeObject(requestParameters.requestBody));
             }
 
             IRestResponse<T> restResponse = restClient.Execute<T>(restRequest);
+            response.StatusCode = restResponse.StatusCode;
 
-            if (restResponse.StatusCode == (statusCode == null ? HttpStatusCode.OK : statusCode))
+            if (response.StatusCode == HttpStatusCode.OK)
             {
-                if (jsonElement != null)
-                {
-                    JObject jObject = JObject.Parse(restResponse.Content);
-                    string result = jObject[jsonElement].ToString();
-                    return JsonConvert.DeserializeObject<T>(result);
-                }
-                else
-                {
-                    //JObject jObject = JObject.Parse(restResponse.Content);
-                    //return JsonConvert.DeserializeObject<T>(jObject.ToString());
-                    return restResponse.Data;
-                }
+                response.Data = restResponse.Data;
             }
             else
             {
-                return default;
-                //throw new Exception(method.ToString() + " Request To " + restClientUrl + " Faild With Message " + restResponse.Content);
+                dynamic responseException = restResponse.Content;
+                response.ErrorMessage = (responseException["ErrorMessage"] as string).Replace("\r", string.Empty).Replace("\n", string.Empty).Trim();
             }
+
+            return response;
+        }
+
+        public static APIResponse<T> CallGetByFilter<T>(APIRequestParameters requestParameters)
+        {
+            return new APIResponse<T>();
         }
 
         protected static string GetRequestUrl(string url)

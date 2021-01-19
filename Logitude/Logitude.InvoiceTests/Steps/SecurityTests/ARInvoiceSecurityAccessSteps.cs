@@ -34,8 +34,8 @@ namespace Logitude.InvoiceTests.Steps.SecurityTests
         {
             ARInvoicePM firstUserARInvoice = GetAnARInvoiceForFirstUser(Context.FirstUser.Token);
             string singleARInvoiceUrl = "arinvoices/GetSingle?id=" + firstUserARInvoice.Id;
-            ARInvoicePM ARInvoicePM = APICaller.CallGet<ARInvoicePM>(singleARInvoiceUrl, Context.SecondUser.Token, null);
-            Context.SecondUserPMData.Id = ARInvoicePM?.Id;
+            var response = APICaller.CallGet<ARInvoicePM>(singleARInvoiceUrl, Context.SecondUser.Token);
+            Context.SecondUserPMData.Id = response.Data?.Id;
         }
 
         [Then(@"AR Invoice should be exists")]
@@ -52,9 +52,11 @@ namespace Logitude.InvoiceTests.Steps.SecurityTests
 
         private ARInvoicePM GetAnARInvoiceForFirstUser(string Token)
         {
-            string ARInvoicesListUrl = "arinvoiceviews/getbyfilters?ForceCacheRefresh=false&GetAll=false&Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value=&PageIndex=0&PageSize=22";
-            IEnumerable<ARInvoicePM> ARInvoicePMs = APICaller.CallGet<IEnumerable<ARInvoicePM>>(ARInvoicesListUrl, Token, "Result");
-            return ARInvoicePMs.FirstOrDefault();
+            //this method is waiting the CallGetByFilter to be implemented by Abd.M
+            //string ARInvoicesListUrl = "arinvoiceviews/getbyfilters?ForceCacheRefresh=false&GetAll=false&Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value=&PageIndex=0&PageSize=22";
+            //IEnumerable<ARInvoicePM> ARInvoicePMs = APICaller.CallGet<IEnumerable<ARInvoicePM>>(ARInvoicesListUrl, Token, "Result");
+            //return ARInvoicePMs.FirstOrDefault();
+            return null;
         }
     }
 }

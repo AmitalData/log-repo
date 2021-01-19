@@ -270,7 +270,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
 
 			if (!string.IsNullOrEmpty(theEntityPm.FullNameTextCodeCode))
             {
-                TextCode textCode = textCodeRepository.GetTextCodes().Where(o => o.Code == theEntityPm.FullNameTextCodeCode).FirstOrDefault();
+                TextCode textCode = textCodeRepository.GetTextCodes().Where(o => o.Code == theEntityPm.FullNameTextCodeCode && o.Tenant == theEntityPm.Tenant).FirstOrDefault();
                 if (textCode != null)
                 {
                     if (textCode.DefaultText != theEntityPm.FullNameTextCodeDefaultText)
@@ -283,7 +283,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
 
             if (!string.IsNullOrEmpty(theEntityPm.ListTextCodeCode) && !string.IsNullOrEmpty(theEntityPm.ListTextCodeDefaultText))
             {
-                TextCode textCode = textCodeRepository.GetTextCodes().Where(o => o.Code == theEntityPm.ListTextCodeCode).FirstOrDefault();
+                TextCode textCode = textCodeRepository.GetTextCodes().Where(o => o.Code == theEntityPm.ListTextCodeCode && o.Tenant == theEntityPm.Tenant).FirstOrDefault();
                 if (textCode != null)
                 {
                     if (textCode.DefaultText != theEntityPm.ListTextCodeDefaultText)
@@ -297,7 +297,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
 
             if (!string.IsNullOrEmpty(theEntityPm.HelpTextCodeCode))
             {
-                TextCode helpTextCode = textCodeRepository.GetTextCodes().Where(o => o.Code == theEntityPm.HelpTextCodeCode).FirstOrDefault();
+                TextCode helpTextCode = textCodeRepository.GetTextCodes().Where(o => o.Code == theEntityPm.HelpTextCodeCode && o.Tenant == theEntityPm.Tenant).FirstOrDefault();
                 if (helpTextCode == null)
                 {
                     ObjectTable ob = objectTableRepository.GetSingleObjectTable(theEntityPm.ObjectTableId, 0, true);
@@ -425,7 +425,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
 
 			if (!string.IsNullOrEmpty(theEntityPm.FullNameTextCodeCode))
             {
-                TextCode textCode = textCodeRepository.GetTextCodes().Where(o => o.Code == theEntityPm.FullNameTextCodeCode).FirstOrDefault();
+                TextCode textCode = textCodeRepository.GetTextCodes().Where(o => o.Code == theEntityPm.FullNameTextCodeCode && o.Tenant == theEntityPm.Tenant).FirstOrDefault();
                 if (textCode != null)
                 {
                     if (textCode.DefaultText != theEntityPm.FullNameTextCodeDefaultText)
@@ -438,7 +438,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
 
             if (!string.IsNullOrEmpty(theEntityPm.ListTextCodeCode) && !string.IsNullOrEmpty(theEntityPm.ListTextCodeDefaultText))
             {
-                TextCode textCode = textCodeRepository.GetTextCodes().Where(o => o.Code == theEntityPm.ListTextCodeCode).FirstOrDefault();
+                TextCode textCode = textCodeRepository.GetTextCodes().Where(o => o.Code == theEntityPm.ListTextCodeCode && o.Tenant == theEntityPm.Tenant).FirstOrDefault();
                 if (textCode != null)
                 {
                     if (textCode.DefaultText != theEntityPm.ListTextCodeDefaultText)
@@ -452,7 +452,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
 
             if (!string.IsNullOrEmpty(theEntityPm.HelpTextCodeCode))
             {
-                TextCode helpTextCode = textCodeRepository.GetTextCodes().Where(o => o.Code == theEntityPm.HelpTextCodeCode).FirstOrDefault();
+                TextCode helpTextCode = textCodeRepository.GetTextCodes().Where(o => o.Code == theEntityPm.HelpTextCodeCode && o.Tenant == theEntityPm.Tenant).FirstOrDefault();
                 if (helpTextCode == null)
                 {
                     ObjectTable ob = objectTableRepository.GetSingleObjectTable(theEntityPm.ObjectTableId, 0, true);

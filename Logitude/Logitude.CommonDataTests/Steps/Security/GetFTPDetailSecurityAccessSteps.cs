@@ -2,7 +2,6 @@
 using Logitude.Test.Base.Models.Login;
 using Logitude.Test.Base.Context;
 using Logitude.Test.Base.Services;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using TechTalk.SpecFlow;
@@ -39,8 +38,8 @@ namespace Logitude.CommonDataTests.Steps.Security
         {
             IEnumerable<FTPDetailPM> FirstUserDetailList = GetFTPDetailsListForFirstUser();
             string singleDetailUrl = "ftpdetailviews/GetSingle?id=" + FirstUserDetailList?.FirstOrDefault()?.Id;
-            FTPDetailPM detailPM = APICaller.CallGet<FTPDetailPM>(singleDetailUrl, Context.SecondUser.Token, null);
-            Context.SecondUserPMData.Id = detailPM?.Id;
+            var response = APICaller.CallGet<FTPDetailPM>(singleDetailUrl, Context.SecondUser.Token);
+            Context.SecondUserPMData.Id = response.Data?.Id;
         }
 
         [Then(@"the Detail for second user should not be exists")]
@@ -51,9 +50,11 @@ namespace Logitude.CommonDataTests.Steps.Security
 
         private IEnumerable<FTPDetailPM> GetFTPDetailsListForFirstUser()
         {
-            string contactsListUrl = "ftpdetailviews/GetByFilters?ForceCacheRefresh=false&GetAll=false&GetCount=true&PageIndex=0&PageSize=10";
-            IEnumerable<FTPDetailPM> FTPDetailPMs = APICaller.CallGet<IEnumerable<FTPDetailPM>>(contactsListUrl, Context.FirstUser.Token, "Result");
-            return FTPDetailPMs;
+            //this method is waiting the CallGetByFilter to be implemented by Abd.M
+            //string contactsListUrl = "ftpdetailviews/GetByFilters?ForceCacheRefresh=false&GetAll=false&GetCount=true&PageIndex=0&PageSize=10";
+            //IEnumerable<FTPDetailPM> FTPDetailPMs = APICaller.CallGet<IEnumerable<FTPDetailPM>>(contactsListUrl, Context.FirstUser.Token, "Result");
+            //return FTPDetailPMs;
+            return null;
         }
 
     }

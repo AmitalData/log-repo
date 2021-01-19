@@ -40,8 +40,8 @@ namespace Logitude.CommonDataTests.Steps.Security
         {
             IEnumerable<ContactPM> FirstUserContactList = GetContactsListForFirstUser();
             string singleContactUrl = "Contact/GetSingle?id=" + FirstUserContactList?.FirstOrDefault()?.Id;
-            ContactPM contactPM = APICaller.CallGet<ContactPM>(singleContactUrl, Context.SecondUser.Token, null);
-            Context.SecondUserPMData.Id = contactPM?.Id;
+            var response = APICaller.CallGet<ContactPM>(singleContactUrl, Context.SecondUser.Token);
+            Context.SecondUserPMData.Id = response.Data?.Id;
         }
 
         [Then(@"the Contact for second user should not be exists")]
@@ -52,9 +52,11 @@ namespace Logitude.CommonDataTests.Steps.Security
 
         private IEnumerable<ContactPM> GetContactsListForFirstUser()
         {
-            string contactsListUrl = "contactviews/GetByFilters?ForceCacheRefresh=false&GetAll=false&GetCount=true&PageIndex=0&PageSize=10";
-            IEnumerable<ContactPM> contactPMs = APICaller.CallGet<IEnumerable<ContactPM>>(contactsListUrl, Context.FirstUser.Token, "Result");
-            return contactPMs;
+            //this method is waiting the CallGetByFilter to be implemented by Abd.M
+            //string contactsListUrl = "contactviews/GetByFilters?ForceCacheRefresh=false&GetAll=false&GetCount=true&PageIndex=0&PageSize=10";
+            //IEnumerable<ContactPM> contactPMs = APICaller.CallGet<IEnumerable<ContactPM>>(contactsListUrl, Context.FirstUser.Token, "Result");
+            //return contactPMs;
+            return null;
         }
 
 
