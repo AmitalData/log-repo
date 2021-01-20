@@ -1,10 +1,9 @@
 ﻿using Logitude.Test.Base.Models;
-using Logitude.Test.Base;
 using System;
 using System.Collections.Generic;
 using TechTalk.SpecFlow;
 using TechTalk.SpecFlow.Assist;
-using Logitude.Test.Base.Models.Base;
+
 
 namespace Logitude.ShipmentTests.Models.Builders
 {
@@ -202,8 +201,8 @@ namespace Logitude.ShipmentTests.Models.Builders
                 BranchId = UserTenant.BranchId,
                 DepartmentId = UserTenant.DepartmentId,
                 CustomerId = PartnersData.CustomerId,
-                CreatedByUserId = UserTenant.LoginUserId,
-                UpdatedByUserId = UserTenant.LoginUserId
+                CreatedByUserId = UserTenant.UserId,
+                UpdatedByUserId = UserTenant.UserId
             };
             return this;
         }

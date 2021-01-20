@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Logitude.Test.Base.Models.Base
+namespace Logitude.Test.Base.Models
 {
     public class LocationsData
     {
