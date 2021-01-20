@@ -55,7 +55,7 @@ namespace WebFreight.Web.Controllers.Integration
                 int tenant = authToken.Tenant;
 
                 SecurityUtility.AuthenticationOnTenant(tenant);
-                SecurityUtility.CheckContactFeature("Shipment", "READ", tenant);
+                //SecurityUtility.CheckContactFeature("Shipment", "READ", tenant);
 
                 LocationsPreparationVariables locationsPreperationVariables = new LocationsPreparationVariables(tenant);
                 LocationsVariables Variables = locationsPreperationVariables.GetBaseLocationsVaribles();
@@ -82,7 +82,7 @@ namespace WebFreight.Web.Controllers.Integration
                 int tenant = authToken.Tenant;
 
                 SecurityUtility.AuthenticationOnTenant(tenant);
-                SecurityUtility.CheckContactFeature("Shipment", "READ", tenant);
+                //SecurityUtility.CheckContactFeature("Shipment", "READ", tenant);
 
                 PartnersPreparationVariables partnersPreperationVariables = new PartnersPreparationVariables(tenant);
                 PartnersVariables Variables = partnersPreperationVariables.GetBasePartnersVaribles();
