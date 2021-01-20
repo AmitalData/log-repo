@@ -4,7 +4,6 @@ using Logitude.Test.Base.Context;
 using Logitude.Test.Base.Models;
 using Logitude.Test.Base.Services;
 using TechTalk.SpecFlow;
-using Logitude.Test.Base.Constants;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -31,8 +30,8 @@ namespace Logitude.InvoiceTests.Steps.SecurityTests
         public void WhenGetARInvoiceRequestSentForOtherTenant()
         {
             ARInvoicePM firstUserARInvoice = GetAnARInvoiceForFirstUser();
-            string arInvoicesGetSingleUrl = URLs.ARInvoicesGetSingle(firstUserARInvoice?.Id);
-            APIResponse<ARInvoicePM> response = APICaller.CallGet<ARInvoicePM>(arInvoicesGetSingleUrl, UserOtherTenant.Token);
+            string arInvoicesGetSingleUrl = Urls.ARInvoicesGetSingle(firstUserARInvoice?.Id);
+            ApiResponse<ARInvoicePM> response = APICaller.CallGet<ARInvoicePM>(arInvoicesGetSingleUrl, UserOtherTenant.Token);
             Context.SecondUserPMData.Id = response.Data?.Id;
         }
 
@@ -56,7 +55,7 @@ namespace Logitude.InvoiceTests.Steps.SecurityTests
                 PageSize = 1
             };
 
-            APIResponse<IEnumerable<ARInvoicePM>> response = APICaller.CallGetByFilters<IEnumerable<ARInvoicePM>>(URLs.ARInvoiceViewsGetByFilters(), UserTenant.Token, apiQueryFilters);
+            ApiResponse<IEnumerable<ARInvoicePM>> response = APICaller.CallGetByFilters<IEnumerable<ARInvoicePM>>(Urls.ARInvoiceViewsGetByFilters(), UserTenant.Token, apiQueryFilters);
             return response.Data?.FirstOrDefault();
         }
     }

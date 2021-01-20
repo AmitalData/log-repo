@@ -1,11 +1,9 @@
 ﻿using FluentAssertions;
 using Logitude.ShipmentTests.Models;
 using Logitude.ShipmentTests.Models.Builders;
-using Logitude.Test.Base.Constants;
 using Logitude.Test.Base.Context;
 using Logitude.Test.Base.Models;
 using Logitude.Test.Base.Services;
-using System;
 using TechTalk.SpecFlow;
 
 namespace Logitude.ShipmentTests.Steps.SecurityTests
@@ -24,7 +22,7 @@ namespace Logitude.ShipmentTests.Steps.SecurityTests
         [When(@"Create shipment request sent for User's Tenant")]
         public void WhenCreateShipmentRequestSentForUserSTenant()
         {
-            APIResponse<ShipmentPM> response = CreateShipmentForFirstUser(UserTenant.Token);
+            ApiResponse<ShipmentPM> response = CreateShipmentForFirstUser(UserTenant.Token);
             Context.FirstUserPMData.Id = response.Data?.Id;
             ErrorMsg = response.ErrorMessage;
         }
@@ -39,7 +37,7 @@ namespace Logitude.ShipmentTests.Steps.SecurityTests
         [When(@"Create shipment request sent for other Tenant")]
         public void WhenCreateShipmentRequestSentForOtherTenant()
         {
-            APIResponse<ShipmentPM> response = CreateShipmentForFirstUser(UserOtherTenant.Token);
+            ApiResponse<ShipmentPM> response = CreateShipmentForFirstUser(UserOtherTenant.Token);
             Context.SecondUserPMData.Id = response.Data?.Id;
             ErrorMsg = response.ErrorMessage;
         }
@@ -54,7 +52,7 @@ namespace Logitude.ShipmentTests.Steps.SecurityTests
         [When(@"Update shipment request sent for User's Tenant")]
         public void WhenUpdateShipmentRequestSentForUserSTenant()
         {
-            APIResponse<ShipmentPM> response = UpdateShipmentForFirstUser(UserTenant.Token);
+            ApiResponse<ShipmentPM> response = UpdateShipmentForFirstUser(UserTenant.Token);
             Context.FirstUserPMData.Id = response.Data?.Id;
             ErrorMsg = response.ErrorMessage;
         }
@@ -69,7 +67,7 @@ namespace Logitude.ShipmentTests.Steps.SecurityTests
         [When(@"Update shipment request sent for other Tenant")]
         public void WhenUpdateShipmentRequestSentForOtherTenant()
         {
-            APIResponse<ShipmentPM> response = UpdateShipmentForFirstUser(UserOtherTenant.Token);
+            ApiResponse<ShipmentPM> response = UpdateShipmentForFirstUser(UserOtherTenant.Token);
             Context.SecondUserPMData.Id = response.Data?.Id;
             ErrorMsg = response.ErrorMessage;
         }
@@ -81,16 +79,16 @@ namespace Logitude.ShipmentTests.Steps.SecurityTests
             ErrorMsg.Should().Contain("Sorry! you have no permission to do this operation on Tenant");
         }
 
-        private APIResponse<ShipmentPM> UpdateShipmentForFirstUser(string Token)
+        private ApiResponse<ShipmentPM> UpdateShipmentForFirstUser(string Token)
         {
-            APIResponse<ShipmentPM> response = CreateShipmentForFirstUser(UserTenant.Token);
-            return APICaller.CallPut<ShipmentPM>(response.Data, URLs.Shipment(), Token);
+            ApiResponse<ShipmentPM> response = CreateShipmentForFirstUser(UserTenant.Token);
+            return APICaller.CallPut<ShipmentPM>(response.Data, Urls.Shipment(), Token);
         }
 
-        private APIResponse<ShipmentPM> CreateShipmentForFirstUser(string Token)
+        private ApiResponse<ShipmentPM> CreateShipmentForFirstUser(string Token)
         {
             ShipmentPM shipmentModel = GetValidUserShipmentPM();
-            return APICaller.CallPost<ShipmentPM>(shipmentModel, URLs.Shipment(), Token);
+            return APICaller.CallPost<ShipmentPM>(shipmentModel, Urls.Shipment(), Token);
         }
 
         private ShipmentPM GetValidUserShipmentPM()

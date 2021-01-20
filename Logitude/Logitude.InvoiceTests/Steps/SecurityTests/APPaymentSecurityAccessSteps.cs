@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.Linq;
 using TechTalk.SpecFlow;
 using Logitude.Test.Base.Models;
-using Logitude.Test.Base.Constants;
 
 namespace Logitude.InvoiceTests.Steps.SecurityTests
 {
@@ -30,8 +29,8 @@ namespace Logitude.InvoiceTests.Steps.SecurityTests
         public void WhenSecondUserGetTheAPPaymentThatRequestedByFirstUser()
         {
             IEnumerable<APPaymentPM> firstUserAPPaymentsList = GetAPPaymentListForFirstUser();
-            string apPaymentsGetSingleUrl = URLs.APPaymentsGetSingle(firstUserAPPaymentsList?.FirstOrDefault()?.Id);
-            APIResponse<APPaymentPM> response = APICaller.CallGet<APPaymentPM>(apPaymentsGetSingleUrl, UserOtherTenant.Token);
+            string apPaymentsGetSingleUrl = Urls.APPaymentsGetSingle(firstUserAPPaymentsList?.FirstOrDefault()?.Id);
+            ApiResponse<APPaymentPM> response = APICaller.CallGet<APPaymentPM>(apPaymentsGetSingleUrl, UserOtherTenant.Token);
             Context.SecondUserPMData.Id = response.Data?.Id;
         }
 
@@ -55,7 +54,7 @@ namespace Logitude.InvoiceTests.Steps.SecurityTests
                 PageSize = 1
             };
 
-            APIResponse<IEnumerable<APPaymentPM>> response = APICaller.CallGetByFilters<IEnumerable<APPaymentPM>>(URLs.APPaymentViewsGetByFilters(), UserTenant.Token, apiQueryFilters);
+            ApiResponse<IEnumerable<APPaymentPM>> response = APICaller.CallGetByFilters<IEnumerable<APPaymentPM>>(Urls.APPaymentViewsGetByFilters(), UserTenant.Token, apiQueryFilters);
             return response.Data;
         }
     }

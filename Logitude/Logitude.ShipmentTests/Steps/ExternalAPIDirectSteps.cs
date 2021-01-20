@@ -36,7 +36,7 @@ namespace Logitude.ShipmentTests.Steps
         [When(@"Create direct shipment using external API")]
         public void WhenCreateDirectShipmentUsingExternalAPI()
         {
-            APIResponse<Direct> response = APICaller.CallPost<Direct>(Context.Direct, "Direct", UserTenant.Token);
+            ApiResponse<Direct> response = APICaller.CallPost<Direct>(Context.Direct, "Direct", UserTenant.Token);
             Context.Direct = response.Data;
         }
 
@@ -52,7 +52,7 @@ namespace Logitude.ShipmentTests.Steps
             DateTime futureDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day).AddYears(1);
             Context.Direct.MainCarriageLegs.First().ATA = futureDate;
 
-            APIResponse<Direct> response = APICaller.CallPut<Direct>(Context.Direct, "Direct", UserTenant.Token);
+            ApiResponse<Direct> response = APICaller.CallPut<Direct>(Context.Direct, "Direct", UserTenant.Token);
 
             Context.ExceptionMessage = response.ErrorMessage;
         }
@@ -69,7 +69,7 @@ namespace Logitude.ShipmentTests.Steps
             DateTime futureDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day).AddYears(1);
             Context.Direct.MainCarriageLegs.First().ATD = futureDate;
 
-            APIResponse<Direct> response = APICaller.CallPut<Direct>(Context.Direct, "Direct", UserTenant.Token);
+            ApiResponse<Direct> response = APICaller.CallPut<Direct>(Context.Direct, "Direct", UserTenant.Token);
 
             Context.ExceptionMessage = response.ErrorMessage;
         }
@@ -87,7 +87,7 @@ namespace Logitude.ShipmentTests.Steps
             Context.Direct.MainCarriageLegs.First().ATD = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day).AddMonths(-1).AddDays(2);
             Context.Direct.MainCarriageLegs.First().ETA = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day).AddMonths(-1).AddDays(3);
             Context.Direct.MainCarriageLegs.First().ATA = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day).AddMonths(-1).AddDays(4);
-            APIResponse<Direct> response = APICaller.CallPut<Direct>(Context.Direct, "Direct", UserTenant.Token);
+            ApiResponse<Direct> response = APICaller.CallPut<Direct>(Context.Direct, "Direct", UserTenant.Token);
             Context.Direct = response.Data;
         }
 
