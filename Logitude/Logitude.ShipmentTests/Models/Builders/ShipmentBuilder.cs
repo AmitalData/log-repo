@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using TechTalk.SpecFlow;
 using TechTalk.SpecFlow.Assist;
 
+
 namespace Logitude.ShipmentTests.Models.Builders
 {
     public class ShipmentBuilder
@@ -199,7 +200,7 @@ namespace Logitude.ShipmentTests.Models.Builders
                 NewConcurrencyGUID = Guid.NewGuid().ToString(),
                 BranchId = UserTenant.BranchId,
                 DepartmentId = UserTenant.DepartmentId,
-                CustomerId = ShipmentData.CustomerId,
+                CustomerId = PartnersData.CustomerId,
                 CreatedByUserId = UserTenant.UserId,
                 UpdatedByUserId = UserTenant.UserId
             };
@@ -241,19 +242,19 @@ namespace Logitude.ShipmentTests.Models.Builders
             switch(portCode)
             {
                 case "LHR":
-                    return ShipmentData.PortLHRId;
+                    return LocationsData.PortLHRId;
                 case "MIA":
-                    return ShipmentData.PortMIAId;
+                    return LocationsData.PortMIAId;
                 case "JFK":
-                    return ShipmentData.PortJFKId;
+                    return LocationsData.PortJFKId;
                 case "SOU":
-                    return ShipmentData.PortSOUId;
+                    return LocationsData.PortSOUId;
                 case "NYC":
-                    return ShipmentData.PortNYCId;
+                    return LocationsData.PortNYCId;
                 case "LON":
-                    return ShipmentData.PortLONId;
+                    return LocationsData.PortLONId;
                 case "MAN":
-                    return ShipmentData.PortMANId;
+                    return LocationsData.PortMANId;
                 default:
                     return null;
             }
