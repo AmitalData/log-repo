@@ -56,17 +56,30 @@ namespace Logitude.Customs.BL.Messaging.ILOVS
 
         public  string BuildUpdateHawbStatus(string declarationId, int tenant, string messageToMaman)
         {
-            using (var scop = TransactionFactory.GetTransaction())
+            //using (var scop = TransactionFactory.GetTransaction())
             {
                 byte[] bytearray = Encoding.UTF8.GetBytes(messageToMaman);
 
 
 
-
+                bool haveDefinition = true;
                 var webAPISendMessage2MamanService = new WebAPISendMessage2MasofService();
-                webAPISendMessage2MamanService.BuildCommunicationLog(bytearray, tenant, declarationId, CustomsPartnerFtpDetails.InterfaceName_ECOVSTHR, CustomsPartnerFtpDetails.PartnerCode_ILOVS);
-
-                scop.Complete();
+                var customsPartnerFtpDetails = new CustomsPartnerFtpDetails();
+                var defDefaultJSON = customsPartnerFtpDetails.GetAllInterfaceName().First(r => r.Key == CustomsPartnerFtpDetails.InterfaceName_ECOVSTHR).Value;
+                var defDefault = ProxyUtil.JsonConvertDeserializeTyped<InterfaceDetails>(defDefaultJSON);
+                try
+                {
+                    webAPISendMessage2MamanService.GetCustomsPartnerFtpPM(tenant, CustomsPartnerFtpDetails.InterfaceName_ECOVSTHR, CustomsPartnerFtpDetails.PartnerCode_ILOVS, defDefault);
+                }
+                catch (MasofException ignoreif )
+                {
+                    haveDefinition = false;
+                }
+                if (haveDefinition)
+                {
+                    webAPISendMessage2MamanService.BuildCommunicationLog(bytearray, tenant, declarationId, CustomsPartnerFtpDetails.InterfaceName_ECOVSTHR, CustomsPartnerFtpDetails.PartnerCode_ILOVS);
+                }
+                ///scop.Complete();
                 //output  ftp://192.168.10.88/FTP_MAMAN/  
             }
             return "המסר לאוברסיז נבנה בהצלחה וישלח בתהליך רקע ";
