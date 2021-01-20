@@ -13,7 +13,7 @@ namespace Logitude.ShipmentTests.Steps.SecurityTests
     [Binding]
     public class GetShipmentSecurityAccessSteps
     {
-        protected SecurityAccessStepsContext<ShipmentPM> Context;
+        private SecurityAccessStepsContext<ShipmentPM> Context;
 
         public GetShipmentSecurityAccessSteps(SecurityAccessStepsContext<ShipmentPM> context)
         {
@@ -23,16 +23,14 @@ namespace Logitude.ShipmentTests.Steps.SecurityTests
         [When(@"First user get the first shipment from shipments list")]
         public void WhenFirstUserGetTheFirstShipmentFromShipmentsList()
         {
-            IEnumerable<ShipmentPM> firstUserShipmentsList = GetShipmentsListForFirstUser();
-            Context.FirstUserPMData.Id = firstUserShipmentsList?.FirstOrDefault()?.Id;
+            ShipmentPM shipment = GetAShipmentFromFirstUserList();
+            Context.FirstUserPMData.Id = shipment?.Id;
         }
 
         [When(@"Second user get the shipment that requested by first user")]
         public void WhenSecondUserGetTheShipmentThatRequestedByFirstUser()
         {
-            IEnumerable<ShipmentPM> firstUserShipmentsList = GetShipmentsListForFirstUser();
-            string shipmentGetSingleUrl = URLs.ShipmentGetSingle(firstUserShipmentsList?.FirstOrDefault()?.Id);
-            var response = APICaller.CallGet<ShipmentPM>(shipmentGetSingleUrl, UserOtherTenant.Token);
+            APIResponse<ShipmentPM> response = GetAsingleShipmentForFirstUser(UserOtherTenant.Token); 
             Context.SecondUserPMData.Id = response.Data?.Id;
         }
 
@@ -48,8 +46,14 @@ namespace Logitude.ShipmentTests.Steps.SecurityTests
             Context.SecondUserPMData.Id.Should().BeNull();
         }
 
+        private APIResponse<ShipmentPM> GetAsingleShipmentForFirstUser(string Token)
+        {
+            ShipmentPM firstUserShipment = GetAShipmentFromFirstUserList();
+            string shipmentGetSingleUrl = URLs.ShipmentGetSingle(firstUserShipment?.Id);
+            return APICaller.CallGet<ShipmentPM>(shipmentGetSingleUrl, Token);
+        }
 
-        protected IEnumerable<ShipmentPM> GetShipmentsListForFirstUser()
+        private ShipmentPM GetAShipmentFromFirstUserList()
         {
             ApiQueryFilters apiQueryFilters = new ApiQueryFilters
             {
@@ -58,7 +62,7 @@ namespace Logitude.ShipmentTests.Steps.SecurityTests
             };
 
             APIResponse<IEnumerable<ShipmentPM>> response = APICaller.CallGetByFilters<IEnumerable<ShipmentPM>>(URLs.ShipmentViewsGetByFilters(), UserTenant.Token, apiQueryFilters);
-            return response.Data;
+            return response.Data?.FirstOrDefault();
         }
     }
 }
