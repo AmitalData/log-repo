@@ -45,6 +45,7 @@ export class BankDepositDetailsTabComponent extends BaseComponent {
     public SelectedTotal = 0;
     public NoCashBookRows: boolean = false;
     public IsLinesSelection: boolean = false;
+    public IsNewDepositMode: boolean = false;
     searchText: string = "";
 
     CashBookPM: CashBookPM;
@@ -102,6 +103,7 @@ export class BankDepositDetailsTabComponent extends BaseComponent {
     private SetSelectionMode()
     {
         this.IsLinesSelection = true;
+        this.IsNewDepositMode = true;
         this.GetCashBook();
         this.GetChequesCounter();
 
@@ -384,12 +386,16 @@ export class BankDepositDetailsTabComponent extends BaseComponent {
         if (this.FilterSelectedValue != itemValue) {
             this.FilterSelectedValue = itemValue;
             // this.FilterLines();
-            if (this.SelectedTotal > 0) {
-                this.ShowConfirmMessageToToggleBetweenCashAndPostdated();
-            }
-            else
-                this.GetCashbookLines();
+            this.GetCashbookLinesAccordingToFilter();
         }
+    }
+
+    private GetCashbookLinesAccordingToFilter() {
+        if (this.SelectedTotal > 0) {
+            this.ShowConfirmMessageToToggleBetweenCashAndPostdated();
+        }
+        else
+            this.GetCashbookLines();
     }
 
     ShowConfirmMessageToToggleBetweenCashAndPostdated() {
@@ -408,7 +414,7 @@ export class BankDepositDetailsTabComponent extends BaseComponent {
     TextChanged(searchtext) {
 
         // Deposited cheque
-        if (this.LineSelection && !this.EntityPM.IsCashDeposit) {
+        if (!this.EntityPM.IsCashDeposit) {
             this.timerToken = setTimeout(() => {
                 this.searchText = searchtext;
                 this.FilterChequeDeposits();
@@ -417,7 +423,7 @@ export class BankDepositDetailsTabComponent extends BaseComponent {
 
     }
     FilterChequeDeposits() {
-        if (!this.IsLinesSelection) {
+        if (!this.IsNewDepositMode) {
             this.GetDepositLines();
         }
         else {
@@ -915,11 +921,11 @@ export class BankDepositDetailsTabComponent extends BaseComponent {
 
     RefreshButtonClicked() {
 
-        if (!this.IsLinesSelection) {
+        if (!this.IsNewDepositMode) {
             this.GetDepositLines();
         }
         else {
             this.GetCashbookLines();
         }
-        }
+    }
 }
