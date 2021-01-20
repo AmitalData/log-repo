@@ -96,6 +96,7 @@ export class DocsOutTabComponent implements OnInit, OnDestroy {
     IsLoadCommunicationLogsListsComplete: boolean = false;
     IsLoadFollowUpDocumentTypeListsComplete: boolean = false;
     IsOpenSendComponent: boolean = false;
+    public DisableSendOriginalCopy: boolean = false;
 
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(
@@ -430,7 +431,9 @@ export class DocsOutTabComponent implements OnInit, OnDestroy {
             this.IsShowAddFromLibraryLink = false;
         }
 
-
+        if (this.entityArgs && this.entityArgs.ObjectTableName == "ARInvoice" && SessionLocator.AccountingSettingPM.BlockSendInvoiceOriginalCopy) {
+            this.DisableSendOriginalCopy = true;
+        }
     
     
         if (this.EntityPM && this.EntityPM.FollowUps) {

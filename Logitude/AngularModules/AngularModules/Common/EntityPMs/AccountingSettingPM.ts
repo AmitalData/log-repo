@@ -295,6 +295,11 @@ export class AccountingSettingPM {
     public set EnableEnteringTotalVAT(newValue: boolean) { if (this.enableEnteringTotalVAT != newValue) { this.enableEnteringTotalVAT = newValue; this.MarkAsDirty("EnableEnteringTotalVAT"); } }
        
 	 
+    private blockSendInvoiceOriginalCopy: boolean;
+    public get BlockSendInvoiceOriginalCopy() { return this.blockSendInvoiceOriginalCopy; }
+    public set BlockSendInvoiceOriginalCopy(newValue: boolean) { if (this.blockSendInvoiceOriginalCopy != newValue) { this.blockSendInvoiceOriginalCopy = newValue; this.MarkAsDirty("BlockSendInvoiceOriginalCopy"); } }
+       
+	 
 
     public OldEntityPM: AccountingSettingPM;
 		

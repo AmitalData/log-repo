@@ -63,6 +63,7 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             poco.TransferToFTPActivated = entityPM.TransferToFTPActivated;
             poco.TransferFTPDetailId = entityPM.TransferFTPDetailId;
             poco.EnableEnteringTotalVAT = entityPM.EnableEnteringTotalVAT;
+            poco.BlockSendInvoiceOriginalCopy = entityPM.BlockSendInvoiceOriginalCopy;
         }
     }
 }
