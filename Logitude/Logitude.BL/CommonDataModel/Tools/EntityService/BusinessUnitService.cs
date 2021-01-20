@@ -65,17 +65,25 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             }
 
             else
-            {                
+            {
                 int numberOfSplitChar = entityPM.ParentId.Count(d => d == '-');
 
                 List<string> allIds = entityRepository.GetAllIds(tenant);
                 List<string> matchedIds = allIds.Where(d => d.Count(c => c == '-') == numberOfSplitChar + 1).ToList();
-                List<string> numerics = matchedIds.Select(d => d.Substring(d.Length - 1)).ToList();
+                List<string> numerics = matchedIds.Select(d => d.Substring(d.LastIndexOf('-') + 1)).ToList();
 
                 int maxIdNumber = 0;
-                Int32.TryParse(numerics.Max(), out maxIdNumber);
 
-                maxIdNumber += 1;
+                if (numerics.Count > 0)
+                {
+                    var maxValue = (from max in numerics select Convert.ToInt32(max)).Max();
+                    maxIdNumber = maxValue + 1;
+                }
+
+                else
+                {
+                    Int32.TryParse(numerics.Max(), out maxIdNumber);
+                }
 
                 myResultId = entityPM.ParentId + '-' + maxIdNumber.ToString();
             }
