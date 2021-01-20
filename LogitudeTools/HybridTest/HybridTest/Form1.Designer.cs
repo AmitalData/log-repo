@@ -221,6 +221,7 @@
             "ShipmentWarehouseLeg"});
             this.cmdServices.Location = new System.Drawing.Point(49, 50);
             this.cmdServices.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+
             this.cmdServices.Name = "cmdServices";
             this.cmdServices.Size = new System.Drawing.Size(357, 24);
             this.cmdServices.TabIndex = 14;

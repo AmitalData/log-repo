@@ -40,7 +40,8 @@ namespace Logitude.ShipmentTests.Features
         public static void FeatureSetup()
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
-            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features", "Create Shipments", "\tCreate master and house shipments.", ProgrammingLanguage.CSharp, ((string[])(null)));
+            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features", "Create Shipments", "\tWith pre-prepared base and shipment data\r\n\tWe want to create master and house sh" +
+                    "ipments.", ProgrammingLanguage.CSharp, ((string[])(null)));
             testRunner.OnFeatureStart(featureInfo);
         }
         
@@ -88,7 +89,7 @@ namespace Logitude.ShipmentTests.Features
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Create a master shipment", null, tagsOfScenario, argumentsOfScenario);
-#line 11
+#line 5
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             bool isScenarioIgnored = default(bool);
@@ -112,8 +113,8 @@ this.ScenarioInitialize(scenarioInfo);
                             "Direction",
                             "TransportMode",
                             "ShipmentLevel",
-                            "FreightPrepaidCollectId",
-                            "OtherPrepaidCollectId",
+                            "FreightPrepaidCollect",
+                            "OtherPrepaidCollect",
                             "MainCarriageToPort",
                             "MainCarriageFromPort"});
                 table1.AddRow(new string[] {
@@ -124,13 +125,13 @@ this.ScenarioInitialize(scenarioInfo);
                             "C",
                             "LHR",
                             "MIA"});
-#line 12
+#line 6
  testRunner.Given("A master shipment fields", ((string)(null)), table1, "Given ");
 #line hidden
-#line 15
+#line 9
  testRunner.When("Create master shipment API request sent", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 16
+#line 10
  testRunner.Then("A new master created successfully", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
@@ -145,7 +146,7 @@ this.ScenarioInitialize(scenarioInfo);
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Create a house shipment", null, tagsOfScenario, argumentsOfScenario);
-#line 18
+#line 12
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             bool isScenarioIgnored = default(bool);
@@ -166,43 +167,31 @@ this.ScenarioInitialize(scenarioInfo);
             {
                 this.ScenarioStart();
                 TechTalk.SpecFlow.Table table2 = new TechTalk.SpecFlow.Table(new string[] {
-                            "NewConcurrencyGUID",
-                            "DirectionId",
-                            "TransportModeId",
-                            "ShipmentLevelCode",
-                            "BranchId",
-                            "DepartmentId",
-                            "FreightPrepaidCollectId",
-                            "OtherPrepaidCollectId",
-                            "CreatedByUserId",
-                            "UpdatedByUserId",
-                            "MainCarriageToPortId",
-                            "MainCarriageFromPortId",
-                            "CustomerId"});
+                            "Direction",
+                            "TransportMode",
+                            "ShipmentLevel",
+                            "FreightPrepaidCollect",
+                            "OtherPrepaidCollect",
+                            "MainCarriageToPort",
+                            "MainCarriageFromPort"});
                 table2.AddRow(new string[] {
-                            "Guid.NewGuid().ToString()",
                             "E",
                             "A",
                             "H",
-                            "1-1102",
-                            "1-2988",
                             "P",
                             "C",
-                            "1-108265",
-                            "1-108265",
-                            "1-300930",
-                            "1-303023",
-                            "1-200716"});
-#line 19
+                            "LHR",
+                            "MIA"});
+#line 13
  testRunner.Given("A house shipment fields", ((string)(null)), table2, "Given ");
 #line hidden
-#line 22
+#line 16
  testRunner.And("A master shipment", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-#line 23
+#line 17
  testRunner.When("Create house shipment API request sent", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 24
+#line 18
  testRunner.Then("A new house created successfully", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }

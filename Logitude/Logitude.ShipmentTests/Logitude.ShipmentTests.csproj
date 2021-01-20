@@ -103,6 +103,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Constants\URLs.cs" />
+    <Compile Include="Models\Builders\PackageBuilder.cs" />
+    <Compile Include="Models\Builders\PayableBuilder.cs" />
+    <Compile Include="Models\Builders\MainCarriageLegBuilder.cs" />
+    <Compile Include="Models\Builders\DirectBuilder.cs" />
     <Compile Include="Models\Builders\ShipmentBuilder.cs" />
     <Compile Include="Hooks\BeforeTestRun.cs" />
     <Compile Include="Models\Card.cs" />
@@ -116,8 +121,8 @@
     <Compile Include="Models\Port.cs" />
     <Compile Include="Models\PreparationShortClass.cs" />
     <Compile Include="Models\ShipmentContext.cs" />
-    <Compile Include="Models\ShipmentPackagePM.cs" />
-    <Compile Include="Models\ShipmentPayablesPM.cs" />
+    <Compile Include="Models\PackagePM.cs" />
+    <Compile Include="Models\PayablesPM.cs" />
     <Compile Include="Models\ShipmentPM.cs" />
     <Compile Include="Models\ShipmentType.cs" />
     <Compile Include="Models\ShipmentVariables.cs" />

@@ -5,7 +5,6 @@ using Logitude.Test.Base.Context;
 using System;
 using TechTalk.SpecFlow;
 using Logitude.ShipmentTests.Models;
-using Logitude.Test.Base.Models;
 
 namespace Logitude.ShipmentTests.Steps.SecurityTests
 {
@@ -71,8 +70,8 @@ namespace Logitude.ShipmentTests.Steps.SecurityTests
         {
             var firstUser = Context.FirstUser;
 
-            APIResponse<ShipmentPM> shipmentModel = GetShipmentForFirstUser();
-            shipmentModel.Data.NewConcurrencyGUID = Guid.NewGuid().ToString();
+            ShipmentPM shipmentModel = GetShipmentForFirstUser();
+            shipmentModel.NewConcurrencyGUID = Guid.NewGuid().ToString();
 
             var response = APICaller.CallPut<ShipmentPM>(shipmentModel, "shipment", firstUser.Token);
             Context.FirstUserPMData.Id = response.Data?.Id;
@@ -92,8 +91,8 @@ namespace Logitude.ShipmentTests.Steps.SecurityTests
             var firstUser = Context.FirstUser;
             var secondUser = Context.SecondUser;
 
-            APIResponse<ShipmentPM> shipmentModel = GetShipmentForFirstUser();
-            shipmentModel.Data.NewConcurrencyGUID = Guid.NewGuid().ToString();
+            ShipmentPM shipmentModel = GetShipmentForFirstUser();
+            shipmentModel.NewConcurrencyGUID = Guid.NewGuid().ToString();
 
             var response = APICaller.CallPut<ShipmentPM>(shipmentModel, "shipment", secondUser.Token);
             Context.SecondUserPMData.Id = response.Data?.Id;
@@ -124,15 +123,15 @@ namespace Logitude.ShipmentTests.Steps.SecurityTests
             };
         }
 
-        private APIResponse<ShipmentPM> GetShipmentForFirstUser()
+        private ShipmentPM GetShipmentForFirstUser()
         {
             var firstUser = Context.FirstUser;
             ShipmentPM shipmentModel = GetValidShipmentPM();
             shipmentModel.Tenant = firstUser.Tenant;
             shipmentModel.CreatedByUserId = firstUser.UserId;
             shipmentModel.UpdatedByUserId = firstUser.UserId;
-
-            return APICaller.CallPost<ShipmentPM>(shipmentModel, "shipment", firstUser.Token);
+            var postResponse = APICaller.CallPost<ShipmentPM>(shipmentModel, "shipment", firstUser.Token);
+            return postResponse.Data;
         }
     }
 }

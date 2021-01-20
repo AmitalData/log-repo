@@ -1246,7 +1246,7 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
                 this.FollowUpDateObjectFieldLists.push(objectField);
             }
 
-            if ((objectField.DataTypeCode == "Date" || objectField.DataTypeCode == "DateTime") && objectField.ObjectTableId == this.CurrentEntityPM.ObjectTableId && objectField.AllowedinAutomationConditions) {
+            if ((objectField.DataTypeCode == "Date" || objectField.DataTypeCode == "DateTime") && objectField.ObjectTableId == this.CurrentEntityPM.ObjectTableId && (objectField.AllowedinAutomationConditions || objectField.IsCustom)) {
                 this.DelayTimeObjectFields.push(objectField);
             }
 
