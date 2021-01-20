@@ -1,4 +1,6 @@
 ﻿Feature: Get Shipment Security Access
+	With pre-prepared base and shipment data
+	We want to test Get Shipment Security Access.
 
 Scenario: Get Shipment From User's Tenant
 	When First user get the first shipment from shipments list

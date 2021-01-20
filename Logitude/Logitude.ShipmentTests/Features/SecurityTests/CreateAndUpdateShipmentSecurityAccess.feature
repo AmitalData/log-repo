@@ -1,4 +1,6 @@
 ﻿Feature: Create and Update Shipment Security Access
+	With pre-prepared base and shipment data
+	We want to test Create and Update Shipment Security Access.
 
 Scenario: Create Shipment for User's Tenant
 	When Create shipment request sent for User's Tenant
