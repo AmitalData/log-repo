@@ -1,7 +1,9 @@
 ﻿using Logitude.Accounting.BL.CloseTables;
+using Logitude.Accounting.BL.EntityUpdateServices;
 using Logitude.Accounting.Data;
 using Logitude.Accounting.Data.Repositories;
 using Logitude.Accounting.Def.EntityPMs;
+using Simplog.Server.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -76,6 +78,67 @@ namespace Logitude.Accounting.BL.CoreBL
 
         }
 
+        public void RedeemCheques(List<ARPaymentChequePM> cheques)
+        {
+            IAccountingContext MyContext = AccountingContext.GetContext(tenant);
+            ARPaymentChequeUpdateService service = new ARPaymentChequeUpdateService(MyContext, new Dictionary<string, IContext>(), tenant);
+
+            foreach (var cheque in cheques)
+            {
+                cheque.StatusCode = ARPaymentChequeStatusValues.Redeemed;
+                cheque.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
+
+                service.Update(cheque, false);
+            }
+
+            service.Save();
+        }
+
+        public void UpdateChequeAsRedeemed(int tenant, string chequeId)
+        {
+            try
+            {
+                IAccountingContext MyContext = AccountingContext.GetContext(tenant);
+
+                ARPaymentChequePM arpcheque = (from cheque in MyContext.ARPaymentCheques
+                                               where cheque.Id == chequeId && cheque.Tenant == tenant
+                                               select new ARPaymentChequePM()
+                                               {
+                                                   Id = cheque.Id,
+                                                   Tenant = cheque.Tenant,
+                                                   CurrencyCode = cheque.Currency.Code,
+                                                   SearchFields = cheque.SearchFields,
+                                                   LineNumber = cheque.LineNumber,
+                                                   ChequeNumber = cheque.ChequeNumber,
+                                                   ValueDate = cheque.ValueDate,
+                                                   LocalAmount = cheque.LocalAmount,
+                                                   ForeignAmount = cheque.ForeignAmount,
+                                                   BankId = cheque.BankId,
+                                                   BankBranch = cheque.BankBranch,
+                                                   BankAccount = cheque.BankAccount,
+                                                   StatusName = cheque.ARPaymentChequeStatus != null ? cheque.ARPaymentChequeStatus.EnglishName : "",
+                                                   PaymentId = cheque.PaymentId,
+                                                   ExchangeRate = cheque.ExchangeRate,
+                                                   StatusCode = cheque.StatusCode,
+                                                   CurrencyId = cheque.CurrencyId,
+                                               }).FirstOrDefault();
+
+                ARPaymentChequeUpdateService service = new ARPaymentChequeUpdateService(MyContext, new Dictionary<string, IContext>(), tenant);
+
+                arpcheque.StatusCode = ARPaymentChequeStatusValues.Redeemed;
+                arpcheque.ChangeSetOp = ChangeSetOperation.Update;
+
+                service.Update(arpcheque, false);
+
+                service.Save();
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+            
+        }
 
 
     }
