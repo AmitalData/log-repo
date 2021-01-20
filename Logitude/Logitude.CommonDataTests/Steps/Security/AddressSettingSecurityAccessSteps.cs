@@ -1,10 +1,9 @@
-﻿
-using TechTalk.SpecFlow;
+﻿using TechTalk.SpecFlow;
 using FluentAssertions;
 using Logitude.Test.Base.Models.Login;
 using Logitude.Test.Base.Services;
 using Logitude.Test.Base.Context;
-using Logitude.CommonDataTests.Models.CompanyAddressSetting;
+using Logitude.CommonDataTests.Models;
 
 namespace Logitude.CommonDataTests.Steps.Security
 {

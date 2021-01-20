@@ -2,11 +2,12 @@
 using Logitude.Test.Base.Models.Login;
 using Logitude.Test.Base.Services;
 using Logitude.Test.Base.Context;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using TechTalk.SpecFlow;
 using Logitude.InvoiceTests.Models.Invoice;
+using Logitude.Test.Base.Models;
+using Logitude.Test.Base.Constants;
 
 namespace Logitude.InvoiceTests.Steps.SecurityTests
 {
@@ -31,8 +32,8 @@ namespace Logitude.InvoiceTests.Steps.SecurityTests
         public void WhenSecondUserGetTheAPInvoiceThatRequestedByFirstUser()
         {
             IEnumerable<APInvoicePM> firstUserAPInvoicesList = GetAPInvoiceListForFirstUser();
-            string singleAPPaymentUrl = "apinvoices/getsingle?id=" + firstUserAPInvoicesList?.FirstOrDefault()?.Id;
-            var response = APICaller.CallGet<APInvoicePM>(singleAPPaymentUrl, Context.SecondUser.Token);
+            string apInvoicesGetSingleUrl = URLs.APInvoicesGetSingle(firstUserAPInvoicesList?.FirstOrDefault()?.Id);
+            var response = APICaller.CallGet<APInvoicePM>(apInvoicesGetSingleUrl, Context.SecondUser.Token);
             Context.SecondUserPMData.Id = response?.Data.Id;
         }
 
@@ -50,11 +51,14 @@ namespace Logitude.InvoiceTests.Steps.SecurityTests
 
         private IEnumerable<APInvoicePM> GetAPInvoiceListForFirstUser()
         {
-            //this method is waiting the CallGetByFilter to be implemented by Abd.M
-            //string APInvoicesListUrl = "apinvoiceviews/getbyfilters?ForceCacheRefresh=false&GetAll=false&Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value=&PageIndex=0&PageSize=1";
-            //IEnumerable<APInvoicePM> APInvoicePMs = APICaller.CallGet<IEnumerable<APInvoicePM>>(APInvoicesListUrl, Context.FirstUser.Token, "Result");
-            //return APInvoicePMs;
-            return null;
+            ApiQueryFilters apiQueryFilters = new ApiQueryFilters
+            {
+                PageIndex = 0,
+                PageSize = 1
+            };
+
+            APIResponse<IEnumerable<APInvoicePM>> response = APICaller.CallGetByFilters<IEnumerable<APInvoicePM>>(URLs.APInvoiceViewsGetByFilters(), Context.FirstUser.Token, apiQueryFilters);
+            return response.Data;
         }
     }
 }
