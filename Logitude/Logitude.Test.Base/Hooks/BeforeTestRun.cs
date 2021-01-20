@@ -18,6 +18,57 @@ namespace Logitude.Test.Base.Hooks
         {
             GetLoginParameters();
             FillUserTenant();
+            SetupLocationPreparationVariables();
+            SetupPartnerPreparationVariables();
+
+        }
+
+        private  static void SetupLocationPreparationVariables()
+        {
+            var LocationVariables = APICaller.CallGet<LocationsVariables>("IntegrationTest/GetBaseLocation", UserTenant.Token);
+            LocationDataMap(LocationVariables.Data);
+        }
+        private static void SetupPartnerPreparationVariables()
+        {
+            var PartnerVariables = APICaller.CallGet<PartnersVariables>("IntegrationTest/GetBasePartners", UserTenant.Token);
+            PartnerDataMap(PartnerVariables.Data);
+        }
+
+        private static void LocationDataMap(LocationsVariables vars)
+        {
+            LocationsData.PortLHRId = vars.PortLHRId;
+            LocationsData.PortMIAId = vars.PortMIAId;
+            LocationsData.PortJFKId = vars.PortJFKId;
+            LocationsData.PortSOUId = vars.PortSOUId;
+            LocationsData.PortNYCId = vars.PortNYCId;
+            LocationsData.PortLONId = vars.PortLONId;
+            LocationsData.PortMANId = vars.PortMANId;
+            LocationsData.GlobalZoneEUId = vars.GlobalZoneEUId;
+            LocationsData.CountryUSId = vars.CountryUSId;
+            LocationsData.StateAKId = vars.StateAKId;
+            LocationsData.AirlineAAId = vars.AirlineAAId;
+            LocationsData.AirlineBAId = vars.AirlineBAId;
+            LocationsData.ShippingLineMSCUId = vars.ShippingLineMSCUId;
+            LocationsData.ShippingLineMAEUId = vars.ShippingLineMAEUId;
+            LocationsData.MoveTypeMTAId = vars.MoveTypeMTAId;
+            LocationsData.MoveTypeMTOId = vars.MoveTypeMTOId;
+            LocationsData.CountryUSId = vars.CountryUSId;
+            LocationsData.WarehouseId = vars.WarehouseId;
+
+        }
+
+        private static void PartnerDataMap(PartnersVariables vars)
+        {
+            PartnersData.CountryGBId = vars.CountryGBId;
+            PartnersData.CountryUSId = vars.CountryUSId;
+            PartnersData.VendorId = vars.VendorId;
+            PartnersData.AgentId = vars.AgentId;
+            PartnersData.CustomerId = vars.CustomerId;
+            PartnersData.CustomAgentId = vars.CustomAgentId;
+            PartnersData.ShippingAgentId = vars.ShippingAgentId;
+            PartnersData.PotentialCustomerId = vars.PotentialCustomerId;
+            PartnersData.TruckerId = vars.TruckerId;
+            PartnersData.ShipperExport1 = vars.ShipperExport1;
         }
 
         private static void GetLoginParameters()

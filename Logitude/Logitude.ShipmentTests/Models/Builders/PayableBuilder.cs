@@ -103,7 +103,7 @@ namespace Logitude.ShipmentTests.Models.Builders
 
         public PayableBuilder MeasurementIdByCode(string measurementCode)
         {
-            _payablesPM.MeasurementId = measurementCode == "GRWT" ? ShipmentData.MeasurmentGRWTId : null;
+            _payablesPM.MeasurementId = measurementCode == "GRWT" ? ShipmentData.MeasurementGRWTId : null;
             return this;
         }
 
