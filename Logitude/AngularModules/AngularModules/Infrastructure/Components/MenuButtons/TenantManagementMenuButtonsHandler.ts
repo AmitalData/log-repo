@@ -50,7 +50,7 @@ export class TenantManagementMenuButtonsHandler {
                                 else {
                                     button.IsDisabled = true;
                                 }
-
+                                button.IsDisabled = false;
                                 break;
                             }
                     }
