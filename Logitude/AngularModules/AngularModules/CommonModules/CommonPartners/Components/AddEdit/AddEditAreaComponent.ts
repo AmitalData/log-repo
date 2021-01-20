@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CarrierAreaPM } from '../../../../Common/EntityPMs/CarrierAreaPM';
 import { BaseComponent } from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
-import { AppTool } from '../../../../Infrastructure/Tools';
+import { AppTool, DateTool } from '../../../../Infrastructure/Tools';
 import { Cloner } from '../../../../Infrastructure/Utilities/Cloner';
 import { Validator } from '../../../../Infrastructure/Validators/Validator';
 import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
@@ -13,6 +13,8 @@ import { DocumentsFilingExtendedPMService } from '../../../../Common/Services/Ex
 import { CachedDataManager } from '../../../../Infrastructure/Utilities/CachedDataManager';
 import { CarrierAreaExtendedPMService, CarrierAreaParameters} from '../../../../Common/Services/ExtendedPMs/CarrierAreaExtendedPMService';
 import { ServiceHelper } from '../../../../Infrastructure/Utilities/ServiceHelper';
+import { CarrierAreasPortPM } from '../../../../Common/EntityPMs/CarrierAreasPortPM';
+import { SessionInfo } from '../../../../Infrastructure/Utilities/SessionInfo';
 declare var ResultAsArray: any;
 
 @Component({    
@@ -204,11 +206,15 @@ export class AddEditAreaComponent extends BaseComponent implements OnInit {
         reader.readAsArrayBuffer(file);
         context.EntityPM.FileUploadedName = this.fileName;
     }
-    SendExcelToServer(filter: CarrierAreaParameters) {
+    SendExcelToServer(filters: CarrierAreaParameters) {
         this.CurrentSession.CurrentEditComponent.ValidationErrorsList = [];
 
-        this.carrierAreaExtendedPMService.PostUploadCarrierAreaPortsExcelFile(filter).subscribe((response: ServiceResponse) => {
+        this.carrierAreaExtendedPMService.PostUploadCarrierAreaPortsExcelFile(filters).subscribe((response: ServiceResponse) => {
             if (!response.HasError) {
+                filters = response.Result;
+
+                this.FillPorts(filters);
+
                 this.CurrentSession.StopBusyIndicator();
                 CachedDataManager.RefreshTableData("Port", true);
                 this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
@@ -219,5 +225,82 @@ export class AddEditAreaComponent extends BaseComponent implements OnInit {
                 this.CurrentSession.CurrentEditComponent.ValidationErrorsList = response.ErrorsArray;
             }
         });
+    }
+
+    private FillPorts(filters: CarrierAreaParameters) {
+        var notFoundErrorMessage: string;
+        var alreadyAddedErrorMessage: string;
+        var addedPortsFromExcel: number = 0;
+
+        if (filters.ExcelPorts.length > 0) {
+            filters.ExcelPorts.forEach(item => {
+                if (item.HasError) {
+                    if (AppTool.IsNullOrEmpty(notFoundErrorMessage)) {
+                        notFoundErrorMessage = item.ExcelPortCode
+                    }
+
+                    else {
+                        notFoundErrorMessage = notFoundErrorMessage + ", " + item.ExcelPortCode;
+                    }
+                }
+
+                else {
+                    if (this.EntityPM.CarrierAreasPorts.filter(d => d.PortId == item.PortId).length > 0) {
+                        var areaPort: CarrierAreasPortPM = this.EntityPM.CarrierAreasPorts.filter(d => d.PortId == item.PortId)[0];
+
+                        if (AppTool.IsNullOrEmpty(alreadyAddedErrorMessage)) {
+                            alreadyAddedErrorMessage = areaPort.Code;
+                        }
+
+                        else {
+                            alreadyAddedErrorMessage = alreadyAddedErrorMessage + ", " + areaPort.Code;
+                        }
+                    }
+
+                    else {
+                        addedPortsFromExcel += 1;
+
+                        var newPort: CarrierAreasPortPM = new CarrierAreasPortPM(this.EntityPM);
+                        newPort.Tenant = SessionLocator.Tenant;
+                        newPort.CarrierAreaId = this.EntityPM.Id;
+                        newPort.Name = item.PortName;
+                        newPort.Code = item.PortCode;
+                        newPort.CountryCode = item.PortCountryCode;
+                        newPort.PortId = item.PortId;
+                        newPort.AddedByUserId = SessionInfo.LoggedUserId;
+                        newPort.AddedDate = DateTool.GetCurrentDateAsUtc();
+                        this.EntityPM.AddCarrierAreasPortPM(newPort);
+                        //this.BuildPortItemsList();
+                    }
+                }
+            });
+
+            var message: string = "Ports added: " + addedPortsFromExcel + " out of " + filters.RowsCount;
+            
+            if (!AppTool.IsNullOrEmpty(notFoundErrorMessage)) {
+                if (AppTool.IsNullOrEmpty(message)) {
+                    message = notFoundErrorMessage + " not found";
+                }
+
+                else {
+                    message = message + '\n' + notFoundErrorMessage + " not found";
+                }
+            }
+
+            if (!AppTool.IsNullOrEmpty(alreadyAddedErrorMessage)) {
+                if (AppTool.IsNullOrEmpty(message)) {
+                    message = alreadyAddedErrorMessage + " already added";
+                }
+
+                else {
+                    message = message + '\n' + alreadyAddedErrorMessage + " already added";
+                }
+            }
+
+            if (!AppTool.IsNullOrEmpty(message)) {
+                var messageWindow: MessageWindow = new MessageWindow();
+                messageWindow.Show(message);
+            }
+        }
     }
 }

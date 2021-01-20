@@ -126,7 +126,10 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
 
                 List<ExcelPort> myResult = this.BuildPortsFromExcelLines(sheet, filter, authToken.Tenant);
 
-                return Request.CreateResponse(HttpStatusCode.OK, "OK");
+                filter.RowsCount = sheet.UsedRange.Rows.Count() - 1;
+                filter.ExcelPorts = myResult;
+
+                return Request.CreateResponse(HttpStatusCode.OK, filter);
             }
 
             catch (Exception ex)
@@ -160,17 +163,21 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
                         if (port != null)
                         {
                             excelPort.PortId = port.Id;
+                            excelPort.PortCode = port.Code;
+                            excelPort.PortName = port.EnglishName;
+                            excelPort.PortCountryCode = port.CountryCode;
                         }
 
                         else
                         {
-                            excelPort.HasErrors = true;
+                            excelPort.HasError = true;
+                            excelPort.ExcelPortCode = portCode;
                         }
                     }
 
                     else
                     {
-                        excelPort.HasErrors = true;
+                        excelPort.HasError = true;
                     }
                 }
 
@@ -306,11 +313,17 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
         public string TransportMode { get; set; }
         public string FileName { get; set; }
         public string FileExtension { get; set; }
+        public int RowsCount { get; set; }
+        public List<ExcelPort> ExcelPorts { get; set; }
     }
 
     public class ExcelPort
     {
         public string PortId { get; set; }
-        public bool HasErrors { get; set; }
+        public string PortCode { get; set; }
+        public string PortName { get; set; }
+        public string PortCountryCode { get; set; }
+        public bool HasError { get; set; }
+        public string ExcelPortCode { get; set; }
     }
 }

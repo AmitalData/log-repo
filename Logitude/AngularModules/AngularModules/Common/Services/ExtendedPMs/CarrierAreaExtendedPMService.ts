@@ -46,4 +46,15 @@ export class CarrierAreaParameters {
     FileName: string;
     FileExtension: string;
     TransportMode: string;
+    RowsCount: number;
+    ExcelPorts: ExcelPort[];
+}
+
+export class ExcelPort {
+    PortId: string;
+    PortCode: string;
+    PortName: string;
+    PortCountryCode: string;
+    HasError: boolean;
+    ExcelPortCode: string;
 }
