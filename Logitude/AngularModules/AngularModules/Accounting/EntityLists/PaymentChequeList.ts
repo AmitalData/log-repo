@@ -46,6 +46,7 @@ export class PaymentChequeList {
 	JournalId: string;
 	StatusEnglishName: string;
 	APPaymentId: string;
+	APPaymentNo: string;
 	
 }
  

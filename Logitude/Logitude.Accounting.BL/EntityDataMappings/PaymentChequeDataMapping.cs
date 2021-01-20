@@ -18,6 +18,8 @@ using Logitude.BL.Interfaces;
 using Microsoft.Practices.Unity;
 using Logitude.BL.Helpers;
 using Logitude.BL.Resolvers;
+using Logitude.BL.InvoiceModel.EntityQueries;
+using Logitude.BL.InvoiceModel.EntityPMs;
 
 namespace Logitude.Accounting.BL.EntityDataMappings
 {
@@ -151,6 +153,16 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 
                 }
 
+            }
+
+            if(entityPOCO.APPaymentId != null)
+            {
+                APPaymentQuery aPPaymentQuery = new APPaymentQuery(entityPOCO.Tenant);
+                APPaymentPM aPPayment = aPPaymentQuery.GetSingleAPPaymentPM(entityPOCO.APPaymentId, entityPOCO.Tenant);
+                if(aPPayment != null)
+                {
+                    entityPM.APPaymentNo = aPPayment.PaymentNo;
+                }
             }
 
         }

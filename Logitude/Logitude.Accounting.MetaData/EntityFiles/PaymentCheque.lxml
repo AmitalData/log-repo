@@ -55,6 +55,7 @@
   ApplyOnPropertyChangedCode="false"
   HasApiHelper="false"
   AllowedForComputingPartners="false"
+  IsBusinessUnitEnabled="false"
   Code1="&quot;5eeb&quot;"
   Name1="&quot; Query Group&quot;"
   CustomFieldsCount="0"
@@ -3635,6 +3636,80 @@
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
+  <field
+    Id="&quot;bee50409-c9ee-4d10-b86a-ab90776e15ca&quot;"
+    FieldName="&quot;APPaymentNo&quot;"
+    OldNames="APPaymentNo"
+    IsNew="true"
+    IsChecked="false"
+    IsDeleted="false"
+    ObjectTableName="&quot;PaymentCheque&quot;"
+    FieldsDataType="&quot;Text&quot;"
+    MinLength="0"
+    MaxLength="15"
+    IsRequired="false"
+    CopyToDW="false"
+    DisplayOnLookUp="false"
+    DisplayOnLookUpLocal="false"
+    CanFilter="false"
+    DisplayOnly="false"
+    SystemRequired="false"
+    ObjectFieldNotRequired="false"
+    SystemMaxLength="15"
+    DisplayInList="true"
+    IsCustomFilter="false"
+    MultiLine="false"
+    IsTimeFrameFilter="false"
+    DisplayInSearchWindowList="false"
+    PMPropertyPath="&quot;APPaymentNo&quot;"
+    ListPropertyPath="&quot;APPaymentNo&quot;"
+    DisplayInLookUpIndex="0"
+    AutomaticField="false"
+    UniqueField="false"
+    DisplayInSearchWindowListIndex="0"
+    IsMulti="false"
+    DependencyFilter1IsList="false"
+    DependencyFilter2IsList="false"
+    DependencyFilter3IsList="false"
+    ValidForQuerySection1="&quot;PaymentCheque&quot;"
+    IsRestrictable="false"
+    DisplayInEntityVariables="false"
+    AllowedInCustomerFieldsSettings="false"
+    DisplayInSearchWindowFilters="false"
+    DisplayInSearchWindowFiltersIndex="0"
+    DisplayInDocumentReferences="false"
+    InActive="false"
+    DisplayLongName="false"
+    FullFieldLable="&quot;APPaymentNo&quot;"
+    DefaultText="&quot;AP Payment No&quot;"
+    FullLocalDefaultText="&quot;מספר הוראת תשלום&quot;"
+    ListFieldLable="&quot;APPaymentNoListLable&quot;"
+    ListLableDefaultText="&quot;AP Payment No&quot;"
+    ListLocalDefaultText="&quot;מספר הוראת תשלום&quot;"
+    IsNullable="true"
+    IsForeignKey="false"
+    DontBuildRelationOnDB="false"
+    IsPrimaryKey="false"
+    HasDataBaseField="false"
+    HasPMField="true"
+    IsComposition="false"
+    IsMaxLength="false"
+    NoMetaDataField="false"
+    GenerateInList="true"
+    IsFixedLength="false"
+    EnableAutoFill="false"
+    IncludeInSearchField="false"
+    AllowedinAutomationConditions="false"
+    AutomationEmailRecipient="false"
+    CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
+    HasTemplate="true"
+    IsCustom="false"
+    IsSpellCheckedFullFieldLable="false"
+    IsSpellCheckedHelpLocalDefaultText="false"
+    IsSpellCheckedShortLocalDefaultText="false"
+    IsSpellCheckedListLocalDefaultText="false"
+    EnableFullscreenTextBox="false" />
   <Query
     Code="&quot;AllPaymentCheques&quot;"
     TextCode="&quot;Payment Cheques&quot;"
@@ -3663,36 +3738,41 @@
       <QueryColumn
         QueryCode="&quot;AllPaymentCheques&quot;"
         IndexOrder="1"
+        ObjectFieldName="&quot;APPaymentNo&quot;"
+        ColumnWidth="130" />
+      <QueryColumn
+        QueryCode="&quot;AllPaymentCheques&quot;"
+        IndexOrder="2"
         ObjectFieldName="&quot;ChequeNumber&quot;"
         ColumnWidth="120" />
       <QueryColumn
         QueryCode="&quot;AllPaymentCheques&quot;"
-        IndexOrder="2"
+        IndexOrder="3"
         ObjectFieldName="&quot;GLAccountNumber&quot;"
         ColumnWidth="120" />
       <QueryColumn
         QueryCode="&quot;AllPaymentCheques&quot;"
-        IndexOrder="3"
+        IndexOrder="4"
         ObjectFieldName="&quot;PayToName&quot;"
         ColumnWidth="120" />
       <QueryColumn
         QueryCode="&quot;AllPaymentCheques&quot;"
-        IndexOrder="4"
+        IndexOrder="5"
         ObjectFieldName="&quot;BankAccountName&quot;"
         ColumnWidth="120" />
       <QueryColumn
         QueryCode="&quot;AllPaymentCheques&quot;"
-        IndexOrder="5"
+        IndexOrder="6"
         ObjectFieldName="&quot;LocalAmount&quot;"
         ColumnWidth="120" />
       <QueryColumn
         QueryCode="&quot;AllPaymentCheques&quot;"
-        IndexOrder="6"
+        IndexOrder="7"
         ObjectFieldName="&quot;InternalNumber&quot;"
         ColumnWidth="120" />
       <QueryColumn
         QueryCode="&quot;AllPaymentCheques&quot;"
-        IndexOrder="7"
+        IndexOrder="8"
         ObjectFieldName="&quot;PaymentChequeStatusName&quot;"
         ColumnWidth="150" />
     </QueryColumns>
@@ -3704,7 +3784,7 @@
     IsReadOnly="true"
     IsHeaderScreen="true"
     Code="&quot;PaymentCheque.PaymentChequeHeaderScreen&quot;"
-    NumberOfColumns="4"
+    NumberOfColumns="5"
     NumberOfRows="1">
     <ScreenFields>
       <ScreenField
@@ -3726,6 +3806,11 @@
         Column="3"
         Row="0"
         ObjectFieldName="&quot;JournalId&quot;"
+        ScreenName="PaymentChequeHeaderScreen" />
+      <ScreenField
+        Column="4"
+        Row="0"
+        ObjectFieldName="&quot;APPaymentNo&quot;"
         ScreenName="PaymentChequeHeaderScreen" />
     </ScreenFields>
   </Screen>
@@ -3883,7 +3968,5 @@
   </MenuButtons>
   <DataContracts />
   <AdditionalTextCodes />
-  <AdditionalFeatures>
-    
-  </AdditionalFeatures>
+  <AdditionalFeatures />
 </entity>
