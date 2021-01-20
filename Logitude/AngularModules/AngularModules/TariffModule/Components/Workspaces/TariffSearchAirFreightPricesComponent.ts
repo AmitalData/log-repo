@@ -25,6 +25,7 @@ import { PackageTypeListService } from '../../../Common/Services/StandardLists/P
 import { TariffProductListService } from '../../Services/StandardLists/TariffProductListService';
 import { TariffProductList } from '../../EntityLists/TariffProductList';
 import { TariffSettingPM } from '../../EntityPMs/TariffSettingPM';
+import { QuoteChargesBehaviours } from '../../../QuoteModules/QuoteCharges/Behaviours/QuoteChargesBehaviours';
 
 @Component({
 
@@ -1326,10 +1327,10 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
                 chargePM.CostCurrencyId = item.CurrencyId;
                 chargePM.CostCurrencyCode = this.FatherComponent.Behaviours.GetCurrencyCode(item.CurrencyId);
                 chargePM.CostExchangeRate = this.FatherComponent.Behaviours.GetCurrencyRate(item.CurrencyId);
-              
-                chargePM.SaleCurrencyId = this.FatherComponent.EntityPM.SaleCurrencyId;
-                chargePM.SaleCurrencyCode = this.FatherComponent.Behaviours.GetCurrencyCode(this.FatherComponent.EntityPM.SaleCurrencyId);
-                chargePM.SaleExchangeRate = this.FatherComponent.Behaviours.GetCurrencyRate(this.FatherComponent.EntityPM.SaleCurrencyId);
+
+                chargePM.SaleCurrencyId = this.FatherComponent.Behaviours.GetSaleCurrencyOnChargeTypeChanged(chargesType, chargePM);
+                chargePM.SaleCurrencyCode = this.FatherComponent.Behaviours.GetCurrencyCode(chargePM.SaleCurrencyId);
+                chargePM.SaleExchangeRate = this.FatherComponent.Behaviours.GetCurrencyRate(chargePM.SaleCurrencyId);
                 chargePM.ChargesGroupCode = chargesType.ChargesGroupCode;
 
                 var measurementCode = item.UnitOfMesurmentCode;
