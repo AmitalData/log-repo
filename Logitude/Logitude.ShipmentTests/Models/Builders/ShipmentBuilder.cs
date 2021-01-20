@@ -207,30 +207,6 @@ namespace Logitude.ShipmentTests.Models.Builders
             return this;
         }
 
-        public ShipmentBuilder MasterShipment()
-        {
-            return WithDefualtValues()
-                .DirectionId("E")
-                .TransportModeId("A")
-                .ShipmentLevelCode("C")
-                .OtherPrepaidCollectId("P")
-                .FreightPrepaidCollectId("C")
-                .MainCarriageToPortIdByCode("LHR")
-                .MainCarriageFromPortIdByCode("MIA");
-        }
-
-        public ShipmentBuilder HouseShipment()
-        {
-            return WithDefualtValues()
-                .DirectionId("E")
-                .TransportModeId("A")
-                .ShipmentLevelCode("H")
-                .OtherPrepaidCollectId("C")
-                .FreightPrepaidCollectId("P")
-                .MainCarriageToPortIdByCode("LHR")
-                .MainCarriageFromPortIdByCode("MIA");
-        }
-
         public ShipmentBuilder FromDataTable(Table dataTable)
         {
             _shipmentPM = dataTable.CreateInstance<ShipmentPM>();

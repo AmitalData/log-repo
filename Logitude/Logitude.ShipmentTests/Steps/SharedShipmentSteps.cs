@@ -22,16 +22,32 @@ namespace Logitude.ShipmentTests.Steps
         [Given(@"A master shipment")]
         public void GivenAMasterShipment()
         {
-            ShipmentPM MasterShipment = new ShipmentBuilder().MasterShipment().Build();
+            ShipmentPM MasterShipment = new ShipmentBuilder().WithDefualtValues()
+                .DirectionId("E")
+                .TransportModeId("A")
+                .ShipmentLevelCode("C")
+                .OtherPrepaidCollectId("P")
+                .FreightPrepaidCollectId("C")
+                .MainCarriageToPortIdByCode("LHR")
+                .MainCarriageFromPortIdByCode("MIA")
+                .Build();
+
             ShipmentContext.MasterShipment = CreateAndGetShipment(MasterShipment);
         }
 
         [Given(@"A house shipment")]
         public void GivenAHouseShipment()
         {
-            ShipmentPM HouseShipment = new ShipmentBuilder().HouseShipment()
-                                                            .MasterShipmentDataId(ShipmentContext.MasterShipment.Id)
-                                                            .Build();
+            ShipmentPM HouseShipment = new ShipmentBuilder().WithDefualtValues()
+                .DirectionId("E")
+                .TransportModeId("A")
+                .ShipmentLevelCode("H")
+                .OtherPrepaidCollectId("C")
+                .FreightPrepaidCollectId("P")
+                .MainCarriageToPortIdByCode("LHR")
+                .MainCarriageFromPortIdByCode("MIA")
+                .MasterShipmentDataId(ShipmentContext.MasterShipment.Id)
+                .Build();
 
             ShipmentContext.HouseShipment = CreateAndGetShipment(HouseShipment);
         }

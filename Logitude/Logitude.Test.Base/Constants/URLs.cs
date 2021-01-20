@@ -106,5 +106,10 @@
         {
             return "ARPayments/GetSingle?id=" + id;
         }
+
+        public static string Address()
+        {
+            return "address";
+        }
     }
 }

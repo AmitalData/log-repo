@@ -19,7 +19,7 @@ namespace Logitude.CommonDataTests.Features.Security
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("TechTalk.SpecFlow", "3.5.0.0")]
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public partial class AddressSettingSecurityAccessFeature : object, Xunit.IClassFixture<AddressSettingSecurityAccessFeature.FixtureData>, System.IDisposable
+    public partial class TenantSecurityAccessFeature : object, Xunit.IClassFixture<TenantSecurityAccessFeature.FixtureData>, System.IDisposable
     {
         
         private static TechTalk.SpecFlow.ITestRunner testRunner;
@@ -28,10 +28,10 @@ namespace Logitude.CommonDataTests.Features.Security
         
         private Xunit.Abstractions.ITestOutputHelper _testOutputHelper;
         
-#line 1 "AddressSettingSecurityAccess.feature"
+#line 1 "TenantSecurityAccess.feature"
 #line hidden
         
-        public AddressSettingSecurityAccessFeature(AddressSettingSecurityAccessFeature.FixtureData fixtureData, Logitude_CommonDataTests_XUnitAssemblyFixture assemblyFixture, Xunit.Abstractions.ITestOutputHelper testOutputHelper)
+        public TenantSecurityAccessFeature(TenantSecurityAccessFeature.FixtureData fixtureData, Logitude_CommonDataTests_XUnitAssemblyFixture assemblyFixture, Xunit.Abstractions.ITestOutputHelper testOutputHelper)
         {
             this._testOutputHelper = testOutputHelper;
             this.TestInitialize();
@@ -40,7 +40,7 @@ namespace Logitude.CommonDataTests.Features.Security
         public static void FeatureSetup()
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
-            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features/Security", "Address Setting Security Access", null, ProgrammingLanguage.CSharp, ((string[])(null)));
+            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features/Security", "Tenant Security Access", null, ProgrammingLanguage.CSharp, ((string[])(null)));
             testRunner.OnFeatureStart(featureInfo);
         }
         
@@ -80,14 +80,14 @@ namespace Logitude.CommonDataTests.Features.Security
             this.TestTearDown();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="Update Address Settings for User\'s Tenant")]
-        [Xunit.TraitAttribute("FeatureTitle", "Address Setting Security Access")]
-        [Xunit.TraitAttribute("Description", "Update Address Settings for User\'s Tenant")]
-        public virtual void UpdateAddressSettingsForUsersTenant()
+        [Xunit.SkippableFactAttribute(DisplayName="Get Tenant for User\'s Tenant")]
+        [Xunit.TraitAttribute("FeatureTitle", "Tenant Security Access")]
+        [Xunit.TraitAttribute("Description", "Get Tenant for User\'s Tenant")]
+        public virtual void GetTenantForUsersTenant()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Update Address Settings for User\'s Tenant", null, tagsOfScenario, argumentsOfScenario);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get Tenant for User\'s Tenant", null, tagsOfScenario, argumentsOfScenario);
 #line 3
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -109,23 +109,23 @@ this.ScenarioInitialize(scenarioInfo);
             {
                 this.ScenarioStart();
 #line 4
- testRunner.When("Update Address Settings request sent for User\'s Tenant", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("Get Tenant request sent for User\'s Tenant", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
 #line 5
- testRunner.Then("Address Settings should be Updated successfully", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then("Tenant should be exists", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="Update Address Settings for other Tenant")]
-        [Xunit.TraitAttribute("FeatureTitle", "Address Setting Security Access")]
-        [Xunit.TraitAttribute("Description", "Update Address Settings for other Tenant")]
-        public virtual void UpdateAddressSettingsForOtherTenant()
+        [Xunit.SkippableFactAttribute(DisplayName="Get Tenant for other Tenant")]
+        [Xunit.TraitAttribute("FeatureTitle", "Tenant Security Access")]
+        [Xunit.TraitAttribute("Description", "Get Tenant for other Tenant")]
+        public virtual void GetTenantForOtherTenant()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Update Address Settings for other Tenant", null, tagsOfScenario, argumentsOfScenario);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get Tenant for other Tenant", null, tagsOfScenario, argumentsOfScenario);
 #line 7
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -147,10 +147,10 @@ this.ScenarioInitialize(scenarioInfo);
             {
                 this.ScenarioStart();
 #line 8
- testRunner.When("Update Address Settings request sent for other Tenant", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("Get Tenant request sent for other Tenant", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
 #line 9
- testRunner.Then("Address Settings should not be Updated", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then("Tenant should not be exists", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();
@@ -163,12 +163,12 @@ this.ScenarioInitialize(scenarioInfo);
             
             public FixtureData()
             {
-                AddressSettingSecurityAccessFeature.FeatureSetup();
+                TenantSecurityAccessFeature.FeatureSetup();
             }
             
             void System.IDisposable.Dispose()
             {
-                AddressSettingSecurityAccessFeature.FeatureTearDown();
+                TenantSecurityAccessFeature.FeatureTearDown();
             }
         }
     }
