@@ -1,11 +1,8 @@
 ﻿using FluentAssertions;
 using Logitude.InvoiceTests.Models.Invoice;
-using Logitude.Test.Base.Models.Login;
-using Logitude.Test.Base.Services;
-using System;
 using Logitude.Test.Base.Context;
-using System.Collections.Generic;
-using System.Linq;
+using Logitude.Test.Base.Models;
+using Logitude.Test.Base.Services;
 using TechTalk.SpecFlow;
 
 namespace Logitude.InvoiceTests.Steps.SecurityTests
@@ -15,26 +12,24 @@ namespace Logitude.InvoiceTests.Steps.SecurityTests
     {
         private SecurityAccessStepsContext<ARInvoicePM> Context;
 
-        public ARInvoiceSecurityAccessSteps(MultiUsers multiUsers, SecurityAccessStepsContext<ARInvoicePM> context)
+        public ARInvoiceSecurityAccessSteps(SecurityAccessStepsContext<ARInvoicePM> context)
         {
             Context = context;
-            Context.FirstUser = multiUsers.Users[0];
-            Context.SecondUser = multiUsers.Users[1];
         }
 
         [When(@"Get AR Invoice request sent for User's Tenant")]
         public void WhenGetARInvoiceRequestSentForUserSTenant()
         {
-            ARInvoicePM firstUserARInvoice = GetAnARInvoiceForFirstUser(Context.FirstUser.Token);
+            ARInvoicePM firstUserARInvoice = GetAnARInvoiceForFirstUser(UserTenant.Token);
             Context.FirstUserPMData.Id = firstUserARInvoice.Id;
         }
 
         [When(@"Get AR Invoice request sent for other Tenant")]
         public void WhenGetARInvoiceRequestSentForOtherTenant()
         {
-            ARInvoicePM firstUserARInvoice = GetAnARInvoiceForFirstUser(Context.FirstUser.Token);
+            ARInvoicePM firstUserARInvoice = GetAnARInvoiceForFirstUser(UserTenant.Token);
             string singleARInvoiceUrl = "arinvoices/GetSingle?id=" + firstUserARInvoice.Id;
-            var response = APICaller.CallGet<ARInvoicePM>(singleARInvoiceUrl, Context.SecondUser.Token);
+            var response = APICaller.CallGet<ARInvoicePM>(singleARInvoiceUrl, UserOtherTenant.Token);
             Context.SecondUserPMData.Id = response.Data?.Id;
         }
 

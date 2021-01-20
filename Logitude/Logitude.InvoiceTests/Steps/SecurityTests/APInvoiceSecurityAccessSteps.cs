@@ -1,12 +1,11 @@
 ﻿using FluentAssertions;
-using Logitude.Test.Base.Models.Login;
-using Logitude.Test.Base.Services;
+using Logitude.InvoiceTests.Models.Invoice;
 using Logitude.Test.Base.Context;
-using System;
+using Logitude.Test.Base.Models;
+using Logitude.Test.Base.Services;
 using System.Collections.Generic;
 using System.Linq;
 using TechTalk.SpecFlow;
-using Logitude.InvoiceTests.Models.Invoice;
 
 namespace Logitude.InvoiceTests.Steps.SecurityTests
 {
@@ -14,11 +13,9 @@ namespace Logitude.InvoiceTests.Steps.SecurityTests
     public class GetAPInvoiceSecurityAccessSteps
     {
         private SecurityAccessStepsContext<APInvoicePM> Context;
-        public GetAPInvoiceSecurityAccessSteps(MultiUsers multiUsers, SecurityAccessStepsContext<APInvoicePM> context)
+        public GetAPInvoiceSecurityAccessSteps(SecurityAccessStepsContext<APInvoicePM> context)
         {
             Context = context;
-            Context.FirstUser = multiUsers.Users[0];
-            Context.SecondUser = multiUsers.Users[1];
         }
         [When(@"The First user gets the first AP Invoice from AP Invoices list")]
         public void WhenFirstUserGetTheFirstAPInvoiceFromAPInvoicesList()
@@ -32,7 +29,7 @@ namespace Logitude.InvoiceTests.Steps.SecurityTests
         {
             IEnumerable<APInvoicePM> firstUserAPInvoicesList = GetAPInvoiceListForFirstUser();
             string singleAPPaymentUrl = "apinvoices/getsingle?id=" + firstUserAPInvoicesList?.FirstOrDefault()?.Id;
-            var response = APICaller.CallGet<APInvoicePM>(singleAPPaymentUrl, Context.SecondUser.Token);
+            var response = APICaller.CallGet<APInvoicePM>(singleAPPaymentUrl, UserOtherTenant.Token);
             Context.SecondUserPMData.Id = response?.Data.Id;
         }
 

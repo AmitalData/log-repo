@@ -1,36 +1,33 @@
 ﻿using FluentAssertions;
-using Logitude.Test.Base.Models.Login;
-using Logitude.Test.Base.Services;
+using Logitude.ShipmentTests.Models;
 using Logitude.Test.Base.Context;
+using Logitude.Test.Base.Models;
+using Logitude.Test.Base.Services;
 using System;
 using TechTalk.SpecFlow;
-using Logitude.ShipmentTests.Models;
 
 namespace Logitude.ShipmentTests.Steps.SecurityTests
 {
     [Binding]
     public class CreateAndUpdateShipmentSecurityAccessSteps
     {
-        protected SecurityAccessStepsContext<ShipmentPM> Context;
+        private SecurityAccessStepsContext<ShipmentPM> Context;
         private string ErrorMsg; 
 
-        public CreateAndUpdateShipmentSecurityAccessSteps(MultiUsers multiUsers, SecurityAccessStepsContext<ShipmentPM> context)
+        public CreateAndUpdateShipmentSecurityAccessSteps(SecurityAccessStepsContext<ShipmentPM> context)
         {
             Context = context;
-            Context.FirstUser = multiUsers.Users[0];
-            Context.SecondUser = multiUsers.Users[1];
         }
 
         [When(@"Create shipment request sent for User's Tenant")]
         public void WhenCreateShipmentRequestSentForUserSTenant()
         {
-            var firstUser = Context.FirstUser;
             ShipmentPM shipmentModel = GetValidShipmentPM();
-            shipmentModel.Tenant = firstUser.Tenant;
-            shipmentModel.CreatedByUserId = firstUser.UserId;
-            shipmentModel.UpdatedByUserId = firstUser.UserId;
+            shipmentModel.Tenant = UserTenant.Tenant;
+            shipmentModel.CreatedByUserId = UserTenant.UserId;
+            shipmentModel.UpdatedByUserId = UserTenant.UserId;
 
-            var response = APICaller.CallPost<ShipmentPM>(shipmentModel, "shipment", firstUser.Token);
+            var response = APICaller.CallPost<ShipmentPM>(shipmentModel, "shipment", UserTenant.Token);
             Context.FirstUserPMData.Id = response.Data?.Id;
             ErrorMsg = response?.ErrorMessage;
         }
@@ -45,15 +42,12 @@ namespace Logitude.ShipmentTests.Steps.SecurityTests
         [When(@"Create shipment request sent for other Tenant")]
         public void WhenCreateShipmentRequestSentForOtherTenant()
         {
-            var firstUser = Context.FirstUser;
-            var secondUser = Context.SecondUser;
-
             ShipmentPM shipmentModel = GetValidShipmentPM();
-            shipmentModel.Tenant = firstUser.Tenant; // Second user try to Post on first user tenant
-            shipmentModel.CreatedByUserId = secondUser.UserId;
-            shipmentModel.UpdatedByUserId = secondUser.UserId;
+            shipmentModel.Tenant = UserTenant.Tenant; // Second user try to Post on first user tenant
+            shipmentModel.CreatedByUserId = UserOtherTenant.UserId;
+            shipmentModel.UpdatedByUserId = UserOtherTenant.UserId;
 
-            var response = APICaller.CallPost<ShipmentPM>(shipmentModel, "shipment", secondUser.Token);
+            var response = APICaller.CallPost<ShipmentPM>(shipmentModel, "shipment", UserOtherTenant.Token);
             Context.SecondUserPMData.Id = response.Data?.Id;
             ErrorMsg = response?.ErrorMessage;
         }
@@ -68,12 +62,10 @@ namespace Logitude.ShipmentTests.Steps.SecurityTests
         [When(@"Update shipment request sent for User's Tenant")]
         public void WhenUpdateShipmentRequestSentForUserSTenant()
         {
-            var firstUser = Context.FirstUser;
-
             ShipmentPM shipmentModel = GetShipmentForFirstUser();
             shipmentModel.NewConcurrencyGUID = Guid.NewGuid().ToString();
 
-            var response = APICaller.CallPut<ShipmentPM>(shipmentModel, "shipment", firstUser.Token);
+            var response = APICaller.CallPut<ShipmentPM>(shipmentModel, "shipment", UserTenant.Token);
             Context.FirstUserPMData.Id = response.Data?.Id;
             ErrorMsg = response?.ErrorMessage;
         }
@@ -88,13 +80,10 @@ namespace Logitude.ShipmentTests.Steps.SecurityTests
         [When(@"Update shipment request sent for other Tenant")]
         public void WhenUpdateShipmentRequestSentForOtherTenant()
         {
-            var firstUser = Context.FirstUser;
-            var secondUser = Context.SecondUser;
-
             ShipmentPM shipmentModel = GetShipmentForFirstUser();
             shipmentModel.NewConcurrencyGUID = Guid.NewGuid().ToString();
 
-            var response = APICaller.CallPut<ShipmentPM>(shipmentModel, "shipment", secondUser.Token);
+            var response = APICaller.CallPut<ShipmentPM>(shipmentModel, "shipment", UserOtherTenant.Token);
             Context.SecondUserPMData.Id = response.Data?.Id;
             ErrorMsg = response?.ErrorMessage;
         }
@@ -125,12 +114,11 @@ namespace Logitude.ShipmentTests.Steps.SecurityTests
 
         private ShipmentPM GetShipmentForFirstUser()
         {
-            var firstUser = Context.FirstUser;
             ShipmentPM shipmentModel = GetValidShipmentPM();
-            shipmentModel.Tenant = firstUser.Tenant;
-            shipmentModel.CreatedByUserId = firstUser.UserId;
-            shipmentModel.UpdatedByUserId = firstUser.UserId;
-            var postResponse = APICaller.CallPost<ShipmentPM>(shipmentModel, "shipment", firstUser.Token);
+            shipmentModel.Tenant = UserTenant.Tenant;
+            shipmentModel.CreatedByUserId = UserTenant.UserId;
+            shipmentModel.UpdatedByUserId = UserTenant.UserId;
+            var postResponse = APICaller.CallPost<ShipmentPM>(shipmentModel, "shipment", UserTenant.Token);
             return postResponse.Data;
         }
     }

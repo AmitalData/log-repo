@@ -1,7 +1,4 @@
-﻿using Logitude.Test.Base.Models.Login;
-using System.Collections.Generic;
-
-namespace Logitude.ShipmentTests.Models
+﻿namespace Logitude.ShipmentTests.Models
 {
     public class ExternalAPIDirectContext
     {

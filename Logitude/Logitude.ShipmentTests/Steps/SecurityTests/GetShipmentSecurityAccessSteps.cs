@@ -1,12 +1,11 @@
 ﻿using FluentAssertions;
-using Logitude.Test.Base.Models.Login;
-using Logitude.Test.Base.Services;
+using Logitude.ShipmentTests.Models;
 using Logitude.Test.Base.Context;
+using Logitude.Test.Base.Models;
+using Logitude.Test.Base.Services;
 using System.Collections.Generic;
 using System.Linq;
 using TechTalk.SpecFlow;
-using Logitude.ShipmentTests.Models;
-using Logitude.Test.Base.Models;
 
 namespace Logitude.ShipmentTests.Steps.SecurityTests
 {
@@ -15,11 +14,9 @@ namespace Logitude.ShipmentTests.Steps.SecurityTests
     {
         protected SecurityAccessStepsContext<ShipmentPM> Context;
 
-        public GetShipmentSecurityAccessSteps(MultiUsers multiUsers, SecurityAccessStepsContext<ShipmentPM> context)
+        public GetShipmentSecurityAccessSteps(SecurityAccessStepsContext<ShipmentPM> context)
         {
             Context = context;
-            Context.FirstUser = multiUsers.Users[0];
-            Context.SecondUser = multiUsers.Users[1];
         }
 
         [When(@"First user get the first shipment from shipments list")]
@@ -34,7 +31,7 @@ namespace Logitude.ShipmentTests.Steps.SecurityTests
         {
             IEnumerable<ShipmentPM> firstUserShipmentsList = GetShipmentsListForFirstUser();
             string singleShipmentUrl = "Shipment/GetSingle?id=" + firstUserShipmentsList?.FirstOrDefault()?.Id;
-            var response = APICaller.CallGet<ShipmentPM>(singleShipmentUrl, Context.SecondUser.Token);
+            var response = APICaller.CallGet<ShipmentPM>(singleShipmentUrl, UserOtherTenant.Token);
             Context.SecondUserPMData.Id = response.Data?.Id;
         }
 

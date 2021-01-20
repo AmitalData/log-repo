@@ -1,4 +1,4 @@
-﻿using Logitude.Test.Base.Models.Login;
+﻿using Logitude.Test.Base.Models;
 
 namespace Logitude.Test.Base.Context
 {
@@ -9,12 +9,8 @@ namespace Logitude.Test.Base.Context
             FirstUserPMData = new T();
             SecondUserPMData = new T();
         }
-
-
         public T FirstUserPMData { get; set; }
         public T SecondUserPMData { get; set; }
-        public User FirstUser { get; set; }
-        public User SecondUser { get; set; }
     }
 }
 

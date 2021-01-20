@@ -1,9 +1,9 @@
 ﻿
 using FluentAssertions;
 using Logitude.CommonDataTests.Models.Contact;
-using Logitude.Test.Base.Models.Login;
-using Logitude.Test.Base.Services;
 using Logitude.Test.Base.Context;
+using Logitude.Test.Base.Models;
+using Logitude.Test.Base.Services;
 using System.Collections.Generic;
 using System.Linq;
 using TechTalk.SpecFlow;
@@ -15,11 +15,9 @@ namespace Logitude.CommonDataTests.Steps.Security
     public class GetContactSecurityAccessSteps
     {
         private SecurityAccessStepsContext<ContactPM> Context;
-        public GetContactSecurityAccessSteps(MultiUsers multiUsers, SecurityAccessStepsContext<ContactPM> context)
+        public GetContactSecurityAccessSteps(SecurityAccessStepsContext<ContactPM> context)
         {
             Context = context;
-            Context.FirstUser = multiUsers.Users[0];
-            Context.SecondUser = multiUsers.Users[1];
         }
 
         [When(@"First user get the first contact from contacts list")]
@@ -40,7 +38,7 @@ namespace Logitude.CommonDataTests.Steps.Security
         {
             IEnumerable<ContactPM> FirstUserContactList = GetContactsListForFirstUser();
             string singleContactUrl = "Contact/GetSingle?id=" + FirstUserContactList?.FirstOrDefault()?.Id;
-            var response = APICaller.CallGet<ContactPM>(singleContactUrl, Context.SecondUser.Token);
+            var response = APICaller.CallGet<ContactPM>(singleContactUrl, UserOtherTenant.Token);
             Context.SecondUserPMData.Id = response.Data?.Id;
         }
 

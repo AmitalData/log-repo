@@ -200,8 +200,8 @@ namespace Logitude.ShipmentTests.Models.Builders
                 BranchId = UserTenant.BranchId,
                 DepartmentId = UserTenant.DepartmentId,
                 CustomerId = ShipmentData.CustomerId,
-                CreatedByUserId = UserTenant.LoginUserId,
-                UpdatedByUserId = UserTenant.LoginUserId
+                CreatedByUserId = UserTenant.UserId,
+                UpdatedByUserId = UserTenant.UserId
             };
             return this;
         }
