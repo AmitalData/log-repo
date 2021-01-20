@@ -1,14 +1,11 @@
 ﻿using FluentAssertions;
 using Logitude.CommonDataTests.Models;
-using Logitude.Test.Base.Models.Login;
 using Logitude.Test.Base.Services;
 using Logitude.Test.Base.Context;
 using Logitude.Test.Base.Models;
-using Logitude.Test.Base.Services;
 using System.Collections.Generic;
 using System.Linq;
 using TechTalk.SpecFlow;
-using Logitude.Test.Base.Models;
 using Logitude.Test.Base.Constants;
 
 namespace Logitude.CommonDataTests.Steps.Security
@@ -40,7 +37,7 @@ namespace Logitude.CommonDataTests.Steps.Security
         {
             IEnumerable<ContactPM> firstUserContactList = GetContactsListForFirstUser();
             string contactsGetSingleUrl = URLs.ContactsGetSingle(firstUserContactList?.FirstOrDefault()?.Id);
-            APIResponse<ContactPM> response = APICaller.CallGet<ContactPM>(contactsGetSingleUrl, Context.SecondUser.Token);
+            APIResponse<ContactPM> response = APICaller.CallGet<ContactPM>(contactsGetSingleUrl, UserOtherTenant.Token);
             Context.SecondUserPMData.Id = response.Data?.Id;
         }
 
@@ -58,7 +55,7 @@ namespace Logitude.CommonDataTests.Steps.Security
                 PageSize = 1
             };
 
-            APIResponse<IEnumerable<ContactPM>> response = APICaller.CallGetByFilters<IEnumerable<ContactPM>>(URLs.ContactViewsGetByFilters(), Context.FirstUser.Token, apiQueryFilters);
+            APIResponse<IEnumerable<ContactPM>> response = APICaller.CallGetByFilters<IEnumerable<ContactPM>>(URLs.ContactViewsGetByFilters(), UserTenant.Token, apiQueryFilters);
             return response.Data;
         }
     }

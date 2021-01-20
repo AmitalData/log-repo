@@ -14,10 +14,12 @@ namespace Logitude.InvoiceTests.Steps.SecurityTests
     public class GetAPInvoiceSecurityAccessSteps
     {
         private SecurityAccessStepsContext<APInvoicePM> Context;
+
         public GetAPInvoiceSecurityAccessSteps(SecurityAccessStepsContext<APInvoicePM> context)
         {
             Context = context;
         }
+
         [When(@"The First user gets the first AP Invoice from AP Invoices list")]
         public void WhenFirstUserGetTheFirstAPInvoiceFromAPInvoicesList()
         {
@@ -31,7 +33,7 @@ namespace Logitude.InvoiceTests.Steps.SecurityTests
             IEnumerable<APInvoicePM> firstUserAPInvoicesList = GetAPInvoiceListForFirstUser();
             string apInvoicesGetSingleUrl = URLs.APInvoicesGetSingle(firstUserAPInvoicesList?.FirstOrDefault()?.Id);
             var response = APICaller.CallGet<APInvoicePM>(apInvoicesGetSingleUrl, UserOtherTenant.Token);
-            Context.SecondUserPMData.Id = response?.Data.Id;
+            Context.SecondUserPMData.Id = response.Data?.Id;
         }
 
         [Then(@"The AP Invoice which is related to the first user tanent is existed")]
@@ -54,7 +56,7 @@ namespace Logitude.InvoiceTests.Steps.SecurityTests
                 PageSize = 1
             };
 
-            APIResponse<IEnumerable<APInvoicePM>> response = APICaller.CallGetByFilters<IEnumerable<APInvoicePM>>(URLs.APInvoiceViewsGetByFilters(), Context.FirstUser.Token, apiQueryFilters);
+            APIResponse<IEnumerable<APInvoicePM>> response = APICaller.CallGetByFilters<IEnumerable<APInvoicePM>>(URLs.APInvoiceViewsGetByFilters(), UserTenant.Token, apiQueryFilters);
             return response.Data;
         }
     }

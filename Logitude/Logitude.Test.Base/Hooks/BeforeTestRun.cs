@@ -1,6 +1,8 @@
 ﻿using Logitude.Test.Base.Constants;
 using Logitude.Test.Base.Models;
 using Logitude.Test.Base.Services;
+using System.Collections.Generic;
+using System.Linq;
 using TechTalk.SpecFlow;
 
 namespace Logitude.Test.Base.Hooks
@@ -54,7 +56,7 @@ namespace Logitude.Test.Base.Hooks
                 GetToken = true
             };
 
-            APIResponse<User> user = APICaller.CallPost<User>(loginParameters, URLs.UserAuthentication, null);
+            APIResponse<User> user = APICaller.CallPost<User>(loginParameters, URLs.UserAuthentication(), null);
             UserOtherTenant.Token = user.Data.Token;
             UserOtherTenant.Tenant = user.Data.Tenant;
             UserOtherTenant.UserId = user.Data.UserId;
@@ -64,7 +66,7 @@ namespace Logitude.Test.Base.Hooks
         private static void FillTenant()
         {
             string tenantUrl = URLs.TenantsGetSingle(UserTenant.Tenant);
-            APIResponse<TenantPM> tenantPM = APICaller.CallGet<TenantPM>(tenantUrl, UserTenant.Token);
+            APIResponse<Tenant> tenantPM = APICaller.CallGet<Tenant>(tenantUrl, UserTenant.Token);
 
             UserTenant.LocalCurrencyId = tenantPM.Data.CurrencyId;
             UserTenant.ProfitCurrencyId = tenantPM.Data.ProfitCurrencyId;

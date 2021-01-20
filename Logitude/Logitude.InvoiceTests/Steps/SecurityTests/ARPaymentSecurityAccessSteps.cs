@@ -4,9 +4,9 @@ using Logitude.Test.Base.Context;
 using Logitude.Test.Base.Models;
 using Logitude.Test.Base.Services;
 using TechTalk.SpecFlow;
-using Logitude.InvoiceTests.Models.Payment;
-using Logitude.Test.Base.Models;
 using Logitude.Test.Base.Constants;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Logitude.InvoiceTests.Steps.SecurityTests
 {
@@ -32,7 +32,7 @@ namespace Logitude.InvoiceTests.Steps.SecurityTests
         {
             ARPaymentPM firstUserARPayment = GetAnARPaymentForFirstUser();
             string arPaymentsGetSingleUrl = URLs.ARPaymentsGetSingle(firstUserARPayment?.Id);
-            var response = APICaller.CallGet<ARPaymentPM>(arPaymentsGetSingleUrl, Context.SecondUser.Token);
+            var response = APICaller.CallGet<ARPaymentPM>(arPaymentsGetSingleUrl, UserOtherTenant.Token);
             Context.SecondUserPMData.Id = response.Data?.Id;
         }
 
@@ -56,7 +56,7 @@ namespace Logitude.InvoiceTests.Steps.SecurityTests
                 PageSize = 1
             };
 
-            APIResponse<IEnumerable<ARPaymentPM>> response = APICaller.CallGetByFilters<IEnumerable<ARPaymentPM>>(URLs.ARPaymentViewsGetByFilters(), Context.FirstUser.Token, apiQueryFilters);
+            APIResponse<IEnumerable<ARPaymentPM>> response = APICaller.CallGetByFilters<IEnumerable<ARPaymentPM>>(URLs.ARPaymentViewsGetByFilters(), UserTenant.Token, apiQueryFilters);
             return response.Data?.FirstOrDefault();
         }
     }

@@ -55,7 +55,7 @@ namespace Logitude.CommonDataTests.Steps.Security
                 PageSize = 1
             };
 
-            APIResponse<IEnumerable<FTPDetailPM>> response = APICaller.CallGetByFilters<IEnumerable<FTPDetailPM>>(URLs.FTPDetailViewsGetByFilters(), Context.FirstUser.Token, apiQueryFilters);
+            APIResponse<IEnumerable<FTPDetailPM>> response = APICaller.CallGetByFilters<IEnumerable<FTPDetailPM>>(URLs.FTPDetailViewsGetByFilters(), UserTenant.Token, apiQueryFilters);
             return response.Data;
         }
 

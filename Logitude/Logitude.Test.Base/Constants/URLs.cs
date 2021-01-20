@@ -51,7 +51,12 @@
         {
             return "Shipment/GetSingle?id=" + id;
         }
-        
+
+        public static string Shipment()
+        {
+            return "Shipment";
+        }
+
         public static string FTPDetailViewsGetByFilters()
         {
             return "FTPDetailViews/GetByFilters";

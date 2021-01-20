@@ -4,8 +4,9 @@ using Logitude.Test.Base.Context;
 using Logitude.Test.Base.Models;
 using Logitude.Test.Base.Services;
 using TechTalk.SpecFlow;
-using Logitude.Test.Base.Models;
 using Logitude.Test.Base.Constants;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Logitude.InvoiceTests.Steps.SecurityTests
 {
@@ -55,7 +56,7 @@ namespace Logitude.InvoiceTests.Steps.SecurityTests
                 PageSize = 1
             };
 
-            APIResponse<IEnumerable<ARInvoicePM>> response = APICaller.CallGetByFilters<IEnumerable<ARInvoicePM>>(URLs.ARInvoiceViewsGetByFilters(), Context.FirstUser.Token, apiQueryFilters);
+            APIResponse<IEnumerable<ARInvoicePM>> response = APICaller.CallGetByFilters<IEnumerable<ARInvoicePM>>(URLs.ARInvoiceViewsGetByFilters(), UserTenant.Token, apiQueryFilters);
             return response.Data?.FirstOrDefault();
         }
     }
