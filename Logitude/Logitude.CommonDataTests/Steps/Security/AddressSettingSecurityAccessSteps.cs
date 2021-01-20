@@ -1,7 +1,6 @@
 ﻿using FluentAssertions;
 using Logitude.CommonDataTests.Models;
 using Logitude.CommonDataTests.Models.Builders;
-using Logitude.Test.Base.Constants;
 using Logitude.Test.Base.Context;
 using Logitude.Test.Base.Models;
 using Logitude.Test.Base.Services;
@@ -48,7 +47,7 @@ namespace Logitude.CommonDataTests.Steps.Security
         {
             AddressPM FirstUserAdressSettings = GetAFirstUserAdressSettings();
 
-            APIResponse<AddressPM> UpdatedAddressSettings = APICaller.CallPut<AddressPM>(FirstUserAdressSettings, URLs.Address() , Token);
+            ApiResponse<AddressPM> UpdatedAddressSettings = APICaller.CallPut<AddressPM>(FirstUserAdressSettings, Urls.Address() , Token);
             return UpdatedAddressSettings.Data;
         }
 
@@ -72,7 +71,7 @@ namespace Logitude.CommonDataTests.Steps.Security
                 .CardEnglishName("Simplog LTD.")
                 .Build();
 
-            APIResponse<AddressPM> response = APICaller.CallPost<AddressPM>(addressPM, URLs.Address(), UserTenant.Token);
+            ApiResponse<AddressPM> response = APICaller.CallPost<AddressPM>(addressPM, Urls.Address(), UserTenant.Token);
             return response.Data;
         }
     }

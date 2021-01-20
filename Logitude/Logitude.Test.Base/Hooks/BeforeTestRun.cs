@@ -122,13 +122,13 @@ namespace Logitude.Test.Base.Hooks
 
         private static void SetupLocationPreparationVariables()
         {
-            ApiResponse<LocationsVariables> locationsVariablesResponse = APICaller.CallGet<LocationsVariables>("IntegrationTest/GetBaseLocation", UserTenant.Token);
+            ApiResponse<LocationsVariables> locationsVariablesResponse = APICaller.CallGet<LocationsVariables>(Urls.IntegrationTestGetBaseLocations(), UserTenant.Token);
             LocationDataMap(locationsVariablesResponse.Data);
         }
 
         private static void SetupPartnerPreparationVariables()
         {
-            ApiResponse<PartnersVariables> partnersVariablesResponse = APICaller.CallGet<PartnersVariables>("IntegrationTest/GetBasePartners", UserTenant.Token);
+            ApiResponse<PartnersVariables> partnersVariablesResponse = APICaller.CallGet<PartnersVariables>(Urls.IntegrationTestGetBasePartners(), UserTenant.Token);
             PartnerDataMap(partnersVariablesResponse.Data);
         }
 

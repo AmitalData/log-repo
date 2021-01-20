@@ -109,7 +109,17 @@
 
         public static string Address()
         {
-            return "address";
+            return "Address";
+        }
+
+        public static string IntegrationTestGetBaseLocations()
+        {
+            return "IntegrationTest/GetBaseLocations";
+        }
+
+        public static string IntegrationTestGetBasePartners()
+        {
+            return "IntegrationTest/GetBasePartners";
         }
     }
 }
