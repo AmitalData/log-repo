@@ -47,5 +47,5 @@ update  OBLTypes set AutomaticLastUpdateDate =GETDATE() where AutomaticLastUpdat
 
  update  QuoteStages set AutomaticLastUpdateDate =GETDATE() where AutomaticLastUpdateDate is null
  update  QuoteClosingReasons set AutomaticLastUpdateDate =GETDATE() where AutomaticLastUpdateDate is null
- --update  Countries set AutomaticLastUpdateDate =GETDATE() where AutomaticLastUpdateDate is null
+ update  Quotes set AutomaticLastUpdateDate = GETDATE() where AutomaticLastUpdateDate is null
  --update  ChargesGroups set AutomaticLastUpdateDate =GETDATE() where AutomaticLastUpdateDate is null
