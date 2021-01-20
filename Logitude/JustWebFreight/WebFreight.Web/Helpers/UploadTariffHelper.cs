@@ -166,20 +166,12 @@ namespace WebFreight.Web.Helpers
 
                 /*From Port*/
                 string fromPortCode = rowData[0];
-                if (!Regex.IsMatch(fromPortCode, @"^[a-zA-Z0-9]+$"))
-                {
-                    fromPortCode = Regex.Replace(fromPortCode, @"[^a-zA-Z0-9]+", "");
-                }
-
+                fromPortCode = Regex.Replace(fromPortCode, @"\*+", "");
                 myLine.FromPort = fromPortCode;
 
                 /*To Port*/
                 string toPortCode = rowData[1];
-                if (!Regex.IsMatch(toPortCode, @"^[a-zA-Z0-9]+$"))
-                {
-                    toPortCode = Regex.Replace(toPortCode, @"[^a-zA-Z0-9]+", "");
-                }
-
+                toPortCode = Regex.Replace(toPortCode, @"\*+", "");
                 myLine.ToPort = toPortCode;
 
                 if (StepLength > 2 && rowDataLength > 2)
@@ -271,20 +263,12 @@ namespace WebFreight.Web.Helpers
 
                 /*From Port*/
                 string fromPortCode = rowData[0];
-                if (!Regex.IsMatch(fromPortCode, @"^[a-zA-Z0-9]+$"))
-                {
-                    fromPortCode = Regex.Replace(fromPortCode, @"[^a-zA-Z0-9]+", "");
-                }
-
+                fromPortCode = Regex.Replace(fromPortCode, @"\*+", "");
                 myLine.FromPort = fromPortCode;
 
                 /*To Port*/
                 string toPortCode = rowData[1];
-                if (!Regex.IsMatch(toPortCode, @"^[a-zA-Z0-9]+$"))
-                {
-                    toPortCode = Regex.Replace(toPortCode, @"[^a-zA-Z0-9]+", "");
-                }
-
+                toPortCode = Regex.Replace(toPortCode, @"\*+", "");
                 myLine.ToPort = toPortCode;
 
                 if (rowData.Length > 2)
