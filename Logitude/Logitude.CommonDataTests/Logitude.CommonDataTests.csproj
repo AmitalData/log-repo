@@ -98,6 +98,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Models\AddressPM.cs" />
+    <Compile Include="Models\Builders\AddressBuilder.cs" />
     <Compile Include="Models\ContactPM.cs" />
     <Compile Include="Models\FTPDetailPM.cs" />
     <Compile Include="Models\TenantPM.cs" />
@@ -105,12 +106,14 @@
     <Compile Include="Steps\Security\AddressSettingSecurityAccessSteps.cs" />
     <Compile Include="Steps\Security\GetContactSecurityAccessSteps.cs" />
     <Compile Include="Steps\Security\GetFTPDetailSecurityAccessSteps.cs" />
+    <Compile Include="Steps\Security\TenantSecurityAccessSteps.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
     <None Include="Features\Security\AddressSettingSecurityAccess.feature" />
     <None Include="Features\Security\GetContactSecurityAccess.feature" />
     <None Include="Features\Security\GetFTPDetailSecurityAccess.feature" />
+    <None Include="Features\Security\TenantSecurityAccess.feature" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

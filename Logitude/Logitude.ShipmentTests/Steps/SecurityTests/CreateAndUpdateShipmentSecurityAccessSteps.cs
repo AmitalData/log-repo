@@ -95,7 +95,15 @@ namespace Logitude.ShipmentTests.Steps.SecurityTests
 
         private ShipmentPM GetValidUserShipmentPM()
         {
-            return new ShipmentBuilder().MasterShipment().Build();
+            return new ShipmentBuilder().WithDefualtValues()
+                .DirectionId("E")
+                .TransportModeId("A")
+                .ShipmentLevelCode("C")
+                .OtherPrepaidCollectId("P")
+                .FreightPrepaidCollectId("C")
+                .MainCarriageToPortIdByCode("LHR")
+                .MainCarriageFromPortIdByCode("MIA")
+                .Build();
         }
     }
 }
