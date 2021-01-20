@@ -62,7 +62,7 @@ namespace Logitude.Customs.BL.Messaging.ILOVS
 
 
 
-
+                bool haveDefinition = true;
                 var webAPISendMessage2MamanService = new WebAPISendMessage2MasofService();
                 var customsPartnerFtpDetails = new CustomsPartnerFtpDetails();
                 var defDefaultJSON = customsPartnerFtpDetails.GetAllInterfaceName().First(r => r.Key == CustomsPartnerFtpDetails.InterfaceName_ECOVSTHR).Value;
@@ -73,13 +73,12 @@ namespace Logitude.Customs.BL.Messaging.ILOVS
                 }
                 catch (MasofException ignoreif )
                 {
-
+                    haveDefinition = false;
                 }
-                
-                
-
-                webAPISendMessage2MamanService.BuildCommunicationLog(bytearray, tenant, declarationId, CustomsPartnerFtpDetails.InterfaceName_ECOVSTHR, CustomsPartnerFtpDetails.PartnerCode_ILOVS);
-
+                if (haveDefinition)
+                {
+                    webAPISendMessage2MamanService.BuildCommunicationLog(bytearray, tenant, declarationId, CustomsPartnerFtpDetails.InterfaceName_ECOVSTHR, CustomsPartnerFtpDetails.PartnerCode_ILOVS);
+                }
                 ///scop.Complete();
                 //output  ftp://192.168.10.88/FTP_MAMAN/  
             }
