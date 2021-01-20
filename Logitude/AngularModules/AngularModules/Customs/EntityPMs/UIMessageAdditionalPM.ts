@@ -58,7 +58,10 @@ export class UIMessageAdditionalPM {
     public OldEntityPM: UIMessageAdditionalPM;
 		
     public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
+       if(!this.DisableMarkAsDirty)
+       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -66,6 +69,7 @@ export class UIMessageAdditionalPM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "Customs.UIMessageAdditional");
            
         }
+       }
     }
 
     private MyClone: UIMessageAdditionalPM;

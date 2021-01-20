@@ -1,5 +1,4 @@
-﻿using Logitude.BL.ShipmentsModel.EntityPMs;
-using Simplog.Data.CommonDataModel;
+﻿using Simplog.Data.CommonDataModel;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using System;
@@ -16,6 +15,8 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using Logitude.BL.ShipmentsModel.EntityQueries;
 using Logitude.BL.IntegrationTestModel.EntityPMs;
+using Logitude.BL.InfrastructureModel.Tools.EntityService;
+using Logitude.BL.InfrastructureModel.EntityPMs;
 
 namespace Logitude.BL.IntegrationTestModel.EntityQueries
 {
@@ -53,6 +54,8 @@ namespace Logitude.BL.IntegrationTestModel.EntityQueries
             Variables.PaymentTermCashId = GetPaymentTerm("Cash");
             Variables.VATTypeZeroId = GetVATType("ZERO");
             Variables.QuoteStageQTDRId = GetQuoteStage("QTDR");
+            Variables.MoveTypeMTAId = GetMoveType("MTA", "A");
+            Variables.MoveTypeMTOId = GetMoveType("MTO", "O");
             Variables.ChargesTypes = this.FillChargesTypes();
             Variables.VatTypes = this.FillVatTayes();
             Variables.Currencies = this.FillCurrencies();
@@ -272,6 +275,37 @@ namespace Logitude.BL.IntegrationTestModel.EntityQueries
             vatTypePM.NewEntityPercentage = 0;
             vatTypePM.NewEntityPercentageDate = DateTime.Now;
             return vatTypePM;
+        }
+        private string GetMoveType(string moveTypeCode, string transportModeCode)
+        {
+            MoveTypeRepository moveTypeRepository = new MoveTypeRepository(webFreightContext);
+            MoveType moveType = moveTypeRepository.GetSingleMoveTypesByCode(moveTypeCode, tenant);
+            if (moveType == null)
+            {
+                InsertNewMoveType(moveTypeCode, transportModeCode);
+                moveType = moveTypeRepository.GetSingleMoveTypesByCode(moveTypeCode, tenant);
+            }
+            return moveType.Id;
+        }
+
+        private void InsertNewMoveType(string moveTypeCode, string transportModeCode)
+        {
+            MoveTypeService moveTypeService = new MoveTypeService(webFreightContext, tenant);
+            moveTypeService.Create(CreateMoveTypePM(moveTypeCode, transportModeCode));
+        }
+
+        public MoveTypePM CreateMoveTypePM(string moveTypeCode, string moveTypeTransportMode)
+        {
+            MoveTypePM moveTypePM = new MoveTypePM();
+            moveTypePM.Tenant = tenant;
+            moveTypePM.Code = moveTypeCode;
+            moveTypePM.MoveTypeEnglishName = "TestMoveTypeId" + moveTypeCode;
+            moveTypePM.MoveTypeLocalName = moveTypeCode + " Move Type LocalName";
+            moveTypePM.TransportModeId = moveTypeTransportMode;
+            moveTypePM.IsAir = moveTypeTransportMode == "A" ? true : false;
+            moveTypePM.IsOcean = moveTypeTransportMode == "O" ? true : false;
+            moveTypePM.IsInland = moveTypeTransportMode == "I" ? true : false;
+            return moveTypePM;
         }
         private string GetQuoteStage(string code)
         {

@@ -58,7 +58,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     return;
                 }
 
-                if (customResponse.VehicleDetails.FirstOrDefault().richbitFileNumberSpecified == true)
+                if (customResponse.VehicleDetails.FirstOrDefault().richbitFileNumber != null && customResponse.VehicleDetails.FirstOrDefault().richbitFileNumber !=0)
                 {
                     _MyVehicle.RichbitFileNumber = customResponse.VehicleDetails.FirstOrDefault().richbitFileNumber.ToString();
                 }

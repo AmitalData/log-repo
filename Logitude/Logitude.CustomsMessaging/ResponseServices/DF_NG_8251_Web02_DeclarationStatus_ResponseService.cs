@@ -268,7 +268,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                         };                                       
                                         myEventContextTagModelPRS.EventCode = "PRS";
                                         declarationPM.CurrentContextTag = myEventContextTagModelPRS;
-                                        RaiseStatus(declarationPM, "", myEventContextTagModelPRS.EventCode);
+                                        //RaiseStatus(declarationPM, "", myEventContextTagModelPRS.EventCode);
                                         break;
                                     case "25":
                                     case "30":

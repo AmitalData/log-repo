@@ -304,6 +304,13 @@ SELECT TOP 1000 [Id]
             }
         }
 
+        public static void GetListByCourierHAWB()
+        {
+            var repo = new DeclarationRepository(1);
+            var res=repo.GetListByCourierHAWB("xmd",1);
+            //throw new NotImplementedException();
+        }
+
         public static void MultiProccessTestLockTab()
         {
             int nTasks = 0;

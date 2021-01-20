@@ -53,7 +53,10 @@ export class PaymentOrderStatusPM {
     public OldEntityPM: PaymentOrderStatusPM;
 		
     public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
+       if(!this.DisableMarkAsDirty)
+       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -61,6 +64,7 @@ export class PaymentOrderStatusPM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "Customs.PaymentOrderStatus");
            
         }
+       }
     }
 
     private MyClone: PaymentOrderStatusPM;

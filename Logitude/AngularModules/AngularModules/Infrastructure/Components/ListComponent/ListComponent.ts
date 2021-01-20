@@ -642,9 +642,9 @@ export class ListComponent implements OnInit, AfterViewInit {
         var subscription = this.pubSubAdvanceQueryFiltersService.Stream.subscribe(customer => this.processAdvanceQueryFilters(customer));
       //SessionLocator.SelectedSession.pubSubAdvanceQueryFiltersService.emit(this.pubSubAdvanceQueryFiltersService)
       //this.ObjectTableName == "Customs.Declaration" || this.ObjectTableName == "Customs.PhysicalCheck" ||
-      if (this.ObjectTableName.startsWith("Customs.")) {
-          this.IsNavigateButtonVisible = false;
-      }
+    //   if (this.ObjectTableName.startsWith("Customs.")) {
+    //       this.IsNavigateButtonVisible = false;
+    //   }
         this.Listen();
         //this.CD.detectChanges();
     }
@@ -2639,6 +2639,7 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
 
                     case "Customs.Declaration":
                         {
+                            isVisible = false;
                             this.customsSettingListService.getSingleFromCache(this.TenantPM.Id.toString()).subscribe((response: ServiceResponse) => {
                                 var list = response.Result;
 
@@ -2647,11 +2648,13 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                                         isVisible = false;
                                     }
                                 }
+                                if (!isVisible && this.HaveFeatureNewExportDeclararion()) {
+                                    isVisible = true;
+                                }
+                                this.IsNewEntityButtonVisible = isVisible;
                             });
 
-                            if (!isVisible && this.HaveFeatureNewExportDeclararion()) {
-                                isVisible = true;
-                            }
+                          
                             break;
                         }
 

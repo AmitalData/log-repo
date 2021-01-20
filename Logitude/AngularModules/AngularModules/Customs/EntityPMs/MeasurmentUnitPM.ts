@@ -58,7 +58,10 @@ export class MeasurmentUnitPM {
     public OldEntityPM: MeasurmentUnitPM;
 		
     public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
+       if(!this.DisableMarkAsDirty)
+       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -66,6 +69,7 @@ export class MeasurmentUnitPM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "Customs.MeasurmentUnit");
            
         }
+       }
     }
 
     private MyClone: MeasurmentUnitPM;

@@ -1,12 +1,9 @@
 ﻿using Logitude.Test.Base.Constants;
 using Logitude.Test.Base.Models;
-using Logitude.Test.Base.Models.Base;
-using Logitude.Test.Base.Models.Login;
 using Logitude.Test.Base.Services;
 using System.Collections.Generic;
 using System.Linq;
 using TechTalk.SpecFlow;
-using Logitude.Test.Base.Models;
 
 namespace Logitude.Test.Base.Hooks
 {
@@ -16,7 +13,7 @@ namespace Logitude.Test.Base.Hooks
         [BeforeTestRun(Order = 0)]
         public static void SetupBasePreparationVariables()
         {
-            GetLoginParameters();
+            GetUsersLoginParameters();
             FillUserTenant();
             SetupLocationPreparationVariables();
             SetupPartnerPreparationVariables();
@@ -68,7 +65,19 @@ namespace Logitude.Test.Base.Hooks
             PartnersData.WarehouseId = vars.WarehouseId;
         }
 
-        private static void GetLoginParameters()
+        private static void GetUsersLoginParameters()
+        {
+            GetUserLoginParameters();
+            GetOtherUserLoginParameters();
+        }
+
+        private static void FillUserTenant()
+        {
+            FillTenant();
+            FillUser();
+        }
+
+        private static void GetUserLoginParameters()
         {
             LoginParameters loginParameters = new LoginParameters()
             {
@@ -78,25 +87,35 @@ namespace Logitude.Test.Base.Hooks
                 GetToken = true
             };
 
-            APIResponse<User> user= APICaller.CallPost<User>(loginParameters, URLs.UserAuthentication, null);
+            APIResponse<User> user= APICaller.CallPost<User>(loginParameters, URLs.UserAuthentication(), null);
             UserTenant.Token = user.Data.Token;
             UserTenant.Tenant = user.Data.Tenant;
-            UserTenant.LoginUserId = user.Data.UserId;
-            UserTenant.LoginUserName = user.Data.UserName;
+            UserTenant.UserId = user.Data.UserId;
+            UserTenant.UserName = user.Data.UserName;
         }
 
-        private static void FillUserTenant()
+        private static void GetOtherUserLoginParameters()
         {
-            FillTenant();
-            FillUser();
+            LoginParameters loginParameters = new LoginParameters()
+            {
+                Email = BaseConfigurations.OtherUserEmail,
+                Password = BaseConfigurations.OtherUserPassword,
+                ClientType = "Web",
+                GetToken = true
+            };
+
+            APIResponse<User> user = APICaller.CallPost<User>(loginParameters, URLs.UserAuthentication(), null);
+            UserOtherTenant.Token = user.Data.Token;
+            UserOtherTenant.Tenant = user.Data.Tenant;
+            UserOtherTenant.UserId = user.Data.UserId;
+            UserOtherTenant.UserName = user.Data.UserName;
         }
 
         private static void FillTenant()
         {
-            string TenantUrl = URLs.TenantsGetSingle + UserTenant.Tenant;
-            APIResponse<TenantPM> tenantPM = APICaller.CallGet<TenantPM>(TenantUrl, UserTenant.Token);
+            string tenantUrl = URLs.TenantsGetSingle(UserTenant.Tenant);
+            APIResponse<Tenant> tenantPM = APICaller.CallGet<Tenant>(tenantUrl, UserTenant.Token);
 
-            UserTenant.Tenant = tenantPM.Data.Id;
             UserTenant.LocalCurrencyId = tenantPM.Data.CurrencyId;
             UserTenant.ProfitCurrencyId = tenantPM.Data.ProfitCurrencyId;
             UserTenant.ProfitCurrencyRate = tenantPM.Data.ProfitCurrencyRate;
@@ -104,14 +123,21 @@ namespace Logitude.Test.Base.Hooks
 
         private static void FillUser()
         {
-            //this method is waiting the CallGetByFilter to be implemented by Abd.M
-            //string UserListUrl = URLs.UserviewsGetbyfilters + BaseConfigurations.Email;
-            //List<UserList> users = APICaller.CallGetByFilter<List<UserList>>(UserListUrl, UserTenant.Token, "Result");
-            //var user = users.FirstOrDefault();
+            ApiQueryFilters apiQueryFilters = new ApiQueryFilters
+            {
+                PageIndex = 0,
+                PageSize = 1,
+                Filter1Name = "SearchFields",
+                Filter1Operator = "Contains",
+                Filter1Value = BaseConfigurations.Email
+            };
 
-            UserTenant.BranchId = "1-1102";//user.BranchId;
-            UserTenant.DepartmentId = "1-2988";//user.DepartmentId;
-            UserTenant.BusinessUnitId = "";//user.BusinessUnitId;
+            APIResponse<IEnumerable<UserList>> usersResponse = APICaller.CallGetByFilters<IEnumerable<UserList>>(URLs.UserViewsGetByFilters(), UserTenant.Token, apiQueryFilters);
+            UserList user = usersResponse.Data?.FirstOrDefault();
+
+            UserTenant.BranchId = user?.BranchId;
+            UserTenant.DepartmentId = user?.DepartmentId;
+            UserTenant.BusinessUnitId = user?.BusinessUnitId;
         }
     }
 }

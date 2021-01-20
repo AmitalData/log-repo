@@ -20,7 +20,6 @@ import { ExceptionReasonListService } from '../../Services/StandardLists/Excepti
 import { ExceptionReasonList } from '../../EntityLists/ExceptionReasonList';
 
 import { EntityResourceService } from '../../../Infrastructure/Services/EntityResourceService';
-
 @Component({
 
     templateUrl: './FieldTemplateComponent.html',
@@ -123,8 +122,10 @@ export class FieldTemplateComponent {
         var myExceptionReasonListService = new ExceptionReasonListService();
         myExceptionReasonListService.getSingleFromCache(ToolTipValue)
             .subscribe(serviceResponse => {
-                var ExceptionReason = serviceResponse.Result as ExceptionReasonList;
-                ToolTipValue = ExceptionReason.LocalName;
+                if (serviceResponse.Result != null) {
+                    var ExceptionReason = serviceResponse.Result as ExceptionReasonList;
+                    ToolTipValue = ExceptionReason.LocalName;
+                }
             });
         return ToolTipValue;
     }
@@ -174,8 +175,8 @@ export class FieldTemplateComponent {
         var _declarationRemarksService: DeclarationRemarksService = new DeclarationRemarksService();
         var windowArgs: any = {};
         var logitudeWindow = new LogitudeWindow();
-        logitudeWindow.Height = 700;//400;
-        logitudeWindow.Width = 800;
+        logitudeWindow.Height = 800;//400;
+        logitudeWindow.Width = 900;
         logitudeWindow.ShowCloseButton = true;
         if (this.Entity.IsClassificationRemarks) {
 
@@ -381,6 +382,52 @@ export class FieldTemplateComponent {
         }
         else {
             alert("ShowCFIFILEMMoveSIToOCRScreen");
+        }
+    }
+
+
+    ShowCFIFILEMMoveToCollector() {
+        this._ListComponentArgs.SuppressOnRowSelectedField = true;
+        
+
+        let myDeclarationReferantDataList: DeclarationReferantDataList = this.Entity;
+        let myViewModelName = "FieldTemplateComponent.ts-ShowCFIFILEMMoveToCollector";
+        if (AmitalGatewayUtil.Instance.AmitalBrowserInUse) {
+            SessionLocator.SelectedSession.StartBusyIndicatorLoading();
+            let sub = AmitalGatewayUtil.Instance.UnifaceRequestArrived
+                .subscribe(
+                    (mess: UnifreightMessageM) => {
+                        var IsMatchUnifreightCallbackCommand = (
+                            mess.LogitudeEntity == AmitalGatewayUtil.Instance.DeclarationMessaging.LogitudeEntityDeclaration &&
+                            mess.LogitudeEntityNumber == myDeclarationReferantDataList.DeclarationId &&
+                            mess.LogitudeViewModel == myViewModelName);
+                        if (IsMatchUnifreightCallbackCommand) {
+                            sub.unsubscribe();
+                            SessionLocator.SelectedSession.StopBusyIndicator();
+                            let sBool = UnifreightMessageM.GetStringValue(mess, AmitalGatewayUtil.Instance.DeclarationMessaging.UnifreightResponseStatus);
+                            SessionLocator.SelectedSession.CurrentListComponent.OnBackFromEdit(this.Entity.DeclarationId, { rowIndex: this.RowIndex });
+                            this.CD.detectChanges();
+                        }
+                    }
+                );
+
+            SessionLocator.SelectedSession.StartBusyIndicator("");
+            var unifreightMessageM =
+                AmitalGatewayUtil.Instance.
+                    DeclarationMessaging.GetMessage(myDeclarationReferantDataList.CustomFileNo, myDeclarationReferantDataList.DeclarationId,
+                        myViewModelName);
+
+
+            AmitalGatewayUtil.Instance.SendRequestToUnifreightAsync(
+                "ScriptableGatewayUtil.ShowCFIFILEMMoveToCollector",
+                "CFIHMAIN.LogitudeTask",
+                "ShowCFIFILEMMoveToCollector",
+                unifreightMessageM,
+                " הצגת מסך : העברה לגובה");
+
+        }
+        else {
+            alert("ShowCFIFILEMMoveToCollector");
         }
     }
 

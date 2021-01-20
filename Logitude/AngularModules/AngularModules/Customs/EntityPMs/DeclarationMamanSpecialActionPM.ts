@@ -88,7 +88,10 @@ export class DeclarationMamanSpecialActionPM {
     public OldEntityPM: DeclarationMamanSpecialActionPM;
 		
     public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
+       if(!this.DisableMarkAsDirty)
+       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -96,6 +99,7 @@ export class DeclarationMamanSpecialActionPM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "Customs.DeclarationMamanSpecialAction");
            
         }
+       }
     }
 
     private MyClone: DeclarationMamanSpecialActionPM;

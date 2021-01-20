@@ -128,6 +128,28 @@
 
                 <tr class="FormFieldRow">
 
+                    <td>
+                        <LogLabel [ObjectFieldName]="'UnloadPortCode'" [ObjectTableName]="ObjectTableName"
+                                  [DataContext]="DataContext"></LogLabel>
+                    </td>
+                    <td>
+                        <LogLov [ObjectFieldName]="'UnloadPortCode'"
+                                [ObjectTableName]="ObjectTableName"
+                                [DataContext]="DataContext"
+                                [LookUpTableName]="'Customs.UnloadingSiteType'"
+                                [DisplayMemberPath]="'LocalName'"
+                                [SelectedValue]="UnloadPortCode"
+                                [HideColumns]="true">
+                        </LogLov>
+
+                    </td>
+
+                    <td></td>
+
+                </tr>
+
+                <tr class="FormFieldRow">
+
                     <!-- InActive -->
                     <td>
                         <LogLabel [ObjectFieldName]="'InActive'" [ObjectTableName]="ObjectTableName"

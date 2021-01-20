@@ -213,7 +213,10 @@ export class CustomsDocumentPM {
     public OldEntityPM: CustomsDocumentPM;
 		
     public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
+       if(!this.DisableMarkAsDirty)
+       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -221,6 +224,7 @@ export class CustomsDocumentPM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "Customs.CustomsDocument");
            
         }
+       }
     }
 
     private MyClone: CustomsDocumentPM;

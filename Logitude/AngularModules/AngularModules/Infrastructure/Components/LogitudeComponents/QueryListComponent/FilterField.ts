@@ -30,7 +30,7 @@ export class FilterField extends BaseComponent {
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(objectField: any, queryCode: string, iswidnowMode: boolean, AdvancedQFPMs: AdvancedQueryFilterPM[], parentClass: any = null, filterchangeevent: PubSubService = null) {
         super();
-        this.SessionIdx = this.CurrentSession.SessionIndex;
+         this.SessionIdx = this.CurrentSession.SessionIndex;
         this.ControlId = "CheckBox_" + this.CurrentSession.GetNewId("CheckBox");
         this.QueryCode = queryCode;
         this.Filterchangeevent = filterchangeevent;
@@ -64,6 +64,7 @@ export class FilterField extends BaseComponent {
                 else {
                     this.EnableDelete = true;
                 }
+                
                 this.Operation = this.Operators.filter(a => a.Code == preDefinedFilter.Operator)[0];
             }
             else {
@@ -92,6 +93,7 @@ export class FilterField extends BaseComponent {
                 else {
                     this.EnableDelete = true;
                 }
+                
                 this.Operation = this.Operators.filter(a => a.Code == preDefinedFilter.Operator)[0];
             }
             else {
@@ -248,7 +250,9 @@ export class FilterField extends BaseComponent {
     }
 
     private operation: ObjectFieldOperator;
-    public get Operation() {
+    public get Operation()
+    {
+        
         if (!this.operation) {
             if ((this.ObjectField.DataTypeCode == "Text" || this.ObjectField.DataTypeCode == "nText") && AppTool.IsNullOrEmpty(this.operation)) {
                 this.operation = new ObjectFieldOperator("StartsWith", "Starts With");
@@ -415,7 +419,7 @@ export class FilterField extends BaseComponent {
     list: ObjectFieldOperator[];
     private GetFieldOperators(field: ObjectFieldPM) {
 
-
+        
         this.list = [];
 
         if (field.DataTypeCode == "Text" || field.DataTypeCode == "nText") {
@@ -427,6 +431,8 @@ export class FilterField extends BaseComponent {
             //}
             //else {
             this.list.push(this.startsWithOp);
+            this.list.push(this.ContainsOp);
+
             //}
         }
 
@@ -456,7 +462,7 @@ export class FilterField extends BaseComponent {
 
 
 
-
+    ContainsOp: ObjectFieldOperator = new ObjectFieldOperator("Contains", "Contains");
     startsWithOp: ObjectFieldOperator = new ObjectFieldOperator("StartsWith", "Starts With");
     equalsOp: ObjectFieldOperator = new ObjectFieldOperator("Equals", "Equals to");
     notEqualsOp: ObjectFieldOperator = new ObjectFieldOperator("NotEqual", "Not Equal to");

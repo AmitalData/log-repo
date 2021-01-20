@@ -74,16 +74,19 @@ export class DeclarationErrorViewPM {
 
 
     public OldEntityPM: DeclarationErrorViewPM;
-
+    public DisableMarkAsDirty: boolean = false;
     public IsDirty: boolean;
     MarkAsDirty(propertyName: string = null) {
-        this.IsDirty = true;
+        if(!this.DisableMarkAsDirty)
+         {
+            this.IsDirty = true;
 
-        if (propertyName != null) {
-            this.PropertyChanged.emit(new PropertyChangedArgs(propertyName, this));
-            ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "DeclarationErrorViewPM");
+            if (propertyName != null) {
+                this.PropertyChanged.emit(new PropertyChangedArgs(propertyName, this));
+                ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "DeclarationErrorViewPM");
 
-        }
+            }
+         }
     }
 
     private MyClone: DeclarationErrorViewPM;
@@ -96,4 +99,4 @@ export class DeclarationErrorViewPM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}

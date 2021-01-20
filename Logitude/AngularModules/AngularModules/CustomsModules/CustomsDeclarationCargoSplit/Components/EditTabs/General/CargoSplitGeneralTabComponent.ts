@@ -498,7 +498,7 @@ export class CargoSplitGeneralTabComponent
                     this.TabIndex = code;
             }
         }
-
+        this.TabIndex=(ArrayTool.Max(this.Tabs, "Code") );
 
         var Tab: DecCargoSplitConPM = new DecCargoSplitConPM(this.EntityPM);
         Tab.DeclarationCargoSplitId = this.EntityPM.Id;

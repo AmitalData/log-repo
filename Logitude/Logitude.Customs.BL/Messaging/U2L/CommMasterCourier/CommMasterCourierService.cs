@@ -223,6 +223,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommMasterCourier
                 _CourierMasterPM.CurrentContextTag = UpsertActionConst;
                 if (!string.IsNullOrWhiteSpace(_LogitudeMasterCourier.StorageSiteCode) && string.IsNullOrWhiteSpace(_CourierMasterPM.StorageSiteCode)) _CourierMasterPM.StorageSiteCode = TranslateStorageSite(_LogitudeMasterCourier.StorageSiteCode);
                 if (!string.IsNullOrWhiteSpace(_LogitudeMasterCourier.NoOfCourierHawb) && string.IsNullOrWhiteSpace(_CourierMasterPM.NoOfCourierHawb)) _CourierMasterPM.NoOfCourierHawb = _LogitudeMasterCourier.NoOfCourierHawb;
+                /*
                 if (!string.IsNullOrWhiteSpace(_LogitudeMasterCourier.TruckerId) && string.IsNullOrWhiteSpace(_CourierMasterPM.TruckerId))
                 {
                     CardRepository cardRep = new CardRepository(_CourierMasterPM.Tenant);
@@ -240,6 +241,16 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommMasterCourier
                         }
                     }
                 }
+                */
+                int packageQuantityInMAWB = 0;
+                if (!string.IsNullOrWhiteSpace(_LogitudeMasterCourier.PackageQuantityInMAWB))
+                {
+                    if (int.TryParse(_LogitudeMasterCourier.PackageQuantityInMAWB, out packageQuantityInMAWB))
+                    {
+                        _CourierMasterPM.PackageQuantityInMAWB = packageQuantityInMAWB;
+                    }
+                }
+                if (!string.IsNullOrWhiteSpace(_LogitudeMasterCourier.UnifreightLeadingFile) && string.IsNullOrWhiteSpace(_CourierMasterPM.UnifreightLeadingFile)) _CourierMasterPM.UnifreightLeadingFile = _LogitudeMasterCourier.UnifreightLeadingFile;
 
                 myCourierMasterUpdateService.Update(this._CourierMasterPM, true);
 

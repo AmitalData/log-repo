@@ -97,10 +97,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Models\CompanyAddressSetting\AddressPM.cs" />
-    <Compile Include="Models\CompanyAddressSetting\TenantPM.cs" />
-    <Compile Include="Models\Contact\ContactPM.cs" />
-    <Compile Include="Models\FTPDetail\FTPDetailPM.cs" />
+    <Compile Include="Models\AddressPM.cs" />
+    <Compile Include="Models\ContactPM.cs" />
+    <Compile Include="Models\FTPDetailPM.cs" />
+    <Compile Include="Models\TenantPM.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Steps\Security\AddressSettingSecurityAccessSteps.cs" />
     <Compile Include="Steps\Security\GetContactSecurityAccessSteps.cs" />

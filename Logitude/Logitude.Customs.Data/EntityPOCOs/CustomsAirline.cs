@@ -37,6 +37,11 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public string AirlinePrefix { get; set; }
         [Column("ICAO")]
 	    public string ICAO { get; set; }
+        [ForeignKey("Sites")]
+        [Column("UnloadPortCode")]
+	    public string UnloadPortCode { get; set; }
+	      
+        public virtual UnloadingSiteType Sites { get; set; }
     }
 }
 	 

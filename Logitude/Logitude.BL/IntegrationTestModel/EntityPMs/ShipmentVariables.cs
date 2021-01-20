@@ -22,6 +22,8 @@ namespace Logitude.BL.IntegrationTestModel.EntityPMs
         public string VATTypeZeroId { get; set; }
         public string QuoteStageQTDRId { get; set; }
         public string VesselPTId { get; set; }
+        public string MoveTypeMTAId { get; set; }
+        public string MoveTypeMTOId { get; set; }
         public string ShipmentId { get; internal set; }
         public string ConcurrencyGUID { get; set; }
         public List<PreparationShortClass> ChargesTypes { get; set; }

@@ -69,6 +69,7 @@ import {UserFilter} from './UserFilter';
 import {ConnectToFilter} from './ConnectToFilter';
 import { ParticipatedFilter } from './ParticipatedFilter';
 import { InvitedFilter } from './InvitedFilter';
+import { LogitudeHotKeysComponent } from './LogitudeHotkeysComponent/LogitudeHotKeysComponent';
 
 export const Directives =
     [
@@ -147,7 +148,8 @@ export const Components =
         UserFilter,
         ConnectToFilter,
         ParticipatedFilter,
-        InvitedFilter
+        InvitedFilter,
+        LogitudeHotKeysComponent , 
     ];
 
 export class ModuleDeclarations {

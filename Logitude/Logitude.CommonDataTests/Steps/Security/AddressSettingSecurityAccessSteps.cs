@@ -1,10 +1,9 @@
-﻿
-using TechTalk.SpecFlow;
-using FluentAssertions;
-using Logitude.Test.Base.Models.Login;
-using Logitude.Test.Base.Services;
+﻿using FluentAssertions;
+using Logitude.CommonDataTests.Models;
 using Logitude.Test.Base.Context;
-using Logitude.CommonDataTests.Models.CompanyAddressSetting;
+using Logitude.Test.Base.Models;
+using Logitude.Test.Base.Services;
+using TechTalk.SpecFlow;
 
 namespace Logitude.CommonDataTests.Steps.Security
 {
@@ -13,43 +12,41 @@ namespace Logitude.CommonDataTests.Steps.Security
     {
         protected SecurityAccessStepsContext<AddressPM> Context;
         protected SecurityAccessStepsContext<TenantPM> TanentContext;
-        public AddressSettingSecurityAccessSteps(MultiUsers multiUsers, SecurityAccessStepsContext<AddressPM> context ,SecurityAccessStepsContext<TenantPM> tanentContext)
+        public AddressSettingSecurityAccessSteps(SecurityAccessStepsContext<AddressPM> context ,SecurityAccessStepsContext<TenantPM> tanentContext)
         {
             Context = context;
             TanentContext = tanentContext;
-            Context.FirstUser = multiUsers.Users[0];
-            Context.SecondUser = multiUsers.Users[1];
         }
 
         [When(@"Get Address Settings request sent for User's Tenant")]
         public void WhenGetAddressSettingsRequestSentForUserSTenant()
         {
-            TanentContext.FirstUserPMData = GetAddressSettings(Context.FirstUser.Tenant, Context.FirstUser.Token);
+            TanentContext.FirstUserPMData = GetAddressSettings(UserTenant.Tenant, UserTenant.Token);
         }
 
         [When(@"Get Address Settings request sent for other Tenant")]
         public void WhenGetAddressSettingsRequestSentForOtherTenant()
         {
-            TanentContext.SecondUserPMData = GetAddressSettings(Context.FirstUser.Tenant, Context.SecondUser.Token);
+            TanentContext.SecondUserPMData = GetAddressSettings(UserTenant.Tenant, UserOtherTenant.Token);
         }
 
         [When(@"Update Address Settings request sent for User's Tenant")]
         public void WhenUpdateAddressSettingsRequestSentForUserSTenant()
         {
-            Context.FirstUserPMData = UpdateFirstUserAddressSettings(Context.FirstUser.Token);
+            Context.FirstUserPMData = UpdateFirstUserAddressSettings(UserTenant.Token);
         }
 
         [When(@"Update Address Settings request sent for other Tenant")]
         public void WhenUpdateAddressSettingsRequestSentForOtherTenant()
         {
-            Context.SecondUserPMData = UpdateFirstUserAddressSettings(Context.SecondUser.Token);
+            Context.SecondUserPMData = UpdateFirstUserAddressSettings(UserOtherTenant.Token);
         }
 
         [Then(@"Address Settings should be exists")]
         public void ThenAddressSettingsShouldBeExists()
         {
             TanentContext.FirstUserPMData.Should().NotBeNull();
-            TanentContext.FirstUserPMData.Id.Should().Be(Context.FirstUser.Tenant);
+            TanentContext.FirstUserPMData.Id.Should().Be(UserTenant.Tenant);
         }
 
         [Then(@"Address Settings should not be exists")]
@@ -62,7 +59,7 @@ namespace Logitude.CommonDataTests.Steps.Security
         public void ThenAddressSettingsShouldBeUpdatedSuccessfully()
         {
             Context.FirstUserPMData.Should().NotBeNull();
-            Context.FirstUserPMData.Tenant.Should().Be(Context.FirstUser.Tenant);
+            Context.FirstUserPMData.Tenant.Should().Be(UserTenant.Tenant);
         }
 
         [Then(@"Address Settings should not be Updated")]
@@ -90,7 +87,7 @@ namespace Logitude.CommonDataTests.Steps.Security
         {
             AddressPM AddressPM = new AddressPM
             {
-                Tenant = Context.FirstUser.Tenant,
+                Tenant = UserTenant.Tenant,
                 AgentId = "1-140040",
                 CurrencyId = "1-4319",
                 Description = "Integration Test",
@@ -117,7 +114,7 @@ namespace Logitude.CommonDataTests.Steps.Security
                 IsStateRequired = true,
             };
 
-            var response = APICaller.CallPost<AddressPM>(AddressPM, "addresses", Context.FirstUser.Token);
+            var response = APICaller.CallPost<AddressPM>(AddressPM, "addresses", UserTenant.Token);
             return response.Data;
         }
     }

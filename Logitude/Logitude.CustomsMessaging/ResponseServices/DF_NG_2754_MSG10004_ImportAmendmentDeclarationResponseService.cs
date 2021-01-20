@@ -124,7 +124,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                 else
                 {
-                    declarationOrg = myQueryService.GetDeclarationsByIds(new List<string> { GetValueIDType(declaration.ID) }, tenant).FirstOrDefault();
+                    string idDec = myQueryService.GetIdByDeclarationNumber(GetValueIDType(declaration.ID), tenant);
+                    declarationOrg = myQueryService.GetDeclarationsByIds(new List<string> { idDec }, tenant).FirstOrDefault();
                     if (declarationOrg == null)
                     {
                         declarationOrg = myQueryService.GetAcceptDeclarationAmendment(  idOrg , tenant);
@@ -194,6 +195,11 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     else
 
                     {
+                        if(declarationOrg.IsAmendment == true)
+                            declarationPM.AmendmentOriginalDeclartation = declarationOrg.AmendmentOriginalDeclartation;
+
+                        else
+
                         declarationPM.AmendmentOriginalDeclartation = declarationOrg.Id;
 
                     }

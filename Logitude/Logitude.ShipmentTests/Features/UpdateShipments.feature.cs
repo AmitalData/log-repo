@@ -109,20 +109,20 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 this.ScenarioStart();
-                TechTalk.SpecFlow.Table table7 = new TechTalk.SpecFlow.Table(new string[] {
+                TechTalk.SpecFlow.Table table5 = new TechTalk.SpecFlow.Table(new string[] {
                             "Quantity",
                             "Length",
                             "Width",
                             "Height",
                             "Weight"});
-                table7.AddRow(new string[] {
+                table5.AddRow(new string[] {
                             "1",
                             "100",
                             "100",
                             "100",
                             "200"});
 #line 6
- testRunner.Given("The master shipment packages fields", ((string)(null)), table7, "Given ");
+ testRunner.Given("The master shipment packages fields", ((string)(null)), table5, "Given ");
 #line hidden
 #line 9
  testRunner.And("A master shipment", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
@@ -165,20 +165,20 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 this.ScenarioStart();
-                TechTalk.SpecFlow.Table table8 = new TechTalk.SpecFlow.Table(new string[] {
+                TechTalk.SpecFlow.Table table6 = new TechTalk.SpecFlow.Table(new string[] {
                             "Quantity",
                             "Length",
                             "Width",
                             "Height",
                             "Weight"});
-                table8.AddRow(new string[] {
+                table6.AddRow(new string[] {
                             "1",
                             "100",
                             "100",
                             "100",
                             "200"});
 #line 14
- testRunner.Given("The house shipment packages fields", ((string)(null)), table8, "Given ");
+ testRunner.Given("The house shipment packages fields", ((string)(null)), table6, "Given ");
 #line hidden
 #line 17
  testRunner.And("A master shipment", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
@@ -224,14 +224,14 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 this.ScenarioStart();
-                TechTalk.SpecFlow.Table table9 = new TechTalk.SpecFlow.Table(new string[] {
+                TechTalk.SpecFlow.Table table7 = new TechTalk.SpecFlow.Table(new string[] {
                             "ChargesTypeName",
                             "ChargesType",
                             "Measurement",
                             "UnitPrice",
                             "Currency",
                             "ShipmentPayableLineStatus"});
-                table9.AddRow(new string[] {
+                table7.AddRow(new string[] {
                             "Air Freight",
                             "AFT",
                             "GRWT",
@@ -239,7 +239,7 @@ this.ScenarioInitialize(scenarioInfo);
                             "EUR",
                             "OAMT"});
 #line 23
- testRunner.Given("The Payable Charge Type fields", ((string)(null)), table9, "Given ");
+ testRunner.Given("The Payable Charge Type fields", ((string)(null)), table7, "Given ");
 #line hidden
 #line 26
  testRunner.And("A master shipment", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");

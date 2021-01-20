@@ -48,7 +48,10 @@ export class MamanStatusPM {
     public OldEntityPM: MamanStatusPM;
 		
     public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
+       if(!this.DisableMarkAsDirty)
+       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -56,6 +59,7 @@ export class MamanStatusPM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "Customs.MamanStatus");
            
         }
+       }
     }
 
     private MyClone: MamanStatusPM;

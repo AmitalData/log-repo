@@ -234,6 +234,7 @@ export class LogTextBoxComponent implements BeforeOnDestroy, OnInit, AfterViewIn
         this.counterId = null;
         var baseIdCombination = null;
         if (this.ObjectTableName) {
+           
             baseIdCombination = this.ObjectTableName + "_" + this.ObjectFieldName;
         }
         else {

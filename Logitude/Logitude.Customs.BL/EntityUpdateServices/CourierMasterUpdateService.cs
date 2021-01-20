@@ -51,6 +51,8 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             entityPM.Id = IdCounter.GetNumber("Customs.CourierMaster", entityPM.Tenant);
             entityPM.CreateDateTime = DateTime.Now;
             entityPM.IsOpen = true;
+            int.TryParse(EntityPM.NoOfCourierHawb, out int noOfCourierHawb);
+            EntityPM.OpenDeclarations = noOfCourierHawb;
             entityPM.IsCancelled = false;
         }
 
@@ -215,7 +217,17 @@ if (NotConnecteditems != null && NotConnecteditems.Length > 0)
                 entityPM.EstimatedArrivalDate = date;
             }
 
-            if(!string.IsNullOrWhiteSpace(entityPM.HAWB))
+            if (entityPM.LandingDateDateOnly != null && entityPM.LandingDateDateOnly.HasValue)
+            {
+                DateTime date = (DateTime)entityPM.LandingDateDateOnly;
+                if (entityPM.LandingDateTimeOnly != null && entityPM.LandingDateTimeOnly.HasValue)
+                {
+                    date = DateTime.Parse(string.Format("{0} {1}:{2}", entityPM.LandingDateDateOnly.Value.ToString("dd-MM-yyyy"), entityPM.LandingDateTimeOnly.Value.Hour, entityPM.LandingDateTimeOnly.Value.Minute));
+                }
+                entityPM.LandingDate = date;
+            }
+
+            if (!string.IsNullOrWhiteSpace(entityPM.HAWB))
             {
                 entityPM.ShortHAWB = entityPM.HAWB;
                 int indexStart = entityPM.ShortHAWB.IndexOf("-");
@@ -304,7 +316,7 @@ if (NotConnecteditems != null && NotConnecteditems.Length > 0)
                         GSTRING3 = entityPM.Id,
 
                         DEBUG = "F",
-                        DONEOPERATION = "A",
+                        DONEOPERATION = "D",
                         QUEUEMANAGEMENT=true,
 
 
@@ -701,7 +713,7 @@ if (NotConnecteditems != null && NotConnecteditems.Length > 0)
                         PRIMARYNUM = dirtyCourierMasterPM.Id,
                         FORMID = "LGT_UPDATE_FCI",
                         DEBUG = "F",
-                        DONEOPERATION = "A",
+                        DONEOPERATION = "D",
                         //GSTRING1 = myYCULTASKPM.TASKID,
                     };
                     myGGGQUpdateService.Update(myGGGQPM, true);

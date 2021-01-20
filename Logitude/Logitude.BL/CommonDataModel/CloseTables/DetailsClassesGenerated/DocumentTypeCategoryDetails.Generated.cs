@@ -45,8 +45,8 @@ namespace Logitude.BL.CommonDataModel
             all.Add(new DocumentTypeCategoryDetails()
             {    
                 Code = "E", 
-                Name = "Export", 
-                SearchFields = "E,Export", 
+                Name = "Export Customs", 
+                SearchFields = "E,Export Customs", 
 			});
 			
             return all;

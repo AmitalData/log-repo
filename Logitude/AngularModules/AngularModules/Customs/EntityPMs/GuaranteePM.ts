@@ -298,7 +298,10 @@ export class GuaranteePM {
     public OldEntityPM: GuaranteePM;
 		
     public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
+       if(!this.DisableMarkAsDirty)
+       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -306,6 +309,7 @@ export class GuaranteePM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "Customs.Guarantee");
            
         }
+       }
     }
 
     private MyClone: GuaranteePM;

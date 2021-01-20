@@ -155,6 +155,7 @@ export class CustomsItemPMService {
         if (!entityPM) {
             
             entityPM = new CustomsItemPM();
+			entityPM.DisableMarkAsDirty = true;
         }
 
 		var customFields: Array<string> = [];
@@ -215,6 +216,8 @@ export class CustomsItemPMService {
             entityPM.OldEntityPM = null;
         }
 		entityPM.IsDirty = false;
+	    entityPM.DisableMarkAsDirty = false;
+
         return entityPM;
     }
 
@@ -240,7 +243,8 @@ export class CustomsItemPMService {
             {
                 newCustomsItemDetailsHistoryPM = new CustomsItemDetailsHistoryPM(null);
             }
-                
+ 			newCustomsItemDetailsHistoryPM.DisableMarkAsDirty = true;
+               
             var pmKeysArray = Object.keys(jItem);
             for (var pmKey in pmKeysArray) {
                 if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
@@ -272,7 +276,7 @@ export class CustomsItemPMService {
                 newCustomsItemDetailsHistoryPM.OldEntityPM = null;
                 newCustomsItemDetailsHistoryPM.EntityParentPM = null;
             }
-			
+			 newCustomsItemDetailsHistoryPM.DisableMarkAsDirty = false;
 			 newCustomsItemDetailsHistoryPM.IsDirty = false;
             entityPM.CustomsItemDetailsHistory.push(newCustomsItemDetailsHistoryPM);
         }
@@ -286,6 +290,7 @@ export class CustomsItemPMService {
                         //entityPM.CustomsItemDetailsHistory.push(oldCustomsItemDetailsHistory[itemKey]);
 						var oldItemJson = oldCustomsItemDetailsHistory[itemKey];
                         var deletedPM: CustomsItemDetailsHistoryPM = new CustomsItemDetailsHistoryPM(null);
+						deletedPM.DisableMarkAsDirty = true;
                         var pmKeys = Object.keys(oldItemJson);
                         for (var key in pmKeys) {
 
@@ -297,7 +302,7 @@ export class CustomsItemPMService {
                             deletedPM[property] = oldItemJson[property];
                         }
 
-                      
+					    deletedPM.DisableMarkAsDirty = false;
                         deletedPM.IsDirty = false;
                         deletedPM.ChangeSetOp = "Delete";
                         
@@ -330,7 +335,8 @@ export class CustomsItemPMService {
             {
                 newPropertiesDetailsHistoryPM = new PropertiesDetailsHistoryPM(null);
             }
-                
+ 			newPropertiesDetailsHistoryPM.DisableMarkAsDirty = true;
+               
             var pmKeysArray = Object.keys(jItem);
             for (var pmKey in pmKeysArray) {
                 if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
@@ -362,7 +368,7 @@ export class CustomsItemPMService {
                 newPropertiesDetailsHistoryPM.OldEntityPM = null;
                 newPropertiesDetailsHistoryPM.EntityParentPM = null;
             }
-			
+			 newPropertiesDetailsHistoryPM.DisableMarkAsDirty = false;
 			 newPropertiesDetailsHistoryPM.IsDirty = false;
             entityPM.PropertiesDetailsHistory.push(newPropertiesDetailsHistoryPM);
         }
@@ -376,6 +382,7 @@ export class CustomsItemPMService {
                         //entityPM.PropertiesDetailsHistory.push(oldPropertiesDetailsHistory[itemKey]);
 						var oldItemJson = oldPropertiesDetailsHistory[itemKey];
                         var deletedPM: PropertiesDetailsHistoryPM = new PropertiesDetailsHistoryPM(null);
+						deletedPM.DisableMarkAsDirty = true;
                         var pmKeys = Object.keys(oldItemJson);
                         for (var key in pmKeys) {
 
@@ -387,7 +394,7 @@ export class CustomsItemPMService {
                             deletedPM[property] = oldItemJson[property];
                         }
 
-                      
+					    deletedPM.DisableMarkAsDirty = false;
                         deletedPM.IsDirty = false;
                         deletedPM.ChangeSetOp = "Delete";
                         

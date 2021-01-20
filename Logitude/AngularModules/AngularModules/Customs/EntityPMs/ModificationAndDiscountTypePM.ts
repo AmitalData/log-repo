@@ -63,7 +63,10 @@ export class ModificationAndDiscountTypePM {
     public OldEntityPM: ModificationAndDiscountTypePM;
 		
     public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
+       if(!this.DisableMarkAsDirty)
+       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -71,6 +74,7 @@ export class ModificationAndDiscountTypePM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "Customs.ModificationAndDiscountType");
            
         }
+       }
     }
 
     private MyClone: ModificationAndDiscountTypePM;

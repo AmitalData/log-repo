@@ -3,14 +3,6 @@
 	As a user you have to login with your credentials,
 	then you can create a new charge type to your tenant
 
-Background:
-	Successful login with valid credentials
-	Given Users with following credentials
-		| Email              | Password    |
-		| ahmadb123@mail.com | ahmed13!A15 |
-	When Users make login request
-	Then Users should have token
-
 Scenario: Create New Charge Type
 	Given Charge type with the following properties
 		| name             | value                                                 |

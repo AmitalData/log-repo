@@ -58,6 +58,7 @@ export class AdvanceSearchComponent implements OnInit {
     LayoutDirection: string = 'ltr';
     public IsShowWarringMessage: boolean = false;
     public  IsQueryViewOnly: boolean = false;
+    public TopImageRedX: string = (ObjectsLocator.GlobalSetting.WorkEnvironment == "customs") ? '0px' : '7px';
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(fb: FormBuilder, private pubSubService: PubSubService, private CD: ChangeDetectorRef) {
         this.serviceArgs = new ServiceArgs();

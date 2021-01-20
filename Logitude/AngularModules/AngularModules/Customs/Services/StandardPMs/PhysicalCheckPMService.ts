@@ -153,6 +153,7 @@ export class PhysicalCheckPMService {
         if (!entityPM) {
             
             entityPM = new PhysicalCheckPM();
+			entityPM.DisableMarkAsDirty = true;
         }
 
 		var customFields: Array<string> = [];
@@ -193,6 +194,8 @@ export class PhysicalCheckPMService {
             entityPM.OldEntityPM = null;
         }
 		entityPM.IsDirty = false;
+	    entityPM.DisableMarkAsDirty = false;
+
         return entityPM;
     }
 

@@ -154,6 +154,7 @@ export class CargoSealIdentifierPMService {
         if (!entityPM) {
             
             entityPM = new CargoSealIdentifierPM();
+			entityPM.DisableMarkAsDirty = true;
         }
 
 		var customFields: Array<string> = [];
@@ -204,6 +205,8 @@ export class CargoSealIdentifierPMService {
             entityPM.OldEntityPM = null;
         }
 		entityPM.IsDirty = false;
+	    entityPM.DisableMarkAsDirty = false;
+
         return entityPM;
     }
 
@@ -229,7 +232,8 @@ export class CargoSealIdentifierPMService {
             {
                 newCargoSealPM = new CargoSealPM(null);
             }
-                
+ 			newCargoSealPM.DisableMarkAsDirty = true;
+               
             var pmKeysArray = Object.keys(jItem);
             for (var pmKey in pmKeysArray) {
                 if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
@@ -261,7 +265,7 @@ export class CargoSealIdentifierPMService {
                 newCargoSealPM.OldEntityPM = null;
                 newCargoSealPM.EntityParentPM = null;
             }
-			
+			 newCargoSealPM.DisableMarkAsDirty = false;
 			 newCargoSealPM.IsDirty = false;
             entityPM.CargoSeals.push(newCargoSealPM);
         }
@@ -275,6 +279,7 @@ export class CargoSealIdentifierPMService {
                         //entityPM.CargoSeals.push(oldCargoSeals[itemKey]);
 						var oldItemJson = oldCargoSeals[itemKey];
                         var deletedPM: CargoSealPM = new CargoSealPM(null);
+						deletedPM.DisableMarkAsDirty = true;
                         var pmKeys = Object.keys(oldItemJson);
                         for (var key in pmKeys) {
 
@@ -286,7 +291,7 @@ export class CargoSealIdentifierPMService {
                             deletedPM[property] = oldItemJson[property];
                         }
 
-                      
+					    deletedPM.DisableMarkAsDirty = false;
                         deletedPM.IsDirty = false;
                         deletedPM.ChangeSetOp = "Delete";
                         

@@ -420,6 +420,7 @@
     <Compile Include="DataContracts\ExportDocumentArgs.cs" />
     <Compile Include="DataContracts\QuoteDashboardArguments.cs" />
     <Compile Include="ExternalService\IEntityAutomationMappingPMFields.cs" />
+    <Compile Include="InfrastructureModel\FieldShortNameGetters\ObjectFieldsShortNamesGetter.cs" />
     <Compile Include="GlobalModel\EntityLists\BluesnapTransactionList.cs" />
     <Compile Include="GlobalModel\EntityLists\HelpResourceList.cs" />
     <Compile Include="GlobalModel\EntityPMs\BluesnapTransactionPM.cs" />
@@ -433,6 +434,8 @@
     <Compile Include="Helpers\BuildDocsOutService.cs" />
     <Compile Include="Helpers\DocumentHelper.cs" />
     <Compile Include="Helpers\DWObjectFieldAdditionalFactService.cs" />
+    <Compile Include="Helpers\InfraRegistrationHelper.cs" />
+    <Compile Include="Helpers\ObjectTablePropertyGetter.cs" />
     <Compile Include="InfrastructureModel\CloseTables\DetailsClassesGenerated\EventTypeCategoryDetails.Generated.cs" />
     <Compile Include="InfrastructureModel\CloseTables\DetailsClassesGenerated\SchedulerProcedureDetails.Generated.cs" />
     <Compile Include="InfrastructureModel\CloseTables\DetailsClassesGenerated\SharedLogisticsInvitationStatusDetails.Generated.cs" />

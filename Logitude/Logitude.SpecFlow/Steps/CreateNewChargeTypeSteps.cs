@@ -2,10 +2,8 @@
 using Logitude.SpecFlow.Builders.ChargeType;
 using Logitude.SpecFlow.Models.ChargeType;
 using Logitude.Test.Base.Models;
-using Logitude.Test.Base.Models.Login;
 using Logitude.Test.Base.Services;
 using TechTalk.SpecFlow;
-using TechTalk.SpecFlow.Assist;
 
 namespace Logitude.SpecFlow.Steps
 {
@@ -14,11 +12,9 @@ namespace Logitude.SpecFlow.Steps
     {
         protected ChargeTypeContext Context;
 
-        public CreateNewChargeTypeSteps(MultiUsers multiUsers, ChargeTypeContext context)
+        public CreateNewChargeTypeSteps(ChargeTypeContext context)
         {
             Context = context;
-            Context.User = multiUsers.Users[0];
-
         }
         
         [Given(@"Charge type with the following properties")]

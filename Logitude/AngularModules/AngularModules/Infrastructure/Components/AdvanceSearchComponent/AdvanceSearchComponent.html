@@ -130,7 +130,7 @@
 
                     <div>
                         <input type="text" [id]="AdvanceQuerySearchFieldsId" placeholder="Search" (focus)="ClearPlaceHolder();" (blur)="FillPlaceHolder();" [(ngModel)]="SearchText" style="background: url(Images/Search.png) no-repeat scroll;margin: 7px;width:200px;" [ngStyle]="LayoutDirection == 'rtl' ? {'background-position': 'left center','padding-left':'30px'} : {'background-position': 'right center','padding-right':'30px'}">
-                        <img *ngIf="SearchText" class="DeleteButton"  [className]="LayoutDirection == 'rtl' ? 'LeftCenter' : 'RightCenter'" [ngStyle]="LayoutDirection == 'rtl' ? {'left': '4px;','margin-right': '-32px'} : {'right': '4px;','margin-left': '-25px'}" style="position: relative;display:inline-block;margin-left: -25px;top: 7px;" src="Images/RedX.png" (click)="OnDeleteValue()" />
+                        <img *ngIf="SearchText" class="DeleteButton"  [className]="LayoutDirection == 'rtl' ? 'LeftCenter' : 'RightCenter'" [ngStyle]="LayoutDirection == 'rtl' ? {'left': '4px;','margin-right': '-32px' ,'top' : TopImageRedX} : {'right': '4px;','margin-left': '-25px' ,'top' : TopImageRedX}" style="position: relative;display:inline-block;margin-left: -25px;" src="Images/RedX.png" (click)="OnDeleteValue()" />
                     </div>
                     <div style="overflow-x: hidden;overflow-y: auto;height: 208px;">
                         <div style="width: 50%;" [style.float]="LayoutDirection=='rtl' ? 'right' : 'left'">

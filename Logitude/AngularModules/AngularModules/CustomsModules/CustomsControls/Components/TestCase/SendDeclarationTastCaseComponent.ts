@@ -5,6 +5,7 @@ import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLoca
 import { BaseComponent } from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { KeyValuePair } from '../../../CustomsCourier/Components/CourierWorkSheet/CourierWorksheetComponent';
 import { CustomsSettingExtendedListService } from '../../../../Customs/Services/ExtendedLists/CustomsSettingExtendedListService';
+import { AppTool } from '../../../../Infrastructure/Tools';
 
 @Component({
     selector: 'SendDeclarationTastCaseComponent',
@@ -33,6 +34,11 @@ export class SendDeclarationTastCaseComponent extends BaseComponent{
         this._Param2 = newValue;
     }
 
+    private _Test: string;
+    public get Test() { return this._Test; }
+    public set Test(newValue: string) {
+        this._Test = newValue;
+    }
 
     constructor() {
         super();
@@ -60,6 +66,17 @@ export class SendDeclarationTastCaseComponent extends BaseComponent{
     }
 
     OkButtonClicked() {
+         this.Test = "{";
+        if (!AppTool.IsNullOrEmpty(this.parametres))
+            this.Param1 = "{";
+        this.parametres.forEach(x => {
+            this.Param1 += "'" + x.Code + "' : '" + x.Value + "',";
+        });
+        this.Param1 = this.Param1.slice(0, this.Param1.length - 1);
+        this.Param1 += "}";
+
+       // this.Param1 = this.Param1.slice(1, this.Param1.length - 1);
+
         var errors = [];
         if (this._ScenarioCode == null) {
             errors.push("אנא בחר קוד תרחיש");
@@ -77,17 +94,31 @@ export class SendDeclarationTastCaseComponent extends BaseComponent{
         this.CurrentSession.CloseCurrentWindowEmit("Ok");
     }
 
-    
+ 
 
     CancelButtonClicked() {
         this.CurrentSession.CloseCurrentWindowEmit("");
     }
     public _ScenarioCode: String;
+    parametres: Parameter[];
+
     ScenarioCodeClicked(evKey) {
         this._ScenarioCode = evKey;
         let detail = this.SincroTestCaseDetailList.filter(r => r.Code == this._ScenarioCode)[0];
-        this.Param1 = detail.Param1;
-        this.Param2 = detail.Param2;
+         var list = JSON.parse(detail.Param1);
+        var jsonListKeys = Object.keys(list);
+        this.parametres = [];
+        for (var key in jsonListKeys) {
+          var  p: Parameter = new Parameter();
+            var property = jsonListKeys[key];
+            p.Value = list[property];
+            p.Code = property;
+            //this.Param2 = list[property];
+            this.parametres.push(p);
+        }
+
+        //this.Param1 = detail.Param1;
+        //this.Param2 = detail.Param2;
     }
 }
 
@@ -98,4 +129,19 @@ export class SincroTestCaseDetail {
     IsDCA: boolean
     Param1: string
     Param2: string
+}
+
+export class Parameter extends BaseComponent  {
+    public DataContext: any = this;
+
+    private _Code: string;
+    public get Code() { return this._Code; }
+    public set Code(newValue: string) {
+        this._Code = newValue;
+    }
+    private _Value: string;
+    public get Value() { return this._Value; }
+    public set Value(newValue: string) {
+        this._Value = newValue;
+    }
 }

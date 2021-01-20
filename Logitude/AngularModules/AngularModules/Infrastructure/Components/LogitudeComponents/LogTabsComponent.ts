@@ -1,4 +1,4 @@
-﻿declare var window: any;
+declare var window: any;
 import {Input, Output, Component, OnInit, OnChanges, EventEmitter, QueryList, AfterViewInit, OnDestroy, ChangeDetectorRef, ViewChild, ViewChildren} from '@angular/core';
 import {BaseComponent} from './BaseComponent';
 import {SessionComponent} from '../Session/SessionComponent';
@@ -20,6 +20,7 @@ export class LogTabsComponent implements AfterViewInit {
     @Input() NoBorder: boolean = false;
     @Input() IsFixedTabs: boolean = false; // disable new tab button
     @Input() HideCloseButton: boolean = false;
+    @Input() MultiLineTabs: boolean = false;
     
     @Output() AddTabClicked: EventEmitter<any> = new EventEmitter;
     @Output() CloseTabClicked: EventEmitter<any> = new EventEmitter;

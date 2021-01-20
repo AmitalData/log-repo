@@ -153,6 +153,7 @@ export class CourierPendingReasonPMService {
         if (!entityPM) {
             
             entityPM = new CourierPendingReasonPM();
+			entityPM.DisableMarkAsDirty = true;
         }
 
 		var customFields: Array<string> = [];
@@ -193,6 +194,8 @@ export class CourierPendingReasonPMService {
             entityPM.OldEntityPM = null;
         }
 		entityPM.IsDirty = false;
+	    entityPM.DisableMarkAsDirty = false;
+
         return entityPM;
     }
 

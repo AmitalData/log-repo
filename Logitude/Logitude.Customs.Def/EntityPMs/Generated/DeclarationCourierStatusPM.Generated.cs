@@ -1412,6 +1412,75 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private bool delivered ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool Delivered  
+	   {
+	    
+	     get
+		{
+		   return delivered;
+		 }
+		 set
+		 {
+		   if(delivered != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Delivered",OldValue=delivered,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   delivered=value;
+		   }
+			
+		 }
+	   }
+	  private string truckerId ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string TruckerId  
+	   {
+	    
+	     get
+		{
+		   return truckerId;
+		 }
+		 set
+		 {
+		   if(truckerId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="TruckerId",OldValue=truckerId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   truckerId=value;
+		   }
+			
+		 }
+	   }
+	  private string distributionArea ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string DistributionArea  
+	   {
+	    
+	     get
+		{
+		   return distributionArea;
+		 }
+		 set
+		 {
+		   if(distributionArea != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DistributionArea",OldValue=distributionArea,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   distributionArea=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

@@ -832,6 +832,16 @@ export class SupplierInvoiceItemPM {
     public set ItemFOBAmountNIS(newValue: number) { if (this.itemFOBAmountNIS != newValue) { this.itemFOBAmountNIS = newValue; this.MarkAsDirty("ItemFOBAmountNIS"); } }
        
 	 
+    private classificationCodeSource: string;
+    public get ClassificationCodeSource() { return this.classificationCodeSource; }
+    public set ClassificationCodeSource(newValue: string) { if (this.classificationCodeSource != newValue) { this.classificationCodeSource = newValue; this.MarkAsDirty("ClassificationCodeSource"); } }
+       
+	 
+    private documentFilingId: string;
+    public get DocumentFilingId() { return this.documentFilingId; }
+    public set DocumentFilingId(newValue: string) { if (this.documentFilingId != newValue) { this.documentFilingId = newValue; this.MarkAsDirty("DocumentFilingId"); } }
+       
+	 
 
     public OldEntityPM: SupplierInvoiceItemPM;
 	
@@ -846,7 +856,10 @@ export class SupplierInvoiceItemPM {
     public UniqueKey: string;
 	 	
     public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
+       if(!this.DisableMarkAsDirty)
+       {
         this.IsDirty = true;
 		  if (this.EntityParentPM) {
             this.EntityParentPM.MarkAsDirty();
@@ -856,6 +869,7 @@ export class SupplierInvoiceItemPM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "Customs.SupplierInvoiceItem");
            
         }
+       }
     }
 
     private MyClone: SupplierInvoiceItemPM;
