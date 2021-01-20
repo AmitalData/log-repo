@@ -18,5 +18,10 @@ namespace Logitude.Test.Base.Models.Base
         public static string CountryGBId { get; set; }
         public static string TruckerId { get; set; }
         public static string ShipperExport1 { get; set; }
+        public static string AirlineAAId { get; set; }
+        public static string AirlineBAId { get; set; }
+        public static string WarehouseId { get; set; }
+        public static string ShippingLineMSCUId { get; set; }
+        public static string ShippingLineMAEUId { get; set; }
     }
 }

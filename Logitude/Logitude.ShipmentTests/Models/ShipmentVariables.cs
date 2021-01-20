@@ -26,6 +26,8 @@ namespace Logitude.ShipmentTests.Models
         public string VesselPTId { get; set; }
         public string ShipmentId { get; internal set; }
         public string ConcurrencyGUID { get; set; }
+        public string MoveTypeMTAId { get; set; }
+        public string MoveTypeMTOId { get; set; }
         public List<PreparationShortClass> ChargesTypes { get; set; }
         public List<PreparationShortClass> VatTypes { get; set; }
         public List<PreparationShortClass> Currencies { get; set; }

@@ -30,10 +30,13 @@ namespace Logitude.ShipmentTests.Hooks
             ShipmentData.PaymentTermCashId = vars.PaymentTermCashId;
             ShipmentData.VATTypeZeroId = vars.VATTypeZeroId;
             ShipmentData.QuoteStageQTDRId = vars.QuoteStageQTDRId;
+            ShipmentData.MoveTypeMTAId = vars.MoveTypeMTAId;
+            ShipmentData.MoveTypeMTOId = vars.MoveTypeMTOId;
             ShipmentData.ChargesTypes = vars.ChargesTypes;
             ShipmentData.VatTypes = vars.VatTypes;
             ShipmentData.Currencies = vars.Currencies;
             ShipmentData.Rates = vars.Rates;
+        
         }
     }
 }

@@ -37,6 +37,7 @@ namespace Logitude.Test.Base.Hooks
         private static void LocationDataMap(LocationsVariables vars)
         {
             LocationsData.PortLHRId = vars.PortLHRId;
+            LocationsData.PortLASId = vars.PortLASId;
             LocationsData.PortMIAId = vars.PortMIAId;
             LocationsData.PortJFKId = vars.PortJFKId;
             LocationsData.PortSOUId = vars.PortSOUId;
@@ -46,15 +47,6 @@ namespace Logitude.Test.Base.Hooks
             LocationsData.GlobalZoneEUId = vars.GlobalZoneEUId;
             LocationsData.CountryUSId = vars.CountryUSId;
             LocationsData.StateAKId = vars.StateAKId;
-            LocationsData.AirlineAAId = vars.AirlineAAId;
-            LocationsData.AirlineBAId = vars.AirlineBAId;
-            LocationsData.ShippingLineMSCUId = vars.ShippingLineMSCUId;
-            LocationsData.ShippingLineMAEUId = vars.ShippingLineMAEUId;
-            LocationsData.MoveTypeMTAId = vars.MoveTypeMTAId;
-            LocationsData.MoveTypeMTOId = vars.MoveTypeMTOId;
-            LocationsData.CountryUSId = vars.CountryUSId;
-            LocationsData.WarehouseId = vars.WarehouseId;
-
         }
 
         private static void PartnerDataMap(PartnersVariables vars)
@@ -69,6 +61,11 @@ namespace Logitude.Test.Base.Hooks
             PartnersData.PotentialCustomerId = vars.PotentialCustomerId;
             PartnersData.TruckerId = vars.TruckerId;
             PartnersData.ShipperExport1 = vars.ShipperExport1;
+            PartnersData.AirlineAAId = vars.AirlineAAId;
+            PartnersData.AirlineBAId = vars.AirlineBAId;
+            PartnersData.ShippingLineMSCUId = vars.ShippingLineMSCUId;
+            PartnersData.ShippingLineMAEUId = vars.ShippingLineMAEUId;
+            PartnersData.WarehouseId = vars.WarehouseId;
         }
 
         private static void GetLoginParameters()

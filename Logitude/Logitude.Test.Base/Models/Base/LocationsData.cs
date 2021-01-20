@@ -16,15 +16,8 @@ namespace Logitude.Test.Base.Models.Base
         public static string PortNYCId { get; set; }
         public static string PortLONId { get; set; }
         public static string PortMANId { get; set; }
+        public static string CountryUSId { get; set; }
         public static string GlobalZoneEUId { get; set; }
         public static string StateAKId { get; set; }
-        public static string AirlineAAId { get; set; }
-        public static string AirlineBAId { get; set; }
-        public static string CountryUSId { get; set; }
-        public static string ShippingLineMSCUId { get; set; }
-        public static string ShippingLineMAEUId { get; set; }
-        public static string MoveTypeMTAId { get; set; }
-        public static string MoveTypeMTOId { get; set; }
-        public static string WarehouseId { get; set; }
     }
 }
