@@ -89,6 +89,7 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
 
     IsEnableEditDocument: boolean = false;
 
+    public DisableSendOriginalCopy: boolean = false;
     public SelectedAsDefaultBtnVisible: boolean;
     private CurrentSession = SessionLocator.SelectedSession;
     private documentsExecutionLogListExtendedService: DocumentsExecutionLogListExtendedService;
@@ -1383,7 +1384,9 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
 
         }
 
-
+        if ((this.ObjectTableName == "ARInvoice" || item.ChildObjectTableName == "ARInvoice") && SessionLocator.AccountingSettingPM.BlockSendInvoiceOriginalCopy) {
+            this.DisableSendOriginalCopy = true;
+        }
 
         if (this.ObjectTableName == "Quote" && item.DocumentTypeCode == "QUOTE") {
 

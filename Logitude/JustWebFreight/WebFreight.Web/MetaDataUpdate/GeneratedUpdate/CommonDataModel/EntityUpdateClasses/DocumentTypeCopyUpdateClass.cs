@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 {
    public class DocumentTypeCopyUpdateClass
    {  		
-		public const string HashString = "6ce05fdc6eba9f46929cbba745ec7d4e";
+		public const string HashString = "cb0c5e4d25da10298581040db755145f";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -87,36 +87,48 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
             {
 			
 	             				    ObjectTableName =  "DocumentTypeCopy",
+			      				    IsNew =  false,
 			      				    DBTableName =  "DocumentTypeCopies",
 			      				    ObjectTableSingular =  "Document Type Copy",
 			      				    ObjectTablePlural =  "Document Type Copy",
-			      				    DefaultText =  "Document Type Copy",
-			      				    Name =  "DocumentTypeCopy",
+			      				    HasCustomFilter =  false,
+			      				    HasCustomFields =  false,
+			      				    HasHelper =  false,
+			      				    HasShortTitle =  false,
+			      				    HasFiltersMenu =  false,
+			      				    IsEditable =  true,
 			      				    IsNewWizard =  false,
 			      				    AutoCompleteSearchWindow =  false,
 			      				    IsClosed =  false,
 			      				    CacheOnClient =  false,
 			      				    EditableFromAutoCompleteWindow =  false,
 			      				    HasCounter =  false,
-			      				    EnableEditFromLOV =  false,
 			      				    EnableAddFromLOV =  false,
 			      				    IsRestrictable =  false,
 			      				    IsMain =  false,
 			      				    IsAutoComplete =  false,
-			      				    CustomFieldsCount =  0,
-			      				    HasCustomFields =  false,
+			      				    EnableEditFromLOV =  false,
 			      				    InActive =  false,
-			      				    SearchFields =  "DocumentTypeCopy,DocumentTypeCopies,,,",
 			      				    IsSaveButtonVisible =  true,
-			      				    EnableSecurity =  false,
-			      				    ObjectTableTypeCode =  "MD",
 			      				    IsComposition =  true,
-			      				    MaxNumberOfCustomFields =  0,
+			      				    EnableSecurity =  false,
 			      				    AllowCustomFields =  false,
 			      				    HasDynamicHeader =  false,
+			      				    ObjectTableTypeCode =  "MD",
+			      				    MaxNumberOfCustomFields =  0,
+			      				    DefaultText =  "Document Type Copy",
+			      				    Code =  "8a62",
+			      				    Name =  "DocumentTypeCopy",
+			      				    GenerateDomainService =  false,
+			      				    NoTS =  false,
+			      				    HasMenuButtons =  false,
+			      				    AllowedForComputingPartners =  false,
+			      				    CustomFieldsCount =  0,
+			      				    DisableSearchBox =  false,
 			      				    HasDocuments =  false,
 			      				    IsLookUp =  false,
-			      				    IsEditable =  true,
+			      				    IsTabsHidden =  false,
+			      				    SearchFields =  "DocumentTypeCopy,DocumentTypeCopies,,,",
 			      				    HashString =  DocumentTypeCopyUpdateClass.HashString,
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
@@ -131,7 +143,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
-	    {    
+	    {   
 
 	    }
 

@@ -125,7 +125,8 @@ export class AccountingSettingsComponent extends BaseComponent {
             this.UIProperties.SetEnabled("APPaymentExternalPayment", this.ObjectTableName, false);
             this.UIProperties.SetEnabled("EnableMultiRateAPInvoices", this.ObjectTableName, false);
             this.UIProperties.SetEnabled("EnableNegativeOffsetAPPayments", this.ObjectTableName, false);
-            this.UIProperties.SetEnabled("EnableMultiCurrencyAPPayments", this.ObjectTableName, false);      
+            this.UIProperties.SetEnabled("EnableMultiCurrencyAPPayments", this.ObjectTableName, false);
+            this.UIProperties.SetEnabled("BlockSendInvoiceOriginalCopy", this.ObjectTableName, false);   
         }
 
         else {
@@ -241,6 +242,13 @@ export class AccountingSettingsComponent extends BaseComponent {
     set AllowRegionalTaxManagement(value: boolean) {
         if (this.EntityPM.AllowRegionalTaxManagement != value) {
             this.EntityPM.AllowRegionalTaxManagement = value;
+        }
+    }
+
+    get BlockSendInvoiceOriginalCopy() { return this.EntityPM.BlockSendInvoiceOriginalCopy; }
+    set BlockSendInvoiceOriginalCopy(value: boolean) {
+        if (this.EntityPM.BlockSendInvoiceOriginalCopy != value) {
+            this.EntityPM.BlockSendInvoiceOriginalCopy = value;
         }
     }
     
@@ -479,7 +487,7 @@ export class AccountingSettingsComponent extends BaseComponent {
         var windowTitle = "Advanced Accounting Settings ";
         var logWindow = new LogitudeWindow();
         logWindow.Width = 500;
-        logWindow.Height = 350;
+        logWindow.Height = 390;
         logWindow.Title = windowTitle;
         logWindow.DataContext = this;
         logWindow.Show('./InfrastructureModules/InfrastructureGettingStarted/Components/AccountingSettings/AccountingAdvancedSettingsComponent');

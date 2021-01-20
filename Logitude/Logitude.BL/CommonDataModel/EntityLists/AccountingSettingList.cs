@@ -59,5 +59,6 @@ namespace Logitude.BL.CommonDataModel.EntityLists
         public bool TransferToFTPActivated { get; set; }
         public string TransferFTPDetailId { get; set; }
         public bool EnableEnteringTotalVAT { get; set; }
+        public bool BlockSendInvoiceOriginalCopy { get; set; }
     }
 }

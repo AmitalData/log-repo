@@ -61,6 +61,7 @@ export class AccountingAdvancedSettingsComponent extends BaseComponent {
         this.myCloner.AddField('EnableNegativeOffsetARPayments');
         this.myCloner.AddField('AllowManualARPaymentNumber');
         this.myCloner.AddField('AllowRegionalTaxManagement');
+        this.myCloner.AddField('BlockSendInvoiceOriginalCopy');
         this.myCloner.AddEntity(this.EntityPM);
     }
 

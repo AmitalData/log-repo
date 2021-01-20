@@ -73,6 +73,7 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public virtual FTPDetail TransferFTPDetail { get; set; }
 
         public bool EnableEnteringTotalVAT { get; set; }
+        public bool BlockSendInvoiceOriginalCopy { get; set; }
 
     }
 }
