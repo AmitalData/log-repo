@@ -47,91 +47,147 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
         }
         
 
-        protected override void OnUpdating(ExternalReconciliationPM entityPM)
+        protected override void OnUpdating(ExternalReconciliationPM externalRecoPM)
         {
 
-            if (entityPM.ChangeSetOp == ChangeSetOperation.Insert) 
+            if (externalRecoPM.ChangeSetOp == ChangeSetOperation.Insert)
             {
-                LedgerTransactionQueryService transQuery = new LedgerTransactionQueryService(entityPM.Tenant);
-                ReconcileExternalPageLineQueryService pageLineQuery = new ReconcileExternalPageLineQueryService(entityPM.Tenant);
-                LedgerTransactionUpdateService transactionService = new LedgerTransactionUpdateService(MainContext, AdditionalContexts, entityPM.Tenant);
-                ReconcileExternalPageLineUpdateService pageLineService = new ReconcileExternalPageLineUpdateService(MainContext, AdditionalContexts, entityPM.Tenant);
-                ARPaymentChequeQueryService aRPaymentChequeQueryService = new ARPaymentChequeQueryService(entityPM.Tenant);
-                BankDepositQueryService bankDepositQueryService = new BankDepositQueryService(entityPM.Tenant);
-                PaymentChequeQueryService paymentChequeQuery  = new PaymentChequeQueryService(entityPM.Tenant);
 
-                List<string> LedgerTransactionIds = EntityPM.ExternalReconciliationLines.Where(d => d.LedgerTransactionId != null).Select(d=>d.LedgerTransactionId).ToList();
-                List<string> PageLineIds = EntityPM.ExternalReconciliationLines.Where(d => d.ExternalPageLineId != null).Select(d => d.ExternalPageLineId).ToList();
+                List<LedgerTransactionPM> LedgerTransactions = GetLedgerTransactionsOfExternalReconcile(externalRecoPM);
 
-                List<LedgerTransactionPM> LedgerTransactions = transQuery.GetLedgerTransactionPMsByIdList(LedgerTransactionIds, entityPM.Tenant);
-                List<ReconcileExternalPageLinePM> PageLines = pageLineQuery.GetPageLinesPMsByIdList(PageLineIds, entityPM.Tenant);
+                SetTransactionsAsExternallyReconciled(externalRecoPM.Tenant, LedgerTransactions);
+                SetExtenalPageAsReconciled(externalRecoPM);
 
-
-                foreach (var transactionPM in LedgerTransactions)
-                {
-                    transactionPM.ChangeSetOp = ChangeSetOperation.Update;
-                    transactionPM.IsExternalReconcile = true;
-                    if (transactionPM.SourceTypeCode == "6") // 6- Cheque Deposit
-                    {
-                        List<ARPaymentChequePM> aRPaymentChequePMs = bankDepositQueryService.GetListByPaymentId(transactionPM.SourceId, entityPM.Tenant);
-                        ARPaymentChequePM aRPaymentCheque = aRPaymentChequePMs.Where(a => a.ChequeNumber == transactionPM.Reference1).FirstOrDefault();
-                        if (aRPaymentCheque != null && (aRPaymentCheque.StatusCode =="2" || aRPaymentCheque.StatusCode == "3"))
-                        {
-                            UpdateARPaymentCheque(aRPaymentCheque, "6");
-                        }
-                        
-                    }
-                    if (transactionPM.SourceTypeCode == "3") // 3- ARPayment
-                    {
-                        List<ARPaymentChequePM> aRPaymentChequePMs = aRPaymentChequeQueryService.GetInBankAccountChequesByPaymentId(transactionPM.SourceId, entityPM.Tenant);
-                        ARPaymentChequePM aRPaymentCheque = aRPaymentChequePMs.Where(a => a.ChequeNumber == transactionPM.Reference2).FirstOrDefault();
-                        if (aRPaymentCheque != null && (aRPaymentCheque.StatusCode == "2" || aRPaymentCheque.StatusCode == "3"))
-                        {
-                           
-                            UpdateARPaymentCheque(aRPaymentCheque, "6");
-                        }
-
-                    }
-                    else if (transactionPM.SourceTypeCode == "9") // 9- Payment Cheque
-                    {
-                        PaymentChequePM chequePM = paymentChequeQuery.GetSingle(transactionPM.SourceId, false, false);
-                       
-                    }
-                    else if(transactionPM.SourceTypeCode == "5") {
-                        List<PaymentChequePM> paymentCheques = paymentChequeQuery.GetPaymentChequesByPaymentId(transactionPM.SourceId, transactionPM.Tenant);
-                        //IM+ OHAD - IN CASE NOT manual Cheques (NOT INSERTED AS  PaymentCheque) 
-                        // NOT NEED TO CHANGE STATUS 2 Redeemed
-                        //ITZIK :I THINK manual/PRINTED Cheque - also have to create dummy  paymentCheque !!!
-                        if (paymentCheques.Count > 0)
-                            
-                        {
-                            UpdatePaymentChequeStatus(paymentCheques[0]);
-                        }
-                        
-                    }
-                    transactionService.Update(transactionPM, false);
-                }
-
-                foreach (var pageLinePM in PageLines)
-                {
-                    pageLinePM.ChangeSetOp = ChangeSetOperation.Update;
-                    pageLinePM.IsReconciled = true;
-                    pageLineService.Update(pageLinePM, false);
-                }
-
+                RedeemARPaymentCheques(LedgerTransactions);
+                RedeemPaymentCheques(LedgerTransactions);                
 
             }
-
-            base.OnUpdating(entityPM);
         }
-        private void UpdateARPaymentCheque(ARPaymentChequePM aRPaymentCheque, string status)
+
+        private void SetExtenalPageAsReconciled(ExternalReconciliationPM externalRecoPM)
         {
-            aRPaymentCheque.StatusCode =status;
+            List<ReconcileExternalPageLinePM> PageLines = GetExternalPageLinesOfExternalReconcile(externalRecoPM);
+
+            ReconcileExternalPageLineUpdateService pageLineService = new ReconcileExternalPageLineUpdateService(MainContext, AdditionalContexts, externalRecoPM.Tenant);
+            foreach (var pageLinePM in PageLines)
+            {
+                pageLinePM.ChangeSetOp = ChangeSetOperation.Update;
+                pageLinePM.IsReconciled = true;
+                pageLineService.Update(pageLinePM, false);
+            }
+        }
+
+        private void RedeemPaymentCheques(List<LedgerTransactionPM> LedgerTransactions)
+        {
+            foreach (var transactionPM in LedgerTransactions)
+            {
+                if (transactionPM.SourceTypeCode == AccountingEntityValues.APPayment)
+                {
+                    List<PaymentChequePM> paymentCheques = GetTransactionPaymentCheques(transactionPM);
+                    if (paymentCheques.Count > 0)
+                        UpdatePaymentChequeStatus(paymentCheques.FirstOrDefault());
+                }
+            }
+        }
+
+        private static List<PaymentChequePM> GetTransactionPaymentCheques(LedgerTransactionPM transactionPM)
+        {
+            PaymentChequeQueryService paymentChequeQuery = new PaymentChequeQueryService(transactionPM.Tenant);
+            List<PaymentChequePM> paymentCheques = paymentChequeQuery.GetPaymentChequesByPaymentId(transactionPM.SourceId, transactionPM.Tenant);
+            return paymentCheques;
+        }
+
+        private void RedeemARPaymentCheques(List<LedgerTransactionPM> LedgerTransactions)
+        {
+            foreach (var transactionPM in LedgerTransactions)
+            {
+                ARPaymentChequePM arpaymentCheque = GetARPChequeFromTransaction(transactionPM);
+
+                if (arpaymentCheque != null && (arpaymentCheque.StatusCode == ARPaymentChequeStatusValues.InBank || arpaymentCheque.StatusCode == ARPaymentChequeStatusValues.InBankAccount))
+                    SetARPaymentChequeAsRedeemed(arpaymentCheque);
+            }
+        }
+
+        private void SetTransactionsAsExternallyReconciled(int tenant, List<LedgerTransactionPM> LedgerTransactions)
+        {
+            foreach (var transactionPM in LedgerTransactions)
+            {
+                transactionPM.ChangeSetOp = ChangeSetOperation.Update;
+                transactionPM.IsExternalReconcile = true;
+
+                LedgerTransactionUpdateService transactionService = new LedgerTransactionUpdateService(MainContext, AdditionalContexts, tenant);
+                transactionService.Update(transactionPM, false);
+            }
+        }
+
+        private static ARPaymentChequePM GetARPChequeFromTransaction(LedgerTransactionPM transactionPM)
+        {
+            ARPaymentChequePM arpaymentCheque = null;
+
+            if (transactionPM.SourceTypeCode == AccountingEntityValues.ChequeDeposit)
+                arpaymentCheque = GetChequeOfDepositTransaction(transactionPM.Reference1, transactionPM.SourceId, transactionPM.Tenant);
+
+            if (transactionPM.SourceTypeCode == AccountingEntityValues.ARPayment)
+                arpaymentCheque = GetChequeOfARPaymentTransaction(transactionPM.Reference2, transactionPM.SourceId, transactionPM.Tenant);
+
+            return arpaymentCheque;
+        }
+
+        private static ARPaymentChequePM GetChequeOfDepositTransaction(string transactionReference, string depositId, int tenant)
+        {
+            List<ARPaymentChequePM> arpaymentCheques = GetChequesOfDeposit(tenant, depositId);
+
+            ARPaymentChequePM aRPaymentCheque = arpaymentCheques.Where(a => a.ChequeNumber == transactionReference).FirstOrDefault();
+            return aRPaymentCheque;
+        }
+
+        private static ARPaymentChequePM GetChequeOfARPaymentTransaction(string transactionReference, string paymentId, int tenant)
+        {
+            ARPaymentChequeQueryService aRPaymentChequeQueryService = new ARPaymentChequeQueryService(tenant);
+            List<ARPaymentChequePM> aRPaymentChequePMs = aRPaymentChequeQueryService.GetInBankAccountChequesByPaymentId(paymentId, tenant);
+
+            ARPaymentChequePM aRPaymentCheque = aRPaymentChequePMs.Where(a => a.ChequeNumber == transactionReference).FirstOrDefault();
+            return aRPaymentCheque;
+        }
+
+
+        private static List<ARPaymentChequePM> GetChequesOfDeposit(int tenant, string depositId)
+        {
+            BankDepositQueryService bankDepositQueryService = new BankDepositQueryService(tenant);
+            List<ARPaymentChequePM> aRPaymentChequePMs = bankDepositQueryService.GetChequesOfDeposit(depositId, tenant);
+            return aRPaymentChequePMs;
+        }
+
+        private List<ReconcileExternalPageLinePM> GetExternalPageLinesOfExternalReconcile(ExternalReconciliationPM externalRecoPM)
+        {
+            ReconcileExternalPageLineQueryService pageLineQuery = new ReconcileExternalPageLineQueryService(externalRecoPM.Tenant);
+            List<string> PageLineIds = EntityPM.ExternalReconciliationLines.Where(d => d.ExternalPageLineId != null).Select(d => d.ExternalPageLineId).ToList();
+            List<ReconcileExternalPageLinePM> PageLines = pageLineQuery.GetPageLinesPMsByIdList(PageLineIds, externalRecoPM.Tenant);
+            return PageLines;
+        }
+
+        private static List<LedgerTransactionPM> GetLedgerTransactionsOfExternalReconcile(ExternalReconciliationPM externalRecoPM)
+        {
+            LedgerTransactionQueryService transQuery = new LedgerTransactionQueryService(externalRecoPM.Tenant);
+            List<string> LedgerTransactionIds = externalRecoPM.ExternalReconciliationLines.Where(d => d.LedgerTransactionId != null).Select(d => d.LedgerTransactionId).ToList();
+            List<LedgerTransactionPM> LedgerTransactions = transQuery.GetLedgerTransactionPMsByIdList(LedgerTransactionIds, externalRecoPM.Tenant);
+            return LedgerTransactions;
+        }
+
+        private void SetARPaymentChequeAsRedeemed(ARPaymentChequePM aRPaymentCheque)
+        {
+            aRPaymentCheque.StatusCode = ARPaymentChequeStatusValues.Redeemed;
             aRPaymentCheque.ChangeSetOp = ChangeSetOperation.Update;
+
+            SubmitCheque(aRPaymentCheque);
+        }
+
+        private void SubmitCheque(ARPaymentChequePM aRPaymentCheque)
+        {
             ARPaymentChequeUpdateService aRPaymentChequeUpdateService = new ARPaymentChequeUpdateService(MainContext, AdditionalContexts, aRPaymentCheque.Tenant);
             aRPaymentChequeUpdateService.Update(aRPaymentCheque, true);
-            
         }
+
         private void UpdatePaymentChequeStatus(PaymentChequePM chequePM)
         {
             if (chequePM != null)
