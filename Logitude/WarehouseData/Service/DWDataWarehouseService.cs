@@ -41,8 +41,9 @@ namespace WarehouseData.Service
 
             }
 
-            table.ObjectFieldDBLists = GetCopyToDwObjectFieldLists(dwObjectTable);
             generalDataWarehouseService.ExecuteSql(CreateTABLE(table.Dw_TableName, dwObjectTable, table.ObjectFieldDBLists), destinationConnectionString);
+            table.ObjectFieldDBLists = GetCopyToDwObjectFieldLists(dwObjectTable);
+
         }
 
         private List<DWObjectFieldDB> GetCopyToDwObjectFieldLists(DataTable dataTable)
