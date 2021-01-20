@@ -404,6 +404,7 @@ export class TariffSearchSummary {
     ValidityDate: string;
     CurrencySign: string;
     NoteMissingContainers: string;
+    MoreLessDetailsLabel: string = "More Details";
 }
 
 export class ContainersPrice {
