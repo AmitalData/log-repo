@@ -277,9 +277,9 @@
     <None Include="DBScripts\InvoiceModel\202010260915_UpdateSearchFieldsOfARInvoices.sxml" />
     <None Include="DBScripts\InvoiceModel\202010261215_UpdateSearchFieldsOfAPPayments.sxml" />
     <None Include="DBScripts\InvoiceModel\202010261230_UpdateSearchFieldsOfARPayments.sxml" />
-    <None Include="DBScripts\QuoteModel\UpdateQuote.sxml" />
-    <None Include="DBScripts\QuoteModel\UpdateQuoteClosingReason.sxml" />
-    <None Include="DBScripts\QuoteModel\UpdateQuoteStages.sxml" />
+    <None Include="DBScripts\QuoteModel\UpdateAutomaticLastUpdateDateOnQuote.sxml" />
+    <None Include="DBScripts\QuoteModel\UpdateAutomaticLastUpdateDateOnQuoteClosingReason.sxml" />
+    <None Include="DBScripts\QuoteModel\UpdateAutomaticLastUpdateDateOnQuoteStages.sxml" />
     <None Include="DBScripts\ScreenField Unique index removal.sxml" />
     <None Include="DBOthers\CommonDataModel\Procedures\UpdateAllTenantsCustomersActualDataProcedure.dxml" />
     <None Include="DBOthers\CommonDataModel\Procedures\UpdateCustomerActualDataProcedure.dxml" />
