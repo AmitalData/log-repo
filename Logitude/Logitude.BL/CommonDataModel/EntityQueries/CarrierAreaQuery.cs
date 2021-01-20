@@ -115,6 +115,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                      AddedDate = a.AddedDate,
                                                      PortId = a.PortId,
                                                      Code = a.Port == null ? null : a.Port.Code,
+                                                     CombinedCode = a.Port == null ? null : a.Port.CombinedCode,
                                                      CountryCode = a.Port == null ? null : (a.Port.Country == null ? null : a.Port.Country.Code),
                                                  }).ToList();
 
@@ -159,6 +160,36 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                      TransportModeCode = a.TransportModeCode,
                                                  };
             return result;
+        }
+
+        public CarrierAreaPM GetSinglePMWithComposition(string id, int tenant)
+        {
+            CarrierAreaPM myResult
+                = (from a in repository.context.CarrierAreas.Include("User").Include("User.Contact")
+                   where a.Id == id && a.Tenant == tenant
+                   select new CarrierAreaPM()
+                   {
+                       CreateDate = a.CreateDate,
+                       Id = a.Id,
+                       CarrierId = a.CarrierId,
+                       CreatedByUserId = a.CreatedByUserId,
+                       Description = a.Description,
+                       Name = a.Name,
+                       Tenant = a.Tenant,
+                       UpdateDate = a.UpdateDate,
+                       UpdatedByUserId = a.UpdatedByUserId,
+                       CreatedByUserName = a.CreatedByUser == null ? null : a.CreatedByUser.Contact.EnglishName,
+                       UpdatedByUserName = a.UpdatedByUser == null ? null : a.UpdatedByUser.Contact.EnglishName,
+                       TransportModeCode = a.TransportModeCode,
+                   }).FirstOrDefault();
+
+            IQueryable<CarrierAreasPort> iQueryableChilds = (from a in repository.context.CarrierAreasPorts.Include("Port").Include("Port.Country")
+                                                             where a.CarrierAreaId == id && a.Tenant == tenant
+                                                             select a);
+
+            myResult.CarrierAreasPorts = this.MapInnerPocoToPM(iQueryableChilds);
+
+            return myResult;
         }
     }
 }

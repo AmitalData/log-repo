@@ -1,18 +1,21 @@
-import { Component, Output, OnInit } from '@angular/core';
-import { AirlinePM } from '../../../../Common/EntityPMs/AirlinePM';
+import { Component, OnInit } from '@angular/core';
 import { CarrierAreaPM } from '../../../../Common/EntityPMs/CarrierAreaPM';
 import { BaseComponent } from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
-import { SessionInfo } from '../../../../Infrastructure/Utilities/SessionInfo';
-import { AppTool, DateTool } from '../../../../Infrastructure/Tools';
+import { AppTool } from '../../../../Infrastructure/Tools';
 import { Cloner } from '../../../../Infrastructure/Utilities/Cloner';
 import { Validator } from '../../../../Infrastructure/Validators/Validator';
 import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
 import { AreaItemClass } from '../EditTabs/AreasTabComponent';
 import { CarrierAreaPMService } from '../../../../Common/Services/StandardPMs/CarrierAreaPMService';
+import { MessageWindow } from '../../../../Controls/Windows/MessageWindow';
+import { DocumentsFilingExtendedPMService } from '../../../../Common/Services/ExtendedPMs/DocumentsFilingExtendedPMService';
+import { CachedDataManager } from '../../../../Infrastructure/Utilities/CachedDataManager';
+import { CarrierAreaExtendedPMService, CarrierAreaParameters} from '../../../../Common/Services/ExtendedPMs/CarrierAreaExtendedPMService';
+import { ServiceHelper } from '../../../../Infrastructure/Utilities/ServiceHelper';
+declare var ResultAsArray: any;
 
-@Component({
-    
+@Component({    
     templateUrl: './AddEditAreaComponent.html',
 })
 
@@ -23,6 +26,7 @@ export class AddEditAreaComponent extends BaseComponent implements OnInit {
     public IsNew: boolean;
     public ValidationErrorsList: string[] = [];
     private CurrentSession = SessionLocator.SelectedSession;
+    private carrierAreaExtendedPMService: CarrierAreaExtendedPMService;
     constructor() {
         super();
     }
@@ -38,6 +42,7 @@ export class AddEditAreaComponent extends BaseComponent implements OnInit {
         this.EntityPM = dataContext.EntityPM;
         this.IsNew = dataContext.IsNewEntity;
 
+        this.carrierAreaExtendedPMService = new CarrierAreaExtendedPMService();
         this.Clone();
     }
 
@@ -105,5 +110,114 @@ export class AddEditAreaComponent extends BaseComponent implements OnInit {
     private RejectChanges() {
         this.DataContext.ResetAreaPorts();
         this.myCloner.RejectChanges();
+    }
+
+    DownloadClicked() {
+        this.carrierAreaExtendedPMService.DownloadCarrierAreaPorts(this.EntityPM.Id).subscribe((myResponse: ServiceResponse) => {
+            if (!myResponse.HasError) {
+                var fileName = myResponse.Result;
+
+                var url = ServiceHelper.GetLogitudeURL() + "WebPages/DawnLoadExcelPage.aspx?fileName=" + fileName + "&tempId=" + ServiceHelper.GetLDocumentDownloadToken() + "&qname=" + fileName;
+                {
+                    window.open(url);
+                }
+            }
+        });
+    }
+
+    private fileName: string;
+    private fileExtension: string;
+    OnFileChanged(fileEvent) {
+        var file = fileEvent.target.files[0];
+
+        if (file) {
+            var extension: string = file.name.split('.')[1];
+
+            if (extension.includes("xls")) {
+                var file = fileEvent.target.files[0];
+                this.UploadExcel(file);
+            }
+
+            else {
+                var messageWindow: MessageWindow = new MessageWindow();
+                messageWindow.Show("You have to upload excel files only");
+            }
+        }
+    }
+    UploadExcel(file: any) {
+        this.CurrentSession.StartBusyIndicator("Uploading...");
+
+        this.fileName = null;
+        this.fileExtension = null;
+
+        if (!AppTool.IsNullOrEmpty(file.name)) {
+            var name = file.name.split('.');
+            if (name.length == 2) {
+                this.fileName = name[0];
+                this.fileExtension = name[1];
+            }
+        }
+        if (file && file.size > 0) {
+            var documentExtendedService = new DocumentsFilingExtendedPMService();
+            documentExtendedService.GetFileSizeAndUnit(file.size).subscribe((response: ServiceResponse) => {
+                if (!response.HasError) {
+                    var myResult = response.Result;
+                    if (myResult) {
+                        this.StartUploadingExcelFile(file);
+                    }
+                }
+            });
+        }
+    }
+    StartUploadingExcelFile(file: any) {
+        if (file && file.size > 0) {
+            var filebuffer = file.slice(0, file.size);
+            this.ConvertArrayBufferToBase64(filebuffer, this);
+        }
+    }
+    ConvertArrayBufferToBase64(file: any, context: any) {
+        var reader: FileReader = new FileReader();
+        var reader = new FileReader();
+        reader.onload = function (e) {
+            var binary = '';
+            var bytes = new Uint8Array(ResultAsArray(e));
+            var len = bytes.byteLength;
+
+            for (var i = 0; i < len; i++) {
+                binary += String.fromCharCode(bytes[i]);
+            }
+
+            var filter = new CarrierAreaParameters();
+            filter.Tenant = context.EntityPM.Tenant;
+            filter.FileData = window.btoa(binary);
+            filter.CarrierAreaId = context.EntityPM.Id;
+            filter.TransportMode = context.EntityPM.TransportModeCode;
+            filter.FileName = context.FileName;
+            filter.FileExtension = context.FileExtension;
+            context.SendExcelToServer(filter);
+        };
+
+        reader.onerror = function (e) {
+            console.log(e);
+        };
+
+        reader.readAsArrayBuffer(file);
+        context.EntityPM.FileUploadedName = this.fileName;
+    }
+    SendExcelToServer(filter: CarrierAreaParameters) {
+        this.CurrentSession.CurrentEditComponent.ValidationErrorsList = [];
+
+        this.carrierAreaExtendedPMService.PostUploadCarrierAreaPortsExcelFile(filter).subscribe((response: ServiceResponse) => {
+            if (!response.HasError) {
+                this.CurrentSession.StopBusyIndicator();
+                CachedDataManager.RefreshTableData("Port", true);
+                this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+            }
+
+            else {
+                this.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.CurrentEditComponent.ValidationErrorsList = response.ErrorsArray;
+            }
+        });
     }
 }

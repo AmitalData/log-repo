@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 {
    public class CarrierAreaUpdateClass
    {  		
-		public const string HashString = "cf7abe0f05d032b4e38bfb2d15420aab";
+		public const string HashString = "5147ce95ba5b12d6865131707dfdd053";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -111,7 +111,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    IsAutoComplete =  true,
 			      				    EnableEditFromLOV =  false,
 			      				    InActive =  false,
-			      				    IsSaveButtonVisible =  false,
+			      				    IsSaveButtonVisible =  true,
 			      				    IsComposition =  false,
 			      				    EnableSecurity =  true,
 			      				    AllowCustomFields =  false,
@@ -120,7 +120,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    MaxNumberOfCustomFields =  0,
 			      				    NewWizardControlName =  "",
 			      				    DefaultText =  "Carrier Area",
-			      				    Code =  "7362",
+			      				    Code =  "4d89",
 			      				    Name =  "Carriers",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Common",

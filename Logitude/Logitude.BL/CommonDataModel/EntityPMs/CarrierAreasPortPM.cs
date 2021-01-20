@@ -48,6 +48,9 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         public string Code { get; set; }
 
         [DataMember]
+        public string CombinedCode { get; set; }
+
+        [DataMember]
         public string CountryCode { get; set; }
     }
 }

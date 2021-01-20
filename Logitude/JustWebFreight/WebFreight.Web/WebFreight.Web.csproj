@@ -994,6 +994,7 @@
     <Compile Include="Controllers\CargoTrackingModel\Generated\PMControllers\CargoTrackingShipmentSearchController.Generated.cs" />
     <Compile Include="Controllers\CargoTrackingModel\Generated\PMControllers\CargoTrackingTransportModeController.Generated.cs" />
     <Compile Include="Controllers\CargoTrackingModel\Generated\PMControllers\CargoTrackingWatermarkController.Generated.cs" />
+    <Compile Include="Controllers\CommonDataModel\Extended\CarrierAreaExtendedController.cs" />
     <Compile Include="Controllers\CommonDataModel\Extended\LogitudeGridExportToExcelController.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\ListControllers\HorseViewsController.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\ListControllers\VatUniquePartnerTypeViewsController.Generated.cs" />
