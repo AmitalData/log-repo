@@ -385,6 +385,8 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
                         logitudeWindow.Show('./Accounting/Components/Others/ExtReconcileAdjustBankFeeComponent');
                         logitudeWindow.WindowClosed
                             .subscribe(($event: any) => {
+                                this.ExtPageSelectedLines.Clear();
+                                this.TransactionSelectedLines.Clear();
                                 this.RefreshButtonClicked();
                             });
                     });
