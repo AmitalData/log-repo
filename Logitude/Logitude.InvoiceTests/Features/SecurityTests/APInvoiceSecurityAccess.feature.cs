@@ -76,30 +76,6 @@ namespace Logitude.InvoiceTests.Features.SecurityTests
             testRunner.CollectScenarioErrors();
         }
         
-        public virtual void FeatureBackground()
-        {
-#line 5
-#line hidden
-            TechTalk.SpecFlow.Table table1 = new TechTalk.SpecFlow.Table(new string[] {
-                        "Email",
-                        "Password"});
-            table1.AddRow(new string[] {
-                        "ahmadb123@mail.com",
-                        "ahmed13!A15"});
-            table1.AddRow(new string[] {
-                        "protractor@test.com",
-                        "!P123t456"});
-#line 7
- testRunner.Given("Users with following credentials", ((string)(null)), table1, "Given ");
-#line hidden
-#line 11
- testRunner.When("Users make login request", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line hidden
-#line 12
- testRunner.Then("Users should have token", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line hidden
-        }
-        
         void System.IDisposable.Dispose()
         {
             this.TestTearDown();
@@ -113,7 +89,7 @@ namespace Logitude.InvoiceTests.Features.SecurityTests
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("An AP Invoice From A User\'s Tenant is Gotten", null, tagsOfScenario, argumentsOfScenario);
-#line 14
+#line 5
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             bool isScenarioIgnored = default(bool);
@@ -133,13 +109,10 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 this.ScenarioStart();
-#line 5
-this.FeatureBackground();
-#line hidden
-#line 15
+#line 6
  testRunner.When("The First user gets the first AP Invoice from AP Invoices list", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 16
+#line 7
  testRunner.Then("The AP Invoice which is related to the first user tanent is existed", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
@@ -154,7 +127,7 @@ this.FeatureBackground();
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("An AP Invoice From  From Other Tenant isn\'t Gotten Get", null, tagsOfScenario, argumentsOfScenario);
-#line 18
+#line 9
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             bool isScenarioIgnored = default(bool);
@@ -174,13 +147,10 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 this.ScenarioStart();
-#line 5
-this.FeatureBackground();
-#line hidden
-#line 19
+#line 10
  testRunner.When("The Second user gets the AP Invoice that was requested by the first user", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 20
+#line 11
  testRunner.Then("The AP Invoice that was requested by the second user isn\'t existed", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }

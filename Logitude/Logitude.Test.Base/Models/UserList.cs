@@ -1,4 +1,4 @@
-﻿namespace Logitude.Test.Base.Models.Base
+﻿namespace Logitude.Test.Base.Models
 {
     public class UserList
     {

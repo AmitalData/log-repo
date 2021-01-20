@@ -76,27 +76,6 @@ namespace Logitude.SpecFlow.Features
             testRunner.CollectScenarioErrors();
         }
         
-        public virtual void FeatureBackground()
-        {
-#line 6
-#line hidden
-            TechTalk.SpecFlow.Table table1 = new TechTalk.SpecFlow.Table(new string[] {
-                        "Email",
-                        "Password"});
-            table1.AddRow(new string[] {
-                        "ahmadb123@mail.com",
-                        "ahmed13!A15"});
-#line 8
- testRunner.Given("Users with following credentials", ((string)(null)), table1, "Given ");
-#line hidden
-#line 11
- testRunner.When("Users make login request", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line hidden
-#line 12
- testRunner.Then("Users should have token", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line hidden
-        }
-        
         void System.IDisposable.Dispose()
         {
             this.TestTearDown();
@@ -110,7 +89,7 @@ namespace Logitude.SpecFlow.Features
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Create New Charge Type", null, tagsOfScenario, argumentsOfScenario);
-#line 14
+#line 6
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             bool isScenarioIgnored = default(bool);
@@ -130,34 +109,31 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 this.ScenarioStart();
-#line 6
-this.FeatureBackground();
-#line hidden
-                TechTalk.SpecFlow.Table table2 = new TechTalk.SpecFlow.Table(new string[] {
+                TechTalk.SpecFlow.Table table1 = new TechTalk.SpecFlow.Table(new string[] {
                             "name",
                             "value"});
-                table2.AddRow(new string[] {
+                table1.AddRow(new string[] {
                             "Code",
                             "{RandomString(3)}"});
-                table2.AddRow(new string[] {
+                table1.AddRow(new string[] {
                             "EnglishName",
                             "Test Charge Type"});
-                table2.AddRow(new string[] {
+                table1.AddRow(new string[] {
                             "ChargesGroupCode",
                             "NONE"});
-                table2.AddRow(new string[] {
+                table1.AddRow(new string[] {
                             "MeasurementId",
                             "Get {Id} from {Code} {FIXD} using {MeasurementViews}"});
-                table2.AddRow(new string[] {
+                table1.AddRow(new string[] {
                             "ChargesGroupId",
                             "Get {Id} from {Code} {NONE} using {ChargesGroupViews}"});
-#line 15
- testRunner.Given("Charge type with the following properties", ((string)(null)), table2, "Given ");
+#line 7
+ testRunner.Given("Charge type with the following properties", ((string)(null)), table1, "Given ");
 #line hidden
-#line 22
+#line 14
  testRunner.When("Create charge type", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 23
+#line 15
  testRunner.Then("New charge type should be created", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }

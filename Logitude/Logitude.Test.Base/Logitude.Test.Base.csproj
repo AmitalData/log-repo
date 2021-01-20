@@ -86,21 +86,19 @@
   <ItemGroup>
     <Compile Include="Constants\BaseConfigurations.cs" />
     <Compile Include="Constants\URLs.cs" />
-    <Compile Include="Extensions\TableExtensions.cs" />
     <Compile Include="Context\SecurityAccessStepsContext.cs" />
+    <Compile Include="Extensions\TableExtensions.cs" />
     <Compile Include="Hooks\BeforeTestRun.cs" />
     <Compile Include="Models\APIResponse.cs" />
-    <Compile Include="Models\Login\LoginParameters.cs" />
-    <Compile Include="Models\Login\MultiLoginParameters.cs" />
-    <Compile Include="Models\Login\User.cs" />
-    <Compile Include="Models\Login\MultiUsers.cs" />
-    <Compile Include="Models\Base\TenantPM.cs" />
-    <Compile Include="Models\Base\UserList.cs" />
+    <Compile Include="Models\LoginParameters.cs" />
+    <Compile Include="Models\User.cs" />
+    <Compile Include="Models\Tenant.cs" />
+    <Compile Include="Models\UserList.cs" />
+    <Compile Include="Models\UserOtherTenant.cs" />
     <Compile Include="Models\UserTenant.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\APICaller.cs" />
-    <Compile Include="Services\APIRequestParameters.cs" />
-    <Compile Include="Steps\Login\LoginSteps.cs" />
+    <Compile Include="Models\APIRequestParameters.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

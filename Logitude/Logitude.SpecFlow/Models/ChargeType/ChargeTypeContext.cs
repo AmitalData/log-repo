@@ -1,6 +1,4 @@
-﻿using Logitude.Test.Base.Models.Login;
-
-namespace Logitude.SpecFlow.Models.ChargeType
+﻿namespace Logitude.SpecFlow.Models.ChargeType
 {
     public class ChargeTypeContext
     {
@@ -9,7 +7,6 @@ namespace Logitude.SpecFlow.Models.ChargeType
             ChargeTypePM = new ChargeTypePM();
         }
 
-        public User User { get; set; }
         public ChargeTypePM ChargeTypePM { get; set; }
     }
 }

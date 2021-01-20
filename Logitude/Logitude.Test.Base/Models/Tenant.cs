@@ -1,6 +1,6 @@
-﻿namespace Logitude.Test.Base.Models.Base
+﻿namespace Logitude.Test.Base.Models
 {
-    public class TenantPM
+    public class Tenant
     {
         public int Id { get; set; }
         public string CurrencyId { get; set; }

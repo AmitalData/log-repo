@@ -1,4 +1,4 @@
-﻿namespace Logitude.Test.Base.Models.Login
+﻿namespace Logitude.Test.Base.Models
 {
     public class User
     {

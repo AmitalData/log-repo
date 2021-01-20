@@ -5,6 +5,8 @@
         public static int Tenant = 951;
         public static string Email = "ahmadb123@mail.com";
         public static string Password = "ahmed13!A15";
+        public static string OtherUserEmail = "protractor@test.com";
+        public static string OtherUserPassword = "!P123t456";
         public static string ServerURL = "https://test.logitudeworld.com/test/api";
     }
 }
