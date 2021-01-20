@@ -89,7 +89,6 @@
     <Compile Include="Extensions\TableExtensions.cs" />
     <Compile Include="Context\SecurityAccessStepsContext.cs" />
     <Compile Include="Hooks\BeforeTestRun.cs" />
-    <Compile Include="Hooks\NewBeforeTestRun.cs" />
     <Compile Include="Models\APIResponse.cs" />
     <Compile Include="Models\Base\LocationsData.cs" />
     <Compile Include="Models\Base\LocationsVariables.cs" />
