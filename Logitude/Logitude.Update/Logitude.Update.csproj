@@ -310,9 +310,6 @@
     <None Include="App.config">
       <SubType>Designer</SubType>
     </None>
-    <None Include="bin\Debug\JustWebFreightConnectionStrings.config">
-      <SubType>Designer</SubType>
-    </None>
     <Content Include="bin\Debug\JustWebFreightappSettings.config">
       <SubType>Designer</SubType>
     </Content>

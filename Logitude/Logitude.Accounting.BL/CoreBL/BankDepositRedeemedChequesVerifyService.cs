@@ -44,7 +44,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
             List<ARPaymentChequePM> paymentChequesNotRedeemed = (from cheque in context.ARPaymentCheques
                                                       where paymentChequeIds.Contains(cheque.Id) && cheque.Tenant == tenant
-                                                            && cheque.StatusCode != "6" 
+                                                            && cheque.StatusCode == "3" 
                                                       select new ARPaymentChequePM()
                                                       {
                                                           Id = cheque.Id,
