@@ -29,5 +29,24 @@ namespace Logitude.Update
 
 
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                int tenant = Convert.ToInt32(tenantTextBox.Text);
+                string chequeId = chequeIdTextBox.Text;
+
+                BankDepositRedeemedChequesVerifyService verifyService = new BankDepositRedeemedChequesVerifyService(tenant);
+                verifyService.UpdateChequeAsRedeemed(tenant, chequeId);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                throw;
+            }
+            
+
+        }
     }
 }

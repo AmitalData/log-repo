@@ -189,5 +189,11 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             return loggedcontact;
         }
 
+        public void Save()
+        {
+            base.SubmitChanges();
+        }
+
+
     }
 }

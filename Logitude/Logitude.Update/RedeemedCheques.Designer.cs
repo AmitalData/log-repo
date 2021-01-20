@@ -33,6 +33,9 @@ namespace Logitude.Update
             this.label1 = new System.Windows.Forms.Label();
             this.tenantTextBox = new System.Windows.Forms.TextBox();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.chequeIdTextBox = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.button1 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -66,16 +69,46 @@ namespace Logitude.Update
             // dataGridView1
             // 
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(23, 83);
+            this.dataGridView1.Location = new System.Drawing.Point(23, 129);
             this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(615, 355);
+            this.dataGridView1.Size = new System.Drawing.Size(1145, 516);
             this.dataGridView1.TabIndex = 3;
+            // 
+            // chequeIdTextBox
+            // 
+            this.chequeIdTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.chequeIdTextBox.Location = new System.Drawing.Point(903, 19);
+            this.chequeIdTextBox.Name = "chequeIdTextBox";
+            this.chequeIdTextBox.Size = new System.Drawing.Size(100, 26);
+            this.chequeIdTextBox.TabIndex = 5;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(841, 27);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(56, 13);
+            this.label2.TabIndex = 4;
+            this.label2.Text = "Cheque Id";
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(1009, 19);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(128, 26);
+            this.button1.TabIndex = 6;
+            this.button1.Text = "redeemCheque";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // RedeemedCheques
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(650, 450);
+            this.ClientSize = new System.Drawing.Size(1180, 657);
+            this.Controls.Add(this.button1);
+            this.Controls.Add(this.chequeIdTextBox);
+            this.Controls.Add(this.label2);
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.tenantTextBox);
             this.Controls.Add(this.label1);
@@ -98,5 +131,8 @@ namespace Logitude.Update
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox tenantTextBox;
         private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.TextBox chequeIdTextBox;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Button button1;
     }
 }
