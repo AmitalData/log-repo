@@ -462,7 +462,7 @@ namespace WebFreight.Web.WcfApi
                     entityPM.IsHybrid = true;
                     Customer entity = customerRepository.GetSingleCustomerByCodeForHybrid(entityPM.Code, entityPM.Tenant, false);
 
-                    if (entity == null && !string.IsNullOrEmpty(entityPM.VatNumber))
+                    if (entity == null)
                     {
                         bool isPotentialCustomerReceived = (entityPM.CustomerStatusCode == "POT" || entityPM.CustomerStatusCode == "WAC" || entityPM.SetReady);
                         List<Customer> varCustomers = customerRepository.GetCustomersByVat(entityPM.VatNumber, entityPM.Tenant);

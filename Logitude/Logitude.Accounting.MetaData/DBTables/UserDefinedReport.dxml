@@ -25,7 +25,7 @@
       Nullable="false" />
   </Column>
   <Column
-    Name="CreatedByUserId"
+    Name="CreatedByUserId"    
     Type="varchar"
     Size="15">
     <Constraints

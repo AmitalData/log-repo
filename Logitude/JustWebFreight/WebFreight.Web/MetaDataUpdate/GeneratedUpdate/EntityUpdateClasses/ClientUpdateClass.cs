@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class ClientUpdateClass
    {  		
-		public const string HashString = "59546d4922bb7ad2772f961368029899";
+		public const string HashString = "f6f4b32dcbf9ff8475f590f20414fa20";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -2320,7 +2320,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			List<AdvancedQueryFilter> addedQueryFilters = new List<AdvancedQueryFilter>();
    
 
-			   TextCode ClientTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Client.Q.ClientQuery", DefaultText = @"Clients",LocalDefaultText = "לקוח", ObjectTableId = ClientObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   TextCode ClientTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Client.Q.ClientQuery", DefaultText = @"Clients",LocalDefaultText = "לקוחות", ObjectTableId = ClientObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
 			   Feature ClientFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Client.Q.Clients", ObjectTableId = ClientObjectTable.Id, Tenant = 0, NameTextCodeCode = "ClientFeatures.Clients", NameTextCodeDefaultText = "Clients", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,ClientObjectTable, addedFeatures, addedTextCodes);
 
 	        //TextCodeRepository.SubmitChanges();
@@ -2496,6 +2496,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode ClientTextCode_CustomsClientONewClient = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Client.O.NewClient", DefaultText = "New Client",LocalDefaultText = @"לקוח חדש", ObjectTableId = ClientObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode ClientTextCode_CustomsClientONewClientSucceeded = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Client.O.NewClientSucceeded", DefaultText = "Create New Client Succeeded",LocalDefaultText = @"לקוח חדש הוקם בהצלחה", ObjectTableId = ClientObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ClientTextCode_CustomsClientNewButton = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Client.NewButton", DefaultText = "New Client",LocalDefaultText = @"לקוח חדש", ObjectTableId = ClientObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

@@ -153,6 +153,7 @@ export class CustomsExchangeRatePMService {
         if (!entityPM) {
             
             entityPM = new CustomsExchangeRatePM();
+			entityPM.DisableMarkAsDirty = true;
         }
 
 		var customFields: Array<string> = [];
@@ -193,6 +194,8 @@ export class CustomsExchangeRatePMService {
             entityPM.OldEntityPM = null;
         }
 		entityPM.IsDirty = false;
+	    entityPM.DisableMarkAsDirty = false;
+
         return entityPM;
     }
 

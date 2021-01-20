@@ -125,7 +125,11 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 entityRepository.Add(entityPOCO);
                 entityRepository.SubmitChanges();
 
-                RunStoredProcedureClass.UpdateCardSearcsRecords(entityPM.Id, entityPM.Tenant);
+                string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
+                if (dbms != "oracle")
+                {
+                    RunStoredProcedureClass.UpdateCardSearcsRecords(entityPM.Id, entityPM.Tenant);
+                }
             }
         }
 
@@ -198,8 +202,11 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                  entityRepository.Update(entityPOCO);
                  entityRepository.SubmitChanges();
 
-                RunStoredProcedureClass.UpdateCardSearcsRecords(entityPM.Id, entityPM.Tenant);
-
+                string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
+                if (dbms != "oracle")
+                {
+                    RunStoredProcedureClass.UpdateCardSearcsRecords(entityPM.Id, entityPM.Tenant);
+                }
             }
         }
 

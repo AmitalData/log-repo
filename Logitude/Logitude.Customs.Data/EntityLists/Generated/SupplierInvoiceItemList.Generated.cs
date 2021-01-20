@@ -99,6 +99,8 @@ namespace Logitude.Customs.Data.EntityLists
        [DataMember]
        public bool IsUsed  { get; set; }
        [DataMember]
+       public string InvoiceNumber  { get; set; }
+       [DataMember]
        public decimal? DeferredCustomsTax  { get; set; }
        [DataMember]
        public decimal? DeferredPurchaseTax  { get; set; }

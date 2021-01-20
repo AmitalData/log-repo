@@ -34,7 +34,7 @@ export class CourierMasterGeneralTabComponent extends BaseComponent {
 
     constructor(public entityArgs: EntityArgs) {
         super();
-        this.EntityPM = entityArgs.EntityPM;
+         this.EntityPM = entityArgs.EntityPM;
         this.WeightValueFilterItems = new ApiQueryFilters();
         this.WeightValueFilterItems.addAdditionalFilter("PaymentMethodCode", "CC,CA,NC,PO,PP", null, null, "InListExact", true, false, false, "string", false, true);
         this.UIProperties.SetEnabled("StorageSiteCode", this.ObjectTableName, false);
@@ -47,6 +47,7 @@ export class CourierMasterGeneralTabComponent extends BaseComponent {
     }
 
     private Listen() {
+
         if (SessionLocator.SelectedSession.CurrentEditComponent != null) {
             this.CurrentEditComponentId = SessionLocator.SelectedSession.CurrentEditComponent.ComponentId;
             SessionLocator.SelectedSession.CurrentEditComponent.SubscriptionAdd(
@@ -105,7 +106,12 @@ export class CourierMasterGeneralTabComponent extends BaseComponent {
             this.EntityPM.OriginPortCode = value;
         }
     }
-
+    get CourierMasterRemarks() { return this.EntityPM.CourierMasterRemarks; }
+    set CourierMasterRemarks(value: string) {
+        if (this.EntityPM.CourierMasterRemarks != value) {
+            this.EntityPM.CourierMasterRemarks = value;
+        }
+    }
     get ManifestNumber() { return this.EntityPM.ManifestNumber; }
     set ManifestNumber(value: string) {
         if (this.EntityPM.ManifestNumber != value) {
@@ -131,6 +137,13 @@ export class CourierMasterGeneralTabComponent extends BaseComponent {
     set IsOpen(value: boolean) {
         if (this.EntityPM.IsOpen != value) {
             this.EntityPM.IsOpen = value;
+        }
+    }
+
+    get PackageQuantityInMAWB() { return this.EntityPM.PackageQuantityInMAWB; }
+    set PackageQuantityInMAWB(value: number) {
+        if (this.EntityPM.PackageQuantityInMAWB != value) { 
+            this.EntityPM.PackageQuantityInMAWB = value;
         }
     }
 
@@ -173,6 +186,26 @@ export class CourierMasterGeneralTabComponent extends BaseComponent {
     set EstimatedArrivalDate(value: Date) {
         if (this.EntityPM.EstimatedArrivalDate != value) {
             this.EntityPM.EstimatedArrivalDate = value;
+        }
+    }
+    get LandingDateDateOnly() { return this.EntityPM.LandingDateDateOnly; }
+    set LandingDateDateOnly(value: Date) {
+        if (this.EntityPM.LandingDateDateOnly != value) {
+            this.EntityPM.LandingDateDateOnly = value;
+        }
+    }
+
+    get LandingDateTimeOnly() { return this.EntityPM.LandingDateTimeOnly; }
+    set LandingDateTimeOnly(value: Date) {
+        if (this.EntityPM.LandingDateTimeOnly != value) {
+            this.EntityPM.LandingDateTimeOnly = value;
+        }
+    }
+
+    get LandingDate() { return this.EntityPM.LandingDate; }
+    set LandingDate(value: Date) {
+        if (this.EntityPM.LandingDate != value) {
+            this.EntityPM.LandingDate = value;
         }
     }
 
@@ -270,6 +303,8 @@ export class CourierMasterGeneralTabComponent extends BaseComponent {
         //this.UIProperties.SetEnabled("EstimatedArrivalTimeOnly", this.ObjectTableName, !this.IsDisplayOnly);
         this.UIProperties.SetEnabled("EstimatedArrivalTimeOnly_timepicker", this.ObjectTableName, !this.IsDisplayOnly);
         this.UIProperties.SetEnabled("EstimatedArrivalDateOnly", this.ObjectTableName, !this.IsDisplayOnly);
+        this.UIProperties.SetEnabled("LandingDateTimeOnly_timepicker", this.ObjectTableName, !this.IsDisplayOnly);
+        this.UIProperties.SetEnabled("LandingDateDateOnly", this.ObjectTableName, !this.IsDisplayOnly);
         this.UIProperties.SetEnabled("PackageQuantity", this.ObjectTableName, !this.IsDisplayOnly);
         this.UIProperties.SetEnabled("GrossMassMeasure", this.ObjectTableName, !this.IsDisplayOnly);
         this.UIProperties.SetEnabled("WeightValueCode", this.ObjectTableName, !this.IsDisplayOnly);

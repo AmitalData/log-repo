@@ -372,6 +372,10 @@
 
         private string ocrHeightField;
 
+        private string additionalQuantityField;
+
+        private string additionalQuantityTypeField;
+
         private CERTIFICATES[] cERTIFICATESField;
 
         private EXPENSES[] eXPENSESField;
@@ -620,6 +624,32 @@
             set
             {
                 this.ocrHeightField = value;
+            }
+        }
+
+        /// <remarks/>
+        public string AdditionalQuantity
+        {
+            get
+            {
+                return this.additionalQuantityField;
+            }
+            set
+            {
+                this.additionalQuantityField = value;
+            }
+        }
+
+        /// <remarks/>
+        public string AdditionalQuantityType
+        {
+            get
+            {
+                return this.additionalQuantityTypeField;
+            }
+            set
+            {
+                this.additionalQuantityTypeField = value;
             }
         }
 

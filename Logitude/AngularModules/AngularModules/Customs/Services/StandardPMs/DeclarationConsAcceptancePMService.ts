@@ -153,6 +153,7 @@ export class DeclarationConsAcceptancePMService {
         if (!entityPM) {
             
             entityPM = new DeclarationConsAcceptancePM();
+			entityPM.DisableMarkAsDirty = true;
         }
 
 		var customFields: Array<string> = [];
@@ -193,6 +194,8 @@ export class DeclarationConsAcceptancePMService {
             entityPM.OldEntityPM = null;
         }
 		entityPM.IsDirty = false;
+	    entityPM.DisableMarkAsDirty = false;
+
         return entityPM;
     }
 

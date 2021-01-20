@@ -87,7 +87,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             {
                 var firstRelatedEntity = customResponse.RelatedEntity.FirstOrDefault();
                 if (customResponse.RelatedEntity != null &&
-                    (firstRelatedEntity.entityType == 1055 || firstRelatedEntity.entityType == 11157 || firstRelatedEntity.entityType == 11184 || firstRelatedEntity.entityType == 11185)) //1055 or 11157 = Declaration //11184 = SupplierInvoice //11185 = SupplierInvoiceItem
+                    (firstRelatedEntity.entityType == 1055 || firstRelatedEntity.entityType == 11157 || firstRelatedEntity.entityType == 11184 || firstRelatedEntity.entityType == 11185 || firstRelatedEntity.entityType == 12414 || firstRelatedEntity.entityType == 11188 || firstRelatedEntity.entityType == 12397 || firstRelatedEntity.entityType == 12396)) //1055 or 11157 = Declaration //11184 = SupplierInvoice //11185 = SupplierInvoiceItem
                 {
                     //Search Declaration by entityIdKey1
                     if (customResponse.RequiredDocumentDetails.requiredDocumentMessageType == 1)
@@ -187,7 +187,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 }
             }
             workerRemarks = string.Concat(customResponse.RequiredDocumentDetails.remarks, "\n", workerRemarks);//Eitan H 6/6/18 Bug 39871: 8227 Notification display call# 310246 (make same remarks for all uses)
-
+            var isNew = true;
             if (customResponse.RequiredDocumentDetails.requiredDocumentMessageType == 1) // Craete new CustomsDocumentPointers
             {
                 var myDocumentId = myCustomsDocumentQueryService.GetDocumentInIdByCustomsDocId(customResponse.RequiredDocumentDetails.documentID.ToString(), requestParams.Tenant);
@@ -198,6 +198,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 {
                     customsDocumentsTicketPM.ChangeSetOp = ChangeSetOperation.Insert;
                     customsDocumentPointerPM.ChangeSetOp = ChangeSetOperation.Insert;
+                    isNew = true;
+
                 }
                 else
                 {
@@ -205,7 +207,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     customsDocumentPointerPM.ChangeSetOp = ChangeSetOperation.Update;
                     customsDocumentsTicketPM = myCustomsDocumentsTicketQueryService.GetSingle(customsDocumentPointerPM.CustomsDocumentsTicketId,true,false);
                     customsDocumentsTicketPM.ChangeSetOp = ChangeSetOperation.Update;
-
+                    isNew = false;
                     if (!string.IsNullOrWhiteSpace(customsDocumentsTicketPM.DocumentsFilingId))
                     {
                         this.MyResponseData.ApplicationID = requestId;
@@ -242,10 +244,25 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 customsDocumentPointerPM.DocumentRemarks = customsDocumentsTicketPM.Remarks;
                 customsDocumentPointerPM.DocumentTypeCode = customsDocumentsTicketPM.DocumentTypeCode;
                 //Create Notification
-                myInsertEventContextTagModel.CallProccessID = EventContextTagModel.ProccessEnum.VAL_NG_8227_MSG_520_RequiredDocumentMessageInsert;
-                myInsertEventContextTagModel.EventCode = "CRD";
-                myInsertEventContextTagModel.EventRemarks = "Document Request By Customs" + DeclarationConvertionText;
+                if(isNew)
+                {
+                    myInsertEventContextTagModel.CallProccessID = EventContextTagModel.ProccessEnum.VAL_NG_8227_MSG_520_RequiredDocumentMessageInsert;
+                    myInsertEventContextTagModel.EventCode = "CRD";
 
+                   if(myDeclarationPM.Direction=="E")
+                    {
+                        myInsertEventContextTagModel.EventRemarks = "DocumentID: " + customResponse.RequiredDocumentDetails.documentID + '\n' + "TypeID: " + customResponse.RequiredDocumentDetails.typeID + '\n' +   "RequiredDocumentMessageType: New";
+
+                    }
+                    else
+
+                    {
+                        myInsertEventContextTagModel.EventRemarks = "Document Request By Customs" + DeclarationConvertionText;
+
+                    }
+
+
+                }
                 requestParams.LoggingObjectTableId = customsDocumentPointerPM.ParentEntityCode;
                 requestParams.LoggingEntityId = customsDocumentPointerPM.ParentEntityId;
             }
@@ -274,7 +291,18 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             //Create Notification
                             myInsertEventContextTagModel.CallProccessID = EventContextTagModel.ProccessEnum.VAL_NG_8227_MSG_520_RequiredDocumentMessageDelete;
                             myInsertEventContextTagModel.EventCode = "CRC";
-                            myInsertEventContextTagModel.EventRemarks = "Document requested Cancelled" + DeclarationConvertionText;
+
+
+                            if (myDeclarationPM.Direction == "E")
+                            {
+                                myInsertEventContextTagModel.EventRemarks = "DocumentID: " + customResponse.RequiredDocumentDetails.documentID + '\n' + "TypeID: " + customResponse.RequiredDocumentDetails.typeID + '\n' + "RequiredDocumentMessageType: Delete";
+
+                            }
+                            else
+                            {
+                                myInsertEventContextTagModel.EventRemarks = "Document requested Cancelled" + DeclarationConvertionText;
+
+                            }
                             break;
                         }
                     }

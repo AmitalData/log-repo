@@ -153,6 +153,7 @@ export class DeclarationMamanSpecialActionPMService {
         if (!entityPM) {
             
             entityPM = new DeclarationMamanSpecialActionPM();
+			entityPM.DisableMarkAsDirty = true;
         }
 
 		var customFields: Array<string> = [];
@@ -193,6 +194,8 @@ export class DeclarationMamanSpecialActionPMService {
             entityPM.OldEntityPM = null;
         }
 		entityPM.IsDirty = false;
+	    entityPM.DisableMarkAsDirty = false;
+
         return entityPM;
     }
 

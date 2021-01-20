@@ -168,6 +168,7 @@ export class VehiclePMService {
         if (!entityPM) {
             
             entityPM = new VehiclePM();
+			entityPM.DisableMarkAsDirty = true;
         }
 
 		var customFields: Array<string> = [];
@@ -228,6 +229,8 @@ export class VehiclePMService {
             entityPM.OldEntityPM = null;
         }
 		entityPM.IsDirty = false;
+	    entityPM.DisableMarkAsDirty = false;
+
         return entityPM;
     }
 
@@ -253,7 +256,8 @@ export class VehiclePMService {
             {
                 newVehicleSafetyAccessoryPM = new VehicleSafetyAccessoryPM(null);
             }
-                
+ 			newVehicleSafetyAccessoryPM.DisableMarkAsDirty = true;
+               
             var pmKeysArray = Object.keys(jItem);
             for (var pmKey in pmKeysArray) {
                 if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
@@ -285,7 +289,7 @@ export class VehiclePMService {
                 newVehicleSafetyAccessoryPM.OldEntityPM = null;
                 newVehicleSafetyAccessoryPM.EntityParentPM = null;
             }
-			
+			 newVehicleSafetyAccessoryPM.DisableMarkAsDirty = false;
 			 newVehicleSafetyAccessoryPM.IsDirty = false;
             entityPM.VehicleSafetyAccessories.push(newVehicleSafetyAccessoryPM);
         }
@@ -299,6 +303,7 @@ export class VehiclePMService {
                         //entityPM.VehicleSafetyAccessories.push(oldVehicleSafetyAccessories[itemKey]);
 						var oldItemJson = oldVehicleSafetyAccessories[itemKey];
                         var deletedPM: VehicleSafetyAccessoryPM = new VehicleSafetyAccessoryPM(null);
+						deletedPM.DisableMarkAsDirty = true;
                         var pmKeys = Object.keys(oldItemJson);
                         for (var key in pmKeys) {
 
@@ -310,7 +315,7 @@ export class VehiclePMService {
                             deletedPM[property] = oldItemJson[property];
                         }
 
-                      
+					    deletedPM.DisableMarkAsDirty = false;
                         deletedPM.IsDirty = false;
                         deletedPM.ChangeSetOp = "Delete";
                         
@@ -343,7 +348,8 @@ export class VehiclePMService {
             {
                 newVehicleOwnerPM = new VehicleOwnerPM(null);
             }
-                
+ 			newVehicleOwnerPM.DisableMarkAsDirty = true;
+               
             var pmKeysArray = Object.keys(jItem);
             for (var pmKey in pmKeysArray) {
                 if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
@@ -375,7 +381,7 @@ export class VehiclePMService {
                 newVehicleOwnerPM.OldEntityPM = null;
                 newVehicleOwnerPM.EntityParentPM = null;
             }
-			
+			 newVehicleOwnerPM.DisableMarkAsDirty = false;
 			 newVehicleOwnerPM.IsDirty = false;
             entityPM.VehicleOwners.push(newVehicleOwnerPM);
         }
@@ -389,6 +395,7 @@ export class VehiclePMService {
                         //entityPM.VehicleOwners.push(oldVehicleOwners[itemKey]);
 						var oldItemJson = oldVehicleOwners[itemKey];
                         var deletedPM: VehicleOwnerPM = new VehicleOwnerPM(null);
+						deletedPM.DisableMarkAsDirty = true;
                         var pmKeys = Object.keys(oldItemJson);
                         for (var key in pmKeys) {
 
@@ -400,7 +407,7 @@ export class VehiclePMService {
                             deletedPM[property] = oldItemJson[property];
                         }
 
-                      
+					    deletedPM.DisableMarkAsDirty = false;
                         deletedPM.IsDirty = false;
                         deletedPM.ChangeSetOp = "Delete";
                         

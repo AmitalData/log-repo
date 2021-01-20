@@ -1,3 +1,3 @@
-Warning: Missing Index In DXML File Shipment.dxml, The Found Index On DB Is IX_ForwarderShipmentNumber, The Index Should Added To The DXML File
-Warning: Missing Index In DXML File Shipment.dxml, The Found Index On DB Is IX_Shipments_Tenant_AgentSharedManifestRef, The Index Should Added To The DXML File
-Warning: Missing Index In DXML File Shipment.dxml, The Found Index On DB Is IX_IsCancelled, The Index Should Added To The DXML File
+Warning: Missing Index In DXML File Query.dxml, The Found Index On DB Is IX_FK_QueryFeature, The Index Should Added To The DXML File
+Warning: Missing Index In DXML File Query.dxml, The Found Index On DB Is IX_FK_QueryQuery, The Index Should Added To The DXML File
+Warning: Missing Index In DXML File Query.dxml, The Found Index On DB Is IX_FK_QueryTextCode, The Index Should Added To The DXML File

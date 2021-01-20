@@ -73,7 +73,10 @@ export class CustomsPartnerFtpPM {
     public OldEntityPM: CustomsPartnerFtpPM;
 		
     public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
+       if(!this.DisableMarkAsDirty)
+       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -81,6 +84,7 @@ export class CustomsPartnerFtpPM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "Customs.CustomsPartnerFtp");
            
         }
+       }
     }
 
     private MyClone: CustomsPartnerFtpPM;

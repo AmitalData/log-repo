@@ -185,6 +185,25 @@ export class AmitalGatewayUtil {
     }
 
 
+    public ShowCFIFILEMMoveToCollector(
+        UnifreightEntityNumber: string,
+        LogitudeEntityNumber: string,
+        ViewModelName: string
+    ) {
+        var unifreightMessageM =
+            AmitalGatewayUtil.Instance.
+                DeclarationMessaging.GetMessage(UnifreightEntityNumber, LogitudeEntityNumber, ViewModelName);
+
+
+        AmitalGatewayUtil.Instance.SendRequestToUnifreightAsync(
+            "AmitalGatewayUtil.ShowCFIFILEMMoveToCollector",
+            "CFIHMAIN.LogitudeTask",
+            "ShowCFIFILEMMoveToCollector",
+            unifreightMessageM,
+            " העברה לגובה");
+    }
+
+
     public ShowCFIFILEMEnterRemarks(
         UnifreightEntityNumber: string,
         LogitudeEntityNumber: string,
@@ -555,8 +574,8 @@ export class AmitalGatewayUtil {
     CreateQInvoiceUnifreightCallBack(ptoCreateQInvoice: boolean, remark: string) {
 
         //Response.InvoiceAction
+
         let toCreateQInvoice: string = ptoCreateQInvoice ? "1" : "0";
-         
         this._LastUnifreightMessageM.Requset.push(["InvoiceAction", toCreateQInvoice]);
         this._LastUnifreightMessageM.Response.push(["InvoiceAction", toCreateQInvoice]);
         
@@ -1403,7 +1422,6 @@ export class ShowInvoiceFromUrouterReturnCreateInvoiceCommand {
 
         };
         AmitalGatewayUtil.Instance.IsAmitalBackButtonDisable = true;
-        //logWindow.ShowCloseButton = true;
         logWindow.ComponentLoaded.subscribe(comp => {
             logWindow.WindowClosed.subscribe((toCreateQInvoice: any) => {
                 SessionLocator.SelectedSession.StopBusyIndicator();
@@ -1412,13 +1430,7 @@ export class ShowInvoiceFromUrouterReturnCreateInvoiceCommand {
 
             });
         });
-        logWindow.ShowCloseButton = true;
-        logWindow.Show(
-            //'./CustomsModules/CustomsClient/Components/EditTabs/ClientEditComponent'
-            //'./Customs/Components/Maintenance/DocumentTypeCustomsDataComponent'
-            //'./CustomsModules/CustomsMaintenance/Components/InvoiceQueueComponent'
-            './CustomsModules/InvoiceQueue/Components/InvoiceQueueComponent'
-        );
+        logWindow.Show('./CustomsModules/InvoiceQueue/Components/InvoiceQueueComponent');
         /*
         logWindow.WindowClosed.subscribe((toCreateQInvoice: any) => {
             //AmitalGatewayUtil.Instance.AmitalBackButtonClicked();

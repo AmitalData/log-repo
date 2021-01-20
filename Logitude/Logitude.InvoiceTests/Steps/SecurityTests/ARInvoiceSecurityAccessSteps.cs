@@ -1,11 +1,8 @@
 ﻿using FluentAssertions;
 using Logitude.InvoiceTests.Models.Invoice;
-using Logitude.Test.Base.Models.Login;
-using Logitude.Test.Base.Services;
-using System;
 using Logitude.Test.Base.Context;
-using System.Collections.Generic;
-using System.Linq;
+using Logitude.Test.Base.Models;
+using Logitude.Test.Base.Services;
 using TechTalk.SpecFlow;
 using Logitude.Test.Base.Models;
 using Logitude.Test.Base.Constants;
@@ -17,11 +14,9 @@ namespace Logitude.InvoiceTests.Steps.SecurityTests
     {
         private SecurityAccessStepsContext<ARInvoicePM> Context;
 
-        public ARInvoiceSecurityAccessSteps(MultiUsers multiUsers, SecurityAccessStepsContext<ARInvoicePM> context)
+        public ARInvoiceSecurityAccessSteps(SecurityAccessStepsContext<ARInvoicePM> context)
         {
             Context = context;
-            Context.FirstUser = multiUsers.Users[0];
-            Context.SecondUser = multiUsers.Users[1];
         }
 
         [When(@"Get AR Invoice request sent for User's Tenant")]
@@ -36,7 +31,7 @@ namespace Logitude.InvoiceTests.Steps.SecurityTests
         {
             ARInvoicePM firstUserARInvoice = GetAnARInvoiceForFirstUser();
             string arInvoicesGetSingleUrl = URLs.ARInvoicesGetSingle(firstUserARInvoice?.Id);
-            APIResponse<ARInvoicePM> response = APICaller.CallGet<ARInvoicePM>(arInvoicesGetSingleUrl, Context.SecondUser.Token);
+            APIResponse<ARInvoicePM> response = APICaller.CallGet<ARInvoicePM>(arInvoicesGetSingleUrl, UserOtherTenant.Token);
             Context.SecondUserPMData.Id = response.Data?.Id;
         }
 

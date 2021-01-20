@@ -1,11 +1,10 @@
-﻿using Logitude.Test.Base.Models.Login;
-using TechTalk.SpecFlow;
-using Logitude.Test.Base.Context;
-using System.Collections.Generic;
-using Logitude.Test.Base.Services;
-using System.Linq;
-using FluentAssertions;
+﻿using FluentAssertions;
 using Logitude.InvoiceTests.Models.Payment;
+using Logitude.Test.Base.Context;
+using Logitude.Test.Base.Services;
+using System.Collections.Generic;
+using System.Linq;
+using TechTalk.SpecFlow;
 using Logitude.Test.Base.Models;
 using Logitude.Test.Base.Constants;
 
@@ -15,11 +14,9 @@ namespace Logitude.InvoiceTests.Steps.SecurityTests
     public class GetAPPaymentSecurityAccessSteps
     {
         private SecurityAccessStepsContext<APPaymentPM> Context;
-        public GetAPPaymentSecurityAccessSteps(MultiUsers multiUsers, SecurityAccessStepsContext<APPaymentPM> context)
+        public GetAPPaymentSecurityAccessSteps(SecurityAccessStepsContext<APPaymentPM> context)
         {
             Context = context;
-            Context.FirstUser = multiUsers.Users[0];
-            Context.SecondUser = multiUsers.Users[1];
         }
 
         [When(@"First user get the first AP Payment from AP Payments list")]
@@ -34,7 +31,7 @@ namespace Logitude.InvoiceTests.Steps.SecurityTests
         {
             IEnumerable<APPaymentPM> firstUserAPPaymentsList = GetAPPaymentListForFirstUser();
             string apPaymentsGetSingleUrl = URLs.APPaymentsGetSingle(firstUserAPPaymentsList?.FirstOrDefault()?.Id);
-            APIResponse<APPaymentPM> response = APICaller.CallGet<APPaymentPM>(apPaymentsGetSingleUrl, Context.SecondUser.Token);
+            APIResponse<APPaymentPM> response = APICaller.CallGet<APPaymentPM>(apPaymentsGetSingleUrl, UserOtherTenant.Token);
             Context.SecondUserPMData.Id = response.Data?.Id;
         }
 

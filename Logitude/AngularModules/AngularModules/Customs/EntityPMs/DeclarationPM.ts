@@ -1314,11 +1314,34 @@ export class DeclarationPM {
     public set FOBValueDollar(newValue: number) { if (this.fOBValueDollar != newValue) { this.fOBValueDollar = newValue; this.MarkAsDirty("FOBValueDollar"); } }
        
 	 
+    private amendmentRejectionReasonName: string;
+    public get AmendmentRejectionReasonName() { return this.amendmentRejectionReasonName; }
+    public set AmendmentRejectionReasonName(newValue: string) { if (this.amendmentRejectionReasonName != newValue) { this.amendmentRejectionReasonName = newValue; this.MarkAsDirty("AmendmentRejectionReasonName"); } }
+       
+	 
+    private transshipmentApprovalDateTime: Date;
+    public get TransshipmentApprovalDateTime() { return this.transshipmentApprovalDateTime; }
+    public set TransshipmentApprovalDateTime(newValue: Date) { if (this.transshipmentApprovalDateTime != newValue) { this.transshipmentApprovalDateTime = newValue; this.MarkAsDirty("TransshipmentApprovalDateTime"); } }
+       
+	 
+    private finalLoadingSite: string;
+    public get FinalLoadingSite() { return this.finalLoadingSite; }
+    public set FinalLoadingSite(newValue: string) { if (this.finalLoadingSite != newValue) { this.finalLoadingSite = newValue; this.MarkAsDirty("FinalLoadingSite"); } }
+       
+	 
+    private palestinianCode: string;
+    public get PalestinianCode() { return this.palestinianCode; }
+    public set PalestinianCode(newValue: string) { if (this.palestinianCode != newValue) { this.palestinianCode = newValue; this.MarkAsDirty("PalestinianCode"); } }
+       
+	 
 
     public OldEntityPM: DeclarationPM;
 		
     public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
+       if(!this.DisableMarkAsDirty)
+       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -1326,6 +1349,7 @@ export class DeclarationPM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "Customs.Declaration");
            
         }
+       }
     }
 
     private MyClone: DeclarationPM;

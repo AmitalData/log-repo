@@ -1,10 +1,8 @@
 ﻿using FluentAssertions;
-using Logitude.Test.Base.Models.Login;
-using Logitude.Test.Base.Services;
+using Logitude.InvoiceTests.Models.Payment;
 using Logitude.Test.Base.Context;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+using Logitude.Test.Base.Models;
+using Logitude.Test.Base.Services;
 using TechTalk.SpecFlow;
 using Logitude.InvoiceTests.Models.Payment;
 using Logitude.Test.Base.Models;
@@ -17,11 +15,9 @@ namespace Logitude.InvoiceTests.Steps.SecurityTests
     {
         private SecurityAccessStepsContext<ARPaymentPM> Context;
 
-        public ARPaymentSecurityAccessSteps(MultiUsers multiUsers, SecurityAccessStepsContext<ARPaymentPM> context)
+        public ARPaymentSecurityAccessSteps(SecurityAccessStepsContext<ARPaymentPM> context)
         {
             Context = context;
-            Context.FirstUser = multiUsers.Users[0];
-            Context.SecondUser = multiUsers.Users[1];
         }
 
         [When(@"Get AR Payment request sent for User's Tenant")]

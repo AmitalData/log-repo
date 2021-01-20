@@ -88,7 +88,10 @@ export class CustomsDocumentsDefinitionPM {
     public OldEntityPM: CustomsDocumentsDefinitionPM;
 		
     public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
+       if(!this.DisableMarkAsDirty)
+       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -96,6 +99,7 @@ export class CustomsDocumentsDefinitionPM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "Customs.CustomsDocumentsDefinition");
            
         }
+       }
     }
 
     private MyClone: CustomsDocumentsDefinitionPM;

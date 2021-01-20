@@ -38,6 +38,7 @@ using Logitude.Customs.BL.Messaging;
 using Logitude.Customs.BL.Messaging.ILOVS;
 using Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue;
 using System.Web;
+using Logitude.Customs.BL.Messaging.Customs.PerformanceLogger;
 
 namespace CustomsWorkerRole
 {
@@ -150,26 +151,34 @@ Insert into BATCHSERVICESDEFINITIONMODS (CODE,INACTIVE,NUMBEROFTHREADS) values (
         {
             while (true)
             {
-                using (TransactionScope scope = TransactionFactory.GetTransaction())
+                
+                try
                 {
-                    _IQueueService = new DbQueueService();
-                    _IQueueService.InitializeQueue(SBQueueNames.SendWEBAPIMessage2MamanQ.ToString(), 0);
-
-                    _ReceivedBrokeredMessage = _IQueueService.Receive();
-
-                    if (_ReceivedBrokeredMessage == null || String.IsNullOrWhiteSpace(_ReceivedBrokeredMessage.MessageId))
+                    using (TransactionScope scope = TransactionFactory.GetTransaction())
                     {
-                        //Thread.Sleep(TimeSpan.FromSeconds(5));
-                        Thread.Sleep(TimeSpan.FromSeconds(15));//not using soo mach 
-                        break;
-                    }
-                    if (_ReceivedBrokeredMessage.RetryNumber > 5)
-                    {
-                        _IQueueService.CompleteAsFailed();
-                    }
+                        _IQueueService = new DbQueueService();
+                        _IQueueService.InitializeQueue(SBQueueNames.SendWEBAPIMessage2MamanQ.ToString(), 0);
 
-                    ProccessReceivedMessage();
-                    scope.Complete();
+                        _ReceivedBrokeredMessage = _IQueueService.Receive();
+
+                        if (_ReceivedBrokeredMessage == null || String.IsNullOrWhiteSpace(_ReceivedBrokeredMessage.MessageId))
+                        {
+                            //Thread.Sleep(TimeSpan.FromSeconds(5));
+                            Thread.Sleep(TimeSpan.FromSeconds(15));//not using soo mach 
+                            break;
+                        }
+                        if (_ReceivedBrokeredMessage.RetryNumber > 5)
+                        {
+                            _IQueueService.CompleteAsFailed();
+                        }
+
+                        ProccessReceivedMessage();
+                        scope.Complete();
+                    }
+                }
+                finally
+                {
+                    PerformanceM.SleepMSAfterEachQueuePeek();
                 }
             }
         }

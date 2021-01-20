@@ -192,7 +192,7 @@
         cursor: default;
     }
 </style>
-
+<!-- <LogitudeHotKeysComponent  (SaveHotKey)="OnSaveHotKeyPressed()"  (ESCHotKey)="OnEscHotKeyPressed()" (ShiftSHotKey)="OnSaveAndNewHotKeyPressed()"></LogitudeHotKeysComponent> -->
 <table>
 
     <tr style="height:22px">
@@ -273,7 +273,7 @@
                                                 <tr>
                                                     <td style="vertical-align: top;">
                                                         <ul>
-                                                            <li class="DefaultMenuItem" *ngFor="let item of TabsItemsSource" (click)="SelectedTabCode = item.code" [class.SelectedMenuItem]="item.code === SelectedTabCode"
+                                                            <li class="DefaultMenuItem" id="{{item.code}}" *ngFor="let item of TabsItemsSource" (click)="SelectedTabCode = item.code" [class.SelectedMenuItem]="item.code === SelectedTabCode"
                                                                 [style.text-align]="LayoutDirection=='rtl' ? 'right' : 'left'">
                                                                 <!--<img *ngIf="item != SelectedMenu" style="position:absolute; top:0; bottom:0; margin:auto;" [attr.src]="item.IconSource" [ngStyle]="LayoutDirection == 'rtl' ? {'right': '10px;'} : {'left': '10px;'}" />
                                                                 <img *ngIf="item == SelectedMenu" style="position:absolute; top:0; bottom:0; margin:auto;" [attr.src]="item.IconSelectedSource" [ngStyle]="LayoutDirection == 'rtl' ? {'right': '11px;'} : {'left': '11px;'}" />-->
@@ -434,7 +434,7 @@
                                          [class.disabled]="IsDisplayOnly">
                                         <span class="x-split-button">
 
-                                            <button [disabled]="IsDisplayOnly"
+                                            <button [disabled]="IsDisplayOnly" id="button-drp-down"
                                                     class="x-button x-button-drop"
                                                     style="min-width: 10px;border-radius: 5px 0px 0px 5px;color:gray !important"
                                                     (click)="dropdowndisplayToggle()">
@@ -453,10 +453,10 @@
                                                  style="position: fixed;z-index: 1;background-color : aquamarine;">
                                                 <ul class="x-button-drop-menu">
                                                   
-                                                    <li>
+                                                    <li id="CopyInvoice">
                                                         <span (click)="CopyInvoiceClicked()">שמור והעתק</span>
                                                     </li>
-                                                    <li>
+                                                    <li id="CopyInvoiceWithItems">
                                                         <span (click)="CopyInvoiceWithItemsClicked()">שמור והעתק מורחב </span>
                                                     </li>
                                                   
@@ -483,7 +483,7 @@
 </td>
                               
                                 <td style="width: 57px;">
-                                    <button class="RedButton" [disabled]="IsDisplayOnly" (click)="OkButtonClicked()">{{'General.B.Save' | TextCodeTranslationPipe}}</button>
+                                    <button class="RedButton" [disabled]="IsDisplayOnly" id="SaveSupplierInvoice" (click)="OkButtonClicked()">{{'General.B.Save' | TextCodeTranslationPipe}}</button>
                                 </td>
                             </tr>
                         </table>

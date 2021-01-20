@@ -170,6 +170,7 @@ export class PaymentOrderPMService {
         if (!entityPM) {
             
             entityPM = new PaymentOrderPM();
+			entityPM.DisableMarkAsDirty = true;
         }
 
 		var customFields: Array<string> = [];
@@ -250,6 +251,8 @@ export class PaymentOrderPMService {
             entityPM.OldEntityPM = null;
         }
 		entityPM.IsDirty = false;
+	    entityPM.DisableMarkAsDirty = false;
+
         return entityPM;
     }
 
@@ -275,7 +278,8 @@ export class PaymentOrderPMService {
             {
                 newPaymentOrderLinePM = new PaymentOrderLinePM(null);
             }
-                
+ 			newPaymentOrderLinePM.DisableMarkAsDirty = true;
+               
             var pmKeysArray = Object.keys(jItem);
             for (var pmKey in pmKeysArray) {
                 if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
@@ -307,7 +311,7 @@ export class PaymentOrderPMService {
                 newPaymentOrderLinePM.OldEntityPM = null;
                 newPaymentOrderLinePM.EntityParentPM = null;
             }
-			
+			 newPaymentOrderLinePM.DisableMarkAsDirty = false;
 			 newPaymentOrderLinePM.IsDirty = false;
             entityPM.PaymentOrderLines.push(newPaymentOrderLinePM);
         }
@@ -321,6 +325,7 @@ export class PaymentOrderPMService {
                         //entityPM.PaymentOrderLines.push(oldPaymentOrderLines[itemKey]);
 						var oldItemJson = oldPaymentOrderLines[itemKey];
                         var deletedPM: PaymentOrderLinePM = new PaymentOrderLinePM(null);
+						deletedPM.DisableMarkAsDirty = true;
                         var pmKeys = Object.keys(oldItemJson);
                         for (var key in pmKeys) {
 
@@ -332,7 +337,7 @@ export class PaymentOrderPMService {
                             deletedPM[property] = oldItemJson[property];
                         }
 
-                      
+					    deletedPM.DisableMarkAsDirty = false;
                         deletedPM.IsDirty = false;
                         deletedPM.ChangeSetOp = "Delete";
                         
@@ -365,7 +370,8 @@ export class PaymentOrderPMService {
             {
                 newPaymentOrderMethodPM = new PaymentOrderMethodPM(null);
             }
-                
+ 			newPaymentOrderMethodPM.DisableMarkAsDirty = true;
+               
             var pmKeysArray = Object.keys(jItem);
             for (var pmKey in pmKeysArray) {
                 if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
@@ -397,7 +403,7 @@ export class PaymentOrderPMService {
                 newPaymentOrderMethodPM.OldEntityPM = null;
                 newPaymentOrderMethodPM.EntityParentPM = null;
             }
-			
+			 newPaymentOrderMethodPM.DisableMarkAsDirty = false;
 			 newPaymentOrderMethodPM.IsDirty = false;
             entityPM.PaymentOrderMethods.push(newPaymentOrderMethodPM);
         }
@@ -411,6 +417,7 @@ export class PaymentOrderPMService {
                         //entityPM.PaymentOrderMethods.push(oldPaymentOrderMethods[itemKey]);
 						var oldItemJson = oldPaymentOrderMethods[itemKey];
                         var deletedPM: PaymentOrderMethodPM = new PaymentOrderMethodPM(null);
+						deletedPM.DisableMarkAsDirty = true;
                         var pmKeys = Object.keys(oldItemJson);
                         for (var key in pmKeys) {
 
@@ -422,7 +429,7 @@ export class PaymentOrderPMService {
                             deletedPM[property] = oldItemJson[property];
                         }
 
-                      
+					    deletedPM.DisableMarkAsDirty = false;
                         deletedPM.IsDirty = false;
                         deletedPM.ChangeSetOp = "Delete";
                         
@@ -455,7 +462,8 @@ export class PaymentOrderPMService {
             {
                 newPaymentOrderProtestReasonPM = new PaymentOrderProtestReasonPM(null);
             }
-                
+ 			newPaymentOrderProtestReasonPM.DisableMarkAsDirty = true;
+               
             var pmKeysArray = Object.keys(jItem);
             for (var pmKey in pmKeysArray) {
                 if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
@@ -487,7 +495,7 @@ export class PaymentOrderPMService {
                 newPaymentOrderProtestReasonPM.OldEntityPM = null;
                 newPaymentOrderProtestReasonPM.EntityParentPM = null;
             }
-			
+			 newPaymentOrderProtestReasonPM.DisableMarkAsDirty = false;
 			 newPaymentOrderProtestReasonPM.IsDirty = false;
             entityPM.PaymentOrderProtestReasons.push(newPaymentOrderProtestReasonPM);
         }
@@ -501,6 +509,7 @@ export class PaymentOrderPMService {
                         //entityPM.PaymentOrderProtestReasons.push(oldPaymentOrderProtestReasons[itemKey]);
 						var oldItemJson = oldPaymentOrderProtestReasons[itemKey];
                         var deletedPM: PaymentOrderProtestReasonPM = new PaymentOrderProtestReasonPM(null);
+						deletedPM.DisableMarkAsDirty = true;
                         var pmKeys = Object.keys(oldItemJson);
                         for (var key in pmKeys) {
 
@@ -512,7 +521,7 @@ export class PaymentOrderPMService {
                             deletedPM[property] = oldItemJson[property];
                         }
 
-                      
+					    deletedPM.DisableMarkAsDirty = false;
                         deletedPM.IsDirty = false;
                         deletedPM.ChangeSetOp = "Delete";
                         
@@ -545,7 +554,8 @@ export class PaymentOrderPMService {
             {
                 newPaymentOrderConnectionTablePM = new PaymentOrderConnectionTablePM(null);
             }
-                
+ 			newPaymentOrderConnectionTablePM.DisableMarkAsDirty = true;
+               
             var pmKeysArray = Object.keys(jItem);
             for (var pmKey in pmKeysArray) {
                 if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
@@ -577,7 +587,7 @@ export class PaymentOrderPMService {
                 newPaymentOrderConnectionTablePM.OldEntityPM = null;
                 newPaymentOrderConnectionTablePM.EntityParentPM = null;
             }
-			
+			 newPaymentOrderConnectionTablePM.DisableMarkAsDirty = false;
 			 newPaymentOrderConnectionTablePM.IsDirty = false;
             entityPM.PaymentOrderConnectionTables.push(newPaymentOrderConnectionTablePM);
         }
@@ -591,6 +601,7 @@ export class PaymentOrderPMService {
                         //entityPM.PaymentOrderConnectionTables.push(oldPaymentOrderConnectionTables[itemKey]);
 						var oldItemJson = oldPaymentOrderConnectionTables[itemKey];
                         var deletedPM: PaymentOrderConnectionTablePM = new PaymentOrderConnectionTablePM(null);
+						deletedPM.DisableMarkAsDirty = true;
                         var pmKeys = Object.keys(oldItemJson);
                         for (var key in pmKeys) {
 
@@ -602,7 +613,7 @@ export class PaymentOrderPMService {
                             deletedPM[property] = oldItemJson[property];
                         }
 
-                      
+					    deletedPM.DisableMarkAsDirty = false;
                         deletedPM.IsDirty = false;
                         deletedPM.ChangeSetOp = "Delete";
                         

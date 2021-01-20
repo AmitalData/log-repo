@@ -1,10 +1,6 @@
 ﻿using Logitude.Test.Base.Constants;
 using Logitude.Test.Base.Models;
-using Logitude.Test.Base.Models.Base;
-using Logitude.Test.Base.Models.Login;
 using Logitude.Test.Base.Services;
-using System.Collections.Generic;
-using System.Linq;
 using TechTalk.SpecFlow;
 
 namespace Logitude.Test.Base.Hooks
@@ -15,11 +11,23 @@ namespace Logitude.Test.Base.Hooks
         [BeforeTestRun(Order = 0)]
         public static void SetupBasePreparationVariables()
         {
-            GetLoginParameters();
+            GetUsersLoginParameters();
             FillUserTenant();
         }
 
-        private static void GetLoginParameters()
+        private static void GetUsersLoginParameters()
+        {
+            GetUserLoginParameters();
+            GetOtherUserLoginParameters();
+        }
+
+        private static void FillUserTenant()
+        {
+            FillTenant();
+            FillUser();
+        }
+
+        private static void GetUserLoginParameters()
         {
             LoginParameters loginParameters = new LoginParameters()
             {
@@ -32,14 +40,25 @@ namespace Logitude.Test.Base.Hooks
             APIResponse<User> user= APICaller.CallPost<User>(loginParameters, URLs.UserAuthentication(), null);
             UserTenant.Token = user.Data.Token;
             UserTenant.Tenant = user.Data.Tenant;
-            UserTenant.LoginUserId = user.Data.UserId;
-            UserTenant.LoginUserName = user.Data.UserName;
+            UserTenant.UserId = user.Data.UserId;
+            UserTenant.UserName = user.Data.UserName;
         }
 
-        private static void FillUserTenant()
+        private static void GetOtherUserLoginParameters()
         {
-            FillTenant();
-            FillUser();
+            LoginParameters loginParameters = new LoginParameters()
+            {
+                Email = BaseConfigurations.OtherUserEmail,
+                Password = BaseConfigurations.OtherUserPassword,
+                ClientType = "Web",
+                GetToken = true
+            };
+
+            APIResponse<User> user = APICaller.CallPost<User>(loginParameters, URLs.UserAuthentication, null);
+            UserOtherTenant.Token = user.Data.Token;
+            UserOtherTenant.Tenant = user.Data.Tenant;
+            UserOtherTenant.UserId = user.Data.UserId;
+            UserOtherTenant.UserName = user.Data.UserName;
         }
 
         private static void FillTenant()
@@ -47,7 +66,6 @@ namespace Logitude.Test.Base.Hooks
             string tenantUrl = URLs.TenantsGetSingle(UserTenant.Tenant);
             APIResponse<TenantPM> tenantPM = APICaller.CallGet<TenantPM>(tenantUrl, UserTenant.Token);
 
-            UserTenant.Tenant = tenantPM.Data.Id;
             UserTenant.LocalCurrencyId = tenantPM.Data.CurrencyId;
             UserTenant.ProfitCurrencyId = tenantPM.Data.ProfitCurrencyId;
             UserTenant.ProfitCurrencyRate = tenantPM.Data.ProfitCurrencyRate;

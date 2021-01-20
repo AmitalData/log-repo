@@ -823,4 +823,13 @@ export class ImporterDetailsComponent extends BaseComponent {
       
     }
 
+    OnCTRL_S_HotKeyPressed(){
+        if(!this.IsDisplayOnly){
+        this.OkButtonClicked();
+        }
+    }
+
+    OnEscHotKeyPressed(){
+        this.CancelButtonClicked();
+    }
 }

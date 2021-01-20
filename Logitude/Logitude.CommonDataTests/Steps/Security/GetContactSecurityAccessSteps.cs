@@ -3,6 +3,8 @@ using Logitude.CommonDataTests.Models;
 using Logitude.Test.Base.Models.Login;
 using Logitude.Test.Base.Services;
 using Logitude.Test.Base.Context;
+using Logitude.Test.Base.Models;
+using Logitude.Test.Base.Services;
 using System.Collections.Generic;
 using System.Linq;
 using TechTalk.SpecFlow;
@@ -15,12 +17,9 @@ namespace Logitude.CommonDataTests.Steps.Security
     public class GetContactSecurityAccessSteps
     {
         private SecurityAccessStepsContext<ContactPM> Context;
-
-        public GetContactSecurityAccessSteps(MultiUsers multiUsers, SecurityAccessStepsContext<ContactPM> context)
+        public GetContactSecurityAccessSteps(SecurityAccessStepsContext<ContactPM> context)
         {
             Context = context;
-            Context.FirstUser = multiUsers.Users[0];
-            Context.SecondUser = multiUsers.Users[1];
         }
 
         [When(@"First user get the first contact from contacts list")]

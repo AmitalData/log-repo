@@ -57,7 +57,9 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         BuyerAddress, 
 	         BuyerCountryCode, 
 	         BuyerRoleCode, 
-	         PartyRelationshipCode,
+	         PartyRelationshipCode, 
+	         ItemFOBAmountForeign, 
+	         ItemFOBAmountNIS,
 	      }
 
 
@@ -115,7 +117,9 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         PartyRelationshipCode, 
 	         PartyRelationshipName, 
 	         BuyerRoleName, 
-	         BuyerCountryName,
+	         BuyerCountryName, 
+	         ItemFOBAmountForeign, 
+	         ItemFOBAmountNIS,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -292,6 +296,16 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.PartyRelationshipCode))
             {
 				entityPOCO.PartyRelationshipCode = entityPM.PartyRelationshipCode;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ItemFOBAmountForeign))
+            {
+				entityPOCO.ItemFOBAmountForeign = entityPM.ItemFOBAmountForeign;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ItemFOBAmountNIS))
+            {
+				entityPOCO.ItemFOBAmountNIS = entityPM.ItemFOBAmountNIS;
 			}
 			}
 
@@ -478,6 +492,16 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.PartyRelationshipCode = entityPOCO.PartyRelationshipCode;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ItemFOBAmountForeign))
+            {
+					entityPM.ItemFOBAmountForeign = entityPOCO.ItemFOBAmountForeign;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ItemFOBAmountNIS))
+            {
+					entityPM.ItemFOBAmountNIS = entityPOCO.ItemFOBAmountNIS;
+            }
+
 		}
 
 		public void PMToOldPM(SupplierInvoicePM entityPM, SupplierInvoicePM oldEntityPM)
@@ -652,6 +676,16 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.PartyRelationshipCode))
             {
                 oldEntityPM.PartyRelationshipCode = entityPM.PartyRelationshipCode;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ItemFOBAmountForeign))
+            {
+                oldEntityPM.ItemFOBAmountForeign = entityPM.ItemFOBAmountForeign;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ItemFOBAmountNIS))
+            {
+                oldEntityPM.ItemFOBAmountNIS = entityPM.ItemFOBAmountNIS;
             }
 			
 		}

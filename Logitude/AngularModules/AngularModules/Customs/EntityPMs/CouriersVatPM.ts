@@ -63,7 +63,10 @@ export class CouriersVatPM {
     public OldEntityPM: CouriersVatPM;
 		
     public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
+       if(!this.DisableMarkAsDirty)
+       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -71,6 +74,7 @@ export class CouriersVatPM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "Customs.CouriersVat");
            
         }
+       }
     }
 
     private MyClone: CouriersVatPM;

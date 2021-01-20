@@ -28,6 +28,7 @@ using Logitude.Customs.BL.Messaging.LogitudeClient.DeclarationErrorPointer.DBWCO
 using Logitude.Customs.BL.BL;
 using Unifreight.BL.EntityQueryServices;
 using Unifreight.Data.AmitalModel;
+using Exception = System.Exception;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {
@@ -625,12 +626,12 @@ namespace Logitude.CustomsMessaging.ResponseServices
             string paymentStatusCode = null; //Yuval Chalup 10.08.2015 TASK-15472
             if (customResponse.DeclarationPaymentDetails != null)
             {
-                if (customResponse.DeclarationPaymentDetails.PaymentOrderNumber != null)
+                if (customResponse.DeclarationPaymentDetails.PaymentOrderNumber != null && customResponse.DeclarationPaymentDetails.PaymentOrderNumber!=0)
                 {
                     _MyDeclarationPM.PaymentOrderNumber = customResponse.DeclarationPaymentDetails.PaymentOrderNumber.ToString();
                     paymentOrderNumber = customResponse.DeclarationPaymentDetails.PaymentOrderNumber.ToString(); //Yuval Chalup 10.08.2015 TASK-15472
                 }
-                if (customResponse.DeclarationPaymentDetails.PaymentOrderStatus != null)
+                if (customResponse.DeclarationPaymentDetails.PaymentOrderStatus != null && customResponse.DeclarationPaymentDetails.PaymentOrderStatus!=0)
                 {
                     _MyDeclarationPM.PaymentStatusCode = customResponse.DeclarationPaymentDetails.PaymentOrderStatus.ToString();
                     paymentStatusCode = customResponse.DeclarationPaymentDetails.PaymentOrderStatus.ToString(); //Yuval Chalup 10.08.2015 TASK-15472
@@ -881,6 +882,21 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                 isCollectActive = false;
                             }
                         }
+
+                        if (isCollectActive)
+                        {
+                            bool isStatusVPA = false;
+                            try
+                            {
+                                isStatusVPA = myDeclarationUpdateService.CheckFileStatus(_MyDeclarationPM, requestParams.LoggingUserId);
+                            }
+                            catch (Exception e)
+                            {
+                                LogMessagingUtil.Instance.AppendLine("Exception was thrown while checking if VPA exist in the file " + _MyDeclarationPM.CustomFileNo + Environment.NewLine + e.Message);
+                            }
+                            if (isStatusVPA) isCollectActive = false;
+                        }
+
                         if (isCollectActive)
                         {
 
@@ -1032,7 +1048,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 //<--- Yuval Chalup 09.11.2015 TASK-16498 - Update PaymentOrderNumber in Payment
                 if (customResponse.DeclarationPaymentDetails != null)
                 {
-                    if (customResponse.DeclarationPaymentDetails.PaymentOrderNumber != null || (_IsSubmitDeclarationResponse == true && string.IsNullOrWhiteSpace(paymentOrderNumber) && _MyDeclarationPM.DeclarationStatusTypeCode == "5" && _MyDeclarationPM.TotalTax <= 5))
+                    if(customResponse.DeclarationPaymentDetails.PaymentOrderStatus != null && customResponse.DeclarationPaymentDetails.PaymentOrderNumber != null && customResponse.DeclarationPaymentDetails.PaymentOrderStatus != 0)
+                   // if (customResponse.DeclarationPaymentDetails.PaymentOrderNumber != null || (_IsSubmitDeclarationResponse == true && string.IsNullOrWhiteSpace(paymentOrderNumber) && _MyDeclarationPM.DeclarationStatusTypeCode == "5" && _MyDeclarationPM.TotalTax <= 5))
                     {
                         var unifreightDeclarationPaymentUpdateService = new UnifreightDeclarationPaymentUpdateService(declarationPaymentsPM, _MyDeclarationPM);
                         unifreightDeclarationPaymentUpdateService.Update();

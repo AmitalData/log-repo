@@ -11,7 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
-using UnifreightIIG.Common.ImportDeclarationServiceReference;
+using UnifreightIIG.Common.MessageLib.ID;
 
 namespace Logitude.CustomsMessaging.ResponseServices.DeclarationErrorPointer
 {
@@ -242,6 +242,10 @@ namespace Logitude.CustomsMessaging.ResponseServices.DeclarationErrorPointer
             {
                 //Add New Entity Error
                 var myEntityError = new error();
+              if(amendmentItem.AmendmentFieldStatus!=null)   myEntityError.AmendmentFieldStatus = amendmentItem.AmendmentFieldStatus.ToString();
+              if(amendmentItem.AmendmentRequestInitiatorType!=null)  myEntityError.AmendmentRequestInitiatorType = amendmentItem.AmendmentRequestInitiatorType.ToString();
+              if(amendmentItem.FieldAmendmentRejectReasonRemarks!=null) myEntityError.FieldAmendmentRejectReasonRemarks = amendmentItem.FieldAmendmentRejectReasonRemarks.ToString();
+
                 myEntityError.Code = amendmentItem.ChangeReasonCode.Value;
                 myEntityError.ListVersionID = amendmentItem.ChangeReasonCode.listVersionID;
                 if (MessageErrorArray != null && MessageErrorArray.Count() > 0)
@@ -269,6 +273,11 @@ namespace Logitude.CustomsMessaging.ResponseServices.DeclarationErrorPointer
                 //Add New Fields Error
                 var myFieldError = new field();
                 myFieldError.Code = amendmentItem.ChangeReasonCode.Value;
+                myFieldError.AmendmentFieldStatus = amendmentItem.AmendmentFieldStatus.ToString();
+                if (amendmentItem.AmendmentFieldStatus != null) myFieldError.AmendmentFieldStatus = amendmentItem.AmendmentFieldStatus.ToString();
+                if (amendmentItem.AmendmentRequestInitiatorType != null) myFieldError.AmendmentRequestInitiatorType = amendmentItem.AmendmentRequestInitiatorType.ToString();
+                if (amendmentItem.FieldAmendmentRejectReasonRemarks != null) myFieldError.FieldAmendmentRejectReasonRemarks = amendmentItem.FieldAmendmentRejectReasonRemarks.ToString();
+
                 myFieldError.ListVersionID = amendmentItem.ChangeReasonCode.listVersionID;
                 if (MessageErrorArray != null && MessageErrorArray.Count() > 0)
                 {

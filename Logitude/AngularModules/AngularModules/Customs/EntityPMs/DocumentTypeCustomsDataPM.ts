@@ -43,7 +43,10 @@ export class DocumentTypeCustomsDataPM {
     public OldEntityPM: DocumentTypeCustomsDataPM;
 		
     public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
+       if(!this.DisableMarkAsDirty)
+       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -51,6 +54,7 @@ export class DocumentTypeCustomsDataPM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "Customs.DocumentTypeCustomsData");
            
         }
+       }
     }
 
     private MyClone: DocumentTypeCustomsDataPM;

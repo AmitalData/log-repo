@@ -97,7 +97,6 @@
                                                     [ObjectTableName]="ObjectTableName"
                                                     [HideColumns]="true"
                                                     [DataContext]="DataContext"
-                                                    
                                                     [Text]="CasualSupplierName"></LogTextBox>
 
                                     </td>
@@ -127,7 +126,7 @@
                                         <LogLabel [ObjectFieldName]="'ImporterCode'" [ObjectTableName]="ObjectTableName"
                                                   [DataContext]="DataContext"></LogLabel>
                                     </td>
-                                    <td style="width: 100px;">
+                                    <td *ngIf="!ShowPalestinianCode" style="width: 100px;">
                                         <SearchBox #ImporterSearchBox [ObjectTableName]="'Customs.Client'"
                                                    [IsQuickSearch]="true"
                                                    [DropDownWidth]="143"
@@ -142,7 +141,21 @@
                                                    (ItemClicked)="ImporterClicked($event)"></SearchBox>
                                         <!--(TextChanged)="ImporterTextChanged('Importer', $event, ImporterSearchBox)"-->
                                     </td>
-
+                                    <td *ngIf="ShowPalestinianCode" style="width: 100px;">
+                                        <SearchBox #ImporterSearchBox [ObjectTableName]="'Customs.Client'"
+                                                   [IsQuickSearch]="true"
+                                                   [DropDownWidth]="143"
+                                                   [DisplayText]="PalestinianCode"
+                                                   [SearchText]="PalestinianCode"
+                                                   [DisplayMember]="'Code'"
+                                                   [ItemHeight]="36"
+                                                   [HideIcons]="true"
+                                                   [Watermark]="''"
+                                                   [IsDisabled]="!IsImporerCodeEnabled"
+                                                   (LostFocus)="ImporterLostFocus( $event, ImporterSearchBox)"
+                                                   (ItemClicked)="ImporterClicked($event)"></SearchBox>
+                                        <!--(TextChanged)="ImporterTextChanged('Importer', $event, ImporterSearchBox)"-->
+                                    </td>
                                     <td style="width: 25px;"><IconButton [IsSmall]="true" [Name]="'Edit'" (click)="EditImporter()"></IconButton></td>
                                     <!--<td style="width: 25px;"><IconButton [IsSmall]="true" [Name]="'Search'" (click)="SearchImporter('Importer', $event)" [IsEnabled]="!IsDisplayOnly"></IconButton></td>-->
 

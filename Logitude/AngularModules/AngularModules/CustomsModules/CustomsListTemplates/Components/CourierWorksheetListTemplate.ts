@@ -78,6 +78,7 @@ export class CourierWorksheetListTemplate {
     IsDeclarationChecked: boolean = false;
     SuspentionReasonText: string;
     SuspentionReasonTip: string;
+    IsClosedForFollowUp: boolean = false;
 
     DelayCertificateDetails: DeclarationMamanSpecialActionPM = null;
     MamanStickerDetails: DeclarationMamanSpecialActionPM = null;
@@ -251,7 +252,7 @@ export class CourierWorksheetListTemplate {
         }
 
         this.SuspentionReasonText = this._CourierWorksheet.CourierCustomStatusName;
-
+        this.IsClosedForFollowUp = this._CourierWorksheet.IsClosedForFollowUp;
         this.BuildDeclarationsCheckBox();
         //this.getCourierPendingReasonName(this._CourierWorksheet.CourierPendingReasonList);
         this.CD.detectChanges();
@@ -887,5 +888,47 @@ export class CourierWorksheetListTemplate {
             SessionLocator.SelectedSession.StopBusyIndicator();
             this.RefreshData();
         });
+    }
+
+    SetCLSHWBEvent(SetEvetActive: number) {
+        var confirm = new ConfirmWindow();
+        confirm.YesButtonText = TextCodeTranslator.Translate("General.O.Confirm");
+        confirm.NoButtonText = TextCodeTranslator.Translate("General.O.Void");
+
+        if (SetEvetActive==0) {
+                      
+            confirm.Show("אשר ביטול סגירת ש.מ.ב")
+            confirm.WindowClosed.subscribe((event: any) => {
+                if (confirm.Yes) {
+                    confirm.Close();
+                    this._DeclarationWebService.GetCLSHWBEventHandle(this._CourierWorksheet.DeclarationId, SessionLocator.Tenant, 0).subscribe((response: ServiceResponse) => {
+                        SessionLocator.SelectedSession.StopBusyIndicator();
+                        this.RefreshData();
+
+                    }
+                    );
+                }
+                        else {
+                    confirm.Close();
+                }
+            });
+        }
+        else {  // SetEvetActive==0
+            confirm.Show("אשר סגירת ש.מ.ב")
+            confirm.WindowClosed.subscribe((event: any) => {
+                if (confirm.Yes) {
+                    confirm.Close();
+                    this._DeclarationWebService.GetCLSHWBEventHandle(this._CourierWorksheet.DeclarationId, SessionLocator.Tenant, 1).subscribe
+                        ((response: ServiceResponse) => {
+                            SessionLocator.SelectedSession.StopBusyIndicator();
+                            this.RefreshData();
+                        });
+                                 }
+                 else {
+                    confirm.Close();
+                }
+            });
+        }
+
     }
 }

@@ -7,5 +7,6 @@ update  CardSearches set IsCustomer = (select IsCustomer From Cards where id =Ca
 
     ]]>
   </Sql>
+  <Oracle Version="1"></Oracle>
 </Script>
 

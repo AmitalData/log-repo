@@ -142,6 +142,7 @@
   </Column>
   <Column
     Name="ExportRecieverWareHouseCode"
+    OldNames="RecieverWareHouseCode"
     Type="varchar"
     Size="20">
     <Constraints
@@ -157,11 +158,10 @@
   <Column
     Name="ExportLoadingPortCode"
     Type="varchar"
-    Size="17">
+    Size="10">
     <Constraints
       Nullable="true" />
   </Column>
-  
   <Relation
     ForeignKeyColumn="DeclarationId"
     ReferencedTable="Declarations"
@@ -219,7 +219,7 @@
     ReferencedTableSchema="Customs" />
   <Relation
     ForeignKeyColumn="ExportLoadingPortCode"
-    ReferencedTable="UnloadingSiteType"
+    ReferencedTable="LoadingSiteTypes"
     ReferencedColumn="Code"
     ReferencedTableSchema="Customs" />
 </Table>

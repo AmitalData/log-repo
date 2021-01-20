@@ -4,7 +4,7 @@
   Schema="Customs"
   DBType="Main"
   Module="Customs">
-  <Column
+  <Column   
     Name="DeclarationId"
     Type="varchar"
     Size="15">

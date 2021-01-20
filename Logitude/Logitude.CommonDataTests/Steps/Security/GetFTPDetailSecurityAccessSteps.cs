@@ -1,5 +1,4 @@
 ﻿using FluentAssertions;
-using Logitude.Test.Base.Models.Login;
 using Logitude.Test.Base.Context;
 using Logitude.Test.Base.Services;
 using System.Collections.Generic;
@@ -15,12 +14,9 @@ namespace Logitude.CommonDataTests.Steps.Security
     public class GetFTPDetailSecurityAccessSteps
     {
         private SecurityAccessStepsContext<FTPDetailPM> Context;
-
-        public GetFTPDetailSecurityAccessSteps(MultiUsers multiUsers, SecurityAccessStepsContext<FTPDetailPM> context)
+        public GetFTPDetailSecurityAccessSteps(SecurityAccessStepsContext<FTPDetailPM> context)
         {
             Context = context;
-            Context.FirstUser = multiUsers.Users[0];
-            Context.SecondUser = multiUsers.Users[1];
         }
 
         [When(@"First user get the first FTP Detail from FTP Detail list")]
@@ -41,7 +37,7 @@ namespace Logitude.CommonDataTests.Steps.Security
         {
             IEnumerable<FTPDetailPM> firstUserDetailList = GetFTPDetailsListForFirstUser();
             string ftpDetailsGetSingleUrl = URLs.FTPDetailsGetSingle(firstUserDetailList?.FirstOrDefault()?.Id);
-            APIResponse<FTPDetailPM> response = APICaller.CallGet<FTPDetailPM>(ftpDetailsGetSingleUrl, Context.SecondUser.Token);
+            APIResponse<FTPDetailPM> response = APICaller.CallGet<FTPDetailPM>(ftpDetailsGetSingleUrl, UserOtherTenant.Token);
             Context.SecondUserPMData.Id = response.Data?.Id;
         }
 

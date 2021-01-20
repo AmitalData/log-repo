@@ -53,7 +53,10 @@ export class SignatureTypePM {
     public OldEntityPM: SignatureTypePM;
 		
     public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
+       if(!this.DisableMarkAsDirty)
+       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -61,6 +64,7 @@ export class SignatureTypePM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "Customs.SignatureType");
            
         }
+       }
     }
 
     private MyClone: SignatureTypePM;

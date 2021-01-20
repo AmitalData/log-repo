@@ -42,6 +42,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 					                          AirlinePrefix = a.AirlinePrefix,
 					
                                               ICAO = a.ICAO,
+											  UnloadPortCode=a.UnloadPortCode,
 		                    	            });
             return query;
 		}

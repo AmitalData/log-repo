@@ -53,7 +53,10 @@ export class ContinuousMessagesTypeCodePM {
     public OldEntityPM: ContinuousMessagesTypeCodePM;
 		
     public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
+       if(!this.DisableMarkAsDirty)
+       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -61,6 +64,7 @@ export class ContinuousMessagesTypeCodePM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "Customs.ContinuousMessagesTypeCode");
            
         }
+       }
     }
 
     private MyClone: ContinuousMessagesTypeCodePM;

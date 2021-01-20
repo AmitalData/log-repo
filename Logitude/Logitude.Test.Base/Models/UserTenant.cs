@@ -10,7 +10,7 @@
         public static string ProfitCurrencyId { get; set; }
         public static double? ProfitCurrencyRate { get; set; }
         public static string LocalCurrencyId { get; set; }
-        public static string LoginUserId { get; set; }
-        public static string LoginUserName { get; set; }
+        public static string UserId { get; set; }
+        public static string UserName { get; set; }
     }
 }

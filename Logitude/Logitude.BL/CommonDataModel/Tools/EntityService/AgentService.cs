@@ -129,8 +129,11 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             entityRepository.Add(entityPOCO);
             entityRepository.SubmitChanges();
 
-            RunStoredProcedureClass.UpdateCardSearcsRecords(entityPM.Id, entityPM.Tenant);
-            //TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "Agent");
+            string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
+            if (dbms != "oracle")
+            {
+                RunStoredProcedureClass.UpdateCardSearcsRecords(entityPM.Id, entityPM.Tenant);
+            }            //TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "Agent");
             //TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "Card");
 
             foreach (ContactPM itemPM in entityPM.Contacts)
@@ -182,8 +185,11 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             entityRepository.Update(entityPOCO);
             entityRepository.SubmitChanges();
 
-            RunStoredProcedureClass.UpdateCardSearcsRecords(entityPM.Id, entityPM.Tenant);
-            //TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "Agent");
+            string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
+            if (dbms != "oracle")
+            {
+                RunStoredProcedureClass.UpdateCardSearcsRecords(entityPM.Id, entityPM.Tenant);
+            }            //TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "Agent");
             //TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "Card");
         }
 

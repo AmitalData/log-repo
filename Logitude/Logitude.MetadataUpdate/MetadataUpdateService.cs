@@ -1,4 +1,5 @@
-﻿using Logitude.Customs.BL.EntityQueryServices;
+﻿using Logitude.BL.Helpers;
+using Logitude.Customs.BL.EntityQueryServices;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
@@ -42,6 +43,9 @@ namespace Logitude.MetadataUpdate
         {
             string dbms = ConfigurationManager.AppSettings.Get("DBMS");
             LogitudeSettings.DatabaseManagementSystem = dbms;
+            Console.WriteLine("Connected to " + dbms);
+            Console.WriteLine(GetConnectionString());
+            
             SettingRepository settingRepository = new SettingRepository();
             Setting setting = settingRepository.GetSingleSetting("1");
             LogitudeSettings.Id = setting.Id;
@@ -78,8 +82,22 @@ namespace Logitude.MetadataUpdate
 
             Logitude.Server.Tools.ContainerAccessor.InitContainer();
             InjectionUtil.Init(null, null, null, () => (new ByteCompressorUtil()) as IByteCompressorUtil, null, null,null);
-
+            InfraRegistrationHelper.Register();
             CacheManager.CacheWrapper = new CacheWrapper(WorkerEntryPoint.Cache);
+        }
+
+        private string GetConnectionString()
+        {
+            string dbConnectionInfo = "";
+            if (LogitudeSettings.DatabaseManagementSystem == "oracle")
+            {
+                dbConnectionInfo = ConfigurationManager.ConnectionStrings["Oracle_Globalstr"].ConnectionString;
+            }
+            else
+            {
+                dbConnectionInfo = ConfigurationManager.ConnectionStrings["Globalstr"].ConnectionString;
+            }
+            return dbConnectionInfo;
         }
     }
 }
