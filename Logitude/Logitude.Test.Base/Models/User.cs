@@ -2,10 +2,9 @@
 {
     public class User
     {
-        public string UserId { get; set; }
-        public string UserName { get; set; }
-        public int Tenant { get; set; }
-        public string Token { get; set; }
-        public bool InvalidToken { get; set; }
+        public string Id { get; set; }
+        public string BranchId { get; set; }
+        public string DepartmentId { get; set; }
+        public string BusinessUnitId { get; set; }
     }
 }

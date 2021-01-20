@@ -13,9 +13,7 @@ namespace Logitude.Test.Base.Services
 {
     public class APICaller
     {
-        private static readonly string ApiUrl = ConfigurationManager.AppSettings["Url"];
-
-        public static APIResponse<T> CallPost<T>(object requestBody, string url, string token)
+        public static ApiResponse<T> CallPost<T>(object requestBody, string url, string token)
         {
             ApiRequestParameters request = new ApiRequestParameters()
             {
@@ -28,7 +26,7 @@ namespace Logitude.Test.Base.Services
             return CallAPIProcess<T>(request);
         }
 
-        public static APIResponse<T> CallPut<T>(object requestBody, string url, string token)
+        public static ApiResponse<T> CallPut<T>(object requestBody, string url, string token)
         {
             ApiRequestParameters request = new ApiRequestParameters()
             {
@@ -41,7 +39,7 @@ namespace Logitude.Test.Base.Services
             return CallAPIProcess<T>(request);
         }
 
-        public static APIResponse<T> CallGet<T>(string url, string token)
+        public static ApiResponse<T> CallGet<T>(string url, string token)
         {
             ApiRequestParameters request = new ApiRequestParameters()
             {
@@ -53,7 +51,7 @@ namespace Logitude.Test.Base.Services
             return CallAPIProcess<T>(request);
         }
 
-        public static APIResponse<T> CallGetByFilters<T>(string url, string token, ApiQueryFilters apiQueryFilters)
+        public static ApiResponse<T> CallGetByFilters<T>(string url, string token, ApiQueryFilters apiQueryFilters)
         {
             ApiRequestParameters request = new ApiRequestParameters()
             {
@@ -66,12 +64,12 @@ namespace Logitude.Test.Base.Services
         }
 
         
-        private static APIResponse<T> CallAPIProcess<T>(ApiRequestParameters requestParameters)
+        private static ApiResponse<T> CallAPIProcess<T>(ApiRequestParameters requestParameters)
         {
             string restClientUrl = GetRequestUrl(requestParameters.Url);
             RestClient restClient = new RestClient(restClientUrl);
             RestRequest restRequest = new RestRequest(requestParameters.Method) { RequestFormat = DataFormat.Json };
-            var response = new APIResponse<T>();
+            var response = new ApiResponse<T>();
 
             if (!string.IsNullOrEmpty(requestParameters.Token))
             {
@@ -98,14 +96,14 @@ namespace Logitude.Test.Base.Services
             return response;
         }
 
-        private static APIResponse<T> CallAPIProcess<T>(ApiRequestParameters requestParameters, ApiQueryFilters apiQueryFilters)
+        private static ApiResponse<T> CallAPIProcess<T>(ApiRequestParameters requestParameters, ApiQueryFilters apiQueryFilters)
         {
             string restClientUrl = GetRequestUrl(requestParameters.Url);
             restClientUrl += GetQueryStringFromApiQueryFilters(apiQueryFilters);
 
             RestClient restClient = new RestClient(restClientUrl);
             RestRequest restRequest = new RestRequest(requestParameters.Method) { RequestFormat = DataFormat.Json };
-            var response = new APIResponse<T>();
+            var response = new ApiResponse<T>();
 
             if (!string.IsNullOrEmpty(requestParameters.Token))
             {
@@ -136,11 +134,13 @@ namespace Logitude.Test.Base.Services
 
         private static string GetRequestUrl(string url)
         {
+            string apiUrl = Settings.ServerUrl;
+
             if (String.IsNullOrEmpty(url))
             {
                 return null;
             }
-            return (ApiUrl.EndsWith("/") ? ApiUrl.TrimEnd('/') : ApiUrl) + (!url.StartsWith("/") ? ("/" + url) : url);
+            return (apiUrl.EndsWith("/") ? apiUrl.TrimEnd('/') : apiUrl) + (!url.StartsWith("/") ? ("/" + url) : url);
         }
 
         private static string GetQueryStringFromApiQueryFilters(ApiQueryFilters apiQueryFilters)

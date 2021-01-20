@@ -6,7 +6,6 @@ using System.Linq;
 using TechTalk.SpecFlow;
 using Logitude.InvoiceTests.Models.Invoice;
 using Logitude.Test.Base.Models;
-using Logitude.Test.Base.Constants;
 
 namespace Logitude.InvoiceTests.Steps.SecurityTests
 {
@@ -31,7 +30,7 @@ namespace Logitude.InvoiceTests.Steps.SecurityTests
         public void WhenSecondUserGetTheAPInvoiceThatRequestedByFirstUser()
         {
             IEnumerable<APInvoicePM> firstUserAPInvoicesList = GetAPInvoiceListForFirstUser();
-            string apInvoicesGetSingleUrl = URLs.APInvoicesGetSingle(firstUserAPInvoicesList?.FirstOrDefault()?.Id);
+            string apInvoicesGetSingleUrl = Urls.APInvoicesGetSingle(firstUserAPInvoicesList?.FirstOrDefault()?.Id);
             var response = APICaller.CallGet<APInvoicePM>(apInvoicesGetSingleUrl, UserOtherTenant.Token);
             Context.SecondUserPMData.Id = response.Data?.Id;
         }
@@ -56,7 +55,7 @@ namespace Logitude.InvoiceTests.Steps.SecurityTests
                 PageSize = 1
             };
 
-            APIResponse<IEnumerable<APInvoicePM>> response = APICaller.CallGetByFilters<IEnumerable<APInvoicePM>>(URLs.APInvoiceViewsGetByFilters(), UserTenant.Token, apiQueryFilters);
+            ApiResponse<IEnumerable<APInvoicePM>> response = APICaller.CallGetByFilters<IEnumerable<APInvoicePM>>(Urls.APInvoiceViewsGetByFilters(), UserTenant.Token, apiQueryFilters);
             return response.Data;
         }
     }

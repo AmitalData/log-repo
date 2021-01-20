@@ -1,6 +1,6 @@
-﻿namespace Logitude.Test.Base.Constants
+﻿namespace Logitude.Test.Base.Models
 {
-    public static class URLs
+    public static class Urls
     {
         //public static string UserAuthentication = "Authentication";
         //public static string TenantsGetSingle = "Tenants/GetSingle?id=";
@@ -109,7 +109,17 @@
 
         public static string Address()
         {
-            return "address";
+            return "Address";
+        }
+
+        public static string IntegrationTestGetBaseLocations()
+        {
+            return "IntegrationTest/GetBaseLocations";
+        }
+
+        public static string IntegrationTestGetBasePartners()
+        {
+            return "IntegrationTest/GetBasePartners";
         }
     }
 }

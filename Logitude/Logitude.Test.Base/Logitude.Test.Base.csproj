@@ -84,29 +84,35 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Constants\BaseConfigurations.cs" />
-    <Compile Include="Constants\URLs.cs" />
+    <Compile Include="Models\Configurations.cs" />
+    <Compile Include="Models\Credentials.cs" />
+    <Compile Include="Models\Settings.cs" />
+    <Compile Include="Models\Urls.cs" />
     <Compile Include="Context\SecurityAccessStepsContext.cs" />
     <Compile Include="Extensions\TableExtensions.cs" />
     <Compile Include="Hooks\BeforeTestRun.cs" />
     <Compile Include="Models\ApiQueryFilters.cs" />
     <Compile Include="Models\ApiRequestParameters.cs" />
-    <Compile Include="Models\APIResponse.cs" />
+    <Compile Include="Models\ApiResponse.cs" />
     <Compile Include="Models\LoginParameters.cs" />
-    <Compile Include="Models\User.cs" />
+    <Compile Include="Models\UserLogin.cs" />
     <Compile Include="Models\Tenant.cs" />
-    <Compile Include="Models\UserList.cs" />
+    <Compile Include="Models\User.cs" />
     <Compile Include="Models\UserOtherTenant.cs" />
     <Compile Include="Models\UserTenant.cs" />
-
     <Compile Include="Models\LocationsData.cs" />
     <Compile Include="Models\LocationsVariables.cs" />
     <Compile Include="Models\PartnersData.cs" />
     <Compile Include="Models\PartnersVariables.cs" />
+    <Compile Include="Models\XMLParser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\APICaller.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="Configurations\configurations.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />

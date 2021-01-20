@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Logitude.Test.Base.Models
+﻿namespace Logitude.Test.Base.Models
 {
     public class LocationsVariables
     {
@@ -19,7 +13,5 @@ namespace Logitude.Test.Base.Models
         public string CountryUSId { get; set; }
         public string GlobalZoneEUId { get; set; }
         public string StateAKId { get; set; }
-
-
     }
 }

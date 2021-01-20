@@ -6,7 +6,6 @@ using System.Linq;
 using TechTalk.SpecFlow;
 using Logitude.CommonDataTests.Models;
 using Logitude.Test.Base.Models;
-using Logitude.Test.Base.Constants;
 
 namespace Logitude.CommonDataTests.Steps.Security
 {
@@ -36,8 +35,8 @@ namespace Logitude.CommonDataTests.Steps.Security
         public void WhenSecondUserGetTheFTPDetailThatRequestedByFirstUser()
         {
             IEnumerable<FTPDetailPM> firstUserDetailList = GetFTPDetailsListForFirstUser();
-            string ftpDetailsGetSingleUrl = URLs.FTPDetailsGetSingle(firstUserDetailList?.FirstOrDefault()?.Id);
-            APIResponse<FTPDetailPM> response = APICaller.CallGet<FTPDetailPM>(ftpDetailsGetSingleUrl, UserOtherTenant.Token);
+            string ftpDetailsGetSingleUrl = Urls.FTPDetailsGetSingle(firstUserDetailList?.FirstOrDefault()?.Id);
+            ApiResponse<FTPDetailPM> response = APICaller.CallGet<FTPDetailPM>(ftpDetailsGetSingleUrl, UserOtherTenant.Token);
             Context.SecondUserPMData.Id = response.Data?.Id;
         }
 
@@ -55,7 +54,7 @@ namespace Logitude.CommonDataTests.Steps.Security
                 PageSize = 1
             };
 
-            APIResponse<IEnumerable<FTPDetailPM>> response = APICaller.CallGetByFilters<IEnumerable<FTPDetailPM>>(URLs.FTPDetailViewsGetByFilters(), UserTenant.Token, apiQueryFilters);
+            ApiResponse<IEnumerable<FTPDetailPM>> response = APICaller.CallGetByFilters<IEnumerable<FTPDetailPM>>(Urls.FTPDetailViewsGetByFilters(), UserTenant.Token, apiQueryFilters);
             return response.Data;
         }
 

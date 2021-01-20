@@ -1,10 +1,7 @@
 ﻿using Logitude.ShipmentTests.Models;
 using Logitude.ShipmentTests.Models.Builders;
-using Logitude.Test.Base.Constants;
 using Logitude.Test.Base.Models;
 using Logitude.Test.Base.Services;
-using System.Collections.Generic;
-using System.Linq;
 using TechTalk.SpecFlow;
 
 namespace Logitude.ShipmentTests.Steps
@@ -54,12 +51,12 @@ namespace Logitude.ShipmentTests.Steps
 
         private ShipmentPM CreateAndGetShipment(ShipmentPM shipmentPM)
         {
-            APIResponse<ShipmentPM> PostResponse = APICaller.CallPost<ShipmentPM>(shipmentPM, URLs.Shipment(), UserTenant.Token);
+            ApiResponse<ShipmentPM> PostResponse = APICaller.CallPost<ShipmentPM>(shipmentPM, Urls.Shipment(), UserTenant.Token);
             ShipmentPM shipment = PostResponse.Data;
 
-            string singleShipmentUrl = URLs.ShipmentGetSingle(shipment?.Id);
+            string singleShipmentUrl = Urls.ShipmentGetSingle(shipment?.Id);
 
-            APIResponse<ShipmentPM> GetResponse = APICaller.CallGet<ShipmentPM>(singleShipmentUrl, UserTenant.Token);
+            ApiResponse<ShipmentPM> GetResponse = APICaller.CallGet<ShipmentPM>(singleShipmentUrl, UserTenant.Token);
             return GetResponse.Data;
         }
     }

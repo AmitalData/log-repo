@@ -1,0 +1,12 @@
+﻿<Configurations>
+
+  <General>
+    <ServerUrl>https://test.logitudeworld.com/test/api</ServerUrl>
+  </General>
+
+  <Users>
+    <User Email="ahmadb123@mail.com" Password="ahmed13!A15" Default="true" />
+    <User Email="protractor@test.com" Password="!P123t456" />
+  </Users>
+
+</Configurations>

@@ -1,7 +1,8 @@
-﻿using Logitude.Test.Base.Constants;
-using Logitude.Test.Base.Models;
+﻿using Logitude.Test.Base.Models;
 using Logitude.Test.Base.Services;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using TechTalk.SpecFlow;
 
@@ -11,24 +12,124 @@ namespace Logitude.Test.Base.Hooks
     public class BeforeTestRun
     {
         [BeforeTestRun(Order = 0)]
-        public static void SetupBasePreparationVariables()
+        public static void SetupBeforeTestRun()
         {
-            GetUsersLoginParameters();
-            FillUserTenant();
+            ReadConfigurations();
+            AuthenticateUsers();
+            SetupDefaultUserTenant();
             SetupLocationPreparationVariables();
             SetupPartnerPreparationVariables();
-
         }
 
-        private  static void SetupLocationPreparationVariables()
+        private static void ReadConfigurations()
         {
-            var LocationVariables = APICaller.CallGet<LocationsVariables>("IntegrationTest/GetBaseLocation", UserTenant.Token);
-            LocationDataMap(LocationVariables.Data);
+            string configurationsXmlFilePath = AppDomain.CurrentDomain.BaseDirectory + @"\Configurations\configurations.xml";
+            string configurationsXmlString = File.ReadAllText(configurationsXmlFilePath);
+            Configurations configurations = configurationsXmlString.ParseXML<Configurations>();
+
+            Settings.ServerUrl = configurations.General.ServerUrl;
+
+            ConfigurationsUser defaultUserConfiguration = configurations.Users.Where(u => u.Default).FirstOrDefault();
+            ConfigurationsUser otherUserConfiguration = configurations.Users.Where(u => !u.Default).FirstOrDefault();
+
+            Settings.DefaultUserCredentials = new Credentials
+            {
+                Email = defaultUserConfiguration?.Email,
+                Password = defaultUserConfiguration?.Password
+            };
+
+            Settings.OtherUserCredentials = new Credentials
+            {
+                Email = otherUserConfiguration?.Email,
+                Password = otherUserConfiguration?.Password
+            };
         }
+
+        private static void AuthenticateUsers()
+        {
+            AuthenticateDefaultUser();
+            AuthenticateOtherUser();
+        }
+
+        private static void SetupDefaultUserTenant()
+        {
+            SetupDefaultTenant();
+            SetupDefaultUser();
+        }
+
+        private static void AuthenticateDefaultUser()
+        {
+            LoginParameters loginParameters = new LoginParameters()
+            {
+                Email = Settings.DefaultUserCredentials.Email,
+                Password = Settings.DefaultUserCredentials.Password,
+                ClientType = "Web",
+                GetToken = true
+            };
+
+            ApiResponse<UserLogin> userLoginResponse = APICaller.CallPost<UserLogin>(loginParameters, Urls.UserAuthentication(), null);
+            UserTenant.Token = userLoginResponse.Data?.Token;
+            UserTenant.Tenant = userLoginResponse.Data == null ? 0 : userLoginResponse.Data.Tenant;
+            UserTenant.UserId = userLoginResponse.Data?.UserId;
+            UserTenant.UserName = userLoginResponse.Data?.UserName;
+        }
+
+        private static void AuthenticateOtherUser()
+        {
+            LoginParameters loginParameters = new LoginParameters()
+            {
+                Email = Settings.OtherUserCredentials.Email,
+                Password = Settings.OtherUserCredentials.Password,
+                ClientType = "Web",
+                GetToken = true
+            };
+
+            ApiResponse<UserLogin> userLoginResponse = APICaller.CallPost<UserLogin>(loginParameters, Urls.UserAuthentication(), null);
+            UserOtherTenant.Token = userLoginResponse.Data?.Token;
+            UserOtherTenant.Tenant = userLoginResponse.Data == null ? 0 : userLoginResponse.Data.Tenant;
+            UserOtherTenant.UserId = userLoginResponse.Data?.UserId;
+            UserOtherTenant.UserName = userLoginResponse.Data?.UserName;
+        }
+
+        private static void SetupDefaultTenant()
+        {
+            string tenantUrl = Urls.TenantsGetSingle(UserTenant.Tenant);
+            ApiResponse<Tenant> tenantResponse = APICaller.CallGet<Tenant>(tenantUrl, UserTenant.Token);
+
+            UserTenant.LocalCurrencyId = tenantResponse.Data?.CurrencyId;
+            UserTenant.ProfitCurrencyId = tenantResponse.Data?.ProfitCurrencyId;
+            UserTenant.ProfitCurrencyRate = tenantResponse.Data?.ProfitCurrencyRate;
+        }
+
+        private static void SetupDefaultUser()
+        {
+            ApiQueryFilters apiQueryFilters = new ApiQueryFilters
+            {
+                PageIndex = 0,
+                PageSize = 1,
+                Filter1Name = "SearchFields",
+                Filter1Operator = "Contains",
+                Filter1Value = Settings.DefaultUserCredentials.Email
+            };
+
+            ApiResponse<IEnumerable<User>> usersResponse = APICaller.CallGetByFilters<IEnumerable<User>>(Urls.UserViewsGetByFilters(), UserTenant.Token, apiQueryFilters);
+            User user = usersResponse.Data?.FirstOrDefault();
+
+            UserTenant.BranchId = user?.BranchId;
+            UserTenant.DepartmentId = user?.DepartmentId;
+            UserTenant.BusinessUnitId = user?.BusinessUnitId;
+        }
+
+        private static void SetupLocationPreparationVariables()
+        {
+            ApiResponse<LocationsVariables> locationsVariablesResponse = APICaller.CallGet<LocationsVariables>(Urls.IntegrationTestGetBaseLocations(), UserTenant.Token);
+            LocationDataMap(locationsVariablesResponse.Data);
+        }
+
         private static void SetupPartnerPreparationVariables()
         {
-            var PartnerVariables = APICaller.CallGet<PartnersVariables>("IntegrationTest/GetBasePartners", UserTenant.Token);
-            PartnerDataMap(PartnerVariables.Data);
+            ApiResponse<PartnersVariables> partnersVariablesResponse = APICaller.CallGet<PartnersVariables>(Urls.IntegrationTestGetBasePartners(), UserTenant.Token);
+            PartnerDataMap(partnersVariablesResponse.Data);
         }
 
         private static void LocationDataMap(LocationsVariables vars)
@@ -63,81 +164,6 @@ namespace Logitude.Test.Base.Hooks
             PartnersData.ShippingLineMSCUId = vars.ShippingLineMSCUId;
             PartnersData.ShippingLineMAEUId = vars.ShippingLineMAEUId;
             PartnersData.WarehouseId = vars.WarehouseId;
-        }
-
-        private static void GetUsersLoginParameters()
-        {
-            GetUserLoginParameters();
-            GetOtherUserLoginParameters();
-        }
-
-        private static void FillUserTenant()
-        {
-            FillTenant();
-            FillUser();
-        }
-
-        private static void GetUserLoginParameters()
-        {
-            LoginParameters loginParameters = new LoginParameters()
-            {
-                Email = BaseConfigurations.Email,
-                Password = BaseConfigurations.Password,
-                ClientType = "Web",
-                GetToken = true
-            };
-
-            APIResponse<User> user= APICaller.CallPost<User>(loginParameters, URLs.UserAuthentication(), null);
-            UserTenant.Token = user.Data.Token;
-            UserTenant.Tenant = user.Data.Tenant;
-            UserTenant.UserId = user.Data.UserId;
-            UserTenant.UserName = user.Data.UserName;
-        }
-
-        private static void GetOtherUserLoginParameters()
-        {
-            LoginParameters loginParameters = new LoginParameters()
-            {
-                Email = BaseConfigurations.OtherUserEmail,
-                Password = BaseConfigurations.OtherUserPassword,
-                ClientType = "Web",
-                GetToken = true
-            };
-
-            APIResponse<User> user = APICaller.CallPost<User>(loginParameters, URLs.UserAuthentication(), null);
-            UserOtherTenant.Token = user.Data.Token;
-            UserOtherTenant.Tenant = user.Data.Tenant;
-            UserOtherTenant.UserId = user.Data.UserId;
-            UserOtherTenant.UserName = user.Data.UserName;
-        }
-
-        private static void FillTenant()
-        {
-            string tenantUrl = URLs.TenantsGetSingle(UserTenant.Tenant);
-            APIResponse<Tenant> tenantPM = APICaller.CallGet<Tenant>(tenantUrl, UserTenant.Token);
-
-            UserTenant.LocalCurrencyId = tenantPM.Data.CurrencyId;
-            UserTenant.ProfitCurrencyId = tenantPM.Data.ProfitCurrencyId;
-            UserTenant.ProfitCurrencyRate = tenantPM.Data.ProfitCurrencyRate;
-        }
-
-        private static void FillUser()
-        {
-            ApiQueryFilters apiQueryFilters = new ApiQueryFilters
-            {
-                PageIndex = 0,
-                PageSize = 1,
-                Filter1Name = "SearchFields",
-                Filter1Operator = "Contains",
-                Filter1Value = BaseConfigurations.Email
-            };
-
-            APIResponse<IEnumerable<UserList>> usersResponse = APICaller.CallGetByFilters<IEnumerable<UserList>>(URLs.UserViewsGetByFilters(), UserTenant.Token, apiQueryFilters);
-            UserList user = usersResponse.Data?.FirstOrDefault();
-
-            UserTenant.BranchId = user?.BranchId;
-            UserTenant.DepartmentId = user?.DepartmentId;
-            UserTenant.BusinessUnitId = user?.BusinessUnitId;
         }
     }
 }

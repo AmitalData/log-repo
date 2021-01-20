@@ -2,8 +2,8 @@
 {
     public class UserTenant
     {
-        public static string Token { get; set; }
         public static int Tenant { get; set; }
+        public static string Token { get; set; }
         public static string BranchId { get; set; }
         public static string DepartmentId { get; set; }
         public static string BusinessUnitId { get; set; }

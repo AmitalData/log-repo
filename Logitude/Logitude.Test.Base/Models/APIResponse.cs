@@ -2,7 +2,7 @@
 
 namespace Logitude.Test.Base.Models
 {
-    public class APIResponse<T>
+    public class ApiResponse<T>
     {
         public string ErrorMessage { set; get; }
         public T Data { set; get; }

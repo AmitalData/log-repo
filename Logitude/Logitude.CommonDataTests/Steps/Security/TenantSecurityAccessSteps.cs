@@ -1,6 +1,5 @@
 ﻿using FluentAssertions;
 using Logitude.CommonDataTests.Models;
-using Logitude.Test.Base.Constants;
 using Logitude.Test.Base.Context;
 using Logitude.Test.Base.Models;
 using Logitude.Test.Base.Services;
@@ -45,7 +44,7 @@ namespace Logitude.CommonDataTests.Steps.Security
 
         private TenantPM GetTenant(int Tenant, string Token)
         {
-            string TenantUrl = URLs.TenantsGetSingle(Tenant);
+            string TenantUrl = Urls.TenantsGetSingle(Tenant);
             var tenant = APICaller.CallGet<TenantPM>(TenantUrl, Token);
             return tenant.Data;
         }
