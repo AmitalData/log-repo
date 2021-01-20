@@ -1528,8 +1528,8 @@
     Columns="Tenant,OpenDate" />
   <Index
     Columns="OpportunityId" />
+  <Index
+    Columns="AutomaticLastUpdateDate" />
   <UniqueConstraint
     Columns="Tenant,QuoteNumber" />
-	<Index
-	  Columns="AutomaticLastUpdateDate" />
 </Table>
