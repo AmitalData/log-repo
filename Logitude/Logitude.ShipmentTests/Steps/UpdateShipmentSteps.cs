@@ -1,7 +1,7 @@
 ﻿using FluentAssertions;
-using Logitude.ShipmentTests.Constants;
 using Logitude.ShipmentTests.Models;
 using Logitude.ShipmentTests.Models.Builders;
+using Logitude.Test.Base.Constants;
 using Logitude.Test.Base.Models;
 using Logitude.Test.Base.Services;
 using TechTalk.SpecFlow;
@@ -32,7 +32,7 @@ namespace Logitude.ShipmentTests.Steps
         {
             ShipmentContext.MasterShipment = AddPackagesToShipment(ShipmentContext.MasterShipment, _masterPackages);
 
-            var response = APICaller.CallPut<ShipmentPM>(ShipmentContext.MasterShipment, URLs.Shipment, UserTenant.Token);
+            var response = APICaller.CallPut<ShipmentPM>(ShipmentContext.MasterShipment, URLs.Shipment(), UserTenant.Token);
             ShipmentContext.MasterShipment.Id = response.Data.Id;
         }
 
@@ -52,7 +52,7 @@ namespace Logitude.ShipmentTests.Steps
         public void TheputAPIsenttoaddhousepackages()
         {
             ShipmentContext.MasterShipment = AddPackagesToShipment(ShipmentContext.HouseShipment, _housePackage);
-            var response = APICaller.CallPut<ShipmentPM>(ShipmentContext.HouseShipment, URLs.Shipment, UserTenant.Token);
+            var response = APICaller.CallPut<ShipmentPM>(ShipmentContext.HouseShipment, URLs.Shipment(), UserTenant.Token);
             ShipmentContext.HouseShipment.Id = response.Data.Id;
         }
 
@@ -72,7 +72,7 @@ namespace Logitude.ShipmentTests.Steps
         public void WhenThePutAPISentToAddMasterPayable()
         {
             ShipmentContext.MasterShipment = AddPayablesToShipment(ShipmentContext.MasterShipment, _PayablesPM);
-            var response = APICaller.CallPut<ShipmentPM>(ShipmentContext.MasterShipment, URLs.Shipment, UserTenant.Token);
+            var response = APICaller.CallPut<ShipmentPM>(ShipmentContext.MasterShipment, URLs.Shipment(), UserTenant.Token);
             ShipmentContext.MasterShipment.Id = response.Data?.Id;
         }
 

@@ -1,11 +1,12 @@
 ﻿using FluentAssertions;
 using Logitude.InvoiceTests.Models.Payment;
 using Logitude.Test.Base.Context;
-using Logitude.Test.Base.Models;
 using Logitude.Test.Base.Services;
 using System.Collections.Generic;
 using System.Linq;
 using TechTalk.SpecFlow;
+using Logitude.Test.Base.Models;
+using Logitude.Test.Base.Constants;
 
 namespace Logitude.InvoiceTests.Steps.SecurityTests
 {
@@ -29,8 +30,8 @@ namespace Logitude.InvoiceTests.Steps.SecurityTests
         public void WhenSecondUserGetTheAPPaymentThatRequestedByFirstUser()
         {
             IEnumerable<APPaymentPM> firstUserAPPaymentsList = GetAPPaymentListForFirstUser();
-            string singleAPPaymentUrl = "appayments/getsingle?id=" + firstUserAPPaymentsList?.FirstOrDefault()?.Id;
-            var response = APICaller.CallGet<APPaymentPM>(singleAPPaymentUrl, UserOtherTenant.Token);
+            string apPaymentsGetSingleUrl = URLs.APPaymentsGetSingle(firstUserAPPaymentsList?.FirstOrDefault()?.Id);
+            APIResponse<APPaymentPM> response = APICaller.CallGet<APPaymentPM>(apPaymentsGetSingleUrl, UserOtherTenant.Token);
             Context.SecondUserPMData.Id = response.Data?.Id;
         }
 
@@ -48,11 +49,14 @@ namespace Logitude.InvoiceTests.Steps.SecurityTests
 
         private IEnumerable<APPaymentPM> GetAPPaymentListForFirstUser()
         {
-            //this method is waiting the CallGetByFilter to be implemented by Abd.M
-            //string APPaymentsListUrl = "appaymentviews/getbyfilters?ForceCacheRefresh=false&GetAll=false&Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value=&PageIndex=0&PageSize=1";
-            //IEnumerable<APPaymentPM> APPaymentPMs = APICaller.CallGet<IEnumerable<APPaymentPM>>(APPaymentsListUrl, Context.FirstUser.Token, "Result");
-            //return APPaymentPMs;
-            return null;
+            ApiQueryFilters apiQueryFilters = new ApiQueryFilters
+            {
+                PageIndex = 0,
+                PageSize = 1
+            };
+
+            APIResponse<IEnumerable<APPaymentPM>> response = APICaller.CallGetByFilters<IEnumerable<APPaymentPM>>(URLs.APPaymentViewsGetByFilters(), UserTenant.Token, apiQueryFilters);
+            return response.Data;
         }
     }
 }

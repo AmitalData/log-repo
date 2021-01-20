@@ -103,7 +103,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Constants\URLs.cs" />
     <Compile Include="Models\Builders\PackageBuilder.cs" />
     <Compile Include="Models\Builders\PayableBuilder.cs" />
     <Compile Include="Models\Builders\MainCarriageLegBuilder.cs" />

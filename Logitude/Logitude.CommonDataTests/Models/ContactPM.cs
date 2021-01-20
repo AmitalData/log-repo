@@ -1,5 +1,4 @@
-﻿
-namespace Logitude.CommonDataTests.Models.Contact
+﻿namespace Logitude.CommonDataTests.Models
 {
     public class ContactPM
     {

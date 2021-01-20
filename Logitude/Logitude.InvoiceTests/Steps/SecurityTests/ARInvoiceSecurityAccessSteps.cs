@@ -4,6 +4,9 @@ using Logitude.Test.Base.Context;
 using Logitude.Test.Base.Models;
 using Logitude.Test.Base.Services;
 using TechTalk.SpecFlow;
+using Logitude.Test.Base.Constants;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Logitude.InvoiceTests.Steps.SecurityTests
 {
@@ -20,16 +23,16 @@ namespace Logitude.InvoiceTests.Steps.SecurityTests
         [When(@"Get AR Invoice request sent for User's Tenant")]
         public void WhenGetARInvoiceRequestSentForUserSTenant()
         {
-            ARInvoicePM firstUserARInvoice = GetAnARInvoiceForFirstUser(UserTenant.Token);
-            Context.FirstUserPMData.Id = firstUserARInvoice.Id;
+            ARInvoicePM firstUserARInvoice = GetAnARInvoiceForFirstUser();
+            Context.FirstUserPMData.Id = firstUserARInvoice?.Id;
         }
 
         [When(@"Get AR Invoice request sent for other Tenant")]
         public void WhenGetARInvoiceRequestSentForOtherTenant()
         {
-            ARInvoicePM firstUserARInvoice = GetAnARInvoiceForFirstUser(UserTenant.Token);
-            string singleARInvoiceUrl = "arinvoices/GetSingle?id=" + firstUserARInvoice.Id;
-            var response = APICaller.CallGet<ARInvoicePM>(singleARInvoiceUrl, UserOtherTenant.Token);
+            ARInvoicePM firstUserARInvoice = GetAnARInvoiceForFirstUser();
+            string arInvoicesGetSingleUrl = URLs.ARInvoicesGetSingle(firstUserARInvoice?.Id);
+            APIResponse<ARInvoicePM> response = APICaller.CallGet<ARInvoicePM>(arInvoicesGetSingleUrl, UserOtherTenant.Token);
             Context.SecondUserPMData.Id = response.Data?.Id;
         }
 
@@ -45,13 +48,16 @@ namespace Logitude.InvoiceTests.Steps.SecurityTests
             Context.SecondUserPMData.Id.Should().BeNull();
         }
 
-        private ARInvoicePM GetAnARInvoiceForFirstUser(string Token)
+        private ARInvoicePM GetAnARInvoiceForFirstUser()
         {
-            //this method is waiting the CallGetByFilter to be implemented by Abd.M
-            //string ARInvoicesListUrl = "arinvoiceviews/getbyfilters?ForceCacheRefresh=false&GetAll=false&Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value=&PageIndex=0&PageSize=22";
-            //IEnumerable<ARInvoicePM> ARInvoicePMs = APICaller.CallGet<IEnumerable<ARInvoicePM>>(ARInvoicesListUrl, Token, "Result");
-            //return ARInvoicePMs.FirstOrDefault();
-            return null;
+            ApiQueryFilters apiQueryFilters = new ApiQueryFilters
+            {
+                PageIndex = 0,
+                PageSize = 1
+            };
+
+            APIResponse<IEnumerable<ARInvoicePM>> response = APICaller.CallGetByFilters<IEnumerable<ARInvoicePM>>(URLs.ARInvoiceViewsGetByFilters(), UserTenant.Token, apiQueryFilters);
+            return response.Data?.FirstOrDefault();
         }
     }
 }

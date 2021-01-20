@@ -4,6 +4,9 @@ using Logitude.Test.Base.Context;
 using Logitude.Test.Base.Models;
 using Logitude.Test.Base.Services;
 using TechTalk.SpecFlow;
+using Logitude.Test.Base.Constants;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Logitude.InvoiceTests.Steps.SecurityTests
 {
@@ -20,16 +23,16 @@ namespace Logitude.InvoiceTests.Steps.SecurityTests
         [When(@"Get AR Payment request sent for User's Tenant")]
         public void WhenGetARPaymentRequestSentForUserSTenant()
         {
-            ARPaymentPM firstUserARPayment = GetAnARPaymentForFirstUser(UserTenant.Token);
-            Context.FirstUserPMData.Id = firstUserARPayment.Id;
+            ARPaymentPM firstUserARPayment = GetAnARPaymentForFirstUser();
+            Context.FirstUserPMData.Id = firstUserARPayment?.Id;
         }
 
         [When(@"Get AR Payment request sent for other Tenant")]
         public void WhenGetARPaymentRequestSentForOtherTenant()
         {
-            ARPaymentPM firstUserARPayment = GetAnARPaymentForFirstUser(UserTenant.Token);
-            string singleARPaymentUrl = "arPayments/GetSingle?id=" + firstUserARPayment.Id;
-            var response = APICaller.CallGet<ARPaymentPM>(singleARPaymentUrl, UserOtherTenant.Token);
+            ARPaymentPM firstUserARPayment = GetAnARPaymentForFirstUser();
+            string arPaymentsGetSingleUrl = URLs.ARPaymentsGetSingle(firstUserARPayment?.Id);
+            var response = APICaller.CallGet<ARPaymentPM>(arPaymentsGetSingleUrl, UserOtherTenant.Token);
             Context.SecondUserPMData.Id = response.Data?.Id;
         }
 
@@ -45,13 +48,16 @@ namespace Logitude.InvoiceTests.Steps.SecurityTests
             Context.SecondUserPMData.Id.Should().BeNull();
         }
 
-        private ARPaymentPM GetAnARPaymentForFirstUser(string Token)
+        private ARPaymentPM GetAnARPaymentForFirstUser()
         {
-            //this method is waiting the CallGetByFilter to be implemented by Abd.M
-            //string ARPaymentsListUrl = "arpaymentviews/getbyfilters?ForceCacheRefresh=false&GetAll=false&Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value=&PageIndex=0&PageSize=22";
-            //IEnumerable<ARPaymentPM> ARPaymentPMs = APICaller.CallGet<IEnumerable<ARPaymentPM>>(ARPaymentsListUrl, Token, "Result");
-            //return ARPaymentPMs.FirstOrDefault();
-            return null;
+            ApiQueryFilters apiQueryFilters = new ApiQueryFilters
+            {
+                PageIndex = 0,
+                PageSize = 1
+            };
+
+            APIResponse<IEnumerable<ARPaymentPM>> response = APICaller.CallGetByFilters<IEnumerable<ARPaymentPM>>(URLs.ARPaymentViewsGetByFilters(), UserTenant.Token, apiQueryFilters);
+            return response.Data?.FirstOrDefault();
         }
     }
 }

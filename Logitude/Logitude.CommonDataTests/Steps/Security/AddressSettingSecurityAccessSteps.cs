@@ -1,6 +1,5 @@
-﻿
-using FluentAssertions;
-using Logitude.CommonDataTests.Models.CompanyAddressSetting;
+﻿using FluentAssertions;
+using Logitude.CommonDataTests.Models;
 using Logitude.Test.Base.Context;
 using Logitude.Test.Base.Models;
 using Logitude.Test.Base.Services;

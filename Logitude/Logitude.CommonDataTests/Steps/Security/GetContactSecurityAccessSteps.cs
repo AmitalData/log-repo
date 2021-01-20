@@ -1,13 +1,12 @@
-﻿
-using FluentAssertions;
-using Logitude.CommonDataTests.Models.Contact;
+﻿using FluentAssertions;
+using Logitude.CommonDataTests.Models;
+using Logitude.Test.Base.Services;
 using Logitude.Test.Base.Context;
 using Logitude.Test.Base.Models;
-using Logitude.Test.Base.Services;
 using System.Collections.Generic;
 using System.Linq;
 using TechTalk.SpecFlow;
-
+using Logitude.Test.Base.Constants;
 
 namespace Logitude.CommonDataTests.Steps.Security
 {
@@ -23,8 +22,8 @@ namespace Logitude.CommonDataTests.Steps.Security
         [When(@"First user get the first contact from contacts list")]
         public void WhenFirstUserGetTheFirstContactFromContactsList()
         {
-            IEnumerable<ContactPM> FirstUserContactList = GetContactsListForFirstUser();
-            Context.FirstUserPMData.Id = FirstUserContactList?.FirstOrDefault()?.Id;
+            IEnumerable<ContactPM> firstUserContactList = GetContactsListForFirstUser();
+            Context.FirstUserPMData.Id = firstUserContactList?.FirstOrDefault()?.Id;
         }
 
         [Then(@"the Contact for first user should be exists")]
@@ -36,9 +35,9 @@ namespace Logitude.CommonDataTests.Steps.Security
         [When(@"Second user get the contact that requested by first user")]
         public void WhenSecondUserGetTheContactThatRequestedByFirstUser()
         {
-            IEnumerable<ContactPM> FirstUserContactList = GetContactsListForFirstUser();
-            string singleContactUrl = "Contact/GetSingle?id=" + FirstUserContactList?.FirstOrDefault()?.Id;
-            var response = APICaller.CallGet<ContactPM>(singleContactUrl, UserOtherTenant.Token);
+            IEnumerable<ContactPM> firstUserContactList = GetContactsListForFirstUser();
+            string contactsGetSingleUrl = URLs.ContactsGetSingle(firstUserContactList?.FirstOrDefault()?.Id);
+            APIResponse<ContactPM> response = APICaller.CallGet<ContactPM>(contactsGetSingleUrl, UserOtherTenant.Token);
             Context.SecondUserPMData.Id = response.Data?.Id;
         }
 
@@ -50,13 +49,14 @@ namespace Logitude.CommonDataTests.Steps.Security
 
         private IEnumerable<ContactPM> GetContactsListForFirstUser()
         {
-            //this method is waiting the CallGetByFilter to be implemented by Abd.M
-            //string contactsListUrl = "contactviews/GetByFilters?ForceCacheRefresh=false&GetAll=false&GetCount=true&PageIndex=0&PageSize=10";
-            //IEnumerable<ContactPM> contactPMs = APICaller.CallGet<IEnumerable<ContactPM>>(contactsListUrl, Context.FirstUser.Token, "Result");
-            //return contactPMs;
-            return null;
+            ApiQueryFilters apiQueryFilters = new ApiQueryFilters
+            {
+                PageIndex = 0,
+                PageSize = 1
+            };
+
+            APIResponse<IEnumerable<ContactPM>> response = APICaller.CallGetByFilters<IEnumerable<ContactPM>>(URLs.ContactViewsGetByFilters(), UserTenant.Token, apiQueryFilters);
+            return response.Data;
         }
-
-
     }
 }
