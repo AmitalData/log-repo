@@ -213,6 +213,7 @@ export class AddEditTariffLineComponent  {
         this.myCloner.AddEntity(this.EntityPM);
         this.myCloner.AddEntity(this.DataContext.FatherComponent.CurrentVersion);
         this.myCloner.AddEntity(this.DataContext.FatherComponent.EntityPM);
+        this.myCloner.AddEntity(this.DataContext.ContainerPricesItemsSource);
     }
 
     private RejectChanges() {
