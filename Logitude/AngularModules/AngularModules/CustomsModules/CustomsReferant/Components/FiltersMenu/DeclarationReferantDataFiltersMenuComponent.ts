@@ -71,11 +71,14 @@ export class DeclarationReferantDataFiltersMenuComponent
 
         var myService: UserListService = new UserListService();
         var UserListFromFilters = this.UserFilters.AdditionalFilters.map(({ FieldValue }) => FieldValue);
-        var UserListFromFilters = this.UserFilters.AdditionalFilters.map(({ FieldValue }) => FieldValue);
-
+        if (this.TransportFilters.AdditionalFilters.length > 0) {
+            this.SetTransport(this.TransportFilters.AdditionalFilters.map(({ FieldValue }) => FieldValue).toString());
+        } else {
+            this.SetTransport("All");
+        }
         var myService: UserListService = new UserListService();
-         if (UserListFromFilters[0] != "HowCare" || UserListFromFilters.length != 0) {
-             UserListFromFilters[0].split("%2C").forEach(function (value) {
+        if (UserListFromFilters[0] != "HowCare" || UserListFromFilters.length != 0) {
+            UserListFromFilters[0].split("%2C").forEach(function (value) {
                 myService.getSingleFromCache(value).subscribe((resp: ServiceResponse) => {
                     if (!resp.HasError) {
                         var result: ServiceResponse = resp;
@@ -87,7 +90,7 @@ export class DeclarationReferantDataFiltersMenuComponent
                             if (AppTool.IsNullOrEmpty(list.LocalName)) {
                                 ul.LocalName = list.EnglishName;
                             }
-                           this.LOVListUsers.push(ul)
+                            this.LOVListUsers.push(ul)
                             this.ApplyTransportSelectedStyle();
                             this.myViewChildrenMultiSelectLOVComponent.first.Invalidate();
                             this.SelectedValueChangedEmitUser();
@@ -95,9 +98,9 @@ export class DeclarationReferantDataFiltersMenuComponent
                         }
                     }
                 });
-            },this);
-        } else{
-          
+            }, this);
+        } else {
+
         }
     }
     OnChosenListItemsChanged() {
