@@ -4259,7 +4259,7 @@ User/Pass",
             thread.Start();
         }
 
-        private void button49_Click(object sender, EventArgs e)
+        private void button50_Click(object sender, EventArgs e)
         {
             Thread thread = new Thread(() => LoadClosedTables());
             thread.IsBackground = true;
@@ -4295,7 +4295,7 @@ User/Pass",
             //SetControlPropertyValue(LoadClosedTablesLabel, "ForeColor", Color.Green); // timer
             //SetControlPropertyValue(LoadClosedTablesLabel, "Text", "Done in " + ts.ToString(@"hh\:mm\:ss"));
         }
-        private void button50_Click(object sender, EventArgs e)
+        private void button49_Click(object sender, EventArgs e)
         {
             MetaDataUpdateClass updateClass = new MetaDataUpdateClass();
             updateClass.LoadDefaultReports();
@@ -4565,12 +4565,14 @@ User/Pass",
 
         }
 
-        //private void button50_Click(object sender, EventArgs e)
-        //{
-        //    Thread thread = new Thread(() => UpdateModule(0, "CargoTracking", UpdateCargoTrackingLabel));
-        //    thread.IsBackground = true;
-        //    thread.Start();
-        //}
+       
+
+        private void CargoTracking_btn_Click(object sender, EventArgs e)
+        {
+            Thread thread = new Thread(() => UpdateModule(0, "cargotracking", UpdateAccountinglbl));
+            thread.IsBackground = true;
+            thread.Start();
+        }
     }
 
     public class TenantMailBox
