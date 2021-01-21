@@ -14,14 +14,21 @@ namespace Logitude.Accounting.BL.CoreBL
 {
     public class BankDepositRedeemedChequesVerifyService
     {
-        int tenant;
-        public BankDepositRedeemedChequesVerifyService(int tenant)
+        public string LoggingText { get; set; } = "";
+        public BankDepositRedeemedChequesVerifyService()
         {
-            this.tenant = tenant;
         }
 
-        public List<ARPaymentChequePM> GetNotRedeemedReconciledCheques()
+
+        public void GetAndUpdateChequesForTenant(int tenant)
         {
+            var cheques = GetNotRedeemedReconciledCheques(tenant);
+            SetChequesAsRedeemed(tenant, cheques);
+        }
+        public List<ARPaymentChequePM> GetNotRedeemedReconciledCheques(int tenant)
+        {
+            Log("[Tenant " + tenant + "] getting cheques ...");
+
             var context = AccountingContext.GetContext(tenant);
 
             //var externallyReconciledChequeDepositTransactions
@@ -69,12 +76,9 @@ namespace Logitude.Accounting.BL.CoreBL
                                                       }).ToList();
 
 
+            Log("[Tenant " + tenant + "] cheques got, count: " + paymentChequesNotRedeemed.Count());
+
             return paymentChequesNotRedeemed;
-
-
-
-
-
 
         }
 
@@ -138,6 +142,40 @@ namespace Logitude.Accounting.BL.CoreBL
                 throw;
             }
             
+        }
+
+        public void SetChequesAsRedeemed(int tenant, List<ARPaymentChequePM> chequesPMs)
+        {
+            try
+            {
+                Log("[Tenant " + tenant + "] update cheques started");
+
+                List<string> chequesIds = chequesPMs.Select(d => d.Id).ToList();
+                ARPaymentChequeRepository chequeRepository = new ARPaymentChequeRepository(tenant);
+                var cheques = chequeRepository.GetByIds(tenant, chequesIds);
+
+                foreach (var cheque in cheques)
+                {
+                    cheque.StatusCode = ARPaymentChequeStatusValues.Redeemed;
+                    //chequeRepository.Update(cheque);
+                }
+
+                //chequeRepository.SubmitChanges();
+
+                Log("[Tenant " + tenant + "] update cheques finished");
+
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+
+        }
+
+        private void Log(string text)
+        {
+            LoggingText += text +Environment.NewLine;
         }
 
 
