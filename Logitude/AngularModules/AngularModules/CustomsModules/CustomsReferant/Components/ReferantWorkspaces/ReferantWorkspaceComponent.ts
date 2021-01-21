@@ -397,8 +397,7 @@ export class ReferantWorkspaceComponent implements AfterViewInit {
                     }
                 default: { break; }
             }
-            debugger;
-            this.BuildFiltersForQuery(this.filters);
+             this.BuildFiltersForQuery(this.filters);
             if (myQueryCode.endsWith("_A"))
                 this.filters.addAdditionalFilter("IsAvailabilityDateNull", false, null, null, "Equals", false, false, false, "number");
             var listArgs = new ListComponentArgs();
