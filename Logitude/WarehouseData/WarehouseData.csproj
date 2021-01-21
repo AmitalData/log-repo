@@ -198,6 +198,7 @@
     <Content Include="WarehouseScript\BuildWarehouse\BuildFactChargesTable.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="WarehouseScript\BuildWarehouse\BuildFactQuotesTable.sql" />
     <Content Include="WarehouseScript\BuildWarehouse\BuildIncotermDimensionTable.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -252,6 +253,7 @@
     <Content Include="WarehouseScript\IncrementalWarehouse\UpdateFactChargesTable.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="WarehouseScript\IncrementalWarehouse\UpdateFactQuoteTable.sql" />
     <Content Include="WarehouseScript\IncrementalWarehouse\UpdateMoveTypeDimensionTable.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

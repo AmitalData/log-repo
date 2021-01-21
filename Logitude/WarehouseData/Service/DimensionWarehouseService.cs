@@ -35,6 +35,10 @@ namespace WarehouseData.Helper
                 TableName = ("#" + table.DWObjectTableCode + "Temp ")
             };
 
+            if(table.Dw_TableName == "dw_Ports")
+            {
+
+            }
             stringBuilder.Append(generalDataWarehouseService.GetSqlInsertNotSpecifiedRecorderToDB(sqlInsertNotSpecifiedRecordArgs));
 
             stringBuilder.Append(generalDataWarehouseService.GetDataWarehouseScriptByForderAndScriptName("BuildWarehouse", table.BuildScriptName));
