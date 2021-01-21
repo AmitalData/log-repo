@@ -25,14 +25,14 @@ namespace Logitude.Accounting.BL.CoreBL.Reconcile
             
             InitLines();
         }
-        public List<ReconciliationPM> SplitReconciliation()
+        public List<ReconciliationPM> SplitReconciliationByPayment()
         {
             ReconciliationLinePM line = GetNextReconcileLine();
             if (line != null)
             {
                 CreateReconciliationForLine(line);
 
-                return SplitReconciliation();
+                return SplitReconciliationByPayment();
             }
             else
                 return createdReconciliations;
@@ -119,7 +119,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reconcile
             bool suitableLineIsBiggerThanReconcileLine = Math.Abs(suitableLine.ReconciliationAmount) > Math.Abs(recoAmount);
             if (suitableLineIsBiggerThanReconcileLine)
             {
-                lineToAdd = GetSlicedLineWithSuitableReconcileAmount(recoAmount, suitableLine);
+                lineToAdd = CreateReconcileLineFromOriginalLineByAmount(recoAmount, suitableLine);
             }
             else
             {
@@ -189,15 +189,15 @@ namespace Logitude.Accounting.BL.CoreBL.Reconcile
             reconciliation.ReconciliationLines.Add(reconcileLine);
         }
 
-        ReconciliationLinePM GetSlicedLineWithSuitableReconcileAmount(decimal paymentAmount2Reconcile, ReconciliationLinePM otherRecoLine)
+        ReconciliationLinePM CreateReconcileLineFromOriginalLineByAmount(decimal amountToReconcile, ReconciliationLinePM originalReconcileLine)
         {
-            ReconciliationLinePM sliceLine = CloneReconcileLine(otherRecoLine);
-            sliceLine.ReconciliationAmount = paymentAmount2Reconcile > 0 ? Math.Abs(paymentAmount2Reconcile)*-1 : Math.Abs(paymentAmount2Reconcile);
+            ReconciliationLinePM newLine = CloneReconcileLine(originalReconcileLine);
+            newLine.ReconciliationAmount = amountToReconcile > 0 ? Math.Abs(amountToReconcile)*-1 : Math.Abs(amountToReconcile);
 
-            otherRecoLine.ReconciliationAmount -= sliceLine.ReconciliationAmount; 
+            originalReconcileLine.ReconciliationAmount -= newLine.ReconciliationAmount; 
             
 
-            return sliceLine;
+            return newLine;
         }
 
         List<LedgerTransactionPM> GetReconcileTransactions()
