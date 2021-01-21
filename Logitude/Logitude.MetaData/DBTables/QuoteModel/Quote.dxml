@@ -1243,6 +1243,12 @@
     <Constraints
       Nullable="false" />
   </Column>
+  <Column
+    Name="AutomaticLastUpdateDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="QuoteTemplateId"
     ReferencedTable="QuoteTemplates"
@@ -1522,6 +1528,8 @@
     Columns="Tenant,OpenDate" />
   <Index
     Columns="OpportunityId" />
+  <Index
+    Columns="AutomaticLastUpdateDate" />
   <UniqueConstraint
     Columns="Tenant,QuoteNumber" />
 </Table>
