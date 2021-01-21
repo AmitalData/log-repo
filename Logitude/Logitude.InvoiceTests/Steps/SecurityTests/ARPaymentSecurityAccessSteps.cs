@@ -29,10 +29,7 @@ namespace Logitude.InvoiceTests.Steps.SecurityTests
         [When(@"Get AR Payment request sent for other Tenant")]
         public void WhenGetARPaymentRequestSentForOtherTenant()
         {
-            ARPaymentPM firstUserARPayment = GetAnARPaymentForFirstUser();
-            string arPaymentsGetSingleUrl = Urls.ARPaymentsGetSingle(firstUserARPayment?.Id);
-            var response = APICaller.CallGet<ARPaymentPM>(arPaymentsGetSingleUrl, UserOtherTenant.Token);
-            Context.SecondUserPMData.Id = response.Data?.Id;
+            GetARPaymentForTheSecondUserBaseOnFirstUserARPayments();
         }
 
         [Then(@"AR Payment should be exists")]
@@ -45,6 +42,14 @@ namespace Logitude.InvoiceTests.Steps.SecurityTests
         public void ThenARPaymentShouldNotBeExists()
         {
             Context.SecondUserPMData.Id.Should().BeNull();
+        }
+
+        private void GetARPaymentForTheSecondUserBaseOnFirstUserARPayments()
+        {
+            ARPaymentPM firstUserARPayment = GetAnARPaymentForFirstUser();
+            string arPaymentsGetSingleUrl = Urls.ARPaymentsGetSingle(firstUserARPayment?.Id);
+            var response = APICaller.CallGet<ARPaymentPM>(arPaymentsGetSingleUrl, UserOtherTenant.Token);
+            Context.SecondUserPMData.Id = response.Data?.Id;
         }
 
         private ARPaymentPM GetAnARPaymentForFirstUser()
