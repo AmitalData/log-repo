@@ -66,7 +66,7 @@ namespace Logitude.Accounting.BL.CoreBL
                                                           ExchangeRate = cheque.ExchangeRate,
                                                           StatusCode = cheque.StatusCode,
                                                           CurrencyId = cheque.CurrencyId,
-                                                      }).ToList();
+                                                      }).OrderBy(d=>d.ChequeNumber).ToList();
 
 
             return paymentChequesNotRedeemed;
