@@ -202,6 +202,7 @@ namespace Logitude.Update
             this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "RedeemedCheques";
+            this.Load += new System.EventHandler(this.RedeemedCheques_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();

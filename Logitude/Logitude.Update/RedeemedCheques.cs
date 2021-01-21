@@ -56,31 +56,32 @@ namespace Logitude.Update
 
         private void chequesUpdateAll_Click(object sender, EventArgs e)
         {
+            logTextBox.Text = "";
             progressBar1.Value = 0;
-            progressBar1.Maximum = Tenants.Count();
+            service.DoneTenants = 0;
+            service.LoggingText = "";
 
             var tenantsCSV = tenantsTextBox.Text;
             Tenants = tenantsCSV.Split(',').ToList();
+            progressBar1.Maximum = Tenants.Count();
 
-            Thread thread = new Thread(() => UpdateAllCheques());
+            Thread thread = new Thread(() => service.UpdateCheqesForTenantList(Tenants));
             thread.IsBackground = true;
             thread.Start();
 
+
         }
 
-        private void UpdateAllCheques()
-        {
-            foreach (var tenant in Tenants)
-            {
-
-                service.GetAndUpdateChequesForTenant(Convert.ToInt32(tenant));
-                progressBar1.Value++;
-            }
-        }
 
         private void timer1_Tick(object sender, EventArgs e)
         {
             logTextBox.Text = service.LoggingText;
+            progressBar1.Value = service.DoneTenants;
+        }
+
+        private void RedeemedCheques_Load(object sender, EventArgs e)
+        {
+            timer1.Start();
         }
     }
 }

@@ -1,25 +1,41 @@
 ﻿using Logitude.Accounting.BL.CloseTables;
 using Logitude.Accounting.BL.EntityUpdateServices;
 using Logitude.Accounting.Data;
+using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Accounting.Data.Repositories;
 using Logitude.Accounting.Def.EntityPMs;
 using Simplog.Server.Infrastructure;
+using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Transactions;
 
 namespace Logitude.Accounting.BL.CoreBL
 {
     public class BankDepositRedeemedChequesVerifyService
     {
         public string LoggingText { get; set; } = "";
+        public int DoneTenants = 0;
+        public int WorkingTenant;
         public BankDepositRedeemedChequesVerifyService()
         {
         }
 
-
+        public void UpdateCheqesForTenantList(List<string> Tenants)
+        {
+            doneCheques = new List<ARPaymentCheque>();
+            foreach (var tenant in Tenants)
+            {
+                WorkingTenant = Convert.ToInt32(tenant);
+                GetAndUpdateChequesForTenant(WorkingTenant);
+                DoneTenants++;
+            }
+            writeChequesOnFile();
+        }
         public void GetAndUpdateChequesForTenant(int tenant)
         {
             var cheques = GetNotRedeemedReconciledCheques(tenant);
@@ -143,30 +159,40 @@ namespace Logitude.Accounting.BL.CoreBL
             }
             
         }
-
+        List<ARPaymentCheque> doneCheques = new List<ARPaymentCheque>();
         public void SetChequesAsRedeemed(int tenant, List<ARPaymentChequePM> chequesPMs)
         {
             try
             {
                 Log("[Tenant " + tenant + "] update cheques started");
 
-                List<string> chequesIds = chequesPMs.Select(d => d.Id).ToList();
-                ARPaymentChequeRepository chequeRepository = new ARPaymentChequeRepository(tenant);
-                var cheques = chequeRepository.GetByIds(tenant, chequesIds);
-
-                foreach (var cheque in cheques)
+                using (TransactionScope scope = TransactionFactory.GetTransaction())
                 {
-                    cheque.StatusCode = ARPaymentChequeStatusValues.Redeemed;
-                    //chequeRepository.Update(cheque);
-                }
+                    List<string> chequesIds = chequesPMs.Select(d => d.Id).ToList();
+                    ARPaymentChequeRepository chequeRepository = new ARPaymentChequeRepository(tenant);
+                    List<ARPaymentCheque> cheques = chequeRepository.GetByIds(tenant, chequesIds);
 
-                //chequeRepository.SubmitChanges();
+                    foreach (var cheque in cheques)
+                    {
+                        cheque.StatusCode = ARPaymentChequeStatusValues.Redeemed;
+                        chequeRepository.Update(cheque);
+                    }
+
+
+                    chequeRepository.SubmitChanges();
+
+                    doneCheques.AddRange(cheques);
+
+                    //scope.Complete();
+                }
+                
 
                 Log("[Tenant " + tenant + "] update cheques finished");
 
             }
             catch (Exception ex)
             {
+                Log("*failed* [Tenant " + tenant + "] " + ex.Message);
 
                 throw;
             }
@@ -176,6 +202,26 @@ namespace Logitude.Accounting.BL.CoreBL
         private void Log(string text)
         {
             LoggingText += text +Environment.NewLine;
+        }
+
+        private void writeChequesOnFile()
+        {
+            var fileName = "cheques.csv";
+            // Check if file already exists. If yes, delete it.     
+            if (File.Exists(fileName))
+            {
+                File.Delete(fileName);
+            }
+
+            var all = "Tenant,Cheques Number,Cheque Id" + Environment.NewLine;
+            var list = doneCheques.Select(d => d.Tenant + "," + d.ChequeNumber + "," + d.Id).ToList();
+            var text = string.Join(Environment.NewLine, list);
+            all += text;
+            // Create a new file     
+            using (StreamWriter sw = File.CreateText(fileName))
+            {
+                sw.WriteLine(all);
+            }
         }
 
 
