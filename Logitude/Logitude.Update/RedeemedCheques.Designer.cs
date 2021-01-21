@@ -40,7 +40,7 @@ namespace Logitude.Update
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.button2 = new System.Windows.Forms.Button();
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
-            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.tenantsTextBox = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.logTextBox = new System.Windows.Forms.TextBox();
@@ -115,7 +115,7 @@ namespace Logitude.Update
             // 
             this.groupBox1.Controls.Add(this.button2);
             this.groupBox1.Controls.Add(this.progressBar1);
-            this.groupBox1.Controls.Add(this.textBox2);
+            this.groupBox1.Controls.Add(this.tenantsTextBox);
             this.groupBox1.Controls.Add(this.label4);
             this.groupBox1.Controls.Add(this.label3);
             this.groupBox1.Controls.Add(this.logTextBox);
@@ -144,13 +144,13 @@ namespace Logitude.Update
             this.progressBar1.Size = new System.Drawing.Size(350, 23);
             this.progressBar1.TabIndex = 8;
             // 
-            // textBox2
+            // tenantsTextBox
             // 
-            this.textBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F);
-            this.textBox2.Location = new System.Drawing.Point(16, 56);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(501, 20);
-            this.textBox2.TabIndex = 7;
+            this.tenantsTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F);
+            this.tenantsTextBox.Location = new System.Drawing.Point(16, 56);
+            this.tenantsTextBox.Name = "tenantsTextBox";
+            this.tenantsTextBox.Size = new System.Drawing.Size(501, 20);
+            this.tenantsTextBox.TabIndex = 7;
             // 
             // label4
             // 
@@ -222,7 +222,7 @@ namespace Logitude.Update
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.ProgressBar progressBar1;
-        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.TextBox tenantsTextBox;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox logTextBox;

@@ -82,7 +82,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
         }
 
-        public void RedeemCheques(List<ARPaymentChequePM> cheques)
+        public void RedeemCheques(List<ARPaymentChequePM> cheques, int tenant)
         {
             IAccountingContext MyContext = AccountingContext.GetContext(tenant);
             ARPaymentChequeUpdateService service = new ARPaymentChequeUpdateService(MyContext, new Dictionary<string, IContext>(), tenant);

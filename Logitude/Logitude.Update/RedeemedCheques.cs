@@ -21,7 +21,7 @@ namespace Logitude.Update
 
         BankDepositRedeemedChequesVerifyService service = new BankDepositRedeemedChequesVerifyService();
 
-        List<int> Tenants = new List<int>();
+        List<string> Tenants = new List<string>();
 
         private void GetChequesBtn_Click(object sender, EventArgs e)
         {
@@ -59,6 +59,9 @@ namespace Logitude.Update
             progressBar1.Value = 0;
             progressBar1.Maximum = Tenants.Count();
 
+            var tenantsCSV = tenantsTextBox.Text;
+            Tenants = tenantsCSV.Split(',').ToList();
+
             Thread thread = new Thread(() => UpdateAllCheques());
             thread.IsBackground = true;
             thread.Start();
@@ -69,7 +72,8 @@ namespace Logitude.Update
         {
             foreach (var tenant in Tenants)
             {
-                service.GetAndUpdateChequesForTenant(tenant);
+
+                service.GetAndUpdateChequesForTenant(Convert.ToInt32(tenant));
                 progressBar1.Value++;
             }
         }
