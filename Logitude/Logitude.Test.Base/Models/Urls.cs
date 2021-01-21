@@ -121,5 +121,10 @@
         {
             return "IntegrationTest/GetBasePartners";
         }
+
+        public static string IntegrationTestGetBaseShipment()
+        {
+            return "IntegrationTest/GetBaseShipment";
+        }
     }
 }

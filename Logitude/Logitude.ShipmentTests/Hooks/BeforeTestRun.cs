@@ -11,32 +11,31 @@ namespace Logitude.ShipmentTests.Hooks
         [BeforeTestRun]
         public static void SetupShipmentPreparationVariables()
         {
-            ApiResponse<ShipmentVariables> shipmentVariablesResponse = APICaller.CallGet<ShipmentVariables>("IntegrationTest/GetBaseShipment", UserTenant.Token);
+            ApiResponse<ShipmentVariables> shipmentVariablesResponse = APICaller.CallGet<ShipmentVariables>(Urls.IntegrationTestGetBaseShipment(), UserTenant.Token);
             ShipmentDataMap(shipmentVariablesResponse.Data);
         }
 
-        private static void ShipmentDataMap(ShipmentVariables vars)
+        private static void ShipmentDataMap(ShipmentVariables shipmentVariables)
         {
-            ShipmentData.CurrencyEURId = vars.CurrencyEURId;
-            ShipmentData.IncotermLDEId = vars.IncotermLDEId;
-            ShipmentData.ChargeGroupCOMMCode = vars.ChargeGroupCOMMCode;
-            ShipmentData.ChargeGroupCOMMId = vars.ChargeGroupCOMMId;
-            ShipmentData.ChargeTypeAFTId = vars.ChargeTypeAFTId;
-            ShipmentData.VesselPTId = vars.VesselPTId;
-            ShipmentData.PackageTypePC1Id = vars.PackageTypePC1Id;
-            ShipmentData.PackageTypePC2Id = vars.PackageTypePC2Id;
-            ShipmentData.PackageTypePP1Id = vars.PackageTypePP1Id;
-            ShipmentData.PackageTypePP2Id = vars.PackageTypePP2Id;
-            ShipmentData.PaymentTermCashId = vars.PaymentTermCashId;
-            ShipmentData.VATTypeZeroId = vars.VATTypeZeroId;
-            ShipmentData.QuoteStageQTDRId = vars.QuoteStageQTDRId;
-            ShipmentData.MoveTypeMTAId = vars.MoveTypeMTAId;
-            ShipmentData.MoveTypeMTOId = vars.MoveTypeMTOId;
-            ShipmentData.ChargesTypes = vars.ChargesTypes;
-            ShipmentData.VatTypes = vars.VatTypes;
-            ShipmentData.Currencies = vars.Currencies;
-            ShipmentData.Rates = vars.Rates;
-        
+            ShipmentData.CurrencyEURId = shipmentVariables.CurrencyEURId;
+            ShipmentData.IncotermLDEId = shipmentVariables.IncotermLDEId;
+            ShipmentData.ChargeGroupCOMMCode = shipmentVariables.ChargeGroupCOMMCode;
+            ShipmentData.ChargeGroupCOMMId = shipmentVariables.ChargeGroupCOMMId;
+            ShipmentData.ChargeTypeAFTId = shipmentVariables.ChargeTypeAFTId;
+            ShipmentData.VesselPTId = shipmentVariables.VesselPTId;
+            ShipmentData.PackageTypePC1Id = shipmentVariables.PackageTypePC1Id;
+            ShipmentData.PackageTypePC2Id = shipmentVariables.PackageTypePC2Id;
+            ShipmentData.PackageTypePP1Id = shipmentVariables.PackageTypePP1Id;
+            ShipmentData.PackageTypePP2Id = shipmentVariables.PackageTypePP2Id;
+            ShipmentData.PaymentTermCashId = shipmentVariables.PaymentTermCashId;
+            ShipmentData.VATTypeZeroId = shipmentVariables.VATTypeZeroId;
+            ShipmentData.QuoteStageQTDRId = shipmentVariables.QuoteStageQTDRId;
+            ShipmentData.MoveTypeMTAId = shipmentVariables.MoveTypeMTAId;
+            ShipmentData.MoveTypeMTOId = shipmentVariables.MoveTypeMTOId;
+            ShipmentData.ChargesTypes = shipmentVariables.ChargesTypes;
+            ShipmentData.VatTypes = shipmentVariables.VatTypes;
+            ShipmentData.Currencies = shipmentVariables.Currencies;
+            ShipmentData.Rates = shipmentVariables.Rates;
         }
     }
 }
