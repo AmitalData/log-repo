@@ -403,17 +403,22 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
     set DocumentTypeSelected(value: DocumentTypeList) {
         if (this.documentTypeSelected != value) {
             this.documentTypeSelected = value;
-            if (this.CurrentEntityPM && this.CurrentEntityPM.DocumentTypeId != value.Id) {
-                this.CurrentEntityPM.DocumentTypeId = value.Id;
+            var newValue = value ? value.Id : "";
+            var oldValue = this.CurrentEntityPM.DocumentTypeId;
+
+            if (this.CurrentEntityPM && newValue != oldValue) {
+                this.CurrentEntityPM.DocumentTypeId = newValue;
                 this.IsChangeAutomation = true;
             }
             this.IsEnableAddTemplate = true;
 
-            if (this.documentTypeSelected.TemplateFormatCode == "P") {
+            if (this.documentTypeSelected && this.documentTypeSelected.TemplateFormatCode == "P") {
                 this.IsEnableAddReportTemplate = true;
             }
         }
-        this.LoadDocumentTypeTemplate(this.documentTypeSelected);
+        if (this.documentTypeSelected) {
+            this.LoadDocumentTypeTemplate(this.documentTypeSelected);
+        }
 
     }
 
@@ -464,10 +469,7 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
 
         this.DocumentTypeLists = this.AllDocumentTypeLists.filter(a => a.IsDocOut && a.TemplateFormatCode == "M");
 
-        if (this.ResultCodeSelected && (this.ResultCodeSelected.Code == "EMAIL" || this.ResultCodeSelected.Code == "SENDDOCUMENT")
-            || this.ResultCodeSelected.Code == "SENDINTERFACE" || this.ResultCodeSelected.Code == "FOLLOWUP" || this.ResultCodeSelected.Code == "DOCOUTFOLLOWUP"
-            || this.ResultCodeSelected.Code == "DOCINFOLLOWUP" || this.ResultCodeSelected.Code == "FIELDSET" || this.ResultCodeSelected.Code == "FIELDSET"
-            || this.ResultCodeSelected.Code == "QUEUE") {
+        if (this.ResultCodeSelected && (this.ResultCodeSelected.Code == "EMAIL" || this.ResultCodeSelected.Code == "SENDDOCUMENT")) {
             this.DocumentTypeLists = this.AllDocumentTypeLists.filter(a => a.IsDocOut);
         }
 
