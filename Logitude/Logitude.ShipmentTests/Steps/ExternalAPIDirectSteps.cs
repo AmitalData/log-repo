@@ -49,11 +49,9 @@ namespace Logitude.ShipmentTests.Steps
         [When(@"Update main carriage leg ATA to future date")]
         public void WhenUpdateMainCarriageLegATAToFutureDate()
         {
-            DateTime futureDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day).AddYears(1);
-            Context.Direct.MainCarriageLegs.First().ATA = futureDate;
+            Context.Direct.MainCarriageLegs.First().ATA = GetDateBasedOnCurrentDate(1, 0, 0);
 
             ApiResponse<Direct> response = APICaller.CallPut<Direct>(Context.Direct, "Direct", UserTenant.Token);
-
             Context.ExceptionMessage = response.ErrorMessage;
         }
 
@@ -66,11 +64,9 @@ namespace Logitude.ShipmentTests.Steps
         [When(@"Update main carriage leg ATD to future date")]
         public void WhenUpdateMainCarriageLegATDToFutureDate()
         {
-            DateTime futureDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day).AddYears(1);
-            Context.Direct.MainCarriageLegs.First().ATD = futureDate;
+            Context.Direct.MainCarriageLegs.First().ATD = GetDateBasedOnCurrentDate(1, 0, 0);
 
             ApiResponse<Direct> response = APICaller.CallPut<Direct>(Context.Direct, "Direct", UserTenant.Token);
-
             Context.ExceptionMessage = response.ErrorMessage;
         }
 
@@ -83,10 +79,7 @@ namespace Logitude.ShipmentTests.Steps
         [When(@"Update main carriage leg ETD,ATD,ETA and ATA to valid date")]
         public void WhenUpdateMainCarriageLegETDATDETAAndATAToValidDate()
         {
-            Context.Direct.MainCarriageLegs.First().ETD = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day).AddMonths(-1).AddDays(1);
-            Context.Direct.MainCarriageLegs.First().ATD = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day).AddMonths(-1).AddDays(2);
-            Context.Direct.MainCarriageLegs.First().ETA = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day).AddMonths(-1).AddDays(3);
-            Context.Direct.MainCarriageLegs.First().ATA = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day).AddMonths(-1).AddDays(4);
+            FillVaildDatesInMainCarriageLegs();
             ApiResponse<Direct> response = APICaller.CallPut<Direct>(Context.Direct, "Direct", UserTenant.Token);
             Context.Direct = response.Data;
         }
@@ -97,11 +90,12 @@ namespace Logitude.ShipmentTests.Steps
             Context.Direct.Should().NotBeNull();
         }
 
-
         private void BuildNewDirectShipment(Table directShipmentTable)
         {
             dynamic directShipment = directShipmentTable.CreateDynamicInstance();
+ 
 
+ 
             DirectBuilder directBuilder = new DirectBuilder();
             directBuilder.Agent((string)directShipment.Agent.ToString())
                 .Direction((string)directShipment.Direction.ToString())
@@ -139,6 +133,19 @@ namespace Logitude.ShipmentTests.Steps
 
             Context.Direct.MainCarriageLegs = new List<MainCarriageLeg>();
             Context.Direct.MainCarriageLegs.AddRange(mainCarriageLegsList);
+        }
+
+        private void FillVaildDatesInMainCarriageLegs()
+        {
+            Context.Direct.MainCarriageLegs.First().ETD = GetDateBasedOnCurrentDate(0, -1, 1);
+            Context.Direct.MainCarriageLegs.First().ATD = GetDateBasedOnCurrentDate(0, -1, 2);
+            Context.Direct.MainCarriageLegs.First().ETA = GetDateBasedOnCurrentDate(0, -1, 3);
+            Context.Direct.MainCarriageLegs.First().ATA = GetDateBasedOnCurrentDate(0, -1, 4);
+        }
+
+        private DateTime GetDateBasedOnCurrentDate(int numberOfYearsToBeAdded, int numberOfMonthesToBeAdded, int numberOfDaysToBeAdded)
+        {
+            return new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day).AddYears(numberOfYearsToBeAdded).AddMonths(numberOfMonthesToBeAdded).AddDays(numberOfDaysToBeAdded);
         }
     }
 }

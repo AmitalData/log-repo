@@ -28,10 +28,7 @@ namespace Logitude.InvoiceTests.Steps.SecurityTests
         [When(@"Second user get the AP Payment that requested by first user")]
         public void WhenSecondUserGetTheAPPaymentThatRequestedByFirstUser()
         {
-            IEnumerable<APPaymentPM> firstUserAPPaymentsList = GetAPPaymentListForFirstUser();
-            string apPaymentsGetSingleUrl = Urls.APPaymentsGetSingle(firstUserAPPaymentsList?.FirstOrDefault()?.Id);
-            ApiResponse<APPaymentPM> response = APICaller.CallGet<APPaymentPM>(apPaymentsGetSingleUrl, UserOtherTenant.Token);
-            Context.SecondUserPMData.Id = response.Data?.Id;
+            GetAPPaymentForTheSecondUserBaseOnFirstUserAPPayments();
         }
 
         [Then(@"AP Payment for first user should be exists")]
@@ -44,6 +41,14 @@ namespace Logitude.InvoiceTests.Steps.SecurityTests
         public void ThenAPPaymentForSecondUserShouldNotBeExists()
         {
             Context.SecondUserPMData.Id.Should().BeNull();
+        }
+
+        private void GetAPPaymentForTheSecondUserBaseOnFirstUserAPPayments()
+        {
+            IEnumerable<APPaymentPM> firstUserAPPaymentsList = GetAPPaymentListForFirstUser();
+            string apPaymentsGetSingleUrl = Urls.APPaymentsGetSingle(firstUserAPPaymentsList?.FirstOrDefault()?.Id);
+            ApiResponse<APPaymentPM> response = APICaller.CallGet<APPaymentPM>(apPaymentsGetSingleUrl, UserOtherTenant.Token);
+            Context.SecondUserPMData.Id = response.Data?.Id;
         }
 
         private IEnumerable<APPaymentPM> GetAPPaymentListForFirstUser()

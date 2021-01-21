@@ -23,16 +23,13 @@ namespace Logitude.InvoiceTests.Steps.SecurityTests
         public void WhenFirstUserGetTheFirstAPInvoiceFromAPInvoicesList()
         {
             IEnumerable<APInvoicePM> firstUserAPInvociesList = GetAPInvoiceListForFirstUser();
-            Context.FirstUserPMData.Id = firstUserAPInvociesList?.FirstOrDefault()?.Id;
+            Context.FirstUserPMData.Id = GetAPInvoiceListForFirstUser()?.FirstOrDefault()?.Id;
         }
 
         [When(@"The Second user gets the AP Invoice that was requested by the first user")]
         public void WhenSecondUserGetTheAPInvoiceThatRequestedByFirstUser()
         {
-            IEnumerable<APInvoicePM> firstUserAPInvoicesList = GetAPInvoiceListForFirstUser();
-            string apInvoicesGetSingleUrl = Urls.APInvoicesGetSingle(firstUserAPInvoicesList?.FirstOrDefault()?.Id);
-            var response = APICaller.CallGet<APInvoicePM>(apInvoicesGetSingleUrl, UserOtherTenant.Token);
-            Context.SecondUserPMData.Id = response.Data?.Id;
+            GetAPInvoiceForTheSecondUserBaseOnFirstUserAPInvoices();
         }
 
         [Then(@"The AP Invoice which is related to the first user tanent is existed")]
@@ -45,6 +42,14 @@ namespace Logitude.InvoiceTests.Steps.SecurityTests
         public void ThenAPInvoiceForSecondUserShouldNotBeExists()
         {
             Context.SecondUserPMData.Id.Should().BeNull();
+        }
+
+        private void GetAPInvoiceForTheSecondUserBaseOnFirstUserAPInvoices()
+        {
+            IEnumerable<APInvoicePM> firstUserAPInvoicesList = GetAPInvoiceListForFirstUser();
+            string apInvoicesGetSingleUrl = Urls.APInvoicesGetSingle(firstUserAPInvoicesList?.FirstOrDefault()?.Id);
+            var response = APICaller.CallGet<APInvoicePM>(apInvoicesGetSingleUrl, UserOtherTenant.Token);
+            Context.SecondUserPMData.Id = response.Data?.Id;
         }
 
         private IEnumerable<APInvoicePM> GetAPInvoiceListForFirstUser()

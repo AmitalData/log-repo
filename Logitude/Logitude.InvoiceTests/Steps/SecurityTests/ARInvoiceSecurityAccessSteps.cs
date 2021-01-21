@@ -29,10 +29,7 @@ namespace Logitude.InvoiceTests.Steps.SecurityTests
         [When(@"Get AR Invoice request sent for other Tenant")]
         public void WhenGetARInvoiceRequestSentForOtherTenant()
         {
-            ARInvoicePM firstUserARInvoice = GetAnARInvoiceForFirstUser();
-            string arInvoicesGetSingleUrl = Urls.ARInvoicesGetSingle(firstUserARInvoice?.Id);
-            ApiResponse<ARInvoicePM> response = APICaller.CallGet<ARInvoicePM>(arInvoicesGetSingleUrl, UserOtherTenant.Token);
-            Context.SecondUserPMData.Id = response.Data?.Id;
+            GetARInvoiceForTheSecondUserBaseOnFirstUserARInvoices();
         }
 
         [Then(@"AR Invoice should be exists")]
@@ -45,6 +42,14 @@ namespace Logitude.InvoiceTests.Steps.SecurityTests
         public void ThenARInvoiceShouldNotBeExists()
         {
             Context.SecondUserPMData.Id.Should().BeNull();
+        }
+
+        private void GetARInvoiceForTheSecondUserBaseOnFirstUserARInvoices()
+        {
+            ARInvoicePM firstUserARInvoice = GetAnARInvoiceForFirstUser();
+            string arInvoicesGetSingleUrl = Urls.ARInvoicesGetSingle(firstUserARInvoice?.Id);
+            ApiResponse<ARInvoicePM> response = APICaller.CallGet<ARInvoicePM>(arInvoicesGetSingleUrl, UserOtherTenant.Token);
+            Context.SecondUserPMData.Id = response.Data?.Id;
         }
 
         private ARInvoicePM GetAnARInvoiceForFirstUser()

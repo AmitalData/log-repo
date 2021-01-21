@@ -34,16 +34,21 @@ namespace Logitude.CommonDataTests.Steps.Security
         [When(@"Second user get the FTP Detail that requested by first user")]
         public void WhenSecondUserGetTheFTPDetailThatRequestedByFirstUser()
         {
-            IEnumerable<FTPDetailPM> firstUserDetailList = GetFTPDetailsListForFirstUser();
-            string ftpDetailsGetSingleUrl = Urls.FTPDetailsGetSingle(firstUserDetailList?.FirstOrDefault()?.Id);
-            ApiResponse<FTPDetailPM> response = APICaller.CallGet<FTPDetailPM>(ftpDetailsGetSingleUrl, UserOtherTenant.Token);
-            Context.SecondUserPMData.Id = response.Data?.Id;
+            GetFTPDetailForTheSecondUserBaseOnFirstUserFTPDetails();
         }
 
         [Then(@"the Detail for second user should not be exists")]
         public void ThenTheDetailForSecondUserShouldNotBeExists()
         {
             Context.SecondUserPMData.Id.Should().BeNull();
+        }
+
+        private void GetFTPDetailForTheSecondUserBaseOnFirstUserFTPDetails()
+        {
+            IEnumerable<FTPDetailPM> firstUserDetailList = GetFTPDetailsListForFirstUser();
+            string ftpDetailsGetSingleUrl = Urls.FTPDetailsGetSingle(firstUserDetailList?.FirstOrDefault()?.Id);
+            ApiResponse<FTPDetailPM> response = APICaller.CallGet<FTPDetailPM>(ftpDetailsGetSingleUrl, UserOtherTenant.Token);
+            Context.SecondUserPMData.Id = response.Data?.Id;
         }
 
         private IEnumerable<FTPDetailPM> GetFTPDetailsListForFirstUser()
