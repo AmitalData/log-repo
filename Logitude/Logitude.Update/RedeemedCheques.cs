@@ -31,8 +31,7 @@ namespace Logitude.Update
             var cheques = verifyService.GetNotRedeemedReconciledCheques(tenant);
 
             dataGridView1.DataSource = cheques;
-
-
+            countLbl.Text = cheques.Count().ToString();
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -69,7 +68,7 @@ namespace Logitude.Update
             thread.IsBackground = true;
             thread.Start();
 
-
+            button3.Enabled = true;
         }
 
 
@@ -82,6 +81,20 @@ namespace Logitude.Update
         private void RedeemedCheques_Load(object sender, EventArgs e)
         {
             timer1.Start();
+        }
+
+        private void fixTotalsBtn_Click(object sender, EventArgs e)
+        {
+            service.LoggingText = "";
+
+            var tenantsCSV = tenantsTextBox.Text;
+            Tenants = tenantsCSV.Split(',').ToList();
+            progressBar1.Maximum = Tenants.Count();
+
+            Thread thread = new Thread(() => service.RecalculateChequesTotals(Tenants));
+            thread.IsBackground = true;
+            thread.Start();
+
         }
     }
 }

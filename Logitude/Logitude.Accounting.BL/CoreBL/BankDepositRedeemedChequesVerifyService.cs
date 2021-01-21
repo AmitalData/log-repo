@@ -1,9 +1,13 @@
 ﻿using Logitude.Accounting.BL.CloseTables;
+using Logitude.Accounting.BL.EntityQueryServices;
 using Logitude.Accounting.BL.EntityUpdateServices;
 using Logitude.Accounting.Data;
 using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Accounting.Data.Repositories;
 using Logitude.Accounting.Def.EntityPMs;
+using Simplog.Data.CommonDataModel.Repositories;
+using Simplog.Data.InvoiceModel.EntityPOCOs;
+using Simplog.Data.InvoiceModel.Repositories;
 using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.Helpers;
 using System;
@@ -21,13 +25,15 @@ namespace Logitude.Accounting.BL.CoreBL
         public string LoggingText { get; set; } = "";
         public int DoneTenants = 0;
         public int WorkingTenant;
+        public List<ARPaymentCheque> DoneCheques = new List<ARPaymentCheque>();
+
         public BankDepositRedeemedChequesVerifyService()
         {
         }
 
         public void UpdateCheqesForTenantList(List<string> Tenants)
         {
-            doneCheques = new List<ARPaymentCheque>();
+            DoneCheques = new List<ARPaymentCheque>();
             foreach (var tenant in Tenants)
             {
                 WorkingTenant = Convert.ToInt32(tenant);
@@ -41,6 +47,64 @@ namespace Logitude.Accounting.BL.CoreBL
             var cheques = GetNotRedeemedReconciledCheques(tenant);
             SetChequesAsRedeemed(tenant, cheques);
         }
+
+        public void RecalculateChequesTotals(List<string> Tenants)
+        {
+            Log(">>> fixing cheques totals");
+
+            foreach (var tenantStr in Tenants)
+            {
+                using (TransactionScope scope = TransactionFactory.GetTransaction())
+                {
+                    try
+                    {
+                        Log("-----------------------------------------------------------------");
+                        Log("   >>> fixing for tenant " + tenantStr);
+
+                        billToAccounts = new List<string>();
+
+                        var tenant = Convert.ToInt32(tenantStr);
+                        var tenantCheques = DoneCheques.Where(d => d.Tenant == tenant);
+
+                        Log("[Tenant " + tenantStr + "] get bill to accounts");
+
+                        foreach (var cheque in tenantCheques)
+                        {
+                            GetTenantBillToAccounts(tenant, cheque.PaymentId);
+                        }
+
+                        List<string> billtos = billToAccounts.Distinct().ToList();
+
+                        Log("[Tenant " + tenantStr + "] bill to accounts got, (" + billtos.Count() + ")");
+
+
+                        foreach (var billTo in billToAccounts)
+                        {
+                            CalculateBilltoFutureCheques(tenant, billTo);
+                        }
+
+                        //scope.Complete();
+
+                        Log("   >>>>> tenant (" + tenantStr + ") cheques recalculated successfully");
+                    }
+                    catch (Exception ex)
+                    {
+                        Log("*FAILED* Tenant(" + tenantStr + ")" + ex.Message);
+
+                        throw ;
+                    }
+                    
+
+                }
+            }
+
+
+            Log(".........................");
+            Log(".........................");
+            Log(">>> cheques recalculated successfully for giver tenants");
+
+        }
+
         public List<ARPaymentChequePM> GetNotRedeemedReconciledCheques(int tenant)
         {
             Log("[Tenant " + tenant + "] getting cheques ...");
@@ -159,7 +223,6 @@ namespace Logitude.Accounting.BL.CoreBL
             }
             
         }
-        List<ARPaymentCheque> doneCheques = new List<ARPaymentCheque>();
         public void SetChequesAsRedeemed(int tenant, List<ARPaymentChequePM> chequesPMs)
         {
             try
@@ -181,13 +244,14 @@ namespace Logitude.Accounting.BL.CoreBL
 
                     chequeRepository.SubmitChanges();
 
-                    doneCheques.AddRange(cheques);
+                    DoneCheques.AddRange(cheques);
 
                     //scope.Complete();
                 }
                 
 
                 Log("[Tenant " + tenant + "] update cheques finished");
+                Log("......................................");
 
             }
             catch (Exception ex)
@@ -214,7 +278,7 @@ namespace Logitude.Accounting.BL.CoreBL
             }
 
             var all = "Tenant,Cheques Number,Cheque Id" + Environment.NewLine;
-            var list = doneCheques.Select(d => d.Tenant + "," + d.ChequeNumber + "," + d.Id).ToList();
+            var list = DoneCheques.Select(d => d.Tenant + "," + d.ChequeNumber + "," + d.Id).ToList();
             var text = string.Join(Environment.NewLine, list);
             all += text;
             // Create a new file     
@@ -225,5 +289,69 @@ namespace Logitude.Accounting.BL.CoreBL
         }
 
 
+        List<string> billToAccounts;
+        private void GetTenantBillToAccounts(int tenant,string paymentId)
+        {
+
+            ARPaymentRepository repo = new ARPaymentRepository(tenant);
+
+            ARPayment payment = repo.GetSingleNotCancelledARPayment(paymentId, tenant);
+            if (payment != null)
+            {
+                billToAccounts.Add(payment.BillToId);
+            }
+        }
+
+        private void CalculateBilltoFutureCheques(int tenant, string billTo)
+        {
+            ARPaymentRepository repo = new ARPaymentRepository(tenant);
+
+            List<ARPayment> payments = repo.GetARPaymentsByBillTo(billTo, tenant);
+            List<string> paymentIds = new List<string>();
+            foreach (var item in payments)
+            {
+
+                paymentIds.Add(item.Id);
+
+            }
+
+
+            ARPaymentChequeQueryService queryService = new ARPaymentChequeQueryService(tenant);
+            List<ARPaymentChequePM> aRPaymentChequePMs = queryService.GetARPaymentChequesByPaymentIds(paymentIds, tenant);
+            CardRepository cardRepo = new CardRepository(tenant);
+
+
+            //if (card != null)
+            //{
+            string GLAccountId = cardRepo.GetGLAccountIdByCardId(billTo, tenant);
+            GLAccountMoreDataQueryService moreDataQueryService = new GLAccountMoreDataQueryService(tenant);
+            IAccountingContext MyContext = AccountingContext.GetContext(tenant);
+            GLAccountMoreDataPM moreDataPM = moreDataQueryService.GetSingle(GLAccountId, false, false);
+            GLAccountMoreDataUpdateService updateService = new GLAccountMoreDataUpdateService(MyContext, new Dictionary<string, IContext>(), tenant);
+            moreDataPM.TotFutureOpenChequesInLocalCur = 0;
+            moreDataPM.TotalOpenChequesInLocalCur = 0;
+            foreach (ARPaymentChequePM item in aRPaymentChequePMs)
+            {
+                if (item.StatusCode != "6" && item.StatusCode != "5")
+                {
+                    if (item.ValueDate > DateTime.Today)
+                    {
+                        moreDataPM.TotFutureOpenChequesInLocalCur += item.LocalAmount;
+
+                    }
+                    else
+                    {
+                        moreDataPM.TotalOpenChequesInLocalCur += item.LocalAmount;
+
+                    }
+                }
+            }
+
+            moreDataPM.ChangeSetOp = ChangeSetOperation.Update;
+            updateService.Update(moreDataPM, true);
+
+            Log("[Tenant " + tenant + "] account updated (" + billTo + ")");
+
+        }
     }
 }
