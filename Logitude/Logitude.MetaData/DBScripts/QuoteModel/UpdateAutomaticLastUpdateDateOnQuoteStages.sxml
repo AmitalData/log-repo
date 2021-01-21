@@ -1,0 +1,11 @@
+﻿<Script DBType="Main" Module="Quote"  AOT="true" TargetTableName="QuoteStages">
+
+	<Sql Version="4">
+		<![CDATA[
+    
+update  QuoteStages set AutomaticLastUpdateDate =GETDATE() where AutomaticLastUpdateDate is null and $LastCounterWhere
+
+    ]]>
+	</Sql>
+</Script>
+

@@ -1,78 +1,163 @@
-﻿using Newtonsoft.Json;
+﻿using Logitude.Test.Base.Models;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using RestSharp;
 using System;
+using System.Collections.Generic;
 using System.Configuration;
+using System.Linq;
 using System.Net;
+using System.Web;
 
 namespace Logitude.Test.Base.Services
 {
     public class APICaller
     {
-        protected static readonly string ApiUrl = ConfigurationManager.AppSettings["Url"];
-
-        public static T CallPost<T>(object requestBody, string url, string token)
+        public static ApiResponse<T> CallPost<T>(object requestBody, string url, string token)
         {
-            return CallAPIProcess<T>(Method.POST, requestBody, url, token, null, null);
+            ApiRequestParameters request = new ApiRequestParameters()
+            {
+                Method = Method.POST,
+                RequestBody = requestBody,
+                Token = token,
+                Url = url
+            };
+
+            return CallAPIProcess<T>(request);
         }
 
-        public static T CallPut<T>(object requestBody, string url, string token, HttpStatusCode? stausCode = null)
-        { 
-            return CallAPIProcess<T>(Method.PUT, requestBody, url, token, null, stausCode);  
+        public static ApiResponse<T> CallPut<T>(object requestBody, string url, string token)
+        {
+            ApiRequestParameters request = new ApiRequestParameters()
+            {
+                Method = Method.PUT,
+                RequestBody = requestBody,
+                Token = token,
+                Url = url
+            };
+
+            return CallAPIProcess<T>(request);
         }
 
-        public static T CallGet<T>(string url, string token, string jsonElement)
+        public static ApiResponse<T> CallGet<T>(string url, string token)
         {
-            return CallAPIProcess<T>(Method.GET, null, url, token, jsonElement, null);
+            ApiRequestParameters request = new ApiRequestParameters()
+            {
+                Method = Method.GET,
+                Token = token,
+                Url = url
+            };
+
+            return CallAPIProcess<T>(request);
         }
 
-        protected static T CallAPIProcess<T>(Method method, object requestBody, string url, string token, string jsonElement, HttpStatusCode? statusCode)
+        public static ApiResponse<T> CallGetByFilters<T>(string url, string token, ApiQueryFilters apiQueryFilters)
         {
-            string restClientUrl = GetRequestUrl(url);
+            ApiRequestParameters request = new ApiRequestParameters()
+            {
+                Method = Method.GET,
+                Token = token,
+                Url = url
+            };
+
+            return CallAPIProcess<T>(request, apiQueryFilters);
+        }
+
+        
+        private static ApiResponse<T> CallAPIProcess<T>(ApiRequestParameters requestParameters)
+        {
+            string restClientUrl = GetRequestUrl(requestParameters.Url);
             RestClient restClient = new RestClient(restClientUrl);
-            RestRequest restRequest = new RestRequest(method) { RequestFormat = DataFormat.Json };
+            RestRequest restRequest = new RestRequest(requestParameters.Method) { RequestFormat = DataFormat.Json };
+            var response = new ApiResponse<T>();
 
-            if (!string.IsNullOrEmpty(token))
+            if (!string.IsNullOrEmpty(requestParameters.Token))
             {
-                restRequest.AddHeader("Token", token);
+                restRequest.AddHeader("Token", requestParameters.Token);
             }
-
-            if (requestBody != null)
+            if (requestParameters.RequestBody != null)
             {
-                restRequest.AddJsonBody(JsonConvert.SerializeObject(requestBody));
+                restRequest.AddJsonBody(JsonConvert.SerializeObject(requestParameters.RequestBody));
             }
 
             IRestResponse<T> restResponse = restClient.Execute<T>(restRequest);
+            response.StatusCode = restResponse.StatusCode;
 
-            if (restResponse.StatusCode == (statusCode == null ? HttpStatusCode.OK : statusCode))
+            if (response.StatusCode == HttpStatusCode.OK)
             {
-                if (jsonElement != null)
-                {
-                    JObject jObject = JObject.Parse(restResponse.Content);
-                    string result = jObject[jsonElement].ToString();
-                    return JsonConvert.DeserializeObject<T>(result);
-                }
-                else
-                {
-                    //JObject jObject = JObject.Parse(restResponse.Content);
-                    //return JsonConvert.DeserializeObject<T>(jObject.ToString());
-                    return restResponse.Data;
-                }
+                response.Data = restResponse.Data;
             }
             else
             {
-                return default;
-                //throw new Exception(method.ToString() + " Request To " + restClientUrl + " Faild With Message " + restResponse.Content);
+                JObject jObject = JObject.Parse(restResponse.Content);
+                response.ErrorMessage = jObject["ErrorMessage"].ToString().Replace("\r", string.Empty).Replace("\n", string.Empty).Trim();
             }
+
+            return response;
         }
 
-        protected static string GetRequestUrl(string url)
+        private static ApiResponse<T> CallAPIProcess<T>(ApiRequestParameters requestParameters, ApiQueryFilters apiQueryFilters)
         {
+            string restClientUrl = GetRequestUrl(requestParameters.Url);
+            restClientUrl += GetQueryStringFromApiQueryFilters(apiQueryFilters);
+
+            RestClient restClient = new RestClient(restClientUrl);
+            RestRequest restRequest = new RestRequest(requestParameters.Method) { RequestFormat = DataFormat.Json };
+            var response = new ApiResponse<T>();
+
+            if (!string.IsNullOrEmpty(requestParameters.Token))
+            {
+                restRequest.AddHeader("Token", requestParameters.Token);
+            }
+            if (requestParameters.RequestBody != null)
+            {
+                restRequest.AddJsonBody(JsonConvert.SerializeObject(requestParameters.RequestBody));
+            }
+
+            IRestResponse<T> restResponse = restClient.Execute<T>(restRequest);
+            response.StatusCode = restResponse.StatusCode;
+
+            if (response.StatusCode == HttpStatusCode.OK)
+            {
+                JObject jObject = JObject.Parse(restResponse.Content);
+                string result = jObject["Result"].ToString();
+                response.Data = JsonConvert.DeserializeObject<T>(result);
+            }
+            else
+            {
+                JObject jObject = JObject.Parse(restResponse.Content);
+                response.ErrorMessage = jObject["ErrorMessage"].ToString().Replace("\r", string.Empty).Replace("\n", string.Empty).Trim();
+            }
+
+            return response;
+        }
+
+        private static string GetRequestUrl(string url)
+        {
+            string apiUrl = Settings.ServerUrl;
+
             if (String.IsNullOrEmpty(url))
             {
                 return null;
             }
-            return (ApiUrl.EndsWith("/") ? ApiUrl.TrimEnd('/') : ApiUrl) + (!url.StartsWith("/") ? ("/" + url) : url);
+            return (apiUrl.EndsWith("/") ? apiUrl.TrimEnd('/') : apiUrl) + (!url.StartsWith("/") ? ("/" + url) : url);
+        }
+
+        private static string GetQueryStringFromApiQueryFilters(ApiQueryFilters apiQueryFilters)
+        {
+            try
+            {
+                string apiQueryFiltersJson = JsonConvert.SerializeObject(apiQueryFilters);
+                IDictionary<string, string> apiQueryFiltersDictionary = JsonConvert.DeserializeObject<IDictionary<string, string>>(apiQueryFiltersJson);
+                IEnumerable<string> apiQueryFiltersQueryStringList = apiQueryFiltersDictionary.Where(x => !String.IsNullOrEmpty(x.Value))
+                                                                                              .Select(x => HttpUtility.UrlEncode(x.Key) + "=" + HttpUtility.UrlEncode(x.Value));
+                string apiQueryFiltersQueryString = "?ForceCacheRefresh=false&" + string.Join("&", apiQueryFiltersQueryStringList);
+                return apiQueryFiltersQueryString;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
         }
     }
 }

@@ -81,7 +81,19 @@ namespace Simplog.Data.CommonDataModel.Repositories
 
         public User GetSingleUser(string id, int tenant, bool getFromCache)
         {
+           
             string entityName = "User" + id + tenant;
+            if (LogitudeSettings.IsCostomsDeploy)
+            {
+                entityName = "IsCostomsDeployUser" + id + tenant;
+                var res = CacheManager.GetOrInsertNewObject<User>(entityName, () =>
+                {
+                    return (from record in context.Users.Include("UserLastLogin").Include("Contact").Include("Department").Include("Branch").Include("BusinessUnit")
+                              where record.Id == id && record.Tenant == tenant
+                              select record).FirstOrDefault();
+                });
+                return res;
+            }
             User entity;
             if (getFromCache)
             {

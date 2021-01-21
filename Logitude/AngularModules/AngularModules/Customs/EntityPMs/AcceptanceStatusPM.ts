@@ -48,7 +48,10 @@ export class AcceptanceStatusPM {
     public OldEntityPM: AcceptanceStatusPM;
 		
     public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
+       if(!this.DisableMarkAsDirty)
+       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -56,6 +59,7 @@ export class AcceptanceStatusPM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "Customs.AcceptanceStatus");
            
         }
+       }
     }
 
     private MyClone: AcceptanceStatusPM;

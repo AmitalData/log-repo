@@ -1,68 +1,40 @@
-﻿
-using TechTalk.SpecFlow;
-using FluentAssertions;
-using Logitude.Test.Base.Models.Login;
-using Logitude.Test.Base.Services;
+﻿using FluentAssertions;
+using Logitude.CommonDataTests.Models;
+using Logitude.CommonDataTests.Models.Builders;
 using Logitude.Test.Base.Context;
-using Logitude.CommonDataTests.Models.CompanyAddressSetting;
+using Logitude.Test.Base.Models;
+using Logitude.Test.Base.Services;
+using TechTalk.SpecFlow;
 
 namespace Logitude.CommonDataTests.Steps.Security
 {
     [Binding]
     public class AddressSettingSecurityAccessSteps
     {
-        protected SecurityAccessStepsContext<AddressPM> Context;
-        protected SecurityAccessStepsContext<TenantPM> TanentContext;
-        public AddressSettingSecurityAccessSteps(MultiUsers multiUsers, SecurityAccessStepsContext<AddressPM> context ,SecurityAccessStepsContext<TenantPM> tanentContext)
+        private SecurityAccessStepsContext<AddressPM> Context;
+
+        public AddressSettingSecurityAccessSteps(SecurityAccessStepsContext<AddressPM> context )
         {
             Context = context;
-            TanentContext = tanentContext;
-            Context.FirstUser = multiUsers.Users[0];
-            Context.SecondUser = multiUsers.Users[1];
-        }
-
-        [When(@"Get Address Settings request sent for User's Tenant")]
-        public void WhenGetAddressSettingsRequestSentForUserSTenant()
-        {
-            TanentContext.FirstUserPMData = GetAddressSettings(Context.FirstUser.Tenant, Context.FirstUser.Token);
-        }
-
-        [When(@"Get Address Settings request sent for other Tenant")]
-        public void WhenGetAddressSettingsRequestSentForOtherTenant()
-        {
-            TanentContext.SecondUserPMData = GetAddressSettings(Context.FirstUser.Tenant, Context.SecondUser.Token);
         }
 
         [When(@"Update Address Settings request sent for User's Tenant")]
         public void WhenUpdateAddressSettingsRequestSentForUserSTenant()
         {
-            Context.FirstUserPMData = UpdateFirstUserAddressSettings(Context.FirstUser.Token);
-        }
-
-        [When(@"Update Address Settings request sent for other Tenant")]
-        public void WhenUpdateAddressSettingsRequestSentForOtherTenant()
-        {
-            Context.SecondUserPMData = UpdateFirstUserAddressSettings(Context.SecondUser.Token);
-        }
-
-        [Then(@"Address Settings should be exists")]
-        public void ThenAddressSettingsShouldBeExists()
-        {
-            TanentContext.FirstUserPMData.Should().NotBeNull();
-            TanentContext.FirstUserPMData.Id.Should().Be(Context.FirstUser.Tenant);
-        }
-
-        [Then(@"Address Settings should not be exists")]
-        public void ThenAddressSettingsShouldNotBeExists()
-        {
-            TanentContext.SecondUserPMData.Should().BeNull();
+            Context.FirstUserPMData = UpdateFirstUserAddressSettings(UserTenant.Token);
         }
 
         [Then(@"Address Settings should be Updated successfully")]
         public void ThenAddressSettingsShouldBeUpdatedSuccessfully()
         {
             Context.FirstUserPMData.Should().NotBeNull();
-            Context.FirstUserPMData.Tenant.Should().Be(Context.FirstUser.Tenant);
+            Context.FirstUserPMData.Tenant.Should().Be(UserTenant.Tenant);
+        }
+
+        [When(@"Update Address Settings request sent for other Tenant")]
+        public void WhenUpdateAddressSettingsRequestSentForOtherTenant()
+        {
+            Context.SecondUserPMData = UpdateFirstUserAddressSettings(UserOtherTenant.Token);
         }
 
         [Then(@"Address Settings should not be Updated")]
@@ -71,53 +43,36 @@ namespace Logitude.CommonDataTests.Steps.Security
             Context.SecondUserPMData.Should().BeNull();
         }
 
-        protected TenantPM GetAddressSettings(int Tenant, string Token)
-        {
-            string TenantUrl = "tenants/getsingle?id=" + Tenant;
-            TenantPM tenant = APICaller.CallGet<TenantPM>(TenantUrl, Token, null);
-            return tenant;
-        }
-
-        protected AddressPM UpdateFirstUserAddressSettings(string Token)
+        private AddressPM UpdateFirstUserAddressSettings(string Token)
         {
             AddressPM FirstUserAdressSettings = GetAFirstUserAdressSettings();
 
-            AddressPM UpdatedAddressSettings = APICaller.CallPut<AddressPM>(FirstUserAdressSettings, "addresses", Token);
-            return UpdatedAddressSettings;
+            ApiResponse<AddressPM> UpdatedAddressSettings = APICaller.CallPut<AddressPM>(FirstUserAdressSettings, Urls.Address() , Token);
+            return UpdatedAddressSettings.Data;
         }
 
-        protected AddressPM GetAFirstUserAdressSettings()
+        private AddressPM GetAFirstUserAdressSettings()
         {
-            AddressPM AddressPM = new AddressPM
-            {
-                Tenant = Context.FirstUser.Tenant,
-                AgentId = "1-140040",
-                CurrencyId = "1-4319",
-                Description = "Integration Test",
-                City = "New York City",
-                Name = "Te",
-                AddressTypeId = "M",
-                Address1 = "18 West 48th Street ",
-                Address2 = "#5B, New York3",
-                CountryId = "1-397",
-                StateId = "1-89",
-                ZipCode = "+001",
-                FaxNumber = "asd",
-                PhoneNumber = "+001598137715",
-                CountryCode = "US",
-                CountryName = "United States of America",
-                CountryEnglishName = "United States of America",
-                StateEnglishName = "New York",
-                StateCode = "NY",
-                SearchFields = "Te,18 West 48th Street ,#5B, New York3,+001,New York City,United States of America",
-                VatNumber = "89898",
-                CardCode = "10027",
-                CardEnglishName = "Simplog LTD.",
-                HasStates = true,
-                IsStateRequired = true,
-            };
+            AddressPM addressPM = new AddressBuilder()
+                .WithDefualtValues()
+                .Description("Integration Test")
+                .City("New York City")
+                .Name("Te")
+                .AddressTypeId("M")
+                .Address1("18 West 48th Street ")
+                .Address2("#5B, New York3")
+                .CountryId("1-397")
+                .ZipCode("+001")
+                .FaxNumber("asd")
+                .PhoneNumber("+001598137715")
+                .StateEnglishName("New York")
+                .VatNumber("89898")
+                .CardCode("10027")
+                .CardEnglishName("Simplog LTD.")
+                .Build();
 
-            return APICaller.CallPost<AddressPM>(AddressPM, "addresses", Context.FirstUser.Token);
+            ApiResponse<AddressPM> response = APICaller.CallPost<AddressPM>(addressPM, Urls.Address(), UserTenant.Token);
+            return response.Data;
         }
     }
 }

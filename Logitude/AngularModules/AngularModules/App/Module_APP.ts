@@ -17,7 +17,7 @@ import { LazyArrayToObjects } from './DynamicLoader/LazyWidgetsLogitude';
   providers: [
     SystemJsNgModuleLoader,
 
-    { provide: LAZY_WIDGETS, useFactory: LazyArrayToObjects }
+    { provide: LAZY_WIDGETS, useFactory: LazyArrayToObjects } 
 
   ],
 

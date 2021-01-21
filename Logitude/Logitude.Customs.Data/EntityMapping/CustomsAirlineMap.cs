@@ -40,6 +40,8 @@ namespace Logitude.Customs.Data.EntityMapping
             this.Property(t => t.AirlinePrefix).HasColumnName("AirlinePrefix").IsRequired().HasMaxLength(3).IsUnicode(false);
 
             this.Property(t => t.ICAO).HasColumnName("ICAO").HasMaxLength(3).IsUnicode(false);
+
+            this.Property(t => t.UnloadPortCode).HasColumnName("UnloadPortCode").HasMaxLength(17).IsUnicode(false);
         }
     }
 }

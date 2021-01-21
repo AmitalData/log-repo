@@ -167,6 +167,16 @@ export class SupplierInvoiceItemVehiclePM {
     public set VehicleTypeName(newValue: string) { if (this.vehicleTypeName != newValue) { this.vehicleTypeName = newValue; this.MarkAsDirty("VehicleTypeName"); } }
        
 	 
+    private vehicleChassisNumberSource: string;
+    public get VehicleChassisNumberSource() { return this.vehicleChassisNumberSource; }
+    public set VehicleChassisNumberSource(newValue: string) { if (this.vehicleChassisNumberSource != newValue) { this.vehicleChassisNumberSource = newValue; this.MarkAsDirty("VehicleChassisNumberSource"); } }
+       
+	 
+    private richbitFileNumberSource: string;
+    public get RichbitFileNumberSource() { return this.richbitFileNumberSource; }
+    public set RichbitFileNumberSource(newValue: string) { if (this.richbitFileNumberSource != newValue) { this.richbitFileNumberSource = newValue; this.MarkAsDirty("RichbitFileNumberSource"); } }
+       
+	 
 
     public OldEntityPM: SupplierInvoiceItemVehiclePM;
 	
@@ -181,7 +191,10 @@ export class SupplierInvoiceItemVehiclePM {
     public UniqueKey: string;
 	 	
     public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
+       if(!this.DisableMarkAsDirty)
+       {
         this.IsDirty = true;
 		  if (this.EntityParentPM) {
             this.EntityParentPM.MarkAsDirty();
@@ -191,6 +204,7 @@ export class SupplierInvoiceItemVehiclePM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "Customs.SupplierInvoiceItemVehicle");
            
         }
+       }
     }
 
     private MyClone: SupplierInvoiceItemVehiclePM;

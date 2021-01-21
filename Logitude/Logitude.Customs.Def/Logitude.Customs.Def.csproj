@@ -64,6 +64,9 @@
     <Compile Include="Contracts\IIIGClosedTable.cs" />
     <Compile Include="Contracts\SendDeclarationChecksResult.cs" />
     <Compile Include="Contracts\UnifreightGenericService.cs" />
+    <Compile Include="EntityPMs\Generated\AmendCancellRequestInitiatorPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\AmendmentFieldStatusTypePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\AmendmentRequestRejectReasonTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\AmountTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\AutonomyRegionTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\CancellationReasonRequestTypePM.Generated.cs" />
@@ -75,6 +78,7 @@
     <Compile Include="EntityPMs\Generated\DeclarationExportRecipientPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\ExceptionReasonPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\ExporterRoleTypePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\LoadingSiteTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\NbcDeclarationTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\PartyRelationshipTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\ReferantExceptionPM.Generated.cs" />

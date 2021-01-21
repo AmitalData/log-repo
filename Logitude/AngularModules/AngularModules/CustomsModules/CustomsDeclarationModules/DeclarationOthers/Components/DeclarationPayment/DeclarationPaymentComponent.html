@@ -415,7 +415,7 @@
                             </td>
 
                             <td style="width: 30px;">
-                                <IconButton [Name]="'Add'" [IsSmall]="true" [IsEnabled]="!IsDisplayOnly" (click)="AddPaymentMethodClicked(false)"></IconButton>
+                                <IconButton [Name]="'Add'" [IsSmall]="true" [IsEnabled]="!IsDisplayOnly" (click)="AddPaymentMethodClicked(false,false)"></IconButton>
                             </td>
                         </tr>
 
@@ -698,7 +698,7 @@
             <button class="Button" (click)="CancelButtonClicked()">{{'Customs.General.B.Cancel' |TextCodeTranslationPipe}}</button>
         </td>
         <td style="width: 67px;vertical-align: bottom; padding-right: 10px;">
-            <button class="RedButton" (click)="OkButtonClicked()" [disabled]="!OkButtonEnabled">{{'General.B.Save' |TextCodeTranslationPipe}}</button>
+            <button class="RedButton" (click)="OkButtonClicked()" [disabled]="!OkButtonEnabled ||  AutomaticPayment">{{'General.B.Save' |TextCodeTranslationPipe}}</button>
         </td>
     </tr>
 

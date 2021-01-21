@@ -105,6 +105,24 @@ namespace Logitude.Customs.BL.Messaging.U2L.CourierStatus
                 newDeclarationCourierStatusPM.LastMileStatusName = _LogitudeCourierStatus.LastMileStatusName;
                 newDeclarationCourierStatusPM.LastMileStatusDate = AmitalConvertUtil.GetUnifreightFormatedDate(_LogitudeCourierStatus.LastMileStatusDate, "_LogitudeCourierStatus.LastMileStatusDate");
                 newDeclarationCourierStatusPM.LastMileStatusRemarks = _LogitudeCourierStatus.LastMileStatusRemarks;
+                if (string.IsNullOrWhiteSpace(_LogitudeCourierStatus.Delivered) || (!string.IsNullOrWhiteSpace(_LogitudeCourierStatus.Delivered) && _LogitudeCourierStatus.Delivered.ToLower().Substring(0, 1) != "t"))
+                {
+                    //newDeclarationCourierStatusPM.Delivered = false;
+
+                }
+                else
+                {
+                    newDeclarationCourierStatusPM.Delivered = true;
+                }
+                if (string.IsNullOrWhiteSpace(_LogitudeCourierStatus.IsClosedForFollowUp) || (!string.IsNullOrWhiteSpace(_LogitudeCourierStatus.IsClosedForFollowUp) && _LogitudeCourierStatus.IsClosedForFollowUp.ToLower().Substring(0, 1) != "t"))
+                {
+                    //newDeclarationCourierStatusPM.IsClosedForFollowUp = false;
+
+                }
+                else
+                {
+                    newDeclarationCourierStatusPM.IsClosedForFollowUp = true;
+                }
                 declarationCourierStatusUpdateService.Update(newDeclarationCourierStatusPM, true);
             }
 

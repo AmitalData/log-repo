@@ -1007,39 +1007,49 @@ export class CustomsAnswersComponent extends BaseComponent implements AfterViewI
     GetEditedScreenTitle(entityName: string, declarationError: DeclarationErrorView) {
 
         var title = "";
+        var declaration = this.EntityPM;
+        var textcode = "Customs.Declaration.O.EditInvoice";
+        if (declaration.Direction == "E") {
+            textcode = "Customs.Declaration.O.ExporterInvoice";
+        }
+
         switch (entityName.toLowerCase()) {
             case "declaration":
             case "consignment":
                 {
-                    title = TextCodeTranslator.Translate("Customs.Declaration");
+                    if (this.EntityPM.Direction == "E")
+                        title = TextCodeTranslator.Translate("Customs.Declaration.O.Export");
+                        else
+                        title = TextCodeTranslator.Translate("Customs.Declaration");
+
+
                     break;
                 }
             case "supplierinvoice":
                 {
-                    var declaration = this.EntityPM;
                     var supplierInvoicePM = declaration.SupplierInvoices.find(d => d.DeclarationId == declaration.Id && d.SequenceNumeric == declarationError.Line);
 
                     if (!AppTool.IsNullOrEmpty(supplierInvoicePM.InvoiceNumber) && !AppTool.IsNullOrEmpty(declaration.DeclarationNumber)) {
-                        title = supplierInvoicePM.InvoiceNumber + "-" + declaration.DeclarationNumber + " " + TextCodeTranslator.Translate("Customs.Declaration.O.EditInvoice");
+                        title = supplierInvoicePM.InvoiceNumber + "-" + declaration.DeclarationNumber + " " + TextCodeTranslator.Translate(textcode);
 
                     }
                     else if ((AppTool.IsNullOrEmpty(supplierInvoicePM.InvoiceNumber) || supplierInvoicePM.InvoiceNumber == "") && !AppTool.IsNullOrEmpty(declaration.DeclarationNumber)) {
-                        title = declaration.DeclarationNumber + " " + TextCodeTranslator.Translate("Customs.Declaration.O.EditInvoice");
+                        title = declaration.DeclarationNumber + " " + TextCodeTranslator.Translate(textcode);
 
                     }
                     if (!AppTool.IsNullOrEmpty(supplierInvoicePM.InvoiceNumber) && (AppTool.IsNullOrEmpty(declaration.DeclarationNumber) || declaration.DeclarationNumber == "")) {
-                        title = supplierInvoicePM.InvoiceNumber + " " + TextCodeTranslator.Translate("Customs.Declaration.O.EditInvoice");
+                        title = supplierInvoicePM.InvoiceNumber + " " + TextCodeTranslator.Translate(textcode);
 
                     }
                     if ((AppTool.IsNullOrEmpty(supplierInvoicePM.InvoiceNumber) || supplierInvoicePM.InvoiceNumber == "") && (AppTool.IsNullOrEmpty(declaration.DeclarationNumber) || declaration.DeclarationNumber == "")) {
-                        title = TextCodeTranslator.Translate("Customs.Declaration.O.EditInvoice");
+                        title = TextCodeTranslator.Translate(textcode);
 
                     }
                     break;
                 }
             case "supplierinvoiceitem":
                 {
-                    title = TextCodeTranslator.Translate("Customs.Declaration.O.EditInvoiceItem");
+                    title = TextCodeTranslator.Translate(textcode);
                     break;
                 }
 
@@ -1196,6 +1206,7 @@ export class ConstraintLineModel extends BaseComponent {
             this.hasNoError = true;
             this.declarationError = new DeclarationErrorView();
         }
+
         this.textcode_TableNameTextCode = TextCodeTranslator.Translate(this.declarationError.TableNameTextCode);
         this.UIProperties.SetEnabled("AgentExplanation", "Customs.DeclarationConstraint", !this.parent.IsDisplayOnly);
         this.ManageScreensVisibility();

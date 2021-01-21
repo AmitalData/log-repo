@@ -76,7 +76,10 @@ export class ClientsAddressCommTypePM {
     public UniqueKey: string;
 	 	
     public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
+       if(!this.DisableMarkAsDirty)
+       {
         this.IsDirty = true;
 		  if (this.EntityParentPM) {
             this.EntityParentPM.MarkAsDirty();
@@ -86,6 +89,7 @@ export class ClientsAddressCommTypePM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "Customs.ClientsAddressCommType");
            
         }
+       }
     }
 
     private MyClone: ClientsAddressCommTypePM;

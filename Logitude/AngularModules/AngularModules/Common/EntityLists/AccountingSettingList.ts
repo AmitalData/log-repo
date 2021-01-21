@@ -56,5 +56,6 @@ export class AccountingSettingList {
 		TransferToFTPActivated: boolean;
 		TransferFTPDetailId: string;
 		EnableEnteringTotalVAT: boolean;
+		BlockSendInvoiceOriginalCopy: boolean;
 	
 }

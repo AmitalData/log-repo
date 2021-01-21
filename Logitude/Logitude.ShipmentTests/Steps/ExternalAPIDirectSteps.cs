@@ -1,151 +1,144 @@
 ﻿using FluentAssertions;
 using Logitude.ShipmentTests.Models;
-using Logitude.Test.Base.Extensions;
-using Logitude.Test.Base.Models.Login;
+using Logitude.ShipmentTests.Models.Builders;
+using Logitude.Test.Base.Models;
 using Logitude.Test.Base.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
 using TechTalk.SpecFlow;
-using Xunit;
+using TechTalk.SpecFlow.Assist;
 
 namespace Logitude.ShipmentTests.Steps
 {
     [Binding]
     public class ExternalAPIDirectSteps
     {
-        protected ExternalAPIDirectContext Context;
-        string ExceptionMessage;
+        private readonly ExternalAPIDirectContext Context;
 
-        public ExternalAPIDirectSteps(MultiUsers multiUsers, ExternalAPIDirectContext context)
+        public ExternalAPIDirectSteps(ExternalAPIDirectContext context)
         {
             Context = context;
-            Context.User = multiUsers.Users[0];
         }
 
         [Given(@"Direct shipment with the following properties")]
         public void GivenDirectShipmentWithTheFollowingProperties(Table directShipmentTable)
         {
-            Direct directShipment = directShipmentTable.CreateComplexInstance<Direct>();
-            if (directShipment != null)
-            {
-                Context.Direct = directShipment;
-            }
+            BuildNewDirectShipment(directShipmentTable);
         }
 
-        [Given(@"List of ocean or inland packages for direct shipment")]
-        public void GivenListOfOceanOrInlandPackagesForDirectShipment(Table oceanOrInlandPackagesTable)
+        [Given(@"List of main carriage legs")]
+        public void GivenListOfMainCarriageLegs(Table mainCarriageLegsTable)
         {
-            IEnumerable<OceanOrInlandPackage> oceanOrInlandPackages = oceanOrInlandPackagesTable.CreateComplexSet<OceanOrInlandPackage>();
-            Context.Direct.OceanOrInlandPackages = new List<OceanOrInlandPackage>();
-            Context.Direct.OceanOrInlandPackages.AddRange(oceanOrInlandPackages);
+            AddMainCarriageLegsToDirectShipment(mainCarriageLegsTable);
         }
-
-        [Given(@"User adding main carriage legs to last direct shipmentd")]
-        public void GivenUserAddingMainCarriageLegsToLastDirectShipmentd(Table table)
+        
+        [When(@"Create direct shipment using external API")]
+        public void WhenCreateDirectShipmentUsingExternalAPI()
         {
-            IEnumerable<MainCarriageLeg> mainCarriageLegs = table.CreateComplexSet<MainCarriageLeg>();
-            Context.Direct.MainCarriageLegs = new List<MainCarriageLeg>();
-            Context.Direct.MainCarriageLegs.AddRange(mainCarriageLegs);
-        }
-
-
-        [When(@"User create direct shipment using external API")]
-        public void WhenUserCreateDirectShipmentUsingExternalAPI()
-        {
-            Direct createdDirectShipment = APICaller.CallPost<Direct>(Context.Direct, "Direct", Context.User.Token);
-            Context.Direct.Id = createdDirectShipment?.Id;
+            ApiResponse<Direct> response = APICaller.CallPost<Direct>(Context.Direct, "Direct", UserTenant.Token);
+            Context.Direct = response.Data;
         }
 
         [Then(@"The direct shipment should be created successfully")]
         public void ThenTheDirectShipmentShouldBeCreatedSuccessfully()
         {
-            Context.Direct.Id.Should().NotBeNull();
+            Context.Direct.Should().NotBeNull();
         }
 
-        [Given(@"The main carriage legs are added to last direct shipment")]
-        public void GivenTheMainCarriageLegsAreAddedToLastDirectShipment(Table mainCarriageLegsTable)
+        [When(@"Update main carriage leg ATA to future date")]
+        public void WhenUpdateMainCarriageLegATAToFutureDate()
         {
-            IEnumerable<MainCarriageLeg> mainCarriageLegs = mainCarriageLegsTable.CreateComplexSet<MainCarriageLeg>();
-            GetTheLastDirectShipment();
-            Context.Direct.MainCarriageLegs = new List<MainCarriageLeg>();
-            Context.Direct.MainCarriageLegs.AddRange(mainCarriageLegs);
+            DateTime futureDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day).AddYears(1);
+            Context.Direct.MainCarriageLegs.First().ATA = futureDate;
+
+            ApiResponse<Direct> response = APICaller.CallPut<Direct>(Context.Direct, "Direct", UserTenant.Token);
+
+            Context.ExceptionMessage = response.ErrorMessage;
         }
 
-        [When(@"User Update Shipment With Invalid Future ATA")]
-        public void WhenUpdateShipmentWithInvalidFutureATA()
+        [Then(@"Error message \(cannot set main carriage ATA to future date\) should received")]
+        public void ThenErrorMessageCannotSetMainCarriageATAToFutureDateShouldReceived()
         {
-            DateTime FutureDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day).AddYears(1);
-
-            Context.Direct.MainCarriageLegs.Last().ATA = FutureDate;
-            dynamic response = APICaller.CallPut<dynamic>(Context.Direct, "Direct", Context.User.Token, HttpStatusCode.BadRequest);
-
-            ExceptionMessage = (response["ErrorMessage"] as string).Replace("\r", string.Empty).Replace("\n", string.Empty).Trim();
+            Context.ExceptionMessage.Should().Be("Can't set MainCarriageATA to future date");
         }
 
-        [Then(@"Update should not be done")]
-        public void UpdateShouldNotBeDone()
+        [When(@"Update main carriage leg ATD to future date")]
+        public void WhenUpdateMainCarriageLegATDToFutureDate()
         {
-            ExceptionMessage.Should().Be("Can't set MainCarriageATA to future date");
+            DateTime futureDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day).AddYears(1);
+            Context.Direct.MainCarriageLegs.First().ATD = futureDate;
+
+            ApiResponse<Direct> response = APICaller.CallPut<Direct>(Context.Direct, "Direct", UserTenant.Token);
+
+            Context.ExceptionMessage = response.ErrorMessage;
         }
 
-        [When(@"The User Updates Shipment With Invalid Future ATD")]
-        public void WhenTheUserUpdatesShipmentWithInvalidFutureATD()
+        [Then(@"Error message \(cannot set main carriage ATD to future date\) should received")]
+        public void ThenErrorMessageCannotSetMainCarriageATDToFutureDateShouldReceived()
         {
-            DateTime FutureDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day).AddYears(1);
-
-            Context.Direct.MainCarriageLegs.Last().ATD = FutureDate;
-            dynamic response = APICaller.CallPut<dynamic>(Context.Direct, "Direct", Context.User.Token, HttpStatusCode.BadRequest);
-
-            ExceptionMessage = (response["ErrorMessage"] as string).Replace("\r", string.Empty).Replace("\n", string.Empty).Trim();
+            Context.ExceptionMessage.Should().Be("Can't set MainCarriageATD to future date");
         }
 
-        [Then(@"The excption massage that's related to this case is shown")]
-        public void ThenTheExcptionMassageThatSRelatedToThisCaseIsShown()
+        [When(@"Update main carriage leg ETD,ATD,ETA and ATA to valid date")]
+        public void WhenUpdateMainCarriageLegETDATDETAAndATAToValidDate()
         {
-            ExceptionMessage.Should().Be("Can't set MainCarriageATD to future date");
-            
+            Context.Direct.MainCarriageLegs.First().ETD = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day).AddMonths(-1).AddDays(1);
+            Context.Direct.MainCarriageLegs.First().ATD = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day).AddMonths(-1).AddDays(2);
+            Context.Direct.MainCarriageLegs.First().ETA = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day).AddMonths(-1).AddDays(3);
+            Context.Direct.MainCarriageLegs.First().ATA = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day).AddMonths(-1).AddDays(4);
+            ApiResponse<Direct> response = APICaller.CallPut<Direct>(Context.Direct, "Direct", UserTenant.Token);
+            Context.Direct = response.Data;
         }
 
-        [When(@"The User Updates Shipment With valid Future ETD,ATD,ETA and ATA")]
-        public void WhenTheUserUpdatesShipmentWithValidFutureETDATDETAAndATA()
-        {
-
-            Context.Direct.MainCarriageLegs.Last().ETD = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day).AddMonths(-1).AddDays(1);
-            Context.Direct.MainCarriageLegs.Last().ATD = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day).AddMonths(-1).AddDays(2);
-            Context.Direct.MainCarriageLegs.Last().ETA = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day).AddMonths(-1).AddDays(3);
-            Context.Direct.MainCarriageLegs.Last().ATA = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day).AddMonths(-1).AddDays(4);
-            Context.Direct.NewConcurrencyGUID = Guid.NewGuid().ToString();
-            Context.Direct = APICaller.CallPut<Direct>(Context.Direct, "Direct", Context.User.Token);
-        }
-
-        [Then(@"The shipment is updated succesfully")]
+        [Then(@"The shipment should updated succesfully")]
         public void ThenTheShipmentIsUpdatedSuccesfully()
         {
             Context.Direct.Should().NotBeNull();
         }
 
-        private void GetTheLastDirectShipment()
+
+        private void BuildNewDirectShipment(Table directShipmentTable)
         {
-            Context.Direct = null;
-            string directShipmentsRequestUrl = "ShipmentViews/GetByFilters?ForceCacheRefresh=false&GetAll=false&GetCount=false&PageIndex=0&PageSize=10" +
-                "&Filter1Name=ShipmentLevelCode&Filter1Operator=equals&Filter1Value=D" +
-                "&Filter3Name=TransportModeId&Filter3Operator=equals&Filter3Value=O" +
-                "&Filter2Name=CreatedByUserId&Filter2Operator=equals&Filter2Value=" + Context.User.UserId +
-                "&SortBy=CreateDateTime&SortDirection=descending";
+            dynamic directShipment = directShipmentTable.CreateDynamicInstance();
 
-            IEnumerable<ShipmentPM> directShipments = APICaller.CallGet<IEnumerable<ShipmentPM>>(directShipmentsRequestUrl, Context.User.Token, "Result");
+            DirectBuilder directBuilder = new DirectBuilder();
+            directBuilder.Agent((string)directShipment.Agent.ToString())
+                .Direction((string)directShipment.Direction.ToString())
+                .TransportMode((string)directShipment.TransportMode.ToString())
+                .ShipmentType((string)directShipment.ShipmentType.ToString())
+                .Shipper((string)directShipment.Shipper.ToString())
+                .ShipperReference1((string)directShipment.ShipperReference1.ToString())
+                .ShipperReference2((string)directShipment.ShipperReference2.ToString())
+                .GrossWeightUnit((string)directShipment.GrossWeightUnit.ToString())
+                .ChargeableWeightUnit((string)directShipment.ChargeableWeightUnit.ToString())
+                .VolumeUnit((string)directShipment.VolumeUnit.ToString())
+                .Incoterm((string)directShipment.Incoterm.ToString())
+                .MainCarriageCarrier((string)directShipment.MainCarriageCarrier.ToString())
+                .MainCarriageATD((DateTime)directShipment.MainCarriageATD);
 
-            string lastDirectShipmentId = directShipments?.FirstOrDefault()?.Id;
-
-            Direct directShipment = APICaller.CallGet<Direct>(("Direct/GetSingleDirect?id=" + lastDirectShipmentId), Context.User.Token, null);
-
-            if (directShipment != null)
-            {
-                Context.Direct = directShipment;
-            }
+            Context.Direct = directBuilder.Build();
         }
 
+        private void AddMainCarriageLegsToDirectShipment(Table mainCarriageLegsTable)
+        {
+            IEnumerable<dynamic> mainCarriageLegs = mainCarriageLegsTable.CreateDynamicSet();
+
+            List<MainCarriageLeg> mainCarriageLegsList = new List<MainCarriageLeg>();
+
+            mainCarriageLegs.ToList().ForEach(mainCarriageLeg =>
+            {
+                MainCarriageLegBuilder mainCarriageLegBuilder = new MainCarriageLegBuilder();
+                MainCarriageLeg newMainCarriageLeg = mainCarriageLegBuilder.LegIndex((int)mainCarriageLeg.LegIndex)
+                .Carrier((string)mainCarriageLeg.Carrier.ToString())
+                .FromPort((string)mainCarriageLeg.FromPort.ToString())
+                .ToPort((string)mainCarriageLeg.ToPort.ToString())
+                .Build();
+                mainCarriageLegsList.Add(newMainCarriageLeg);
+            });
+
+            Context.Direct.MainCarriageLegs = new List<MainCarriageLeg>();
+            Context.Direct.MainCarriageLegs.AddRange(mainCarriageLegsList);
+        }
     }
 }

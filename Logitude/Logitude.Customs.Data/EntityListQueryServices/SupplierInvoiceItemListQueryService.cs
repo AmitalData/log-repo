@@ -66,6 +66,55 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             return iQueryable;
         }
 
+        public List<SupplierInvoiceItemList> GetSupplierInvoiceItemsClasifiedRemarks(string entityParentId, int tenant)
+        {
+
+
+
+            List<SupplierInvoiceItemList> invoiceItemsLists = (from a in context.SupplierInvoiceItems.Include("TradeAgreement").Include("OriginCountry")
+                                                               where a.DeclarationId == entityParentId && a.ClasifiedRemarks != null && a.Tenant == tenant
+                                                               select new SupplierInvoiceItemList()
+                                                               {
+                                                                   ClassificationCode = a.ClassificationCode,
+                                                                   CustomsBookTypeCode = a.CustomsBookTypeCode,
+                                                                   DangerousClassificationCode = a.DangerousClassificationCode,
+                                                                   DangerousPackingGroupTypeCode = a.DangerousPackingGroupTypeCode,
+                                                                   DeclarationId = a.DeclarationId,
+                                                                   Tenant = a.Tenant,
+                                                                   CounterKey = a.CounterKey,
+                                                                   ItemCode = a.ItemCode,
+                                                                   ItemPrice = a.ItemPrice,
+                                                                   ManufactureIdentifier = a.ManufactureIdentifier,
+                                                                   NonCustomsItemPrice = a.NonCustomsItemPrice,
+                                                                   OptionalTamaPercentage = a.OptionalTamaPercentage,
+                                                                   OriginCountryCode = a.OriginCountryCode,
+                                                                   //   PROCESS_TYPE = a.PROCESS_TYPE,
+                                                                   SalesTaxExemptionTypeCode = a.SalesTaxExemptionTypeCode,
+                                                                   TradeAgreementCode = a.TradeAgreementCode,
+                                                                   TaxExemptCode = a.TaxExemptCode,
+                                                                   WholeSaleItemPrice = a.WholeSaleItemPrice,
+                                                                   ItemPriceCurrencyCode = a.ItemPriceCurrencyCode,
+                                                                   LineNumber = a.LineNumber,
+                                                                   NonCustomsItemPriceCurCode = a.NonCustomsItemPriceCurCode,
+                                                                   ActualInvoiceLines = a.ActualInvoiceLines,
+                                                                   TradeAgreementName = a.TradeAgreement.LocalName,
+                                                                   OriginCountryName = a.OriginCountry.LocalName,
+                                                                   InvoiceQuantity = a.InvoiceQuantity,
+                                                                   InvoiceQuantityType = a.InvoiceQuantityType,
+                                                                   StatisticQuantity = a.StatisticQuantity,
+                                                                   StatisticQuantityType = a.StatisticQuantityType,
+                                                                   SequenceNumeric = a.SequenceNumeric,
+                                                                   IsParent = a.IsParent,
+                                                                   ClasifiedRemarks = a.ClasifiedRemarks,
+                                                                   InvoiceNumber=a.SupplierInvoice.InvoiceNumber,
+
+
+                                                               }).ToList();
+            return invoiceItemsLists.OrderBy(d => d.SequenceNumeric).ToList();
+
+
+        }
+
         public List<SupplierInvoiceItemList> GetSupplierInvoiceItemsForInvoices(string entityParentId, string keys, int tenant)
         {
             List<int> intKeys = new List<int>();

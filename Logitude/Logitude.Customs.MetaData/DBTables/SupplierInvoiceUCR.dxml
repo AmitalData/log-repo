@@ -12,7 +12,7 @@
       PrimaryKey="true"
       Nullable="false" />
   </Column>
-  <Column
+  <Column   
     Name="InvoiceCounterKey"
     Type="int">
     <Constraints

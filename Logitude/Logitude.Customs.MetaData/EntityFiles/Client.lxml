@@ -2840,7 +2840,7 @@
   <Query
     Code="&quot;Clients&quot;"
     TextCode="&quot;Clients&quot;"
-    LocalTextCode="&quot;לקוח&quot;"
+    LocalTextCode="&quot;לקוחות&quot;"
     QueryGroupCode="&quot;CLNT&quot;"
     IndexOrder="0"
     ObjectTableName="&quot;Customs.Client&quot;"
@@ -3044,6 +3044,12 @@
       Code="&quot;Customs.Client.O.NewClientSucceeded&quot;"
       DefaultText="&quot;Create New Client Succeeded&quot;"
       LocalDefaultText="&quot;לקוח חדש הוקם בהצלחה&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.Client.NewButton&quot;"
+      DefaultText="&quot;New Client&quot;"
+      LocalDefaultText="&quot;לקוח חדש&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>

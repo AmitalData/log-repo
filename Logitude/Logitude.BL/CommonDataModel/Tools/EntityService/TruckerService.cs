@@ -136,7 +136,11 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             {
                 this.UpdateContactSearchField(itemPM);
             }
-            RunStoredProcedureClass.UpdateCardSearcsRecords(entityPM.Id, entityPM.Tenant);
+            string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
+            if (dbms != "oracle")
+            {
+                RunStoredProcedureClass.UpdateCardSearcsRecords(entityPM.Id, entityPM.Tenant);
+            }
         }
 
         public void Update(TruckerPM entityPM, bool mapComposition = false)
@@ -183,7 +187,11 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
             //TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "Trucker");
             //TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "Carrier");
-            RunStoredProcedureClass.UpdateCardSearcsRecords(entityPM.Id, entityPM.Tenant);
+            string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
+            if (dbms != "oracle")
+            {
+                RunStoredProcedureClass.UpdateCardSearcsRecords(entityPM.Id, entityPM.Tenant);
+            }
         }
 
         private void InitializeComponent()

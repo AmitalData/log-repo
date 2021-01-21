@@ -79,16 +79,14 @@ namespace Logitude.Accounting.BL.CoreBL
 
                 bool hasTwoPaymentsOnly = (recoTransactions.Count(d => d.SourceTypeCode == AccountingEntities.ARPayment) == 2) && recoTransactions.TrueForAll(d => d.SourceTypeCode == AccountingEntities.ARPayment);
                 bool hasMultipleARPayments = CheckIfHasMultiplePayment(reconciliationPM, recoTransactions);
-                if (hasMultipleARPayments == true && !hasTwoPaymentsOnly)
+                if (hasMultipleARPayments == true)
                 {
-                    CheckIfReconcilePaymentOnly(reconciliationPM, recoTransactions);
-
                     CheckIfTotalNotEqualsZero(reconciliationPM);
 
                     MultipleARPaymentReconciliationSplitter splitter = new MultipleARPaymentReconciliationSplitter(reconciliationPM);
 
 
-                   List<ReconciliationPM> paymentReconciliations = splitter.SplitReconciliationByPayments();
+                   List<ReconciliationPM> paymentReconciliations = splitter.SplitReconciliationByPayment();
 
 
 

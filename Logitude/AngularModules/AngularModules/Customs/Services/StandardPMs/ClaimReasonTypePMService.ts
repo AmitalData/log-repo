@@ -153,6 +153,7 @@ export class ClaimReasonTypePMService {
         if (!entityPM) {
             
             entityPM = new ClaimReasonTypePM();
+			entityPM.DisableMarkAsDirty = true;
         }
 
 		var customFields: Array<string> = [];
@@ -193,6 +194,8 @@ export class ClaimReasonTypePMService {
             entityPM.OldEntityPM = null;
         }
 		entityPM.IsDirty = false;
+	    entityPM.DisableMarkAsDirty = false;
+
         return entityPM;
     }
 

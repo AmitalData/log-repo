@@ -60,7 +60,21 @@ namespace Logitude.Server.Tools
                 EntityUpdateServiceContext.Current = null;
             }
         }
+        public void GetAncestorEntityUpdateService
+            (out object AncestorEntityUpdateService)
+        {
+            AncestorEntityUpdateService = null;
+            try
+            {
+                AncestorEntityUpdateService = EntityUpdateServiceContext.Current.EntityUpdateService;
+            }
+            catch (Exception)
+            {
 
+                //throw;
+            }
+            
+        }
         public void GetAncestor
             (out object entityPOCO, out object entityPM, out object entityParentPM)
         

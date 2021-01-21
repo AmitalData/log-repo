@@ -51,6 +51,7 @@ export class AutonomyKeywordComponent
         super();
         this._KeywordtypeCodes.push(new KeyValuePair("1", "עיר"));
         this._KeywordtypeCodes.push(new KeyValuePair("2", "טלפון"));
+        this._KeywordtypeCodes.push(new KeyValuePair("3", "קידומת ת\"ז/ח\"פ פלסטינאי"));
         SessionLocator.SelectedSession.StartBusyIndicator("");
         this._EntityResourceService.getEntityResourceByTableName(this.ObjectTableName).subscribe(response => {
             this.Loaded = true;
@@ -81,12 +82,24 @@ export class AutonomyKeywordComponent
     }
     ngOnInit(): void {
             if(this.entityArgs.EntityPM != null) {
-            this.EntityPM = this.entityArgs.EntityPM;
-            if (this.EntityPM.KeywordtypeCode == "1") {
-                this.SelectedItemKeywordtypeCode = this._KeywordtypeCodes[0];
-            } else {
-                this.SelectedItemKeywordtypeCode = this._KeywordtypeCodes[1];
-            }
+                this.EntityPM = this.entityArgs.EntityPM;
+                switch (this.EntityPM.KeywordtypeCode) {
+                    case "1": {
+                        this.SelectedItemKeywordtypeCode = this._KeywordtypeCodes[0];
+                        break;
+                    }
+                    case "2": {
+                        this.SelectedItemKeywordtypeCode = this._KeywordtypeCodes[1];
+                        break;
+                    }
+                    case "3": {
+                        this.SelectedItemKeywordtypeCode = this._KeywordtypeCodes[2];
+                        break;
+                    }
+                    default: {
+                        break;
+                    }
+                }
         } else {
             this.isNewRecord = true;
             this.EntityPM = new CustomsAutonomyKeywordPM();

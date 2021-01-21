@@ -223,7 +223,7 @@
   <Column
     Name="ItemDescription"
     Type="nvarchar"
-    Size="30">
+    Size="256">
     <Constraints
       Nullable="true" />
   </Column>
@@ -400,7 +400,7 @@
     Name="ItemFOBAmountForeign"
     Type="decimal"
     Precision="16"
-    Scale="2">
+    Scale="2">   
     <Constraints
       Nullable="true" />
   </Column>

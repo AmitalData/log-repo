@@ -53,7 +53,10 @@ export class DeclarationStatementTypePM {
     public OldEntityPM: DeclarationStatementTypePM;
 		
     public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
+       if(!this.DisableMarkAsDirty)
+       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -61,6 +64,7 @@ export class DeclarationStatementTypePM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "Customs.DeclarationStatementType");
            
         }
+       }
     }
 
     private MyClone: DeclarationStatementTypePM;

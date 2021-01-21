@@ -31,7 +31,16 @@ namespace Simplog.Data.CommonDataModel.Repositories
         {
             return (from record in context.Departments where record.Tenant == tenant select record);
         }
-
+        public Department GetSingleDepartmentCache(string id, int tenant)
+        {
+            string entityKeyString = $"GetSingleDepartment({id},{tenant})";
+            var res = CacheManager.GetOrInsertNewObject<Department>(entityKeyString, () =>
+            {
+                return this.GetSingleDepartment(id, tenant);
+            });
+            return res;
+           
+        }
         public Department GetSingleDepartment(string id, int tenant)
         {
             return (from record in context.Departments where record.Id == id && record.Tenant == tenant select record).FirstOrDefault();

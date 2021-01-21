@@ -108,6 +108,10 @@ namespace Logitude.Customs.Data.EntityLists
        public string BuyerRoleName  { get; set; }
        [DataMember]
        public string BuyerCountryName  { get; set; }
+       [DataMember]
+       public decimal? ItemFOBAmountForeign  { get; set; }
+       [DataMember]
+       public decimal? ItemFOBAmountNIS  { get; set; }
    }
 
 }

@@ -228,6 +228,26 @@ namespace Logitude.Customs.Data.Repsitories
 
         }
 
+        public List<DeclarationCourierStatus> GetDeclarationsByPendings(List<string> declarationIds, int tenant, string pending)
+        {
+        //    var test = context.DeclarationCourierStatuses.Where(a=> a.Tenant == tenant && a.CourierPendingReasonList.Contains(pending));
+
+            List<DeclarationCourierStatus> declarations = context.DeclarationCourierStatuses.Where(a => a.Tenant == tenant 
+            &&  (("," +a.CourierPendingReasonList + ",").Contains("," +pending +","))).ToList();
+
+
+            //List<DeclarationCourierStatus> declarations1 =  context.DeclarationCourierStatuses.Where(a=> declarationIds.Contains(a.DeclarationId)
+            //                                               && a.Tenant == tenant && a.CourierPendingReasonList==pending).ToList();
+
+            //List<DeclarationCourierStatus> declarations = (from a in context.DeclarationCourierStatuses
+            //                                               where declarationIds.Contains(a.DeclarationId)
+            //                                               && a.Tenant == tenant && a.CourierPendingReasonList.Split(',').Contains(pending)
+            //                                               select a).ToList();
+
+            return declarations;
+
+        }
+
         public int Lock_forUpdateNOWAIT(string declarationIds)
         {
 
@@ -237,7 +257,11 @@ namespace Logitude.Customs.Data.Repsitories
 
             return succ;
         }
-
+        public int CountOpenDeclarations(string couriermasterid, int tenant)
+        {
+            var courierDecs = context.CourierDeclarations.Where(y => y.CourierMasterId == couriermasterid).Select(y=>y.DeclarationId); 
+            return (context.DeclarationCourierStatuses.Count(x => x.IsClosedForFollowUp==false && courierDecs.Contains(x.DeclarationId)));
+        }
     }
 
 }

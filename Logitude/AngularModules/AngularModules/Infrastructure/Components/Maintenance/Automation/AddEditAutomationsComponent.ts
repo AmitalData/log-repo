@@ -281,6 +281,7 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
         this.TimeUnits.push(new CodeNameClass("II", "Minutes"));
         this.TimeUnits.push(new CodeNameClass("OO", "Hours"));
         this.TimeUnits.push(new CodeNameClass("DD", "Days"));
+        this.TimeUnitOps.push(new CodeNameClass("NL", ""));
         this.TimeUnitOps.push(new CodeNameClass("BF", "Before"));
         this.TimeUnitOps.push(new CodeNameClass("AF", "After"));
     }
@@ -463,7 +464,10 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
 
         this.DocumentTypeLists = this.AllDocumentTypeLists.filter(a => a.IsDocOut && a.TemplateFormatCode == "M");
 
-        if (this.ResultCodeSelected && (this.ResultCodeSelected.Code == "EMAIL" || this.ResultCodeSelected.Code == "SENDDOCUMENT")) {
+        if (this.ResultCodeSelected && (this.ResultCodeSelected.Code == "EMAIL" || this.ResultCodeSelected.Code == "SENDDOCUMENT")
+            || this.ResultCodeSelected.Code == "SENDINTERFACE" || this.ResultCodeSelected.Code == "FOLLOWUP" || this.ResultCodeSelected.Code == "DOCOUTFOLLOWUP"
+            || this.ResultCodeSelected.Code == "DOCINFOLLOWUP" || this.ResultCodeSelected.Code == "FIELDSET" || this.ResultCodeSelected.Code == "FIELDSET"
+            || this.ResultCodeSelected.Code == "QUEUE") {
             this.DocumentTypeLists = this.AllDocumentTypeLists.filter(a => a.IsDocOut);
         }
 
@@ -1176,6 +1180,9 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
         if (value != this.delaytimeOpIndicator) {
             this.delaytimeOpIndicator = value;
             this.DelayTimeOp = value.Code;
+            if (value.Code == "NL") {
+                this.DelayTimeObjectFieldsIndicator = null;
+            }
         }
     }
 
@@ -1186,7 +1193,7 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
     set DelayTimeObjectFieldsIndicator(value: ObjectFieldPM) {
         if (value != this.delayTimeObjectFieldsIndicator) {
             this.delayTimeObjectFieldsIndicator = value;
-            this.SelectedDelaytimeFieldCode = value.FieldCode;
+            this.SelectedDelaytimeFieldCode = value?.FieldCode;
         }
     }
 
@@ -1242,7 +1249,7 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
                 this.FollowUpDateObjectFieldLists.push(objectField);
             }
 
-            if ((objectField.DataTypeCode == "Date" || objectField.DataTypeCode == "DateTime") && objectField.ObjectTableId == this.CurrentEntityPM.ObjectTableId && objectField.AllowedinAutomationConditions) {
+            if ((objectField.DataTypeCode == "Date" || objectField.DataTypeCode == "DateTime") && objectField.ObjectTableId == this.CurrentEntityPM.ObjectTableId && (objectField.AllowedinAutomationConditions || objectField.IsCustom)) {
                 this.DelayTimeObjectFields.push(objectField);
             }
 
@@ -1640,7 +1647,20 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
             }
         }
 
-
+        if (this.AutomationCondationAndList.length > 0) {
+            this.AutomationCondationAndList.forEach((item) => {
+                if (item.CurrentEntityPM.Value == "" || item.ObjectFieldCode == "") {
+                    this.ValidationErrorsList.push("Field value is required");
+                }
+            })
+        }
+        if (this.AutomationCondationOrList.length > 0) {
+            this.AutomationCondationOrList.forEach((item) => {
+                if (item.CurrentEntityPM.Value == "" || item.ObjectFieldCode == "") {
+                    this.ValidationErrorsList.push("Field value is required");
+                }
+            })
+        }
 
         if (this.CurrentEntityPM.ResultCode == "FIELDSET" && this.AutomationSetValueLists && this.AutomationSetValueLists.length > 0) {
             this.AutomationSetValueLists.forEach((item) => {

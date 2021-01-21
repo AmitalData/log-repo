@@ -385,6 +385,10 @@ namespace CommunicationWorkerRole.Services
 
         private StiReport GetStimulReportByReportFilter(ReportFliter reportFilter)
         {
+            AdvancedDateResolver advancedDateResolver = new AdvancedDateResolver();
+            List<QueryFilterItem> reportFilterItems = advancedDateResolver.ResolveDateValues(reportFilter.QueryFilterItemLists);
+            reportFilter.QueryFilterItemLists = reportFilterItems;
+
             StiReport stiReport = null;
             if (reportFilter != null)
             {

@@ -69,11 +69,19 @@ export class CustomsAirlinePM {
     public set ICAO(newValue: string) { if (this.iCAO != newValue) { this.iCAO = newValue; this.MarkAsDirty("ICAO"); } }
        
 	 
+    private unloadPortCode: string;
+    public get UnloadPortCode() { return this.unloadPortCode; }
+    public set UnloadPortCode(newValue: string) { if (this.unloadPortCode != newValue) { this.unloadPortCode = newValue; this.MarkAsDirty("UnloadPortCode"); } }
+       
+	 
 
     public OldEntityPM: CustomsAirlinePM;
 		
     public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
+       if(!this.DisableMarkAsDirty)
+       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -81,6 +89,7 @@ export class CustomsAirlinePM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "Customs.CustomsAirline");
            
         }
+       }
     }
 
     private MyClone: CustomsAirlinePM;

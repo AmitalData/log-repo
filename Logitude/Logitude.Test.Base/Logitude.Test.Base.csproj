@@ -39,6 +39,9 @@
     <Reference Include="Cucumber.Messages, Version=6.0.1.0, Culture=neutral, PublicKeyToken=b10c5988214f940c, processorArchitecture=MSIL">
       <HintPath>..\packages\Cucumber.Messages.6.0.1\lib\net45\Cucumber.Messages.dll</HintPath>
     </Reference>
+    <Reference Include="Dynamitey, Version=2.0.9.136, Culture=neutral, PublicKeyToken=cbf53ea3aeb972c6, processorArchitecture=MSIL">
+      <HintPath>..\packages\Dynamitey.2.0.9.136\lib\net40\Dynamitey.dll</HintPath>
+    </Reference>
     <Reference Include="FluentAssertions, Version=5.10.3.0, Culture=neutral, PublicKeyToken=33f2691a05b67b6a, processorArchitecture=MSIL">
       <HintPath>..\packages\FluentAssertions.5.10.3\lib\net47\FluentAssertions.dll</HintPath>
     </Reference>
@@ -53,6 +56,9 @@
     </Reference>
     <Reference Include="RestSharp, Version=106.11.7.0, Culture=neutral, PublicKeyToken=598062e77f915f75, processorArchitecture=MSIL">
       <HintPath>..\packages\RestSharp.106.11.7\lib\net452\RestSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="SpecFlow.Assist.Dynamic, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\SpecFlow.Assist.Dynamic.1.4.2\lib\net472\SpecFlow.Assist.Dynamic.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
@@ -78,23 +84,37 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-
-    <Compile Include="Constants\RegularExpressions.cs" />
-    <Compile Include="Extensions\TableExtensions.cs" />
+    <Compile Include="Models\Configurations.cs" />
+    <Compile Include="Models\Credentials.cs" />
+    <Compile Include="Models\Settings.cs" />
+    <Compile Include="Models\Urls.cs" />
     <Compile Include="Context\SecurityAccessStepsContext.cs" />
-  
-    <Compile Include="Models\Login\LoginParameters.cs" />
-    <Compile Include="Models\Login\MultiLoginParameters.cs" />
-    <Compile Include="Models\Login\User.cs" />
-    <Compile Include="Models\Login\MultiUsers.cs" />
+    <Compile Include="Extensions\TableExtensions.cs" />
+    <Compile Include="Hooks\BeforeTestRun.cs" />
+    <Compile Include="Models\ApiQueryFilters.cs" />
+    <Compile Include="Models\ApiRequestParameters.cs" />
+    <Compile Include="Models\ApiResponse.cs" />
+    <Compile Include="Models\LoginParameters.cs" />
+    <Compile Include="Models\UserLogin.cs" />
+    <Compile Include="Models\Tenant.cs" />
+    <Compile Include="Models\User.cs" />
+    <Compile Include="Models\UserOtherTenant.cs" />
+    <Compile Include="Models\UserTenant.cs" />
+    <Compile Include="Models\LocationsData.cs" />
+    <Compile Include="Models\LocationsVariables.cs" />
+    <Compile Include="Models\PartnersData.cs" />
+    <Compile Include="Models\PartnersVariables.cs" />
+    <Compile Include="Models\XMLParser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\APICaller.cs" />
-    <Compile Include="Steps\Login\LoginSteps.cs" />
-    <Compile Include="ValueRetrievers\RandomValueRetriever.cs" />
-    <Compile Include="ValueRetrievers\ForeignEntityValueRetriever.cs" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
+    <Content Include="Configurations\configurations.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

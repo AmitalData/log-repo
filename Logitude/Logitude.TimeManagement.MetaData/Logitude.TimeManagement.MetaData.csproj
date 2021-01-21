@@ -83,7 +83,9 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="DBScripts\" />
+  </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="DBTables\Sprint.dxml" />

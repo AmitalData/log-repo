@@ -1,13 +1,11 @@
-﻿
-using FluentAssertions;
-using Logitude.CommonDataTests.Models.Contact;
-using Logitude.Test.Base.Models.Login;
+﻿using FluentAssertions;
+using Logitude.CommonDataTests.Models;
 using Logitude.Test.Base.Services;
 using Logitude.Test.Base.Context;
+using Logitude.Test.Base.Models;
 using System.Collections.Generic;
 using System.Linq;
 using TechTalk.SpecFlow;
-
 
 namespace Logitude.CommonDataTests.Steps.Security
 {
@@ -15,18 +13,16 @@ namespace Logitude.CommonDataTests.Steps.Security
     public class GetContactSecurityAccessSteps
     {
         private SecurityAccessStepsContext<ContactPM> Context;
-        public GetContactSecurityAccessSteps(MultiUsers multiUsers, SecurityAccessStepsContext<ContactPM> context)
+        public GetContactSecurityAccessSteps(SecurityAccessStepsContext<ContactPM> context)
         {
             Context = context;
-            Context.FirstUser = multiUsers.Users[0];
-            Context.SecondUser = multiUsers.Users[1];
         }
 
         [When(@"First user get the first contact from contacts list")]
         public void WhenFirstUserGetTheFirstContactFromContactsList()
         {
-            IEnumerable<ContactPM> FirstUserContactList = GetContactsListForFirstUser();
-            Context.FirstUserPMData.Id = FirstUserContactList?.FirstOrDefault()?.Id;
+            IEnumerable<ContactPM> firstUserContactList = GetContactsListForFirstUser();
+            Context.FirstUserPMData.Id = firstUserContactList?.FirstOrDefault()?.Id;
         }
 
         [Then(@"the Contact for first user should be exists")]
@@ -38,10 +34,10 @@ namespace Logitude.CommonDataTests.Steps.Security
         [When(@"Second user get the contact that requested by first user")]
         public void WhenSecondUserGetTheContactThatRequestedByFirstUser()
         {
-            IEnumerable<ContactPM> FirstUserContactList = GetContactsListForFirstUser();
-            string singleContactUrl = "Contact/GetSingle?id=" + FirstUserContactList?.FirstOrDefault()?.Id;
-            ContactPM contactPM = APICaller.CallGet<ContactPM>(singleContactUrl, Context.SecondUser.Token, null);
-            Context.SecondUserPMData.Id = contactPM?.Id;
+            IEnumerable<ContactPM> firstUserContactList = GetContactsListForFirstUser();
+            string contactsGetSingleUrl = Urls.ContactsGetSingle(firstUserContactList?.FirstOrDefault()?.Id);
+            ApiResponse<ContactPM> response = APICaller.CallGet<ContactPM>(contactsGetSingleUrl, UserOtherTenant.Token);
+            Context.SecondUserPMData.Id = response.Data?.Id;
         }
 
         [Then(@"the Contact for second user should not be exists")]
@@ -52,11 +48,14 @@ namespace Logitude.CommonDataTests.Steps.Security
 
         private IEnumerable<ContactPM> GetContactsListForFirstUser()
         {
-            string contactsListUrl = "contactviews/GetByFilters?ForceCacheRefresh=false&GetAll=false&GetCount=true&PageIndex=0&PageSize=10";
-            IEnumerable<ContactPM> contactPMs = APICaller.CallGet<IEnumerable<ContactPM>>(contactsListUrl, Context.FirstUser.Token, "Result");
-            return contactPMs;
+            ApiQueryFilters apiQueryFilters = new ApiQueryFilters
+            {
+                PageIndex = 0,
+                PageSize = 1
+            };
+
+            ApiResponse<IEnumerable<ContactPM>> response = APICaller.CallGetByFilters<IEnumerable<ContactPM>>(Urls.ContactViewsGetByFilters(), UserTenant.Token, apiQueryFilters);
+            return response.Data;
         }
-
-
     }
 }

@@ -133,7 +133,7 @@
 
                                                             <td class="CellStretched" style="width: 100px; min-width: 100px; max-width: 100px; position: relative;">
 
-                                                                <button id="{{item.DocumentTypeCode+'-S-DocsOut' | IdGeneratorPipe}}" *ngIf="item.VisibleSendButton" style="width: 40px;" class="Button"  (click)="SendButtonClick(item)"   >Send</button>
+                                                                <button id="{{item.DocumentTypeCode+'-S-DocsOut' | IdGeneratorPipe}}" [disabled]="DisableSendOriginalCopy" *ngIf="item.VisibleSendButton" style="width: 40px;" class="Button"  (click)="SendButtonClick(item)"   >Send</button>
                                                                 <button id="{{item.DocumentTypeCode+'-P-DocsOut' | IdGeneratorPipe}}" *ngIf="item.VisiblePrintButton" style="width: 75px;" class="Button" (click)="PrintButtonClick(item)"   >Print/Send</button>
 
 

@@ -569,7 +569,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 //    }
                 //}
                 var mySend2MasofIfNeededService = new Send2MasofIfNeededService();
-                mySend2MasofIfNeededService.Send2Masof(entityPM, CourierStorageSiteChanged);
+                mySend2MasofIfNeededService.Send2Masof(entityPM, CourierStorageSiteChanged,GetDBEntity(entityPM.Id, entityPM.Tenant));
 
             }
         }
@@ -718,7 +718,13 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 }
 
             }
+            if (entityPM.ImporterName != entityPOCO.ImporterName)
+            {
 
+                {
+                    UpdatePendingByKeyWordsByImporterName(entityPM, false);
+                }
+            }
             if (entityPM.IsCourierDeclaration && entityPM.ChangeSetOp == ChangeSetOperation.Update)
             {
                 if (CheckIfRequiredFieldForCourierHasChanged(entityPM, entityPOCO))
@@ -728,6 +734,63 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             }
 
             base.OnUpdating(entityPM, entityPOCO);
+        }
+        public void UpdatePendingByKeyWordsByImporterName(DeclarationPM entityPM, Boolean IsAfterDeclarationCourierStatusInsert )
+        {
+
+            if (String.IsNullOrWhiteSpace(entityPM.ImporterName))
+            {
+                return;
+            }
+
+
+            List<string> pendingReasonCodeList = new List<string>();
+            ICustomContext context = MainContext as CustomContext;
+            DeclarationCourierStatusQueryService myDeclarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(context);
+            DeclarationCourierStatusUpdateService declarationCourierStatusUpdateService = new DeclarationCourierStatusUpdateService(MainContext, new Dictionary<string, IContext>(), entityPM.Tenant);
+            DeclarationCourierStatusPM declarationCourierStatusPM = myDeclarationCourierStatusQueryService.GetSingle(entityPM.Id, true, false);
+            if (declarationCourierStatusPM != null)
+            {
+                var pendingByKeywordQueryService = new PendingByKeywordQueryService(entityPM.Tenant);
+                var courierReasonCodeList = pendingByKeywordQueryService.GetCourierPendingReasonCodeBykeyWords(
+                    entityPM.ImporterName,
+                     /*SearchByFieldCode:*/ "2"  /*שם יבואן*/,
+                    entityPM.Tenant);
+                foreach (var courierReasonCode in courierReasonCodeList)
+                {
+
+                    if (!String.IsNullOrWhiteSpace(courierReasonCode) && !pendingReasonCodeList.Contains(courierReasonCode))
+                    {
+                        pendingReasonCodeList.Add(courierReasonCode);
+                        DeclarationPendingPM declarationPendingPM = new DeclarationPendingPM();
+                        declarationPendingPM = declarationCourierStatusPM.DeclarationPendings.Where(r => r.DeclarationID == entityPM.Id && r.CourierPendingReasonCode == courierReasonCode).FirstOrDefault();
+                        if (declarationPendingPM != null)
+                        {
+                            if (declarationPendingPM.Status != "A")
+                            {
+                                declarationPendingPM.ChangeSetOp = ChangeSetOperation.Update;
+                                declarationPendingPM.Status = "A";
+                                if (declarationCourierStatusPM.ChangeSetOp != ChangeSetOperation.Update) declarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
+                            }
+                        }
+                        else
+                        {
+                            declarationPendingPM = new DeclarationPendingPM();
+                            declarationPendingPM.ChangeSetOp = ChangeSetOperation.Insert;
+                            declarationPendingPM.Status = "A";
+                            declarationPendingPM.DeclarationID = entityPM.Id;
+                            declarationPendingPM.Tenant = entityPM.Tenant;
+                            declarationPendingPM.CourierPendingReasonCode = courierReasonCode;
+                            declarationCourierStatusPM.DeclarationPendings.Add(declarationPendingPM);
+                            if (declarationCourierStatusPM.ChangeSetOp != ChangeSetOperation.Update) declarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
+                        }
+                    }
+                }
+                if (declarationCourierStatusPM != null && declarationCourierStatusPM.ChangeSetOp == ChangeSetOperation.Update)
+                {
+                    declarationCourierStatusUpdateService.Update(declarationCourierStatusPM, true);
+                }
+            }
         }
 
         public bool CheckIfUpdatingAllowed(DeclarationPM myDeclarationPM)
@@ -809,10 +872,13 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
         protected override void AfterUpdating(DeclarationPM entityPM, EntityPM entityParentPM)
         {
+
+            bool fromcache = true; // why i need the Name ?? 
+            _AfterCommitUpdate = true;
             if (entityPM.CustomerCode != null)
             {
                 CardRepository rep = new CardRepository(entityPM.Tenant);
-                Card customerCard = rep.GetSingleCardByCode(entityPM.CustomerCode, entityPM.Tenant, false);
+                Card customerCard = rep.GetSingleCardByCode(entityPM.CustomerCode, entityPM.Tenant, fromcache);//i leave not from cache-due 4 update 
                 if (customerCard != null)
                 {
                     entityPM.CustomerName = customerCard.LocalName != null ? customerCard.LocalName : customerCard.EnglishName;
@@ -822,7 +888,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             if (!string.IsNullOrEmpty(entityPM.DepartmentId))
             {
                 DepartmentRepository departmentRep = new DepartmentRepository(entityPM.Tenant);
-                Department department = departmentRep.GetSingleDepartment(entityPM.DepartmentId, entityPM.Tenant);
+                Department department = departmentRep.GetSingleDepartmentCache(entityPM.DepartmentId, entityPM.Tenant);
                 if (department != null)
                 {
                     entityPM.DepartmentName = department.LocalName != null ? department.LocalName : department.EnglishName;
@@ -833,7 +899,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             if (entityPM.DeclarationOfficeCode != null)
             {
                 CustomsHouseTypeQueryService customsHouseTypeQueryService = new CustomsHouseTypeQueryService(entityPM.Tenant);
-                CustomsHouseTypePM declarationOffice = customsHouseTypeQueryService.GetSingle(entityPM.DeclarationOfficeCode, false, false);
+                CustomsHouseTypePM declarationOffice = customsHouseTypeQueryService.GetSingle(entityPM.DeclarationOfficeCode, false, fromcache);
                 if (declarationOffice != null)
                 {
                     entityPM.DeclarationOfficeName = declarationOffice.LocalName;
@@ -843,7 +909,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             if (entityPM.AutonomyRegionTypeCode != null)
             {
                 AutonomyTypeQueryService autonomyTypeQueryService = new AutonomyTypeQueryService(entityPM.Tenant);
-                AutonomyTypePM autonomyType = autonomyTypeQueryService.GetSingle(entityPM.AutonomyRegionTypeCode, false, false);
+                AutonomyTypePM autonomyType = autonomyTypeQueryService.GetSingle(entityPM.AutonomyRegionTypeCode, false, fromcache);
                 if (autonomyType != null)
                 {
                     entityPM.AutonomyRegionTypeName = autonomyType.LocalName;
@@ -853,7 +919,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             if (entityPM.ImporterEntitlementTypeCode != null)
             {
                 EntitlementTypeQueryService entitlementTypeQueryService = new EntitlementTypeQueryService(entityPM.Tenant);
-                EntitlementTypePM entitlementType = entitlementTypeQueryService.GetSingle(entityPM.ImporterEntitlementTypeCode, false, false);
+                EntitlementTypePM entitlementType = entitlementTypeQueryService.GetSingle(entityPM.ImporterEntitlementTypeCode, false, fromcache);
                 if (entitlementType != null)
                 {
                     entityPM.ImporterEntitlementTypeName = entitlementType.LocalName;
@@ -863,7 +929,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             if (entityPM.ImporterPassCountryCode != null)
             {
                 CustomsCountryQueryService countryQueryService = new CustomsCountryQueryService(entityPM.Tenant);
-                CustomsCountryPM country = countryQueryService.GetSingle(entityPM.ImporterPassCountryCode, false, false);
+                CustomsCountryPM country = countryQueryService.GetSingle(entityPM.ImporterPassCountryCode, false, fromcache);
                 if (country != null)
                 {
                     entityPM.ImporterPassCountryName = country.LocalName;
@@ -873,7 +939,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             if (entityPM.TransferImporterCountryCode != null)
             {
                 CustomsCountryQueryService countryQueryService = new CustomsCountryQueryService(entityPM.Tenant);
-                CustomsCountryPM country = countryQueryService.GetSingle(entityPM.TransferImporterCountryCode, false, false);
+                CustomsCountryPM country = countryQueryService.GetSingle(entityPM.TransferImporterCountryCode, false, fromcache);
                 if (country != null)
                 {
                     entityPM.ImporterPassCountryName = country.LocalName;
@@ -883,7 +949,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             if (entityPM.ProcedureCurrentCode != null)
             {
                 GovernmentProcedureTypeQueryService governmentProcedureTypeQueryService = new GovernmentProcedureTypeQueryService(entityPM.Tenant);
-                GovernmentProcedureTypePM governmentProcedureType = governmentProcedureTypeQueryService.GetSingle(entityPM.ProcedureCurrentCode, false, false);
+                GovernmentProcedureTypePM governmentProcedureType = governmentProcedureTypeQueryService.GetSingle(entityPM.ProcedureCurrentCode, false, fromcache);
                 if (governmentProcedureType != null)
                 {
                     entityPM.ProcedureCurrentName = governmentProcedureType.LocalName;
@@ -893,7 +959,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             if (entityPM.ImporterId != null)
             {
                 ClientQueryService clientQueryService = new ClientQueryService(entityPM.Tenant);
-                ClientPM client = clientQueryService.GetSingle(entityPM.ImporterId, false, false);
+                ClientPM client = clientQueryService.GetSingle(entityPM.ImporterId, false, fromcache);
                 if (client != null)
                 {
                     entityPM.CalculatedImporterName = client.LocalFirstName;
@@ -903,7 +969,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             if (entityPM.DeclarationStatusTypeCode != null)
             {
                 DeclarationStatusTypeQueryService declarationStatusTypeQueryService = new DeclarationStatusTypeQueryService(entityPM.Tenant);
-                DeclarationStatusTypePM declarationStatusType = declarationStatusTypeQueryService.GetSingle(entityPM.DeclarationStatusTypeCode, false, false);
+                DeclarationStatusTypePM declarationStatusType = declarationStatusTypeQueryService.GetSingle(entityPM.DeclarationStatusTypeCode, false, fromcache);
                 if (declarationStatusType != null)
                 {
                     entityPM.DeclarationStatusTypeName = declarationStatusType.LocalName;
@@ -1141,7 +1207,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
             string loggingUserId = AuthenticationUtil.ResolveUserId(dirtyDeclarationPM.Tenant);
 
-            DeclarationPM dbOccDeclarationPM = GetDBEntity(dirtyDeclarationPM);
+            DeclarationPM dbOccDeclarationPM = GetDBEntity(dirtyDeclarationPM.Id, dirtyDeclarationPM.Tenant );
 
             var eventContextTagModel = dirtyDeclarationPM.CurrentContextTag as EventContextTagModel;
             if (eventContextTagModel != null)
@@ -1737,7 +1803,92 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 toDeclaration.DeclarationNumberandVersionId = null;
                 toDeclaration.IsSignedVersion = false;
 
+                if (string.IsNullOrEmpty(toDeclaration.DestinationCountryCode))
+                {
+                    toDeclaration.DestinationCountryCode = fromDeclaration.DestinationCountryCode;
+                }
 
+                if (toDeclaration.LoadingDateTime == null)
+                {
+                    toDeclaration.LoadingDateTime = fromDeclaration.LoadingDateTime;
+                }
+
+                if (string.IsNullOrEmpty(toDeclaration.ShipCode))
+                {
+                    toDeclaration.ShipCode = fromDeclaration.ShipCode;
+                }
+
+                if (toDeclaration.IsExporterConfirmation == false)
+                {
+                    toDeclaration.IsExporterConfirmation = fromDeclaration.IsExporterConfirmation;
+                }
+
+                if (string.IsNullOrEmpty(toDeclaration.ExportAutonomyRegionTypeCode))
+                {
+                    toDeclaration.ExportAutonomyRegionTypeCode = fromDeclaration.ExportAutonomyRegionTypeCode;
+                }
+
+                if (fromDeclaration.DeclarationExportRecipients != null && fromDeclaration.DeclarationExportRecipients.Count() > 0)
+                {
+
+                    foreach (DeclarationExportRecipientPM declarationExportRecipient in fromDeclaration.DeclarationExportRecipients)
+                    {
+                        if (toDeclaration.DeclarationExportRecipients == null)
+                        {
+                            toDeclaration.DeclarationExportRecipients = new List<DeclarationExportRecipientPM>();
+                        }
+                        DeclarationExportRecipientPM declarationExportRecipientPM = toDeclaration.DeclarationExportRecipients.Where(d => d.LineNumber == declarationExportRecipient.LineNumber).FirstOrDefault();
+
+                        if (declarationExportRecipientPM != null)
+                        {
+
+                            if (string.IsNullOrEmpty(declarationExportRecipientPM.RecipientAddress))
+                            {
+                                declarationExportRecipientPM.RecipientAddress = declarationExportRecipient.RecipientAddress;
+
+                            }
+
+                            if (string.IsNullOrEmpty(declarationExportRecipientPM.RecipientIssueCountryCode))
+                            {
+                                declarationExportRecipientPM.RecipientIssueCountryCode = declarationExportRecipient.RecipientIssueCountryCode;
+
+                            }
+
+                            if (string.IsNullOrEmpty(declarationExportRecipientPM.RecipientName))
+                            {
+                                declarationExportRecipientPM.RecipientName = declarationExportRecipient.RecipientName;
+
+                            }
+
+                            declarationExportRecipientPM.ChangeSetOp = ChangeSetOperation.Update;
+
+
+                        }
+                        else
+                        {
+                            int? number = 0;
+                            if (toDeclaration.DeclarationExportRecipients != null)
+                                number = toDeclaration.DeclarationExportRecipients.Max(d => d.LineNumber);
+                            number += 1;
+
+
+                            declarationExportRecipientPM = new DeclarationExportRecipientPM()
+                            {
+                                LineNumber = number,
+                                DeclarationId = toDeclaration.Id,
+                                ChangeSetOp = ChangeSetOperation.Insert,
+                                RecipientAddress = declarationExportRecipient.RecipientAddress,
+                                RecipientIssueCountryCode = declarationExportRecipient.RecipientIssueCountryCode,
+                                RecipientName = declarationExportRecipient.RecipientName,
+                                Tenant = toDeclaration.Tenant,
+
+                            };
+
+                            toDeclaration.DeclarationExportRecipients.Add(declarationExportRecipientPM);
+
+                        }
+                    }
+                }
 
                 if (toDeclaration.Consignments.Count > 0)
                 {
@@ -1864,6 +2015,36 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                                 consignmentPM.CargoDescription = Consignment.CargoDescription;
 
                             }
+
+                            if (string.IsNullOrEmpty(consignmentPM.ExportLoadingPortCode))
+                            {
+                                consignmentPM.ExportLoadingPortCode = Consignment.ExportLoadingPortCode;
+
+                            }
+
+                            if (string.IsNullOrEmpty(consignmentPM.ExportRecieverWareHouseCode))
+                            {
+                                consignmentPM.ExportRecieverWareHouseCode = Consignment.ExportRecieverWareHouseCode;
+
+                            }
+
+                            if (string.IsNullOrEmpty(consignmentPM.ExportUnloadingPortCode))
+                            {
+                                consignmentPM.ExportUnloadingPortCode = Consignment.ExportUnloadingPortCode;
+
+                            }
+
+                            consignmentPM.IsDangerousGoods = Consignment.IsDangerousGoods;
+
+
+
+                            if (string.IsNullOrEmpty(consignmentPM.FinalDestinationPortCode))
+                            {
+                                consignmentPM.FinalDestinationPortCode = Consignment.FinalDestinationPortCode;
+
+                            }
+
+
                             consignmentPM.ChangeSetOp = ChangeSetOperation.Update;
                         }
 
@@ -1899,6 +2080,12 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                                 UnloadDate = Consignment.UnloadDate,
                                 UnloadPortCode = Consignment.UnloadPortCode,
                                 UnloadPortName = Consignment.UnloadPortName,
+                                ExportLoadingPortCode = Consignment.ExportLoadingPortCode,
+                                ExportRecieverWareHouseCode = Consignment.ExportRecieverWareHouseCode,
+                                ExportUnloadingPortCode = Consignment.ExportUnloadingPortCode,
+                                IsDangerousGoods = Consignment.IsDangerousGoods,
+                                FinalDestinationPortCode = Consignment.FinalDestinationPortCode,
+
                                 ChangeSetOp = ChangeSetOperation.Insert,
                             };
 
@@ -2016,6 +2203,9 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 SupplierInvoiceItemQueryService supplierInvoiceItemQueryService = new SupplierInvoiceItemQueryService(context);
                 SupplierInvioceItemCertificatQueryService supplierInvioceItemCertificatQueryService = new SupplierInvioceItemCertificatQueryService(context);
                 SupplierInvoiceFreightAmountQueryService supplierInvoiceFreightAmountQueryService = new SupplierInvoiceFreightAmountQueryService(context);
+                SupplierInvoiceUCRQueryService supplierInvoiceUCRQueryService = new SupplierInvoiceUCRQueryService(context);
+                SupplierInvoicePaymentQueryService supplierInvoicePaymentQueryService = new SupplierInvoicePaymentQueryService(context);
+
                 //SupplierInvoiceModificationQueryService supplierInvoiceModificationQueryService = new SupplierInvoiceModificationQueryService(context); --- mohammad bug 36761
 
                 foreach (SupplierInvoicePM invoice in fromDeclaration.SupplierInvoices)
@@ -2058,7 +2248,11 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                         FullItemsCount = invoice.FullItemsCount,
                         FullParentsCount = invoice.FullParentsCount,
                         AccumalationStateCode = invoice.AccumalationStateCode,
-                        
+                        BuyerAddress = invoice.BuyerAddress,
+                        BuyerCountryCode = invoice.BuyerCountryCode,
+                        BuyerName = invoice.BuyerName,
+                        BuyerRoleCode = invoice.BuyerRoleCode,
+                        PartyRelationshipCode = invoice.PartyRelationshipCode,
 
                         ChangeSetOp = ChangeSetOperation.Insert,
 
@@ -2089,6 +2283,46 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     //    invoicePM.SupplierInvoiceModifications.Add(modificationPM);
                     //}
                     //----------------------
+
+                    invoice.SupplierInvoiceUCRs = supplierInvoiceUCRQueryService.GetMulti(new SupplierInvoiceKeys() { DeclarationId = fromDeclarationId, InvoiceCounterKey = invoicePM.InvoiceCounterKey }, true, true);
+
+                    foreach (SupplierInvoiceUCRPM UCR in invoice.SupplierInvoiceUCRs)
+                    {
+                        SupplierInvoiceUCRPM UCRPM = new SupplierInvoiceUCRPM()
+                        {
+                            DeclarationId = toDeclaration.Id,
+                            Tenant = toDeclaration.Tenant,
+                            InvoiceCounterKey = UCR.InvoiceCounterKey,
+                            AgentChargeID = UCR.AgentChargeID,
+                            SequenceNumeric = UCR.SequenceNumeric,
+                            SupplierChargeID = UCR.SupplierChargeID,
+                            ChangeSetOp = ChangeSetOperation.Insert,
+
+                        };
+                        invoicePM.SupplierInvoiceUCRs.Add(UCRPM);
+                    }
+
+
+                    invoice.SupplierInvoicePayments = supplierInvoicePaymentQueryService.GetMulti(new SupplierInvoiceKeys() { DeclarationId = fromDeclarationId, InvoiceCounterKey = invoicePM.InvoiceCounterKey }, true, true);
+
+                    foreach (SupplierInvoicePaymentPM Payment in invoice.SupplierInvoicePayments)
+                    {
+                        SupplierInvoicePaymentPM paymentPM = new SupplierInvoicePaymentPM()
+                        {
+                            DeclarationId = toDeclaration.Id,
+                            Tenant = toDeclaration.Tenant,
+                            InvoiceCounterKey = Payment.InvoiceCounterKey,
+                            SequenceNumeric = Payment.SequenceNumeric,
+                            PaymentAmount = Payment.PaymentAmount,
+                            PaymentTypeCode = Payment.PaymentTypeCode,
+                            ChangeSetOp = ChangeSetOperation.Insert,
+
+                        };
+                        invoicePM.SupplierInvoicePayments.Add(paymentPM);
+                    }
+
+
+
                     invoice.SupplierInvoiceFreightAmounts = supplierInvoiceFreightAmountQueryService.GetMulti(new SupplierInvoiceKeys() { DeclarationId = fromDeclarationId, InvoiceCounterKey = invoicePM.InvoiceCounterKey }, true, true); 
 
                     foreach (SupplierInvoiceFreightAmountPM amount in invoice.SupplierInvoiceFreightAmounts)
@@ -2157,8 +2391,10 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                              ItemHash= null,
                              DeferredCustomsTax = item.DeferredCustomsTax,
                              DeferredPurchaseTax= item.DeferredPurchaseTax,
-                             
-                            ItemAdditionalStatus= item.ItemAdditionalStatus,
+                            ClassificationTypeCode = item.ClassificationTypeCode,
+                            ClaimReasonCode = item.ClaimReasonCode,
+                            TransactionNatureCode = item.TransactionNatureCode,
+                            ItemAdditionalStatus = item.ItemAdditionalStatus,
                             ChangeSetOp = ChangeSetOperation.Insert,
 
 
@@ -2558,7 +2794,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 return true;
             }
 
-            DeclarationPM dbOccDeclarationPM = GetDBEntity(entityPM);
+            DeclarationPM dbOccDeclarationPM = GetDBEntity(entityPM.Id, entityPM.Tenant);
             //Check SupplierInvoice fields
             if (entityPM.SupplierInvoices != null)
             {

@@ -24,7 +24,7 @@ namespace Logitude.ShipmentTests.Models
         public string MainCarriageFromPortId { get; set; }
         public int? PackagesQuantity { get; set; }
         public string ConcurrencyGUID { get; set; }
-        public List<ShipmentPackagePM> ShipmentPackages { get; set; }
-        public List<ShipmentPayablesPM> ShipmentPayables { get; set; }
+        public List<PackagePM> ShipmentPackages { get; set; }
+        public List<PayablesPM> ShipmentPayables { get; set; }
     }
 }

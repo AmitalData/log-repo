@@ -49,6 +49,23 @@ namespace Logitude.CustomsMessaging.FakeMessagingServices
             response.ResponseContentHeader = _header;
             List<ResponseAdditionalInformation> AdditionalInformation = new List< ResponseAdditionalInformation>();
 
+            List<ResponseAmendment> responseAmendments = new List<ResponseAmendment>();
+
+             responseAmendments.Add(new ResponseAmendment()
+            {
+                ChangeReasonCode = new AmendmentChangeReasonCodeType() { name = "1" },
+                AmendmentFieldStatusSpecified = true,
+                AmendmentFieldStatus=1,
+               FieldAmendmentRejectReasonRemarks="TEST",
+               AmendmentRequestInitiatorTypeSpecified=true,
+               AmendmentRequestInitiatorType=2,
+               Pointer= new ResponseAmendmentPointer[1]{
+                     new ResponseAmendmentPointer(){DocumentSectionCode=new PointerDocumentSectionCodeType(){Value="42A" },SequenceNumeric=0}
+                }
+
+            }); ;
+
+            response.Response.Amendment = responseAmendments.ToArray();
             if (!string.IsNullOrEmpty(data.Content29.ToString()))
             {
                 AdditionalInformation.Add(new ResponseAdditionalInformation

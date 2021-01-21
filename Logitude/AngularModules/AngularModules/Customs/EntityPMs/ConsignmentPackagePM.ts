@@ -156,7 +156,10 @@ export class ConsignmentPackagePM {
     public UniqueKey: string;
 	 	
     public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
+       if(!this.DisableMarkAsDirty)
+       {
         this.IsDirty = true;
 		  if (this.EntityParentPM) {
             this.EntityParentPM.MarkAsDirty();
@@ -166,6 +169,7 @@ export class ConsignmentPackagePM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "Customs.ConsignmentPackage");
            
         }
+       }
     }
 
     private MyClone: ConsignmentPackagePM;

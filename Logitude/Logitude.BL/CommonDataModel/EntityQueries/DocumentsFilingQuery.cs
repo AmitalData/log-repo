@@ -38,7 +38,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
         public DocumentsFilingQuery()
         {
             repository = new DocumentsFilingRepository();
-            (repository.context as IObjectContextAdapter).ObjectContext.ContextOptions.UseCSharpNullComparisonBehavior = false; //Pasted from <http://stackoverflow.com/questions/682429/how-can-i-query-for-null-values-in-entity-framework?lq=1> 
+            //(repository.context as IObjectContextAdapter).ObjectContext.ContextOptions.UseCSharpNullComparisonBehavior = false; //Pasted from <http://stackoverflow.com/questions/682429/how-can-i-query-for-null-values-in-entity-framework?lq=1> 
 
         }
 
@@ -1986,7 +1986,9 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                        //.Include("CreatedByUser.Contact")
                                        .Include("Document").Include("DocumentType")
                                        //.Include("Owner.Contact")
-                                       where a.Tenant == tenant && ((a.EntityId == entityId && a.ObjectTableId == objectTableId) || (a.ExternalEntityName == "CFIFILEM" && a.ExternalEntityReference == referenceNumber))
+                                       where a.Tenant == tenant && ((a.EntityId == entityId && a.ObjectTableId == objectTableId && (a.ExternalEntityName != "EFIFILEM" && a.ExternalEntityName != "MFIFILEM")) 
+                                       || (a.ExternalEntityName == "CFIFILEM" && a.ExternalEntityReference == referenceNumber) 
+                                       || ((a.ExternalEntityName == "EFIFILEM" || a.ExternalEntityName == "MFIFILEM" )&& a.EntityReference == referenceNumber))
                                        && a.DirectionCode == directionCode && a.IsDeleted == false
                                        select new DocumentsFilingPM()
                                        {
@@ -2045,7 +2047,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                            CustomerDocumentId = a.CustomerDocumentId,
                                            ForwarderDocumentId = a.ForwarderDocumentId,
                                            SecurityId = a.SecurityId,
-
+                                           DocumentCategoryCode = a.DocumentType.DocumentTypeCategoryCode,
+ 
                                            LastVersion = a.LastVersion,
                                            CustomerTenantNumber = a.CustomerTenantNumber,
                                            IsRequested = a.IsRequested,
@@ -3006,6 +3009,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                            SignDueDate = a.SignDueDate,
                                            IsDigitalSignRequired = a.IsDigitalSignRequired,
                                            BackedupExternally = a.BackedupExternally,
+                                           DocumentCategoryCode = a.DocumentType.DocumentTypeCategoryCode
+ 
                                        }).ToList();
             }
             else
@@ -3264,6 +3269,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                        OrigionalDocumentId = a.OrigionalDocumentId,
                                        IsDigitalSignRequired = a.IsDigitalSignRequired,
                                        BackedupExternally = a.BackedupExternally,
+                                       DocumentCategoryCode =a.DocumentType.DocumentTypeCategoryCode
                                    }).ToList();
 
 

@@ -1,8 +1,11 @@
 <!ELEMENT LOGICOURIERSTATUS (LogitudeCourierStatus*)>
-<!ELEMENT LogitudeCourierStatus (DeclarationId?, CustomFileNo?, LastMileStatus?, LastMileStatusDate?, LastMileStatusRemarks?, Param?)>
+<!ELEMENT LogitudeCourierStatus (DeclarationId?, CustomFileNo?, LastMileStatus?, LastMileStatusDate?, LastMileStatusRemarks?, LastMileStatusName?, Param?, Delivered?, IsClosedForFollowUp?)>
 <!ELEMENT DeclarationId (#PCDATA)>
 <!ELEMENT CustomFileNo (#PCDATA)>
 <!ELEMENT LastMileStatus (#PCDATA)>
 <!ELEMENT LastMileStatusDate (#PCDATA)>
 <!ELEMENT LastMileStatusRemarks (#PCDATA)>
+<!ELEMENT LastMileStatusName (#PCDATA)>
 <!ELEMENT Param (#PCDATA)>
+<!ELEMENT Delivered (#PCDATA)>
+<!ELEMENT IsClosedForFollowUp (#PCDATA)>

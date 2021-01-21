@@ -24,6 +24,7 @@ export class AgingFilterComponent extends BaseComponent implements OnInit
     isReady: boolean = false;
     IsSalesmanRestricted: boolean = false;
     public SalesmanFilterItems: ApiQueryFilters;
+    public ChartOfAccountTypeFilterItems: ApiQueryFilters;
 
     entityResourceService: EntityResourceService = new EntityResourceService();
     public isRTL: boolean = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
@@ -62,6 +63,9 @@ export class AgingFilterComponent extends BaseComponent implements OnInit
     {
         this.SalesmanFilterItems = new ApiQueryFilters();
         this.SalesmanFilterItems.addAdditionalFilter("IsSalesman", true, null, null, "Equals", false, false, false, "boolean", false, false);
+
+        this.ChartOfAccountTypeFilterItems = new ApiQueryFilters();
+        // this.ChartOfAccountTypeFilterItems.addAdditionalFilter("CodeFilter", "3,4", null, null, "Exclude", false, false, false, "string", false, true);
     }
 
     private GetResources()
@@ -152,6 +156,36 @@ export class AgingFilterComponent extends BaseComponent implements OnInit
                 this.IsCategoryDisabled = false;
         }
     }
+
+    private _ChartOfAccountsTypeCode : string;
+    public get ChartOfAccountsTypeCode() : string {
+        return this._ChartOfAccountsTypeCode;
+    }
+    public set ChartOfAccountsTypeCode(v : string) {
+        this._ChartOfAccountsTypeCode = v;
+        this.ChartOfAccountsId = null;
+    }
+
+    private chartOfAccount: any;
+    public get ChartOfAccount() { return this.chartOfAccount; }
+    public set ChartOfAccount(value: any)
+    {
+        if (this.chartOfAccount != value) {
+            this.chartOfAccount = value;
+            // this.ChartOfAccountsId = value.Id;
+        }
+    }
+
+
+    private _ChartOfAccountsId : string;
+    public get ChartOfAccountsId() : string {
+        return this._ChartOfAccountsId;
+    }
+    public set ChartOfAccountsId(v : string) {
+        this._ChartOfAccountsId = v;
+    }
+
+
 
     ValidateDate()
     {
@@ -331,6 +365,11 @@ export class AgingFilterComponent extends BaseComponent implements OnInit
 
             myFilterItems.push(new QueryFilterItem("BalanceFilter", this.balanceFilterSelectedValue.replace("filter_", "")));
             myFilterItems.push(new QueryFilterItem("BalanceFilterValue", this.balance || 0, "decimal"));
+
+            myFilterItems.push(new QueryFilterItem("ChartOfAccountsTypeCode", this.ChartOfAccountsTypeCode ? this.ChartOfAccountsTypeCode : null));
+            myFilterItems.push(new QueryFilterItem("ChartOfAccountId", this.ChartOfAccount ? this.ChartOfAccount.Id : null));
+
+
 
             var myReportFliter: ReportFliter = new ReportFliter();
             myReportFliter.NumberOfPage = 1;

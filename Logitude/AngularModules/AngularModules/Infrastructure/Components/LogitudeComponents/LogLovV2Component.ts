@@ -1549,12 +1549,12 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
             if (this.ItemsSource && this.ItemsSource.length > 0) {
                 var oldItems = this.ItemsSource;
 
-                var item = this.ItemsSource.filter(d => d[this.LookUp1] != null && d[this.LookUp1].toLowerCase() === this.SearchTextNgModel.toLowerCase())[0];
+                var item = this.ItemsSource.filter(d => d[this.LookUp1] != null && d[this.LookUp1]?.toLowerCase() === this.SearchTextNgModel?.toLowerCase())[0];
                 if (!item && this.LookUp2) {
-                    var item = this.ItemsSource.filter(d => d[this.LookUp2] != null && d[this.LookUp2].toLowerCase() === this.SearchTextNgModel.toLowerCase())[0];
+                    var item = this.ItemsSource.filter(d => d[this.LookUp2] != null && d[this.LookUp2]?.toLowerCase() === this.SearchTextNgModel?.toLowerCase())[0];
                 }
                 if (!item) {
-                    var item = this.ItemsSource.filter(d => d[this.DisplayMemberPath] != null && d[this.DisplayMemberPath].toLowerCase() === this.SearchTextNgModel.toLowerCase())[0];
+                    var item = this.ItemsSource.filter(d => d[this.DisplayMemberPath] != null && d[this.DisplayMemberPath]?.toLowerCase() === this.SearchTextNgModel?.toLowerCase())[0];
                 }
                 if (item) {
                     this.ItemsSource = [];
@@ -1579,12 +1579,12 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
                 if (this.ZeroItemsSource.length > 0) {
                     var oldItems = this.ZeroItemsSource;
 
-                    var item = this.ZeroItemsSource.filter(d => d[this.LookUp1] != null && d[this.LookUp1].toLowerCase() === this.SearchTextNgModel.toLowerCase())[0];
+                    var item = this.ZeroItemsSource.filter(d => d[this.LookUp1] != null && d[this.LookUp1]?.toLowerCase() === this.SearchTextNgModel?.toLowerCase())[0];
                     if (!item && this.LookUp2) {
-                        var item = this.ZeroItemsSource.filter(d => d[this.LookUp2] != null && d[this.LookUp2].toLowerCase() === this.SearchTextNgModel.toLowerCase())[0];
+                        var item = this.ZeroItemsSource.filter(d => d[this.LookUp2] != null && d[this.LookUp2]?.toLowerCase() === this.SearchTextNgModel?.toLowerCase())[0];
                     }
                     if (!item) {
-                        var item = this.ZeroItemsSource.filter(d => d[this.DisplayMemberPath] != null && d[this.DisplayMemberPath].toLowerCase() === this.SearchTextNgModel.toLowerCase())[0];
+                        var item = this.ZeroItemsSource.filter(d => d[this.DisplayMemberPath] != null && d[this.DisplayMemberPath]?.toLowerCase() === this.SearchTextNgModel?.toLowerCase())[0];
                     }
                     if (item) {
                         this.ZeroItemsSource = [];
@@ -1672,7 +1672,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
         if (originalTable.Name == "Carrier") {
             originalTable = window.ObjectTables.filter(d => d.Name === "Card")[0];
         }
-        var inactiveField = window.ObjectFields.filter(d => d.FieldName.toLowerCase() === "inactive" && (d.ObjectTableId === parenttable.Id || d.ObjectTableId === originalTable.Id))[0];
+        var inactiveField = window.ObjectFields.filter(d => d.FieldName?.toLowerCase() === "inactive" && (d.ObjectTableId === parenttable.Id || d.ObjectTableId === originalTable.Id))[0];
         if (inactiveField && !this.ShowInActive) {
             filters.addAdditionalFilter(inactiveField.FieldName, false, null, null, "Equals", false, false, false, null, false, this.LookUpTable.CacheOnClient);
         }
@@ -1927,7 +1927,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
         if (value == null || value == undefined) {
             return null;
         }
-        switch (dataTypeCode.toLowerCase()) {
+        switch (dataTypeCode?.toLowerCase()) {
             case "ntext":
             case "text":
                 {
@@ -1943,10 +1943,10 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
                 {
                     var bb: boolean;
                     if (typeof (value) == "string") {
-                        if (value.toLowerCase() == 'false') {
+                        if (value?.toLowerCase() == 'false') {
                             bb = false;
                         }
-                        else if (value.toLowerCase() == 'true') {
+                        else if (value?.toLowerCase() == 'true') {
                             bb = true;
                         }
                     }
@@ -2515,7 +2515,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
         //SetWarningPopupVisibility(false);
         //SetValidationPopupVisibility(false);
         objectTableName = this.GetObjectTableName(objectTableName);
-        var originalTable: ObjectTablePM = window.ObjectTables.filter(d => d.Name.toLowerCase() === objectTableName.toLocaleLowerCase())[0];
+        var originalTable: ObjectTablePM = window.ObjectTables.filter(d => d.Name?.toLowerCase() === objectTableName.toLocaleLowerCase())[0];
 
         if (!FeatureLocator.HasFeaturePermession(this.LookUpTableName, "NEW") && this.LookUpTable.EnableSecurity) {
             var messageWindow: MessageWindow = new MessageWindow();
@@ -2761,7 +2761,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
         return this.GetObjectTableNameForDependency(dep, parentObjectName);
     }
     private GetObjectTableNameForDependency(dependency: string, parentObjectName: string) {
-        var partnerType = this.PartnerTypes.filter(p => p.Id.toLowerCase() == dependency.toLowerCase())[0];
+        var partnerType = this.PartnerTypes.filter(p => p.Id?.toLowerCase() == dependency?.toLowerCase())[0];
         if (partnerType != null && partnerType != undefined) {
             var name: string = partnerType.Name.replace(" ", "");
 
@@ -2769,7 +2769,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
                 name = "Customer";
             }
 
-            var table: ObjectTablePM = window.ObjectTables.filter(d => d.Name.toLowerCase() === name.toLocaleLowerCase())[0];
+            var table: ObjectTablePM = window.ObjectTables.filter(d => d.Name?.toLowerCase() === name.toLocaleLowerCase())[0];
             if (table != null) {
                 return table.Name;
             }
@@ -2973,12 +2973,12 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
                     if (setFirstAsSelected) {
                         if (this.bufferData.length > 0) {
                             this.FocusOnSelect = false;
-                            var item = this.bufferData.filter(d => d[this.LookUp1] != null && d[this.LookUp1].toLowerCase() === this.SearchTextNgModel.toLowerCase())[0];
+                            var item = this.bufferData.filter(d => d[this.LookUp1] != null && d[this.LookUp1]?.toLowerCase() === this.SearchTextNgModel?.toLowerCase())[0];
                             if (!item && this.LookUp2) {
-                                var item = this.bufferData.filter(d => d[this.LookUp2] != null && d[this.LookUp2].toLowerCase() === this.SearchTextNgModel.toLowerCase())[0];
+                                var item = this.bufferData.filter(d => d[this.LookUp2] != null && d[this.LookUp2]?.toLowerCase() === this.SearchTextNgModel?.toLowerCase())[0];
                             }
                             if (!item) {
-                                var item = this.bufferData.filter(d => d[this.DisplayMemberPath].toLowerCase() === this.SearchTextNgModel.toLowerCase())[0];
+                                var item = this.bufferData.filter(d => d[this.DisplayMemberPath]?.toLowerCase() === this.SearchTextNgModel?.toLowerCase())[0];
                             }
                             if (item) {
                                 this.OnSelected(item);

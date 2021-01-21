@@ -199,6 +199,39 @@
     <Constraints
       Nullable="false" />
   </Column>
+  <Column
+    Name="PackageQuantityInMAWB"
+    Type="int">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="LandingDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="UnifreightLeadingFile"
+    Type="nvarchar"
+    Size="12">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="CourierMasterRemarks"
+    Type="nvarchar"
+    Size="512">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="OpenDeclarations"
+    Type="int"
+    DefaultValue="0">
+    <Constraints
+      Nullable="false" />
+  </Column>
   <Relation
     ForeignKeyColumn="CreatedByUserId"
     ReferencedTable="Users"

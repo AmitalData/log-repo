@@ -143,6 +143,8 @@
         font-family: sans-serif;
     }
 </style>
+<LogitudeHotKeysComponent  (CTRL_S_HotKey)="OnSaveHotKeyPressed()" (RightArrowHotKey)="OnArrowRightHotKeyPressed()"  
+ (LeftArrowHotKey) ="OnArrowLeftHotKeyPressed()" (ESCHotKey)="OnEscHotKeyPressed()" (CTRL_Shift_S_HotKey)="OnSaveAndCloseHotKey()"></LogitudeHotKeysComponent>
 
 <div class="MediaFillAbsolute LogitudeEditComponent" [ngStyle]="{background: ComponentBackground}">
     <div class="MarginAbsolute10" style="top: 5px; bottom: 8px;" [style.overflow-y]="IsSplitBtnVisible ? 'auto' : 'none'">

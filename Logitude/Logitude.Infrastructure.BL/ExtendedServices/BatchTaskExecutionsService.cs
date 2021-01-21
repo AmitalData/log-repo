@@ -45,7 +45,7 @@ namespace Logitude.Infrastructure.BL.ExtendedServices
             }
         }
 
-        public virtual void RunCode() { }
+        public abstract void RunCode();
         
 
         public virtual void ChangeStatus(string statusCode,Exception ex=null,string logStatus=null)

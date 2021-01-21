@@ -152,6 +152,12 @@ namespace Logitude.Customs.Data.EntityLists
        public string SortedCourierManifestStatus  { get; set; }
        [DataMember]
        public string SortedCourierDeclarationStatus  { get; set; }
+       [DataMember]
+       public bool Delivered  { get; set; }
+       [DataMember]
+       public string TruckerId  { get; set; }
+       [DataMember]
+       public string DistributionArea  { get; set; }
    }
 
 }

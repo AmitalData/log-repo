@@ -3964,6 +3964,12 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 this.UpdateShipmentRegistryDate();
                 this.UpdSatehipmentFirstApprovalDate();
             }
+
+            // when creating auto credit invoice: press on back button then save, the invoice should be transferred
+            else if(entityPM.IsAutoCredit)
+            {
+                this.CreateARInvoiceMessage(true);
+            }
         }
         private void UpdateShipmentRegistryDate()
         {

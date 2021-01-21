@@ -166,6 +166,7 @@ export class CourierMasterPMService {
         if (!entityPM) {
             
             entityPM = new CourierMasterPM();
+			entityPM.DisableMarkAsDirty = true;
         }
 
 		var customFields: Array<string> = [];
@@ -206,6 +207,8 @@ export class CourierMasterPMService {
             entityPM.OldEntityPM = null;
         }
 		entityPM.IsDirty = false;
+	    entityPM.DisableMarkAsDirty = false;
+
         return entityPM;
     }
 

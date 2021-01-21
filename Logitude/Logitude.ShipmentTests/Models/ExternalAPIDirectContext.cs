@@ -1,7 +1,4 @@
-﻿using Logitude.Test.Base.Models.Login;
-using System.Collections.Generic;
-
-namespace Logitude.ShipmentTests.Models
+﻿namespace Logitude.ShipmentTests.Models
 {
     public class ExternalAPIDirectContext
     {
@@ -11,6 +8,6 @@ namespace Logitude.ShipmentTests.Models
         }
 
         public Direct Direct { get; set; }
-        public User User { get; set; }
+        public string ExceptionMessage { get; set; }
     }
 }

@@ -196,6 +196,46 @@
         <td></td>
         <td><div></div></td>
     </tr>
+    <tr style="height:40px; width:700px">
+        <td>
+            <table>
+                <tr>
+                    <td style="width:110px">
+                        <LogLabel [ObjectFieldName]="'LandingDate'" [ObjectTableName]="ObjectTableName"
+                                  [DataContext]="DataContext"></LogLabel>
+                    </td>
+                    <td style="width: 150px;">
+                        <LogDatePicker [NoObjectField]="true" [ObjectFieldName]="'LandingDateDateOnly'" [ObjectTableName]="ObjectTableName"
+                                       [InputType]="'date'" [DataContext]="DataContext"
+                                       [HideColumns]="true"></LogDatePicker>
+                    </td>
+                    <td style="width:30px"></td>
+                </tr>
+            </table>
+
+
+        </td>
+
+        <td>
+            <table>
+                <tr>
+                    <td style="width:110px">
+                        <LogLabel [ObjectFieldName]="'LandingDateTimeOnly'" [DataContext]="DataContext" [ObjectTableName]="ObjectTableName"> </LogLabel>
+                    </td>
+                    <td style="width: 150px;">
+                        <LogDatePicker [ObjectFieldName]="'LandingDateTimeOnly'"
+                                       [ObjectTableName]="ObjectTableName"
+                                       [InputType]="'time'" [DataContext]="DataContext"
+                                       [TimeMode]="24" [SelectedDateValue]="LandingDateTimeOnly"
+                                       [HideColumns]="true"></LogDatePicker>
+                    </td>
+                </tr>
+            </table>
+        </td>
+
+        <td></td>
+        <td><div></div></td>
+    </tr>
 
     <tr style="height:40px; width:700px">
         <td>
@@ -320,7 +360,7 @@
     </tr>
 
     <tr style="height:40px; width:700px">
-        <td>
+        <!--td>
             <table>
                 <tr>
                     <td style="width:110px">
@@ -345,7 +385,8 @@
                     <td style="width:30px"></td>
                 </tr>
             </table>
-        </td>
+        </td-->
+
 
         <td>
             <table>
@@ -358,21 +399,64 @@
                         <LogTextBox [ObjectFieldName]="'IntegratorName'" [InputType]="'text'" [DataContext]="DataContext"
                                     [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
                         <!--
-    <LogLov [ObjectFieldName]="'IntegratorCode'"
-            [ObjectTableName]="ObjectTableName"
-            [DataContext]="DataContext"
-            [SelectedValue]="IntegratorCode"
-            [HideColumns]="true"
-            [LookUpTableName]="'Card'">
-        [DependencyFilter1Value]="'CS'"
-                        </LogLov>
-                        -->
+                        <LogLov [ObjectFieldName]="'IntegratorCode'"
+                                [ObjectTableName]="ObjectTableName"
+                                [DataContext]="DataContext"
+                                [SelectedValue]="IntegratorCode"
+                                [HideColumns]="true"
+                                [LookUpTableName]="'Card'">
+                            [DependencyFilter1Value]="'CS'"
+                                            </LogLov>
+                                            -->
+                    </td>
+                    <td style="width:30px"></td>
+                </tr>
+            </table>
+        </td>
+
+        <td>
+            <table>
+                <tr>
+                    <td style="width:110px">
+                        <LogLabel [ObjectFieldName]="'PackageQuantityInMAWB'" [ObjectTableName]="ObjectTableName"
+                                  [DataContext]="DataContext"></LogLabel>
+                    </td>
+                    <td style="width:150px">
+                        <LogTextBox [ObjectFieldName]="'PackageQuantityInMAWB'" [InputType]="'number'" [DataContext]="DataContext"
+                                    [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
                     </td>
                 </tr>
             </table>
         </td>
+
+        <td><div></div></td>
+    </tr>
+    <tr style="height:7px; width:700px">
+        <td></td>
+        <td></td>
+
+        <td></td>
+
+    </tr>
+    <tr style="height:40px; width:700px">
+
+        <td colspan="2">
+            <table>
+                <tr>
+                    <td style="width:38px">
+                        <LogLabel [ObjectFieldName]="'CourierMasterRemarks'" [ObjectTableName]="ObjectTableName"
+                                  [DataContext]="DataContext"></LogLabel>
+                    </td>
+                    <td style="width:150px">
+                        <LogTextBox [ObjectFieldName]="'CourierMasterRemarks'" [DataContext]="DataContext"
+                                    [ObjectTableName]="ObjectTableName" [HideColumns]="true" [IsMultiline]="true"></LogTextBox>
+
+                    </td>
+                </tr>
+            </table>
+        </td>
+
         <td><div></div></td>
     </tr>
 
-    <tr></tr>
 </table>

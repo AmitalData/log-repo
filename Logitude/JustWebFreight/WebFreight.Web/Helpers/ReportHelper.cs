@@ -763,7 +763,8 @@ namespace WebFreight.Web.Helpers
 
         public string BuildStimulReport(ReportFliter reportFliter)
         {
-            List<QueryFilterItem> reportFilterItems = ResolveDateValues(reportFliter);
+            AdvancedDateResolver advancedDateResolver = new AdvancedDateResolver();
+            List<QueryFilterItem> reportFilterItems = advancedDateResolver.ResolveDateValues(reportFliter.QueryFilterItemLists);
             reportFliter.QueryFilterItemLists = reportFilterItems;
 
             string result = string.Empty;
@@ -773,20 +774,6 @@ namespace WebFreight.Web.Helpers
                 result = WriteReportToStorage(reportFliter, stiReport);
             }
             return result;
-        }
-
-        private List<QueryFilterItem> ResolveDateValues(ReportFliter reportFliter)
-        {
-            AdvancedDateResolver advancedDateResolver = new AdvancedDateResolver();
-            List<QueryFilterItem> reportFilterItems = reportFliter.QueryFilterItemLists;
-            reportFilterItems.ForEach(reportFilter =>
-            {
-                if (reportFilter.FieldDataType == "Date")
-                {
-                    reportFilter.FieldValue = advancedDateResolver.GetDateValueByOptionCode(reportFilter.FieldValue?.ToString());
-                }
-            });
-            return reportFilterItems;
         }
 
         public StiReport GetStimulReportByReportFilter(ReportFliter reportFliter)

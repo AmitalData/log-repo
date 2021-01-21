@@ -2,15 +2,6 @@
         In order to get an APInvoice from the APInvoices list 
 		It should be related to the user's tenant 
 
-Background:
-    Successful login with valid credentials for set of users
-	Given Users with following credentials
-		| Email               | Password    |
-		| ahmadb123@mail.com  | ahmed13!A15 |
-		| protractor@test.com | !P123t456   |
-	When Users make login request
-	Then Users should have token
-
 Scenario: An AP Invoice From A User's Tenant is Gotten
 	When The First user gets the first AP Invoice from AP Invoices list
 	Then The AP Invoice which is related to the first user tanent is existed

@@ -40,7 +40,7 @@ namespace Logitude.Customs.BL.CloseTables
                     Code = "2754Constraint",
                     Name = "הצהרת יבוא אילוץ",
                     Entity="Declaration",
-                    Param1= @"{ ""code"":""4589""}",
+                    Param1= @"{ ""code"":""4589"" , ""documentSectionCode"" : ""30B"", ""tagId"" :""D024""}",
                 },
 
                 new SincroTestCaseDetail()
@@ -88,6 +88,33 @@ MainInterfaceCode ="5002"
 
 
                     MainInterfaceCode="5118",
+                },
+
+                    new SincroTestCaseDetail()
+                {
+                    Code = "8227",
+                    Name = "(מסמך נדרש (8227 ",
+                    IsDCA= true,
+                    Entity="Declaration",
+                    Param1= @"{ ""documentId"" :"""" ,  ""requiredDocumentMessageType"" :""1"" , 
+                              ""typeId"" :""380"" , ""entityType"" :""12414"" , ""entityIdKey2"" :"""",
+                                 ""entityIdKey3"" :""""  }",
+
+
+                    MainInterfaceCode="8227",
+                },
+                new SincroTestCaseDetail()
+                {
+                    Code = "8228",
+                    Name = "(אימות מסמך נדרש (8228",
+                    IsDCA= true,
+                    Entity="Declaration",
+                    Param1= @"{ ""documentId"" :"""" ,  ""rejectVerificationReason"" :"""" , ""verificationDecisionType"" :""2"" , ""rejectVerificationRemark"" :""FAKE"" , 
+                              ""typeId"" :""380"" , ""entityType"" :""12414"" , ""entityIdKey2"" :"""",
+                                 ""entityIdKey3"" :""""  }",
+
+
+                    MainInterfaceCode="8228",
                 },
                 new SincroTestCaseDetail()
                 {

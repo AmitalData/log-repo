@@ -31,6 +31,8 @@ export class ClaimCustomsDocumentsController implements ICustomsDocumentsControl
 
     }
 
+    ValidationBeforeSave(customsDocumentsTicket: CustomsDocumentsTicketPM, param1: string) {
+    }
     CheckIfDuplicateTicket() {
         return true;
     }

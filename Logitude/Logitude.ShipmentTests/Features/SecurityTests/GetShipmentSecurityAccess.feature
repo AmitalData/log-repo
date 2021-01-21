@@ -1,13 +1,6 @@
 ﻿Feature: Get Shipment Security Access
-
-Background:
-    Successful login with valid credentials for set of users
-	Given Users with following credentials
-		| Email               | Password    |
-		| ahmadb123@mail.com  | ahmed13!A15 |
-		| protractor@test.com | !P123t456   |
-	When Users make login request
-	Then Users should have token
+	With pre-prepared base and shipment data
+	We want to test Get Shipment Security Access.
 
 Scenario: Get Shipment From User's Tenant
 	When First user get the first shipment from shipments list

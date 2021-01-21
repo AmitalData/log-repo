@@ -482,9 +482,9 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
         //this.SendALLCorrectDec_OLD(courierDeclarationStatusCode);
     }
 
-    SendALLSVG() {
+    SendALLSVG(isAll: boolean) {
 
-        if (this._SVGTotal == 0) {
+        if (this._SVGTotal == 0 && !isAll) {
             var myMessageWindow = new MessageWindow();
             myMessageWindow.Width = 250;
             myMessageWindow.Height = 150;
@@ -511,7 +511,10 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
 
         MyFilters.GetCount = false;
         MyFilters.PageIndex = 0;
-        MyFilters.PageSize = 100;
+
+        MyFilters.GetAll = true;
+       // MyFilters.PageSize = 100;
+
         //this.CurrentQueryFilters = MyFilters;
         var ids: string[] = [];
         this._EntityListService.getByFilters("Customs.DeclarationCourierStatus", MyFilters, null).then((observable: Observable<any>) => {
@@ -1881,7 +1884,29 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
                 }
             });
     }
+    ChangeUnloadPortSiteMethod() {
 
+        if (this.IsDisplayOnly) {
+            var myMessageWindow = new MessageWindow();
+            myMessageWindow.Width = 250;
+            myMessageWindow.Height = 150;
+            myMessageWindow.Show("קיים מסר זהה בתהליך");
+            return;
+        }
+
+        var logitudeWindow = new LogitudeWindow();
+        var windowArgs: any = {};
+        windowArgs.CourierMasterPM = this.entityPM;
+        logitudeWindow.Width = 350;
+        logitudeWindow.Height = 250;
+        logitudeWindow.IsShowCloseButton = true;
+        logitudeWindow.Title = "שינוי אתר פריקה";
+        logitudeWindow.WindowArgs = windowArgs;
+        logitudeWindow.Show('./CustomsModules/CustomsCourier/Components/CourierWorkSheet/GetUnloadPortCodeComponent');
+        logitudeWindow.WindowClosed.subscribe(($event: any) => {
+            this.RefreshButtonClicked();
+        });
+    }
     ChangeStorageSiteMethod() {
 
         if (this.IsDisplayOnly) {

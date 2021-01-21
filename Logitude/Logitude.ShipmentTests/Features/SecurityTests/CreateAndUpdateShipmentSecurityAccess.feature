@@ -1,12 +1,6 @@
 ﻿Feature: Create and Update Shipment Security Access
-
-Background: Login and get a token
-	Given Users with following credentials
-		| Email               | Password    |
-		| ahmadb123@mail.com  | ahmed13!A15 |
-		| protractor@test.com | !P123t456   |
-	When Users make login request
-	Then Users should have token
+	With pre-prepared base and shipment data
+	We want to test Create and Update Shipment Security Access.
 
 Scenario: Create Shipment for User's Tenant
 	When Create shipment request sent for User's Tenant

@@ -393,6 +393,7 @@
     <Compile Include="Services\QueryExportLogExecutionService.cs" />
     <Compile Include="Services\ReportSchedulerTaskService.cs" />
     <Compile Include="Services\SFTPSchedulerTaskService.cs" />
+    <Compile Include="Tasks\CustomsSendDeclarationStatus.cs" />
     <Compile Include="Tasks\CustomsSendManifestTask.cs" />
     <Compile Include="Tasks\CustomsCloseCourierMasterTask.cs" />
     <Compile Include="Tasks\DeleteOldCargoTrackingData.cs" />
@@ -698,6 +699,14 @@
     <ProjectReference Include="..\Logitude.Customs.Data\Logitude.Customs.Data.csproj">
       <Project>{643f92c9-7cf1-4429-b79e-1e354b758abf}</Project>
       <Name>Logitude.Customs.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Logitude.Customs.Def\Logitude.Customs.Def.csproj">
+      <Project>{89132340-6F21-4CE1-8DE4-1CA45E2CD9F3}</Project>
+      <Name>Logitude.Customs.Def</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Logitude.CustomsMessaging.Common\Logitude.CustomsMessaging.Common.csproj">
+      <Project>{F0039DBE-4A1A-4755-8F37-E4005EA74746}</Project>
+      <Name>Logitude.CustomsMessaging.Common</Name>
     </ProjectReference>
     <ProjectReference Include="..\Logitude.Infrastructure.BL\Logitude.Infrastructure.BL.csproj">
       <Project>{BD959AB6-4476-48B3-AA4D-CFD7ED120E55}</Project>

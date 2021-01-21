@@ -17,10 +17,10 @@ namespace Logitude.BL.InfrastructureModel.Tools.Validating
             ////if (taskPoco.Status == "In progress") WR can edit
             ////    throw new Exception("The task is in progress. You are not allowed to edit it");
 
-            if (taskPM.StartDateTime != taskPoco.StartDateTime)
+            if (taskPM.StartDateTimeUTC != taskPoco.StartDateTimeUTC)
             {
                 var utcNowDate = DateTime.UtcNow;
-                if (taskPM.NextRunTimeUTC < utcNowDate)
+                if (taskPM.StartDateTimeUTC < utcNowDate)
                     throw new Exception("You can't select a past date");
             }
 
