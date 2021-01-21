@@ -118,6 +118,13 @@ export class DeclarationReferantDataFiltersMenuComponent
             }, this);
         } else {
         }
+
+        if (this.TransportFilters.AdditionalFilters.length > 0) {
+            this.SetTransport(this.TransportFilters.AdditionalFilters.map(({ FieldValue }) => FieldValue).toString());
+        } else {
+            this.SetTransport("All");
+        }
+
         this.SelectedValueChangedEmitUser();
         this.SelectedValueChangedEmitDepartment();
         this.ApplyTransportSelectedStyle();
