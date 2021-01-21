@@ -27,8 +27,12 @@ namespace WebFreight.Web.Helpers
 
         private static void ThrowErrors(string linesWithCheckDigitErrors, string linesWithWrongInvoiceStatusMessage)
         {
-            var errorMessages = string.Join(";", linesWithCheckDigitErrors, linesWithWrongInvoiceStatusMessage);
-            throw new ApplicationException(errorMessages);
+            if(!string.IsNullOrWhiteSpace(linesWithCheckDigitErrors) || !string.IsNullOrWhiteSpace(linesWithWrongInvoiceStatusMessage))
+            {
+                var errorMessages = string.Join(";", linesWithCheckDigitErrors, linesWithWrongInvoiceStatusMessage);
+                throw new ApplicationException(errorMessages);
+
+            }
         }
 
         private static string CheckIfLinesHasErrors(TaxReportPM taxreport, List<string> errorsCodes, string checkDigitError)
