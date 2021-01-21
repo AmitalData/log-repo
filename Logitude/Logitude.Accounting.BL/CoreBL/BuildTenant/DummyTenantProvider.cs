@@ -735,7 +735,7 @@ namespace Logitude.Accounting.BL.CoreBL.BuildTenant
                 Tenant = tenant,
                 //JournalNumber = "1003",
                 //StatusCode = "2",
-                StatusCodeEnum = Logitude.Accounting.Def.EntityPMs.JournalStatusTypePM.StatusCodeEnum.Failed,
+                StatusCodeEnum = Logitude.Accounting.Def.EntityPMs.JournalStatusTypePM.StatusCodeEnum.Approved,
                 UpdatedByUserId = UpdatedByUserId,
                 UpdateDate = DateTime.Now,
                 ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert,
