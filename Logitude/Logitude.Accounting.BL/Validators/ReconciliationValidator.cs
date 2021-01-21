@@ -179,7 +179,7 @@ namespace Logitude.Accounting.BL.Validators
             if (transactionsAreNotSameSource)
             {
                 if (arpaymentsCount > 1)
-                    AddErrorByTextCode(errorsList, "Reconciliation.O.CantReconcileMutipleAPPayment");
+                    //AddErrorByTextCode(errorsList, "Reconciliation.O.CantReconcileMutipleAPPayment");
                 //if (appaymentsCount > 1)
                 //    AddErrorByTextCode(errorsList, "Reconciliation.O.CantReconcileMutipleAPPayment");
                 if (appaymentsCount == 1 && arpaymentsCount == 1)
