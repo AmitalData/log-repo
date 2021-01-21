@@ -105,6 +105,10 @@
             this.DWQuoteClosingReasonslabel = new System.Windows.Forms.Label();
             this.label32 = new System.Windows.Forms.Label();
             this.DimQuoteClosingReasonsLabel = new System.Windows.Forms.Label();
+            this.FactQuotesLabel = new System.Windows.Forms.Label();
+            this.label37 = new System.Windows.Forms.Label();
+            this.label28 = new System.Windows.Forms.Label();
+            this.DWQuoteslabel = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // BuildWarehouseData
@@ -370,7 +374,7 @@
             this.DWIncotermsLabel.BackColor = System.Drawing.SystemColors.Control;
             this.DWIncotermsLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.DWIncotermsLabel.ForeColor = System.Drawing.Color.CornflowerBlue;
-            this.DWIncotermsLabel.Location = new System.Drawing.Point(335, 475);
+            this.DWIncotermsLabel.Location = new System.Drawing.Point(336, 475);
             this.DWIncotermsLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.DWIncotermsLabel.Name = "DWIncotermsLabel";
             this.DWIncotermsLabel.Size = new System.Drawing.Size(0, 25);
@@ -857,7 +861,7 @@
             this.DimChargesTypesLabel.AutoSize = true;
             this.DimChargesTypesLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
             this.DimChargesTypesLabel.ForeColor = System.Drawing.Color.CornflowerBlue;
-            this.DimChargesTypesLabel.Location = new System.Drawing.Point(1045, 374);
+            this.DimChargesTypesLabel.Location = new System.Drawing.Point(1045, 505);
             this.DimChargesTypesLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.DimChargesTypesLabel.Name = "DimChargesTypesLabel";
             this.DimChargesTypesLabel.Size = new System.Drawing.Size(0, 25);
@@ -869,7 +873,7 @@
             this.label29.BackColor = System.Drawing.SystemColors.Control;
             this.label29.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label29.ForeColor = System.Drawing.Color.CornflowerBlue;
-            this.label29.Location = new System.Drawing.Point(761, 375);
+            this.label29.Location = new System.Drawing.Point(761, 506);
             this.label29.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label29.Name = "label29";
             this.label29.Size = new System.Drawing.Size(219, 25);
@@ -881,7 +885,7 @@
             this.FactChargeslabel.AutoSize = true;
             this.FactChargeslabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
             this.FactChargeslabel.ForeColor = System.Drawing.Color.CornflowerBlue;
-            this.FactChargeslabel.Location = new System.Drawing.Point(1045, 407);
+            this.FactChargeslabel.Location = new System.Drawing.Point(1045, 642);
             this.FactChargeslabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.FactChargeslabel.Name = "FactChargeslabel";
             this.FactChargeslabel.Size = new System.Drawing.Size(0, 25);
@@ -893,7 +897,7 @@
             this.label30.BackColor = System.Drawing.SystemColors.Control;
             this.label30.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label30.ForeColor = System.Drawing.Color.CornflowerBlue;
-            this.label30.Location = new System.Drawing.Point(761, 409);
+            this.label30.Location = new System.Drawing.Point(761, 644);
             this.label30.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label30.Name = "label30";
             this.label30.Size = new System.Drawing.Size(130, 25);
@@ -905,7 +909,7 @@
             this.DimQuoteStagesLabel.AutoSize = true;
             this.DimQuoteStagesLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
             this.DimQuoteStagesLabel.ForeColor = System.Drawing.Color.CornflowerBlue;
-            this.DimQuoteStagesLabel.Location = new System.Drawing.Point(1045, 484);
+            this.DimQuoteStagesLabel.Location = new System.Drawing.Point(1045, 538);
             this.DimQuoteStagesLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.DimQuoteStagesLabel.Name = "DimQuoteStagesLabel";
             this.DimQuoteStagesLabel.Size = new System.Drawing.Size(0, 25);
@@ -917,7 +921,7 @@
             this.label31.BackColor = System.Drawing.SystemColors.Control;
             this.label31.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label31.ForeColor = System.Drawing.Color.CornflowerBlue;
-            this.label31.Location = new System.Drawing.Point(761, 485);
+            this.label31.Location = new System.Drawing.Point(761, 539);
             this.label31.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label31.Name = "label31";
             this.label31.Size = new System.Drawing.Size(225, 25);
@@ -929,7 +933,7 @@
             this.DWQuoteStageslabel.AutoSize = true;
             this.DWQuoteStageslabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
             this.DWQuoteStageslabel.ForeColor = System.Drawing.Color.CornflowerBlue;
-            this.DWQuoteStageslabel.Location = new System.Drawing.Point(1045, 451);
+            this.DWQuoteStageslabel.Location = new System.Drawing.Point(1045, 374);
             this.DWQuoteStageslabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.DWQuoteStageslabel.Name = "DWQuoteStageslabel";
             this.DWQuoteStageslabel.Size = new System.Drawing.Size(0, 25);
@@ -941,7 +945,7 @@
             this.label33.BackColor = System.Drawing.SystemColors.Control;
             this.label33.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label33.ForeColor = System.Drawing.Color.CornflowerBlue;
-            this.label33.Location = new System.Drawing.Point(761, 452);
+            this.label33.Location = new System.Drawing.Point(761, 375);
             this.label33.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label33.Name = "label33";
             this.label33.Size = new System.Drawing.Size(167, 25);
@@ -953,7 +957,7 @@
             this.DimCountriesLabel.AutoSize = true;
             this.DimCountriesLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
             this.DimCountriesLabel.ForeColor = System.Drawing.Color.CornflowerBlue;
-            this.DimCountriesLabel.Location = new System.Drawing.Point(1045, 629);
+            this.DimCountriesLabel.Location = new System.Drawing.Point(1045, 605);
             this.DimCountriesLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.DimCountriesLabel.Name = "DimCountriesLabel";
             this.DimCountriesLabel.Size = new System.Drawing.Size(0, 25);
@@ -965,7 +969,7 @@
             this.label34.BackColor = System.Drawing.SystemColors.Control;
             this.label34.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label34.ForeColor = System.Drawing.Color.CornflowerBlue;
-            this.label34.Location = new System.Drawing.Point(761, 630);
+            this.label34.Location = new System.Drawing.Point(761, 606);
             this.label34.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label34.Name = "label34";
             this.label34.Size = new System.Drawing.Size(193, 25);
@@ -977,7 +981,7 @@
             this.DWCountrieslabel.AutoSize = true;
             this.DWCountrieslabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
             this.DWCountrieslabel.ForeColor = System.Drawing.Color.CornflowerBlue;
-            this.DWCountrieslabel.Location = new System.Drawing.Point(1045, 596);
+            this.DWCountrieslabel.Location = new System.Drawing.Point(1045, 437);
             this.DWCountrieslabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.DWCountrieslabel.Name = "DWCountrieslabel";
             this.DWCountrieslabel.Size = new System.Drawing.Size(0, 25);
@@ -989,7 +993,7 @@
             this.label38.BackColor = System.Drawing.SystemColors.Control;
             this.label38.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label38.ForeColor = System.Drawing.Color.CornflowerBlue;
-            this.label38.Location = new System.Drawing.Point(761, 597);
+            this.label38.Location = new System.Drawing.Point(761, 438);
             this.label38.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label38.Name = "label38";
             this.label38.Size = new System.Drawing.Size(135, 25);
@@ -1002,7 +1006,7 @@
             this.label36.BackColor = System.Drawing.SystemColors.Control;
             this.label36.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label36.ForeColor = System.Drawing.Color.CornflowerBlue;
-            this.label36.Location = new System.Drawing.Point(761, 527);
+            this.label36.Location = new System.Drawing.Point(761, 406);
             this.label36.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label36.Name = "label36";
             this.label36.Size = new System.Drawing.Size(248, 25);
@@ -1014,7 +1018,7 @@
             this.DWQuoteClosingReasonslabel.AutoSize = true;
             this.DWQuoteClosingReasonslabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
             this.DWQuoteClosingReasonslabel.ForeColor = System.Drawing.Color.CornflowerBlue;
-            this.DWQuoteClosingReasonslabel.Location = new System.Drawing.Point(1045, 526);
+            this.DWQuoteClosingReasonslabel.Location = new System.Drawing.Point(1045, 405);
             this.DWQuoteClosingReasonslabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.DWQuoteClosingReasonslabel.Name = "DWQuoteClosingReasonslabel";
             this.DWQuoteClosingReasonslabel.Size = new System.Drawing.Size(0, 25);
@@ -1026,7 +1030,7 @@
             this.label32.BackColor = System.Drawing.SystemColors.Control;
             this.label32.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label32.ForeColor = System.Drawing.Color.CornflowerBlue;
-            this.label32.Location = new System.Drawing.Point(761, 560);
+            this.label32.Location = new System.Drawing.Point(761, 573);
             this.label32.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label32.Name = "label32";
             this.label32.Size = new System.Drawing.Size(250, 25);
@@ -1038,17 +1042,70 @@
             this.DimQuoteClosingReasonsLabel.AutoSize = true;
             this.DimQuoteClosingReasonsLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
             this.DimQuoteClosingReasonsLabel.ForeColor = System.Drawing.Color.CornflowerBlue;
-            this.DimQuoteClosingReasonsLabel.Location = new System.Drawing.Point(1045, 559);
+            this.DimQuoteClosingReasonsLabel.Location = new System.Drawing.Point(1045, 572);
             this.DimQuoteClosingReasonsLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.DimQuoteClosingReasonsLabel.Name = "DimQuoteClosingReasonsLabel";
             this.DimQuoteClosingReasonsLabel.Size = new System.Drawing.Size(0, 25);
             this.DimQuoteClosingReasonsLabel.TabIndex = 171;
+            // 
+            // FactQuotesLabel
+            // 
+            this.FactQuotesLabel.AutoSize = true;
+            this.FactQuotesLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            this.FactQuotesLabel.ForeColor = System.Drawing.Color.CornflowerBlue;
+            this.FactQuotesLabel.Location = new System.Drawing.Point(1050, 674);
+            this.FactQuotesLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.FactQuotesLabel.Name = "FactQuotesLabel";
+            this.FactQuotesLabel.Size = new System.Drawing.Size(0, 25);
+            this.FactQuotesLabel.TabIndex = 177;
+            // 
+            // label37
+            // 
+            this.label37.AutoSize = true;
+            this.label37.BackColor = System.Drawing.SystemColors.Control;
+            this.label37.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label37.ForeColor = System.Drawing.Color.CornflowerBlue;
+            this.label37.Location = new System.Drawing.Point(766, 676);
+            this.label37.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label37.Name = "label37";
+            this.label37.Size = new System.Drawing.Size(109, 25);
+            this.label37.TabIndex = 176;
+            this.label37.Text = "Fact Quote";
+            // 
+            // label28
+            // 
+            this.label28.AutoSize = true;
+            this.label28.BackColor = System.Drawing.SystemColors.Control;
+            this.label28.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label28.ForeColor = System.Drawing.Color.CornflowerBlue;
+            this.label28.Location = new System.Drawing.Point(762, 468);
+            this.label28.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label28.Name = "label28";
+            this.label28.Size = new System.Drawing.Size(115, 25);
+            this.label28.TabIndex = 179;
+            this.label28.Text = "DW Quotes";
+            // 
+            // DWQuoteslabel
+            // 
+            this.DWQuoteslabel.AutoSize = true;
+            this.DWQuoteslabel.BackColor = System.Drawing.SystemColors.Control;
+            this.DWQuoteslabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.DWQuoteslabel.ForeColor = System.Drawing.Color.CornflowerBlue;
+            this.DWQuoteslabel.Location = new System.Drawing.Point(1050, 469);
+            this.DWQuoteslabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.DWQuoteslabel.Name = "DWQuoteslabel";
+            this.DWQuoteslabel.Size = new System.Drawing.Size(0, 25);
+            this.DWQuoteslabel.TabIndex = 178;
             // 
             // BuildWarehouseForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1444, 859);
+            this.Controls.Add(this.label28);
+            this.Controls.Add(this.DWQuoteslabel);
+            this.Controls.Add(this.FactQuotesLabel);
+            this.Controls.Add(this.label37);
             this.Controls.Add(this.DimCountriesLabel);
             this.Controls.Add(this.label34);
             this.Controls.Add(this.DWCountrieslabel);
@@ -1213,6 +1270,10 @@
         private System.Windows.Forms.Label DWQuoteClosingReasonslabel;
         private System.Windows.Forms.Label label32;
         private System.Windows.Forms.Label DimQuoteClosingReasonsLabel;
+        private System.Windows.Forms.Label FactQuotesLabel;
+        private System.Windows.Forms.Label label37;
+        private System.Windows.Forms.Label label28;
+        private System.Windows.Forms.Label DWQuoteslabel;
     }
 }
 

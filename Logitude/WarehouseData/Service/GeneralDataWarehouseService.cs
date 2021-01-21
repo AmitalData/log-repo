@@ -130,7 +130,6 @@ namespace WarehouseData.Helper
             tableNameLists.Add(new TableClass() { TableName = "ObjectField", DBTableName = "ObjectFields", Dw_TableName = "dw_ObjectFields", KeyName = "Id", FieldsDBName = "FieldName,DataTypeCode,ObjectTableId,IsCustom" });
             tableNameLists.Add(new TableClass() { TableName = "Rank", DBTableName = "Ranks", Dw_TableName = "dw_Ranks", KeyName = "Id", });
             tableNameLists.Add(new TableClass() { TableName = "LeadSource", DBTableName = "LeadSources", Dw_TableName = "dw_LeadSources", KeyName = "Id", });
-
             tableNameLists.Add(new TableClass() { TableName = "Region", DBTableName = "Regions", Dw_TableName = "dw_Regions", KeyName = "Id" });
             tableNameLists.Add(new TableClass() { TableName = "CustomerSize", DBTableName = "CustomerSizes", Dw_TableName = "dw_CustomerSizes", KeyName = "Id" });
             tableNameLists.Add(new TableClass() { TableName = "Industry", DBTableName = "Industries", Dw_TableName = "dw_Industries", KeyName = "Id" });
@@ -143,7 +142,8 @@ namespace WarehouseData.Helper
             tableNameLists.Add(new TableClass() { TableName = "ARInvoiceLine", FieldsDBName = "ARInvoiceId,ReceivableId",  DispayInScreen = true, AdditionalIndexes = "ReceivableId", DBTableName = "ARInvoiceLines", Dw_TableName = "dw_ARInvoiceLines", KeyName = "Id" });
             tableNameLists.Add(new TableClass() { TableName = "ARInvoice", HasConstraint = true, DispayInScreen = true, DBTableName = "ARInvoices", Dw_TableName = "dw_ARInvoices", KeyName = "Id" });
             tableNameLists.Add(new TableClass() { TableName = "Shipment", RelatedEntities = tableNameLists.Where(d => d.TableName == "ShipmentPayable" || d.TableName == "ShipmentReceivable").ToList(), FieldsDBName = (("ComputedStatusId,ComputedStatusDate,") +  GetCustomFieldAsDBFieldOnTable(40)), KeyName = "Id", DBTableName = "Shipments", Dw_TableName = "dw_Shipments", HasConstraint = true, DispayInScreen = true , });
-            
+            tableNameLists.Add(new TableClass() { TableName = "Quote", KeyName = "Id", DBTableName = "Quotes", Dw_TableName = "dw_Quotes", HasConstraint = true, DispayInScreen = true, });
+
 
             //Dimension  Table
             tableNameLists.Add(new TableClass() { TableName = "CustomPickList", DBTableName = "CustomPickLists", Dw_TableName = "dw_CustomPickLists", KeyName = "Id", HasDimensionTable = true, DWObjectTableCode = "DIM_CustomPickLists", BuildScriptName = "BuildCustomPickListDimensionsTable", IncrementalScriptName = "UpdateCustomPickListDimensionsTable", FieldsDBName = "Code,Value,IsMultipleChoice" });
@@ -169,14 +169,16 @@ namespace WarehouseData.Helper
             tableNameLists.Add(new TableClass() { TableName = "ChargesType", DBTableName = "ChargesTypes", DispayInScreen = true, Dw_TableName = "dw_ChargesTypes", KeyName = "Id", HasDimensionTable = true, DWObjectTableCode = "DIM_ChargesTypes", BuildScriptName = "BuildChargesTypeDimensionTable", IncrementalScriptName = "UpdateChargesTypeDimensionTable" });
             tableNameLists.Add(new TableClass() { IsCloseTable = true, TableName = "ShipmentPayableStatus", DBTableName = "ShipmentPayableStatus", DispayInScreen = true, Dw_TableName = "dw_ShipmentPayableStatuses", KeyName = "Code", HasDimensionTable = true, DWObjectTableCode = "DIM_ShipmentPayableStatuses", BuildScriptName = "BuildShipmentPayableStatusDimensionTable", IncrementalScriptName = "UpdateShipmentPayableStatusDimensionTable"  });
             tableNameLists.Add(new TableClass() { IsCloseTable = true, TableName = "ShipmentReceivableStatus", DBTableName = "ShipmentReceivableStatus", DispayInScreen = true, Dw_TableName = "dw_ShipmentReceivableStatuses", KeyName = "Code", HasDimensionTable = true, DWObjectTableCode = "DIM_ShipmentReceivableStatuses", BuildScriptName = "BuildShipmentReceivableStatusDimensionTable", IncrementalScriptName = "UpdateShipmentReceivableStatusDimensionTable" });
-
             tableNameLists.Add(new TableClass() { TableName = "QuoteStage", DBTableName = "QuoteStages", DispayInScreen = true, Dw_TableName = "dw_QuoteStages", KeyName = "Id", HasDimensionTable = true, DWObjectTableCode = "DIM_QuoteStages", BuildScriptName = "BuildQuoteStagesDimensionTable", IncrementalScriptName = "UpdateQuoteStagesDimensionTable" });
             tableNameLists.Add(new TableClass() { TableName = "QuoteClosingReason", DBTableName = "QuoteClosingReasons", DispayInScreen = true, Dw_TableName = "dw_QuoteClosingReasons", KeyName = "Id", HasDimensionTable = true, DWObjectTableCode = "DIM_QuoteClosingReasons", BuildScriptName = "BuildQuoteClosingReasonsDimensionTable", IncrementalScriptName = "UpdateQuoteClosingReasonsDimensionTable" }); 
+
+
 
             //Fact Table
             tableNameLists.Add(new TableClass() { TableName = "Shipment", FieldIndexes = "Source Tenant,Parent Tenant,Id,DirectHouse", DWObjectTableCode = "Fact_Shipments", KeyName = "Id", DWTableKeyName = "Id", Dw_TableName = "dw_Shipments", HasFactTable = true, BuildScriptName = "BuildFactShipmentTable", IncrementalScriptName = "UpdateFactShipmentTable", HasCustomFields = true, CustomFieldsCount = 40, DispayInScreen = true });
             tableNameLists.Add(new TableClass() { TableName = "Shipment", FieldIndexes = "Source Tenant,Parent Tenant,Shipment Id,DirectHouse", DWObjectTableCode = "Fact_Charges", Dw_TableName = "dw_Shipments", KeyName = "[Shipment Id]", DWTableKeyName = "Id", HasFactTable = true, BuildScriptName = "BuildFactChargesTable", IncrementalScriptName = "UpdateFactChargesTable", DispayInScreen = true });
-            
+            tableNameLists.Add(new TableClass() { TableName = "Quote",  DWObjectTableCode = "Fact_Quotes", Dw_TableName = "dw_Quotes", KeyName = "Id", DWTableKeyName = "Id", HasFactTable = true, BuildScriptName = "BuildFactQuotesTable", IncrementalScriptName = "UpdateFactQuoteTable", DispayInScreen = true });
+
             //WaterMark
             tableNameLists.Add(new TableClass() { TableName = "WaterMark", DBTableName = "WaterMarks", Dw_TableName = "dw_WaterMarks", KeyName = "TableName", FieldsDBName = "TableName,LastUpdateDate" });
 

@@ -132,7 +132,7 @@ namespace WarehouseData.Service
             {
                 string customFieldindex = "";
                 int i = 1;
-                while (i <= 6)
+                while (i <= 40)
                 {
                     customFieldindex += "[Field" + i + "],";
                     i += 1;
@@ -160,6 +160,37 @@ namespace WarehouseData.Service
             string cmd = string.Empty;
             switch (table.DBTableName)
             {
+
+
+                case "Quotes":
+
+                    cmd = " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "ShipperId DEFAULT '-1' FOR ShipperId"
+                        + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "ConsigneeId DEFAULT '-1' FOR ConsigneeId;"
+                        + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "AgentId DEFAULT '-1' FOR AgentId;"
+                        + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "CustomerId DEFAULT '-1' FOR CustomerId;"
+                        + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "IncotermId DEFAULT '-1' FOR IncotermId;"
+                        + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "SalesmanUserId DEFAULT '-1' FOR SalesmanUserId;"
+
+                        + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "ShipmentTypeId DEFAULT '-1' FOR ShipmentTypeId;"
+                        + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "DepartmentId DEFAULT '-1' FOR DepartmentId;"
+                        + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "BranchId DEFAULT '-1' FOR BranchId;"
+                        + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "SaleCurrencyId DEFAULT '-1' FOR SaleCurrencyId;"
+                        + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "DirectionId DEFAULT '1' FOR DirectionId;"
+                        + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "TransportModeId DEFAULT '1' FOR TransportModeId;"
+                        + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "StageId DEFAULT '-1' FOR StageId;"
+                        + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "QuoteClosingReasonId DEFAULT '-1' FOR QuoteClosingReasonId;"
+                        + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "FromPortId DEFAULT '-1' FOR FromPortId;"
+                        + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "ToPortId DEFAULT '-1' FOR ToPortId;"
+                        ;
+
+                    break;
+
+
+
+
+
+
+
                 case "Shipments":
 
                     cmd = " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "ShipperId DEFAULT '-1' FOR ShipperId"
