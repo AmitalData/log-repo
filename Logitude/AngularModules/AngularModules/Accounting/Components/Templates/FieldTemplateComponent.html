@@ -448,6 +448,12 @@
                         </div>
                     </div>
 
+                    <div *ngIf="FieldName == 'APPaymentNo'">
+                        <div *ngIf="IsHeaderScreenTemplate">
+                            <a  href="#" (click)="OpenAPPayment(Entity.APPaymentId)">{{Entity.APPaymentNo}}</a>
+                        </div>
+                    </div>
+
                     <div *ngIf="FieldName == 'PaymentChequeStatusCode'">
                         <div *ngIf="IsHeaderScreenTemplate" style="padding-left: 3px;" [style.color]="textColor">
                             {{

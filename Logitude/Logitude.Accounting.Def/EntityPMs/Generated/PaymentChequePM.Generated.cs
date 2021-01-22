@@ -1159,6 +1159,29 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
+	  private string aPPaymentNo ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string APPaymentNo  
+	   {
+	    
+	     get
+		{
+		   return aPPaymentNo;
+		 }
+		 set
+		 {
+		   if(aPPaymentNo != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="APPaymentNo",OldValue=aPPaymentNo,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   aPPaymentNo=value;
+		   }
+			
+		 }
+	   }
    }
    
 }
