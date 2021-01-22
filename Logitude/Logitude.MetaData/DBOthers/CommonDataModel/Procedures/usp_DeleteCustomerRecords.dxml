@@ -23,7 +23,7 @@ update Tickets set CompanyId = NULL where Tenant = @Tenant
 update MAWBStacks set AssignedToId = null where Tenant = @Tenant
 update Cards set PrimaryContactId = NULL where Tenant = @Tenant and (PartnerTypeId = 'CS' or PartnerTypeId = 'PO')
 exec [dbo].usp_DoTheTableDeletionSet @Tenant = @Tenant, @TableName = 'Customers'
-exec [dbo].usp_DoTheTableDeletionSet @Tenant = @Tenant, @TableName = 'Cards', @WhereInput='PartnerTypeId = ''CS'' or PartnerTypeId = ''PO'''
+exec [dbo].usp_DoTheTableDeletionSet @Tenant = @Tenant, @TableName = 'Cards', @WhereInput=' and PartnerTypeId = ''CS'' or PartnerTypeId = ''PO'''
 
 END
 ]]></SqlScript>
