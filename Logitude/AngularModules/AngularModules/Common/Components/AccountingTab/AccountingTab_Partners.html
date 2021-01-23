@@ -2,6 +2,33 @@
     <tr>
         <td style="width: 410px;">
             <table>
+
+                <!-- BillToId -->
+                <tr class="FormFieldRow">
+                    <td>
+                        <table>
+                            <tr>
+                                <td style="width: 70px;">
+                                    <LogLabel [ObjectFieldName]="'BillToId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                </td>
+
+                                <td style="width: 160px;">
+                                    <LogLov [ObjectFieldName]="'BillToId'"
+                                            [SelectedValue]="BillToId"
+                                            [ObjectTableName]="ObjectTableName"
+                                            [DataContext]="DataContext"
+                                            [LookUpTableName]="'Card'">
+                                    </LogLov>
+                                </td>
+
+                                <td>
+                                    <div></div>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+
                 <tr style="height: 32px;">
                     <td>
                         <table>
@@ -41,7 +68,7 @@
                                             <td>
                                                 <LogTextBox [ObjectFieldName]="'ReceivablesAccountingCard'" [Text]="ReceivablesAccountingCard" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
                                             </td>
-                                           
+
                                         </tr>
 
                                         <tr class="FormFieldRow">
@@ -52,7 +79,7 @@
                                             <td>
                                                 <LogTextBox [ObjectFieldName]="'PayablesAccountingCard'" [Text]="PayablesAccountingCard" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
                                             </td>
-                                         
+
                                         </tr>
                                     </table>
                                 </SectionBody>
@@ -74,7 +101,7 @@
                                                     <td style="width: 120px; min-width: 120px; max-width: 120px;">Currency</td>
                                                     <td style="width: 160px; min-width: 160px; max-width: 160px;">Receivable Credit Account</td>
                                                     <td *ngIf="IsPayablesAccountingCardVisible">Payable Debit Account</td>
-                                                    
+
                                                 </tr>
                                             </table>
                                         </div>
@@ -93,7 +120,7 @@
                                                     <td *ngIf="IsPayablesAccountingCardVisible" class="GridViewCell">
                                                         <LogTextBox [ObjectFieldName]="'PayableDebitAccount'" [Text]="item.PayableDebitAccount" [ObjectTableName]="item.ObjectTableName" [DataContext]="item.DataContext" [HideColumns]="true"></LogTextBox>
                                                     </td>
-                                                   
+
 
                                                 </tr>
 

@@ -432,6 +432,13 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="BillToId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="InvoiceCurrencyId"
     ReferencedTable="Currencies"

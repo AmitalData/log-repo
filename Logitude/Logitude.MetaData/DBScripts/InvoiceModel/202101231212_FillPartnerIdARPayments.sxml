@@ -1,0 +1,7 @@
+﻿<Script DBType="Main" Module="Invoice" AOT="true" TargetTableName="ARPayments">
+  <Sql Version="1">
+    <![CDATA[
+		 update ARPayments set PartnerId = BillToId where $LastCounterWhere$
+    ]]>
+  </Sql>
+</Script>

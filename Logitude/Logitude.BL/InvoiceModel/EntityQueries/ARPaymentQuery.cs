@@ -150,6 +150,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                        CancelationNotes = a.CancelationNotes,
 
                                        PaymentCurrencySign= a.PaymentCurrency.Sign,
+                                       PartnerId = a.PartnerId,
 
                                    }).FirstOrDefault();
 
@@ -418,6 +419,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                        IsPaymentNumberManuallySet = a.IsPaymentNumberManuallySet,
                                        AccountingCancelationDate = a.AccountingCancelationDate,
                                        CancelationNotes = a.CancelationNotes,
+                                       PartnerId = a.PartnerId,
                                    }).FirstOrDefault();
             if (payment != null)
             {
@@ -562,6 +564,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                                    Field10 = entity.Field10,
                                                    AccountingCancelationDate = entity.AccountingCancelationDate,
                                                    CancelationNotes = entity.CancelationNotes,
+                                                   PartnerId = entity.PartnerId,
                                                };
             return query2;
         }
@@ -660,6 +663,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                             Field10 = entity.Field10,
                             AccountingCancelationDate = entity.AccountingCancelationDate,
                             CancelationNotes = entity.CancelationNotes,
+                            PartnerId = entity.PartnerId,
                         };
 
             return query;
@@ -759,6 +763,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                             Field10 = entity.Field10,
                             AccountingCancelationDate = entity.AccountingCancelationDate,
                             CancelationNotes = entity.CancelationNotes,
+                            PartnerId = entity.PartnerId,
                         };
 
             return query;
@@ -844,6 +849,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                          Field10 = a.Field10,
                                          AccountingCancelationDate = a.AccountingCancelationDate,
                                          CancelationNotes = a.CancelationNotes,
+                                         PartnerId = a.PartnerId,
                                      }).FirstOrDefault();
 
             return payment;

@@ -155,5 +155,7 @@ namespace Simplog.Data.InvoiceModel.EntityPOCOs
         public string Field8 { get; set; }
         public string Field9 { get; set; }
         public string Field10 { get; set; }
+
+        public string PartnerId { get; set; }
     }
 }

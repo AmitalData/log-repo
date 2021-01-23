@@ -372,6 +372,11 @@ export class CustomAgentPM {
     public set GLAccountNumber(newValue: string) { if (this.gLAccountNumber != newValue) { this.gLAccountNumber = newValue; this.MarkAsDirty("GLAccountNumber"); } }
        
 	 
+    private billToId: string;
+    public get BillToId() { return this.billToId; }
+    public set BillToId(newValue: string) { if (this.billToId != newValue) { this.billToId = newValue; this.MarkAsDirty("BillToId"); } }
+       
+	 
 
     public OldEntityPM: CustomAgentPM;
 		

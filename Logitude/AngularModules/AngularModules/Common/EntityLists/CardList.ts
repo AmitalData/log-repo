@@ -112,5 +112,6 @@ export class CardList {
 		InlandWeightRoundingCode: string;
 		SearchWeight: number;
 		RecordDate: Date;
+		BillToId: string;
 	
 }

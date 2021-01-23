@@ -377,6 +377,11 @@ export class AccountingPartnerPM {
     public set UploadingUniqueKey(newValue: string) { if (this.uploadingUniqueKey != newValue) { this.uploadingUniqueKey = newValue; this.MarkAsDirty("UploadingUniqueKey"); } }
        
 	 
+    private billToId: string;
+    public get BillToId() { return this.billToId; }
+    public set BillToId(newValue: string) { if (this.billToId != newValue) { this.billToId = newValue; this.MarkAsDirty("BillToId"); } }
+       
+	 
 
     public OldEntityPM: AccountingPartnerPM;
 		

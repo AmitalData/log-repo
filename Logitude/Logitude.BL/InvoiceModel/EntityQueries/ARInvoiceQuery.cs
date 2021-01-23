@@ -1415,6 +1415,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                             RegionalTaxId = a.RegionalTaxId,
                             RegionalTaxPercentage = a.RegionalTaxPercentage,
                             PaidDate  = a.PaidDate,
+                            PartnerId = a.PartnerId,
                         };
 
             return query;
@@ -1556,6 +1557,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                              RegionalTaxPercentage = entity.RegionalTaxPercentage,
                              PaidDate = entity.PaidDate,
                              IsFromInterestBatchInvoice =entity .IsFromInterestBatchInvoice,
+                             PartnerId = entity.PartnerId,
                          };
 
             return result;
@@ -1671,6 +1673,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                               RegionalTaxId = a.RegionalTaxId,
                                               RegionalTaxPercentage = a.RegionalTaxPercentage,
                                               PaidDate = a.PaidDate,
+                                              PartnerId = a.PartnerId,
                                           }).ToList();
             return invoices;
         }
@@ -1789,6 +1792,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                     RegionalTaxId = entityPOCO.RegionalTaxId,
                     RegionalTaxPercentage = entityPOCO.RegionalTaxPercentage,
                     PaidDate = entityPOCO.PaidDate,
+                    PartnerId = entityPOCO.PartnerId,
                 };
 
                 entityPM.ConcurrencyGUID = entityPOCO.ConcurrencyGUID;
@@ -2132,6 +2136,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                              RegionalTaxId = entity.RegionalTaxId,
                              RegionalTaxPercentage = entity.RegionalTaxPercentage,
                              PaidDate = entity.PaidDate,
+                             PartnerId = entity.PartnerId,
                          };
 
             return result;

@@ -123,7 +123,8 @@ namespace Logitude.BL.CommonDataModel.EntityLists
         public int SearchWeight { get; set; }
 
         public DateTime? RecordDate { get; set; }
+        public string BillToId { get; set; }
 
-        
+
     }
 }

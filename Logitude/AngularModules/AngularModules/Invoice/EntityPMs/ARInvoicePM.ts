@@ -1067,6 +1067,11 @@ export class ARInvoicePM {
     public set PaidDate(newValue: Date) { if (this.paidDate != newValue) { this.paidDate = newValue; this.MarkAsDirty("PaidDate"); } }
        
 	 
+    private partnerId: string;
+    public get PartnerId() { return this.partnerId; }
+    public set PartnerId(newValue: string) { if (this.partnerId != newValue) { this.partnerId = newValue; this.MarkAsDirty("PartnerId"); } }
+       
+	 
 
     public OldEntityPM: ARInvoicePM;
 		
