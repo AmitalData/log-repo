@@ -730,7 +730,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
                     _MyDeclarationPM.CasualImporterZipCode = _AmitalCustomsFile.CasualImporterZipCode;
                     _MyDeclarationPM.CasualImporterFax = _AmitalCustomsFile.CasualImporterFax;
                     _MyDeclarationPM.CasualImporterEmail = _AmitalCustomsFile.CasualImporterEmail;
-                    _MyDeclarationPM.CasualImporterTel = _AmitalCustomsFile.CasualImportelTel;
+                    if (!string.IsNullOrWhiteSpace(_AmitalCustomsFile.CasualImportelTel)) _MyDeclarationPM.CasualImporterTel = string.Concat(_AmitalCustomsFile.CasualImportelTel.Where(c => !char.IsWhiteSpace(c)));
                     _MyDeclarationPM.CasualImporterContact = _AmitalCustomsFile.CasualImporterContact;
                     if (_MyDeclarationPM.Consignments.Count == 1)
                     {
