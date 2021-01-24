@@ -257,6 +257,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
         }
         private static void MapAllFields(ShipmentPM entityPM, Shipment entityPoco, ShipmentMasterData entityMasterData, int packagesListCount)
         {
+            entityPoco.ConcurrencyGUID = entityPM.NewConcurrencyGUID;
             entityPoco.IsFSRSent = entityPM.IsFSRSent;
             entityPoco.FNAReason = entityPM.FNAReason;
             entityPoco.FHLStatusCode = entityPM.FHLStatusCode;
