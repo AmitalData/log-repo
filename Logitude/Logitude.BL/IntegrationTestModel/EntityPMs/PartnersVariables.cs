@@ -18,5 +18,6 @@ namespace Logitude.BL.IntegrationTestModel.EntityPMs
         public string ShippingLineMSCUId { get; set; }
         public string ShippingLineMAEUId { get; set; }
         public string ShipperExport1 { get; set; }
+        public string GlobalZoneEUId { get; set; }
     }
 }

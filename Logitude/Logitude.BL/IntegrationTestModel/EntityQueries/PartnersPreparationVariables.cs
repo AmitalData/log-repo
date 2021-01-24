@@ -26,7 +26,6 @@ namespace Logitude.BL.IntegrationTestModel.EntityQueries
 
         public PartnersVariables GetBasePartnersVaribles()
         {
-
             Variables.VendorId = GetVendor("TestVendor");
             Variables.AgentId = GetAgent("IntegrationAgent");
             Variables.ShipperExport1 = GetCustomer("ShipperExport1");
@@ -38,7 +37,9 @@ namespace Logitude.BL.IntegrationTestModel.EntityQueries
             Variables.ShippingLineMSCUId = GetShippingLine("MSCU");
             Variables.ShippingLineMAEUId = GetShippingLine("MAEU");   
             Variables.WarehouseId = GetWarehouse("IntegrationWarehouse", "WR9");
-
+            Variables.CountryUSId = GetCountry("US");
+            Variables.CountryGBId = GetCountry("GB");
+            Variables.GlobalZoneEUId = GetGlobalZone("EU");
             return Variables;
         }
 
@@ -284,6 +285,59 @@ namespace Logitude.BL.IntegrationTestModel.EntityQueries
             WarehousePM.Code = code;
             return WarehousePM;
 
+        }
+        private string GetCountry(string code)
+        {
+            string countryId = "";
+            CountryRepository countryRepository = new CountryRepository(commonDataContext);
+            countryId = countryRepository.GetCountryIdByCode(code, tenant);
+            if (string.IsNullOrEmpty(countryId))
+            {
+                InsertNewCountry(code);
+                countryId = countryRepository.GetCountryIdByCode(code, tenant);
+            }
+            return countryId;
+        }
+        private void InsertNewCountry(string code)
+        {
+            CountryService countryService = new CountryService(commonDataContext, tenant);
+            countryService.Create(CreateCountryPM(code));
+        }
+
+        public CountryPM CreateCountryPM(string countryCode)
+        {
+            CountryPM countryPM = new CountryPM();
+            countryPM.Tenant = tenant;
+            countryPM.Code = countryCode;
+            countryPM.EnglishName = countryCode + " Country";
+            countryPM.GlobalZoneId = Variables.GlobalZoneEUId;
+            return countryPM;
+        }
+
+        private string GetGlobalZone(string code)
+        {
+            GlobalZoneRepository globalZoneRepository = new GlobalZoneRepository(commonDataContext);
+            GlobalZone globalZone = globalZoneRepository.GetSingleGlobalZoneByCode(code, tenant);
+            if (globalZone == null)
+            {
+                InsertNewGlobalZone(code);
+                globalZone = globalZoneRepository.GetSingleGlobalZoneByCode(code, tenant);
+            }
+            return globalZone.Id;
+        }
+
+        private void InsertNewGlobalZone(string code)
+        {
+            GlobalZoneService globalZoneService = new GlobalZoneService(commonDataContext, tenant);
+            globalZoneService.Create(CreateGlobalZonePM(code));
+        }
+        public GlobalZonePM CreateGlobalZonePM(string code)
+        {
+            GlobalZonePM globalZonePM = new GlobalZonePM();
+            globalZonePM.Tenant = tenant;
+            globalZonePM.Code = code;
+            globalZonePM.EnglishName = code + " Global Zone";
+            return globalZonePM;
         }
     }
 }
