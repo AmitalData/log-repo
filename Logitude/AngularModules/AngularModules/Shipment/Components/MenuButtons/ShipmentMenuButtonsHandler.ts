@@ -616,8 +616,8 @@ export class ShipmentMenuButtonsHandler implements OnDestroy {
         var logWindow = new LogitudeWindow();
         logWindow.Title = "Accounted Shipment Reopen";
         logWindow.WindowArgs = args;
-        logWindow.Width = 450;
-        logWindow.Height = 300;
+        logWindow.Width = 500;
+        logWindow.Height = 350;
         logWindow.Show('./Shipment/Components/MenuButtons/MenuButtonsTemplateComponent');
         logWindow.ComponentLoaded.subscribe(cmp => {
             cmp.ReopenDone.subscribe(p => {
@@ -729,6 +729,8 @@ export class ShipmentMenuButtonsHandler implements OnDestroy {
         var logWindow = new LogitudeWindow();
         logWindow.Title = "Shipment Accounting Close";
         logWindow.WindowArgs = args;
+        logWindow.Width = 500;
+        logWindow.Height = 350;
         logWindow.Show('./Shipment/Components/MenuButtons/MenuButtonsTemplateComponent');
         logWindow.ComponentLoaded.subscribe(cmp => {
             cmp.ReopenDone.subscribe(p => {
@@ -749,8 +751,8 @@ export class ShipmentMenuButtonsHandler implements OnDestroy {
         var args = new MenuButtonsTemplateArgs();
         args.IsNotesStackPanelVisible = true;        
         var logWindow = new LogitudeWindow();
-        logWindow.Width = 450;
-        logWindow.Height = 300;
+        logWindow.Width = 500;
+        logWindow.Height = 350;
         logWindow.Title = "Shipment Operational Reopen";
         logWindow.WindowArgs = args;
         logWindow.Show('./Shipment/Components/MenuButtons/MenuButtonsTemplateComponent');
@@ -831,8 +833,8 @@ export class ShipmentMenuButtonsHandler implements OnDestroy {
         args.ActionStepsStateList = this.ActionStepsStateList;
         var logWindow = new LogitudeWindow();
         logWindow.WindowArgs = args;
-        logWindow.Width = 450;
-        logWindow.Height = 300;
+        logWindow.Width = 500;
+        logWindow.Height = 350;
         logWindow.Title = "Convert Shipment From House To Direct";
         logWindow.Show('./Shipment/Components/MenuButtons/MenuButtonsTemplateComponent');
         logWindow.ComponentLoaded.subscribe(s => {
@@ -862,28 +864,23 @@ export class ShipmentMenuButtonsHandler implements OnDestroy {
                 args.EntityPM = this.EntityPM;
                 args.IsNotesStackPanelVisible = true;
                 this.ActionStepsStateList = new Array<ActionsStepsState>();
-                var state: ActionsStepsState = new ActionsStepsState();                
+                var state: ActionsStepsState = new ActionsStepsState();
 
-                var logWindow = new LogitudeWindow();
                 if (this.EntityPM.MainCarriageIsFromStack) {
                     state = new ActionsStepsState();
                     state.Message = TextCodeTranslator.Translate("Shipment.M.MasterAWBNumberTakenFromStack");
                     state.State = "Error";
                     this.ActionStepsStateList.push(state);
                     args.EnabledOkButton = false;
-
-                    logWindow.Width = 700;
-                    logWindow.Height = 400;
                 }
 
-                else {
-                    logWindow.Width = 450;
-                    logWindow.Height = 300;
-                }
+                var logWindow = new LogitudeWindow();
+                logWindow.Width = 500;
+                logWindow.Height = 350;
 
-                args.ActionStepsStateList = this.ActionStepsStateList;                
+                args.ActionStepsStateList = this.ActionStepsStateList;
                 logWindow.WindowArgs = args;
-                
+
                 logWindow.Title = "Convert Shipment From Direct To House";
                 logWindow.Show('./Shipment/Components/MenuButtons/MenuButtonsTemplateComponent');
                 logWindow.ComponentLoaded.subscribe(s => {
@@ -924,8 +921,8 @@ export class ShipmentMenuButtonsHandler implements OnDestroy {
         
         var logWindow = new LogitudeWindow();
         logWindow.WindowArgs = args;
-        logWindow.Width = 450;
-        logWindow.Height = 300;
+        logWindow.Width = 500;
+        logWindow.Height = 350;
         logWindow.Title = "Reactivate Shipment";
         logWindow.Show('./Shipment/Components/MenuButtons/MenuButtonsTemplateComponent');
         logWindow.ComponentLoaded.subscribe(s => {
@@ -995,8 +992,8 @@ export class ShipmentMenuButtonsHandler implements OnDestroy {
         args.EventNote = "";
         var logWindow = new LogitudeWindow();
         logWindow.WindowArgs = args;
-        logWindow.Width = 450;
-        logWindow.Height = 300;
+        logWindow.Width = 500;
+        logWindow.Height = 350;
         logWindow.Title = "Cancel Shipment";
         logWindow.Show('./Shipment/Components/MenuButtons/MenuButtonsTemplateComponent');
         logWindow.ComponentLoaded.subscribe(s => {
@@ -1449,6 +1446,8 @@ export class ShipmentMenuButtonsHandler implements OnDestroy {
         var logWindow = new LogitudeWindow();
         logWindow.Title = "Shipment Operational Close";
         logWindow.WindowArgs = args;
+        logWindow.Width = 500;
+        logWindow.Height = 350;
         logWindow.Show('./Shipment/Components/MenuButtons/MenuButtonsTemplateComponent');
         logWindow.ComponentLoaded.subscribe(cmp => {
             cmp.ReopenDone.subscribe(p => {
