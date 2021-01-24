@@ -32,6 +32,7 @@ namespace Logitude.BL.IntegrationTestModel.EntityQueries
 
             Variables.PortJFKId = GetPort("JFK");
             Variables.PortMIAId = GetPort("MIA");
+            Variables.PortLASId = GetPort("LAS");
             Variables.PortLHRId = GetPort("LHR");
             Variables.PortSOUId = GetPort("SOU");
             Variables.PortNYCId = GetPort("NYC");

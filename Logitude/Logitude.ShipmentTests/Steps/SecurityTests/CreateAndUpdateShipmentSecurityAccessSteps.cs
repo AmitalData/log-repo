@@ -82,13 +82,13 @@ namespace Logitude.ShipmentTests.Steps.SecurityTests
         private ApiResponse<ShipmentPM> UpdateShipmentForFirstUser(string Token)
         {
             ApiResponse<ShipmentPM> response = CreateShipmentForFirstUser(UserTenant.Token);
-            return APICaller.CallPut<ShipmentPM>(response.Data, Urls.Shipment(), Token);
+            return APICaller.CallPut<ShipmentPM>(response.Data, Urls.ShipmentController, Token);
         }
 
         private ApiResponse<ShipmentPM> CreateShipmentForFirstUser(string Token)
         {
             ShipmentPM shipmentModel = GetValidUserShipmentPM();
-            return APICaller.CallPost<ShipmentPM>(shipmentModel, Urls.Shipment(), Token);
+            return APICaller.CallPost<ShipmentPM>(shipmentModel, Urls.ShipmentController, Token);
         }
 
         private ShipmentPM GetValidUserShipmentPM()

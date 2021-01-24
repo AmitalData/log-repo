@@ -59,7 +59,7 @@ namespace Logitude.InvoiceTests.Steps.SecurityTests
                 PageSize = 1
             };
 
-            ApiResponse<IEnumerable<APPaymentPM>> response = APICaller.CallGetByFilters<IEnumerable<APPaymentPM>>(Urls.APPaymentViewsGetByFilters(), UserTenant.Token, apiQueryFilters);
+            ApiResponse<IEnumerable<APPaymentPM>> response = APICaller.CallGetByFilters<IEnumerable<APPaymentPM>>(Urls.APPaymentViewsGetByFilters, UserTenant.Token, apiQueryFilters);
             return response.Data;
         }
     }

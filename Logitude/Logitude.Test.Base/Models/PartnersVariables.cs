@@ -8,8 +8,6 @@
         public string PotentialCustomerId { get; set; }
         public string CustomAgentId { get; set; }
         public string ShippingAgentId { get; set; }
-        public string CountryUSId { get; set; }
-        public string CountryGBId { get; set; }
         public string TruckerId { get; set; }
         public string ShipperExport1 { get; set; }
         public string AirlineAAId { get; set; }

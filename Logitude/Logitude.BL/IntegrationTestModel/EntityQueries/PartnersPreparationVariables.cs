@@ -34,12 +34,11 @@ namespace Logitude.BL.IntegrationTestModel.EntityQueries
             Variables.CustomerId = GetCustomer("IntegrationCustomer");
             Variables.AirlineAAId = GetAirline("AA");
             Variables.AirlineBAId = GetAirline("BA");
+            //Variables.TruckerId =                     //Must be implmented 
+            // Variables.PotentialCustomerId =          //Must be implmented 
             Variables.ShippingLineMSCUId = GetShippingLine("MSCU");
             Variables.ShippingLineMAEUId = GetShippingLine("MAEU");   
             Variables.WarehouseId = GetWarehouse("IntegrationWarehouse", "WR9");
-            Variables.CountryUSId = GetCountry("US");
-            Variables.CountryGBId = GetCountry("GB");
-            Variables.GlobalZoneEUId = GetGlobalZone("EU");
             return Variables;
         }
 
@@ -69,7 +68,7 @@ namespace Logitude.BL.IntegrationTestModel.EntityQueries
             vendorPM.EnglishName = vendorName;
             vendorPM.CityName = "AKD";
             vendorPM.PartnerTypeId = "VD";
-            vendorPM.CountryId = Variables.CountryUSId;
+            vendorPM.CountryId = GetCountry("US");
             vendorPM.Addresses.Add(Address("M", vendorName));
             return vendorPM;
         }
@@ -81,7 +80,7 @@ namespace Logitude.BL.IntegrationTestModel.EntityQueries
             address.Description = "Main Address";
             address.Name = partnerName;
             address.City = "XSD";
-            address.CountryId = Variables.CountryGBId;
+            address.CountryId = GetCountry("GB");
             address.IsCreatedWithPartner = true;
 
             return address;
@@ -110,7 +109,7 @@ namespace Logitude.BL.IntegrationTestModel.EntityQueries
             agentPM.EnglishName = agentName;
             agentPM.CityName = "AKD";
             agentPM.PartnerTypeId = "AG";
-            agentPM.CountryId = Variables.CountryUSId;
+            agentPM.CountryId = GetCountry("US");
             agentPM.Addresses.Add(Address("M", agentName));
             return agentPM;
         }
@@ -138,7 +137,7 @@ namespace Logitude.BL.IntegrationTestModel.EntityQueries
             customerPM.EnglishName = agentName;
             customerPM.CityName = "AKD";
             customerPM.PartnerTypeId = "CS";
-            customerPM.CountryId = Variables.CountryUSId;
+            customerPM.CountryId = GetCountry("US");
             customerPM.Addresses.Add(Address("M", agentName));
             return customerPM;
         }
@@ -166,7 +165,7 @@ namespace Logitude.BL.IntegrationTestModel.EntityQueries
             customAgentPM.EnglishName = customAgentName;
             customAgentPM.CityName = "AKD";
             customAgentPM.PartnerTypeId = "CG";
-            customAgentPM.CountryId = Variables.CountryUSId;
+            customAgentPM.CountryId = GetCountry("US");
             customAgentPM.Addresses.Add(Address("M", customAgentName));
             return customAgentPM;
         }
@@ -195,7 +194,7 @@ namespace Logitude.BL.IntegrationTestModel.EntityQueries
             shippingAgentPM.EnglishName = shippingAgentName;
             shippingAgentPM.CityName = "AKD";
             shippingAgentPM.PartnerTypeId = "SG";
-            shippingAgentPM.CountryId = Variables.CountryUSId;
+            shippingAgentPM.CountryId = GetCountry("US");
             return shippingAgentPM;
 
         }
@@ -281,7 +280,7 @@ namespace Logitude.BL.IntegrationTestModel.EntityQueries
             WarehousePM.EnglishName = warehouseName;
             WarehousePM.CityName = "AKD";
             WarehousePM.PartnerTypeId = "WH";
-            WarehousePM.CountryId = Variables.CountryUSId;
+            WarehousePM.CountryId = GetCountry("US");
             WarehousePM.Code = code;
             return WarehousePM;
 
@@ -310,7 +309,7 @@ namespace Logitude.BL.IntegrationTestModel.EntityQueries
             countryPM.Tenant = tenant;
             countryPM.Code = countryCode;
             countryPM.EnglishName = countryCode + " Country";
-            countryPM.GlobalZoneId = Variables.GlobalZoneEUId;
+            countryPM.GlobalZoneId = GetGlobalZone("EU");
             return countryPM;
         }
 
