@@ -300,6 +300,8 @@ export class AddEditAreaComponent extends BaseComponent implements OnInit {
             if (!AppTool.IsNullOrEmpty(message)) {
                 var messageWindow: MessageWindow = new MessageWindow();
                 messageWindow.IsMessageMultiLine = true;
+                messageWindow.Width = 400;
+                messageWindow.Height = 220;
                 messageWindow.Show(message);
             }
         }
