@@ -663,7 +663,7 @@
     <TextCode
       Code="&quot;Customs.General.O.BankAccountToRefundQuery&quot;"
       DefaultText="&quot;Bank Account To Refund Query&quot;"
-      LocalDefaultText="&quot;שאילתא לבקשת החזר פיקדון&quot;"
+      LocalDefaultText="&quot;השלמת פרטי בנק להחזר פיקדון&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
