@@ -1,4 +1,4 @@
-﻿import {Component, OnInit, Output, EventEmitter}  from '@angular/core';
+import {Component, OnInit, Output, EventEmitter}  from '@angular/core';
 import {AppTool} from '../../../../Infrastructure/Tools';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
@@ -97,7 +97,11 @@ export class ShipmentProfitVSQuoteEstimateComponent extends BaseComponent implem
             myFilterItems.push(new QueryFilterItem("CustomerId", this.CustomerId));
             myFilterItems.push(new QueryFilterItem("SalesmanUserId", this.SalesmanUserId));
             myFilterItems.push(new QueryFilterItem("FromDate", this.FromDate, "Date"));
-            myFilterItems.push(new QueryFilterItem("ToDate", this.ToDate, "Date"));
+
+            if (this.ToDate != null) {
+                myFilterItems.push(new QueryFilterItem("ToDate", this.ToDate, "Date"));
+            }
+
             myFilterItems.push(new QueryFilterItem("IsLocalCurrency", this.SelectedCurrencyCode == this.LocalCurrencyCode ? true : false));
             myFilterItems.push(new QueryFilterItem("ShipmentsTypeCode", this.ShipmentsTypeCode));
 
