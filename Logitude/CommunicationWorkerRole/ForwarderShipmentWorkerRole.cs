@@ -19,6 +19,7 @@ using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.InfrastructureModel;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
+using Simplog.Data.ShipmentsModel.Repositories;
 using Simplog.Global.Data.GlobalModel;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.Repositories;
@@ -200,6 +201,22 @@ namespace CommunicationWorkerRole
 
                                         #region RegulerAddEdit
 
+                                        APILogsPM newLogPM = new APILogsPM()
+                                        {
+                                            Id = IdCounter.GetNumber("APILogs", tenant),
+                                            CorrelationId = CorrelationId,
+                                            CreateDate = DateTime.Now,
+                                            CreateDateUTC = DateTime.UtcNow,
+                                            Direction = "O",
+                                            LastUpdateDate = DateTime.Now,
+                                            LastUpdateDateUTC = DateTime.UtcNow,
+                                            NumberOfRetries = 1,
+                                            ExpirationDate = DateTime.Now.AddDays(90),
+                                            Status = "I",
+                                            QueueMessageMoreDetailsId = response.MessageId
+                                        };
+
+
                                         using (var client = new HttpClient())
                                         {
                                             string ImporterShipmentsURI = URI + "ForwarderShipments";
@@ -370,7 +387,15 @@ namespace CommunicationWorkerRole
                                                 APILogsUtility.UpdateAPILogStatus(LogPM.Id, tenant, "D", response.RetryNumber + 1, DateTime.Now, DateTime.UtcNow, msg, LogitudeXmlSerializer.SerializeObjectToXmlString(shipmentAM), temp1, null, "");
                                                 queue.Complete();
 
-
+                                                
+                                                ShipmentAdditionalCloudDataRepository Repository = new ShipmentAdditionalCloudDataRepository(tenant);
+                                                var data = Repository.GetSingleShipmentAdditionalCloudData(ShipmentId, tenant);
+                                                if (data.IsUserIDNumberRequired) 
+                                                { 
+                                                    IQueueService newqueueservice = new DbQueueService();
+                                                    newqueueservice.InitializeQueue("ShipmentReceivedQueue", 0);
+                                                    newqueueservice.Send(new Dictionary<string, string>() { { "Id", ShipmentId }, { "Tenant", tenant.ToString() } }, tenant);
+                                                }
                                             }
                                             else //if (result.StatusCode == System.Net.HttpStatusCode.BadRequest)
                                             {

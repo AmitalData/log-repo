@@ -1024,6 +1024,8 @@
     <Compile Include="Controllers\Integration\Shipment\ShipmentIntegrationVariables.cs" />
     <Compile Include="Controllers\QuoteModel\Generated\PMControllers\QuoteClosingReasonController.Generated.cs" />
     <Compile Include="Controllers\CargoTrackingModel\CargoTrackingBrandingController.cs" />
+    <Compile Include="Controllers\ShipmentsModel\ApiHelpers\ExternalTasksQueueHelper.cs" />
+    <Compile Include="Controllers\ShipmentsModel\ShipmentReceivedController.cs" />
     <Compile Include="Controllers\ShipmentsModel\Extended\LogboxShipmentExportExcelController.cs" />
     <Compile Include="Controllers\ShipmentsModel\Generated\ListControllers\AccountingInformationIdentifierViewsController.Generated.cs" />
     <Compile Include="Controllers\ShipmentsModel\DocumentApprovalController.cs" />
