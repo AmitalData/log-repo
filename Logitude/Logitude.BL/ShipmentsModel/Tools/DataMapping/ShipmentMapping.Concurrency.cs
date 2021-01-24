@@ -13,41 +13,49 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
         private static bool isMappingEntityPM;
         public static void MapConcurrencyFields(ShipmentPM entityPM, Shipment entityPoco, ShipmentMasterData entityMasterData, int packagesListCount, bool isNewEntity, bool isMappingPM = true)
         {
-            isMappingEntityPM = isMappingPM;
-
-            if (isNewEntity)
+            if(entityPM.IsHybrid)
             {
-                MapConcurrencyFields_Champ(entityPM, entityPoco, entityMasterData);
-                MapConcurrencyFields_INTTRA(entityPM, entityPoco, entityMasterData);
-                MapConcurrencyFields_Client(entityPM, entityPoco, entityMasterData);
+                MapAllFields(entityPM, entityPoco, entityMasterData, packagesListCount);
             }
 
             else
             {
-                if (entityPM.IsUpdatedByChampAnalyzer)
+                isMappingEntityPM = isMappingPM;
+
+                if (isNewEntity)
                 {
                     MapConcurrencyFields_Champ(entityPM, entityPoco, entityMasterData);
-                }
-
-                else if (entityPM.IsUpdatedByINTTRAAnalyzer)
-                {
                     MapConcurrencyFields_INTTRA(entityPM, entityPoco, entityMasterData);
+                    MapConcurrencyFields_Client(entityPM, entityPoco, entityMasterData);
                 }
 
                 else
                 {
-                    MapConcurrencyFields_OnEdited(entityPM, entityPoco, entityMasterData);
-                    MapConcurrencyFields_Client(entityPM, entityPoco, entityMasterData);
-
-                    if (packagesListCount == 0)
+                    if (entityPM.IsUpdatedByChampAnalyzer)
                     {
-                        entityPoco.HasContainerException = false;
-                        entityPoco.INTTRALastStatusDate = null;
+                        MapConcurrencyFields_Champ(entityPM, entityPoco, entityMasterData);
+                    }
+
+                    else if (entityPM.IsUpdatedByINTTRAAnalyzer)
+                    {
+                        MapConcurrencyFields_INTTRA(entityPM, entityPoco, entityMasterData);
+                    }
+
+                    else
+                    {
+                        MapConcurrencyFields_OnEdited(entityPM, entityPoco, entityMasterData);
+                        MapConcurrencyFields_Client(entityPM, entityPoco, entityMasterData);
+
+                        if (packagesListCount == 0)
+                        {
+                            entityPoco.HasContainerException = false;
+                            entityPoco.INTTRALastStatusDate = null;
+                        }
                     }
                 }
-            }
 
-            MapCalculatedFields(entityPM, entityPoco, entityMasterData);
+                MapCalculatedFields(entityPM, entityPoco, entityMasterData);
+            }
         }
 
         private static void MapConcurrencyFields_Champ(ShipmentPM entityPM, Shipment entityPoco, ShipmentMasterData entityMasterData)
@@ -245,6 +253,102 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
                 entityPoco.GrossWeightPerTon = entityPM.GrossWeightPerTon = GetWeightInTon(entityPM.GrossWeightInKG);
                 entityPoco.ChargeableWeightInKG = entityPM.ChargeableWeightInKG = GetWeightInKG(entityPM.ChargeableWeightUnitCode, entityPM.ChargeableWeight);
             }
+        }
+        private static void MapAllFields(ShipmentPM entityPM, Shipment entityPoco, ShipmentMasterData entityMasterData, int packagesListCount)
+        {
+            entityPoco.IsFSRSent = entityPM.IsFSRSent;
+            entityPoco.FNAReason = entityPM.FNAReason;
+            entityPoco.FHLStatusCode = entityPM.FHLStatusCode;
+            entityPoco.FHLStatusDate = entityPM.FHLStatusDate;
+            entityPoco.CarrierLastStatusCode = entityPM.CarrierLastStatusCode;
+            entityPoco.CarrierLastStatusDate = entityPM.CarrierLastStatusDate;
+            entityPoco.NumberOfPackages = entityPM.NumberOfPackages;
+            entityPoco.GrossWeight = entityPM.GrossWeight;
+            entityPoco.ChargeableWeight = entityPM.ChargeableWeight;
+            entityPoco.GrossWeightUnitCode = entityPM.GrossWeightUnitCode;
+            entityPoco.PreCarriageATA = entityPM.PreCarriageATA;
+            entityPoco.PreCarriageATD = entityPM.PreCarriageATD;
+            entityPoco.PreCarriageETA = entityPM.PreCarriageETA;
+            entityPoco.PreCarriageETD = entityPM.PreCarriageETD;
+            entityPoco.OnCarriageATA = entityPM.OnCarriageATA;
+            entityPoco.OnCarriageATD = entityPM.OnCarriageATD;
+            entityPoco.OnCarriageETA = entityPM.OnCarriageETA;
+            entityPoco.OnCarriageETD = entityPM.OnCarriageETD;
+            entityPoco.HasContainerException = entityPM.HasContainerException;
+            entityPoco.INTTRALastStatusDate = entityPM.INTTRALastStatusDate;
+            entityPoco.INTTRASIStatusCode = entityPM.INTTRASIStatusCode;
+            entityPoco.INTTRASIStatusDate = entityPM.INTTRASIStatusDate;
+            entityPoco.INTTRALastBookingResponse = entityPM.INTTRALastBookingResponse;
+            entityPoco.INTTRABookingStatusCode = entityPM.INTTRABookingStatusCode;
+            entityPoco.INTTRABookingTransStatusCode = entityPM.INTTRABookingTransStatusCode;
+            entityPoco.LastSentByUserId = entityPM.LastSentByUserId;
+            entityPoco.LastFSRStatusRequestDate = entityPM.LastFSRStatusRequestDate;
+            entityPoco.CargonautFHLStatusCode = entityPM.CargonautFHLStatusCode;
+            entityPoco.CargonautFHLStatusDate = entityPM.CargonautFHLStatusDate;
+            entityPoco.INTTRASIError = entityPM.INTTRASIError;
+            entityPoco.INTTRAContractNumber = entityPM.INTTRAContractNumber;
+            entityPoco.INTTRAInstructions = entityPM.INTTRAInstructions;
+            entityPoco.INTTRAComments = entityPM.INTTRAComments;
+            entityPoco.INTTRADocumentQTY = entityPM.INTTRADocumentQTY;
+            entityPoco.SIHasAttachList = entityPM.SIHasAttachList;
+            entityPoco.INTTRAIsFreighted = entityPM.INTTRAIsFreighted;
+            entityPoco.INTTRADocumentTypeCode = entityPM.INTTRADocumentTypeCode;
+            entityPoco.INTTRABookingError = entityPM.INTTRABookingError;
+
+            if (entityPM.ShipmentLevelCode != "H")
+            {
+                if (entityMasterData != null)
+                {
+                    entityMasterData.FWBStatusCode = entityPM.FWBStatusCode;
+                    entityMasterData.FWBStatusDate = entityPM.FWBStatusDate;
+                    entityMasterData.MainCarriageFromPortId = entityPM.MainCarriageFromPortId;
+                    entityMasterData.MainCarriageToPortId = entityPM.MainCarriageToPortId;
+                    entityMasterData.Transshipment1ToPortId = entityPM.Transshipment1ToPortId;
+                    entityMasterData.Transshipment2ToPortId = entityPM.Transshipment2ToPortId;
+                    entityMasterData.Transshipment3ToPortId = entityPM.Transshipment3ToPortId;
+                    entityMasterData.MainCarriageFinalDestinationPortId = entityPM.MainCarriageFinalDestinationPortId;
+                    entityMasterData.MainCarriageATD = entityPM.MainCarriageATD;
+                    entityMasterData.MainCarriageETD = entityPM.MainCarriageETD;
+                    entityMasterData.MainCarriageETA = entityPM.MainCarriageETA;
+                    entityMasterData.MainCarriageATA = entityPM.MainCarriageATA;
+                    entityMasterData.MainCarriageSTD = entityPM.MainCarriageSTD;
+                    entityMasterData.MainCarriageSTA = entityPM.MainCarriageSTA;
+                    entityMasterData.Transshipment1ATA = entityPM.Transshipment1ATA;
+                    entityMasterData.Transshipment1ATD = entityPM.Transshipment1ATD;
+                    entityMasterData.Transshipment1ETA = entityPM.Transshipment1ETA;
+                    entityMasterData.Transshipment1ETD = entityPM.Transshipment1ETD;
+                    entityMasterData.Transshipment1STD = entityPM.Transshipment1STD;
+                    entityMasterData.Transshipment1STA = entityPM.Transshipment1STA;
+                    entityMasterData.Transshipment2ATA = entityPM.Transshipment2ATA;
+                    entityMasterData.Transshipment2ATD = entityPM.Transshipment2ATD;
+                    entityMasterData.Transshipment2ETA = entityPM.Transshipment2ETA;
+                    entityMasterData.Transshipment2ETD = entityPM.Transshipment2ETD;
+                    entityMasterData.Transshipment2STD = entityPM.Transshipment2STD;
+                    entityMasterData.Transshipment2STA = entityPM.Transshipment2STA;
+                    entityMasterData.Transshipment3ATA = entityPM.Transshipment3ATA;
+                    entityMasterData.Transshipment3ATD = entityPM.Transshipment3ATD;
+                    entityMasterData.Transshipment3ETA = entityPM.Transshipment3ETA;
+                    entityMasterData.Transshipment3ETD = entityPM.Transshipment3ETD;
+                    entityMasterData.Transshipment3STD = entityPM.Transshipment3STD;
+                    entityMasterData.Transshipment3STA = entityPM.Transshipment3STA;
+                    entityMasterData.BookingConfirmedBy = entityPM.BookingConfirmedBy;
+                    entityMasterData.BookingConfirmationNumber = entityPM.BookingConfirmationNumber;
+                    entityMasterData.MainCarriageCarrierNumber = entityPM.MainCarriageCarrierNumber;
+                    entityMasterData.CargonautFWBStatusCode = entityPM.CargonautFWBStatusCode;
+                    entityMasterData.CargonautFWBStatusDate = entityPM.CargonautFWBStatusDate;
+                    
+                    CalculateFinalDestinationPort(entityPM, entityMasterData);
+                    FillEstimatedDatesFields(entityMasterData, entityPM);
+                }
+            }
+
+            if (packagesListCount == 0)
+            {
+                entityPoco.HasContainerException = false;
+                entityPoco.INTTRALastStatusDate = null;
+            }
+
+            MapCalculatedFields(entityPM, entityPoco, entityMasterData);
         }
 
         private static void CalculateFinalDestinationPort(ShipmentPM entityPM, ShipmentMasterData entityMasterData)
