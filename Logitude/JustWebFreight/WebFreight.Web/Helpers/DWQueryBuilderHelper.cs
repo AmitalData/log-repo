@@ -722,7 +722,7 @@ namespace WebFreight.Web.Helpers
                 string finarlCondition = ("where " + Fact + TenantWhere + "@Tenant");
                 if (!string.IsNullOrEmpty(recordTypeCondation)) finarlCondition += (" and " + recordTypeCondation)  ;
                 finarlCondition +=" group by";
-                FinalQuery = FinalQuery.Replace("where", finarlCondition);
+                FinalQuery = FinalQuery.Replace("group by", finarlCondition);
 
             }
             else
