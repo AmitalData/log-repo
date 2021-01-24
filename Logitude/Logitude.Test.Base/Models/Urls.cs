@@ -16,6 +16,7 @@
         public static string ARPaymentViewsGetByFilters = "ARPaymentViews/GetByFilters";
         public static string IntegrationTestGetBasePartners = "IntegrationTest/GetBasePartners";
         public static string IntegrationTestGetBaseLocations = "IntegrationTest/GetBaseLocations";
+        public static string IntegrationTestGetBaseShipment = "IntegrationTest/GetBaseShipment";
 
 
         public static string TenantsGetSingle(int id)
@@ -63,9 +64,5 @@
             return "ARPayments/GetSingle?id=" + id;
         }
 
-        public static string Address()
-        {
-            return "addresses";
-        }
     }
 }

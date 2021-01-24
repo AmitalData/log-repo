@@ -46,13 +46,13 @@ namespace Logitude.Test.Base.Hooks
 
         private static void SetupLocationPreparationVariables()
         {
-            ApiResponse<LocationsVariables> locationsVariablesResponse = APICaller.CallGet<LocationsVariables>(Urls.IntegrationTestGetBaseLocations(), UserTenant.Token);
+            ApiResponse<LocationsVariables> locationsVariablesResponse = APICaller.CallGet<LocationsVariables>(Urls.IntegrationTestGetBaseLocations, UserTenant.Token);
             LocationsDataMap(locationsVariablesResponse.Data);
         }
 
         private static void SetupPartnerPreparationVariables()
         {
-            ApiResponse<PartnersVariables> partnersVariablesResponse = APICaller.CallGet<PartnersVariables>(Urls.IntegrationTestGetBasePartners(), UserTenant.Token);
+            ApiResponse<PartnersVariables> partnersVariablesResponse = APICaller.CallGet<PartnersVariables>(Urls.IntegrationTestGetBasePartners, UserTenant.Token);
             PartnersDataMap(partnersVariablesResponse.Data);
         }
 
@@ -152,13 +152,12 @@ namespace Logitude.Test.Base.Hooks
             LocationsData.PortMANId = locationsVariables.PortMANId;
             LocationsData.GlobalZoneEUId = locationsVariables.GlobalZoneEUId;
             LocationsData.CountryUSId = locationsVariables.CountryUSId;
+            LocationsData.CountryGBId = locationsVariables.CountryGBId;
             LocationsData.StateAKId = locationsVariables.StateAKId;
         }
 
         private static void PartnersDataMap(PartnersVariables partnersVariables)
         {
-            PartnersData.CountryGBId = partnersVariables.CountryGBId;
-            PartnersData.CountryUSId = partnersVariables.CountryUSId;
             PartnersData.VendorId = partnersVariables.VendorId;
             PartnersData.AgentId = partnersVariables.AgentId;
             PartnersData.CustomerId = partnersVariables.CustomerId;
