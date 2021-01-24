@@ -175,7 +175,7 @@
                         <li class="highlighted">
                             <ng-container *ngIf="CurrentMilestoneField.Date">
                                 <div class="tick"> </div>
-                                <div class="date" style="width: 130px;">{{CurrentMilestoneField.Date | date: 'dd/MM/yyyy'}}</div>
+                                <div class="date" style="width: 130px;">{{CurrentMilestoneField.Date | date:  "dd/MM/yyyy, HH:MM"}}</div>
                                 <div class="caption" style="width: 205px;">{{CurrentMilestoneField.Name}}</div>
                                 <div class="desc" style="width: calc(100% - 450px); padding: 0;">{{CurrentMilestoneField.Notes}} </div>
                             </ng-container>
