@@ -460,8 +460,8 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                     .Distinct().ToList();
 
                 GLAccountListQueryService accountQS = new GLAccountListQueryService(_AccountingContext);
-
-                IQueryable<GLAccountList> q_accountsList = accountQS.GetByIds(accountsIds, _Param.Tenant);
+                bool noNeedTenant = true;
+                IQueryable<GLAccountList> q_accountsList = accountQS.GetByIds(accountsIds, _Param.Tenant, noNeedTenant);
                 bool blanceCureency4SplitIsNeeded = true;
                 if (!blanceCureency4SplitIsNeeded)
                 {
@@ -763,9 +763,18 @@ _Param.AgingForDate.Date, false, true, true);
                 reportList.Where(r=>r.CurrencyId==null).ToList()
                     .ForEach(r =>
                 {
+                    try
+                    {
+                        var acc = myaccountsList.First(m => m.Id == r.AccountId);
+                        r.CurrencyId = acc.ReconcileMethodCode == "0" ? tenant.CurrencyId : acc.CurrencyId;
+                    }
+                    catch (Exception)
+                    {
 
-                    var acc = myaccountsList.First(m => m.Id == r.AccountId);
-                    r.CurrencyId = acc.ReconcileMethodCode == "0" ? tenant.CurrencyId : acc.CurrencyId;
+                        throw;
+                    }
+                    
+                   
                 });
                 
             }
@@ -795,12 +804,27 @@ _Param.AgingForDate.Date, false, true, true);
 
         private static List<PeriodMExtended> MapExtended(List<PeriodM> reportList, List<PeriodMExtended> periodMExtendeds, /*IQueryable*/List<Logitude.BL.CommonDataModel.EntityPMs.CurrencyPM> currencies)
         {
+            bool t = false;
+            if (t)
+            {
+                ///****  AccountId is nul !!!! 
+                ///**** BAD - look if there isnt 
+                ///insert INTO GLAccountMoreDatas select a.id accountid , a.tenant ,0 ,0 ,0 ,0  ,0 from GLAccounts a left outer join GLAccountMoreDatas m on a.Id = m.AccountId where m.AccountId is null) 
+                var periodAcc11 = periodMExtendeds.Where(r => string.IsNullOrWhiteSpace( r.AccountId)).ToList();
+                var periodAcc = periodMExtendeds.Select(r => r.AccountId).ToList().Distinct();
+                var reportListAcc = reportList.Select(r => r.AccountId).ToList().Distinct();
+                var bad = periodAcc.Where(p => !reportListAcc.Any(p2 => p2 == p));
+                bad = reportListAcc.Where(p => !periodAcc.Any(p2 => p2 == p));
+            }
+            
             List<PeriodMExtended> namedPeriods = (from line in reportList
 
                                                       //join account in periodMExtendeds
                                                       //  on line.AccountId equals account.AccountId into accJoin
                                                       //from account in accJoin.DefaultIfEmpty()
-                                                  let account = periodMExtendeds.FirstOrDefault(account => account.AccountId == line.AccountId)
+                                                        
+
+                                                  let account = periodMExtendeds.First(account => account.AccountId == line.AccountId)
                                                   let splitAccount = periodMExtendeds.FirstOrDefault(account => account.AccountId == line.SplitAccountId)
 
                                                   //join currency in currencies

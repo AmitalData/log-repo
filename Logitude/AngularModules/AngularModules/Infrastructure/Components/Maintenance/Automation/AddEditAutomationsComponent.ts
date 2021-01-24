@@ -403,17 +403,22 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
     set DocumentTypeSelected(value: DocumentTypeList) {
         if (this.documentTypeSelected != value) {
             this.documentTypeSelected = value;
-            if (this.CurrentEntityPM && this.CurrentEntityPM.DocumentTypeId != value.Id) {
-                this.CurrentEntityPM.DocumentTypeId = value.Id;
+            var newValue = value ? value.Id : "";
+            var oldValue = this.CurrentEntityPM.DocumentTypeId;
+
+            if (this.CurrentEntityPM && newValue != oldValue) {
+                this.CurrentEntityPM.DocumentTypeId = newValue;
                 this.IsChangeAutomation = true;
             }
             this.IsEnableAddTemplate = true;
 
-            if (this.documentTypeSelected.TemplateFormatCode == "P") {
+            if (this.documentTypeSelected && this.documentTypeSelected.TemplateFormatCode == "P") {
                 this.IsEnableAddReportTemplate = true;
             }
         }
-        this.LoadDocumentTypeTemplate(this.documentTypeSelected);
+        if (this.documentTypeSelected) {
+            this.LoadDocumentTypeTemplate(this.documentTypeSelected);
+        }
 
     }
 
@@ -1644,7 +1649,20 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
             }
         }
 
-
+        if (this.AutomationCondationAndList.length > 0) {
+            this.AutomationCondationAndList.forEach((item) => {
+                if (item.CurrentEntityPM.Value == "") {
+                    this.ValidationErrorsList.push("Field value is required");
+                }
+            })
+        }
+        if (this.AutomationCondationOrList.length > 0) {
+            this.AutomationCondationOrList.forEach((item) => {
+                if (item.CurrentEntityPM.Value == "") {
+                    this.ValidationErrorsList.push("Field value is required");
+                }
+            })
+        }
 
         if (this.CurrentEntityPM.ResultCode == "FIELDSET" && this.AutomationSetValueLists && this.AutomationSetValueLists.length > 0) {
             this.AutomationSetValueLists.forEach((item) => {

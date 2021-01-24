@@ -1,5 +1,5 @@
 <table>
-    <tr style="height:1px">
+    <tr style="height:1px" *ngIf="IsTariffSettingsVisible">
         <td>
             <div class="QueriesSection">
                 <div>Tariffs Settings</div>
@@ -9,11 +9,13 @@
             </div>
         </td>
     </tr>
+
     <tr style="height:10px">
         <td>
             <div></div>
         </td>
     </tr>
+
     <tr style="height:1px" *ngIf="IsTariffGenerateVisible">
         <td>
             <div class="QueriesSection">

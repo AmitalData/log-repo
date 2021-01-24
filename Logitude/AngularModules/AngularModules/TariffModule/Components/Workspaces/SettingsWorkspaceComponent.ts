@@ -26,7 +26,7 @@ export class SettingsWorkspaceComponent implements OnInit, OnDestroy {
     private CurrentSession = SessionLocator.SelectedSession;
     private DocumentExtendedService: DocumentsFilingExtendedPMService;
     public IsTariffGenerateVisible: boolean = false;
-
+    public IsTariffSettingsVisible: boolean = false;
     constructor(private _entityResourceService: EntityResourceService, private tariffDomainService: TariffDomainService) {
         //SSthis.RunComponent();
     }
@@ -53,6 +53,9 @@ export class SettingsWorkspaceComponent implements OnInit, OnDestroy {
             this.IsTariffGenerateVisible = true;
         }
 
+        if (FeatureLocator.HasFeaturePermession("TariffSetting", "READ")) {
+            this.IsTariffSettingsVisible = true;
+        }
     }
 
     TariffSettingsClicked() {

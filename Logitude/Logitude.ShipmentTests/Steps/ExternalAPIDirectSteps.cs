@@ -93,6 +93,9 @@ namespace Logitude.ShipmentTests.Steps
         private void BuildNewDirectShipment(Table directShipmentTable)
         {
             dynamic directShipment = directShipmentTable.CreateDynamicInstance();
+ 
+
+ 
             DirectBuilder directBuilder = new DirectBuilder();
             directBuilder.Agent((string)directShipment.Agent.ToString())
                 .Direction((string)directShipment.Direction.ToString())
@@ -119,16 +122,11 @@ namespace Logitude.ShipmentTests.Steps
 
             mainCarriageLegs.ToList().ForEach(mainCarriageLeg =>
             {
-                int legIndex = Convert.ToInt32(mainCarriageLeg.LegIndex);
-                string carrier = Convert.ToString(mainCarriageLeg.Carrier);
-                string fromPort = Convert.ToString(mainCarriageLeg.FromPort);
-                string toPort = Convert.ToString(mainCarriageLeg.ToPort);
-
                 MainCarriageLegBuilder mainCarriageLegBuilder = new MainCarriageLegBuilder();
-                MainCarriageLeg newMainCarriageLeg = mainCarriageLegBuilder.LegIndex(legIndex)
-                .Carrier(carrier)
-                .FromPort(fromPort)
-                .ToPort(toPort)
+                MainCarriageLeg newMainCarriageLeg = mainCarriageLegBuilder.LegIndex((int)mainCarriageLeg.LegIndex)
+                .Carrier((string)mainCarriageLeg.Carrier.ToString())
+                .FromPort((string)mainCarriageLeg.FromPort.ToString())
+                .ToPort((string)mainCarriageLeg.ToPort.ToString())
                 .Build();
                 mainCarriageLegsList.Add(newMainCarriageLeg);
             });

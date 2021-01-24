@@ -242,7 +242,7 @@ export class AutomationConditionViewModel extends BaseComponent implements OnIni
                 //}
             }
         }
-        return recordType;
+        return recordType.replace(" ", "");
     }
 
     InitLOVFilters(objectTableId:string) {

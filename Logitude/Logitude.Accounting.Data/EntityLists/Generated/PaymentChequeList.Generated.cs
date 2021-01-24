@@ -90,6 +90,8 @@ namespace Logitude.Accounting.Data.EntityLists
        public string StatusEnglishName  { get; set; }
        [DataMember]
        public string APPaymentId  { get; set; }
+       [DataMember]
+       public string APPaymentNo  { get; set; }
    }
 
 }

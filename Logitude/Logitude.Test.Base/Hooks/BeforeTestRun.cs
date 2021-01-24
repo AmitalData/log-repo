@@ -14,41 +14,28 @@ namespace Logitude.Test.Base.Hooks
         [BeforeTestRun(Order = 0)]
         public static void SetupBeforeTestRun()
         {
-            ReadConfigurations();
-            AuthenticateUsers();
+            SetupBaseSettings();
+            SetupUsersAuthentication();
             SetupDefaultUserTenant();
             SetupLocationPreparationVariables();
             SetupPartnerPreparationVariables();
         }
 
-        private static void ReadConfigurations()
+        private static void SetupBaseSettings()
         {
-            string configurationsXmlFilePath = AppDomain.CurrentDomain.BaseDirectory + @"\Configurations\configurations.xml";
-            string configurationsXmlString = File.ReadAllText(configurationsXmlFilePath);
-            Configurations configurations = configurationsXmlString.ParseXML<Configurations>();
-
-            Settings.ServerUrl = configurations.General.ServerUrl;
-
-            ConfigurationsUser defaultUserConfiguration = configurations.Users.Where(u => u.Default).FirstOrDefault();
-            ConfigurationsUser otherUserConfiguration = configurations.Users.Where(u => !u.Default).FirstOrDefault();
-
-            Settings.DefaultUserCredentials = new Credentials
+            Configurations configurations = GetConfigurations();
+            if(configurations != null)
             {
-                Email = defaultUserConfiguration?.Email,
-                Password = defaultUserConfiguration?.Password
-            };
-
-            Settings.OtherUserCredentials = new Credentials
-            {
-                Email = otherUserConfiguration?.Email,
-                Password = otherUserConfiguration?.Password
-            };
+                Settings.ServerUrl = configurations.General.ServerUrl;
+                Settings.DefaultUserCredentials = GetUserCredentialsFromConfigurations(configurations, true);
+                Settings.OtherUserCredentials = GetUserCredentialsFromConfigurations(configurations, false);
+            }
         }
 
-        private static void AuthenticateUsers()
+        private static void SetupUsersAuthentication()
         {
-            AuthenticateDefaultUser();
-            AuthenticateOtherUser();
+            SetupDefaultUserAuthentication();
+            SetupOtherUserAuthentication();
         }
 
         private static void SetupDefaultUserTenant()
@@ -57,45 +44,80 @@ namespace Logitude.Test.Base.Hooks
             SetupDefaultUser();
         }
 
-        private static void AuthenticateDefaultUser()
+        private static void SetupLocationPreparationVariables()
         {
-            LoginParameters loginParameters = new LoginParameters()
-            {
-                Email = Settings.DefaultUserCredentials.Email,
-                Password = Settings.DefaultUserCredentials.Password,
-                ClientType = "Web",
-                GetToken = true
-            };
-
-            ApiResponse<UserLogin> userLoginResponse = APICaller.CallPost<UserLogin>(loginParameters, Urls.AuthenticationController, null);
-            UserTenant.Token = userLoginResponse.Data?.Token;
-            UserTenant.Tenant = userLoginResponse.Data == null ? 0 : userLoginResponse.Data.Tenant;
-            UserTenant.UserId = userLoginResponse.Data?.UserId;
-            UserTenant.UserName = userLoginResponse.Data?.UserName;
+            ApiResponse<LocationsVariables> locationsVariablesResponse = APICaller.CallGet<LocationsVariables>(Urls.IntegrationTestGetBaseLocations(), UserTenant.Token);
+            LocationsDataMap(locationsVariablesResponse.Data);
         }
 
-        private static void AuthenticateOtherUser()
+        private static void SetupPartnerPreparationVariables()
+        {
+            ApiResponse<PartnersVariables> partnersVariablesResponse = APICaller.CallGet<PartnersVariables>(Urls.IntegrationTestGetBasePartners(), UserTenant.Token);
+            PartnersDataMap(partnersVariablesResponse.Data);
+        }
+
+        private static Configurations GetConfigurations()
+        {
+            try
+            {
+                string configurationsXmlFilePath = AppDomain.CurrentDomain.BaseDirectory + @"\Configurations\configurations.xml";
+                string configurationsXmlString = File.ReadAllText(configurationsXmlFilePath);
+                Configurations configurations = configurationsXmlString.ParseXML<Configurations>();
+                return configurations;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+
+        private static Credentials GetUserCredentialsFromConfigurations(Configurations configurations, bool isDefaultUser)
+        {
+            ConfigurationsUser userConfiguration = configurations?.Users.Where(u => u.Default == isDefaultUser).FirstOrDefault();
+            Credentials userCredentials = new Credentials
+            {
+                Email = userConfiguration?.Email,
+                Password = userConfiguration?.Password
+            };
+
+            return userCredentials;
+        }
+
+        private static void SetupDefaultUserAuthentication()
+        {
+            UserLogin userLogin = GetUserLogin(Settings.DefaultUserCredentials);
+            UserTenant.Token = userLogin?.Token;
+            UserTenant.Tenant = userLogin == null ? 0 : userLogin.Tenant;
+            UserTenant.UserId = userLogin?.UserId;
+            UserTenant.UserName = userLogin?.UserName;
+        }
+
+        private static void SetupOtherUserAuthentication()
+        {
+            UserLogin userLogin = GetUserLogin(Settings.OtherUserCredentials);
+            UserOtherTenant.Token = userLogin?.Token;
+            UserOtherTenant.Tenant = userLogin == null ? 0 : userLogin.Tenant;
+            UserOtherTenant.UserId = userLogin?.UserId;
+            UserOtherTenant.UserName = userLogin?.UserName;
+        }
+
+        private static UserLogin GetUserLogin(Credentials userCredentials)
         {
             LoginParameters loginParameters = new LoginParameters()
             {
-                Email = Settings.OtherUserCredentials.Email,
-                Password = Settings.OtherUserCredentials.Password,
+                Email = userCredentials.Email,
+                Password = userCredentials.Password,
                 ClientType = "Web",
                 GetToken = true
             };
-
             ApiResponse<UserLogin> userLoginResponse = APICaller.CallPost<UserLogin>(loginParameters, Urls.AuthenticationController, null);
-            UserOtherTenant.Token = userLoginResponse.Data?.Token;
-            UserOtherTenant.Tenant = userLoginResponse.Data == null ? 0 : userLoginResponse.Data.Tenant;
-            UserOtherTenant.UserId = userLoginResponse.Data?.UserId;
-            UserOtherTenant.UserName = userLoginResponse.Data?.UserName;
+            return userLoginResponse.Data;
         }
 
         private static void SetupDefaultTenant()
         {
             string tenantUrl = Urls.TenantsGetSingle(UserTenant.Tenant);
             ApiResponse<Tenant> tenantResponse = APICaller.CallGet<Tenant>(tenantUrl, UserTenant.Token);
-
             UserTenant.LocalCurrencyId = tenantResponse.Data?.CurrencyId;
             UserTenant.ProfitCurrencyId = tenantResponse.Data?.ProfitCurrencyId;
             UserTenant.ProfitCurrencyRate = tenantResponse.Data?.ProfitCurrencyRate;
@@ -111,58 +133,45 @@ namespace Logitude.Test.Base.Hooks
                 Filter1Operator = "Contains",
                 Filter1Value = Settings.DefaultUserCredentials.Email
             };
-
             ApiResponse<IEnumerable<User>> usersResponse = APICaller.CallGetByFilters<IEnumerable<User>>(Urls.UserViewsGetByFilters, UserTenant.Token, apiQueryFilters);
             User user = usersResponse.Data?.FirstOrDefault();
-
             UserTenant.BranchId = user?.BranchId;
             UserTenant.DepartmentId = user?.DepartmentId;
             UserTenant.BusinessUnitId = user?.BusinessUnitId;
         }
 
-        private static void SetupLocationPreparationVariables()
+        private static void LocationsDataMap(LocationsVariables locationsVariables)
         {
-            ApiResponse<LocationsVariables> locationsVariablesResponse = APICaller.CallGet<LocationsVariables>(Urls.IntegrationTestGetBaseLocations, UserTenant.Token);
-            LocationDataMap(locationsVariablesResponse.Data);
+            LocationsData.PortLHRId = locationsVariables.PortLHRId;
+            LocationsData.PortLASId = locationsVariables.PortLASId;
+            LocationsData.PortMIAId = locationsVariables.PortMIAId;
+            LocationsData.PortJFKId = locationsVariables.PortJFKId;
+            LocationsData.PortSOUId = locationsVariables.PortSOUId;
+            LocationsData.PortNYCId = locationsVariables.PortNYCId;
+            LocationsData.PortLONId = locationsVariables.PortLONId;
+            LocationsData.PortMANId = locationsVariables.PortMANId;
+            LocationsData.GlobalZoneEUId = locationsVariables.GlobalZoneEUId;
+            LocationsData.CountryUSId = locationsVariables.CountryUSId;
+            LocationsData.StateAKId = locationsVariables.StateAKId;
         }
 
-        private static void SetupPartnerPreparationVariables()
+        private static void PartnersDataMap(PartnersVariables partnersVariables)
         {
-            ApiResponse<PartnersVariables> partnersVariablesResponse = APICaller.CallGet<PartnersVariables>(Urls.IntegrationTestGetBasePartners, UserTenant.Token);
-            PartnerDataMap(partnersVariablesResponse.Data);
-        }
-
-        private static void LocationDataMap(LocationsVariables vars)
-        {
-            LocationsData.PortLHRId = vars.PortLHRId;
-            LocationsData.PortLASId = vars.PortLASId;
-            LocationsData.PortMIAId = vars.PortMIAId;
-            LocationsData.PortJFKId = vars.PortJFKId;
-            LocationsData.PortSOUId = vars.PortSOUId;
-            LocationsData.PortNYCId = vars.PortNYCId;
-            LocationsData.PortLONId = vars.PortLONId;
-            LocationsData.PortMANId = vars.PortMANId;
-            LocationsData.GlobalZoneEUId = vars.GlobalZoneEUId;
-            LocationsData.CountryUSId = vars.CountryUSId;
-            LocationsData.CountryGBId = vars.CountryGBId;
-            LocationsData.StateAKId = vars.StateAKId;
-        }
-
-        private static void PartnerDataMap(PartnersVariables vars)
-        {
-            PartnersData.VendorId = vars.VendorId;
-            PartnersData.AgentId = vars.AgentId;
-            PartnersData.CustomerId = vars.CustomerId;
-            PartnersData.CustomAgentId = vars.CustomAgentId;
-            PartnersData.ShippingAgentId = vars.ShippingAgentId;
-            PartnersData.PotentialCustomerId = vars.PotentialCustomerId;
-            PartnersData.TruckerId = vars.TruckerId;
-            PartnersData.ShipperExport1 = vars.ShipperExport1;
-            PartnersData.AirlineAAId = vars.AirlineAAId;
-            PartnersData.AirlineBAId = vars.AirlineBAId;
-            PartnersData.ShippingLineMSCUId = vars.ShippingLineMSCUId;
-            PartnersData.ShippingLineMAEUId = vars.ShippingLineMAEUId;
-            PartnersData.WarehouseId = vars.WarehouseId;
+            PartnersData.CountryGBId = partnersVariables.CountryGBId;
+            PartnersData.CountryUSId = partnersVariables.CountryUSId;
+            PartnersData.VendorId = partnersVariables.VendorId;
+            PartnersData.AgentId = partnersVariables.AgentId;
+            PartnersData.CustomerId = partnersVariables.CustomerId;
+            PartnersData.CustomAgentId = partnersVariables.CustomAgentId;
+            PartnersData.ShippingAgentId = partnersVariables.ShippingAgentId;
+            PartnersData.PotentialCustomerId = partnersVariables.PotentialCustomerId;
+            PartnersData.TruckerId = partnersVariables.TruckerId;
+            PartnersData.ShipperExport1 = partnersVariables.ShipperExport1;
+            PartnersData.AirlineAAId = partnersVariables.AirlineAAId;
+            PartnersData.AirlineBAId = partnersVariables.AirlineBAId;
+            PartnersData.ShippingLineMSCUId = partnersVariables.ShippingLineMSCUId;
+            PartnersData.ShippingLineMAEUId = partnersVariables.ShippingLineMAEUId;
+            PartnersData.WarehouseId = partnersVariables.WarehouseId;
         }
     }
 }

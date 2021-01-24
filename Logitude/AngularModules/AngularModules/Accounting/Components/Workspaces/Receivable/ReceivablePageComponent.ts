@@ -279,7 +279,7 @@ export class ReceivablePageComponent {
         logWindow.WindowArgs = { InvoiceTypeCode: type };
         logWindow.Title = windowTitle;
         logWindow.Width = 550;
-        logWindow.Height = 450;
+        logWindow.Height = 500;
 
         logWindow.ComponentLoaded.subscribe(comp => {
             logWindow.WindowClosed.subscribe(s => {
