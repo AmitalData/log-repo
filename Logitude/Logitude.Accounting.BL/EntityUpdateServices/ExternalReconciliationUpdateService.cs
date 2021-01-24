@@ -125,7 +125,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             ARPaymentChequePM arpaymentCheque = null;
 
             if (transactionPM.SourceTypeCode == AccountingEntityValues.ChequeDeposit)
-                arpaymentCheque = GetChequeOfDepositTransaction(transactionPM.Reference1, transactionPM.SourceId, transactionPM.Tenant);
+                arpaymentCheque = GetChequeOfDepositTransaction(transactionPM.Reference2, transactionPM.SourceId, transactionPM.Tenant);
 
             if (transactionPM.SourceTypeCode == AccountingEntityValues.ARPayment)
                 arpaymentCheque = GetChequeOfARPaymentTransaction(transactionPM.Reference2, transactionPM.SourceId, transactionPM.Tenant);

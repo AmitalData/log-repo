@@ -83,7 +83,7 @@ namespace Logitude.Accounting.BL.CoreBL
                             CalculateBilltoFutureCheques(tenant, billTo);
                         }
 
-                        //scope.Complete();
+                        scope.Complete();
 
                         Log("   >>>>> tenant (" + tenantStr + ") cheques recalculated successfully");
                     }
@@ -246,7 +246,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
                     DoneCheques.AddRange(cheques);
 
-                    //scope.Complete();
+                    scope.Complete();
                 }
                 
 
