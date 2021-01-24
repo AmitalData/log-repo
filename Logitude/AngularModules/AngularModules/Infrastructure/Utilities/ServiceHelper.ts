@@ -32,7 +32,13 @@ export class ServiceHelper {
             
         if (error.status == 400) {
           var apiException = error.error;
-                if (apiException.ErrorType == "Exception" || apiException.ErrorType == "ModelStateError" || apiException.ErrorType == "DbEntityValidationException" || apiException.ErrorType == "ApplicationException" || apiException.ErrorType == "EntityCommandExecutionException" || apiException.ErrorType == "NullReferenceException") {
+            if (apiException.ErrorType == "Exception"
+                || apiException.ErrorType == "ModelStateError"
+                || apiException.ErrorType == "DbEntityValidationException"
+                || apiException.ErrorType == "ApplicationException"
+                || apiException.ErrorType == "EntityCommandExecutionException"
+                || apiException.ErrorType == "NullReferenceException"
+                || apiException.ErrorType == "SecurityException") {
 
                     var errorMessage: string = apiException.ShortErrorMessage;
                     if (apiException.ShortErrorMessage) {
