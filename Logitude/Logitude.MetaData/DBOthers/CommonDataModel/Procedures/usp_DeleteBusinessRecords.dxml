@@ -18,12 +18,11 @@ update Activities set QuoteId = NULL where Tenant = @Tenant
 update Shipments set MasterShipmentDataId = NULL where Tenant = @Tenant
 
 exec [dbo].usp_DoTheTableDeletionSet @Tenant = @Tenant, @TableName = 'Quotes'
+exec [dbo].usp_DoTheTableDeletionSet @Tenant = @Tenant, @TableName = 'shipments'
 exec [dbo].usp_DoTheTableDeletionSet @Tenant = @Tenant, @TableName = 'ARPayments'
 exec [dbo].usp_DoTheTableDeletionSet @Tenant = @Tenant, @TableName = 'APInvoices'
 exec [dbo].usp_DoTheTableDeletionSet @Tenant = @Tenant, @TableName = 'ARInvoices'
 exec [dbo].usp_DoTheTableDeletionSet @Tenant = @Tenant, @TableName = 'APPayments'
-exec [dbo].usp_DoTheTableDeletionSet @Tenant = @Tenant, @TableName = 'shipments'
-exec [dbo].usp_DoTheTableDeletionSet @Tenant = @Tenant, @TableName = 'Quotes'
 
 END
 ]]></SqlScript>

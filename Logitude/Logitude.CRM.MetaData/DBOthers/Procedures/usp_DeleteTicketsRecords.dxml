@@ -14,9 +14,8 @@ AS
 
 BEGIN
 
-exec [dbo].usp_DoTheTableDeletionSet @Tenant = @Tenant, @TableName = 'InboundEmailLines'
-exec [dbo].usp_DoTheTableDeletionSet @Tenant = @Tenant, @TableName = 'TicketEscalations'
 exec [dbo].usp_DoTheTableDeletionSet @Tenant = @Tenant, @TableName = 'InboundEmails'
+exec [dbo].usp_DoTheTableDeletionSet @Tenant = @Tenant, @TableName = 'TicketEscalations'
 exec [dbo].usp_DoTheTableDeletionSet @Tenant = @Tenant, @TableName = 'Correspondences'
 exec [dbo].usp_DoTheTableDeletionSet @Tenant = @Tenant, @TableName = 'Tickets'
 

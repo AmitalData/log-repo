@@ -19,11 +19,19 @@ declare @DeletedContactIdTable table
   Id varchar(15) not null
 )
 
+declare  @myWhere varchar(max);
+set @myWhere = ' and CardId in (select Id from Cards where Cards.Tenant =';
+set @myWhere = @myWhere + CAST(@Tenant as varchar(10));
+set @myWhere = @myWhere + ' and (Cards.PartnerTypeId = ''CS'' or Cards.PartnerTypeId = ''PO''))';
+
 update Tickets set CompanyId = NULL where Tenant = @Tenant
 update MAWBStacks set AssignedToId = null where Tenant = @Tenant
 update Cards set PrimaryContactId = NULL where Tenant = @Tenant and (PartnerTypeId = 'CS' or PartnerTypeId = 'PO')
+
+exec [dbo].usp_DoTheTableDeletionSet @Tenant = @Tenant, @TableName = 'Addresses', @WhereInput=@myWhere
+exec [dbo].usp_DoTheTableDeletionSet @Tenant = @Tenant, @TableName = 'CardSearches', @WhereInput=@myWhere
 exec [dbo].usp_DoTheTableDeletionSet @Tenant = @Tenant, @TableName = 'Customers'
-exec [dbo].usp_DoTheTableDeletionSet @Tenant = @Tenant, @TableName = 'Cards', @WhereInput=' and PartnerTypeId = ''CS'' or PartnerTypeId = ''PO'''
+exec [dbo].usp_DoTheTableDeletionSet @Tenant = @Tenant, @TableName = 'Cards'
 
 END
 ]]></SqlScript>
