@@ -60,6 +60,29 @@
                                     </td>
                                 </tr>
 
+                                <!-- PartnerId -->
+                                <tr class="FormFieldRow">
+                                    <td>
+                                        <LogLabel [ObjectFieldName]="'PartnerId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                    </td>
+
+                                    <td>
+                                        <LogLov [ObjectFieldName]="'PartnerId'"
+                                                [SelectedValue]="PartnerId"
+                                                [ObjectTableName]="ObjectTableName"
+                                                [DataContext]="DataContext"
+                                                [LookUpTableName]="'Card'"
+                                                [DependencyFilter1Value]="BillToDependencyValue1"
+                                                [DependencyFilter2Value]="BillToDependencyValue2"
+                                                [DependencyFilter1IsList]="BillToDependencyValue1IsList">
+                                        </LogLov>
+                                    </td>
+
+                                    <td>
+                                        <div></div>
+                                    </td>
+
+                                </tr>
                                 <!-- BillToId -->
                                 <tr class="FormFieldRow">
                                     <td>
@@ -72,9 +95,7 @@
                                                 [ObjectTableName]="ObjectTableName"
                                                 [DataContext]="DataContext"
                                                 [LookUpTableName]="'Card'"
-                                                [DependencyFilter1Value]="BillToDependencyValue1"
-                                                [DependencyFilter2Value]="BillToDependencyValue2"
-                                                [DependencyFilter1IsList]="BillToDependencyValue1IsList">
+                                               >
                                         </LogLov>
                                     </td>
 
