@@ -162,7 +162,7 @@
                         <li *ngFor="let item of FuturesMilestoneFields" class="dimmed">
                             <ng-container *ngIf="item.EstimationDate">
                                 <div class="tick"> </div>
-                                <div class="date" style="width: 130px;">{{item.EstimationDate | date: 'dd/MM/yyyy'}}</div>
+                                <div class="date" style="width: 130px;">{{item.EstimationDate | date: 'dd/MM/yyyy, HH:MM'}}</div>
                                 <div class="caption" style="width: 205px;">{{item.Name}}</div>
                                 <div class="desc" style="width: calc(100% - 450px); padding: 0;">{{item.Notes}} </div>
                             </ng-container>
@@ -175,7 +175,7 @@
                         <li class="highlighted">
                             <ng-container *ngIf="CurrentMilestoneField.Date">
                                 <div class="tick"> </div>
-                                <div class="date" style="width: 130px;">{{CurrentMilestoneField.Date | date:  "dd/MM/yyyy, HH:MM"}}</div>
+                                <div class="date" style="width: 130px;">{{CurrentMilestoneField.Date | date:  'dd/MM/yyyy, HH:MM'}}</div>
                                 <div class="caption" style="width: 205px;">{{CurrentMilestoneField.Name}}</div>
                                 <div class="desc" style="width: calc(100% - 450px); padding: 0;">{{CurrentMilestoneField.Notes}} </div>
                             </ng-container>
@@ -187,7 +187,7 @@
                         <li *ngFor="let item of CompletedMilestoneFields">
                             <ng-container *ngIf="item.Date">
                                 <div class="tick"> <img src="./assets/images/icons/tick.png" alt=""> </div>
-                                <div class="date" style="width: 130px;">{{item.Date | date: 'dd/MM/yyyy'}}</div>
+                                <div class="date" style="width: 130px;">{{item.Date | date: 'dd/MM/yyyy, HH:MM'}}</div>
                                 <div class="caption" style="width: 205px;">{{item.Name}}</div>
                                 <div class="desc" style="width: calc(100% - 450px); padding: 0;">{{item.Notes}}</div>
                             </ng-container>
