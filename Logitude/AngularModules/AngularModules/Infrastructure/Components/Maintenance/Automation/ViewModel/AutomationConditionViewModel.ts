@@ -205,6 +205,9 @@ export class AutomationConditionViewModel extends BaseComponent implements OnIni
             if (objectFieldName == "Company")//this is for now. we need a new field to get the name of the entity(objectField.FullNameAutomationEntity)
                 objectFieldName = "Customer";
             this.AutomationEntityLists.push(new AutomationEntityList(objectFieldName, objectField.LookUpTableId, objectField.FieldCode, objectFieldName));
+            if (objectFieldName == "Shipment" && objectTableName == "ARInvoice") {
+                this.AutomationEntityLists.push(new AutomationEntityList("Master", objectField.LookUpTableId, objectField.FieldCode, "Master"));
+            }
         });
 
         this.SelectedAutomationEntity = this.AutomationEntityLists.filter(d => d.ObjectFieldCode == this.PartnerObjectFieldCode)[0];
@@ -489,7 +492,7 @@ export class AutomationConditionViewModel extends BaseComponent implements OnIni
         if (value) {
             this.ObjectFieldCode = null;
             this.PartnerObjectFieldCode = this.CurrentEntityPM.PartnerObjectFieldCode = value.ObjectFieldCode ? value.ObjectFieldCode:null;
-            this.SelectedAutomationEntity = this.AutomationEntityLists.filter(d => d.ObjectFieldCode == this.PartnerObjectFieldCode)[0];
+            this.SelectedAutomationEntity = this.AutomationEntityLists.filter(d => d.ObjectFieldCode == this.PartnerObjectFieldCode && d.Name == value.Name)[0];
 
             if (!this.SelectedAutomationEntity) {
                 this.SelectedAutomationEntity =   this.AutomationEntityLists.filter(d => d.ObjectTableId == this.AddEditAutomationsViewModel.ObjectTableId)[0];
