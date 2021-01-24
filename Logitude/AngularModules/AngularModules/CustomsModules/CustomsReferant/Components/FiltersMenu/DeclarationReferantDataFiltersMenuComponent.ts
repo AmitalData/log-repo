@@ -128,8 +128,8 @@ export class DeclarationReferantDataFiltersMenuComponent
         this.SelectedValueChangedEmitUser();
         this.SelectedValueChangedEmitDepartment();
         this.ApplyTransportSelectedStyle();
-        this.myViewChildrenMultiSelectLOVComponent.first.Invalidate();
-        this.myViewChildrenMultiSelectLOVComponent.last.Invalidate();
+      //  this.myViewChildrenMultiSelectLOVComponent.first.Invalidate();
+      //  this.myViewChildrenMultiSelectLOVComponent.last.Invalidate();
 
         this._CD.detectChanges();
 
@@ -139,10 +139,14 @@ export class DeclarationReferantDataFiltersMenuComponent
     }
 
     ngAfterViewInit() {
-        if (this.OpenQueryThruWorkSpace) {
+         if (this.OpenQueryThruWorkSpace) {
             this.apiQueryFilters.addAdditionalFilter("RetrievData", true, null, null, "Equal", true, false, false, "string");
             this.SelectedValueChanged.emit({ Filters: this.apiQueryFilters, RemoveFilter: false });
             this.myViewChildrenMultiSelectLOVComponent.first.Invalidate();
+            this.SelectedValueChangedEmitDepartment();
+            this.myViewChildrenMultiSelectLOVComponent.last.Invalidate();
+
+
         } else {
             let ul = new UserList();
             ul.Id = (SessionLocator.LoggedUserPM.Id == null || SessionLocator.LoggedUserPM.Id == "0") ? "9999999" : SessionLocator.LoggedUserPM.Id;
@@ -153,10 +157,14 @@ export class DeclarationReferantDataFiltersMenuComponent
             this.LOVListUsers.push(ul);
             this.ApplyTransportSelectedStyle();
             this.myViewChildrenMultiSelectLOVComponent.first.Invalidate();
+
             this.SelectedValueChangedEmitUser();
             this.SelectedValueChangedEmitDepartment();
 
         }
+        this.myViewChildrenMultiSelectLOVComponent.first.Invalidate();
+        this.myViewChildrenMultiSelectLOVComponent.last.Invalidate();
+
         this._CD.detectChanges();
     }
 
@@ -300,17 +308,17 @@ export class DeclarationReferantDataFiltersMenuComponent
     }
 
     SelectedValueChangedEmitDepartment() {
-        var RemoveFilter = false;
+         var RemoveFilter = false;
         if (this.apiQueryFilters.AdditionalFilters.length > 0) {
-            this.apiQueryFilters.AdditionalFilters = this.apiQueryFilters.AdditionalFilters.filter(a => a.FieldName != "DepartmentId");
+            this.apiQueryFilters.AdditionalFilters = this.apiQueryFilters.AdditionalFilters.filter(a => a.FieldName != "DepartmentId" && a.FieldName != "DepartmentName");
         }
         var LOVListDepartment = "";
         var DepartmentNamesListString = "";
 
-        if (this._LOVListDepartment.length > 0) {
-            this._LOVListDepartment.forEach(item => { LOVListDepartment += item["Id"] + ","; });//Id: "1-3697"
+        if (this.LOVListDepartment.length > 0) {
+            this.LOVListDepartment.forEach(item => { LOVListDepartment += item["Id"] + ","; });//Id: "1-3697"
             LOVListDepartment = LOVListDepartment.slice(0, -1); // trim last comma
-            this._LOVListDepartment.forEach(item => { DepartmentNamesListString += item["LocalName"] + ","; });//Id: "1-3697"
+            this.LOVListDepartment.forEach(item => { DepartmentNamesListString += item["LocalName"] + ","; });//Id: "1-3697"
             DepartmentNamesListString = DepartmentNamesListString.slice(0, -1); // trim last comma
 
         } else {
@@ -320,7 +328,7 @@ export class DeclarationReferantDataFiltersMenuComponent
         }
 
         this.apiQueryFilters.addAdditionalFilter("DepartmentName", DepartmentNamesListString, null, null, "Equal", true, false, false, "string", true);
-        this.apiQueryFilters.addAdditionalFilter("DepartmentId", LOVListDepartment, null, null, "InListExact", false, false, false, "string", this._LOVListDepartment.length == 0);
+        this.apiQueryFilters.addAdditionalFilter("DepartmentId", LOVListDepartment, null, null, "InListExact", false, false, false, "string", this.LOVListDepartment.length == 0);
         this.SelectedValueChanged.emit({ Filters: this.apiQueryFilters, RemoveFilter: RemoveFilter });
     }
 
