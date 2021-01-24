@@ -31,6 +31,7 @@ namespace Logitude.BL.ShipmentsModel.EntityOtherServices
         private IWorkbook workbook;
         private IWorksheet sheet1;
         private DataTable dataTable;
+        private ExcelEngine excelEngine;
         private ICommonDataContext commoContext;
         private IShipmentsContext shipmentsContext;
         private ShipmentPackageRepository shipmentPackageRepository;
@@ -59,9 +60,10 @@ namespace Logitude.BL.ShipmentsModel.EntityOtherServices
         private void InitializeExcelFile()
         {
             memory = new System.IO.MemoryStream();
-            ExcelEngine excelEngine = new ExcelEngine();
+            excelEngine = new ExcelEngine();
             IApplication application = excelEngine.Excel;
             this.workbook = excelEngine.Excel.Workbooks.Create(1);
+            workbook.Version = ExcelVersion.Excel2007;
 
             this.CreateAndDesignExcelSheet();
             this.CreateAndDesignDataTable();
@@ -422,6 +424,8 @@ namespace Logitude.BL.ShipmentsModel.EntityOtherServices
             {
                 sheet1.ImportDataTable(dataTable, true, 1, 1);
                 workbook.SaveAs(memory);
+                workbook.Close();
+                excelEngine.Dispose();
                 return memory.ToArray();
             }
 
@@ -647,7 +651,7 @@ namespace Logitude.BL.ShipmentsModel.EntityOtherServices
                 {
                     FileName = fileProps[0],
                     HasExternalContainer = true,
-                    Extension = "xls",
+                    Extension = "xlsx",
                     Tenant = tenant,
                     FileSize = ComputedData.Length,
                 };
