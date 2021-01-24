@@ -18,13 +18,12 @@ export class MessageWindow {
     public ShowErrorIcon: boolean = false;
     public ShowWarningIcon: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
+    public IsMessageMultiLine: boolean = false;
     constructor() {
         this.LayoutDirection = Settings.LayoutDirection;
         this.Title = TextCodeTranslator.Translate("General.O.Message");
         this.OkButtonText = TextCodeTranslator.Translate("General.B.Ok");
     }
-
-
 
     private message: string = null;
     get Message() { return this.message; }
@@ -35,14 +34,11 @@ export class MessageWindow {
         }
     }
 
-
-
-
-
     private ComponentRef: any = null;
     private InstanceComponent: MessageWindowTemplateComponent = null;
     public Show(message: string) {
         this.Message = message;
+
         if (!this.CurrentSession) {
             this.CurrentSession = SessionLocator.SelectedSession;
         }
@@ -113,6 +109,7 @@ export class MessageWindowTemplateComponent implements AfterViewInit {
     public ShowWarningIcon: boolean = false;
     public RTL: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
+    public IsMessageMultiLine: boolean = false;
     constructor() {
         this.LayoutDirection = Settings.LayoutDirection;
         this.Title = TextCodeTranslator.Translate("General.O.Message");
@@ -139,7 +136,7 @@ export class MessageWindowTemplateComponent implements AfterViewInit {
         this.ShowSuccessIcon = myWindow.ShowSuccessIcon;
         this.ShowErrorIcon = myWindow.ShowErrorIcon;
         this.ShowWarningIcon = myWindow.ShowWarningIcon;
-        
+        this.IsMessageMultiLine = myWindow.IsMessageMultiLine;
 
         if (myWindow.Width != null) {
             this.Width = myWindow.Width + "px";
