@@ -251,7 +251,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
         {
             List<string> accountsIds = transactions.GroupBy(d => d.AccountId).Select(d => d.Key).ToList();
             GLAccountListQueryService gLAccountListQueryService = new GLAccountListQueryService(accountingContext);
-            var glaccounts = gLAccountListQueryService.GetByIds(accountsIds, tenant).ToList();
+            var glaccounts = gLAccountListQueryService.GetByIds(accountsIds, tenant,true).ToList();
             return glaccounts;
         }
 
