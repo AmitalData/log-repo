@@ -369,11 +369,16 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
             return accountList;
         }
         
-        public IQueryable<GLAccountList> GetByIds(List<string> ids, int tenant)
+        public IQueryable<GLAccountList> GetByIds(List<string> ids, int tenant, bool noNeedTenant)
         {
             IQueryable<GLAccount> accountQuery = (from a in context.GLAccounts
-                                                              where a.Tenant == tenant && ids.Contains(a.Id)
-                                                              select a);
+                                                      //where a.Tenant == tenant && ids.Contains(a.Id)
+                                                  where ids.Contains(a.Id)
+                                                  select a);
+            if (!noNeedTenant)
+            {
+                accountQuery = accountQuery.Where(a => a.Tenant == tenant);
+            }
 
             IQueryable<GLAccountList> accountListQuery = this.GetIqueryableList(accountQuery);
             var xxx = accountListQuery.ToList();
