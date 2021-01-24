@@ -140,6 +140,7 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
                                 {
                                     quoteChargePM.CostCurrencyId = chargesType.PayablesDefaultCurrencyId;
                                 }
+
                                 else
                                 {
                                     if (chargesType.ChargesGroupCode == "FRT" || chargesType.ChargesGroupCode == "SCH")
@@ -172,6 +173,43 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
                                 {
                                     quoteChargePM.SaleCurrencyId = quoteChargePM.CostCurrencyId;
                                     quoteChargePM.SaleExchangeRate = quoteChargePM.CostExchangeRate;
+                                }
+
+                                else if (entityPM.IsMultiCurrency)
+                                {
+                                    if (!string.IsNullOrEmpty(chargesType.ReceivablesDefaultCurrencyId))
+                                    {
+                                        quoteChargePM.SaleCurrencyId = chargesType.ReceivablesDefaultCurrencyId;
+                                    }
+
+                                    else
+                                    {
+                                        if (chargesType.ChargesGroupCode == "FRT" || chargesType.ChargesGroupCode == "SCH")
+                                        {
+                                            quoteChargePM.SaleCurrencyId = loggedTenant.FreightCurrencyId;
+                                        }
+
+                                        else
+                                        {
+                                            quoteChargePM.SaleCurrencyId = loggedTenant.OtherChargesCurrencyId;
+                                        }
+                                    }
+
+                                    // Get Rate
+                                    if (quoteChargePM.SaleCurrencyId != null)
+                                    {
+                                        CurrencyRate iCurrencyRate = AllRates.Where(d => d.Id == quoteChargePM.SaleCurrencyId).FirstOrDefault();
+                                        if (iCurrencyRate == null)
+                                        {
+                                            iCurrencyRate = this.GetCurrencyRate(loggedTenant, quoteChargePM.SaleCurrencyId, myQuery);
+                                            AllRates.Add(iCurrencyRate);
+                                        }
+
+                                        if (iCurrencyRate != null)
+                                        {
+                                            quoteChargePM.SaleExchangeRate = MethodHelper.Round(iCurrencyRate.Rate, 5);
+                                        }
+                                    }
                                 }
 
                                 else
@@ -308,6 +346,7 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
                                 {
                                     itemPM.CostCurrencyId = item.PayablesDefaultCurrencyId;
                                 }
+
                                 else
                                 {
                                     if (item.ChargesGroupCode == "FRT" || item.ChargesGroupCode == "SCH")
@@ -341,6 +380,43 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
                                 {
                                     itemPM.SaleCurrencyId = itemPM.CostCurrencyId;
                                     itemPM.SaleExchangeRate = itemPM.CostExchangeRate;
+                                }
+
+                                else if (entityPM.IsMultiCurrency)
+                                {
+                                    if (!string.IsNullOrEmpty(item.ReceivablesDefaultCurrencyId))
+                                    {
+                                        itemPM.SaleCurrencyId = item.ReceivablesDefaultCurrencyId;
+                                    }
+
+                                    else
+                                    {
+                                        if (item.ChargesGroupCode == "FRT" || item.ChargesGroupCode == "SCH")
+                                        {
+                                            itemPM.SaleCurrencyId = loggedTenant.FreightCurrencyId;
+                                        }
+
+                                        else
+                                        {
+                                            itemPM.SaleCurrencyId = loggedTenant.OtherChargesCurrencyId;
+                                        }
+                                    }
+
+                                    // Get Rate
+                                    if (itemPM.SaleCurrencyId != null)
+                                    {
+                                        CurrencyRate iCurrencyRate = AllRates.Where(d => d.Id == itemPM.SaleCurrencyId).FirstOrDefault();
+                                        if (iCurrencyRate == null)
+                                        {
+                                            iCurrencyRate = this.GetCurrencyRate(loggedTenant, itemPM.SaleCurrencyId, myQuery);
+                                            AllRates.Add(iCurrencyRate);
+                                        }
+
+                                        if (iCurrencyRate != null)
+                                        {
+                                            itemPM.SaleExchangeRate = MethodHelper.Round(iCurrencyRate.Rate, 5);
+                                        }
+                                    }
                                 }
 
                                 else
@@ -626,12 +702,24 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
 
             else
             {
-                item.CostUnitPriceInSaleCurrency = MethodHelper.Round(item.CostUnitPrice * item.CostExchangeRate / this.entityPM.ExchangeRate, 3);
-                item.CostUnitPrice1InSaleCurrency = MethodHelper.Round(item.CostContainerType1UnitPrice * item.CostExchangeRate / this.entityPM.ExchangeRate, 3);
-                item.CostUnitPrice2InSaleCurrency = MethodHelper.Round(item.CostContainerType2UnitPrice * item.CostExchangeRate / this.entityPM.ExchangeRate, 3);
-                item.CostUnitPrice3InSaleCurrency = MethodHelper.Round(item.CostContainerType3UnitPrice * item.CostExchangeRate / this.entityPM.ExchangeRate, 3);
-                item.CostUnitPrice4InSaleCurrency = MethodHelper.Round(item.CostContainerType4UnitPrice * item.CostExchangeRate / this.entityPM.ExchangeRate, 3);
-                item.CostUnitPrice5InSaleCurrency = MethodHelper.Round(item.CostContainerType5UnitPrice * item.CostExchangeRate / this.entityPM.ExchangeRate, 3);
+                double? saleExchangeRate = null;
+
+                if (this.entityPM.IsMultiCurrency)
+                {
+                    saleExchangeRate = item.SaleExchangeRate;
+                }
+
+                else
+                {
+                    saleExchangeRate = this.entityPM.ExchangeRate;
+                }
+
+                item.CostUnitPriceInSaleCurrency = MethodHelper.Round(item.CostUnitPrice * item.CostExchangeRate / saleExchangeRate, 3);
+                item.CostUnitPrice1InSaleCurrency = MethodHelper.Round(item.CostContainerType1UnitPrice * item.CostExchangeRate / saleExchangeRate, 3);
+                item.CostUnitPrice2InSaleCurrency = MethodHelper.Round(item.CostContainerType2UnitPrice * item.CostExchangeRate / saleExchangeRate, 3);
+                item.CostUnitPrice3InSaleCurrency = MethodHelper.Round(item.CostContainerType3UnitPrice * item.CostExchangeRate / saleExchangeRate, 3);
+                item.CostUnitPrice4InSaleCurrency = MethodHelper.Round(item.CostContainerType4UnitPrice * item.CostExchangeRate / saleExchangeRate, 3);
+                item.CostUnitPrice5InSaleCurrency = MethodHelper.Round(item.CostContainerType5UnitPrice * item.CostExchangeRate / saleExchangeRate, 3);
             }
         }
         private void ComputeLineSaleUnitPrice(QuoteChargePM item)
@@ -906,6 +994,14 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
                 }
             }
 
+            else if (entityPM.IsMultiCurrency)
+            {
+                if (item.CostTotalAmountLocal != null && item.SaleExchangeRate != null)
+                {
+                    myResult = item.CostTotalAmountLocal / item.SaleExchangeRate;
+                }
+            }
+
             else
             {
                 if (item.CostTotalAmountLocal != null && this.entityPM.ExchangeRate != null)
@@ -1097,37 +1193,13 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
 
             foreach (QuoteChargePM item in allCharges)
             {
-                bool isSameAmounts = true;
-
-                if (this.entityPM.IsSaleCurrencySameAsCost)
-                {
-                    if (item.SaleCurrencyId != this.entityPM.SaleCurrencyId)
-                    {
-                        isSameAmounts = false;
-                    }
-                }
-
-                if (isSameAmounts)
-                {
-                    item.SaleUnitPriceInSaleCurrency = item.SaleUnitPrice;
-                    item.SaleUnitPrice1InSaleCurrency = item.SaleContainerType1UnitPrice;
-                    item.SaleUnitPrice2InSaleCurrency = item.SaleContainerType2UnitPrice;
-                    item.SaleUnitPrice3InSaleCurrency = item.SaleContainerType3UnitPrice;
-                    item.SaleUnitPrice4InSaleCurrency = item.SaleContainerType4UnitPrice;
-                    item.SaleUnitPrice5InSaleCurrency = item.SaleContainerType5UnitPrice;
-                    item.SaleAmountInSaleCurrency = item.SaleTotalAmount;
-                }
-
-                else
-                {
-                    item.SaleUnitPriceInSaleCurrency = MethodHelper.Round(item.SaleUnitPrice * item.SaleExchangeRate / this.entityPM.ExchangeRate, 3);
-                    item.SaleUnitPrice1InSaleCurrency = MethodHelper.Round(item.SaleContainerType1UnitPrice * item.SaleExchangeRate / this.entityPM.ExchangeRate, 3);
-                    item.SaleUnitPrice2InSaleCurrency = MethodHelper.Round(item.SaleContainerType2UnitPrice * item.SaleExchangeRate / this.entityPM.ExchangeRate, 3);
-                    item.SaleUnitPrice3InSaleCurrency = MethodHelper.Round(item.SaleContainerType3UnitPrice * item.SaleExchangeRate / this.entityPM.ExchangeRate, 3);
-                    item.SaleUnitPrice4InSaleCurrency = MethodHelper.Round(item.SaleContainerType4UnitPrice * item.SaleExchangeRate / this.entityPM.ExchangeRate, 3);
-                    item.SaleUnitPrice5InSaleCurrency = MethodHelper.Round(item.SaleContainerType5UnitPrice * item.SaleExchangeRate / this.entityPM.ExchangeRate, 3);
-                    item.SaleAmountInSaleCurrency = MethodHelper.Round(item.SaleTotalAmount * item.SaleExchangeRate / this.entityPM.ExchangeRate, 2);
-                }
+                item.SaleUnitPriceInSaleCurrency = MethodHelper.Round(item.SaleUnitPrice * item.SaleExchangeRate / this.entityPM.ExchangeRate, 3);
+                item.SaleUnitPrice1InSaleCurrency = MethodHelper.Round(item.SaleContainerType1UnitPrice * item.SaleExchangeRate / this.entityPM.ExchangeRate, 3);
+                item.SaleUnitPrice2InSaleCurrency = MethodHelper.Round(item.SaleContainerType2UnitPrice * item.SaleExchangeRate / this.entityPM.ExchangeRate, 3);
+                item.SaleUnitPrice3InSaleCurrency = MethodHelper.Round(item.SaleContainerType3UnitPrice * item.SaleExchangeRate / this.entityPM.ExchangeRate, 3);
+                item.SaleUnitPrice4InSaleCurrency = MethodHelper.Round(item.SaleContainerType4UnitPrice * item.SaleExchangeRate / this.entityPM.ExchangeRate, 3);
+                item.SaleUnitPrice5InSaleCurrency = MethodHelper.Round(item.SaleContainerType5UnitPrice * item.SaleExchangeRate / this.entityPM.ExchangeRate, 3);
+                item.SaleAmountInSaleCurrency = MethodHelper.Round(item.SaleTotalAmount * item.SaleExchangeRate / this.entityPM.ExchangeRate, 2);
             }
         }
         private CurrencyRate GetCurrencyRate(Tenant loggedTenant, string iCurrencyId, RatesTableQuery myQuery)

@@ -202,6 +202,7 @@ namespace Logitude.BL.QuoteModel.Tools.DataMapping
             entityPoco.RegionalTaxId = entityPM.RegionalTaxId;
             entityPoco.RegionalTaxPercentage = entityPM.RegionalTaxPercentage;
             entityPoco.DescriptionRightToLeft = entityPM.DescriptionRightToLeft;
+            entityPoco.IsMultiCurrency = entityPM.IsMultiCurrency;
 
             BuildSearchField(entityPM, entityPoco);
 

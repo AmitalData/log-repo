@@ -1,3 +1,4 @@
+
 <style type="text/css">
 
     .SimpleGridViewRow:hover {
@@ -431,6 +432,15 @@
                                                         </tr>
                                                     </table>
                                                 </div>
+                                            </log-cell-template>
+                                        </ng-template>
+                                    </log-column>
+
+                                    <!-- Sale Currency -->
+                                    <log-column [width]="'40'" [SortFieldName]="'SaleCurrencyCode'" [header]="'QuoteCharge.CH.SaleCurrencyIdListLable' | TextCodeTranslationPipe" [Alignment]="'center'" *ngIf="IsMultiCurrency">
+                                        <ng-template let-item>
+                                            <log-cell-template #logcelltemplate [Alignment]="'center'" [IsEnabled]="false">
+                                                {{item.SaleCurrencyCode}}
                                             </log-cell-template>
                                         </ng-template>
                                     </log-column>
@@ -1350,10 +1360,24 @@
                             <table>
                                 <tr style="height:25px;">
                                     <td style="width:150px;">
-                                        <LogLabel [ObjectFieldName]="'SaleCurrencyId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                        <LogLabel [ObjectFieldName]="'SaleCurrencyId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Text]="'Sale Currency Mode'"></LogLabel>
                                     </td>
 
                                     <td>
+                                        <table>
+                                            <tr>
+                                                <td>
+                                                    <QuoteSaleCurrencyTypeComponent [EntityPM]="EntityPM" (SelectedValueChanged)="OnSaleCurrencyModeChanged()"></QuoteSaleCurrencyTypeComponent>
+                                                </td>
+
+                                                <td style="width: 36px;">
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+
+                                    <!--<td>
                                         <table>
                                             <tr>
                                                 <td style="width:1px;">
@@ -1369,7 +1393,7 @@
                                                 </td>
                                             </tr>
                                         </table>
-                                    </td>
+                                    </td>-->
                                 </tr>
 
                                 <tr style="height:25px;">
@@ -1410,7 +1434,7 @@
                                     <td colspan="2">
                                         <table>
                                             <tr>
-                                                <td style="width:120px" *ngIf="!IsRouteRate">
+                                                <td style="width:120px" *ngIf="IsAdhoc">
                                                     <LogLabel [ObjectFieldName]="'IsFixedPrice'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                                 </td>
 
@@ -1418,7 +1442,7 @@
 
                                                     <table>
                                                         <tr>
-                                                            <td style="width:40px" *ngIf="!IsRouteRate">
+                                                            <td style="width:40px" *ngIf="IsAdhoc">
                                                                 <LogCheckBox [ObjectFieldName]="'IsFixedPrice'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Checked]="IsFixedPrice"></LogCheckBox>
                                                             </td>
 

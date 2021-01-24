@@ -9,6 +9,8 @@ import {QuoteFiltersMenuComponent} from './Components/FiltersMenu/QuoteFiltersMe
 import {ApproveBuildShipmentComponent} from './Components/MenuButtons/ApproveBuildShipmentComponent';
 import {QuoteEventNotesComponent} from './Components/MenuButtons/QuoteEventNotesComponent';
 
+import { QuoteSaleCurrencyTypeComponent } from './Components/Shared/QuoteSaleCurrencyTypeComponent';
+
 export const Components =
     [
         FieldTemplateComponent,
@@ -21,6 +23,11 @@ export const Components =
         QuoteFiltersMenuComponent,  
         ApproveBuildShipmentComponent,
         QuoteEventNotesComponent,
+    ];
+
+export const SharedComponents =
+    [
+        QuoteSaleCurrencyTypeComponent,
     ];
 
 export class ModuleDeclarations {

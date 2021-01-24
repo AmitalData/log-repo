@@ -25,6 +25,7 @@ import { PackageTypeListService } from '../../../Common/Services/StandardLists/P
 import { TariffProductListService } from '../../Services/StandardLists/TariffProductListService';
 import { TariffProductList } from '../../EntityLists/TariffProductList';
 import { TariffSettingPM } from '../../EntityPMs/TariffSettingPM';
+import { QuoteChargesBehaviours } from '../../../QuoteModules/QuoteCharges/Behaviours/QuoteChargesBehaviours';
 
 @Component({
 
@@ -1348,12 +1349,12 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
                 chargePM.MarkUpValue = 0;
                 chargePM.QuoteTypeCode = this.FatherComponent.EntityPM.QuoteTypeCode;
                 chargePM.CostCurrencyId = item.CurrencyId;
-                chargePM.CostCurrencyCode = this.FatherComponent.GetCurrencyCode(item.CurrencyId);
-                chargePM.CostExchangeRate = this.FatherComponent.GetCurrencyRate(item.CurrencyId);
-              
-                chargePM.SaleCurrencyId = this.FatherComponent.EntityPM.SaleCurrencyId;
-                chargePM.SaleCurrencyCode = this.FatherComponent.GetCurrencyCode(this.FatherComponent.EntityPM.SaleCurrencyId);
-                chargePM.SaleExchangeRate = this.FatherComponent.GetCurrencyRate(this.FatherComponent.EntityPM.SaleCurrencyId);
+                chargePM.CostCurrencyCode = this.FatherComponent.Behaviours.GetCurrencyCode(item.CurrencyId);
+                chargePM.CostExchangeRate = this.FatherComponent.Behaviours.GetCurrencyRate(item.CurrencyId);
+
+                chargePM.SaleCurrencyId = this.FatherComponent.Behaviours.GetSaleCurrencyOnChargeTypeChanged(chargesType, chargePM);
+                chargePM.SaleCurrencyCode = this.FatherComponent.Behaviours.GetCurrencyCode(chargePM.SaleCurrencyId);
+                chargePM.SaleExchangeRate = this.FatherComponent.Behaviours.GetCurrencyRate(chargePM.SaleCurrencyId);
                 chargePM.ChargesGroupCode = chargesType.ChargesGroupCode;
 
                 var measurementCode = item.UnitOfMesurmentCode;
@@ -1366,7 +1367,7 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
                     chargePM.CostTotalAmount = costAmount;
                     if (isOFC) {
                         if (!isSurcharge) {
-                            var bcntCharge = this.FatherComponent.AllMeasurements.filter(d => d.Code == "BCNT")[0];
+                            var bcntCharge = this.FatherComponent.Behaviours.AllMeasurements.filter(d => d.Code == "BCNT")[0];
                             measurementCode = bcntCharge.Code;
                             measurementId = bcntCharge.Id;
                         }

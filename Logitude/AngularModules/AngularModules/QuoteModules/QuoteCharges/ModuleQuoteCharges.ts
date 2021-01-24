@@ -1,9 +1,10 @@
-﻿import {NgModule} from '@angular/core';
-import {InfrastructureModule} from '../../Infrastructure/Module_INFR';
+import {NgModule} from '@angular/core';
+import { QuoteModule } from '../../Quote/Module_QUOT';
+import { InfrastructureModule } from '../../Infrastructure/Module_INFR';
 import {Components, ModuleDeclarations} from './ModuleDeclarations';
 
 @NgModule({
-    imports: [InfrastructureModule],
+    imports: [QuoteModule, InfrastructureModule],
     declarations: [...Components],
     entryComponents: [...Components],
 })

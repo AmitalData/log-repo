@@ -448,6 +448,8 @@ namespace Logitude.BL.QuoteModel.Tools.Validating
         }
         private static void ValidateQuoteCharges(QuotePM entityPM)
         {
+            ValidateQuoteCharges_SaleCurrencyMode(entityPM);
+
             string freightLineCostCurrencyId = null;
             string freightLineSaleCurrencyId = null;
             QuoteChargePM freightCharge = entityPM.QuoteCharges.Where(d => d.ChangeSetOp != Simplog.Server.Infrastructure.ChangeSetOperation.Delete && d.ChargesGroupCode == "FRT").FirstOrDefault();
@@ -510,6 +512,55 @@ namespace Logitude.BL.QuoteModel.Tools.Validating
                 }
             }
         }
+
+        private static void ValidateQuoteCharges_SaleCurrencyMode(QuotePM entityPM)
+        {
+            List<QuoteChargePM> lines = entityPM.QuoteCharges.Where(d => d.ChangeSetOp != ChangeSetOperation.Delete).ToList();
+
+            if (lines.Count > 0)
+            {
+                foreach (QuoteChargePM item in lines)
+                {
+                    if (item.CostCurrencyId == item.SaleCurrencyId)
+                    {
+                        if (item.CostExchangeRate != item.SaleExchangeRate)
+                        {
+                            throw new ApplicationException("Charges of same cost and sale currency should have same exchange rate");
+                        }
+                    }
+
+                    if (item.IsAllIN)
+                    {
+                        if (item.SaleCurrencyId != entityPM.SaleCurrencyId)
+                        {
+                            throw new ApplicationException("All in charges must be same as quote sale currency");
+                        }
+                    }
+
+                    if (entityPM.IsSaleCurrencySameAsCost)
+                    {
+                        if (item.CostCurrencyId != item.SaleCurrencyId)
+                        {
+                            throw new ApplicationException("All charges sale currency must be same as cost currency");
+                        }
+                    }
+
+                    else if (entityPM.IsMultiCurrency)
+                    {
+
+                    }
+
+                    else
+                    {
+                        if (item.SaleCurrencyId != entityPM.SaleCurrencyId)
+                        {
+                            throw new ApplicationException("All charges sale currency must be fixed to quote sale currency");
+                        }
+                    }
+                }
+            }
+        }
+
         private static void ValidateShipmentSubType(QuotePM entityPM)
         {
             if (!entityPM.IsHybrid)
