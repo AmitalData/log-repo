@@ -65,7 +65,25 @@ export class LogTabsComponent implements AfterViewInit {
             this.selectedTab = t;
         }
     }
+    BackTab() {
+        
+        let index = this.TabsSource.indexOf(this.SelectedTab);
+        index--;
+        if (index >= 0) {
+            let nextItem = this.TabsSource[index];
+            this.SelectedTab = nextItem;
+        }
 
+    }
+    NextTab() {
+        
+        let index = this.TabsSource.indexOf(this.SelectedTab);
+        if (index >= 0 && index < this.TabsSource.length - 1) {
+            let nextItem = this.TabsSource[index + 1];
+            this.SelectedTab = nextItem;
+        }
+            
+    }
     AddTab() {
         if (this.Disabled)
             return;

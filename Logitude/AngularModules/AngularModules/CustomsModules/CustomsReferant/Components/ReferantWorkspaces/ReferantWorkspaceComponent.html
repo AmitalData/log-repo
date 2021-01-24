@@ -16,7 +16,7 @@
             <table>
                 <tr>
                     <td style="width: 21px; vertical-align:middle;">
-                        <IconButton [Name]="'Refresh'" (click)="RefreshButtonClicked()"></IconButton>
+                        <!--<IconButton [Name]="'Refresh'" (click)="RefreshButtonClicked()"></IconButton>-->
                     </td>
 
                     <td>
@@ -71,13 +71,13 @@
                                     <div style="height: 15px;"></div>
 
 
-
-                                    <div class="QueriesSection" *ngIf="IsQueryVisible_MyViewsGroup">
+                                    <!--(BackCompletedEvent)="onUserQueriesBackComplete($event)"-->
+                                    <!--<div class="QueriesSection" *ngIf="IsQueryVisible_MyViewsGroup">
                                         <div>My Views</div>
                                         <div style="height:80px;">
-                                            <UsersQueryList [ReloadUserQueries]="ReloadUserQueries" [ObjectTableName]="'Customs.Declaration'" [BackButtonTitle]="'General.MH.CourierMaster' | TextCodeTranslationPipe" (BackCompletedEvent)="onUserQueriesBackComplete($event)"></UsersQueryList>
+                                            <UsersQueryList [ReloadUserQueries]="ReloadUserQueries" [ObjectTableName]="'Customs.Declaration'" [BackButtonTitle]="'General.MH.CourierMaster' | TextCodeTranslationPipe"></UsersQueryList>
                                         </div>
-                                    </div>
+                                    </div>-->
 
                                     <div style="height: 15px;"></div>
 
