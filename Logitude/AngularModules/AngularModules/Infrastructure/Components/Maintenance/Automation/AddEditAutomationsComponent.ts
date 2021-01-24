@@ -1651,14 +1651,14 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
 
         if (this.AutomationCondationAndList.length > 0) {
             this.AutomationCondationAndList.forEach((item) => {
-                if (item.CurrentEntityPM.Value == "") {
+                if (item.CurrentEntityPM.Value == "" || item.CurrentEntityPM.Value == null) {
                     this.ValidationErrorsList.push("Field value is required");
                 }
             })
         }
         if (this.AutomationCondationOrList.length > 0) {
             this.AutomationCondationOrList.forEach((item) => {
-                if (item.CurrentEntityPM.Value == "") {
+                if (item.CurrentEntityPM.Value == "" || item.CurrentEntityPM.Value == null ) {
                     this.ValidationErrorsList.push("Field value is required");
                 }
             })
