@@ -51,7 +51,7 @@ namespace Logitude.ShipmentTests.Steps
 
         private ShipmentPM CreateAndGetShipment(ShipmentPM shipmentPM)
         {
-            ApiResponse<ShipmentPM> PostResponse = APICaller.CallPost<ShipmentPM>(shipmentPM, Urls.Shipment(), UserTenant.Token);
+            ApiResponse<ShipmentPM> PostResponse = APICaller.CallPost<ShipmentPM>(shipmentPM, Urls.ShipmentController, UserTenant.Token);
             ShipmentPM shipment = PostResponse.Data;
 
             string singleShipmentUrl = Urls.ShipmentGetSingle(shipment?.Id);

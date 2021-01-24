@@ -15,7 +15,7 @@ namespace Logitude.BL.IntegrationTestModel.EntityPMs
         public string GlobalZoneEUId { get; set; }
         public string StateAKId { get; set; }
         public string CountryUSId { get; set; }
+        public string CountryGBId { get; set; }
 
-  
     }
 }

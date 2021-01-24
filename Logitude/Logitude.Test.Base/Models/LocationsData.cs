@@ -11,6 +11,7 @@
         public static string PortLONId { get; set; }
         public static string PortMANId { get; set; }
         public static string CountryUSId { get; set; }
+        public static string CountryGBId { get; set; }
         public static string GlobalZoneEUId { get; set; }
         public static string StateAKId { get; set; }
     }

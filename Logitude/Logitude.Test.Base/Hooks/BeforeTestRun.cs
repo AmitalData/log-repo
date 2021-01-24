@@ -46,13 +46,13 @@ namespace Logitude.Test.Base.Hooks
 
         private static void SetupLocationPreparationVariables()
         {
-            ApiResponse<LocationsVariables> locationsVariablesResponse = APICaller.CallGet<LocationsVariables>(Urls.IntegrationTestGetBaseLocations(), UserTenant.Token);
+            ApiResponse<LocationsVariables> locationsVariablesResponse = APICaller.CallGet<LocationsVariables>(Urls.IntegrationTestGetBaseLocations, UserTenant.Token);
             LocationsDataMap(locationsVariablesResponse.Data);
         }
 
         private static void SetupPartnerPreparationVariables()
         {
-            ApiResponse<PartnersVariables> partnersVariablesResponse = APICaller.CallGet<PartnersVariables>(Urls.IntegrationTestGetBasePartners(), UserTenant.Token);
+            ApiResponse<PartnersVariables> partnersVariablesResponse = APICaller.CallGet<PartnersVariables>(Urls.IntegrationTestGetBasePartners, UserTenant.Token);
             PartnersDataMap(partnersVariablesResponse.Data);
         }
 
@@ -110,7 +110,7 @@ namespace Logitude.Test.Base.Hooks
                 ClientType = "Web",
                 GetToken = true
             };
-            ApiResponse<UserLogin> userLoginResponse = APICaller.CallPost<UserLogin>(loginParameters, Urls.UserAuthentication(), null);
+            ApiResponse<UserLogin> userLoginResponse = APICaller.CallPost<UserLogin>(loginParameters, Urls.AuthenticationController, null);
             return userLoginResponse.Data;
         }
 
@@ -133,7 +133,7 @@ namespace Logitude.Test.Base.Hooks
                 Filter1Operator = "Contains",
                 Filter1Value = Settings.DefaultUserCredentials.Email
             };
-            ApiResponse<IEnumerable<User>> usersResponse = APICaller.CallGetByFilters<IEnumerable<User>>(Urls.UserViewsGetByFilters(), UserTenant.Token, apiQueryFilters);
+            ApiResponse<IEnumerable<User>> usersResponse = APICaller.CallGetByFilters<IEnumerable<User>>(Urls.UserViewsGetByFilters, UserTenant.Token, apiQueryFilters);
             User user = usersResponse.Data?.FirstOrDefault();
             UserTenant.BranchId = user?.BranchId;
             UserTenant.DepartmentId = user?.DepartmentId;
@@ -152,13 +152,12 @@ namespace Logitude.Test.Base.Hooks
             LocationsData.PortMANId = locationsVariables.PortMANId;
             LocationsData.GlobalZoneEUId = locationsVariables.GlobalZoneEUId;
             LocationsData.CountryUSId = locationsVariables.CountryUSId;
+            LocationsData.CountryGBId = locationsVariables.CountryGBId;
             LocationsData.StateAKId = locationsVariables.StateAKId;
         }
 
         private static void PartnersDataMap(PartnersVariables partnersVariables)
         {
-            PartnersData.CountryGBId = partnersVariables.CountryGBId;
-            PartnersData.CountryUSId = partnersVariables.CountryUSId;
             PartnersData.VendorId = partnersVariables.VendorId;
             PartnersData.AgentId = partnersVariables.AgentId;
             PartnersData.CustomerId = partnersVariables.CustomerId;

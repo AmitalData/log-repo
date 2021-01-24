@@ -32,6 +32,7 @@ namespace Logitude.BL.IntegrationTestModel.EntityQueries
 
             Variables.PortJFKId = GetPort("JFK");
             Variables.PortMIAId = GetPort("MIA");
+            Variables.PortLASId = GetPort("LAS");
             Variables.PortLHRId = GetPort("LHR");
             Variables.PortSOUId = GetPort("SOU");
             Variables.PortNYCId = GetPort("NYC");
@@ -39,6 +40,8 @@ namespace Logitude.BL.IntegrationTestModel.EntityQueries
             Variables.PortMANId = GetPort("MAN");
             Variables.GlobalZoneEUId = GetGlobalZone("EU");
             Variables.StateAKId = GetState("AK");
+            Variables.CountryGBId = GetCountry("GB");
+            Variables.CountryUSId = GetCountry("US");
 
 
             return Variables;
@@ -127,8 +130,35 @@ namespace Logitude.BL.IntegrationTestModel.EntityQueries
             statePM.CountryId = Variables.CountryUSId;
             return statePM;
         }
+        private string GetCountry(string code)
+        {
+            string countryId = "";
+            CountryRepository countryRepository = new CountryRepository(commonDataContext);
+            countryId = countryRepository.GetCountryIdByCode(code, tenant);
+            if (string.IsNullOrEmpty(countryId))
+            {
+                InsertNewCountry(code);
+                countryId = countryRepository.GetCountryIdByCode(code, tenant);
+            }
+            return countryId;
+        }
+        private void InsertNewCountry(string code)
+        {
+            CountryService countryService = new CountryService(commonDataContext, tenant);
+            countryService.Create(CreateCountryPM(code));
+        }
 
-      
+        public CountryPM CreateCountryPM(string countryCode)
+        {
+            CountryPM countryPM = new CountryPM();
+            countryPM.Tenant = tenant;
+            countryPM.Code = countryCode;
+            countryPM.EnglishName = countryCode + " Country";
+            countryPM.GlobalZoneId = Variables.GlobalZoneEUId;
+            return countryPM;
+        }
+
+
 
     }
 }

@@ -186,7 +186,7 @@ namespace Logitude.CommonDataTests.Models.Builders
             _addressPM = new AddressPM
             {
                 Tenant = UserTenant.Tenant,
-                CountryId = PartnersData.CountryUSId,
+                CountryId = LocationsData.CountryUSId,
                 AgentId = PartnersData.AgentId,
                 StateId = LocationsData.StateAKId,
                 CountryName = "United States of America",

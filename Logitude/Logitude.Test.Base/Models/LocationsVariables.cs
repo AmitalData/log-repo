@@ -10,8 +10,9 @@
         public string PortNYCId { get; set; }
         public string PortLONId { get; set; }
         public string PortMANId { get; set; }
-        public string CountryUSId { get; set; }
         public string GlobalZoneEUId { get; set; }
         public string StateAKId { get; set; }
+        public string CountryUSId { get; set; }
+        public string CountryGBId { get; set; }
     }
 }

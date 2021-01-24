@@ -47,7 +47,7 @@ namespace Logitude.CommonDataTests.Steps.Security
         {
             AddressPM FirstUserAdressSettings = GetAFirstUserAdressSettings();
 
-            ApiResponse<AddressPM> UpdatedAddressSettings = APICaller.CallPut<AddressPM>(FirstUserAdressSettings, Urls.Address() , Token);
+            ApiResponse<AddressPM> UpdatedAddressSettings = APICaller.CallPut<AddressPM>(FirstUserAdressSettings, Urls.AddressController , Token);
             return UpdatedAddressSettings.Data;
         }
 
@@ -61,7 +61,6 @@ namespace Logitude.CommonDataTests.Steps.Security
                 .AddressTypeId("M")
                 .Address1("18 West 48th Street ")
                 .Address2("#5B, New York3")
-                .CountryId("1-397")
                 .ZipCode("+001")
                 .FaxNumber("asd")
                 .PhoneNumber("+001598137715")
@@ -71,7 +70,7 @@ namespace Logitude.CommonDataTests.Steps.Security
                 .CardEnglishName("Simplog LTD.")
                 .Build();
 
-            ApiResponse<AddressPM> response = APICaller.CallPost<AddressPM>(addressPM, Urls.Address(), UserTenant.Token);
+            ApiResponse<AddressPM> response = APICaller.CallPost<AddressPM>(addressPM, Urls.AddressController, UserTenant.Token);
             return response.Data;
         }
     }

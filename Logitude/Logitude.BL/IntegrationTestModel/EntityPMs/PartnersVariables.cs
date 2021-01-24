@@ -9,8 +9,6 @@ namespace Logitude.BL.IntegrationTestModel.EntityPMs
         public string PotentialCustomerId { get; set; }
         public string CustomAgentId { get; set; }
         public string ShippingAgentId { get; set; }
-        public string CountryUSId { get; set; }
-        public string CountryGBId { get; set; }
         public string TruckerId { get; set; }
         public string WarehouseId { get; set; }
         public string AirlineAAId { get; set; }
@@ -18,5 +16,6 @@ namespace Logitude.BL.IntegrationTestModel.EntityPMs
         public string ShippingLineMSCUId { get; set; }
         public string ShippingLineMAEUId { get; set; }
         public string ShipperExport1 { get; set; }
+
     }
 }

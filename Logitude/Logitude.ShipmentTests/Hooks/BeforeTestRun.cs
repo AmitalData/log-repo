@@ -11,7 +11,7 @@ namespace Logitude.ShipmentTests.Hooks
         [BeforeTestRun]
         public static void SetupShipmentPreparationVariables()
         {
-            ApiResponse<ShipmentVariables> shipmentVariablesResponse = APICaller.CallGet<ShipmentVariables>(Urls.IntegrationTestGetBaseShipment(), UserTenant.Token);
+            ApiResponse<ShipmentVariables> shipmentVariablesResponse = APICaller.CallGet<ShipmentVariables>(Urls.IntegrationTestGetBaseShipment, UserTenant.Token);
             ShipmentDataMap(shipmentVariablesResponse.Data);
         }
 

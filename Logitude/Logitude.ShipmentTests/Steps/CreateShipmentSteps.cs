@@ -28,7 +28,7 @@ namespace Logitude.ShipmentTests.Steps
         [When(@"Create master shipment API request sent")]
         public void WhenCreateMasterShipmentAPIRequestSent()
         {
-            var Response = APICaller.CallPost<ShipmentPM>(ShipmentContext.MasterShipment, Urls.Shipment(), UserTenant.Token);
+            var Response = APICaller.CallPost<ShipmentPM>(ShipmentContext.MasterShipment, Urls.ShipmentController, UserTenant.Token);
             ShipmentContext.MasterShipment = Response?.Data;
         }
 
@@ -50,7 +50,7 @@ namespace Logitude.ShipmentTests.Steps
             ShipmentContext.HouseShipment = new ShipmentBuilder().WithModel(ShipmentContext.HouseShipment)
                                                      .MasterShipmentDataId(ShipmentContext.MasterShipment.Id)
                                                      .Build();
-            var response = APICaller.CallPost<ShipmentPM>(ShipmentContext.HouseShipment, Urls.Shipment(), UserTenant.Token);
+            var response = APICaller.CallPost<ShipmentPM>(ShipmentContext.HouseShipment, Urls.ShipmentController, UserTenant.Token);
             ShipmentContext.HouseShipment = response?.Data;
         }
 

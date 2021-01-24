@@ -26,7 +26,6 @@ namespace Logitude.BL.IntegrationTestModel.EntityQueries
 
         public PartnersVariables GetBasePartnersVaribles()
         {
-
             Variables.VendorId = GetVendor("TestVendor");
             Variables.AgentId = GetAgent("IntegrationAgent");
             Variables.ShipperExport1 = GetCustomer("ShipperExport1");
@@ -35,10 +34,11 @@ namespace Logitude.BL.IntegrationTestModel.EntityQueries
             Variables.CustomerId = GetCustomer("IntegrationCustomer");
             Variables.AirlineAAId = GetAirline("AA");
             Variables.AirlineBAId = GetAirline("BA");
+            //Variables.TruckerId =                     //Must be implmented 
+            // Variables.PotentialCustomerId =          //Must be implmented 
             Variables.ShippingLineMSCUId = GetShippingLine("MSCU");
             Variables.ShippingLineMAEUId = GetShippingLine("MAEU");   
             Variables.WarehouseId = GetWarehouse("IntegrationWarehouse", "WR9");
-
             return Variables;
         }
 
@@ -68,7 +68,7 @@ namespace Logitude.BL.IntegrationTestModel.EntityQueries
             vendorPM.EnglishName = vendorName;
             vendorPM.CityName = "AKD";
             vendorPM.PartnerTypeId = "VD";
-            vendorPM.CountryId = Variables.CountryUSId;
+            vendorPM.CountryId = GetCountry("US");
             vendorPM.Addresses.Add(Address("M", vendorName));
             return vendorPM;
         }
@@ -80,7 +80,7 @@ namespace Logitude.BL.IntegrationTestModel.EntityQueries
             address.Description = "Main Address";
             address.Name = partnerName;
             address.City = "XSD";
-            address.CountryId = Variables.CountryGBId;
+            address.CountryId = GetCountry("GB");
             address.IsCreatedWithPartner = true;
 
             return address;
@@ -109,7 +109,7 @@ namespace Logitude.BL.IntegrationTestModel.EntityQueries
             agentPM.EnglishName = agentName;
             agentPM.CityName = "AKD";
             agentPM.PartnerTypeId = "AG";
-            agentPM.CountryId = Variables.CountryUSId;
+            agentPM.CountryId = GetCountry("US");
             agentPM.Addresses.Add(Address("M", agentName));
             return agentPM;
         }
@@ -137,7 +137,7 @@ namespace Logitude.BL.IntegrationTestModel.EntityQueries
             customerPM.EnglishName = agentName;
             customerPM.CityName = "AKD";
             customerPM.PartnerTypeId = "CS";
-            customerPM.CountryId = Variables.CountryUSId;
+            customerPM.CountryId = GetCountry("US");
             customerPM.Addresses.Add(Address("M", agentName));
             return customerPM;
         }
@@ -165,7 +165,7 @@ namespace Logitude.BL.IntegrationTestModel.EntityQueries
             customAgentPM.EnglishName = customAgentName;
             customAgentPM.CityName = "AKD";
             customAgentPM.PartnerTypeId = "CG";
-            customAgentPM.CountryId = Variables.CountryUSId;
+            customAgentPM.CountryId = GetCountry("US");
             customAgentPM.Addresses.Add(Address("M", customAgentName));
             return customAgentPM;
         }
@@ -194,7 +194,7 @@ namespace Logitude.BL.IntegrationTestModel.EntityQueries
             shippingAgentPM.EnglishName = shippingAgentName;
             shippingAgentPM.CityName = "AKD";
             shippingAgentPM.PartnerTypeId = "SG";
-            shippingAgentPM.CountryId = Variables.CountryUSId;
+            shippingAgentPM.CountryId = GetCountry("US");
             return shippingAgentPM;
 
         }
@@ -280,10 +280,63 @@ namespace Logitude.BL.IntegrationTestModel.EntityQueries
             WarehousePM.EnglishName = warehouseName;
             WarehousePM.CityName = "AKD";
             WarehousePM.PartnerTypeId = "WH";
-            WarehousePM.CountryId = Variables.CountryUSId;
+            WarehousePM.CountryId = GetCountry("US");
             WarehousePM.Code = code;
             return WarehousePM;
 
+        }
+        private string GetCountry(string code)
+        {
+            string countryId = "";
+            CountryRepository countryRepository = new CountryRepository(commonDataContext);
+            countryId = countryRepository.GetCountryIdByCode(code, tenant);
+            if (string.IsNullOrEmpty(countryId))
+            {
+                InsertNewCountry(code);
+                countryId = countryRepository.GetCountryIdByCode(code, tenant);
+            }
+            return countryId;
+        }
+        private void InsertNewCountry(string code)
+        {
+            CountryService countryService = new CountryService(commonDataContext, tenant);
+            countryService.Create(CreateCountryPM(code));
+        }
+
+        public CountryPM CreateCountryPM(string countryCode)
+        {
+            CountryPM countryPM = new CountryPM();
+            countryPM.Tenant = tenant;
+            countryPM.Code = countryCode;
+            countryPM.EnglishName = countryCode + " Country";
+            countryPM.GlobalZoneId = GetGlobalZone("EU");
+            return countryPM;
+        }
+
+        private string GetGlobalZone(string code)
+        {
+            GlobalZoneRepository globalZoneRepository = new GlobalZoneRepository(commonDataContext);
+            GlobalZone globalZone = globalZoneRepository.GetSingleGlobalZoneByCode(code, tenant);
+            if (globalZone == null)
+            {
+                InsertNewGlobalZone(code);
+                globalZone = globalZoneRepository.GetSingleGlobalZoneByCode(code, tenant);
+            }
+            return globalZone.Id;
+        }
+
+        private void InsertNewGlobalZone(string code)
+        {
+            GlobalZoneService globalZoneService = new GlobalZoneService(commonDataContext, tenant);
+            globalZoneService.Create(CreateGlobalZonePM(code));
+        }
+        public GlobalZonePM CreateGlobalZonePM(string code)
+        {
+            GlobalZonePM globalZonePM = new GlobalZonePM();
+            globalZonePM.Tenant = tenant;
+            globalZonePM.Code = code;
+            globalZonePM.EnglishName = code + " Global Zone";
+            return globalZonePM;
         }
     }
 }
