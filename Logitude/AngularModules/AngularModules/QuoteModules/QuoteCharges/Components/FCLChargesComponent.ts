@@ -2715,6 +2715,13 @@ export class FCLQuoteChargeItem extends BaseComponent {
         }
     }
 
+    get SaleIsFixedRate() { return this.EntityPM.SaleIsFixedRate; }
+    set SaleIsFixedRate(value: boolean) {
+        if (this.EntityPM.SaleIsFixedRate != value) {
+            this.EntityPM.SaleIsFixedRate = value;
+        }
+    }
+
     get SaleMinAmount() { return this.EntityPM.SaleMinAmount; }
     set SaleMinAmount(newValue: number) {
         if (this.EntityPM.SaleMinAmount != newValue) {
