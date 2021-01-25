@@ -699,6 +699,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommDec
             var palestinianCode = !String.IsNullOrWhiteSpace(this._MyDeclarationPM.ImporterCode) ? this._MyDeclarationPM.ImporterCode : !String.IsNullOrWhiteSpace(this._MyDeclarationPM.PalestinianCode) ? this._MyDeclarationPM.PalestinianCode : null;
             CustomsAutonomyKeywordQueryService customsAutonomyKeywordQueryService = new CustomsAutonomyKeywordQueryService(_context);
             var casualImportelTel = _AmitalCustomsFile.CasualImportelTel;
+            if (!String.IsNullOrWhiteSpace(casualImportelTel)) casualImportelTel = string.Concat(casualImportelTel.Where(c => !char.IsWhiteSpace(c)));
             if (!String.IsNullOrWhiteSpace(casualImportelTel)) casualImportelTel = _AmitalCustomsFile.CasualImportelTel.TrimStart(new Char[] { '0' });
             if (customsAutonomyKeywordQueryService.CheckIfsAutonomy(_AmitalCustomsFile.CasualImporterCity, casualImportelTel, palestinianCode, ResolvedTenant()))
             {

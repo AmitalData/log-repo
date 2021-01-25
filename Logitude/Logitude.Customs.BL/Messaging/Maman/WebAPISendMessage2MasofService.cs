@@ -65,16 +65,7 @@ namespace Logitude.Customs.BL.Messaging/*.Maman*/
             var defDefaultJSON = customsPartnerFtpDetails.GetAllInterfaceName().First(r => r.Key == InterfaceName).Value;
             var defDefault = ProxyUtil.JsonConvertDeserializeTyped<InterfaceDetails>(defDefaultJSON);
 
-            var myCustomsPartnerFtpQueryService = new CustomsPartnerFtpQueryService(tenant);
-            var pmCustomsPartnerFtp = myCustomsPartnerFtpQueryService.GetBy(tenant, InterfaceName /*CustomsPartnerFtpDetails.InterfaceName_ECSPCL*/,
-                PartnerCode/*CustomsPartnerFtpDetails.PartnerCode_Mamam*/,
-                CustomsPartnerFtpDetails.TypeCode_Out);
-
-
-            if (string.IsNullOrWhiteSpace(pmCustomsPartnerFtp.CommunicationDetails))
-            {
-                throw new Exception($"  מסר {defDefault.Name} -לא נמצא הגדרת תקשורת ");
-            }
+            CustomsPartnerFtpPM pmCustomsPartnerFtp = GetCustomsPartnerFtpPM(tenant, InterfaceName, PartnerCode, defDefault);
             var dtoWebApiDefinition = ProxyUtil.JsonConvertDeserializeTyped<WebApiDefinitionDTO>(pmCustomsPartnerFtp.CommunicationDetails);
             if (string.IsNullOrWhiteSpace(dtoWebApiDefinition.WEBAPIAuthenticationURL))
             {
@@ -178,6 +169,21 @@ namespace Logitude.Customs.BL.Messaging/*.Maman*/
 
         }
 
+        public CustomsPartnerFtpPM GetCustomsPartnerFtpPM(int tenant, string InterfaceName, string PartnerCode, InterfaceDetails defDefault)
+        {
+            var myCustomsPartnerFtpQueryService = new CustomsPartnerFtpQueryService(tenant);
+            var pmCustomsPartnerFtp = myCustomsPartnerFtpQueryService.GetBy(tenant, InterfaceName /*CustomsPartnerFtpDetails.InterfaceName_ECSPCL*/,
+                PartnerCode/*CustomsPartnerFtpDetails.PartnerCode_Mamam*/,
+                CustomsPartnerFtpDetails.TypeCode_Out);
+
+
+            if (string.IsNullOrWhiteSpace(pmCustomsPartnerFtp.CommunicationDetails))
+            {
+                throw new MasofException($"  מסר {defDefault.Name} -לא נמצא הגדרת תקשורת ");
+            }
+
+            return pmCustomsPartnerFtp;
+        }
 
 
         private void SendCommunicationLogMessageToQueue(string queueName, string communicationLogId, int tenant)
@@ -225,5 +231,17 @@ namespace Logitude.Customs.BL.Messaging/*.Maman*/
         public string LoggedContactId { get;  set; }
         public string RqstCommLogID { get; set; }
     }
+
+    public class MasofException : Exception
+    {
+        public MasofException(string message) : base(message)
+        {
+        }
+
+        //public MasofException(string message, Exception innerException) : base(message, innerException)
+        //{
+        //}
+    }
+
 }
 
