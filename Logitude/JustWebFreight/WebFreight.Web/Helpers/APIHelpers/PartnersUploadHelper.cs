@@ -504,7 +504,7 @@ namespace WebFreight.Web.Helpers.APIHelpers
             if (items.Count > 0)
             {
                 List<string> emails = (from b in items group b by b.SalesmanEmail into g select g.Key).ToList();
-                systemUsers = (from user in commonDataContext.Users
+                systemUsers = (from user in commonDataContext.Users where user.IsSalesman
                                join db_Contacts in commonDataContext.Contacts
                                on user.Id equals db_Contacts.Id
                                into db_UsersContacts
@@ -512,6 +512,7 @@ namespace WebFreight.Web.Helpers.APIHelpers
                                where
                                user.Tenant == tenant
                                && contact.Tenant == tenant
+                               && !contact.InActive
                                && emails.Contains(contact.Email)
                                select new SystemUser
                                {
@@ -1079,15 +1080,12 @@ namespace WebFreight.Web.Helpers.APIHelpers
                         Card card = cardRepository.GetSingleCardByUniqueCode(item.UniqueCode, tenant, false);
                         if (card != null)
                         {
-                            if (card.SalesmanUserId == null)
-                            {
-                                card.SalesmanUserId = systemUsers.Where(a => a.Email == item.SalesmanEmail).Select(a => a.Id).FirstOrDefault();
-                                Customer customer = customerRepository.GetSingleCustomer(card.Id, tenant);
-                                customer.SalesmanUserId = card.SalesmanUserId;
-                                cardRepository.Update(card);
-                                customerRepository.Update(customer);
-                                count++;
-                            }
+                            card.SalesmanUserId = systemUsers.Where(a => a.Email == item.SalesmanEmail).Select(a => a.Id).FirstOrDefault();
+                            Customer customer = customerRepository.GetSingleCustomer(card.Id, tenant);
+                            customer.SalesmanUserId = card.SalesmanUserId;
+                            cardRepository.Update(card);
+                            customerRepository.Update(customer);
+                            count++;
                         }
                         if (count >= 100)
                         {
