@@ -147,12 +147,11 @@
 
 	   [Local Currency] )
 	   
-	   
-      values(@Id  , @SourceTenant, @ParentTenant ,@Direction , @TransportMode , @Type,@Department ,@Branch,@QuoteNumber
-	 ,@Shipper ,@Consignee, @Agent ,@Customer , @Incoterm ,@CreatedByUser ,@OpenDate , @SentDate ,@AcceptedDate ,@DeclinedDate ,@StartDate ,@LastActivityDate
+	   values(@Id  , @SourceTenant, @ParentTenant ,@Direction , @TransportMode , @Type,@Department ,@Branch,@QuoteNumber
+	 ,@Shipper ,@Consignee, @Agent ,@Customer , @Incoterm ,@CreatedByUser ,dbo.GetDateFormateAsNumber(@OpenDate)    , dbo.GetDateFormateAsNumber(@SentDate)  , dbo.GetDateFormateAsNumber(@AcceptedDate)  ,dbo.GetDateFormateAsNumber(@DeclinedDate)    ,dbo.GetDateFormateAsNumber(@StartDate)   ,dbo.GetDateFormateAsNumber(@LastActivityDate) 
 	, @Salesman ,@QuoteStages, @Notes ,@QuoteClosingReasons , @EstimatedProfitInLocal 
 	, @SaleCurrency ,@Subject , @GrossWeightInKG ,@ChargeableWeightInKG ,@VolumeInCBM ,@NumberOfPackages ,@NumberOfContainers
-	 , @ExpirationDate ,@IsAutomaticallyClosed ,@IncludePickUp ,@IncludeDelivery ,@StageDueDate ,@IsQuoteDataExternal ,@IsQuoteDocumentExternal,@DeliveryAddress ,@PickUpAddress,@AutomaticallyCloseDate
+	 , dbo.GetDateFormateAsNumber(@ExpirationDate)  ,@IsAutomaticallyClosed ,@IncludePickUp ,@IncludeDelivery ,dbo.GetDateFormateAsNumber(@StageDueDate)   ,@IsQuoteDataExternal ,@IsQuoteDocumentExternal,@DeliveryAddress ,@PickUpAddress,dbo.GetDateFormateAsNumber(@AutomaticallyCloseDate) 
 	  , @FromCountry , @ToCountry ,@IsPotentialShipper ,  @IsPotentialConsignee,@IsPotentialCustomer,
 	  1
 	 )
