@@ -42,6 +42,7 @@ using Microsoft.Practices.Unity;
 using Logitude.Server.Tools.StorageService;
 using Microsoft.ServiceBus.Messaging;
 using Logitude.SystemLogs;
+using WebFreight.Web.Controllers.ShipmentsModel.ApiHelpers;
 
 namespace WebFreight.Web.Controllers.ShipmentsModel
 {
@@ -142,7 +143,10 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
                             Communications.UpdateCommunicationLogStatus(commLog.Id, Shipment.Tenant, null, commLog.CommunicationStatusTypeCode, "Before adding message to queue Forwarder Shipment " + DateTime.Now.ToString(), null);
                             SendCommunicationLogMessageToQueue(commLog.QueueName, commLog.Id, Shipment.Tenant);
                             Communications.UpdateCommunicationLogStatus(commLog.Id, Shipment.Tenant, null, commLog.CommunicationStatusTypeCode, "after adding message to queue  Forwarder Shipment " + DateTime.Now.ToString(), null);
-
+                            ExternalTasksQueueHelper externalTasksQueueHelper = new ExternalTasksQueueHelper(Shipment.Tenant);
+                            StatusUpdateExternalTasksQueueResult tasksQueueResult = externalTasksQueueHelper.PostVIRExternalTaskQueue(Shipment, myAction);
+                            if(tasksQueueResult != null && tasksQueueResult.Response != null && tasksQueueResult.Response.HasError)
+                                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(tasksQueueResult.Exception));
                         }
                         catch (Exception ex)
                         {

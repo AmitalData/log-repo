@@ -19,6 +19,7 @@ using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.InfrastructureModel;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
+using Simplog.Data.ShipmentsModel.Repositories;
 using Simplog.Global.Data.GlobalModel;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.Repositories;
@@ -200,6 +201,7 @@ namespace CommunicationWorkerRole
 
                                         #region RegulerAddEdit
 
+
                                         using (var client = new HttpClient())
                                         {
                                             string ImporterShipmentsURI = URI + "ForwarderShipments";
@@ -369,8 +371,6 @@ namespace CommunicationWorkerRole
                                                 msg = "Shipment sent To Forwarder " + DateTime.Now;
                                                 APILogsUtility.UpdateAPILogStatus(LogPM.Id, tenant, "D", response.RetryNumber + 1, DateTime.Now, DateTime.UtcNow, msg, LogitudeXmlSerializer.SerializeObjectToXmlString(shipmentAM), temp1, null, "");
                                                 queue.Complete();
-
-
                                             }
                                             else //if (result.StatusCode == System.Net.HttpStatusCode.BadRequest)
                                             {
