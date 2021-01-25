@@ -456,7 +456,7 @@
   <Index
    Columns="DocumentId" />-->
 
-    
-   Columns="Tenant,DocumentId" />
+  <Index
+Columns="Tenant,DocumentId" />
 
 </Table>
