@@ -333,7 +333,15 @@ export class ReferantWorkspaceComponent implements AfterViewInit {
                 this.LoadInProgressDeclarationReferantDatasDashboard();
             });
     }
+    RefreshButtonClicked() {
+        this._declarationReferantDataWebService.GetQueriesCounts(this.RefId, this.DepId, this.TransportModeId).subscribe(
+            (data: any) => {
+                this.counters = data.Result;
+                this.LoadAllScreenData();
+                this.LoadInProgressDeclarationReferantDatasDashboard();
+            });
 
+    }
 
     ViewReferantQuery(myQueryCode: string) {
         if (myQueryCode != null) {
