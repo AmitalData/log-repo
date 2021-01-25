@@ -866,17 +866,21 @@ export class ShipmentMenuButtonsHandler implements OnDestroy {
                 this.ActionStepsStateList = new Array<ActionsStepsState>();
                 var state: ActionsStepsState = new ActionsStepsState();
 
+                var logWindow = new LogitudeWindow();
                 if (this.EntityPM.MainCarriageIsFromStack) {
                     state = new ActionsStepsState();
                     state.Message = TextCodeTranslator.Translate("Shipment.M.MasterAWBNumberTakenFromStack");
                     state.State = "Error";
                     this.ActionStepsStateList.push(state);
                     args.EnabledOkButton = false;
+                    logWindow.Width = 700;
+                    logWindow.Height = 400;
                 }
 
-                var logWindow = new LogitudeWindow();
-                logWindow.Width = 500;
-                logWindow.Height = 350;
+                else {
+                    logWindow.Width = 450;
+                    logWindow.Height = 300;
+                }
 
                 args.ActionStepsStateList = this.ActionStepsStateList;
                 logWindow.WindowArgs = args;
@@ -1154,7 +1158,7 @@ export class ShipmentMenuButtonsHandler implements OnDestroy {
 
         else if (this.EntityPM.ShipmentPackages.filter(d => !AppTool.IsNullOrEmpty(d.DeliveryId)).length > 0
             || this.EntityPM.ShipmentPackages.filter(d => !AppTool.IsNullOrEmpty(d.EmptyContainerReturnId)).length > 0) {
-            errors.push("Cannot change shipment type when shipment packages are connected to a delivery or empty container return");
+            errors.push("Cannot change shipment type when shipment packages are \nconnected to a delivery or empty container return");
         }
 
         else if (this.EntityPM.ShipmentLevelCode == "H" && !AppTool.IsNullOrEmpty(this.EntityPM.MasterShipmentDataId)) {
@@ -1172,7 +1176,7 @@ export class ShipmentMenuButtonsHandler implements OnDestroy {
         else if (this.EntityPM.MainCarriageATD != null || this.EntityPM.Transshipment1ATD != null || this.EntityPM.Transshipment2ATD != null
             || this.EntityPM.Transshipment3ATD != null || this.EntityPM.MainCarriageATA != null || this.EntityPM.Transshipment1ATA != null
             || this.EntityPM.Transshipment2ATA != null || this.EntityPM.Transshipment3ATA != null) {
-            errors.push("Cannot change shipment type when shipment contains actual departure/arrival dates");
+            errors.push("Cannot change shipment type when shipment contains \nactual departure/arrival dates");
         }
 
         if (errors.length == 0) {
@@ -1181,7 +1185,7 @@ export class ShipmentMenuButtonsHandler implements OnDestroy {
                     var result: boolean = myResponse.Result;
 
                     if (result) {
-                        errors.push("Cannot change shipment type when shipment is connected to Cross Docks Entries / Releases");
+                        errors.push("Cannot change shipment type when shipment is connected \nto Cross Docks Entries / Releases");
                     }
 
                     this.ShowNotesWindow(errors, type);
@@ -1203,10 +1207,10 @@ export class ShipmentMenuButtonsHandler implements OnDestroy {
         args.IsConvertShipmentType = true;
         args.ValidationErrorsList = errors;
         args.EnabledOkButton = false;
+        args.IsNotesStackPanelVisible = true;
+        args.NotesHeader = "Notes";
 
         if (errors.length == 0) {
-            args.IsNotesStackPanelVisible = true;
-            args.NotesHeader = "Notes";
             args.EnabledOkButton = true;
         }
 
@@ -1242,8 +1246,8 @@ export class ShipmentMenuButtonsHandler implements OnDestroy {
 
         var logWindow = new LogitudeWindow();
         logWindow.WindowArgs = args;
-        logWindow.Width = 700;
-        logWindow.Height = 400;
+        logWindow.Width = 500;
+        logWindow.Height = 350;
 
         logWindow.Title = windowTitle;
         logWindow.Show('./Shipment/Components/MenuButtons/MenuButtonsTemplateComponent');
