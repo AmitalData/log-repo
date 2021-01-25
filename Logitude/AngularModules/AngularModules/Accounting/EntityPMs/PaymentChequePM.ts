@@ -299,6 +299,11 @@ export class PaymentChequePM {
     public set CancelledByAPPayment(newValue: boolean) { if (this.cancelledByAPPayment != newValue) { this.cancelledByAPPayment = newValue; this.MarkAsDirty("CancelledByAPPayment"); } }
        
 	 
+    private aPPaymentNo: string;
+    public get APPaymentNo() { return this.aPPaymentNo; }
+    public set APPaymentNo(newValue: string) { if (this.aPPaymentNo != newValue) { this.aPPaymentNo = newValue; this.MarkAsDirty("APPaymentNo"); } }
+       
+	 
 
     public OldEntityPM: PaymentChequePM;
 		

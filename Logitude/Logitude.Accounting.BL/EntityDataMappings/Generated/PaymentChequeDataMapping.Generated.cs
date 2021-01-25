@@ -106,7 +106,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         BankLocalName, 
 	         BankEnglishName, 
 	         APPaymentId, 
-	         CancelledByAPPayment,
+	         CancelledByAPPayment, 
+	         APPaymentNo,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
