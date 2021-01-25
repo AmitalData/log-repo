@@ -20,6 +20,7 @@ using System.IO;
 using ICSharpCode.SharpZipLib.Zip;
 using ICSharpCode.SharpZipLib.Core;
 using WebFreight.Web.Helpers;
+using Logitude.Server.Tools.Helpers;
 
 namespace WebFreight.Web.WebPages
 {
@@ -139,6 +140,8 @@ namespace WebFreight.Web.WebPages
 
                 string email = this.Context.User.Identity.Name;
 
+
+
                 if (string.IsNullOrEmpty(downloadAllDocumentsArgs.PartnerType))
                 {
                     downloadAllDocumentsArgs.PartnerType = "CS";
@@ -158,7 +161,9 @@ namespace WebFreight.Web.WebPages
 
                 else if (downloadAllDocumentsArgs.Securitykey != null)
                 {
-                    // security maybe needed
+                    string linkName = (Request.Url.ToString().Contains("SharedDownloadPage.aspx")) ? "SharedDownloadPage" : "DocumentsApprovalPage";
+                    UserViewLinkLimitationService userViewLinkLimitationService = new UserViewLinkLimitationService();
+                    userViewLinkLimitationService.Run(linkName, AuthenticationUtil.GetIP4Address());
                 }
 
                 else
@@ -167,6 +172,8 @@ namespace WebFreight.Web.WebPages
                     isAuothenticatedRequest = CheckSharedContactAuthenticationForShipment(shipment.AgentId, shipment.CustomerId, downloadAllDocumentsArgs.Tenant);
                     CheckForTenantAvailability = CheckAvailablityTenantsForEmail(email, downloadAllDocumentsArgs.Tenant);
                 }
+
+
                 if (CheckForTenantAvailability && isAuothenticatedRequest)
                 {
                     Uploader up = new Uploader();
@@ -341,6 +348,8 @@ namespace WebFreight.Web.WebPages
                 string headerRequest = Request["id"];
                 filestrings = headerRequest.Split(':');
 
+
+
                 //string documentName = 
                 //string url = "../WebPages/SharedDownloadPage.aspx?id=" + tenant + ":" + item.DocumentId +documenttype+ entityId;
 
@@ -369,7 +378,7 @@ namespace WebFreight.Web.WebPages
                     {
                         downloadAllDocumentsArgs.FileName = fileName;
                     }
-                    DownloadAllDocuments(downloadAllDocumentsArgs);                    
+                    DownloadAllDocuments(downloadAllDocumentsArgs);
                 }
 
                 else
@@ -529,6 +538,16 @@ namespace WebFreight.Web.WebPages
             }
             catch (Exception errorInfo)
             {
+
+                if (errorInfo.Message != null)
+                {
+                    Response.Clear();
+                    Response.Output.Write(errorInfo.Message.ToString());
+                }
+        
+
+
+
                 // string ErrorMessage = errorInfo.Message;
 
                 //if (errorInfo.InnerException != null)
