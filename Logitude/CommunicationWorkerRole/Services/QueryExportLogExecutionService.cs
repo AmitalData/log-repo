@@ -36,6 +36,7 @@ namespace CommunicationWorkerRole.Services
                 var logId = queueResponse.MessageValues.Keys.Contains("LogId") ? queueResponse.MessageValues["LogId"].ToString() : "";
                 var tenant = int.Parse(queueResponse.MessageValues["Tenant"].ToString());
                 var fileName = queueResponse.MessageValues["FileName"].ToString();
+                var loggedUserEmail = queueResponse.MessageValues["LoggedUserEmail"].ToString();
 
                 //var loggedContact = LoggedContactResolver.GetLoggedContact(tenant);
                 //HttpContext.Current.User = new System.Security.Principal.GenericPrincipal(new System.Security.Principal.GenericIdentity(loggedContact?.Email), new string[0]);
@@ -52,6 +53,7 @@ namespace CommunicationWorkerRole.Services
                         QueryFilters = queryFilters,
                         IsWorkerRoleCall = true, 
                         OutputFileName = fileName,
+                        LoggedUserEmail = loggedUserEmail,
                     };
 
                     queryToExcelExportService.ExportQueryDataToStorage(queryArgs);
