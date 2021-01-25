@@ -455,4 +455,8 @@
   Unnecessary Index On Columns DUE IS FOREIGN KEY
   <Index
    Columns="DocumentId" />-->
+
+    
+   Columns="Tenant,DocumentId" />
+
 </Table>
