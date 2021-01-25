@@ -3,6 +3,7 @@ using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.InfrastructureModel.EntityPMs;
 using Logitude.BL.InfrastructureModel.EntityQueries;
+using Logitude.BL.Resolvers;
 using Logitude.BL.Validators;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Data.CommonDataModel;
@@ -24,8 +25,15 @@ namespace Logitude.BL.Security
 {
     public class SecurityUtility
     {
+        public static bool IsWorkerRoleCall = false;
         public static string GetAuthenticatedUser()
         {
+            if (IsWorkerRoleCall && HttpContext.Current == null) //for calling the excel export data from WR 
+            {
+                var loggedContact = LoggedContactResolver.GetLoggedContact(0);
+                return loggedContact?.Email;
+            }
+
             if (HttpContext.Current != null)
             {
                 if (!string.IsNullOrEmpty(HttpContext.Current.User.Identity.Name))
@@ -45,6 +53,11 @@ namespace Logitude.BL.Security
        static   ContactInformation contactinfo;
         public static void CheckContactFeature(string objectTableName, string featureCode, int tenant, string overrideEmail = null)
         {
+            if (IsWorkerRoleCall && HttpContext.Current == null) //for calling the excel export data from WR 
+            {
+                return;
+            }
+
             bool exists = false;
 
             if (objectTableName.Contains("Customs."))
