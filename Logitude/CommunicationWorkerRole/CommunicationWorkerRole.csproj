@@ -359,7 +359,6 @@
     <Compile Include="ArtemusAnalyzerWorkerRole.cs" />
     <Compile Include="AutoSignUpMailWorkerRole.cs" />
     <Compile Include="AutoSignUpWorkerRole.cs" />
-    <Compile Include="ShipmentReceivedWorkerRole.cs" />
     <Compile Include="Services\QuoteSchedulerTaskService.cs" />
     <Compile Include="WarmCargoTracking.cs" />
     <Compile Include="BatchTaskExecutionWR.cs" />

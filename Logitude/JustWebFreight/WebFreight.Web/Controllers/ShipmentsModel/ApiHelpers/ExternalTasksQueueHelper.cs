@@ -42,6 +42,7 @@ using Microsoft.Practices.Unity;
 using Logitude.Server.Tools.StorageService;
 using Microsoft.ServiceBus.Messaging;
 using Logitude.SystemLogs;
+using Simplog.Data.ShipmentsModel.EntityPOCOs;
 
 namespace WebFreight.Web.Controllers.ShipmentsModel.ApiHelpers
 {
@@ -217,6 +218,33 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.ApiHelpers
                 errorMessage += Environment.NewLine + ex.StackTrace;
 
             return errorMessage;
+        }
+
+        public StatusUpdateExternalTasksQueueResult PostVIRExternalTaskQueue(ShipmentAM Shipment, string myAction)
+        {
+            StatusUpdateExternalTasksQueueResult tasksQueueResult = new StatusUpdateExternalTasksQueueResult();
+            ShipmentAdditionalCloudDataRepository Repository = new ShipmentAdditionalCloudDataRepository(Shipment.Tenant);
+            ShipmentAdditionalCloudData shipmentAdditionalColudData = Repository.GetSingleShipmentAdditionalCloudData(Shipment.Id, Shipment.Tenant);
+            if (IsMatchVIRStatusConditions(myAction, shipmentAdditionalColudData))
+            {
+                ShipmentAdditionalCloudDataAM shipmentAdditionalCloudDataAM = new ShipmentAdditionalCloudDataAM()
+                {
+                    ShipmentNumber = Shipment.CustomerShipmentNumber,
+                    Tenant = Shipment.Tenant,
+                    Code = "VIR",
+                    Remarks = "",
+                    Direction = Shipment.DirectionId
+                };
+                tasksQueueResult = PostStatusUpdateExternalTaskQueue(shipmentAdditionalCloudDataAM);
+            }
+
+            return tasksQueueResult;
+        }
+
+        private bool IsMatchVIRStatusConditions(string myAction, ShipmentAdditionalCloudData shipmentAdditionalColudData)
+        {
+            bool isMatch = shipmentAdditionalColudData != null && shipmentAdditionalColudData.IsUserIDNumberRequired && myAction == "NewImporterShipment";
+            return isMatch;
         }
     }
 
