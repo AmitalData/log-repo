@@ -29,6 +29,7 @@ import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
 import { MessageWindow } from '../../../../Controls/Windows/MessageWindow';
 import { BankDepositPMService } from '../../../Services/StandardPMs/BankDepositPMService';
 import { CashbookChequesCounter } from '../../../DataContracts/CashbookChequesCounter';
+import { CashBookList } from '../../../EntityLists/CashBookList';
 
 @Component({
 
@@ -384,29 +385,33 @@ export class BankDepositDetailsTabComponent extends BaseComponent {
     public FilterSelectedValue: string = 'cash';
     FilterItemClicked(itemValue: string) {
         if (this.FilterSelectedValue != itemValue) {
-            this.FilterSelectedValue = itemValue;
+            
             // this.FilterLines();
-            this.GetCashbookLinesAccordingToFilter();
+            this.GetCashbookLinesAccordingToFilter(itemValue);
         }
     }
 
-    private GetCashbookLinesAccordingToFilter() {
+    private GetCashbookLinesAccordingToFilter(newValue: string) {
         if (this.SelectedTotal > 0) {
-            this.ShowConfirmMessageToToggleBetweenCashAndPostdated();
+            this.ShowConfirmMessageToToggleBetweenCashAndPostdated(newValue);
         }
-        else
+        else {
+            this.FilterSelectedValue = newValue;
             this.GetCashbookLines();
+        }
     }
 
-    ShowConfirmMessageToToggleBetweenCashAndPostdated() {
+    ShowConfirmMessageToToggleBetweenCashAndPostdated(newValue: string) {
         var myConfirmWindow = new ConfirmWindow();
         myConfirmWindow.Width = 400;
         myConfirmWindow.Show(TextCodeTranslator.Translate("Cashbook.O.ConfirmUncheckelines"));
         myConfirmWindow.WindowClosed.subscribe(event => {
             if (myConfirmWindow.Yes) {
+                this.FilterSelectedValue = newValue;
                 this.GetCashbookLines();
                 this.IsAllSelected = false;
             }
+     
         });
     }
 
@@ -503,21 +508,27 @@ export class BankDepositDetailsTabComponent extends BaseComponent {
     }
 
     tenantCurrencyCode: string = "";
+    public selectedRows: any[] = [];
     private GetCashbookLines()
     {
-
+        
         this.BankDepositLines.Clear();
         this.EntityPM.BankDepositLines = [];
 
+        this.getSelectedCashbookLines();
 
-        this.cashBookLineListService.getByFilters(this.GetCashbookLinesAPIFilters()).subscribe((response: ServiceResponse) =>
-        {
+        this.cashBookLineListService.getByFilters(this.GetCashbookLinesAPIFilters()).subscribe((response: ServiceResponse) => {
             var result = response.Result;
             console.log("CashBookLineListService", result);
-
-
-            // this.CashBookLines = result;
             this.CashbookLines.InsertCollection(result);
+
+            for (let row of this.selectedRows) {
+                var CashbookLine = this.CashbookLines.Collection.filter(d => d.ChequeNumber == row.ChequeNumber)[0];
+                if (CashbookLine) {
+                    this.CashbookLines.Collection.filter(a => a.ChequeNumber == CashbookLine.ChequeNumber)[0].IsSelected = true;
+                }
+            }
+            // this.CashBookLines = result;
 
             // this.UpdateFiltersCounts();
 
@@ -531,6 +542,15 @@ export class BankDepositDetailsTabComponent extends BaseComponent {
 
 
         });
+    }
+
+    private getSelectedCashbookLines() {
+        this.selectedRows = [];
+        for (let line of this.CashbookLines.Collection) {
+            if (line.IsSelected) {
+                this.selectedRows.push(line);
+            }
+        }
     }
 
     private GetCashbookLinesAPIFilters()
@@ -725,6 +745,7 @@ export class BankDepositDetailsTabComponent extends BaseComponent {
         if (event == true) {
             for (let line of this.CashbookLines.Collection) {
                 this.PushBankDeposit(line);
+                line.IsSelected = true;
             }
         }else{
           for (let line of this.CashbookLines.Collection) {
@@ -739,6 +760,7 @@ export class BankDepositDetailsTabComponent extends BaseComponent {
         if (event == true) {
             this.PushBankDeposit(cashbookLine);
         } else if (event == false) {
+            this.IsAllSelected = false;
             this.PopBankDeposit(cashbookLine);
         }
         this.CalculateTotals();

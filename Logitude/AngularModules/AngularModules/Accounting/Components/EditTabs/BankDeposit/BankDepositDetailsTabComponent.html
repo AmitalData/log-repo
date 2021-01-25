@@ -553,7 +553,7 @@
                                         <ng-template let-item>
                                             <log-cell-template #logcelltemplate [IgnoreMods]="true">
                                                 <div class="TextTrimming" [style.text-align]="isRTL ? 'right' : 'left'" style="padding-top: 2px;">
-                                                    <CheckBox [IsChecked]="IsAllSelected || item.IsSelected == true" (Checked)="LineSelection(item , $event)"></CheckBox>
+                                                    <CheckBox [IsChecked]="item.IsSelected == true" (Checked)="LineSelection(item , $event)"></CheckBox>
                                                 </div>
                                             </log-cell-template>
                                         </ng-template>
