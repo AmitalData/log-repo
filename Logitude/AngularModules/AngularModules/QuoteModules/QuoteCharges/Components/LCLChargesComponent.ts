@@ -2224,6 +2224,13 @@ export class QuoteChargeItem extends BaseComponent {
         }
     }
 
+    get SaleIsFixedRate() { return this.EntityPM.SaleIsFixedRate; }
+    set SaleIsFixedRate(value: boolean) {
+        if (this.EntityPM.SaleIsFixedRate != value) {
+            this.EntityPM.SaleIsFixedRate = value;
+        }
+    }
+
     SetSaleQuantity(ChargesGroupCode: string = "FRT") {
         var myResult = null;
 
