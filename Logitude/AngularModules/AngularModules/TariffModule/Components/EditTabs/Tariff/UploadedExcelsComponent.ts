@@ -63,7 +63,7 @@ export class ExcelFileItem {
     get FileName() { return this.EntityPM.FileName; }
     
     DownloadClicked() {
-        DownloadManager.DownloadPage(this.EntityPM.DocumentId);
+        DownloadManager.DownloadPage(this.EntityPM.DocumentId + "*" + this.FileName);
     }
 }
 
