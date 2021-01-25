@@ -414,6 +414,7 @@ export class BankDepositDetailsTabComponent extends BaseComponent {
                 this.FilterSelectedValue = newValue;
                 this.GetCashbookLines();
                 this.IsAllSelected = false;
+                this.SelectedCashbookLines.Clear();
             }
      
         });
@@ -754,7 +755,6 @@ export class BankDepositDetailsTabComponent extends BaseComponent {
 
     LineSelection(cashbookLine, event) {
         this.CashbookLines.Collection.filter(a => a.CashBookId == cashbookLine.CashBookId && a.ARPChequeId == cashbookLine.ARPChequeId)[0].IsSelected = event;
-        this.SelectedCashbookLines.Collection.filter(a => a.CashBookId == cashbookLine.CashBookId && a.ARPChequeId == cashbookLine.ARPChequeId)[0].IsSelected = event;
         if (event == true) {
             this.PushBankDeposit(cashbookLine);
             this.SelectedCashbookLines.Collection.push(cashbookLine);
