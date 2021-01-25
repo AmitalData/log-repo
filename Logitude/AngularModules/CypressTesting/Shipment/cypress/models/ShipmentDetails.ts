@@ -1,6 +1,11 @@
 export interface ShipmentDetails {
-    LevelCode: string,
-    DirectionCode: string,
-    TransportModeCode: string,
-    ShipmentTypeCode: string
+    ShipmentLevel: string,
+    Direction: string,
+    TransportMode: string,
+    ShipmentType: string,
+    Shipper: string,
+    Consignee: string,
+    Agent: string,
+    MainCarriageToPort: string,
+    MainCarriageFromPort: string
 }
