@@ -6,12 +6,12 @@
    declare @ParentTenant int
    declare @AutomaticLastUpdateDate as datetime
 
-	DECLARE CountriesCursor CURSOR READ_ONLY
+   DECLARE CountriesCursor CURSOR READ_ONLY
 	FOR
-	SELECT Id,  dw_Countries.EnglishName, Code, dw_DWHSettings.Tenant, dw_DWHSettings.ParentTenant, dw_Countries.AutomaticLastUpdateDate
+		SELECT Id,  dw_Countries.EnglishName, Code, dw_DWHSettings.Tenant, dw_DWHSettings.ParentTenant, dw_Countries.AutomaticLastUpdateDate
 	From dw_Countries
 	inner JOIN dw_DWHSettings ON dw_Countries.Tenant = dw_DWHSettings.Tenant
-	OPEN CountriesCursor FETCH NEXT FROM CountriesCursor INTO  @Id, @Name, @Code, @SourceTenant , @ParentTenant, @AutomaticLastUpdateDate
+	OPEN CountriesCursor FETCH NEXT FROM CountriesCursor INTO  @Id, @Name, @Code, @SourceTenant, @ParentTenant, @AutomaticLastUpdateDate
 	WHILE @@FETCH_STATUS = 0
 	BEGIN
 	
@@ -21,4 +21,3 @@
 		End
 	CLOSE CountriesCursor
 	DEALLOCATE CountriesCursor
- 

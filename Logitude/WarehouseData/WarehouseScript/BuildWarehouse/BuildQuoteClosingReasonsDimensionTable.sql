@@ -11,7 +11,7 @@
 	SELECT Id, Name, Code,dw_DWHSettings.Tenant, dw_DWHSettings.ParentTenant, dw_QuoteClosingReasons.AutomaticLastUpdateDate
 	From dw_QuoteClosingReasons
 	inner JOIN dw_DWHSettings ON dw_QuoteClosingReasons.Tenant = dw_DWHSettings.Tenant
-	OPEN QuoteClosingReasonsCursor FETCH NEXT FROM QuoteClosingReasonsCursor INTO  @Id ,@Name ,@Code, @SourceTenant , @ParentTenant, @AutomaticLastUpdateDate
+	OPEN QuoteClosingReasonsCursor FETCH NEXT FROM QuoteClosingReasonsCursor INTO  @Id ,@Name ,@Code, @SourceTenant, @ParentTenant, @AutomaticLastUpdateDate
 	WHILE @@FETCH_STATUS = 0
 	BEGIN
 	
