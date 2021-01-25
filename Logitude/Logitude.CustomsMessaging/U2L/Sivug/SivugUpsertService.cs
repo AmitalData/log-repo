@@ -899,61 +899,60 @@ namespace Logitude.CustomsMessaging.U2L.Sivug
                     }
                 }
                 SupplierInvoiceItemPM.ClassificationCode = invoiceItem.CLASSIFICATIONCODE;
-                SupplierInvoiceItemPM.TradeAgreementCode = TranslateTradeAgreementCode(invoiceItem.TRADEAGREEMENTCODE);
-                
+                // moran 18.3.15 - Task 11540 -->
+                //SupplierInvoiceItemPM.TradeAgreementCode = invoiceItem.TRADEAGREEMENTCODE;
+                if (!String.IsNullOrWhiteSpace(invoiceItem.TRADEAGREEMENTCODE))
+                {
+                    SupplierInvoiceItemPM.TradeAgreementCode = TranslateTradeAgreementCode(invoiceItem.TRADEAGREEMENTCODE);
+                }
+                // moran 18.3.15 - Task 11540 <--
                 if (invoiceItem.QUANTITY != null && !String.IsNullOrWhiteSpace(invoiceItem.QUANTITY))
                 {
                     if (decimal.TryParse(invoiceItem.QUANTITY, out decimal1))
                     {
-                        SupplierInvoiceItemPM.InvoiceQuantity = decimal1;
+                        if(decimal1 > 0)SupplierInvoiceItemPM.InvoiceQuantity = decimal1;
+                        //SupplierInvoiceItemPM.StatisticQuantity = decimal1; // moran 18.4.16 - AMI-56381 - commented
                     }
                     else
                     {
                         throw new BusinessErrorException("Error in parsing QUANTITY (" + invoiceItem.QUANTITY + ") into integer");
                     }
                 }
-                else
-                {
-                    SupplierInvoiceItemPM.InvoiceQuantity = null;
-                }
 
                 if (invoiceItem.StatisticQuantity != null && !String.IsNullOrWhiteSpace(invoiceItem.StatisticQuantity))
                 {
                     if (decimal.TryParse(invoiceItem.StatisticQuantity, out decimal1))
                     {
-                        SupplierInvoiceItemPM.StatisticQuantity = decimal1;
+                        if(decimal1 > 0)SupplierInvoiceItemPM.StatisticQuantity = decimal1;
                     }
                     else
                     {
                         throw new BusinessErrorException("Error in parsing Statistic Quantity (" + invoiceItem.StatisticQuantity + ") into integer");
                     }
                 }
-                else
-                {
-                    SupplierInvoiceItemPM.StatisticQuantity = null;
-                }
 
                 if (invoiceItem.ITEMPRICE != null && !String.IsNullOrWhiteSpace(invoiceItem.ITEMPRICE))
                 {
                     if (decimal.TryParse(invoiceItem.ITEMPRICE, out decimal1))
                     {
-                        SupplierInvoiceItemPM.ItemPrice = decimal1;
+                        if(decimal1 > 0)SupplierInvoiceItemPM.ItemPrice = decimal1;
                     }
                     else
                     {
                         throw new BusinessErrorException("Error in parsing ITEMPRICE (" + invoiceItem.ITEMPRICE + ") into decimal");
                     }
                 }
-                else
+                if (!string.IsNullOrWhiteSpace(invoiceItem.ITEMORIGINCOUNTRY))
                 {
-                    SupplierInvoiceItemPM.ItemPrice = null;
+                    SupplierInvoiceItemPM.OriginCountryCode = invoiceItem.ITEMORIGINCOUNTRY;
                 }
-
-                SupplierInvoiceItemPM.OriginCountryCode = invoiceItem.ITEMORIGINCOUNTRY;
 
                 SupplierInvoiceItemPM.ItemCode = invoiceItem.ITEMCODE;
                 //   SupplierInvoiceItemPM.UnfInvoiceCounterKey = invoiceItem.ITEM_SI_COUNTER;
-                SupplierInvoiceItemPM.ClasifiedRemarks = invoiceItem.CLASIFIEDREMARKS;
+                if (!string.IsNullOrWhiteSpace(invoiceItem.CLASIFIEDREMARKS))
+                {
+                    SupplierInvoiceItemPM.ClasifiedRemarks = invoiceItem.CLASIFIEDREMARKS;
+                }
 
                 if (_IsBuildItemsUnit && !string.IsNullOrEmpty(SupplierInvoiceItemPM.ClassificationCode))
                 {
@@ -967,11 +966,21 @@ namespace Logitude.CustomsMessaging.U2L.Sivug
                         ClasificationQtyTypes.Add(SupplierInvoiceItemPM.ClassificationCode, SupplierInvoiceItemPM.InvoiceQuantityType);
                     }
                 }
-                SupplierInvoiceItemPM.InvoiceQuantityType = TranslateMeasurmentUnit(invoiceItem.UNIT_ID);
-                SupplierInvoiceItemPM.StatisticQuantityType = TranslateMeasurmentUnit(invoiceItem.StatisticQuantityType);
-                SupplierInvoiceItemPM.TaxExemptCode = invoiceItem.TAXEXEMPTCODE; //TranslateTaxExemptCode(invoiceItem.TAXEXEMPTCODE);
+                if(string.IsNullOrWhiteSpace(SupplierInvoiceItemPM.InvoiceQuantityType) && !string.IsNullOrWhiteSpace(invoiceItem.UNIT_ID))
+                {
+                    SupplierInvoiceItemPM.InvoiceQuantityType = TranslateMeasurmentUnit(invoiceItem.UNIT_ID);
+                }
+                if (string.IsNullOrWhiteSpace(SupplierInvoiceItemPM.StatisticQuantityType) && !string.IsNullOrWhiteSpace(invoiceItem.StatisticQuantityType))
+                {
+                    SupplierInvoiceItemPM.StatisticQuantityType = TranslateMeasurmentUnit(invoiceItem.StatisticQuantityType);
+                }
+                
+                if (string.IsNullOrWhiteSpace(SupplierInvoiceItemPM.TaxExemptCode) && !string.IsNullOrWhiteSpace(invoiceItem.TAXEXEMPTCODE))
+                {
+                    SupplierInvoiceItemPM.TaxExemptCode = invoiceItem.TAXEXEMPTCODE; //TranslateTaxExemptCode(invoiceItem.TAXEXEMPTCODE);
+                }
 
-                if (!string.IsNullOrWhiteSpace(invoiceItem.OcrPageNumber))
+                if (SupplierInvoiceItemPM.OcrPageNumber == 0 && !string.IsNullOrWhiteSpace(invoiceItem.OcrPageNumber))
                 {
                     if (decimal.TryParse(invoiceItem.OcrPageNumber, out decimal1))
                     {
@@ -982,11 +991,7 @@ namespace Logitude.CustomsMessaging.U2L.Sivug
                         throw new BusinessErrorException("Error in parsing OcrPageNumber (" + invoiceItem.OcrPageNumber + ") into decimal");
                     }
                 }
-                else
-                {
-                    SupplierInvoiceItemPM.OcrPageNumber = 0;
-                }
-                if (!string.IsNullOrWhiteSpace(invoiceItem.OcrTop))
+                if (SupplierInvoiceItemPM.OcrTop == 0 && !string.IsNullOrWhiteSpace(invoiceItem.OcrTop))
                 {
                     if (decimal.TryParse(invoiceItem.OcrTop, out decimal1))
                     {
@@ -997,11 +1002,7 @@ namespace Logitude.CustomsMessaging.U2L.Sivug
                         throw new BusinessErrorException("Error in parsing OcrTop (" + invoiceItem.OcrTop + ") into decimal");
                     }
                 }
-                else
-                {
-                    SupplierInvoiceItemPM.OcrTop = 0;
-                }
-                if (!string.IsNullOrWhiteSpace(invoiceItem.OcrHeight))
+                if (SupplierInvoiceItemPM.OcrHeight == 0 && !string.IsNullOrWhiteSpace(invoiceItem.OcrHeight))
                 {
                     if (decimal.TryParse(invoiceItem.OcrHeight, out decimal1))
                     {
@@ -1011,34 +1012,6 @@ namespace Logitude.CustomsMessaging.U2L.Sivug
                     {
                         throw new BusinessErrorException("Error in parsing OcrHeight (" + invoiceItem.OcrHeight + ") into decimal");
                     }
-                }
-                else
-                {
-                    SupplierInvoiceItemPM.OcrHeight = 0;
-                }
-
-                SupplierInvoiceItemPM.AdditionalQuantityType = TranslateMeasurmentUnit(invoiceItem.AdditionalQuantityType);
-                if (!string.IsNullOrWhiteSpace(SupplierInvoiceItemPM.AdditionalQuantityType))
-                {
-                    if (invoiceItem.AdditionalQuantity != null && !String.IsNullOrWhiteSpace(invoiceItem.AdditionalQuantity))
-                    {
-                        if (decimal.TryParse(invoiceItem.AdditionalQuantity, out decimal1))
-                        {
-                            if (decimal1 > 0) SupplierInvoiceItemPM.AdditionalQuantity = decimal1;
-                        }
-                        else
-                        {
-                            throw new BusinessErrorException("Error in parsing Additional Quantity (" + invoiceItem.AdditionalQuantity + ") into integer");
-                        }
-                    }
-                    else if(!SupplierInvoiceItemPM.AdditionalQuantity.HasValue)
-                    {
-                        SupplierInvoiceItemPM.AdditionalQuantityType = null;
-                    }
-                }
-                else if (SupplierInvoiceItemPM.AdditionalQuantity.HasValue)
-                {
-                    SupplierInvoiceItemPM.AdditionalQuantity = null;
                 }
 
                 if (invoiceItem.CERTIFICATES != null && invoiceItem.CERTIFICATES.Count() > 0)
