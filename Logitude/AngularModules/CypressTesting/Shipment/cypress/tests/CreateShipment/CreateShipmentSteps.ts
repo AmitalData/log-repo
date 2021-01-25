@@ -5,10 +5,7 @@ import { ShipmentDetails } from "../../models/ShipmentDetails";
 import { BaseSelectors } from "../../../../Base/cypress/selectors/BaseSelectors"
 import { Selectors } from "../../selectors/Selectors";
 
-let LevelCode: string;
-let DirectionCode: string;
-let TransportModeCode: string;
-let ShipmentTypeCode: string;
+let _ShipmentDetails: ShipmentDetails;
 
 Given("User logged in", () => {
   cy.Login();
@@ -22,19 +19,19 @@ Given("Go to shipments workspace", () => {
 Given("Shipment details",
   (dataTable) => {
    const shipmentDetails = dataTable.hashes()[0] as ShipmentDetails;
-   LevelCode = shipmentDetails.LevelCode;
-   DirectionCode = shipmentDetails.DirectionCode;
-   TransportModeCode = shipmentDetails.TransportModeCode;
-   ShipmentTypeCode = shipmentDetails.ShipmentTypeCode;
-   Actions.OpenNewShipmentWizard(LevelCode);
-   Actions.FillShipmentDefaultFields(LevelCode, DirectionCode, TransportModeCode, ShipmentTypeCode);
+   _ShipmentDetails = shipmentDetails;
+   Actions.OpenNewShipmentWizard(_ShipmentDetails.ShipmentLevel);
+   Actions.FillShipmentDefaultFields(_ShipmentDetails);
 });
 
 When("Click create shipment button", () => {
-  Actions.CreateShipment(LevelCode);
+  Actions.CreateShipment(_ShipmentDetails.ShipmentLevel);
 });
 
 Then("The create operation completed successfully", () => {
-  let resultFile = "CreatedShipmentsData/" + LevelCode + DirectionCode + TransportModeCode + ShipmentTypeCode + ".json";
+  let resultFile = "CreatedShipmentsData/" + _ShipmentDetails.ShipmentLevel + _ShipmentDetails.Direction +
+  _ShipmentDetails.TransportMode +
+  ((typeof _ShipmentDetails.ShipmentType) === "undefined" || _ShipmentDetails.ShipmentType === null ? "" : _ShipmentDetails.ShipmentType) + ".json";
+
   Assertions.ValidateCreatedShipment(resultFile);
 });

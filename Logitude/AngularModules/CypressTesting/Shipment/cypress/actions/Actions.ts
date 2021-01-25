@@ -1,46 +1,42 @@
 import * as gr from "../../../Base/cypress/Actions/GenerateRandoms"
 import { Selectors } from "../selectors/Selectors"
+import { ShipmentDetails } from "../models/ShipmentDetails";
 
 export function OpenNewShipmentWizard(levelCode: string){
     cy.Click("#HelperNotesButton_0_0", null)
     cy.Click(".LogitudeToggleButtonItem", levelCode)
 }
 
-export function FillShipmentDefaultFields(levelCode:string, directionCode: string, transportModCode: string, shipmentTypeCode: string){
-    cy.ClickRadio("#DirectionRadio_0" + directionCode)
-    cy.ClickRadio("#TransportModeRadio_0" + transportModCode)
+export function FillShipmentDefaultFields(shipmentDetails: ShipmentDetails){
+    cy.ClickRadio("#DirectionRadio_0" + shipmentDetails.Direction)
+    cy.ClickRadio("#TransportModeRadio_0" + shipmentDetails.TransportMode)
     
-    if(shipmentTypeCode){
-        if(shipmentTypeCode === "Groupage"){
-            cy.ClickRadio("#ShipmentTypeRadio_0MyG" + transportModCode);
+    if(shipmentDetails.ShipmentType){
+        if(shipmentDetails.ShipmentType === "Groupage"){
+            cy.ClickRadio("#ShipmentTypeRadio_0MyG" + shipmentDetails.TransportMode);
         }else{
-            cy.ClickRadio("#ShipmentTypeRadio_0" + shipmentTypeCode)
+            cy.ClickRadio("#ShipmentTypeRadio_0" + shipmentDetails.ShipmentType)
         }
     }
 
-    if(directionCode === "D" && transportModCode === "I"){
-        cy.SelectLogLovFirstElement("#Shipment_ShipperId", false)
-        cy.SelectLogLovFirstElement("#Shipment_ConsigneeId", false)
+    if(shipmentDetails.Direction === "D" && shipmentDetails.TransportMode === "I"){
+        cy.FillLogLov("#Shipment_ShipperId", shipmentDetails.Shipper, false)
+        cy.FillLogLov("#Shipment_ConsigneeId", shipmentDetails.Consignee, false)
     }else{
-        if(levelCode === "Master"){
-            cy.SelectLogLovRandomElement("#Master_AgentId", false, 5)
+        if(shipmentDetails.ShipmentLevel === "Master"){
+            cy.FillLogLov("#Master_AgentId", shipmentDetails.Agent, false)
         }else{
-            if(directionCode === "I"){
-                cy.SelectLogLovRandomElement("#Shipment_ConsigneeId", false, 5)
+            if(shipmentDetails.Direction === "I"){
+                cy.FillLogLov("#Shipment_ConsigneeId", shipmentDetails.Consignee, false)
             }else{
-                cy.SelectLogLovRandomElement("#Shipment_ShipperId", false, 5)
+                cy.FillLogLov("#Shipment_ShipperId", shipmentDetails.Shipper, false)
             }
         }
 
-        let portsPreSelector = levelCode === "Master" ? "#Master" : "#Shipment";
+        let portsPreSelector = shipmentDetails.ShipmentLevel === "Master" ? "#Master" : "#Shipment";
 
-        if(directionCode === "D"){
-            cy.SelectLogLovFirstElement(portsPreSelector + "_MainCarriageFromPortId", false)
-            cy.SelectLogLovFirstElement(portsPreSelector + "_MainCarriageToPortId", false)
-        }else{
-            cy.SelectLogLovRandomElement(portsPreSelector + "_MainCarriageFromPortId", false, 5)
-            cy.SelectLogLovRandomElement(portsPreSelector + "_MainCarriageToPortId", false, 5)
-        }
+        cy.FillLogLov((portsPreSelector + "_MainCarriageFromPortId"), shipmentDetails.MainCarriageFromPort, false)
+        cy.FillLogLov((portsPreSelector + "_MainCarriageToPortId"), shipmentDetails.MainCarriageToPort, false)
     }
 }
 
