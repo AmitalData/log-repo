@@ -217,6 +217,7 @@ namespace WebFreight.Web.Security
         }
 
         public static bool IsWorkerRoleCall = false;
+       
         public static void CheckContactFeature(string objectTableName, string featureCode, int tenant,string overrideEmail=null)
         {
             if (IsWorkerRoleCall && HttpContext.Current == null) //for calling the excel export data from WR 
