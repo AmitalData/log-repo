@@ -359,6 +359,11 @@ export class DeclarationCourierStatusPM {
     public set Delivered(newValue: boolean) { if (this.delivered != newValue) { this.delivered = newValue; this.MarkAsDirty("Delivered"); } }
        
 	 
+    private truckerId: string;
+    public get TruckerId() { return this.truckerId; }
+    public set TruckerId(newValue: string) { if (this.truckerId != newValue) { this.truckerId = newValue; this.MarkAsDirty("TruckerId"); } }
+       
+	 
 
     public OldEntityPM: DeclarationCourierStatusPM;
 		
