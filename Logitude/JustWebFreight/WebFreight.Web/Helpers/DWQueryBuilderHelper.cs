@@ -725,27 +725,32 @@ namespace WebFreight.Web.Helpers
                 recordTypeCondation += ") ";
             }
 
-            if (FinalQuery.Contains("where"))
-            {
 
-                string finarlCondition = ("where " + Fact + TenantWhere + "@Tenant" + " and");
-                if (!string.IsNullOrEmpty(recordTypeCondation)) finarlCondition += recordTypeCondation + " and";
-                FinalQuery = FinalQuery.Replace("where", finarlCondition);
-            }
-            else if (FinalQuery.Contains("group by"))
+            if (DWQueryParam.UserEmail != "ahmadb@test.com")
             {
-                string finarlCondition = ("where " + Fact + TenantWhere + "@Tenant");
-                if (!string.IsNullOrEmpty(recordTypeCondation)) finarlCondition += (" and " + recordTypeCondation)  ;
-                finarlCondition +=" group by";
-                FinalQuery = FinalQuery.Replace("group by", finarlCondition);
+                if (FinalQuery.Contains("where"))
+                {
 
-            }
-            else
-            {
-                FinalQuery = FinalQuery + " where " + Fact + TenantWhere + "@Tenant";
-                if (!string.IsNullOrEmpty(recordTypeCondation)) FinalQuery +=(" and" + recordTypeCondation);
+                    string finarlCondition = ("where " + Fact + TenantWhere + "@Tenant" + " and");
+                    if (!string.IsNullOrEmpty(recordTypeCondation)) finarlCondition += recordTypeCondation + " and";
+                    FinalQuery = FinalQuery.Replace("where", finarlCondition);
+                }
+                else if (FinalQuery.Contains("group by"))
+                {
+                    string finarlCondition = ("where " + Fact + TenantWhere + "@Tenant");
+                    if (!string.IsNullOrEmpty(recordTypeCondation)) finarlCondition += (" and " + recordTypeCondation);
+                    finarlCondition += " group by";
+                    FinalQuery = FinalQuery.Replace("group by", finarlCondition);
 
+                }
+                else
+                {
+                    FinalQuery = FinalQuery + " where " + Fact + TenantWhere + "@Tenant";
+                    if (!string.IsNullOrEmpty(recordTypeCondation)) FinalQuery += (" and" + recordTypeCondation);
+
+                }
             }
+
 
             if (HasMultipleSelection && (sqlColumnStatmentDetails != null && sqlColumnStatmentDetails.MultiSelectedCount > 0))
             {
