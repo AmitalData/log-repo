@@ -442,20 +442,20 @@ namespace WebFreight.Web.Helpers
                 sqlCommandDefinition = BuildSqlCommandDefinition(sqlStatmentDetails, DWQueryParam);
             }
 
-            SQLTenantValidation(DWQueryParam, sqlCommandDefinition);
+            SQLSecurityTenantValidation(DWQueryParam, sqlCommandDefinition);
 
             return sqlCommandDefinition;
         }
 
-        private  void SQLTenantValidation(DWQueryData DWQueryParam, SqlCommandDefinition sqlCommandDefinition)
+        private  void SQLSecurityTenantValidation(DWQueryData DWQueryParam, SqlCommandDefinition sqlCommandDefinition)
         {
             string factName = DWQueryParam.FactTableName.ToLower();
-            string queryScript = sqlCommandDefinition.SQLString.ToLower().Replace(" ", "");
+            string querySQL = sqlCommandDefinition.SQLString.ToLower().Replace(" ", "");
             string whereByParenttenant = ("where" + factName + ".[parenttenant]=");
             string whereBySourcettenant = ("where" + factName + ".[sourcetenant]=");
-            if (!queryScript.Contains(whereByParenttenant) && !queryScript.Contains(whereBySourcettenant))
+            if (!querySQL.Contains(whereByParenttenant) && !querySQL.Contains(whereBySourcettenant))
             {
-                throw new Exception("You are not authorized to view the content. The returned data is doesn't belong to the right tenant!");
+                throw new Exception("You are not authorized to view the content.");
             }
         }
 
