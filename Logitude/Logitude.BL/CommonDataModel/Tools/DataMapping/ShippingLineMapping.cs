@@ -48,6 +48,7 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             entityCard.ReceivablesAccountingCard = entityPM.ReceivablesAccountingCard;
             entityCard.PayablesAccountingCard = entityPM.PayablesAccountingCard;
             entityCard.AccountingVATSplit = entityPM.AccountingVATSplit;
+            entityCard.BillToId = entityPM.BillToId;
             entityCard.VatNumber = entityPM.VatNumber;
             entityCard.Notes = entityPM.Remark;
             entityCard.Website = entityPM.Website;

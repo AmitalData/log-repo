@@ -585,6 +585,30 @@ export class NewARPaymentComponent extends BaseComponent implements OnInit {
 
     get DebitAccountDependencyProperty1() { return "AR,BN"; }
 
+    get PartnerId() { return this.EntityPM.PartnerId; }
+    set PartnerId(newValue: string) {
+        if (this.EntityPM.PartnerId != newValue) {
+            this.EntityPM.PartnerId = newValue;
+            if (AppTool.IsNullOrEmpty(newValue)) {
+                this.BillToId = null;
+            }
+            else {
+                var myService: CardListService = new CardListService();
+                myService.getSingle(newValue).subscribe((myResponse: ServiceResponse) => {
+                    if (!myResponse.HasError) {
+                        var list: CardList = myResponse.Result;
+                        if (list != null) {
+                            this.BillToId = list.BillToId;
+                            if (AppTool.IsNullOrEmpty(this.BillToId)) {
+                                this.BillToId = newValue;
+                            }
+                        }
+                    }
+                });
+            }
+        }
+    }
+
     // BillTo Properties
     get BillToId() { return this.newARPaymentPM.BillToId; }
     set BillToId(newValue: string) {
@@ -916,6 +940,7 @@ export class NewARPaymentComponent extends BaseComponent implements OnInit {
     }
 
     SetUIProperties_Payment() {
+        this.UIProperties.SetEnabled("BillToId", this.ObjectTableName, false);
         this.UIProperties.SetRequired("SATPaymentMethodCode", this.ObjectTableName, false);
         this.UIProperties.SetRequired("MetodoPagoCode", this.ObjectTableName, false);
 
@@ -1210,9 +1235,9 @@ export class NewARPaymentComponent extends BaseComponent implements OnInit {
     public set SelectedPartnerType(type : PartnerTypeList) {
         this._SelectedPartnerType = type;
         this.filterByPartnerTypeCode = type.Id;
-        this.BillToId = null;
-    }
+        this.PartnerId = null;
 
+    }
 
 }
 

@@ -41,6 +41,26 @@
                                 <tr>
                                     <td style="width:360px;">
                                         <table>
+                                            <!-- PartnerId -->
+                                            <tr class="FormFieldRow">
+                                                <td style="width:120px;">
+                                                    <LogLabel [ObjectFieldName]="'PartnerId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td style="width:230px; ">
+                                                    <LogLov [ObjectFieldName]="'PartnerId'"
+                                                            [SelectedValue]="PartnerId"
+                                                            [ObjectTableName]="ObjectTableName"
+                                                            [DataContext]="DataContext"
+                                                            [LookUpTableName]="'Card'"
+                                                            [DependencyFilter1Value]="'CS,AG,AL,CG,SG,SL,TR,VD,WH'"
+                                                            [DependencyFilter1IsList]="true">
+                                                    </LogLov>
+                                                </td>
+                                                <td>
+                                                    <div></div>
+                                                </td>
+                                            </tr>
 
                                             <!-- BillToId -->
                                             <tr class="FormFieldRow">
@@ -53,9 +73,7 @@
                                                             [ObjectTableName]="ObjectTableName"
                                                             [DataContext]="DataContext"
                                                             [SelectedValue]="BillToId"
-                                                            [LookUpTableName]="'Card'"
-                                                            [DependencyFilter1Value]="'CS,AG,AL,CG,SG,SL,TR,VD,WH'"
-                                                            [DependencyFilter1IsList]="true">
+                                                            [LookUpTableName]="'Card'">
                                                     </LogLov>
                                                 </td>
 
@@ -126,24 +144,24 @@
                                             </tr>
 
                                             <!--<tr style="height:22px;" *ngIf="DisplaySATSettings">
-                                                <td style="width:120px; height:25px; ">
-                                                    <LogLabel [ObjectFieldName]="'SATPaymentMethodCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                                </td>
+        <td style="width:120px; height:25px; ">
+            <LogLabel [ObjectFieldName]="'SATPaymentMethodCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+        </td>
 
-                                                <td>
-                                                    <LogLov [ObjectFieldName]="'SATPaymentMethodCode'"
-                                                            [ObjectTableName]="ObjectTableName"
-                                                            [DataContext]="DataContext"
-                                                            [SelectedValue]="SATPaymentMethodCode"
-                                                            [LookUpTableName]="'SATPaymentMethod'">
-                                                    </LogLov>
-                                                </td>
+        <td>
+            <LogLov [ObjectFieldName]="'SATPaymentMethodCode'"
+                    [ObjectTableName]="ObjectTableName"
+                    [DataContext]="DataContext"
+                    [SelectedValue]="SATPaymentMethodCode"
+                    [LookUpTableName]="'SATPaymentMethod'">
+            </LogLov>
+        </td>
 
-                                                <td>
-                                                    <div></div>
-                                                </td>
+        <td>
+            <div></div>
+        </td>
 
-                                            </tr>-->
+    </tr>-->
 
                                             <tr>
                                                 <td>

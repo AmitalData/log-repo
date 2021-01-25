@@ -189,7 +189,7 @@ export class ARInvoiceDetailsTabConsolidation extends BaseComponent implements O
             }            
         }
 
-        this.UIProperties.SetEnabled("BillToId", this.ObjectTableName, isFieldtEnabled);
+        this.UIProperties.SetEnabled("BillToId", this.ObjectTableName, false);
         this.UIProperties.SetEnabled("InvoiceCurrencyId", this.ObjectTableName, isFieldtEnabled);
     }
     SetUIProperties_BillToAddress() {
@@ -292,6 +292,28 @@ export class ARInvoiceDetailsTabConsolidation extends BaseComponent implements O
         this.UIProperties.SetEnabled("DueDate", this.ObjectTableName, AllowManuallyDueDate);
     }
 
+    get PartnerId() { return this.EntityPM.PartnerId; }
+    set PartnerId(newValue: string) {
+        if (this.EntityPM.PartnerId != newValue) {
+            this.EntityPM.PartnerId = newValue;
+            if (AppTool.IsNullOrEmpty(newValue)) {
+                this.BillToId = null;
+            }
+            else {
+                this.myCardListService.getSingle(newValue).subscribe((myResponse: ServiceResponse) => {
+                    if (!myResponse.HasError) {
+                        var list: CardList = myResponse.Result;
+                        if (list != null) {
+                            this.BillToId = list.BillToId;
+                            if (AppTool.IsNullOrEmpty(this.BillToId)) {
+                                this.BillToId = newValue;
+                            }
+                        }
+                    }
+                });
+            }
+        }
+    }
     // Bill To
     public BillToDependencyValue1: string = null;
     get BillToId() { return this.EntityPM.BillToId; }

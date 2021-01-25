@@ -368,7 +368,12 @@ export class ContactPM {
         }
     }
 	    //public CardContactAdditionalServices: Array<CardContactAdditionalServicePMPM>= [];
- 
+     private oldSimilarInactiveContactId: string;
+    public get OldSimilarInactiveContactId() { return this.oldSimilarInactiveContactId; }
+    public set OldSimilarInactiveContactId(newValue: string) { if (this.oldSimilarInactiveContactId != newValue) { this.oldSimilarInactiveContactId = newValue; this.MarkAsDirty("OldSimilarInactiveContactId"); } }
+       
+	 
+
     public OldEntityPM: ContactPM;
 		
     public IsDirty: boolean;

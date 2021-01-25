@@ -196,9 +196,11 @@ export class ARPaymentDetailsTabComponent extends BaseComponent implements OnIni
             if (this.FullAccounting) {
                 this.UIProperties.SetEnabled("BankAccountId", this.ObjectTableName, false);
             }
+            this.UIProperties.SetEnabled("PartnerId", this.ObjectTableName, false);
         }
 
         else {
+            this.UIProperties.SetEnabled("PartnerId", this.ObjectTableName, true);
             this.UIProperties.SetEnabled("AccountingPaymentMethodId", this.ObjectTableName, true);
             this.UIProperties.SetEnabled("AmountInPaymentCurrency", this.ObjectTableName, true);
             this.UIProperties.SetEnabled("RegisterDate", this.ObjectTableName, true);
@@ -211,9 +213,11 @@ export class ARPaymentDetailsTabComponent extends BaseComponent implements OnIni
             this.UIProperties.SetEnabled("CreditCardTypeId", this.ObjectTableName, true);
             this.UIProperties.SetEnabled("BranchId", this.ObjectTableName, true);
 
+            this.UIProperties.SetEnabled("BillToId", this.ObjectTableName, false);
             if (AppTool.IsNullOrEmpty(this.EntityPM.BillToId)) {
                 this.UIProperties.SetEnabled("BillToAddressId", this.ObjectTableName, false);
             }
+            
 
             if (this.EntityPM.StatusCode == "VD") {
                 this.UIProperties.SetEnabled("PrintNotes", this.ObjectTableName, false);
@@ -226,18 +230,18 @@ export class ARPaymentDetailsTabComponent extends BaseComponent implements OnIni
     
     SetUIProperties_Invoices() {
         if (!this.IsScreenEnabled) {
-            this.UIProperties.SetEnabled("BillToId", this.ObjectTableName, false);
+            this.UIProperties.SetEnabled("PartnerId", this.ObjectTableName, false);
             this.UIProperties.SetEnabled("BillToAddressId", this.ObjectTableName, false);
             this.UIProperties.SetEnabled("PaymentCurrencyId", this.ObjectTableName, false);
         }
 
         else {
-            this.UIProperties.SetEnabled("BillToId", this.ObjectTableName, true);
+            this.UIProperties.SetEnabled("PartnerId", this.ObjectTableName, true);
             this.UIProperties.SetEnabled("PaymentCurrencyId", this.ObjectTableName, true);
             this.UIProperties.SetEnabled("BillToAddressId", this.ObjectTableName, true);
 
             if (this.EntityPM.PaymentInvoices.length > 0) {
-                this.UIProperties.SetEnabled("BillToId", this.ObjectTableName, false);
+                this.UIProperties.SetEnabled("PartnerId", this.ObjectTableName, false);
                 this.UIProperties.SetEnabled("BillToAddressId", this.ObjectTableName, false);
                 this.UIProperties.SetEnabled("PaymentCurrencyId", this.ObjectTableName, false);
             }
@@ -557,6 +561,30 @@ export class ARPaymentDetailsTabComponent extends BaseComponent implements OnIni
         this.ItemsSource.InsertCollection(itemsCollection);
         this.UpdateSummary();
         this.IsDataLoaded = true;
+    }
+
+    get PartnerId() { return this.EntityPM.PartnerId; }
+    set PartnerId(newValue: string) {
+        if (this.EntityPM.PartnerId != newValue) {
+            this.EntityPM.PartnerId = newValue;
+            if (AppTool.IsNullOrEmpty(newValue)) {
+                this.BillToId = null;
+            }
+            else {
+                var myService: CardListService = new CardListService();
+                myService.getSingle(newValue).subscribe((myResponse: ServiceResponse) => {
+                    if (!myResponse.HasError) {
+                        var list: CardList = myResponse.Result;
+                        if (list != null) {
+                            this.BillToId = list.BillToId;
+                            if (AppTool.IsNullOrEmpty(this.BillToId)) {
+                                this.BillToId = newValue;
+                            }
+                        }
+                    }
+                });
+            }
+        }
     }
 
     // BillTo

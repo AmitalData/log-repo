@@ -251,6 +251,7 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
             entity.ForwarderCreditNumber = entityPm.ForwarderCreditNumber;
             entity.ForwarderAccountNumber = entityPm.ForwarderAccountNumber;
             card.AccountingVATSplit = entityPm.AccountingVATSplit;
+            card.BillToId = entityPm.BillToId;
             card.ReceivablesAccountingCard = entityPm.ReceivablesAccountingCard;
             card.PayablesAccountingCard = entityPm.PayablesAccountingCard;
             card.CreateDate = entityPm.CreateDate;

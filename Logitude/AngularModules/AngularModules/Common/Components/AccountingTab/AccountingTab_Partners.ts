@@ -111,6 +111,13 @@ export class AccountingTab_Partners extends BaseComponent implements OnDestroy {
         AppTool.KillEventEmitter(this.LoadCompletedEvent);
     }
 
+    get BillToId() { return this.EntityPM.BillToId; }
+    set BillToId(value: boolean) {
+        if (this.EntityPM.BillToId != value) {
+            this.EntityPM.BillToId = value;
+        }
+    }
+
     get AccountingVATSplit() { return this.EntityPM.AccountingVATSplit; }
     set AccountingVATSplit(value: boolean) {
         if (this.EntityPM.AccountingVATSplit != value) {
