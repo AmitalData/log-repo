@@ -188,6 +188,7 @@ export class NewARInvoiceComponent extends BaseComponent {
         }
 
         this.UIProperties.SetEnabled("BillToId", this.ObjectTableName, false);
+        this.UIProperties.SetEnabled("PartnerId", this.ObjectTableName, isBillToEnabled);
         this.UIProperties.SetEnabled("BillToAddressId", this.ObjectTableName, isBillToAddressEnabled);
     }
 

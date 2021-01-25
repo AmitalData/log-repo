@@ -213,8 +213,10 @@ export class ARPaymentDetailsTabComponent extends BaseComponent implements OnIni
             this.UIProperties.SetEnabled("CreditCardTypeId", this.ObjectTableName, true);
             this.UIProperties.SetEnabled("BranchId", this.ObjectTableName, true);
 
-            
-            this.UIProperties.SetEnabled("BillToAddressId", this.ObjectTableName, false);
+            this.UIProperties.SetEnabled("BillToId", this.ObjectTableName, false);
+            if (AppTool.IsNullOrEmpty(this.EntityPM.BillToId)) {
+                this.UIProperties.SetEnabled("BillToAddressId", this.ObjectTableName, false);
+            }
             
 
             if (this.EntityPM.StatusCode == "VD") {
