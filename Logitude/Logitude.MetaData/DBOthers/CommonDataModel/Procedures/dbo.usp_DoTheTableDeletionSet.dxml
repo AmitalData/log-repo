@@ -51,7 +51,8 @@ set @where = ' ';
 		if @lvl =0
 		begin -- this is the root level
       set @where = '  where  ' + @TableName + '.Tenant = '+ CAST(@Tenant as varchar(10)) + @WhereInput;
-      set @sqlcmd = @sqlcmd +' delete from  ' + @TableName +  @where;
+      set @sqlcmd = ' delete from  ' + @TableName +  @where;
+      --print @sqlcmd;
 		end -- this is the roolt level
 
 		DELETE FROM #NamesAliases
@@ -145,7 +146,7 @@ set @where = ' ';
 		set @where = ' where ' + (select top 1 TableAliasName from #NamesAliases where tablename = @TableName and lvl = 1) + '.Tenant=' +CAST(@Tenant as varchar(10)) + @WhereInput;
 		--print @sqlcmd + @crlf + @where + ';';
 		--print '';
-    if TRIM(@sqlcmd) is not null
+    if RTRIM(LTRIM(@sqlcmd)) is not null
 		   EXEC (@sqlcmd + @crlf + @where + ';');
 	fetch next from curT into  @lvl, @id;
 	end

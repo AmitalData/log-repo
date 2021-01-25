@@ -1,4 +1,4 @@
-﻿import {TenantManagementPM} from '../../EntityPMs/TenantManagementPM';
+import {TenantManagementPM} from '../../EntityPMs/TenantManagementPM';
 import {MenuButtonPM} from '../../EntityPMs/MenuButtonPM'
 import {EntityArgs} from '../../DataContracts/EntityArgs';
 import {LogitudeWindow} from '../../../Controls/Windows/LogitudeWindow';
@@ -50,7 +50,7 @@ export class TenantManagementMenuButtonsHandler {
                                 else {
                                     button.IsDisabled = true;
                                 }
-                                button.IsDisabled = false;
+          
                                 break;
                             }
                     }
