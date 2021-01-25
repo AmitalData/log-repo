@@ -125,8 +125,8 @@ export class DeclarationReferantDataFiltersMenuComponent
             this.SetTransport("All");
         }
 
-        this.SelectedValueChangedEmitUser();
-        this.SelectedValueChangedEmitDepartment();
+      //  this.SelectedValueChangedEmitUser();
+      //  this.SelectedValueChangedEmitDepartment();
         this.ApplyTransportSelectedStyle();
       //  this.myViewChildrenMultiSelectLOVComponent.first.Invalidate();
       //  this.myViewChildrenMultiSelectLOVComponent.last.Invalidate();
@@ -141,10 +141,10 @@ export class DeclarationReferantDataFiltersMenuComponent
     ngAfterViewInit() {
          if (this.OpenQueryThruWorkSpace) {
             this.apiQueryFilters.addAdditionalFilter("RetrievData", true, null, null, "Equal", true, false, false, "string");
-            this.SelectedValueChanged.emit({ Filters: this.apiQueryFilters, RemoveFilter: false });
-            this.myViewChildrenMultiSelectLOVComponent.first.Invalidate();
-            this.SelectedValueChangedEmitDepartment();
-            this.myViewChildrenMultiSelectLOVComponent.last.Invalidate();
+         //   this.SelectedValueChanged.emit({ Filters: this.apiQueryFilters, RemoveFilter: false });
+           // this.myViewChildrenMultiSelectLOVComponent.first.Invalidate();
+          //  this.SelectedValueChangedEmitDepartment();
+         //   this.myViewChildrenMultiSelectLOVComponent.last.Invalidate();
 
 
         } else {
@@ -156,10 +156,10 @@ export class DeclarationReferantDataFiltersMenuComponent
             }
             this.LOVListUsers.push(ul);
             this.ApplyTransportSelectedStyle();
-            this.myViewChildrenMultiSelectLOVComponent.first.Invalidate();
+           // this.myViewChildrenMultiSelectLOVComponent.first.Invalidate();
 
-            this.SelectedValueChangedEmitUser();
-            this.SelectedValueChangedEmitDepartment();
+          //  this.SelectedValueChangedEmitUser();
+           // this.SelectedValueChangedEmitDepartment();
 
         }
         this.myViewChildrenMultiSelectLOVComponent.first.Invalidate();
@@ -298,7 +298,7 @@ export class DeclarationReferantDataFiltersMenuComponent
 
         } else {
             UsersListString = "HowCare"
-            UserNamesListString = "HowCare"
+          //  UserNamesListString = "HowCare"
             RemoveFilter = true;
         }
         this.apiQueryFilters.addAdditionalFilter("ReferantUserName", UserNamesListString, null, null, "Equal", true, false, false, "string", true);
@@ -323,7 +323,7 @@ export class DeclarationReferantDataFiltersMenuComponent
 
         } else {
             LOVListDepartment = "HowCare";
-            DepartmentNamesListString =  "HowCare";
+          //  DepartmentNamesListString =  "HowCare";
             RemoveFilter = true;
         }
 
