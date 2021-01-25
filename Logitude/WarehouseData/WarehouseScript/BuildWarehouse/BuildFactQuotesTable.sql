@@ -107,8 +107,13 @@
 	inner JOIN NewDIM_QuoteClosingReasons  ON dw_Quotes.QuoteClosingReasonId = NewDIM_QuoteClosingReasons.Id
 	inner JOIN NewDIM_Currencies SaleCurrency ON dw_Quotes.SaleCurrencyId = SaleCurrency.Id
 	inner JOIN NewDIM_Users createdByUser ON dw_Quotes.CreatedByUserId = createdByUser.Id
+	
 	inner JOIN dw_Ports fromPort ON dw_Quotes.FromPortId = fromPort.Id
 	inner JOIN NewDIM_Countries FromCountry ON fromPort.CountryId = FromCountry.Id
+
+
+
+
 	inner JOIN dw_Ports toPort ON dw_Quotes.ToPortId = toPort.Id
 	inner JOIN NewDIM_Countries ToCountry ON toPort.CountryId = ToCountry.Id
 
@@ -177,7 +182,7 @@ END CATCH
 	 ,@Shipper ,@Consignee, @Agent ,@Customer , @Incoterm ,@CreatedByUser ,@OpenDate , @SentDate ,@AcceptedDate ,@DeclinedDate ,@StartDate ,@LastActivityDate
 	, @Salesman ,@QuoteStages, @Notes ,@QuoteClosingReasons , @EstimatedProfitInLocal 
 	, @SaleCurrency ,@Subject , @GrossWeightInKG ,@ChargeableWeightInKG ,@VolumeInCBM ,@NumberOfPackages ,@NumberOfContainers
-	 , @ExpirationDate ,@IsAutomaticallyClosed ,@IncludePickUp ,@IncludeDelivery ,@StageDueDate ,@IsQuoteDataExternal ,@IsQuoteDocumentExternal,@DeliveryAddress ,@PickUpAddress,@AutomaticallyCloseDate,@ToCountry ,@FromCountry , @ShipperPartnerType,@ConsigneePartnerType ,  @CustomerPartnerType
+	 , @ExpirationDate ,@IsAutomaticallyClosed ,@IncludePickUp ,@IncludeDelivery ,@StageDueDate ,@IsQuoteDataExternal ,@IsQuoteDocumentExternal,@DeliveryAddress ,@PickUpAddress,@AutomaticallyCloseDate,@FromCountry , @ToCountry  , @ShipperPartnerType,@ConsigneePartnerType ,  @CustomerPartnerType
 		 
 
 		End
