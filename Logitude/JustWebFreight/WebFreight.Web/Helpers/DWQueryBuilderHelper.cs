@@ -418,7 +418,8 @@ namespace WebFreight.Web.Helpers
                 innerSqlStatmentDetails.Columns = Columns;
                 innerSqlStatmentDetails.Filters = Filters;
                 int columnIndex = 0;
-                Columns.ForEach(c => {
+                Columns.ForEach(c =>
+                {
                     columnIndex += 1;
                     if (c.IsMultipleSelection)
                     {
@@ -427,7 +428,7 @@ namespace WebFreight.Web.Helpers
                         sqlColumnStatmentDetails.MultiSelectedCount = c.MultiSelectedValueLists.Count();
 
                         innerSqlStatmentDetails = BuildSqlStatmentDetails(innerSqlStatmentDetails, columnIndex);
-                        
+
                         sqlCommandDefinition = BuildSqlCommandDefinition(innerSqlStatmentDetails, DWQueryParam, sqlColumnStatmentDetails);
                         FinalQuery += string.IsNullOrEmpty(FinalQuery) ? sqlCommandDefinition.SQLString : " Union " + sqlCommandDefinition.SQLString;
                     }
@@ -440,8 +441,22 @@ namespace WebFreight.Web.Helpers
                 sqlStatmentDetails = BuildSqlStatmentDetails(sqlStatmentDetails);
                 sqlCommandDefinition = BuildSqlCommandDefinition(sqlStatmentDetails, DWQueryParam);
             }
-            
+
+            SQLTenantValidation(DWQueryParam, sqlCommandDefinition);
+
             return sqlCommandDefinition;
+        }
+
+        private  void SQLTenantValidation(DWQueryData DWQueryParam, SqlCommandDefinition sqlCommandDefinition)
+        {
+            string factName = DWQueryParam.FactTableName.ToLower();
+            string queryScript = sqlCommandDefinition.SQLString.ToLower().Replace(" ", "");
+            string whereByParenttenant = ("where" + factName + ".[parenttenant]=");
+            string whereBySourcettenant = ("where" + factName + ".[sourcetenant]=");
+            if (!queryScript.Contains(whereByParenttenant) && !queryScript.Contains(whereBySourcettenant))
+            {
+                throw new Exception("You are not authorized to view the content. The returned data is doesn't belong to the right tenant!");
+            }
         }
 
         private SqlStatmentDetails BuildSqlStatmentDetails(SqlStatmentDetails sqlStatmentDetails, int columnIndex = -1, bool isMainSelectStmt = false)
