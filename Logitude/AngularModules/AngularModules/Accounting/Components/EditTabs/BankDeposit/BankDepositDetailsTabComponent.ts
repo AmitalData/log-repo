@@ -49,9 +49,12 @@ export class BankDepositDetailsTabComponent extends BaseComponent {
     public IsNewDepositMode: boolean = false;
     searchText: string = "";
 
+
     CashBookPM: CashBookPM;
     // BankDepositLines: BankDepositLinePM[];
     CashbookLines: ObservableCollection = new ObservableCollection([]);
+    SelectedCashbookLines: ObservableCollection = new ObservableCollection([]);
+
     BankDepositLines: ObservableCollection = new ObservableCollection([]);
 
     public isRTL: boolean = false;
@@ -189,6 +192,7 @@ export class BankDepositDetailsTabComponent extends BaseComponent {
         this.GetDepositLines();
 
         this.CashbookLines = new ObservableCollection([]);
+        this.SelectedCashbookLines = new ObservableCollection([]);
         // this.BankDepositLines = new ObservableCollection(this.EntityPM.BankDepositLines);
 
         this.CalculateTotals();
@@ -488,7 +492,6 @@ export class BankDepositDetailsTabComponent extends BaseComponent {
                         else {  // Cheque
 
                             this.GetCashbookLines();
-
                             this.SetUIProperty();
                         }
 
@@ -508,26 +511,18 @@ export class BankDepositDetailsTabComponent extends BaseComponent {
     }
 
     tenantCurrencyCode: string = "";
-    public selectedRows: any[] = [];
     private GetCashbookLines()
     {
         
         this.BankDepositLines.Clear();
         this.EntityPM.BankDepositLines = [];
 
-        this.getSelectedCashbookLines();
 
         this.cashBookLineListService.getByFilters(this.GetCashbookLinesAPIFilters()).subscribe((response: ServiceResponse) => {
             var result = response.Result;
             console.log("CashBookLineListService", result);
             this.CashbookLines.InsertCollection(result);
 
-            for (let row of this.selectedRows) {
-                var CashbookLine = this.CashbookLines.Collection.filter(d => d.ChequeNumber == row.ChequeNumber)[0];
-                if (CashbookLine) {
-                    this.CashbookLines.Collection.filter(a => a.ChequeNumber == CashbookLine.ChequeNumber)[0].IsSelected = true;
-                }
-            }
             // this.CashBookLines = result;
 
             // this.UpdateFiltersCounts();
@@ -539,20 +534,22 @@ export class BankDepositDetailsTabComponent extends BaseComponent {
             }
 
             this.CalculateTotals();
+            this.SetSelectedCashbookLines();
 
 
         });
     }
 
-    private getSelectedCashbookLines() {
-        this.selectedRows = [];
+    private SetSelectedCashbookLines() {
         for (let line of this.CashbookLines.Collection) {
-            if (line.IsSelected) {
-                this.selectedRows.push(line);
+            var CashbookLine = this.SelectedCashbookLines.Collection.filter(d => d.ChequeNumber == line.ChequeNumber)[0];
+            if (CashbookLine) {
+                this.CashbookLines.Collection.filter(a => a.ChequeNumber == CashbookLine.ChequeNumber)[0].IsSelected = true;
             }
         }
     }
 
+ 
     private GetCashbookLinesAPIFilters()
     {
         var linesQueryFilters = new ApiQueryFilters();
@@ -757,13 +754,21 @@ export class BankDepositDetailsTabComponent extends BaseComponent {
 
     LineSelection(cashbookLine, event) {
         this.CashbookLines.Collection.filter(a => a.CashBookId == cashbookLine.CashBookId && a.ARPChequeId == cashbookLine.ARPChequeId)[0].IsSelected = event;
+        this.SelectedCashbookLines.Collection.filter(a => a.CashBookId == cashbookLine.CashBookId && a.ARPChequeId == cashbookLine.ARPChequeId)[0].IsSelected = event;
         if (event == true) {
             this.PushBankDeposit(cashbookLine);
+            this.SelectedCashbookLines.Collection.push(cashbookLine);
         } else if (event == false) {
+            this.DeleteUnSelectedLine(cashbookLine);
             this.IsAllSelected = false;
             this.PopBankDeposit(cashbookLine);
         }
         this.CalculateTotals();
+    }
+
+    private DeleteUnSelectedLine(line: any) {
+        var index = this.SelectedCashbookLines.Collection.findIndex(d => d.ChequeNumber === line.ChequeNumber);
+        this.SelectedCashbookLines.Collection.splice(index, 1);
     }
 
     PushBankDeposit(cashbookLine: CashBookLinePM) {
