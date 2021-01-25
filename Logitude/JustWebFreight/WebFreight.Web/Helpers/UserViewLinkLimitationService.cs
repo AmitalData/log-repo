@@ -30,7 +30,7 @@ namespace WebFreight.Web.Helpers
         private  void Validation()
         {
             TimeSpan timeSpan = (DateTime.Now - userViewLinkDetails.LastViewDate);
-            if (timeSpan.Minutes < 5)
+            if (timeSpan.Minutes < 60)
             {
                 if (userViewLinkDetails.NumberOfClick >= 4)
                 {
