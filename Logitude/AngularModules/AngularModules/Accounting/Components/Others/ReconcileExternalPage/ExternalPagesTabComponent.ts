@@ -650,8 +650,8 @@ export class ExternalPagesTabComponent extends BaseComponent implements OnInit, 
         logitudeWindow.Width = 900;
         logitudeWindow.Height = 800;
         logitudeWindow.IsFullScreen = true;
+        var BankName = this.getBankName();
 
-        var BankName = this.DontShowLocal ? this.EntityPM.EnglishName : this.EntityPM.LocalName == null ? this.EntityPM.EnglishName : this.EntityPM.LocalName;
         logitudeWindow.Title = TextCodeTranslator.Translate("Accounting.General.O.ExternalReconcile") + ' - ' + BankName;
 
         logitudeWindow.IsFullScreen = true;
@@ -662,6 +662,13 @@ export class ExternalPagesTabComponent extends BaseComponent implements OnInit, 
             // show alert
             this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
         });
+    }
+
+    getBankName(): string{
+        var isBankNameNotExists = this.EntityPM.EnglishName == null && this.EntityPM.LocalName == null;
+        var BankCode = this.EntityPM.BankCode;
+        var BankName = this.DontShowLocal ? this.EntityPM.EnglishName : this.EntityPM.LocalName == null ? this.EntityPM.EnglishName : this.EntityPM.LocalName;
+        return isBankNameNotExists ? BankCode : BankName+"";
     }
 
 }
