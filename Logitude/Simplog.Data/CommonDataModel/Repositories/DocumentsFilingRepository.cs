@@ -144,6 +144,8 @@ namespace Simplog.Data.CommonDataModel.Repositories
 
         public string GetDocumentIdByDocumentType(string documentTypeId, string objectTableId, string entityId, int tenant ,out string DocumentsFilingId)
         {
+            (context as System.Data.Entity.Infrastructure.IObjectContextAdapter).ObjectContext.ContextOptions.UseCSharpNullComparisonBehavior = false; //Pasted from <http://stackoverflow.com/questions/682429/how-can-i-query-for-null-values-in-entity-framework?lq=1> 
+
             DocumentsFilingId = null;
             bool ihabIsSureItsBetter = true;
             if (ihabIsSureItsBetter)
