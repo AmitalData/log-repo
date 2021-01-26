@@ -19,6 +19,7 @@ namespace Logitude.InvoiceTests.Steps.SecurityTests
             Context = context;
         }
 
+        #region Step Region
         [When(@"The First user gets the first AP Invoice from AP Invoices list")]
         public void WhenFirstUserGetTheFirstAPInvoiceFromAPInvoicesList()
         {
@@ -43,7 +44,9 @@ namespace Logitude.InvoiceTests.Steps.SecurityTests
         {
             Context.SecondUserPMData.Id.Should().BeNull();
         }
+        #endregion
 
+        #region Private Function Region
         private void GetAPInvoiceForTheSecondUserBaseOnFirstUserAPInvoices()
         {
             IEnumerable<APInvoicePM> firstUserAPInvoicesList = GetAPInvoiceListForFirstUser();
@@ -63,5 +66,6 @@ namespace Logitude.InvoiceTests.Steps.SecurityTests
             ApiResponse<IEnumerable<APInvoicePM>> response = APICaller.CallGetByFilters<IEnumerable<APInvoicePM>>(Urls.APInvoiceViewsGetByFilters, UserTenant.Token, apiQueryFilters);
             return response.Data;
         }
+        #endregion
     }
 }

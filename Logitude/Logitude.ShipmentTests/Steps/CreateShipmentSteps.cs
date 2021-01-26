@@ -19,6 +19,7 @@ namespace Logitude.ShipmentTests.Steps
             ShipmentContext = shipmentContext;
         }
 
+        #region Step Region
         [Given(@"A master shipment fields")]
         public void GivenAMasterShipmentFields(Table table)
         {
@@ -59,7 +60,9 @@ namespace Logitude.ShipmentTests.Steps
         {
             ShipmentContext.HouseShipment.Id.Should().NotBeNull();
         }
+        #endregion
 
+        #region Build Models Region
         private ShipmentPM CreateShipmentInstance(Table DataTable)
         {
             dynamic dataTable = DataTable.CreateDynamicInstance();
@@ -74,5 +77,6 @@ namespace Logitude.ShipmentTests.Steps
                 .MainCarriageFromPortIdByCode((string)dataTable.MainCarriageFromPort)
                 .Build();
         }
+        #endregion
     }
 }

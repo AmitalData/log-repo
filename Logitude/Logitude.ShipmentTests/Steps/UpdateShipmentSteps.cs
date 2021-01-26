@@ -20,6 +20,7 @@ namespace Logitude.ShipmentTests.Steps
             ShipmentContext = shipmentContext;
         }
 
+        #region Step Region
         [Given(@"The master shipment packages fields")]
         public void GivenTheMasterShipmentPackagesFields(Table table)
         {
@@ -80,7 +81,35 @@ namespace Logitude.ShipmentTests.Steps
         {
             ShipmentContext.MasterShipment.Id.Should().NotBeNull();
         }
+        #endregion
 
+        #region Private Function Region
+        private ShipmentPM AddPackagesToShipment(ShipmentPM shipment, PackagePM package)
+        {
+            package = new PackageBuilder().WithModel(package)
+                .ShipmentNumber(shipment.MasterShipmentNumber)
+                .ShipmentId(shipment.Id)
+                .Build();
+
+            return new ShipmentBuilder().WithModel(shipment)
+                .PackagesQuantity(package.Quantity)
+                .ShipmentPackages(package)
+                .Build();
+        }
+
+        private ShipmentPM AddPayablesToShipment(ShipmentPM shipment, PayablesPM payable)
+        {
+            payable = new PayableBuilder().WithModel(payable)
+                .ShipmentId(shipment.Id)
+                .Build();
+
+            return new ShipmentBuilder().WithModel(shipment)
+                .ShipmentPayables(payable)
+                .Build();
+        }
+        #endregion
+
+        #region Build Models Region
         private PackagePM CreatePackageInstance(Table DataTable)
         {
             dynamic dataTable = DataTable.CreateDynamicInstance();
@@ -110,29 +139,6 @@ namespace Logitude.ShipmentTests.Steps
                 .ShipmentPayableLineStatusCode((string)dataTable.ShipmentPayableLineStatus)
                 .Build();
         }
-
-        private ShipmentPM AddPackagesToShipment(ShipmentPM shipment, PackagePM package)
-        {
-            package = new PackageBuilder().WithModel(package)
-                .ShipmentNumber(shipment.MasterShipmentNumber)
-                .ShipmentId(shipment.Id)
-                .Build();
-
-            return new ShipmentBuilder().WithModel(shipment)
-                .PackagesQuantity(package.Quantity)
-                .ShipmentPackages(package)
-                .Build();
-        }
-
-        private ShipmentPM AddPayablesToShipment(ShipmentPM shipment, PayablesPM payable)
-        {
-            payable = new PayableBuilder().WithModel(payable)
-                .ShipmentId(shipment.Id)
-                .Build();
-
-            return new ShipmentBuilder().WithModel(shipment)
-                .ShipmentPayables(payable)
-                .Build();
-        }
+        #endregion
     }
 }

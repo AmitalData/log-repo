@@ -16,6 +16,7 @@ namespace Logitude.ShipmentTests.Steps
             ShipmentContext = shipmentContext;
         }
 
+        #region Step Region
         [Given(@"A master shipment")]
         public void GivenAMasterShipment()
         {
@@ -48,7 +49,9 @@ namespace Logitude.ShipmentTests.Steps
 
             ShipmentContext.HouseShipment = CreateAndGetShipment(HouseShipment);
         }
+        #endregion
 
+        #region Private Function Region
         private ShipmentPM CreateAndGetShipment(ShipmentPM shipmentPM)
         {
             ApiResponse<ShipmentPM> PostResponse = APICaller.CallPost<ShipmentPM>(shipmentPM, Urls.ShipmentController, UserTenant.Token);
@@ -59,5 +62,6 @@ namespace Logitude.ShipmentTests.Steps
             ApiResponse<ShipmentPM> GetResponse = APICaller.CallGet<ShipmentPM>(singleShipmentUrl, UserTenant.Token);
             return GetResponse.Data;
         }
+        #endregion
     }
 }

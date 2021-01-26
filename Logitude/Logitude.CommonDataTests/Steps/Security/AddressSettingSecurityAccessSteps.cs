@@ -19,6 +19,7 @@ namespace Logitude.CommonDataTests.Steps.Security
             Context = context;
         }
 
+        #region Step Region
         [When(@"Update Address Settings request sent for User's Tenant")]
         public void WhenUpdateAddressSettingsRequestSentForUserSTenant()
         {
@@ -44,7 +45,9 @@ namespace Logitude.CommonDataTests.Steps.Security
             Context.act.Should().ThrowExactly<Exception>()
                 .Where(m => m.Message.Contains("Sorry! you have no permission to do this operation on Tenant"));
         }
+        #endregion
 
+        #region Private Function Region
         private AddressPM UpdateFirstUserAddressSettings(string Token)
         {
             AddressPM FirstUserAdressSettings = GetAFirstUserAdressSettings();
@@ -52,7 +55,9 @@ namespace Logitude.CommonDataTests.Steps.Security
             ApiResponse<AddressPM> UpdatedAddressSettings = APICaller.CallPut<AddressPM>(FirstUserAdressSettings, Urls.AddressController , Token);
             return UpdatedAddressSettings.Data;
         }
+        #endregion
 
+        #region Build Models Region
         private AddressPM GetAFirstUserAdressSettings()
         {
             AddressPM addressPM = new AddressBuilder()
@@ -75,5 +80,6 @@ namespace Logitude.CommonDataTests.Steps.Security
             ApiResponse<AddressPM> response = APICaller.CallPost<AddressPM>(addressPM, Urls.AddressController, UserTenant.Token);
             return response.Data;
         }
+        #endregion
     }
 }

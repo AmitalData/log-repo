@@ -21,6 +21,7 @@ namespace Logitude.ShipmentTests.Steps
             Context = context;
         }
 
+        #region Step Region
         [Given(@"Direct shipment with the following properties")]
         public void GivenDirectShipmentWithTheFollowingProperties(Table directShipmentTable)
         {
@@ -88,31 +89,9 @@ namespace Logitude.ShipmentTests.Steps
         {
             Context.Direct.Should().NotBeNull();
         }
+        #endregion
 
-        private void BuildNewDirectShipment(Table directShipmentTable)
-        {
-            dynamic directShipment = directShipmentTable.CreateDynamicInstance();
- 
-
- 
-            DirectBuilder directBuilder = new DirectBuilder();
-            directBuilder.Agent((string)directShipment.Agent.ToString())
-                .Direction((string)directShipment.Direction.ToString())
-                .TransportMode((string)directShipment.TransportMode.ToString())
-                .ShipmentType((string)directShipment.ShipmentType.ToString())
-                .Shipper((string)directShipment.Shipper.ToString())
-                .ShipperReference1((string)directShipment.ShipperReference1.ToString())
-                .ShipperReference2((string)directShipment.ShipperReference2.ToString())
-                .GrossWeightUnit((string)directShipment.GrossWeightUnit.ToString())
-                .ChargeableWeightUnit((string)directShipment.ChargeableWeightUnit.ToString())
-                .VolumeUnit((string)directShipment.VolumeUnit.ToString())
-                .Incoterm((string)directShipment.Incoterm.ToString())
-                .MainCarriageCarrier((string)directShipment.MainCarriageCarrier.ToString())
-                .MainCarriageATD((DateTime)directShipment.MainCarriageATD);
-
-            Context.Direct = directBuilder.Build();
-        }
-
+        #region Private Function Region
         private void AddMainCarriageLegsToDirectShipment(Table mainCarriageLegsTable)
         {
             IEnumerable<dynamic> mainCarriageLegs = mainCarriageLegsTable.CreateDynamicSet();
@@ -146,5 +125,32 @@ namespace Logitude.ShipmentTests.Steps
         {
             return new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day).AddYears(numberOfYearsToBeAdded).AddMonths(numberOfMonthesToBeAdded).AddDays(numberOfDaysToBeAdded);
         }
+        #endregion
+
+        #region Build Models Region
+        private void BuildNewDirectShipment(Table directShipmentTable)
+        {
+            dynamic directShipment = directShipmentTable.CreateDynamicInstance();
+
+
+
+            DirectBuilder directBuilder = new DirectBuilder();
+            directBuilder.Agent((string)directShipment.Agent.ToString())
+                .Direction((string)directShipment.Direction.ToString())
+                .TransportMode((string)directShipment.TransportMode.ToString())
+                .ShipmentType((string)directShipment.ShipmentType.ToString())
+                .Shipper((string)directShipment.Shipper.ToString())
+                .ShipperReference1((string)directShipment.ShipperReference1.ToString())
+                .ShipperReference2((string)directShipment.ShipperReference2.ToString())
+                .GrossWeightUnit((string)directShipment.GrossWeightUnit.ToString())
+                .ChargeableWeightUnit((string)directShipment.ChargeableWeightUnit.ToString())
+                .VolumeUnit((string)directShipment.VolumeUnit.ToString())
+                .Incoterm((string)directShipment.Incoterm.ToString())
+                .MainCarriageCarrier((string)directShipment.MainCarriageCarrier.ToString())
+                .MainCarriageATD((DateTime)directShipment.MainCarriageATD);
+
+            Context.Direct = directBuilder.Build();
+        }
+        #endregion
     }
 }

@@ -19,6 +19,7 @@ namespace Logitude.InvoiceTests.Steps.SecurityTests
             Context = context;
         }
 
+        #region Step Region
         [When(@"Get AR Payment request sent for User's Tenant")]
         public void WhenGetARPaymentRequestSentForUserSTenant()
         {
@@ -43,7 +44,9 @@ namespace Logitude.InvoiceTests.Steps.SecurityTests
         {
             Context.SecondUserPMData.Id.Should().BeNull();
         }
+        #endregion
 
+        #region Private Function Region
         private void GetARPaymentForTheSecondUserBaseOnFirstUserARPayments()
         {
             ARPaymentPM firstUserARPayment = GetAnARPaymentForFirstUser();
@@ -63,5 +66,6 @@ namespace Logitude.InvoiceTests.Steps.SecurityTests
             ApiResponse<IEnumerable<ARPaymentPM>> response = APICaller.CallGetByFilters<IEnumerable<ARPaymentPM>>(Urls.ARPaymentViewsGetByFilters, UserTenant.Token, apiQueryFilters);
             return response.Data?.FirstOrDefault();
         }
+        #endregion
     }
 }
