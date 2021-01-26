@@ -15,7 +15,6 @@ namespace Logitude.ShipmentTests.Steps
     public class ExternalAPIDirectSteps
     {
         private readonly ExternalAPIDirectContext Context;
-        private Action act;
 
         public ExternalAPIDirectSteps(ExternalAPIDirectContext context)
         {
@@ -51,13 +50,13 @@ namespace Logitude.ShipmentTests.Steps
         public void WhenUpdateMainCarriageLegATAToFutureDate()
         {
             Context.Direct.MainCarriageLegs.First().ATA = GetDateBasedOnCurrentDate(1, 0, 0);
-            act = () => APICaller.CallPut<Direct>(Context.Direct, "Direct", UserTenant.Token);
+            Context.act = () => APICaller.CallPut<Direct>(Context.Direct, "Direct", UserTenant.Token);
         }
 
         [Then(@"Error message \(cannot set main carriage ATA to future date\) should received")]
         public void ThenErrorMessageCannotSetMainCarriageATAToFutureDateShouldReceived()
         {
-            act.Should().ThrowExactly<Exception>()
+            Context.act.Should().ThrowExactly<Exception>()
                 .Where(e => e.Message.Contains("Can't set MainCarriageATA to future date"));
         }
 
@@ -65,14 +64,14 @@ namespace Logitude.ShipmentTests.Steps
         public void WhenUpdateMainCarriageLegATDToFutureDate()
         {
             Context.Direct.MainCarriageLegs.First().ATD = GetDateBasedOnCurrentDate(1, 0, 0);
-            act = () => APICaller.CallPut<Direct>(Context.Direct, "Direct", UserTenant.Token);
+            Context.act = () => APICaller.CallPut<Direct>(Context.Direct, "Direct", UserTenant.Token);
 
         }
 
         [Then(@"Error message \(cannot set main carriage ATD to future date\) should received")]
         public void ThenErrorMessageCannotSetMainCarriageATDToFutureDateShouldReceived()
         {
-            act.Should().ThrowExactly<Exception>()
+            Context.act.Should().ThrowExactly<Exception>()
                 .Where(e => e.Message.Contains("Can't set MainCarriageATD to future date"));
         }
 

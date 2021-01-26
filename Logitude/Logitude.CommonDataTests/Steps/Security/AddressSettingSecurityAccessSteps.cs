@@ -13,7 +13,6 @@ namespace Logitude.CommonDataTests.Steps.Security
     public class AddressSettingSecurityAccessSteps
     {
         private SecurityAccessStepsContext<AddressPM> Context;
-        private Action act;
 
         public AddressSettingSecurityAccessSteps(SecurityAccessStepsContext<AddressPM> context )
         {
@@ -36,16 +35,14 @@ namespace Logitude.CommonDataTests.Steps.Security
         [When(@"Update Address Settings request sent for other Tenant")]
         public void WhenUpdateAddressSettingsRequestSentForOtherTenant()
         {
-            //Context.SecondUserPMData = UpdateFirstUserAddressSettings(UserOtherTenant.Token);
-            act = ()=> UpdateFirstUserAddressSettings(UserOtherTenant.Token);
+            Context.act = ()=> UpdateFirstUserAddressSettings(UserOtherTenant.Token);
         }
 
         [Then(@"Address Settings should not be Updated")]
         public void ThenAddressSettingsShouldNotBeUpdated()
         {
-            act.Should().ThrowExactly<Exception>()
+            Context.act.Should().ThrowExactly<Exception>()
                 .Where(m => m.Message.Contains("Sorry! you have no permission to do this operation on Tenant"));
-           // Context.SecondUserPMData.Should().BeNull();
         }
 
         private AddressPM UpdateFirstUserAddressSettings(string Token)

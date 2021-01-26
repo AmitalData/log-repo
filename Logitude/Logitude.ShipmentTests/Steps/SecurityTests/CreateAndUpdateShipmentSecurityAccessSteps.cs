@@ -13,7 +13,6 @@ namespace Logitude.ShipmentTests.Steps.SecurityTests
     public class CreateAndUpdateShipmentSecurityAccessSteps
     {
         private SecurityAccessStepsContext<ShipmentPM> Context;
-        private Action act;
 
         public CreateAndUpdateShipmentSecurityAccessSteps(SecurityAccessStepsContext<ShipmentPM> context)
         {
@@ -36,13 +35,13 @@ namespace Logitude.ShipmentTests.Steps.SecurityTests
         [When(@"Create shipment request sent for other Tenant")]
         public void WhenCreateShipmentRequestSentForOtherTenant()
         {
-            act = () => CreateShipmentForFirstUser(UserOtherTenant.Token);
+            Context.act = () => CreateShipmentForFirstUser(UserOtherTenant.Token);
         }
 
         [Then(@"Shipment should not be added")]
         public void ThenShipmentShouldNotBeAdded()
         {
-            act.Should().ThrowExactly<Exception>()
+            Context.act.Should().ThrowExactly<Exception>()
                 .Where(m => m.Message.Contains("Sorry! you have no permission to do this operation on Tenant"));
         }
 
@@ -62,13 +61,13 @@ namespace Logitude.ShipmentTests.Steps.SecurityTests
         [When(@"Update shipment request sent for other Tenant")]
         public void WhenUpdateShipmentRequestSentForOtherTenant()
         {
-            act =() => UpdateShipmentForFirstUser(UserOtherTenant.Token);
+            Context.act =() => UpdateShipmentForFirstUser(UserOtherTenant.Token);
         }
 
         [Then(@"Shipment should not be Updated")]
         public void ThenShipmentShouldNotBeUpdated()
         {
-            act.Should().ThrowExactly<Exception>()
+            Context.act.Should().ThrowExactly<Exception>()
                 .Where(m => m.Message.Contains("Sorry! you have no permission to do this operation on Tenant"));
         }
 

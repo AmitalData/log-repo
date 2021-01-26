@@ -28,10 +28,8 @@ namespace Logitude.ShipmentTests.Steps
         [When(@"Create master shipment API request sent")]
         public void WhenCreateMasterShipmentAPIRequestSent()
         {
-            //ShipmentContext.MasterShipment.BranchId = null;
             var Response = APICaller.CallPost<ShipmentPM>(ShipmentContext.MasterShipment, Urls.ShipmentController, UserTenant.Token);
             ShipmentContext.MasterShipment = Response?.Data;
-            
         }
 
         [Then(@"A new master created successfully")]
