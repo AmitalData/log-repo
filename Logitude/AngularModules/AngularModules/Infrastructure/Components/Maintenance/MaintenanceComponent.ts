@@ -1545,6 +1545,17 @@ export class MaintenanceComponent {
                 logitudeWindow.Show('./Accounting/Components/Maintenance/AccountingFunctionalTestComponent');
 
             } break;
+            case "jokeracctest": {
+
+
+                var logitudeWindow = new LogitudeWindow();
+                logitudeWindow.Width = 1600;
+                logitudeWindow.Height = 1200;
+                logitudeWindow.Title = "Accounting main Tester";
+                logitudeWindow.ShowCloseButton = true;
+                logitudeWindow.Show('./Accounting/Components/Maintenance/Tester/AccountingMainTesterComponent');
+
+            } break;
             case "jokeraccloadtest": {
 
 

@@ -99,6 +99,7 @@ namespace WebFreight.Web.AccountingWebServices.Testers
         //DateTime _MyDate;
         protected void Page_Load(object sender, EventArgs e)
         {
+            throw new Exception("");
             LogMessagingUtil.Instance.Clear();
             //var testIt = new AccountingModel.WebInjection.XLSUtil();
             //testIt.GetDataTableFromWorkSheet(null,"");
@@ -202,7 +203,7 @@ namespace WebFreight.Web.AccountingWebServices.Testers
                 Tenant = 989,
                 accoutingDate = DateTime.Now.AddMonths(-1),
                 GLAccountId = "1-1",
-                verbose = true,
+                verbose = true
             };
             try
             {
