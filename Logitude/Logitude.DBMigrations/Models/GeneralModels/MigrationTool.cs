@@ -20,6 +20,7 @@ namespace Logitude.DBMigrations.Models
 
         protected string Root;
         protected string MissingIndexesWarnings = "";
+        protected string MissingUniqueConstraintsWarnings = "";
         protected List<TableDefinition> DXMLTablesDefinitions;
         protected List<DXMLHash> DXMLHashes;
         protected List<ExecutedSxmlFile> ExecutedSxmlFiles;
@@ -80,6 +81,7 @@ namespace Logitude.DBMigrations.Models
             GeneratedScript scriptsToSave = GenerateAndExecuteDBScripts(dxmlFiles, sxmlFiles);
             SaveScripts(scriptsToSave);
             ExportMissingIndexesWarnings();
+            ExportMissingUniqueConstraintsWarnings();
         }
 
         protected void ValidateDBFiles(string[] dxmlFiles, string[] sxmlFiles)
@@ -323,6 +325,7 @@ namespace Logitude.DBMigrations.Models
             dxmlGeneratedScript.GeneratedScript = AppendToGeneratedScript(dxmlGeneratedScript.GeneratedScript, dxmlTable.TableDefinition.DBType, generatedScripts);
             dxmlGeneratedScript.RelationsScript = AppendToGeneratedScript(dxmlGeneratedScript.RelationsScript, dxmlTable.TableDefinition.DBType, databaseMigrationsResult.RelationsScript);
             MissingIndexesWarnings += databaseMigrationsResult.MissingIndexesWarnings;
+            MissingUniqueConstraintsWarnings += databaseMigrationsResult.MissingUniqueConstraintsWarnings;
 
             return dxmlGeneratedScript;
         }
@@ -351,13 +354,15 @@ namespace Logitude.DBMigrations.Models
             string indexesScript = databaseMigrations.GetIndexesScript();
             string missingIndexesWarnings = databaseMigrations.GetMissingIndexesWarnings();
             string uniqueConstraintsScript = databaseMigrations.GetUniqueConstraintsScript();
-            
+            string missingUniqueConstraintsWarnings = databaseMigrations.GetMissingUniqueConstraintsWarnings();
+
             return new DatabaseMigrationsResult
             {
                 MigrationsScript = migrationsScript,
                 RelationsScript = relationsScript,
                 IndexesScript = indexesScript,
                 MissingIndexesWarnings = missingIndexesWarnings,
+                MissingUniqueConstraintsWarnings = missingUniqueConstraintsWarnings,
                 UniqueConstraintsScript = uniqueConstraintsScript
             };
         }
@@ -571,6 +576,26 @@ namespace Logitude.DBMigrations.Models
             }
 
             File.WriteAllText(missingIndexesWarningsFilePath, missingIndexesWarningsToExport);
+        }
+
+        protected void ExportMissingUniqueConstraintsWarnings()
+        {
+            string missingUniqueConstraintsWarningsToExport = !String.IsNullOrEmpty(MissingUniqueConstraintsWarnings) ? MissingUniqueConstraintsWarnings.TrimEnd('\n') : "";
+            string projectDirectory = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
+            if (ToolArguments.IsArgumentProvided(Arguments.DEPLOYMENT))
+            {
+                projectDirectory = AppDomain.CurrentDomain.BaseDirectory;
+            }
+
+            string warningsDirectoryPath = Path.Combine(projectDirectory, @"Warnings");
+            string missingUniqueConstraintsWarningsFilePath = Path.Combine(projectDirectory, @"Warnings\MissingUniqueConstraintsWarnings.txt");
+
+            if (!Directory.Exists(warningsDirectoryPath))
+            {
+                Directory.CreateDirectory(warningsDirectoryPath);
+            }
+
+            File.WriteAllText(missingUniqueConstraintsWarningsFilePath, missingUniqueConstraintsWarningsToExport);
         }
 
         protected GeneratedScript AppendToGeneratedScript(GeneratedScript generatedScript, string dbType, string script)
@@ -2591,8 +2616,7 @@ namespace Logitude.DBMigrations.Models
                 string[] dxmlFiles = new string[] { dbConfigurationsDxml };
                 HandleDXMLFiles(dxmlFiles, true);
                 string validationMessage = "Error: Cannot Find Environment Configuration In Table [DBMigrationConfigurations] In Main Database, " +
-                                           "To Continue You Should Add It Using Insert Statement\n\n" +
-                                           "For Example: INSERT INTO [dbo].[DBMigrationConfigurations] VALUES('Env', 'Local')";
+                                           "To Continue You Should Add It Using Insert Statement";
                 ExitTool(validationMessage);
             }
         }

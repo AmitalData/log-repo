@@ -13,5 +13,6 @@ namespace Logitude.DBMigrations.Models
         public string IndexesScript { get; set; }
         public string UniqueConstraintsScript { get; set; }
         public string MissingIndexesWarnings { get; set; }
+        public string MissingUniqueConstraintsWarnings { get; set; }
     }
 }
