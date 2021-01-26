@@ -123,8 +123,20 @@ namespace Logitude.Server.Tools
 
             return json;
         }
+        public static object JsonConvertDeserializeObject(string json)
+        {
+            var objT = Newtonsoft.Json.JsonConvert.DeserializeObject(json);
+            
+
+            return objT;
+        }
+        public static T JsonConvertDeserializeTObject<T>(string json)
+        {
+            var objT = Newtonsoft.Json.JsonConvert.DeserializeObject<T>(json);
 
 
+            return objT;
+        }
 
         public static T DeserializeElementObject<T>(string xml)
         {
