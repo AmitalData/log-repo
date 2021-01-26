@@ -41,5 +41,6 @@
         public string AdditionalFilters { get; set; }
         public bool DontApplyVirtualization { get; set; }
         public bool GetAll { get; set; }
+        public bool ForceCacheRefresh { get; set; }
     }
 }
