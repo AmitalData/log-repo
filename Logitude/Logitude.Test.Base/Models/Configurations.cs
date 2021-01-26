@@ -4,22 +4,21 @@
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true)]
     [System.Xml.Serialization.XmlRootAttribute(Namespace = "", IsNullable = false)]
-    public partial class Configurations
+    public class Configurations
     {
-
-        private ConfigurationsGeneral generalField;
+        private ConfigurationsServerSettings serverSettingsField;
 
         private ConfigurationsUser[] usersField;
 
-        public ConfigurationsGeneral General
+        public ConfigurationsServerSettings ServerSettings
         {
             get
             {
-                return this.generalField;
+                return this.serverSettingsField;
             }
             set
             {
-                this.generalField = value;
+                this.serverSettingsField = value;
             }
         }
 
@@ -40,20 +39,20 @@
     [System.SerializableAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true)]
-    public partial class ConfigurationsGeneral
+    public partial class ConfigurationsServerSettings
     {
 
-        private string serverUrlField;
+        private string urlField;
 
-        public string ServerUrl
+        public string Url
         {
             get
             {
-                return this.serverUrlField;
+                return this.urlField;
             }
             set
             {
-                this.serverUrlField = value;
+                this.urlField = value;
             }
         }
     }

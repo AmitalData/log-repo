@@ -26,7 +26,7 @@ namespace Logitude.Test.Base.Hooks
             Configurations configurations = GetConfigurations();
             if(configurations != null)
             {
-                Settings.ServerUrl = configurations.General.ServerUrl;
+                Settings.ServerUrl = configurations.ServerSettings.Url;
                 Settings.DefaultUserCredentials = GetUserCredentialsFromConfigurations(configurations, true);
                 Settings.OtherUserCredentials = GetUserCredentialsFromConfigurations(configurations, false);
             }

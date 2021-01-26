@@ -151,7 +151,7 @@ namespace Logitude.Test.Base.Services
                 IDictionary<string, string> apiQueryFiltersDictionary = JsonConvert.DeserializeObject<IDictionary<string, string>>(apiQueryFiltersJson);
                 IEnumerable<string> apiQueryFiltersQueryStringList = apiQueryFiltersDictionary.Where(x => !String.IsNullOrEmpty(x.Value))
                                                                                               .Select(x => HttpUtility.UrlEncode(x.Key) + "=" + HttpUtility.UrlEncode(x.Value));
-                string apiQueryFiltersQueryString = "?ForceCacheRefresh=false&" + string.Join("&", apiQueryFiltersQueryStringList);
+                string apiQueryFiltersQueryString = "?" + string.Join("&", apiQueryFiltersQueryStringList);
                 return apiQueryFiltersQueryString;
             }
             catch (Exception)
