@@ -73,7 +73,8 @@ delete from Customers where Tenant = @Tenant
 delete from Cards where Tenant = @Tenant and (PartnerTypeId = 'CS' or PartnerTypeId = 'PO')
 
 END
-]]></SqlScript>
+]]>
+  </SqlScript>
   <OracleScript>
-</OracleScript>
+  </OracleScript>
 </Procedure>

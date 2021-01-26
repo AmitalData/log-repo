@@ -11,7 +11,6 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "bbf07032-5e01-4cf5-89e0-dec565185f45",
 						"exec": [
 							"var expectedHttpStatus = 200;",
 							"var maxNumberOfTries = 10;",
@@ -75,7 +74,6 @@
 				{
 					"listen": "prerequest",
 					"script": {
-						"id": "5d5447a0-89f1-4f5d-895e-4231822d84f2",
 						"exec": [
 							""
 						],
@@ -95,7 +93,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\"Email\":\"{{Email}}\",\"Password\":\"{{Password}}\",\"IsUser\":true,\"GetToken\":true,\"ClientType\":\"Web\",\"Tenant\":\"{{Tenant}}\",\"GetInvalidDocumentToken\":true}\n",
+					"raw": "{\"Email\":\"{{Email3}}\",\"Password\":\"{{Password}}\",\"IsUser\":true,\"GetToken\":true,\"ClientType\":\"Web\",\"Tenant\":\"{{Tenant}}\",\"GetInvalidDocumentToken\":true}\n",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -127,7 +125,6 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "705f1218-53a8-48ee-8ffa-1c2d1e903b20",
 						"exec": [
 							"\r",
 							"pm.test(\"GetBIReportsFolder\", function () {\r",
@@ -201,7 +198,6 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "90d0741c-9c9f-4b91-8b2d-e082ecd9b23c",
 						"exec": [
 							"\r",
 							"pm.test(\"CreateBIReportFolder\", function () {\r",
@@ -272,7 +268,6 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "63488171-e976-4ff8-aa3a-bbba89ef29c8",
 						"exec": [
 							"\r",
 							"pm.test(\"GetBIReportId\", function () {\r",
@@ -381,7 +376,6 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "c83e0b9d-a76c-4bb0-af7d-bc88a4d37e46",
 						"exec": [
 							"\r",
 							"pm.test(\"GetAllDWObjectTable\", function () {\r",
@@ -435,7 +429,6 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "8f21b6cc-604a-4988-aea2-0577eff344ba",
 						"exec": [
 							"\r",
 							"pm.test(\"GetFactShipmentsCode\", function () {\r",
@@ -495,7 +488,6 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "f1b2f238-d066-4e0c-978e-df037d9cb13a",
 						"exec": [
 							"\r",
 							"pm.test(\"GetAllDWObjectFieldsGroupedByCategory\", function () {\r",
@@ -555,7 +547,6 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "fb5c4b8d-2ac5-4778-bec5-739579f7f34d",
 						"exec": [
 							"\r",
 							"pm.test(\"CheckIfReportNameExist\", function () {\r",
@@ -632,7 +623,6 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "dd05eb9b-254d-4c4d-a528-3d888b2f27ed",
 						"exec": [
 							"\r",
 							"pm.test(\"CreateBIReportFolder\", function () {\r",
@@ -733,7 +723,6 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "f9b81787-5950-4463-a128-68e9e1dc67c0",
 						"exec": [
 							"\r",
 							"pm.test(\"CreateBiReport\", function () {\r",
@@ -806,7 +795,6 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "44de11bc-32fd-4a79-9143-7b0cbf2c6560",
 						"exec": [
 							"\r",
 							"pm.test(\"GetByBIReportIdWithDetails\", function () {\r",
@@ -870,7 +858,6 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "3fd1cdb8-5b86-4ded-82d7-141f359a737a",
 						"exec": [
 							"\r",
 							"pm.test(\"RunBIReport1\", function () {\r",
@@ -954,7 +941,6 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "74e1ecab-7933-4b6b-b1fb-b50fddac5b6e",
 						"exec": [
 							"\r",
 							"pm.test(\"RunBIReport2\", function () {\r",
@@ -1038,7 +1024,6 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "32209f63-90c3-4ac7-99bb-48d307acdd93",
 						"exec": [
 							"\r",
 							"pm.test(\"UpdateBIReportLastRunBy\", function () {\r",
@@ -1096,6 +1081,5 @@
 			},
 			"response": []
 		}
-	],
-	"protocolProfileBehavior": {}
+	]
 }

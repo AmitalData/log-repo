@@ -117,6 +117,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                  CalculatedEnglishName = string.IsNullOrEmpty(card.EnglishName) ? card.LocalName : card.EnglishName,
                                                  CalculatedLocalName = string.IsNullOrEmpty(card.LocalName) ? card.EnglishName : card.LocalName,
                                                  CreatedByPartner = card.CreatedByPartner,
+                                                 BillToId = card.BillToId,
                                              });
 
 
@@ -238,6 +239,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                       StorageFreeDays = a.StorageFreeDays,
                                       RankId = a.Customer != null ? (a.Customer.Rank != null ? a.Customer.Rank.Id : null) : null,
                                       IndustryId = a.Customer != null ? (a.Customer.Industry != null ? a.Customer.Industry.Id : null) : null,
+                                      BillToId = a.BillToId,
                                   }).FirstOrDefault();
 
 
@@ -330,6 +332,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                   IsInternationalPartner = a.IsInternationalPartner,
                                   IsAutonomy = a.IsAutonomy,
                                   CreatedByPartner = a.CreatedByPartner,
+                                  BillToId = a.BillToId,
                               }).FirstOrDefault();
 
                     if (entity != null)
@@ -525,6 +528,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                               IsInternationalPartner = a.IsInternationalPartner,
                                               IsAutonomy = a.IsAutonomy,
                                               CreatedByPartner = a.CreatedByPartner,
+                                              BillToId = a.BillToId,
                                           });
             return cards;
         }
@@ -593,6 +597,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                               IsInternationalPartner = a.IsInternationalPartner,
                                               IsAutonomy = a.IsAutonomy,
                                               CreatedByPartner = a.CreatedByPartner,
+                                              BillToId = a.BillToId,
                                           });
             return cards;
         }
@@ -689,6 +694,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                           IsInternationalPartner = a.IsInternationalPartner,
                                           IsAutonomy = a.IsAutonomy,
                                           CreatedByPartner = a.CreatedByPartner,
+                                          BillToId = a.BillToId,
                                       }).FirstOrDefault();
 
                             if (CacheManager.CacheWrapper.Get(entityName) == null && entity != null)
@@ -774,6 +780,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                       IsInternationalPartner = a.IsInternationalPartner,
                                       IsAutonomy = a.IsAutonomy,
                                       CreatedByPartner = a.CreatedByPartner,
+                                      BillToId = a.BillToId,
                                   }).FirstOrDefault();
                     }
                 }
@@ -849,6 +856,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                   IsInternationalPartner = a.IsInternationalPartner,
                                   IsAutonomy = a.IsAutonomy,
                                   CreatedByPartner = a.CreatedByPartner,
+                                  BillToId = a.BillToId,
                               }).FirstOrDefault();
                 }
 
@@ -919,6 +927,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     CalculatedLocalName = string.IsNullOrEmpty(entityPOCO.LocalName) ? entityPOCO.EnglishName : entityPOCO.LocalName,
                     CreatedByPartner = entityPOCO.CreatedByPartner,
                     StorageFreeDays = entityPOCO.StorageFreeDays,
+                    BillToId = entityPOCO.BillToId,
                 };
 
                 if (entityPOCO.Customer != null)
@@ -1158,6 +1167,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                 RankId = card.Customer != null ? (card.Customer.Rank != null ? card.Customer.Rank.Name : null) : null,
                                                 IndustryId = card.Customer != null ? (card.Customer.Industry != null ? card.Customer.Industry.Name : null) : null,
                                                 RecordDate = card.UpdateDate != null ? card.UpdateDate : card.CreateDate,
+                                                BillToId = card.BillToId,
                                             };
 
             if (myResult.Count() > 0)
@@ -1237,6 +1247,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                               CalculatedEnglishName = string.IsNullOrEmpty(a.EnglishName) ? a.LocalName : a.EnglishName,
                                               CalculatedLocalName = string.IsNullOrEmpty(a.LocalName) ? a.EnglishName : a.LocalName,
                                               CreatedByPartner = a.CreatedByPartner,
+                                              BillToId = a.BillToId,
                                           });
             return cards;
         }
@@ -2088,6 +2099,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                        IsInternationalPartner = a.IsInternationalPartner,
                                        IsAutonomy = a.IsAutonomy,
                                        CreatedByPartner = a.CreatedByPartner,
+                                       BillToId = a.BillToId,
                                    }).ToList();
             return card.FirstOrDefault();
         }

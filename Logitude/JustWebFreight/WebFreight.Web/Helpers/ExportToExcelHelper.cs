@@ -75,6 +75,7 @@ namespace WebFreight.Web.Helpers
             queryOperations.GetAll = true;
             queryOperations.PageIndex = 0;
             queryOperations.GetAll = true;
+            queryOperations.UserId = exportToExcelArgs.UserId;
             MethodInfo getListMethodInfo = null;
             MethodInfo getCountMethodInfo = null;
             object context = null;

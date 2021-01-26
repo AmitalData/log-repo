@@ -484,6 +484,11 @@ export class CardPM {
     public set Address2(newValue: string) { if (this.address2 != newValue) { this.address2 = newValue; this.MarkAsDirty("Address2"); } }
        
 	 
+    private billToId: string;
+    public get BillToId() { return this.billToId; }
+    public set BillToId(newValue: string) { if (this.billToId != newValue) { this.billToId = newValue; this.MarkAsDirty("BillToId"); } }
+       
+	 
 
     public OldEntityPM: CardPM;
 		

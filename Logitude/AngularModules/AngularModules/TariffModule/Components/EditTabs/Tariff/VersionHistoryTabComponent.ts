@@ -840,53 +840,61 @@ export class VersionHistoryTariffLine {
         if (!AppTool.IsNullOrEmpty(ichargeTypeId)) {
             if (this.myTariffLine.ContainersPrices.filter(d => d.SurchargeId == ichargeTypeId).length > 0) {
                 this.myTariffLine.ContainersPrices.filter(d => d.SurchargeId == ichargeTypeId).forEach((item) => {
-                    if (!AppTool.IsNullOrEmpty(this.myTariff.ContainerType1Id)) {
-                        if (AppTool.IsNullOrZero(item.Price1)) {
-                            myValue = "-";
-                        }
 
-                        else {
-                            myValue = item.Price1.toString();
-                        }
+                    if (!AppTool.IsNullOrZero(item.CostPrice)) {
+                        myValue = item.CostPrice.toString();
                     }
 
-                    if (!AppTool.IsNullOrEmpty(this.myTariff.ContainerType2Id)) {
-                        if (AppTool.IsNullOrZero(item.Price2)) {
-                            myValue = myValue + " / -";
+                    else {
+
+                        if (!AppTool.IsNullOrEmpty(this.myTariff.ContainerType1Id)) {
+                            if (AppTool.IsNullOrZero(item.Price1)) {
+                                myValue = "-";
+                            }
+
+                            else {
+                                myValue = item.Price1.toString();
+                            }
                         }
 
-                        else {
-                            myValue = myValue + " / " + item.Price2.toString();
-                        }
-                    }
+                        if (!AppTool.IsNullOrEmpty(this.myTariff.ContainerType2Id)) {
+                            if (AppTool.IsNullOrZero(item.Price2)) {
+                                myValue = myValue + " / -";
+                            }
 
-                    if (!AppTool.IsNullOrEmpty(this.myTariff.ContainerType3Id)) {
-                        if (AppTool.IsNullOrZero(item.Price3)) {
-                            myValue = myValue + " / -";
-                        }
-
-                        else {
-                            myValue = myValue + " / " + item.Price3.toString();
-                        }
-                    }
-
-                    if (!AppTool.IsNullOrEmpty(this.myTariff.ContainerType4Id)) {
-                        if (AppTool.IsNullOrZero(item.Price4)) {
-                            myValue = myValue + " / -";
+                            else {
+                                myValue = myValue + " / " + item.Price2.toString();
+                            }
                         }
 
-                        else {
-                            myValue = myValue + " / " + item.Price4.toString();
-                        }
-                    }
+                        if (!AppTool.IsNullOrEmpty(this.myTariff.ContainerType3Id)) {
+                            if (AppTool.IsNullOrZero(item.Price3)) {
+                                myValue = myValue + " / -";
+                            }
 
-                    if (!AppTool.IsNullOrEmpty(this.myTariff.ContainerType5Id)) {
-                        if (AppTool.IsNullOrZero(item.Price5)) {
-                            myValue = myValue + " / -";
+                            else {
+                                myValue = myValue + " / " + item.Price3.toString();
+                            }
                         }
 
-                        else {
-                            myValue = myValue + " / " + item.Price5.toString();
+                        if (!AppTool.IsNullOrEmpty(this.myTariff.ContainerType4Id)) {
+                            if (AppTool.IsNullOrZero(item.Price4)) {
+                                myValue = myValue + " / -";
+                            }
+
+                            else {
+                                myValue = myValue + " / " + item.Price4.toString();
+                            }
+                        }
+
+                        if (!AppTool.IsNullOrEmpty(this.myTariff.ContainerType5Id)) {
+                            if (AppTool.IsNullOrZero(item.Price5)) {
+                                myValue = myValue + " / -";
+                            }
+
+                            else {
+                                myValue = myValue + " / " + item.Price5.toString();
+                            }
                         }
                     }
                 });

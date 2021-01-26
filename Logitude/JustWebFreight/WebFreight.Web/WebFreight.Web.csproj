@@ -1033,6 +1033,7 @@
     <Compile Include="Controllers\Integration\Shipment\ShipmentIntegrationVariables.cs" />
     <Compile Include="Controllers\QuoteModel\Generated\PMControllers\QuoteClosingReasonController.Generated.cs" />
     <Compile Include="Controllers\CargoTrackingModel\CargoTrackingBrandingController.cs" />
+    <Compile Include="Controllers\ShipmentsModel\ApiHelpers\ExternalTasksQueueHelper.cs" />
     <Compile Include="Controllers\ShipmentsModel\Extended\LogboxShipmentExportExcelController.cs" />
     <Compile Include="Controllers\ShipmentsModel\Generated\ListControllers\AccountingInformationIdentifierViewsController.Generated.cs" />
     <Compile Include="Controllers\ShipmentsModel\DocumentApprovalController.cs" />
@@ -2615,6 +2616,7 @@
     <Compile Include="Helpers\DataProviderHelpers\ShipmentsEventsListDataProvider.cs" />
     <Compile Include="Helpers\AutomationDocumentHelper.cs" />
     <Compile Include="Helpers\DocumentTypeTemplateDefultAttachmentService.cs" />
+    <Compile Include="Helpers\UserViewLinkLimitationService.cs" />
     <Compile Include="Helpers\DWQueryBuilderHelper.cs" />
     <Compile Include="Helpers\AgentSharedManifestHelper.cs" />
     <Compile Include="Helpers\APICredentialsHelper.cs" />

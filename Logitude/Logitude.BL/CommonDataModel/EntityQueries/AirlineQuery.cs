@@ -127,6 +127,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                    EnglishName = a.Card.EnglishName,
                                    PrimaryContactId = a.Card.PrimaryContactId,
                                },
+                               BillToId = a.Card.BillToId,
                            }).FirstOrDefault();
 
 
@@ -229,6 +230,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                    EnglishName = a.Card.EnglishName,
                                    PrimaryContactId = a.Card.PrimaryContactId,
                                },
+                               BillToId = a.Card.BillToId,
                            }).FirstOrDefault();
 
 
@@ -333,6 +335,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                    PrimaryContactId = a.Card.PrimaryContactId,
                                    GLAccountDisplayNumber = a.Card.GLAccountDisplayNumber,
                                },
+                               BillToId = a.Card.BillToId,
                            }).FirstOrDefault();
 
             CardExternalCodeByCurrencyRepository cardExternalCodeByCurrencyRepository = new CardExternalCodeByCurrencyRepository(repository.context);
@@ -448,6 +451,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                  MetodoPagoCode = a.Card.MetodoPagoCode,
                                                  UsoCFDICode = a.Card.UsoCFDICode,
                                                  ImageDetailId = a.Card.ImageDetailId,
+                                                 BillToId = a.Card.BillToId,
                                              };
             return airlines;
         }
@@ -536,6 +540,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                              MetodoPagoCode = a.Card.MetodoPagoCode,
                              UsoCFDICode = a.Card.UsoCFDICode,
                              ImageDetailId = a.Card.ImageDetailId,
+                             BillToId = a.Card.BillToId,
                          }).AsQueryable();
 
             IQueryable<AirlinePM> query2 = null;

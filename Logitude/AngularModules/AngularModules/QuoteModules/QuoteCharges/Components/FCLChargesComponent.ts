@@ -2715,6 +2715,13 @@ export class FCLQuoteChargeItem extends BaseComponent {
         }
     }
 
+    get SaleIsFixedRate() { return this.EntityPM.SaleIsFixedRate; }
+    set SaleIsFixedRate(value: boolean) {
+        if (this.EntityPM.SaleIsFixedRate != value) {
+            this.EntityPM.SaleIsFixedRate = value;
+        }
+    }
+
     get SaleMinAmount() { return this.EntityPM.SaleMinAmount; }
     set SaleMinAmount(newValue: number) {
         if (this.EntityPM.SaleMinAmount != newValue) {
@@ -4188,6 +4195,8 @@ export class FCLQuoteChargeItem extends BaseComponent {
         this.ComputeCostInSalePrice5();
         this.ComputeCostInSaleAmount();
         this.EntityPM.SaleTotalAmountLocal = AppTool.IsNullOrEmpty(this.SaleTotalAmount) ? null : AppTool.Round(this.SaleTotalAmount * this.SaleExchangeRate, 2);
+        this.EntityPM.SaleAmountInSaleCurrency = AppTool.IsNullOrEmpty(this.EntityPM.SaleTotalAmountLocal) ? null : AppTool.Round(this.EntityPM.SaleTotalAmountLocal / this.QuotePM.ExchangeRate, 2);
+
         this.SetUIProperties_AllIn();
     }
 

@@ -91,6 +91,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                         PrimaryContactId = a.Card.PrimaryContactId,
                                         GLAccountDisplayNumber = a.Card.GLAccountDisplayNumber,
                                     },
+                                    BillToId = a.Card.BillToId,
                                 }).FirstOrDefault();
 
             CardExternalCodeByCurrencyRepository cardExternalCodeByCurrencyRepository = new CardExternalCodeByCurrencyRepository(repository.context);
@@ -185,6 +186,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                         EnglishName = a.Card.EnglishName,
                                         PrimaryContactId = a.Card.PrimaryContactId,
                                     },
+                                    BillToId = a.Card.BillToId,
                                 }).FirstOrDefault();
 
             return shippingLine;
@@ -238,6 +240,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                            CAAT = a.CAAT,
                                                            CBSA = a.CBSA,
                                                            ImageDetailId = a.Card.ImageDetailId,
+                                                           BillToId = a.Card.BillToId,
                                                        };
             return shippingLines;
         }
@@ -296,6 +299,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                              CAAT = a.CAAT,
                              CBSA = a.CBSA,
                              ImageDetailId = a.Card.ImageDetailId,
+                             BillToId = a.Card.BillToId,
                          }).AsQueryable();
 
             IQueryable<ShippingLinePM> query2 = null;

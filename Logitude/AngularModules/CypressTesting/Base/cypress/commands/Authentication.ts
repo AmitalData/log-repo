@@ -13,7 +13,7 @@ Cypress.Commands.add("Login", () => {
 
         cy.fixture("Login.json").then((LoginData) => {
             CompleteLoginProcess(LoginData.email,LoginData.password,LoginData.url,LoginData.tenant);
-        }) 
+        })
     }
     else{
 

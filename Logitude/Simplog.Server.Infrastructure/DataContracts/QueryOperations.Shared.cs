@@ -14,7 +14,7 @@ namespace Simplog.Server.Infrastructure.DataContracts
         string querySection;
         public bool GetAll { get; set; }
 
-
+        public string UserId { get; set; }
         public string ObjectTableName { get; set; }
         public string QuerySection
         {

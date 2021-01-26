@@ -77,13 +77,22 @@
                     </td>
                 </tr>
 
-                <tr style="height: 80px;">
-                    <td style="width:50%">
-                        <div class="FillParent">
-                            <LogTextBox [ObjectFieldName]="'EventNotes'" [IsMultiline]="true" [DataContext]="DataContext"></LogTextBox>
-                        </div>
+                <tr style="height: 90px;">
+                    <td>
+                        <table>
+                            <tr>
+                                <td style="width: 350px; height: 90px;">
+                                    <div style="height: 90px;">
+                                        <LogTextBox [NoObjectField]="true" [ObjectFieldName]="'EventNotes'" [IsMultiline]="true" [DataContext]="DataContext"></LogTextBox>
+                                    </div>
+                                </td>
+
+                                <td>
+                                    <div></div>
+                                </td>
+                            </tr>
+                        </table>
                     </td>
-                    <td></td>
                 </tr>
             </table>
         </td>

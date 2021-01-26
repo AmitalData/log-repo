@@ -119,7 +119,7 @@
 	 ,@Shipper ,@Consignee, @Agent ,@Customer , @Incoterm ,@CreatedByUser ,@OpenDate , @SentDate ,@AcceptedDate ,@DeclinedDate ,@StartDate ,@LastActivityDate
 	, @Salesman ,@QuoteStages, @Notes ,@QuoteClosingReasons , @EstimatedProfitInLocal 
 	, @SaleCurrency ,@Subject , @GrossWeightInKG ,@ChargeableWeightInKG ,@VolumeInCBM ,@NumberOfPackages ,@NumberOfContainers
-	 , @ExpirationDate ,@IsAutomaticallyClosed ,@IncludePickUp ,@IncludeDelivery ,@StageDueDate ,@IsQuoteDataExternal ,@IsQuoteDocumentExternal,@DeliveryAddress ,@PickUpAddress,@AutomaticallyCloseDate,@ToCountry ,@FromCountry , @ShipperPartnerType,@ConsigneePartnerType ,  @CustomerPartnerType
+	 , @ExpirationDate ,@IsAutomaticallyClosed ,@IncludePickUp ,@IncludeDelivery ,@StageDueDate ,@IsQuoteDataExternal ,@IsQuoteDocumentExternal,@DeliveryAddress ,@PickUpAddress,@AutomaticallyCloseDate, @FromCountry,@ToCountry , @ShipperPartnerType,@ConsigneePartnerType ,  @CustomerPartnerType
 		 
 
 
@@ -175,7 +175,7 @@ END CATCH
 	 ,@Shipper ,@Consignee, @Agent ,@Customer , @Incoterm ,@CreatedByUser ,@OpenDate , @SentDate ,@AcceptedDate ,@DeclinedDate ,@StartDate ,@LastActivityDate
 	, @Salesman ,@QuoteStages, @Notes ,@QuoteClosingReasons , @EstimatedProfitInLocal 
 	, @SaleCurrency ,@Subject , @GrossWeightInKG ,@ChargeableWeightInKG ,@VolumeInCBM ,@NumberOfPackages ,@NumberOfContainers
-	 , @ExpirationDate ,@IsAutomaticallyClosed ,@IncludePickUp ,@IncludeDelivery ,@StageDueDate ,@IsQuoteDataExternal ,@IsQuoteDocumentExternal,@DeliveryAddress ,@PickUpAddress,@AutomaticallyCloseDate,@ToCountry ,@FromCountry , @ShipperPartnerType,@ConsigneePartnerType ,  @CustomerPartnerType
+	 , @ExpirationDate ,@IsAutomaticallyClosed ,@IncludePickUp ,@IncludeDelivery ,@StageDueDate ,@IsQuoteDataExternal ,@IsQuoteDocumentExternal,@DeliveryAddress ,@PickUpAddress,@AutomaticallyCloseDate,@FromCountry ,@ToCountry , @ShipperPartnerType,@ConsigneePartnerType ,  @CustomerPartnerType
 		 
 
 

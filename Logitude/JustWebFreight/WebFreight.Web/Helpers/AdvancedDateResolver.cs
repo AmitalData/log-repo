@@ -21,7 +21,7 @@ namespace WebFreight.Web.Helpers
             });
             return reportFilterItems;
         }
-        public DateTime GetDateValueByOptionCode(string optionCode)
+        public object GetDateValueByOptionCode(string optionCode)
         {
             DateTime dateValue = new DateTime();
             int quarterNumber = (DateTime.Now.Month - 1) / 3 + 1;
@@ -74,6 +74,9 @@ namespace WebFreight.Web.Helpers
                     dateValue = new DateTime(DateTime.Now.Year-1, 12, 31);
                     break;
                 default:
+                    if (string.IsNullOrEmpty(optionCode))
+                        return optionCode;
+                    
                     dateValue = Convert.ToDateTime(optionCode);
                     break;
             }

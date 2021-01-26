@@ -182,6 +182,9 @@
     <None Include="DBOthers\QuoteModel\Triggers\TriggerOnCreate_AutomaticLastUpdateDateQuotes.dxml" />
     <None Include="DBOthers\QuoteModel\Triggers\Trigger_AutomaticLastUpdateDateQuotes.dxml" />
     <None Include="DBScripts\InfrastructureModel\202101120950_ModifyDBMigrationLastScriptTrigger.sxml" />
+    <None Include="DBOthers\CommonDataModel\Procedures\dbo.usp_DoTheTableDeletionSet.dxml" />
+    <None Include="DBOthers\CommonDataModel\Procedures\usp_SearchForeignkeyTree.dxml" />
+    <None Include="DBScripts\InfrastructureModel\202101120950_ModifyDBMigrationLastScriptTrigger.sxml" />
     <None Include="DBOthers\QuoteModel\Triggers\TriggerOnCreate_AutomaticLastUpdateDateQuoteClosingReasons.dxml" />
     <None Include="DBOthers\QuoteModel\Triggers\TriggerOnCreate_AutomaticLastUpdateDateQuoteStages.dxml" />
     <None Include="DBOthers\QuoteModel\Triggers\Trigger_AutomaticLastUpdateDateQuoteClosingReasons.dxml" />
@@ -273,6 +276,8 @@
     <None Include="DBScripts\InsertDBMigrationSettingsData.sxml" />
     <None Include="DBScripts\InvoiceModel\202012060902_FillPaidDateOfAPInvoices.sxml" />
     <None Include="DBScripts\InvoiceModel\202012201448_SAT voided invoices and payments.sxml" />
+    <None Include="DBScripts\InvoiceModel\202101231210_FillPartnerIdARInvoices.sxml" />
+    <None Include="DBScripts\InvoiceModel\202101231212_FillPartnerIdARPayments.sxml" />
     <None Include="DBScripts\QuoteModel\202010270950_AddIsRegionalTAXToQuoteTemplateTextCode.sxml" />
     <None Include="DBScripts\InvoiceModel\202010260915_UpdateSearchFieldsOfARInvoices.sxml" />
     <None Include="DBScripts\InvoiceModel\202010261215_UpdateSearchFieldsOfAPPayments.sxml" />

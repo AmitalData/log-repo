@@ -25,7 +25,7 @@ namespace WebFreight.Web.Helpers
                 if (tenants == null) isSecure = IsBIReportDataSecure(bIReportData);
                 else isSecure = IsBIReportCenteralDataSecure(bIReportData , tenants);
 
-                if (!isSecure) throw new Exception("You are not authorized to view the content. The returned data is doesn't belong to the right tenant!");
+                if (!isSecure) throw new Exception("You are not authorized to view the content.");
             }
         }
 

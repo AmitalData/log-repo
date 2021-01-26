@@ -2232,6 +2232,13 @@ export class QuoteChargeItem extends BaseComponent {
         }
     }
 
+    get SaleIsFixedRate() { return this.EntityPM.SaleIsFixedRate; }
+    set SaleIsFixedRate(value: boolean) {
+        if (this.EntityPM.SaleIsFixedRate != value) {
+            this.EntityPM.SaleIsFixedRate = value;
+        }
+    }
+
     SetSaleQuantity(ChargesGroupCode: string = "FRT") {
         var myResult = null;
 
@@ -2737,6 +2744,8 @@ export class QuoteChargeItem extends BaseComponent {
         this.ComputeCostInSalePrice();
         this.ComputeCostInSaleAmount();
         this.EntityPM.SaleTotalAmountLocal = AppTool.IsNullOrEmpty(this.SaleTotalAmount) ? null : AppTool.Round(this.SaleTotalAmount * this.SaleExchangeRate, 2);
+        this.EntityPM.SaleAmountInSaleCurrency = AppTool.IsNullOrEmpty(this.EntityPM.SaleTotalAmountLocal) ? null : AppTool.Round(this.EntityPM.SaleTotalAmountLocal / this.QuotePM.ExchangeRate, 2);
+
         this.SetUIProperties_AllIn();
     }
 }

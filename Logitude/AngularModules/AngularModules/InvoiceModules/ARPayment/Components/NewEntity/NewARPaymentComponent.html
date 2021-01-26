@@ -44,12 +44,51 @@
                                     </td>
 
                                     <td style="width:230px;" [style.padding-right]="isRTL ? 'initial' : '36px'" [style.padding-left]="isRTL ? '36px' : 'initial'">
-                                        <ComboBox
-                                            [ItemsSource]="PartnerTypes"
-                                            [Binding]="'Name'"
-                                            [SelectedItem]="SelectedPartnerType"
-                                            (SelectedItemChanged)="SelectedPartnerType = $event"></ComboBox>
+                                        <ComboBox [ItemsSource]="PartnerTypes"
+                                                  [Binding]="'Name'"
+                                                  [SelectedItem]="SelectedPartnerType"
+                                                  (SelectedItemChanged)="SelectedPartnerType = $event"></ComboBox>
 
+                                    </td>
+
+                                    <td>
+                                        <div></div>
+                                    </td>
+
+                                </tr>
+
+
+                                <!-- PartnerId -->
+                                <tr class="FormFieldRow">
+                                    <td style="width:120px; ">
+                                        <LogLabel [ObjectFieldName]="'PartnerId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                    </td>
+
+                                    <td style="width:230px; ">
+                                        <LogLov *ngIf="isPartnerTypesFilterEnabled"
+                                                [ObjectFieldName]="'PartnerId'"
+                                                [ObjectTableName]="ObjectTableName"
+                                                [DataContext]="DataContext"
+                                                [SelectedValue]="PartnerId"
+                                                [LookUpTableName]="'Card'"
+                                                [DependencyFilter1Value]="filterByPartnerTypeCode"
+                                                [DisplayFieldsFromList]="DisplayFieldsFromList"
+                                                [DisplayLocalFieldsFromList]="DisplayLocalFieldsFromList"
+                                                [CustomizedWidth]="BillToLovSizeForFullAccounting">
+                                        </LogLov>
+
+                                        <LogLov *ngIf="!isPartnerTypesFilterEnabled"
+                                                [ObjectFieldName]="'PartnerId'"
+                                                [ObjectTableName]="ObjectTableName"
+                                                [DataContext]="DataContext"
+                                                [SelectedValue]="PartnerId"
+                                                [LookUpTableName]="'Card'"
+                                                [DependencyFilter1Value]="'CS,AG,AC,AL,CG,SG,SL,TR,VD,WH'"
+                                                [DependencyFilter1IsList]="true"
+                                                [DisplayFieldsFromList]="DisplayFieldsFromList"
+                                                [DisplayLocalFieldsFromList]="DisplayLocalFieldsFromList"
+                                                [CustomizedWidth]="BillToLovSizeForFullAccounting">
+                                        </LogLov>
                                     </td>
 
                                     <td>
@@ -66,34 +105,13 @@
 
                                     <td style="width:230px; ">
 
-                                        <LogLov *ngIf="isPartnerTypesFilterEnabled"
+                                        <LogLov
                                                 [ObjectFieldName]="'BillToId'"
                                                 [ObjectTableName]="ObjectTableName"
                                                 [DataContext]="DataContext"
                                                 [SelectedValue]="BillToId"
-                                                [LookUpTableName]="'Card'"
-                                                [DependencyFilter1Value]="filterByPartnerTypeCode"
-                                                [DisplayFieldsFromList]="DisplayFieldsFromList"
-                                                [DisplayLocalFieldsFromList]="DisplayLocalFieldsFromList"
-                                                [CustomizedWidth]="BillToLovSizeForFullAccounting"
-                                                >
+                                                [LookUpTableName]="'Card'">
                                         </LogLov>
-
-                                        <LogLov *ngIf="!isPartnerTypesFilterEnabled"
-                                                [ObjectFieldName]="'BillToId'"
-                                                [ObjectTableName]="ObjectTableName"
-                                                [DataContext]="DataContext"
-                                                [SelectedValue]="BillToId"
-                                                [LookUpTableName]="'Card'"
-                                                [DependencyFilter1Value]="'CS,AG,AC,AL,CG,SG,SL,TR,VD,WH'"
-                                                [DependencyFilter1IsList]="true"
-                                                [DisplayFieldsFromList]="DisplayFieldsFromList"
-                                                [DisplayLocalFieldsFromList]="DisplayLocalFieldsFromList"
-                                                [CustomizedWidth]="BillToLovSizeForFullAccounting"
-                                                >
-                                        </LogLov>
-
-
                                     </td>
 
                                     <td>

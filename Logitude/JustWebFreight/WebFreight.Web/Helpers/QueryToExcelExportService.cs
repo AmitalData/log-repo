@@ -61,12 +61,15 @@ namespace WebFreight.Web.Helpers
             string ObjectTableName = queryFilters.ObjectTableName.Replace("Customs.", "");
             string fileName = GetOutpuFileName(queryFilters, ObjectTableName);
 
+            var loggedEmail = SecurityUtility.GetAuthenticatedUser();
+
             IQueueService queueservice = new DbQueueService();
             queueservice.InitializeQueue("QueryExportExecutionLogQueue", executionLog.Tenant);
             queueservice.Send(new Dictionary<string, string>() {
                     { "LogId", executionLog.Id },
                     { "Tenant", executionLog.Tenant.ToString() },
-                    { "FileName", fileName }
+                    { "FileName", fileName },
+                    { "LoggedUserEmail", loggedEmail },
                 }, tenant, null, null, null, null);
 
 
@@ -230,8 +233,9 @@ namespace WebFreight.Web.Helpers
     public class ExportQueryToExcelArgs {
         public CustomApiQueryFilters QueryFilters { get; set; }
         public bool IsWorkerRoleCall { get; set; }
-        CustomApiQueryFilters queryFilters;
         public string OutputFileName { get; set; }
+
+        public string LoggedUserEmail { get; set; }
     }
     public class ExportResult
     {

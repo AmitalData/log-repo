@@ -1627,7 +1627,8 @@ namespace WebFreight.Web.Helpers
                 TariffVersionUploadedExcelRepository excelRepository = new TariffVersionUploadedExcelRepository(tariffContext);
                 IQueryable<TariffVersionUploadedExcel> uploadedExcels = excelRepository.GetAllVersionUploadedExcels(tariffId, version, tenant);
 
-                string documentId = this.UploadExcelFileToStorage(tariffPM.TariffNumber,  tenant);
+                int index = uploadedExcels.Count() + 1;
+                string documentId = this.UploadExcelFileToStorage(tariffPM.TariffNumber, versionPM.Version, index, tenant);
 
                 TariffVersionUploadedExcelPM tariffVersionUploadedExcel = new TariffVersionUploadedExcelPM();
                 tariffVersionUploadedExcel.ChangeSetOp = ChangeSetOperation.Insert;
@@ -1636,7 +1637,7 @@ namespace WebFreight.Web.Helpers
                 tariffVersionUploadedExcel.Version = version;
                 tariffVersionUploadedExcel.NumberOfLines = count;
                 tariffVersionUploadedExcel.DocumentId = documentId;
-                tariffVersionUploadedExcel.Index = uploadedExcels.Count() + 1;
+                tariffVersionUploadedExcel.Index = index;
 
                 TariffVersionUploadedExcelUpdateService updateService = new TariffVersionUploadedExcelUpdateService(tariffContext, new Dictionary<string, IContext>(), tenant);
                 updateService.Update(tariffVersionUploadedExcel, true);
@@ -1664,18 +1665,18 @@ namespace WebFreight.Web.Helpers
             }
         }
 
-        private string UploadExcelFileToStorage(string tariffNumber, int tenant)
+        private string UploadExcelFileToStorage(string tariffNumber, int version, int index, int tenant)
         {
             Document document = null;
             IBlobService storageservice = ContainerAccessor.Container.Resolve(typeof(IBlobService), "StorageService", new ParameterOverride("", 1)) as IBlobService;
-            
+
             if (memoryStream != null)
             {
                 byte[] ByteData = memoryStream.ToArray();
                 DocumentRepository documentRepository = new DocumentRepository(tenant);
                 document = new Document()
                 {
-                    FileName = fileName,
+                    FileName = "Tariff:" + tariffNumber + "_Version:" + version + "_Index:" + index,
                     CreateDate = DateTime.Now,
                     Extension = fileExtension,
                     FileSize = ByteData.Length,

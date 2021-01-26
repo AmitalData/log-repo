@@ -995,6 +995,7 @@ export class ARInvoiceMenuButtonsHandler {
         AutoCreditInvoice.DebitAccount = this.EntityPM.DebitAccount;
         AutoCreditInvoice.TransferStatusCode = this.EntityPM.TransferStatusCode;
         AutoCreditInvoice.BillToAddressId = this.EntityPM.BillToAddressId;
+        AutoCreditInvoice.PartnerId = this.EntityPM.PartnerId;
         AutoCreditInvoice.BillToId = this.EntityPM.BillToId;
         AutoCreditInvoice.InternalNotes = note.replace("%InvoiceNumber", this.EntityPM.InvoiceNumber);// this.EntityPM.InternalNotes;
         AutoCreditInvoice.InvoiceCurrencyExchangeRate = this.EntityPM.InvoiceCurrencyExchangeRate;

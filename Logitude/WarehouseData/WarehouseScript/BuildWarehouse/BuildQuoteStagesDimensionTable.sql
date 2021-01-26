@@ -11,7 +11,7 @@
 	SELECT Id, Name, Code,dw_DWHSettings.Tenant, dw_DWHSettings.ParentTenant, dw_QuoteStages.AutomaticLastUpdateDate
 	From dw_QuoteStages
 	inner JOIN dw_DWHSettings ON dw_QuoteStages.Tenant = dw_DWHSettings.Tenant
-	OPEN QuoteStagesCursor FETCH NEXT FROM QuoteStagesCursor INTO  @Id ,@Name ,@Code, @SourceTenant , @ParentTenant, @AutomaticLastUpdateDate
+	OPEN QuoteStagesCursor FETCH NEXT FROM QuoteStagesCursor INTO  @Id, @Name ,@Code, @SourceTenant, @ParentTenant, @AutomaticLastUpdateDate
 	WHILE @@FETCH_STATUS = 0
 	BEGIN
 	
