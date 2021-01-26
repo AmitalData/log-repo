@@ -24,15 +24,22 @@ namespace Logitude.Customs.Data.Repsitories
 
         public string GetIdByPaymentNumber(string paymentNumber, int tenant)
        {
-            return 
-                (
-                from rec in   context.PaymentOrders
-                where rec.PaymentNumber == paymentNumber && rec.Tenant == tenant  
-                select rec.Id 
-                )
+            var payment =
+                            (
+                            from rec in context.PaymentOrders
+                            where rec.PaymentNumber == paymentNumber && rec.Tenant == tenant
+                            select rec
+                            )//
                 .FirstOrDefault();
            
                    
+            if(payment!= null)
+            {
+                return payment.Id;
+            }
+
+            return null;
+
        }
 
 

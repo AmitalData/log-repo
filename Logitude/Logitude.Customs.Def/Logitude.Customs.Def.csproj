@@ -76,6 +76,7 @@
     <Compile Include="EntityPMs\CustomsShipPM.cs" />
     <Compile Include="EntityPMs\Generated\CustomsShipPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\DeclarationExportRecipientPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\DocumentRejectTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\ExceptionReasonPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\ExporterRoleTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\LoadingSiteTypePM.Generated.cs" />
@@ -83,6 +84,7 @@
     <Compile Include="EntityPMs\Generated\PartyRelationshipTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\ReferantExceptionPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\ReferantTeamPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\ReleaseMessageTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\SuppInvoiceItemsAbachStatementPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\SupplierInvoiceItemsPricePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\SupplierInvoicePaymentPM.Generated.cs" />

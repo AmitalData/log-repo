@@ -29,5 +29,6 @@ INSERT INTO [dbo].[BatchServicesDefinitionMods]
   
     ]]>
   </Sql>
+  <Oracle Version="1"></Oracle>
 </Script>
 

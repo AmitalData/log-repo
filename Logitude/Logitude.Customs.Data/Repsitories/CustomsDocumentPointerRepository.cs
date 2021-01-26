@@ -61,6 +61,9 @@ namespace Logitude.Customs.Data.Repsitories
 
         public List<CustomsDocumentPointer> GetCustomDocumentPointersForTicketId(string CustomsDocumentsTicketId, int tenant)
         {
+            (context as System.Data.Entity.Infrastructure.IObjectContextAdapter).ObjectContext.ContextOptions.UseCSharpNullComparisonBehavior = false; //Pasted from <http://stackoverflow.com/questions/682429/how-can-i-query-for-null-values-in-entity-framework?lq=1> 
+
+
             List<CustomsDocumentPointer> customsDocumentPointers;
             customsDocumentPointers = (from a in context.CustomsDocumentPointers
                                        where (a.CustomsDocumentsTicketId == CustomsDocumentsTicketId)
@@ -72,6 +75,8 @@ namespace Logitude.Customs.Data.Repsitories
 
         public List<CustomsDocumentPointer> GetCustomDocumentPointersForCustomDocumentId(string customsDocumentId, int tenant)
         {
+            (context as System.Data.Entity.Infrastructure.IObjectContextAdapter).ObjectContext.ContextOptions.UseCSharpNullComparisonBehavior = false; //Pasted from <http://stackoverflow.com/questions/682429/how-can-i-query-for-null-values-in-entity-framework?lq=1> 
+
             List<string> ticketsIds = (from a in context.CustomsDocumentsTickets
                                        where a.DocumentsFilingId == customsDocumentId
                                        select a.Id).ToList();

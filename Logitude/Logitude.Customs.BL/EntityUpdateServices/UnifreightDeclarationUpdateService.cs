@@ -2397,23 +2397,30 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
             //<--- Yuval Chalup 31.12.2014 AMI-52371
             //_CCUFILEMPM.INDEXVALUE = _CCUFILEMPM.INDEXVALUE.GetValueOrDefault() + decSupplierInvoice.InvoiceAmount;
-            Decimal? firstInvoiceExchangeRate = (_CCUFILEMPM.CURRENCYRATE.HasValue && _CCUFILEMPM.CURRENCYRATE > 0) ? (Decimal?)_CCUFILEMPM.CURRENCYRATE : 1;
-            Decimal? invoiceExchangeRate = decSupplierInvoice.ExchangeRate;
-
-            //If invoice Exchange Rate does not exist, calculate the Exchange Rate
-            if (!invoiceExchangeRate.HasValue)
+            if (decSupplierInvoice.InvoiceCurrencyTypeCode != _CCUFILEMPM.COINIDN)
             {
-                rate = _CustomsExchangeRates.FirstOrDefault(obj => obj.CurrencyTypeCode == decSupplierInvoice.InvoiceCurrencyTypeCode);
-                if (rate != null)
+                Decimal? firstInvoiceExchangeRate = (_CCUFILEMPM.CURRENCYRATENEW.HasValue && _CCUFILEMPM.CURRENCYRATENEW > 0) ? (Decimal?)_CCUFILEMPM.CURRENCYRATENEW : 1;
+                Decimal? invoiceExchangeRate = decSupplierInvoice.ExchangeRate;
+
+                //If invoice Exchange Rate does not exist, calculate the Exchange Rate
+                if (!invoiceExchangeRate.HasValue)
                 {
-                    if (!string.IsNullOrWhiteSpace(rate.ExchangeRate.ToString()))
+                    rate = _CustomsExchangeRates.FirstOrDefault(obj => obj.CurrencyTypeCode == decSupplierInvoice.InvoiceCurrencyTypeCode);
+                    if (rate != null)
                     {
-                        invoiceExchangeRate = rate.ExchangeRate;
+                        if (!string.IsNullOrWhiteSpace(rate.ExchangeRate.ToString()))
+                        {
+                            invoiceExchangeRate = rate.ExchangeRate;
+                        }
                     }
                 }
-            }
 
-            _CCUFILEMPM.INDEXVALUE = _CCUFILEMPM.INDEXVALUE.GetValueOrDefault() + ((decSupplierInvoice.InvoiceAmount * invoiceExchangeRate) / firstInvoiceExchangeRate);
+                _CCUFILEMPM.INDEXVALUE = _CCUFILEMPM.INDEXVALUE.GetValueOrDefault() + ((decSupplierInvoice.InvoiceAmount * invoiceExchangeRate) / firstInvoiceExchangeRate);
+            }
+            else
+            {
+                _CCUFILEMPM.INDEXVALUE = _CCUFILEMPM.INDEXVALUE.GetValueOrDefault() + decSupplierInvoice.InvoiceAmount;
+            }
             supplierInvoicePM.VALUE = decSupplierInvoice.InvoiceAmount.ToNullableDouble("decSupplierInvoice.InvoiceAmount");
             //Yuval Chalup 31.12.2014 AMI-52371 --->
 

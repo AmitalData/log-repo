@@ -66,14 +66,16 @@ export class SendDeclarationTastCaseComponent extends BaseComponent{
     }
 
     OkButtonClicked() {
-         this.Test = "{";
-        if (!AppTool.IsNullOrEmpty(this.parametres))
+        this.Test = "{";
+         if (!AppTool.IsNullOrEmpty(this.parametres)) {
             this.Param1 = "{";
-        this.parametres.forEach(x => {
-            this.Param1 += "'" + x.Code + "' : '" + x.Value + "',";
-        });
-        this.Param1 = this.Param1.slice(0, this.Param1.length - 1);
-        this.Param1 += "}";
+            this.parametres.forEach(x => {
+                this.Param1 += "'" + x.Code + "' : '" + x.Value + "',";
+            });
+            this.Param1 = this.Param1.slice(0, this.Param1.length - 1);
+            this.Param1 += "}";
+        }
+  
 
        // this.Param1 = this.Param1.slice(1, this.Param1.length - 1);
 
@@ -105,6 +107,10 @@ export class SendDeclarationTastCaseComponent extends BaseComponent{
     ScenarioCodeClicked(evKey) {
         this._ScenarioCode = evKey;
         let detail = this.SincroTestCaseDetailList.filter(r => r.Code == this._ScenarioCode)[0];
+        if (AppTool.IsNullOrEmpty(detail.Param1)) {
+            this.parametres = [];
+            return;
+        }
          var list = JSON.parse(detail.Param1);
         var jsonListKeys = Object.keys(list);
         this.parametres = [];

@@ -976,6 +976,12 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="RequestedCustomsDocId"
+    Type="int">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="CustomerId"
     ReferencedTable="Cards"
@@ -1180,4 +1186,16 @@
     Columns="AmendmentOriginalDeclartation" />
   <Index
     Columns="CourierHAWB" />
+  <Index
+    Columns="IsCancelled" />
+  <Index
+    Columns="PaymentDate" />
+  <Index
+    Columns="AvailabilityDate" />
+  <Index
+    Columns="HatraDate" />
+
+  <Index
+  Columns="IsClose" />
+
 </Table>

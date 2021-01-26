@@ -55,7 +55,8 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                          AdditionalQuantityType = a.AdditionalQuantityType,
                                                          AdditionalQuantityTypeName = a.AdditionalMeasurmentUnit != null ? (a.AdditionalMeasurmentUnit.LocalName != null ? a.AdditionalMeasurmentUnit.LocalName : a.AdditionalMeasurmentUnit.EnglishName) : null,
                                                              Tenant = a.Tenant,
-
+                                                             ItemFOBAmountForeign =a.ItemFOBAmountForeign,
+                                                             ItemFOBAmountNIS = a.ItemFOBAmountNIS
 
                                                          });
             return query;

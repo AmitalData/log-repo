@@ -19,6 +19,13 @@ namespace Logitude.Customs.BL.CloseTables
                     Entity="Declaration",
                     
                 },
+                 new SincroTestCaseDetail()
+                {
+                    Code = "8373",
+                    Name = "(8373)שחזור נתוני הצהרה",
+                    Entity="RetrieveDeclaration",
+
+                },
                 new SincroTestCaseDetail()
                 {
                     Code = "2754Payment",
@@ -51,7 +58,14 @@ namespace Logitude.Customs.BL.CloseTables
                     Param1= @"{ ""Error"":""false""}",
 MainInterfaceCode ="2892"
                 },
-
+                               new SincroTestCaseDetail()
+                {
+                    Code = "1170",
+                    Name = "(1170)מסר מצהר- מניפסט",
+                    Entity="Manifest",
+                    Param1= @"{ ""manifestCargoStatusCode"":""1""  }",
+                    MainInterfaceCode ="1170"
+                },
                         new SincroTestCaseDetail()
                 {
                     Code = "5002",
@@ -67,7 +81,7 @@ MainInterfaceCode ="5002"
                     IsDCA= true,
                     Entity="Declaration",
                     Param1= @"{ ""RequestNumber"" :""1"" ,  ""Content32"" :""1"" , 
-                              ""Content29"" :""test 29"" , ""Content27"" :""test 27"", ""status"" :""13"" , ""error"" :""true"" ,
+                              ""Content29"" :""test 29"" , ""Content27"" :""test 27"",  ""Content16"" :""PaymentID"" ,""status"" :""13"" , ""error"" :""true"" ,
                                ""constrain"" :""false"" , ""amendmentDocumentDetails"" :""false""  }",
                                                    
                                                

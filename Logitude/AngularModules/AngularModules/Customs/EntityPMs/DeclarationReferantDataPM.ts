@@ -189,6 +189,11 @@ export class DeclarationReferantDataPM {
     public set FileOpenDate(newValue: Date) { if (this.fileOpenDate != newValue) { this.fileOpenDate = newValue; this.MarkAsDirty("FileOpenDate"); } }
        
 	 
+    private isClose: boolean;
+    public get IsClose() { return this.isClose; }
+    public set IsClose(newValue: boolean) { if (this.isClose != newValue) { this.isClose = newValue; this.MarkAsDirty("IsClose"); } }
+       
+	 
 
     public OldEntityPM: DeclarationReferantDataPM;
 		

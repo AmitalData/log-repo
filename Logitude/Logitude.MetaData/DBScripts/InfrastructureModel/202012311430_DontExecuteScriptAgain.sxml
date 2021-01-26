@@ -9,4 +9,5 @@
     update DBScriptsHistory set version='3' ,hashValue='31acd8555e64aae44f0052c551a13115' where sxmlfilename='202010260915_UpdateSearchFieldsOfARInvoices.sxml'
     ]]>
   </Sql>
+  <Oracle Version="1"></Oracle>
 </Script>

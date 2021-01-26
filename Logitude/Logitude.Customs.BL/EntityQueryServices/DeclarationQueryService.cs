@@ -54,8 +54,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
             //DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(context);
 
             entityPM.InvoiceHasFreight = supplierInvoiceService.DoesAnyInvoiceHasFreight(entityPM.Id, entityPM.Tenant);
-
-            //******getting all compositionTables for response service purposes only *****///
+             //******getting all compositionTables for response service purposes only *****///
             entityPM.Consignments = consignmentService.GetMulti(declarationKeys, true);
             // if (LoadSupplierInvoices)
             var DeclarationExportRecipientQueryService = new DeclarationExportRecipientQueryService(context);
@@ -1210,7 +1209,8 @@ namespace Logitude.Customs.BL.EntityQueryServices
                         {
                             information.StatmentName = statement.LocalName;
                         }
-
+                        
+                        if(additional.StatementTypeCode != "27")
                         generalData.AdditionalInformation.Add(information);
 
 
@@ -1298,7 +1298,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
 
 
                             AmendCancellRequestInitiatorQueryService amendCancellRequestInitiatorQueryService = new AmendCancellRequestInitiatorQueryService(tenant);
-                            AmendCancellRequestInitiatorPM amendCancellRequestInitiatorPM = amendCancellRequestInitiatorQueryService.GetSingle(amendment.AmendmentRequestInitiatorType, false, true);
+                            AmendCancellRequestInitiatorPM amendCancellRequestInitiatorPM = amendCancellRequestInitiatorQueryService.GetSingle(field.AmendmentRequestInitiatorType, false, true);
                             if (amendCancellRequestInitiatorPM != null)
                             {
                                 amendment.AmendmentRequestInitiatorType = amendCancellRequestInitiatorPM.LocalName;
@@ -1613,13 +1613,13 @@ namespace Logitude.Customs.BL.EntityQueryServices
         }
 
         //<--- Yuval Chalup 19.11.2015 TASK-17450
-        public DeclarationPM GetSingleDeclarationByNumber(string number, int tenant)
+        public DeclarationPM GetSingleDeclarationByNumber(string number, int tenant, bool getComposition=false)
         {
             if (String.IsNullOrWhiteSpace(number)) return null;
             var q = repository.GetSingleDeclarationPMByNumber(number, tenant);
 
             var pocos = q.ToList();
-            return pocos.Select(poco => this.GetEntityPM(poco, false, null)).FirstOrDefault();
+            return pocos.Select(poco => this.GetEntityPM(poco, getComposition, new DeclarationKeys() { Id = pocos.FirstOrDefault().Id })).FirstOrDefault();
         }
         //Yuval Chalup 19.11.2015 TASK-17450 --->
 

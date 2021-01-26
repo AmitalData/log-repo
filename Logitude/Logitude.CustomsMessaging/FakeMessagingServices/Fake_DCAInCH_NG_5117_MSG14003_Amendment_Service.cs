@@ -104,7 +104,21 @@ namespace Logitude.CustomsMessaging.FakeMessagingServices
                 
             }
 
-             response.Response.AdditionalInformation = AdditionalInformation.ToArray();
+
+            if (!string.IsNullOrEmpty(data.Content16.ToString()) && data.Content16.ToString() != "PaymentID")
+            {
+                AdditionalInformation.Add(new ResponseAdditionalInformation
+                {
+                    StatementTypeCode = new AdditionalInformationStatementTypeCodeType()
+                    {
+                        Value = "16"
+                    },
+                    Content = new AdditionalInformationContentTextType() { Value = data.Content16 }
+                });
+
+            }
+
+            response.Response.AdditionalInformation = AdditionalInformation.ToArray();
             response.Response.FunctionCode = new ResponseFunctionCodeType() { Value = "Amendment" };
             response.Response.IssueDateTime = XmlConvert.ToString(DateTime.Now);
             //response.Response.Amendment = new ResponseAmendment[1]; // reason to change?

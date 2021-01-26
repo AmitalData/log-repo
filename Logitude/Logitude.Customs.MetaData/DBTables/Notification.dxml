@@ -222,4 +222,14 @@
     ReferencedTable="Customers"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
+
+  <Index
+     Columns="BadjCount,AssigneToId,IsClosedByAssignee" />
+
+  <Index
+      Columns="BadjCount" />
+
+  
+  <Index
+      Columns="IsClosedByAssignee" />
 </Table>

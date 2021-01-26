@@ -20,7 +20,7 @@ import {CustomsExchangeRatePM} from '../../../../../Customs/EntityPMs/CustomsExc
 import {DeclarationValidator} from '../../../../../Customs/Validators/DeclarationValidator';
 import {DeclarationPMService} from '../../../../../Customs/Services/StandardPMs/DeclarationPMService';
 import {GenericRequestParams} from '../../../../../Customs/DataContract/RequestParams/GenericRequestParams';
-import {SendRequestVIA} from '../../../../../Customs/DataContract/RequestParams/RequestParamsBase';
+import {SendRequestVIA, TestCase} from '../../../../../Customs/DataContract/RequestParams/RequestParamsBase';
 import {CustomMessageProgressComponent, ShowProgressBarParams} from '../../../../CustomsControls/Components/CustomMessageProgressComponent';
 import { ClientSearchResponseData } from '../../../../../Customs/DataContract/ResponseData/ClientSearchResponseData';
 import {SupplierInvoicePMService} from  '../../../../../Customs/Services/StandardPMs/SupplierInvoicePMService';
@@ -56,6 +56,35 @@ export class SendManifestComponent {
 
   
     OnCustomSendOptionsButtonClick(event) {
+        this._SendManifestService._TestCase = null;
+        if (event.TestCase) {
+
+            let windowArgs = { "SincroScreen": "SincroSendManifest" };
+
+            var logWindow = new LogitudeWindow();
+            logWindow.Width = 600;
+            logWindow.Height = 400;
+            logWindow.Title = "תרחשי הצהרה";
+            logWindow.ShowCloseButton = false;
+            logWindow.WindowArgs = windowArgs;
+
+            logWindow.ComponentLoaded.subscribe(comp => {
+                logWindow.WindowClosed.subscribe(res => {
+                     if (!AppTool.IsNullOrEmpty(res) && res == "Ok") {
+                        this._SendManifestService._TestCase = new TestCase();
+                        this._SendManifestService._TestCase.Code = comp._ScenarioCode;
+                        this._SendManifestService._TestCase.Param1 = comp.Param1;
+                        this._SendManifestService._TestCase.Param2 = comp.Param2;
+                        this._SendManifestService.OnCustomSendOptionsButtonClick(event)
+                    }
+                });
+            });
+
+            logWindow.Show('./CustomsModules/CustomsControls/Components/TestCase/SendDeclarationTastCaseComponent');
+            ///this.StopMyBusyIndicator();///this.CurrentSession.CurrentEditComponent.StopBusyIndicator();
+
+            return;
+        }
         this._SendManifestService.OnCustomSendOptionsButtonClick(event);
     }
                                                                       
@@ -93,6 +122,7 @@ export class SendManifestService {
             });
         });
     }
+    _TestCase: TestCase;
 
     CourierWorksheetmode: boolean = false;
     ButtonText: string;
@@ -133,7 +163,7 @@ export class SendManifestService {
         this.CurrentSession.StartBusyIndicator("");
         this.RequestVIA = event.RequestVIA;
         this.Option = event.Option;
-        this.ForcePersonalSign = event.ForcePersonalSign;
+         this.ForcePersonalSign = event.ForcePersonalSign;
         Validator.TryValidateObject(this.EntityPM, "Customs.Declaration", this.ValidationErrors);
         if (this.ValidationErrors.length == 0) {
             // this.CurrentSession.CurrentEditComponent.SaveChanges("");
@@ -266,7 +296,7 @@ export class SendManifestService {
         sendParams.ResponseName = "Declaration Response";
         sendParams.RequestVIA = this.RequestVIA;
         sendParams.ForcePersonalSign = this.ForcePersonalSign;
-
+        sendParams.TestCase = this._TestCase;
         //let myShowProgressBarParams = new ShowProgressBarParams();
         //myShowProgressBarParams.OnCloseCustomMessageProgressComponentMethod =
         //    (response: any) => {
