@@ -3,6 +3,7 @@ using Logitude.CommonDataTests.Models;
 using Logitude.Test.Base.Context;
 using Logitude.Test.Base.Models;
 using Logitude.Test.Base.Services;
+using System;
 using TechTalk.SpecFlow;
 
 namespace Logitude.CommonDataTests.Steps.Security
@@ -11,6 +12,7 @@ namespace Logitude.CommonDataTests.Steps.Security
     public class TenantSecurityAccessSteps
     {
         private SecurityAccessStepsContext<TenantPM> Context;
+        private Action act;
 
         public TenantSecurityAccessSteps( SecurityAccessStepsContext<TenantPM> context)
         {
@@ -33,13 +35,14 @@ namespace Logitude.CommonDataTests.Steps.Security
         [When(@"Get Tenant request sent for other Tenant")]
         public void WhenGetTenantRequestSentForOtherTenant()
         {
-            Context.SecondUserPMData = GetTenant(UserTenant.Tenant, UserOtherTenant.Token);
+            act = () => GetTenant(UserTenant.Tenant, UserOtherTenant.Token);
         }
 
         [Then(@"Tenant should not be exists")]
         public void ThenTenantShouldNotBeExists()
         {
-            Context.SecondUserPMData.Should().BeNull();
+            act.Should().ThrowExactly<Exception>()
+                .Where(m => m.Message.Contains("Sorry you’re not authenticated to view company info"));
         }
 
         private TenantPM GetTenant(int Tenant, string Token)
