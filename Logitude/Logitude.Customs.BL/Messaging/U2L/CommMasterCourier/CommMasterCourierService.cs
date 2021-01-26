@@ -243,6 +243,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommMasterCourier
                 }
                 */
                 int packageQuantityInMAWB = 0;
+                _CourierMasterPM.PackageQuantityInMAWB = packageQuantityInMAWB;
                 if (!string.IsNullOrWhiteSpace(_LogitudeMasterCourier.PackageQuantityInMAWB))
                 {
                     if (int.TryParse(_LogitudeMasterCourier.PackageQuantityInMAWB, out packageQuantityInMAWB))
@@ -263,17 +264,30 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommMasterCourier
             }
             catch (DbEntityValidationException ex)
             {
+
                 var FormatedException = ExceptionFormatUtil.GetFormated(ex);
+                AppendLogLine("Master Courier Upsert Error " + Environment.NewLine + Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.ToString(1000));
                 AppendLogLine("ProccessRequest():Exception " + FormatedException.ToString() + Environment.NewLine + "---------------------------------------------");
+                MyGenericResponseObj.Message = "Master Courier Upsert Error ";
+                MyGenericResponseObj.InnerException = FormatedException.ToString();
+                MyGenericResponseObj.ExceptionType = ex.GetType().ToString();
+                MyGenericResponseObj.StatusType = GenericResponseObj.StatusEnum.BusinessError;
+
                 return;
             }
             catch (Exception e)
             {
+                AppendLogLine("Master Courier Upsert Error " + Environment.NewLine + Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.ToString(1000));
                 AppendLogLine("ProccessRequest():Exception " + e.ToString() + Environment.NewLine + "---------------------------------------------");
+                MyGenericResponseObj.Message = "Master Courier Upsert Error ";
+                MyGenericResponseObj.InnerException = e.ToString();
+                MyGenericResponseObj.ExceptionType = e.GetType().ToString();
+                MyGenericResponseObj.StatusType = GenericResponseObj.StatusEnum.BusinessError;
                 return;
             }
             if(!String.IsNullOrWhiteSpace(MyGenericResponseObj.StatusType.ToString()) && MyGenericResponseObj.StatusType != GenericResponseObj.StatusEnum.Success)
             {
+                AppendLogLine("Master Courier Upsert Error " + Environment.NewLine + Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.ToString(1000));
                 return;
             }
             

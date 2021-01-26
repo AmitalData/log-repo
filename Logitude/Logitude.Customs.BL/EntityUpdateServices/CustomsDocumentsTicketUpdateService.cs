@@ -268,6 +268,10 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 DoUpdateNotification(entityPM, connectedDeclarationPM, loggingUserId, notificationDefinitionCode, eventContextTagModel.FUStatusRemarks);
                 if(connectedDeclarationPM!= null && connectedDeclarationPM.Direction=="E")
                 {
+                    if(eventContextTagModel.CallProccessID== EventContextTagModel.ProccessEnum.VAL_NG_8228_RequiredDocumentVerificationDecisionVerifiedWithClient)
+                    {
+                        eventContextTagModel.EventCode = "RDC";
+                    }
                     eventContextTagModel.StatusCustomFileNo = connectedDeclarationPM.CustomFileNo;
                     SendEvent(eventContextTagModel.EventCode, eventContextTagModel, loggingUserId, connectedDeclarationPM.Id, entityPM.VerificationRemarks, entityPM.RequestedCustomsDocId);
 

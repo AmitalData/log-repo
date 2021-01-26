@@ -93,12 +93,12 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     if (customResponse.RequiredDocumentDetails.requiredDocumentMessageType == 1)
                     {
                         DeclarationUpdateService declarationUpdateService = new DeclarationUpdateService(dbContext, new Dictionary<string, IContext>(), requestParams.Tenant);
-                        myDeclarationPM = declarationUpdateService.GetSertByConvertedDeclarationNumber(firstRelatedEntity.entityIdKey1, requestParams.Tenant);
+                        myDeclarationPM = declarationUpdateService.GetSertByConvertedDeclarationNumber(firstRelatedEntity.entityIdKey1, requestParams.Tenant,true);
                     }
                     else if (customResponse.RequiredDocumentDetails.requiredDocumentMessageType == 2)
                     {
                         //myDeclarationPM = myDeclarationQueryService.GetSingle(firstRelatedEntity.entityIdKey1, true, false);
-                        myDeclarationPM = myDeclarationQueryService.GetSingleDeclarationByNumber(firstRelatedEntity.entityIdKey1, requestParams.Tenant);
+                        myDeclarationPM = myDeclarationQueryService.GetSingleDeclarationByNumber(firstRelatedEntity.entityIdKey1, requestParams.Tenant,true);
                     }
                     if (myDeclarationPM == null || string.IsNullOrWhiteSpace(myDeclarationPM.Id))
                     {
@@ -261,6 +261,9 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                     }
 
+                    myDeclarationPM.RequestedCustomsDocId = 1; 
+
+                    myDeclarationPM.ChangeSetOp = ChangeSetOperation.Update;
 
                 }
                 requestParams.LoggingObjectTableId = customsDocumentPointerPM.ParentEntityCode;
@@ -306,8 +309,16 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             break;
                         }
                     }
+
+                   var requestedCustomsDocId = myCustomsDocumentsTicketQueryService.CheckRequestedCustomsDocIdsByEntityIdAndChilds(myDeclarationPM.Id, myDeclarationPM.Tenant, "", customResponse.RequiredDocumentDetails.documentID.ToString());
+                    if(requestedCustomsDocId!= myDeclarationPM.RequestedCustomsDocId)
+                    myDeclarationPM.ChangeSetOp = ChangeSetOperation.Update;
                 }
             }
+
+
+            DeclarationUpdateService declarationUpdateService1 = new DeclarationUpdateService(dbContext, new Dictionary<string, IContext>(), requestParams.Tenant);
+            declarationUpdateService1.Update(myDeclarationPM, true);
 
             if (customsDocumentPointerPM != null)
             {

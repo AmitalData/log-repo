@@ -189,6 +189,7 @@ namespace Logitude.Customs.Data
 		 IDbSet<DepositCustomerActivity> DepositCustomerActivities { get; }
 		 IDbSet<DepositEssenceType> DepositEssenceTypes { get; }
 		 IDbSet<DepositFileType> DepositFileTypes { get; }
+		 IDbSet<DocumentRejectType> DocumentRejectTypes { get; }
 		 IDbSet<DocumentTypeCustomsData> DocumentTypeCustomsData { get; }
 		 IDbSet<EntitlementType> EntitlementTypes { get; }
 		 IDbSet<EntityTypeLookup> EntityTypeLookups { get; }
@@ -278,6 +279,7 @@ namespace Logitude.Customs.Data
 		 IDbSet<ReferantTeam> ReferantTeams { get; }
 		 IDbSet<RefundCustomerActivityType> RefundCustomerActivityTypes { get; }
 		 IDbSet<RegisteredWarehouseSiteType> RegisteredWarehouseSiteTypes { get; }
+		 IDbSet<ReleaseMessageType> ReleaseMessageTypes { get; }
 		 IDbSet<RequestStatus> RequestStatuses { get; }
 		 IDbSet<RequestType> RequestTypes { get; }
 		 IDbSet<RequiredGuaranteeType> RequiredGuaranteeTypes { get; }

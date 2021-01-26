@@ -147,7 +147,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommDec
                 string existId = myQueryService.GetIdByCustomFileNo(_LogitudeCommDecFile.CustomFileNo, ResolvedTenant());
                 _LogitudeCommDecFile.Id = existId;
             }
-
+            AppendLogLine("After Declaration Upsert " + Environment.NewLine + Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.ToString(1000));
             /////////////////////////////////////////////////////////////
             _context = CustomContext.GetContext(ResolvedTenant());
             MyGenericResponseObj.Stage = "GetSingle";
@@ -248,6 +248,23 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommDec
                 }
                 if (!string.IsNullOrWhiteSpace(_LogitudeCommDecFile.WarehouseId)) this._MyDeclarationPM.Consignments[0].StorageSiteCode = TranslateDeliverySite(_LogitudeCommDecFile.WarehouseId);
 
+                if (String.IsNullOrWhiteSpace(this._MyDeclarationPM.Consignments[0].UnloadPortCode))
+                {
+                    if (this._CourierMasterPM == null)
+                    {
+                        var myCourierMasterQueryService = new CourierMasterQueryService(_context);
+                        _CourierMasterPM = myCourierMasterQueryService.GetByDeclarationId(this._MyDeclarationPM.Id, ResolvedTenant());
+                    }
+                    if (_CourierMasterPM != null)
+                    {
+                        CustomsAirlineQueryService customsAirlineQueryService = new CustomsAirlineQueryService(_CourierMasterPM.Tenant);
+                        CustomsAirlinePM customsAirline = customsAirlineQueryService.GetSingle(_CourierMasterPM.AirlineId, false, true);
+                        if (customsAirline != null)
+                        {
+                           if (!String.IsNullOrWhiteSpace(customsAirline.UnloadPortCode)) this._MyDeclarationPM.Consignments[0].UnloadPortCode = customsAirline.UnloadPortCode;
+                        }
+                    }
+                }
 
                 if (this._LogitudeCommDecFile.PACKAGES != null && this._LogitudeCommDecFile.PACKAGES.Count() > 0)
                 {
@@ -499,6 +516,10 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommDec
                             ChangeSetOp = ChangeSetOperation.Insert,
 
                         };
+                        if (this._MyDeclarationPM.Consignments[0].ChangeSetOp != ChangeSetOperation.Insert)
+                        {
+                            this._MyDeclarationPM.Consignments[0].ChangeSetOp = ChangeSetOperation.Update;
+                        }
                         this._MyDeclarationPM.Consignments[0].ConsignmentInternalTransitions.Add(transitionPM);
                     }
                 }
@@ -678,6 +699,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommDec
             var palestinianCode = !String.IsNullOrWhiteSpace(this._MyDeclarationPM.ImporterCode) ? this._MyDeclarationPM.ImporterCode : !String.IsNullOrWhiteSpace(this._MyDeclarationPM.PalestinianCode) ? this._MyDeclarationPM.PalestinianCode : null;
             CustomsAutonomyKeywordQueryService customsAutonomyKeywordQueryService = new CustomsAutonomyKeywordQueryService(_context);
             var casualImportelTel = _AmitalCustomsFile.CasualImportelTel;
+            if (!String.IsNullOrWhiteSpace(casualImportelTel)) casualImportelTel = string.Concat(casualImportelTel.Where(c => !char.IsWhiteSpace(c)));
             if (!String.IsNullOrWhiteSpace(casualImportelTel)) casualImportelTel = _AmitalCustomsFile.CasualImportelTel.TrimStart(new Char[] { '0' });
             if (customsAutonomyKeywordQueryService.CheckIfsAutonomy(_AmitalCustomsFile.CasualImporterCity, casualImportelTel, palestinianCode, ResolvedTenant()))
             {

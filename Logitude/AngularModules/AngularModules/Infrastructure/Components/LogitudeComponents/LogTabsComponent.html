@@ -215,43 +215,49 @@
 <table>
     <tr>
         <td>
-            <div class="TableHolder">
-                <table>
-                    <tr>
-                        <td>
-                            <div style="position: absolute; top: 0;" class="LogTabControl">
-                                <div class="TabControlHead" [ngStyle]="MultiLineTabs ? {'overflow':'auto'} : ''" >
-                                    <ul >
-                                        <li *ngFor="let tab of TabsSource" [class.Selected]="tab.IsSelected" [style.float]="IsRTL ? 'right' : 'left'" (click)="SelectionChanged(tab)">
+    <div style="height:20px;position: absolute; top: -15px;"  *ngIf="MultiLineTabs">     
+            <IconButton style="width:25px;height: 16px;" [style.float]="IsRTL ? 'right' : 'left'" [IsSmall]="true" [Name]="'Add'" (click)="AddTab()"></IconButton>
+            <button [style.float]="IsRTL ? 'right' : 'left'" style="width:25px;    height: 18px;" class="Button" (click)="BackTab()"><</button>
+            <button [style.float]="IsRTL ? 'right' : 'left'" style="width:25px;    height: 18px;" class="Button" (click)="NextTab()">></button>
+    </div>
+    <div class="TableHolder">
+        <table>
 
-                                            <div style="position: relative; width: 100%;" class="InnerChild"
-                                                 [style.text-align]="IsRTL ? 'right' : 'left'"
-                                                 [title]="tab.Header"
-                                                 (mousedown)="onListMouseDown($event,tab)">
+            <tr>
+                <td>
+                    <div style="position: absolute; top: 0;" class="LogTabControl">
+                        <div class="TabControlHead" [ngStyle]="MultiLineTabs ? {'overflow':'auto'} : ''">
+                            <ul>
+                                <li LocationDirective [IsSelected]="tab.IsSelected" *ngFor="let tab of TabsSource" [class.Selected]="tab.IsSelected" [style.float]="IsRTL ? 'right' : 'left'" (click)="SelectionChanged(tab)">
 
-                                                <div class="TextTrimming" [style.padding-left]="tab.IsSelected ? '3px' : ''">{{tab.Header}}</div>
-                                                <div *ngIf="!HideCloseButton && !Disabled && (tab.IsSelected && TabsSource.length > 1)" class="CloseButtonWrapper" [title]="'General.B.Close' | TextCodeTranslationPipe"><div class="CloseButton" (click)="CloseTab(tab)"></div></div>
-                                            </div>
+                                    <div style="position: relative; width: 100%;" class="InnerChild"
+                                         [style.text-align]="IsRTL ? 'right' : 'left'"
+                                         [title]="tab.Header"
+                                         (mousedown)="onListMouseDown($event,tab)">
 
-                                        </li>
-
-                                        <li *ngIf="!IsFixedTabs" class="NewTabItem" (click)="AddTab()" [style.float]="IsRTL ? 'right' : 'left'">+</li>
-                                    </ul>
-                                </div>
-
-                                
-                                <div class="TabControlBody" style="background: white;" [style.border]="NoBorder ? 'none' : '1px solid #3bb3e2'">
-                                    <div class="MediaFillAbsolute" *ngFor="let tab of TabsSource;" [hidden]="!tab.IsSelected">
-                                        <div LocationDirective Code="{{tab.Code}}" Index="{{tab.Index}}"></div>
+                                        <div class="TextTrimming" [style.padding-left]="tab.IsSelected ? '3px' : ''">{{tab.Header}}</div>
+                                        <div *ngIf="!HideCloseButton && !Disabled && (tab.IsSelected && TabsSource.length > 1)" class="CloseButtonWrapper" [title]="'General.B.Close' | TextCodeTranslationPipe"><div class="CloseButton" (click)="CloseTab(tab)"></div></div>
                                     </div>
-                                </div>
-                            </div>
-                        </td>
-                    </tr>
-                </table>
 
-            </div>
-        </td>
+                                </li>
+
+                                <li *ngIf="!IsFixedTabs" class="NewTabItem" (click)="AddTab()" [style.float]="IsRTL ? 'right' : 'left'">+</li>
+                            </ul>
+                        </div>
+
+
+                        <div class="TabControlBody" style="background: white;" [style.border]="NoBorder ? 'none' : '1px solid #3bb3e2'">
+                            <div class="MediaFillAbsolute" *ngFor="let tab of TabsSource;" [hidden]="!tab.IsSelected">
+                                <div LocationDirective Code="{{tab.Code}}" Index="{{tab.Index}}"></div>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        </table>
+
+    </div>
+    </td>
     </tr>
 </table>
 <div *ngIf="TabsSource.length <= 0" style="background: #f5f5f5; height: 100px; text-align: center; color: #a3a3a3; font-style: italic; padding-top: 40px; font-family: Verdana;">
