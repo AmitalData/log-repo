@@ -26,17 +26,17 @@ namespace Logitude.ShipmentTests.Steps.SecurityTests
             Context.FirstUserPMData.Id = shipment?.Id;
         }
 
-        [When(@"Second user get the shipment that requested by first user")]
-        public void WhenSecondUserGetTheShipmentThatRequestedByFirstUser()
-        {
-            ApiResponse<ShipmentPM> response = GetAsingleShipmentForFirstUser(UserOtherTenant.Token); 
-            Context.SecondUserPMData.Id = response.Data?.Id;
-        }
-
         [Then(@"Shipment for first user should be exists")]
         public void ThenShipmentForFirstUserShouldBeExists()
         {
             Context.FirstUserPMData.Id.Should().NotBeNull();
+        }
+
+        [When(@"Second user get the shipment that requested by first user")]
+        public void WhenSecondUserGetTheShipmentThatRequestedByFirstUser()
+        {
+            ApiResponse<ShipmentPM> response = GetAsingleShipmentForFirstUser(UserOtherTenant.Token);
+            Context.SecondUserPMData.Id = response.Data?.Id;
         }
 
         [Then(@"Shipment for second user should not be exists")]
