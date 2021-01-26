@@ -18,7 +18,8 @@ namespace WebFreight.Web.AccountingWebServices.Testers
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            
+            throw new Exception();
             if (!Page.IsPostBack)
             {
 

@@ -628,11 +628,8 @@
     <Content Include="AmitalBrowserTester.html" />
     <Content Include="FileNotFound.aspx" />
     <Content Include="Errors\404.aspx" />
-    <Content Include="AccountingWebServices\Testers\AccountingBalanceTester.aspx" />
-    <Content Include="AccountingWebServices\Testers\Reconcile.aspx" />
-    <Content Include="AccountingWebServices\Testers\RevaluationWorkerRoleTester.aspx" />
-    <Content Include="AccountingWebServices\Testers\TrailReport.aspx" />
-    <Content Include="AccountingWebServices\Testers\TreeMapGLAccountBanlanceByCOA.aspx" />
+    <Content Include="AccountingWebServices\TestersNoInUSE\AccountingBalanceTester.aspx" />
+    <Content Include="AccountingWebServices\TestersNoInUSE\TrailReport.aspx" />
     <Content Include="AccountingWebServices\YearTransferWebService.asmx" />
     <Content Include="AerolineaseRegistrationPage.aspx" />
     <Content Include="AmitalDefault.aspx" />
@@ -1070,19 +1067,12 @@
     <Compile Include="AccountingModel\Reports\PaymentCheque\PaymentChequePrintService.cs" />
     <Compile Include="AccountingModel\Reports\TaxDeductionReport\TaxDeductionReportPrintService.cs" />
     <Compile Include="AccountingModel\WebInjection\XLSUtil.cs" />
-    <Compile Include="AccountingWebServices\Testers\TrailReport.aspx.cs">
+    <Compile Include="AccountingWebServices\TestersNoInUSE\TrailReport.aspx.cs">
       <DependentUpon>TrailReport.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="AccountingWebServices\Testers\TrailReport.aspx.designer.cs">
+    <Compile Include="AccountingWebServices\TestersNoInUSE\TrailReport.aspx.designer.cs">
       <DependentUpon>TrailReport.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="AccountingWebServices\Testers\TreeMapGLAccountBanlanceByCOA.aspx.cs">
-      <DependentUpon>TreeMapGLAccountBanlanceByCOA.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="AccountingWebServices\Testers\TreeMapGLAccountBanlanceByCOA.aspx.designer.cs">
-      <DependentUpon>TreeMapGLAccountBanlanceByCOA.aspx</DependentUpon>
     </Compile>
     <Content Include="App_Code\PrivateLableController.cs" />
     <Content Include="App_Code\LogBoxSignTool\LogBoxSignatureClientController.cs" />
@@ -3961,26 +3951,12 @@
     <Compile Include="AccountingModel\DomainServices\Generated\BankAccountDomainService.Generated.cs" />
     <Compile Include="AccountingModel\DomainServices\Generated\BankCodeDomainService.Generated.cs" />
     <Compile Include="AccountingModel\DomainServices\Generated\CashBookTypeDomainService.Generated.cs" />
-    <Compile Include="AccountingWebServices\Testers\AccountingBalanceTester.aspx.cs">
+    <Compile Include="AccountingWebServices\TestersNoInUSE\AccountingBalanceTester.aspx.cs">
       <DependentUpon>AccountingBalanceTester.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="AccountingWebServices\Testers\AccountingBalanceTester.aspx.designer.cs">
+    <Compile Include="AccountingWebServices\TestersNoInUSE\AccountingBalanceTester.aspx.designer.cs">
       <DependentUpon>AccountingBalanceTester.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="AccountingWebServices\Testers\Reconcile.aspx.cs">
-      <DependentUpon>Reconcile.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="AccountingWebServices\Testers\Reconcile.aspx.designer.cs">
-      <DependentUpon>Reconcile.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="AccountingWebServices\Testers\RevaluationWorkerRoleTester.aspx.cs">
-      <DependentUpon>RevaluationWorkerRoleTester.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="AccountingWebServices\Testers\RevaluationWorkerRoleTester.aspx.designer.cs">
-      <DependentUpon>RevaluationWorkerRoleTester.aspx</DependentUpon>
     </Compile>
     <Compile Include="AccountingWebServices\YearTransferWebService.asmx.cs">
       <DependentUpon>YearTransferWebService.asmx</DependentUpon>
