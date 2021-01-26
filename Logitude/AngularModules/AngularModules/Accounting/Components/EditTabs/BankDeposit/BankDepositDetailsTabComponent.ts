@@ -396,13 +396,22 @@ export class BankDepositDetailsTabComponent extends BaseComponent {
     }
 
     private GetCashbookLinesAccordingToFilter(newValue: string) {
-        if (this.SelectedTotal > 0) {
+        if (this.GetNumberOfSelectedLines() > 0) {
             this.ShowConfirmMessageToToggleBetweenCashAndPostdated(newValue);
         }
         else {
             this.FilterSelectedValue = newValue;
             this.GetCashbookLines();
         }
+    }
+
+    private GetNumberOfSelectedLines(): number {
+        var numberOfSelectedLines = 0;
+        for (let line of this.CashbookLines.Collection) {
+            if (line.IsSelected)
+                numberOfSelectedLines++;
+        }
+        return numberOfSelectedLines;
     }
 
     ShowConfirmMessageToToggleBetweenCashAndPostdated(newValue: string) {
@@ -545,7 +554,7 @@ export class BankDepositDetailsTabComponent extends BaseComponent {
         for (let line of this.CashbookLines.Collection) {
             var CashbookLine = this.SelectedCashbookLines.Collection.filter(d => d.ChequeNumber == line.ChequeNumber)[0];
             if (CashbookLine) {
-                this.CashbookLines.Collection.filter(a => a.ChequeNumber == CashbookLine.ChequeNumber)[0].IsSelected = true;
+                line.IsSelected = true;
             }
         }
     }
