@@ -19,6 +19,8 @@ namespace Logitude.ShipmentTests.Steps.SecurityTests
             Context = context;
         }
 
+        #region Step Region
+
         [When(@"Create shipment request sent for User's Tenant")]
         public void WhenCreateShipmentRequestSentForUserSTenant()
         {
@@ -78,7 +80,9 @@ namespace Logitude.ShipmentTests.Steps.SecurityTests
             Context.SecondUserPMData.Id.Should().BeNull();
             ErrorMsg.Should().Contain("Sorry! you have no permission to do this operation on Tenant");
         }
+        #endregion
 
+        #region Private Function Region
         private ApiResponse<ShipmentPM> UpdateShipmentForFirstUser(string Token)
         {
             ApiResponse<ShipmentPM> response = CreateShipmentForFirstUser(UserTenant.Token);
@@ -91,6 +95,9 @@ namespace Logitude.ShipmentTests.Steps.SecurityTests
             return APICaller.CallPost<ShipmentPM>(shipmentModel, Urls.ShipmentController, Token);
         }
 
+        #endregion
+
+        #region Build Models Region
         private ShipmentPM GetValidUserShipmentPM()
         {
             return new ShipmentBuilder().WithDefualtValues()
@@ -103,5 +110,7 @@ namespace Logitude.ShipmentTests.Steps.SecurityTests
                 .MainCarriageFromPortIdByCode("MIA")
                 .Build();
         }
+
+        #endregion
     }
 }

@@ -19,6 +19,7 @@ namespace Logitude.ShipmentTests.Steps.SecurityTests
             Context = context;
         }
 
+        #region Step Region
         [When(@"First user get the first shipment from shipments list")]
         public void WhenFirstUserGetTheFirstShipmentFromShipmentsList()
         {
@@ -44,7 +45,9 @@ namespace Logitude.ShipmentTests.Steps.SecurityTests
         {
             Context.SecondUserPMData.Id.Should().BeNull();
         }
+        #endregion
 
+        #region Private Function Region
         private ApiResponse<ShipmentPM> GetAsingleShipmentForFirstUser(string Token)
         {
             ShipmentPM firstUserShipment = GetAShipmentFromFirstUserList();
@@ -63,5 +66,6 @@ namespace Logitude.ShipmentTests.Steps.SecurityTests
             ApiResponse<IEnumerable<ShipmentPM>> response = APICaller.CallGetByFilters<IEnumerable<ShipmentPM>>(Urls.ShipmentViewsGetByFilters, UserTenant.Token, apiQueryFilters);
             return response.Data?.FirstOrDefault();
         }
+        #endregion
     }
 }

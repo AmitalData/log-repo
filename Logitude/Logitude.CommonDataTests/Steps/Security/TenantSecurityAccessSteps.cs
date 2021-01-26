@@ -17,6 +17,7 @@ namespace Logitude.CommonDataTests.Steps.Security
             Context = context;
         }
 
+        #region Step Region
         [When(@"Get Tenant request sent for User's Tenant")]
         public void WhenGetTenantRequestSentForUserSTenant()
         {
@@ -41,13 +42,16 @@ namespace Logitude.CommonDataTests.Steps.Security
         {
             Context.SecondUserPMData.Should().BeNull();
         }
+        #endregion
 
+        #region Private Function Region
         private TenantPM GetTenant(int Tenant, string Token)
         {
             string TenantUrl = Urls.TenantsGetSingle(Tenant);
             var tenant = APICaller.CallGet<TenantPM>(TenantUrl, Token);
             return tenant.Data;
         }
+        #endregion
 
     }
 }

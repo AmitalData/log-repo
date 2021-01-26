@@ -18,6 +18,7 @@ namespace Logitude.CommonDataTests.Steps.Security
             Context = context;
         }
 
+        #region Step Region
         [When(@"First user get the first FTP Detail from FTP Detail list")]
         public void WhenFirstUserGetTheFirstFTPDetailFromFTPDetailList()
         {
@@ -42,7 +43,9 @@ namespace Logitude.CommonDataTests.Steps.Security
         {
             Context.SecondUserPMData.Id.Should().BeNull();
         }
+        #endregion
 
+        #region Private Function Region
         private void GetFTPDetailForTheSecondUserBaseOnFirstUserFTPDetails()
         {
             IEnumerable<FTPDetailPM> firstUserDetailList = GetFTPDetailsListForFirstUser();
@@ -62,6 +65,7 @@ namespace Logitude.CommonDataTests.Steps.Security
             ApiResponse<IEnumerable<FTPDetailPM>> response = APICaller.CallGetByFilters<IEnumerable<FTPDetailPM>>(Urls.FTPDetailViewsGetByFilters, UserTenant.Token, apiQueryFilters);
             return response.Data;
         }
+        #endregion
 
     }
 }

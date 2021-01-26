@@ -18,6 +18,7 @@ namespace Logitude.CommonDataTests.Steps.Security
             Context = context;
         }
 
+        #region Step Region
         [When(@"First user get the first contact from contacts list")]
         public void WhenFirstUserGetTheFirstContactFromContactsList()
         {
@@ -42,7 +43,9 @@ namespace Logitude.CommonDataTests.Steps.Security
         {
             Context.SecondUserPMData.Id.Should().BeNull();
         }
+        #endregion
 
+        #region Private Function Region
         private void GetContactForTheSecondUserBaseOnFirstUserContacts()
         {
             IEnumerable<ContactPM> firstUserContactList = GetContactsListForFirstUser();
@@ -62,5 +65,6 @@ namespace Logitude.CommonDataTests.Steps.Security
             ApiResponse<IEnumerable<ContactPM>> response = APICaller.CallGetByFilters<IEnumerable<ContactPM>>(Urls.ContactViewsGetByFilters, UserTenant.Token, apiQueryFilters);
             return response.Data;
         }
+        #endregion
     }
 }
