@@ -1,6 +1,6 @@
 ﻿
 <Script DBType="Main"  Module="Accounting" >
-  <Sql Version="1">
+  <Sql Version="2">
     <![CDATA[
 declare @recoId varchar(15)
 DECLARE db_cursor CURSOR FOR 
@@ -13,7 +13,7 @@ BEGIN
 
     UPDATE   TaxReportLines
     set   StatusCode = 9
-    where  IIF(SIGN (VatAmount) = SIGN (TotalInvoiceAmount),'same','diff') = 'diff'
+    where  SIGN(VatAmount) <> SIGN (TotalInvoiceAmount)
     and VatAmount <> 0 and TotalInvoiceAmount <> 0 and VatAmount is not null and TotalInvoiceAmount is not null 
 
     FETCH NEXT FROM db_cursor INTO @recoId 
