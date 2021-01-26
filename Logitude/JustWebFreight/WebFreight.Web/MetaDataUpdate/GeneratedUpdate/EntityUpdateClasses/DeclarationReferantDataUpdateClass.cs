@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class DeclarationReferantDataUpdateClass
    {  		
-		public const string HashString = "83bb9ae4bdd3ed6f3e534a4140651294";
+		public const string HashString = "5b6f748f80c6853a0eebb5db61a23f9f";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -4399,7 +4399,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   Feature DeclarationReferantDataFeature_6 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DeclarationReferantData.Q.FilesAvailableFreeOfCharge", ObjectTableId = DeclarationReferantDataObjectTable.Id, Tenant = 0, NameTextCodeCode = "DeclarationReferantDataFeatures.FilesAvailableFreeOfCharge", NameTextCodeDefaultText = "FilesAvailableFreeOfCharge", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,DeclarationReferantDataObjectTable, addedFeatures, addedTextCodes);
  
 
-			   TextCode DeclarationReferantDataTextCode_7 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DeclarationReferantData.Q.FilesWithoutRelease", DefaultText = @"Files Without Release",LocalDefaultText = "תיקים שהוגשו למכס ולא הותרו", ObjectTableId = DeclarationReferantDataObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   TextCode DeclarationReferantDataTextCode_7 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DeclarationReferantData.Q.FilesWithoutRelease", DefaultText = @"Files Without Release",LocalDefaultText = "תיקים שהוגשו ולא הותרו", ObjectTableId = DeclarationReferantDataObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
 			   Feature DeclarationReferantDataFeature_7 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DeclarationReferantData.Q.FilesWithoutRelease", ObjectTableId = DeclarationReferantDataObjectTable.Id, Tenant = 0, NameTextCodeCode = "DeclarationReferantDataFeatures.FilesWithoutRelease", NameTextCodeDefaultText = "FilesWithoutRelease", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,DeclarationReferantDataObjectTable, addedFeatures, addedTextCodes);
  
 
@@ -5157,7 +5157,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
  		   TextCode DeclarationReferantDataTextCode_CustomsDeclarationReferantDataOFilesRejectedByClassification = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.DeclarationReferantData.O.FilesRejectedByClassification", DefaultText = "Files Rejected By Classification",LocalDefaultText = "תיקים שנדחו ע''י מסווג", ObjectTableId = DeclarationReferantDataObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationReferantDataTextCode_CustomsDeclarationReferantDataOFilesWithoutRelease = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.DeclarationReferantData.O.FilesWithoutRelease", DefaultText = "Files Without Release",LocalDefaultText = @"תיקים שהוגשו למכס ולא הותרו", ObjectTableId = DeclarationReferantDataObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationReferantDataTextCode_CustomsDeclarationReferantDataOFilesWithoutRelease = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.DeclarationReferantData.O.FilesWithoutRelease", DefaultText = "Files Without Release",LocalDefaultText = @"תיקים שהוגשו ולא הותרו", ObjectTableId = DeclarationReferantDataObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    
