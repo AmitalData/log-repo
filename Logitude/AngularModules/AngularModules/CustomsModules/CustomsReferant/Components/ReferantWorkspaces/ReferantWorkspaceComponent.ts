@@ -7,7 +7,7 @@ import { ListComponentArgs } from '../../../../Infrastructure/Args';
 import { TextCodeTranslator } from '../../../../Infrastructure/Utilities/TextCodeTranslator';
 import { ChartingDataClass } from '../../../../Infrastructure/DataContracts/Dashboard/ChartingDataClass';
 import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
-import { FormatTool } from '../../../../Infrastructure/Tools';
+import { FormatTool, AppTool } from '../../../../Infrastructure/Tools';
 import { DeclarationReferantDataExtendedListService } from '../../../../Customs/Services/ExtendedLists/DeclarationReferantDataExtendedListService';
 import { Dictionary } from '../../../../Infrastructure/GenericTypes/Dictionary';
 import { DeclarationReferantDataFiltersMenuComponent } from '../FiltersMenu/DeclarationReferantDataFiltersMenuComponent';
@@ -415,10 +415,13 @@ export class ReferantWorkspaceComponent implements AfterViewInit {
             listArgs.DisplayTitle = displayTitle;
             listArgs.BackButtonTitle = TextCodeTranslator.Translate("General.MH.ReferantWorkspace");
             listArgs.IgnoreSelectedPerspective = true;
+            if (AppTool.IsNullOrEmpty(listArgs.NewButtonLabel)) listArgs.NewButtonLabel = TextCodeTranslator.Translate("Customs.General.O.NewCustomsFile"); // "פתיחת תיק חדש";
+
             this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe(response => {
                 SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
                     .then(cmpRef => {
                         cmpRef.instance.ComponentRef = cmpRef;
+
                         cmpRef.instance.Run(listArgs);
                         cmpRef.instance.BackCompleted.subscribe(($event: any) => {
                           //  this.filters = $event.Filters;
