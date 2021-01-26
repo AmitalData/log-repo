@@ -15,6 +15,7 @@ namespace Logitude.ShipmentTests.Steps
     public class ExternalAPIDirectSteps
     {
         private readonly ExternalAPIDirectContext Context;
+        private Action act;
 
         public ExternalAPIDirectSteps(ExternalAPIDirectContext context)
         {
@@ -50,30 +51,29 @@ namespace Logitude.ShipmentTests.Steps
         public void WhenUpdateMainCarriageLegATAToFutureDate()
         {
             Context.Direct.MainCarriageLegs.First().ATA = GetDateBasedOnCurrentDate(1, 0, 0);
-
-            ApiResponse<Direct> response = APICaller.CallPut<Direct>(Context.Direct, "Direct", UserTenant.Token);
-            Context.ExceptionMessage = response.ErrorMessage;
+            act = () => APICaller.CallPut<Direct>(Context.Direct, "Direct", UserTenant.Token);
         }
 
         [Then(@"Error message \(cannot set main carriage ATA to future date\) should received")]
         public void ThenErrorMessageCannotSetMainCarriageATAToFutureDateShouldReceived()
         {
-            Context.ExceptionMessage.Should().Be("Can't set MainCarriageATA to future date");
+            act.Should().ThrowExactly<Exception>()
+                .Where(e => e.Message.Contains("Can't set MainCarriageATA to future date"));
         }
 
         [When(@"Update main carriage leg ATD to future date")]
         public void WhenUpdateMainCarriageLegATDToFutureDate()
         {
             Context.Direct.MainCarriageLegs.First().ATD = GetDateBasedOnCurrentDate(1, 0, 0);
+            act = () => APICaller.CallPut<Direct>(Context.Direct, "Direct", UserTenant.Token);
 
-            ApiResponse<Direct> response = APICaller.CallPut<Direct>(Context.Direct, "Direct", UserTenant.Token);
-            Context.ExceptionMessage = response.ErrorMessage;
         }
 
         [Then(@"Error message \(cannot set main carriage ATD to future date\) should received")]
         public void ThenErrorMessageCannotSetMainCarriageATDToFutureDateShouldReceived()
         {
-            Context.ExceptionMessage.Should().Be("Can't set MainCarriageATD to future date");
+            act.Should().ThrowExactly<Exception>()
+                .Where(e => e.Message.Contains("Can't set MainCarriageATD to future date"));
         }
 
         [When(@"Update main carriage leg ETD,ATD,ETA and ATA to valid date")]
