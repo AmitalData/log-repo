@@ -369,7 +369,15 @@ namespace Logitude.BL.ShipmentsModel.EntityOtherServices
                     row[11] = item.ShipmentLevelCode == "H" ? item.FromPortCode : item.MainCarriageFromPortCode;
                     row[12] = item.ShipmentLevelCode == "H"? item.FromPortCountryCode : item.MainCarriageFromPortCountryCode;
                     row[13] = "H";
-                    row[14] = item.Master;
+
+                    if (!string.IsNullOrEmpty(item.Master))
+                    {
+                        string master = item.Master.Trim();
+                        master = Regex.Replace(item.Master, @"[^0-9a-zA-Z.,+]+", "");
+
+                        row[14] = master;
+                    }
+
                     row[15] = "2";
                     row[16] = item.ShipmentLevelCode == "H" ? item.ToPortCode : item.MainCarriageFinalDestinationPortCode;
                     row[17] = item.ShipmentLevelCode == "H"? item.ToPortCountryCode : item.MainCarriageFinalDestinationCountryCode;
