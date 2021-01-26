@@ -31,18 +31,3 @@ export class LocationDirective implements AfterViewInit {
         //this.DirectiveLoaded.emit('Directive Loaded');
     }
 }
-
-@Directive({
-    selector: '[LocationDirectiveA]'
-})
-
-export class LocationDirectiveA implements AfterViewInit {
-   
-    constructor(public elementRef: ElementRef,public viewContainerRef: ViewContainerRef) {
-
-    }
-
-    ngAfterViewInit() {
-        //this.DirectiveLoaded.emit('Directive Loaded');
-    }
-}
