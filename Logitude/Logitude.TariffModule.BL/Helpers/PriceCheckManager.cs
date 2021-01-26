@@ -822,7 +822,7 @@ namespace Logitude.TariffModule.BL.Helpers
                                                 SurchargeItem.SellerId = CurrentSurcharge.SellerId;
                                                 SurchargeItem.SellerName = sellerName;
                                                 SurchargeItem.MinPrice = minPriceSurcharge;
-                                                SurchargeItem.CurrencySign = AssignSignCode(Currencies, SurchargeItem.CurrencyId, SurchargeItem.UnitOfMesurmentCode);
+                                                SurchargeItem.CurrencySign = AssignSignCode(Currencies, currencyId, SurchargeItem.UnitOfMesurmentCode);
                                                 surchargesList.Add(SurchargeItem);
                                             }
                                         }
@@ -1201,7 +1201,7 @@ namespace Logitude.TariffModule.BL.Helpers
                                         SurchargeItem.SellerId = CurrentSurcharge.SellerId;
                                         SurchargeItem.SellerName = sellerName;
                                         SurchargeItem.LineId = ChargesfilteredLines.Id;
-                                        SurchargeItem.CurrencySign = AssignSignCode(currencies, SurchargeItem.CurrencyId, SurchargeItem.UnitOfMesurmentCode);
+                                        SurchargeItem.CurrencySign = AssignSignCode(currencies, currencyId, SurchargeItem.UnitOfMesurmentCode);
                                         surchargesList.Add(SurchargeItem);
                                     }
                                 }
