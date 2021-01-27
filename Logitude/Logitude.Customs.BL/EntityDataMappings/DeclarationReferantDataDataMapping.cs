@@ -55,17 +55,20 @@ namespace Logitude.Customs.BL.EntityDataMappings
                 }
                 ConsignmentQueryService cosigmentQuery = new ConsignmentQueryService(poco.Tenant);
                 ConsignmentPM consignment = cosigmentQuery.GetSingle(entityPM.DeclarationId,1, false, false);
-                if (!string.IsNullOrEmpty(consignment.ManifestNumber))
+                if (consignment != null)
                 {
-                    result = string.IsNullOrEmpty(result) ? consignment.ManifestNumber : result + "," + consignment.ManifestNumber;
-                }
-                if (!string.IsNullOrEmpty(consignment.SecondCargoID))
-                {
-                    result = string.IsNullOrEmpty(result) ? consignment.SecondCargoID : result + "," + consignment.SecondCargoID;
-                }
-                if (!string.IsNullOrEmpty(consignment.ThirdCargoID))
-                {
-                    result = string.IsNullOrEmpty(result) ? consignment.ThirdCargoID : result + "," + consignment.ThirdCargoID;
+                    if (!string.IsNullOrEmpty(consignment.ManifestNumber))
+                    {
+                        result = string.IsNullOrEmpty(result) ? consignment.ManifestNumber : result + "," + consignment.ManifestNumber;
+                    }
+                    if (!string.IsNullOrEmpty(consignment.SecondCargoID))
+                    {
+                        result = string.IsNullOrEmpty(result) ? consignment.SecondCargoID : result + "," + consignment.SecondCargoID;
+                    }
+                    if (!string.IsNullOrEmpty(consignment.ThirdCargoID))
+                    {
+                        result = string.IsNullOrEmpty(result) ? consignment.ThirdCargoID : result + "," + consignment.ThirdCargoID;
+                    }
                 }
             }
             entityPM.SearchFields = result.ToLower();
