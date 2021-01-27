@@ -631,14 +631,14 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
             logitudeWindow.WindowClosed.subscribe(s => {
                 if (s.indexOf('+') > -1) {
                     this.PricesChanged = true;
-                    this.CheckStorageProperties();
+                    this.CheckStorageProperties(this.WarehouseLegActualReleaseDate);
                     this.UpdateCurrency();
                 }
 
                 else {
                     if (s == "PricesChanged") {
                         this.PricesChanged = true;
-                        this.CheckStorageProperties();
+                        this.CheckStorageProperties(this.WarehouseLegActualReleaseDate);
                     }
 
                     else if (s == "CurrencyChanged") {
@@ -791,16 +791,16 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
         this.ValidationErrorsList = errors;
 
         if (errors.length == 0) {
-            this.CheckStorageProperties(); 
+            this.CheckStorageProperties(this.WarehouseLegActualReleaseDate); 
             this.FatherComponent.BuildItemsCollection();
             this.CurrentSession.CloseCurrentWindowEmit("OK");
         }
     }
 
-    private CheckStorageProperties() {
+    private CheckStorageProperties(date: Date) {
         var storageReceivable: ShipmentReceivablePM = this.EntityPM.ShipmentReceivables.filter(d => d.ChargesTypeCode == "ISTOR" && d.MeasurementCode == "STFE" && AppTool.IsNullOrEmpty(d.ARInvoiceId))[0];
 
-        if (this.IsCFSWarehouse && this.WarehouseLegActualReleaseDate != null && this.WarehouseLegActualReleaseDate != undefined && !AppTool.IsNullOrEmpty(this.EntityPM.ChargeStorageCurrencyId)
+        if (this.IsCFSWarehouse && date != null && date != undefined && !AppTool.IsNullOrEmpty(this.EntityPM.ChargeStorageCurrencyId)
             && !AppTool.IsNullOrZero(this.StorageDays) && this.ChargeStorage && this.EntityPM.ShipmentStoragePricings.length > 0) {
 
             if (this.PricesChanged) {
@@ -1053,5 +1053,22 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
         this.GrossWeightPerStorageDays = weightPerStorageDays < 0 ? 0 : weightPerStorageDays;
 
         ShipmentTool.OnWarehouseStorageFreeDaysChanged(this.EntityPM);
+    }
+
+    CalculateStorageClicked() {
+        var date: Date = this.WarehouseLegActualReleaseDate;
+        var days: number;
+
+        if (date == null) {
+            date = this.WarehouseLegExpectedReleaseDate;
+        }
+
+        if (DateTool.GetDateFromDate(date) >= DateTool.GetDateFromDate(this.WarehouseLegActualEntryDate)) {
+            days = DateTool.GetDaysBetweenDates(this.WarehouseLegActualEntryDate, date);
+            this.StorageDays = days;
+            this.Days = " Days";
+        }
+
+        this.CheckStorageProperties(date);
     }
 }
