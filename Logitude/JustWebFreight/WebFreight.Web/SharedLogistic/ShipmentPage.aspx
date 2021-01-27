@@ -103,6 +103,10 @@
 
 <body>
 
+    <form style="visibility:collapse;">
+        <input id="TokenInput" runat="server" />
+        <input id="LoginInput" runat="server" />
+    </form>
 
     <script src="../HtmlHelpers/JS/highlight.pack.js" type="text/javascript"></script>
     <script src="../HtmlHelpers/JS/app.js" type="text/javascript"></script>

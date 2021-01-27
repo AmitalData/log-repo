@@ -156,3 +156,22 @@ function GetApplicationLogoHeight(myLogoCode) {
     return myResult;
 }
 
+function PostFormParams(formURL, params) {    
+    var mapForm = document.createElement("form");
+    mapForm.target = "_self";
+    mapForm.method = "POST";
+    mapForm.action = formURL;
+
+    for (var i = 0; i < params.length; i++) {
+        var mapInput = document.createElement("input");
+        mapInput.type = "hidden";
+        mapInput.name = params[i].name;
+        mapInput.setAttribute("value", params[i].value);
+        mapForm.appendChild(mapInput);
+    }
+
+    document.body.appendChild(mapForm);
+    mapForm.submit();
+    document.body.removeChild(mapForm);
+}
+
