@@ -196,6 +196,7 @@ export class NewARPaymentComponent extends BaseComponent implements OnInit {
 
         if (this.invoicePm != null) {
             this.IsCreatedFromInvoiceSide = true;
+            this.UIProperties.SetEnabled("PartnerId", this.ObjectTableName, false);
             this.UIProperties.SetEnabled("BillToId", this.ObjectTableName, false);
             this.UIProperties.SetEnabled("BillToAddressId", this.ObjectTableName, false);
             this.UIProperties.SetEnabled("PaymentCurrencyId", this.ObjectTableName, false);
@@ -302,6 +303,7 @@ export class NewARPaymentComponent extends BaseComponent implements OnInit {
         this.CreateARPayment();
 
         if (this.IsCreatedFromInvoiceSide) {
+            this.newARPaymentPM.PartnerId = this.invoicePm.PartnerId;
             this.newARPaymentPM.BillToId = this.invoicePm.BillToId;
             this.newARPaymentPM.BillToName = this.invoicePm.BillToName;
             this.newARPaymentPM.BillToAddressId = this.invoicePm.BillToAddressId;
@@ -321,7 +323,7 @@ export class NewARPaymentComponent extends BaseComponent implements OnInit {
 
         else {
             if (!AppTool.IsNullOrEmpty(this.customerId)) {
-                this.BillToId = this.customerId;
+                this.PartnerId = this.customerId;
             }
 
             this.PaymentCurrencyId = SessionLocator.TenantPM.CurrencyId;
