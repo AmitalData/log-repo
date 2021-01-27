@@ -44,6 +44,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                                        SecondaryColor = a.SecondaryColor, 
                                                        BackgroundId = a.BackgroundId,
                                                        ComapnylogoId = a.ComapnylogoId,
+                                                       InvertedLogoId = a.InvertedLogoId,
                                                        BrowserIconId = a.BrowserIconId,
                                                        CustomerURL = a.CustomerURL,
 
@@ -232,6 +233,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
 
                                                      BackgroundId = a.BackgroundId,
                                                      ComapnylogoId = a.ComapnylogoId,
+                                                     InvertedLogoId = a.InvertedLogoId,
                                                      BrowserIconId = a.BrowserIconId,
                                                      NoPaymentForChildTenants = a.NoPaymentForChildTenants,
                                                  }).FirstOrDefault();
@@ -416,6 +418,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
 
                                                   BackgroundId = a.BackgroundId,
                                                   ComapnylogoId = a.ComapnylogoId,
+                                                  InvertedLogoId = a.InvertedLogoId,
                                                   BrowserIconId = a.BrowserIconId,
                                                   NoPaymentForChildTenants = a.NoPaymentForChildTenants,
                                               }).FirstOrDefault();

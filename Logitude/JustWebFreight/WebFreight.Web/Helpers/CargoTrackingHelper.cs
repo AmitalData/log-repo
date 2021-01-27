@@ -40,6 +40,7 @@ namespace WebFreight.Web.Helpers
                     BackgroundId = tenantManagementPM.BackgroundId,
                     BrowserIconId = tenantManagementPM.BrowserIconId,
                     ComapnylogoId = tenantManagementPM.ComapnylogoId,
+                    InvertedLogoId = tenantManagementPM.InvertedLogoId,
                     CustomerURL = tenantManagementPM.CustomerURL,
                 };
                 SetCargoTrackingImages(cargoTrackingBrandingData, BrandingDataRequest, isFromPrivateSite);
@@ -53,6 +54,7 @@ namespace WebFreight.Web.Helpers
         {
             SetBackgroundImageBase64(cargoTrackingBrandingData, BrandingDataRequest, isFromPrivateSite);
             SetComapnyLogoBase64(cargoTrackingBrandingData, BrandingDataRequest);
+            SetInvertedLogoBase64(cargoTrackingBrandingData, BrandingDataRequest);
             SetBrowserIconBase64(cargoTrackingBrandingData, BrandingDataRequest);
         }
         private void SetBackgroundImageBase64(CargoTrackingBrandingData cargoTrackingBrandingData, 
@@ -72,16 +74,30 @@ namespace WebFreight.Web.Helpers
 
         }
 
-        private void SetComapnyLogoBase64(CargoTrackingBrandingData cargoTrackingBrandingData, 
+        private void SetComapnyLogoBase64(CargoTrackingBrandingData cargoTrackingBrandingData,
                                           CargoTrackingBrandingDataRequest BrandingDataRequest)
         {
-            if (!string.IsNullOrEmpty(cargoTrackingBrandingData.ComapnylogoId) && 
+            if (!string.IsNullOrEmpty(cargoTrackingBrandingData.ComapnylogoId) &&
                                       BrandingDataRequest.ComapnylogoId != cargoTrackingBrandingData.ComapnylogoId)
             {
                 byte[] filedata = GeImageBytesById(cargoTrackingBrandingData.ComapnylogoId);
                 if (filedata != null)
                 {
                     cargoTrackingBrandingData.ComapnylogoBytes = filedata;
+                }
+            }
+
+        }
+        private void SetInvertedLogoBase64(CargoTrackingBrandingData cargoTrackingBrandingData,
+                                         CargoTrackingBrandingDataRequest BrandingDataRequest)
+        {
+            if (!string.IsNullOrEmpty(cargoTrackingBrandingData.InvertedLogoId) &&
+                                      BrandingDataRequest.InvertedLogoId != cargoTrackingBrandingData.InvertedLogoId)
+            {
+                byte[] filedata = GeImageBytesById(cargoTrackingBrandingData.InvertedLogoId);
+                if (filedata != null)
+                {
+                    cargoTrackingBrandingData.InvertedLogoBytes = filedata;
                 }
             }
 

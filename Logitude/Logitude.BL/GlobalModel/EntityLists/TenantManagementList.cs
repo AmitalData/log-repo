@@ -143,6 +143,7 @@ namespace Logitude.BL.GlobalModel.EntityLists
         public decimal Opacity { get; set; }
         public string BackgroundId { get; set; }
         public string ComapnylogoId { get; set; }
+        public string InvertedLogoId { get; set; }
         public string BrowserIconId { get; set; }
 
         public int? TotalNumberOfUsers { get; set; }

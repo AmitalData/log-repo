@@ -36,13 +36,13 @@ export class UserDashboardComponent implements AfterViewInit
     }
     constructor(private cargoTrackingDataExtendedService: CargoTrackingBrandingDataExtendedService,private router: Router,@Inject('BASE_URL') baseUrl: string )
     {
-         
+
          document.documentElement.style.setProperty('--BGColor', 'RGB(250,251,252)');
          this.GetcargoTrackingData(baseUrl);
          this.InitComponent();
 
     }
- 
+
     private InitComponent()
     {
 
@@ -50,11 +50,33 @@ export class UserDashboardComponent implements AfterViewInit
         this.GetLoggedUserNameFromLoggedEmail();
     }
 
+    UserNameFirstLetters: string;
     private GetLoggedUserNameFromLoggedEmail()
     {
-        var loggedEmail = sessionStorage.getItem("LoggedUserEmail");
-        this.UserName = loggedEmail?.split('@')[0] || 'Saitama Con';
+        if(SessionInfo.LoggedUser){
+            this.SetFirstUserLetters(SessionInfo.LoggedUser.UserName);
+            this.UserName = SessionInfo.LoggedUser.UserName;
+        }else{
+            var loggedEmail = sessionStorage.getItem("LoggedUserEmail");
+            this.UserName = loggedEmail;
+            this.SetFirstUserLetters(loggedEmail);
+        }
+
     }
+    private SetFirstUserLetters(userName: string)
+    {
+        if (userName) {
+            var splitted = userName.split(" ");
+            if (splitted.length == 1)
+                this.UserNameFirstLetters = splitted[0][0];
+            else if (splitted.length == 2)
+                this.UserNameFirstLetters = splitted[0][0] + splitted[1][0];
+            else if (splitted.length == 0)
+                this.UserNameFirstLetters = "Aa";
+
+        }
+    }
+
     private GetCompanyLoginsFromCache()
     {
         SessionInfo.LoggedUserCompanyLogins = JSON.parse(sessionStorage.getItem("LoggedUserCompanyLogins"));
@@ -67,16 +89,16 @@ export class UserDashboardComponent implements AfterViewInit
         this.ConnectedCustomers = SessionInfo.LoggedUserCompanyLogins
             .filter(d => d.CardType == 'CS' && d.CardId != null && d.Tenant == this.tenant)
             .map(d => d.CardId);
-            console.log("[Invited Customers]",this.ConnectedCustomers);            
+            console.log("[Invited Customers]",this.ConnectedCustomers);
     }
 
-  
+
 
     private Authenticate()
     {
         var loggedEmail = sessionStorage.getItem("LoggedUserEmail");
-        if (!loggedEmail) 
-            this.router.navigate(["Cargo-Tracking", "login"]);        
+        if (!loggedEmail)
+            this.router.navigate(["Cargo-Tracking", "login"]);
     }
 
     isNavOpened = false;
@@ -96,13 +118,17 @@ export class UserDashboardComponent implements AfterViewInit
     }
 
 
+    public get InvertedLogoURL(){
+        return CargoTrackingBrandingData.InvertedLogoURL;
+    }
+
     public GoToError401(){
         this.router.navigate(['Error401']);
     }
 
- 
+
     private GetcargoTrackingData(baseUrl:string)
-    {   if(this.tenant) 
+    {   if(this.tenant)
         this.IsBrandingDataLoaded = true;
         this.cargoTrackingDataExtendedService.GetCargoTrackingBrandingDataForPrivateSite(ServiceHelper.GetcargoTrackingDataRequest(baseUrl)).subscribe((response: ServiceResponse) =>
         { if(response.Result){
@@ -112,23 +138,23 @@ export class UserDashboardComponent implements AfterViewInit
         else{
             this.GoToError401();
         }
-          
+
         });
     }
-    
+
     ngAfterViewInit()
-    { 
+    {
 
     }
     get ComapnyLogo(){
         return CargoTrackingBrandingData.ComapnylogoURL;
-    } 
+    }
     get BrowserIcon(){
         return CargoTrackingBrandingData.BrowserIconURL;
-    } 
+    }
     get BackGroundImg(){
         return CargoTrackingBrandingData.BackgroundURL;
-    } 
-  
-    
+    }
+
+
 }

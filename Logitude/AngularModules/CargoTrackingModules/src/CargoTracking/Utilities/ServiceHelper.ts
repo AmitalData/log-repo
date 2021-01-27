@@ -27,10 +27,12 @@ export  class ServiceHelper{
     public static GetcargoTrackingDataRequest(baseUrl:string)
     {   var BackgroundId:string = this.GetImageIdFromStorage("BackgroundImg");
         var CompanyLogoId:string = this.GetImageIdFromStorage("CompanyLogoImg");
+        var InvertedLogoId:string = this.GetImageIdFromStorage("InvertedLogoImg");
         var BrowserIconId:string = this.GetImageIdFromStorage("BrowserIconImg");
         var BrandingDataRequest:CargoTrackingBrandingDataRequest = new CargoTrackingBrandingDataRequest();
         BrandingDataRequest.BackgroundId = BackgroundId;
         BrandingDataRequest.ComapnylogoId = CompanyLogoId;
+        BrandingDataRequest.InvertedLogoId = InvertedLogoId;
         BrandingDataRequest.BrowserIconId = BrowserIconId;
         BrandingDataRequest.Domain = baseUrl;
         return BrandingDataRequest;
@@ -58,11 +60,12 @@ export  class ServiceHelper{
     }
     private static SetCarogTrackingImages(BrandingData:any,baseUrl:string)
     {
-        this.SetBackGroundImg(BrandingData,baseUrl);
-        this.SetComapnyLogo(BrandingData,baseUrl);
+        this.SetBackgroundImg(BrandingData,baseUrl);
+        this.SetCompanyLogo(BrandingData,baseUrl);
         this.SetBrowserIcon(BrandingData);
+        this.SetInvertedLogo(BrandingData);
     }
-    private static SetBackGroundImg(BrandingData:any,baseUrl:string)
+    private static SetBackgroundImg(BrandingData:any,baseUrl:string)
     {
         if(BrandingData.BackgroundBytes){
             CargoTrackingBrandingData.BackgroundURL = "url("+ServiceHelper.GetImageFromBytes(BrandingData.BackgroundBytes)+")";
@@ -79,7 +82,7 @@ export  class ServiceHelper{
         }
     }
 
-    private static SetComapnyLogo(BrandingData:any,baseUrl:string)
+    private static SetCompanyLogo(BrandingData:any,baseUrl:string)
     {
         if(BrandingData.ComapnylogoBytes){
             CargoTrackingBrandingData.ComapnylogoURL = ServiceHelper.GetImageFromBytes(BrandingData.ComapnylogoBytes);
@@ -89,6 +92,20 @@ export  class ServiceHelper{
             var StorageCompanyLogo:CargoTrackingImage = ServiceHelper.GetImageFromStorage("CompanyLogoImg");
                 if(StorageCompanyLogo && StorageCompanyLogo.Id!=null && StorageCompanyLogo.Id == BrandingData.ComapnylogoId){
                     CargoTrackingBrandingData.ComapnylogoURL =ServiceHelper.GetImageFromBytes(StorageCompanyLogo.Data);
+                }
+        }
+    }
+
+    private static SetInvertedLogo(BrandingData:any)
+    {
+        if(BrandingData.InvertedLogoBytes){
+            CargoTrackingBrandingData.InvertedLogoURL = ServiceHelper.GetImageFromBytes(BrandingData.InvertedLogoBytes);
+            this.StoreImageInStorage("InvertedLogoImg",BrandingData.InvertedLogoId,BrandingData.InvertedLogoBytes);
+        }
+        else{
+            var StorageInvertedLogo:CargoTrackingImage = ServiceHelper.GetImageFromStorage("InvertedLogoImg");
+                if(StorageInvertedLogo && StorageInvertedLogo.Id!=null && StorageInvertedLogo.Id == BrandingData.ComapnylogoId){
+                    CargoTrackingBrandingData.InvertedLogoURL =ServiceHelper.GetImageFromBytes(StorageInvertedLogo.Data);
                 }
         }
     }
