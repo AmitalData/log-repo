@@ -4562,7 +4562,15 @@ User/Pass",
 
         private void citiesTextBox_TextChanged(object sender, EventArgs e)
         {
+         
+        }
 
+       
+
+        private void button51_Click_1(object sender, EventArgs e)
+        {
+            RedeemedCheques frm = new RedeemedCheques();
+            frm.Show(this);
         }
 
         //private void button50_Click(object sender, EventArgs e)

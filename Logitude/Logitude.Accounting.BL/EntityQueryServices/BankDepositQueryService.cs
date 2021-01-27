@@ -637,7 +637,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
 
         public static Func<int, ContactPM> OverrideGetLoggedContactFunc { get; set; }
 
-        public List<ARPaymentChequePM> GetListByPaymentId(string banDepositId, int tenant)
+        public List<ARPaymentChequePM> GetChequesOfDeposit(string banDepositId, int tenant)
         {
             BankDepositLineQueryService bankDepositLineQueryService = new BankDepositLineQueryService(context);
             List<string> paymentChequeIds = (from a in context.BankDepositLines

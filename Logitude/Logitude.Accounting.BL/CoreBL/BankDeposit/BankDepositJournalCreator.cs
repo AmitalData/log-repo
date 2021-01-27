@@ -123,8 +123,8 @@ namespace Logitude.Accounting.BL.CoreBL.BankDeposit
                 CurrencyId = DepositPM.DepositCurrencyId,
                 DocumentDate = DepositPM.AccountingDate,
                 AccountingDate = DepositPM.AccountingDate,
-                Reference1 = cheque.ChequeNumber,
-                Reference2 = DepositPM.DepositNumber.ToString(),
+                Reference1 = DepositPM.DepositNumber.ToString(),
+                Reference2 = cheque.ChequeNumber,
                 ExchangeRate = cheque.LocalAmount / cheque.ForeignAmount
             };
 
@@ -273,8 +273,8 @@ namespace Logitude.Accounting.BL.CoreBL.BankDeposit
                 = cheque.ValueDate <= TenantServerConfigration.GetCurrentDateTime(DepositPM.Tenant)
                                     ? BankGLAccount.Id : BankDeferedGLAccount.Id;
 
-            newCreditJournalLine.Reference1 = cheque.ChequeNumber;
-            newCreditJournalLine.Reference2 = DepositPM.DepositNumber.ToString();
+            newCreditJournalLine.Reference1 = DepositPM.DepositNumber.ToString();
+            newCreditJournalLine.Reference2 = cheque.ChequeNumber;
             return newCreditJournalLine;
         }
 
