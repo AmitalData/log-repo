@@ -800,8 +800,13 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
     private CheckStorageProperties(date: Date) {
         var storageReceivable: ShipmentReceivablePM = this.EntityPM.ShipmentReceivables.filter(d => d.ChargesTypeCode == "ISTOR" && d.MeasurementCode == "STFE" && AppTool.IsNullOrEmpty(d.ARInvoiceId))[0];
 
-        if (this.IsCFSWarehouse && date != null && date != undefined && !AppTool.IsNullOrEmpty(this.EntityPM.ChargeStorageCurrencyId)
-            && !AppTool.IsNullOrZero(this.StorageDays) && this.ChargeStorage && this.EntityPM.ShipmentStoragePricings.length > 0) {
+        if (this.IsCFSWarehouse
+            && date != null && date != undefined
+            && !AppTool.IsNullOrEmpty(this.EntityPM.ChargeStorageCurrencyId)
+            && !AppTool.IsNullOrZero(this.StorageDays)
+            && this.StorageDays > this.EntityPM.WarehouseStorageFreeDays
+            && this.ChargeStorage
+            && this.EntityPM.ShipmentStoragePricings.length > 0) {
 
             if (this.PricesChanged) {
                 if (storageReceivable) {
