@@ -192,14 +192,14 @@ LEFT OUTER JOIN AMINETNXT_MAIN.Contacts Extent10 ON Extent10.Id = Extent1.Contro
                 declarationReferantDatas = declarationReferantDatas.Where(x => depId.Contains(x.DepartmentId));
             }
 
-
+            var date2 = DateTime.Today.Date.AddDays(1);
 
             var qGroupIt = (from a in declarationReferantDatas
                             group a by 1 into groupBy1
                             select new DeclarationReferantDataSummary
                             {
                                 FilesInProcess = groupBy1.Count(x => x.IsClosedForFollowUp != "1"),
-                                TrackingCases = groupBy1.Count(x => x.FollowUpDate == DateTime.Today && x.IsClosedForFollowUp != "1"),
+                                TrackingCases = groupBy1.Count(x => x.FollowUpDate != null &&   x.FollowUpDate > DateTime.Today.Date   && x.FollowUpDate < date2  && x.IsClosedForFollowUp != "1"),
                                 FilesInOCR = groupBy1.Count(x => x.PreClassification == "P" && x.IsClosedForFollowUp != "1"),
                                 FilesInSivug = groupBy1.Count(x => x.ClassificationStatus == "P" && x.IsClosedForFollowUp != "1"),
                                 FilesInReview = groupBy1.Count(x => x.ControllerStatus == "P" && x.IsClosedForFollowUp != "1"),
