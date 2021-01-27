@@ -298,12 +298,17 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             IWorkbook workbook = excelEngine.Excel.Workbooks.Create(1);
             IWorksheet sheet1 = workbook.Worksheets[0];
 
-            DataTable table0 = new DataTable();            
-            DataRow row0 = table0.NewRow();
-            row0[0] = "From Multi-Ports ";
-            DataRow row1 = table0.NewRow();
-            row1[0] = "To Multi-Ports ";
-            sheet1.ImportDataTable(table0, true, 1, 1);
+            //sheet1.Rows[1].Columns[1].Value = "From Multi-Ports";
+            //sheet1.Cells[2].Value = "To Multi-Ports";
+
+            DataTable table_multi = new DataTable();
+            table_multi.Columns.Add();
+            table_multi.Columns.Add();
+            table_multi.Rows.Add(table_multi.NewRow());
+            table_multi.Rows.Add(table_multi.NewRow());
+            object[] array = { "From Multi-Ports" };
+            table_multi.Rows[0].ItemArray = array;
+            sheet1.ImportDataTable(table_multi, true, 1, 1);
 
             // Build excel headers 
             DataTable table = new DataTable();
@@ -334,6 +339,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 table.Columns.Add("Notes");
             }
 
+            #region Range
             string range = "A3:F3";
             if (steps.Length == 2)
             {
@@ -369,6 +375,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             {
                 range = "A3:M3";
             }
+            #endregion
 
             if (type == "Data")
             {
