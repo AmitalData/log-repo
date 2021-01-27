@@ -1,7 +1,7 @@
 export class Selectors
 {
     public static readonly ShipmentTab = '#SHIP';
-    public static readonly MenuButtons='#MenuButtons';
+    public static readonly ShipmentMoreList ='#MenuButtons';
     public static readonly GeneralTab = '#ShipmentTHGeneral';
     public static readonly OrdersTab = '#ShipmentTHOrders';
     public static readonly PartnersTab = '#ShipmentTHPartners';
@@ -50,5 +50,5 @@ export class Selectors
     public static readonly ShipmentPayable_ChargesTypeId = '#ShipmentPayable_ChargesTypeId';
     public static readonly ShipmentPayable_MeasurementId = '#ShipmentPayable_MeasurementId';
     public static readonly ShipmentPayable_CurrencyId = '#ShipmentPayable_CurrencyId';
-    public static readonly MenuButtons_CopyShipment='#ShipmentBCopyShipment'
+    public static readonly CopyShipmentButton='#ShipmentBCopyShipment'
 }

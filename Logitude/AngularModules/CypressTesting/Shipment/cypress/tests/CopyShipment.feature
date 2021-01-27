@@ -1,18 +1,17 @@
 Feature:Copy Direct Export Air Shipment
 
     Scenario: Login And Open Shipments Workspace
-        Given user has logged
-        And the user has gone to the shipments workspace
+        Given the user logged in
+        And navigates to shipments workspace
 
     Scenario: Create Direct Export Air Shipment
-        Given the user fills the required shipment details with valid data
+        Given a direct shipment with the following details
             | ShipmentLevel | Direction | TransportMode | Shipper  | MainCarriageFromPort | MainCarriageToPort |
             | Direct        | E         | A             | Shipper1 | LHR                  | MIA                |
-        When the user Clicks on create shipment button
-        Then the create operation completed successfully
+        When create shipment 
+        Then the shipment should create successfully
 
     Scenario: Copy Direct Export Air Shipment
-        Given the user searches for the required shipment using quick search
-        And the user clicks on copy shipment
-        When the users clicks on Copy
-        Then the copy operation completed successfully
+        Given the user open the direct shipment
+        When copy the shipment
+        Then a shipment copy should create successfully

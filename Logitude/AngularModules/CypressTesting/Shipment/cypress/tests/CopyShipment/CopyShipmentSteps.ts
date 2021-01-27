@@ -4,49 +4,46 @@ import { Given, When, Then, And } from "cypress-cucumber-preprocessor/steps";
 import { ShipmentDetails } from "../../models/ShipmentDetails";
 import { BaseSelectors } from "../../../../Base/cypress/selectors/BaseSelectors"
 import { Selectors } from "../../selectors/Selectors";
-let _ShipmentDetails: ShipmentDetails;
+let ShipmentData: ShipmentDetails;
 let ShipmentFile;
 let CopiedShipmentFile;
-Given("user has logged", () => {
+Given("the user logged in", () => {
   cy.Login();
 });
-And("the user has gone to the shipments workspace", () => {
+And("navigates to shipments workspace", () => {
   cy.Click(BaseSelectors.OperationsMenu, null);
   cy.Click(Selectors.ShipmentTab, null);
 });
 
-Given("the user fills the required shipment details with valid data",
+Given("a direct shipment with the following details",
   (dataTable) => {
     const shipmentDetails = dataTable.hashes()[0] as ShipmentDetails;
-    _ShipmentDetails = shipmentDetails;
-    Actions.OpenNewShipmentWizard(_ShipmentDetails.ShipmentLevel);
-    Actions.FillShipmentDefaultFields(_ShipmentDetails);
+    ShipmentData = shipmentDetails;
+    Actions.OpenNewShipmentWizard(ShipmentData.ShipmentLevel);
+    Actions.FillShipmentDefaultFields(ShipmentData);
   });
-When("the user Clicks on create shipment button", () => {
-  Actions.CreateShipment(_ShipmentDetails.ShipmentLevel);
+When("create shipment", () => {
+  Actions.CreateShipment(ShipmentData.ShipmentLevel);
 });
-Then("the create operation completed successfully", () => {
-  ShipmentFile = "CreatedShipmentsData/" + _ShipmentDetails.ShipmentLevel + _ShipmentDetails.Direction +
-    _ShipmentDetails.TransportMode +
-    ((typeof _ShipmentDetails.ShipmentType) === "undefined" || _ShipmentDetails.ShipmentType === null ? "" : _ShipmentDetails.ShipmentType) + ".json";
+Then("the shipment should create successfully", () => {
+  ShipmentFile = "CreatedShipmentsData/" + ShipmentData.ShipmentLevel + ShipmentData.Direction +
+    ShipmentData.TransportMode +
+    ((typeof ShipmentData.ShipmentType) === "undefined" || ShipmentData.ShipmentType === null ? "" : ShipmentData.ShipmentType) + ".json";
   Assertions.ValidateCreatedShipment(ShipmentFile);
 });
 
 
-Given("the user searches for the required shipment using quick search", () => {
+Given("the user open the direct shipment", () => {
   Actions.OpenShipment(ShipmentFile)
 })
-And("the user clicks on copy shipment", () => {
-  cy.Click(Selectors.MenuButtons, null)
-  cy.Click(Selectors.MenuButtons_CopyShipment,null)
+When("copy the shipment", () => {
+  cy.Click(Selectors.ShipmentMoreList, null)
+  cy.Click(Selectors.CopyShipmentButton,null)
+  Actions.CopyShipment(ShipmentData.ShipmentLevel);
 });
-When("the users clicks on Copy", () => {
-  Actions.CopyShipment(_ShipmentDetails.ShipmentLevel);
-});
-Then("the copy operation completed successfully", () => {
-  CopiedShipmentFile = "CreatedShipmentsData/" + _ShipmentDetails.ShipmentLevel + _ShipmentDetails.Direction +
-    _ShipmentDetails.TransportMode +
-    ((typeof _ShipmentDetails.ShipmentType) === "undefined" || _ShipmentDetails.ShipmentType === null ? "" : _ShipmentDetails.ShipmentType) + "1" + ".json";
+Then("a shipment copy should create successfully", () => {
+  CopiedShipmentFile = "CreatedShipmentsData/" + ShipmentData.ShipmentLevel + ShipmentData.Direction +
+    ShipmentData.TransportMode +
+    ((typeof ShipmentData.ShipmentType) === "undefined" || ShipmentData.ShipmentType === null ? "" : ShipmentData.ShipmentType) + "1" + ".json";
   Assertions.ValidateCreatedShipment(CopiedShipmentFile);
-  Assertions.ValidateEqualityOfTwoShipments(ShipmentFile, CopiedShipmentFile)
 });
