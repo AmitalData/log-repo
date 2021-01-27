@@ -41,6 +41,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
 
             if (string.IsNullOrEmpty(cardId))
             {
+                entityPM.ShipperName = IsShipmentFromToLogbox() ? entityPM.ShipperName : null;
                 entityPM.ShipperNote = null;
                 entityPM.ShipperContactId = null;
                 entityPM.ShipperAddressId = null;
@@ -67,6 +68,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
 
             if (string.IsNullOrEmpty(cardId))
             {
+                entityPM.ConsigneeName = IsShipmentFromToLogbox() ? entityPM.ConsigneeName : null;
                 entityPM.ConsigneeNote = null;
                 entityPM.ConsigneeContactId = null;
                 entityPM.ConsigneeAddressId = null;
@@ -209,6 +211,11 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
                     entityPM.FreightForwarderAddressId = initializer.AddressRepository.GetMainAddressId(cardId, initializer.Tenant);
                 }
             }
+        }
+        private bool IsShipmentFromToLogbox()
+        {
+            bool isShipmentFromOrToLogbox = entityPM.IsImporterShipment || !string.IsNullOrEmpty(entityPM.ForwarderShipmentNumber);
+            return isShipmentFromOrToLogbox;
         }
     }
 }
