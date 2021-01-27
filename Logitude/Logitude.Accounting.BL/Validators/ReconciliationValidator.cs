@@ -44,6 +44,7 @@ namespace Logitude.Accounting.BL.Validators
         public const string M_AfterConversion_no_Journal_Line = "CreatedByReconciliationAfterConversion : no Journal Line";
         public const string M_AfterConversion_noallJournalLinehaveExternalReconcileNumber = "CreatedByReconciliationAfterConversion : no all Journal Line have ExternalReconcileNumber";
         public const string M_AfterConversion_JournalLinehavenotthesameExternalReconcileNumber = "CreatedByReconciliationAfterConversion : Journal Line have not the same ExternalReconcileNumber";
+        public const string M_CantIncludeTwoOrMorePayment = "Accounting.O.CantIncludeTwoOrMorePayment";
 
         private static ReconciliationPM reconciliation;
         public static ValidationResult IsReconciliationValid(ReconciliationPM myReconciliationPM, ValidationContext context)
