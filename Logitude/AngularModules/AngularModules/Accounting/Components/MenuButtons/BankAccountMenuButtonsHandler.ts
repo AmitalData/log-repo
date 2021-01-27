@@ -162,9 +162,9 @@ export class BankAccountMenuButtonsHandler {
 
     getBankName(): string {
         var isBankNameNotExists = this.EntityPM.EnglishName == null && this.EntityPM.LocalName == null;
-        var BankCode = this.EntityPM.BankCode;
+        var BankCode = this.DontShowLocal ? this.EntityPM.BankCodeEnglishName : this.EntityPM.BankCodeLocalName ? this.EntityPM.BankCodeLocalName: this.EntityPM.BankCodeEnglishName;
         var BankName = this.DontShowLocal ? this.EntityPM.EnglishName : this.EntityPM.LocalName == null ? this.EntityPM.EnglishName : this.EntityPM.LocalName;
-        return isBankNameNotExists ? BankCode : BankName + "";
+        return isBankNameNotExists ? BankCode : BankName;
     }
 
 }

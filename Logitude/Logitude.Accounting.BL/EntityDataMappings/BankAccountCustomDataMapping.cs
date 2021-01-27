@@ -35,6 +35,9 @@ namespace Logitude.Accounting.BL.EntityDataMappings
             customMappedPMProperties.Add(BankAccountDataMapping.PMPropertyNames.GLAccountCurrencyId);
             customMappedPMProperties.Add(BankAccountDataMapping.PMPropertyNames.GLAccountNumber);
             customMappedPMProperties.Add(BankAccountDataMapping.PMPropertyNames.DeferedGLAccountNumber);
+            customMappedPMProperties.Add(BankAccountDataMapping.PMPropertyNames.BankCodeEnglishName);
+            customMappedPMProperties.Add(BankAccountDataMapping.PMPropertyNames.BankCodeLocalName);
+
 
             // Get currency id of account to compare it when creating a new deposit in html version
             if (entityPOCO.GLAccountId != null)
@@ -62,6 +65,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
                 if (bank != null)
                 {
                     entityPM.BankCode = bank.Code;
+                    entityPM.BankCodeLocalName = bank.LocalName;
+                    entityPM.BankCodeEnglishName = bank.EnglishName;
                 }
             }
 
