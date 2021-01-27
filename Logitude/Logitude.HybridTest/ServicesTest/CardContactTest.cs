@@ -10,37 +10,54 @@ namespace Logitude.HybridTest.ServicesTest
     public class CardContactTest
     {
         private static EntityWcfCaller entityWcfCaller = new EntityWcfCaller();
+        public TestContext TestContext { get; set; }
         [TestMethod]
         public void Test_CardContact_UPSERT()
         {
-            CardContactPM cardContactPM = new CardContactPM()
+            try
             {
-                IsAll = true,
-                ContactId = HybridData.ContactCode,
-                CardId = HybridData.AgentCodeHAgent,
-                Tenant = EnvironmentGlobalParams.MainTenant,
-            };
-            ServiceOutcome serviceOutcome = entityWcfCaller.CallEntityUpsert(cardContactPM);
-            Assert.IsFalse(serviceOutcome.Response.HasError, "Upsert Failed! " + serviceOutcome.Response.ErrorMessage);
-            Assert.IsNotNull(serviceOutcome.Response.Result, "Upsert Failed! " + serviceOutcome.Response.ErrorMessage);
+                RetryTest.InsertTestMethodToDictionary(TestContext.TestName);
+                CardContactPM cardContactPM = new CardContactPM()
+                {
+                    IsAll = true,
+                    ContactId = HybridData.ContactCode,
+                    CardId = HybridData.AgentCodeHAgent,
+                    Tenant = EnvironmentGlobalParams.MainTenant,
+                };
+                ServiceOutcome serviceOutcome = entityWcfCaller.CallEntityUpsert(cardContactPM);
+                Assert.IsFalse(serviceOutcome.Response.HasError, "Upsert Failed! " + serviceOutcome.Response.ErrorMessage);
+                Assert.IsNotNull(serviceOutcome.Response.Result, "Upsert Failed! " + serviceOutcome.Response.ErrorMessage);
+            }
+            catch (Exception ex)
+            {
+                RetryTest.RetryFailTestRun(TestContext, this, ex.Message);
+            }
         }
 
         [TestMethod]
         public void Test_CardContact_DELETE()
         {
-            InvokedProperties serviceProperties = new InvokedProperties
+            try
             {
-                ServiceName = "CardContact",
-                ServiceOperation = "Delete",
-                ServiceResponseIndex = 0,
-                ServiceType = null,
-                ServiceFilterType = null,
-            };
-            Response serviceResponse = new Response();
-            object[] serviceParameters = new object[] { HybridData.ContactCode, HybridData.AgentCodeHAgent, EnvironmentGlobalParams.MainTenant, false };
-            ServiceOutcome serviceOutcome = WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters);
-            Assert.IsFalse(serviceOutcome.Response.HasError, "Delete Failed! " + serviceOutcome.Response.ErrorMessage);
-            Assert.IsNull(serviceOutcome.Response.Result, "Delete Failed! " + serviceOutcome.Response.Result);
+                RetryTest.InsertTestMethodToDictionary(TestContext.TestName);
+                InvokedProperties serviceProperties = new InvokedProperties
+                {
+                    ServiceName = "CardContact",
+                    ServiceOperation = "Delete",
+                    ServiceResponseIndex = 0,
+                    ServiceType = null,
+                    ServiceFilterType = null,
+                };
+                Response serviceResponse = new Response();
+                object[] serviceParameters = new object[] { HybridData.ContactCode, HybridData.AgentCodeHAgent, EnvironmentGlobalParams.MainTenant, false };
+                ServiceOutcome serviceOutcome = WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters);
+                Assert.IsFalse(serviceOutcome.Response.HasError, "Delete Failed! " + serviceOutcome.Response.ErrorMessage);
+                Assert.IsNull(serviceOutcome.Response.Result, "Delete Failed! " + serviceOutcome.Response.Result);
+            }
+            catch (Exception ex)
+            {
+                RetryTest.RetryFailTestRun(TestContext, this, ex.Message);
+            }
         }
 
         [TestMethod]

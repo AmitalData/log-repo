@@ -10,19 +10,28 @@ namespace Logitude.HybridTest.ServicesTest
     public class GlobalZoneTest
     {
         private static EntityWcfCaller entityWcfCaller = new EntityWcfCaller();
+        public TestContext TestContext { get; set; }
         [TestMethod]
         public void Test_GlobalZone_UPSERT()
         {
-            GlobalZonePM globalZonePM = new GlobalZonePM()
+            try
             {
-                Code = HybridData.GlobalZoneCodeHZ,
-                EnglishName = "Hybrid GlobalZone",
-                LocalName = "Hybrid GlobalZone",
-                Tenant = EnvironmentGlobalParams.MainTenant,
-            };
-            ServiceOutcome serviceOutcome = entityWcfCaller.CallEntityUpsert(globalZonePM);
-            Assert.IsFalse(serviceOutcome.Response.HasError, "Upsert Failed! " + serviceOutcome.Response.ErrorMessage);
-            Assert.IsNotNull(serviceOutcome.Response.Result, "Upsert Failed! " + serviceOutcome.Response.ErrorMessage);
+                RetryTest.InsertTestMethodToDictionary(TestContext.TestName);
+                GlobalZonePM globalZonePM = new GlobalZonePM()
+                {
+                    Code = HybridData.GlobalZoneCodeHZ,
+                    EnglishName = "Hybrid GlobalZone",
+                    LocalName = "Hybrid GlobalZone",
+                    Tenant = EnvironmentGlobalParams.MainTenant,
+                };
+                ServiceOutcome serviceOutcome = entityWcfCaller.CallEntityUpsert(globalZonePM);
+                Assert.IsFalse(serviceOutcome.Response.HasError, "Upsert Failed! " + serviceOutcome.Response.ErrorMessage);
+                Assert.IsNotNull(serviceOutcome.Response.Result, "Upsert Failed! " + serviceOutcome.Response.ErrorMessage);
+            }
+            catch (Exception ex)
+            {
+                RetryTest.RetryFailTestRun(TestContext, this, ex.Message);
+            }
         }
     }
 }
