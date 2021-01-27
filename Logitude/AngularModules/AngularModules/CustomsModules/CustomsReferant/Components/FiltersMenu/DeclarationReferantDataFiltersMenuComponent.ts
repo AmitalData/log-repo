@@ -9,6 +9,7 @@ import { AppTool } from '../../../../Infrastructure/Tools';
 import { AmitalGatewayUtil, UnifreightMessageM } from '../../../../Infrastructure/Utilities/AmitalGatewayUtil';
 import { UserListService } from '../../../../Common/Services/StandardLists/UserListService';
 import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
+import { DepartmentList } from '../../../../Common/EntityLists/DepartmentList';
 
 @Component({
     selector: 'DeclarationReferantDataFiltersMenuComponent',
@@ -56,52 +57,96 @@ export class DeclarationReferantDataFiltersMenuComponent
 
     public OpenQueryThruWorkSpace: boolean = false;
     public UserFilters: ApiQueryFilters = new ApiQueryFilters();
+    public UserNameFilters: ApiQueryFilters = new ApiQueryFilters();
+    public DepartmentFilters: ApiQueryFilters = new ApiQueryFilters();
+    public DepartmentNameFilters: ApiQueryFilters = new ApiQueryFilters();
     public TransportFilters: ApiQueryFilters = new ApiQueryFilters();
 
     SetFiltersMenu(args: any) {
-        this.OpenQueryThruWorkSpace = true;
+         this.OpenQueryThruWorkSpace = true;
         this.TransportFilters = new ApiQueryFilters();
         this.UserFilters = new ApiQueryFilters();
+        this.UserNameFilters = new ApiQueryFilters();
+        this.DepartmentFilters = new ApiQueryFilters();
+        this.DepartmentNameFilters = new ApiQueryFilters();
+
         this.TransportFilters.AdditionalFilters = args.AdditionalFilters.filter(a => a.FieldName == "TransportModeId");
         this.UserFilters.AdditionalFilters = args.AdditionalFilters.filter(a => a.FieldName == "ReferentUserId");
+        this.UserNameFilters.AdditionalFilters = args.AdditionalFilters.filter(a => a.FieldName == "ReferantUserName");
+        this.DepartmentFilters.AdditionalFilters = args.AdditionalFilters.filter(a => a.FieldName == "DepartmentId");
+        this.DepartmentNameFilters.AdditionalFilters = args.AdditionalFilters.filter(a => a.FieldName == "DepartmentName");
+
         var myService: UserListService = new UserListService();
         var UserListFromFilters = this.UserFilters.AdditionalFilters.map(({ FieldValue }) => FieldValue);
+        var UserNameListFromFilters = this.UserNameFilters.AdditionalFilters.map(({ FieldValue }) => FieldValue);
+
+        var UserNameList = UserNameListFromFilters[0].split("%2C");
+
+
+        var DepartmentFromFilters = this.DepartmentFilters.AdditionalFilters.map(({ FieldValue }) => FieldValue);
+        var DepartmentNameFromFilters = this.DepartmentNameFilters.AdditionalFilters.map(({ FieldValue }) => FieldValue);
+
+        var DepartmentNameList = DepartmentNameFromFilters[0].split("%2C");
+
+     var  i = 0;
         var myService: UserListService = new UserListService();
-        if (UserListFromFilters[0] != "HowCare" || UserListFromFilters.length != 0) {
-            UserListFromFilters.forEach(function (value) {
-                myService.getSingleFromCache(value).subscribe((resp: ServiceResponse) => {
-                    if (!resp.HasError) {
-                        var result: ServiceResponse = resp;
-                        var list: UserList = resp.Result;
-                        if (list != null) {
-                            let ul = new UserList();
-                            ul.Id = list.Id;
-                            ul.LocalName = list.LocalName;
-                            if (AppTool.IsNullOrEmpty(list.LocalName)) {
-                                ul.LocalName = list.EnglishName;
-                            }
-                            this.LOVListUsers.push(ul)
-                            this.ApplyTransportSelectedStyle();
-                            this.myViewChildrenMultiSelectLOVComponent.first.Invalidate();
-                            this.SelectedValueChangedEmitUser();
-                            this._CD.detectChanges();
-                        }
-                    }
-                });
-            });
+          if (UserListFromFilters[0] != "HowCare" || UserListFromFilters.length != 0) {
+             UserListFromFilters[0].split("%2C").forEach(function (value) {
+
+                 let ul = new UserList();
+                 ul.Id = value;
+                 ul.LocalName = decodeURIComponent(UserNameList[i]);
+                 this.LOVListUsers.push(ul)
+                 i++;
+
+            },this);
         } else{
-          
+
+
         }
+        i = 0;
+         if (DepartmentFromFilters[0] != "HowCare" || DepartmentFromFilters.length != 0) {
+            DepartmentFromFilters[0].split("%2C").forEach(function (value) {
+
+                let ul = new DepartmentList();
+                ul.Id = value;
+                ul.LocalName = decodeURIComponent(DepartmentNameList[i]);
+                this.LOVListDepartment.push(ul)
+
+                i++;
+  
+            }, this);
+        } else {
+        }
+
+        if (this.TransportFilters.AdditionalFilters.length > 0) {
+            this.SetTransport(this.TransportFilters.AdditionalFilters.map(({ FieldValue }) => FieldValue).toString());
+        } else {
+            this.SetTransport("All");
+        }
+
+      //  this.SelectedValueChangedEmitUser();
+      //  this.SelectedValueChangedEmitDepartment();
+        this.ApplyTransportSelectedStyle();
+      //  this.myViewChildrenMultiSelectLOVComponent.first.Invalidate();
+      //  this.myViewChildrenMultiSelectLOVComponent.last.Invalidate();
+
+        this._CD.detectChanges();
+
     }
     OnChosenListItemsChanged() {
         this.SelectedValueChangedEmitUser();
     }
 
     ngAfterViewInit() {
-        if (this.OpenQueryThruWorkSpace) {
+         if (this.OpenQueryThruWorkSpace) {
             this.apiQueryFilters.addAdditionalFilter("RetrievData", true, null, null, "Equal", true, false, false, "string");
-            this.SelectedValueChanged.emit({ Filters: this.apiQueryFilters, RemoveFilter: false });
-            this.myViewChildrenMultiSelectLOVComponent.first.Invalidate();
+         //   this.SelectedValueChanged.emit({ Filters: this.apiQueryFilters, RemoveFilter: false });
+           // this.myViewChildrenMultiSelectLOVComponent.first.Invalidate();
+          //  this.SelectedValueChangedEmitDepartment();
+         //   this.myViewChildrenMultiSelectLOVComponent.last.Invalidate();
+
+
         } else {
             let ul = new UserList();
             ul.Id = (SessionLocator.LoggedUserPM.Id == null || SessionLocator.LoggedUserPM.Id == "0") ? "9999999" : SessionLocator.LoggedUserPM.Id;
@@ -111,9 +156,15 @@ export class DeclarationReferantDataFiltersMenuComponent
             }
             this.LOVListUsers.push(ul);
             this.ApplyTransportSelectedStyle();
-            this.myViewChildrenMultiSelectLOVComponent.first.Invalidate();
-            this.SelectedValueChangedEmitUser();
+           // this.myViewChildrenMultiSelectLOVComponent.first.Invalidate();
+
+          //  this.SelectedValueChangedEmitUser();
+           // this.SelectedValueChangedEmitDepartment();
+
         }
+        this.myViewChildrenMultiSelectLOVComponent.first.Invalidate();
+        this.myViewChildrenMultiSelectLOVComponent.last.Invalidate();
+
         this._CD.detectChanges();
     }
 
@@ -229,40 +280,55 @@ export class DeclarationReferantDataFiltersMenuComponent
     }
 
     SelectedValueChangedEmitUser() {
-        var RemoveFilter = false;
+         var RemoveFilter = false;
         if (this.apiQueryFilters.AdditionalFilters.length > 0) {
-            this.apiQueryFilters.AdditionalFilters = this.apiQueryFilters.AdditionalFilters.filter(a => a.FieldName != "ReferentUserId");
+            this.apiQueryFilters.AdditionalFilters = this.apiQueryFilters.AdditionalFilters.filter(a => a.FieldName != "ReferentUserId" && a.FieldName != "ReferantUserName");
         }
         var UsersListString = "";
+        var UserNamesListString = "";
+
         if (this._LOVListUsers.length > 0) {
 
             this._LOVListUsers.forEach(item => { UsersListString += item["Id"] + ","; });//Id: "1-3697"
             UsersListString = UsersListString.slice(0, -1); // trim last comma
 
+            this._LOVListUsers.forEach(item => { UserNamesListString += item["LocalName"] + ","; });//Id: "1-3697"
+            UserNamesListString = UserNamesListString.slice(0, -1); // trim last comma
+
+
         } else {
             UsersListString = "HowCare"
+          //  UserNamesListString = "HowCare"
             RemoveFilter = true;
         }
+        this.apiQueryFilters.addAdditionalFilter("ReferantUserName", UserNamesListString, null, null, "Equal", true, false, false, "string", true);
         this.apiQueryFilters.addAdditionalFilter("ReferentUserId", UsersListString, null, null, "InListExact", false, false, false, "string", this._LOVListUsers.length == 0);
         this.apiQueryFilters.addAdditionalFilter("RetrievData", true, null, null, "Equal", true, false, false, "string", this._LOVListUsers.length == 0);
         this.SelectedValueChanged.emit({ Filters: this.apiQueryFilters, RemoveFilter: RemoveFilter });
     }
 
     SelectedValueChangedEmitDepartment() {
-        var RemoveFilter = false;
+         var RemoveFilter = false;
         if (this.apiQueryFilters.AdditionalFilters.length > 0) {
-            this.apiQueryFilters.AdditionalFilters = this.apiQueryFilters.AdditionalFilters.filter(a => a.FieldName != "DepartmentId");
+            this.apiQueryFilters.AdditionalFilters = this.apiQueryFilters.AdditionalFilters.filter(a => a.FieldName != "DepartmentId" && a.FieldName != "DepartmentName");
         }
         var LOVListDepartment = "";
-        if (this._LOVListDepartment.length > 0) {
-            this._LOVListDepartment.forEach(item => { LOVListDepartment += item["Id"] + ","; });//Id: "1-3697"
+        var DepartmentNamesListString = "";
+
+        if (this.LOVListDepartment.length > 0) {
+            this.LOVListDepartment.forEach(item => { LOVListDepartment += item["Id"] + ","; });//Id: "1-3697"
             LOVListDepartment = LOVListDepartment.slice(0, -1); // trim last comma
+            this.LOVListDepartment.forEach(item => { DepartmentNamesListString += item["LocalName"] + ","; });//Id: "1-3697"
+            DepartmentNamesListString = DepartmentNamesListString.slice(0, -1); // trim last comma
 
         } else {
-            LOVListDepartment = "HowCare"
+            LOVListDepartment = "HowCare";
+          //  DepartmentNamesListString =  "HowCare";
             RemoveFilter = true;
         }
-        this.apiQueryFilters.addAdditionalFilter("DepartmentId", LOVListDepartment, null, null, "InListExact", false, false, false, "string", this._LOVListDepartment.length == 0);
+
+        this.apiQueryFilters.addAdditionalFilter("DepartmentName", DepartmentNamesListString, null, null, "Equal", true, false, false, "string", true);
+        this.apiQueryFilters.addAdditionalFilter("DepartmentId", LOVListDepartment, null, null, "InListExact", false, false, false, "string", this.LOVListDepartment.length == 0);
         this.SelectedValueChanged.emit({ Filters: this.apiQueryFilters, RemoveFilter: RemoveFilter });
     }
 
