@@ -26,11 +26,11 @@ namespace Logitude.Customs.BL.Messaging.Amital
             try
             {
 
-                string statusList = "", Subject = " file "+ fileNo;
+                string statusList = "", Subject = " file " + fileNo;
                 var myParams = new Hashtable();
 
 
-               
+
 
                 myParams.Add("componentname", "GDSHMAINXML");
                 myParams.Add("Operation", "GetQInvoice");
@@ -155,15 +155,20 @@ namespace Logitude.Customs.BL.Messaging.Amital
 <MessagesData>
 <W>אריק שגיאה1</W>
 </MessagesData>
-</Messages>";
+</Messages>
+<GeneralDetails>
+<Forwarder>XXX</Forwarder>
+<TypeOfDelivery>2</TypeOfDelivery>
+</GeneralDetails>
+";
             if (!String.IsNullOrWhiteSpace(resXML))
             {
-                    string alexGiveBadXML = $"<AllInvoices>{resXML}</AllInvoices>";
-                    var StatusItemlist = LogitudeXmlSerializer.DeserializeObject<AllInvoices>(alexGiveBadXML);
-                    return StatusItemlist;
-               
-               // string alexGiveBadXML = $"<AllInvoices>{resXML}</AllInvoices>";
-               // var StatusItemlist = LogitudeXmlSerializer.DeserializeObject<AllInvoices>(alexGiveBadXML);
+                string alexGiveBadXML = $"<AllInvoices>{resXML}</AllInvoices>";
+                var StatusItemlist = LogitudeXmlSerializer.DeserializeObject<AllInvoices>(alexGiveBadXML);
+                return StatusItemlist;
+
+                // string alexGiveBadXML = $"<AllInvoices>{resXML}</AllInvoices>";
+                // var StatusItemlist = LogitudeXmlSerializer.DeserializeObject<AllInvoices>(alexGiveBadXML);
 
                 //var response = UnifreightListsUtil.Deserialize(resXML);
                 //var xmlStatusList = UnifreightListsUtil.GetHtmlDecodeValue(ref response, "InvoiceList");
@@ -186,7 +191,7 @@ namespace Logitude.Customs.BL.Messaging.Amital
             public List<IntegratedInvoice> IntegratedInvoices;
             public List<Invoice> Invoices;
             public List<MessagesData> Messages;
-
+            public List<GeneralDetails> GeneralDetailsList;
 
         }
         public class Invoice
@@ -194,6 +199,8 @@ namespace Logitude.Customs.BL.Messaging.Amital
             public string InvoiceBillTo { get; set; }
             public string InvoiceType { get; set; }
             public string InvoiceDate { get; set; }
+            public string InvoiceBillToCard { get; set; }
+            public string InvoiceTypeCode { get; set; }
             public string InvoiceCurrency { get; set; }
             public decimal InvoiceAmount { get; set; }
 
@@ -234,6 +241,13 @@ namespace Logitude.Customs.BL.Messaging.Amital
         {
             public string W { get; set; }
             public string E { get; set; }
+        }
+
+        public class GeneralDetails
+        {
+            public string Forwarder { get; set; }
+            public string TypeOfDelivery { get; set; }
+
         }
 
 

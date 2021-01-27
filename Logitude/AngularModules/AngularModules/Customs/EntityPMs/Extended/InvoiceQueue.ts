@@ -1,15 +1,16 @@
- 
+
 export class AllInvoices {
- 
+
     Statuses: StatusData[];
     InvoiceLines: InvoiceLine[];
     IntegratedInvoices: IntegratedInvoice[];
     Invoices: Invoice[];
     Messages: MessagesData[];
+    GeneralDetailsList: GeneralDetails[];
     static InvoiceList: any;
 
 }
- 
+
 export class StatusData {
     Code: string;
     Name: string;
@@ -35,7 +36,7 @@ export class IntegratedInvoice {
     ForwarderFile: string;
     InvoiceCurrency: string;
     InvoiceAmount: any;
- 
+
 }
 export class Invoice {
     InvoiceBillTo: string;
@@ -49,4 +50,9 @@ export class Invoice {
 export class MessagesData {
     W: string;
     E: string;
+}
+
+export class GeneralDetails {
+    Forwarder: string;
+    TypeOfDelivery: string;
 }

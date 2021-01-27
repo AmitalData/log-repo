@@ -34,6 +34,7 @@ export class InvoiceQueueComponent
     public InvoiceListList: ObservableCollection;
     public EMessagesList: ObservableCollection;
     public WMessagesList: ObservableCollection;
+    public GeneralDetailsList: ObservableCollection;
     public declaration: DeclarationPM;
     CreateQInvoiceButtonDim: boolean;
     ErrorMessages: boolean;
@@ -82,6 +83,10 @@ export class InvoiceQueueComponent
                     x.InvoiceAmount = this.SetFixedValue(x.InvoiceAmount);
                     this.IntegratedInvoiceList.Insert(x);
                 });
+                (data.Result.Invoice as AllInvoices).GeneralDetailsList.forEach(x => {
+                    this.GeneralDetailsList.Insert(x);
+                });
+                
                 if ((data.Result.Invoice as AllInvoices).Invoices != null) {
                     (data.Result.Invoice as AllInvoices).Invoices.forEach(x => {
                         if (x.InvoiceDate != null && x.InvoiceDate != "") {
@@ -138,6 +143,7 @@ export class InvoiceQueueComponent
         this.InvoiceListList = new ObservableCollection([]);
         this.EMessagesList = new ObservableCollection([]);
         this.WMessagesList = new ObservableCollection([]);
+        this.GeneralDetailsList = new ObservableCollection([]);
         this.ErrorMessages = false;
         this.WarningMessages = false;
     }

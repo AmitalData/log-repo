@@ -357,6 +357,58 @@
                 <br />
             </td>
         </tr>
+        <tr style="height:25px;">
+
+            <td>
+                <span _ngcontent-c14="" class="Counter" style="font-size: 18px; color: #1B90CB;">
+
+                    תנאי מכר
+                </span>
+
+                <span _ngcontent-c14="" class="Counter" style="font-size: 18px;" *ngIf="declaration.SupplierInvoices && declaration.SupplierInvoices[0]">
+                    {{   declaration.SupplierInvoices[0].IncotermCode}}
+                </span>
+                <br />
+            </td>
+            <td></td>
+            <td>
+                <span _ngcontent-c14="" class="Counter" style="font-size: 18px; color: #1B90CB;">
+
+                    משלח
+                </span>
+
+                <span _ngcontent-c14="" class="Counter" style="font-size: 18px;" *ngIf="GeneralDetailsList[0]">
+                    {{   GeneralDetailsList[0].Forwarder}}
+                </span>
+                <br />
+            </td>
+            <td></td>
+            <td>
+                <span _ngcontent-c14="" class="Counter" style="font-size: 18px; color: #1B90CB;">
+
+                    סוג משלוח
+                </span>
+
+                <span _ngcontent-c14="" class="Counter" style="font-size: 18px;" *ngIf="GeneralDetailsList[0]">
+                    {{   GeneralDetailsList[0].TypeOfDelivery}}
+                </span>
+                <br />
+            </td>
+            <td></td>
+            <td style="position: relative; vertical-align:top;">
+                <ul style="direction:rtl; left:90%;">
+                    <li class="ValidationItem" *ngFor="let item of this.GeneralDetailsList.Collection" [style.float]="'right'">
+                        <div *ngIf="item.Forwarder != null" style="height:18px;">
+                            <span [style.text-align]="'right'" style="height:13px;">{{item.Forwarder}}</span>
+                        </div>
+                        <div *ngIf="item.TypeOfDelivery != null " style="height:18px;">
+                            <span [style.text-align]="'right'" style="height:13px;">{{item.TypeOfDelivery}}</span>
+                        </div>
+                    </li>
+                </ul>
+            </td>
+            
+        </tr>
         <tr *ngIf="IsPaymentDateGreaterThanInvoiceDate">
             <td colspan="12" style="right:55%">
                 <br />
