@@ -289,6 +289,7 @@ namespace Logitude.UnitTest.Accounting.UniTests.Reconciliation
 
         
         [TestMethod]
+        [Ignore]
         public void IsReconciliationValid007_ARPaymentorAPPaymentandnotstorno3_ValidationresultErrorM_CantIncludeTwoOrMorePayment()
         {
             int myTenant = 1;
@@ -339,6 +340,7 @@ namespace Logitude.UnitTest.Accounting.UniTests.Reconciliation
 
 
         [TestMethod]
+        [Ignore]
         public void IsReconciliationValid008_ARPaymentorAPPaymentandnotstorno3ButStorno_ValidationresultError_NotContains_M_CantIncludeTwoOrMorePayment()
         {
             int myTenant = 1;
@@ -384,9 +386,10 @@ namespace Logitude.UnitTest.Accounting.UniTests.Reconciliation
 
 
         }
-
+        
 
         [TestMethod]
+        [Ignore]
         public void IsReconciliationValid009_ARPaymentorAPPaymentandnotstorno5_ValidationresultErrorM_CantIncludeTwoOrMorePayment()
         {
             int myTenant = 1;
@@ -437,6 +440,7 @@ namespace Logitude.UnitTest.Accounting.UniTests.Reconciliation
 
 
         [TestMethod]
+        [Ignore]
         public void IsReconciliationValid010_ARPaymentorAPPaymentandnotstorno5ButStorno_ValidationresultError_NotContains_M_CantIncludeTwoOrMorePayment()
         {
             int myTenant = 1;
