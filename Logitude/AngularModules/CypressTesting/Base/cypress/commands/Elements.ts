@@ -12,7 +12,7 @@ namespace Cypress {
         ClickCheckBox(selector: string): Chainable<Element>
         ClickRadio(selector: string): Chainable<Element>
         SelectLogLovFirstElement(selector: string, fromCache: boolean): Chainable<Element>
-        SelectLogLovRandomElement(selector: string, fromCache: boolean, maxOptions: number): Chainable<Element>
+        SelectLogLovElement(selector: string, fromCache: boolean, moveType: string): Chainable<Element>
         ValidateElementColor(selector: string, expectedcolor: string): Chainable<Element>
         ValidateInputValue(selector: string, value: string): Chainable<Element>
         SelectQuickSearchFirstElement(selector: string, value: string): Chainable<Element>
@@ -60,18 +60,18 @@ Cypress.Commands.add("SelectLogLovFirstElement", (selector, fromCache) => {
 
 })
 
-Cypress.Commands.add("SelectLogLovRandomElement", (selector, fromCache, maxOptions) => {
+Cypress.Commands.add("SelectLogLovElement", (selector, fromCache, moveType) => {
 
     if(!fromCache){
         cy.intercept("**/GetByCompactFilters?**").as("LOVDataLoaded")
     }
-    cy.get(selector).focus().clear().type("{downarrow}")
+    cy.get(selector).focus().clear().type(moveType)
     if(!fromCache){
         cy.wait("@LOVDataLoaded")
     }
 
-    let randomIndex = gr.GenerateRandomNumber(1, (maxOptions - 1))
-    cy.get(".DropDownListItem").children().eq(randomIndex).click()
+    //let randomIndex = gr.GenerateRandomNumber(1, (maxOptions - 1))
+    cy.get(".DropDownListItem").children().eq(0).click({ force: true })
 
 })
 

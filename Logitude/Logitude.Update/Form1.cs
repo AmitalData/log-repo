@@ -4265,7 +4265,7 @@ User/Pass",
             thread.Start();
         }
 
-        private void button49_Click(object sender, EventArgs e)
+        private void button50_Click(object sender, EventArgs e)
         {
             Thread thread = new Thread(() => LoadClosedTables());
             thread.IsBackground = true;
@@ -4301,7 +4301,7 @@ User/Pass",
             //SetControlPropertyValue(LoadClosedTablesLabel, "ForeColor", Color.Green); // timer
             //SetControlPropertyValue(LoadClosedTablesLabel, "Text", "Done in " + ts.ToString(@"hh\:mm\:ss"));
         }
-        private void button50_Click(object sender, EventArgs e)
+        private void button49_Click(object sender, EventArgs e)
         {
             MetaDataUpdateClass updateClass = new MetaDataUpdateClass();
             updateClass.LoadDefaultReports();
@@ -4568,7 +4568,15 @@ User/Pass",
 
         private void citiesTextBox_TextChanged(object sender, EventArgs e)
         {
+         
+        }
 
+       
+
+        private void button51_Click_1(object sender, EventArgs e)
+        {
+            RedeemedCheques frm = new RedeemedCheques();
+            frm.Show(this);
         }
 
         private void updateBluesnapTransactionsBtn_Click(object sender, EventArgs e)
@@ -4591,6 +4599,14 @@ User/Pass",
             stopWatch.Stop();
             SetControlPropertyValue(updateBluesnapTransactionsLabel, "ForeColor", Color.Green);
             SetControlPropertyValue(updateBluesnapTransactionsLabel, "Text", "Done in " + stopWatch.Elapsed.ToString(@"hh\:mm\:ss"));
+        }
+       
+
+        private void CargoTracking_btn_Click(object sender, EventArgs e)
+        {
+            Thread thread = new Thread(() => UpdateModule(0, "cargotracking", UpdateAccountinglbl));
+            thread.IsBackground = true;
+            thread.Start();
         }
     }
 
