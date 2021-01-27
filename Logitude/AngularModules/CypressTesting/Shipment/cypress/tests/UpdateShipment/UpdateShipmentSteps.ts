@@ -5,95 +5,94 @@ import { BaseSelectors } from "../../../../Base/cypress/selectors/BaseSelectors"
 import { Given, When, Then } from "cypress-cucumber-preprocessor/steps";
 import { PartnersDetails } from "cypress/models/PartnersDetails";
 
-Given("User logged in", () => {
+Given("the user logged in", () => {
   cy.Login()
 });
 
-Given("Go to shipments workspace", () => {
+Given("navigate to shipments workspace", () => {
   cy.Click(BaseSelectors.OperationsMenu, null)
   cy.Click(Selectors.ShipmentTab, null)
 });
 
-Given("Create a new Direct shipment", () => {
+Given("create a new Direct shipment", () => {
     Actions.CreateAnewShipment("Direct")
     Actions.OpenShipment("CreatedShipmentsData/DEA.json")
 });
 
-Given("The user in the general tab", () => {
+Given("the user in the general tab", () => {
     cy.Click(Selectors.GeneralTab, null)
 });
 
-When("Fill general tab with a random GrossWeight and {string} as a MoveType and click save button", (MoveType) => {
+Given("fill random GrossWeight and {string} as a MoveType",(MoveType) => {
     Actions.FillGeneralTab(MoveType)
-    Actions.UpdateShipment(Selectors.ShipmentSaveButton)
 });
 
-Given("The user in the Orders tab", () => {
+Given("the user in the Orders tab", () => {
     cy.Click(Selectors.OrdersTab, null)
 });
 
-When("Fill Orders tab with random number of Packages and click save button", () => {
+Given("fill Orders tab with random number of Packages", () => {
     Actions.FillOrdersTab()
-    Actions.UpdateShipment(Selectors.ShipmentSaveButton)
 });
 
-Given("The user in the Partners tab", () => {
+Given("the user in the Partners tab", () => {
     cy.Click(Selectors.PartnersTab, null)
 });
 
-When("Fill Partners tab with following partners and click save button", (dataTable) => {
+Given("fill Partners tab with following details", (dataTable) => {
     const partnersDetails = dataTable.hashes()[0] as PartnersDetails;
     Actions.FillPartnersTab("E","A", partnersDetails)
-    Actions.UpdateShipment(Selectors.ShipmentSaveButton)
 });
 
-Given("The user in the Packages tab", () => {
+Given("the user in the Packages tab", () => {
     cy.Click(Selectors.PackagesTab, null)
 });
 
-When("Fill Packages tab with random number of Packages and click save button", () => {
+Given("fill Packages tab with random number of Packages", () => {
     Actions.FillPackagesTab("A")
-    Actions.UpdateShipment(Selectors.ShipmentSaveButton)
 });
 
-Given("The user in the Receivables tab", () => {
+Given("the user in the Receivables tab", () => {
     cy.Click(Selectors.ReceivablesTab, null)
 });
 
-When("Fill Receivables tab  with a random UnitPrice and {string} as a ChargesType and click save button", (ChargesType) => {
+Given("fill Receivables tab  with a random UnitPrice and {string} as a ChargesType", (ChargesType) => {
     Actions.FillReceivablesTab(ChargesType)
-    Actions.UpdateShipment(Selectors.ShipmentSaveButton)
 });
 
-Given("The user in the Routings tab", () => {
+Given("the user in the Routings tab", () => {
     cy.Click(Selectors.RoutingsTab, null)
 });
 
-When("Add new pickup routing and click save button", () => {
+Given("add new pickup routing", () => {
     Actions.FillPickupRouting()
-    Actions.UpdateShipment(Selectors.SaveClose)
 });
 
-When("Add new delivery with {string} as a partner routing and click save button", (partner) => {
+Given("add new delivery with {string} as a partner routing", (partner) => {
     Actions.FillDeliveryRouting(partner)
-    Actions.UpdateShipment(Selectors.SaveClose)
 });
 
-When("Add carriage routings from port {string} to port {string} and click save button", (fromPort, toPort) => {
+Given("add carriage routings from port {string} to port {string}", (fromPort, toPort) => {
     Actions.FillPreCarriageRouting("A", fromPort, toPort)
     Actions.FillOnCarriageRouting("A", fromPort, toPort)
-    Actions.UpdateShipment(Selectors.ShipmentSaveButton)
 });
 
-Given("The user in the Payables tab", () => {
+Given("the user in the Payables tab", () => {
     cy.Click(Selectors.PayablesTab, null)
 });
 
-When("Add Payables with {string} as a ChargesType, {string} as a Currency and random UOM and click save button", (chargesType, currency) => {
+Given("add Payables with {string} as a ChargesType, {string} as a Currency and random UOM", (chargesType, currency) => {
     Actions.FillPayablesTab(chargesType, currency)
+});
+
+When("save shipment", () => {
     Actions.UpdateShipment(Selectors.ShipmentSaveButton)
 });
 
-Then("The save operation complete successfully", () => {
+When("save shipment window", () => {
+    Actions.UpdateShipment(Selectors.SaveClose)
+});
+
+Then("the save operation complete successfully", () => {
     Assertions.ValidateUpdatedShipment(null);
 });
