@@ -41,7 +41,7 @@ And("the user clicks on copy shipment", () => {
   cy.Click(Selectors.MenuButtons_CopyShipment,null)
 });
 When("the users clicks on Copy", () => {
-  Actions.CreateShipment(_ShipmentDetails.ShipmentLevel);
+  Actions.CopyShipment(_ShipmentDetails.ShipmentLevel);
 });
 Then("the copy operation completed successfully", () => {
   CopiedShipmentFile = "CreatedShipmentsData/" + _ShipmentDetails.ShipmentLevel + _ShipmentDetails.Direction +
