@@ -66,7 +66,7 @@
     <Compile Include="Contracts\UnifreightGenericService.cs" />
     <Compile Include="EntityPMs\Generated\AmendCancellRequestInitiatorPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\AmendmentFieldStatusTypePM.Generated.cs" />
-    <Compile Include="EntityPMs\Generated\AmendmentRequestRejectReasonTypePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\AmendRequestRejectReasonTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\AmountTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\AutonomyRegionTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\CancellationReasonRequestTypePM.Generated.cs" />

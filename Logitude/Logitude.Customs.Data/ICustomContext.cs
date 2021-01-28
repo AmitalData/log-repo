@@ -24,10 +24,10 @@ namespace Logitude.Customs.Data
 		 IDbSet<AmendCancellRequestInitiator> AmendCancellRequestInitiators { get; }
 		 IDbSet<AmendmentFieldReasonType> AmendmentFieldReasonTypes { get; }
 		 IDbSet<AmendmentFieldStatusType> AmendmentFieldStatusTypes { get; }
-		 IDbSet<AmendRequestRejectReasonType> AmendRequestRejectReasonTypes { get; }
 		 IDbSet<AmendmentRequestStatus> AmendmentRequestStatuses { get; }
 		 IDbSet<AmendmentStatus> AmendmentStatuses { get; }
 		 IDbSet<AmendmentType> AmendmentTypes { get; }
+		 IDbSet<AmendRequestRejectReasonType> AmendRequestRejectReasonTypes { get; }
 		 IDbSet<AmountType> AmountTypes { get; }
 		 IDbSet<ApprovedProfession> ApprovedProfessions { get; }
 		 IDbSet<AssigneeNotificationType> AssigneeNotificationTypes { get; }

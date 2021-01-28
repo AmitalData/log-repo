@@ -1264,9 +1264,9 @@
     <TypeScriptCompile Include="Customs\DataContract\ResponseData\PhysicalCheckResponseData.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\AmendCancellRequestInitiatorList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\AmendmentFieldStatusTypeList.ts" />
-    <TypeScriptCompile Include="Customs\EntityLists\AmendmentRequestRejectReasonTypeList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\AmendmentStatusList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\AmendmentTypeList.ts" />
+    <TypeScriptCompile Include="Customs\EntityLists\AmendRequestRejectReasonTypeList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\AmountTypeList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\ApprovedProfessionList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\AutonomyRegionTypeList.ts" />
@@ -1313,9 +1313,9 @@
     <TypeScriptCompile Include="Customs\EntityLists\UpdateCodeList.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\AmendCancellRequestInitiatorPM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\AmendmentFieldStatusTypePM.ts" />
-    <TypeScriptCompile Include="Customs\EntityPMs\AmendmentRequestRejectReasonTypePM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\AmendmentStatusPM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\AmendmentTypePM.ts" />
+    <TypeScriptCompile Include="Customs\EntityPMs\AmendRequestRejectReasonTypePM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\AmountTypePM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\ApprovedProfessionPM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\AutonomyRegionTypePM.ts" />
@@ -1394,9 +1394,9 @@
     <TypeScriptCompile Include="Customs\Services\StandardLists\AgentTalkBackTypeListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\AmendCancellRequestInitiatorListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\AmendmentFieldStatusTypeListService.ts" />
-    <TypeScriptCompile Include="Customs\Services\StandardLists\AmendmentRequestRejectReasonTypeListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\AmendmentStatusListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\AmendmentTypeListService.ts" />
+    <TypeScriptCompile Include="Customs\Services\StandardLists\AmendRequestRejectReasonTypeListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\AmountTypeListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\ApprovedProfessionListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\AutonomyRegionTypeListService.ts" />

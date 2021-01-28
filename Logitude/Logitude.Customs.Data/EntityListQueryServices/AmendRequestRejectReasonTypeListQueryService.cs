@@ -28,9 +28,8 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 					                          Code = a.Code,
 					
 					                          EnglishName = a.EnglishName,
-                                                LocalName = a.LocalName,
-
-                                                SearchFields = a.SearchFields,
+					
+					                          SearchFields = a.SearchFields,
 					
 					                          Inactive = a.Inactive,
 					
@@ -40,9 +39,8 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 
 		private IQueryable<AmendRequestRejectReasonType> ApplyCustomFilters(QueryOperations queryOperations,IQueryable<AmendRequestRejectReasonType> iQueryable)
         {
-            return iQueryable;
-
-        }
+			throw new NotImplementedException();
+		}
 			}
 
 
