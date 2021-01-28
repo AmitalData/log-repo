@@ -480,7 +480,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                         this.UpdateShipmentStoragePricingsCollection();
                     }
 
-                    if (shipmentBehaviourFacade.DatesUpdated_CrossDoc || entityPM.IsHybrid)
+                    if (shipmentBehaviourFacade.DatesUpdated_CrossDoc)
                     {
                         shipmentTracing.TraceTerminalData();
                     }
