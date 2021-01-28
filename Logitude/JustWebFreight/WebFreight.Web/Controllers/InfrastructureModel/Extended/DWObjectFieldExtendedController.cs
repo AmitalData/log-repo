@@ -109,7 +109,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
 
                         if (MyGroup.FieldsList != null && MyGroup.FieldsList.Count > 0)
                         {
-                            if (MyGroup.Key == "Custom Fields")
+                            if (MyGroup.Key == "Custom Fields") //|| MyGroup.Key == "CustomFields"
                             {
                                 ResolveDWCustomObjectFields(objectFieldPMs, MyGroup, authToken.Tenant);
 
