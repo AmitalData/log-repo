@@ -407,7 +407,7 @@ namespace Logitude.BL.ShipmentsModel.EntityOtherServices
 
                     row[32] = myShipmentPackages.Count > 0 ? "1" : "";
                     row[33] = marksAndNumbers;
-                    row[34] = item.ShipmentTypeId == "FCLD" ? totalInsidePackages : myShipmentPackages.Count;
+                    row[34] = item.ShipmentTypeId == "FCLD" ? totalInsidePackages : item.NumberOfPackages;
                     row[35] = grossWeight;
                     row[36] = "";
                     row[37] = generalDescription;
@@ -422,7 +422,7 @@ namespace Logitude.BL.ShipmentsModel.EntityOtherServices
                     row[46] = containerType;
                     row[47] = shipmentType;
                     row[48] = grossWeight;
-                    row[49] = item.ShipmentTypeId == "FCLD" ? totalInsidePackages : myShipmentPackages.Count;
+                    row[49] = item.ShipmentTypeId == "FCLD" ? totalInsidePackages : item.NumberOfPackages;
 
                     dataTable.Rows.Add(row);
                 }
