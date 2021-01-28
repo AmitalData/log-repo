@@ -191,7 +191,7 @@ namespace Logitude.Customs.BL.Messaging.Amital
             public List<IntegratedInvoice> IntegratedInvoices;
             public List<Invoice> Invoices;
             public List<MessagesData> Messages;
-            public List<GeneralDetails> GeneralDetailsList;
+            public GeneralDetails GeneralDetails;
 
         }
         public class Invoice

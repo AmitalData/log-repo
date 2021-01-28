@@ -6,7 +6,7 @@ export class AllInvoices {
     IntegratedInvoices: IntegratedInvoice[];
     Invoices: Invoice[];
     Messages: MessagesData[];
-    GeneralDetailsList: GeneralDetails[];
+    GeneralDetails: GeneralDetails;
     static InvoiceList: any;
 
 }
