@@ -4589,16 +4589,16 @@ User/Pass",
 
         private void UpdateBluesnapTransactions()
         {
-            SetControlPropertyValue(updateBluesnapTransactionsLabel, "Text", "Updating...");
-            SetControlPropertyValue(updateBluesnapTransactionsLabel, "ForeColor", Color.Black);
+            //SetControlPropertyValue(updateBluesnapTransactionsLabel, "Text", "Updating...");
+            //SetControlPropertyValue(updateBluesnapTransactionsLabel, "ForeColor", Color.Black);
             Stopwatch stopWatch = new Stopwatch();
             stopWatch.Start();
             timer1.Enabled = true;
             timer1.Start();
             BluesnapTransactionUppdateOld.Run();
             stopWatch.Stop();
-            SetControlPropertyValue(updateBluesnapTransactionsLabel, "ForeColor", Color.Green);
-            SetControlPropertyValue(updateBluesnapTransactionsLabel, "Text", "Done in " + stopWatch.Elapsed.ToString(@"hh\:mm\:ss"));
+            //SetControlPropertyValue(updateBluesnapTransactionsLabel, "ForeColor", Color.Green);
+            //SetControlPropertyValue(updateBluesnapTransactionsLabel, "Text", "Done in " + stopWatch.Elapsed.ToString(@"hh\:mm\:ss"));
         }
        
 
