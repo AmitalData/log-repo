@@ -53,4 +53,6 @@ export class Selectors
     public static readonly ShipmentPayable_CurrencyId = '#ShipmentPayable_CurrencyId';
     public static readonly NewAttachedHouse = '#NewHouseBtn';
     public static readonly CopyShipmentButton='#ShipmentBCopyShipment'
+    public static readonly CancelShipmentButton='#ShipmentBCancelShipment'
+    public static readonly ConfirmActionButton='#ConfirmAction'
 }

@@ -3,6 +3,7 @@ import { Selectors } from "../selectors/Selectors"
 import { ShipmentDetails } from "../models/ShipmentDetails";
 import * as Assertions from "./Assertions";
 import { PartnersDetails } from "cypress/models/PartnersDetails";
+import { BaseSelectors } from "../../../Base/cypress/selectors/BaseSelectors";
 
 export function OpenNewShipmentWizard(levelCode: string){
     cy.Click("#HelperNotesButton_0_0", null)
@@ -58,6 +59,27 @@ export function OpenShipment(dataFile: string){
     cy.fixture(dataFile).then((shipment) => {
         cy.SelectQuickSearchFirstElement(Selectors.ShipmentSearchBar, shipment.ShipmentNumber)
     })
+}
+
+export function CancelShipment(){
+    cy.Click(Selectors.ShipmentMoreList,null);
+    cy.Click(Selectors.CancelShipmentButton,null);
+    UpdateCanceledShipment();
+}
+
+export function UpdateCanceledShipment(){
+    cy.DefineRequestWait("PUT", "**/shipment", "WaitPutShipmentRequest")
+    cy.Click(Selectors.ConfirmActionButton,null);
+}
+
+export function DisconnectShipment(){
+   // cy.Click(BaseSelectors.Button,"Disconnect All");
+    UpdateDisconnectedShipment()
+}
+
+export function UpdateDisconnectedShipment(){
+    cy.DefineRequestWait("PUT", "**/shipment", "WaitPutShipmentRequest")
+    cy.Click(BaseSelectors.RedButton,"Yes");
 }
 
 export function FillGeneralTab(MoveType: string){
