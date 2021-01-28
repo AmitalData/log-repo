@@ -25,13 +25,13 @@ namespace Logitude.ShipmentTests.Steps
         [Given(@"Direct shipment with the following properties")]
         public void GivenDirectShipmentWithTheFollowingProperties(Table directShipmentTable)
         {
-            BuildNewDirectShipment(directShipmentTable);
+            Context.Direct = CreateDirectInstance(directShipmentTable);
         }
 
         [Given(@"List of main carriage legs")]
         public void GivenListOfMainCarriageLegs(Table mainCarriageLegsTable)
         {
-            AddMainCarriageLegsToDirectShipment(mainCarriageLegsTable);
+            AddMainCarriageLegsToDirectShipment(Context.Direct, mainCarriageLegsTable);
         }
         
         [When(@"Create direct shipment using external API")]
@@ -92,10 +92,9 @@ namespace Logitude.ShipmentTests.Steps
         #endregion
 
         #region Private Function Region
-        private void AddMainCarriageLegsToDirectShipment(Table mainCarriageLegsTable)
+        private void AddMainCarriageLegsToDirectShipment(Direct direct,Table mainCarriageLegsTable)
         {
             IEnumerable<dynamic> mainCarriageLegs = mainCarriageLegsTable.CreateDynamicSet();
-
             List<MainCarriageLeg> mainCarriageLegsList = new List<MainCarriageLeg>();
 
             mainCarriageLegs.ToList().ForEach(mainCarriageLeg =>
@@ -109,8 +108,8 @@ namespace Logitude.ShipmentTests.Steps
                 mainCarriageLegsList.Add(newMainCarriageLeg);
             });
 
-            Context.Direct.MainCarriageLegs = new List<MainCarriageLeg>();
-            Context.Direct.MainCarriageLegs.AddRange(mainCarriageLegsList);
+            direct.MainCarriageLegs = new List<MainCarriageLeg>();
+            direct.MainCarriageLegs.AddRange(mainCarriageLegsList);
         }
 
         private void FillVaildDatesInMainCarriageLegs()
@@ -128,14 +127,11 @@ namespace Logitude.ShipmentTests.Steps
         #endregion
 
         #region Build Models Region
-        private void BuildNewDirectShipment(Table directShipmentTable)
+        private Direct CreateDirectInstance(Table directShipmentTable)
         {
             dynamic directShipment = directShipmentTable.CreateDynamicInstance();
 
-
-
-            DirectBuilder directBuilder = new DirectBuilder();
-            directBuilder.Agent((string)directShipment.Agent.ToString())
+            return new DirectBuilder().Agent((string)directShipment.Agent.ToString())
                 .Direction((string)directShipment.Direction.ToString())
                 .TransportMode((string)directShipment.TransportMode.ToString())
                 .ShipmentType((string)directShipment.ShipmentType.ToString())
@@ -147,9 +143,8 @@ namespace Logitude.ShipmentTests.Steps
                 .VolumeUnit((string)directShipment.VolumeUnit.ToString())
                 .Incoterm((string)directShipment.Incoterm.ToString())
                 .MainCarriageCarrier((string)directShipment.MainCarriageCarrier.ToString())
-                .MainCarriageATD((DateTime)directShipment.MainCarriageATD);
-
-            Context.Direct = directBuilder.Build();
+                .MainCarriageATD((DateTime)directShipment.MainCarriageATD)
+                .Build();
         }
         #endregion
     }

@@ -22,14 +22,15 @@ namespace Logitude.InvoiceTests.Steps.SecurityTests
         [When(@"First user get the first AP Payment from AP Payments list")]
         public void WhenFirstUserGetTheFirstAPPaymentFromAPPaymentsList()
         {
-            IEnumerable<APPaymentPM> firstUserAPPaymentsList = GetAPPaymentListForFirstUser();
-            Context.FirstUserPMData.Id = firstUserAPPaymentsList?.FirstOrDefault()?.Id;
+            APPaymentPM firstUserAPPayments = GetAPPaymentFromFirstUserList();
+            Context.FirstUserPMData.Id = firstUserAPPayments?.Id;
         }
 
         [When(@"Second user get the AP Payment that requested by first user")]
         public void WhenSecondUserGetTheAPPaymentThatRequestedByFirstUser()
         {
-            GetAPPaymentForTheSecondUserBaseOnFirstUserAPPayments();
+            ApiResponse<APPaymentPM> response = GetAPPaymentForFirstUser(UserOtherTenant.Token);
+            Context.SecondUserPMData.Id = response.Data?.Id;
         }
 
         [Then(@"AP Payment for first user should be exists")]
@@ -46,15 +47,14 @@ namespace Logitude.InvoiceTests.Steps.SecurityTests
         #endregion
 
         #region Private Function Region
-        private void GetAPPaymentForTheSecondUserBaseOnFirstUserAPPayments()
+        private ApiResponse<APPaymentPM> GetAPPaymentForFirstUser(string Token)
         {
-            IEnumerable<APPaymentPM> firstUserAPPaymentsList = GetAPPaymentListForFirstUser();
-            string apPaymentsGetSingleUrl = Urls.APPaymentsGetSingle(firstUserAPPaymentsList?.FirstOrDefault()?.Id);
-            ApiResponse<APPaymentPM> response = APICaller.CallGet<APPaymentPM>(apPaymentsGetSingleUrl, UserOtherTenant.Token);
-            Context.SecondUserPMData.Id = response.Data?.Id;
+            APPaymentPM firstUserAPPaymentsList = GetAPPaymentFromFirstUserList();
+            string apPaymentsGetSingleUrl = Urls.APPaymentsGetSingle(firstUserAPPaymentsList?.Id);
+            return APICaller.CallGet<APPaymentPM>(apPaymentsGetSingleUrl, Token);
         }
 
-        private IEnumerable<APPaymentPM> GetAPPaymentListForFirstUser()
+        private APPaymentPM GetAPPaymentFromFirstUserList()
         {
             ApiQueryFilters apiQueryFilters = new ApiQueryFilters
             {
@@ -63,7 +63,7 @@ namespace Logitude.InvoiceTests.Steps.SecurityTests
             };
 
             ApiResponse<IEnumerable<APPaymentPM>> response = APICaller.CallGetByFilters<IEnumerable<APPaymentPM>>(Urls.APPaymentViewsGetByFilters, UserTenant.Token, apiQueryFilters);
-            return response.Data;
+            return response.Data?.FirstOrDefault();
         }
         #endregion
 

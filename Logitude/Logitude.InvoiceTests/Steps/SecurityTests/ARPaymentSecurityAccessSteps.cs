@@ -23,14 +23,15 @@ namespace Logitude.InvoiceTests.Steps.SecurityTests
         [When(@"Get AR Payment request sent for User's Tenant")]
         public void WhenGetARPaymentRequestSentForUserSTenant()
         {
-            ARPaymentPM firstUserARPayment = GetAnARPaymentForFirstUser();
+            ARPaymentPM firstUserARPayment = GetAnARPaymentFromFirstUserList();
             Context.FirstUserPMData.Id = firstUserARPayment?.Id;
         }
 
         [When(@"Get AR Payment request sent for other Tenant")]
         public void WhenGetARPaymentRequestSentForOtherTenant()
         {
-            GetARPaymentForTheSecondUserBaseOnFirstUserARPayments();
+            ApiResponse<ARPaymentPM> response = GetAnARPaymentForFirstUser(UserOtherTenant.Token);
+            Context.SecondUserPMData.Id = response.Data?.Id;
         }
 
         [Then(@"AR Payment should be exists")]
@@ -47,15 +48,14 @@ namespace Logitude.InvoiceTests.Steps.SecurityTests
         #endregion
 
         #region Private Function Region
-        private void GetARPaymentForTheSecondUserBaseOnFirstUserARPayments()
+        private ApiResponse<ARPaymentPM> GetAnARPaymentForFirstUser(string Token)
         {
-            ARPaymentPM firstUserARPayment = GetAnARPaymentForFirstUser();
+            ARPaymentPM firstUserARPayment = GetAnARPaymentFromFirstUserList();
             string arPaymentsGetSingleUrl = Urls.ARPaymentsGetSingle(firstUserARPayment?.Id);
-            var response = APICaller.CallGet<ARPaymentPM>(arPaymentsGetSingleUrl, UserOtherTenant.Token);
-            Context.SecondUserPMData.Id = response.Data?.Id;
+            return APICaller.CallGet<ARPaymentPM>(arPaymentsGetSingleUrl, Token);
         }
 
-        private ARPaymentPM GetAnARPaymentForFirstUser()
+        private ARPaymentPM GetAnARPaymentFromFirstUserList()
         {
             ApiQueryFilters apiQueryFilters = new ApiQueryFilters
             {

@@ -36,7 +36,7 @@ namespace Logitude.ShipmentTests.Steps.SecurityTests
         [When(@"Second user get the shipment that requested by first user")]
         public void WhenSecondUserGetTheShipmentThatRequestedByFirstUser()
         {
-            ApiResponse<ShipmentPM> response = GetAsingleShipmentForFirstUser(UserOtherTenant.Token);
+            ApiResponse<ShipmentPM> response = GetASingleShipmentForFirstUser(UserOtherTenant.Token);
             Context.SecondUserPMData.Id = response.Data?.Id;
         }
 
@@ -48,7 +48,7 @@ namespace Logitude.ShipmentTests.Steps.SecurityTests
         #endregion
 
         #region Private Function Region
-        private ApiResponse<ShipmentPM> GetAsingleShipmentForFirstUser(string Token)
+        private ApiResponse<ShipmentPM> GetASingleShipmentForFirstUser(string Token)
         {
             ShipmentPM firstUserShipment = GetAShipmentFromFirstUserList();
             string shipmentGetSingleUrl = Urls.ShipmentGetSingle(firstUserShipment?.Id);

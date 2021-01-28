@@ -22,8 +22,8 @@ namespace Logitude.CommonDataTests.Steps.Security
         [When(@"First user get the first contact from contacts list")]
         public void WhenFirstUserGetTheFirstContactFromContactsList()
         {
-            IEnumerable<ContactPM> firstUserContactList = GetContactsListForFirstUser();
-            Context.FirstUserPMData.Id = firstUserContactList?.FirstOrDefault()?.Id;
+            ContactPM firstUserContact = GeAContactsFromFirstUserList();
+            Context.FirstUserPMData.Id = firstUserContact?.Id;
         }
 
         [Then(@"the Contact for first user should be exists")]
@@ -35,7 +35,8 @@ namespace Logitude.CommonDataTests.Steps.Security
         [When(@"Second user get the contact that requested by first user")]
         public void WhenSecondUserGetTheContactThatRequestedByFirstUser()
         {
-            GetContactForTheSecondUserBaseOnFirstUserContacts();
+            ApiResponse<ContactPM> response = GetAContactFornFirstUser(UserOtherTenant.Token);
+            Context.SecondUserPMData.Id = response.Data?.Id;
         }
 
         [Then(@"the Contact for second user should not be exists")]
@@ -46,15 +47,14 @@ namespace Logitude.CommonDataTests.Steps.Security
         #endregion
 
         #region Private Function Region
-        private void GetContactForTheSecondUserBaseOnFirstUserContacts()
+        private ApiResponse<ContactPM> GetAContactFornFirstUser(string Token)
         {
-            IEnumerable<ContactPM> firstUserContactList = GetContactsListForFirstUser();
-            string contactsGetSingleUrl = Urls.ContactsGetSingle(firstUserContactList?.FirstOrDefault()?.Id);
-            ApiResponse<ContactPM> response = APICaller.CallGet<ContactPM>(contactsGetSingleUrl, UserOtherTenant.Token);
-            Context.SecondUserPMData.Id = response.Data?.Id;
+            ContactPM firstUserContact = GeAContactsFromFirstUserList();
+            string contactsGetSingleUrl = Urls.ContactsGetSingle(firstUserContact?.Id);
+             return APICaller.CallGet<ContactPM>(contactsGetSingleUrl, Token);
         }
 
-        private IEnumerable<ContactPM> GetContactsListForFirstUser()
+        private ContactPM GeAContactsFromFirstUserList()
         {
             ApiQueryFilters apiQueryFilters = new ApiQueryFilters
             {
@@ -63,7 +63,7 @@ namespace Logitude.CommonDataTests.Steps.Security
             };
 
             ApiResponse<IEnumerable<ContactPM>> response = APICaller.CallGetByFilters<IEnumerable<ContactPM>>(Urls.ContactViewsGetByFilters, UserTenant.Token, apiQueryFilters);
-            return response.Data;
+            return response.Data?.FirstOrDefault();
         }
         #endregion
     }
