@@ -164,13 +164,6 @@ namespace Logitude.Infrastructure.BL
 			 
             all.Add(new ToggleDetails()
             {    
-                Code = "LIC", 
-                Name = "License Management", 
-                SearchFields = "LIC,License Management", 
-			});
-			 
-            all.Add(new ToggleDetails()
-            {    
                 Name = "CRM Customer Quick Search", 
                 Code = "CQS", 
                 SearchFields = "CQS,CRM Customer Quick Search", 
@@ -224,14 +217,15 @@ namespace Logitude.Infrastructure.BL
                 SearchFields = "TAR,All Tariffs", 
                 Description = "Hide Tariffs Menu", 
 			});
-
-			 all.Add(new ToggleDetails()
+			 
+            all.Add(new ToggleDetails()
             {    
                 Code = "QMC", 
                 Name = "Quote Multi Currency Mode", 
                 SearchFields = "QMC, Quote Multi Currency Mode", 
                 Description = "Quote Multi Currency Mode", 
 			});
+			
             return all;
        }
 

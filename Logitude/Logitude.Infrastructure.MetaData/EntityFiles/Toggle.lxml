@@ -39,7 +39,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Toggle&quot;"
-  Code="&quot;1a60&quot;"
+  Code="&quot;405f&quot;"
   Name="&quot; Query Group&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;Name&quot;"
@@ -474,10 +474,6 @@
       SearchFields="&quot;API,API Update&quot;"
       Name="&quot;API Update&quot;" />
     <Record
-      Code="&quot;LIC&quot;"
-      Name="&quot;License Management&quot;"
-      SearchFields="&quot;LIC,License Management&quot;" />
-    <Record
       Name="&quot;CRM Customer Quick Search&quot;"
       Code="&quot;CQS&quot;"
       SearchFields="&quot;CQS,CRM Customer Quick Search&quot;"
@@ -502,7 +498,6 @@
       Name="&quot;Export Query Data Via WorkerRole&quot;"
       Description="&quot;Export Query Data to Excel Via WorkerRole&quot;"
       SearchFields="&quot;Export Query Data Via WorkerRole&quot;" />
-
     <Record
       Name="&quot; Improved Search in Customers Views&quot;"
       Code="&quot;SCV&quot;"
@@ -513,13 +508,11 @@
       Name="&quot;All Tariffs&quot;"
       SearchFields="&quot;TAR,All Tariffs&quot;"
       Description="&quot;Hide Tariffs Menu&quot;" />
-
     <Record
       Code="&quot;QMC&quot;"
       Name="&quot;Quote Multi Currency Mode&quot;"
       SearchFields="&quot;QMC, Quote Multi Currency Mode&quot;"
       Description="&quot;Quote Multi Currency Mode&quot;" />
-
   </Records>
   <DataContracts />
   <AdditionalTextCodes />
