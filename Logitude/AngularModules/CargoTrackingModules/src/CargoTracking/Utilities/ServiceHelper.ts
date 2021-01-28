@@ -104,7 +104,7 @@ export  class ServiceHelper{
         }
         else{
             var StorageInvertedLogo:CargoTrackingImage = ServiceHelper.GetImageFromStorage("InvertedLogoImg");
-                if(StorageInvertedLogo && StorageInvertedLogo.Id!=null && StorageInvertedLogo.Id == BrandingData.ComapnylogoId){
+                if(StorageInvertedLogo && StorageInvertedLogo.Id!=null && StorageInvertedLogo.Id == BrandingData.InvertedLogoId){
                     CargoTrackingBrandingData.InvertedLogoURL =ServiceHelper.GetImageFromBytes(StorageInvertedLogo.Data);
                 }
         }

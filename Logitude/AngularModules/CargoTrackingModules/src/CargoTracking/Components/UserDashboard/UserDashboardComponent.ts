@@ -161,6 +161,7 @@ export class UserDashboardComponent implements AfterViewInit
     {
         if (this.tenant)
             this.IsBrandingDataLoaded = true;
+
         this.brandingService.GetUserDashboardBrandingData(ServiceHelper.GetcargoTrackingDataRequest(this.baseURL))
         .subscribe((response: ServiceResponse) =>
         {
