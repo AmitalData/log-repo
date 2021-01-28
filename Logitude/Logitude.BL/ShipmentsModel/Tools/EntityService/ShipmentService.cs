@@ -280,10 +280,10 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 {
                     shipmentTracing.BeginTracing();
                 }
-                if (entityPM.IsHybrid)
-                {
-                    shipmentTracing.TraceTerminalData();
-                }
+                //if (entityPM.IsHybrid)
+                //{
+                //    shipmentTracing.TraceTerminalData();
+                //}
 
                 this.ComputeIsAssemblyField();
                 this.ComputeFinalDestination();
