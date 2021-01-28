@@ -6,8 +6,7 @@ export const Components =
     [
         AddEditReferantExceptionReasonComponent,
         AddExceptionReasonToUnifreightStatusComponent,
-        RemarksPopUp,
-    ];
+     ];
 export class ModuleDeclarations {
     public static Get(name: string) {
 
