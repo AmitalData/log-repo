@@ -591,6 +591,15 @@
                                     </log-cell-template>
                                 </ng-template>
                             </log-column>
+                            <log-column [width]="'30'" [Alignment]="'right'">
+                                <ng-template let-item>
+                                    <log-cell-template #logcelltemplate>
+                                        <div *ngIf="item.Comments != null ">
+                                            <button class="Button" (click)="ExpandComment(item , $event)"><img class="CenterCenter" title="לצפייה בהערה" src="./Images/Icons/expand.png" /></button>
+                                        </div>
+                                    </log-cell-template>
+                                </ng-template>
+                            </log-column>
                         </logitude-edit-grid>
                     </div>
 
