@@ -135,12 +135,13 @@ h1{
       top: 0;
       width: fit-content;
       margin: 0 auto;
-      padding-top: 12px;
+      /* padding-top: 12px; */
       display: inline-block;
     }
 
     .sidebar .logo img{
-        width: 80px;
+        width: auto;
+        max-height: 50px;
     }
 
     .sidebar .action-buttons{
