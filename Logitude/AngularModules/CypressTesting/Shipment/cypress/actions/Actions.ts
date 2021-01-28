@@ -48,6 +48,7 @@ export function CreateShipment(levelCode: string){
     cy.Click(createPreSelector + "Createbtn", null)
 }
 
+
 export function UpdateShipment(saveButtonSelector: string){
     cy.DefineRequestWait("PUT", "**/shipment", "WaitPutShipmentRequest")
     cy.Click(saveButtonSelector, null)
@@ -90,6 +91,10 @@ export function FillPartnersTab(directionCode:string, transportModeCode:string, 
     AddPartner("CLERN", "Shipment_CustomClearancePointId")
     AddPartner("CONSL", "Shipment_ConsolidatorId")
     AddPartner("REAGT", "Shipment_ReleasingAgentId")
+}
+
+export function FillHouseInShipmentsTab(Shipper: string){
+    cy.SelectLogLovElement("#Shipment_CustomerId", true, Shipper)
 }
 
 export function FillPackagesTab(transportModeCode:string, shipmentTypeCode?:string, PackageType?:string){

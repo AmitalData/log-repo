@@ -5,6 +5,7 @@ export class Selectors
     public static readonly GeneralTab = '#ShipmentTHGeneral';
     public static readonly OrdersTab = '#ShipmentTHOrders';
     public static readonly PartnersTab = '#ShipmentTHPartners';
+    public static readonly ShipmentsTab = '#ShipmentTHConsolidation';
     public static readonly PackagesTab = '#ShipmentTHPackages';
     public static readonly ReceivablesTab = '#ShipmentTHReceivables';
     public static readonly RoutingsTab = '#ShipmentTHRoutings';
@@ -50,5 +51,6 @@ export class Selectors
     public static readonly ShipmentPayable_ChargesTypeId = '#ShipmentPayable_ChargesTypeId';
     public static readonly ShipmentPayable_MeasurementId = '#ShipmentPayable_MeasurementId';
     public static readonly ShipmentPayable_CurrencyId = '#ShipmentPayable_CurrencyId';
+    public static readonly NewAttachedHouse = '#NewHouseBtn';
     public static readonly CopyShipmentButton='#ShipmentBCopyShipment'
 }
