@@ -543,18 +543,17 @@ export class BankDepositDetailsTabComponent extends BaseComponent {
                 this.NoCashBookRows = true;
             }
 
-            this.CalculateTotals();
             this.SetSelectedCashbookLines();
-
+            this.CalculateTotals();
 
         });
     }
 
     private SetSelectedCashbookLines() {
-        for (let line of this.CashbookLines.Collection) {
-            var CashbookLine = this.SelectedCashbookLines.Collection.filter(d => d.ChequeNumber == line.ChequeNumber)[0];
-            if (CashbookLine) {
-                line.IsSelected = true;
+        for (let line of this.SelectedCashbookLines.Collection) {
+            var CashbookLine = this.CashbookLines.Collection.filter(a => a.CashBookId == line.CashBookId && a.ARPChequeId == line.ARPChequeId)[0];
+            if (CashbookLine != null) {
+                 this.CashbookLines.Collection.filter(a => a.CashBookId == line.CashBookId && a.ARPChequeId == line.ARPChequeId)[0].IsSelected = true;
             }
         }
     }
@@ -697,8 +696,7 @@ export class BankDepositDetailsTabComponent extends BaseComponent {
 
             if (this.IsLinesSelection) {
                 if (this.IsLinesSelection && !this.EntityPM.IsCashDeposit) {
-                    this.EntityPM.LocalDepositAmount = localSum;
-                    this.EntityPM.ForeignAmount = this.SelectedTotal;
+                    this.CalculateTotalsForNewChequeDeposite();
 
                 } else if (this.IsLinesSelection) {
                     this.EntityPM.ForeignAmount = this.SelectedTotal;
@@ -708,6 +706,17 @@ export class BankDepositDetailsTabComponent extends BaseComponent {
                 }
             }
         }
+    }
+
+    private CalculateTotalsForNewChequeDeposite() {
+        this.SelectedTotal = 0;
+        var localSum = 0.0;
+        for (let CashbookLine of this.SelectedCashbookLines.Collection) {
+            localSum += CashbookLine.LocalAmount;
+            this.SelectedTotal += CashbookLine.ForeignAmount == null ? 0 : CashbookLine.ForeignAmount;
+        }
+        this.EntityPM.LocalDepositAmount = localSum;
+        this.EntityPM.ForeignAmount = this.SelectedTotal;
     }
 
     Abs(number: number) {
@@ -750,15 +759,17 @@ export class BankDepositDetailsTabComponent extends BaseComponent {
 
         // this.BankDepositLines = [];
         if (event == true) {
+            this.SelectedCashbookLines.Clear();
             for (let line of this.CashbookLines.Collection) {
                 this.PushBankDeposit(line);
                 this.SelectedCashbookLines.Collection.push(line);
                 line.IsSelected = true;
             }
-        }else{
+        } else {
+            this.SelectedCashbookLines.Clear();
           for (let line of this.CashbookLines.Collection) {
               line.IsSelected = false;
-              this.DeleteUnSelectedLine(line);
+
         }
         }
         this.CalculateTotals();

@@ -490,8 +490,8 @@
                     <!-- Cashbook lines Filters -->
                     <tr *ngIf="IsLinesSelection && !this.EntityPM.IsCashDeposit" style="height: 20px;">
                         <td style="width: 30px; padding: 5px;">
-                            <div *ngIf="!NoCashBookRows" style="width: 29px;">
-                                <div class="Button More"><CheckBox (Checked)="SelectAll($event)" [IsChecked]="IsAllSelected" style="width: 29px;"></CheckBox></div>
+                            <div style="width: 29px;">
+                                <div class="Button More"><CheckBox (Checked)="SelectAll($event)" [IsEnabled]="!NoCashBookRows" [IsChecked]="IsAllSelected" style="width: 29px;"></CheckBox></div>
                             </div>
                         </td>
                         <td style="width: 350px; padding: 5px;">
