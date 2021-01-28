@@ -248,7 +248,7 @@ namespace Logitude.BL.ShipmentsModel.EntityOtherServices
                     string containerType = "";
                     string shipmentType = item.ShipmentTypeName;
                     int totalInsidePackages = item.NumberOfInsidePackages;
-                    
+
                     string portId = "";
                     if (item.ShipmentLevelCode == "H")
                     {
@@ -405,9 +405,9 @@ namespace Logitude.BL.ShipmentsModel.EntityOtherServices
                         row[31] = "0";
                     }
 
-                    row[32] = item.ShipmentTypeId == "FCLD" && myShipmentPackages.Count > 0 ? "1" : "";
+                    row[32] = myShipmentPackages.Count > 0 ? "1" : "";
                     row[33] = marksAndNumbers;
-                    row[34] = totalInsidePackages;
+                    row[34] = item.ShipmentTypeId == "FCLD" ? totalInsidePackages : item.NumberOfPackages;
                     row[35] = grossWeight;
                     row[36] = "";
                     row[37] = generalDescription;
@@ -422,7 +422,7 @@ namespace Logitude.BL.ShipmentsModel.EntityOtherServices
                     row[46] = containerType;
                     row[47] = shipmentType;
                     row[48] = grossWeight;
-                    row[49] = totalInsidePackages;
+                    row[49] = item.ShipmentTypeId == "FCLD" ? totalInsidePackages : item.NumberOfPackages;
 
                     dataTable.Rows.Add(row);
                 }
