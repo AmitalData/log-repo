@@ -48,7 +48,6 @@ When("create house with {string} as Shipper",(Shipper)=>{
 });
 
 Then("the shipment should create and connect successfully",()=>{
-    //the house created
     let resultFile = "CreatedShipmentsData/" + "House" + MasterShipmentDetails.Direction +
     MasterShipmentDetails.TransportMode +
     ((typeof MasterShipmentDetails.ShipmentType) === "undefined" || MasterShipmentDetails.ShipmentType === null ? "" : MasterShipmentDetails.ShipmentType) + ".json";
@@ -58,19 +57,12 @@ Then("the shipment should create and connect successfully",()=>{
 });
 
 When("disconnect shipment",()=>{
-
     cy.Click(BaseSelectors.Button,"Disconnect All");
-    cy.Click(BaseSelectors.RedButton,"Yes");
-    cy.DefineRequestWait("PUT", "**/shipment", "WaitPutShipmentRequest")
+    Actions.DisconnectShipment()
 });
 
 Then("the shipment should disconnect successfully",()=>{
-
-    let resultFile2 = "CreatedShipmentsData/" + MasterShipmentDetails.ShipmentLevel + MasterShipmentDetails.Direction +
-    MasterShipmentDetails.TransportMode +
-    ((typeof MasterShipmentDetails.ShipmentType) === "undefined" || MasterShipmentDetails.ShipmentType === null ? "" : MasterShipmentDetails.ShipmentType) + ".json";
-    Assertions.ValidateUpdatedShipment(resultFile2);
-   // Assertions.HouseDisconnectedFromMaster("CreatedShipmentsData/HouseEA.json","CreatedShipmentsData/MasterEA.json");
+    Assertions.ValidateUpdatedShipment(null);
 });
 
 
