@@ -2224,6 +2224,7 @@ namespace WebFreight.Web.ReportsWebServices
                                                                EntityTypeCode = d.ARInvoiceTypeCode,
                                                                CardId = d.BillToId,
                                                                Date = d.DueDate,
+                                                               PartnerId = d.PartnerId,
                                                                Debit = d.AmountDueInLocalCurrency == null ? null : ((d.ARInvoiceTypeCode == "CD" || d.ARInvoiceTypeCode == "CC") ? null : d.AmountDueInLocalCurrency),
                                                                Credit = d.AmountDueInLocalCurrency == null ? null : ((d.ARInvoiceTypeCode != "CD" && d.ARInvoiceTypeCode != "CC") ? null : d.AmountDueInLocalCurrency),
                                                            }).ToList();
@@ -2249,6 +2250,7 @@ namespace WebFreight.Web.ReportsWebServices
                                                                TypeCode = "AR",
                                                                EntityName = "ARPayment",
                                                                CardId = d.BillToId,
+                                                               PartnerId = d.PartnerId,
                                                                Date = d.ValueDate,
                                                                Credit = d.OpenAmount * d.PaymentCurrencyExchangeRate,
                                                            }).ToList();
@@ -2292,9 +2294,9 @@ namespace WebFreight.Web.ReportsWebServices
 
             #region Fill
 
+
             List<string> cardIdsList = totalList.Select(s => s.CardId).ToList();
             cardIdsList = cardIdsList.Distinct().ToList();
-
             List<CardEntityClass> allCardData = (from d in commonContext.Cards.Include("PaymentTerm").Include("PartnerType")
                                                  where d.Tenant == tenant && cardIdsList.Contains(d.Id)
                                                  select new CardEntityClass
@@ -2302,10 +2304,23 @@ namespace WebFreight.Web.ReportsWebServices
                                                      Id = d.Id,
                                                      Name = d.EnglishName,
                                                      PaymentTerm = d.PaymentTerm == null ? null : d.PaymentTerm.EnglishName,
-                                                     CardCode = d.Code,
+                                                     CardCode = d.Code,         
                                                      CardTypeName = d.PartnerType == null ? null : d.PartnerType.Name,
                                                  }).ToList();
 
+            List<string> partnersIdsFromTheTotalList = totalList.Select(s => s.PartnerId).ToList();
+            partnersIdsFromTheTotalList = partnersIdsFromTheTotalList.Distinct().ToList();
+
+            List<CardEntityClass> partnersDataAsCards= (from d in commonContext.Cards.Include("PaymentTerm").Include("PartnerType")
+                                                  where d.Tenant == tenant && partnersIdsFromTheTotalList.Contains(d.Id)
+                                                  select new CardEntityClass
+                                                  {
+                                                      Id = d.Id,
+                                                      Name = d.EnglishName,
+                                                      PaymentTerm = d.PaymentTerm == null ? null : d.PaymentTerm.EnglishName,
+                                                      CardCode = d.Code,
+                                                      CardTypeName = d.PartnerType == null ? null : d.PartnerType.Name,
+                                                  }).ToList();
             double? currencyRate = 0;
             if (!string.IsNullOrEmpty(localCurrencyCode) && !string.IsNullOrEmpty(profitCurrencyCode))
             {
@@ -2421,7 +2436,6 @@ namespace WebFreight.Web.ReportsWebServices
                 }
 
                 CardEntityClass cardEntity = allCardData.Where(d => d.Id == cardId).FirstOrDefault();
-
                 if (cardEntity != null)
                 {
                     acountsRecored.PaymentTerm = cardEntity.PaymentTerm;
@@ -2430,6 +2444,17 @@ namespace WebFreight.Web.ReportsWebServices
                     acountsRecored.CardTypeName = cardEntity.CardTypeName;
                 }
 
+                foreach(string partnerId in partnersIdsFromTheTotalList) {
+                    List<AgingStatemantDataItem> partnersSharedToSameCustomer = tempList.Where(d => d.PartnerId == partnerId).ToList();
+                    if (partnersSharedToSameCustomer.Count != 0)
+                    {
+                        CardEntityClass cardEntityForPartner = partnersDataAsCards.Where(d => d.Id == partnerId).FirstOrDefault();
+                        if (cardEntityForPartner != null)
+                        {
+                            acountsRecored.PartnerName = acountsRecored.PartnerName == null ? cardEntityForPartner.Name : acountsRecored.PartnerName + ", " + cardEntityForPartner.Name;                    
+                        }     
+                    }               
+                }
                 acountsRecored.CurrentDue = currentsum;
                 acountsRecored.DaysPastDue1_30 = sum1_30;
                 acountsRecored.DaysPastDue31_60 = sum31_60;
@@ -2458,8 +2483,6 @@ namespace WebFreight.Web.ReportsWebServices
 
                 }
             }
-              
-
 
             #endregion
 
@@ -12856,7 +12879,7 @@ namespace WebFreight.Web.ReportsWebServices
         public string Id { get; set; }
         public string TypeCode { get; set; }
         public string EntityName { get; set; }
-
+        public string PartnerId { get; set; }
         public string EntityTypeCode { get; set; }
         public DateTime? Date { get; set; }
         public string CardId { get; set; }
