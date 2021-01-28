@@ -22,8 +22,8 @@ namespace Logitude.CommonDataTests.Steps.Security
         [When(@"First user get the first FTP Detail from FTP Detail list")]
         public void WhenFirstUserGetTheFirstFTPDetailFromFTPDetailList()
         {
-            IEnumerable<FTPDetailPM> firstUserDetailList = GetFTPDetailsListForFirstUser();
-            Context.FirstUserPMData.Id = firstUserDetailList?.FirstOrDefault()?.Id;
+            FTPDetailPM firstUserFTPDetail = GetAFTPDetailsFromFirstUserList();
+            Context.FirstUserPMData.Id = firstUserFTPDetail?.Id;
         }
 
         [Then(@"the Detail for first user should be exists")]
@@ -35,7 +35,8 @@ namespace Logitude.CommonDataTests.Steps.Security
         [When(@"Second user get the FTP Detail that requested by first user")]
         public void WhenSecondUserGetTheFTPDetailThatRequestedByFirstUser()
         {
-            GetFTPDetailForTheSecondUserBaseOnFirstUserFTPDetails();
+            ApiResponse<FTPDetailPM> response = GetAFTPDetailForFirstUser(UserOtherTenant.Token);
+            Context.SecondUserPMData.Id = response.Data?.Id;
         }
 
         [Then(@"the Detail for second user should not be exists")]
@@ -46,15 +47,14 @@ namespace Logitude.CommonDataTests.Steps.Security
         #endregion
 
         #region Private Function Region
-        private void GetFTPDetailForTheSecondUserBaseOnFirstUserFTPDetails()
+        private ApiResponse<FTPDetailPM> GetAFTPDetailForFirstUser(string Token)
         {
-            IEnumerable<FTPDetailPM> firstUserDetailList = GetFTPDetailsListForFirstUser();
-            string ftpDetailsGetSingleUrl = Urls.FTPDetailsGetSingle(firstUserDetailList?.FirstOrDefault()?.Id);
-            ApiResponse<FTPDetailPM> response = APICaller.CallGet<FTPDetailPM>(ftpDetailsGetSingleUrl, UserOtherTenant.Token);
-            Context.SecondUserPMData.Id = response.Data?.Id;
+            FTPDetailPM firstUserFTPDetail = GetAFTPDetailsFromFirstUserList();
+            string ftpDetailsGetSingleUrl = Urls.FTPDetailsGetSingle(firstUserFTPDetail?.Id);
+            return APICaller.CallGet<FTPDetailPM>(ftpDetailsGetSingleUrl, Token);
         }
 
-        private IEnumerable<FTPDetailPM> GetFTPDetailsListForFirstUser()
+        private FTPDetailPM GetAFTPDetailsFromFirstUserList()
         {
             ApiQueryFilters apiQueryFilters = new ApiQueryFilters
             {
@@ -63,9 +63,8 @@ namespace Logitude.CommonDataTests.Steps.Security
             };
 
             ApiResponse<IEnumerable<FTPDetailPM>> response = APICaller.CallGetByFilters<IEnumerable<FTPDetailPM>>(Urls.FTPDetailViewsGetByFilters, UserTenant.Token, apiQueryFilters);
-            return response.Data;
+            return response.Data?.FirstOrDefault();
         }
         #endregion
-
     }
 }

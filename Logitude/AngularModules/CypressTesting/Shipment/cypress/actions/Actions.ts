@@ -241,3 +241,6 @@ function AddPackagesOrContainersForPackagesTab(transportModeCode:string, shipmen
         }
     }
 }
+export function CopyShipment(levelCode: string){
+    CreateShipment(levelCode);
+}
