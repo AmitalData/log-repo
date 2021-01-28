@@ -642,7 +642,16 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
             if (entityPM.SetApproved)
             {
-                entityPM.StatusCode = "AD";
+                if (entityPM.AmountInInvoiceCurrency == 0)
+                {
+                    entityPM.StatusCode = "PD";
+                }
+
+                else
+                {
+                    entityPM.StatusCode = "AD";
+                }
+
                 entityPM.ApprovedDate = TenantServerConfigration.GetCurrentDateTime(tenant);
                 entityPM.ApprovedByUserId = initializer.LoggedContactId; //loggedContactId;
 
