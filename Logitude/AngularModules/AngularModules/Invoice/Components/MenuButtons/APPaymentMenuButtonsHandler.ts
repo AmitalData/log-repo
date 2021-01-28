@@ -22,6 +22,7 @@ import { GLAccountPM } from '../../../Accounting/EntityPMs/GLAccountPM';
 import { InvoiceTool } from '../../Tools';
 
 import { reject } from 'q';
+import { InvoiceDomainService } from '../../Services/InvoiceDomainService';
 
 export class APPaymentMenuButtonsHandler {
     public EntityPM: APPaymentPM;
@@ -587,53 +588,55 @@ export class APPaymentMenuButtonsHandler {
 
     VoidingAPPayment(event: any) {
         if (event == null || event == "Ok") {
+            var invoiceDomainService: InvoiceDomainService = new InvoiceDomainService();
+            invoiceDomainService.GetConnectedAPInvoicestoPayments(this.EntityPM.Id).subscribe((response: any) => {
+                if (!response.HasError) {
+                    var hasConnectedInvoices: boolean = response.Result;
+                    var hasExternalPaymentAmount: boolean = (this.EntityPM.ExternalPaymentAmount && this.EntityPM.ExternalPaymentAmount != 0) ? true : false;
 
-            var hasConnectedInvoices: boolean = this.EntityPM.PaymentInvoices.length > 0 ? true : false;
-            var hasExternalPaymentAmount: boolean = (this.EntityPM.ExternalPaymentAmount && this.EntityPM.ExternalPaymentAmount != 0) ? true : false;
+                    if (hasConnectedInvoices || hasExternalPaymentAmount) {
+                        var msg: string = null;
 
-            if (hasConnectedInvoices || hasExternalPaymentAmount) {
-                var msg: string = null;
-
-                if (hasConnectedInvoices && hasExternalPaymentAmount) {
-                    msg = "Please disconnect all invoices and external payment amount";
-                }
-
-                else if (hasConnectedInvoices && !hasExternalPaymentAmount) {
-                    msg = TextCodeTranslator.Translate("APPayment.M.DisconnectInvoices");
-                }
-
-                else if (!hasConnectedInvoices && hasExternalPaymentAmount) {
-                    msg = "Please disconnect external payment amount";
-                }
-
-                var messageWindow = new MessageWindow();
-                messageWindow.Show(msg);
-            }
-
-            else {
-                var confirmVoid = new ConfirmWindow();
-                confirmVoid.Width = 400;
-                var confirmMsg = TextCodeTranslator.Translate("APPayment.M.ConfirmVoid");
-                confirmVoid.ShowCancelButton = false;
-                confirmVoid.WindowClosed.subscribe(c => {
-                    if (confirmVoid.Yes) {
-                        this.EntityPM.SetVoided = true;
-                        this.EntityPM.SetApproved = false;
-                        this.EntityPM.SetCancelApproval = false;
-                        if (this.CurrentDocument != null) {
-                            this.CurrentDocument.NeedsRebuild = true;
-                            //CommonContext.SubmitChanges();
+                        if (hasConnectedInvoices && hasExternalPaymentAmount) {
+                            msg = "Please disconnect all invoices and external payment amount";
                         }
 
-                        this.entityArgs.EditComponent.SaveChanges();
+                        else if (hasConnectedInvoices && !hasExternalPaymentAmount) {
+                            msg = TextCodeTranslator.Translate("APPayment.M.DisconnectInvoices");
+                        }
+
+                        else if (!hasConnectedInvoices && hasExternalPaymentAmount) {
+                            msg = "Please disconnect external payment amount";
+                        }
+
+                        var messageWindow = new MessageWindow();
+                        messageWindow.Show(msg);
                     }
-                });
-    
-                confirmVoid.Show(confirmMsg);
-            }
+
+                    else {
+                        var confirmVoid = new ConfirmWindow();
+                        confirmVoid.Width = 400;
+                        var confirmMsg = TextCodeTranslator.Translate("APPayment.M.ConfirmVoid");
+                        confirmVoid.ShowCancelButton = false;
+                        confirmVoid.WindowClosed.subscribe(c => {
+                            if (confirmVoid.Yes) {
+                                this.EntityPM.SetVoided = true;
+                                this.EntityPM.SetApproved = false;
+                                this.EntityPM.SetCancelApproval = false;
+                                if (this.CurrentDocument != null) {
+                                    this.CurrentDocument.NeedsRebuild = true;
+                                }
+
+                                this.entityArgs.EditComponent.SaveChanges();
+                            }
+                        });
+
+                        confirmVoid.Show(confirmMsg);
+                    }
+                }
+            });
         }
     }
-
 
     // [Void]
     VoidMethod() {
