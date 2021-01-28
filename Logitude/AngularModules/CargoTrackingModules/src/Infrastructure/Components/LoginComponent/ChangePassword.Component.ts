@@ -46,7 +46,7 @@ export class ChangePasswordComponent implements OnInit {
 
     private GetcargoTrackingData(baseUrl:string) {
         this.LogoImgSrc = "./assets/images/logo/White.jpg";
-        this.cargoTrackingBrandingDataExtendedService.GetCargoTrackingBrandingDataForPrivateSite(ServiceHelper.GetcargoTrackingDataRequest(baseUrl)).subscribe((response: ServiceResponse) => { 
+        this.cargoTrackingBrandingDataExtendedService.GetUserDashboardBrandingData(ServiceHelper.GetcargoTrackingDataRequest(baseUrl)).subscribe((response: ServiceResponse) => {
             if(response.Result){
                 this.Tenant = response.Result.Tenant;
                 ServiceHelper.SetCargoTrackingDate(response.Result,baseUrl);
@@ -77,7 +77,7 @@ export class ChangePasswordComponent implements OnInit {
         this.PasswordLenghtImg = "./assets/images/changePassword/verified.png";
         this.PasswordContainsCharactersImg = "./assets/images/changePassword/verified.png";
         this.PasswordContainsNumberImg = "./assets/images/changePassword/verified.png";
-        
+
         document.documentElement.style.setProperty('--PasswordLenghtColor', "gray");
         document.documentElement.style.setProperty('--PasswordContainsCharacters', "gray");
         document.documentElement.style.setProperty('--PasswordContainsNumber', "gray");
@@ -93,7 +93,7 @@ export class ChangePasswordComponent implements OnInit {
             if (!this.NewPassword) {
                 this.ErrorMessage = "Confirm your password";
                 return;
-            } 
+            }
 
             this.ErrorMessage = this.PasswordValidation();
             if (this.ErrorMessage) {
@@ -146,7 +146,7 @@ export class ChangePasswordComponent implements OnInit {
             });
         }
         else this.ChangePassword();
- 
+
     }
 
     private PasswordValidation() {
@@ -282,7 +282,7 @@ export class ChangePasswordComponent implements OnInit {
     private IsContainsLowerUpperCase(str: any) {
         return str.match(/[a-z]/) && str.match(/[A-Z]/);
     }
-    
+
     private IsContainsNumber(str: any) {
         var regex = /\d/g;
         return regex.test(str);

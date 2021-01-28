@@ -18,7 +18,7 @@ export class CargoTrackingBrandingDataExtendedService {
         this.httpHeaders = ServiceHelper.GetHeaders();
         this._apiUrl = ServiceHelper.GetAppURL(baseUrl) + 'api/CargoTrackingBranding';
     }
-   
+
     get(BrandingDataRequest:CargoTrackingBrandingDataRequest) {
         var url = '/PutGetCargoTrackingBrandingData';
         var callUrl = this._apiUrl.concat(url);
@@ -31,7 +31,7 @@ export class CargoTrackingBrandingDataExtendedService {
             }),
             catchError(null));
     }
-    GetCargoTrackingBrandingDataForPrivateSite(BrandingDataRequest:CargoTrackingBrandingDataRequest) {
+    GetUserDashboardBrandingData(BrandingDataRequest:CargoTrackingBrandingDataRequest) {
         var url = '/PutGetCargoTrackingBrandingDataForPrivateSite';
         var callUrl = this._apiUrl.concat(url);
 
@@ -55,7 +55,7 @@ export class CargoTrackingBrandingDataExtendedService {
             }),
             catchError(null));
     }
-    
-   
+
+
 
 }
