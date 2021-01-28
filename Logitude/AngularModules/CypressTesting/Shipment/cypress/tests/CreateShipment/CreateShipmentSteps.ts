@@ -7,16 +7,16 @@ import { Selectors } from "../../selectors/Selectors";
 
 let _ShipmentDetails: ShipmentDetails;
 
-Given("User logged in", () => {
+Given("the user logged in", () => {
   cy.Login();
 });
 
-Given("Go to shipments workspace", () => {
+Given("navigate to shipments workspace", () => {
   cy.Click(BaseSelectors.OperationsMenu, null);
   cy.Click(Selectors.ShipmentTab, null);
 });
 
-Given("Shipment details",
+Given("a direct shipment with the following details",
   (dataTable) => {
    const shipmentDetails = dataTable.hashes()[0] as ShipmentDetails;
    _ShipmentDetails = shipmentDetails;
@@ -24,11 +24,11 @@ Given("Shipment details",
    Actions.FillShipmentDefaultFields(_ShipmentDetails);
 });
 
-When("Click create shipment button", () => {
+When("create shipment", () => {
   Actions.CreateShipment(_ShipmentDetails.ShipmentLevel);
 });
 
-Then("The create operation completed successfully", () => {
+Then("the shipment should create successfully", () => {
   let resultFile = "CreatedShipmentsData/" + _ShipmentDetails.ShipmentLevel + _ShipmentDetails.Direction +
   _ShipmentDetails.TransportMode +
   ((typeof _ShipmentDetails.ShipmentType) === "undefined" || _ShipmentDetails.ShipmentType === null ? "" : _ShipmentDetails.ShipmentType) + ".json";
