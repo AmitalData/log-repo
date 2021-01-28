@@ -90,7 +90,7 @@ export class DeclarationReferantDataFiltersMenuComponent
 
      var  i = 0;
         var myService: UserListService = new UserListService();
-          if (UserListFromFilters[0] != "HowCare" || UserListFromFilters.length != 0) {
+          if (UserListFromFilters[0] != "HowCare" && UserListFromFilters.length != 0) {
              UserListFromFilters[0].split("%2C").forEach(function (value) {
 
                  let ul = new UserList();
@@ -105,7 +105,7 @@ export class DeclarationReferantDataFiltersMenuComponent
 
         }
         i = 0;
-         if (DepartmentFromFilters[0] != "HowCare" || DepartmentFromFilters.length != 0) {
+         if (DepartmentFromFilters[0] != "HowCare"  && DepartmentFromFilters.length != 0) {
             DepartmentFromFilters[0].split("%2C").forEach(function (value) {
 
                 let ul = new DepartmentList();
@@ -280,7 +280,7 @@ export class DeclarationReferantDataFiltersMenuComponent
     }
 
     SelectedValueChangedEmitUser() {
-         var RemoveFilter = false;
+          var RemoveFilter = false;
         if (this.apiQueryFilters.AdditionalFilters.length > 0) {
             this.apiQueryFilters.AdditionalFilters = this.apiQueryFilters.AdditionalFilters.filter(a => a.FieldName != "ReferentUserId" && a.FieldName != "ReferantUserName");
         }
@@ -308,7 +308,7 @@ export class DeclarationReferantDataFiltersMenuComponent
     }
 
     SelectedValueChangedEmitDepartment() {
-         var RemoveFilter = false;
+          var RemoveFilter = false;
         if (this.apiQueryFilters.AdditionalFilters.length > 0) {
             this.apiQueryFilters.AdditionalFilters = this.apiQueryFilters.AdditionalFilters.filter(a => a.FieldName != "DepartmentId" && a.FieldName != "DepartmentName");
         }
@@ -328,7 +328,9 @@ export class DeclarationReferantDataFiltersMenuComponent
         }
 
         this.apiQueryFilters.addAdditionalFilter("DepartmentName", DepartmentNamesListString, null, null, "Equal", true, false, false, "string", true);
-        this.apiQueryFilters.addAdditionalFilter("DepartmentId", LOVListDepartment, null, null, "InListExact", false, false, false, "string", this.LOVListDepartment.length == 0);
+        if (this.LOVListDepartment.length != 0)
+       this.apiQueryFilters.addAdditionalFilter("DepartmentId", LOVListDepartment, null, null, "InListExact", false, false, false, "string", this.LOVListDepartment.length == 0);
+ 
         this.SelectedValueChanged.emit({ Filters: this.apiQueryFilters, RemoveFilter: RemoveFilter });
     }
 
