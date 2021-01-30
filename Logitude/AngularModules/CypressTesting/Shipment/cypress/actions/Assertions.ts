@@ -7,7 +7,13 @@ export function ValidateCreatedShipment(resultFile: string){
 export function ValidateUpdatedShipment(resultFile: string){
     cy.AssertResponseStatusCode("WaitPutShipmentRequest", 200, resultFile)
 }
+export function ValidateCreatedAPInvoice(InvoiceFile:string){
+    cy.AssertResponseStatusCode("WaitPostAPInvoicesRequest", 200, InvoiceFile)
+}
 
+export function ValidateUpdatedAPInvoice(resultFile: string){
+    cy.AssertResponseStatusCode("WaitPutAPInvoicesRequest", 200, resultFile)
+}
 export function HouseConnectedToMaster(HouseFile: string , MasterFile:string){
     let houseMasterId :string ;
     let masterID:string ;

@@ -4,7 +4,7 @@ import { Selectors } from "../../selectors/Selectors"
 import { BaseSelectors } from "../../../../Base/cypress/selectors/BaseSelectors"
 import { Given, When, Then } from "cypress-cucumber-preprocessor/steps";
 import { PartnersDetails } from "cypress/models/PartnersDetails";
-
+import {PayableDetails} from "cypress/models/PayableDetails"
 Given("the user logged in", () => {
   cy.Login()
 });
@@ -81,8 +81,13 @@ Given("the user in the Payables tab", () => {
     cy.Click(Selectors.PayablesTab, null)
 });
 
-Given("add Payables with {string} as a ChargesType, {string} as a Currency and random UOM", (chargesType, currency) => {
-    Actions.FillPayablesTab(chargesType, currency)
+Given("add Payables with {string} as a ChargesType, {string} as a Currency and {string} as UOM", (chargesType, currency,uom) => {
+    var payableDetails = {
+        ChargesType:chargesType,
+        Currency:currency,
+        Measurement:uom,
+      } as PayableDetails;
+      Actions.FillPayablesTab(payableDetails)
 });
 
 When("save shipment", () => {

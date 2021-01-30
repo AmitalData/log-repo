@@ -58,7 +58,7 @@ Feature: Edit Direct Export Air Shipment
 
   Scenario: Fill Payables Tab
     Given the user in the Payables tab
-    And  add Payables with "AFT" as a ChargesType, "EUR" as a Currency and random UOM 
+    And  add Payables with "AFT" as a ChargesType, "EUR" as a Currency and "GRWT" as UOM 
     When save shipment
     Then the save operation complete successfully
     

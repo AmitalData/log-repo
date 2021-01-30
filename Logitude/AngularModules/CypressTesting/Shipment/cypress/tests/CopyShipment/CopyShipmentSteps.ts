@@ -37,8 +37,6 @@ Given("the user open the direct shipment", () => {
   Actions.OpenShipment(ShipmentFile)
 })
 When("copy the shipment", () => {
-  cy.Click(Selectors.ShipmentMoreList, null)
-  cy.Click(Selectors.CopyShipmentButton,null)
   Actions.CopyShipment(ShipmentData.ShipmentLevel);
 });
 Then("a shipment copy should create successfully", () => {
