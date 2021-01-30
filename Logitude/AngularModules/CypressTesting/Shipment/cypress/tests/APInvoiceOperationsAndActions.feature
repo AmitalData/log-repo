@@ -18,7 +18,7 @@ Feature: APInvoice operations and actions
             | AFT         | GRWT | 5        | 10        | EUR      |
         And an ap invoice with the following details
             | Vendor     | InvoiceNumber | InvoiceAmount | InvoiceCurrency | InvoiceExchangeRate | InvoiceDate | PaymentTerms | DueDate | VATType |
-            | TestVendor | RandomNumber  | 50            | EUR             | 4                  | today       | Cash         | today   | Zero    |
+            | TestVendor | RandomNumber  | 50            | EUR             | 4                   | today       | Cash         | today   | Zero    |
         When receive invoice
         Then the invoice should create successfully
 
