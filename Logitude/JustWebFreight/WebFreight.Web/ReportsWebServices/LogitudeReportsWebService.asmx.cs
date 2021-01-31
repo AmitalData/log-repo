@@ -8442,6 +8442,7 @@ namespace WebFreight.Web.ReportsWebServices
             QueryOperations queryOperations = (QueryOperations)serializer.Deserialize(memorystream);
 
             QueryFilterItem filterItem_CustomerId = queryOperations.QueryFilterItems.Where(d => d.FieldName == "CustomerId").FirstOrDefault();
+            QueryFilterItem filterItem_PartnerId = queryOperations.QueryFilterItems.Where(d => d.FieldName == "PartnerId").FirstOrDefault();
             QueryFilterItem filterItem_IsByInvoiceDate = queryOperations.QueryFilterItems.Where(d => d.FieldName == "IsByInvoiceDate").FirstOrDefault();
             QueryFilterItem filterItem_FromDate = queryOperations.QueryFilterItems.Where(d => d.FieldName == "FromDate").FirstOrDefault();
             QueryFilterItem filterItem_ToDate = queryOperations.QueryFilterItems.Where(d => d.FieldName == "ToDate").FirstOrDefault();
@@ -8458,6 +8459,7 @@ namespace WebFreight.Web.ReportsWebServices
             DateTime toDate = new DateTime(todayDate.Year, todayDate.Month, DateTime.DaysInMonth(todayDate.Year, todayDate.Month));
 
             string customerId = null;
+            string partnerId = null;
             bool isByInvoiceDate = true;
             bool includeVoidInvoices = true;
             bool includeDraftInvoices = true;
@@ -8471,6 +8473,14 @@ namespace WebFreight.Web.ReportsWebServices
                 if (filterItem_CustomerId.FieldValue != null)
                 {
                     customerId = filterItem_CustomerId.FieldValue.ToString();
+                }
+            }
+
+            if (filterItem_PartnerId != null)
+            {
+                if (filterItem_PartnerId.FieldValue != null)
+                {
+                    partnerId = filterItem_PartnerId.FieldValue.ToString();
                 }
             }
 
@@ -8547,6 +8557,11 @@ namespace WebFreight.Web.ReportsWebServices
             if (!string.IsNullOrEmpty(customerId))
             {
                 iQueryable_Invoices = iQueryable_Invoices.Where(d => d.BillToId == customerId);
+            }
+
+            if (!string.IsNullOrEmpty(partnerId))
+            {
+                iQueryable_Invoices = iQueryable_Invoices.Where(d => d.PartnerId == partnerId);
             }
 
             if (isByInvoiceDate)
@@ -8745,6 +8760,7 @@ namespace WebFreight.Web.ReportsWebServices
 
                     record.InvoiceNumber = invoice.InvoiceNumber;
                     record.BillToName = invoice.BillToName;
+                    record.PartnerName = invoice.PartnerName;
                     record.OurReference = invoice.MainEntityReference;
                     record.CustomerReference = invoice.CustomerRef;
                     record.BillToCode = invoice.BillToCode;
