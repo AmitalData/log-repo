@@ -1,5 +1,5 @@
 Feature: ARInvoice operations and actions
-    this feature file will create an ARInvoice then approve invoice then cancel the approvement
+    this feature file will create an ARInvoice then approve invoice then void the invoice for normal ARInvoice and Credit Note
 
     Scenario: Login And Open Shipments Workspace
         Given the user logged in
