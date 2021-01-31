@@ -164,7 +164,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         TransshipmentApprovalDateTime, 
 	         FinalLoadingSite, 
 	         PalestinianCode, 
-	         RequestedCustomsDocId,
+	         RequestedCustomsDocId, 
+	         ExportDeclarationOfficeCode,
 	      }
 
 
@@ -389,7 +390,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         TransshipmentApprovalDateTime, 
 	         FinalLoadingSite, 
 	         PalestinianCode, 
-	         RequestedCustomsDocId,
+	         RequestedCustomsDocId, 
+	         ExportDeclarationOfficeCode,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -1106,6 +1108,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.RequestedCustomsDocId))
             {
 				entityPOCO.RequestedCustomsDocId = entityPM.RequestedCustomsDocId;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ExportDeclarationOfficeCode))
+            {
+				entityPOCO.ExportDeclarationOfficeCode = entityPM.ExportDeclarationOfficeCode;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -1829,6 +1836,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.RequestedCustomsDocId = entityPOCO.RequestedCustomsDocId;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ExportDeclarationOfficeCode))
+            {
+					entityPM.ExportDeclarationOfficeCode = entityPOCO.ExportDeclarationOfficeCode;
+            }
+
 		}
 
 		public void PMToOldPM(DeclarationPM entityPM, DeclarationPM oldEntityPM)
@@ -2543,6 +2555,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.RequestedCustomsDocId))
             {
                 oldEntityPM.RequestedCustomsDocId = entityPM.RequestedCustomsDocId;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ExportDeclarationOfficeCode))
+            {
+                oldEntityPM.ExportDeclarationOfficeCode = entityPM.ExportDeclarationOfficeCode;
             }
 			
 		}
