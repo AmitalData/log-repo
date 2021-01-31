@@ -23,7 +23,7 @@ namespace WebFreight.Web.Helpers
                     Validation();
                 }
 
-                CacheManager.CacheWrapper.Insert(entityCacheName, userViewLinkDetails, null, DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
+                CacheManager.CacheWrapper.Insert(entityCacheName, userViewLinkDetails, null, System.DateTime.UtcNow.AddHours(1), TimeSpan.Zero);
             }
         }
 
