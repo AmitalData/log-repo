@@ -49,7 +49,7 @@ export class InvoiceQueueComponent
         super();
         this.EntityResourceService.getEntityResourceByTableName("Customs.Consignment").subscribe(response => {
             this.EntityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe(response => {
-                this.GetData();
+                //this.GetData();
             });
         });
     }
