@@ -354,7 +354,7 @@
                                                                         <td style="width: 120px;">Connected</td>
 
                                                                         <td style="width: 100px;">
-                                                                            <button class="Button" [disabled]="!IsEditingEnabled" (click)="DisconnectAllClicked()">Disconnect All</button>
+                                                                            <button class="Button" id="DisconnectALL" [disabled]="!IsEditingEnabled" (click)="DisconnectAllClicked()">Disconnect All</button>
                                                                         </td>
 
                                                                         <td>
@@ -456,7 +456,7 @@
                                                                         <td style="width: 120px;">Not Connected</td>
 
                                                                         <td style="width: 100px;">
-                                                                            <button class="Button" [disabled]="!IsEditingEnabled" (click)="ConnectAllClicked()">Connect All</button>
+                                                                            <button class="Button" id="ConnectAll" [disabled]="!IsEditingEnabled" (click)="ConnectAllClicked()">Connect All</button>
                                                                         </td>
 
                                                                         <td>
