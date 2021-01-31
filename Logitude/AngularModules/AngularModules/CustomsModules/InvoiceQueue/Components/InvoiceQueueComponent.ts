@@ -18,6 +18,7 @@ import { MessageWindow } from '../../../Controls/Windows/MessageWindow';
 import { ConfirmWindow } from '../../../Controls/Windows/ConfirmWindow';
 import { TextCodeTranslator } from '../../../Infrastructure/Utilities/TextCodeTranslator';
 import { tryParse } from 'selenium-webdriver/http';
+import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
 
 @Component({
     selector: 'InvoiceQueueComponent',
@@ -34,6 +35,7 @@ export class InvoiceQueueComponent
     public InvoiceListList: ObservableCollection;
     public EMessagesList: ObservableCollection;
     public WMessagesList: ObservableCollection;
+    public GeneralDetails: any;
     public declaration: DeclarationPM;
     CreateQInvoiceButtonDim: boolean;
     ErrorMessages: boolean;
@@ -48,14 +50,27 @@ export class InvoiceQueueComponent
         super();
         this.EntityResourceService.getEntityResourceByTableName("Customs.Consignment").subscribe(response => {
             this.EntityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe(response => {
-                //this.GetData();
+                this.GetData();
             });
         });
     }
+
+    ExpandComment(entity: any, $event: any) {
+        var windowArgs: any = {};
+        var logitudeWindow = new LogitudeWindow();
+        logitudeWindow.Height = 400;
+        logitudeWindow.Width = 700;
+        logitudeWindow.ShowCloseButton = true;
+        windowArgs.remarks = entity.Comments;
+       // logitudeWindow.Title = this.title;
+        logitudeWindow.WindowArgs = windowArgs;
+        logitudeWindow.Show('./CustomsModules/CustomsControls/Components/RemarksPopUp');
+    }
+
     private GetData() {
         this.ResetVariables();
-       this._declarationPMService.get(this.UnifreightMessage.LogitudeEntityNumber).subscribe(data => {
-        //this._declarationPMService.get("1-5362").subscribe(data => {
+      this._declarationPMService.get(this.UnifreightMessage.LogitudeEntityNumber).subscribe(data => {
+    //      this._declarationPMService.get("1-5362").subscribe(data => {
             this.declaration = data.Result;
             SessionLocator.SelectedSession.StopBusyIndicator();
             if (this.declaration == null) {
@@ -82,6 +97,8 @@ export class InvoiceQueueComponent
                     x.InvoiceAmount = this.SetFixedValue(x.InvoiceAmount);
                     this.IntegratedInvoiceList.Insert(x);
                 });
+                this.GeneralDetails = (data.Result.Invoice as AllInvoices).GeneralDetails;
+                 
                 if ((data.Result.Invoice as AllInvoices).Invoices != null) {
                     (data.Result.Invoice as AllInvoices).Invoices.forEach(x => {
                         if (x.InvoiceDate != null && x.InvoiceDate != "") {
@@ -138,6 +155,7 @@ export class InvoiceQueueComponent
         this.InvoiceListList = new ObservableCollection([]);
         this.EMessagesList = new ObservableCollection([]);
         this.WMessagesList = new ObservableCollection([]);
+        this.GeneralDetails = {};
         this.ErrorMessages = false;
         this.WarningMessages = false;
     }

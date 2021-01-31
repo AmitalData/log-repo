@@ -1138,7 +1138,7 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
 
         CustomMessageProgressComponent
             .ShowProgressBar(currRequestParams.PBId,
-                "שליחת שםילתם להדפסת הצהרה", true)
+                "שליחת שאילתא להדפסת הצהרה", true)
             .then((res) => {
                 let sub =
                     this.CurrentSession.CurrentEditComponent.LoadCompleted
