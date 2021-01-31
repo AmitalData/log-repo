@@ -439,7 +439,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
             var OpenCourierMasters = courierMasterRepository.GetAllOpenCourierMastersWithLandingDate(tenant);
             foreach(var item in OpenCourierMasters)
             {
-                courierMasterPMList.Add(this.GetEntityPM(item, false, null);
+                courierMasterPMList.Add(this.GetEntityPM(item, false, null));
             }
             return courierMasterPMList;
         }
