@@ -15,7 +15,8 @@ import {MessageWindow} from '../../../Controls/Windows/MessageWindow';
 
 export class StatementByInvoiceDateFilterComponent extends BaseComponent   {
     public ReportsPreview: ReportsPreviewComponent;
-    public CustomerId: string = null;    
+    public CustomerId: string = null;
+    public PartnerId: string = null;    
     public ObjectTableName: string = "Report";
     public RunReportTitle: string = "Run Report";
     public ValidationErrorsList: string[];
@@ -52,6 +53,16 @@ export class StatementByInvoiceDateFilterComponent extends BaseComponent   {
             queryFilterItem.Operator = "Equals";
             queryFilterItems.push(queryFilterItem);
         }
+
+        if (!AppTool.IsNullOrEmpty(this.PartnerId)) {
+            queryFilterItem = new QueryFilterItem();
+            queryFilterItem.DisplayInList = false;
+            queryFilterItem.FieldName = "PartnerId";
+            queryFilterItem.FieldValue = this.PartnerId;
+            queryFilterItem.Operator = "Equals";
+            queryFilterItems.push(queryFilterItem);
+        }
+        
         return queryFilterItems;
     }
 

@@ -25,7 +25,8 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
     public class StatementReportManager
     {
         private int tenant;
-        private string billToId = null;        
+        private string billToId = null;
+        private string partnerId = null;
         private DateTime? fromDate = null;
         private DateTime? toDate = null;
         private bool includeDraftInvoices = false;
@@ -48,6 +49,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
             QueryOperations myQueryOperations = (QueryOperations)xmlSerializer.Deserialize(memoryStream);
 
             QueryFilterItem filterItem_BillTo = myQueryOperations.QueryFilterItems.Where(d => d.FieldName == "BillToId").FirstOrDefault();
+            QueryFilterItem filterItem_PartnerId = myQueryOperations.QueryFilterItems.Where(d => d.FieldName == "PartnerId").FirstOrDefault();
             QueryFilterItem filterItem_DueDate = myQueryOperations.QueryFilterItems.Where(d => d.FieldName == "DueDate").FirstOrDefault();
             QueryFilterItem filterItem_IncludeDraftInvoices = myQueryOperations.QueryFilterItems.Where(d => d.FieldName == "IncludeDraftInvoices").FirstOrDefault();
             QueryFilterItem filterItem_ARAPFilter = myQueryOperations.QueryFilterItems.Where(d => d.FieldName == "ARAPFilter").FirstOrDefault();
@@ -62,6 +64,14 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                 if (filterItem_BillTo.FieldValue != null)
                 {
                     billToId = filterItem_BillTo.FieldValue.ToString();
+                }
+            }
+
+            if (filterItem_PartnerId != null)
+            {
+                if (filterItem_PartnerId.FieldValue != null)
+                {
+                    partnerId = filterItem_PartnerId.FieldValue.ToString();
                 }
             }
 
@@ -260,6 +270,12 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                 myFilterdCustomerAddress = addressRepository.GetMainAddressByCardId(billToId, tenant);
             }
 
+            if (!string.IsNullOrEmpty(partnerId))
+            {
+                myFilterdCustomer = CardRepository.GetSingleCard(partnerId, tenant, true);
+                myFilterdCustomerAddress = addressRepository.GetMainAddressByCardId(partnerId, tenant);
+            }
+
             dataProvider.GeneralAddress = DataProviders.General.GetAddress(tenantAddress);
             dataProvider.TenantName = currentTenant.Company;
             dataProvider.Signature = currentTenant.Signature;
@@ -333,6 +349,11 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                                         iQueryable_ARInvoice = iQueryable_ARInvoice.Where(d => d.BillToId == billToId);
                                     }
 
+                                    if (!string.IsNullOrEmpty(partnerId))
+                                    {
+                                        iQueryable_ARInvoice = iQueryable_ARInvoice.Where(d => d.PartnerId == partnerId);
+                                    }
+
                                     if (fromDate != null)
                                     {
                                         if (isByDueDateFilter)
@@ -420,6 +441,11 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                                         iQueryable_APInvoice = iQueryable_APInvoice.Where(d => d.VendorId == billToId);
                                     }
 
+                                    if (!string.IsNullOrEmpty(partnerId))
+                                    {
+                                        iQueryable_ARInvoice = iQueryable_ARInvoice.Where(d => d.PartnerId == partnerId);      
+                                    }
+
                                     if (fromDate != null)
                                     {
                                         if (isByDueDateFilter)
@@ -470,6 +496,11 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                                     if (!string.IsNullOrEmpty(billToId))
                                     {
                                         iQueryable_ARPayment = iQueryable_ARPayment.Where(d => d.BillToId == billToId);
+                                    }
+
+                                    if (!string.IsNullOrEmpty(partnerId))
+                                    {
+                                        iQueryable_ARPayment = iQueryable_ARPayment.Where(d => d.PartnerId == partnerId);
                                     }
 
                                     if (fromDate != null)
@@ -552,7 +583,13 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                                         iQueryable_APPayment = iQueryable_APPayment.Where(d => d.VendorId == billToId);
                                     }
 
-                                   
+                                    if (!string.IsNullOrEmpty(partnerId))
+                                    {
+                                        iQueryable_ARPayment = iQueryable_ARPayment.Where(d => d.PartnerId == partnerId);
+                                        iQueryable_APPayment = iQueryable_APPayment.Where(d => d.VendorId == billToId);
+                                    }
+
+
                                     if (fromDate != null)
                                     {
                                         if (isByDueDateFilter)
@@ -612,6 +649,12 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                                     {
                                         iQueryable_ARInvoice = iQueryable_ARInvoice.Where(d => d.BillToId == billToId);
                                         iQueryable_ARPayment = iQueryable_ARPayment.Where(d => d.BillToId == billToId);
+                                    }
+
+                                    if (!string.IsNullOrEmpty(partnerId))
+                                    {
+                                        iQueryable_ARInvoice = iQueryable_ARInvoice.Where(d => d.PartnerId == partnerId);
+                                        iQueryable_ARPayment = iQueryable_ARPayment.Where(d => d.PartnerId == partnerId);
                                     }
 
                                     if (fromDate != null)
@@ -717,6 +760,12 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                                         iQueryable_APInvoice = iQueryable_APInvoice.Where(d => d.VendorId == billToId);
                                         iQueryable_ARPayment = iQueryable_ARPayment.Where(d => d.BillToId == billToId);
                                         iQueryable_APPayment = iQueryable_APPayment.Where(d => d.VendorId == billToId);
+                                    }
+
+                                    if (!string.IsNullOrEmpty(partnerId))
+                                    {
+                                        iQueryable_ARInvoice = iQueryable_ARInvoice.Where(d => d.PartnerId == partnerId);                    
+                                        iQueryable_ARPayment = iQueryable_ARPayment.Where(d => d.PartnerId == partnerId);
                                     }
 
                                     if (fromDate != null)

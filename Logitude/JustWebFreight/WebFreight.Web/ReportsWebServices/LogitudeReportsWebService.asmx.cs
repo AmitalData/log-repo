@@ -3536,14 +3536,22 @@ namespace WebFreight.Web.ReportsWebServices
             QueryOperations queryOperations = (QueryOperations)serializer.Deserialize(memorystream);
 
             QueryFilterItem customerItem = queryOperations.QueryFilterItems.Where(d => d.FieldName == "CustomerId" && d.Operator == "Equals").FirstOrDefault();
+            QueryFilterItem partnerItem = queryOperations.QueryFilterItems.Where(d => d.FieldName == "PartnerId" && d.Operator == "Equals").FirstOrDefault();
 
             DateTime todayDate = TenantServerConfigration.GetCurrentDateTime(tenant);
             string customerId = null;
+            string partnerId = null;
             Card customer = null;
+            Card partner = null;
 
             if (customerItem != null && customerItem.FieldValue != null)
             {
                 customerId = customerItem.FieldValue.ToString();
+            }
+
+            if (partnerItem != null && partnerItem.FieldValue != null)
+            {
+                partnerId = partnerItem.FieldValue.ToString();
             }
 
             if (!string.IsNullOrEmpty(customerId))
@@ -3554,6 +3562,14 @@ namespace WebFreight.Web.ReportsWebServices
                 iQueryableARPayment = iQueryableARPayment.Where(d => d.BillToId == customerId);
                 iQueryableAPPayment = iQueryableAPPayment.Where(d => d.VendorId == customerId);
                 iQueryableAPInvoice = iQueryableAPInvoice.Where(d => d.VendorId == customerId);
+            }
+
+            if (!string.IsNullOrEmpty(partnerId))
+            {
+                partner = CardRepository.GetSingleCard(partnerId, tenant, true);
+
+                iQueryableARInvoice = iQueryableARInvoice.Where(d => d.PartnerId == partnerId);
+                iQueryableARPayment = iQueryableARPayment.Where(d => d.PartnerId == partnerId);
             }
 
             totalData.CustomerName = customer != null ? customer.EnglishName : "";
