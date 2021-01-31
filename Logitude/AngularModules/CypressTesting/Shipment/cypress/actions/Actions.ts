@@ -278,33 +278,17 @@ export function CopyShipment(levelCode: string) {
 export function FillAPInvoiceDetails(aPInvoiceDetails: APInvoiceDetails) {
     var generatedInvoiceNumber = "AP" + gr.GenerateRandomNumber(10000, 99999).toString();
     var todayDate = BaseActions.GetTodayDate();
-    if (aPInvoiceDetails.Vendor) {
-        cy.SelectLogLovElement(Selectors.APInvoiceVendor, false, aPInvoiceDetails.Vendor);
-    }
+    cy.SelectLogLovElement(Selectors.APInvoiceVendor, false, aPInvoiceDetails.Vendor);
     cy.get(Selectors.APInvoiceInvoiceNumber).type(generatedInvoiceNumber)
-    if (aPInvoiceDetails.InvoiceAmount) {
-        cy.get(Selectors.APInvoiceAmountInInvoice).type(aPInvoiceDetails.InvoiceAmount)
-    }
-    if (aPInvoiceDetails.InvoiceCurrency) {
-        cy.SelectLogLovElement(Selectors.APInvoiceInvoiceCurrency, true, aPInvoiceDetails.InvoiceCurrency);
-    }
-    if (aPInvoiceDetails.InvoiceExchangeRate) {
-        cy.get(Selectors.APInvoiceInvoiceExchangeRate).clear().type(aPInvoiceDetails.InvoiceExchangeRate);
-    }
-    if (aPInvoiceDetails.InvoiceDate) {
-        cy.get(Selectors.APInvoiceInvoiceDate).type(todayDate);
-    }
-    if (aPInvoiceDetails.PaymentTerms) {
-        cy.SelectLogLovElement(Selectors.APInvoicePaymentTerm, true, aPInvoiceDetails.PaymentTerms);
-    }
-    if (aPInvoiceDetails.DueDate) {
-        cy.get(Selectors.APInvoiceDueDate).type(todayDate);
-    }
+    cy.get(Selectors.APInvoiceAmountInInvoice).type(aPInvoiceDetails.InvoiceAmount)
+    cy.SelectLogLovElement(Selectors.APInvoiceInvoiceCurrency, true, aPInvoiceDetails.InvoiceCurrency);
+    cy.get(Selectors.APInvoiceInvoiceExchangeRate).clear().type(aPInvoiceDetails.InvoiceExchangeRate);
+    cy.get(Selectors.APInvoiceInvoiceDate).type(todayDate);
+    cy.SelectLogLovElement(Selectors.APInvoicePaymentTerm, true, aPInvoiceDetails.PaymentTerms);
+    cy.get(Selectors.APInvoiceDueDate).type(todayDate);
     cy.Click(Selectors.OkCreateAPInvoiceButton, null);
     cy.Click(Selectors.APInvoiceLineCheckBox, null)
-    if (Selectors.APInvoiceVatType) {
-        cy.SelectLogLovElement(Selectors.APInvoiceVatType, true, aPInvoiceDetails.VATType)
-    }
+    cy.SelectLogLovElement(Selectors.APInvoiceVatType, true, aPInvoiceDetails.VATType)
     cy.Click(Selectors.APInvoiceVatTypeApplyToAll, null)
 }
 
