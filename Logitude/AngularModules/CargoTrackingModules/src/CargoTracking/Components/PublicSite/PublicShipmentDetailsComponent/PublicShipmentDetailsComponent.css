@@ -18,6 +18,11 @@ a {
     margin-top: 10px;
     position: relative;
     overflow: auto;
+
+    background: white;
+    box-shadow: 0px 0px 5px 0px #00000021;
+    border-radius: 5px;
+    padding: 20px;
 }
 
 .box-header .icon {
@@ -373,11 +378,13 @@ ul.line-list li.tick {
 
 @media screen and (max-width: 479px) {
     .box-header {
-        background: none;
-        height: 140px;
+        min-height: 140px;
+        margin: 40px 0px;
+        width: calc(100% - 40px);
     }
     .box-header .field {
         width: calc(50% - 40px);
+        min-height: 50px;
     }
     .milestones>div {
         width: 70px;
