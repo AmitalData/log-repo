@@ -28,4 +28,5 @@ CLOSE Triggers_Cursor
 DEALLOCATE Triggers_Cursor
     ]]>       
   </Sql>
+  <Oracle Version="1"></Oracle>
 </Script>
