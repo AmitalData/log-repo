@@ -12,8 +12,8 @@ namespace Logitude.ShipmentTests.Steps
     public class UpdateShipmentSteps
     {
         private readonly ShipmentContext ShipmentContext;
-        private PackagePM _housePackage, _masterPackages;
-        private PayablesPM _PayablesPM;
+        private PackagePM HousePackage, MasterPackages;
+        private PayablesPM PayablesPM;
 
         public UpdateShipmentSteps(ShipmentContext shipmentContext)
         {
@@ -24,15 +24,13 @@ namespace Logitude.ShipmentTests.Steps
         [Given(@"The master shipment packages fields")]
         public void GivenTheMasterShipmentPackagesFields(Table table)
         {
-            _masterPackages = CreatePackageInstance(table);
+            MasterPackages = CreatePackageInstance(table);
         }
 
         [When(@"The put API sent to add master packages")]
         public void TheputAPIsenttoaddmasterpackages()
         {
-            ShipmentContext.MasterShipment = AddPackagesToShipment(ShipmentContext.MasterShipment, _masterPackages);
-
-            ApiResponse<ShipmentPM> response = APICaller.CallPut<ShipmentPM>(ShipmentContext.MasterShipment, Urls.ShipmentController, UserTenant.Token);
+            ApiResponse<ShipmentPM> response = UpdateShipmentByAddingPackages(ShipmentContext.MasterShipment, MasterPackages);
             ShipmentContext.MasterShipment.Id = response.Data?.Id;
         }
 
@@ -45,14 +43,13 @@ namespace Logitude.ShipmentTests.Steps
         [Given(@"The house shipment packages fields")]
         public void GivenTheHouseShipmentPackagesFields(Table table)
         {
-            _housePackage = CreatePackageInstance(table);
+            HousePackage = CreatePackageInstance(table);
         }
 
         [When(@"The put API sent to add house packages")]
         public void TheputAPIsenttoaddhousepackages()
         {
-            ShipmentContext.MasterShipment = AddPackagesToShipment(ShipmentContext.HouseShipment, _housePackage);
-            var response = APICaller.CallPut<ShipmentPM>(ShipmentContext.HouseShipment, Urls.ShipmentController, UserTenant.Token);
+            ApiResponse<ShipmentPM> response = UpdateShipmentByAddingPackages(ShipmentContext.HouseShipment, HousePackage);
             ShipmentContext.HouseShipment.Id = response.Data?.Id;
         }
 
@@ -65,14 +62,13 @@ namespace Logitude.ShipmentTests.Steps
         [Given(@"The Payable Charge Type fields")]
         public void GivenThePayableChargeTypeFields(Table table)
         {
-            _PayablesPM = CreatePayablesInstance(table);
+            PayablesPM = CreatePayablesInstance(table);
         }
 
         [When(@"The put API sent to add master Payable")]
         public void WhenThePutAPISentToAddMasterPayable()
         {
-            ShipmentContext.MasterShipment = AddPayablesToShipment(ShipmentContext.MasterShipment, _PayablesPM);
-            var response = APICaller.CallPut<ShipmentPM>(ShipmentContext.MasterShipment, Urls.ShipmentController, UserTenant.Token);
+            ApiResponse<ShipmentPM> response = UpdateShipmentByAddingPayables(ShipmentContext.MasterShipment, PayablesPM);
             ShipmentContext.MasterShipment.Id = response.Data?.Id;
         }
 
@@ -84,6 +80,18 @@ namespace Logitude.ShipmentTests.Steps
         #endregion
 
         #region Private Function Region
+        private ApiResponse<ShipmentPM> UpdateShipmentByAddingPackages(ShipmentPM shipment, PackagePM package)
+        {
+            shipment = AddPackagesToShipment(shipment, package);
+            return APICaller.CallPut<ShipmentPM>(shipment, Urls.ShipmentController, UserTenant.Token);
+        }
+
+        private ApiResponse<ShipmentPM> UpdateShipmentByAddingPayables(ShipmentPM shipment, PayablesPM payable)
+        {
+            shipment = AddPayablesToShipment(shipment, payable);
+            return APICaller.CallPut<ShipmentPM>(shipment, Urls.ShipmentController, UserTenant.Token);
+        }
+
         private ShipmentPM AddPackagesToShipment(ShipmentPM shipment, PackagePM package)
         {
             package = new PackageBuilder().WithModel(package)

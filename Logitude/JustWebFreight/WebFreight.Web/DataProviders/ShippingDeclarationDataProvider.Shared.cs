@@ -483,6 +483,7 @@ namespace WebFreight.Web.DataProviders
         //If no delivery, show pickup/delivery address of the consignee
         //If no pickup/delivery address, show the chosen address on the consignee
         public string DeliveryAddress_New { get; set; }
-        
+
+        public string AWBCommodityItemNumber { get; set; }
     }
 }

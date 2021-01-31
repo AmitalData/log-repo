@@ -650,8 +650,8 @@ export class ExternalPagesTabComponent extends BaseComponent implements OnInit, 
         logitudeWindow.Width = 900;
         logitudeWindow.Height = 800;
         logitudeWindow.IsFullScreen = true;
-
         var BankName = this.DontShowLocal ? this.EntityPM.EnglishName : this.EntityPM.LocalName == null ? this.EntityPM.EnglishName : this.EntityPM.LocalName;
+
         logitudeWindow.Title = TextCodeTranslator.Translate("Accounting.General.O.ExternalReconcile") + ' - ' + BankName;
 
         logitudeWindow.IsFullScreen = true;

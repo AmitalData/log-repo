@@ -1,9 +1,12 @@
 export class Selectors
 {
     public static readonly ShipmentTab = '#SHIP';
+    public static readonly ShipmentMoreList ='#MenuButtons';
+    public static readonly APInvoiceMoreList  ="#MenuButtons_1"
     public static readonly GeneralTab = '#ShipmentTHGeneral';
     public static readonly OrdersTab = '#ShipmentTHOrders';
     public static readonly PartnersTab = '#ShipmentTHPartners';
+    public static readonly ShipmentsTab = '#ShipmentTHConsolidation';
     public static readonly PackagesTab = '#ShipmentTHPackages';
     public static readonly ReceivablesTab = '#ShipmentTHReceivables';
     public static readonly RoutingsTab = '#ShipmentTHRoutings';
@@ -49,4 +52,26 @@ export class Selectors
     public static readonly ShipmentPayable_ChargesTypeId = '#ShipmentPayable_ChargesTypeId';
     public static readonly ShipmentPayable_MeasurementId = '#ShipmentPayable_MeasurementId';
     public static readonly ShipmentPayable_CurrencyId = '#ShipmentPayable_CurrencyId';
+    public static readonly NewAttachedHouse = '#NewHouseBtn';
+    public static readonly CopyShipmentButton='#ShipmentBCopyShipment'
+    public static readonly CancelShipmentButton='#ShipmentBCancelShipment'
+    public static readonly ConfirmActionButton='#ConfirmAction'
+    public static readonly ShipmentPayableUnitPrice = '#ShipmentPayable_UnitPrice';
+    public static readonly ShipmentPayableQuantity = '#ShipmentPayable_Quantity';
+    public static readonly ReceiveInvoiceButton= "#ReceiveInvoice";
+    public static readonly APInvoiceVendor="#APInvoice_VendorId";
+    public static readonly APInvoiceInvoiceNumber ="#APInvoice_InvoiceNumber";
+    public static readonly APInvoiceAmountInInvoice="#APInvoice_AmountInInvoiceCurrency";
+    public static readonly APInvoiceInvoiceCurrency ="#APInvoice_InvoiceCurrencyId";
+    public static readonly APInvoiceInvoiceExchangeRate= "#APInvoice_InvoiceCurrencyExchangeRate"
+    public static readonly APInvoiceInvoiceDate= "#date_APInvoice_InvoiceDate";
+    public static readonly APInvoicePaymentTerm= "#APInvoice_PaymentTermId";
+    public static readonly APInvoiceDueDate=  "#date_APInvoice_DueDate";
+    public static readonly OkCreateAPInvoiceButton="#Ok-CreateAPInvoice";
+    public static readonly APInvoiceLineCheckBox="#CheckBox_0_0_LBL";
+    public static readonly APInvoiceVatType="#APInvoice_VatTypeId"
+    public static readonly APInvoiceVatTypeApplyToAll="#VATApplyToAll"
+    public static readonly APInvoiceSaveButton= "#APInvoiceBSave"
+    public static readonly APInvoiceApproveButton ="#APInvoiceBApprove"
+    public static readonly APInvoiceCancelApprovalButton= "#APInvoiceBCancelApproval"
 }
