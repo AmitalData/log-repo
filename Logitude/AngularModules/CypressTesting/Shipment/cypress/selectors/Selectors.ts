@@ -68,7 +68,7 @@ export class Selectors
     public static readonly APInvoicePaymentTerm= "#APInvoice_PaymentTermId";
     public static readonly APInvoiceDueDate=  "#date_APInvoice_DueDate";
     public static readonly OkCreateAPInvoiceButton="#Ok-CreateAPInvoice";
-    public static readonly APInvoiceCheckBoxInvoiceLine="#CheckBox_0_0_LBL";
+    public static readonly APInvoiceLineCheckBox="#CheckBox_0_0_LBL";
     public static readonly APInvoiceVatType="#APInvoice_VatTypeId"
     public static readonly APInvoiceVatTypeApplyToAll="#VATApplyToAll"
     public static readonly APInvoiceSaveButton= "#APInvoiceBSave"

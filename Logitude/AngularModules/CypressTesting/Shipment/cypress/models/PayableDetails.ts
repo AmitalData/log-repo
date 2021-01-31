@@ -1,7 +1,7 @@
 export interface PayableDetails {
     ChargesType: string,
     Currency: string,
-    Measurement: string,
+    UOM: string,
     UnitPrice: string,
     Quantity: string
 }

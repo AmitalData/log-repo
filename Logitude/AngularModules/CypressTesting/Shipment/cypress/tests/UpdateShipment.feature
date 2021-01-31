@@ -1,10 +1,9 @@
 Feature: Edit Direct Export Air Shipment
-
+@open
   Scenario: Login And Open Shipments Workspace
     Given the user logged in
     And navigate to shipments workspace
     And create a new Direct shipment
-
 #Using the created shipment in the first scenario do the following.
   Scenario: Edit Shipment by filling general tab
     Given the user in the general tab
@@ -55,7 +54,7 @@ Feature: Edit Direct Export Air Shipment
     And  add new delivery with "IntegrationAgent" as a partner routing
     When save shipment window
     Then the save operation complete successfully
-
+@open
   Scenario: Fill Payables Tab
     Given the user in the Payables tab
     And  add Payables with "AFT" as a ChargesType, "EUR" as a Currency and "GRWT" as UOM 
