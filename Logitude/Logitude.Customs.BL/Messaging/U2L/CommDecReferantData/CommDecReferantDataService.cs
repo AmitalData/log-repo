@@ -150,7 +150,17 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommDecReferantData
                 }
                 if (!string.IsNullOrWhiteSpace(_LogitudeDeclarationReferantData.FollowUpStatus)) _DeclarationReferantDataPM.IsClosedForFollowUp = _LogitudeDeclarationReferantData.FollowUpStatus;
 
-                if (!string.IsNullOrWhiteSpace(_LogitudeDeclarationReferantData.PreClassification)) _DeclarationReferantDataPM.PreClassification = _LogitudeDeclarationReferantData.PreClassification;
+                if (!string.IsNullOrWhiteSpace(_LogitudeDeclarationReferantData.PreClassification))
+                {
+                    if(_LogitudeDeclarationReferantData.PreClassification == "D")
+                    {
+                        _DeclarationReferantDataPM.PreClassification = null;
+                    }
+                    else
+                    {
+                        _DeclarationReferantDataPM.PreClassification = _LogitudeDeclarationReferantData.PreClassification;
+                    }
+                }
                 if (_DeclarationReferantDataPM.Tenant < 1) _DeclarationReferantDataPM.Tenant = ResolvedTenant();
                 if (!string.IsNullOrWhiteSpace(_LogitudeDeclarationReferantData.ClassifiedUserId)) _DeclarationReferantDataPM.ClassifiedUserId = TranslateUser(_LogitudeDeclarationReferantData.ClassifiedUserId);
                 if (!string.IsNullOrWhiteSpace(_LogitudeDeclarationReferantData.ControllerUserId)) _DeclarationReferantDataPM.ControllerUserId = TranslateUser(_LogitudeDeclarationReferantData.ControllerUserId);
