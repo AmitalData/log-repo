@@ -29,7 +29,7 @@ namespace WarehouseData.Helper
             {
                 string tableName = row["Name"].ToString() == "Master" ? "ShipmentMasterData" : row["Name"].ToString();
                 string tableId = row["Id"].ToString();
-                TableClass tableClass = tableNameLists.Where(d => d.TableName == tableName).FirstOrDefault();
+                TableClass tableClass = tableNameLists.Where(d => d.TableName == tableName && !d.HasFactTable).FirstOrDefault();
                 if (tableClass != null) tableClass.ObjectTableId = tableId;
 
                 tableClass.FieldsDBNameLists = (from rowfield in copyToDwObjectFieldLists.AsEnumerable()
@@ -39,7 +39,7 @@ namespace WarehouseData.Helper
                 tableClass.FieldsDBName = GetDWObjectFieldsDBName(tableClass.FieldsDBNameLists, tableClass);
             }
 
-            foreach (TableClass tableClass in tableNameLists)
+            foreach (TableClass tableClass in tableNameLists.Where(d => !d.HasFactTable))
             {
                 var rowLists = copyToDwObjectFieldLists.AsEnumerable().Where(row => row["ObjectTableId"].ToString() == tableClass.ObjectTableId).ToList();
                 tableClass.ObjectFieldDBLists = GetDWObjectFieldDBLists(rowLists);
@@ -51,14 +51,52 @@ namespace WarehouseData.Helper
             return tableNameLists;
         }
 
-        private static string GetAdditionalDWObjectFieldsDBName(TableClass tableClass)
+        public List<TableClass> SetCustomObjectFieldMetaData(List<TableClass> dataWarehouseMetaDataTables, string connectionString)
+        {
+            List<TableClass> dataWarehouseMetaDataTableLists = dataWarehouseMetaDataTables;
+            var dwObjectDataTables = new GeneralDataWarehouseService().GetDataTableFromSql(connectionString, "select Code ,HasCustomFields ,MaxNumberOfCustomFields ,CustomFieldObjectTableName from DWObjectTables where  HasCustomFields = 1");
+            foreach (DataRow row in dwObjectDataTables.AsEnumerable())
+            {
+                int maxNumberOfCustomFields = row["MaxNumberOfCustomFields"] != null && !string.IsNullOrEmpty(row["MaxNumberOfCustomFields"].ToString()) ? int.Parse(row["MaxNumberOfCustomFields"].ToString()) : 0;
+                string customFieldObjectTableName = row["CustomFieldObjectTableName"] != null ? row["CustomFieldObjectTableName"].ToString() : "";
+
+                TableClass factMetaDataTable = dataWarehouseMetaDataTableLists.Where(d => d.DWObjectTableCode == row["Code"].ToString()).FirstOrDefault();
+                if (factMetaDataTable != null)
+                {
+                    TableClass dwMetaDataTable = dataWarehouseMetaDataTableLists.Where(d => d.TableName == factMetaDataTable.TableName && !d.HasFactTable).FirstOrDefault();
+                    factMetaDataTable.HasCustomFields = dwMetaDataTable.HasCustomFields = true;
+                    factMetaDataTable.MaxNumberOfCustomFields = dwMetaDataTable.MaxNumberOfCustomFields = maxNumberOfCustomFields;
+                    factMetaDataTable.CustomFieldObjectTableName = dwMetaDataTable.CustomFieldObjectTableName = customFieldObjectTableName;
+                }
+            }
+            return dataWarehouseMetaDataTableLists;
+
+        }
+
+        private  string GetAdditionalDWObjectFieldsDBName(TableClass tableClass)
         {
             string fieldsDBName = string.Empty;
              if (tableClass.FieldsDBNameLists!=null && !tableClass.FieldsDBNameLists.Contains(tableClass.KeyName)) fieldsDBName = "," + tableClass.KeyName;
              fieldsDBName += (!tableClass.IsCloseTable && tableClass.KeyName != "Tenant" && tableClass.TableName != "Tenant" ? ",Tenant" : "");
              fieldsDBName += ",AutomaticLastUpdateDate";
+            fieldsDBName +=  (tableClass.HasCustomFields ? ("," + GetCustomFieldDBNames(tableClass.MaxNumberOfCustomFields) ): "");
+
             return fieldsDBName;
         }
+
+
+        private string GetCustomFieldDBNames(int maxNumberOfCustomFields)
+        {
+            int i = 1;
+            string customFieldsDBName = string.Empty;
+            while (i <= maxNumberOfCustomFields)
+            {
+                customFieldsDBName += (i != 1 ? "," : "") + ("Field" + i);
+                i += 1;
+            }
+            return customFieldsDBName;
+        }
+
 
         private static string GetDWObjectFieldsDBName(List<string> fields, TableClass tableClass)
         {
@@ -111,7 +149,7 @@ namespace WarehouseData.Helper
         private static string GetDWTablesNamesAsString(List<TableClass> tableNameLists)
         {
             StringBuilder tableNamesBuilder = new StringBuilder("(");
-            foreach (TableClass table in tableNameLists)
+            foreach (TableClass table in tableNameLists.Where(d=>!d.HasFactTable))
             {
                 string name = table.TableName == "ShipmentMasterData" ? "Master" : table.TableName;
                 tableNamesBuilder.Append(("'" + name + (tableNameLists.Last() != table ? "'," : "')")));
