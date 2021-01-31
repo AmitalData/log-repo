@@ -144,7 +144,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
 
                 CustomsRequestsSheetQueryService customsRequestsSheetQuery = new CustomsRequestsSheetQueryService(customContext);
                 List<CustomsRequestsSheetPM> requestSheets = customsRequestsSheetQuery.GetCustomsRequestsSheetByCustomFileNumberPM(CustomFileNo, Tenant);
-                requestSheets  =requestSheets.Where(r => r.InterfaceTypeCode == InterfaceTypeCode).ToList();
+                requestSheets  =requestSheets.Where(r => r.InterfaceTypeCode == InterfaceTypeCode && r.RequestStatusCode !="99").ToList();
 
 
 

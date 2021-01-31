@@ -233,7 +233,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 var myCustomsDocumentsTicketUpdateService = new CustomsDocumentsTicketUpdateService(context, new Dictionary<string, IContext>(), requestParams.Tenant);
                 foreach (var customsDocumentsTicket in customsDocumentsTicketPMList)
                 {
-                    if (!string.IsNullOrWhiteSpace(customsDocumentsTicket.RequestedCustomsDocId))
+                    if (!string.IsNullOrWhiteSpace(customsDocumentsTicket.RequestedCustomsDocId) && _MyCustomsDocumentPM.DocumentStatusCode  != "2")
                     {
                         customsDocumentsTicket.VerificationStatusTypeCode = "8";
                         customsDocumentsTicket.ChangeSetOp = ChangeSetOperation.Update;
