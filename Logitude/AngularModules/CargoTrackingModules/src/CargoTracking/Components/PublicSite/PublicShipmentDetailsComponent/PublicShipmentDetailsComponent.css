@@ -419,25 +419,27 @@ ul.line-list li.tick {
         display: block;
     }
     .steps-list li>div.date {
-        color: gray;
+        color: white;
         font-weight: normal;
-        order: 3;
+        /* order: 3; */
+        float: right;
     }
     .steps-list li>div.caption {
         font-weight: bold;
+        float: left;
     }
     .steps-list li>div.desc {
         font-weight: normal;
         width: 100% !important;
     }
     .steps-list li {
-        display: flex;
-        flex-direction: column;
+        /* display: flex;
+        flex-direction: column; */
     }
     .steps-list li:hover:not(.dimmed),
     .steps-list li.highlighted {
-        background: none;
-        color: black;
+        /* background: none;
+        color: black; */
         font-weight: normal;
     }
     .steps-list li.highlighted>.caption {
