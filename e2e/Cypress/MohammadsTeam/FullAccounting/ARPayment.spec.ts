@@ -22,13 +22,12 @@ let R: CreateRandom= new CreateRandom();
   it('New ARPayment Created Successfully', function () {
 
       var str = R.createrandomnum();
-      cy.get('li[id=GeneralMHMaintenance]').click()
+
    
-      cy.get('li[id=PAR]')
-      cy.get('li[id=GeneralMHFullAccounting]').click();
     
-      cy.get('li[id=FACS]').click();
-      cy.get('button[id=NewARPayment]').click();
+      cy.get('li[id=GeneralMHFullAccounting]').click({Force:true});    
+      cy.get('li[id=FACS]').click({Force:true});
+      cy.get('button[id=NewARPayment]').click({Force:true});
       cy.get('input[id=ARPayment_BillToId]').type("Test Customer GLAccountXU805920XV").should("have.value", "Test Customer GLAccountXU805920XV")
       cy.get('ul[id=mydatalist_ARPayment_BillToId]').contains("Test Customer GLAccountXU805920XV").then(a => {
           a[0].click();

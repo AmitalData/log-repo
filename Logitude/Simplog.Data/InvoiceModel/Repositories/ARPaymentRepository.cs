@@ -49,6 +49,13 @@ namespace Simplog.Data.InvoiceModel.Repositories
                     select a).FirstOrDefault();
         }
 
+        public List<ARPayment> GetNotCancelledARPayments(List<string> ids, int tenant)
+        {
+            return (from a in context.ARPayments
+                    where ids.Contains(a.Id) && a.Tenant == tenant && a.StatusCode != "VD"
+                    select a).ToList();
+        }
+
         public List<string> GetCardIdsFromPayments(List<string> ids, int tenant)
         {
             List<string> list = new List<string>();

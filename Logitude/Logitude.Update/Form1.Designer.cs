@@ -204,6 +204,8 @@
             this.label4 = new System.Windows.Forms.Label();
             this.AirlineLogoTenantTextBox = new System.Windows.Forms.TextBox();
             this.button46 = new System.Windows.Forms.Button();
+            this.tabPage4 = new System.Windows.Forms.TabPage();
+            this.button51 = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
@@ -213,6 +215,7 @@
             this.tabPage2.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.tabPage3.SuspendLayout();
+            this.tabPage4.SuspendLayout();
             this.SuspendLayout();
             // 
             // button1
@@ -1438,6 +1441,7 @@
             this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Controls.Add(this.tabPage2);
             this.tabControl1.Controls.Add(this.tabPage3);
+            this.tabControl1.Controls.Add(this.tabPage4);
             this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControl1.Location = new System.Drawing.Point(0, 24);
             this.tabControl1.Name = "tabControl1";
@@ -1509,7 +1513,7 @@
             this.tabPage1.Controls.Add(this.button5);
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
             this.tabPage1.Size = new System.Drawing.Size(743, 558);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Update";
@@ -1760,8 +1764,8 @@
             this.tabPage2.Controls.Add(this.UpdateAutomationMetadataButton);
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
-            this.tabPage2.Size = new System.Drawing.Size(743, 561);
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage2.Size = new System.Drawing.Size(743, 558);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Other";
             // 
@@ -1935,7 +1939,7 @@
             this.tabPage3.Controls.Add(this.button46);
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
             this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Size = new System.Drawing.Size(743, 561);
+            this.tabPage3.Size = new System.Drawing.Size(743, 558);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "Airline Logos";
             this.tabPage3.UseVisualStyleBackColor = true;
@@ -2010,6 +2014,27 @@
             this.button46.UseVisualStyleBackColor = true;
             this.button46.Click += new System.EventHandler(this.button46_Click_1);
             // 
+            // tabPage4
+            // 
+            this.tabPage4.Controls.Add(this.button51);
+            this.tabPage4.Location = new System.Drawing.Point(4, 22);
+            this.tabPage4.Name = "tabPage4";
+            this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage4.Size = new System.Drawing.Size(743, 558);
+            this.tabPage4.TabIndex = 3;
+            this.tabPage4.Text = "Misc";
+            this.tabPage4.UseVisualStyleBackColor = true;
+            // 
+            // button51
+            // 
+            this.button51.Location = new System.Drawing.Point(18, 21);
+            this.button51.Name = "button51";
+            this.button51.Size = new System.Drawing.Size(180, 36);
+            this.button51.TabIndex = 0;
+            this.button51.Text = "Verify Redeemed Cheques";
+            this.button51.UseVisualStyleBackColor = true;
+            this.button51.Click += new System.EventHandler(this.button51_Click_1);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -2041,6 +2066,7 @@
             this.groupBox2.PerformLayout();
             this.tabPage3.ResumeLayout(false);
             this.tabPage3.PerformLayout();
+            this.tabPage4.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -2237,6 +2263,8 @@
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.TextBox citiesTextBox;
         private System.Windows.Forms.Button uploadCitiesBtn;
+        private System.Windows.Forms.TabPage tabPage4;
+        private System.Windows.Forms.Button button51;
     }
 }
 

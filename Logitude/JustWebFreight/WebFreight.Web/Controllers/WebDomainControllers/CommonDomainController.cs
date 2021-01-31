@@ -184,7 +184,8 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             dataTable1.Columns.Add("Receivables Account ID = Receivables External ID");
             dataTable1.Columns.Add("Payables Account ID = Payables External ID");
             dataTable1.Columns.Add("Code");
-            var range = "A1:Q1";
+            dataTable1.Columns.Add("Salesman");
+            var range = "A1:R1";
             sheet1.Range["A2:A1001"].DataValidation.ListOfValues = partnersTypes_Sheet.Select(s => s.Code).ToArray();
             sheet1.Range["A2:A1001"].DataValidation.IsSuppressDropDownArrow = false;
             sheet1.Range[range].CellStyle.Font.Color = ExcelKnownColors.White;

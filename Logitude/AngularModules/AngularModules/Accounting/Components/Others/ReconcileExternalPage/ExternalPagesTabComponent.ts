@@ -52,6 +52,7 @@ export class ExternalPagesTabComponent extends BaseComponent implements OnInit, 
     preventSelect: boolean = false;
     public isRTL: boolean = false;
     public Title: string = "";
+    public DontShowLocal: boolean = false;
 
 
 
@@ -62,7 +63,7 @@ export class ExternalPagesTabComponent extends BaseComponent implements OnInit, 
         this.LoadResources();
 
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
-
+        this.DontShowLocal = SessionLocator.LoggedUserPM.DontShowLocal;
         this.SetComponentArgs(entityArgs);
 
         this.SetUIProperties();
@@ -349,7 +350,7 @@ export class ExternalPagesTabComponent extends BaseComponent implements OnInit, 
         });
 
         this.columns.push({
-            FieldName: SessionLocator.LoggedUserPM.DontShowLocal ? 'StatusName' : 'StatusLocalName',
+            FieldName: this.DontShowLocal ? 'StatusName' : 'StatusLocalName',
             DataTypeCode: 'String',
             Display: TextCodeTranslator.Translate("ReconcileExternalPage.F.StatusName"),
             Styles: { width: '140px' },
@@ -359,7 +360,7 @@ export class ExternalPagesTabComponent extends BaseComponent implements OnInit, 
         });
 
         this.columns.push({
-            FieldName: SessionLocator.LoggedUserPM.DontShowLocal ? 'EntryTypeEnglishName' : 'EntryTypeLocalName',
+            FieldName: this.DontShowLocal ? 'EntryTypeEnglishName' : 'EntryTypeLocalName',
             DataTypeCode: 'String',
             Display: TextCodeTranslator.Translate("ReconcileExternalPage.F.EntryTypeEnglishName"),
             Styles: { width: '140px' },
@@ -645,13 +646,13 @@ export class ExternalPagesTabComponent extends BaseComponent implements OnInit, 
         windowArgs.EntityPM = this.EntityPM;
         windowArgs.openAmountCurrency = currency; // CurrencySign
         windowArgs.ObjectTableName = this.ObjectTableName;
-
         var logitudeWindow = new LogitudeWindow();
         logitudeWindow.Width = 900;
         logitudeWindow.Height = 800;
         logitudeWindow.IsFullScreen = true;
+        var BankName = this.DontShowLocal ? this.EntityPM.EnglishName : this.EntityPM.LocalName == null ? this.EntityPM.EnglishName : this.EntityPM.LocalName;
 
-        logitudeWindow.Title = TextCodeTranslator.Translate("Accounting.General.O.ExternalReconcile");
+        logitudeWindow.Title = TextCodeTranslator.Translate("Accounting.General.O.ExternalReconcile") + ' - ' + BankName;
 
         logitudeWindow.IsFullScreen = true;
         logitudeWindow.WindowArgs = windowArgs;

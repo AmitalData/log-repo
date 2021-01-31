@@ -4,7 +4,7 @@ import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
 import {ReportFliter} from '../../Components/Filters/ReportFliter';
 import {QueryFilterItem} from '../../Components/Filters/QueryFilterItem';
 import {Component, OnInit}  from '@angular/core';
-import { AppTool } from '../../../Infrastructure/Tools';
+import { AppTool, DateTool } from '../../../Infrastructure/Tools';
 import { CodeNameClass } from './CodeNameClass';
 import { CurrencyListService } from '../../../Common/Services/StandardLists/CurrencyListService';
 import { CurrencyList } from '../../../Common/EntityLists/CurrencyList';
@@ -35,6 +35,25 @@ export class StatementFilterComponent extends BaseComponent implements OnInit {
         this.IsRegisterDateId = this.IsRegisterDateId + this.CurrentSession.GetNewId(this.IsRegisterDateId);
         this.IsDueDateId = this.IsDueDateId + this.CurrentSession.GetNewId(this.IsDueDateId);
         this.DateRadio = this.DateRadio + this.CurrentSession.GetNewId(this.DateRadio);
+        var month = new Date().getMonth();
+        var Year = new Date().getFullYear();
+        var daysofmonth = this.daysInMonth(new Date());
+
+        this.FromDate = this.SetDate(Year, month - 1, 1);
+        this.DueDate = this.SetDate(Year, month, daysofmonth);
+    }
+    SetDate(year: number, month: number, day: number) {
+        var date = new Date();
+        date.setUTCFullYear(year);
+        date.setUTCMonth(month);
+        date.setUTCDate(day);
+        date.setUTCHours(0);
+        date.setUTCMinutes(0);
+        date.setUTCSeconds(0);
+        return date;
+    }
+    daysInMonth(aDate: Date) {
+        return (new Date(aDate.getFullYear(), aDate.getMonth() + 1, 0)).getDate();
     }
 
     public CustomerId: string = null;
@@ -98,7 +117,8 @@ export class StatementFilterComponent extends BaseComponent implements OnInit {
     }
     RunReport(isloading: boolean) {
         this.ValidationErrorsList = [];
-        if (this.FromDate > this.DueDate)
+
+        if (this.FromDate != null && this.DueDate != null && (this.FromDate > this.DueDate))
             this.ValidationErrorsList.push("From date field must be less than To date field");
 
         if (this.ValidationErrorsList.length == 0) {

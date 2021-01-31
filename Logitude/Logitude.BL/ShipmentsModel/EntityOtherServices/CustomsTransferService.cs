@@ -31,6 +31,7 @@ namespace Logitude.BL.ShipmentsModel.EntityOtherServices
         private IWorkbook workbook;
         private IWorksheet sheet1;
         private DataTable dataTable;
+        private ExcelEngine excelEngine;
         private ICommonDataContext commoContext;
         private IShipmentsContext shipmentsContext;
         private ShipmentPackageRepository shipmentPackageRepository;
@@ -59,9 +60,10 @@ namespace Logitude.BL.ShipmentsModel.EntityOtherServices
         private void InitializeExcelFile()
         {
             memory = new System.IO.MemoryStream();
-            ExcelEngine excelEngine = new ExcelEngine();
+            excelEngine = new ExcelEngine();
             IApplication application = excelEngine.Excel;
             this.workbook = excelEngine.Excel.Workbooks.Create(1);
+            workbook.Version = ExcelVersion.Excel2007;
 
             this.CreateAndDesignExcelSheet();
             this.CreateAndDesignDataTable();
@@ -246,7 +248,7 @@ namespace Logitude.BL.ShipmentsModel.EntityOtherServices
                     string containerType = "";
                     string shipmentType = item.ShipmentTypeName;
                     int totalInsidePackages = item.NumberOfInsidePackages;
-                    
+
                     string portId = "";
                     if (item.ShipmentLevelCode == "H")
                     {
@@ -367,7 +369,15 @@ namespace Logitude.BL.ShipmentsModel.EntityOtherServices
                     row[11] = item.ShipmentLevelCode == "H" ? item.FromPortCode : item.MainCarriageFromPortCode;
                     row[12] = item.ShipmentLevelCode == "H"? item.FromPortCountryCode : item.MainCarriageFromPortCountryCode;
                     row[13] = "H";
-                    row[14] = item.Master;
+
+                    if (!string.IsNullOrEmpty(item.Master))
+                    {
+                        string master = item.Master.Trim();
+                        master = Regex.Replace(item.Master, @"[^0-9a-zA-Z.,+]+", "");
+
+                        row[14] = master;
+                    }
+
                     row[15] = "2";
                     row[16] = item.ShipmentLevelCode == "H" ? item.ToPortCode : item.MainCarriageFinalDestinationPortCode;
                     row[17] = item.ShipmentLevelCode == "H"? item.ToPortCountryCode : item.MainCarriageFinalDestinationCountryCode;
@@ -395,9 +405,9 @@ namespace Logitude.BL.ShipmentsModel.EntityOtherServices
                         row[31] = "0";
                     }
 
-                    row[32] = item.ShipmentTypeId == "FCLD" && myShipmentPackages.Count > 0 ? "1" : "";
+                    row[32] = myShipmentPackages.Count > 0 ? "1" : "";
                     row[33] = marksAndNumbers;
-                    row[34] = totalInsidePackages;
+                    row[34] = item.ShipmentTypeId == "FCLD" ? totalInsidePackages : item.NumberOfPackages;
                     row[35] = grossWeight;
                     row[36] = "";
                     row[37] = generalDescription;
@@ -412,7 +422,7 @@ namespace Logitude.BL.ShipmentsModel.EntityOtherServices
                     row[46] = containerType;
                     row[47] = shipmentType;
                     row[48] = grossWeight;
-                    row[49] = totalInsidePackages;
+                    row[49] = item.ShipmentTypeId == "FCLD" ? totalInsidePackages : item.NumberOfPackages;
 
                     dataTable.Rows.Add(row);
                 }
@@ -422,6 +432,8 @@ namespace Logitude.BL.ShipmentsModel.EntityOtherServices
             {
                 sheet1.ImportDataTable(dataTable, true, 1, 1);
                 workbook.SaveAs(memory);
+                workbook.Close();
+                excelEngine.Dispose();
                 return memory.ToArray();
             }
 
@@ -647,7 +659,7 @@ namespace Logitude.BL.ShipmentsModel.EntityOtherServices
                 {
                     FileName = fileProps[0],
                     HasExternalContainer = true,
-                    Extension = "xls",
+                    Extension = "xlsx",
                     Tenant = tenant,
                     FileSize = ComputedData.Length,
                 };

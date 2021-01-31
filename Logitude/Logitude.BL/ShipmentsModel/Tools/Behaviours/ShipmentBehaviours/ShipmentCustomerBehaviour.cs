@@ -41,9 +41,9 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
                 entityPM.ShipmentCustomerTypeCode = null;
             }
 
-            else
+            else 
             {
-                this.SetCustomerType();
+                if (!entityPM.IsImporterShipment) this.SetCustomerType();
                 this.MapCustomerFields();
                 this.GetCustomerEntity();
             }

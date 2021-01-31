@@ -24,7 +24,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
         {
 
 
-            IQueryable<PaymentChequeList> query = (from a in iQueryable.Include("PaymentChequeStatus")
+            IQueryable<PaymentChequeList> query = (from a in iQueryable.Include("PaymentChequeStatus").Include("APPayment")
                                             select new PaymentChequeList()
 											{
                      
@@ -86,9 +86,10 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
 					                          PaymentChequeStatusName= a.PaymentChequeStatus != null? a.PaymentChequeStatus.LocalName:null,
                                               BankAccountName= a.BankAccount != null? a.BankAccount.LocalName :null,
                                               GLAccountNumber = a.PayToGLAccount != null ? a.PayToGLAccount.DisplayNumber : null,
-                                            GLAccountName = a.PayToGLAccount != null? a.PayToGLAccount.LocalName : null,
-                                           StatusEnglishName= a.PaymentChequeStatus != null? a.PaymentChequeStatus.EnglishName :null,
-                                            });
+                                              GLAccountName = a.PayToGLAccount != null? a.PayToGLAccount.LocalName : null,
+                                              StatusEnglishName= a.PaymentChequeStatus != null? a.PaymentChequeStatus.EnglishName :null,
+										      APPaymentNo = a.APPayment != null ? a.APPayment.PaymentNo : null,
+											});
             return query;
 		}
 

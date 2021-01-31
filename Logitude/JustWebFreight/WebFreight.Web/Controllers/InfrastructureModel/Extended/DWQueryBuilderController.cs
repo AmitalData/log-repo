@@ -589,12 +589,13 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
                 SecurityUtility.CheckContactFeature("Shipment", "READ", authToken.Tenant);
                 SecurityUtility.CheckContactFeature("BIReport", "BIReportRun", authToken.Tenant);
 
+                int tenantSecurtiy = authToken.Email == "ahmadb@test.com" ? 15 : authToken.Tenant;
+                DWQueryParam.UserEmail = authToken.Email;
 
                 DWQueryBuilderHelper QBHelper = new DWQueryBuilderHelper(authToken.Tenant);
                 SqlCommandDefinition sqlCommandDefinition = QBHelper.GetQuerySQL(DWQueryParam);
                 DataTable MyData = QBHelper.GetDWQueryData(sqlCommandDefinition);
 
-                int tenantSecurtiy = authToken.Email == "ahmadb@test.com" ? 15 : authToken.Tenant;
                 BIReportsSecurityIntegrationService bIReportsSecurityIntegrationService = new BIReportsSecurityIntegrationService(tenantSecurtiy);
                 bIReportsSecurityIntegrationService.CheckBIReportDataSecurity (MyData );
 

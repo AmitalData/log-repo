@@ -420,6 +420,7 @@
     <None Include="DBScripts\ShipmentModel\202007051322_UpdateNotAirShipmentsSubType.sxml" />
     <None Include="DBScripts\ShipmentModel\202009230840_AddNewSpecialHandlingCode.sxml" />
     <None Include="DBScripts\ShipmentModel\202009281700_MapValuesFromIsBondedToIsCFS.sxml" />
+    <None Include="DBScripts\ShipmentModel\202101271225_AddNewSpecialHandlingCodes.sxml" />
     <None Include="DBScripts\ShipmentModel\UpdateshipmentsCalculateDocumentsKPIFields.sxml" />
     <None Include="DBScripts\ShipmentModel\UpdateShipmentsCalculateSendDocumentField.sxml" />
     <None Include="DBTables\CommonDataModel\CardSearch.dxml" />

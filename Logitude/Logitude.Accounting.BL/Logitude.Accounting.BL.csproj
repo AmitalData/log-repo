@@ -198,6 +198,7 @@
     <Compile Include="CoreBL\AutomaticReconcileService.cs" />
     <Compile Include="CoreBL\BankAccountPages\BankAccountPageAnalyzer.cs" />
     <Compile Include="CoreBL\BankAccountPages\BankAccountPagesExample.cs" />
+    <Compile Include="CoreBL\BankDepositRedeemedChequesVerifyService.cs" />
     <Compile Include="CoreBL\BankDeposit\BankDepositJournalCreator.cs" />
     <Compile Include="CoreBL\BankDeposit\BankDepositingService.cs" />
     <Compile Include="CoreBL\Batch\BatchAccountingLoadTestTask.cs" />
@@ -331,6 +332,7 @@
     <Compile Include="CoreBL\System1000Service.cs" />
     <Compile Include="CoreBL\TaxDeductionReportService.cs" />
     <Compile Include="CoreBL\ARPaymentReconciliationService.cs" />
+    <Compile Include="CoreBL\Testers\GateWayTester.cs" />
     <Compile Include="CoreBL\YearTransferService.cs" />
     <Compile Include="DataContract\ARPaymentChequeFutureData.cs" />
     <Compile Include="DataContract\CashbookChequesCounter.cs" />

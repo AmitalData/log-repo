@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class PaymentChequeUpdateClass
    {  		
-		public const string HashString = "fb9c1c41667e3cfd6833cd58cd0f83fa";
+		public const string HashString = "f3502b0461990e11386844c74097651c";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -2933,6 +2933,68 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "APPaymentNo",
+					  						ObjectTableName =  "PaymentCheque",
+					  						FieldsDataType =  "Text",
+					  						MinLength =  0,
+					  						MaxLength =  15,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  true,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  15,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						Operator =  "Contains",
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "APPaymentNo",
+					  						ListPropertyPath =  "APPaymentNo",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "PaymentCheque",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "APPaymentNo",
+					  						DefaultText =  "AP Payment No",
+					  						FullLocalDefaultText =  "מספר הוראת תשלום",
+					  						ListFieldLable =  "APPaymentNoListLable",
+					  						ListLableDefaultText =  "AP Payment No",
+					  						ListLocalDefaultText =  "מספר הוראת תשלום",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
 	    }
 
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
@@ -2969,19 +3031,21 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	
 			 QueryColumn AllPaymentChequesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllPaymentChequesQuery.Id,QueryCode = AllPaymentChequesQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "PaymentCheque.CreateDate" , ColumnWidth = 120 }, addedQueryColumns);
 
-			 QueryColumn AllPaymentChequesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllPaymentChequesQuery.Id,QueryCode = AllPaymentChequesQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "PaymentCheque.ChequeNumber" , ColumnWidth = 120 }, addedQueryColumns);
+			 QueryColumn AllPaymentChequesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllPaymentChequesQuery.Id,QueryCode = AllPaymentChequesQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "PaymentCheque.APPaymentNo" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn AllPaymentChequesQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllPaymentChequesQuery.Id,QueryCode = AllPaymentChequesQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "PaymentCheque.GLAccountNumber" , ColumnWidth = 120 }, addedQueryColumns);
+			 QueryColumn AllPaymentChequesQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllPaymentChequesQuery.Id,QueryCode = AllPaymentChequesQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "PaymentCheque.ChequeNumber" , ColumnWidth = 120 }, addedQueryColumns);
 
-			 QueryColumn AllPaymentChequesQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllPaymentChequesQuery.Id,QueryCode = AllPaymentChequesQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "PaymentCheque.PayToName" , ColumnWidth = 120 }, addedQueryColumns);
+			 QueryColumn AllPaymentChequesQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllPaymentChequesQuery.Id,QueryCode = AllPaymentChequesQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "PaymentCheque.GLAccountNumber" , ColumnWidth = 120 }, addedQueryColumns);
 
-			 QueryColumn AllPaymentChequesQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllPaymentChequesQuery.Id,QueryCode = AllPaymentChequesQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "PaymentCheque.BankAccountName" , ColumnWidth = 120 }, addedQueryColumns);
+			 QueryColumn AllPaymentChequesQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllPaymentChequesQuery.Id,QueryCode = AllPaymentChequesQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "PaymentCheque.PayToName" , ColumnWidth = 120 }, addedQueryColumns);
 
-			 QueryColumn AllPaymentChequesQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllPaymentChequesQuery.Id,QueryCode = AllPaymentChequesQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "PaymentCheque.LocalAmount" , ColumnWidth = 120 }, addedQueryColumns);
+			 QueryColumn AllPaymentChequesQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllPaymentChequesQuery.Id,QueryCode = AllPaymentChequesQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "PaymentCheque.BankAccountName" , ColumnWidth = 120 }, addedQueryColumns);
 
-			 QueryColumn AllPaymentChequesQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllPaymentChequesQuery.Id,QueryCode = AllPaymentChequesQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "PaymentCheque.InternalNumber" , ColumnWidth = 120 }, addedQueryColumns);
+			 QueryColumn AllPaymentChequesQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllPaymentChequesQuery.Id,QueryCode = AllPaymentChequesQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "PaymentCheque.LocalAmount" , ColumnWidth = 120 }, addedQueryColumns);
 
-			 QueryColumn AllPaymentChequesQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllPaymentChequesQuery.Id,QueryCode = AllPaymentChequesQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "PaymentCheque.PaymentChequeStatusName" , ColumnWidth = 150 }, addedQueryColumns);
+			 QueryColumn AllPaymentChequesQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllPaymentChequesQuery.Id,QueryCode = AllPaymentChequesQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "PaymentCheque.InternalNumber" , ColumnWidth = 120 }, addedQueryColumns);
+
+			 QueryColumn AllPaymentChequesQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllPaymentChequesQuery.Id,QueryCode = AllPaymentChequesQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "PaymentCheque.PaymentChequeStatusName" , ColumnWidth = 150 }, addedQueryColumns);
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);
 			SqlBulkInsert.BulkInsert("Queries", addedQueries);
@@ -2998,7 +3062,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 		       
 	      
 
-	         Screen PaymentChequePaymentChequeHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "PaymentCheque.PaymentChequeHeaderScreen", Name = "PaymentChequeHeaderScreen", ObjectTableId = PaymentChequeObjectTable.Id, NumberOfColumns = 4, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
+	         Screen PaymentChequePaymentChequeHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "PaymentCheque.PaymentChequeHeaderScreen", Name = "PaymentChequeHeaderScreen", ObjectTableId = PaymentChequeObjectTable.Id, NumberOfColumns = 5, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       
              ScreenField PaymentChequePaymentChequePaymentChequeHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = PaymentChequePaymentChequeHeaderScreenScreen0.Id,ScreenCode = PaymentChequePaymentChequeHeaderScreenScreen0.Code, ObjectFieldCode = "PaymentCheque.ChequeNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
 	          
@@ -3007,6 +3071,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
              ScreenField PaymentChequePaymentChequePaymentChequeHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ScreenId = PaymentChequePaymentChequeHeaderScreenScreen0.Id,ScreenCode = PaymentChequePaymentChequeHeaderScreenScreen0.Code, ObjectFieldCode = "PaymentCheque.PaymentChequeStatusCode", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
 	          
              ScreenField PaymentChequePaymentChequePaymentChequeHeaderScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, Row = 0, ScreenId = PaymentChequePaymentChequeHeaderScreenScreen0.Id,ScreenCode = PaymentChequePaymentChequeHeaderScreenScreen0.Code, ObjectFieldCode = "PaymentCheque.JournalId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField PaymentChequePaymentChequePaymentChequeHeaderScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 4, Row = 0, ScreenId = PaymentChequePaymentChequeHeaderScreenScreen0.Id,ScreenCode = PaymentChequePaymentChequeHeaderScreenScreen0.Code, ObjectFieldCode = "PaymentCheque.APPaymentNo", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
 	          	
 		    PaymentChequeObjectTable.HeaderScreenId = PaymentChequePaymentChequeHeaderScreenScreen0.Id;
 		    PaymentChequeObjectTable.HeaderScreenCode = PaymentChequePaymentChequeHeaderScreenScreen0.Code;
