@@ -53,7 +53,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
     {
         private DataProvider currentDataProvider;
         private EventTracerArgs _LastTraceEventParams;
-
+        private CourierMasterPM _CourierMasterPM;
 
         public bool IsFromCustomsFeedback { get; set; }
         public bool ToUpdateWithPaymentDate { get; set; }
@@ -1167,7 +1167,27 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                             }
                         }
                     }
-                    
+
+                    if(newDeclarationCourierStatusPM != null && !newDeclarationCourierStatusPM.IsClosedForFollowUp)
+                    {
+                        if (this._CourierMasterPM == null)
+                        {
+                            var myCourierDeclarationQueryService = new CourierDeclarationQueryService(context);
+                            CourierDeclarationPM _CourierDeclarationPM = myCourierDeclarationQueryService.GetCourierDeclarationByDeclarationId(entityPM.Id, entityPM.Tenant);
+                            if (_CourierDeclarationPM != null)
+                            {
+                                var myCourierMasterQueryService = new CourierMasterQueryService(context);
+                                this._CourierMasterPM = myCourierMasterQueryService.GetSingle(_CourierDeclarationPM.CourierMasterId, true, false);
+                            }
+                        }
+                        if (this._CourierMasterPM != null && !this._CourierMasterPM.IsOpen)
+                        {
+                            this._CourierMasterPM.IsOpen = true;
+                            this._CourierMasterPM.ChangeSetOp = ChangeSetOperation.Update;
+                            var myCourierMasterUpdateService = new CourierMasterUpdateService(context);
+                            myCourierMasterUpdateService.Update(this._CourierMasterPM, true);
+                        }
+                    }
                 }
                 
             }
