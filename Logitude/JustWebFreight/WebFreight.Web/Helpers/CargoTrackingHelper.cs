@@ -40,6 +40,7 @@ namespace WebFreight.Web.Helpers
                     BackgroundId = tenantManagementPM.BackgroundId,
                     BrowserIconId = tenantManagementPM.BrowserIconId,
                     ComapnylogoId = tenantManagementPM.ComapnylogoId,
+                    ShipmentHeaderImageId = tenantManagementPM.ShipmentHeaderImageId,
                     CustomerURL = tenantManagementPM.CustomerURL,
                 };
                 SetCargoTrackingImages(cargoTrackingBrandingData, BrandingDataRequest, isFromPrivateSite);
@@ -54,6 +55,7 @@ namespace WebFreight.Web.Helpers
             SetBackgroundImageBase64(cargoTrackingBrandingData, BrandingDataRequest, isFromPrivateSite);
             SetComapnyLogoBase64(cargoTrackingBrandingData, BrandingDataRequest);
             SetBrowserIconBase64(cargoTrackingBrandingData, BrandingDataRequest);
+            SetShipmentHeaderImageBase64(cargoTrackingBrandingData, BrandingDataRequest);
         }
         private void SetBackgroundImageBase64(CargoTrackingBrandingData cargoTrackingBrandingData, 
                                               CargoTrackingBrandingDataRequest BrandingDataRequest,
@@ -97,6 +99,21 @@ namespace WebFreight.Web.Helpers
                 if (filedata != null)
                 {
                     cargoTrackingBrandingData.BrowserIconBytes = filedata;
+                }
+            }
+
+        }
+
+        private void SetShipmentHeaderImageBase64(CargoTrackingBrandingData cargoTrackingBrandingData,
+                                      CargoTrackingBrandingDataRequest BrandingDataRequest)
+        {
+            if (!string.IsNullOrEmpty(cargoTrackingBrandingData.ShipmentHeaderImageId) &&
+                                      BrandingDataRequest.ShipmentHeaderImageId != cargoTrackingBrandingData.ShipmentHeaderImageId)
+            {
+                byte[] filedata = GeImageBytesById(cargoTrackingBrandingData.ShipmentHeaderImageId);
+                if (filedata != null)
+                {
+                    cargoTrackingBrandingData.ShipmentHeaderImageBytes = filedata;
                 }
             }
 

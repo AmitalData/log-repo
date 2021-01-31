@@ -142,6 +142,7 @@ export class TenantManagementList {
 		TotalFreeUsers: number;
 		AveragePrice: number;
 		TotalPaymentamount: number;
-		NoPaymentForChildTenants: boolean;
+        NoPaymentForChildTenants: boolean;
+        ShipmentHeaderImageId: string;
 	
 }
