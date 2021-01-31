@@ -1482,9 +1482,8 @@ namespace WebFreight.Web.ReportsWebServices
 
             IQueryable<ARInvoiceList> iQueryable = arInvoiceQuery.GetInvoiceListByTenant(tenant);
             List<VatType> tenantVatTypes = vatTypeRepository.GetVatTypes(tenant).ToList();
-
             IQueryable<ARInvoiceLine> tenantARInvoiceLines = aRInvoiceLineRepository.GetInvoiceLinesByTenant(tenant);
-
+       
             #region Report Filters
             MemoryStream memorystream = new MemoryStream(xmlFilters);
             XmlSerializer serializer = new XmlSerializer(typeof(QueryOperations));
@@ -1736,6 +1735,7 @@ namespace WebFreight.Web.ReportsWebServices
                 invoicesRecored.InvoiceDate = a.InvoiceDate.Value;
                 invoicesRecored.InvoiceNumber = a.InvoiceNumber;
                 invoicesRecored.BillTo = a.BillToName;
+                invoicesRecored.PartnerName = a.PartnerName;
                 invoicesRecored.OurRefNumber = a.MainEntityReference;
                 invoicesRecored.InvoiceStatus = a.StatusName;
                 invoicesRecored.Currency = a.InvoiceCurrencyCode;
