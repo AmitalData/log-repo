@@ -82,13 +82,13 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new AmendmentFieldStatusTypeMap());
 	
-            modelBuilder.Configurations.Add(new AmendRequestRejectReasonTypeMap());
-	
             modelBuilder.Configurations.Add(new AmendmentRequestStatusMap());
 	
             modelBuilder.Configurations.Add(new AmendmentStatusMap());
 	
             modelBuilder.Configurations.Add(new AmendmentTypeMap());
+	
+            modelBuilder.Configurations.Add(new AmendRequestRejectReasonTypeMap());
 	
             modelBuilder.Configurations.Add(new AmountTypeMap());
 	
@@ -1283,12 +1283,6 @@ namespace Logitude.Customs.Data
 	 
 	 }
 	
-	 public IDbSet<AmendRequestRejectReasonType> AmendRequestRejectReasonTypes 
-	 {
-	      get; set;
-	 
-	 }
-	
 	 public IDbSet<AmendmentRequestStatus> AmendmentRequestStatuses 
 	 {
 	      get; set;
@@ -1302,6 +1296,12 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<AmendmentType> AmendmentTypes 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<AmendRequestRejectReasonType> AmendRequestRejectReasonTypes 
 	 {
 	      get; set;
 	 

@@ -1339,6 +1339,11 @@ export class DeclarationPM {
     public set RequestedCustomsDocId(newValue: number) { if (this.requestedCustomsDocId != newValue) { this.requestedCustomsDocId = newValue; this.MarkAsDirty("RequestedCustomsDocId"); } }
        
 	 
+    private exportDeclarationOfficeCode: string;
+    public get ExportDeclarationOfficeCode() { return this.exportDeclarationOfficeCode; }
+    public set ExportDeclarationOfficeCode(newValue: string) { if (this.exportDeclarationOfficeCode != newValue) { this.exportDeclarationOfficeCode = newValue; this.MarkAsDirty("ExportDeclarationOfficeCode"); } }
+       
+	 
 
     public OldEntityPM: DeclarationPM;
 		

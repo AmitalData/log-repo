@@ -415,7 +415,8 @@ export class ReferantWorkspaceComponent implements AfterViewInit {
             listArgs.DisplayTitle = displayTitle;
             listArgs.BackButtonTitle = TextCodeTranslator.Translate("General.MH.ReferantWorkspace");
             listArgs.IgnoreSelectedPerspective = true;
-            if (AppTool.IsNullOrEmpty(listArgs.NewButtonLabel)) listArgs.NewButtonLabel = TextCodeTranslator.Translate("Customs.General.O.NewCustomsFile"); // "τϊιηϊ ϊιχ ηγω";
+            if (AppTool.IsNullOrEmpty(listArgs.NewButtonLabel)) listArgs.NewButtonLabel = TextCodeTranslator.Translate("Customs.General.O.NewCustomsFile"); // "Χ¤ΧªΧ™Χ—Χª ΧªΧ™Χ§ Χ—Χ“Χ©";
+             var _filters = ["TransportModeId", "ReferentUserId", "DepartmentName", "ReferantUserName", "DepartmentId"];
 
             this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe(response => {
                 SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
@@ -424,7 +425,7 @@ export class ReferantWorkspaceComponent implements AfterViewInit {
 
                         cmpRef.instance.Run(listArgs);
                         cmpRef.instance.BackCompleted.subscribe(($event: any) => {
-                          //  this.filters = $event.Filters;
+                            this.filters.AdditionalFilters = this.filters.AdditionalFilters.filter(x => x.FieldName == "TransportModeId" || x.FieldName == "ReferentUserId" || x.FieldName == "DepartmentName" || x.FieldName == "ReferantUserName" || x.FieldName == "DepartmentId"  );
                             this.LoadAllScreenData();
                             this._declarationReferantDataWebService.GetQueriesCounts(this.RefId, this.DepId, this.TransportModeId).subscribe(
                                 (data: any) => {

@@ -36,77 +36,49 @@ namespace Logitude.Customs.CustomsMessaging.Tasks
         private void RunPerTenant(CustomsSettingPM t)
         {
             LogMessagingUtil.Instance.AppendLine($"RunPerTenant({t.Tenant})");
-            CourierMasterRepository MyCourierMasterRepository = new CourierMasterRepository(t.Tenant);
+            CourierMasterQueryService courierMasterQueryService = new CourierMasterQueryService(t.Tenant);
             CourierDeclarationRepository courierDeclarationRepository = new CourierDeclarationRepository(t.Tenant);
             DeclarationQueryService declarationQueryService = new DeclarationQueryService(t.Tenant);
-            var OpenCourierMasters = MyCourierMasterRepository.GetAllOpenCourierMastersWithLandingDate(t.Tenant);
+            var OpenCourierMasters = courierMasterQueryService.GetAllOpenCourierMastersWithLandingDate(t.Tenant);
             foreach (var courierMaster in OpenCourierMasters)
             {
+                bool isEventNATR = false;
                 var decIdsList = courierDeclarationRepository.GetDeclarationIdsByCourierMasterIDWithNoCourierCustomStatus(courierMaster.Id, t.Tenant);
                 foreach (var dec in decIdsList)
                 {
                     var decPM = declarationQueryService.GetSingleDeclarationById(dec, t.Tenant);
                     if (decPM != null)
                     {
-                        SendDeclarationStatusRequest(decPM);
+                        var loggedUserId = AuthenticationUtil.ResolveUserId(decPM.Tenant);
+                        var _CustomContext = CustomContext.GetContext(t.Tenant);
+                        var myDeclarationUpdateService = new DeclarationUpdateService(_CustomContext, new Dictionary<string, IContext>(), t.Tenant);
+                        try
+                        {
+                            isEventNATR = myDeclarationUpdateService.CheckLeadingFileEvent(courierMaster, loggedUserId, "NATR");
+                        }
+                        catch (Exception e)
+                        {
+                            LogMessagingUtil.Instance.AppendLine("Exception was thrown while checking if NATR exist in the file " + decPM.CustomFileNo + Environment.NewLine + e.Message);
+                        }
+                        if (!isEventNATR)
+                        {
+                            SendDeclarationStatusRequest(decPM, loggedUserId);
+                        }
                     }
                 }
-                if (decIdsList != null)
+                if (decIdsList != null && !isEventNATR)
                 {
                     SendNatr(t.Tenant,"",courierMaster.UnifreightLeadingFile);
                 }
             }
 
 
-            /*CourierMasterQueryService courierMasterQueryService = new CourierMasterQueryService(t.Tenant);
-            List<CourierMaster> courierMasters = courierMasterQueryService.GetAllCourierMastersToSendAutoManifest(t.Tenant);
-
-            foreach (var courierMaster in courierMasters)
-            {
-                var messagingService = new DCAInUCB1170_MsgMessagingService();
-                var sts = messagingService.CreateCRS(t.Tenant, null,
-                    new SendALLCorrectRequestParams()
-                    {
-                        CourierMasterId = courierMaster.Id,
-                        HAWB = courierMaster.HAWB,
-                    // CourierDeclarationStatusCode = courierMaster.
-                }
-
-                    );
-            }*/
-
-            //CourierMasterQueryService courierMasterQueryService = new CourierMasterQueryService(t.Tenant);
-            //List<CourierMasterPM> courierMasterPMList = courierMasterQueryService.GetAllCourierMastersForClosing(t.Tenant);
-            //if(courierMasterPMList != null)
-            //{
-            //    LogMessagingUtil.Instance.AppendLine($"נמצאו " + courierMasterPMList.Count() + " טיסות פתוחות לסגירה " + "\n");
-            //    ICustomContext dbContext = CustomContext.GetContext(t.Tenant);
-            //    CourierMasterUpdateService CourierMasterUpdateService = new CourierMasterUpdateService(dbContext, new Dictionary<string, IContext>(), t.Tenant);
-            //    foreach (CourierMasterPM courierMasterPMItem in courierMasterPMList)
-            //    {
-            //        try
-            //        {
-            //            courierMasterPMItem.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
-            //            courierMasterPMItem.IsOpen = false;
-            //            CourierMasterUpdateService.Update(courierMasterPMItem, true);
-            //            LogMessagingUtil.Instance.AppendLine($"נסגרה טיסה " + courierMasterPMItem.AirlinePrefix + "-" + courierMasterPMItem.MAWB + "\n");
-            //        }
-            //        catch
-            //        {
-            //            LogMessagingUtil.Instance.AppendLine($"לא נסגרה טיסה " + courierMasterPMItem.AirlinePrefix + "-" + courierMasterPMItem.MAWB + "\n");
-            //        }
-            //    }
-            //}
-            //else
-            //{
-            //    LogMessagingUtil.Instance.AppendLine($"לא נמצאו טיסות פתוחות לסגירה");
-            //}
+           
         }
-        private void SendDeclarationStatusRequest(DeclarationPM declarationPM)
+        private void SendDeclarationStatusRequest(DeclarationPM declarationPM,string loggedUserId)
         {
             if (declarationPM.DeclarationNumber != "" && declarationPM.DeclarationNumber != null)
             {
-                var loggedUserId = AuthenticationUtil.ResolveUserId(declarationPM.Tenant);
                 var requestParams = new DeclarationStatusRequestParams()
                 {
                     LoggingEnabled = true,

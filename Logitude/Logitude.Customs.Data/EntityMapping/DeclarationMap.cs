@@ -308,6 +308,8 @@ namespace Logitude.Customs.Data.EntityMapping
             this.Property(t => t.PalestinianCode).HasColumnName("PalestinianCode").HasMaxLength(15).IsUnicode(true);
 
             this.Property(t => t.RequestedCustomsDocId).HasColumnName("RequestedCustomsDocId");
+
+            this.Property(t => t.ExportDeclarationOfficeCode).HasColumnName("ExportDeclarationOfficeCode").HasMaxLength(17).IsUnicode(false);
         }
     }
 }

@@ -236,7 +236,7 @@ import { ExporterRoleTypeListService } from './Services/StandardLists/ExporterRo
 import { AutonomyRegionTypeListService } from './Services/StandardLists/AutonomyRegionTypeListService';
 import { AmendmentStatusListService } from './Services/StandardLists/AmendmentStatusListService';
 import { ReferantTeamListService } from './Services/StandardLists/ReferantTeamListService';
-import { AmendRequestRejectReasonTypeListService } from './Services/StandardLists/AmendmentRequestRejectReasonTypeListService';
+import { AmendRequestRejectReasonTypeListService } from './Services/StandardLists/AmendRequestRejectReasonTypeListService';
 import { ReleaseMessageTypeListService } from './Services/StandardLists/ReleaseMessageTypeListService';
 import { DocumentRejectTypeListService } from './Services/StandardLists/DocumentRejectTypeListService';
 
