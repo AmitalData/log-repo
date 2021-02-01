@@ -588,7 +588,6 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                                         if (isByDueDateFilter)
                                         {
                                             iQueryable_ARPayment = iQueryable_ARPayment.Where(d => d.ValueDate != null && System.Data.Entity.DbFunctions.TruncateTime(d.ValueDate) >= System.Data.Entity.DbFunctions.TruncateTime(fromDate));
-                                            iQueryable_APPayment = iQueryable_APPayment.Where(d => d.ValueDate != null && System.Data.Entity.DbFunctions.TruncateTime(d.ValueDate) >= System.Data.Entity.DbFunctions.TruncateTime(fromDate));
                                         }
 
                                         else
