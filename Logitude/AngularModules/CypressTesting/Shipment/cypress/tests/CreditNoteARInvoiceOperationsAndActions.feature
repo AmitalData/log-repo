@@ -1,12 +1,10 @@
 Feature: Credit Note ARInvoice Operations And Actions
     This feature file will create a direct shipment and assign an Credit Note ARInvoice, approve this invoice,set as sent and void invoice
 
-    Scenario: Login And Open Shipments Workspace
-        Given the user logged in
-        And navigate to shipments workspace
 
     Scenario: Create Direct Export Air Shipment
-        Given a direct shipment with the following details
+        Given the user logged in and navigates to shipments workspace
+        And a direct shipment with the following details
             | ShipmentLevel | Direction | TransportMode | Shipper  | MainCarriageFromPort | MainCarriageToPort |
             | Direct        | E         | A             | Shipper1 | LHR                  | MIA                |
         When create shipment
@@ -29,7 +27,7 @@ Feature: Credit Note ARInvoice Operations And Actions
     Scenario: Set credit note ARInvoice as sent
         When set invoice as sent
         Then the invoice should set as sent successfully
-        
+
     Scenario: Void credit note ARInvoice
         When void invoice
         Then the invoice should void successfully
