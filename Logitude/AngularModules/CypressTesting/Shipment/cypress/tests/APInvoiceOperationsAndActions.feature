@@ -14,7 +14,7 @@ Feature: APInvoice operations and actions
         Given a payable with the following details
             | ChargesType | UOM  | Quantity | UnitPrice | Currency |
             | AFT         | GRWT | 5        | 10        | EUR      |
-        And an APInvoice with the following details
+        And an APInvoice with the following details and a random invoice number
             | Vendor     | InvoiceAmount | InvoiceCurrency | InvoiceExchangeRate | InvoiceDate | PaymentTerms | DueDate | VATType |
             | TestVendor | 50            | EUR             | 4                   | today       | Cash         | today   | Zero    |
         When receive invoice

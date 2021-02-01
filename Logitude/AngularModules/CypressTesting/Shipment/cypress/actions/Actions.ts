@@ -205,15 +205,14 @@ export function CopyShipment(shipmentLevel: string) {
 
 export function FillAPInvoiceDetails(aPInvoiceDetails: APInvoiceDetails) {
     var generatedInvoiceNumber = "AP" + gr.GenerateRandomNumber(10000, 99999).toString();
-    var todayDate = BaseActions.GetTodayDate();
     cy.SelectLogLovElement(Selectors.APInvoiceVendor, false, aPInvoiceDetails.Vendor);
     cy.get(Selectors.APInvoiceInvoiceNumber).type(generatedInvoiceNumber)
     cy.get(Selectors.APInvoiceAmountInInvoice).type(aPInvoiceDetails.InvoiceAmount)
     cy.SelectLogLovElement(Selectors.APInvoiceInvoiceCurrency, true, aPInvoiceDetails.InvoiceCurrency);
     cy.get(Selectors.APInvoiceInvoiceExchangeRate).clear().type(aPInvoiceDetails.InvoiceExchangeRate);
-    cy.get(Selectors.APInvoiceInvoiceDate).type(todayDate);
+    cy.FillDate(Selectors.APInvoiceInvoiceDate,aPInvoiceDetails.InvoiceDate)
     cy.SelectLogLovElement(Selectors.APInvoicePaymentTerm, true, aPInvoiceDetails.PaymentTerms);
-    cy.get(Selectors.APInvoiceDueDate).type(todayDate);
+    cy.FillDate(Selectors.APInvoiceDueDate,aPInvoiceDetails.DueDate)
     cy.Click(Selectors.OkCreateAPInvoiceButton, null);
     cy.Click(Selectors.APInvoiceLineCheckBox, null)
     cy.SelectLogLovElement(Selectors.APInvoiceVatType, true, aPInvoiceDetails.VATType)
@@ -244,7 +243,7 @@ export function ConnectShipment() {
 export function VoidAPInvoice(){
     cy.Click(Selectors.InvoiceMoreList, null)
     cy.Click(Selectors.APInvoiceVoidButton,null)
-    cy.DefineRequestWait("PUT", "**/apinvoices", "WaitPutARInvoicesRequest")
+    cy.DefineRequestWait("PUT", "**/apinvoices", "WaitPutAPInvoicesRequest")
     cy.Click(Selectors.ConfirmWindowYes, null);
 }
 

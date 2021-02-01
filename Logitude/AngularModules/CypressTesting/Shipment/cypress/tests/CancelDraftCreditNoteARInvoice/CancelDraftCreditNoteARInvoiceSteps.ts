@@ -19,7 +19,7 @@ Given("a direct shipment with the following details",(dataTable) => {
     const shipmentDetails = dataTable.hashes()[0] as ShipmentDetails;
     ShipmentData = shipmentDetails;
     Actions.OpenNewShipmentWizard(ShipmentData.ShipmentLevel);
-    Actions.FillShipmentDefaultFields(ShipmentData);
+    Actions.FillShipmentWizardsFields(ShipmentData);
 });
 When("create shipment", () => {
     Actions.CreateShipment(ShipmentData.ShipmentLevel);
@@ -37,7 +37,7 @@ Given("a receivable with the following details", (dataTable) => {
     Actions.FillReceivablesTab(ReceivableData)
     Actions.UpdateShipment(Selectors.ShipmentSaveButton)
 });
-Given("a credit ARInvoice with the following details", 
+Given("a credit ARInvoice with the following details and a random invoice number", 
 (dataTable) => {
     const ARInvoiceData = dataTable.hashes()[0] as ARInvoiceDetails
     cy.Click(Selectors.CreateCreditNoteARInvoiceButton, null);
