@@ -290,6 +290,7 @@ export function VoidARInvoice(){
 }
 
 export function CancelDraftARInvoice() {
+    cy.Click(Selectors.InvoiceMoreList, null)
     cy.DefineRequestWait("PUT", "**/arinvoices", "WaitPutARInvoicesRequest")
     cy.Click(Selectors.ARInvoiceCancelDraftButton, null)
     cy.Click(Selectors.ConfirmWindowYes,null)
