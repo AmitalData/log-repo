@@ -917,6 +917,52 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
+	  private string bankCodeEnglishName ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string BankCodeEnglishName  
+	   {
+	    
+	     get
+		{
+		   return bankCodeEnglishName;
+		 }
+		 set
+		 {
+		   if(bankCodeEnglishName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="BankCodeEnglishName",OldValue=bankCodeEnglishName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   bankCodeEnglishName=value;
+		   }
+			
+		 }
+	   }
+	  private string bankCodeLocalName ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string BankCodeLocalName  
+	   {
+	    
+	     get
+		{
+		   return bankCodeLocalName;
+		 }
+		 set
+		 {
+		   if(bankCodeLocalName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="BankCodeLocalName",OldValue=bankCodeLocalName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   bankCodeLocalName=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

@@ -1538,7 +1538,7 @@
             this.button50.TabIndex = 100;
             this.button50.Text = "Update CargoTracking";
             this.button50.UseVisualStyleBackColor = true;
-            this.button50.Click += new System.EventHandler(this.button50_Click);
+            this.button50.Click += new System.EventHandler(this.CargoTracking_btn_Click);
             // 
             // cbxOldUpdateCode
             // 
