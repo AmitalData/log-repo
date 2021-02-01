@@ -91,8 +91,11 @@
                         <td>
                             <table>
                                 <tr>
-                                    <td style="width:60px"><label style="width:60px">Partner</label></td>
 
+                                    <td style="width:10px;"><div style="width:5px;"></div></td>
+
+                                    <td style="width:150px" class="Label">Bill To/ Vendor:</td>
+                                    <td><div style="width:15px;"></div></td>
                                     <td style="width:200px;">
                                         <div style="width:200px;">
                                             <LogLov [ObjectFieldName]="'CustomerId'"
@@ -102,14 +105,30 @@
                                                     [DependencyFilter1IsList]="'true'"
                                                     [ShowInActive]="'true'"
                                                     [DependencyFilter1Value]="'AG,CS,AL,SL,CC,VD,CG,CO,OT,SG,TR,WH'">
+                                            </LogLov>
+                                        </div>
+                                    </td>
+
+                                    <td style="width:10px;"><div></div></td>
+
+                                    <td style="width:60px" class="Label">Partner:</td>
+                                    <td><div style="width:15px;"></div></td>
+                                    <td style="width:200px;">
+                                        <div style="width:200px;">
+                                            <LogLov [ObjectFieldName]="'PartnerId'"
+                                                    [DataContext]="DataContext"
+                                                    [LookUpTableName]="'Card'"
+                                                    [DisplayMemberPath]="'EnglishName'"
+                                                    [DependencyFilter1IsList]="'true'"
+                                                    [ShowInActive]="'true'"
+                                                    [DependencyFilter1Value]="'AG,CS,AL,SL,CC,VD,CG,CO,OT,SG,TR,WH'">
 
 
                                             </LogLov>
-
-
-
                                         </div>
                                     </td>
+
+                                    <td><div style="width:20px;"></div></td>
                                     <td style="width:90px;">
                                         <button (click)="RunReport()" class="greenButton" style="width:90px;height:22px;border:1px solid green;border-radius:3px;">
                                             <div style="color:black;  text-align:center;vertical-align:central;font-size:12px;">{{RunReportTitle}}</div>

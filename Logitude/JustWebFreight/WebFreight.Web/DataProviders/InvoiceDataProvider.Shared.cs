@@ -440,6 +440,7 @@ namespace WebFreight.Web.DataProviders
             public string InvoiceNumber { get; set; }
             public string InternalNumber { get; set; }
             public string BillTo { get; set; }
+            public string PartnerName { get; set; }
             public DateTime InvoiceDate { get; set; }
             public string OurRefNumber { get; set; }
             public string InvoiceStatus { get; set; }
