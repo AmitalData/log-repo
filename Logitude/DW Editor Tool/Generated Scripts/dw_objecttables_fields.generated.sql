@@ -1000,7 +1000,7 @@ insert into DWObjectTables(Id,Tenant,IndexesXml,Code,Name,TypeCode,IsClosed,Data
 ------------------------------------------------------------------------------------
 declare @Fact_MastersNewId varchar(15)
 execute usp_GetNextTableIdValue @Fact_MastersNewId OUTPUT,'DWObjectTable' 
-insert into DWObjectTables(Id,Tenant,IndexesXml,Code,Name,TypeCode,IsClosed,DataViewName,HasPivotColumn,ParentFactCode,RecordType,DisplayName) Values(@Fact_MastersNewId,0,'','Fact_Masters','Fact_Masters','Fact','false','factMasters','false','Fact_Shipments','Master','Masters')  
+insert into DWObjectTables(Id,Tenant,IndexesXml,Code,Name,TypeCode,IsClosed,DataViewName,HasPivotColumn,ParentFactCode,RecordType,DisplayName,CustomFieldObjectTableName,HasCustomFields,MaxNumberOfCustomFields) Values(@Fact_MastersNewId,0,'','Fact_Masters','Fact_Masters','Fact','false','factMasters','false','Fact_Shipments','Master','Masters','Shipment','false',0)  
 --Fields --
 ------------------------------------------------------------------------------------
 declare @Fact_QuotesNewId varchar(15)
@@ -2098,3 +2098,6 @@ insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,Is
 declare @Fact_ShipmentsOnCarriageCarrierNewId varchar(15)
 execute usp_GetNextTableIdValue @Fact_ShipmentsOnCarriageCarrierNewId OUTPUT,'DWObjectField' 
 insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,DimensionTableCode,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom,OriginalObjectFieldCode,DontDisplayInView,IsMultipleSelection) Values(@Fact_ShipmentsOnCarriageCarrierNewId,0,'Fact_Shipments','[On Carriage Carrier]','On Carriage Carrier','Dimension','false',0,15,'DIM_Partners','false','false','true','Routings','false','false','false','Shipments.OnCarriageCarrierId','false','false')  
+declare @Fact_ShipmentsConnectedQuotesNewId varchar(15)
+execute usp_GetNextTableIdValue @Fact_ShipmentsConnectedQuotesNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom,OriginalObjectFieldCode,DontDisplayInView,IsMultipleSelection) Values(@Fact_ShipmentsConnectedQuotesNewId,0,'Fact_Shipments','[Connected Quotes]','Connected Quotes','Text','false',0,20,'false','false','true','General','false','false','false','Shipment.QuoteNumber','false','false')  
