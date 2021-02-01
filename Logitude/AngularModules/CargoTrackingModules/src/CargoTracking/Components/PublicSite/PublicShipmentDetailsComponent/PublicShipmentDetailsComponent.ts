@@ -236,7 +236,7 @@ export class PublicShipmentDetailsComponent implements OnInit
             this.AllMilestoneFields.forEach(S =>
             {
 
-                if (S.IsEstimation) {
+                if (S.IsEstimation && S.EstimationDate != null) {
 
                     this.FuturesMilestoneFields.push(S);
                 }

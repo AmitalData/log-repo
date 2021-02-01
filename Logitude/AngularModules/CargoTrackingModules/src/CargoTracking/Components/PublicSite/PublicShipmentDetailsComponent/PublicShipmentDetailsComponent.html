@@ -157,8 +157,8 @@
  
                 <div class="title hide-mobile">Shipment Milestones Details</div>
                 <div *ngIf="MilstonesExist">
-                    <div class="tag">Future milestones</div>
-                    <ul *ngIf="FuturesMilestoneFields" class="steps-list">
+                    <div class="tag"  *ngIf="FuturesMilestoneFields.length > 0">Planned Milestones</div>
+                    <ul *ngIf="FuturesMilestoneFields.length > 0" class="steps-list">
                         <li *ngFor="let item of FuturesMilestoneFields" class="dimmed">
                             <ng-container *ngIf="item.EstimationDate">
                                 <div class="tick"> </div>
