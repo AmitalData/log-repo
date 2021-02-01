@@ -162,6 +162,20 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="ShipCode"
+    Type="varchar"
+    Size="25">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ConsignmentType"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="DeclarationId"
     ReferencedTable="Declarations"
@@ -220,6 +234,11 @@
   <Relation
     ForeignKeyColumn="ExportLoadingPortCode"
     ReferencedTable="LoadingSiteTypes"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="Customs" />
+  <Relation
+    ForeignKeyColumn="ShipCode"
+    ReferencedTable="CustomsShips"
     ReferencedColumn="Code"
     ReferencedTableSchema="Customs" />
 </Table>

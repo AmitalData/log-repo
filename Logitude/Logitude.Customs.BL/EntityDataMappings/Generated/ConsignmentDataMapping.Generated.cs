@@ -44,7 +44,9 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         FinalDestinationPortCode, 
 	         ExportRecieverWareHouseCode, 
 	         ExportUnloadingPortCode, 
-	         ExportLoadingPortCode,
+	         ExportLoadingPortCode, 
+	         ShipCode, 
+	         ConsignmentType,
 	      }
 
 
@@ -81,7 +83,9 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         ExportRecieverWareHouseCode, 
 	         ExportRecieverWareHouseName, 
 	         ExportUnloadingPortCode, 
-	         ExportLoadingPortCode,
+	         ExportLoadingPortCode, 
+	         ShipCode, 
+	         ConsignmentType,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -193,6 +197,16 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ExportLoadingPortCode))
             {
 				entityPOCO.ExportLoadingPortCode = entityPM.ExportLoadingPortCode;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ShipCode))
+            {
+				entityPOCO.ShipCode = entityPM.ShipCode;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ConsignmentType))
+            {
+				entityPOCO.ConsignmentType = entityPM.ConsignmentType;
 			}
 			}
 
@@ -314,6 +328,16 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.ExportLoadingPortCode = entityPOCO.ExportLoadingPortCode;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ShipCode))
+            {
+					entityPM.ShipCode = entityPOCO.ShipCode;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ConsignmentType))
+            {
+					entityPM.ConsignmentType = entityPOCO.ConsignmentType;
+            }
+
 		}
 
 		public void PMToOldPM(ConsignmentPM entityPM, ConsignmentPM oldEntityPM)
@@ -423,6 +447,16 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ExportLoadingPortCode))
             {
                 oldEntityPM.ExportLoadingPortCode = entityPM.ExportLoadingPortCode;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ShipCode))
+            {
+                oldEntityPM.ShipCode = entityPM.ShipCode;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ConsignmentType))
+            {
+                oldEntityPM.ConsignmentType = entityPM.ConsignmentType;
             }
 			
 		}
