@@ -173,6 +173,7 @@ export function FillPayablesTab(payableDetails: PayableDetails) {
     cy.SelectLogLovElement(Selectors.ShipmentPayable_CurrencyId, true, payableDetails.Currency)
     cy.Click(Selectors.AddPayableOkButton, null)
 }
+
 export function CreateAnewShipment(shipmentLevel: string) {
     var _ShipmentDetails = {
         ShipmentLevel: shipmentLevel,
@@ -188,7 +189,49 @@ export function CreateAnewShipment(shipmentLevel: string) {
     CreateShipment(_ShipmentDetails.ShipmentLevel)
 }
 
+export function CopyShipment(shipmentLevel: string) {
+    cy.Click(Selectors.ShipmentMoreList, null)
+    cy.Click(Selectors.CopyShipmentButton, null)
+    CreateShipment(shipmentLevel);
+}
 
+export function FillAPInvoiceDetails(aPInvoiceDetails: APInvoiceDetails) {
+    var generatedInvoiceNumber = "AP" + gr.GenerateRandomNumber(10000, 99999).toString();
+    var todayDate = BaseActions.GetTodayDate();
+    cy.SelectLogLovElement(Selectors.APInvoiceVendor, false, aPInvoiceDetails.Vendor);
+    cy.get(Selectors.APInvoiceInvoiceNumber).type(generatedInvoiceNumber)
+    cy.get(Selectors.APInvoiceAmountInInvoice).type(aPInvoiceDetails.InvoiceAmount)
+    cy.SelectLogLovElement(Selectors.APInvoiceInvoiceCurrency, true, aPInvoiceDetails.InvoiceCurrency);
+    cy.get(Selectors.APInvoiceInvoiceExchangeRate).clear().type(aPInvoiceDetails.InvoiceExchangeRate);
+    cy.get(Selectors.APInvoiceInvoiceDate).type(todayDate);
+    cy.SelectLogLovElement(Selectors.APInvoicePaymentTerm, true, aPInvoiceDetails.PaymentTerms);
+    cy.get(Selectors.APInvoiceDueDate).type(todayDate);
+    cy.Click(Selectors.OkCreateAPInvoiceButton, null);
+    cy.Click(Selectors.APInvoiceLineCheckBox, null)
+    cy.SelectLogLovElement(Selectors.APInvoiceVatType, true, aPInvoiceDetails.VATType)
+    cy.Click(Selectors.APInvoiceVatTypeApplyToAll, null)
+}
+
+export function ReceiveAPInvoice() {
+    cy.DefineRequestWait("POST", "**/apinvoices", "WaitPostAPInvoicesRequest")
+    cy.Click(Selectors.APInvoiceSaveButton, null)
+}
+
+export function APApproveInvoice() {
+    cy.DefineRequestWait("PUT", "**/apinvoices", "WaitPutAPInvoicesRequest")
+    cy.Click(Selectors.APInvoiceApproveButton, null)
+}
+
+export function APInvoiceCancelApproval() {
+    cy.Click(Selectors.APInvoiceMoreList, null)
+    cy.DefineRequestWait("PUT", "**/apinvoices", "WaitPutAPInvoicesRequest")
+    cy.Click(Selectors.APInvoiceCancelApprovalButton, null)
+}
+
+export function ConnectShipment() {
+    cy.DefineRequestWait("PUT", "**/shipment", "WaitPutShipmentRequest");
+    cy.Click(BaseSelectors.RedButton, "Yes");
+}
 
 function AddPackagesOrContainersForOrdersTab(shipmentType:string, PackageType: string){
     let numberOfPackages = gr.GenerateRandomNumber(1, 3)
@@ -202,6 +245,7 @@ function AddPackagesOrContainersForOrdersTab(shipmentType:string, PackageType: s
         cy.Click(Selectors.OrderOKButton, null)
     }
 }
+
 function AddPartner(partnerTypeId: string, partnerFieldId: string, partner?: string) {
     cy.Click("label", "Add Partners")
 
@@ -300,49 +344,6 @@ function FillMainCarriagePorts(fromPort: string, toPort: string, direction: stri
 
 function FillMasterAgent(agent: string){
     cy.FillLogLov("#Master_AgentId", agent, false)
-}
-export function CopyShipment(levelCode: string) {
-    cy.Click(Selectors.ShipmentMoreList, null)
-    cy.Click(Selectors.CopyShipmentButton, null)
-    CreateShipment(levelCode);
-}
-
-export function FillAPInvoiceDetails(aPInvoiceDetails: APInvoiceDetails) {
-    var generatedInvoiceNumber = "AP" + gr.GenerateRandomNumber(10000, 99999).toString();
-    var todayDate = BaseActions.GetTodayDate();
-    cy.SelectLogLovElement(Selectors.APInvoiceVendor, false, aPInvoiceDetails.Vendor);
-    cy.get(Selectors.APInvoiceInvoiceNumber).type(generatedInvoiceNumber)
-    cy.get(Selectors.APInvoiceAmountInInvoice).type(aPInvoiceDetails.InvoiceAmount)
-    cy.SelectLogLovElement(Selectors.APInvoiceInvoiceCurrency, true, aPInvoiceDetails.InvoiceCurrency);
-    cy.get(Selectors.APInvoiceInvoiceExchangeRate).clear().type(aPInvoiceDetails.InvoiceExchangeRate);
-    cy.get(Selectors.APInvoiceInvoiceDate).type(todayDate);
-    cy.SelectLogLovElement(Selectors.APInvoicePaymentTerm, true, aPInvoiceDetails.PaymentTerms);
-    cy.get(Selectors.APInvoiceDueDate).type(todayDate);
-    cy.Click(Selectors.OkCreateAPInvoiceButton, null);
-    cy.Click(Selectors.APInvoiceLineCheckBox, null)
-    cy.SelectLogLovElement(Selectors.APInvoiceVatType, true, aPInvoiceDetails.VATType)
-    cy.Click(Selectors.APInvoiceVatTypeApplyToAll, null)
-}
-
-export function ReceiveAPInvoice() {
-    cy.DefineRequestWait("POST", "**/apinvoices", "WaitPostAPInvoicesRequest")
-    cy.Click(Selectors.APInvoiceSaveButton, null)
-}
-
-export function APApproveInvoice() {
-    cy.DefineRequestWait("PUT", "**/apinvoices", "WaitPutAPInvoicesRequest")
-    cy.Click(Selectors.APInvoiceApproveButton, null)
-}
-
-export function APInvoiceCancelApproval() {
-    cy.Click(Selectors.APInvoiceMoreList, null)
-    cy.DefineRequestWait("PUT", "**/apinvoices", "WaitPutAPInvoicesRequest")
-    cy.Click(Selectors.APInvoiceCancelApprovalButton, null)
-}
-
-export function ConnectShipment() {
-    cy.DefineRequestWait("PUT", "**/shipment", "WaitPutShipmentRequest");
-    cy.Click(BaseSelectors.RedButton, "Yes");
 }
 
 function IsInlandDomestic(direction: string, transportMode: string){

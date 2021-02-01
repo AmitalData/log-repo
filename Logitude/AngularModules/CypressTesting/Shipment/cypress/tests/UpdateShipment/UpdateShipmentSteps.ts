@@ -21,7 +21,7 @@ Given("a direct shipment with the following details",
   (dataTable) => {
    shipmentDetails = dataTable.hashes()[0] as ShipmentDetails;
    Actions.OpenNewShipmentWizard(shipmentDetails.ShipmentLevel);
-   Actions.FillShipmentDefaultFields(shipmentDetails);
+   Actions.FillShipmentWizardsFields(shipmentDetails);
 });
 
 When("create shipment", () => {
