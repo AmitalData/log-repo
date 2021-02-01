@@ -270,12 +270,6 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                 myFilterdCustomerAddress = addressRepository.GetMainAddressByCardId(billToId, tenant);
             }
 
-            if (!string.IsNullOrEmpty(partnerId))
-            {
-                myFilterdCustomer = CardRepository.GetSingleCard(partnerId, tenant, true);
-                myFilterdCustomerAddress = addressRepository.GetMainAddressByCardId(partnerId, tenant);
-            }
-
             dataProvider.GeneralAddress = DataProviders.General.GetAddress(tenantAddress);
             dataProvider.TenantName = currentTenant.Company;
             dataProvider.Signature = currentTenant.Signature;
@@ -595,7 +589,6 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                                         if (isByDueDateFilter)
                                         {
                                             iQueryable_ARPayment = iQueryable_ARPayment.Where(d => d.ValueDate != null && System.Data.Entity.DbFunctions.TruncateTime(d.ValueDate) >= System.Data.Entity.DbFunctions.TruncateTime(fromDate));
-                                            iQueryable_APPayment = iQueryable_APPayment.Where(d => d.ValueDate != null && System.Data.Entity.DbFunctions.TruncateTime(d.ValueDate) >= System.Data.Entity.DbFunctions.TruncateTime(fromDate));
                                         }
 
                                         else
