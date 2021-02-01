@@ -78,7 +78,8 @@
             <div class="value">{{ Shipment.ToPortName }}</div>
         </div>
 
-        <img class="hide-tablet" src="./assets/images/misc/cargo.svg" alt="">
+       <!-- <img class="hide-tablet" src="./assets/images/misc/cargo.svg" alt="">-->
+        <img *ngIf="ShipmentHeaderImage"  [attr.src]="ShipmentHeaderImage" alt="" />
     </div>
 
     <div class="panel-container">

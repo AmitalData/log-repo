@@ -113,7 +113,7 @@ namespace WebFreight.Web.Helpers
                 byte[] filedata = GeImageBytesById(cargoTrackingBrandingData.ShipmentHeaderImageId);
                 if (filedata != null)
                 {
-                    cargoTrackingBrandingData.ShipmentHeaderImageBytes = filedata;
+                    cargoTrackingBrandingData.ShipmentHeaderBytes = filedata;
                 }
             }
 

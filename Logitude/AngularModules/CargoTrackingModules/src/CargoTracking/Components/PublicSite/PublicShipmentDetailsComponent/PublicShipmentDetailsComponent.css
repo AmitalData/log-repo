@@ -38,9 +38,12 @@ a {
 
 .box-header img {
     position: absolute;
-    top: -56px;
-    right: 10vw;
-    width: 168px;
+    margin-left: auto;
+    top: 10px;
+    right: 5vw;
+    left: 400px;
+    height:80px;
+    width: auto
 }
 
 .box-header ul{
