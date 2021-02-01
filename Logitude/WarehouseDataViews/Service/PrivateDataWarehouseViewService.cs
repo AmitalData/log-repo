@@ -21,12 +21,17 @@ namespace WarehouseDataViews.Service
             DeleteDataWarehouseViews(privateViewArgs);
 
             var dataWarehouseViews = GetDataWarehouseViewsListsByTenant(privateViewArgs.Tenant);
-            dataWarehouseViews = AppendCustomFieldViews(privateViewArgs, dataWarehouseViews);
+            
+            if (!privateViewArgs.IsParentTenant)
+            {
+                List<WarehouseView> customFieldViewLists = GetCustomFieldViewsLists(privateViewArgs.Tenant, dataWarehouseViews);
+                dataWarehouseViews = dataWarehouseViews.Concat(customFieldViewLists).ToList();
+            }
 
             foreach (WarehouseView view in dataWarehouseViews)
             {
                 string viewscript = view.SqlString;
-                if (view.IsFactView && view.IsHaveCustomFields)
+                if (view.IsFactView && view.HasCustomFields)
                 {
                     viewscript = view.SqlString.Replace(",@CustomFields", view.CustomFieldScriptSQL);
                 }
@@ -35,29 +40,29 @@ namespace WarehouseDataViews.Service
             }
         }
 
-        private List<WarehouseView> AppendCustomFieldViews(PrivateViewArgs privateViewArgs, List<WarehouseView> dataWarehouseViews)
+        private List<WarehouseView> GetCustomFieldViewsLists(int tenant, List<WarehouseView> dataWarehouseViews)
         {
-            if (dataWarehouseViews.Where(d => d.IsHaveCustomFields).FirstOrDefault() != null && !privateViewArgs.IsParentTenant)
-            {
-                foreach (WarehouseView view in dataWarehouseViews.Where(d => d.IsHaveCustomFields && d.IsFactView).ToList())
-                {
-                    CustomFieldDataWarehouseArgs customFieldDataWarehouseArgs = new CustomFieldDataWarehouseArgs()
-                    {
-                        ConnectionString = sourceConnectionString,
-                        DWObjectFieldLists = DwObjectFieldLists,
-                        Tenant = privateViewArgs.Tenant,
-                        WarehouseView = view
+            List<WarehouseView> customFieldViewsLists = new List<WarehouseView>();
 
-                    };
-                    CustomFieldDataWarehouseViewService customFieldViewDataWarehouseService = new CustomFieldDataWarehouseViewService(customFieldDataWarehouseArgs);
-                    List<WarehouseView> customFieldViewLists = customFieldViewDataWarehouseService.GetCustomFieldViewLists();
-                    dataWarehouseViews = dataWarehouseViews.Concat(customFieldViewLists).ToList();
-                    view.CustomFieldScriptSQL = customFieldViewDataWarehouseService.GetCustomFieldsAsSqlString();
-                }
+            foreach (WarehouseView view in dataWarehouseViews.Where(d=>d.HasCustomFields))
+            {
+                CustomFieldDataWarehouseArgs customFieldDataWarehouseArgs = new CustomFieldDataWarehouseArgs()
+                {
+                    ConnectionString = sourceConnectionString,
+                    DWObjectFieldLists = DwObjectFieldLists,
+                    Tenant = tenant,
+                    WarehouseView = view
+
+                };
+                CustomFieldDataWarehouseViewService customFieldViewDataWarehouseService = new CustomFieldDataWarehouseViewService(customFieldDataWarehouseArgs);
+                List<WarehouseView> customFieldViews = customFieldViewDataWarehouseService.GetCustomFieldViewLists();
+                customFieldViewsLists = customFieldViewsLists.Concat(customFieldViews).ToList();
+                view.CustomFieldScriptSQL = customFieldViewDataWarehouseService.GetCustomFieldsAsSqlString();
             }
 
-            return dataWarehouseViews;
+            return customFieldViewsLists;
         }
+
 
         private List<WarehouseView> GetDataWarehouseViewsListsByTenant(int tenant)
         {

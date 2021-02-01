@@ -48,7 +48,7 @@ namespace DW_Editor_Tool.Helpers
                 SetAttribute("RecordType", GetStringValue(tableViewModel.RecordType), entityElement);
                 SetAttribute("DisplayName", GetStringValue(tableViewModel.DisplayName), entityElement);
 
-                SetAttribute("CustomFieldObjectTableName", GetStringValue(tableViewModel.CustomFieldObjectTableName), entityElement);
+                SetAttribute("ObjectTableName", GetStringValue(tableViewModel.ObjectTableName), entityElement);
                 SetAttribute("HasCustomFields", tableViewModel.HasCustomFields.ToString().ToLower(), entityElement);
                 SetAttribute("MaxNumberOfCustomFields", tableViewModel.MaxNumberOfCustomFields.ToString(), entityElement);
 
@@ -175,7 +175,7 @@ namespace DW_Editor_Tool.Helpers
                         tableViewModel.RecordType = GetAttributeStringValue(entity.Attributes["RecordType"]);
                         tableViewModel.DisplayName = GetAttributeStringValue(entity.Attributes["DisplayName"]);
 
-                        tableViewModel.CustomFieldObjectTableName = GetAttributeStringValue(entity.Attributes["CustomFieldObjectTableName"]);
+                        tableViewModel.ObjectTableName = GetAttributeStringValue(entity.Attributes["ObjectTableName"]);
                         tableViewModel.HasCustomFields = GetAttributeBoolValue(entity.Attributes["HasCustomFields"]);
                         tableViewModel.MaxNumberOfCustomFields = GetAttributeIntegerValue(entity.Attributes["MaxNumberOfCustomFields"]);
 
