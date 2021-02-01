@@ -22,73 +22,83 @@ namespace Logitude.ShipmentTests.Steps
         }
 
         #region Step Region
-        [Given(@"Direct shipment with the following properties")]
-        public void GivenDirectShipmentWithTheFollowingProperties(Table directShipmentTable)
+
+        #region Create direct shipment with main carriage leg steps
+
+        [Given(@"a direct shipment with the following properties")]
+        public void GivenADirectShipmentWithTheFollowingProperties(Table directShipmentTable)
         {
             Context.Direct = CreateDirectInstance(directShipmentTable);
         }
 
-        [Given(@"List of main carriage legs")]
-        public void GivenListOfMainCarriageLegs(Table mainCarriageLegsTable)
+        [Given(@"a main carriage leg")]
+        public void GivenAMainCarriageLeg(Table mainCarriageLegsTable)
         {
             AddMainCarriageLegsToDirectShipment(Context.Direct, mainCarriageLegsTable);
         }
-        
-        [When(@"Create direct shipment using external API")]
-        public void WhenCreateDirectShipmentUsingExternalAPI()
+
+        [When(@"create direct shipment")]
+        public void WhenCreateDirectShipment()
         {
             ApiResponse<Direct> response = APICaller.CallPost<Direct>(Context.Direct, "Direct", UserTenant.Token);
             Context.Direct = response.Data;
         }
 
-        [Then(@"The direct shipment should be created successfully")]
-        public void ThenTheDirectShipmentShouldBeCreatedSuccessfully()
+        [Then(@"the direct should create successfully")]
+        public void ThenTheDirectShouldCreateSuccessfully()
         {
             Context.Direct.Should().NotBeNull();
         }
+        #endregion
 
-        [When(@"Update main carriage leg ATA to future date")]
-        public void WhenUpdateMainCarriageLegATAToFutureDate()
+        #region Set main carriage ATA to future date steps
+        [When(@"set main carriage ATA to future date")]
+        public void WhenSetMainCarriageATAToFutureDate()
         {
             Context.Direct.MainCarriageLegs.First().ATA = GetDateBasedOnCurrentDate(1, 0, 0);
             Context.act = () => APICaller.CallPut<Direct>(Context.Direct, "Direct", UserTenant.Token);
         }
 
-        [Then(@"Error message \(cannot set main carriage ATA to future date\) should received")]
-        public void ThenErrorMessageCannotSetMainCarriageATAToFutureDateShouldReceived()
+        [Then(@"ATA error message should received")]
+        public void ThenATAErrorMessageShouldReceived()
         {
             Context.act.Should().ThrowExactly<Exception>()
                 .Where(e => e.Message.Contains("Can't set MainCarriageATA to future date"));
         }
+        #endregion
 
-        [When(@"Update main carriage leg ATD to future date")]
-        public void WhenUpdateMainCarriageLegATDToFutureDate()
+        #region Set main carriage ATD to future date steps
+        [When(@"set main carriage ATD to future date")]
+        public void WhenSetMainCarriageATDToFutureDate()
         {
             Context.Direct.MainCarriageLegs.First().ATD = GetDateBasedOnCurrentDate(1, 0, 0);
             Context.act = () => APICaller.CallPut<Direct>(Context.Direct, "Direct", UserTenant.Token);
-
         }
 
-        [Then(@"Error message \(cannot set main carriage ATD to future date\) should received")]
-        public void ThenErrorMessageCannotSetMainCarriageATDToFutureDateShouldReceived()
+        [Then(@"ATD error message should received")]
+        public void ThenATDErrorMessageShouldReceived()
         {
             Context.act.Should().ThrowExactly<Exception>()
                 .Where(e => e.Message.Contains("Can't set MainCarriageATD to future date"));
         }
+        #endregion
 
-        [When(@"Update main carriage leg ETD,ATD,ETA and ATA to valid date")]
-        public void WhenUpdateMainCarriageLegETDATDETAAndATAToValidDate()
+        #region Set main carriage ETD,ATD,ETA and ATA to vaild dates steps
+        [When(@"Set main carriage ETD,ATD,ETA and ATA to vaild dates")]
+        public void WhenSetMainCarriageETDATDETAAndATAToVaildDates()
         {
             FillVaildDatesInMainCarriageLegs();
             ApiResponse<Direct> response = APICaller.CallPut<Direct>(Context.Direct, "Direct", UserTenant.Token);
             Context.Direct = response.Data;
         }
 
-        [Then(@"The shipment should updated succesfully")]
-        public void ThenTheShipmentIsUpdatedSuccesfully()
+        [Then(@"the direct should add update successfully")]
+        public void ThenTheDirectShouldAddUpdateSuccessfully()
         {
             Context.Direct.Should().NotBeNull();
         }
+        #endregion
+
         #endregion
 
         #region Private Function Region
