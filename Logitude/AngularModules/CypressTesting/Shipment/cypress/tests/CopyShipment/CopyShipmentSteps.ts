@@ -8,13 +8,10 @@ import * as BaseAssertion from "../../../../Base/cypress/actions/Assertion"
 let ShipmentData: ShipmentDetails;
 let shipmentNumber: string;
 
-Given("the user logged in", () => {
-  cy.Login();
-});
-
-Given("navigates to shipments workspace", () => {
-  cy.Click(BaseSelectors.OperationsMenu, null);
-  cy.Click(Selectors.ShipmentTab, null);
+Given("the user logged in and navigates to shipments workspace", () => {
+  cy.Login()
+  cy.Click(BaseSelectors.OperationsMenu, null)
+  cy.Click(Selectors.ShipmentTab, null)
 });
 
 Given("a direct shipment with the following details",

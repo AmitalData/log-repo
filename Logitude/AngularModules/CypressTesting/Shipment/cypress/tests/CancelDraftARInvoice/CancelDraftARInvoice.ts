@@ -37,10 +37,10 @@ Given("a receivable with the following details", (dataTable) => {
     Actions.FillReceivablesTab(ReceivableData)
     Actions.UpdateShipment(Selectors.ShipmentSaveButton)
 });
-Given("a credit ARInvoice with the following details and a random invoice number", 
+Given("an ARInvoice with the following details and a random invoice number", 
 (dataTable) => {
     const ARInvoiceData = dataTable.hashes()[0] as ARInvoiceDetails
-    cy.Click(Selectors.CreateCreditNoteARInvoiceButton, null);
+    cy.Click(Selectors.CreateARInvoiceButton, null);
     Actions.FillARInvoiceDetails(ARInvoiceData)
   });
 });
@@ -51,23 +51,9 @@ Then("the invoice should create successfully", () => {
     BaseAssertion.AssertStatusCode("WaitPostARInvoicesRequest", 200);
 });
 
-When("approve invoice", () => {
-    Actions.ARApproveInvoice()
+When("cancel draft", () => {
+    Actions.CancelDraftARInvoice()
 });
-Then("the invoice should approve successfully", () => {
-    BaseAssertion.AssertStatusCode("WaitPutARInvoicesRequest", 200);
-});
-
-When("set invoice as sent", () => {
-    Actions.SetAsSentARInvoice()
-});
-Then("the invoice should set as sent successfully", () => {
-    BaseAssertion.AssertStatusCode("WaitPutARInvoicesRequest", 200);
-});
-
-When("void invoice", () => {
-    Actions.VoidARInvoice()
-});
-Then("the invoice should void successfully", () => {
+Then("the invoice should cancel successfully", () => {
     BaseAssertion.AssertStatusCode("WaitPutARInvoicesRequest", 200);
 });

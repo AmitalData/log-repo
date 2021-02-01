@@ -40,7 +40,7 @@ Given("a payable with the following details",
     Actions.FillPayablesTab(PayableData)
     Actions.UpdateShipment(Selectors.ShipmentSaveButton)
   });
-And("an APInvoice with the following details",
+And("an APInvoice with the following details and a random invoice number",
   (dataTable) => {
     const APInvoiceData = dataTable.hashes()[0] as APInvoiceDetails
     cy.Click(Selectors.ReceiveInvoiceButton, null);
@@ -70,5 +70,5 @@ When("void invoice", () => {
   Actions.VoidAPInvoice()
 });
 Then("the invoice should void successfully", () => {
-  BaseAssertion.AssertStatusCode("WaitPutARInvoicesRequest", 200);
+  BaseAssertion.AssertStatusCode("WaitPutAPInvoicesRequest", 200);
 });

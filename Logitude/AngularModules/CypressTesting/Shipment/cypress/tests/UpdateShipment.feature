@@ -36,7 +36,9 @@ Feature: Edit Direct Export Air Shipment
 
   Scenario: Edit Shipment by filling Receivables tab
     Given the user in the Receivables tab
-    And  fill Receivables tab  with a random UnitPrice and "AFT" as a ChargesType
+    And  fill Receivables with the following details
+     | ChargesType | UOM  | Quantity | UnitPrice | Currency | ExchangeRate |
+            | AFT         | GRWT | 5        | 20        | EUR      | 4            |
     When save shipment
     Then the save operation complete successfully
 

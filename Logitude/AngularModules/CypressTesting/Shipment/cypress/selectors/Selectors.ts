@@ -85,6 +85,7 @@ export class Selectors
     public static readonly  ARInvoiceInvoiceDate ="#date_ARInvoice_InvoiceDate"
     public static readonly ARInvoiceInvoiceCurrency="#ARInvoice_InvoiceCurrencyId"
     public static readonly CreateCreditNoteARInvoiceButton="#CreateCreditNote"
+    public static readonly CreateARInvoiceButton= "#CreateARInvoice"
     public static readonly ARInvoiceExchangeRate="#ARInvoice_InvoiceCurrencyExchangeRate"
     public static readonly OkCreateARInvoiceButton = "#Ok-CreateARInvoice"
     public static readonly ARInvoiceVatType = "#ARInvoice_VatTypeId"

@@ -29,20 +29,20 @@ Then("the shipment should create successfully", () => {
     BaseAssertion.AssertStatusCode("WaitPostShipmentRequest", 200).then((interception) => {
         shipmentNumber = interception.response.body.ShipmentNumber;
 });
-
-Given("a receivable with the following details", (dataTable) => {
+})
+Given("a receivable with the following details",
+ (dataTable) => {
     const ReceivableData = dataTable.hashes()[0] as ReceivableDetails;
     Actions.OpenShipment(shipmentNumber)
     cy.Click(Selectors.ReceivablesTab, null)
     Actions.FillReceivablesTab(ReceivableData)
     Actions.UpdateShipment(Selectors.ShipmentSaveButton)
 });
-Given("a credit ARInvoice with the following details and a random invoice number", 
+Given("an ARInvoice with the following details and a random invoice number", 
 (dataTable) => {
     const ARInvoiceData = dataTable.hashes()[0] as ARInvoiceDetails
-    cy.Click(Selectors.CreateCreditNoteARInvoiceButton, null);
+    cy.Click(Selectors.CreateARInvoiceButton, null);
     Actions.FillARInvoiceDetails(ARInvoiceData)
-  });
 });
 When("create invoice", () => {
     Actions.CreateARInvoice()
