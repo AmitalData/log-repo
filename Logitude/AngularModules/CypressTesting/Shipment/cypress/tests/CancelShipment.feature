@@ -11,7 +11,7 @@ Feature: Cancel Shipment
     When create shipment 
     Then the shipment should create successfully
 
-    Scenario: Cancel Direct Shipment
-    Given the user open the direct shipment 
-    When cancel the shipment 
-    Then the shipment should cancel successfully 
+  Scenario: Cancel Direct Shipment
+    Given the user open the direct shipment
+    When cancel the shipment
+    Then the shipment should cancel successfully

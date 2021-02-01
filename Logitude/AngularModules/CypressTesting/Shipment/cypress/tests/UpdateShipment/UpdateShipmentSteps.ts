@@ -1,9 +1,11 @@
 import * as Actions from "../../actions/Actions"
-import * as Assertions from "../../actions/Assertions"
 import { Selectors } from "../../selectors/Selectors"
 import { BaseSelectors } from "../../../../Base/cypress/selectors/BaseSelectors"
 import { Given, When, Then } from "cypress-cucumber-preprocessor/steps";
 import { PartnersDetails } from "cypress/models/PartnersDetails";
+import * as BaseActions from "../../../../Base/cypress/actions/Actions"
+
+let shipmentNumber: string;
 
 Given("the user logged in", () => {
   cy.Login()
@@ -14,10 +16,13 @@ Given("navigate to shipments workspace", () => {
   cy.Click(Selectors.ShipmentTab, null)
 });
 
-Given("create a new Direct shipment", () => {
-    Actions.CreateAnewShipment("Direct")
-    Actions.OpenShipment("CreatedShipmentsData/DEA.json")
-});
+// Given("create a new Direct shipment", () => {
+//     Actions.CreateAnewShipment("Direct")
+//     BaseActions.WaitRequestReturnResponse("WaitPostShipmentRequest", 200).then((interception) => {
+//         shipmentNumber = interception.response.body.ShipmentNumber;
+//     })
+//     Actions.OpenShipment("CreatedShipmentsData/DEA.json")
+// });
 
 Given("the user in the general tab", () => {
     cy.Click(Selectors.GeneralTab, null)
@@ -94,5 +99,5 @@ When("save shipment window", () => {
 });
 
 Then("the save operation complete successfully", () => {
-    Assertions.ValidateUpdatedShipment(null);
+    BaseActions.WaitRequestReturnResponse("WaitPostShipmentRequest", 200);
 });

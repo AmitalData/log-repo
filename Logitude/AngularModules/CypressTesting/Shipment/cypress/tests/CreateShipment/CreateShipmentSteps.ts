@@ -1,9 +1,9 @@
 import * as Actions from "../../actions/Actions";
-import * as Assertions from "../../actions/Assertions";
 import { Given, When, Then } from "cypress-cucumber-preprocessor/steps";
 import { ShipmentDetails } from "../../models/ShipmentDetails";
 import { BaseSelectors } from "../../../../Base/cypress/selectors/BaseSelectors"
 import { Selectors } from "../../selectors/Selectors";
+import * as BaseAssertion from "../../../../Base/cypress/actions/Assertion"
 
 let _ShipmentDetails: ShipmentDetails;
 
@@ -29,9 +29,5 @@ When("create shipment", () => {
 });
 
 Then("the shipment should create successfully", () => {
-  let resultFile = "CreatedShipmentsData/" + _ShipmentDetails.ShipmentLevel + _ShipmentDetails.Direction +
-  _ShipmentDetails.TransportMode +
-  ((typeof _ShipmentDetails.ShipmentType) === "undefined" || _ShipmentDetails.ShipmentType === null ? "" : _ShipmentDetails.ShipmentType) + ".json";
-
-  Assertions.ValidateCreatedShipment(resultFile);
+  BaseAssertion.AssertStatusCode("WaitPostShipmentRequest", 200);
 });
