@@ -1192,27 +1192,38 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 
             }
             //  -------- Declaration Referant Data 
-            if(entityPM.ProcedureCurrentCode!= null)
+            DeclarationReferantDataQueryService declarationReferantDataQueryService = new DeclarationReferantDataQueryService(entityPM.Tenant);
+            DeclarationReferantDataPM referant = declarationReferantDataQueryService.GetSingle(entityPM.Id, false, true);
+            if (referant != null)
             {
-                ICustomContext context = MainContext as CustomContext;
-                if (entityPM.ProcedureCurrentCode.Length > 3)
+                if (entityPM.ProcedureCurrentCode != null)
                 {
-                    string ProcedureCurrentCode = entityPM.ProcedureCurrentCode.Substring(0, 3);
-                    if (ProcedureCurrentCode == "407")
+                    if (entityPM.ProcedureCurrentCode.Length > 3)
                     {
-                        DeclarationReferantDataQueryService declarationReferantDataQueryService = new DeclarationReferantDataQueryService(entityPM.Tenant);
-                        DeclarationReferantDataPM referant = declarationReferantDataQueryService.GetSingle(entityPM.Id, false, true);
-                        if (referant != null)
+                        string ProcedureCurrentCode = entityPM.ProcedureCurrentCode.Substring(0, 3);
+                        if (ProcedureCurrentCode == "407")
                         {
                             if (referant.ClassificationStatus == null)
                             {
                                 referant.ClassificationStatus = "N";
                                 referant.ChangeSetOp = ChangeSetOperation.Update;
-                                DeclarationReferantDataUpdateService service=new DeclarationReferantDataUpdateService(context, new Dictionary<string, IContext>(), entityPM.Tenant);
-                                service.Update(referant, true);
                             }
                         }
                     }
+                }
+                if(referant.NewFile != false)
+                {
+                    if (HttpContextUtil.IsCustomDomainService())
+                    {
+                        referant.NewFile = false;
+                        referant.ChangeSetOp = ChangeSetOperation.Update;
+                    }
+                }
+                if(referant.ChangeSetOp == ChangeSetOperation.Update)
+                {
+                    ICustomContext context = MainContext as CustomContext;
+                    DeclarationReferantDataUpdateService service = new DeclarationReferantDataUpdateService(context, new Dictionary<string, IContext>(), entityPM.Tenant);
+                    service.Update(referant, true);
                 }
             }
         }
