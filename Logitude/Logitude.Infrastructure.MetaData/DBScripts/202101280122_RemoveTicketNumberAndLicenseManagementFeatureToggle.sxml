@@ -1,7 +1,8 @@
 ﻿<Script DBType="Main" Module="Infrastructure">
-  <Sql Version="1">
+  <Sql Version="2">
     <![CDATA[
-      delete from FeatureToggles where ToggleCode = 'LIC' or togglecode = 'TJC'         
+      delete from FeatureToggles where ToggleCode = 'LIC' or togglecode = 'TJC'   
+      delete from toggles where Code = 'LIC' or Code = 'TJC'    
     ]]>
   </Sql>
 </Script>
