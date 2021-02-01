@@ -34,7 +34,7 @@ namespace Simplog.Data.InvoiceModel.Mapping
             }
             else
             {
-                this.Property(t => t.SearchFields).HasMaxLength(4000).IsUnicode(true);
+                this.Property(t => t.SearchFields).IsMaxLength().IsUnicode(true);
             }
             this.Property(t => t.MainEntityReference).HasMaxLength(20).IsUnicode(false);
             this.Property(t => t.MainEntityId).HasMaxLength(15).IsUnicode(false);

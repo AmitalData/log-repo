@@ -3416,6 +3416,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.Description);
             MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.CustomerRef);
             MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.PrintNotes);
+            MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.InternalNotes);
 
             #region Card
             if (!string.IsNullOrEmpty(entityPM.BillToId))
@@ -3465,11 +3466,6 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 }
             }
             #endregion
-
-            if (mySearchFields.Length > 4000)
-            {
-                mySearchFields = mySearchFields.Substring(0, 4000);
-            }
 
             entityPM.SearchFields = mySearchFields;
             invoice.SearchFields = mySearchFields;
