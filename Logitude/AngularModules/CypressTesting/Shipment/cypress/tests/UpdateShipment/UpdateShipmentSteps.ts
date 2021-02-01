@@ -41,7 +41,7 @@ Given("the user in the Partners tab", () => {
 
 Given("fill Partners tab with following details", (dataTable) => {
     const partnersDetails = dataTable.hashes()[0] as PartnersDetails;
-    Actions.FillPartnersTab("E","A", partnersDetails)
+    Actions.FillPartnersTab("Export", "Air", partnersDetails)
 });
 
 Given("the user in the Packages tab", () => {
@@ -49,7 +49,7 @@ Given("the user in the Packages tab", () => {
 });
 
 Given("fill Packages tab with random number of Packages", () => {
-    Actions.FillPackagesTab("A")
+    Actions.FillPackagesTab("Air")
 });
 
 Given("the user in the Receivables tab", () => {
@@ -73,8 +73,8 @@ Given("add new delivery with {string} as a partner routing", (partner) => {
 });
 
 Given("add carriage routings from port {string} to port {string}", (fromPort, toPort) => {
-    Actions.FillPreCarriageRouting("A", fromPort, toPort)
-    Actions.FillOnCarriageRouting("A", fromPort, toPort)
+    Actions.FillPreCarriageRouting("Air", fromPort, toPort)
+    Actions.FillOnCarriageRouting("Air", fromPort, toPort)
 });
 
 Given("the user in the Payables tab", () => {
