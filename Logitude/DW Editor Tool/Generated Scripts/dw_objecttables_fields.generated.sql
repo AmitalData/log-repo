@@ -1000,7 +1000,7 @@ insert into DWObjectTables(Id,Tenant,IndexesXml,Code,Name,TypeCode,IsClosed,Data
 ------------------------------------------------------------------------------------
 declare @Fact_MastersNewId varchar(15)
 execute usp_GetNextTableIdValue @Fact_MastersNewId OUTPUT,'DWObjectTable' 
-insert into DWObjectTables(Id,Tenant,IndexesXml,Code,Name,TypeCode,IsClosed,DataViewName,HasPivotColumn,ParentFactCode,RecordType,DisplayName,CustomFieldObjectTableName,HasCustomFields,MaxNumberOfCustomFields) Values(@Fact_MastersNewId,0,'','Fact_Masters','Fact_Masters','Fact','false','factMasters','false','Fact_Shipments','Master','Masters','Shipment','false',0)  
+insert into DWObjectTables(Id,Tenant,IndexesXml,Code,Name,TypeCode,IsClosed,DataViewName,HasPivotColumn,ParentFactCode,RecordType,DisplayName) Values(@Fact_MastersNewId,0,'','Fact_Masters','Fact_Masters','Fact','false','factMasters','false','Fact_Shipments','Master','Masters')  
 --Fields --
 ------------------------------------------------------------------------------------
 declare @Fact_QuotesNewId varchar(15)
