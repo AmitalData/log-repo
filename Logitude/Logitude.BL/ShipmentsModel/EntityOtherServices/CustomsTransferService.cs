@@ -252,12 +252,20 @@ namespace Logitude.BL.ShipmentsModel.EntityOtherServices
                     string portId = "";
                     if (item.ShipmentLevelCode == "H")
                     {
-                        portId = item.DirectionId == "E" ? item.FromPortId : item.ToPortId;
+                        if (string.IsNullOrEmpty(item.MasterShipmentDataId))
+                        {
+                            portId = item.DirectionId == "I" ? item.ToPortId : item.FromPortId;
+                        }
+
+                        else
+                        {
+                            portId = item.DirectionId == "I" ? item.MainCarriageFinalDestinationPortId : item.MainCarriageFromPortId;
+                        }
                     }
 
                     else
                     {
-                        portId = item.DirectionId == "E" ? item.MainCarriageFromPortId : item.MainCarriageFinalDestinationPortId;
+                        portId = item.DirectionId == "I" ? item.MainCarriageFinalDestinationPortId : item.MainCarriageFromPortId;
                     }
 
                     Port customsSectionPort = null;
