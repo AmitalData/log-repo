@@ -25,6 +25,7 @@ export class NewRoleComponent extends BaseComponent {
     public IsResourcesReady: boolean = false;
     public IsNewEntity: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
+    private parentRoleName: string;
     constructor(private entityResourceService: EntityResourceService) {
         super();
         this.InitializeServices();
@@ -77,6 +78,7 @@ export class NewRoleComponent extends BaseComponent {
             if (AppTool.IsNullOrEmpty(value)) {
                 this.Name = null;
                 this.RoleTypeCode = null;
+                this.parentRoleName = null;
             }
 
             else {
@@ -86,6 +88,7 @@ export class NewRoleComponent extends BaseComponent {
                         if (list != null) {
                             this.Name = list.Name;
                             this.RoleTypeCode = list.RoleTypeCode;
+                            this.parentRoleName = list.Name;
                         }
                     }
                 });
@@ -125,6 +128,10 @@ export class NewRoleComponent extends BaseComponent {
         if (AppTool.IsNullOrEmpty(this.ParentRoleId)) {
             var msg: string = TextCodeTranslator.Translate("General.M.FieldIsRequired");
             errors.push(msg.replace("%FieldName", "Parent Role"));
+        }
+
+        if (this.Name == this.parentRoleName) {
+            errors.push("Role name should be different than parent role name");
         }
 
         this.ValidationErrorsList = errors;
