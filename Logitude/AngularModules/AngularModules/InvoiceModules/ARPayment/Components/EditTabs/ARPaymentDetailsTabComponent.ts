@@ -200,7 +200,6 @@ export class ARPaymentDetailsTabComponent extends BaseComponent implements OnIni
         }
 
         else {
-            this.UIProperties.SetEnabled("PartnerId", this.ObjectTableName, true);
             this.UIProperties.SetEnabled("AccountingPaymentMethodId", this.ObjectTableName, true);
             this.UIProperties.SetEnabled("AmountInPaymentCurrency", this.ObjectTableName, true);
             this.UIProperties.SetEnabled("RegisterDate", this.ObjectTableName, true);
