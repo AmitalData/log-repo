@@ -49,7 +49,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         RecordType = a.RecordType,
                         ParentFactCode = a.ParentFactCode,
                         DisplayName = a.DisplayName,
-                        CustomFieldObjectTableName = a.CustomFieldObjectTableName ,
+                        ObjectTableName = a.ObjectTableName ,
                         HasCustomFields = a.HasCustomFields , 
                         MaxNumberOfCustomFields = a.MaxNumberOfCustomFields,
 
@@ -78,7 +78,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         RecordType = a.RecordType,
                         ParentFactCode = a.ParentFactCode,
                         DisplayName = a.DisplayName,
-                        CustomFieldObjectTableName = a.CustomFieldObjectTableName,
+                        ObjectTableName = a.ObjectTableName,
                         HasCustomFields = a.HasCustomFields,
                         MaxNumberOfCustomFields = a.MaxNumberOfCustomFields,
                     });
@@ -105,7 +105,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         RecordType = a.RecordType,
                         ParentFactCode = a.ParentFactCode,
                         DisplayName = a.DisplayName,
-                        CustomFieldObjectTableName = a.CustomFieldObjectTableName,
+                        ObjectTableName = a.ObjectTableName,
                         HasCustomFields = a.HasCustomFields,
                         MaxNumberOfCustomFields = a.MaxNumberOfCustomFields,
                     }).FirstOrDefault();
@@ -132,7 +132,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         RecordType = a.RecordType,
                         ParentFactCode = a.ParentFactCode,
                         DisplayName = a.DisplayName,
-                        CustomFieldObjectTableName = a.CustomFieldObjectTableName,
+                        ObjectTableName = a.ObjectTableName,
                         HasCustomFields = a.HasCustomFields,
                         MaxNumberOfCustomFields = a.MaxNumberOfCustomFields,
                     });
@@ -158,7 +158,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                        RecordType = a.RecordType,
                                                        ParentFactCode = a.ParentFactCode,
                                                        DisplayName = a.DisplayName,
-                                                       CustomFieldObjectTableName = a.CustomFieldObjectTableName,
+                                                       ObjectTableName = a.ObjectTableName,
                                                        HasCustomFields = a.HasCustomFields,
                                                        MaxNumberOfCustomFields = a.MaxNumberOfCustomFields,
                                                    };

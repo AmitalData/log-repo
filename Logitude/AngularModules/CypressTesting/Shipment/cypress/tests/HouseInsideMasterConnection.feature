@@ -1,13 +1,10 @@
 Feature: House Creation And Disconnecting Inside The Master
 
-  Scenario: Login And Open Shipments Workspace
-    Given the user logged in
-    And navigate to shipments workspace
-
   Scenario: Create Master Export Air Shipment
-    Given a master Shipment with following details
+    Given the user logged in and navigates to shipments workspace
+    And a master Shipment with following details
       | ShipmentLevel | Direction | TransportMode | Agent            | MainCarriageFromPort | MainCarriageToPort |
-      | Master        | E         | A             | IntegrationAgent | LHR                  | MIA                |
+      | Master        | Export    | Air           | IntegrationAgent | LHR                  | MIA                |
     When create shipment
     Then the master should create successfully
 

@@ -32,7 +32,7 @@ namespace WarehouseData
         public string FieldIndexes { get; set; }
         public string RefreshIds { get; set; }
         public string ParentKeyName { get; set; }
-        public string CustomFieldObjectTableName { get; set; }
+        public string ObjectTableName { get; set; }
 
         public string AdditionalIndexes { get; set; }
         

@@ -8,20 +8,17 @@ import { ShipmentDetails } from "../../models/ShipmentDetails";
 let MasterShipmentDetails: ShipmentDetails;
 let shipmentNumber: string;
 
-Given("the user logged in", () => {
-  cy.Login()
-});
-
-Given("navigate to shipments workspace", () => {
-  cy.Click(BaseSelectors.OperationsMenu, null)
-  cy.Click(Selectors.ShipmentTab, null)
+Given("the user logged in and navigates to shipments workspace", () => {
+    cy.Login()
+    cy.Click(BaseSelectors.OperationsMenu, null)
+    cy.Click(Selectors.ShipmentTab, null)
 });
 
 Given("a master Shipment with following details",(dataTable)=>{
     const shipmentDetails = dataTable.hashes()[0] as ShipmentDetails;
     MasterShipmentDetails = shipmentDetails;
     Actions.OpenNewShipmentWizard(MasterShipmentDetails.ShipmentLevel);
-    Actions.FillShipmentDefaultFields(MasterShipmentDetails);
+    Actions.FillShipmentWizardsFields(MasterShipmentDetails);
 });
 
 When("create shipment", () => {
@@ -46,13 +43,13 @@ When("create house with {string} as Shipper",(Shipper)=>{
 });
 
 Then("the house should create and connect successfully",()=>{
-    BaseAssertion.AssertStatusCode("WaitPostShipmentRequest", 200);
+    BaseAssertion.AssertStatusCode("WaitPostShipmentRequest", 200)
 });
 
 When("disconnect shipment",()=>{
-    cy.Click(BaseSelectors.Button,"Disconnect All");
-    cy.Click(BaseSelectors.RedButton,"Yes");
-    cy.DefineRequestWait("PUT", "**/shipment", "WaitPutShipmentRequest")
+    cy.get('#EditComponentBusyIndicator_0').should('not.exist');
+    cy.Click("#EditComponentCellId_0_0 > div.MediaFill > table > tr:nth-child(3) > td > div > div.MediaFillAbsolute.CurvedEditArea > table > tr > td:nth-child(2) > div > ng-component:nth-child(3) > div > scrollviewer > div > div > div > ng-component > table > tr:nth-child(1) > td > div > table > tr:nth-child(3) > td > div > div > div.SimpleGridViewBody > table > tr:nth-child(1) > td > table > tr:nth-child(2) > td:nth-child(2) > table > tr > td:nth-child(2) > button",null);
+    Actions.DisconnectShipment()
 });
 
 Then("the shipment should disconnect successfully",()=>{

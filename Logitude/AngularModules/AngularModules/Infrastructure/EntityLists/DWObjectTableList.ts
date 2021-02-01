@@ -22,7 +22,7 @@ export class DWObjectTableList {
 		ParentFactCode: string;
 		RecordType: string;
 		DisplayName: string;
-		CustomFieldObjectTableName: string;
+		ObjectTableName: string;
 		MaxNumberOfCustomFields: number;
 		HasCustomFields: boolean;
 	

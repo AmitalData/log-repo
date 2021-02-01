@@ -11,18 +11,20 @@ let shipmentNumber: string;
 Given("the user logged in", () => {
   cy.Login();
 });
-And("navigates to shipments workspace", () => {
+
+Given("navigates to shipments workspace", () => {
   cy.Click(BaseSelectors.OperationsMenu, null);
   cy.Click(Selectors.ShipmentTab, null);
 });
 
 Given("a direct shipment with the following details",
   (dataTable) => {
-    const shipmentDetails = dataTable.hashes()[0] as ShipmentDetails;
+    let shipmentDetails = dataTable.hashes()[0] as ShipmentDetails;
     ShipmentData = shipmentDetails;
     Actions.OpenNewShipmentWizard(ShipmentData.ShipmentLevel);
-    Actions.FillShipmentDefaultFields(ShipmentData);
-  });
+    Actions.FillShipmentWizardsFields(ShipmentData);
+});
+
 When("create shipment", () => {
   Actions.CreateShipment(ShipmentData.ShipmentLevel);
 });
@@ -32,13 +34,13 @@ Then("the direct should create successfully", () => {
   })
 });
 
-
 Given("the user open the direct shipment", () => {
   Actions.OpenShipment(shipmentNumber)
 })
 When("copy the shipment", () => {
   Actions.CopyShipment(ShipmentData.ShipmentLevel);
 });
+
 Then("a shipment copy should create successfully", () => {
   BaseAssertion.AssertStatusCode("WaitPostShipmentRequest", 200);
 });

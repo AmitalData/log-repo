@@ -28,7 +28,7 @@ namespace WarehouseData.Helper
                 result = ResolveDeclareCustomFieldsVariable(result);
                 result = ResolveCustomFieldNamesVariable(result);
                 result = ResolveCustomFieldValuesVariable(result);
-                result = ResolveShipmentsCustomFieldsVariable(result , tableClass.Dw_TableName);
+                result = ResolveCustomFieldsVariable(result , tableClass.Dw_TableName);
                 result = ResolveCursorCustomFieldsVariable(result);
 
             }
@@ -53,7 +53,7 @@ namespace WarehouseData.Helper
             return sql;
         }
 
-        private string ResolveShipmentsCustomFieldsVariable(string sql , string dwTableName)
+        private string ResolveCustomFieldsVariable(string sql , string dwTableName)
         {
             string result = string.Empty;
             if (sql.Contains("@"+ dwTableName + ".CustomFieldsVariable"))
