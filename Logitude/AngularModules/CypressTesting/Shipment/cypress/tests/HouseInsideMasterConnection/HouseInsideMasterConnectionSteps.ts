@@ -50,7 +50,6 @@ Then("the house should create and connect successfully",()=>{
 });
 
 When("disconnect shipment",()=>{
-
     cy.Click(BaseSelectors.Button,"Disconnect All");
     cy.Click(BaseSelectors.RedButton,"Yes");
     cy.DefineRequestWait("PUT", "**/shipment", "WaitPutShipmentRequest")

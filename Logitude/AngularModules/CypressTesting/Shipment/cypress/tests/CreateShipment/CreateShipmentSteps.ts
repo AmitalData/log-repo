@@ -28,6 +28,6 @@ When("create shipment", () => {
   Actions.CreateShipment(_ShipmentDetails.ShipmentLevel);
 });
 
-Then("the shipment should create successfully", () => {
+Then("the direct should create successfully", () => {
   BaseAssertion.AssertStatusCode("WaitPostShipmentRequest", 200);
 });

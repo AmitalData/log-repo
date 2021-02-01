@@ -26,7 +26,7 @@ Given("a direct shipment with the following details",
 When("create shipment", () => {
   Actions.CreateShipment(ShipmentData.ShipmentLevel);
 });
-Then("the shipment should create successfully", () => {
+Then("the direct should create successfully", () => {
   BaseAssertion.AssertStatusCode("WaitPostShipmentRequest", 200).then((interception) => {
     shipmentNumber = interception.response.body.ShipmentNumber;
   })
@@ -37,8 +37,6 @@ Given("the user open the direct shipment", () => {
   Actions.OpenShipment(shipmentNumber)
 })
 When("copy the shipment", () => {
-  cy.Click(Selectors.ShipmentMoreList, null)
-  cy.Click(Selectors.CopyShipmentButton, null)
   Actions.CopyShipment(ShipmentData.ShipmentLevel);
 });
 Then("a shipment copy should create successfully", () => {

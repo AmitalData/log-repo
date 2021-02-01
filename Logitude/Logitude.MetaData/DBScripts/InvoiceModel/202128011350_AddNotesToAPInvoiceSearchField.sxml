@@ -1,0 +1,71 @@
+﻿<Script DBType="Main" Module="Invoice" AOT="true" TargetTableName="APInvoices">
+  <Sql Version="3">
+    <![CDATA[
+    
+		  If(OBJECT_ID('tempdb..#temp') Is Not Null)
+      Begin
+       Drop Table #temp
+      End
+
+      If(OBJECT_ID('tempdb..#temp_Invoices') Is Not Null)
+      Begin
+        Drop Table #temp_Invoices
+      End
+
+      CREATE TABLE #temp_Invoices(APInvoiceId varchar(15) not null,SearchFields nvarchar(MAX) not null)
+      
+      select Id,Tenant,InternalNotes,SearchFields
+      into #temp
+      from APInvoices where InternalNotes is not null and $LastCounterWhere$
+      declare @Tenant as int
+      declare @APInvoiceId as varchar(15)
+			declare @InternalNotes as nvarchar(250)
+      declare @MySearchFields as nvarchar(MAX)
+			declare @Count as int
+      set @Count = 0;
+                BEGIN
+                    DECLARE DataCursor CURSOR READ_ONLY
+                    FOR
+                    SELECT Id, Tenant, InternalNotes, SearchFields
+                    FROM #temp
+                    OPEN DataCursor FETCH NEXT FROM DataCursor INTO @APInvoiceId, @Tenant, @InternalNotes, @MySearchFields
+                    WHILE @@FETCH_STATUS = 0
+                    BEGIN
+                          set @MySearchFields = @MySearchFields +',' + @InternalNotes;
+                          insert into #temp_Invoices(APInvoiceId, SearchFields) values (@APInvoiceId, @MySearchFields)
+                          set @Count = @Count + 1;
+                          if(@Count = 1000)
+                    begin
+                                  update APInvoices
+                                  set SearchFields = #temp_Invoices.SearchFields 
+                                  FROM APInvoices
+                                  INNER JOIN #temp_Invoices
+                                  ---on APInvoices.Id = #temp_Invoices.APInvoiceId
+                                  on APInvoices.Id COLLATE SQL_Latin1_General_CP1_CI_AS= #temp_Invoices.APInvoiceId COLLATE SQL_Latin1_General_CP1_CI_AS
+                                  truncate table #temp_Invoices
+                                  set @Count = 0
+                     end
+
+                    FETCH NEXT FROM DataCursor INTO @APInvoiceId, @Tenant, @InternalNotes, @MySearchFields
+                    END
+                    CLOSE DataCursor
+                    DEALLOCATE DataCursor
+              END
+              
+              if (@Count > 0)
+              begin
+                    update APInvoices
+                    set
+                    SearchFields = #temp_Invoices.SearchFields 
+                    FROM APInvoices
+                    INNER JOIN #temp_Invoices
+                    --on APInvoices.Id = #temp_Invoices.APInvoiceId
+                    on APInvoices.Id COLLATE SQL_Latin1_General_CP1_CI_AS= #temp_Invoices.APInvoiceId COLLATE SQL_Latin1_General_CP1_CI_AS
+
+              end
+
+        drop table #temp
+        drop table #temp_Invoices
+    ]]>
+  </Sql>
+</Script>

@@ -822,5 +822,10 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public double? HousesACCTReceivablesInProfit { get; set; }
 
         public DateTime? INTTRALastEBbookingSendDate { get; set; }
+
+        public string TruckerId { get; set; } 
+        public DateTime? AssignedToTruckerDate { get; set; }
+        public virtual Card TruckerCard { get; set; }
+
     }
 }

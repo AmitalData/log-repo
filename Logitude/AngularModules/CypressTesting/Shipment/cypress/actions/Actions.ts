@@ -1,9 +1,12 @@
 import * as gr from "../../../Base/cypress/Actions/GenerateRandoms"
 import { Selectors } from "../selectors/Selectors"
 import { ShipmentDetails } from "../models/ShipmentDetails";
-import * as BaseActions from "../../../Base/cypress/actions/Actions"
 import { PartnersDetails } from "cypress/models/PartnersDetails";
-import { BaseSelectors } from "../../../Base/cypress/selectors/BaseSelectors"
+import { BaseSelectors } from "../../../Base/cypress/selectors/BaseSelectors";
+import { PayableDetails } from "cypress/models/PayableDetails";
+import { APInvoiceDetails } from "cypress/models/APInvoiceDetails"
+import * as BaseActions from "../../../Base/cypress/actions/Actions"
+import * as BaseAssertion from "../../../Base/cypress/actions/Assertion";
 
 export function OpenNewShipmentWizard(levelCode: string) {
     cy.Click("#HelperNotesButton_0_0", null)
@@ -59,6 +62,27 @@ export function OpenShipment(ShipmentNumber: string) {
     cy.SelectQuickSearchFirstElement(Selectors.ShipmentSearchBar, ShipmentNumber)
 }
 
+export function CancelShipment() {
+    cy.Click(Selectors.ShipmentMoreList, null);
+    cy.Click(Selectors.CancelShipmentButton, null);
+    UpdateCanceledShipment();
+}
+
+export function UpdateCanceledShipment() {
+    cy.DefineRequestWait("PUT", "**/shipment", "WaitPutShipmentRequest")
+    cy.Click(Selectors.ConfirmActionButton, null);
+}
+
+export function DisconnectShipment() {
+    // cy.Click(BaseSelectors.Button,"Disconnect All");
+    UpdateDisconnectedShipment()
+}
+
+export function UpdateDisconnectedShipment() {
+    cy.DefineRequestWait("PUT", "**/shipment", "WaitPutShipmentRequest")
+    cy.Click(BaseSelectors.RedButton, "Yes");
+}
+
 export function FillGeneralTab(MoveType: string) {
     cy.FillRandomNumber(Selectors.ShipmentGrossWeight, 100, 1000)
     cy.SelectLogLovElement(Selectors.ShipmentMoveType, true, MoveType)
@@ -112,8 +136,8 @@ export function FillPickupRouting() {
     cy.DefineRequestWait("GET", "**/cardviews/**", "WaitCardViewsRequest")
     cy.DefineRequestWait("GET", "**/addressviews/**", "WaitAddressViewsRequest")
     cy.Click(Selectors.PickUp, null)
-    BaseActions.WaitRequestReturnResponse("WaitCardViewsRequest", 200)
-    BaseActions.WaitRequestReturnResponse("WaitAddressViewsRequest", 200)
+    BaseAssertion.AssertStatusCode("WaitCardViewsRequest", 200)
+    BaseAssertion.AssertStatusCode("WaitAddressViewsRequest", 200)
 }
 
 export function FillDeliveryRouting(partner: string) {
@@ -121,8 +145,8 @@ export function FillDeliveryRouting(partner: string) {
     cy.DefineRequestWait("GET", "**/cardviews/**", "WaitCardViewsRequest")
     cy.DefineRequestWait("GET", "**/addressviews/**", "WaitAddressViewsRequest")
     cy.Click(Selectors.Delivery, null)
-    BaseActions.WaitRequestReturnResponse("WaitCardViewsRequest", 200)
-    BaseActions.WaitRequestReturnResponse("WaitAddressViewsRequest", 200)
+    BaseAssertion.AssertStatusCode("WaitCardViewsRequest", 200)
+    BaseAssertion.AssertStatusCode("WaitAddressViewsRequest", 200)
     cy.get(Selectors.ShipmentPickUpDelivery_ToPartnerCardId).then((input) => {
         if (input.text() === "" || input.text() === null) {
             cy.SelectLogLovElement(Selectors.ShipmentPickUpDelivery_ToPartnerCardId, false, partner)
@@ -160,14 +184,19 @@ export function FillOnCarriageRouting(transportModeCode: string, fromPort: strin
     })
 }
 
-export function FillPayablesTab(ChargesType: string, currency: string, measutment?: string) {
+export function FillPayablesTab(payableDetails: PayableDetails) {
     cy.Click(Selectors.AddNewPayableLine, null)
-    cy.SelectLogLovElement(Selectors.ShipmentPayable_ChargesTypeId, true, ChargesType)
-    cy.SelectLogLovFirstElement(Selectors.ShipmentPayable_MeasurementId, true)
-    cy.SelectLogLovElement(Selectors.ShipmentPayable_CurrencyId, true, currency)
+    cy.SelectLogLovElement(Selectors.ShipmentPayable_ChargesTypeId, true, payableDetails.ChargesType);
+    cy.SelectLogLovElement(Selectors.ShipmentPayable_MeasurementId, true, payableDetails.UOM)
+    if (payableDetails.Quantity) {
+        cy.get(Selectors.ShipmentPayableQuantity).type(payableDetails.Quantity);
+    }
+    if (payableDetails.UnitPrice) {
+        cy.get(Selectors.ShipmentPayableUnitPrice).type(payableDetails.UnitPrice);
+    }
+    cy.SelectLogLovElement(Selectors.ShipmentPayable_CurrencyId, true, payableDetails.Currency)
     cy.Click(Selectors.AddPayableOkButton, null)
 }
-
 export function CreateAnewShipment(shipmentLevel: string) {
     var _ShipmentDetails = {
         ShipmentLevel: shipmentLevel.charAt(0),
@@ -195,7 +224,6 @@ function AddPackagesOrContainersForOrdersTab(shipmentTypeCode: string, PackageTy
         cy.Click(Selectors.OrderOKButton, null)
     }
 }
-
 function AddPartner(partnerTypeId: string, partnerFieldId: string, partner?: string) {
     cy.Click("label", "Add Partners")
 
@@ -235,12 +263,42 @@ function AddPackagesOrContainersForPackagesTab(transportModeCode: string, shipme
     }
 }
 export function CopyShipment(levelCode: string) {
+    cy.Click(Selectors.ShipmentMoreList, null)
+    cy.Click(Selectors.CopyShipmentButton, null)
     CreateShipment(levelCode);
 }
 
-export function DisconnectShipment() {
-    cy.DefineRequestWait("PUT", "**/shipment", "WaitPutShipmentRequest");
-    cy.Click(BaseSelectors.RedButton, "Yes");
+export function FillAPInvoiceDetails(aPInvoiceDetails: APInvoiceDetails) {
+    var generatedInvoiceNumber = "AP" + gr.GenerateRandomNumber(10000, 99999).toString();
+    var todayDate = BaseActions.GetTodayDate();
+    cy.SelectLogLovElement(Selectors.APInvoiceVendor, false, aPInvoiceDetails.Vendor);
+    cy.get(Selectors.APInvoiceInvoiceNumber).type(generatedInvoiceNumber)
+    cy.get(Selectors.APInvoiceAmountInInvoice).type(aPInvoiceDetails.InvoiceAmount)
+    cy.SelectLogLovElement(Selectors.APInvoiceInvoiceCurrency, true, aPInvoiceDetails.InvoiceCurrency);
+    cy.get(Selectors.APInvoiceInvoiceExchangeRate).clear().type(aPInvoiceDetails.InvoiceExchangeRate);
+    cy.get(Selectors.APInvoiceInvoiceDate).type(todayDate);
+    cy.SelectLogLovElement(Selectors.APInvoicePaymentTerm, true, aPInvoiceDetails.PaymentTerms);
+    cy.get(Selectors.APInvoiceDueDate).type(todayDate);
+    cy.Click(Selectors.OkCreateAPInvoiceButton, null);
+    cy.Click(Selectors.APInvoiceLineCheckBox, null)
+    cy.SelectLogLovElement(Selectors.APInvoiceVatType, true, aPInvoiceDetails.VATType)
+    cy.Click(Selectors.APInvoiceVatTypeApplyToAll, null)
+}
+
+export function ReceiveAPInvoice() {
+    cy.DefineRequestWait("POST", "**/apinvoices", "WaitPostAPInvoicesRequest")
+    cy.Click(Selectors.APInvoiceSaveButton, null)
+}
+
+export function APApproveInvoice() {
+    cy.DefineRequestWait("PUT", "**/apinvoices", "WaitPutAPInvoicesRequest")
+    cy.Click(Selectors.APInvoiceApproveButton, null)
+}
+
+export function APInvoiceCancelApproval() {
+    cy.Click(Selectors.APInvoiceMoreList, null)
+    cy.DefineRequestWait("PUT", "**/apinvoices", "WaitPutAPInvoicesRequest")
+    cy.Click(Selectors.APInvoiceCancelApprovalButton, null)
 }
 
 export function ConnectShipment() {
