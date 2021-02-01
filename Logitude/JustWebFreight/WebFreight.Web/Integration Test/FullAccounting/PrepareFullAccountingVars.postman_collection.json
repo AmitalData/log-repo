@@ -703,7 +703,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{ \r\n\"ChangeSetOp\": 2,\r\n\"ClosedMonth\":{{AcocuntingPeriodsClosedMonth}} ,\r\n\"EncodeBase64NVARCHARFieldsBy\": null,\r\n\"Id\": \"{{AcocuntingPeriodsId}}\",\r\n\"OpenMonth\":{{CurrentMonth}},\r\n\"PeriodTypeCode\": \"1\",\r\n\"PeriodTypeName\": \"Accounting\",\r\n\"Tenant\": {{AcocuntingPeriodsTenant}},\r\n\"Year\": {{AcocuntingPeriodsYear}}\r\n}\r\n",
+					"raw": "{ \r\n\"ChangeSetOp\": 2,\r\n\"ClosedMonth\":null ,\r\n\"EncodeBase64NVARCHARFieldsBy\": null,\r\n\"Id\": \"{{AcocuntingPeriodsId}}\",\r\n\"OpenMonth\":{{CurrentMonth}},\r\n\"PeriodTypeCode\": \"1\",\r\n\"PeriodTypeName\": \"Accounting\",\r\n\"Tenant\": {{AcocuntingPeriodsTenant}},\r\n\"Year\": {{AcocuntingPeriodsYear}}\r\n}\r\n",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -758,7 +758,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{ \r\n\"ChangeSetOp\": 2,\r\n\"ClosedMonth\":{{AcocuntingPeriodsInvoiceClosedMonth}} ,\r\n\"EncodeBase64NVARCHARFieldsBy\": null,\r\n\"Id\": \"{{AcocuntingPeriodsInvoiceId}}\",\r\n\"OpenMonth\":{{CurrentMonth}},\r\n\"PeriodTypeCode\": \"2\",\r\n\"PeriodTypeName\": \"Invoice\",\r\n\"Tenant\": {{AcocuntingPeriodsTenant}},\r\n\"Year\": {{AcocuntingPeriodsInvoiceYear}}\r\n}\r\n",
+					"raw": "{ \r\n\"ChangeSetOp\": 2,\r\n\"ClosedMonth\":null,\r\n\"EncodeBase64NVARCHARFieldsBy\": null,\r\n\"Id\": \"{{AcocuntingPeriodsInvoiceId}}\",\r\n\"OpenMonth\":{{CurrentMonth}},\r\n\"PeriodTypeCode\": \"2\",\r\n\"PeriodTypeName\": \"Invoice\",\r\n\"Tenant\": {{AcocuntingPeriodsTenant}},\r\n\"Year\": {{AcocuntingPeriodsInvoiceYear}}\r\n}\r\n",
 					"options": {
 						"raw": {
 							"language": "json"
