@@ -455,6 +455,9 @@ ul.line-list li.tick {
     }
 }
 
+
+
+
 @media screen and (max-width: 1000px) {
     /* .panel {
         width: calc(100% - 40px) !important;
@@ -468,6 +471,9 @@ ul.line-list li.tick {
         background: initial;
         box-shadow: none;
         border: none;
+    }
+    .ShipmentHeaderImage{
+      display: none;
     }
     .panel-container {
         background: white;
