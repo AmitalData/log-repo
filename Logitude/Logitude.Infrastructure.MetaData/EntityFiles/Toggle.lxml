@@ -39,7 +39,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Toggle&quot;"
-  Code="&quot;405f&quot;"
+  Code="&quot;3c6d&quot;"
   Name="&quot; Query Group&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;Name&quot;"
@@ -421,10 +421,6 @@
       Code="&quot;FPG&quot;"
       Name="&quot;ARPayment Fetcha Pago&quot;"
       SearchFields="&quot;FPG,ARPayment Fetcha Pago&quot;" />
-    <Record
-      Code="&quot;TJC&quot;"
-      Name="&quot;Ticket Jumping Counter&quot;"
-      SearchFields="&quot;TJC,Ticket Jumping Counter&quot;" />
     <Record
       Code="&quot;BDW&quot;"
       Name="&quot;Build Document Via WorkerRole&quot;"
