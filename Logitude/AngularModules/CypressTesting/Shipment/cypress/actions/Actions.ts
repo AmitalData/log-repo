@@ -7,47 +7,23 @@ import { PayableDetails } from "cypress/models/PayableDetails";
 import { APInvoiceDetails } from "cypress/models/APInvoiceDetails"
 import * as BaseActions from "../../../Base/cypress/actions/Actions"
 import * as BaseAssertion from "../../../Base/cypress/actions/Assertion";
+import { ShipmentMapping } from "../mapping/ShipmentMapping"
 
-export function OpenNewShipmentWizard(levelCode: string) {
+export function OpenNewShipmentWizard(shipmentLevel: string){
     cy.Click("#HelperNotesButton_0_0", null)
-    cy.Click(".LogitudeToggleButtonItem", levelCode)
+    cy.Click(".LogitudeToggleButtonItem", shipmentLevel)
 }
 
-export function FillShipmentDefaultFields(shipmentDetails: ShipmentDetails) {
-    cy.ClickRadio("#DirectionRadio_0" + shipmentDetails.Direction)
-    cy.ClickRadio("#TransportModeRadio_0" + shipmentDetails.TransportMode)
-
-    if (shipmentDetails.ShipmentType) {
-        if (shipmentDetails.ShipmentType === "Groupage") {
-            cy.ClickRadio("#ShipmentTypeRadio_0MyG" + shipmentDetails.TransportMode);
-        } else {
-            cy.ClickRadio("#ShipmentTypeRadio_0" + shipmentDetails.ShipmentType)
-        }
-    }
-
-    if (shipmentDetails.Direction === "D" && shipmentDetails.TransportMode === "I") {
-        cy.FillLogLov("#Shipment_ShipperId", shipmentDetails.Shipper, false)
-        cy.FillLogLov("#Shipment_ConsigneeId", shipmentDetails.Consignee, false)
-    } else {
-        if (shipmentDetails.ShipmentLevel === "Master") {
-            cy.FillLogLov("#Master_AgentId", shipmentDetails.Agent, false)
-        } else {
-            if (shipmentDetails.Direction === "I") {
-                cy.FillLogLov("#Shipment_ConsigneeId", shipmentDetails.Consignee, false)
-            } else {
-                cy.FillLogLov("#Shipment_ShipperId", shipmentDetails.Shipper, false)
-            }
-        }
-
-        let portsPreSelector = shipmentDetails.ShipmentLevel === "Master" ? "#Master" : "#Shipment";
-
-        cy.FillLogLov((portsPreSelector + "_MainCarriageFromPortId"), shipmentDetails.MainCarriageFromPort, false)
-        cy.FillLogLov((portsPreSelector + "_MainCarriageToPortId"), shipmentDetails.MainCarriageToPort, false)
+export function FillShipmentWizardsFields(shipmentDetails: ShipmentDetails){
+    if(shipmentDetails.ShipmentLevel !== "Master"){
+        FillDirectAndHouseFields(shipmentDetails);
+    }else{
+        FillMasterFields(shipmentDetails);
     }
 }
 
-export function CreateShipment(levelCode: string) {
-    let createPreSelector = levelCode === "Master" ? "#Master" : "#Shipment";
+export function CreateShipment(shipmentLevel: string){
+    let createPreSelector = shipmentLevel === "Master" ? "#Master" : "#Shipment";
     cy.DefineRequestWait("POST", "**/shipment", "WaitPostShipmentRequest")
     cy.Click(createPreSelector + "Createbtn", null)
 }
@@ -88,19 +64,19 @@ export function FillGeneralTab(MoveType: string) {
     cy.SelectLogLovElement(Selectors.ShipmentMoveType, true, MoveType)
 }
 
-export function FillOrdersTab(shipmentTypeCode?: string, PackageType?: string) {
-    AddPackagesOrContainersForOrdersTab(shipmentTypeCode, PackageType)
+export function FillOrdersTab(shipmentType?:string, PackageType?: string){
+    AddPackagesOrContainersForOrdersTab(shipmentType, PackageType)
 }
 
-export function FillPartnersTab(directionCode: string, transportModeCode: string, partnersDetails: PartnersDetails) {
-    if (directionCode === "I") {
+export function FillPartnersTab(direction:string, transportMode:string, partnersDetails: PartnersDetails){
+    if (direction === "Import") {
         AddPartner("SHIPR", "Shipment_ShipperId")
     }
-    if ((directionCode === "E") || (directionCode === "R") || (directionCode === "D" && transportModeCode !== "I")) {
+    if((direction === "Export") || (direction === "Drop") || (direction === "Domestic" && transportMode !== "Inland")){
         AddPartner("CONSI", "Shipment_ConsigneeId")
     }
     AddPartner("AGENT", "Shipment_AgentId", partnersDetails.Agent)
-    if ((directionCode === "I" && transportModeCode === "A") || (directionCode === "D" && transportModeCode === "A")) {
+    if((direction === "Import" && transportMode === "Air") || (direction === "Domestic" && transportMode === "Air")){
         AddPartner("ISSAG", "Shipment_IssuingCarrierAgentId")
     }
     AddPartner("CSAEX", "Shipment_CustomAgentExportId", partnersDetails.CustomsAgentExport)
@@ -116,12 +92,12 @@ export function FillPartnersTab(directionCode: string, transportModeCode: string
     AddPartner("REAGT", "Shipment_ReleasingAgentId")
 }
 
-export function FillHouseInShipmentsTab(Shipper: string) {
-    cy.SelectLogLovElement("#Shipment_CustomerId", true, Shipper)
+export function FillPackagesTab(transportMode:string, shipmentType?:string, packageType?:string){
+    AddPackagesOrContainersForPackagesTab(transportMode, shipmentType, packageType)
 }
 
-export function FillPackagesTab(transportModeCode: string, shipmentTypeCode?: string, PackageType?: string) {
-    AddPackagesOrContainersForPackagesTab(transportModeCode, shipmentTypeCode, PackageType)
+export function FillHouseInShipmentsTab(Shipper: string) {
+    cy.SelectLogLovElement("#Shipment_CustomerId", true, Shipper)
 }
 
 export function FillReceivablesTab(ChargesType: string) {
@@ -154,12 +130,12 @@ export function FillDeliveryRouting(partner: string) {
     })
 }
 
-export function FillPreCarriageRouting(transportModeCode: string, fromPort: string, toPort: string) {
+export function FillPreCarriageRouting(transportMode:string, fromPort: string, toPort: string){
     cy.Click(Selectors.RoutingToggle, null)
     cy.get(Selectors.PreCarriage).then((btn) => {
         if (!btn.is('[disabled]')) {
             cy.Click(Selectors.PreCarriage, null)
-            cy.FillLogLov(Selectors.Shipment_PreCarriageTransportModeId, transportModeCode, true)
+            cy.FillLogLov(Selectors.Shipment_PreCarriageTransportModeId, transportMode, true)
             cy.SelectLogLovElement(Selectors.Shipment_PreCarriageFromPortId, false, fromPort)
             cy.SelectLogLovElement(Selectors.Shipment_PreCarriageToPortId, false, toPort)
             cy.Click(Selectors.PreCarriageOKBtn, null)
@@ -169,12 +145,12 @@ export function FillPreCarriageRouting(transportModeCode: string, fromPort: stri
     })
 }
 
-export function FillOnCarriageRouting(transportModeCode: string, fromPort: string, toPort: string) {
+export function FillOnCarriageRouting(transportMode:string, fromPort: string, toPort: string){
     cy.Click(Selectors.RoutingToggle, null)
     cy.get(Selectors.OnCarriage).then((btn) => {
         if (!btn.is('[disabled]')) {
             cy.Click(Selectors.OnCarriage, null)
-            cy.FillLogLov(Selectors.Shipment_OnCarriageTransportModeId, transportModeCode, true)
+            cy.FillLogLov(Selectors.Shipment_OnCarriageTransportModeId, transportMode, true)
             cy.SelectLogLovElement(Selectors.Shipment_OnCarriageFromPortId, false, fromPort)
             cy.SelectLogLovElement(Selectors.Shipment_OnCarriageToPortId, false, toPort)
             cy.Click(Selectors.OnCarriageOKBtn, null)
@@ -197,75 +173,26 @@ export function FillPayablesTab(payableDetails: PayableDetails) {
     cy.SelectLogLovElement(Selectors.ShipmentPayable_CurrencyId, true, payableDetails.Currency)
     cy.Click(Selectors.AddPayableOkButton, null)
 }
+
 export function CreateAnewShipment(shipmentLevel: string) {
     var _ShipmentDetails = {
-        ShipmentLevel: shipmentLevel.charAt(0),
-        Direction: "E",
-        TransportMode: "A",
+        ShipmentLevel: shipmentLevel,
+        Direction: "Export",
+        TransportMode: "Air",
         Shipper: "Shipper1",
         MainCarriageToPort: "LHR",
         MainCarriageFromPort: "MIA"
     } as ShipmentDetails;
 
     OpenNewShipmentWizard(_ShipmentDetails.ShipmentLevel);
-    FillShipmentDefaultFields(_ShipmentDetails);
+    FillShipmentWizardsFields(_ShipmentDetails);
     CreateShipment(_ShipmentDetails.ShipmentLevel)
 }
 
-function AddPackagesOrContainersForOrdersTab(shipmentTypeCode: string, PackageType: string) {
-    let numberOfPackages = gr.GenerateRandomNumber(1, 3)
-    for (let i = 0; i < numberOfPackages; i++) {
-        cy.Click(Selectors.OrdersAddPackage, null)
-        cy.FillRandomNumber(Selectors.OrderPackageQuantity, 1, 10)
-        if (shipmentTypeCode === "FCLD" || shipmentTypeCode === "FTL" || shipmentTypeCode === "LCLD" || shipmentTypeCode === "LTL") {
-            cy.SelectLogLovElement(Selectors.OrderPackageType, true, PackageType)
-            cy.FillRandomNumber(Selectors.OrderPackageGrossWeight, 1, 50)
-        }
-        cy.Click(Selectors.OrderOKButton, null)
-    }
-}
-function AddPartner(partnerTypeId: string, partnerFieldId: string, partner?: string) {
-    cy.Click("label", "Add Partners")
-
-    cy.get("#" + partnerTypeId).then((btn) => {
-        if (!btn.is('[disabled]')) {
-            cy.Click(("#" + partnerTypeId), null)
-            let partnerFieldSelector = "addeditpartnercomponent input[id^='" + partnerFieldId + "']"
-            if (partner) {
-                cy.SelectLogLovElement(partnerFieldSelector, false, partner)
-            }
-            else {
-                cy.SelectLogLovFirstElement(partnerFieldSelector, false)
-            }
-            cy.Click(Selectors.PartnerOKButton, null)
-        }
-    })
-}
-
-function AddPackagesOrContainersForPackagesTab(transportModeCode: string, shipmentTypeCode: string, PackageType: string) {
-    let numberOfPackages = gr.GenerateRandomNumber(1, 3)
-    for (let i = 0; i < numberOfPackages; i++) {
-        cy.Click(Selectors.AddPackage, null)
-        if (transportModeCode !== "A") {
-            cy.SelectLogLovElement(Selectors.PackageType, true, PackageType)
-        }
-        if (shipmentTypeCode !== "FCLD" && shipmentTypeCode !== "FTL") {
-            cy.FillRandomNumber(Selectors.PackageQuantity, 1, 10)
-        }
-        if (transportModeCode !== "A") {
-            cy.FillRandomNumber(Selectors.PackageWeight, 1, 10)
-        }
-        if (transportModeCode === "A") {
-            cy.Click(Selectors.AirPackageOKButton, null)
-        } else {
-            cy.Click(Selectors.OceanPackageOKButton, null)
-        }
-    }
-}
-export function CopyShipment(levelCode: string) {
+export function CopyShipment(shipmentLevel: string) {
     cy.Click(Selectors.ShipmentMoreList, null)
     cy.Click(Selectors.CopyShipmentButton, null)
-    CreateShipment(levelCode);
+    CreateShipment(shipmentLevel);
 }
 
 export function FillAPInvoiceDetails(aPInvoiceDetails: APInvoiceDetails) {
@@ -304,4 +231,121 @@ export function APInvoiceCancelApproval() {
 export function ConnectShipment() {
     cy.DefineRequestWait("PUT", "**/shipment", "WaitPutShipmentRequest");
     cy.Click(BaseSelectors.RedButton, "Yes");
+}
+
+function AddPackagesOrContainersForOrdersTab(shipmentType:string, PackageType: string){
+    let numberOfPackages = gr.GenerateRandomNumber(1, 3)
+    for (let i = 0; i < numberOfPackages; i++) {
+        cy.Click(Selectors.OrdersAddPackage, null)
+        cy.FillRandomNumber(Selectors.OrderPackageQuantity, 1, 10)
+        if (shipmentType === "FCLD" || shipmentType === "FTL" || shipmentType === "LCLD" || shipmentType === "LTL"){
+            cy.SelectLogLovElement(Selectors.OrderPackageType, true, PackageType)
+            cy.FillRandomNumber(Selectors.OrderPackageGrossWeight, 1, 50)
+        }
+        cy.Click(Selectors.OrderOKButton, null)
+    }
+}
+
+function AddPartner(partnerTypeId: string, partnerFieldId: string, partner?: string) {
+    cy.Click("label", "Add Partners")
+
+    cy.get("#" + partnerTypeId).then((btn) => {
+        if (!btn.is('[disabled]')) {
+            cy.Click(("#" + partnerTypeId), null)
+            let partnerFieldSelector = "addeditpartnercomponent input[id^='" + partnerFieldId + "']"
+            if (partner) {
+                cy.SelectLogLovElement(partnerFieldSelector, false, partner)
+            }
+            else {
+                cy.SelectLogLovFirstElement(partnerFieldSelector, false)
+            }
+            cy.Click(Selectors.PartnerOKButton, null)
+        }
+    })
+}
+
+function AddPackagesOrContainersForPackagesTab(transportMode:string, shipmentType:string, packageType:string){
+    let numberOfPackages = gr.GenerateRandomNumber(1, 3)
+    for (let i = 0; i < numberOfPackages; i++) {
+        cy.Click(Selectors.AddPackage, null)
+        if(transportMode !== "Air"){
+            cy.SelectLogLovElement(Selectors.PackageType, true, packageType)
+        }
+        if(shipmentType !== "FCLD" && shipmentType !== "FTL"){
+            cy.FillRandomNumber(Selectors.PackageQuantity, 1, 10)
+        }
+        if(transportMode !== "Air"){
+            cy.FillRandomNumber(Selectors.PackageWeight, 1, 10)
+        }
+        if(transportMode === "Air"){
+            cy.Click(Selectors.AirPackageOKButton, null)
+        } else {
+            cy.Click(Selectors.OceanPackageOKButton, null)
+        }
+    }
+}
+
+function FillDirectAndHouseFields(shipmentDetails: ShipmentDetails){
+    FillMainFields(shipmentDetails.Direction, shipmentDetails.TransportMode, shipmentDetails.ShipmentType);
+    FillShipperAndConsignee(shipmentDetails.Shipper, shipmentDetails.Consignee, shipmentDetails.Direction, shipmentDetails.TransportMode);
+    FillMainCarriagePorts(shipmentDetails.MainCarriageFromPort, shipmentDetails.MainCarriageToPort, shipmentDetails.Direction, shipmentDetails.TransportMode);
+}
+
+function FillMasterFields(shipmentDetails: ShipmentDetails){
+    FillMainFields(shipmentDetails.Direction, shipmentDetails.TransportMode, shipmentDetails.ShipmentType);
+    FillMasterAgent(shipmentDetails.Agent);
+    FillMainCarriagePorts(shipmentDetails.MainCarriageFromPort, shipmentDetails.MainCarriageToPort, shipmentDetails.Direction, shipmentDetails.TransportMode, true);
+}
+
+function FillMainFields(direction: string, transportMode: string, shipmentType: string){
+    FillDirection(direction);
+    FillTransportMode(transportMode);
+    FillShipmentType(shipmentType, transportMode);
+}
+
+function FillDirection(direction: string){
+    cy.ClickRadio("#DirectionRadio_0" + ShipmentMapping.GetDirectionCode(direction))
+}
+
+function FillTransportMode(transportMode: string){
+    cy.ClickRadio("#TransportModeRadio_0" + ShipmentMapping.GetTransportModeCode(transportMode))
+}
+
+function FillShipmentType(shipmentType: string, transportMode: string){
+    if(shipmentType){
+        if(shipmentType === "Groupage"){
+            cy.ClickRadio("#ShipmentTypeRadio_0MyG" + ShipmentMapping.GetTransportModeCode(transportMode));
+        }else{
+            cy.ClickRadio("#ShipmentTypeRadio_0" + shipmentType)
+        }
+    }
+}
+
+function FillShipperAndConsignee(shipper: string, consignee: string, direction: string, transportMode: string){
+    if(IsInlandDomestic(direction, transportMode)){
+        cy.FillLogLov("#Shipment_ShipperId", shipper, false)
+        cy.FillLogLov("#Shipment_ConsigneeId", consignee, false)
+    }else{
+        if(direction === "Import"){
+            cy.FillLogLov("#Shipment_ConsigneeId", consignee, false)
+        }else{
+            cy.FillLogLov("#Shipment_ShipperId", shipper, false)
+        }
+    }
+}
+
+function FillMainCarriagePorts(fromPort: string, toPort: string, direction: string, transportMode: string, isMaster: boolean = false){
+    if(!IsInlandDomestic(direction, transportMode)){
+        let portsPreSelector = isMaster ? "#Master" : "#Shipment";
+        cy.FillLogLov((portsPreSelector + "_MainCarriageFromPortId"), fromPort, false)
+        cy.FillLogLov((portsPreSelector + "_MainCarriageToPortId"), toPort, false)
+    }
+}
+
+function FillMasterAgent(agent: string){
+    cy.FillLogLov("#Master_AgentId", agent, false)
+}
+
+function IsInlandDomestic(direction: string, transportMode: string){
+    return (direction === "Domestic" && transportMode === "Inland");
 }

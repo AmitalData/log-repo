@@ -17,13 +17,13 @@ Given("the user logged in and navigates to shipments workspace", () => {
 Given("a master Shipment with the following details", (dataTable) => {
     shipmentDetails = dataTable.hashes()[0] as ShipmentDetails;
     Actions.OpenNewShipmentWizard(shipmentDetails.ShipmentLevel);
-    Actions.FillShipmentDefaultFields(shipmentDetails);
+    Actions.FillShipmentWizardsFields(shipmentDetails);
 });
 
 Given("a house Shipment with the following details", (dataTable) => {
     shipmentDetails = dataTable.hashes()[0] as ShipmentDetails;
     Actions.OpenNewShipmentWizard(shipmentDetails.ShipmentLevel);
-    Actions.FillShipmentDefaultFields(shipmentDetails);
+    Actions.FillShipmentWizardsFields(shipmentDetails);
 });
 
 Given("the user in the master's Shipment tab", () => {
