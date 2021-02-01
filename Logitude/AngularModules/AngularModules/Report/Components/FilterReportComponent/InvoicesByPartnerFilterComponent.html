@@ -1,4 +1,4 @@
-﻿
+
 
 
 <style>
@@ -85,13 +85,31 @@
                     <td style="width:5px;"><div style="width:5px;"></div></td>
 
 
-                    <td style="width:70px;"><div style="width:70px;">Partner</div></td>
+                    <td style="width:100px;"><div style="width:100px;">Bill To/ Vendor:</div></td>
 
                     <td style="width:200px;">
                         <div style="width:200px;">
 
-                            <LogLov 
-                                    [ObjectFieldName]="'CustomerId'"
+                            <LogLov [ObjectFieldName]="'CustomerId'"
+                                    [DataContext]="DataContext"
+                                    [LookUpTableName]="'Card'"
+                                    [DisplayMemberPath]="'EnglishName'"
+                                    [DependencyFilter1IsList]="'true'"
+                                    [ShowInActive]="'true'"
+                                    [DependencyFilter1Value]="''">
+
+
+                            </LogLov>
+
+                        </div>
+                    </td>
+
+
+                    <td style="width:60px;"><div style="width:60px;">Partner:</div></td>
+                    <td style="width:200px;">
+                        <div style="width:200px;">
+
+                            <LogLov [ObjectFieldName]="'PartnerId'"
                                     [DataContext]="DataContext"
                                     [LookUpTableName]="'Card'"
                                     [DisplayMemberPath]="'EnglishName'"
@@ -176,7 +194,7 @@
 
                                 <td style="width:120px;">
                                     <div style="width:120px;">
-                                        <LogDatePicker [HideColumns]="true"  [ObjectFieldName]="'ToDate'" [DataContext]="DataContext"></LogDatePicker>
+                                        <LogDatePicker [HideColumns]="true" [ObjectFieldName]="'ToDate'" [DataContext]="DataContext"></LogDatePicker>
                                     </div>
                                 </td>
 
