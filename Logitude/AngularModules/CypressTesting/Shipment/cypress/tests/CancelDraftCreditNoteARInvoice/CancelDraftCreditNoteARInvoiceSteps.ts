@@ -51,23 +51,9 @@ Then("the invoice should create successfully", () => {
     BaseAssertion.AssertStatusCode("WaitPostARInvoicesRequest", 200);
 });
 
-When("approve invoice", () => {
-    Actions.ARApproveInvoice()
+When("cancel draft", () => {
+    Actions.CancelDraftARInvoice()
 });
-Then("the invoice should approve successfully", () => {
-    BaseAssertion.AssertStatusCode("WaitPutARInvoicesRequest", 200);
-});
-
-When("set invoice as sent", () => {
-    Actions.SetAsSentARInvoice()
-});
-Then("the invoice should set as sent successfully", () => {
-    BaseAssertion.AssertStatusCode("WaitPutARInvoicesRequest", 200);
-});
-
-When("void invoice", () => {
-    Actions.VoidARInvoice()
-});
-Then("the invoice should void successfully", () => {
+Then("the invoice should cancel successfully", () => {
     BaseAssertion.AssertStatusCode("WaitPutARInvoicesRequest", 200);
 });

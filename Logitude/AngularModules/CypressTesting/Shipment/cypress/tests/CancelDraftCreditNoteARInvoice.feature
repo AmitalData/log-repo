@@ -12,11 +12,11 @@ Feature: Credit Note ARInvoice Operations And Actions
 
     Scenario: Create credit note ARInvoice
         Given a receivable with the following details
-            | ChargesType | UOM  | Quantity | UnitPrice | Currency |
-            | AFT         | GRWT | 5        | -10       | EUR      |
+            | ChargesType | UOM  | Quantity | UnitPrice | Currency | ExchangeRate |
+            | AFT         | GRWT | 5        | -10       | EUR      | 4            |
         And a credit ARInvoice with the following details
-            | PartnerType | InvoiceCurrency | InvoiceExchangeRate | InvoiceDate | PaymentTerms | DueDate | VATType |
-            | Customer    | EUR             | 4                   | today       | Cash         | today   | Zero    |
+            | PartnerType | InvoiceCurrency | InvoiceExchangeRate | InvoiceDate | PaymentTerms | DueDate | VATNo | Branch      | VATType |
+            | Customer    | EUR             | 4                   | today       | Cash         | today   | Zero  | Main Office | Zero    |
         When create invoice
         Then the invoice should create successfully
 

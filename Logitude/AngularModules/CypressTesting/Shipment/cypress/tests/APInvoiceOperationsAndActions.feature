@@ -1,12 +1,10 @@
 Feature: APInvoice operations and actions
     This feature file will create a direct shipment and assign an APInvoice, approve this invoice and cancel the approvement.
 
-    Scenario: Login And Open Shipments Workspace
-        Given the user logged in
-        And navigate to shipments workspace
-
+   
     Scenario: Create Direct Export Air Shipment
-        Given a direct shipment with the following details
+        Given the user logged in and navigates to shipments workspace
+        And a direct shipment with the following details
             | ShipmentLevel | Direction | TransportMode | Shipper  | MainCarriageFromPort | MainCarriageToPort |
             | Direct        | E         | A             | Shipper1 | LHR                  | MIA                |
         When create shipment
@@ -29,3 +27,6 @@ Feature: APInvoice operations and actions
     Scenario: Cancel the APInvoice approvement
         When cancel the invoice approvement
         Then the invoice should cancel successfully
+Scenario: Void APInvoice
+    When void invoice
+    Then the invoice should void successfully

@@ -3,5 +3,6 @@ export interface ReceivableDetails {
     Currency: string,
     UOM: string,
     UnitPrice: string,
-    Quantity: string
+    Quantity: string;
+    ExchangeRate:string
 }
