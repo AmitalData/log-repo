@@ -805,6 +805,52 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private string shipCode ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ShipCode  
+	   {
+	    
+	     get
+		{
+		   return shipCode;
+		 }
+		 set
+		 {
+		   if(shipCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ShipCode",OldValue=shipCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   shipCode=value;
+		   }
+			
+		 }
+	   }
+	  private string consignmentType ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ConsignmentType  
+	   {
+	    
+	     get
+		{
+		   return consignmentType;
+		 }
+		 set
+		 {
+		   if(consignmentType != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ConsignmentType",OldValue=consignmentType,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   consignmentType=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

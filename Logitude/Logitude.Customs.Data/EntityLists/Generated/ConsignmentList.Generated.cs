@@ -76,6 +76,10 @@ namespace Logitude.Customs.Data.EntityLists
        public string ExportUnloadingPortCode  { get; set; }
        [DataMember]
        public string ExportLoadingPortCode  { get; set; }
+       [DataMember]
+       public string ShipCode  { get; set; }
+       [DataMember]
+       public string ConsignmentType  { get; set; }
    }
 
 }
