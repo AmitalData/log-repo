@@ -1,11 +1,13 @@
 Feature: Edit Direct Export Air Shipment
 
-  Scenario: Login And Open Shipments Workspace
-    Given the user logged in
-    And navigate to shipments workspace
-    And create a new Direct shipment
-
-#Using the created shipment in the first scenario do the following.
+  Scenario: Create Direct Export Air Shipment
+    Given the user logged in and navigates to shipments workspace
+    And a direct shipment with the following details
+      | ShipmentLevel | Direction | TransportMode | Shipper  | MainCarriageFromPort | MainCarriageToPort |
+      | Direct        | E         | A             | Shipper1 | LHR                  | MIA                |
+    When create shipment
+    Then the direct should create successfully
+    
   Scenario: Edit Shipment by filling general tab
     Given the user in the general tab
     And  fill random GrossWeight and "MTA" as a MoveType 
@@ -58,7 +60,7 @@ Feature: Edit Direct Export Air Shipment
 
   Scenario: Fill Payables Tab
     Given the user in the Payables tab
-    And  add Payables with "AFT" as a ChargesType, "EUR" as a Currency and random UOM 
+    And  add Payables with "AFT" as a ChargesType, "EUR" as a Currency and "GRWT" as UOM 
     When save shipment
     Then the save operation complete successfully
     

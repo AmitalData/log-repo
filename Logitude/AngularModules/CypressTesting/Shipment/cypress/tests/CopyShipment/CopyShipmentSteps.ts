@@ -1,12 +1,12 @@
 import * as Actions from "../../actions/Actions";
-import * as Assertions from "../../actions/Assertions";
 import { Given, When, Then, And } from "cypress-cucumber-preprocessor/steps";
 import { ShipmentDetails } from "../../models/ShipmentDetails";
 import { BaseSelectors } from "../../../../Base/cypress/selectors/BaseSelectors"
 import { Selectors } from "../../selectors/Selectors";
+import * as BaseAssertion from "../../../../Base/cypress/actions/Assertion"
 
 let ShipmentData: ShipmentDetails;
-let ResultFile: string;
+let shipmentNumber: string;
 
 Given("the user logged in", () => {
   cy.Login();
@@ -28,24 +28,19 @@ Given("a direct shipment with the following details",
 When("create shipment", () => {
   Actions.CreateShipment(ShipmentData.ShipmentLevel);
 });
-
-Then("the shipment should create successfully", () => {
-  ResultFile = "CreatedShipmentsData/" + ShipmentData.ShipmentLevel.charAt(0) + ShipmentData.Direction +
-  ShipmentData.TransportMode + ((typeof ShipmentData.ShipmentType) === "undefined" || ShipmentData.ShipmentType === null ? "" : ShipmentData.ShipmentType) + ".json";
-
-  Assertions.ValidateCreatedShipment(ResultFile);
+Then("the direct should create successfully", () => {
+  BaseAssertion.AssertStatusCode("WaitPostShipmentRequest", 200).then((interception) => {
+    shipmentNumber = interception.response.body.ShipmentNumber;
+  })
 });
 
 Given("the user open the direct shipment", () => {
-  Actions.OpenShipment(ResultFile)
-});
-
+  Actions.OpenShipment(shipmentNumber)
+})
 When("copy the shipment", () => {
-  cy.Click(Selectors.ShipmentMoreList, null)
-  cy.Click(Selectors.CopyShipmentButton,null)
   Actions.CopyShipment(ShipmentData.ShipmentLevel);
 });
 
 Then("a shipment copy should create successfully", () => {
-  Assertions.ValidateCreatedShipment(null);
+  BaseAssertion.AssertStatusCode("WaitPostShipmentRequest", 200);
 });

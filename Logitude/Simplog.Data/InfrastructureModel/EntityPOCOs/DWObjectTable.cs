@@ -27,6 +27,9 @@ namespace Simplog.Data.InfrastructureModel.EntityPOCOs
         public string DisplayName { get; set; }
         public string IndexesXml { get; set; }
 
+        public string CustomFieldObjectTableName { get; set; }
+        public int MaxNumberOfCustomFields { get; set; }
+        public bool HasCustomFields { get; set; }
 
     }
 }

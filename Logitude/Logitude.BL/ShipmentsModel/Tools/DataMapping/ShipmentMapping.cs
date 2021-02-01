@@ -465,6 +465,9 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             entityPoco.IsAccrualsApproved = entityPM.IsAccrualsApproved;
             entityPoco.AccrualsApprovalDate = entityPM.AccrualsApprovalDate;
 
+            entityPoco.AssignedToTruckerDate = entityPM.AssignedToTruckerDate;
+            entityPoco.TruckerId = entityPM.TruckerId;
+
             BuildSearchField(entityPM, entityPoco, entityMasterData, myPackagesList);
             if (!LBcurrentTenant.IsDocumentsArchive)
             {
