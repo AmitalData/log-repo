@@ -217,7 +217,7 @@ export function FillAPInvoiceDetails(aPInvoiceDetails: APInvoiceDetails) {
     cy.Click(Selectors.OkCreateAPInvoiceButton, null);
     cy.Click(Selectors.APInvoiceLineCheckBox, null)
     cy.SelectLogLovElement(Selectors.APInvoiceVatType, true, aPInvoiceDetails.VATType)
-    cy.Click(Selectors.APInvoiceVatTypeApplyToAll, null)
+    cy.Click(Selectors.VatTypeApplyToAll, null)
 }
 
 export function ReceiveAPInvoice() {
@@ -231,7 +231,7 @@ export function APApproveInvoice() {
 }
 
 export function APInvoiceCancelApproval() {
-    cy.Click(Selectors.APInvoiceMoreList, null)
+    cy.Click(Selectors.InvoiceMoreList, null)
     cy.DefineRequestWait("PUT", "**/apinvoices", "WaitPutAPInvoicesRequest")
     cy.Click(Selectors.APInvoiceCancelApprovalButton, null)
 }
@@ -239,6 +239,61 @@ export function APInvoiceCancelApproval() {
 export function ConnectShipment() {
     cy.DefineRequestWait("PUT", "**/shipment", "WaitPutShipmentRequest");
     cy.Click(BaseSelectors.RedButton, "Yes");
+}
+
+export function VoidAPInvoice(){
+    cy.Click(Selectors.InvoiceMoreList, null)
+    cy.Click(Selectors.APInvoiceVoidButton,null)
+    cy.DefineRequestWait("PUT", "**/apinvoices", "WaitPutARInvoicesRequest")
+    cy.Click(Selectors.ConfirmWindowYes, null);
+}
+
+export function FillARInvoiceDetails(aRInvoiceDetails: ARInvoiceDetails) {
+    var generatedInvoiceNumber = "AR" + gr.GenerateRandomNumber(10000, 99999).toString();
+    cy.get(".ComboBox").click();
+    cy.get(".FillParent").find(".TextTrimming").contains("Customer").click()
+    cy.SelectLogLovElement(Selectors.ARInvoiceInvoiceCurrency, true, aRInvoiceDetails.InvoiceCurrency)
+    cy.get(Selectors.ARInvoiceExchangeRate).clear().type(aRInvoiceDetails.InvoiceExchangeRate)
+    cy.FillDate(Selectors.ARInvoiceInvoiceDate, aRInvoiceDetails.InvoiceDate)
+    cy.SelectLogLovElement(Selectors.ARInvoicePaymentTerm, true, aRInvoiceDetails.PaymentTerms)
+    cy.FillDate(Selectors.ARInvoiceDueDate, aRInvoiceDetails.DueDate)
+    cy.get(Selectors.ARInvoiceVatNumber).clear().type(aRInvoiceDetails.VATNo)
+    cy.SelectLogLovElement(Selectors.ARInvoiceBranch, true, aRInvoiceDetails.Branch)
+    cy.Click(Selectors.OkCreateARInvoiceButton, null);
+    cy.SelectLogLovElement(Selectors.ARInvoiceVatType, true, aRInvoiceDetails.VATType)
+    cy.Click(Selectors.VatTypeApplyToAll, null)
+
+
+}
+
+export function CreateARInvoice() {
+    cy.DefineRequestWait("POST", "**/arinvoices", "WaitPostARInvoicesRequest")
+    cy.Click(Selectors.ARInvoiceSaveButton, null)
+}
+
+export function ARApproveInvoice() {
+    cy.DefineRequestWait("PUT", "**/arinvoices", "WaitPutARInvoicesRequest")
+    cy.Click(Selectors.ARInvoiceApproveButton, null)
+}
+
+export function SetAsSentARInvoice(){
+    cy.Click(Selectors.InvoiceMoreList, null)
+    cy.Click(Selectors.ARInvoiceSetAsSentButton,null)
+    cy.DefineRequestWait("PUT", "**/arinvoices", "WaitPutARInvoicesRequest")
+    cy.Click("button", "Confirm");
+}
+
+export function VoidARInvoice(){
+    cy.Click(Selectors.InvoiceMoreList, null)
+    cy.Click(Selectors.ARInvoiceVoidButton,null)
+    cy.DefineRequestWait("PUT", "**/arinvoices", "WaitPutARInvoicesRequest")
+    cy.Click(Selectors.ConfirmWindowYes, null);
+}
+
+export function CancelDraftARInvoice() {
+    cy.DefineRequestWait("PUT", "**/arinvoices", "WaitPutARInvoicesRequest")
+    cy.Click(Selectors.ARInvoiceCancelDraftButton, null)
+    cy.Click(Selectors.ConfirmWindowYes,null)
 }
 
 function AddPackagesOrContainersForOrdersTab(shipmentType:string, PackageType: string){
@@ -354,59 +409,6 @@ function FillMasterAgent(agent: string){
     cy.FillLogLov("#Master_AgentId", agent, false)
 }
 
-export function VoidAPInvoice(){
-    cy.Click(Selectors.InvoiceMoreList, null)
-    cy.Click(Selectors.APInvoiceVoidButton,null)
-    cy.DefineRequestWait("PUT", "**/apinvoices", "WaitPutARInvoicesRequest")
-    cy.Click(Selectors.ConfirmWindowYes, null);
-}
-
-export function ConnectShipment() {
-    cy.DefineRequestWait("PUT", "**/shipment", "WaitPutShipmentRequest");
-    cy.Click(BaseSelectors.RedButton, "Yes");
-}
-
-export function FillARInvoiceDetails(aRInvoiceDetails: ARInvoiceDetails) {
-    var generatedInvoiceNumber = "AR" + gr.GenerateRandomNumber(10000, 99999).toString();
-    cy.get(".ComboBox").click();
-    cy.get(".FillParent").find(".TextTrimming").contains("Customer").click()
-    cy.SelectLogLovElement(Selectors.ARInvoiceInvoiceCurrency, true, aRInvoiceDetails.InvoiceCurrency)
-    cy.get(Selectors.ARInvoiceExchangeRate).clear().type(aRInvoiceDetails.InvoiceExchangeRate)
-    cy.FillDate(Selectors.ARInvoiceInvoiceDate, aRInvoiceDetails.InvoiceDate)
-    cy.SelectLogLovElement(Selectors.ARInvoicePaymentTerm, true, aRInvoiceDetails.PaymentTerms)
-    cy.FillDate(Selectors.ARInvoiceDueDate, aRInvoiceDetails.DueDate)
-    cy.get(Selectors.ARInvoiceVatNumber).clear().type(aRInvoiceDetails.VATNo)
-    cy.SelectLogLovElement(Selectors.ARInvoiceBranch, true, aRInvoiceDetails.Branch)
-    cy.Click(Selectors.OkCreateARInvoiceButton, null);
-    cy.SelectLogLovElement(Selectors.ARInvoiceVatType, true, aRInvoiceDetails.VATType)
-    cy.Click(Selectors.VatTypeApplyToAll, null)
-
-
-}
-
-export function CreateARInvoice() {
-    cy.DefineRequestWait("POST", "**/arinvoices", "WaitPostARInvoicesRequest")
-    cy.Click(Selectors.ARInvoiceSaveButton, null)
-}
-
-export function ARApproveInvoice() {
-    cy.DefineRequestWait("PUT", "**/arinvoices", "WaitPutARInvoicesRequest")
-    cy.Click(Selectors.ARInvoiceApproveButton, null)
-}
-export function SetAsSentARInvoice(){
-    cy.Click(Selectors.InvoiceMoreList, null)
-    cy.Click(Selectors.ARInvoiceSetAsSentButton,null)
-    cy.DefineRequestWait("PUT", "**/arinvoices", "WaitPutARInvoicesRequest")
-    cy.Click("button", "Confirm");
-}
-export function VoidARInvoice(){
-    cy.Click(Selectors.InvoiceMoreList, null)
-    cy.Click(Selectors.ARInvoiceVoidButton,null)
-    cy.DefineRequestWait("PUT", "**/arinvoices", "WaitPutARInvoicesRequest")
-    cy.Click(Selectors.ConfirmWindowYes, null);
-}
-export function CancelDraftARInvoice() {
-    cy.DefineRequestWait("PUT", "**/arinvoices", "WaitPutARInvoicesRequest")
-    cy.Click(Selectors.ARInvoiceCancelDraftButton, null)
-    cy.Click(Selectors.ConfirmWindowYes,null)
+function IsInlandDomestic(direction: string, transportMode: string){
+    return (direction === "Domestic" && transportMode === "Inland");
 }
