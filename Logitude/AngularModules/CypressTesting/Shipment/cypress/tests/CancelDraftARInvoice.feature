@@ -1,5 +1,5 @@
 Feature: ARInvoice operations and actions
-    This feature file will create a direct shipment and assign an ARInvoice, approve this invoice,set as sent and void invoice
+    This feature file will create a direct shipment and assign an ARInvoice, cancel draft
 
     Scenario: Login And Open Shipments Workspace
         Given the user logged in
