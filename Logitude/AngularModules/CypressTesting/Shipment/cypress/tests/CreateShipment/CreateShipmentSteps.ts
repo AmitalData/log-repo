@@ -5,7 +5,7 @@ import { BaseSelectors } from "../../../../Base/cypress/selectors/BaseSelectors"
 import { Selectors } from "../../selectors/Selectors";
 import * as BaseAssertion from "../../../../Base/cypress/actions/Assertion"
 
-let _ShipmentDetails: ShipmentDetails;
+let ShipmentData: ShipmentDetails;
 
 Given("the user logged in", () => {
   cy.Login();
@@ -18,14 +18,14 @@ Given("navigate to shipments workspace", () => {
 
 Given("a direct shipment with the following details",
   (dataTable) => {
-   const shipmentDetails = dataTable.hashes()[0] as ShipmentDetails;
-   _ShipmentDetails = shipmentDetails;
-   Actions.OpenNewShipmentWizard(_ShipmentDetails.ShipmentLevel);
-   Actions.FillShipmentDefaultFields(_ShipmentDetails);
+   let shipmentDetails = dataTable.hashes()[0] as ShipmentDetails;
+   ShipmentData = shipmentDetails;
+   Actions.OpenNewShipmentWizard(ShipmentData.ShipmentLevel);
+   Actions.FillShipmentWizardsFields(ShipmentData);
 });
 
 When("create shipment", () => {
-  Actions.CreateShipment(_ShipmentDetails.ShipmentLevel);
+  Actions.CreateShipment(ShipmentData.ShipmentLevel);
 });
 
 Then("the direct should create successfully", () => {

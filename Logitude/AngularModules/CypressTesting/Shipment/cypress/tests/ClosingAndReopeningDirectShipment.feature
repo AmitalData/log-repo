@@ -7,7 +7,7 @@ Feature:  Closing And Reopening Direct Shipment
   Scenario: Create Direct Export Air Shipment
     Given a direct shipment with the following details 
       | ShipmentLevel | Direction | TransportMode | Shipper  | MainCarriageFromPort | MainCarriageToPort |
-      | Direct        | E         | A             | Shipper1 | LHR                  | MIA                |
+      | Direct        | Export    | Air           | Shipper1 | LHR                  | MIA                |
     When create shipment 
     Then the shipment should create successfully
 

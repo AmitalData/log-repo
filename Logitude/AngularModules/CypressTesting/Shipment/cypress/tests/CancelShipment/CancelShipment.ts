@@ -22,7 +22,7 @@ Given("a direct shipment with the following details",
     const shipmentDetails = dataTable.hashes()[0] as ShipmentDetails;
     _ShipmentDetails = shipmentDetails;
     Actions.OpenNewShipmentWizard(_ShipmentDetails.ShipmentLevel);
-    Actions.FillShipmentDefaultFields(_ShipmentDetails);
+    Actions.FillShipmentWizardsFields(_ShipmentDetails);
   });
 
 When("create shipment", () => {

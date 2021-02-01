@@ -21,7 +21,7 @@ Given("a master Shipment with following details",(dataTable)=>{
     const shipmentDetails = dataTable.hashes()[0] as ShipmentDetails;
     MasterShipmentDetails = shipmentDetails;
     Actions.OpenNewShipmentWizard(MasterShipmentDetails.ShipmentLevel);
-    Actions.FillShipmentDefaultFields(MasterShipmentDetails);
+    Actions.FillShipmentWizardsFields(MasterShipmentDetails);
 });
 
 When("create shipment", () => {
