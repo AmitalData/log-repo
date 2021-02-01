@@ -423,6 +423,9 @@ ul.line-list li.tick {
         font-weight: normal;
         /* order: 3; */
         float: right;
+        text-align: right;
+
+        padding-right: 5px;
     }
     .steps-list li>div.caption {
         font-weight: bold;
@@ -441,6 +444,7 @@ ul.line-list li.tick {
         /* background: none;
         color: black; */
         font-weight: normal;
+        border-radius: 15px;
     }
     .steps-list li.highlighted>.caption {
         background: var(--MainColor);
@@ -450,7 +454,7 @@ ul.line-list li.tick {
         width: fit-content !important;
     }
     .steps-list li:hover:not(.dimmed) {
-        background: none;
+        /* background: none; */
     }
     .steps-list li>div.tick {
         width: 15px;
