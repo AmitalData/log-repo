@@ -4,7 +4,9 @@ import { ShipmentDetails } from "../models/ShipmentDetails";
 import { PartnersDetails } from "cypress/models/PartnersDetails";
 import { BaseSelectors } from "../../../Base/cypress/selectors/BaseSelectors";
 import { PayableDetails } from "cypress/models/PayableDetails";
+import { ReceivableDetails } from "cypress/models/ReceivableDetails"
 import { APInvoiceDetails } from "cypress/models/APInvoiceDetails"
+import { ARInvoiceDetails } from "cypress/models/ARInvoiceDetails"
 import * as BaseActions from "../../../Base/cypress/actions/Actions"
 import * as BaseAssertion from "../../../Base/cypress/actions/Assertion";
 import { ShipmentMapping } from "../mapping/ShipmentMapping"
@@ -100,10 +102,16 @@ export function FillHouseInShipmentsTab(Shipper: string) {
     cy.SelectLogLovElement("#Shipment_CustomerId", true, Shipper)
 }
 
-export function FillReceivablesTab(ChargesType: string) {
+
+
+export function FillReceivablesTab(receivableDetails: ReceivableDetails) {
     cy.Click(Selectors.AddNewReceivableLine, null)
-    cy.SelectLogLovElement(Selectors.ReceivableChargesType, true, ChargesType)
-    cy.FillRandomNumber(Selectors.ReceivableUnitPrice, 100, 100)
+    cy.SelectLogLovElement(Selectors.ReceivableChargesType, true, receivableDetails.ChargesType)
+    cy.SelectLogLovElement(Selectors.ReceivableMeasurement, true, receivableDetails.UOM)
+    cy.get(Selectors.ReceivableQuantity).type(receivableDetails.Quantity);
+    cy.get(Selectors.ReceivableUnitPrice).type(receivableDetails.UnitPrice);
+    cy.SelectLogLovElement(Selectors.ReceivableCurrency, true, receivableDetails.Currency)
+    cy.get(Selectors.ShipmentReceivableRate).clear().type(receivableDetails.ExchangeRate)
     cy.Click(Selectors.AddReceivableOkButton, null)
 }
 
@@ -209,7 +217,7 @@ export function FillAPInvoiceDetails(aPInvoiceDetails: APInvoiceDetails) {
     cy.Click(Selectors.OkCreateAPInvoiceButton, null);
     cy.Click(Selectors.APInvoiceLineCheckBox, null)
     cy.SelectLogLovElement(Selectors.APInvoiceVatType, true, aPInvoiceDetails.VATType)
-    cy.Click(Selectors.APInvoiceVatTypeApplyToAll, null)
+    cy.Click(Selectors.VatTypeApplyToAll, null)
 }
 
 export function ReceiveAPInvoice() {
@@ -223,7 +231,7 @@ export function APApproveInvoice() {
 }
 
 export function APInvoiceCancelApproval() {
-    cy.Click(Selectors.APInvoiceMoreList, null)
+    cy.Click(Selectors.InvoiceMoreList, null)
     cy.DefineRequestWait("PUT", "**/apinvoices", "WaitPutAPInvoicesRequest")
     cy.Click(Selectors.APInvoiceCancelApprovalButton, null)
 }
@@ -231,6 +239,61 @@ export function APInvoiceCancelApproval() {
 export function ConnectShipment() {
     cy.DefineRequestWait("PUT", "**/shipment", "WaitPutShipmentRequest");
     cy.Click(BaseSelectors.RedButton, "Yes");
+}
+
+export function VoidAPInvoice(){
+    cy.Click(Selectors.InvoiceMoreList, null)
+    cy.Click(Selectors.APInvoiceVoidButton,null)
+    cy.DefineRequestWait("PUT", "**/apinvoices", "WaitPutARInvoicesRequest")
+    cy.Click(Selectors.ConfirmWindowYes, null);
+}
+
+export function FillARInvoiceDetails(aRInvoiceDetails: ARInvoiceDetails) {
+    var generatedInvoiceNumber = "AR" + gr.GenerateRandomNumber(10000, 99999).toString();
+    cy.get(".ComboBox").click();
+    cy.get(".FillParent").find(".TextTrimming").contains("Customer").click()
+    cy.SelectLogLovElement(Selectors.ARInvoiceInvoiceCurrency, true, aRInvoiceDetails.InvoiceCurrency)
+    cy.get(Selectors.ARInvoiceExchangeRate).clear().type(aRInvoiceDetails.InvoiceExchangeRate)
+    cy.FillDate(Selectors.ARInvoiceInvoiceDate, aRInvoiceDetails.InvoiceDate)
+    cy.SelectLogLovElement(Selectors.ARInvoicePaymentTerm, true, aRInvoiceDetails.PaymentTerms)
+    cy.FillDate(Selectors.ARInvoiceDueDate, aRInvoiceDetails.DueDate)
+    cy.get(Selectors.ARInvoiceVatNumber).clear().type(aRInvoiceDetails.VATNo)
+    cy.SelectLogLovElement(Selectors.ARInvoiceBranch, true, aRInvoiceDetails.Branch)
+    cy.Click(Selectors.OkCreateARInvoiceButton, null);
+    cy.SelectLogLovElement(Selectors.ARInvoiceVatType, true, aRInvoiceDetails.VATType)
+    cy.Click(Selectors.VatTypeApplyToAll, null)
+
+
+}
+
+export function CreateARInvoice() {
+    cy.DefineRequestWait("POST", "**/arinvoices", "WaitPostARInvoicesRequest")
+    cy.Click(Selectors.ARInvoiceSaveButton, null)
+}
+
+export function ARApproveInvoice() {
+    cy.DefineRequestWait("PUT", "**/arinvoices", "WaitPutARInvoicesRequest")
+    cy.Click(Selectors.ARInvoiceApproveButton, null)
+}
+
+export function SetAsSentARInvoice(){
+    cy.Click(Selectors.InvoiceMoreList, null)
+    cy.Click(Selectors.ARInvoiceSetAsSentButton,null)
+    cy.DefineRequestWait("PUT", "**/arinvoices", "WaitPutARInvoicesRequest")
+    cy.Click("button", "Confirm");
+}
+
+export function VoidARInvoice(){
+    cy.Click(Selectors.InvoiceMoreList, null)
+    cy.Click(Selectors.ARInvoiceVoidButton,null)
+    cy.DefineRequestWait("PUT", "**/arinvoices", "WaitPutARInvoicesRequest")
+    cy.Click(Selectors.ConfirmWindowYes, null);
+}
+
+export function CancelDraftARInvoice() {
+    cy.DefineRequestWait("PUT", "**/arinvoices", "WaitPutARInvoicesRequest")
+    cy.Click(Selectors.ARInvoiceCancelDraftButton, null)
+    cy.Click(Selectors.ConfirmWindowYes,null)
 }
 
 function AddPackagesOrContainersForOrdersTab(shipmentType:string, PackageType: string){

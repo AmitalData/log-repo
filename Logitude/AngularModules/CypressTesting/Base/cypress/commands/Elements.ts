@@ -3,6 +3,7 @@ import * as gr from '../actions/GenerateRandoms'
 declare global{
 namespace Cypress {
     interface Chainable {
+        FillDate(selector: string, value: string): Chainable<Element>
         FillLogTextBox(selector: string, value: string): Chainable<Element>
         FillLogLov(selector: string, value: string, fromCache: boolean): Chainable<Element>
         FillRandomString(selector: string, length: number, upperCase: boolean): Chainable<Element>
@@ -19,7 +20,14 @@ namespace Cypress {
     }
 }
 }
-
+Cypress.Commands.add("FillDate", (selector, value) => {
+if(value=="today"){
+    cy.get(selector).focus().clear().type(".{enter}")
+}
+else{
+    cy.get(selector).focus().clear().type(value)
+}
+})
 Cypress.Commands.add("FillLogTextBox", (selector, value) => {
 
     cy.get(selector).focus().clear().type(value)
