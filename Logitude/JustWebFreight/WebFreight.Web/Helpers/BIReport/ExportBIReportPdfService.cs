@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Web;
@@ -40,6 +41,22 @@ namespace WebFreight.Web.Helpers.BIReport
             pdfConverter.PdfDocumentOptions.PdfPageOrientation = PdfPageOrientation.Portrait;
             pdfConverter.TriggeringMode = TriggeringMode.Auto;
             pdfConverter.NavigationTimeout = 120;
+            pdfConverter.PdfDocumentOptions.LeftMargin = 10;
+            pdfConverter.PdfDocumentOptions.RightMargin = 10;
+            HtmlToPdfElement headerHtml = new HtmlToPdfElement(0, 0, 0, 0, GetEvoPdfHtmlHeader(), null, 2040, 0);
+            pdfConverter.PdfHeaderOptions.AddElement(headerHtml);
+            pdfConverter.PdfHeaderOptions.HeaderHeight = 100;
+
+            HtmlToPdfElement footerHtml = new HtmlToPdfElement(0, 0, 0, 0, GetEvoPdfHtmlFooter(), null, 2040, 0);
+            pdfConverter.PdfFooterOptions.AddElement(footerHtml);
+            pdfConverter.PdfFooterOptions.FooterHeight = 20;
+
+            var footerTextElement = new TextElement(0, 20, "page &p; of &P;  ", new Font(new System.Drawing.FontFamily("Times New Roman"), 7, GraphicsUnit.Point));
+            footerTextElement.TextAlign = HorizontalTextAlign.Right;
+            pdfConverter.PdfFooterOptions.AddElement(footerTextElement);
+
+
+
             string htmlBody = GetPdfHtmlBody(dataTable);
             var pdfData = pdfConverter.ConvertHtml(htmlBody, null);
             return pdfData;
@@ -100,6 +117,34 @@ namespace WebFreight.Web.Helpers.BIReport
             }
             return isExecutedQuota;
         }
+
+
+        private string GetEvoPdfHtmlHeader()
+        {
+            StringBuilder stringBuilder = new StringBuilder();
+            stringBuilder.Append("<table border='1' cellpadding='1' cellspacing='1' style='height: 150px; width: 100 % '>" );
+            stringBuilder.Append("<tbody>");
+            stringBuilder.Append("<tr>");
+            stringBuilder.Append("<td style='width: 30 % '><img  src='https://ckeditor.com/apps/ckfinder/userfiles/files/123984258_682208545772232_645619898285396818_n(1).jpg' style='height:150px; width:290px' /></td>");
+            stringBuilder.Append("<td style='text-align:center;vertical-align:top; width:30 % '><div style='margin - top:50px; '><strong>InVentory Report</strong></div> </td>");
+            stringBuilder.Append("<td style='text-align:center;vertical-align:top; width:30 % '><div style='margin - top:50px; '><strong>22 Jub 2020 Report</strong></div> </td>");
+            stringBuilder.Append("</tr>");
+            stringBuilder.Append("</tbody>");
+            stringBuilder.Append("</table>");
+
+            return stringBuilder.ToString();
+        }
+        private string GetEvoPdfHtmlFooter()
+        {
+            StringBuilder stringBuilder = new StringBuilder();
+            stringBuilder.Append("<div>Print by abed </div>");
+           
+
+            return stringBuilder.ToString();
+        }
+        
+
+
 
         private string GetBIReportTableStyle()
         {
