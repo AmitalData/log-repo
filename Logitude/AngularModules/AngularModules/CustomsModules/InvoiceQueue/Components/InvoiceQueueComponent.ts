@@ -109,7 +109,7 @@ export class InvoiceQueueComponent
                         if (x.E != null) {
                             this.EMessagesList.Insert(x);
                             this.ErrorMessages = true;
-                            this.CreateQInvoiceButtonDim = true; // מקש חשבוניות ב DIM אם יש שגאיה מסוג ERROR
+                            this.CreateQInvoiceButtonDim = true; // מקש חשבוניות ב DIM םם יש שגםיה מסוג ERROR
                         }
                         if (x.W != null) {
                             this.WMessagesList.Insert(x);
@@ -145,7 +145,7 @@ export class InvoiceQueueComponent
     }
 
     SetWindowArgs(args: any) {
-        //var json = '{"UnifreightEntity"  :  "CFIFILEM" , "UnifreightEntityNumber"  :  "3000028" , "LogitudeEntity"  :  "Customs.Declaration" , "LogitudeEntityNumber"  :  "1-211622" , "LogitudeViewModel"  :  "UnifreightMassageHandler" , "LogitudeCommandId"  :  "CreateInvoiceCommand" , "formtitle"  :  "הצהרת יבוא"}';
+        //var json = '{"UnifreightEntity"  :  "CFIFILEM" , "UnifreightEntityNumber"  :  "3000028" , "LogitudeEntity"  :  "Customs.Declaration" , "LogitudeEntityNumber"  :  "1-211622" , "LogitudeViewModel"  :  "UnifreightMassageHandler" , "LogitudeCommandId"  :  "CreateInvoiceCommand" , "formtitle"  :  "הצהרת יבום"}';
 
         this.UnifreightMessage = args.unifreightMessage;
         this.GetData();
@@ -198,7 +198,7 @@ export class InvoiceQueueComponent
             confirm.YesButtonText = TextCodeTranslator.Translate("General.O.Confirm");
             confirm.NoButtonText = TextCodeTranslator.Translate("General.O.Void");
             // confirm.Show(TextCodeTranslator.Translate("Customs.Declarations.O.UnSavedRemark"));
-            confirm.Show("ביציאה מהמסך לא ישמרו הערות לחשבונית שהוזנו במסך")
+            confirm.Show("ביציםה מהמסך לם ישמרו הערות לחשבונית שהוזנו במסך")
             confirm.WindowClosed.subscribe((event: any) => {
                 if (confirm.Yes) {
                     confirm.Close();
@@ -289,7 +289,7 @@ export class InvoiceQueueComponent
                 "CFIHMAIN.LogitudeTask",
                 "ShowPayments",
                 unifreightMessageM,
-                " הצגת מסך : רשימת הוצאות");
+                " הצגת מסך : רשימת הוצםות");
         }
         else {
             alert("ShowPayments");
@@ -336,6 +336,49 @@ export class InvoiceQueueComponent
         }
         else {
             alert("ShowDA");
+        }
+    }
+
+
+    ShowDelivery() {
+
+        let myDeclaration: DeclarationPM = this.declaration;
+        let myViewModelName = "InvoiceQueueComponent.ts-ShowDelivery";
+        if (AmitalGatewayUtil.Instance.AmitalBrowserInUse) {
+            SessionLocator.SelectedSession.StartBusyIndicatorLoading();
+            let sub = AmitalGatewayUtil.Instance.UnifaceRequestArrived
+                .subscribe(
+                    (mess: UnifreightMessageM) => {
+                        var IsMatchUnifreightCallbackCommand = (
+                            mess.LogitudeEntity == AmitalGatewayUtil.Instance.DeclarationMessaging.LogitudeEntityDeclaration &&
+                            mess.LogitudeEntityNumber == myDeclaration.Id &&
+                            mess.LogitudeViewModel == myViewModelName);
+                        IsMatchUnifreightCallbackCommand = true;
+                        if (IsMatchUnifreightCallbackCommand) {
+                            sub.unsubscribe();
+                            SessionLocator.SelectedSession.StopBusyIndicator();
+                            let sBool = UnifreightMessageM.GetStringValue(mess, AmitalGatewayUtil.Instance.DeclarationMessaging.UnifreightResponseStatus);
+                            //SessionLocator.SelectedSession.CurrentListComponent.OnBackFromEdit(this.declaration.Id, { rowIndex: this.RowIndex });
+                            this.GetData();
+                        }
+                    }
+                );
+
+            SessionLocator.SelectedSession.StartBusyIndicator("");
+            var unifreightMessageM =
+                AmitalGatewayUtil.Instance.
+                    DeclarationMessaging.GetMessage(myDeclaration.CustomFileNo, myDeclaration.Id,
+                        myViewModelName);
+
+            AmitalGatewayUtil.Instance.SendRequestToUnifreightAsync(
+                "ScriptableGatewayUtil.ShowDelivery",
+                "CFIHMAIN.LogitudeTask",
+                "ShowDelivery",
+                unifreightMessageM,
+                " הצגת מסך : הובלות יבשתיות");
+        }
+        else {
+            alert("ShowDelivery");
         }
     }
 
