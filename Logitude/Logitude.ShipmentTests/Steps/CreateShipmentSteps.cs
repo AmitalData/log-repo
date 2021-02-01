@@ -29,8 +29,8 @@ namespace Logitude.ShipmentTests.Steps
         [When(@"Create master shipment API request sent")]
         public void WhenCreateMasterShipmentAPIRequestSent()
         {
-            var Response = APICaller.CallPost<ShipmentPM>(ShipmentContext.MasterShipment, Urls.ShipmentController, UserTenant.Token);
-            ShipmentContext.MasterShipment = Response?.Data;
+            ApiResponse<ShipmentPM> response = APICaller.CallPost<ShipmentPM>(ShipmentContext.MasterShipment, Urls.ShipmentController, UserTenant.Token);
+            ShipmentContext.MasterShipment = response?.Data;
         }
 
         [Then(@"A new master created successfully")]
@@ -48,10 +48,7 @@ namespace Logitude.ShipmentTests.Steps
         [When(@"Create house shipment API request sent")]
         public void WhenCreateHouseShipmentAPIRequestSent()
         {
-            ShipmentContext.HouseShipment = new ShipmentBuilder().WithModel(ShipmentContext.HouseShipment)
-                                                     .MasterShipmentDataId(ShipmentContext.MasterShipment.Id)
-                                                     .Build();
-            var response = APICaller.CallPost<ShipmentPM>(ShipmentContext.HouseShipment, Urls.ShipmentController, UserTenant.Token);
+            ApiResponse<ShipmentPM> response = CreateAndConnectHouseToMaster(ShipmentContext.HouseShipment, ShipmentContext.MasterShipment.Id);
             ShipmentContext.HouseShipment = response?.Data;
         }
 
@@ -59,6 +56,16 @@ namespace Logitude.ShipmentTests.Steps
         public void ThenANewHouseCreatedSuccessfully()
         {
             ShipmentContext.HouseShipment.Id.Should().NotBeNull();
+        }
+        #endregion
+
+        #region Private Function Region
+        private ApiResponse<ShipmentPM> CreateAndConnectHouseToMaster(ShipmentPM houseShipment, string masterShipmentDataId)
+        {
+            ShipmentContext.HouseShipment = new ShipmentBuilder().WithModel(houseShipment)
+                                                     .MasterShipmentDataId(masterShipmentDataId)
+                                                     .Build();
+            return APICaller.CallPost<ShipmentPM>(houseShipment, Urls.ShipmentController, UserTenant.Token);
         }
         #endregion
 

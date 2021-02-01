@@ -47,7 +47,7 @@ namespace Logitude.BL.InvoiceModel.Tools.TraceEvents
 
             if (entityPM.SetApproved)
             {
-                if (entityPM.StatusCode == "AD" && invoice.StatusCode != "AD")
+                if ((entityPM.StatusCode == "AD" && invoice.StatusCode != "AD") || (entityPM.AmountInInvoiceCurrency == 0 && entityPM.StatusCode == "PD"))
                 {
                     EventTracer.CreateTraceEvent(new EventTracerArgs()
                     {

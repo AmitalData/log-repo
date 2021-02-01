@@ -1,57 +1,219 @@
 {
-	"id": "82ff70bb-e090-47f4-8590-bec87c4d07fc",
-	"name": "CypressOpenMonth",
-	"description": "",
-	"auth": null,
-	"events": null,
-	"variables": [],
-	"order": [
-		"d52eb0b8-0034-4be6-b68f-1221018ba84d",
-		"a201c959-21f4-4207-a281-e9675431a4ad",
-		"67fc75a7-c4c9-4fee-b315-8b8233736900",
-		"1e1f029f-4db8-42ab-b215-f8236501d243"
-	],
-	"folders_order": [],
-	"protocolProfileBehavior": {},
-	"folders": [],
-	"requests": [
+	"info": {
+		"_postman_id": "4ec19dee-1ca3-448d-bbcf-b081574ac72d",
+		"name": "CypressOpenMonth",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
 		{
-			"id": "1e1f029f-4db8-42ab-b215-f8236501d243",
-			"name": "OpenIvoiceMonth",
-			"url": "{{URL}}/api/accountingperiods",
-			"description": "",
-			"data": [],
-			"dataOptions": {
-				"raw": {
-					"language": "json"
+			"name": "Authentication",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"\r",
+							"\r",
+							"\r",
+							"    var expectedHttpStatus = 200;\r",
+							"    var maxNumberOfTries = 10;\r",
+							"    var numberOfRetries = 5;\r",
+							"    var retries = \"{{RetriesNumber}}\";\r",
+							"    var Retries = pm.globals.get(\"Retries\");\r",
+							"    var sleepBetweenTries =  60000;\r",
+							"\r",
+							"\r",
+							"\r",
+							"    if ((responseCode.code !== expectedHttpStatus) & (pm.globals.get(\"Retries\") < maxNumberOfTries)) {\r",
+							"         pm.globals.set(\"Retries\", ++Retries);\r",
+							"         \r",
+							"        setTimeout(function() {}, sleepBetweenTries);\r",
+							"        \r",
+							"        postman.setNextRequest(\"Authentication\"); \r",
+							"    }\r",
+							"       else {\r",
+							"     pm.globals.set(\"Retries\",1); \r",
+							"     \r",
+							"\r",
+							"pm.test(\"AuthSuccessfullOnTenantCypress\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"    \r",
+							"    var date = new Date();\r",
+							"    var CurrentYear = date.getFullYear();\r",
+							"    var idvalue1 = (pm.response.json().Token);\r",
+							"    var idvalue2 = (pm.response.json().CurrentTenant);\r",
+							"    var idvalue3 = (pm.response.json().UserId);\r",
+							"    var idvalue4 = (pm.response.json().DocumentDownloadToken);\r",
+							"    var idvalue5 = (pm.response.json().InvalidDocumentToken);\r",
+							"    var idvalue6= CurrentYear;\r",
+							"    var id1exist = idvalue1 !== null;\r",
+							"    var id2exist = idvalue2 !== null;\r",
+							"    var id3exist = idvalue3 !== null;\r",
+							"    var id4exist = idvalue4 !== null;\r",
+							"    var id5exist = idvalue5 !== null;\r",
+							"    pm.expect(id1exist);\r",
+							"    pm.expect(id2exist);\r",
+							"    pm.expect(id3exist);\r",
+							"    pm.expect(id4exist);\r",
+							"    pm.expect(id5exist);\r",
+							"    pm.globals.set(\"Token\",idvalue1);\r",
+							"    pm.globals.set(\"Tenant\",idvalue2);\r",
+							"     //pm.environment.set(\"Tenant\",idvalue2);\r",
+							"    pm.globals.set(\"LoggedUserId\",idvalue3);\r",
+							"    pm.globals.set(\"DocumentDownloadToken\",idvalue4);\r",
+							"    pm.globals.set(\"InvalidDocumentToken\",idvalue5);\r",
+							"    pm.globals.set(\"CurrentYear\",idvalue6);\r",
+							"    pm.environment.set(\"RandomNum\", _.random(1,50));\r",
+							"      \r",
+							"      \r",
+							"    tests[\"BodyCointainsTokenKey : \" + id1exist] = responseBody.has(id1exist);\r",
+							"    postman.setNextRequest(\"GetYearAccountingPeriods\");\r",
+							"\r",
+							"});\r",
+							"}\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"Email\":\"{{Email}}\",\"Password\":\"{{Password}}\",\"IsUser\":true,\"GetToken\":true,\"ClientType\":\"Web\",\"Tenant\":\"{{Tenant}}\"}"
+				},
+				"url": {
+					"raw": "{{URL}}/api/authentication?tenant={{Tenant}}",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"authentication"
+					],
+					"query": [
+						{
+							"key": "tenant",
+							"value": "{{Tenant}}"
+						}
+					]
 				}
 			},
-			"dataMode": "raw",
-			"headerData": [
-				{
-					"key": "token",
-					"value": "{{Token}}",
-					"description": "",
-					"type": "text",
-					"enabled": true
-				}
-			],
-			"method": "PUT",
-			"pathVariableData": [],
-			"queryParams": [],
-			"auth": null,
-			"events": [
+			"response": []
+		},
+		{
+			"name": "GetYearAccountingPeriods",
+			"event": [
 				{
 					"listen": "test",
 					"script": {
-						"id": "13f07e6e-dd7e-46c5-9019-f9432cb74449",
 						"exec": [
-							"pm.test(\"Current month opened \", function () {\r",
+							" pm.test(\"Current Year has Accounting Periods \", function () {\r",
+							"\r",
+							"\r",
+							" if(pm.response.json().Result.length < 1 ){\r",
+							"     \r",
+							" tests[\"Current Year has Accounting Periods   : \" + false ] = ( true );\r",
+							"           \r",
+							"            postman.setNextRequest(\"CreatAccountingPeriods\");}\r",
+							"      \r",
+							" else {\r",
+							"\r",
+							" tests[\"Current Year has Accounting Periods   : \" + true ] = ( true );\r",
+							"           postman.setNextRequest(\"GetCurrentMonth'sAccountingPeriods\");  \r",
+							" \r",
+							" }\r",
+							" \r",
+							"});\r",
+							"\r",
+							" \r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "token",
+						"value": "{{Token}}",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{URL}}/api/accountingperiodviews/getbyfilters?&&ForceCacheRefresh=false&DontApplyVirtualization=false&GetAll=true&AdditionalFilters=[{%22FieldName%22:%22Year%22,%22FieldValue%22:{{CurrentYear}},%22FieldValue2%22:null,%22FieldValue3%22:null,%22Operator%22:%22Equal%22,%22IsCustom%22:false,%22DisplayInList%22:false,%22IsCustomField%22:false,%22FieldDataType%22:%22number%22,%22IgnoreFilter%22:false,%22IsCacheOnClient%22:false,%22IsLookUpfilter%22:false}]",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"accountingperiodviews",
+						"getbyfilters"
+					],
+					"query": [
+						{
+							"key": null,
+							"value": null
+						},
+						{
+							"key": null,
+							"value": null
+						},
+						{
+							"key": "ForceCacheRefresh",
+							"value": "false"
+						},
+						{
+							"key": "DontApplyVirtualization",
+							"value": "false"
+						},
+						{
+							"key": "GetAll",
+							"value": "true"
+						},
+						{
+							"key": "AdditionalFilters",
+							"value": "[{%22FieldName%22:%22Year%22,%22FieldValue%22:{{CurrentYear}},%22FieldValue2%22:null,%22FieldValue3%22:null,%22Operator%22:%22Equal%22,%22IsCustom%22:false,%22DisplayInList%22:false,%22IsCustomField%22:false,%22FieldDataType%22:%22number%22,%22IgnoreFilter%22:false,%22IsCacheOnClient%22:false,%22IsLookUpfilter%22:false}]"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CreatAccountingPeriods",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Current year accounting periods created  \", function () {\r",
 							"    \r",
 							"    pm.response.to.have.status(200);\r",
-							"   \r",
-							"      var idvalue1 = (pm.response.json().Id);\r",
-							"   postman.setNextRequest(null);  \r",
+							"     \r",
+							"    postman.setNextRequest(\"GetCurrentMonth'sAccountingPeriods\");  \r",
 							"  \r",
 							" \r",
 							"});\r",
@@ -61,105 +223,50 @@
 					}
 				}
 			],
-			"folder": null,
-			"rawModeData": "{ \r\n\"ChangeSetOp\": 2,\r\n\"ClosedMonth\":{{AcocuntingPeriodsInvoiceClosedMonth}} ,\r\n\"EncodeBase64NVARCHARFieldsBy\": null,\r\n\"Id\": \"{{AcocuntingPeriodsInvoiceId}}\",\r\n\"OpenMonth\":{{CurrentMonth}},\r\n\"PeriodTypeCode\": \"2\",\r\n\"PeriodTypeName\": \"Invoice\",\r\n\"Tenant\": {{AcocuntingPeriodsTenant}},\r\n\"Year\": {{AcocuntingPeriodsInvoiceYear}}\r\n}\r\n",
-			"headers": "token: {{Token}}\n",
-			"pathVariables": {}
-		},
-		{
-			"id": "67fc75a7-c4c9-4fee-b315-8b8233736900",
-			"name": "OpenCurrentmonth",
-			"url": "{{URL}}/api/accountingperiods",
-			"description": "",
-			"data": [],
-			"dataOptions": null,
-			"dataMode": "raw",
-			"headerData": [
-				{
-					"key": "Content-Type",
-					"value": "application/json",
-					"description": "",
-					"type": "text",
-					"enabled": true
-				},
-				{
-					"key": "token",
-					"value": "{{Token}}",
-					"description": "",
-					"type": "text",
-					"enabled": true
-				}
-			],
-			"method": "PUT",
-			"pathVariableData": [],
-			"queryParams": [],
-			"auth": null,
-			"events": [
-				{
-					"listen": "test",
-					"script": {
-						"id": "7c76777e-9b9b-4256-9917-95eb18cf7e55",
-						"exec": [
-							"pm.test(\"Current month opened \", function () {\r",
-							"    \r",
-							"    pm.response.to.have.status(200);\r",
-							"      var idvalue1 = (pm.response.json().Id);\r",
-							"    postman.setNextRequest(\"OpenIvoiceMonth\");  \r",
-							"  \r",
-							" \r",
-							"});\r",
-							""
-						],
-						"type": "text/javascript"
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "token",
+						"value": "{{Token}}",
+						"type": "text"
 					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "[{\"Tenant\":{{Tenant}},\"Year\":{{CurrentYear}},\"PeriodTypeCode\":\"1\",\"PeriodTypeName\":\"Accounting\",\"OpenMonth\":1,\"ClosedMonth\":null},{\"Tenant\":{{Tenant}},\"Year\":{{CurrentYear}},\"PeriodTypeCode\":\"2\",\"PeriodTypeName\":\"Invoice\",\"OpenMonth\":1,\"ClosedMonth\":null},{\"Tenant\":{{Tenant}},\"Year\":{{CurrentYear}},\"PeriodTypeCode\":\"3\",\"PeriodTypeName\":\"Interest Invoice\",\"OpenMonth\":1,\"ClosedMonth\":null}]"
+				},
+				"url": {
+					"raw": "{{URL}}/api/accountingPeriods/PostCreatePeriodsForYear?year={{CurrentYear}}",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"accountingPeriods",
+						"PostCreatePeriodsForYear"
+					],
+					"query": [
+						{
+							"key": "year",
+							"value": "{{CurrentYear}}"
+						}
+					]
 				}
-			],
-			"folder": null,
-			"rawModeData": "{ \r\n\"ChangeSetOp\": 2,\r\n\"ClosedMonth\":{{AcocuntingPeriodsClosedMonth}} ,\r\n\"EncodeBase64NVARCHARFieldsBy\": null,\r\n\"Id\": \"{{AcocuntingPeriodsId}}\",\r\n\"OpenMonth\":{{CurrentMonth}},\r\n\"PeriodTypeCode\": \"1\",\r\n\"PeriodTypeName\": \"Accounting\",\r\n\"Tenant\": {{AcocuntingPeriodsTenant}},\r\n\"Year\": {{AcocuntingPeriodsYear}}\r\n}\r\n",
-			"headers": "Content-Type: application/json\ntoken: {{Token}}\n",
-			"pathVariables": {}
+			},
+			"response": []
 		},
 		{
-			"id": "a201c959-21f4-4207-a281-e9675431a4ad",
-			"name": "GetCurrentMonth",
-			"url": "{{URL}}/api/accountingperiodviews/getbyfilters?GetAll=true",
-			"description": "",
-			"data": null,
-			"dataOptions": null,
-			"dataMode": null,
-			"headerData": [
-				{
-					"key": "Content-Type",
-					"value": "application/json",
-					"description": "",
-					"type": "text",
-					"enabled": true
-				},
-				{
-					"key": "token",
-					"value": "{{Token}}",
-					"description": "",
-					"type": "text",
-					"enabled": true
-				}
-			],
-			"method": "GET",
-			"pathVariableData": [],
-			"queryParams": [
-				{
-					"key": "GetAll",
-					"value": "true",
-					"equals": true,
-					"description": "",
-					"enabled": true
-				}
-			],
-			"auth": null,
-			"events": [
+			"name": "GetCurrentMonth'sAccountingPeriods",
+			"event": [
 				{
 					"listen": "test",
 					"script": {
-						"id": "8324dbb0-fd05-4373-940d-b8042fae3e0a",
 						"exec": [
 							"pm.test(\"Get Accounting Periods\", function () {\r",
 							"    \r",
@@ -231,113 +338,144 @@
 					}
 				}
 			],
-			"folder": null,
-			"headers": "Content-Type: application/json\ntoken: {{Token}}\n",
-			"pathVariables": {}
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "token",
+						"value": "{{Token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{URL}}/api/accountingperiodviews/getbyfilters?GetAll=true",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"accountingperiodviews",
+						"getbyfilters"
+					],
+					"query": [
+						{
+							"key": "GetAll",
+							"value": "true"
+						}
+					]
+				}
+			},
+			"response": []
 		},
 		{
-			"id": "d52eb0b8-0034-4be6-b68f-1221018ba84d",
-			"name": "Authentication",
-			"url": "{{URL}}/api/authentication?tenant={{Tenant}}",
-			"description": "",
-			"data": [],
-			"dataOptions": null,
-			"dataMode": "raw",
-			"headerData": [
-				{
-					"key": "Content-Type",
-					"value": "application/json",
-					"description": "",
-					"type": "text",
-					"enabled": true
-				}
-			],
-			"method": "POST",
-			"pathVariableData": [],
-			"queryParams": [
-				{
-					"key": "tenant",
-					"value": "{{Tenant}}",
-					"equals": true,
-					"description": "",
-					"enabled": true
-				}
-			],
-			"auth": null,
-			"events": [
+			"name": "OpenCurrentmonth",
+			"event": [
 				{
 					"listen": "test",
 					"script": {
-						"id": "6767b34b-a9f7-4ad4-8b5a-880e1e5f0589",
 						"exec": [
-							"\r",
-							"\r",
-							"\r",
-							"    var expectedHttpStatus = 200;\r",
-							"    var maxNumberOfTries = 10;\r",
-							"    var numberOfRetries = 5;\r",
-							"    var retries = \"{{RetriesNumber}}\";\r",
-							"    var Retries = pm.globals.get(\"Retries\");\r",
-							"    var sleepBetweenTries =  60000;\r",
-							"\r",
-							"\r",
-							"\r",
-							"    if ((responseCode.code !== expectedHttpStatus) & (pm.globals.get(\"Retries\") < maxNumberOfTries)) {\r",
-							"         pm.globals.set(\"Retries\", ++Retries);\r",
-							"         \r",
-							"        setTimeout(function() {}, sleepBetweenTries);\r",
-							"        \r",
-							"        postman.setNextRequest(\"Authentication\"); \r",
-							"    }\r",
-							"       else {\r",
-							"     pm.globals.set(\"Retries\",1); \r",
-							"     \r",
-							"\r",
-							"pm.test(\"AuthSuccessfullOnTenantCypress\", function () {\r",
+							"pm.test(\"Current month opened \", function () {\r",
+							"    \r",
 							"    pm.response.to.have.status(200);\r",
-							"    \r",
-							"   \r",
-							"    var idvalue1 = (pm.response.json().Token);\r",
-							"    var idvalue2 = (pm.response.json().CurrentTenant);\r",
-							"    var idvalue3 = (pm.response.json().UserId);\r",
-							"    var idvalue4 = (pm.response.json().DocumentDownloadToken);\r",
-							"    var idvalue5 = (pm.response.json().InvalidDocumentToken);\r",
-							"    \r",
-							"    var id1exist = idvalue1 !== null;\r",
-							"    var id2exist = idvalue2 !== null;\r",
-							"    var id3exist = idvalue3 !== null;\r",
-							"    var id4exist = idvalue4 !== null;\r",
-							"    var id5exist = idvalue5 !== null;\r",
-							"    pm.expect(id1exist);\r",
-							"    pm.expect(id2exist);\r",
-							"    pm.expect(id3exist);\r",
-							"    pm.expect(id4exist);\r",
-							"    pm.expect(id5exist);\r",
-							"    pm.globals.set(\"Token\",idvalue1);\r",
-							"    pm.globals.set(\"Tenant\",idvalue2);\r",
-							"     //pm.environment.set(\"Tenant\",idvalue2);\r",
-							"    pm.globals.set(\"LoggedUserId\",idvalue3);\r",
-							"    pm.globals.set(\"DocumentDownloadToken\",idvalue4);\r",
-							"    pm.globals.set(\"InvalidDocumentToken\",idvalue5);\r",
-							"    \r",
-							"    pm.environment.set(\"RandomNum\", _.random(1,50));\r",
-							"      \r",
-							"      \r",
-							"    tests[\"BodyCointainsTokenKey : \" + id1exist] = responseBody.has(id1exist);\r",
-							"    postman.setNextRequest(\"GetCurrentMonth\");\r",
-							"\r",
+							"      var idvalue1 = (pm.response.json().Id);\r",
+							"    postman.setNextRequest(\"OpenIvoiceMonth\");  \r",
+							"  \r",
+							" \r",
 							"});\r",
-							"}\r",
 							""
 						],
 						"type": "text/javascript"
 					}
 				}
 			],
-			"folder": null,
-			"rawModeData": "{\"Email\":\"{{Email}}\",\"Password\":\"{{Password}}\",\"IsUser\":true,\"GetToken\":true,\"ClientType\":\"Web\",\"Tenant\":\"{{Tenant}}\"}",
-			"headers": "Content-Type: application/json\n",
-			"pathVariables": {}
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "token",
+						"value": "{{Token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{ \r\n\"ChangeSetOp\": 2,\r\n\"ClosedMonth\":{{AcocuntingPeriodsClosedMonth}} ,\r\n\"EncodeBase64NVARCHARFieldsBy\": null,\r\n\"Id\": \"{{AcocuntingPeriodsId}}\",\r\n\"OpenMonth\":6,\r\n\"PeriodTypeCode\": \"1\",\r\n\"PeriodTypeName\": \"Accounting\",\r\n\"Tenant\": {{AcocuntingPeriodsTenant}},\r\n\"Year\": {{AcocuntingPeriodsYear}}\r\n}\r\n"
+				},
+				"url": {
+					"raw": "{{URL}}/api/accountingperiods",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"accountingperiods"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "OpenIvoiceMonth",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Current month opened \", function () {\r",
+							"    \r",
+							"    pm.response.to.have.status(200);\r",
+							"   \r",
+							"      var idvalue1 = (pm.response.json().Id);\r",
+							"   postman.setNextRequest(null);  \r",
+							"  \r",
+							" \r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "token",
+						"value": "{{Token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{ \r\n\"ChangeSetOp\": 2,\r\n\"ClosedMonth\":{{AcocuntingPeriodsInvoiceClosedMonth}} ,\r\n\"EncodeBase64NVARCHARFieldsBy\": null,\r\n\"Id\": \"{{AcocuntingPeriodsInvoiceId}}\",\r\n\"OpenMonth\":{{CurrentMonth}},\r\n\"PeriodTypeCode\": \"2\",\r\n\"PeriodTypeName\": \"Invoice\",\r\n\"Tenant\": {{AcocuntingPeriodsTenant}},\r\n\"Year\": {{AcocuntingPeriodsInvoiceYear}}\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL}}/api/accountingperiods",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"accountingperiods"
+					]
+				}
+			},
+			"response": []
 		}
 	]
 }

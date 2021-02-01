@@ -219,6 +219,16 @@ export class BankAccountPM {
     public set PrintingAccountNumber(newValue: string) { if (this.printingAccountNumber != newValue) { this.printingAccountNumber = newValue; this.MarkAsDirty("PrintingAccountNumber"); } }
        
 	 
+    private bankCodeEnglishName: string;
+    public get BankCodeEnglishName() { return this.bankCodeEnglishName; }
+    public set BankCodeEnglishName(newValue: string) { if (this.bankCodeEnglishName != newValue) { this.bankCodeEnglishName = newValue; this.MarkAsDirty("BankCodeEnglishName"); } }
+       
+	 
+    private bankCodeLocalName: string;
+    public get BankCodeLocalName() { return this.bankCodeLocalName; }
+    public set BankCodeLocalName(newValue: string) { if (this.bankCodeLocalName != newValue) { this.bankCodeLocalName = newValue; this.MarkAsDirty("BankCodeLocalName"); } }
+       
+	 
 
     public OldEntityPM: BankAccountPM;
 		
