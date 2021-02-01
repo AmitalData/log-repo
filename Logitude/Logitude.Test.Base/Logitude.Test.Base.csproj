@@ -84,6 +84,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Extensions\Transforms.cs" />
     <Compile Include="Models\Configurations.cs" />
     <Compile Include="Models\Credentials.cs" />
     <Compile Include="Models\Settings.cs" />

@@ -21,57 +21,66 @@ namespace Logitude.ShipmentTests.Steps.SecurityTests
 
         #region Step Region
 
-        [When(@"Create shipment request sent for User's Tenant")]
-        public void WhenCreateShipmentRequestSentForUserSTenant()
+        #region Create shipment for user's tenant steps
+        [When(@"create a shipment for user's tenant")]
+        public void WhenCreateAShipmentForUserSTenant()
         {
             ApiResponse<ShipmentPM> response = CreateShipmentForFirstUser(UserTenant.Token);
             Context.FirstUserPMData.Id = response.Data?.Id;
         }
 
-        [Then(@"Shipment should be added successfully")]
-        public void ThenShipmentShouldBeAddedSuccessfully()
+        [Then(@"the shipment should create successfully")]
+        public void ThenTheShipmentShouldCreateSuccessfully()
         {
             Context.FirstUserPMData.Id.Should().NotBeNull();
         }
+        #endregion
 
-        [When(@"Create shipment request sent for other Tenant")]
-        public void WhenCreateShipmentRequestSentForOtherTenant()
+        #region Create shipment for other tenant steps
+        [When(@"create a shipment for other tenant")]
+        public void WhenCreateAShipmentForOtherTenant()
         {
             Context.act = () => CreateShipmentForFirstUser(UserOtherTenant.Token);
         }
 
-        [Then(@"Shipment should not be added")]
-        public void ThenShipmentShouldNotBeAdded()
+        [Then(@"the shipment should not create successfully")]
+        public void ThenTheShipmentShouldNotCreateSuccessfully()
         {
             Context.act.Should().ThrowExactly<Exception>()
                 .Where(m => m.Message.Contains("Sorry! you have no permission to do this operation on Tenant"));
         }
+        #endregion
 
-        [When(@"Update shipment request sent for User's Tenant")]
-        public void WhenUpdateShipmentRequestSentForUserSTenant()
+        #region Update shipment for user's tenant steps
+        [When(@"update a shipment for user's tenant")]
+        public void WhenUpdateAShipmentForUserSTenant()
         {
             ApiResponse<ShipmentPM> response = UpdateShipmentForFirstUser(UserTenant.Token);
             Context.FirstUserPMData.Id = response.Data?.Id;
         }
 
-        [Then(@"Shipment should be Updated successfully")]
-        public void ThenShipmentShouldBeUpdatedSuccessfully()
+        [Then(@"the shipment should update successfully")]
+        public void ThenTheShipmentShouldUpdateSuccessfully()
         {
             Context.FirstUserPMData.Id.Should().NotBeNull();
         }
+        #endregion
 
-        [When(@"Update shipment request sent for other Tenant")]
-        public void WhenUpdateShipmentRequestSentForOtherTenant()
+        #region Update shipment for other tenant steps
+        [When(@"update a shipment for other tenant")]
+        public void WhenUpdateAShipmentForOtherTenant()
         {
-            Context.act =() => UpdateShipmentForFirstUser(UserOtherTenant.Token);
+            Context.act = () => UpdateShipmentForFirstUser(UserOtherTenant.Token);
         }
 
-        [Then(@"Shipment should not be Updated")]
-        public void ThenShipmentShouldNotBeUpdated()
+        [Then(@"the shipment should not update successfully")]
+        public void ThenTheShipmentShouldNotUpdateSuccessfully()
         {
             Context.act.Should().ThrowExactly<Exception>()
                 .Where(m => m.Message.Contains("Sorry! you have no permission to do this operation on Tenant"));
         }
+        #endregion
+
         #endregion
 
         #region Private Function Region

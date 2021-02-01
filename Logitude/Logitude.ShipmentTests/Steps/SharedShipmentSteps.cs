@@ -17,14 +17,14 @@ namespace Logitude.ShipmentTests.Steps
         }
 
         #region Step Region
-        [Given(@"A master shipment")]
+        [Given(@"a master shipment")]
         public void GivenAMasterShipment()
         {
-            ShipmentPM MasterShipment = GetValidShipmentPM("C", null); 
+            ShipmentPM MasterShipment = GetValidShipmentPM("C", null);
             ShipmentContext.MasterShipment = CreateAndGetShipment(MasterShipment);
         }
 
-        [Given(@"A house shipment")]
+        [Given(@"a house shipment")]
         public void GivenAHouseShipment()
         {
             ShipmentPM HouseShipment = GetValidShipmentPM("H", ShipmentContext.MasterShipment.Id); 

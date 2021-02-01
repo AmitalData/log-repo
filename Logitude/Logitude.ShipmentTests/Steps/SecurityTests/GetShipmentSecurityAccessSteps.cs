@@ -20,31 +20,37 @@ namespace Logitude.ShipmentTests.Steps.SecurityTests
         }
 
         #region Step Region
-        [When(@"First user get the first shipment from shipments list")]
-        public void WhenFirstUserGetTheFirstShipmentFromShipmentsList()
+
+        #region Get shipment from user's tenant steps
+        [When(@"get a shipment from User's shipment list")]
+        public void WhenGetAShipmentFromUserSShipmentList()
         {
             ShipmentPM shipment = GetAShipmentFromFirstUserList();
             Context.FirstUserPMData.Id = shipment?.Id;
         }
 
-        [Then(@"Shipment for first user should be exists")]
-        public void ThenShipmentForFirstUserShouldBeExists()
+        [Then(@"the shipment should exist")]
+        public void ThenTheShipmentShouldExist()
         {
             Context.FirstUserPMData.Id.Should().NotBeNull();
         }
+        #endregion
 
-        [When(@"Second user get the shipment that requested by first user")]
-        public void WhenSecondUserGetTheShipmentThatRequestedByFirstUser()
+        #region Get shipment from other tenant steps
+        [When(@"get a shipment from Other Tenant")]
+        public void WhenGetAShipmentFromOtherTenant()
         {
             ApiResponse<ShipmentPM> response = GetASingleShipmentForFirstUser(UserOtherTenant.Token);
             Context.SecondUserPMData.Id = response.Data?.Id;
         }
 
-        [Then(@"Shipment for second user should not be exists")]
-        public void ThenShipmentForSecondUserShouldNotBeExists()
+        [Then(@"the shipment should not exist")]
+        public void ThenTheShipmentShouldNotExist()
         {
             Context.SecondUserPMData.Id.Should().BeNull();
         }
+        #endregion
+
         #endregion
 
         #region Private Function Region
