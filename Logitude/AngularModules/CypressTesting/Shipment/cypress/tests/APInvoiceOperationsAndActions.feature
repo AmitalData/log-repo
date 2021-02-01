@@ -10,7 +10,7 @@ Feature: APInvoice operations and actions
             | ShipmentLevel | Direction | TransportMode | Shipper  | MainCarriageFromPort | MainCarriageToPort |
             | Direct        | E         | A             | Shipper1 | LHR                  | MIA                |
         When create shipment
-        Then the shipment should create successfully
+        Then the direct should create successfully
 
     Scenario: Create APInvoice
         Given a payable with the following details

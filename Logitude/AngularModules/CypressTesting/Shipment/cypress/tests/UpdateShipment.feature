@@ -1,10 +1,13 @@
 Feature: Edit Direct Export Air Shipment
-  Scenario: Login And Open Shipments Workspace
-    Given the user logged in
-    And navigate to shipments workspace
-    And create a new Direct shipment
+
+  Scenario: Create Direct Export Air Shipment
+    Given the user logged in and navigates to shipments workspace
+    And a direct shipment with the following details
+      | ShipmentLevel | Direction | TransportMode | Shipper  | MainCarriageFromPort | MainCarriageToPort |
+      | Direct        | E         | A             | Shipper1 | LHR                  | MIA                |
+    When create shipment
+    Then the direct should create successfully
     
-#Using the created shipment in the first scenario do the following.
   Scenario: Edit Shipment by filling general tab
     Given the user in the general tab
     And  fill random GrossWeight and "MTA" as a MoveType 

@@ -9,7 +9,7 @@ Feature:Copy Direct Export Air Shipment
             | ShipmentLevel | Direction | TransportMode | Shipper  | MainCarriageFromPort | MainCarriageToPort |
             | Direct        | E         | A             | Shipper1 | LHR                  | MIA                |
         When create shipment 
-        Then the shipment should create successfully
+        Then the direct should create successfully
 
     Scenario: Copy Direct Export Air Shipment
         Given the user open the direct shipment

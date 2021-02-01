@@ -1,13 +1,12 @@
 import * as Actions from "../../actions/Actions"
-import * as Assertions from "../../actions/Assertions"
 import { Selectors } from "../../selectors/Selectors"
 import { BaseSelectors } from "../../../../Base/cypress/selectors/BaseSelectors"
 import { Given, When, Then } from "cypress-cucumber-preprocessor/steps";
-import { PartnersDetails } from "cypress/models/PartnersDetails";
+import * as BaseAssertion from "../../../../Base/cypress/actions/Assertion"
 import { ShipmentDetails } from "../../models/ShipmentDetails";
 
-
 let MasterShipmentDetails: ShipmentDetails;
+let shipmentNumber: string;
 
 Given("the user logged in", () => {
   cy.Login()
@@ -29,15 +28,14 @@ When("create shipment", () => {
     Actions.CreateShipment(MasterShipmentDetails.ShipmentLevel);
   });
   
-Then("the shipment should create successfully", () => {
-    let resultFile = "CreatedShipmentsData/" + MasterShipmentDetails.ShipmentLevel + MasterShipmentDetails.Direction +
-    MasterShipmentDetails.TransportMode +
-    ((typeof MasterShipmentDetails.ShipmentType) === "undefined" || MasterShipmentDetails.ShipmentType === null ? "" : MasterShipmentDetails.ShipmentType) + ".json";
-    Assertions.ValidateCreatedShipment(resultFile);
+Then("the master should create successfully", () => {
+    BaseAssertion.AssertStatusCode("WaitPostShipmentRequest", 200).then((interception) => {
+        shipmentNumber = interception.response.body.ShipmentNumber;
+    })
 });
 
 Given("the user in the master's Shipment tab",()=>{
-    Actions.OpenShipment("CreatedShipmentsData/MasterEA.json");
+    Actions.OpenShipment(shipmentNumber);
     cy.Click(Selectors.ShipmentsTab, null);
 });
 
@@ -47,22 +45,18 @@ When("create house with {string} as Shipper",(Shipper)=>{
     Actions.CreateShipment("House");
 });
 
-Then("the shipment should create and connect successfully",()=>{
-    let resultFile = "CreatedShipmentsData/" + "House" + MasterShipmentDetails.Direction +
-    MasterShipmentDetails.TransportMode +
-    ((typeof MasterShipmentDetails.ShipmentType) === "undefined" || MasterShipmentDetails.ShipmentType === null ? "" : MasterShipmentDetails.ShipmentType) + ".json";
-    Assertions.ValidateCreatedShipment(resultFile);
-   
-    //Assertions.HouseConnectedToMaster(resultFile,"CreatedShipmentsData/MasterEA.json");
+Then("the house should create and connect successfully",()=>{
+    BaseAssertion.AssertStatusCode("WaitPostShipmentRequest", 200);
 });
 
 When("disconnect shipment",()=>{
     cy.Click(BaseSelectors.Button,"Disconnect All");
-    Actions.DisconnectShipment()
+    cy.Click(BaseSelectors.RedButton,"Yes");
+    cy.DefineRequestWait("PUT", "**/shipment", "WaitPutShipmentRequest")
 });
 
 Then("the shipment should disconnect successfully",()=>{
-    Assertions.ValidateUpdatedShipment(null);
+    BaseAssertion.AssertStatusCode("WaitPutShipmentRequest", 200)
 });
 
 

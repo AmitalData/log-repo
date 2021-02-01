@@ -1,12 +1,12 @@
 import * as gr from "../../../Base/cypress/Actions/GenerateRandoms"
 import { Selectors } from "../selectors/Selectors"
 import { ShipmentDetails } from "../models/ShipmentDetails";
-import * as Assertions from "./Assertions";
 import { PartnersDetails } from "cypress/models/PartnersDetails";
 import { BaseSelectors } from "../../../Base/cypress/selectors/BaseSelectors";
 import { PayableDetails } from "cypress/models/PayableDetails";
 import { APInvoiceDetails } from "cypress/models/APInvoiceDetails"
 import * as BaseActions from "../../../Base/cypress/actions/Actions"
+import * as BaseAssertion from "../../../Base/cypress/actions/Assertion";
 
 export function OpenNewShipmentWizard(levelCode: string) {
     cy.Click("#HelperNotesButton_0_0", null)
@@ -52,15 +52,14 @@ export function CreateShipment(levelCode: string) {
     cy.Click(createPreSelector + "Createbtn", null)
 }
 
+
 export function UpdateShipment(saveButtonSelector: string) {
     cy.DefineRequestWait("PUT", "**/shipment", "WaitPutShipmentRequest")
     cy.Click(saveButtonSelector, null)
 }
 
-export function OpenShipment(dataFile: string) {
-    cy.fixture(dataFile).then((shipment) => {
-        cy.SelectQuickSearchFirstElement(Selectors.ShipmentSearchBar, shipment.ShipmentNumber)
-    })
+export function OpenShipment(ShipmentNumber: string) {
+    cy.SelectQuickSearchFirstElement(Selectors.ShipmentSearchBar, ShipmentNumber)
 }
 
 export function CancelShipment() {
@@ -137,8 +136,8 @@ export function FillPickupRouting() {
     cy.DefineRequestWait("GET", "**/cardviews/**", "WaitCardViewsRequest")
     cy.DefineRequestWait("GET", "**/addressviews/**", "WaitAddressViewsRequest")
     cy.Click(Selectors.PickUp, null)
-    cy.AssertResponseStatusCode("WaitCardViewsRequest", 200, null)
-    cy.AssertResponseStatusCode("WaitAddressViewsRequest", 200, null)
+    BaseAssertion.AssertStatusCode("WaitCardViewsRequest", 200)
+    BaseAssertion.AssertStatusCode("WaitAddressViewsRequest", 200)
 }
 
 export function FillDeliveryRouting(partner: string) {
@@ -146,8 +145,8 @@ export function FillDeliveryRouting(partner: string) {
     cy.DefineRequestWait("GET", "**/cardviews/**", "WaitCardViewsRequest")
     cy.DefineRequestWait("GET", "**/addressviews/**", "WaitAddressViewsRequest")
     cy.Click(Selectors.Delivery, null)
-    cy.AssertResponseStatusCode("WaitCardViewsRequest", 200, null)
-    cy.AssertResponseStatusCode("WaitAddressViewsRequest", 200, null)
+    BaseAssertion.AssertStatusCode("WaitCardViewsRequest", 200)
+    BaseAssertion.AssertStatusCode("WaitAddressViewsRequest", 200)
     cy.get(Selectors.ShipmentPickUpDelivery_ToPartnerCardId).then((input) => {
         if (input.text() === "" || input.text() === null) {
             cy.SelectLogLovElement(Selectors.ShipmentPickUpDelivery_ToPartnerCardId, false, partner)
@@ -211,12 +210,6 @@ export function CreateAnewShipment(shipmentLevel: string) {
     OpenNewShipmentWizard(_ShipmentDetails.ShipmentLevel);
     FillShipmentDefaultFields(_ShipmentDetails);
     CreateShipment(_ShipmentDetails.ShipmentLevel)
-
-    let resultFile = "CreatedShipmentsData/" + _ShipmentDetails.ShipmentLevel + _ShipmentDetails.Direction +
-        _ShipmentDetails.TransportMode +
-        ((typeof _ShipmentDetails.ShipmentType) === "undefined" || _ShipmentDetails.ShipmentType === null ? "" : _ShipmentDetails.ShipmentType) + ".json";
-
-    Assertions.ValidateCreatedShipment(resultFile);
 }
 
 function AddPackagesOrContainersForOrdersTab(shipmentTypeCode: string, PackageType: string) {
@@ -306,4 +299,9 @@ export function APInvoiceCancelApproval() {
     cy.Click(Selectors.APInvoiceMoreList, null)
     cy.DefineRequestWait("PUT", "**/apinvoices", "WaitPutAPInvoicesRequest")
     cy.Click(Selectors.APInvoiceCancelApprovalButton, null)
+}
+
+export function ConnectShipment() {
+    cy.DefineRequestWait("PUT", "**/shipment", "WaitPutShipmentRequest");
+    cy.Click(BaseSelectors.RedButton, "Yes");
 }
