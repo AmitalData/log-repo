@@ -24,7 +24,7 @@ namespace WarehouseDataViews.Service
             this.warehouseView = customFieldDataWarehouseArgs.WarehouseView;
 
             
-            customObjectFieldLists = GetCustomObjectFields(tenant , warehouseView.CustomFieldObjectTableName);
+            customObjectFieldLists = GetCustomObjectFields(tenant , warehouseView.ObjectTableName);
 
         }
 

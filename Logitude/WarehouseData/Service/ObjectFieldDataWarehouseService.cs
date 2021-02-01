@@ -54,11 +54,11 @@ namespace WarehouseData.Helper
         public List<TableClass> SetCustomObjectFieldMetaData(List<TableClass> dataWarehouseMetaDataTables, string connectionString)
         {
             List<TableClass> dataWarehouseMetaDataTableLists = dataWarehouseMetaDataTables;
-            var dwObjectDataTables = new GeneralDataWarehouseService().GetDataTableFromSql(connectionString, "select Code ,HasCustomFields ,MaxNumberOfCustomFields ,CustomFieldObjectTableName from DWObjectTables where  HasCustomFields = 1");
+            var dwObjectDataTables = new GeneralDataWarehouseService().GetDataTableFromSql(connectionString, "select Code ,HasCustomFields ,MaxNumberOfCustomFields ,ObjectTableName from DWObjectTables where  HasCustomFields = 1");
             foreach (DataRow row in dwObjectDataTables.AsEnumerable())
             {
                 int maxNumberOfCustomFields = row["MaxNumberOfCustomFields"] != null && !string.IsNullOrEmpty(row["MaxNumberOfCustomFields"].ToString()) ? int.Parse(row["MaxNumberOfCustomFields"].ToString()) : 0;
-                string customFieldObjectTableName = row["CustomFieldObjectTableName"] != null ? row["CustomFieldObjectTableName"].ToString() : "";
+                string ObjectTableName = row["ObjectTableName"] != null ? row["ObjectTableName"].ToString() : "";
 
                 TableClass factMetaDataTable = dataWarehouseMetaDataTableLists.Where(d => d.DWObjectTableCode == row["Code"].ToString()).FirstOrDefault();
                 if (factMetaDataTable != null)
@@ -66,7 +66,7 @@ namespace WarehouseData.Helper
                     TableClass dwMetaDataTable = dataWarehouseMetaDataTableLists.Where(d => d.TableName == factMetaDataTable.TableName && !d.HasFactTable).FirstOrDefault();
                     factMetaDataTable.HasCustomFields = dwMetaDataTable.HasCustomFields = true;
                     factMetaDataTable.MaxNumberOfCustomFields = dwMetaDataTable.MaxNumberOfCustomFields = maxNumberOfCustomFields;
-                    factMetaDataTable.CustomFieldObjectTableName = dwMetaDataTable.CustomFieldObjectTableName = customFieldObjectTableName;
+                    factMetaDataTable.ObjectTableName = dwMetaDataTable.ObjectTableName = ObjectTableName;
                 }
             }
             return dataWarehouseMetaDataTableLists;

@@ -100,9 +100,9 @@ export class DWObjectTablePM {
     public set DisplayName(newValue: string) { if (this.displayName != newValue) { this.displayName = newValue; this.MarkAsDirty("DisplayName"); } }
        
 	 
-    private customFieldObjectTableName: string;
-    public get CustomFieldObjectTableName() { return this.customFieldObjectTableName; }
-    public set CustomFieldObjectTableName(newValue: string) { if (this.customFieldObjectTableName != newValue) { this.customFieldObjectTableName = newValue; this.MarkAsDirty("CustomFieldObjectTableName"); } }
+    private objectTableName: string;
+    public get ObjectTableName() { return this.objectTableName; }
+    public set ObjectTableName(newValue: string) { if (this.objectTableName != newValue) { this.objectTableName = newValue; this.MarkAsDirty("ObjectTableName"); } }
        
 	 
     private maxNumberOfCustomFields: number;

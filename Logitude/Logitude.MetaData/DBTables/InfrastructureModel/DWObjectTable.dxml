@@ -116,7 +116,8 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="CustomFieldObjectTableName"
+    Name="ObjectTableName"
+    OldNames="CustomFieldObjectTableName"
     Type="varchar"
     Size="50">
     <Constraints

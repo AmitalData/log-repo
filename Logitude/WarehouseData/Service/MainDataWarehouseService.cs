@@ -57,7 +57,7 @@ namespace WarehouseData.Helper
 
             }
 
-            dWDataWarehouseService.CustomObjectFieldTableLists = dataWarehouseTables.Where(d => !string.IsNullOrEmpty(d.CustomFieldObjectTableName)).GroupBy(d => d.CustomFieldObjectTableName).Select(d => d.First().CustomFieldObjectTableName).ToList();
+            dWDataWarehouseService.CustomObjectFieldTableLists = dataWarehouseTables.Where(d => !string.IsNullOrEmpty(d.ObjectTableName)).GroupBy(d => d.ObjectTableName).Select(d => d.First().ObjectTableName).ToList();
            
             return dataWarehouseTables;
         }
