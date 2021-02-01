@@ -761,17 +761,18 @@ export class BankDepositDetailsTabComponent extends BaseComponent {
         if (event == true) {
             this.SelectedCashbookLines.Clear();
             for (let line of this.CashbookLines.Collection) {
+                line.IsSelected = true;
                 this.PushBankDeposit(line);
                 this.SelectedCashbookLines.Collection.push(line);
-                line.IsSelected = true;
             }
-        } else {
+        }
+        else {
             this.SelectedCashbookLines.Clear();
           for (let line of this.CashbookLines.Collection) {
               line.IsSelected = false;
+          }
+        }
 
-        }
-        }
         this.CalculateTotals();
     }
 
