@@ -1,5 +1,5 @@
-Feature: ARInvoice operations and actions
-    This feature file will create a direct shipment and assign an ARInvoice, approve this invoice,set as sent and void invoice
+Feature: Credit Note ARInvoice Operations And Actions
+    This feature file will create a direct shipment and assign an Credit Note ARInvoice, cancel draft
 
     Scenario: Login And Open Shipments Workspace
         Given the user logged in
@@ -12,24 +12,16 @@ Feature: ARInvoice operations and actions
         When create shipment
         Then the shipment should create successfully
 
-    Scenario: Create ARInvoice
+    Scenario: Create credit note ARInvoice
         Given a receivable with the following details
             | ChargesType | UOM  | Quantity | UnitPrice | Currency |
-            | AFT         | GRWT | 5        | 20        | EUR      |
-        And an ARInvoice with the following details
+            | AFT         | GRWT | 5        | -10       | EUR      |
+        And a credit ARInvoice with the following details
             | PartnerType | InvoiceCurrency | InvoiceExchangeRate | InvoiceDate | PaymentTerms | DueDate | VATType |
             | Customer    | EUR             | 4                   | today       | Cash         | today   | Zero    |
         When create invoice
         Then the invoice should create successfully
 
-    Scenario: Approve ARInvoice
-        When approve invoice
-        Then the invoice should approve successfully
-
-   Scenario: Set ARInvoice as sent
-        When set invoice as sent
-        Then the invoice should set as sent successfully
-
-    Scenario: Void ARInvoice
-        When void invoice
-        Then the invoice should void successfully
+    Scenario: Cancel draft of credit note ARInvoice
+        When cancel draft 
+        Then the invoice should cancel successfully

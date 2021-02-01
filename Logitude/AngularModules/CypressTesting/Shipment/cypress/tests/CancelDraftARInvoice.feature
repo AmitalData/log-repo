@@ -22,14 +22,6 @@ Feature: ARInvoice operations and actions
         When create invoice
         Then the invoice should create successfully
 
-    Scenario: Approve ARInvoice
-        When approve invoice
-        Then the invoice should approve successfully
-
-   Scenario: Set ARInvoice as sent
-        When set invoice as sent
-        Then the invoice should set as sent successfully
-
-    Scenario: Void ARInvoice
-        When void invoice
-        Then the invoice should void successfully
+    Scenario: Cancel draft of ARInvoice
+        When cancel draft 
+        Then the invoice should cancel successfully
