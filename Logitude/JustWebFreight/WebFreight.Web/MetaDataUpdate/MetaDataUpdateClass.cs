@@ -4917,6 +4917,7 @@ namespace WebFreight.Web.MetaDataUpdate
             ObjectTable ShippingLinesObject = tenantObjectTables.Where(o => o.Name == "ShippingLine").FirstOrDefault();
             ObjectTable ShipmentObject = tenantObjectTables.Where(o => o.Name == "Shipment").FirstOrDefault();
             ObjectTable CustomerTenantAccessCardObject = tenantObjectTables.Where(o => o.Name == "CustomerTenantAccessCard").FirstOrDefault();
+            ObjectTable BIReportObject = tenantObjectTables.Where(o => o.Name == "BIReport").FirstOrDefault();
             Tip airlineTip = AddTips.AddTip(new TipDetails()
             {
                 Code = "AIRT",
@@ -4973,6 +4974,17 @@ namespace WebFreight.Web.MetaDataUpdate
                 VisibilityDefaultValue = true,
                 ShortTextCode = "CustomerTenantAccessCard.Tip.NewCardTip",
                 ShortTextCodeCode = "CustomerTenantAccessCard.Tip.NewCardTip",
+            }, TipRepository, TextCodeRepository, tips, textCodes);
+
+            Tip BIReportTip = AddTips.AddTip(new TipDetails()
+            {
+                Code = "BIRE",
+                Tenant = 0,
+                ShortTextCodeDefaultText = "You can create a new BI report or add from the reports we added for you by clicking on Upload from Standard Reports button.",
+                ObjectTableId = BIReportObject.Id,
+                VisibilityDefaultValue = true,
+                ShortTextCode = "BIReport.Tip.BITip",
+                ShortTextCodeCode = "BIReport.Tip.BITip",
             }, TipRepository, TextCodeRepository, tips, textCodes);
 
             this.ObjectContext.SaveChanges();

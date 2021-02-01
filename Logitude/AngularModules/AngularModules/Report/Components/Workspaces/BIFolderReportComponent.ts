@@ -13,6 +13,8 @@ import { ListComponentArgs } from '../../../Infrastructure/Args';
 import { ConfirmWindow } from '../../../Controls/Windows/ConfirmWindow'; 
 import { MessageWindow } from '../../../Controls/Windows/MessageWindow';
 import { FeatureLocator } from '../../../Infrastructure/Utilities/FeatureLocator';
+declare var window: any;
+
 
 @Component({
     moduleId: './Report/Components/Workspaces/',
@@ -27,6 +29,12 @@ export class BIFolderReportComponent {
     public IsNewBIReportButtonDisabled: boolean = false;
     public IsNewBIReportFolderButtonDisabled: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
+    public ObjectTableName: string = "BIReport";
+    // Tips
+    public IsTipsOpened: boolean = true;
+    public IsFirstTipLoad: boolean = true;
+
+    IsShowAddReportFromLibraryLink: boolean = false; 
     constructor() {
         this.folderListService = new BIReportFolderExtendedListService();
         this.reportListService = new BIReportListService();
@@ -37,9 +45,29 @@ export class BIFolderReportComponent {
         if (!FeatureLocator.HasEntityPermessions("BIReportFolder", "NEW", false)) {
             this.IsNewBIReportFolderButtonDisabled = true;
         }
+        if (FeatureLocator.HasFeaturePermession("BIReport", "BIReportCopyFromLibrary")) {
+            if (SessionLocator.Tenant != 0) {
+                this.IsShowAddReportFromLibraryLink = true;
+            }
+        }
+
+  
+
         this.LoadData();
         this.Listen();
     }
+
+
+    TipVisibilityChanged(event) {
+
+        if (event == "true") this.IsTipsOpened = true;
+        else this.IsTipsOpened = false;
+        this.IsFirstTipLoad = false;
+    }
+    TipsButtonClicked() {
+        this.IsTipsOpened = !this.IsTipsOpened;
+    }
+     
 
     private Listen() {
         this.CurrentSession.SessionEvent.subscribe(s => {
@@ -52,6 +80,7 @@ export class BIFolderReportComponent {
     public InitComponent() {
 
     }
+
 
     private folderList: BIReportFolderList[];
     private reportList: BIReportList[];
@@ -90,6 +119,8 @@ export class BIFolderReportComponent {
         }); 
     }
 
+
+
     NewFolderButtonClicked() {
         var logWindow = new LogitudeWindow();        
         logWindow.Title = "New Folder";
@@ -112,6 +143,22 @@ export class BIFolderReportComponent {
             if (d) {
                 //this.LoadData();
             }
+        });
+    }
+
+    LinkAddReportFromLibraryClick() {
+        var windowTitle = "Add Report From Library";
+        var logWindow = new LogitudeWindow();
+        logWindow.Width = 750;
+        logWindow.Height = 600;
+        logWindow.Title = windowTitle;
+        var windowArgs: any = {};
+        windowArgs.IsCopyFromLibrary = true;
+       // windowArgs.FolderId = this.listArgs.BIReportFolderId;
+        logWindow.WindowArgs = windowArgs;
+        logWindow.Show('./InfrastructureModules/InfrastructureBIReport/Components/NewEntity/NewBIReport');
+        logWindow.ComponentLoaded.subscribe(s => {
+            //
         });
     }
 

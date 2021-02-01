@@ -42,6 +42,14 @@
                         <button id="{{'NewBIReport' | IdGeneratorPipe}}" style="width:100px;float:left;" class="Button" [disabled]="IsNewBIReportButtonDisabled" (click)="NewReportButtonClicked()">New BI Report</button>
                     </td>
 
+                    <td style="width: 5px;">
+                        <div></div>
+                    </td>
+
+                    <td style="width:100px;">
+                        <button *ngIf="IsShowAddReportFromLibraryLink" style="width:150px;float:left;" class="Button" (click)="LinkAddReportFromLibraryClick()">Upload a Standard Report</button>
+                    </td>
+
                     <td>
                         <div></div>
                     </td>
@@ -54,13 +62,36 @@
         <td>
             <div></div>
         </td>
-    </tr>
+    </tr> 
+    <tr *ngIf="IsTipsOpened && IsShowAddReportFromLibraryLink" style="height:80px">
+        <td>
+            <table>
 
+                <tr>
+                    <td>
+                        <table>
+
+
+                            <tr style="height:80px;margin-top:5px;">
+                                <td>
+                                    <div style="width:770px;">
+                                        <TipsComponent [ObjectTableName]="ObjectTableName" [Code]="'BIRE'" [IsInternalTips]="'true'" [IsFirstTipLoad]="IsFirstTipLoad" (TipVisibilityChangedEvent)="TipVisibilityChanged($event)"></TipsComponent>
+                                    </div>
+                                    <div style="height:5px; width:100%;"></div>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+
+        </td>
+    </tr>
     <tr>
         <td>
             <div class="MediaFill">
                 <ScrollViewer>
-                    <div *ngFor="let item of ItemsSource">                       
+                    <div *ngFor="let item of ItemsSource">
                         <table>
                             <tr class="ItemBox" style="height:25px;" (mouseover)="item.FolderIconMouseOver()" (mouseleave)="item.FolderIconMouseLeave()">
 
