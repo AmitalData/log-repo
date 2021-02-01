@@ -92,6 +92,7 @@ namespace WebFreight.Web.WcfApi
                     TenantPM tenantPM = tenantQuery.GetSinglePM(entityPM.Tenant);
                     CountryRepository countryRepository = new CountryRepository(commoncontext);
                     AddressRepository addressRepository = new AddressRepository(commoncontext);
+                    TruckerRepository truckerRepository = new TruckerRepository(commoncontext);
                     // ???????????
                     //"system@tenant1.com"
 
@@ -334,6 +335,21 @@ namespace WebFreight.Web.WcfApi
                         {
                             response.HasError = true;
                             response.ErrorMessage = "AgentId field doesn't exist in the database,Upsert this entity before using it.";
+                            return response;
+                        }
+                    }
+
+                    if (entityPM.TruckerId != null)
+                    {
+                        Trucker trucker = truckerRepository.GetSingleTruckerByCode(entityPM.TruckerId, entityPM.Tenant);
+                        if (trucker != null)
+                        {
+                            entityPM.TruckerId = trucker.Id;
+                        }
+                        else
+                        {
+                            response.HasError = true;
+                            response.ErrorMessage = "TruckerId field doesn't exist in the database, Upsert this entity before using it.";
                             return response;
                         }
                     }

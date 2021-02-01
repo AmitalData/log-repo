@@ -47,6 +47,20 @@ namespace DW_Editor_Tool.ViewModels
         public string DisplayName { get { return displayName; } set { displayName = value; FirePropertyChanged("DisplayName"); } }
 
 
+        private string customFieldObjectTableName;
+        public string CustomFieldObjectTableName { get { return customFieldObjectTableName; } set { customFieldObjectTableName = value; FirePropertyChanged("CustomFieldObjectTableName"); } }
+
+
+        private int maxNumberOfCustomFields;
+        public int MaxNumberOfCustomFields { get { return maxNumberOfCustomFields; } set { maxNumberOfCustomFields = value; FirePropertyChanged("MaxNumberOfCustomFields"); } }
+
+        private bool hasCustomFields;
+        public bool HasCustomFields { get { return hasCustomFields; } set { hasCustomFields = value; FirePropertyChanged("HasCustomFields"); } }
+
+
+
+
+
 
         bool isClosed;
         public bool IsClosed

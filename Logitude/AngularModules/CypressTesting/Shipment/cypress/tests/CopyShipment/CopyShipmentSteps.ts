@@ -1,12 +1,13 @@
 import * as Actions from "../../actions/Actions";
-import * as Assertions from "../../actions/Assertions";
 import { Given, When, Then, And } from "cypress-cucumber-preprocessor/steps";
 import { ShipmentDetails } from "../../models/ShipmentDetails";
 import { BaseSelectors } from "../../../../Base/cypress/selectors/BaseSelectors"
 import { Selectors } from "../../selectors/Selectors";
+import * as BaseAssertion from "../../../../Base/cypress/actions/Assertion"
+
 let ShipmentData: ShipmentDetails;
-let ShipmentFile;
-let CopiedShipmentFile;
+let shipmentNumber: string;
+
 Given("the user logged in", () => {
   cy.Login();
 });
@@ -25,25 +26,19 @@ Given("a direct shipment with the following details",
 When("create shipment", () => {
   Actions.CreateShipment(ShipmentData.ShipmentLevel);
 });
-Then("the shipment should create successfully", () => {
-  ShipmentFile = "CreatedShipmentsData/" + ShipmentData.ShipmentLevel + ShipmentData.Direction +
-    ShipmentData.TransportMode +
-    ((typeof ShipmentData.ShipmentType) === "undefined" || ShipmentData.ShipmentType === null ? "" : ShipmentData.ShipmentType) + ".json";
-  Assertions.ValidateCreatedShipment(ShipmentFile);
+Then("the direct should create successfully", () => {
+  BaseAssertion.AssertStatusCode("WaitPostShipmentRequest", 200).then((interception) => {
+    shipmentNumber = interception.response.body.ShipmentNumber;
+  })
 });
 
 
 Given("the user open the direct shipment", () => {
-  Actions.OpenShipment(ShipmentFile)
+  Actions.OpenShipment(shipmentNumber)
 })
 When("copy the shipment", () => {
-  cy.Click(Selectors.ShipmentMoreList, null)
-  cy.Click(Selectors.CopyShipmentButton,null)
   Actions.CopyShipment(ShipmentData.ShipmentLevel);
 });
 Then("a shipment copy should create successfully", () => {
-  CopiedShipmentFile = "CreatedShipmentsData/" + ShipmentData.ShipmentLevel + ShipmentData.Direction +
-    ShipmentData.TransportMode +
-    ((typeof ShipmentData.ShipmentType) === "undefined" || ShipmentData.ShipmentType === null ? "" : ShipmentData.ShipmentType) + "1" + ".json";
-  Assertions.ValidateCreatedShipment(CopiedShipmentFile);
+  BaseAssertion.AssertStatusCode("WaitPostShipmentRequest", 200);
 });

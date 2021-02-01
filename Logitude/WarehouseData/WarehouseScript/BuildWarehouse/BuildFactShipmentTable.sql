@@ -365,7 +365,7 @@
 	inner JOIN NewDIM_MoveTypes  ON dw_Shipments.MoveTypeId = NewDIM_MoveTypes.Id
     inner JOIN NewDIM_Vessels   ON dw_ShipmentMasterDatas.MainCarriageVesselId = NewDIM_Vessels.Id
 	inner JOIN NewDIM_SpecialServicesTypes   ON dw_Shipments.SpecialServicesTypeId = NewDIM_SpecialServicesTypes.Id
-	inner JOIN dw_CustomObjectFields  ON dw_Shipments.Tenant = dw_CustomObjectFields.Tenant
+	inner JOIN dw_CustomObjectFields  ON dw_Shipments.Tenant = dw_CustomObjectFields.Tenant and dw_CustomObjectFields.ObjectTableName = 'Shipment'
 	inner JOIN NewDIM_Partners ConsolidatorIdPartners ON dw_Shipments.ConsolidatorId = ConsolidatorIdPartners.Id
 	inner JOIN NewDIM_Partners Notify1Partners ON dw_Shipments.Notify1Id = Notify1Partners.Id
 	inner JOIN NewDIM_Partners Notify2Partners ON dw_Shipments.Notify2Id = Notify2Partners.Id

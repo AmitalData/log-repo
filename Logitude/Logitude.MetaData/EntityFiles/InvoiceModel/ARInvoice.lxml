@@ -2167,7 +2167,7 @@
     FieldName="&quot;SearchFields&quot;"
     OldNames="SearchFields"
     IsNew="false"
-    IsChecked="false"
+    IsChecked="true"
     IsDeleted="false"
     ObjectTableName="&quot;ARInvoice&quot;"
     FieldsDataType="&quot;nText&quot;"
@@ -2210,7 +2210,7 @@
     InActive="false"
     DisplayLongName="false"
     FullFieldLable="&quot;SearchFields&quot;"
-    DefaultText="&quot;Search Inv. # / Bill to&quot;"
+    DefaultText="&quot;Search Inv. # / Bill to / Notes&quot;"
     FullLocalDefaultText="&quot;חיפוש לפי מספר חשבונית, לקוח&quot;"
     HelpTextCode="&quot;SearchFields&quot;"
     HelpTextDefaultText="&quot;Searching by :&#xA;1:Inv. # &#xA;2:Bill to&quot;"
@@ -2222,7 +2222,7 @@
     HasDataBaseField="true"
     HasPMField="true"
     IsComposition="false"
-    IsMaxLength="false"
+    IsMaxLength="true"
     NoMetaDataField="false"
     GenerateInList="true"
     IsFixedLength="false"
@@ -15115,7 +15115,6 @@
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
-
   <field
     Id="&quot;f920d3b3-81b8-4056-9b7c-f39484559454&quot;"
     FieldName="&quot;PartnerId&quot;"
@@ -15188,7 +15187,6 @@
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
-
   <field
     Id="&quot;efe28e16-e16e-4ca1-aa39-a8d21090e0f0&quot;"
     FieldName="&quot;MasterEntityId&quot;"
@@ -15264,7 +15262,6 @@
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
-
   <Query
     Code="&quot;All Invoices&quot;"
     TextCode="&quot;All Invoices&quot;"

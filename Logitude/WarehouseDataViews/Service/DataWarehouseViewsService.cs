@@ -22,14 +22,24 @@ namespace WarehouseDataViews.Service
             BuildDataWarehouseViewLists();
         }
 
+
+        private bool CheckIfDataRowHaveColumnValue(DataRow dataRow , string columnName)
+        {
+            return dataRow[columnName] != null && !string.IsNullOrEmpty(dataRow[columnName].ToString()) ? true : false;
+        }
+
+
         public void BuildDataWarehouseViewLists()
         {
-            var factTables = GetDataTableFromSql(connectionString, "select Code,DataViewName,RecordType from DWObjectTables where TypeCode = 'Fact' and ParentFactCode is null");
+            var factTables = GetDataTableFromSql(connectionString, "select Code,DataViewName,RecordType ,HasCustomFields ,MaxNumberOfCustomFields ,CustomFieldObjectTableName from DWObjectTables where TypeCode = 'Fact' and ParentFactCode is null");
             foreach (DataRow row in factTables.AsEnumerable())
             {
-                string factCode = row["Code"]!=null ? row["Code"].ToString() : "";
-                string viewName = row["DataViewName"] != null ? row["DataViewName"].ToString() : "";
-                string recordType = row["RecordType"] != null ? row["RecordType"].ToString() : "";
+                string factCode = CheckIfDataRowHaveColumnValue(row, "Code") ? row["Code"].ToString() : "";
+                string viewName = CheckIfDataRowHaveColumnValue(row, "DataViewName") ? row["DataViewName"].ToString() : "";
+                string recordType = CheckIfDataRowHaveColumnValue(row, "RecordType") ? row["RecordType"].ToString() : "";
+                string customFieldObjectTableName = CheckIfDataRowHaveColumnValue(row, "CustomFieldObjectTableName") ? row["CustomFieldObjectTableName"].ToString() : "";
+                bool hasCustomFields = CheckIfDataRowHaveColumnValue(row , "HasCustomFields") ? bool.Parse( row["HasCustomFields"].ToString() ): false;
+                int maxNumberOfCustomFields = CheckIfDataRowHaveColumnValue(row, "MaxNumberOfCustomFields") ? int.Parse(row["MaxNumberOfCustomFields"].ToString()) : 0;
 
                 if (!string.IsNullOrEmpty(viewName))
                 {
@@ -38,15 +48,26 @@ namespace WarehouseDataViews.Service
                         CreateDimensionDataView(field , factCode);
                     }
 
-                    CreateFactDataView(factCode, recordType,  viewName);
+                    CreateDataWarehouseFactViewArgs createDataWarehouseFactViewArgs = new CreateDataWarehouseFactViewArgs()
+                    {
+                        FactCode = factCode ,
+                        RecordType = recordType,
+                        ViewName = viewName,
+                        CustomFieldObjectTableName = customFieldObjectTableName,
+                        MaxNumberOfCustomFields = maxNumberOfCustomFields,
+                        HasCustomFields = hasCustomFields,
+
+                    };
+
+                    CreateFactDataView(createDataWarehouseFactViewArgs);
                 }
             }
         }
        
-        private void CreateFactDataView(string factCode,string recordType, string viewName)
+        private void CreateFactDataView(CreateDataWarehouseFactViewArgs createDataWarehouseFactViewArgs)
         {
-            var warehouseView = new WarehouseView() { Fields = new List<DWObjectFieldItem>(), ViewCode = factCode, ViewName = viewName, IsFactView = true,SqlString = " CREATE VIEW " + viewName + " AS SELECT " };
-            foreach (DWObjectFieldItem dwObjectFieldDB in DwObjectFieldLists.Where(d => d.DWObjectTableCode == factCode).ToList())
+            var warehouseView = new WarehouseView() { Fields = new List<DWObjectFieldItem>(), ViewCode = createDataWarehouseFactViewArgs.FactCode, ViewName = createDataWarehouseFactViewArgs.ViewName, IsFactView = true,SqlString = " CREATE VIEW " + createDataWarehouseFactViewArgs.ViewName + " AS SELECT " };
+            foreach (DWObjectFieldItem dwObjectFieldDB in DwObjectFieldLists.Where(d => d.DWObjectTableCode == createDataWarehouseFactViewArgs.FactCode).ToList())
             {
    
                 if (dwObjectFieldDB.DimensionTableCode == "DIM_Dates")
@@ -64,14 +85,16 @@ namespace WarehouseDataViews.Service
 
                 warehouseView.Fields.Add(new DWObjectFieldItem() { DataTypeCode = dwObjectFieldDB.DataTypeCode, FieldName = fieldName, FieldCode = dwObjectFieldDB.FieldCode ,DWObjectTableCode = dwObjectFieldDB.DWObjectTableCode });
 
-
             }
-            warehouseView.IsHaveCustomFields = CheckIfFactHaveCustomField(factCode);
+            warehouseView.IsHaveCustomFields = createDataWarehouseFactViewArgs.HasCustomFields;
+            warehouseView.MaxNumberOfCustomFields = createDataWarehouseFactViewArgs.MaxNumberOfCustomFields;
+            warehouseView.CustomFieldObjectTableName = createDataWarehouseFactViewArgs.CustomFieldObjectTableName;
+
             warehouseView.SqlString = warehouseView.SqlString.Remove(warehouseView.SqlString.Length - 1);
-            warehouseView.SqlString +=((warehouseView.IsHaveCustomFields ? ",@CustomFields":"") +  " FROM " + factCode);
+            warehouseView.SqlString +=((warehouseView.IsHaveCustomFields ? ",@CustomFields":"") +  " FROM " + createDataWarehouseFactViewArgs.FactCode);
 
 
-            List<string> shipmentLevelLists = GetShipmentLevelListsByRecordType(recordType);
+            List<string> shipmentLevelLists = GetShipmentLevelListsByRecordType(createDataWarehouseFactViewArgs.RecordType);
             if(shipmentLevelLists.Count() > 0)
             {
                 string recordTypeCondation = " where [DirectHouse] in ( ";
@@ -199,6 +222,23 @@ namespace WarehouseDataViews.Service
         public bool IsHaveCustomFields { get; set; }
         public List<DWObjectFieldItem> Fields { get; set; }
         public List<string> FactConnectedCodeLists { get; set; }
+        public int MaxNumberOfCustomFields { get; set; }
+        public string CustomFieldObjectTableName { get; set; }
+        public string CustomFieldScriptSQL { get; set; }
+
+        
+
+    }
+
+   
+    public class CreateDataWarehouseFactViewArgs
+    {
+        public string FactCode { get; set; }
+        public string ViewName { get; set; }
+        public string RecordType { get; set; }
+        public bool HasCustomFields { get; set; }
+        public int MaxNumberOfCustomFields { get; set; }
+        public string CustomFieldObjectTableName { get; set; }
 
     }
 
@@ -216,9 +256,6 @@ namespace WarehouseDataViews.Service
         public bool IsPrimaryKey { get; set; }
         public string RecordType { get; set; }
         public string FieldName { get; set; }
-
-        
-
     }
 
 

@@ -17,6 +17,7 @@
    declare @Incoterm as int
 
       declare @CreatedByUser as int
+	    --@[DeclareCustomFieldsVariable]
 
 
 	     declare @Tenant as int
@@ -78,7 +79,7 @@
 	SaleCurrency.Id_Number,dw_Quotes.Subject, dw_Quotes.GrossWeightInKG ,dw_Quotes.ChargeableWeightInKG,dw_Quotes.VolumeInCBM,dw_Quotes.NumberOfPackages , 
 	dw_Quotes.NumberOfContainers,dw_Quotes.ExpirationDate,dw_Quotes.IsAutomaticallyClosed, dw_Quotes.IncludePickUp , 
 	dw_Quotes.IncludeDelivery , dw_Quotes.StageDueDate , dw_Quotes.IsQuoteDataExternal, dw_Quotes.IsQuoteDocumentExternal,
-	dw_Quotes.DeliveryAddress,dw_Quotes.PickUpAddress,dw_Quotes.AutomaticallyCloseDate   , FromCountry.Id_Number , ToCountry.Id_Number , shipperPartners.[Partner Type]  , consigneePartners.[Partner Type],customerPartners.[Partner Type]
+	dw_Quotes.DeliveryAddress,dw_Quotes.PickUpAddress,dw_Quotes.AutomaticallyCloseDate   , FromCountry.Id_Number , ToCountry.Id_Number , shipperPartners.[Partner Type]  , consigneePartners.[Partner Type], @dw_Quotes.CustomFieldsVariable , customerPartners.[Partner Type]
 
 
 
@@ -112,6 +113,7 @@
 	inner JOIN NewDIM_Countries FromCountry ON fromPort.CountryId = FromCountry.Id
 
 
+		inner JOIN dw_CustomObjectFields  ON dw_Quotes.Tenant = dw_CustomObjectFields.Tenant and dw_CustomObjectFields.ObjectTableName = 'Quote'
 
 
 	inner JOIN dw_Ports toPort ON dw_Quotes.ToPortId = toPort.Id
@@ -123,7 +125,7 @@
 	 ,@Shipper ,@Consignee, @Agent ,@Customer , @Incoterm ,@CreatedByUser ,@OpenDate , @SentDate ,@AcceptedDate ,@DeclinedDate ,@StartDate ,@LastActivityDate
 	, @Salesman ,@QuoteStages, @Notes ,@QuoteClosingReasons , @EstimatedProfitInLocal 
 	, @SaleCurrency ,@Subject , @GrossWeightInKG ,@ChargeableWeightInKG ,@VolumeInCBM ,@NumberOfPackages ,@NumberOfContainers
-	 , @ExpirationDate ,@IsAutomaticallyClosed ,@IncludePickUp ,@IncludeDelivery ,@StageDueDate ,@IsQuoteDataExternal ,@IsQuoteDocumentExternal,@DeliveryAddress ,@PickUpAddress,@AutomaticallyCloseDate , @FromCountry, @ToCountry  , @ShipperPartnerType ,@ConsigneePartnerType ,  @CustomerPartnerType
+	 , @ExpirationDate ,@IsAutomaticallyClosed ,@IncludePickUp ,@IncludeDelivery ,@StageDueDate ,@IsQuoteDataExternal ,@IsQuoteDocumentExternal,@DeliveryAddress ,@PickUpAddress,@AutomaticallyCloseDate , @FromCountry, @ToCountry  , @ShipperPartnerType ,@ConsigneePartnerType , @CursorCustomFieldsVariable ,  @CustomerPartnerType 
 		 
 
 
@@ -133,7 +135,11 @@
 	 
 	 BEGIN TRY  
 
-	 
+	 	 ------------Resolve Custom Field Data Type Code-------------------
+            
+			    --@[ResolveCustomFieldDataTypeCodeVariable]
+
+	 ----------------------------------------------------
 
 	       declare @IsPotentialShipper as bit  set @IsPotentialShipper =0;if(@ShipperPartnerType = 'Potential Customer') begin set @IsPotentialShipper = 1 end 
 		   declare @IsPotentialConsignee as bit  set @IsPotentialConsignee =0;if(@ConsigneePartnerType = 'Potential Customer') begin set @IsPotentialConsignee = 1 end 
@@ -146,7 +152,7 @@
 	   [Expiration Date] , [Close Auto by System] , [Include Pickup] , [Include Delivery],
 	   [Stage Due Date] , [Is Quote Data External] , [Is Quote Document External] , [Delivery To] ,[Pickup From] , [Close Date], [From Port Country] ,[To Port Country] ,[Is Potential Shipper], [Is Potential Consignee],[Is Potential Customer],
 
-	   [Local Currency] )
+	   [CustomFieldNamesVariable], [Local Currency] )
 	   
 	   
       values(@Id  , @SourceTenant, @ParentTenant ,@Direction , @TransportMode , @Type,@Department ,@Branch,@QuoteNumber
@@ -154,7 +160,7 @@
 	, @Salesman ,@QuoteStages, @Notes ,@QuoteClosingReasons , @EstimatedProfitInLocal 
 	, @SaleCurrency ,@Subject , @GrossWeightInKG ,@ChargeableWeightInKG ,@VolumeInCBM ,@NumberOfPackages ,@NumberOfContainers
 	 , dbo.GetDateFormateAsNumber(@ExpirationDate)  ,@IsAutomaticallyClosed ,@IncludePickUp ,@IncludeDelivery ,dbo.GetDateFormateAsNumber(@StageDueDate)   ,@IsQuoteDataExternal ,@IsQuoteDocumentExternal,@DeliveryAddress ,@PickUpAddress,dbo.GetDateFormateAsNumber(@AutomaticallyCloseDate) 
-	  , @FromCountry , @ToCountry ,@IsPotentialShipper ,  @IsPotentialConsignee,@IsPotentialCustomer,
+	  , @FromCountry , @ToCountry ,@IsPotentialShipper ,  @IsPotentialConsignee , @IsPotentialCustomer,[CustomFieldValuesVariable],
 	  1
 	 )
 
@@ -182,7 +188,7 @@ END CATCH
 	 ,@Shipper ,@Consignee, @Agent ,@Customer , @Incoterm ,@CreatedByUser ,@OpenDate , @SentDate ,@AcceptedDate ,@DeclinedDate ,@StartDate ,@LastActivityDate
 	, @Salesman ,@QuoteStages, @Notes ,@QuoteClosingReasons , @EstimatedProfitInLocal 
 	, @SaleCurrency ,@Subject , @GrossWeightInKG ,@ChargeableWeightInKG ,@VolumeInCBM ,@NumberOfPackages ,@NumberOfContainers
-	 , @ExpirationDate ,@IsAutomaticallyClosed ,@IncludePickUp ,@IncludeDelivery ,@StageDueDate ,@IsQuoteDataExternal ,@IsQuoteDocumentExternal,@DeliveryAddress ,@PickUpAddress,@AutomaticallyCloseDate,@FromCountry , @ToCountry  , @ShipperPartnerType,@ConsigneePartnerType ,  @CustomerPartnerType
+	 , @ExpirationDate ,@IsAutomaticallyClosed ,@IncludePickUp ,@IncludeDelivery ,@StageDueDate ,@IsQuoteDataExternal ,@IsQuoteDocumentExternal,@DeliveryAddress ,@PickUpAddress,@AutomaticallyCloseDate,@FromCountry , @ToCountry  , @ShipperPartnerType,@ConsigneePartnerType , @CursorCustomFieldsVariable , @CustomerPartnerType
 		 
 
 		End

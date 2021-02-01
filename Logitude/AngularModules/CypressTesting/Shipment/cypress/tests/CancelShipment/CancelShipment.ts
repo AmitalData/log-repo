@@ -1,11 +1,12 @@
 import * as Actions from "../../actions/Actions";
-import * as Assertions from "../../actions/Assertions";
 import { Given, When, Then } from "cypress-cucumber-preprocessor/steps";
 import { ShipmentDetails } from "../../models/ShipmentDetails";
 import { BaseSelectors } from "../../../../Base/cypress/selectors/BaseSelectors"
 import { Selectors } from "../../selectors/Selectors";
+import * as BaseAssertion from "../../../../Base/cypress/actions/Assertion"
 
 let _ShipmentDetails: ShipmentDetails;
+let shipmentNumber: string;
 
 Given("the user logged in", () => {
   cy.Login();
@@ -18,32 +19,30 @@ Given("navigate to shipments workspace", () => {
 
 Given("a direct shipment with the following details",
   (dataTable) => {
-   const shipmentDetails = dataTable.hashes()[0] as ShipmentDetails;
-   _ShipmentDetails = shipmentDetails;
-   Actions.OpenNewShipmentWizard(_ShipmentDetails.ShipmentLevel);
-   Actions.FillShipmentDefaultFields(_ShipmentDetails);
-});
+    const shipmentDetails = dataTable.hashes()[0] as ShipmentDetails;
+    _ShipmentDetails = shipmentDetails;
+    Actions.OpenNewShipmentWizard(_ShipmentDetails.ShipmentLevel);
+    Actions.FillShipmentDefaultFields(_ShipmentDetails);
+  });
 
 When("create shipment", () => {
   Actions.CreateShipment(_ShipmentDetails.ShipmentLevel);
 });
 
-Then("the shipment should create successfully", () => {
-  let resultFile = "CreatedShipmentsData/" + _ShipmentDetails.ShipmentLevel + _ShipmentDetails.Direction +
-  _ShipmentDetails.TransportMode +
-  ((typeof _ShipmentDetails.ShipmentType) === "undefined" || _ShipmentDetails.ShipmentType === null ? "" : _ShipmentDetails.ShipmentType) + ".json";
-
-  Assertions.ValidateCreatedShipment(resultFile);
+Then("the direct should create successfully", () => {
+  BaseAssertion.AssertStatusCode("WaitPostShipmentRequest", 200).then((interception) => {
+    shipmentNumber = interception.response.body.ShipmentNumber;
+  });
 });
 
-Given("the user open the direct shipment",()=>{
-    Actions.OpenShipment("CreatedShipmentsData/DirectEA.json");
+Given("the user open the direct shipment", () => {
+  Actions.OpenShipment(shipmentNumber);
 });
 
-When("cancel the shipment",()=>{
-    Actions.CancelShipment();
+When("cancel the shipment", () => {
+  Actions.CancelShipment();
 });
 
-Then("the shipment should cancel successfully",()=>{
-    Assertions.ValidateUpdatedShipment(null);
+Then("the shipment should cancel successfully", () => {
+  BaseAssertion.AssertStatusCode("WaitPutShipmentRequest", 200);
 }); 
