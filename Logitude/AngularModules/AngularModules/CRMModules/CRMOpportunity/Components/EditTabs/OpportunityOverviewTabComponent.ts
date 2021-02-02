@@ -580,14 +580,12 @@ export class OpportunityOverviewTabComponent extends BaseComponent implements On
         this.getCompetitorList();
     }
     getCompetitorList() {
-        var competitorListService: CompetitorListService = new CompetitorListService();
-        competitorListService.getAll().subscribe((result:any) => {
-            this.AllCompetitors = result.Result;
+        var competitorListService: CompetitorListService = new CompetitorListService();      
+        competitorListService.getAll().subscribe((result: any) => {
+            this.AllCompetitors = result.Result.filter(d => d.InActive == false);
             this.BuildCompetitorToggleButtonList();
             this.BuildCompetitorsObsList();
-
         });
-
     }
 
 
