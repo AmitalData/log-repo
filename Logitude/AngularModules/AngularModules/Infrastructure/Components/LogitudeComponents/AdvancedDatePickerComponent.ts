@@ -9,6 +9,7 @@ import { ObjectsLocator } from "../../Locators/ObjectsLocator";
 import { ObjectFieldPM } from "../../EntityPMs/ObjectFieldPM";
 import { UIProperty, } from "./UIProperties";
 import { AppTool } from "../../Tools";
+import { TextCodeTranslator } from '../../Utilities/TextCodeTranslator';
 
 @Component({
     selector: "AdvancedDatePicker",
@@ -28,10 +29,10 @@ export class AdvancedDatePickerComponent implements OnInit, OnDestroy {
     public DateOptions: CodeNameClass[] = [];
     DropdownId: string;
     DivAdvancedDatePickerId: string;
-    DisplayValue: string;
+    AdvancedDatePickerInputId: string;
     LayoutDirection: string = "ltr";
     isRTL: boolean = false;
-    show: boolean;
+    private showErrorOnHover: boolean;
     public CopyValueSubs: any;
     public ObjectField: ObjectFieldPM;
     public ObjectFieldName: string = null;
@@ -43,6 +44,10 @@ export class AdvancedDatePickerComponent implements OnInit, OnDestroy {
     private isDisabled: boolean;
     public ShowToolTip: boolean;
 
+    public AdvancedDatePickerPlaceHolder: string;
+
+    @Output() OnInputBlurEvent: EventEmitter<any> = new EventEmitter();
+    @Output() InputLostFocus: EventEmitter<boolean> = new EventEmitter<boolean>();
     @Output() ValueChanged = new EventEmitter();
     @Input() NoObjectField: boolean = false;
     @Input() NoValidation: boolean = false;
@@ -54,48 +59,31 @@ export class AdvancedDatePickerComponent implements OnInit, OnDestroy {
     }
 
     public set SelectedDateValue(newValue: any) {
-        var isOk = true;
+        let isOk = true;
         if (newValue) {
             isOk = false;
             if (newValue instanceof Date) {
                 isOk = true;
             }
             else if (typeof (newValue) == "string") {
-                var selectedItem: CodeNameClass = this.DateOptions.filter(date => date.Code == newValue)[0];
+                const selectedItem: CodeNameClass = this.DateOptions.filter(date => date.Code == newValue)[0];
                 if (selectedItem) {
                     this.SelectedItem = selectedItem;
                     this.SelectedItemObject = this.SelectedItem;
                     this.selectedDateValue = selectedItem.Name;
-                    this.DisplayValue = selectedItem.Name; 
+                    this.InputValue = selectedItem.Name; 
                 }
                 else {
-                    selectedItem = this.DateOptions.filter(date => date.Code == "SPD")[0];
-                    this.SelectedItem = selectedItem;
-                    this.SelectedItemObject = this.SelectedItem;
                     this.selectedDateValue = newValue;
-                    var myDisplayValue = this.SetDateValue(new Date(newValue));
-                    this.DisplayValue = myDisplayValue?.split(" ")[0];;
+                    this.DateValueChanged(new Date(newValue));
                 }
             }
         }
 
         if (isOk) {
-            if (newValue === undefined) {
-                newValue = null;
-            }
-
-            if (this.selectedDateValue === undefined) {
-                this.selectedDateValue = null;
-            }
-
-            if (this.selectedDateValue != newValue) {
-                var selectedItem = this.DateOptions.filter(date => date.Code == "SPD")[0];
-                this.SelectedItem = selectedItem;
-                var selectedCalendarDate = this.SetDateValue(newValue, null);
-                this.selectedDateValue = selectedCalendarDate;
-                this.DisplayValue = selectedCalendarDate?.split(" ")[0];
-                this.SelectedItemObject = this.SelectedItem;
-            }
+            if (newValue === undefined) newValue = null;
+            if (this.selectedDateValue === undefined) this.selectedDateValue = null;
+            if (this.selectedDateValue != newValue) this.DateValueChanged(newValue);
         }
     }
 
@@ -136,17 +124,17 @@ export class AdvancedDatePickerComponent implements OnInit, OnDestroy {
     }
 
     constructor(private eRef: ElementRef) {
-        this.show = false;
+        this.showErrorOnHover = false;
         if (ObjectsLocator.GlobalSetting) {
             this.LayoutDirection = ObjectsLocator.GlobalSetting.LayoutDirection;
             this.isRTL = ObjectsLocator.GlobalSetting.LayoutDirection == "rtl";
         }
         else this.LayoutDirection = "ltr";
 
-        this.SetDateOptions();
+        this.setDateOptions();
     }
 
-    SetDateOptions() {
+    private setDateOptions() {
         this.DateOptions.push(new CodeNameClass("SPD", "Specific Date"));
         this.DateOptions.push(new CodeNameClass("TOD", "Today"));
         this.DateOptions.push(new CodeNameClass("YES", "Yesterday"));
@@ -168,17 +156,22 @@ export class AdvancedDatePickerComponent implements OnInit, OnDestroy {
         this.InitializeControl();
         this.uiProperty = this.DataContext.UIProperties.GetUIProperty(this.ObjectFieldName, this.ObjectTableName, this.DataContext);
         this.IsDisabled = this.uiProperty != null ? !this.uiProperty.IsEnabled : false;
+        if (this.InputType == "date") {
+            this.AdvancedDatePickerPlaceHolder = TextCodeTranslator.Translate(
+                "General.O.EnterDate"
+            );
+        }
     }
 
     counterId: number;
     InitializeControl() {
         this.counterId = ControlsIdCounter.GetNextIdCounter();
+        this.AdvancedDatePickerInputId = 'AdvancedDatePickerInputId-' + this.ObjectFieldName + '-' + this.counterId.toString();
         this.DivAdvancedDatePickerId = 'AdvancedDatePicker-' + this.ObjectFieldName + '-' + this.counterId.toString();
         this.DropdownId = 'AdvancedDatePickerDropDown-' + this.ObjectFieldName + '-' + this.counterId.toString();
         this.ErrorPopUpId = 'advanceddatepickerererrorpop-' + this.counterId;
         this.LogCalendarId = 'LogCalendar-' + this.ObjectFieldName + '-' + this.counterId.toString();
     }
-
 
     ngOnDestroy() {
         console.log("advanceddatepicker:ngOnDestroy");
@@ -187,43 +180,29 @@ export class AdvancedDatePickerComponent implements OnInit, OnDestroy {
     //ErrorPopUp
     ErrorPopUpId: string;
     ShowErrorPopup: boolean = false;
-
+    public AdvancedDatePickerInputDivStyle;
     SetValidity(validValue: boolean, errorMessage) {
         if (this.uiProperty != null) {
             this.uiProperty.ValidValue = validValue;
             this.uiProperty.ValidationError = errorMessage;
         }
-        if (!validValue) {
-            if (this.show) {
-                this.ShowErrorPopup = true;
-            }
-        }
-        else {
-            this.ShowErrorPopup = false;
-        }
+        this.ShowErrorPopup = !validValue ? this.showErrorOnHover : false;
+        this.AdvancedDatePickerInputDivStyle = !validValue ? { border: "1px solid #ff0000" } : "" ;
     }
 
     //MainTable
-    DeleteButtonNgStyle: any;
-    Detach: boolean;
-    ComponentMouseInArea: boolean;
+    public DeleteButtonNgStyle: any;
 
-    OnComponentMouseOver() {
-        this.ComponentMouseInArea = true;
-        if (!this.SelectedItem) {
-            this.DeleteButtonNgStyle = { 'visibility': 'hidden' };
-        } else {
-            this.DeleteButtonNgStyle = null;
-        }
+    public OnComponentMouseOver() {
+        this.DeleteButtonNgStyle = this.SelectedItem ? null : { 'visibility': 'hidden' };
         this.DetectChanges();
     }
 
-    OnComponentMouseOut() {
-        this.ComponentMouseInArea = false;
+    public OnComponentMouseOut() {
         this.DetectChanges();
     }
 
-    DetectChanges() {
+    private DetectChanges() {
         return;
     }
 
@@ -233,17 +212,17 @@ export class AdvancedDatePickerComponent implements OnInit, OnDestroy {
     public IsOpen: boolean;
     public ItemsSource: any[];
 
-    OnDropDownMouseOver() {
+    public OnDropDownMouseOver() {
         this.DropDownMouseInArea = true;
     }
 
-    OnDropDownMouseOut() {
+    public OnDropDownMouseOut() {
         this.DropDownMouseInArea = false;
     }
 
-    OnLiMouseOver($event) {
+    public OnLiMouseOver($event) {
         this.DropDownMouseInArea = true;
-        var active = document.getElementsByClassName("highlighted");
+        let active = document.getElementsByClassName("highlighted");
         if (active[0]) {
             active[0].classList.remove("highlighted");
         }
@@ -261,80 +240,66 @@ export class AdvancedDatePickerComponent implements OnInit, OnDestroy {
         }
     }
 
-    OnLiMouseLeave($event) {
+    public OnLiMouseLeave($event) {
         this.DropDownMouseInArea = false;
         $event.target.classList.remove("highlighted");
     }
 
-    OnDropDownSelected(item: any, newValue = null) {
+    public OnDropDownSelected(item: any, newValue = null, toggleDropDown = true) {
         if (item.Code == "SPD" && AppTool.IsNullOrEmpty(newValue)) return;
         this.SelectedItem = item;
-        var selectedValue = this.SelectedItem.Name;
+        let selectedValue = this.SelectedItem.Name;
         if (!AppTool.IsNullOrEmpty(newValue)) selectedValue = newValue;
         this.DataContext[this.ObjectFieldName] = this.SelectedItem.Code == "SPD" ? selectedValue : this.SelectedItem.Code;
         this.SelectedItemObject = this.SelectedItem;
         this.SelectedItemChanged.emit(this.SelectedItem);
         this.ValidateField();
-        this.ToggleOpenDropDown();
+        if (toggleDropDown) this.ToggleOpenDropDown();
         this.ValueChanged.emit(this.DataContext[this.ObjectFieldName]);
         this.DetectChanges();
     }
 
-    OnDropDownClicked() {
+    public OnDropDownClicked() {
         this.ToggleOpenDropDown();
         if (this.IsOpen) {
-            this.Populate(null);
+            this.ItemsSource = this.DateOptions;
+            this.DetectChanges();
         }
     }
 
-    ToggleOpenDropDown() {
+    private ToggleOpenDropDown() {
         this.IsDropDownVisible = !this.IsDropDownVisible;
         this.IsOpen = !this.IsOpen;
         this.DetectChanges();
     }
 
-    Populate(searchText: string) {
-        if (searchText) {
-            this.ItemsSource = this.DateOptions.filter(date => date.Name.toLowerCase().indexOf(searchText.toLowerCase()) != -1);
-        }
-        else {
-            this.ItemsSource = this.DateOptions;
-        }
-        this.DetectChanges();
-    }
+    //OnDropDownBlur() {
+    //    if (!this.IsCalendarOpen || (this.IsCalendarOpen && !this.CalendarMouseInArea)) {
+    //        this.IsDropDownVisible = false;
+    //        this.IsOpen = false;
+    //        this.ToggleCalendar(false);
+    //    }
+    //}
 
-    OnDropDownFocus() {
-        //var inputElement = document.getElementById(this.DropdownId);
-        //if (inputElement) inputElement.focus();
-    }
-
-    OnDropDownBlur() {
-        if (!this.IsCalendarOpen || (this.IsCalendarOpen && !this.CalendarMouseInArea)) {
-            this.IsDropDownVisible = false;
-            this.IsOpen = false;
-            this.ToggleCalendar(false);
-        }
-    }
-
-    OnDeleteValue() {
+    public OnDeleteValue() {
         this.SelectedItem = null;
         this.DataContext[this.ObjectFieldName] = null;
         this.SelectedItemObject = null;
         this.SelectedItemChanged.emit(this.SelectedItem);
         this.DetectChanges();
-        this.DisplayValue = null;
+        this.InputValue = null;
         this.ValidateField();
         this.ValueChanged.emit(null);
     }
 
     //LogCalendar
-    IsCalendarOpen: boolean;
-    IsCalendarDateDropDownOpen: boolean;
-    LogCalendarId: string;
-    CalendarMouseInArea: boolean;
-    InputValue: string;
-    DateValue: string;
-    TimeValue: string;
+    public IsCalendarOpen: boolean;
+    public IsCalendarDateDropDownOpen: boolean;
+    public LogCalendarId: string;
+    private CalendarMouseInArea: boolean;
+    public InputValue: string;
+    private DateValue: string;
+    private TimeValue: string;
 
     private selectedCalendarDate: Date;
     public get SelecteCalendardDate() {
@@ -347,169 +312,103 @@ export class AdvancedDatePickerComponent implements OnInit, OnDestroy {
         }
     }
 
-    OnCalendarBlur() {
+    public OnCalendarBlur() {
         if (!this.DropDownMouseInArea && !this.CalendarMouseInArea) {
             this.IsDropDownVisible = false;
         }
     }
 
-    OnSelectedCalendarDateChanged(selectedDateObj: any) {
-        var selectedCalendarDate = selectedDateObj.SelectedDate;
+    public OnSelectedCalendarDateChanged(selectedDateObj: any) {
+        let selectedCalendarDate = selectedDateObj.SelectedDate;
         this.OnDropDownSelected(this.DateOptions.filter(d => d.Code == "SPD")[0], selectedCalendarDate);
         this.ToggleCalendar(false);
     }
 
-    ToggleCalendar(open: boolean) {
+    private ToggleCalendar(open: boolean) {
         this.IsCalendarDateDropDownOpen = open;
         this.IsCalendarOpen = open;
     }
 
-    OnCalendarMouseOver() {
+    public OnCalendarMouseOver() {
         this.CalendarMouseInArea = true;
-        var inputElement = document.getElementById(this.LogCalendarId);
+        let inputElement = document.getElementById(this.LogCalendarId);
         if (inputElement) inputElement.focus();
     }
 
-    OnCalendarMouseOut() {
+    public OnCalendarMouseOut() {
         this.CalendarMouseInArea = false;
-        var inputElement = document.getElementById(this.LogCalendarId);
+        let inputElement = document.getElementById(this.LogCalendarId);
         if (inputElement) inputElement.focus();
     }
 
-    SetDateValue(date: Date, timeSuffix: string = null) {
+    private SetDateValue(date: Date, timeSuffix: string = null) {
         if (date) {
-            var day: number;
-            var month: number;
-            var year: number;
-            var hour: number;
-            var minute: number;
-            var second: number;
-            var dateparts = this.GetDateParts(date);
-            day = dateparts[2];
-            month = dateparts[1] + 1;
-            year = dateparts[0];
+            const dateParts = this.GetDateParts(date);
+            const day: number = dateParts[2];
+            const month: number = dateParts[1] + 1;
+            const year: number = dateParts[0];
+            const hour: number = dateParts[3];
+            const minute: number = dateParts[4];
+            const second: number = dateParts[5];
 
-            hour = dateparts[3];
-            minute = dateparts[4];
-            second = dateparts[5];
+            this.DateValue = year + "/" + this.ApplyPadding(month.toString()) + "/" + this.ApplyPadding(day.toString());
+            this.TimeValue = this.ApplyPadding(hour.toString()) + ":" + this.ApplyPadding(minute.toString()) + ":" + this.ApplyPadding(second.toString());
 
-            this.DateValue =
-                year +
-                "/" +
-                this.ApplyPadding(month.toString()) +
-                "/" +
-                this.ApplyPadding(day.toString());
-            this.TimeValue =
-                this.ApplyPadding(hour.toString()) +
-                ":" +
-                this.ApplyPadding(minute.toString()) +
-                ":" +
-                this.ApplyPadding(second.toString());
-
-            var timearr = this.TimeValue.split(":");
-            var hourRes = this.GetTimeModeHours(
-                Number(timearr[0]),
-                timeSuffix
-            );
-            var hourResArr = hourRes.split(",");
+            let timearr = this.TimeValue.split(":");
+            let hourRes = this.GetTimeModeHours(Number(timearr[0]),timeSuffix);
+            let hourResArr = hourRes.split(",");
             if (this.TimeMode == "12") {
-                var tSuffix = hourResArr[1];
-                if (timeSuffix) {
+                let tSuffix = hourResArr[1];
+                if (timeSuffix) 
                     tSuffix = timeSuffix;
-                }
-                this.TimeValue =
-                    this.ApplyPadding(hourResArr[0]) +
-                    ":" +
-                    timearr[1] +
-                    ":" +
-                    timearr[2] +
-                    " " +
-                    tSuffix;
-            } else {
-                this.TimeValue =
-                    this.ApplyPadding(hourResArr[0]) +
-                    ":" +
-                    timearr[1] +
-                    ":" +
-                    timearr[2];
+                
+                this.TimeValue = this.ApplyPadding(hourResArr[0]) + ":" + timearr[1] + ":" + timearr[2] + " " + tSuffix;
             }
-
-            var dateValue;
+            else
+                this.TimeValue = this.ApplyPadding(hourResArr[0]) + ":" + timearr[1] + ":" + timearr[2];
 
             if (this.InputType == "date") {
-                if (
-                    !AppTool.IsNullOrEmpty(
-                        SessionLocator.TenantPM.DateTimeFormat
-                    )
-                ) {
-                    var myDateTimeFormatPrefix = SessionLocator.TenantPM.DateTimeFormat.toLowerCase().substring(
-                        0,
-                        2
-                    );
+                if (!AppTool.IsNullOrEmpty(SessionLocator.TenantPM.DateTimeFormat)) {
+                    const myDateTimeFormatPrefix = SessionLocator.TenantPM.DateTimeFormat.toLowerCase().substring(0,2);
 
-                    if (myDateTimeFormatPrefix == "mm") {
-                        dateValue = this.ApplyPadding(month.toString()) + "/" + this.ApplyPadding(day.toString()) + "/" + year;
-                    } else {
-                        dateValue = this.ApplyPadding(day.toString()) + "/" + this.ApplyPadding(month.toString()) + "/" + year;
-                    }
-                } else {
-                    dateValue = this.ApplyPadding(day.toString()) + "/" + this.ApplyPadding(month.toString()) + "/" + year;
+                    if (myDateTimeFormatPrefix == "mm") 
+                        this.DateValue = this.ApplyPadding(month.toString()) + "/" + this.ApplyPadding(day.toString()) + "/" + year;
+                    else
+                        this.DateValue = this.ApplyPadding(day.toString()) + "/" + this.ApplyPadding(month.toString()) + "/" + year;
+                    
                 }
-                return dateValue + " " + this.TimeValue;
+                else
+                    this.DateValue = this.ApplyPadding(day.toString()) + "/" + this.ApplyPadding(month.toString()) + "/" + year;
             }
             else {
-                var timeArray = this.TimeValue.split(":");
-                if (
-                    this.TimeValue.indexOf("AM") > -1 ||
-                    this.TimeValue.indexOf("PM") > -1
-                ) {
-                    var secondsWithsuffix = timeArray[2].split(" ");
-                    var suffix = secondsWithsuffix[1];
-
-                    dateValue = this.ApplyPadding(timeArray[0]) + ":" + timeArray[1] + " " + suffix;
-                } else {
-                    dateValue = this.ApplyPadding(timeArray[0]) + ":" + timeArray[1];
+                let timeArray = this.TimeValue.split(":");
+                if (this.TimeValue.indexOf("AM") > -1 || this.TimeValue.indexOf("PM") > -1) {
+                    let suffix = timeArray[2].split(" ")[1];
+                    this.DateValue = this.ApplyPadding(timeArray[0]) + ":" + timeArray[1] + " " + suffix;
                 }
-                return dateValue + " " + this.TimeValue;
-            }
+                else 
+                    this.DateValue = this.ApplyPadding(timeArray[0]) + ":" + timeArray[1];
+             }
         }
         else {
             this.SelectedCalendarDate = null;
             this.InputValue = null;
             this.TimeValue = null;
             if (this.ObjectField && this.ObjectField.IsCustom) {
-                var customFieldClass: CustomFieldClass = this.DataContext[
-                    this.ObjectFieldName
-                ];
-                if (
-                    customFieldClass != null &&
-                    customFieldClass != undefined
-                ) {
+                let customFieldClass: CustomFieldClass = this.DataContext[this.ObjectFieldName];
+                if (customFieldClass != null && customFieldClass != undefined) {
                     customFieldClass.Value = null;
-                    this.DataContext[
-                        this.ObjectFieldName
-                    ] = customFieldClass;
-                } else {
-                    console.warn(
-                        "Custom Fields are not implemented in: " +
-                        this.ObjectTableName
-                    );
+                    this.DataContext[this.ObjectFieldName] = customFieldClass;
                 }
-            } else {
-                this.DataContext[this.ObjectFieldName] = null;
+                else
+                    console.warn("Custom Fields are not implemented in: " + this.ObjectTableName);     
             }
-
+            else 
+                this.DataContext[this.ObjectFieldName] = null;
+            
             this.ValidateField();
-            var dateUiProp = this.DataContext.UIProperties.GetUIProperty(
-                this.ObjectFieldName,
-                this.ObjectTableName,
-                this.DataContext
-            );
-            var timeUiProp = this.DataContext.UIProperties.GetUIProperty(
-                this.ObjectFieldName + "_timepicker",
-                this.ObjectTableName,
-                this.DataContext
-            );
+            let dateUiProp = this.DataContext.UIProperties.GetUIProperty(this.ObjectFieldName,this.ObjectTableName,this.DataContext);
+            let timeUiProp = this.DataContext.UIProperties.GetUIProperty(this.ObjectFieldName + "_timepicker",this.ObjectTableName,this.DataContext);
             if (timeUiProp != null && timeUiProp != undefined) {
                 timeUiProp.UIPropertyChanged.emit("datevaluechanges");
             }
@@ -517,63 +416,39 @@ export class AdvancedDatePickerComponent implements OnInit, OnDestroy {
         }
     }
 
-    ValidateField(emitPropertyChanged: boolean = true) {
+    private ValidateField(emitPropertyChanged: boolean = true) {
         if (!this.NoValidation) {
-            var errors = null;
-            var table;
-            if (this.uiProperty != null) {
-                table = window.ObjectTables.filter(
-                    d => d.Name === this.uiProperty.ObjectTableName
-                )[0];
-            }
+            let errors = null;
+            let table;
+            if (this.uiProperty != null)
+                table = window.ObjectTables.filter(d => d.Name === this.uiProperty.ObjectTableName)[0];
+            
             if (table) {
-                var field: ObjectFieldPM = window.ObjectFields.filter(
-                    d =>
-                        d.ObjectTableId === table.Id &&
-                        d.FieldName === this.uiProperty.FieldName
-                )[0];
-                var fieldValidator: FieldValidator = new FieldValidator();
-                errors = fieldValidator.Validate(
-                    this.ObjectFieldName,
-                    this.ObjectTableName,
-                    this.DataContext
-                );
+                let fieldValidator: FieldValidator = new FieldValidator();
+                errors = fieldValidator.Validate(this.ObjectFieldName, this.ObjectTableName, this.DataContext);
             }
-            if (this.uiProperty != null && this.uiProperty.IsValidManually == false) {
+
+            if (this.uiProperty != null && this.uiProperty.IsValidManually == false)
                 this.SetValidity(false, this.uiProperty.ManualValidationError);
-            } else if (errors) {
-                if (errors.length > 0) {
-                    this.SetValidity(false, errors[0]);
-                }
-                else {
-                    this.SetValidity(true, null);
-                }
+            else if (errors) {
+                if (errors.length > 0) this.SetValidity(false, errors[0]);
+                else this.SetValidity(true, null);
             }
-            else {
-                this.SetValidity(true, null);
-            }
-            if (emitPropertyChanged && this.uiProperty != null) {
+            else this.SetValidity(true, null);
+            
+            if (emitPropertyChanged && this.uiProperty != null) 
                 this.uiProperty.UIPropertyChanged.emit(this.uiProperty);
-            }
         }
     }
 
-    GetDateParts(date: Date) {
-        var dateParts: number[];
-        dateParts = [];
-        var year: number;
-        var month: number;
-        var day: number;
-        var hour: number;
-        var minute: number;
-        var second: number;
-
-        year = date.getUTCFullYear();
-        month = date.getUTCMonth();
-        day = date.getUTCDate();
-        hour = date.getUTCHours();
-        minute = date.getUTCMinutes();
-        second = date.getUTCSeconds();
+    private GetDateParts(date: Date) {
+        let dateParts: number[] = [];
+        let year: number = date.getUTCFullYear();
+        let month: number = date.getUTCMonth();
+        let day: number = date.getUTCDate();
+        let hour: number = date.getUTCHours();
+        let minute: number = date.getUTCMinutes();
+        let second: number = date.getUTCSeconds();
 
         dateParts.push(year);
         dateParts.push(month);
@@ -584,182 +459,492 @@ export class AdvancedDatePickerComponent implements OnInit, OnDestroy {
         return dateParts;
     }
 
-    ApplyPadding(str: string) {
-        var pad = "00";
-        var ans = pad.substring(0, pad.length - str.length) + str;
+    private ApplyPadding(str: string) {
+        let pad = "00";
+        let ans = pad.substring(0, pad.length - str.length) + str;
         return ans;
     }
 
-    GetTimeModeHours(hours: number, suffix: string = null) {
+    private GetTimeModeHours(hours: number, suffix: string = null) {
         if (isNaN(hours)) {
             hours = 0;
         }
         if (this.TimeMode == "12") {
             if (hours <= 11) {
-                if (hours == 0) {
-                    hours = 12;
-                }
+                hours = hours == 0 ? 12 : hours;
                 return hours.toString() + "," + "AM";
-            } else {
-                var convHour;
+            }
+            else {
+                let convHour;
                 switch (hours) {
                     case 12: {
                         convHour = 12;
                         break;
                     }
-                    case 13: {
-                        convHour = 1;
-                        break;
-                    }
-                    case 14: {
-                        convHour = 2;
-                        break;
-                    }
-                    case 15: {
-                        convHour = 3;
-                        break;
-                    }
-                    case 16: {
-                        convHour = 4;
-                        break;
-                    }
-                    case 17: {
-                        convHour = 5;
-                        break;
-                    }
-                    case 18: {
-                        convHour = 6;
-                        break;
-                    }
-                    case 19: {
-                        convHour = 7;
-                        break;
-                    }
-                    case 20: {
-                        convHour = 8;
-                        break;
-                    }
-                    case 21: {
-                        convHour = 9;
-                        break;
-                    }
-                    case 22: {
-                        convHour = 10;
-                        break;
-                    }
+                    case 13:
+                    case 14:
+                    case 15:
+                    case 16:
+                    case 17:
+                    case 18:
+                    case 19:
+                    case 20:
+                    case 21:
+                    case 22:
                     case 23: {
-                        convHour = 11;
+                        convHour = hours - 12;
                         break;
                     }
                 }
                 return convHour.toString() + "," + "PM";
             }
-        } else {
-            hours = this.GetTimeFor24Mode(hours, suffix);
         }
-
+        else hours = this.GetTimeFor24Mode(hours, suffix);
+        
         return hours.toString();
     }
 
-    GetDateFromString(datestring: string) {
-        var dateAndTime: string[];
-        var suffix: string;
-        if (datestring.indexOf("T") > -1) {
-            dateAndTime = datestring.split("T");
-        } else {
-            dateAndTime = datestring.split(" ");
-        }
-        var dateArray: string[];
-        if (dateAndTime[0].indexOf("/") > -1) {
-            dateArray = dateAndTime[0].split("/");
-        } else if (dateAndTime[0].indexOf("-") > -1) {
-            dateArray = dateAndTime[0].split("-");
-        } else if (dateAndTime[0].indexOf(".") > -1) {
-            dateArray = dateAndTime[0].split(".");
-        }
-
-        if (dateAndTime.length > 2) {
-            suffix = dateAndTime[2];
-        }
-
-        var timeArray: string[];
-        var hour: number = 0;
-        var minute: number = 0;
-        var second: number = 0;
-        if (dateAndTime.length >= 2) {
-            if (dateAndTime[1].indexOf(".") > -1) {
-                timeArray = dateAndTime[1].split(".")[0].split(":");
-            } else {
-                timeArray = dateAndTime[1].split(":");
-            }
-            var hour: number = this.GetTimeFor24Mode(
-                Number(timeArray[0]),
-                suffix
-            );
-            var minute: number = Number(timeArray[1]);
-            var second: number = Number(timeArray[2].substring(0, 2));
-        }
-
-        var year: number = Number(dateArray[0]);
-        var month: number = Number(dateArray[1]) - 1;
-        var day: number = Number(dateArray[2]);
-
-        var date: Date = this.GetDate(year, month, day, hour, minute, second);
+    private GetDate(year: number, month: number, day: number, hour: number, minute: number, second: number) {
+        let date: Date = new Date();
+        date.setUTCDate(1);
+        date.setUTCFullYear(year);
+        date.setUTCMonth(month);
+        date.setUTCDate(day);
+        date.setUTCHours(hour);
+        date.setUTCMinutes(minute);
+        date.setUTCSeconds(second);
+        date.setUTCMilliseconds(0);
         return date;
     }
 
-    GetTimeFor24Mode(hours: number, suffix: string) {
+    //Input DatePicker
+    private SelectedDate: Date;
+    public OnInputFocus() {
+        this.showErrorOnHover = true;
+        this.ShowErrorPopup = !this.uiProperty.ValidValue;
+        if (this.IsDropDownVisible) this.IsDropDownVisible = false;
+    }
+
+    public OnInputBlur() {
+        this.ShowErrorPopup = false;
+        this.showErrorOnHover = false;
+
+        if (!this.CalendarMouseInArea) {
+            if (this.InputType == "date" && this.isTextChanged) this.GetInputDateValue();
+            //else if (this.isTextChanged) this.GetTimeValue(); //DateTime
+
+            this.OnInputBlurEvent.emit({ Id: this.AdvancedDatePickerInputId });
+            this.InputLostFocus.emit(true);
+        }
+        this.isTextChanged = false;
+    }
+
+    private isCtrlKeyDown: boolean = false;
+    private isTextChanged: boolean = false;
+    public Onkeydown(event) {
+        const key = event.keyCode;
+        const keyChar = event.key;
+        let success: boolean;
+
+        if (key == 17) this.isCtrlKeyDown = true;
+        if (key != 13 && key != 9 && key != 17) this.isTextChanged = true; //9: Tab, 13: Enter, 17: Ctrl
+        if (this.IsCalendarOpen) this.ToggleCalendar(false);
+        if (key == 9) this.CalendarMouseInArea = false;
+        
+        success = this.IsAllowedKey(key, keyChar);
+
+        if (key == 13 || key == 9) {
+            if (this.InputType == "date" && this.isTextChanged) {
+                this.GetInputDateValue();
+            }
+            //else if (this.isTextChanged) {//DateTime
+            //    this.GetTimeValue();
+            //}
+        }
+
+        if (key == 67 || key == 65 || key == 86 || key == 88) { //Select All & Copy & Past & Cut
+            if (this.isCtrlKeyDown) {
+                success = true;
+            }
+        }
+
+        return success ? key : false;
+    }
+
+    private IsAllowedKey(key, keyChar) {
+        let success: boolean = false;
+        switch (this.InputType) {
+            case "date": {
+                success = this.IsAllowedDateKey(key);
+                break;
+            }
+            case "time": {
+                success = this.IsAllowedTimeKey(key, keyChar);
+                break;
+            }
+        }
+        return success;
+    }
+
+    private IsAllowedDateKey(key) {
+        return (key >= 48 && key <= 57) ||
+            (key >= 96 && key <= 105) ||
+            key == 8 ||
+            key == 45 ||
+            key == 47 ||
+            key == 46 ||
+            key == 43 ||
+            key == 9 ||
+            key == 190 ||
+            key == 110 ||
+            key == 107 ||
+            key == 109 ||
+            key == 189 ||
+            key == 16 ||
+            key == 111 ||
+            key == 35 ||
+            key == 36 ||
+            key == 16 ||
+            key == 187 ||
+            key == 37 ||
+            key == 38 ||
+            key == 39 ||
+            key == 40 ||
+            key == 190 ||
+            key == 191 ||
+            key == 17;
+    }
+
+    private IsAllowedTimeKey(key, keyChar) {
+        return (key >= 48 && key <= 57) ||
+            (key >= 96 && key <= 105) ||
+            key == 190 ||
+            key == 110 ||
+            key == 8 ||
+            key == 58 ||
+            key == 45 ||
+            key == 47 ||
+            key == 46 ||
+            key == 43 ||
+            key == 112 ||
+            key == 109 ||
+            key == 97 ||
+            key == 9 ||
+            key == 189 ||
+            key == 35 ||
+            key == 36 ||
+            key == 16 ||
+            key == 187 ||
+            key == 37 ||
+            key == 38 ||
+            key == 39 ||
+            key == 40 ||
+            key == 190 ||
+            key == 191 ||
+            key == 111 ||
+            key == 17 ||
+            keyChar == ":";
+    }
+
+    public Onkeyup(event) {
+        if (event.keyCode == 17) this.isCtrlKeyDown = false;
+
+        if (event.keyCode == 8 && this.InputType == "date" && this.IsEmptyInputValue()) { //8: BackSpace Key
+            this.SetDateValue(null);
+            this.DateValueChanged(null);
+        }
+    }
+
+    private IsEmptyInputValue() {
+        return this.InputValue == "" || this.InputValue == undefined || this.InputValue == null;
+    }
+
+    private GetInputDateValue() {
+        if (this.InputValue && this.InputValue != "") {
+            if (!this.TimeValue) this.TimeValue = "00:00:00";
+            let suffix = null;
+            if (this.TimeValue.indexOf("AM") > -1 ||this.TimeValue.indexOf("PM") > -1) {
+                suffix = this.TimeValue.split(" ")[1];
+                this.TimeValue = this.TimeValue.split(" ")[0];
+            }
+            const timearr = this.TimeValue.split(":");
+            let hour = 0;
+            if (suffix != null) hour = this.GetTimeFor24Mode(Number(timearr[0]), suffix);
+            else hour = Number(timearr[0]);
+            
+            const minute = Number(timearr[1]);
+            const second = Number(timearr[2]);
+            const todayDateTime: Date = this.GetTodaysDate();
+            const dateparts = this.GetDateParts(todayDateTime);
+            const date: Date = this.GetDate(dateparts[0],dateparts[1],dateparts[2],hour,minute,second);
+            var invalidText: boolean = false;
+            var invalidDate: boolean = false;
+            var errorMessage: string = "";
+            const val = this.InputValue.trim();
+            if (val.length > 10) invalidText = true;
+            
+
+            if (!invalidText) {
+                if (this.InputValue.trim() == ".") this.DateValueChanged(date);
+                else if (this.InputValue.indexOf("+") == 0 || this.InputValue.indexOf("-") == 0) {
+                    if (this.InputValue.length > 1) {
+                        let days = 0;
+                        const sign = this.InputValue.substring(0, 1);
+                        const daysString = this.InputValue.substring(1,this.InputValue.length);
+
+                        if (sign == "+") {
+                            days = Number(daysString);
+                            if (days) date.setDate(date.getDate() + days);
+                            else invalidText = true;
+                        }
+                        else if (sign == "-") {
+                            days = Number(daysString);
+                            if (days) date.setDate(date.getDate() - days);
+                            else invalidText = true;
+                        }
+                    }
+                    if (!invalidText) this.DateValueChanged(date);
+                }
+                else if ((this.InputValue != "." && this.InputValue.indexOf(".") > -1) ||
+                         (this.InputValue != "/" && this.InputValue.indexOf("/") > -1) ||
+                         (this.InputValue != "-" && this.InputValue.indexOf("-") > -1)) {
+                    const nowDate: Date = this.GetTodaysDate();
+                    let dateStrings: string[];
+                    if (this.InputValue.indexOf(".") > -1) dateStrings = this.InputValue.split(".");
+                    else if (this.InputValue.indexOf("-") > -1) dateStrings = this.InputValue.split("-");
+                    else dateStrings = this.InputValue.split("/");
+                    
+                    const nowdateparts = this.GetDateParts(nowDate);
+                    let day;
+                    let month;
+                    let year;
+                    const currentYear = nowdateparts[0];
+                    const currentMonth = nowdateparts[1] + 1;
+                    const currentYearMillinium = currentYear.toString().substring(0, 1) + "000";
+                    const currentMillinium = Number(currentYearMillinium);
+
+                    if (dateStrings.length == 3) {
+                        if (dateStrings[0].length > 2 && dateStrings[2].length <= 2) {
+                            year = Number(dateStrings[0]);
+                            month = Number(dateStrings[1]);
+                            day = Number(dateStrings[2]);
+                        }
+                        else if (dateStrings[2].length >= 2 && dateStrings[0].length <= 2) {
+                            day = Number(dateStrings[0]);
+                            month = Number(dateStrings[1]);
+                            year = Number(dateStrings[2]);
+                        }
+                        else invalidText = true;
+                        
+                        //calculating year
+                        if (year == 0) year = currentYear;
+                        if (year < 1000) year = year + currentMillinium;
+                        if (month > 12 || day > 31) invalidText = true;
+                        if (!invalidText) {
+                            const datetime: Date = this.GetDate(year,month - 1,day,hour,minute,second);
+                            this.DateValueChanged(datetime);
+                        }
+                    }
+                    else if (dateStrings.length == 2) {
+                        day = Number(dateStrings[0]);
+                        month = Number(dateStrings[1]);
+
+                        if (month == 0) month = currentMonth;
+                        if (month > 12 || day > 31) invalidText = true;
+                        if (!invalidText) {
+                            const datetime: Date = this.GetDate(currentYear,month - 1,day,hour,minute,second);
+                            this.DateValueChanged(datetime);
+                        }
+                    }
+                    else if (dateStrings.length == 1) {
+                        day = Number(dateStrings[0]);
+                        if (day > 31) invalidText = true;
+                        if (!invalidText) {
+                            const datetime: Date = this.GetDate(currentYear,currentMonth,day,hour,minute,second);
+                            this.DateValueChanged(datetime);
+                        }
+                    }
+                }
+                else {
+                    const valid = Number(this.InputValue);
+                    if (valid) {
+                        const nowdateparts = this.GetDateParts(date);
+                        let day;
+                        let month;
+                        let year;
+                        let dayString;
+                        let monthString;
+                        let yearString;
+                        const currentYear = nowdateparts[0]; //date.getFullYear();
+                        const currentMonth = nowdateparts[1] + 1; //date.getMonth() + 1;
+                        const currentYearMillinium = currentYear.toString().substring(0, 1) + "000";
+                        const currentMillinium = Number(currentYearMillinium);
+
+                        if (this.InputValue.length == 8) {
+                            //01082016
+                            dayString = this.InputValue.substring(0, 2);
+                            monthString = this.InputValue.substring(2, 4);
+                            yearString = this.InputValue.substring(4, 8);
+                            day = Number(dayString);
+                            month = Number(monthString);
+                            year = Number(yearString);
+
+                            if (day > 31) {
+                                invalidText = true;
+                                errorMessage = "Invalid day, day must be between 01 and 31";
+                            }
+                            if (month > 12) {
+                                invalidText = true;
+                                errorMessage = "Invalid month, month must be between 01 and 12";
+                            }
+
+                            //calculating year
+                            if (year == 0) {
+                                year = currentYear;
+                            }
+                            if (year < 1000) {
+                                year = year + currentMillinium;
+                            }
+
+                            if (year < currentYear - 100 || year > currentYear + 100) {
+                                invalidText = true;
+                                errorMessage = "Please Enter More Suitable Year";
+                            }
+
+                            if (!invalidText) {
+                                const datetime: Date = this.GetDate(year, month - 1, day, hour, minute, second);
+                                this.DateValueChanged(datetime);
+                            }
+                        }
+                        else if (this.InputValue.length == 6) {
+                            //010816
+
+                            dayString = this.InputValue.substring(0, 2);
+                            monthString = this.InputValue.substring(2, 4);
+                            yearString = this.InputValue.substring(4, 6);
+                            day = Number(dayString);
+                            month = Number(monthString);
+                            year = Number(yearString);
+
+                            //calculating year
+                            if (year == 0) {
+                                year = currentYear;
+                            }
+                            if (year < 1000) {
+                                year = year + currentMillinium;
+                            }
+
+                            if (day > 31) {
+                                invalidText = true;
+                                errorMessage = "Invalid day, day must be between 01 and 31";
+                            }
+                            if (month > 12) {
+                                invalidText = true;
+                                errorMessage = "Invalid month, month must be between 01 and 12";
+                            }
+
+                            if (year < currentYear - 100 || year > currentYear + 100) {
+                                invalidText = true;
+                                errorMessage = "Please Enter More Suitable Year";
+                            }
+
+                            if (!invalidText) {
+                                const datetime: Date = this.GetDate(year, month - 1, day, hour, minute, second);
+                                this.DateValueChanged(datetime);
+                            }
+                        }
+                        else if (this.InputValue.length == 4) {
+                            //0206
+                            dayString = this.InputValue.substring(0, 2);
+                            monthString = this.InputValue.substring(2, 4);
+                            day = Number(dayString);
+                            month = Number(monthString);
+
+                            if (day > 31) {
+                                invalidText = true;
+                                errorMessage = "Invalid day, day must be between 01 and 31";
+                            }
+                            if (month > 12) {
+                                invalidText = true;
+                                errorMessage = "Invalid month, month must be between 01 and 12";
+                            }
+
+                            if (!invalidText) {
+                                const datetime: Date = this.GetDate(currentYear, month - 1, day, hour, minute, second);
+                                this.DateValueChanged(datetime);
+                            }
+                        }
+                        else if (this.InputValue.length == 2) {
+                            dayString = this.InputValue.substring(0, 2);
+                            day = Number(dayString);
+                            if (day > 31) {
+                                invalidText = true;
+                                errorMessage = "Invalid day, day must be between 01 and 31";
+                            }
+
+                            if (!invalidText) {
+                                const datetime: Date = this.GetDate(currentYear, currentMonth - 1, day, hour, minute, second);
+                                this.DateValueChanged(datetime);
+                            }
+                        }
+                        else if (this.InputValue.length == 1) {
+                            dayString = this.InputValue;
+                            day = Number(dayString);
+                            if (day != 0) {
+                                if (!invalidText) {
+                                    const datetime: Date = this.GetDate(currentYear,currentMonth - 1,day,hour,minute,second);
+                                    this.DateValueChanged(datetime);
+                                }
+                            }
+                        }
+                        else invalidText = true;
+                    }
+                    else invalidText = true;
+                }
+            }
+        }
+        else 
+            this.DateValueChanged(null);
+
+        if (!invalidText) {
+            if (this.SelectedDate) {
+                if (this.SelectedDate.getFullYear() < new Date().getFullYear() - 100) {
+                    invalidDate = true;
+                    errorMessage = "Date time is too way in the past!";
+                }
+            }
+        }
+        if (invalidText || invalidDate) {
+            if (errorMessage == "") errorMessage = TextCodeTranslator.Translate("General.O.InvalidInput");
+            this.SetValidity(false, errorMessage);
+            this.DataContext[this.ObjectFieldName] = null;
+        }
+        else 
+            this.SetValidity(true, null);
+        this.isTextChanged = false;
+
+        this.uiProperty.UIPropertyChanged.emit(this.uiProperty);
+    }
+
+    private GetTimeFor24Mode(hours: number, suffix: string) {
         if (suffix) {
-            var convHour;
+            let convHour;
             if (suffix.toLowerCase() == "am") {
                 if (hours >= 12) {
                     switch (hours) {
-                        case 12: {
-                            convHour = 0;
-                            break;
-                        }
-                        case 13: {
-                            convHour = 1;
-                            break;
-                        }
-                        case 14: {
-                            convHour = 2;
-                            break;
-                        }
-                        case 15: {
-                            convHour = 3;
-                            break;
-                        }
-                        case 16: {
-                            convHour = 4;
-                            break;
-                        }
-                        case 17: {
-                            convHour = 5;
-                            break;
-                        }
-                        case 18: {
-                            convHour = 6;
-                            break;
-                        }
-                        case 19: {
-                            convHour = 7;
-                            break;
-                        }
-                        case 20: {
-                            convHour = 8;
-                            break;
-                        }
-                        case 21: {
-                            convHour = 9;
-                            break;
-                        }
-                        case 22: {
-                            convHour = 10;
-                            break;
-                        }
+                        case 12:
+                        case 13:
+                        case 14:
+                        case 15:
+                        case 16:
+                        case 17:
+                        case 18:
+                        case 19:
+                        case 20:
+                        case 21:
+                        case 22:
                         case 23: {
-                            convHour = 11;
+                            convHour = hours - 12;
                             break;
                         }
                     }
@@ -770,52 +955,19 @@ export class AdvancedDatePickerComponent implements OnInit, OnDestroy {
             if (suffix.toLowerCase() == "pm") {
                 if (hours < 12) {
                     switch (hours) {
-                        case 0: {
-                            convHour = 12;
-                            break;
-                        }
-                        case 1: {
-                            convHour = 13;
-                            break;
-                        }
-                        case 2: {
-                            convHour = 14;
-                            break;
-                        }
-                        case 3: {
-                            convHour = 15;
-                            break;
-                        }
-                        case 4: {
-                            convHour = 16;
-                            break;
-                        }
-                        case 5: {
-                            convHour = 17;
-                            break;
-                        }
-                        case 6: {
-                            convHour = 18;
-                            break;
-                        }
-                        case 7: {
-                            convHour = 19;
-                            break;
-                        }
-                        case 8: {
-                            convHour = 20;
-                            break;
-                        }
-                        case 9: {
-                            convHour = 21;
-                            break;
-                        }
-                        case 10: {
-                            convHour = 22;
-                            break;
-                        }
+                        case 0:
+                        case 1:
+                        case 2:
+                        case 3:
+                        case 4:
+                        case 5:
+                        case 6:
+                        case 7:
+                        case 8:
+                        case 9:
+                        case 10:
                         case 11: {
-                            convHour = 23;
+                            convHour = hours + 12;
                             break;
                         }
                     }
@@ -827,23 +979,25 @@ export class AdvancedDatePickerComponent implements OnInit, OnDestroy {
         return hours;
     }
 
-    GetDate(
-        year: number,
-        month: number,
-        day: number,
-        hour: number,
-        minute: number,
-        second: number
-    ) {
-        var date: Date = new Date();
-        date.setUTCDate(1);
-        date.setUTCFullYear(year);
-        date.setUTCMonth(month);
-        date.setUTCDate(day);
-        date.setUTCHours(hour);
-        date.setUTCMinutes(minute);
-        date.setUTCSeconds(second);
-        date.setUTCMilliseconds(0);
-        return date;
+    private GetTodaysDate() {
+        let today: Date = new Date();
+        today.setUTCFullYear(today.getFullYear());
+        today.setUTCMonth(today.getMonth());
+        today.setUTCDate(today.getDate());
+        today.setUTCHours(today.getHours());
+        today.setUTCMinutes(today.getMinutes());
+        today.setUTCSeconds(today.getSeconds());
+        today.setUTCMilliseconds(0);
+        return today;
+    }
+
+    private DateValueChanged(date) {
+        this.SelectedDate = date;
+        this.SetDateValue(date);
+        if (date) {
+            this.InputValue = this.DateValue;
+            this.selectedDateValue = this.DateValue + " " + this.TimeValue;
+        }
+        this.OnDropDownSelected(this.DateOptions.filter(d => d.Code == "SPD")[0], date, false);
     }
 }

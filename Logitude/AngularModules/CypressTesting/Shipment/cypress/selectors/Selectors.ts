@@ -2,7 +2,7 @@ export class Selectors
 {
     public static readonly ShipmentTab = '#SHIP';
     public static readonly ShipmentMoreList ='#MenuButtons';
-    public static readonly APInvoiceMoreList  ="#MenuButtons_1"
+    public static readonly InvoiceMoreList  ="#MenuButtons_1"
     public static readonly GeneralTab = '#ShipmentTHGeneral';
     public static readonly OrdersTab = '#ShipmentTHOrders';
     public static readonly PartnersTab = '#ShipmentTHPartners';
@@ -31,6 +31,9 @@ export class Selectors
     public static readonly AddNewPayableLine = '#AddPayable button';
     public static readonly ReceivableChargesType = '#ShipmentReceivable_ChargesTypeId';
     public static readonly ReceivableUnitPrice = '#ShipmentReceivable_UnitPrice';
+    public static readonly ReceivableQuantity ="#ShipmentReceivable_Quantity"
+    public static readonly ReceivableCurrency ="#ShipmentReceivable_CurrencyId"
+    public static readonly ReceivableMeasurement="#ShipmentReceivable_MeasurementId"
     public static readonly ReceivableTotalAmount = '#ShipmentReceivable_TotalAmount';
     public static readonly AddReceivableOkButton = '#Ok-AddReceivableBtn';
     public static readonly AddPayableOkButton = '#Ok-AddPayableBtn';
@@ -58,6 +61,7 @@ export class Selectors
     public static readonly ConfirmActionButton='#ConfirmAction'
     public static readonly ShipmentPayableUnitPrice = '#ShipmentPayable_UnitPrice';
     public static readonly ShipmentPayableQuantity = '#ShipmentPayable_Quantity';
+    public static readonly ShipmentReceivableRate ="#ShipmentReceivable_Rate"
     public static readonly ReceiveInvoiceButton= "#ReceiveInvoice";
     public static readonly APInvoiceVendor="#APInvoice_VendorId";
     public static readonly APInvoiceInvoiceNumber ="#APInvoice_InvoiceNumber";
@@ -70,8 +74,26 @@ export class Selectors
     public static readonly OkCreateAPInvoiceButton="#Ok-CreateAPInvoice";
     public static readonly APInvoiceLineCheckBox="#CheckBox_0_0_LBL";
     public static readonly APInvoiceVatType="#APInvoice_VatTypeId"
-    public static readonly APInvoiceVatTypeApplyToAll="#VATApplyToAll"
+    public static readonly VatTypeApplyToAll="#VATApplyToAll"
     public static readonly APInvoiceSaveButton= "#APInvoiceBSave"
     public static readonly APInvoiceApproveButton ="#APInvoiceBApprove"
-    public static readonly APInvoiceCancelApprovalButton= "#APInvoiceBCancelApproval"
+    public static readonly APInvoiceCancelApprovalButton= "#APInvoiceBCancelApproval";
+    public static readonly ARInvoiceBranch="#ARInvoice_BranchId"
+    public static readonly ARInvoiceVatNumber="#ARInvoice_VatNumber"
+    public static readonly ARInvoiceDueDate = "#date_ARInvoice_DueDate"
+    public static readonly ARInvoicePaymentTerm="#ARInvoice_PaymentTermId"
+    public static readonly  ARInvoiceInvoiceDate ="#date_ARInvoice_InvoiceDate"
+    public static readonly ARInvoiceInvoiceCurrency="#ARInvoice_InvoiceCurrencyId"
+    public static readonly CreateCreditNoteARInvoiceButton="#CreateCreditNote"
+    public static readonly CreateARInvoiceButton= "#CreateARInvoice"
+    public static readonly ARInvoiceExchangeRate="#ARInvoice_InvoiceCurrencyExchangeRate"
+    public static readonly OkCreateARInvoiceButton = "#Ok-CreateARInvoice"
+    public static readonly ARInvoiceVatType = "#ARInvoice_VatTypeId"
+    public static readonly ARInvoiceApproveButton= "#ARInvoiceBApprove";
+    public static readonly ARInvoiceSetAsSentButton="#ARInvoiceBSetAsSent"
+    public static readonly ARInvoiceSaveButton ="#ARInvoiceBSaveAsDraft"
+    public static readonly ARInvoiceVoidButton="#ARInvoiceBVoid";
+    public static readonly ARInvoiceCancelDraftButton="#ARInvoiceBCancelDraft"
+    public static readonly ConfirmWindowYes= "#ConfirmWindow_Yes_0"
+    public static readonly APInvoiceVoidButton="#APInvoiceBVoid";
 }

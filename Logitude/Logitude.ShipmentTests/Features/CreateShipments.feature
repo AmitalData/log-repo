@@ -2,17 +2,29 @@
 	With pre-prepared base and shipment data
 	We want to create master and house shipments.
 
-Scenario: Create a master shipment
-	Given A master shipment fields
-		| Direction | TransportMode | ShipmentLevel | FreightPrepaidCollect | OtherPrepaidCollect | MainCarriageToPort | MainCarriageFromPort |
-		| E         | A             | C             | P                     | C                   | LHR                | MIA                  |
-	When Create master shipment API request sent
-	Then A new master created successfully
+Scenario: Create master shipment
+	Given a master shipment with the following properties
+		| property              | Value   |
+		| Direction             | Export  |
+		| TransportMode         | Air     |
+		| ShipmentLevel         | Master  |
+		| FreightPrepaidCollect | Prepaid |
+		| OtherPrepaidCollect   | Collect |
+		| MainCarriageToPort    | LHR     |
+		| MainCarriageFromPort  | MIA     |
+	When create master shipment
+	Then the master should create successfully
 
-Scenario: Create a house shipment
-	Given A house shipment fields
-		| Direction | TransportMode | ShipmentLevel | FreightPrepaidCollect | OtherPrepaidCollect | MainCarriageToPort | MainCarriageFromPort |
-		| E         | A             | H             | P                     | C                   | LHR                | MIA                  | 
-	And A master shipment
-	When Create house shipment API request sent
-	Then A new house created successfully
+Scenario: Create house shipment 
+	Given a house shipment with the following properties
+		| property              | Value   |
+		| Direction             | Export  |
+		| TransportMode         | Air     |
+		| ShipmentLevel         | House   |
+		| FreightPrepaidCollect | Prepaid |
+		| OtherPrepaidCollect   | Collect |
+		| MainCarriageToPort    | LHR     |
+		| MainCarriageFromPort  | MIA     |
+	And a master shipment
+	When create house shipment
+	Then the house should create successfully

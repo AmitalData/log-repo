@@ -275,9 +275,9 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
                     if (Tabel == "DIM_Dates")
                     {
                         WhereStmt = (string.IsNullOrEmpty(WhereStmt) ? " where " : WhereStmt + " and ") + (Tabel + ".[Date Key] not in (@DatesParameterName1,@DatesParameterName2,@DatesParameterName3) "); //authToken.Tenant
-                        sqlCommandDefinition.Parameters.Add(new SqlParameterDetails() { ParameterName = "@DatesParameterName1", Value = "-1" });
-                        sqlCommandDefinition.Parameters.Add(new SqlParameterDetails() { ParameterName = "@DatesParameterName2", Value = "-2" });
-                        sqlCommandDefinition.Parameters.Add(new SqlParameterDetails() { ParameterName = "@DatesParameterName3", Value = "-3" });
+                        sqlCommandDefinition.Parameters.Add(new SqlParameterDetails() { ParameterName = "@DatesParameterName1", Value = "2001-01-01" });
+                        sqlCommandDefinition.Parameters.Add(new SqlParameterDetails() { ParameterName = "@DatesParameterName2", Value = "2002-02-02" });
+                        sqlCommandDefinition.Parameters.Add(new SqlParameterDetails() { ParameterName = "@DatesParameterName3", Value = "2003-03-03" });
                     }
 
 
@@ -305,7 +305,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
                     {
                         string tenantFieldName = (Tabel != "DIM_Tenants" ? (!isParentTenant ?  "[Source Tenant]" : "[Parent Tenant]") : "[Tenant Number]" ) + " as Tenant";
                         sqlCommandDefinition.SQLString = "select DISTINCT " + Field + " ";
-                        if(!IsClosed)
+                        if(!IsClosed && Tabel != "DIM_Dates")
                             sqlCommandDefinition.SQLString += ", " + tenantFieldName + " ";
                         if (LovAdditionalFields != null)
                         {
@@ -628,7 +628,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
                 string DateSample = "";
 
                 DataWarehouseHelper dataWarehouseHelper = new DataWarehouseHelper();
-                if (filter != null)
+                if (filter != null && !string.IsNullOrEmpty(filter.TextValue.ToString()))
                 {
                     DateSample = dataWarehouseHelper.ResolveWarehoueDateField("", filter.OperationCode, filter.TextValue.ToString(), filter.DataTypeCode, authToken.Tenant,true);
                 }

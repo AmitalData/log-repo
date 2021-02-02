@@ -31,7 +31,7 @@ namespace Simplog.Data.InfrastructureModel.Mapping
            
             this.Property(t => t.IndexesXml).IsMaxLength().IsUnicode(true);
 
-            this.Property(t => t.CustomFieldObjectTableName).HasMaxLength(50).IsUnicode(false);
+            this.Property(t => t.ObjectTableName).HasMaxLength(50).IsUnicode(false);
 
             this.ToTable("DWObjectTables");
             this.Property(t => t.Id).HasColumnName("Id");
@@ -55,7 +55,7 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             this.Property(t => t.IndexesXml).HasColumnName("IndexesXml");
 
             this.Property(t => t.HasCustomFields).HasColumnName("HasCustomFields");
-            this.Property(t => t.CustomFieldObjectTableName).HasColumnName("CustomFieldObjectTableName");
+            this.Property(t => t.ObjectTableName).HasColumnName("ObjectTableName");
             this.Property(t => t.MaxNumberOfCustomFields).HasColumnName("MaxNumberOfCustomFields");
 
 

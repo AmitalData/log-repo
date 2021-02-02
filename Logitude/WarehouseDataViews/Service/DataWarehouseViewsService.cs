@@ -31,13 +31,13 @@ namespace WarehouseDataViews.Service
 
         public void BuildDataWarehouseViewLists()
         {
-            var factTables = GetDataTableFromSql(connectionString, "select Code,DataViewName,RecordType ,HasCustomFields ,MaxNumberOfCustomFields ,CustomFieldObjectTableName from DWObjectTables where TypeCode = 'Fact' and ParentFactCode is null");
+            var factTables = GetDataTableFromSql(connectionString, "select Code,DataViewName,RecordType ,HasCustomFields ,MaxNumberOfCustomFields ,ObjectTableName from DWObjectTables where TypeCode = 'Fact' and ParentFactCode is null");
             foreach (DataRow row in factTables.AsEnumerable())
             {
                 string factCode = CheckIfDataRowHaveColumnValue(row, "Code") ? row["Code"].ToString() : "";
                 string viewName = CheckIfDataRowHaveColumnValue(row, "DataViewName") ? row["DataViewName"].ToString() : "";
                 string recordType = CheckIfDataRowHaveColumnValue(row, "RecordType") ? row["RecordType"].ToString() : "";
-                string customFieldObjectTableName = CheckIfDataRowHaveColumnValue(row, "CustomFieldObjectTableName") ? row["CustomFieldObjectTableName"].ToString() : "";
+                string objectTableName = CheckIfDataRowHaveColumnValue(row, "ObjectTableName") ? row["ObjectTableName"].ToString() : "";
                 bool hasCustomFields = CheckIfDataRowHaveColumnValue(row , "HasCustomFields") ? bool.Parse( row["HasCustomFields"].ToString() ): false;
                 int maxNumberOfCustomFields = CheckIfDataRowHaveColumnValue(row, "MaxNumberOfCustomFields") ? int.Parse(row["MaxNumberOfCustomFields"].ToString()) : 0;
 
@@ -53,7 +53,7 @@ namespace WarehouseDataViews.Service
                         FactCode = factCode ,
                         RecordType = recordType,
                         ViewName = viewName,
-                        CustomFieldObjectTableName = customFieldObjectTableName,
+                        ObjectTableName = objectTableName,
                         MaxNumberOfCustomFields = maxNumberOfCustomFields,
                         HasCustomFields = hasCustomFields,
 
@@ -86,12 +86,12 @@ namespace WarehouseDataViews.Service
                 warehouseView.Fields.Add(new DWObjectFieldItem() { DataTypeCode = dwObjectFieldDB.DataTypeCode, FieldName = fieldName, FieldCode = dwObjectFieldDB.FieldCode ,DWObjectTableCode = dwObjectFieldDB.DWObjectTableCode });
 
             }
-            warehouseView.IsHaveCustomFields = createDataWarehouseFactViewArgs.HasCustomFields;
+            warehouseView.HasCustomFields = createDataWarehouseFactViewArgs.HasCustomFields;
             warehouseView.MaxNumberOfCustomFields = createDataWarehouseFactViewArgs.MaxNumberOfCustomFields;
-            warehouseView.CustomFieldObjectTableName = createDataWarehouseFactViewArgs.CustomFieldObjectTableName;
+            warehouseView.ObjectTableName = createDataWarehouseFactViewArgs.ObjectTableName;
 
             warehouseView.SqlString = warehouseView.SqlString.Remove(warehouseView.SqlString.Length - 1);
-            warehouseView.SqlString +=((warehouseView.IsHaveCustomFields ? ",@CustomFields":"") +  " FROM " + createDataWarehouseFactViewArgs.FactCode);
+            warehouseView.SqlString +=((warehouseView.HasCustomFields ? ",@CustomFields":"") +  " FROM " + createDataWarehouseFactViewArgs.FactCode);
 
 
             List<string> shipmentLevelLists = GetShipmentLevelListsByRecordType(createDataWarehouseFactViewArgs.RecordType);
@@ -219,11 +219,11 @@ namespace WarehouseDataViews.Service
         public string ViewName { get; set; }
         public string SqlString { get; set; }
         public bool IsFactView { get; set; }
-        public bool IsHaveCustomFields { get; set; }
+        public bool HasCustomFields { get; set; }
         public List<DWObjectFieldItem> Fields { get; set; }
         public List<string> FactConnectedCodeLists { get; set; }
         public int MaxNumberOfCustomFields { get; set; }
-        public string CustomFieldObjectTableName { get; set; }
+        public string ObjectTableName { get; set; }
         public string CustomFieldScriptSQL { get; set; }
 
         
@@ -238,7 +238,7 @@ namespace WarehouseDataViews.Service
         public string RecordType { get; set; }
         public bool HasCustomFields { get; set; }
         public int MaxNumberOfCustomFields { get; set; }
-        public string CustomFieldObjectTableName { get; set; }
+        public string ObjectTableName { get; set; }
 
     }
 

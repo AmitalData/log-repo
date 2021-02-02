@@ -1,28 +1,42 @@
 import * as Actions from "../../actions/Actions"
-import * as Assertions from "../../actions/Assertions"
 import { Selectors } from "../../selectors/Selectors"
 import { BaseSelectors } from "../../../../Base/cypress/selectors/BaseSelectors"
 import { Given, When, Then } from "cypress-cucumber-preprocessor/steps";
 import { PartnersDetails } from "cypress/models/PartnersDetails";
 import {PayableDetails} from "cypress/models/PayableDetails"
+import * as BaseAssertion from "../../../../Base/cypress/actions/Assertion"
+import { ShipmentDetails } from "cypress/models/ShipmentDetails";
+import {ReceivableDetails}from"cypress/models/ReceivableDetails"
 
+let shipmentNumber: string;
+let shipmentDetails: ShipmentDetails;
 let payableDetails: PayableDetails;
 
-Given("the user logged in", () => {
-  cy.Login()
+Given("the user logged in and navigates to shipments workspace", () => {
+    cy.Login()
+    cy.Click(BaseSelectors.OperationsMenu, null)
+    cy.Click(Selectors.ShipmentTab, null)
 });
 
-Given("navigate to shipments workspace", () => {
-  cy.Click(BaseSelectors.OperationsMenu, null)
-  cy.Click(Selectors.ShipmentTab, null)
+Given("a direct shipment with the following details",
+  (dataTable) => {
+   shipmentDetails = dataTable.hashes()[0] as ShipmentDetails;
+   Actions.OpenNewShipmentWizard(shipmentDetails.ShipmentLevel);
+   Actions.FillShipmentWizardsFields(shipmentDetails);
 });
 
-Given("create a new Direct shipment", () => {
-    Actions.CreateAnewShipment("Direct")
-    Actions.OpenShipment("CreatedShipmentsData/DEA.json")
+When("create shipment", () => {
+  Actions.CreateShipment(shipmentDetails.ShipmentLevel);
+});
+
+Then("the direct should create successfully", () => {
+    BaseAssertion.AssertStatusCode("WaitPostShipmentRequest", 200).then((interception) => {
+        shipmentNumber = interception.response.body.ShipmentNumber;
+    })
 });
 
 Given("the user in the general tab", () => {
+    Actions.OpenShipment(shipmentNumber);
     cy.Click(Selectors.GeneralTab, null)
 });
 
@@ -44,7 +58,7 @@ Given("the user in the Partners tab", () => {
 
 Given("fill Partners tab with following details", (dataTable) => {
     const partnersDetails = dataTable.hashes()[0] as PartnersDetails;
-    Actions.FillPartnersTab("E","A", partnersDetails)
+    Actions.FillPartnersTab("Export", "Air", partnersDetails)
 });
 
 Given("the user in the Packages tab", () => {
@@ -52,15 +66,17 @@ Given("the user in the Packages tab", () => {
 });
 
 Given("fill Packages tab with random number of Packages", () => {
-    Actions.FillPackagesTab("A")
+    Actions.FillPackagesTab("Air")
 });
 
-Given("the user in the Receivables tab", () => {
+Given("the user in the Receivables tab",  (dataTable) => {
     cy.Click(Selectors.ReceivablesTab, null)
+ 
 });
 
-Given("fill Receivables tab  with a random UnitPrice and {string} as a ChargesType", (ChargesType) => {
-    Actions.FillReceivablesTab(ChargesType)
+Given("fill Receivables with the following details", (dataTable) => {
+    const ReceivableData = dataTable.hashes()[0] as ReceivableDetails;
+    Actions.FillReceivablesTab(ReceivableData)
 });
 
 Given("the user in the Routings tab", () => {
@@ -76,8 +92,8 @@ Given("add new delivery with {string} as a partner routing", (partner) => {
 });
 
 Given("add carriage routings from port {string} to port {string}", (fromPort, toPort) => {
-    Actions.FillPreCarriageRouting("A", fromPort, toPort)
-    Actions.FillOnCarriageRouting("A", fromPort, toPort)
+    Actions.FillPreCarriageRouting("Air", fromPort, toPort)
+    Actions.FillOnCarriageRouting("Air", fromPort, toPort)
 });
 
 Given("the user in the Payables tab", () => {
@@ -102,5 +118,5 @@ When("save shipment window", () => {
 });
 
 Then("the save operation complete successfully", () => {
-    Assertions.ValidateUpdatedShipment(null);
+    BaseAssertion.AssertStatusCode("WaitPutShipmentRequest", 200);
 });
