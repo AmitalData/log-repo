@@ -1224,6 +1224,8 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     ICustomContext context = MainContext as CustomContext;
                     DeclarationReferantDataUpdateService service = new DeclarationReferantDataUpdateService(context, new Dictionary<string, IContext>(), entityPM.Tenant);
                     service.Update(referant, true);
+                    DeclarationReferantDataRepository declarationReferantDataRepository = new DeclarationReferantDataRepository(context);
+                    declarationReferantDataRepository.SubmitChanges();
                 }
             }
         }

@@ -1182,6 +1182,28 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 */
                 
             }
+
+            //  -------- Declaration Referant Data 
+            DeclarationReferantDataQueryService declarationReferantDataQueryService = new DeclarationReferantDataQueryService(entityPM.Tenant);
+            DeclarationReferantDataPM referant = declarationReferantDataQueryService.GetSingle(entityPM.DeclarationId, false, true);
+            if (referant != null)
+            {
+                if (referant.NewFile != false)
+                {
+                    if (HttpContextUtil.IsCustomDomainService())
+                    {
+                        referant.NewFile = false;
+                        referant.ChangeSetOp = ChangeSetOperation.Update;
+                    }
+                }
+                if (referant.ChangeSetOp == ChangeSetOperation.Update)
+                {
+                    DeclarationReferantDataUpdateService service = new DeclarationReferantDataUpdateService(_Context, new Dictionary<string, IContext>(), entityPM.Tenant);
+                    service.Update(referant, true);
+                    DeclarationReferantDataRepository declarationReferantDataRepository = new DeclarationReferantDataRepository(_Context);
+                    declarationReferantDataRepository.SubmitChanges();
+                }
+            }
         }
 
         private void UpdateDeclarationFields(SupplierInvoicePM entityPM)
