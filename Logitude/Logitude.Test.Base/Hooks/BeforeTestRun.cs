@@ -17,6 +17,13 @@ namespace Logitude.Test.Base.Hooks
             SetupBaseSettings();
             SetupUsersAuthentication();
             SetupDefaultUserTenant();
+            //SetupLocationPreparationVariables();
+           // SetupPartnerPreparationVariables();
+        }
+
+        [BeforeScenario("Pre-Prepare")]
+        public static void SetUpPrepareDataBeforeTestRun()
+        {
             SetupLocationPreparationVariables();
             SetupPartnerPreparationVariables();
         }

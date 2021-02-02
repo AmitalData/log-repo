@@ -2,6 +2,7 @@
 	With pre-prepared base and shipment data
 	We want to test Create and update shipment security access.
 
+@Pre-Prepare
 Scenario: Create shipment for user's tenant
 	When create a shipment for user's tenant
 	Then the shipment should create successfully
