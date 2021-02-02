@@ -1184,7 +1184,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                         {
                             this._CourierMasterPM.IsOpen = true;
                             this._CourierMasterPM.ChangeSetOp = ChangeSetOperation.Update;
-                            var myCourierMasterUpdateService = new CourierMasterUpdateService(context);
+                            var myCourierMasterUpdateService = new CourierMasterUpdateService(context, new Dictionary<string, IContext>(), entityPM.Tenant);
                             myCourierMasterUpdateService.Update(this._CourierMasterPM, true);
                         }
                     }
