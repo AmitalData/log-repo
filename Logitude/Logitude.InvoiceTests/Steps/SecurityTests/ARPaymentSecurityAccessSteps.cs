@@ -20,27 +20,27 @@ namespace Logitude.InvoiceTests.Steps.SecurityTests
         }
 
         #region Step Region
-        [When(@"Get AR Payment request sent for User's Tenant")]
+        [When(@"get a AR Payment from user's AR Payment list")]
         public void WhenGetARPaymentRequestSentForUserSTenant()
         {
             ARPaymentPM firstUserARPayment = GetAnARPaymentFromFirstUserList();
             Context.FirstUserPMData.Id = firstUserARPayment?.Id;
         }
 
-        [When(@"Get AR Payment request sent for other Tenant")]
+        [When(@"get a AR Payment from Other Tenant")]
         public void WhenGetARPaymentRequestSentForOtherTenant()
         {
             ApiResponse<ARPaymentPM> response = GetAnARPaymentForFirstUser(UserOtherTenant.Token);
             Context.SecondUserPMData.Id = response.Data?.Id;
         }
 
-        [Then(@"AR Payment should be exists")]
+        [Then(@"the AR Payment should exist")]
         public void ThenARPaymentShouldBeExists()
         {
             Context.FirstUserPMData.Id.Should().NotBeNull();
         }
 
-        [Then(@"AR Payment should not be exists")]
+        [Then(@"the AR Payment should not exist")]
         public void ThenARPaymentShouldNotBeExists()
         {
             Context.SecondUserPMData.Id.Should().BeNull();

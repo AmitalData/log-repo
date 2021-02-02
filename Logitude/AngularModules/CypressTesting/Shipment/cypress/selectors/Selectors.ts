@@ -104,4 +104,6 @@ export class Selectors
     public static readonly ARInvoiceCancelDraftButton="#ARInvoiceBCancelDraft"
     public static readonly ConfirmWindowYes= "#ConfirmWindow_Yes_0"
     public static readonly APInvoiceVoidButton="#APInvoiceBVoid";
+    public static readonly ShipmentDateMaincarriageATD="#calendarbutton_date_Shipment_MainCarriageATD";
+
 }

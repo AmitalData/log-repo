@@ -20,27 +20,27 @@ namespace Logitude.InvoiceTests.Steps.SecurityTests
         }
 
         #region Step Region
-        [When(@"The First user gets the first AP Invoice from AP Invoices list")]
+        [When(@"get a AP Invoice from user's AP Invoices list")]
         public void WhenFirstUserGetTheFirstAPInvoiceFromAPInvoicesList()
         {
             APInvoicePM firstUserAPInvocies = GetAnAPInvoiceFromFirstUserList();
             Context.FirstUserPMData.Id = firstUserAPInvocies?.Id;
         }
 
-        [When(@"The Second user gets the AP Invoice that was requested by the first user")]
+        [When(@"get a AP Invoice from Other Tenant")]
         public void WhenSecondUserGetTheAPInvoiceThatRequestedByFirstUser()
         {
             ApiResponse<APInvoicePM> response = GetAnAPInvoiceForFirstUser(UserOtherTenant.Token);
             Context.SecondUserPMData.Id = response.Data?.Id;
         }
 
-        [Then(@"The AP Invoice which is related to the first user tanent is existed")]
+        [Then(@"the AP Invoice should exist")]
         public void ThenAPInvoiceForFirstUserShouldBeExists()
         {
             Context.FirstUserPMData.Id.Should().NotBeNull();
         }
 
-        [Then(@"The AP Invoice that was requested by the second user isn't existed")]
+        [Then(@"the AP Invoice should not exist")]
         public void ThenAPInvoiceForSecondUserShouldNotBeExists()
         {
             Context.SecondUserPMData.Id.Should().BeNull();
