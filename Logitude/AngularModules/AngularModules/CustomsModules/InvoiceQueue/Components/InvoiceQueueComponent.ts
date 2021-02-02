@@ -109,7 +109,7 @@ export class InvoiceQueueComponent
                         if (x.E != null) {
                             this.EMessagesList.Insert(x);
                             this.ErrorMessages = true;
-                            this.CreateQInvoiceButtonDim = true; // מקש חשבוניות ב DIM אם יש שגאיה מסוג ERROR
+                            this.CreateQInvoiceButtonDim = true; // מקש חשבוניות ב DIM םם יש שגםיה מסוג ERROR
                         }
                         if (x.W != null) {
                             this.WMessagesList.Insert(x);
@@ -145,7 +145,7 @@ export class InvoiceQueueComponent
     }
 
     SetWindowArgs(args: any) {
-        //var json = '{"UnifreightEntity"  :  "CFIFILEM" , "UnifreightEntityNumber"  :  "3000028" , "LogitudeEntity"  :  "Customs.Declaration" , "LogitudeEntityNumber"  :  "1-211622" , "LogitudeViewModel"  :  "UnifreightMassageHandler" , "LogitudeCommandId"  :  "CreateInvoiceCommand" , "formtitle"  :  "הצהרת יבוא"}';
+        //var json = '{"UnifreightEntity"  :  "CFIFILEM" , "UnifreightEntityNumber"  :  "3000028" , "LogitudeEntity"  :  "Customs.Declaration" , "LogitudeEntityNumber"  :  "1-211622" , "LogitudeViewModel"  :  "UnifreightMassageHandler" , "LogitudeCommandId"  :  "CreateInvoiceCommand" , "formtitle"  :  "הצהרת יבום"}';
 
         this.UnifreightMessage = args.unifreightMessage;
         this.GetData();
@@ -198,7 +198,7 @@ export class InvoiceQueueComponent
             confirm.YesButtonText = TextCodeTranslator.Translate("General.O.Confirm");
             confirm.NoButtonText = TextCodeTranslator.Translate("General.O.Void");
             // confirm.Show(TextCodeTranslator.Translate("Customs.Declarations.O.UnSavedRemark"));
-            confirm.Show("ביציאה מהמסך לא ישמרו הערות לחשבונית שהוזנו במסך")
+            confirm.Show("ביציםה מהמסך לם ישמרו הערות לחשבונית שהוזנו במסך")
             confirm.WindowClosed.subscribe((event: any) => {
                 if (confirm.Yes) {
                     confirm.Close();
@@ -289,7 +289,7 @@ export class InvoiceQueueComponent
                 "CFIHMAIN.LogitudeTask",
                 "ShowPayments",
                 unifreightMessageM,
-                " הצגת מסך : רשימת הוצאות");
+                " הצגת מסך : רשימת הוצםות");
         }
         else {
             alert("ShowPayments");
@@ -338,6 +338,7 @@ export class InvoiceQueueComponent
             alert("ShowDA");
         }
     }
+
 
 
     ShowDelivery() {
