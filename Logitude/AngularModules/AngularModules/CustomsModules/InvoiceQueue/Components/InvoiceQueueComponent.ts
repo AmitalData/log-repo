@@ -18,6 +18,7 @@ import { MessageWindow } from '../../../Controls/Windows/MessageWindow';
 import { ConfirmWindow } from '../../../Controls/Windows/ConfirmWindow';
 import { TextCodeTranslator } from '../../../Infrastructure/Utilities/TextCodeTranslator';
 import { tryParse } from 'selenium-webdriver/http';
+import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
 
 @Component({
     selector: 'InvoiceQueueComponent',
@@ -53,6 +54,19 @@ export class InvoiceQueueComponent
             });
         });
     }
+
+    ExpandComment(entity: any, $event: any) {
+        var windowArgs: any = {};
+        var logitudeWindow = new LogitudeWindow();
+        logitudeWindow.Height = 400;
+        logitudeWindow.Width = 700;
+        logitudeWindow.ShowCloseButton = true;
+        windowArgs.remarks = entity.Comments;
+       // logitudeWindow.Title = this.title;
+        logitudeWindow.WindowArgs = windowArgs;
+        logitudeWindow.Show('./CustomsModules/CustomsControls/Components/RemarksPopUp');
+    }
+
     private GetData() {
         this.ResetVariables();
       this._declarationPMService.get(this.UnifreightMessage.LogitudeEntityNumber).subscribe(data => {
