@@ -36,13 +36,13 @@ using Simplog.Server.Infrastructure.DataContracts;
 
 namespace Logitude.Customs.BL.EntityUpdateServices
 {
-   public partial class CourierMasterUpdateService
+    public partial class CourierMasterUpdateService
     {
         private Boolean toSendTask = false;
         private Boolean toSetDeclarationChanged = false;
         private AmitalContext _AmitalContext;
 
-        public bool CloseCourierMaster { get;  set; }
+        public bool CloseCourierMaster { get; set; }
 
         protected override void OnCreating(CourierMasterPM entityPM, EntityPM entityParentPM)
         {
@@ -52,14 +52,14 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             entityPM.CreateDateTime = DateTime.Now;
             entityPM.IsOpen = true;
             int.TryParse(EntityPM.NoOfCourierHawb, out int noOfCourierHawb);
-            EntityPM.OpenDeclarations = noOfCourierHawb;
+            //EntityPM.OpenDeclarations = noOfCourierHawb;
             entityPM.IsCancelled = false;
         }
 
         protected override void OnUpdating(CourierMasterPM entityPM, CourierMaster entityPOCO)
         {
             ValidateEntity(entityPM);
-            if (entityPOCO!=null && entityPM.IsReadyForInvoice && !entityPOCO.IsReadyForInvoice)
+            if (entityPOCO != null && entityPM.IsReadyForInvoice && !entityPOCO.IsReadyForInvoice)
             {
                 BuildGGGQ_FLIGHT_CREDIT_LETTER(entityPM);
             }
@@ -72,18 +72,19 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             CourierDeclarationQueryService courierDeclarationQuery = new CourierDeclarationQueryService(entityPM.Tenant);
             CourierDeclarationUpdateService courierDeclarationUpdateService = new CourierDeclarationUpdateService(context, new Dictionary<string, IContext>(), entityPOCO.Tenant);
             DeclarationUpdateService declarationUpdateService = new DeclarationUpdateService(context, new Dictionary<string, IContext>(), entityPOCO.Tenant);
-                DeclarationRepository declarationRepository1 = new DeclarationRepository(context);
-            DeclarationCourierStatusRepository rep = new DeclarationCourierStatusRepository(context);
-            entityPM.OpenDeclarations = rep.CountOpenDeclarations(entityPM.Id, entityPM.Tenant);
-            if (entityPM.ConnectedDeclarations != null && entityPM.ConnectedDeclarations.Length > 0 )
+            DeclarationRepository declarationRepository1 = new DeclarationRepository(context);
+
+            if (entityPM.ConnectedDeclarations != null && entityPM.ConnectedDeclarations.Length > 0)
             {
                 CourierDeclarationQueryService service = new CourierDeclarationQueryService(entityPM.Tenant);
                 int? maxSequenceNunmeric = 0;
-                 maxSequenceNunmeric = service.GetCourierMasterMaxSequenceNumeric(entityPM.Id, entityPM.Tenant);
+                maxSequenceNunmeric = service.GetCourierMasterMaxSequenceNumeric(entityPM.Id, entityPM.Tenant);
                 if (maxSequenceNunmeric == null) maxSequenceNunmeric = 0;
+                DeclarationCourierStatusRepository rep = new DeclarationCourierStatusRepository(context);
+                entityPM.OpenDeclarations = rep.CountOpenDeclarations(entityPM.Id, entityPM.Tenant);
+                if (entityPM.ConnectedDeclarations == "ALL")
+                {
 
-                if (entityPM.ConnectedDeclarations == "ALL") {
-                    
                     var decsC = declarationRepository1.GetNotConnectedDeclarations(entityPM.Tenant);
                     foreach (var dec in decsC)
                     {
@@ -94,17 +95,19 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     }
                 }
                 else
-                {   
-                 //entityPM.ConnectedDeclarations = entityPM.ConnectedDeclarations.Substring(1, entityPM.ConnectedDeclarations.Length - 1);
-                entityPM.ConnectedDeclarations = entityPM.ConnectedDeclarations.Substring(0, entityPM.ConnectedDeclarations.Length - 1);
-                string[] items = entityPM.ConnectedDeclarations.Split(',');
-                foreach (string item in items)
                 {
-                    ++maxSequenceNunmeric;
-                    CourierDeclarationPM courierDeclaration = new CourierDeclarationPM() { DeclarationId = item, CourierMasterId = entityPOCO.Id, Tenant = entityPOCO.Tenant, ChangeSetOp = ChangeSetOperation.Insert,SequenceNumeric=maxSequenceNunmeric};
-                    courierDeclarationUpdateService.Update(courierDeclaration, false);
+                    //entityPM.ConnectedDeclarations = entityPM.ConnectedDeclarations.Substring(1, entityPM.ConnectedDeclarations.Length - 1);
+                    entityPM.ConnectedDeclarations = entityPM.ConnectedDeclarations.Substring(0, entityPM.ConnectedDeclarations.Length - 1);
+                    string[] items = entityPM.ConnectedDeclarations.Split(',');
+                    //DeclarationCourierStatusRepository rep = new DeclarationCourierStatusRepository(context);
+                   // entityPM.OpenDeclarations = rep.CountOpenDeclarations(entityPM.Id, entityPM.Tenant);
+                    foreach (string item in items)
+                    {
+                        ++maxSequenceNunmeric;
+                        CourierDeclarationPM courierDeclaration = new CourierDeclarationPM() { DeclarationId = item, CourierMasterId = entityPOCO.Id, Tenant = entityPOCO.Tenant, ChangeSetOp = ChangeSetOperation.Insert, SequenceNumeric = maxSequenceNunmeric };
+                        courierDeclarationUpdateService.Update(courierDeclaration, false);
 
-                }
+                    }
                     entityPM.OpenDeclarations += items.Length;
                 }
             }
@@ -113,36 +116,38 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             {
                 //entityPM.NotConnectedDeclarations = entityPM.NotConnectedDeclarations.Substring(1, entityPM.NotConnectedDeclarations.Length - 1);
 
-                
-                    if (entityPM.NotConnectedDeclarations == "ALL")
+                DeclarationCourierStatusRepository rep = new DeclarationCourierStatusRepository(context);
+                entityPM.OpenDeclarations = rep.CountOpenDeclarations(entityPM.Id, entityPM.Tenant);
+                if (entityPM.NotConnectedDeclarations == "ALL")
+                {
+                    var decsCN = declarationRepository1.GetCourierConnectedDeclaratins(entityPOCO.Id, entityPM.Tenant);
+                    foreach (var item in decsCN)
                     {
-                        var decsCN = declarationRepository1.GetCourierConnectedDeclaratins(entityPOCO.Id , entityPM.Tenant);
-                        foreach (var item in decsCN)
-                        {
-                            CourierDeclarationPM courierDeclaration = new CourierDeclarationPM();
-                            CourierDeclarationQueryService courierDeclarationDelQuery = new CourierDeclarationQueryService(entityPM.Tenant);
-                            courierDeclaration = courierDeclarationDelQuery.GetSingle(item.Id, entityPOCO.Id, false, true);
-                            courierDeclaration.ChangeSetOp = ChangeSetOperation.Delete;
-                            courierDeclarationUpdateService.Update(courierDeclaration, true);
+                        CourierDeclarationPM courierDeclaration = new CourierDeclarationPM();
+                        CourierDeclarationQueryService courierDeclarationDelQuery = new CourierDeclarationQueryService(entityPM.Tenant);
+                        courierDeclaration = courierDeclarationDelQuery.GetSingle(item.Id, entityPOCO.Id, false, true);
+                        courierDeclaration.ChangeSetOp = ChangeSetOperation.Delete;
+                        courierDeclarationUpdateService.Update(courierDeclaration, true);
                         entityPM.OpenDeclarations -= 1;
 
                     }
                 }
-                    else
-                    {                 entityPM.NotConnectedDeclarations = entityPM.NotConnectedDeclarations.Substring(0, entityPM.NotConnectedDeclarations.Length - 1);
-                string[] NotConnecteditems = entityPM.NotConnectedDeclarations.Split(',');
-if (NotConnecteditems != null && NotConnecteditems.Length > 0)
+                else
                 {
-                        foreach (string item in NotConnecteditems)
+                    entityPM.NotConnectedDeclarations = entityPM.NotConnectedDeclarations.Substring(0, entityPM.NotConnectedDeclarations.Length - 1);
+                    string[] NotConnecteditems = entityPM.NotConnectedDeclarations.Split(',');
+                    if (NotConnecteditems != null && NotConnecteditems.Length > 0)
                     {
-                        CourierDeclarationPM courierDeclaration = new CourierDeclarationPM();
-                        CourierDeclarationQueryService courierDeclarationDelQuery = new CourierDeclarationQueryService(entityPM.Tenant);
-                        courierDeclaration = courierDeclarationDelQuery.GetSingle(item, entityPOCO.Id, false, true);
-                        courierDeclaration.ChangeSetOp = ChangeSetOperation.Delete;
-                        courierDeclarationUpdateService.Update(courierDeclaration, true);
+                        foreach (string item in NotConnecteditems)
+                        {
+                            CourierDeclarationPM courierDeclaration = new CourierDeclarationPM();
+                            CourierDeclarationQueryService courierDeclarationDelQuery = new CourierDeclarationQueryService(entityPM.Tenant);
+                            courierDeclaration = courierDeclarationDelQuery.GetSingle(item, entityPOCO.Id, false, true);
+                            courierDeclaration.ChangeSetOp = ChangeSetOperation.Delete;
+                            courierDeclarationUpdateService.Update(courierDeclaration, true);
+                        }
                     }
-                    }
-                    
+
                     entityPM.OpenDeclarations -= NotConnecteditems.Length;
                 }
             }
@@ -167,25 +172,25 @@ if (NotConnecteditems != null && NotConnecteditems.Length > 0)
                     }
                 }
             }
-//            }
+            //            }
 
-                string declarations="";
-                 var declarationRepository = new DeclarationRepository(context);
+            string declarations = "";
+            var declarationRepository = new DeclarationRepository(context);
 
-                var decs=   declarationRepository.GetCourierConnectedDeclaratins(entityPM.Id, entityPM.Tenant);
+            var decs = declarationRepository.GetCourierConnectedDeclaratins(entityPM.Id, entityPM.Tenant);
 
-                if (decs.Count()>0 )
-                {
-                     declarations=  string.Join("','", decs.Select(x=>x.Id));
-                    declarations = "'" + declarations  +"'"  ;
-                 }
+            if (decs.Count() > 0)
+            {
+                declarations = string.Join("','", decs.Select(x => x.Id));
+                declarations = "'" + declarations + "'";
+            }
 
 
             if (!this.CloseCourierMaster)
             {
 
 
-                if (entityPM.IsCancelled == true && entityPOCO.IsCancelled!=true)
+                if (entityPM.IsCancelled == true && entityPOCO.IsCancelled != true)
                 {
 
                     entityPM.IsOpen = false;
@@ -197,7 +202,7 @@ if (NotConnecteditems != null && NotConnecteditems.Length > 0)
 
                 }
 
-                else if(entityPM.IsCancelled != true && entityPOCO.IsCancelled == true)
+                else if (entityPM.IsCancelled != true && entityPOCO.IsCancelled == true)
                 {
 
                     entityPM.IsOpen = true;
@@ -216,7 +221,7 @@ if (NotConnecteditems != null && NotConnecteditems.Length > 0)
             if (entityPM.EstimatedArrivalDateOnly != null && entityPM.EstimatedArrivalDateOnly.HasValue)
             {
                 DateTime date = (DateTime)entityPM.EstimatedArrivalDateOnly;
-                if(entityPM.EstimatedArrivalTimeOnly != null && entityPM.EstimatedArrivalTimeOnly.HasValue)
+                if (entityPM.EstimatedArrivalTimeOnly != null && entityPM.EstimatedArrivalTimeOnly.HasValue)
                 {
                     date = DateTime.Parse(string.Format("{0} {1}:{2}", entityPM.EstimatedArrivalDateOnly.Value.ToString("dd-MM-yyyy"), entityPM.EstimatedArrivalTimeOnly.Value.Hour, entityPM.EstimatedArrivalTimeOnly.Value.Minute));
                 }
@@ -245,10 +250,10 @@ if (NotConnecteditems != null && NotConnecteditems.Length > 0)
                 int indexEnd = entityPM.ShortHAWB.IndexOf("/");
                 if (indexEnd > 0)
                 {
-                    entityPM.ShortHAWB = entityPM.ShortHAWB.Substring(0,indexEnd);
+                    entityPM.ShortHAWB = entityPM.ShortHAWB.Substring(0, indexEnd);
                 }
 
-                if(entityPM.ShortHAWB.Length > 8)
+                if (entityPM.ShortHAWB.Length > 8)
                 {
                     var start = entityPM.ShortHAWB.Length - 8;
                     entityPM.ShortHAWB = entityPM.ShortHAWB.Substring(start);
@@ -292,7 +297,7 @@ if (NotConnecteditems != null && NotConnecteditems.Length > 0)
                 {
                     var myGGGQUpdateService = new GGGQUpdateService(_AmitalContext);
                     myGGGQUpdateService.DontAddTransaction = true;//we cant add a transaction with isolation level snap shot inside a read committed one so you have to assign this prop to true mohammad.
-                    
+
                     var requestData = "";
 
                     string unifreightUser = null;
@@ -302,7 +307,7 @@ if (NotConnecteditems != null && NotConnecteditems.Length > 0)
                         unifreightUser = AuthenticationUtil.ResolveUnifreightUserId(entityPM.Tenant);
                     }
 
-                    
+
 
                     var myGGGQPM = new GGGQPM()
                     {
@@ -313,17 +318,17 @@ if (NotConnecteditems != null && NotConnecteditems.Length > 0)
                         EXECDATE = (new DualQueryService(_AmitalContext as AmitalContext)).GetServerDateTime() ?? DateTime.Now.AddMinutes(-20), //-20 because of time differences between the server where the code runs in and the DB server
                         TRY = 5,
                         PRIORITY = 8,
-                        
+
                         ENTNAME = "CFIFILEM",
                         PRIMARYNUM = "-1",
                         FORMID = "A1468",
-                        GSTRING1= "A1468",
+                        GSTRING1 = "A1468",
                         GSTRING2 = "NONE",
                         GSTRING3 = entityPM.Id,
 
                         DEBUG = "F",
                         DONEOPERATION = "D",
-                        QUEUEMANAGEMENT=true,
+                        QUEUEMANAGEMENT = true,
 
 
                         //GSTRING1 = myYCULTASKPM.TASKID,
@@ -386,13 +391,13 @@ if (NotConnecteditems != null && NotConnecteditems.Length > 0)
                     ObjectTableName = "Customs.CourierMaster",
                     IsAddedManually = false,
                     EventTypeCode = "UPEV",
-                  
+
 
                 };
                 EventTracer.CreateTraceEvent(eventTracerArgs);
 
 
-              
+
             }
             base.Trace(entityPM, entityPOCO, changesXml);
         }
@@ -404,12 +409,12 @@ if (NotConnecteditems != null && NotConnecteditems.Length > 0)
             bool exist = rep.ChcekIfCourierExists(entityPM.Id, entityPM.AirlineId, entityPM.HAWB, entityPM.MAWB, entityPM.Tenant);
             if (exist)
             {
-                throw new Exception(TranslateTextsClass.Translate("Customs.General.O.CourierAlreadyExist", entityPM.Tenant,true));
+                throw new Exception(TranslateTextsClass.Translate("Customs.General.O.CourierAlreadyExist", entityPM.Tenant, true));
             }
 
         }
 
-     
+
         private Contact GetLoggedContact(int tenant)
         {
             ICommonDataContext commonContext = CommonDataContext.GetContext(tenant);
@@ -429,11 +434,11 @@ if (NotConnecteditems != null && NotConnecteditems.Length > 0)
             string strConnString = GetConnection(Tenant);
             string whereIn = "";
             int i = 0;
-           if(!string.IsNullOrEmpty(declarations) &&  declarations.Split(',').Count()>990)
+            if (!string.IsNullOrEmpty(declarations) && declarations.Split(',').Count() > 990)
             {
                 foreach (var item in declarations.Split(','))
                 {
-                    if(i<990)
+                    if (i < 990)
                     {
                         whereIn += item + ',';
                         i++;
@@ -446,7 +451,7 @@ if (NotConnecteditems != null && NotConnecteditems.Length > 0)
                     }
                 }
                 whereIn = whereIn.TrimEnd(',');
-           //     whereIn += ")";
+                //     whereIn += ")";
 
 
             }
@@ -529,7 +534,7 @@ if (NotConnecteditems != null && NotConnecteditems.Length > 0)
         }
 
 
-        private void SetDeclarationChanged(string declarations , string courierManifestStatusCode, int Tenant)
+        private void SetDeclarationChanged(string declarations, string courierManifestStatusCode, int Tenant)
         {
             string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
             string strConnString = GetConnection(Tenant);
@@ -539,7 +544,7 @@ if (NotConnecteditems != null && NotConnecteditems.Length > 0)
                 {
                     string cmd = "Update DECLARATIONCOURIERSTATUSES set " +
                         "COURIERMANIFESTSTATUSCODE= '" + courierManifestStatusCode + "' ";
-                    cmd = cmd + " where DECLARATIONID IN " + "(" + declarations + ")" ;
+                    cmd = cmd + " where DECLARATIONID IN " + "(" + declarations + ")";
 
                     OracleCommand sqlCommand = new OracleCommand(cmd, con);
 
@@ -668,7 +673,7 @@ if (NotConnecteditems != null && NotConnecteditems.Length > 0)
             var sw = Stopwatch.StartNew();
             TransactionScope scope = null;
             var statusDateTime = DateTime.Now;
-            
+
             if (!DbContextBaseUtil.UnifreightDataIncludedInMain_FeatureOn)
             {
                 scope = TransactionFactory.GetNewOracleReadCommittedTransaction();
@@ -682,9 +687,9 @@ if (NotConnecteditems != null && NotConnecteditems.Length > 0)
                     var myYCULTASKUpdateService = new YCULTASKUpdateService(_AmitalContext);
                     myYCULTASKUpdateService.DontAddTransaction = true;//we cant add a transaction with isolation level snap shot inside a read committed one so you have to assign this prop to true mohammad.
                     var requestData = "";
-                    
+
                     string unifreightUser = null;
-                    
+
                     if (String.IsNullOrWhiteSpace(unifreightUser))
                     {
                         unifreightUser = AuthenticationUtil.ResolveUnifreightUserId(dirtyCourierMasterPM.Tenant);
@@ -701,9 +706,9 @@ if (NotConnecteditems != null && NotConnecteditems.Length > 0)
                         //PRIORITY = priority,
                         TYPE = taskType,
                         USRCODE = unifreightUser,
-                        ARCHIVE = "F", 
+                        ARCHIVE = "F",
                     };
-                    
+
                     myYCULTASKUpdateService.Update(myYCULTASKPM, true);
 
                     var myGGGQPM = new GGGQPM()

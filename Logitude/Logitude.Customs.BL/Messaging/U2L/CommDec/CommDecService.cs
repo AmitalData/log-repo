@@ -9,6 +9,7 @@ using Logitude.Customs.BL.EntityUpdateServices;
 using Logitude.Customs.BL.Messaging.Customs;
 using Logitude.Customs.BL.Messaging.U2L.ImportDeclaration;
 using Logitude.Customs.Data;
+using Logitude.Customs.Data.EntityKeys;
 using Logitude.Customs.Data.EntityPOCOs;
 using Logitude.Customs.Data.Repsitories;
 using Logitude.Customs.Def.EntityPMs;
@@ -921,7 +922,20 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommDec
                     _CourierDeclarationPM.SequenceNumeric = sequenceNumericMax + 1;
                 }
                 _CourierDeclarationPM.Tenant = ResolvedTenant();
-                
+
+                _context = CustomContext.GetContext(ResolvedTenant());
+                CourierMasterRepository courierMasterRepository = new CourierMasterRepository(_context);
+                if (courierMasterRepository != null)
+                {
+                    CourierMaster courierMaster = courierMasterRepository.GetSingle(new CourierMasterKeys() { Id = _CourierMasterPM.Id });
+                    if (courierMaster != null)
+                    {
+                        courierMaster.OpenDeclarations = (int)_CourierDeclarationPM.SequenceNumeric;
+                        courierMasterRepository.Update(courierMaster);
+                    }
+                }
+
+
                 AppendLogLine("try to update CourierDeclaration for DeclarationPM.Id: " + _MyDeclarationPM.Id + " CourierMasterPM.Id: " + _CourierMasterPM.Id);
                 try
                 {
