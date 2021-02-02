@@ -2028,7 +2028,13 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             {
                 AccountId = entityPM.Id,
                 Tenant = entityPM.Tenant,
-                ChangeSetOp = ChangeSetOperation.Insert
+                ChangeSetOp = ChangeSetOperation.Insert,
+                BalanceInLocalCurrency = 0,
+                LocalBalanceInDue = 0,
+
+                TotalOpenChequesInLocalCur = 0,
+                TotFutureOpenChequesInLocalCur = 0,
+
 
             }, false);
         }
