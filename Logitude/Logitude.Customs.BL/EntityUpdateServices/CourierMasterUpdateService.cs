@@ -80,7 +80,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 int? maxSequenceNunmeric = 0;
                 maxSequenceNunmeric = service.GetCourierMasterMaxSequenceNumeric(entityPM.Id, entityPM.Tenant);
                 if (maxSequenceNunmeric == null) maxSequenceNunmeric = 0;
-                DeclarationCourierStatusRepository rep = new DeclarationCourierStatusRepository(context);
+               DeclarationCourierStatusRepository rep = new DeclarationCourierStatusRepository(context);
                 entityPM.OpenDeclarations = rep.CountOpenDeclarations(entityPM.Id, entityPM.Tenant);
                 if (entityPM.ConnectedDeclarations == "ALL")
                 {
@@ -128,8 +128,11 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                         courierDeclaration = courierDeclarationDelQuery.GetSingle(item.Id, entityPOCO.Id, false, true);
                         courierDeclaration.ChangeSetOp = ChangeSetOperation.Delete;
                         courierDeclarationUpdateService.Update(courierDeclaration, true);
-                        entityPM.OpenDeclarations -= 1;
+                        if (entityPM.OpenDeclarations > 0)
+                        {
+                            entityPM.OpenDeclarations -= 1;
 
+                        }
                     }
                 }
                 else
@@ -148,7 +151,17 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                         }
                     }
 
-                    entityPM.OpenDeclarations -= NotConnecteditems.Length;
+                    if (entityPM.OpenDeclarations > 0 )
+                    {
+                        if(entityPM.OpenDeclarations < NotConnecteditems.Length)
+                        {
+                            entityPM.OpenDeclarations = 0;
+                        }
+                        else
+                        {
+                            entityPM.OpenDeclarations -= NotConnecteditems.Length;
+                        }
+                    }
                 }
             }
 

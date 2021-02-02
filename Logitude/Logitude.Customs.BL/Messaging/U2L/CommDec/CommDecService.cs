@@ -932,6 +932,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommDec
                     {
                         courierMaster.OpenDeclarations = (int)_CourierDeclarationPM.SequenceNumeric;
                         courierMasterRepository.Update(courierMaster);
+                        courierMasterRepository.SubmitChanges();
                     }
                 }
 
