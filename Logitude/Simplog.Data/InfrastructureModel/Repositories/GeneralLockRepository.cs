@@ -1,6 +1,8 @@
 ﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using Simplog.Data.Helpers;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Server.Infrastructure;
 
@@ -46,6 +48,16 @@ namespace Simplog.Data.InfrastructureModel.Repositories
         {
             (context as DbContextBase)
                 .DeleteWhere<GeneralLock>(rec => rec.GeneralKey == generalKey && rec.Tenant == tenant);
+        }
+        public void FastDeleteIfCreated15MinOld(string generalKey, int tenant)
+        {
+            DateTime createdAtb4_15min = TenantServerConfigration.GetCurrentDateTime(tenant).AddMinutes(-15);
+
+            //DateTime old = datetime.
+            (context as DbContextBase)
+                .DeleteWhere<GeneralLock>(rec => rec.GeneralKey == generalKey && rec.Tenant == tenant 
+                && rec.CreatedAt < createdAtb4_15min
+                );
         }
 
         public IQueryable<GeneralLock> GetGeneralLocks()

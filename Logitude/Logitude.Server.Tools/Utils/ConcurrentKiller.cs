@@ -52,5 +52,19 @@ namespace Logitude.Server.Tools.Utils
             //poco = AddKeyAndLock(dcaAnalyzeAggregateKey);
 
         }
+
+        public void FreeLockIfCreated15MinOld(string cRSKey, int tenant)
+        {
+            var repo = new GeneralLockRepository(tenant);
+
+            using (var scope = TransactionFactory.GetTransaction())
+            {
+                repo.FastDeleteIfCreated15MinOld(cRSKey, tenant);
+
+                //_logger.AppendLine("add GeneralLock");
+                repo.SubmitChanges();
+                scope.Complete();
+            }
+        }
     }
 }

@@ -973,23 +973,8 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 //var communicationLogStep = _CustomsRequestsSheetService.GetCommunicationLogStep();
                 //communicationLogStep.Retries>0
 
-                bool tryConcurrentKiller = true;//ConfigurationManager.AppSettings["20180718.ConcurrentKiller"] == "1";
-                if (tryConcurrentKiller)
-                {
-                    if (CustomsRequestsSheetQueryService.GetintrefaceTypeListDisplayOnly().ToList().Contains(requestParams.InterfaceTypeCode))
-                    {
+                
 
-                        string CRSKey = CustomsRequestsSheetDomainModelUtil.GetCRSKey(requestParams.CustomsRequestsSheetId);
-                        using (var scope = TransactionFactory.GetNewTransaction())// why GetNewTransaction() => b4 send Started (test constraint b4 not after SEND !!!)
-                        {
-                            var concurrentKiller = new ConcurrentKiller();
-                            concurrentKiller.LockOrCrashOnCommitDueUnique(CRSKey, requestParams.Tenant);
-                            scope.Complete();
-                        }
-
-                    }
-                }
-                        
                 //string key = ProcessLockTableUtil.Instance.GetKey4InProggressCustomsRequestsSheet(requestParams.CustomsRequestsSheetId);
                 //using (var disposableToken = ProcessLockTableUtil.Instance.LockItAndGetReleaseToken(key, "CustomsCommandSendWS"))
                 {
@@ -999,8 +984,8 @@ namespace Logitude.CustomsMessaging.MessagingServices
                     {
                         Thread.Sleep(TimeSpan.FromMinutes(2));
                     }
-
-                    if (!requestParams.AvoidSign  && requestParams.TestCase== null && ( _CustomsRequestsSheetService.InterfaceTenantDefinitionManagement.InterfaceManagement.SignatureBy != SignQueueByType.None || requestParams.ForcePersonalSign))
+                    DoConcurrentKiller(requestParams);
+                    if (!requestParams.AvoidSign && requestParams.TestCase == null && (_CustomsRequestsSheetService.InterfaceTenantDefinitionManagement.InterfaceManagement.SignatureBy != SignQueueByType.None || requestParams.ForcePersonalSign))
 
                     //if (!requestParams.AvoidSign  && (_CustomsRequestsSheetService.InterfaceTenantDefinitionManagement.InterfaceManagement.SignatureBy != SignQueueByType.None || requestParams.ForcePersonalSign))
 
@@ -1078,6 +1063,32 @@ namespace Logitude.CustomsMessaging.MessagingServices
 
             }
         }
+
+        private static void DoConcurrentKiller(TRequestParams requestParams)
+        {
+            bool tryConcurrentKiller = true;//ConfigurationManager.AppSettings["20180718.ConcurrentKiller"] == "1";
+            if (tryConcurrentKiller)
+            {
+                if (CustomsRequestsSheetQueryService.GetintrefaceTypeListDisplayOnly().ToList().Contains(requestParams.InterfaceTypeCode))
+                {
+
+                    string CRSKey = CustomsRequestsSheetDomainModelUtil.GetCRSKey(requestParams.CustomsRequestsSheetId);
+                    using (var scope = TransactionFactory.GetNewTransaction())// why GetNewTransaction() => b4 send Started (test constraint b4 not after SEND !!!)
+                    {
+                        var concurrentKiller = new ConcurrentKiller();
+                        bool SupressFreeLockIfCreated15MinOld = ConfigurationManager.AppSettings["20210201.SupressFreeLockIfCreated15MinOld"] == "1";
+                        if (!SupressFreeLockIfCreated15MinOld)
+                        {
+                            concurrentKiller.FreeLockIfCreated15MinOld(CRSKey, requestParams.Tenant);
+                        }
+                        concurrentKiller.LockOrCrashOnCommitDueUnique(CRSKey, requestParams.Tenant);
+                        scope.Complete();
+                    }
+
+                }
+            }
+        }
+
         void SetCorrelationId(string CorrelationId, TCustomsRequest customsRequest)
         {
             _CustomsRequestsSheetService.SetCorrelationId(_CorrelationId);
