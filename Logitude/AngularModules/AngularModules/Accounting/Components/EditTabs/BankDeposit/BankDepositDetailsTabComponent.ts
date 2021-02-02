@@ -553,7 +553,7 @@ export class BankDepositDetailsTabComponent extends BaseComponent {
         for (let line of this.SelectedCashbookLines.Collection) {
             var CashbookLine = this.CashbookLines.Collection.filter(a => a.CashBookId == line.CashBookId && a.ARPChequeId == line.ARPChequeId)[0];
             if (CashbookLine != null) {
-                 this.CashbookLines.Collection.filter(a => a.CashBookId == line.CashBookId && a.ARPChequeId == line.ARPChequeId)[0].IsSelected = true;
+                this.CashbookLines.Collection.filter(a => a.CashBookId == line.CashBookId && a.ARPChequeId == line.ARPChequeId)[0].IsSelected = true;
             }
         }
     }
@@ -756,20 +756,19 @@ export class BankDepositDetailsTabComponent extends BaseComponent {
 
         this.BankDepositLines.Clear();
         this.EntityPM.BankDepositLines = [];
+        this.SelectedCashbookLines.Clear();
 
         // this.BankDepositLines = [];
         if (event == true) {
-            this.SelectedCashbookLines.Clear();
             for (let line of this.CashbookLines.Collection) {
-                line.IsSelected = true;
-                this.PushBankDeposit(line);
                 this.SelectedCashbookLines.Collection.push(line);
+                this.PushBankDeposit(line);
+                line.IsSelected = true;
             }
         }
         else {
-            this.SelectedCashbookLines.Clear();
-          for (let line of this.CashbookLines.Collection) {
-              line.IsSelected = false;
+            for (let line of this.CashbookLines.Collection) {
+                line.IsSelected = false;
           }
         }
 
@@ -783,8 +782,8 @@ export class BankDepositDetailsTabComponent extends BaseComponent {
             this.SelectedCashbookLines.Collection.push(cashbookLine);
         } else if (event == false) {
             this.DeleteUnSelectedLine(cashbookLine);
-            this.IsAllSelected = false;
             this.PopBankDeposit(cashbookLine);
+            this.IsAllSelected = false;
         }
         this.CalculateTotals();
     }
