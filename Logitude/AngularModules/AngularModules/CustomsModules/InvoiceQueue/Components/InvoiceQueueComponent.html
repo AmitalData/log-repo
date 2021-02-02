@@ -234,6 +234,21 @@
         cursor: pointer;
         background: white;
     }
+
+    .cut-text { 
+  width : 120px;
+  overflow:hidden;
+  display:inline-block;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+        .cut-text-label { 
+     width : 100px;
+  overflow:hidden;
+  display:inline-block;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
 </style>
 
 <div class="class-response-content" *ngIf="declaration">
@@ -280,12 +295,12 @@
             </td>
             <td></td>
             <td>
-                <span _ngcontent-c14="" class="Counter" style="font-size: 18px; color: #1B90CB;">
+                <span _ngcontent-c14="" class="Counter cut-text-label" style="font-size: 18px; color: #1B90CB;">
 
                     שם לקוח
                 </span>
 
-                <span _ngcontent-c14="" class="Counter" style="font-size: 18px;">
+                <span _ngcontent-c14="" class="Counter cut-text" style="font-size: 18px;">
 
                     {{declaration.CustomerName}}
                 </span>
@@ -293,13 +308,13 @@
 
             <td></td>
             <td>
-                <span _ngcontent-c14="" class="Counter" style="font-size: 18px; color: #1B90CB;">
+                <span _ngcontent-c14="" class="Counter cut-text-label" style="font-size: 18px; color: #1B90CB;">
 
                     מספר הצהרה
                 </span>
 
 
-                <span _ngcontent-c14="" class="Counter" style="font-size: 18px;">
+                <span _ngcontent-c14="" class="Counter cut-text" style="font-size: 18px; width:140px!important">
 
                     {{declaration.DeclarationNumber}}
                 </span>
@@ -307,25 +322,25 @@
             </td>
             <td></td>
             <td>
-                <span _ngcontent-c14="" class="Counter" style="font-size: 18px; color: #1B90CB;">
+                <span _ngcontent-c14="" class="Counter cut-text-label" style="font-size: 18px; color: #1B90CB;">
                     תאריך הצהרה
                 </span>
 
 
-                <span _ngcontent-c14="" class="Counter" style="font-size: 18px;">
+                <span _ngcontent-c14="" class="Counter cut-text" style="font-size: 18px;">
                     {{declaration.PaymentDate | DateTimeToDatePipe}}
                 </span>
 
             </td>
             <td></td>
             <td>
-                <span _ngcontent-c14="" class="Counter" style="font-size: 18px; color: #1B90CB;">
+                <span _ngcontent-c14="" class="Counter cut-text-label" style="font-size: 18px; color: #1B90CB;">
 
                     תחנת מכס
                 </span>
 
 
-                <span _ngcontent-c14="" class="Counter" style="font-size: 18px;">
+                <span _ngcontent-c14="" class="Counter cut-text" style="font-size: 18px;">
 
                     {{declaration.DeclarationOfficeName}}
                 </span>
@@ -334,12 +349,12 @@
 
             <td></td>
             <td>
-                <span _ngcontent-c14="" class="Counter" style="font-size: 18px; color: #1B90CB;">
+                <span _ngcontent-c14="" class="Counter cut-text-label" style="font-size: 18px; color: #1B90CB;">
 
                     אתר אחסון
                 </span>
 
-                <span _ngcontent-c14="" class="Counter" style="font-size: 18px;">
+                <span _ngcontent-c14="" class="Counter cut-text" style="font-size: 18px;">
 
                     {{   declaration.StorageSiteName}}
                 </span>
@@ -347,7 +362,7 @@
             </td>
 
             <td></td>
-            <td>
+            <!--<td>
                 <span _ngcontent-c14="" class="Counter" style="font-size: 18px; color: #1B90CB;">
 
                     תנאי מכר
@@ -357,7 +372,59 @@
                     {{   declaration.SupplierInvoices[0].IncotermCode}}
                 </span>
                 <br />
+            </td>-->
+        </tr>
+        <tr style="height:25px;">
+
+            <td>
+                <span _ngcontent-c14="" class="Counter cut-text-label" style="font-size: 18px; color: #1B90CB;">
+
+                    תנאי מכר
+                </span>
+
+                <span _ngcontent-c14="" class="Counter cut-text" style="font-size: 18px;" *ngIf="declaration.SupplierInvoices && declaration.SupplierInvoices[0]">
+                    {{   declaration.SupplierInvoices[0].IncotermCode}}
+                </span>
+                <br />
             </td>
+            <td></td>
+            <td>
+                <span _ngcontent-c14="" class="Counter cut-text-label" style="font-size: 18px; color: #1B90CB;">
+
+                    משלח
+                </span>
+
+                <span _ngcontent-c14="" class="Counter cut-text " style="font-size: 18px;" *ngIf="GeneralDetails">
+                    {{   GeneralDetails.Forwarder}}
+                </span>
+                <br />
+            </td>
+            <td></td>
+            <td>
+                <span _ngcontent-c14="" class="Counter cut-text-label" style="font-size: 18px; color: #1B90CB;">
+
+                    סוג משלוח
+                </span>
+
+                <span _ngcontent-c14="" class="Counter cut-text" style="font-size: 18px;" *ngIf="GeneralDetails">
+                    {{   GeneralDetails.TypeOfDelivery}}
+                </span>
+                <br />
+            </td>
+            <td></td>
+            <!--<td style="position: relative; vertical-align:top;">
+                <ul style="direction:rtl; left:90%;">
+                    <li class="ValidationItem" *ngFor="let item of this.GeneralDetailsList.Collection" [style.float]="'right'">
+                        <div *ngIf="item.Forwarder != null" style="height:18px;">
+                            <span [style.text-align]="'right'" style="height:13px;">{{item.Forwarder}}</span>
+                        </div>
+                        <div *ngIf="item.TypeOfDelivery != null " style="height:18px;">
+                            <span [style.text-align]="'right'" style="height:13px;">{{item.TypeOfDelivery}}</span>
+                        </div>
+                    </li>
+                </ul>
+            </td>-->
+            
         </tr>
         <tr *ngIf="IsPaymentDateGreaterThanInvoiceDate">
             <td colspan="12" style="right:55%">

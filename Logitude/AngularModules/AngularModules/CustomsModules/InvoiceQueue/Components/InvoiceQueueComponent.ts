@@ -34,6 +34,7 @@ export class InvoiceQueueComponent
     public InvoiceListList: ObservableCollection;
     public EMessagesList: ObservableCollection;
     public WMessagesList: ObservableCollection;
+    public GeneralDetails: any;
     public declaration: DeclarationPM;
     CreateQInvoiceButtonDim: boolean;
     ErrorMessages: boolean;
@@ -54,8 +55,8 @@ export class InvoiceQueueComponent
     }
     private GetData() {
         this.ResetVariables();
-       this._declarationPMService.get(this.UnifreightMessage.LogitudeEntityNumber).subscribe(data => {
-        //this._declarationPMService.get("1-5362").subscribe(data => {
+      this._declarationPMService.get(this.UnifreightMessage.LogitudeEntityNumber).subscribe(data => {
+    //      this._declarationPMService.get("1-5362").subscribe(data => {
             this.declaration = data.Result;
             SessionLocator.SelectedSession.StopBusyIndicator();
             if (this.declaration == null) {
@@ -82,6 +83,8 @@ export class InvoiceQueueComponent
                     x.InvoiceAmount = this.SetFixedValue(x.InvoiceAmount);
                     this.IntegratedInvoiceList.Insert(x);
                 });
+                this.GeneralDetails = (data.Result.Invoice as AllInvoices).GeneralDetails;
+                 
                 if ((data.Result.Invoice as AllInvoices).Invoices != null) {
                     (data.Result.Invoice as AllInvoices).Invoices.forEach(x => {
                         if (x.InvoiceDate != null && x.InvoiceDate != "") {
@@ -138,6 +141,7 @@ export class InvoiceQueueComponent
         this.InvoiceListList = new ObservableCollection([]);
         this.EMessagesList = new ObservableCollection([]);
         this.WMessagesList = new ObservableCollection([]);
+        this.GeneralDetails = {};
         this.ErrorMessages = false;
         this.WarningMessages = false;
     }
