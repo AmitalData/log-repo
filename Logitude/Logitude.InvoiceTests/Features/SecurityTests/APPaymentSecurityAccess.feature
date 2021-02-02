@@ -1,9 +1,11 @@
 ﻿Feature: Get AP Payment Security Access
+		With pre-prepared user authentication
+		We want to test Get AP Payment Security Access
 
-Scenario: Get AP Payment From User's Tenant
-	When First user get the first AP Payment from AP Payments list
-	Then AP Payment for first user should be exists
+Scenario: Get AP Payment from user's tenant 
+	When get a AP Payment from user's AP Payment list
+	Then the AP Payment should exist
 
-Scenario: Get AP Payment From Other Tenant
-	When Second user get the AP Payment that requested by first user
-	Then AP Payment for second user should not be exists
+Scenario: Get AP Payment from other tenant  
+	When get a AP Payment from Other Tenant
+	Then the AP Payment should not exist
