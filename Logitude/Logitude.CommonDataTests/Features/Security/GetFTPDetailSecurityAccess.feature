@@ -1,9 +1,11 @@
-﻿Feature: Get FTP Detail Security Access
+﻿Feature: FTP detail security access
+	With pre-prepared users authentication
+	We want to test FTP detail security access.
 
-Scenario: Get FTP Detail From User's Tenant
-	When First user get the first FTP Detail from FTP Detail list
-	Then the Detail for first user should be exists
+Scenario: Get FTP detail for user's tenant
+	When get FTP detail for user's tenant
+	Then FTP detail should available
 
-Scenario: Get FTP Detail From Other Tenant
-	When Second user get the FTP Detail that requested by first user
-	Then the Detail for second user should not be exists
+Scenario: Get FTP detail for other tenant
+	When get FTP detail for other tenant
+	Then FTP detail should not available

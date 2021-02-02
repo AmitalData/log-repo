@@ -6,7 +6,7 @@ Feature: Credit Note ARInvoice Operations And Actions
         Given the user logged in and navigates to shipments workspace
         And a direct shipment with the following details
             | ShipmentLevel | Direction | TransportMode | Shipper  | MainCarriageFromPort | MainCarriageToPort |
-            | Direct        | Export         | Air             | Shipper1 | LHR                  | MIA                |
+            | Direct        | Export    | Air           | Shipper1 | LHR                  | MIA                |
         When create shipment
         Then the shipment should create successfully
 
