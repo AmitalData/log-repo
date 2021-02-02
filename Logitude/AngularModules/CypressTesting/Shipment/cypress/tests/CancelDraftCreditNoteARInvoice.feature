@@ -6,7 +6,7 @@ Feature: Credit Note ARInvoice Operations And Actions
         Given the user logged in and navigates to shipments workspace
         And a direct shipment with the following details
             | ShipmentLevel | Direction | TransportMode | Shipper  | MainCarriageFromPort | MainCarriageToPort |
-            | Direct        | Export         | Air             | Shipper1 | LHR                  | MIA                |
+            | Direct        | Export    | Air           | Shipper1 | LHR                  | MIA                |
         When create shipment
         Then the shipment should create successfully
 
@@ -16,7 +16,7 @@ Feature: Credit Note ARInvoice Operations And Actions
             | AFT         | GRWT | 5        | -10       | EUR      | 4            |
         And a credit ARInvoice with the following details and a random invoice number
             | PartnerType | InvoiceCurrency | InvoiceExchangeRate | InvoiceDate | PaymentTerms | DueDate | VATNo | Branch      | VATType |
-            | Customer    | EUR             | 4                   | today       | Cash         | today   | Zero  | Main Office | Zero    |
+            | Customer    | EUR             | 4                   | Today       | Cash         | Today   | Zero  | Main Office | Zero    |
         When create invoice
         Then the invoice should create successfully
 
