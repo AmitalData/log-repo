@@ -136,7 +136,7 @@ namespace WebFreight.Web.Helpers
                             PDim = "[" + filter.ParentDimTabelName + filter.DimensionTableDisplayName + "]";
                             OTBL = "[" + filter.DWObjectTableCode + filter.DimensionTableDisplayName + "]";
                         }
-                        if (filter.DataTypeCode != "Date" && filter.DataTypeCode != "DateTime")
+                        if (filter.DataTypeCode != "Date" && (filter.DataTypeCode != "DateTime" || filter.Code == "[Date Key]"))
                         {
                             if (filter.Operation.Code == "Equals")
                             {
