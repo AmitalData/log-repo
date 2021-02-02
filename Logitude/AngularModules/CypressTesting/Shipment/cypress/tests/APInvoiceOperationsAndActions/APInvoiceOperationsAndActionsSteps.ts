@@ -26,7 +26,7 @@ Given("a direct shipment with the following details",
 When("create shipment", () => {
   Actions.CreateShipment(ShipmentData.ShipmentLevel);
 });
-Then("the direct should create successfully", () => {
+Then("the direct shipment should create successfully", () => {
   BaseAssertion.AssertStatusCode("WaitPostShipmentRequest", 200).then((interception) => {
     shipmentNumber = interception.response.body.ShipmentNumber;
   });
