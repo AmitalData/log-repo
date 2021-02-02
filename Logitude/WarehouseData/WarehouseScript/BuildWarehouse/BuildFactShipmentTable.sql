@@ -282,6 +282,8 @@
    declare @Transshipment3Carrier as int
    declare @Transshipment2AdditionalMAWBOBLBL as nvarchar(20)
    declare @Transshipment3AdditionalMAWBOBLBL as nvarchar(20)
+   declare @QuoteNumber as nvarchar(20)
+  
 
 	DECLARE ShipmentsCursor CURSOR READ_ONLY
 	FOR
@@ -314,7 +316,7 @@
 	dw_Shipments.OnCarriageATD, dw_Shipments.OnCarriageATA, dw_ShipmentMasterDatas.Transshipment2ATA, dw_ShipmentMasterDatas.Transshipment3ATA, dw_ShipmentMasterDatas.Transshipment2ETA , 
 	dw_ShipmentMasterDatas.Transshipment3ETA,dw_ShipmentMasterDatas.Transshipment2ATD, dw_ShipmentMasterDatas.Transshipment3ATD, dw_ShipmentMasterDatas.Transshipment2ETD , 
 	dw_ShipmentMasterDatas.Transshipment3ETD,dw_ShipmentMasterDatas.Transshipment2AdditionalMAWBOBLBL, dw_ShipmentMasterDatas.Transshipment3AdditionalMAWBOBLBL,
-	Transshipment2Carrier.Id_Number,Transshipment3Carrier.Id_Number
+	Transshipment2Carrier.Id_Number,Transshipment3Carrier.Id_Number, dw_Shipments.QuoteNumber
 
 
 	 
@@ -428,7 +430,7 @@
 	  @Transshipment1FromPort, @Transshipment2FromPort, @Transshipment3FromPort, @Transshipment1ToPort, @Transshipment2ToPort,@Transshipment3ToPort, @PreCarriageCarrier, 
 	  @OnCarriageCarrier,@PreCarriageETA, @PreCarriageATD, @PreCarriageATA, @OnCarriageETD, @OnCarriageETA,@OnCarriageATD, @OnCarriageATA, @Transshipment2ATA,
 	  @Transshipment3ATA, @Transshipment2ETA, @Transshipment3ETA, @Transshipment2ATD, @Transshipment3ATD, @Transshipment2ETD, @Transshipment3ETD,
-      @Transshipment2AdditionalMAWBOBLBL, @Transshipment3AdditionalMAWBOBLBL, @Transshipment2Carrier,@Transshipment3Carrier
+      @Transshipment2AdditionalMAWBOBLBL, @Transshipment3AdditionalMAWBOBLBL, @Transshipment2Carrier,@Transshipment3Carrier, @QuoteNumber
 
 
 
@@ -572,7 +574,7 @@
        [On Carriage Carrier], [Pre Carriage ETA], [Pre Carriage ATD], [Pre Carriage ATA], [On Carriage ETD],  [On Carriage ETA], [On Carriage ATD],
        [On Carriage ATA], [Transshipment 2 ATA], [Transshipment 3 ATA],[Transshipment 2 ETA], [Transshipment 3 ETA], [Transshipment 2 ATD],
        [Transshipment 3 ATD], [Transshipment 2 ETD], [Transshipment 3 ETD],[Transshipment 2 Master], [Transshipment 3 Master],
-	   [Transshipment 2 Carrier], [Transshipment 3 Carrier] 
+	   [Transshipment 2 Carrier], [Transshipment 3 Carrier], [Connected Quotes]
 	  ) 
 
       values(@Id, @SourceTenant,@ParentTenant,@Direction,@TransportMode, @DirectHouse, @Type, @OBLType, @Department ,@Branch , @ShipmentNumber , @House ,@Master , @Shipper,  @Consignee , @Agent,@Customer,@Incoterm ,@TotalGrossWeightInKG,@TotalChargeableWeightInKG, @TotalVolumeInCBM,  @NumberOfPackages, @DangerousGoods, @NumberOfContainers, @Salesman , @AccountManager ,    @TotalProfitInLocalCurrency , @TotalProfitInProfitCurrency , @LocalCurrency,@ProfitCurrency ,@OperationallyClosed,@AccountingClosed, @ComputedStatus, @Location,  @MainCarriageFromPort , @FinalDestination , @IsDeparted , @MainCarriageATD  ,@IsArrived , @ArrivedDate   , @IsCustomsCleared , 1 ,dbo.GetDateFormateAsNumber(@CreateDate)    ,dbo.GetDateFormateAsNumber(@LastUpdateDate)   , dbo.GetDateFormateAsNumber(@OperationalDate),dbo.GetDateFormateAsNumber(@OperationalCloseDate),dbo.GetDateFormateAsNumber(@AccountingCloseDate) ,@OpenReceivablesInLocalCurrency , @OpenReceivablesInProfitCurrency ,@AccountedReceivablesInLocalCurrency,@AccountedReceivablesInProfitCurrency, @OpenPayablesInLocalCurrency ,@OpenPayablesInProfitCurrency , @AccountedPayablesInLocalCurrency ,@AccountedPayablesInProfitCurrency , @AgentReference1, @AgentReference2,@AMSBL ,@ConsigneeReference1,@ConsigneeReference2,@CreatedBy,@CustomAgent,@CustomerReference1,@CustomerReference2,dbo.GetDateFormateAsNumber(@FirstPickupDate)   ,@FreightPC, dbo.GetDateFormateAsNumber(@CarrierDate)   ,@Carrier,@CarrierNumber,@MainHarmonize,@OtherChargePC,@ProjectNumber,@ShipperReference1,@ShipperReference2,@TEU,@ValueOfGoods,@ValueOfGoodsCurrency,@Warehouse,@FreightForwarder ,  @BookingConfirmationNumber,@MainCarriageATA , dbo.GetDateFormateAsNumber(@MAWBOBLDate) ,@MAWBOBLDate , dbo.GetDateFormateAsNumber(@ComputedStatusDate) , @CustomsDeclarationNumber ,dbo.GetDateFormateAsNumber(@FirstOperationalCloseDate) ,  @EstimatedFinalArrivalDate , @ActualFinalArrivalDate , REPLACE(@Routing,',','>'), @DescriptionOfGoods, @PreCarriageETD ,  @MainCarriageETA , @MainCarriageETD,@MoveType ,@Vessel,@SpecialServices ,@FirstPickupETA, @FirstPickupETD, @MasterShipmentNumber , @ARInvoices,[CustomFieldValuesVariable],@CreateDate,@LastUpdateDate,@OperationalDate,@CutoffDate ,@Consolidator,@ConsolidatorRef1, @ShipmentNotes, @Notify1, @Notify1Ref1, @Notify2, @Notify2Ref1, @Coloader, @ColoaderRef1, @ShipperNotExporter, @ShipperNotExporterRef1, @ReleasingAgent , @ReleasingAgentRef1 ,
@@ -589,7 +591,7 @@
 	  @OnCarriageCarrier,@PreCarriageETA, @PreCarriageATD,  @PreCarriageATA, @OnCarriageETD,  @OnCarriageETA, @OnCarriageATD, 
 	  @OnCarriageATA, @Transshipment2ATA, @Transshipment3ATA, @Transshipment2ETA , @Transshipment3ETA , @Transshipment2ATD,
       @Transshipment3ATD, @Transshipment2ETD, @Transshipment3ETD, @Transshipment2AdditionalMAWBOBLBL, @Transshipment3AdditionalMAWBOBLBL, 
-	  @Transshipment2Carrier,@Transshipment3Carrier
+	  @Transshipment2Carrier,@Transshipment3Carrier, @QuoteNumber
 	  	  )
 	END TRY 
 BEGIN CATCH  
@@ -626,7 +628,7 @@ END CATCH
 	@Transshipment3ToPort, @PreCarriageCarrier,  @OnCarriageCarrier,@PreCarriageETA, @PreCarriageATD,   @PreCarriageATA, @OnCarriageETD, @OnCarriageETA,
 	@OnCarriageATD, @OnCarriageATA, @Transshipment2ATA, @Transshipment3ATA, @Transshipment2ETA , @Transshipment3ETA , @Transshipment2ATD,
     @Transshipment3ATD, @Transshipment2ETD, @Transshipment3ETD, @Transshipment2AdditionalMAWBOBLBL, @Transshipment3AdditionalMAWBOBLBL, 
-	@Transshipment2Carrier,@Transshipment3Carrier
+	@Transshipment2Carrier,@Transshipment3Carrier, @QuoteNumber
 
 
 		End

@@ -81,14 +81,14 @@ namespace Logitude.ShipmentTests.Features
             this.TestTearDown();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="Add a master packages")]
+        [Xunit.SkippableFactAttribute(DisplayName="Add a master package")]
         [Xunit.TraitAttribute("FeatureTitle", "Update Shipments")]
-        [Xunit.TraitAttribute("Description", "Add a master packages")]
-        public virtual void AddAMasterPackages()
+        [Xunit.TraitAttribute("Description", "Add a master package")]
+        public virtual void AddAMasterPackage()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Add a master packages", null, tagsOfScenario, argumentsOfScenario);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Add a master package", null, tagsOfScenario, argumentsOfScenario);
 #line 5
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -110,28 +110,34 @@ this.ScenarioInitialize(scenarioInfo);
             {
                 this.ScenarioStart();
                 TechTalk.SpecFlow.Table table5 = new TechTalk.SpecFlow.Table(new string[] {
-                            "Quantity",
-                            "Length",
-                            "Width",
-                            "Height",
-                            "Weight"});
+                            "property",
+                            "Value"});
                 table5.AddRow(new string[] {
-                            "1",
-                            "100",
-                            "100",
-                            "100",
+                            "Quantity",
+                            "1"});
+                table5.AddRow(new string[] {
+                            "Length",
+                            "100"});
+                table5.AddRow(new string[] {
+                            "Width",
+                            "100"});
+                table5.AddRow(new string[] {
+                            "Height",
+                            "100"});
+                table5.AddRow(new string[] {
+                            "Weight",
                             "200"});
 #line 6
- testRunner.Given("The master shipment packages fields", ((string)(null)), table5, "Given ");
+ testRunner.Given("a master package with the following properties", ((string)(null)), table5, "Given ");
 #line hidden
-#line 9
- testRunner.And("A master shipment", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 13
+ testRunner.And("a master shipment", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-#line 10
- testRunner.When("The put API sent to add master packages", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 14
+ testRunner.When("add a master package", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 11
- testRunner.Then("A new master packages added successfully", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 15
+ testRunner.Then("the master should add package successfully", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();
@@ -145,7 +151,7 @@ this.ScenarioInitialize(scenarioInfo);
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Add a house packages", null, tagsOfScenario, argumentsOfScenario);
-#line 13
+#line 17
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             bool isScenarioIgnored = default(bool);
@@ -166,45 +172,51 @@ this.ScenarioInitialize(scenarioInfo);
             {
                 this.ScenarioStart();
                 TechTalk.SpecFlow.Table table6 = new TechTalk.SpecFlow.Table(new string[] {
-                            "Quantity",
-                            "Length",
-                            "Width",
-                            "Height",
-                            "Weight"});
+                            "property",
+                            "Value"});
                 table6.AddRow(new string[] {
-                            "1",
-                            "100",
-                            "100",
-                            "100",
+                            "Quantity",
+                            "1"});
+                table6.AddRow(new string[] {
+                            "Length",
+                            "100"});
+                table6.AddRow(new string[] {
+                            "Width",
+                            "100"});
+                table6.AddRow(new string[] {
+                            "Height",
+                            "100"});
+                table6.AddRow(new string[] {
+                            "Weight",
                             "200"});
-#line 14
- testRunner.Given("The house shipment packages fields", ((string)(null)), table6, "Given ");
-#line hidden
-#line 17
- testRunner.And("A master shipment", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line hidden
 #line 18
- testRunner.And("A house shipment", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.Given("a house package with the following properties", ((string)(null)), table6, "Given ");
 #line hidden
-#line 19
- testRunner.When("The put API sent to add house packages", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 25
+ testRunner.And("a master shipment", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-#line 20
- testRunner.Then("A new house packages added successfully", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 26
+ testRunner.And("a house shipment", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+#line 27
+ testRunner.When("add a house package", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+#line 28
+ testRunner.Then("the house should add package successfully", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="And Payable Charge Type")]
+        [Xunit.SkippableFactAttribute(DisplayName="Add a master payable")]
         [Xunit.TraitAttribute("FeatureTitle", "Update Shipments")]
-        [Xunit.TraitAttribute("Description", "And Payable Charge Type")]
-        public virtual void AndPayableChargeType()
+        [Xunit.TraitAttribute("Description", "Add a master payable")]
+        public virtual void AddAMasterPayable()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("And Payable Charge Type", null, tagsOfScenario, argumentsOfScenario);
-#line 22
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Add a master payable", null, tagsOfScenario, argumentsOfScenario);
+#line 30
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             bool isScenarioIgnored = default(bool);
@@ -225,30 +237,37 @@ this.ScenarioInitialize(scenarioInfo);
             {
                 this.ScenarioStart();
                 TechTalk.SpecFlow.Table table7 = new TechTalk.SpecFlow.Table(new string[] {
-                            "ChargesTypeName",
-                            "ChargesType",
-                            "Measurement",
-                            "UnitPrice",
-                            "Currency",
-                            "ShipmentPayableLineStatus"});
+                            "property",
+                            "Value"});
                 table7.AddRow(new string[] {
-                            "Air Freight",
-                            "AFT",
-                            "GRWT",
-                            "100",
-                            "EUR",
+                            "ChargesTypeName",
+                            "Air Freight"});
+                table7.AddRow(new string[] {
+                            "ChargesType",
+                            "AFT"});
+                table7.AddRow(new string[] {
+                            "Measurement",
+                            "GRWT"});
+                table7.AddRow(new string[] {
+                            "UnitPrice",
+                            "100"});
+                table7.AddRow(new string[] {
+                            "Currency",
+                            "EUR"});
+                table7.AddRow(new string[] {
+                            "ShipmentPayableLineStatus",
                             "OAMT"});
-#line 23
- testRunner.Given("The Payable Charge Type fields", ((string)(null)), table7, "Given ");
+#line 31
+ testRunner.Given("a master payable with the following properties", ((string)(null)), table7, "Given ");
 #line hidden
-#line 26
- testRunner.And("A master shipment", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 39
+ testRunner.And("a master shipment", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-#line 27
- testRunner.When("The put API sent to add master Payable", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 40
+ testRunner.When("add a master payable", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 28
- testRunner.Then("The payable cherge type added successfully", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 41
+ testRunner.Then("the master should add payable successfully", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();

@@ -6,6 +6,7 @@ import { PartnersDetails } from "cypress/models/PartnersDetails";
 import {PayableDetails} from "cypress/models/PayableDetails"
 import * as BaseAssertion from "../../../../Base/cypress/actions/Assertion"
 import { ShipmentDetails } from "cypress/models/ShipmentDetails";
+import {ReceivableDetails}from"cypress/models/ReceivableDetails"
 
 let shipmentNumber: string;
 let shipmentDetails: ShipmentDetails;
@@ -68,12 +69,14 @@ Given("fill Packages tab with random number of Packages", () => {
     Actions.FillPackagesTab("Air")
 });
 
-Given("the user in the Receivables tab", () => {
+Given("the user in the Receivables tab",  (dataTable) => {
     cy.Click(Selectors.ReceivablesTab, null)
+ 
 });
 
-Given("fill Receivables tab  with a random UnitPrice and {string} as a ChargesType", (ChargesType) => {
-    Actions.FillReceivablesTab(ChargesType)
+Given("fill Receivables with the following details", (dataTable) => {
+    const ReceivableData = dataTable.hashes()[0] as ReceivableDetails;
+    Actions.FillReceivablesTab(ReceivableData)
 });
 
 Given("the user in the Routings tab", () => {
@@ -115,5 +118,5 @@ When("save shipment window", () => {
 });
 
 Then("the save operation complete successfully", () => {
-    BaseAssertion.AssertStatusCode("WaitPostShipmentRequest", 200);
+    BaseAssertion.AssertStatusCode("WaitPutShipmentRequest", 200);
 });
