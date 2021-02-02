@@ -1,24 +1,30 @@
 export class ShipmentMapping {         
 
     private static Directions: { [key: string]: string; } = {
-        "export": "E",
-        "import": "I",
-        "domestic": "D",
-        "drop": "R",
-        "customs import": "C"
+        "Export": "E",
+        "Import": "I",
+        "Domestic": "D",
+        "Drop": "R",
+        "Customs Import": "C"
     };
 
     private static TransportModes: { [key: string]: string; } = {
-        "air": "A",
-        "inland": "I",
-        "ocean": "O"
+        "Air": "A",
+        "Inland": "I",
+        "Ocean": "O"
     };
 
-    public static GetDirectionCode(directionName:string): string {
-      return this.Directions[directionName.toLowerCase()];
+    public static GetDirectionCode(direction:string): string {
+        if(Object.keys(this.Directions).map(k => this.Directions[k]).indexOf(direction) > -1){
+            return direction;
+        }
+        return this.Directions[direction];
     }
 
-    public static GetTransportModeCode(transportModeName:string): string {
-        return this.TransportModes[transportModeName.toLowerCase()];
+    public static GetTransportModeCode(transportMode:string): string {
+        if(Object.keys(this.TransportModes).map(k => this.TransportModes[k]).indexOf(transportMode) > -1){
+            return transportMode;
+        }
+        return this.TransportModes[transportMode];
     }
 }
