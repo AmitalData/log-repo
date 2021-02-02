@@ -1,5 +1,5 @@
 ﻿<Script DBType="Main" Module="Shipment" AOT="true" TargetTableName="Shipments">
-  <Sql Version="1">
+  <Sql Version="5">
     <![CDATA[
       
 If(OBJECT_ID('tempdb..#temp') Is Not Null)
@@ -34,7 +34,7 @@ If(OBJECT_ID('tempdb..#temp') Is Not Null)
                           set @QuoteNumber = NULL
 		                  set @QuoteNumber = (select QuoteNumber from Quotes where Id = @QuoteId and Tenant = @Tenant)
 
-                          insert into #temp_Shipments(ShipmentId, SearchFields) values (@ShipmentId, @QuoteNumber)
+                          insert into #temp_Shipments(ShipmentId, QuoteNumber) values (@ShipmentId, @QuoteNumber)
                           set @Count = @Count + 1;
                           if(@Count = 1000)
                     begin
@@ -57,7 +57,7 @@ If(OBJECT_ID('tempdb..#temp') Is Not Null)
               begin
                     update Shipments
                     set
-                    SearchFields = #temp_Shipments.SearchFields 
+                    QuoteNumber = #temp_Shipments.QuoteNumber 
                     FROM Shipments
                     INNER JOIN #temp_Shipments
                     on Shipments.Id = #temp_Shipments.ShipmentId

@@ -445,10 +445,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
                         if (item.IsDeleted)
                         {
-                            //if (myParentItem != null)
-                            //{
-                            //    allRoleFeatures.Remove(myParentItem);
-                            //}
+                            if (myParentItem != null)
+                            {
+                                allRoleFeatures.Remove(myParentItem);
+                            }
                         }
 
                         else
@@ -589,10 +589,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
                         if (item.IsDeleted)
                         {
-                            //if (myParentItem != null)
-                            //{
-                            //    allRoleFeatures.Remove(myParentItem);
-                            //}
+                            if (myParentItem != null)
+                            {
+                                allRoleFeatures.Remove(myParentItem);
+                            }
                         }
 
                         else
