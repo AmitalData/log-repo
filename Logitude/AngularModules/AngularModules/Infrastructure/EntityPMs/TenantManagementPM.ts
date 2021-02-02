@@ -697,6 +697,10 @@ export class TenantManagementPM {
     private backgroundId: string;
     public get BackgroundId() { return this.backgroundId; }
     public set BackgroundId(newValue: string) { if (this.backgroundId != newValue) { this.backgroundId = newValue; this.MarkAsDirty("BackgroundId"); } }
+
+    private shipmentHeaderImageId: string;
+    public get ShipmentHeaderImageId() { return this.shipmentHeaderImageId; }
+    public set ShipmentHeaderImageId(newValue: string) { if (this.shipmentHeaderImageId != newValue) { this.shipmentHeaderImageId = newValue; this.MarkAsDirty("ShipmentHeaderImageId"); } }
        
 	 
     private comapnylogoId: string;

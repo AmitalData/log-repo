@@ -82,7 +82,22 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
             this.iDataProvider = new UserDefinedReportDataProvider();
             this.BuildReportHeader();
             this.BuildSourceData();
+            
         }
+
+        private void SetDefaultChartOfAccountType(UserDefinedReportPM userDefinedReport)
+        {
+            userDefinedReport.CalculatedChartsOfAccounts.ForEach(account =>
+            {
+                if (account.ChartOfAccountTypeCode == null)
+                {
+                    account.ChartOfAccountTypeCode = "999";
+                    account.ChartOfAccountTypeEnglishName = "Others";
+                    account.ChartOfAccountTypeLocalName = "אחרים";
+                }
+            });
+        }
+
         private void BuildReportHeader()
         {
 
@@ -97,6 +112,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
         private void BuildSourceData()
         {
             UserDefinedReportPM UserDefinedReport = GetSingleUserDefinedReportByFilters();
+            SetDefaultChartOfAccountType(UserDefinedReport);
             BuildCalculatedChartsofAccountPeriod(UserDefinedReport);
         }
 
