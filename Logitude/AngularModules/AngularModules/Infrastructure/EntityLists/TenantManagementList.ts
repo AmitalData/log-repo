@@ -148,5 +148,6 @@ export class TenantManagementList {
 		NumberOfBookingSentLastWeek: number;
 		NumberOfSISentLastWeek: number;
 		LastContainerStatusReceived: Date;
+        ShipmentHeaderImageId: string;
 	
 }

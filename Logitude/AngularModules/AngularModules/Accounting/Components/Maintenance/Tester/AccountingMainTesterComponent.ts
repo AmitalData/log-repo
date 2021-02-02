@@ -94,6 +94,7 @@ export class AccountingMainTesterComponent extends BaseComponent {
         });
        
     }
+ 
     WorkWithoutQueue_Click() {
         let opr = "WorkWithoutQueue_Click";
         let obj = { MyTenant: 1, JournalId: "1-55235" };
