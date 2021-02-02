@@ -2,6 +2,7 @@
 using Logitude.Accounting.Def.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.BL.Resolvers;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using System;
@@ -13,26 +14,49 @@ namespace WebFreight.Web.Helpers
 {
     public class TaxReportHelper
     {
+        private static List<string> checkDigitErrorCodes = new List<string>() { "2" };
+        private static List<string> invoiceErrorCodes = new List<string>() { "3" };
 
         public static void CheckErrorsInLines(AuthenticationToken authToken, TaxReportPM taxreport)
         {
-            List<string> errorsCodes = new List<string>() { "2" };
+            var linesWithCheckDigitErrors = CheckIfLinesHasErrors(taxreport, checkDigitErrorCodes, GetCheckDigitErrorMessage(taxreport.Tenant));
+            var linesWithWrongInvoiceStatusMessage = CheckIfLinesHasErrors(taxreport, invoiceErrorCodes, GetInvoiceStatusErrorMessage(taxreport.Tenant));
+
+            ThrowErrors(linesWithCheckDigitErrors, linesWithWrongInvoiceStatusMessage);
+        }
+
+        private static void ThrowErrors(string linesWithCheckDigitErrors, string linesWithWrongInvoiceStatusMessage)
+        {
+            if(!string.IsNullOrWhiteSpace(linesWithCheckDigitErrors) || !string.IsNullOrWhiteSpace(linesWithWrongInvoiceStatusMessage))
+            {
+                var errorMessages = string.Join(";", linesWithCheckDigitErrors, linesWithWrongInvoiceStatusMessage);
+                throw new ApplicationException(errorMessages);
+
+            }
+        }
+
+        private static string CheckIfLinesHasErrors(TaxReportPM taxreport, List<string> errorsCodes, string checkDigitError)
+        {
+            int[] linesWithError = GetLinesHasErrors(taxreport, errorsCodes);
+            if (linesWithError.Length > 0)
+                return checkDigitError.Replace("#lines", string.Join(",", linesWithError));
+            return "";
+        }
+
+        private static string GetCheckDigitErrorMessage(int tenant)
+        {
+            return TextCodesTranslator.TranslateText("TaxReport.O.CantDownload", tenant, LoggedContactResolver.GetLoggedContactShowLocal(tenant));
+        }
+        private static string GetInvoiceStatusErrorMessage(int tenant)
+        {
+            return TextCodesTranslator.TranslateText("TaxReport.O.InvoiceErrors", tenant, LoggedContactResolver.GetLoggedContactShowLocal(tenant));
+        }
+
+        private static int[] GetLinesHasErrors(TaxReportPM taxreport, List<string> errorsCodes)
+        {
             TaxReportQueryService taxReportQuery = new TaxReportQueryService(taxreport.Tenant);
             int[] linesWithError = taxReportQuery.CheckErrorsInLines(taxreport.Id, taxreport.Tenant, errorsCodes).ToArray();
-            if (linesWithError.Length > 0)
-            {
-                ContactPM loggedContact = GetLoggedContact(authToken.Email, taxreport.Tenant);
-                bool showlocal = !loggedContact.DontShowLocal;
-                string error = TextCodesTranslator.TranslateText("TaxReport.O.CantDownload", taxreport.Tenant, showlocal);
-                string[] errorParts = error.Split(',');
-                string lines = null;
-                for (int x = 0; x < linesWithError.Length; x++)
-                {
-                    lines = lines + linesWithError[x].ToString() + ',';
-
-                }
-                throw new Exception(errorParts[0] + " ( " + lines.TrimEnd(',') + " ) " + errorParts[1]);
-            }
+            return linesWithError;
         }
 
         public static void CheckWithoutTransmitLines(AuthenticationToken authToken, TaxReportPM taxreport)

@@ -2134,7 +2134,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                    var journalCreditAmount = journal.JournalLines.Where(d => d.ActionCode == "1").FirstOrDefault().LocalAmount;
                     var difference = journalCreditAmount - totalDebitLines  ;
 
-                        if (Math.Abs(difference) < (decimal) 0.06)
+                        if (Math.Abs(difference) <= (decimal) 0.06)
                         {
                             JournalLinePM largestJournalAmount = journalDebitLines.Where(d =>  d.LocalAmount == journalDebitLines.Max(a=> a.LocalAmount)).FirstOrDefault();
                             journal.JournalLines.Where(d => d.Line == largestJournalAmount.Line).ToList().ForEach(d => { d.LocalAmount = d.LocalAmount + difference; d.ForeignAmount = d.ForeignAmount + difference; });

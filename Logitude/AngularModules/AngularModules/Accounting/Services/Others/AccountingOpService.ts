@@ -23,6 +23,21 @@ export class AccountingOpService {
         this._http = ServiceHelper.HttpClient;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/AccountingOp';//AccountingOpController
     }
+    GetTestOperation(operationId: string, myparams:string) :any{
+        var url = this._apiUrl + '/GetTestOperation?operationId=' + operationId +'&myparams='+myparams;
+        return defer(() => {
+            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+
+                var result = response;
+                
+                var serviceResponse: ServiceResponse;
+                serviceResponse = new ServiceResponse();
+                serviceResponse.Result = result;
+                return serviceResponse;
+
+            }), catchError(ServiceHelper.HandleServiceError));
+        });
+    }
     Generate1000(email: string): any {
  
         var url = this._apiUrl + '/GetGenerate1000?email=' + email;

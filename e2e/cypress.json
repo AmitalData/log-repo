@@ -48,6 +48,7 @@
 
     
     "chromeWebSecurity": false,
+    "pageLoadTimeout": 120000,
     "defaultCommandTimeout": 120000,
     "responseTimeout": 120000,
     "requestTimeout": 120000,

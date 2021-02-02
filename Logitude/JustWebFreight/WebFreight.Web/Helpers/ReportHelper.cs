@@ -763,6 +763,10 @@ namespace WebFreight.Web.Helpers
 
         public string BuildStimulReport(ReportFliter reportFliter)
         {
+            AdvancedDateResolver advancedDateResolver = new AdvancedDateResolver();
+            List<QueryFilterItem> reportFilterItems = advancedDateResolver.ResolveDateValues(reportFliter.QueryFilterItemLists);
+            reportFliter.QueryFilterItemLists = reportFilterItems;
+
             string result = string.Empty;
             StiReport stiReport = GetStimulReportByReportFilter(reportFliter);
             if (stiReport != null)

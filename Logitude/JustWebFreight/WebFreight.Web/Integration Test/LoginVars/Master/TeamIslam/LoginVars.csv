@@ -1,2 +1,2 @@
-LogitudeURL,URL,Email,Email1,Email2,Password,Tenant,Tenant2,RetriesNumber
-https://test.logitudeworld.com/staging,https://test.logitudeworld.com/staging,ahmadb@test.com,ahmadb@test.com,ahmad2@test.com,ahmed13!A15,1150,1,5
+LogitudeURL,URL,Email,Email1,Email2,Email3,Password,Tenant,Tenant2,RetriesNumber
+https://test.logitudeworld.com/staging,https://test.logitudeworld.com/staging,ahmadb@test.com,ahmadb@test.com,ahmad2@test.com,ahmadb@integration.com,ahmed13!A15,1150,1,5

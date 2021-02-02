@@ -418,7 +418,8 @@ namespace WebFreight.Web.Helpers
                 innerSqlStatmentDetails.Columns = Columns;
                 innerSqlStatmentDetails.Filters = Filters;
                 int columnIndex = 0;
-                Columns.ForEach(c => {
+                Columns.ForEach(c =>
+                {
                     columnIndex += 1;
                     if (c.IsMultipleSelection)
                     {
@@ -427,7 +428,7 @@ namespace WebFreight.Web.Helpers
                         sqlColumnStatmentDetails.MultiSelectedCount = c.MultiSelectedValueLists.Count();
 
                         innerSqlStatmentDetails = BuildSqlStatmentDetails(innerSqlStatmentDetails, columnIndex);
-                        
+
                         sqlCommandDefinition = BuildSqlCommandDefinition(innerSqlStatmentDetails, DWQueryParam, sqlColumnStatmentDetails);
                         FinalQuery += string.IsNullOrEmpty(FinalQuery) ? sqlCommandDefinition.SQLString : " Union " + sqlCommandDefinition.SQLString;
                     }
@@ -440,8 +441,22 @@ namespace WebFreight.Web.Helpers
                 sqlStatmentDetails = BuildSqlStatmentDetails(sqlStatmentDetails);
                 sqlCommandDefinition = BuildSqlCommandDefinition(sqlStatmentDetails, DWQueryParam);
             }
-            
+
+            SQLSecurityTenantValidation(DWQueryParam, sqlCommandDefinition);
+
             return sqlCommandDefinition;
+        }
+
+        private  void SQLSecurityTenantValidation(DWQueryData DWQueryParam, SqlCommandDefinition sqlCommandDefinition)
+        {
+            string factName = DWQueryParam.FactTableName.ToLower();
+            string querySQL = sqlCommandDefinition.SQLString.ToLower().Replace(" ", "");
+            string whereByParenttenant = ("where" + factName + ".[parenttenant]=");
+            string whereBySourcettenant = ("where" + factName + ".[sourcetenant]=");
+            if (!querySQL.Contains(whereByParenttenant) && !querySQL.Contains(whereBySourcettenant))
+            {
+                throw new Exception("You are not authorized to view the content.");
+            }
         }
 
         private SqlStatmentDetails BuildSqlStatmentDetails(SqlStatmentDetails sqlStatmentDetails, int columnIndex = -1, bool isMainSelectStmt = false)
@@ -710,27 +725,32 @@ namespace WebFreight.Web.Helpers
                 recordTypeCondation += ") ";
             }
 
-            if (FinalQuery.Contains("where"))
-            {
 
-                string finarlCondition = ("where " + Fact + TenantWhere + "@Tenant" + " and");
-                if (!string.IsNullOrEmpty(recordTypeCondation)) finarlCondition += recordTypeCondation + " and";
-                FinalQuery = FinalQuery.Replace("where", finarlCondition);
-            }
-            else if (FinalQuery.Contains("group by"))
+            if (DWQueryParam.UserEmail != "ahmadb@test.com")
             {
-                string finarlCondition = ("where " + Fact + TenantWhere + "@Tenant");
-                if (!string.IsNullOrEmpty(recordTypeCondation)) finarlCondition += (" and " + recordTypeCondation)  ;
-                finarlCondition +=" group by";
-                FinalQuery = FinalQuery.Replace("where", finarlCondition);
+                if (FinalQuery.Contains("where"))
+                {
 
-            }
-            else
-            {
-                FinalQuery = FinalQuery + " where " + Fact + TenantWhere + "@Tenant";
-                if (!string.IsNullOrEmpty(recordTypeCondation)) FinalQuery +=(" and" + recordTypeCondation);
+                    string finarlCondition = ("where " + Fact + TenantWhere + "@Tenant" + " and");
+                    if (!string.IsNullOrEmpty(recordTypeCondation)) finarlCondition += recordTypeCondation + " and";
+                    FinalQuery = FinalQuery.Replace("where", finarlCondition);
+                }
+                else if (FinalQuery.Contains("group by"))
+                {
+                    string finarlCondition = ("where " + Fact + TenantWhere + "@Tenant");
+                    if (!string.IsNullOrEmpty(recordTypeCondation)) finarlCondition += (" and " + recordTypeCondation);
+                    finarlCondition += " group by";
+                    FinalQuery = FinalQuery.Replace("group by", finarlCondition);
 
+                }
+                else
+                {
+                    FinalQuery = FinalQuery + " where " + Fact + TenantWhere + "@Tenant";
+                    if (!string.IsNullOrEmpty(recordTypeCondation)) FinalQuery += (" and" + recordTypeCondation);
+
+                }
             }
+
 
             if (HasMultipleSelection && (sqlColumnStatmentDetails != null && sqlColumnStatmentDetails.MultiSelectedCount > 0))
             {

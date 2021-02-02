@@ -675,7 +675,7 @@ new JournalLinePM()
             decimal totLedger = 0;
             
 
-            if (accountingCurrencyId == bankAccountFromReconcileExternalPageLine.CurrencyId)
+            if (bankAccountFromReconcileExternalPageLine!=null && accountingCurrencyId == bankAccountFromReconcileExternalPageLine.CurrencyId)
             {
                 totLedger = ledgerTransactionList.Sum(r => r.LocalAmountDebit- r.LocalAmountCredit);
             }

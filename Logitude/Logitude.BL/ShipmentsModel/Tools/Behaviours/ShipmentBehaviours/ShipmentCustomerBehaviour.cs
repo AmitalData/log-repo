@@ -41,9 +41,9 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
                 entityPM.ShipmentCustomerTypeCode = null;
             }
 
-            else
+            else 
             {
-                this.SetCustomerType();
+                if (!entityPM.IsImporterShipment) this.SetCustomerType();
                 this.MapCustomerFields();
                 this.GetCustomerEntity();
             }
@@ -62,6 +62,11 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
                 {
                     entityPM.ShipmentCustomerTypeCode = "SHI";
                 }
+            }
+
+            else
+            {
+                this.CheckCustomerValue();
             }
         }
 
@@ -143,6 +148,89 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
 
                         break;
                     }
+            }
+        }
+
+        private void CheckCustomerValue()
+        {
+            if (entityPM.CustomerId == entityPM.ShipperId)
+            {
+                entityPM.ShipmentCustomerTypeCode = "SHI";
+            }
+
+            else if (entityPM.CustomerId == entityPM.ConsigneeId)
+            {
+                entityPM.ShipmentCustomerTypeCode = "CON";
+            }
+
+            else if (entityPM.CustomerId == entityPM.AgentId)
+            {
+                entityPM.ShipmentCustomerTypeCode = "AGT";
+            }
+
+            else if (entityPM.CustomerId == entityPM.IssuingCarrierAgentId)
+            {
+                entityPM.ShipmentCustomerTypeCode = "IGT";
+            }
+
+            else if (entityPM.CustomerId == entityPM.CustomAgentExportId)
+            {
+                entityPM.ShipmentCustomerTypeCode = "CAE";
+            }
+
+            else if (entityPM.CustomerId == entityPM.CustomAgentImportId)
+            {
+                entityPM.ShipmentCustomerTypeCode = "CAI";
+            }
+
+            else if (entityPM.CustomerId == entityPM.Notify1Id)
+            {
+                entityPM.ShipmentCustomerTypeCode = "NT1";
+            }
+
+            else if (entityPM.CustomerId == entityPM.Notify2Id)
+            {
+                entityPM.ShipmentCustomerTypeCode = "NT2";
+            }
+
+            else if (entityPM.CustomerId == entityPM.ShipperNotExporterId)
+            {
+                entityPM.ShipmentCustomerTypeCode = "SNE";
+            }
+
+            else if (entityPM.CustomerId == entityPM.ConsigneeNotImporterId)
+            {
+                entityPM.ShipmentCustomerTypeCode = "CNI";
+            }
+
+            else if (entityPM.CustomerId == entityPM.FreightForwarderId)
+            {
+                entityPM.ShipmentCustomerTypeCode = "FOR";
+            }
+
+            else if (entityPM.CustomerId == entityPM.ColoaderId)
+            {
+                entityPM.ShipmentCustomerTypeCode = "COL";
+            }
+
+            else if (entityPM.CustomerId == entityPM.CustomClearancePointId)
+            {
+                entityPM.ShipmentCustomerTypeCode = "CCP";
+            }
+
+            else if (entityPM.CustomerId == entityPM.ConsolidatorId)
+            {
+                entityPM.ShipmentCustomerTypeCode = "CSD";
+            }
+
+            else if (entityPM.CustomerId == entityPM.ReleasingAgentId)
+            {
+                entityPM.ShipmentCustomerTypeCode = "REA";
+            }
+
+            else
+            {
+                entityPM.ShipmentCustomerTypeCode = "OTH";
             }
         }
 
