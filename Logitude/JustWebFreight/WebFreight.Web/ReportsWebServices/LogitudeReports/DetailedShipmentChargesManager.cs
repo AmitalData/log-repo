@@ -1066,7 +1066,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                                 }
                                 if (partner != null)
                                 {                  
-                                    myRecord.PartnerName = myCard.EnglishName;
+                                    myRecord.PartnerName = partner.EnglishName;
                                 }
 
                                 if (myContact != null)
