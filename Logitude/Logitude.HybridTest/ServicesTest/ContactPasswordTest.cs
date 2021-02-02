@@ -37,6 +37,11 @@ namespace Logitude.HybridTest.ServicesTest
         private static void ChangeContactPassword(InvokedProperties serviceProperties, object[] serviceParameters)
         {
             ServiceOutcome serviceOutcome = WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters);
+            if(serviceOutcome.Response.ErrorMessage == "bad user email or password")
+            {
+                object[] newServiceParameters = new object[] { "Hybrid@fnarsoft.com", "!H1", "!H0" };
+                serviceOutcome = WcfServiceInvoker.InvokeServiceMethod(serviceProperties, newServiceParameters);
+            }
             Assert.IsFalse(serviceOutcome.Response.HasError, "Change Contact Password Failed! " + serviceOutcome.Response.ErrorMessage);
             Assert.IsNull(serviceOutcome.Response.Result, "Change Contact Password Failed! " + serviceOutcome.Response.ErrorMessage);
         }
