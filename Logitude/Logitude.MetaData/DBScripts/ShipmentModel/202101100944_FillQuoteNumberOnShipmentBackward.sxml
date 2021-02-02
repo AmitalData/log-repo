@@ -1,5 +1,7 @@
 ﻿<Script DBType="Main" Module="Shipment" AOT="true" TargetTableName="Shipments">
+
   <Sql Version="5">
+
     <![CDATA[
       
 If(OBJECT_ID('tempdb..#temp') Is Not Null)
