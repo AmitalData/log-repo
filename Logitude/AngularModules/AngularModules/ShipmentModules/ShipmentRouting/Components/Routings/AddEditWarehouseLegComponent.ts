@@ -392,7 +392,9 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
             this.EntityPM.ShipmentStoragePricings = [];
         }
     }
-    private FillDefaultPricings() {        
+    private FillDefaultPricings() {
+        this.EntityPM.ShipmentStoragePricings = [];
+
         if (this.warehouseStoragePricings != null && this.warehouseStoragePricings.length > 0) {
             var count: number = 1;
             this.warehouseStoragePricings.sort((a, b) => { return (a.LineNumber === b.LineNumber) ? 0 : (a.LineNumber < b.LineNumber) ? -1 : 1 }).forEach(item => {
@@ -405,7 +407,7 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
                 defaultItem.Days = item.Days;
                 defaultItem.SalePrice = item.SalePrice;
                 defaultItem.LineNumber = count++;
-
+                
                 this.EntityPM.AddShipmentStoragePricing(defaultItem);
             });
         }
@@ -791,7 +793,12 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
         this.ValidationErrorsList = errors;
 
         if (errors.length == 0) {
-            this.CheckStorageProperties(this.WarehouseLegActualReleaseDate); 
+            var date: Date = this.WarehouseLegActualReleaseDate;
+            if (this.isCalculateStorageClicked && date == null) {
+                date = this.WarehouseLegExpectedReleaseDate;
+            }
+
+            this.CheckStorageProperties(date); 
             this.FatherComponent.BuildItemsCollection();
             this.CurrentSession.CloseCurrentWindowEmit("OK");
         }
@@ -939,6 +946,7 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
                                             }
 
                                             this.EntityPM.AddReceivable(storageReceivable);
+                                            this.ComputeStorageFee();
                                             this.CurrentSession.FireEvent("StorageReceivableCreated");
                                         }
                                     }
@@ -1060,7 +1068,10 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
         ShipmentTool.OnWarehouseStorageFreeDaysChanged(this.EntityPM);
     }
 
+    private isCalculateStorageClicked: boolean = false;
     CalculateStorageClicked() {
+        this.isCalculateStorageClicked = true;
+
         var date: Date = this.WarehouseLegActualReleaseDate;
         var days: number;
 
