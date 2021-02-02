@@ -12,7 +12,7 @@ export class Selectors
     public static readonly RoutingsTab = '#ShipmentTHRoutings';
     public static readonly PayablesTab = '#ShipmentTHPayables'
     public static readonly ShipmentSaveButton = '#Shipment-Save';
-    public static readonly ShipmentSearchBar = '#Shipment_Search';
+    public static readonly ShipmentSearchBar = '#Shipment_Search'; 
     public static readonly ShipmentGrossWeight = '#Shipment_GrossWeightInKG';
     public static readonly ShipmentMoveType = '#Shipment_MoveTypeId';
     public static readonly OrdersAddPackage = '#Orders-AddPackage';
@@ -21,6 +21,7 @@ export class Selectors
     public static readonly OrderPackageGrossWeight = '#ShipmentOrderPackage_GrossWeight';
     public static readonly OrderOKButton = '#OrderOKbtn';
     public static readonly PartnerOKButton = '#PartnerOKbtn';
+    public static readonly MainCarriageOKBtn = '#MainCarriageOKBtn';
     public static readonly AddPackage = '#AddPackage';
     public static readonly PackageQuantity = '#ShipmentPackage_Quantity';
     public static readonly PackageType = '#ShipmentPackage_PackageTypeId';
@@ -29,7 +30,7 @@ export class Selectors
     public static readonly OceanPackageOKButton = '#OkOceanPackage';
     public static readonly AddNewReceivableLine = '#AddReceivable button';
     public static readonly AddNewPayableLine = '#AddPayable button';
-    public static readonly ReceivableChargesType = '#ShipmentReceivable_ChargesTypeId';
+    public static readonly ReceivableChargesType = '#Shipment_MainCarriageCarrierId';
     public static readonly ReceivableUnitPrice = '#ShipmentReceivable_UnitPrice';
     public static readonly ReceivableQuantity ="#ShipmentReceivable_Quantity"
     public static readonly ReceivableCurrency ="#ShipmentReceivable_CurrencyId"
@@ -38,6 +39,9 @@ export class Selectors
     public static readonly AddReceivableOkButton = '#Ok-AddReceivableBtn';
     public static readonly AddPayableOkButton = '#Ok-AddPayableBtn';
     public static readonly RoutingToggle = '#RoutingToggle';
+    public static readonly ShipmentFlightNumber = '#Shipment_MainCarriageCarrierNumber';
+    public static readonly ShipmentMAWB = '#Shipment_Master';
+    public static readonly EditRoutingMainCarriage = '#Edit-MainCarriage';
     public static readonly SaveClose = '#SaveClose';
     public static readonly PickUp = '#PickUp';
     public static readonly Delivery = '#Delivery';
@@ -58,6 +62,10 @@ export class Selectors
     public static readonly NewAttachedHouse = '#NewHouseBtn';
     public static readonly CopyShipmentButton='#ShipmentBCopyShipment'
     public static readonly CancelShipmentButton='#ShipmentBCancelShipment'
+    public static readonly OperationalCloseButton='#ShipmentBOperationalClose'
+    public static readonly AccountllyCloseButton='#ShipmentBAccountingClose'
+    public static readonly OperationalReopenButton='#ShipmentBOperationalReopen'
+    public static readonly AccountllyReopenButton='#ShipmentBAccountedReopen'
     public static readonly ConfirmActionButton='#ConfirmAction'
     public static readonly ShipmentPayableUnitPrice = '#ShipmentPayable_UnitPrice';
     public static readonly ShipmentPayableQuantity = '#ShipmentPayable_Quantity';

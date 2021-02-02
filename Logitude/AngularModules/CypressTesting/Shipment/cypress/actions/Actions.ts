@@ -124,6 +124,22 @@ export function FillPickupRouting() {
     BaseAssertion.AssertStatusCode("WaitAddressViewsRequest", 200)
 }
 
+export function EditMainCarriageLegs(Airline :string){
+    cy.Click(Selectors.EditRoutingMainCarriage, null)
+    cy.SelectLogLovElement(Selectors.ReceivableChargesType, true ,Airline)
+    cy.FillRandomNumber(Selectors.ShipmentFlightNumber, 100, 999)
+    cy.FillRandomNumber(Selectors.ShipmentMAWB, 10000000, 99999999)
+    cy.Click(Selectors.ShipmentDateMaincarriageATD,null)
+    cy.Click(BaseSelectors.Button,"Today")
+    cy.Click(Selectors.MainCarriageOKBtn,null);
+    cy.Click(Selectors.ShipmentSaveButton,null);
+}
+
+export function UpdateClosedShipment() {
+    cy.DefineRequestWait("PUT", "**/shipment", "WaitPutShipmentRequest")
+    cy.Click(BaseSelectors.RedButton, "Confirm");
+}
+
 export function FillDeliveryRouting(partner: string) {
     cy.Click(Selectors.RoutingToggle, null)
     cy.DefineRequestWait("GET", "**/cardviews/**", "WaitCardViewsRequest")
