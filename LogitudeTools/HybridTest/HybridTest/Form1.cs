@@ -1665,7 +1665,7 @@ namespace HypredTest
         private string Login()
         {
             LoginProxy.LoginWcfServiceClient loginService = new LoginProxy.LoginWcfServiceClient();
-            Response loginResponse = loginService.Login("maheera@fnarsoft.com", "0");//"tomerp@amital.co.il", "!T123456");  ("islam@logitudeworld.com", "!I123456");//("yaronc@amital.co.il", "!Y123456");//"yaronc@amital.co.il", "!Y123456");//
+            Response loginResponse = loginService.Login("angular@fnarsoft.com", "1");//"tomerp@amital.co.il", "!T123456");  ("islam@logitudeworld.com", "!I123456");//("yaronc@amital.co.il", "!Y123456");//"yaronc@amital.co.il", "!Y123456");//
             if (!loginResponse.HasError)
             {
                 Token = loginResponse.Result;
@@ -3573,7 +3573,7 @@ namespace HypredTest
                 System.ServiceModel.Web.WebOperationContext.Current.OutgoingRequest.Headers.Add("Token", Token);
                 Response response = new Response();
                 response = shipmentservice.Upsert(consolepm, false);
-
+                
                 if (!response.HasError)
                 { //update warehouseleg values
                     consolepm.WarehouseLegWarehouseId = "sss";
@@ -3589,7 +3589,7 @@ namespace HypredTest
         {
             ShipmentProxy.ShipmentPM consolepm = new ShipmentPM()
             {
-                ShipmentNumber = "1999",
+                ShipmentNumber = "13666",
                 DirectionId = "R",
                 ShipmentLevelCode = "D",
                 Tenant = 1,
@@ -3641,7 +3641,7 @@ namespace HypredTest
                 QuoteNumber = "1000",
                 TruckerId = "TEP",
                 AssignedToTruckerDate = DateTime.Today,
-                AssginedtoCustomsAgentId = "CSA",
+                AssginedtoCustomsAgentId = "TCA",
                 AssginedToCustomsAgentDate = DateTime.Today,
 
             };

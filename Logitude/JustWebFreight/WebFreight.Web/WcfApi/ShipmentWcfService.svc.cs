@@ -355,22 +355,7 @@ namespace WebFreight.Web.WcfApi
                             return response;
                         }
                     }
-
-                    if (entityPM.AssginedtoCustomsAgentId != null)
-                    {
-                        Card customAgent = cardsReporistory.GetSingleCardByCode( entityPM.AssginedtoCustomsAgentId, entityPM.Tenant, false);
-                        if (customAgent != null)
-                        {
-                            entityPM.AssginedtoCustomsAgentId = customAgent.Id;
-                        }
-                        else
-                        {
-                            response.HasError = true;
-                            response.ErrorMessage = "AssginedtoCustomsAgentId field doesn't exist in the database, Upsert this entity before using it.";
-                            return response;
-                        }
-                    }
-
+                     
 
                     if (entityPM.MainCarriageCarrierId != null)
                     {
@@ -688,6 +673,11 @@ namespace WebFreight.Web.WcfApi
                     MapWarehouseLeg(entityPM, cardsReporistory, addressRepository);
                     #endregion
 
+                    #region CustomAgent
+                    MapCustomAgent(entityPM, cardsReporistory);
+                    #endregion
+
+
                     if (response.HasError)
                     {
                         return response;
@@ -909,9 +899,37 @@ namespace WebFreight.Web.WcfApi
                 }
                 return response;
             }
+             
 
+        }
 
+        private void MapCustomAgent(ShipmentPM entityPM, CardRepository cardsReporistory)
+        {
 
+            if (entityPM.AssginedtoCustomsAgentId == "--")
+            {
+                entityPM.AssginedtoCustomsAgentId = null;
+            }
+
+            if (entityPM.AssginedtoCustomsAgentId != null)
+            {
+                Card customAgent = cardsReporistory.GetSingleCardByCode(entityPM.AssginedtoCustomsAgentId, entityPM.Tenant, false);
+
+                if (customAgent != null && !string.IsNullOrEmpty(customAgent.Id))
+                {
+                    entityPM.AssginedtoCustomsAgentId = customAgent.Id;
+                }
+                else
+                {
+                    throw new ApplicationException("AssginedtoCustomsAgentId field doesn't exist in the database, Upsert this entity before using it.");
+                }
+            }
+
+            else if (entityPM.AssginedToCustomsAgentDate != null)
+            { 
+                throw new ApplicationException("AssginedtoCustomsAgentId field doesn't exist in the database, Upsert this entity before using AssginedToCustomsAgentDate.");
+            }
+         
         }
 
         private  void MapShipmentPickUps(ShipmentPM entityPM, CardRepository cardsReporistory, CountryRepository countryRepository)
