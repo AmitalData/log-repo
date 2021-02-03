@@ -43,7 +43,7 @@ namespace Logitude.HybridTest.WcfCallers
             if (!serviceOutcome.Response.HasError)
                 EnvironmentGlobalParams.MainTenantToken = serviceOutcome.Response.Result;
             else
-                Assert.Fail("Login Failed");
+                Assert.Fail("Login Failed: " + serviceOutcome.Response.ErrorMessage);
             Assert.IsNotNull(serviceOutcome.Response.Result, "The Token returned is null " + serviceOutcome.Response.ErrorMessage);
         }
         private static void GetAuthenticationSecondaryTenantToken()
@@ -62,7 +62,7 @@ namespace Logitude.HybridTest.WcfCallers
             if (!serviceOutcome.Response.HasError)
                 EnvironmentGlobalParams.SecondaryTenantToken = serviceOutcome.Response.Result;
             else
-                Assert.Fail("Login Failed");
+                Assert.Fail("Login Failed: " + serviceOutcome.Response.ErrorMessage);
             Assert.IsNotNull(serviceOutcome.Response.Result, "The Token returned is null " + serviceOutcome.Response.ErrorMessage);
         }
         private static void UpsertGlobalZone()
