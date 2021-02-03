@@ -1043,7 +1043,7 @@ namespace Logitude.CustomsMessaging.RequestServices
               //    declarationGoodsShipment.CustomsValuation = GetcustomsValuation(supplierInvoicePM).ToArray();
                 if (supplierInvoicePM.SequenceNumeric.Value == 1 && !declarationPM.ExcludeConsignment)
                 {
-                    declarationGoodsShipment.Consignment = GetDeclarationConsignment(declarationPM).ToArray();
+                  //  declarationGoodsShipment.Consignment = GetDeclarationConsignment(declarationPM).ToArray();
                 }
                 declarationGoodsShipment.AdditionalDocument = GetDeclarationGoodsShipmentAdditionalDocument(supplierInvoicePM);
                 declarationGoodsShipment.GovernmentAgencyGoodsItem = GetDeclarationGoodsItems(supplierInvoicePM).ToArray();
@@ -1925,194 +1925,194 @@ namespace Logitude.CustomsMessaging.RequestServices
         }
 
 
-        private List<DeclarationGoodsShipmentConsignment> GetDeclarationConsignment(DeclarationPM declarationPM)
-        {
-            var declarationConsignmentList = new List<DeclarationGoodsShipmentConsignment>();
-            for (int consignmentSeq = 0; consignmentSeq < declarationPM.Consignments.Count(); consignmentSeq++)
-            {
-                var consignmentPM = declarationPM.Consignments[consignmentSeq];
-                var declarationConsignment = new DeclarationGoodsShipmentConsignment();
-                declarationConsignment.SequenceNumeric = consignmentSeq + 1;
-                //declarationConsignment.SequenceNumericSpecified = true;
+        //private List<DeclarationGoodsShipmentConsignment> GetDeclarationConsignment(DeclarationPM declarationPM)
+        //{
+        //    var declarationConsignmentList = new List<DeclarationGoodsShipmentConsignment>();
+        //    for (int consignmentSeq = 0; consignmentSeq < declarationPM.Consignments.Count(); consignmentSeq++)
+        //    {
+        //        var consignmentPM = declarationPM.Consignments[consignmentSeq];
+        //        var declarationConsignment = new DeclarationGoodsShipmentConsignment();
+        //        declarationConsignment.SequenceNumeric = consignmentSeq + 1;
+        //        //declarationConsignment.SequenceNumericSpecified = true;
 
-                ///if (!String.IsNullOrWhiteSpace(consignmentPM.ManifestNumber) || !String.IsNullOrWhiteSpace(consignmentPM.CargoTypeCode))
-                //{
-                declarationConsignment.TransportContractDocument = new DeclarationGoodsShipmentConsignmentTransportContractDocument()
-                {
-                    TypeCode = SetCodeTypeValue<TransportContractDocumentTypeCodeType>(consignmentPM.CargoTypeCode), //new TransportContractDocumentTypeCodeType() {Value =  "IL1"}, //hardcoded ask yaron + consignmentPM.CargoTypeCode },
-                   // IssueDateTime = consignmentPM.ManifestDate.HasValue ? DataTypeConvertorUtil.Convert(consignmentPM.ManifestDate.Value) : null, // DataTypeConvertorUtil.Convert(declarationPM.IssueDateTime.Value), // hard coded
-                    ID = SetIDTypeValue<TransportContractDocumentIdentificationIDType>(consignmentPM.ManifestNumber), // new TransportContractDocumentIdentificationIDType() { Value = consignmentPM.ManifestNumber },
-                    //ID = SetIDTypeValue<TransportContractDocumentIdentificationIDType>("123456"), // new TransportContractDocumentIdentificationIDType() { Value = consignmentPM.ManifestNumber }, HARD CODED
-                    DMExtensions = new DeclarationGoodsShipmentConsignmentTransportContractDocumentDMExtensions()
-                    {
-                        SecondCargoID = SetIDTypeValue<SecondCargoIDType>(consignmentPM.SecondCargoID), // new SecondCargoIDType() { Value = consignmentPM.SecondCargoID },
-                        ThirdCargoID = SetIDTypeValue<ThirdCargoIDType>(consignmentPM.ThirdCargoID) // new ThirdCargoIDType() { Value = consignmentPM.ThirdCargoID }
-                    }
-                };
-                if (consignmentPM.CargoTypeCode == "17" && !string.IsNullOrWhiteSpace(consignmentPM.ThirdCargoID))
-                {
-                    var thirdCargoID = consignmentPM.ThirdCargoID;
-                    if (consignmentPM.ThirdCargoID.Length >= 8)
-                    {
-                        thirdCargoID = consignmentPM.ThirdCargoID.Substring(0, 4) + consignmentPM.ThirdCargoID.Substring(6, 2);
-                    }
-                    declarationConsignment.TransportContractDocument.DMExtensions.ThirdCargoID = SetIDTypeValue<ThirdCargoIDType>(thirdCargoID);
-                }
-                //}
+        //        ///if (!String.IsNullOrWhiteSpace(consignmentPM.ManifestNumber) || !String.IsNullOrWhiteSpace(consignmentPM.CargoTypeCode))
+        //        //{
+        //      //  declarationConsignment.TransportContractDocument = new DeclarationGoodsShipmentConsignmentTransportContractDocument()
+        //        {
+        //            TypeCode = SetCodeTypeValue<TransportContractDocumentTypeCodeType>(consignmentPM.CargoTypeCode), //new TransportContractDocumentTypeCodeType() {Value =  "IL1"}, //hardcoded ask yaron + consignmentPM.CargoTypeCode },
+        //           // IssueDateTime = consignmentPM.ManifestDate.HasValue ? DataTypeConvertorUtil.Convert(consignmentPM.ManifestDate.Value) : null, // DataTypeConvertorUtil.Convert(declarationPM.IssueDateTime.Value), // hard coded
+        //            ID = SetIDTypeValue<TransportContractDocumentIdentificationIDType>(consignmentPM.ManifestNumber), // new TransportContractDocumentIdentificationIDType() { Value = consignmentPM.ManifestNumber },
+        //            //ID = SetIDTypeValue<TransportContractDocumentIdentificationIDType>("123456"), // new TransportContractDocumentIdentificationIDType() { Value = consignmentPM.ManifestNumber }, HARD CODED
+        //            //DMExtensions = new DeclarationGoodsShipmentConsignmentTransportContractDocumentDMExtensions()
+        //            //{
+        //            //    SecondCargoID = SetIDTypeValue<SecondCargoIDType>(consignmentPM.SecondCargoID), // new SecondCargoIDType() { Value = consignmentPM.SecondCargoID },
+        //            //    ThirdCargoID = SetIDTypeValue<ThirdCargoIDType>(consignmentPM.ThirdCargoID) // new ThirdCargoIDType() { Value = consignmentPM.ThirdCargoID }
+        //            //}
+        //        };
+        //        if (consignmentPM.CargoTypeCode == "17" && !string.IsNullOrWhiteSpace(consignmentPM.ThirdCargoID))
+        //        {
+        //            var thirdCargoID = consignmentPM.ThirdCargoID;
+        //            if (consignmentPM.ThirdCargoID.Length >= 8)
+        //            {
+        //                thirdCargoID = consignmentPM.ThirdCargoID.Substring(0, 4) + consignmentPM.ThirdCargoID.Substring(6, 2);
+        //            }
+        //            declarationConsignment.TransportContractDocument.DMExtensions.ThirdCargoID = SetIDTypeValue<ThirdCargoIDType>(thirdCargoID);
+        //        }
+        //        //}
 
-                /*  if (consignmentPM.ManifestDate.HasValue)
-                  {
-                      declarationConsignment.TransportContractDocument.IssueDateTime = DataTypeConvertorUtil.Convert(consignmentPM.ManifestDate.Value);
-                  } 
+        //        /*  if (consignmentPM.ManifestDate.HasValue)
+        //          {
+        //              declarationConsignment.TransportContractDocument.IssueDateTime = DataTypeConvertorUtil.Convert(consignmentPM.ManifestDate.Value);
+        //          } 
                 
-                  if (consignmentPM.UnloadDate.HasValue)
-                  {
-                      declarationConsignment.UnloadingLocation.ArrivalDateTime = DataTypeConvertorUtil.Convert(consignmentPM.UnloadDate.Value);
-                  }*/
+        //          if (consignmentPM.UnloadDate.HasValue)
+        //          {
+        //              declarationConsignment.UnloadingLocation.ArrivalDateTime = DataTypeConvertorUtil.Convert(consignmentPM.UnloadDate.Value);
+        //          }*/
 
-                declarationConsignment.UnloadingLocation = new DeclarationGoodsShipmentConsignmentUnloadingLocation()
-                {
-                    ID = SetIDTypeValue<DeclarationGoodsShipmentConsignmentUnloadingLocationID>(consignmentPM.ExportUnloadingPortCode), //consignmentPM.UnloadPortCode// new UnloadingLocationIdentificationIDType() { Value = consignmentPM.UnloadPortCode },
-                                                                                                   // ArrivalDateTime = consignmentPM.UnloadDate.HasValue ? DataTypeConvertorUtil.Convert(consignmentPM.UnloadDate.Value) : null,
-                };
-                declarationConsignment.LoadingLocation = new DeclarationGoodsShipmentConsignmentLoadingLocation()
-                {
-                    ID = SetIDTypeValue<DeclarationGoodsShipmentConsignmentLoadingLocationID>(consignmentPM.ExportLoadingPortCode) //consignmentPM.LoadingPortCode new LoadingLocationIdentificationIDType() { Value = consignmentPM.LoadingPortCode }
-                };
-                declarationConsignment.DMExtensions = GetDMExtensionsConsignment(consignmentPM);
-
-
-                declarationConsignmentList.Add(declarationConsignment);
-            }
-
-            return declarationConsignmentList;
-        }
-
-        private DeclarationGoodsShipmentConsignmentDMExtensions GetDMExtensionsConsignment(ConsignmentPM consignmentPM)
-        {
-            var DMExtensions = new DeclarationGoodsShipmentConsignmentDMExtensions();
-            DMExtensions.CargoDescription = new DeclarationGoodsShipmentConsignmentDMExtensionsCargoDescription() { Value = consignmentPM.CargoDescription };
-            //DMExtensions.LastReleaseFromWarehousInd = new LastReleaseFromWarehousIndType() { Value = consignmentPM.IsLastReleaseFromWarehous };
-            //if (consignmentPM.IsLastReleaseFromWarehous == "T") // temporary treatment - Task 9683
-            //{
-            //    //mohammad temp treatment due to the change of task 9684
-            //    DMExtensions.LastReleaseFromWarehousInd = new LastReleaseFromWarehousIndType() { Value = true };//consignmentPM.IsLastReleaseFromWarehous 
-            //}
-            //else if (consignmentPM.IsLastReleaseFromWarehous == "F") // moran 9.3.15 - Task 11761 
-            //{
-            //    DMExtensions.LastReleaseFromWarehousInd = new LastReleaseFromWarehousIndType() { Value = false };
-            //}
-
-            //DMExtensions.ExportationCountryCode = new DeclarationGoodsShipmentConsignmentDMExtensionsExportationCountryCode() { Value = consignmentPM.OriginCountryCode };
-
-            var registeredFacilitylist = new List<DeclarationGoodsShipmentConsignmentDMExtensionsRegisteredFacility>();
-            int seqnum = 0;
-
-            if (!String.IsNullOrWhiteSpace(consignmentPM.StorageSiteCode))
-            {
-                seqnum++;
-                registeredFacilitylist.Add(GetRegisteredFacility(consignmentPM.StorageSiteCode, "004", seqnum));
-            }
-            if (!String.IsNullOrWhiteSpace(consignmentPM.ExportRecieverWareHouseCode))
-            {
-                seqnum++;
-                registeredFacilitylist.Add(GetRegisteredFacility(consignmentPM.ExportRecieverWareHouseCode, "006", seqnum));
-            }
-            if (consignmentPM.ConsignmentInternalTransitions != null)
-            {
-                if (consignmentPM.ConsignmentInternalTransitions.FirstOrDefault() != null)
-                {
-                    if (!String.IsNullOrWhiteSpace(consignmentPM.ConsignmentInternalTransitions.FirstOrDefault().SiteCode))
-                    {
-                        seqnum++;
-                        registeredFacilitylist.Add(GetRegisteredFacility(consignmentPM.ConsignmentInternalTransitions.FirstOrDefault().SiteCode, "005", seqnum));
-                    }
-                }
-            }
-            if (seqnum > 0)
-            {
-                DMExtensions.RegisteredFacility = registeredFacilitylist.ToArray();
-            }
-
-            DMExtensions.PackagesMeasure = GetDeclarationConsignmentPackages(consignmentPM).ToArray();
-            DMExtensions.DangerousGoodsIndicator = new DangerousGoodsIndicatorIndType() {Value =consignmentPM.IsDangerousGoods };
-            DMExtensions.FinalDestinationPort = new DeclarationGoodsShipmentConsignmentDMExtensionsFinalDestinationPort()
-            {
-                Value =  consignmentPM.FinalDestinationPortCode
-            };
-
-            return DMExtensions;
-        }
-
-        private DeclarationGoodsShipmentConsignmentDMExtensionsRegisteredFacility GetRegisteredFacility(string p1, string p2, int seqnum)
-        {
-            var registeredFacility = new DeclarationGoodsShipmentConsignmentDMExtensionsRegisteredFacility();
-            //registeredFacility.ID = SetIDTypeValue<DeclarationGoodsShipmentConsignmentDMExtensionsRegisteredFacilityID>(p1);
-            registeredFacility.ID = new DeclarationGoodsShipmentConsignmentDMExtensionsRegisteredFacilityID() { Value = p1 };
-            registeredFacility.FacilityType = new DeclarationGoodsShipmentConsignmentDMExtensionsRegisteredFacilityFacilityType() { Value = p2 };
-            registeredFacility.SequenceNumeric = seqnum;
-          //  registeredFacility.SequenceNumericSpecified = true;
-
-            return registeredFacility;
-        }
+        //        //declarationConsignment.UnloadingLocation = new DeclarationGoodsShipmentConsignmentUnloadingLocation()
+        //        //{
+        //        //    ID = SetIDTypeValue<DeclarationGoodsShipmentConsignmentUnloadingLocationID>(consignmentPM.ExportUnloadingPortCode), //consignmentPM.UnloadPortCode// new UnloadingLocationIdentificationIDType() { Value = consignmentPM.UnloadPortCode },
+        //        //                                                                                   // ArrivalDateTime = consignmentPM.UnloadDate.HasValue ? DataTypeConvertorUtil.Convert(consignmentPM.UnloadDate.Value) : null,
+        //        //};
+        //        //declarationConsignment.LoadingLocation = new DeclarationGoodsShipmentConsignmentLoadingLocation()
+        //        //{
+        //        //    ID = SetIDTypeValue<DeclarationGoodsShipmentConsignmentLoadingLocationID>(consignmentPM.ExportLoadingPortCode) //consignmentPM.LoadingPortCode new LoadingLocationIdentificationIDType() { Value = consignmentPM.LoadingPortCode }
+        //        //};
+        //        //declarationConsignment.DMExtensions = GetDMExtensionsConsignment(consignmentPM);
 
 
-        private List<DeclarationGoodsShipmentConsignmentDMExtensionsPackagesMeasure> GetDeclarationConsignmentPackages(ConsignmentPM consignmentPM)
-        {
-            /*//<--- HARD CODED
-            var declarationConsignmentPackageList = new List<DeclarationGoodsShipmentConsignmentDMExtensionsPackagesMeasure>();
+        //        declarationConsignmentList.Add(declarationConsignment);
+        //    }
 
-            var declarationConsignmentPackage = new DeclarationGoodsShipmentConsignmentDMExtensionsPackagesMeasure();
-            declarationConsignmentPackage.SequenceNumeric = 1;
-            declarationConsignmentPackage.SequenceNumericSpecified = true;
-            declarationConsignmentPackage.PackageMeasureQualifier = new PackageMeasureQualifierType() { Value = "2"}; //HARDCODED
-            declarationConsignmentPackage.TotalPackageQuantity = new DeclarationGoodsShipmentConsignmentDMExtensionsPackagesMeasureTotalPackageQuantity() { Value = 100.00M };
-            declarationConsignmentPackage.GrossMassMeasure = new DeclarationGoodsShipmentConsignmentDMExtensionsPackagesMeasureGrossMassMeasure()
-            {
-                Value = 10.00M,
-                unitCode = MeasurementUnitCommonCodeContentType.KGM,
-                unitCodeSpecified = true
-            };
-            declarationConsignmentPackage.TypeCode = new DeclarationGoodsShipmentConsignmentDMExtensionsPackagesMeasureTypeCode() { Value = "UN" };
-            declarationConsignmentPackage.MarksNumbers = new DeclarationGoodsShipmentConsignmentDMExtensionsPackagesMeasureMarksNumbers() { Value = "MarksNumbers" };
+        //    return declarationConsignmentList;
+        //}
+
+        //private DeclarationGoodsShipmentConsignmentDMExtensions GetDMExtensionsConsignment(ConsignmentPM consignmentPM)
+        //{
+        //    var DMExtensions = new DeclarationGoodsShipmentConsignmentDMExtensions();
+        //    DMExtensions.CargoDescription = new DeclarationGoodsShipmentConsignmentDMExtensionsCargoDescription() { Value = consignmentPM.CargoDescription };
+        //    //DMExtensions.LastReleaseFromWarehousInd = new LastReleaseFromWarehousIndType() { Value = consignmentPM.IsLastReleaseFromWarehous };
+        //    //if (consignmentPM.IsLastReleaseFromWarehous == "T") // temporary treatment - Task 9683
+        //    //{
+        //    //    //mohammad temp treatment due to the change of task 9684
+        //    //    DMExtensions.LastReleaseFromWarehousInd = new LastReleaseFromWarehousIndType() { Value = true };//consignmentPM.IsLastReleaseFromWarehous 
+        //    //}
+        //    //else if (consignmentPM.IsLastReleaseFromWarehous == "F") // moran 9.3.15 - Task 11761 
+        //    //{
+        //    //    DMExtensions.LastReleaseFromWarehousInd = new LastReleaseFromWarehousIndType() { Value = false };
+        //    //}
+
+        //    //DMExtensions.ExportationCountryCode = new DeclarationGoodsShipmentConsignmentDMExtensionsExportationCountryCode() { Value = consignmentPM.OriginCountryCode };
+
+        //    var registeredFacilitylist = new List<DeclarationGoodsShipmentConsignmentDMExtensionsRegisteredFacility>();
+        //    int seqnum = 0;
+
+        //    if (!String.IsNullOrWhiteSpace(consignmentPM.StorageSiteCode))
+        //    {
+        //        seqnum++;
+        //        registeredFacilitylist.Add(GetRegisteredFacility(consignmentPM.StorageSiteCode, "004", seqnum));
+        //    }
+        //    if (!String.IsNullOrWhiteSpace(consignmentPM.ExportRecieverWareHouseCode))
+        //    {
+        //        seqnum++;
+        //        registeredFacilitylist.Add(GetRegisteredFacility(consignmentPM.ExportRecieverWareHouseCode, "006", seqnum));
+        //    }
+        //    if (consignmentPM.ConsignmentInternalTransitions != null)
+        //    {
+        //        if (consignmentPM.ConsignmentInternalTransitions.FirstOrDefault() != null)
+        //        {
+        //            if (!String.IsNullOrWhiteSpace(consignmentPM.ConsignmentInternalTransitions.FirstOrDefault().SiteCode))
+        //            {
+        //                seqnum++;
+        //                registeredFacilitylist.Add(GetRegisteredFacility(consignmentPM.ConsignmentInternalTransitions.FirstOrDefault().SiteCode, "005", seqnum));
+        //            }
+        //        }
+        //    }
+        //    if (seqnum > 0)
+        //    {
+        //        DMExtensions.RegisteredFacility = registeredFacilitylist.ToArray();
+        //    }
+
+        //    DMExtensions.PackagesMeasure = GetDeclarationConsignmentPackages(consignmentPM).ToArray();
+        //    DMExtensions.DangerousGoodsIndicator = new DangerousGoodsIndicatorIndType() {Value =consignmentPM.IsDangerousGoods };
+        //    DMExtensions.FinalDestinationPort = new DeclarationGoodsShipmentConsignmentDMExtensionsFinalDestinationPort()
+        //    {
+        //        Value =  consignmentPM.FinalDestinationPortCode
+        //    };
+
+        //    return DMExtensions;
+        //}
+
+        //private DeclarationGoodsShipmentConsignmentDMExtensionsRegisteredFacility GetRegisteredFacility(string p1, string p2, int seqnum)
+        //{
+        //    var registeredFacility = new DeclarationGoodsShipmentConsignmentDMExtensionsRegisteredFacility();
+        //    //registeredFacility.ID = SetIDTypeValue<DeclarationGoodsShipmentConsignmentDMExtensionsRegisteredFacilityID>(p1);
+        //    registeredFacility.ID = new DeclarationGoodsShipmentConsignmentDMExtensionsRegisteredFacilityID() { Value = p1 };
+        //    registeredFacility.FacilityType = new DeclarationGoodsShipmentConsignmentDMExtensionsRegisteredFacilityFacilityType() { Value = p2 };
+        //    registeredFacility.SequenceNumeric = seqnum;
+        //  //  registeredFacility.SequenceNumericSpecified = true;
+
+        //    return registeredFacility;
+        //}
+
+
+        //private List<DeclarationGoodsShipmentConsignmentDMExtensionsPackagesMeasure> GetDeclarationConsignmentPackages(ConsignmentPM consignmentPM)
+        //{
+        //    /*//<--- HARD CODED
+        //    var declarationConsignmentPackageList = new List<DeclarationGoodsShipmentConsignmentDMExtensionsPackagesMeasure>();
+
+        //    var declarationConsignmentPackage = new DeclarationGoodsShipmentConsignmentDMExtensionsPackagesMeasure();
+        //    declarationConsignmentPackage.SequenceNumeric = 1;
+        //    declarationConsignmentPackage.SequenceNumericSpecified = true;
+        //    declarationConsignmentPackage.PackageMeasureQualifier = new PackageMeasureQualifierType() { Value = "2"}; //HARDCODED
+        //    declarationConsignmentPackage.TotalPackageQuantity = new DeclarationGoodsShipmentConsignmentDMExtensionsPackagesMeasureTotalPackageQuantity() { Value = 100.00M };
+        //    declarationConsignmentPackage.GrossMassMeasure = new DeclarationGoodsShipmentConsignmentDMExtensionsPackagesMeasureGrossMassMeasure()
+        //    {
+        //        Value = 10.00M,
+        //        unitCode = MeasurementUnitCommonCodeContentType.KGM,
+        //        unitCodeSpecified = true
+        //    };
+        //    declarationConsignmentPackage.TypeCode = new DeclarationGoodsShipmentConsignmentDMExtensionsPackagesMeasureTypeCode() { Value = "UN" };
+        //    declarationConsignmentPackage.MarksNumbers = new DeclarationGoodsShipmentConsignmentDMExtensionsPackagesMeasureMarksNumbers() { Value = "MarksNumbers" };
 
 
 
 
-            declarationConsignmentPackageList.Add(declarationConsignmentPackage);
+        //    declarationConsignmentPackageList.Add(declarationConsignmentPackage);
 
-            return declarationConsignmentPackageList;
-            //<--- HARD CODED */
+        //    return declarationConsignmentPackageList;
+        //    //<--- HARD CODED */
 
-            var declarationConsignmentPackageList = new List<DeclarationGoodsShipmentConsignmentDMExtensionsPackagesMeasure>();
+        //    var declarationConsignmentPackageList = new List<DeclarationGoodsShipmentConsignmentDMExtensionsPackagesMeasure>();
 
-            for (int consignmentPackageSeq = 0; consignmentPackageSeq < consignmentPM.ConsignmentPackages.Count(); consignmentPackageSeq++)
-            {
-                var consignmentPackagePM = consignmentPM.ConsignmentPackages[consignmentPackageSeq];
+        //    for (int consignmentPackageSeq = 0; consignmentPackageSeq < consignmentPM.ConsignmentPackages.Count(); consignmentPackageSeq++)
+        //    {
+        //        var consignmentPackagePM = consignmentPM.ConsignmentPackages[consignmentPackageSeq];
 
-                var declarationConsignmentPackage = new DeclarationGoodsShipmentConsignmentDMExtensionsPackagesMeasure();
-                declarationConsignmentPackage.SequenceNumeric = consignmentPackageSeq + 1;
-                //declarationConsignmentPackage.SequenceNumericSpecified = true;
-                //declarationConsignmentPackage.PackageMeasureQualifier = new PackageMeasureQualifierType() { Value = consignmentPackagePM.PackageMeasureQualifierCode };
-                declarationConsignmentPackage.PackageMeasureQualifier = SetCodeTypeValue<DeclarationGoodsShipmentConsignmentDMExtensionsPackagesMeasurePackageMeasureQualifier>(consignmentPackagePM.PackageMeasureQualifierCode);
-                if (consignmentPackagePM.PackageQuantity.HasValue)
-                {// moran 5.1.16 - Task 19549 - change to EA hard coded instead of ""
-                    declarationConsignmentPackage.TotalPackageQuantity = SetQuantityTypeValue<ConsignmentTotalPackageQuantityType>(consignmentPackagePM.PackageQuantityTypeCode, consignmentPackagePM.PackageQuantity.Value); // hard coded null - mapping missing  // MeasurementUnitCommonCodeContentType.EA.ToString()
-                }
-                //declarationConsignmentPackage.TotalPackageQuantity = new DeclarationGoodsShipmentConsignmentDMExtensionsPackagesMeasureTotalPackageQuantity() { Value = (Decimal)consignmentPackagePM.PackageQuantity };
-                if (consignmentPackagePM.GrossMassMeasure.HasValue)
-                {
-                    declarationConsignmentPackage.GrossMassMeasure = SetMeasureTypeValue<DeclarationGoodsShipmentConsignmentDMExtensionsPackagesMeasureGrossMassMeasure>(consignmentPackagePM.GrossMassMeasureTypeCode, consignmentPackagePM.GrossMassMeasure.Value);
-                }
+        //        var declarationConsignmentPackage = new DeclarationGoodsShipmentConsignmentDMExtensionsPackagesMeasure();
+        //        declarationConsignmentPackage.SequenceNumeric = consignmentPackageSeq + 1;
+        //        //declarationConsignmentPackage.SequenceNumericSpecified = true;
+        //        //declarationConsignmentPackage.PackageMeasureQualifier = new PackageMeasureQualifierType() { Value = consignmentPackagePM.PackageMeasureQualifierCode };
+        //        declarationConsignmentPackage.PackageMeasureQualifier = SetCodeTypeValue<DeclarationGoodsShipmentConsignmentDMExtensionsPackagesMeasurePackageMeasureQualifier>(consignmentPackagePM.PackageMeasureQualifierCode);
+        //        if (consignmentPackagePM.PackageQuantity.HasValue)
+        //        {// moran 5.1.16 - Task 19549 - change to EA hard coded instead of ""
+        //            declarationConsignmentPackage.TotalPackageQuantity = SetQuantityTypeValue<ConsignmentTotalPackageQuantityType>(consignmentPackagePM.PackageQuantityTypeCode, consignmentPackagePM.PackageQuantity.Value); // hard coded null - mapping missing  // MeasurementUnitCommonCodeContentType.EA.ToString()
+        //        }
+        //        //declarationConsignmentPackage.TotalPackageQuantity = new DeclarationGoodsShipmentConsignmentDMExtensionsPackagesMeasureTotalPackageQuantity() { Value = (Decimal)consignmentPackagePM.PackageQuantity };
+        //        if (consignmentPackagePM.GrossMassMeasure.HasValue)
+        //        {
+        //            declarationConsignmentPackage.GrossMassMeasure = SetMeasureTypeValue<DeclarationGoodsShipmentConsignmentDMExtensionsPackagesMeasureGrossMassMeasure>(consignmentPackagePM.GrossMassMeasureTypeCode, consignmentPackagePM.GrossMassMeasure.Value);
+        //        }
 
-                declarationConsignmentPackage.TypeCode = new DeclarationGoodsShipmentConsignmentDMExtensionsPackagesMeasureTypeCode() { Value = consignmentPackagePM.PackageTypeCode };
-                declarationConsignmentPackage.MarksNumbers = new DeclarationGoodsShipmentConsignmentDMExtensionsPackagesMeasureMarksNumbers() { Value = consignmentPackagePM.MarksNumbers };
+        //        declarationConsignmentPackage.TypeCode = new DeclarationGoodsShipmentConsignmentDMExtensionsPackagesMeasureTypeCode() { Value = consignmentPackagePM.PackageTypeCode };
+        //        declarationConsignmentPackage.MarksNumbers = new DeclarationGoodsShipmentConsignmentDMExtensionsPackagesMeasureMarksNumbers() { Value = consignmentPackagePM.MarksNumbers };
 
-                declarationConsignmentPackageList.Add(declarationConsignmentPackage);
-            }
+        //        declarationConsignmentPackageList.Add(declarationConsignmentPackage);
+        //    }
 
-            return declarationConsignmentPackageList;
-        }
+        //    return declarationConsignmentPackageList;
+        //}
 
 
         private DeclarationExporter GetDeclarationImporterRole6(DeclarationPM declarationPM)
