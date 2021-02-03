@@ -240,7 +240,7 @@ export class PublicShipmentDetailsComponent implements OnInit
 
                     this.FuturesMilestoneFields.push(S);
                 }
-                else if (!S.IsCurrent) {
+                else if (!S.IsCurrent && S.Date != null) {
                     this.CompletedMilestoneFields.push(S);
 
                 }
