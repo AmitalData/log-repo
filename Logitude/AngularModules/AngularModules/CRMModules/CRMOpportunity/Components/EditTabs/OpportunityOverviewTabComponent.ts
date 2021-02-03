@@ -144,7 +144,9 @@ export class OpportunityOverviewTabComponent extends BaseComponent implements On
 
     BuildCompetitorToggleButtonList() {
         this.CompetitorToggleButtonList = [];
-        var data: Array<any> = this.AllCompetitors;
+        var ActiveCompetitors: Array<CompetitorList>=[];
+        ActiveCompetitors = this.AllCompetitors.filter(compatitor => compatitor.InActive == false);
+        var data: Array<any> = ActiveCompetitors;//this.AllCompetitors;
         if (!AppTool.IsNullOrEmpty(this.SearchTextCompetitor))
             data = this.AllCompetitors.filter(f => f.Name.toLowerCase().indexOf(this.SearchTextCompetitor.toLowerCase()) > -1);
         data.forEach(item => {
@@ -582,7 +584,7 @@ export class OpportunityOverviewTabComponent extends BaseComponent implements On
     getCompetitorList() {
         var competitorListService: CompetitorListService = new CompetitorListService();      
         competitorListService.getAll().subscribe((result: any) => {
-            this.AllCompetitors = result.Result.filter(d => d.InActive == false);
+            this.AllCompetitors = result.Result;//.filter(d => d.InActive == false);
             this.BuildCompetitorToggleButtonList();
             this.BuildCompetitorsObsList();
         });
