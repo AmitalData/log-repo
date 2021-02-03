@@ -7,62 +7,52 @@ Feature: Edit Direct Export Air Shipment
       | Direct        | Export    | Air           | Shipper1 | LHR                  | MIA                |
     When create shipment
     Then the direct should create successfully
-    
-  Scenario: Edit Shipment by filling general tab
-    Given the user in the general tab
-    And  fill random GrossWeight and "MTA" as a MoveType 
-    When save shipment
-    Then the save operation complete successfully
 
-  Scenario: Edit Shipment by filling Orders tab
-    Given the user in the Orders tab
-    And  fill Orders tab with random number of Packages
-    When save shipment
-    Then the save operation complete successfully
+  Scenario: Update general tab
+    Given the user fills "100" as GrossWeight and "MTA" as a MoveType
+    When update shipment
+    Then the direct should update successfully
 
-  Scenario: Edit Shipment by filling Partners tab
-    Given the user in the Partners tab
-    And  fill Partners tab with following details
-     | Agent            | CustomsAgentImport     | CustomsAgentExport     |
-     | IntegrationAgent | InegrationCustomsAgent | InegrationCustomsAgent |
-    When save shipment
-    Then the save operation complete successfully
+  Scenario: Update orders tab
+    Given the user add order package with the following details
+      | Quantity | Length | Width | Height | GrossWeight |
+      | 5        | 1      | 2     | 3      | 100         |
+      | 5        | 1      | 2     | 3      | 100         |
 
-  Scenario: Edit Shipment by filling Packages tab
-    Given the user in the Packages tab
-    And  fill Packages tab with random number of Packages
-    When save shipment
-    Then the save operation complete successfully
+    When update shipment
+    Then the direct should update successfully
 
-  Scenario: Edit Shipment by filling Receivables tab
-    Given the user in the Receivables tab
-    And  fill Receivables with the following details
-     | ChargesType | UOM  | Quantity | UnitPrice | Currency | ExchangeRate |
-            | AFT         | GRWT | 5        | 20        | EUR      | 4            |
-    When save shipment
-    Then the save operation complete successfully
+  Scenario: Update partners tab
+    Given the user adds partners with following details
+      | Consignee       | Agent            | CustomsAgentExport     | CustomsAgentImport     | Notify1 | Notify2 | ShipperNotExporter   | ConsigneeNotImporter   | FreightForwarder     | Coloader     | CustomClearancePoint     | Consolidator     | ReleasingAgent  |
+      | ConsigneeExport | IntegrationAgent | InegrationCustomsAgent | InegrationCustomsAgent | notify  | notify  | shipper not exporter | consignee not importer | FreightForwarderTest | ColoaderTest | CustomClearancePointTest | ConsolidatorTest | releasing agent |
+    When update shipment
+    Then the direct should update successfully
 
-  Scenario: Add Pickup Routing
-    Given the user in the Routings tab
-    And  add new pickup routing 
-    When save shipment window
-    Then the save operation complete successfully
+  Scenario: Update packages tab
+    Given the user add package with the following details
+      | Quantity | Length | Width | Height | GrossWeight |
+      | 5        | 1      | 2     | 3      | 100         |
+    When update shipment
+    Then the direct should update successfully
 
-  Scenario: Add Pre Carriage And On Carriage Routings
-    Given the user in the Routings tab
-    And  add carriage routings from port "JFK" to port "MIA" 
-    When save shipment 
-    Then the save operation complete successfully
+  Scenario: Update receivables tab
+    Given  the user fill receivables with the following details
+      | ChargesType | UOM  | Quantity | UnitPrice | Currency | ExchangeRate |
+      | AFT         | GRWT | 5        | 20        | EUR      | 4            |
+    When update shipment
+    Then the direct should update successfully
 
-  Scenario: Add Delivery Routing
-    Given the user in the Routings tab
-    And  add new delivery with "IntegrationAgent" as a partner routing
-    When save shipment window
-    Then the save operation complete successfully
+  Scenario: Update routing tab
+    Given the user add new pickup
+    And add delivery with "IntegrationAgent" as a partner routing
+    And add pre carriage and on carriage from port "JFK" to port "MIA"
+    When update shipment
+    Then the direct should update successfully
 
-  Scenario: Fill Payables Tab
-    Given the user in the Payables tab
-    And  add Payables with "AFT" as a ChargesType, "EUR" as a Currency and "GRWT" as UOM 
-    When save shipment
-    Then the save operation complete successfully
-    
+  Scenario: Update payables tab
+    Given the user add payable with the following details
+      | ChargesType | UOM  | Quantity | UnitPrice | Currency |
+      | AFT         | GRWT | 5        | 10        | EUR      |
+    When update shipment
+    Then the direct should update successfully
