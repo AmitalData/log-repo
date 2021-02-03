@@ -19,14 +19,14 @@ namespace WebFreight.Web.Helpers.BIReport
         private BIReportXMLData bIReportXMLData = null;
         private DataTable bIReportdataTable = null;
         private int tenant;
-        private BuildBIReportHtmlService buildBIReportHtmlService;
+        private BIReportHtmlRenderingService bIReportHtmlRenderingService;
         private HtmlToPdfConverter pdfConverter = null;
         public ExportBIReportPdfService(BIReportXMLData bIReportXMLData, DataTable bIReportdataTable, int tenant)
         {
             this.bIReportXMLData = bIReportXMLData;
             this.bIReportdataTable = bIReportdataTable;
             this.tenant = tenant;
-            this.buildBIReportHtmlService = new BuildBIReportHtmlService(this.bIReportdataTable);
+            this.bIReportHtmlRenderingService = new BIReportHtmlRenderingService(this.bIReportdataTable);
         }
 
         public byte[] Run()
@@ -52,7 +52,7 @@ namespace WebFreight.Web.Helpers.BIReport
             InitializePdfConverter();
             SetEvoPdfHeader();
             SetEvoPdfFooter();
-            string htmlBody = buildBIReportHtmlService.Run();
+            string htmlBody = bIReportHtmlRenderingService.Render();
             var pdfData = pdfConverter.ConvertHtml(htmlBody, null);
             return pdfData;
         }
@@ -80,6 +80,7 @@ namespace WebFreight.Web.Helpers.BIReport
             pdfConverter.PdfHeaderOptions.AddElement(headerHtml);
             pdfConverter.PdfHeaderOptions.HeaderHeight = 105;
             pdfConverter.PdfDocumentOptions.ShowHeader = true;
+
         }
 
 
@@ -89,12 +90,17 @@ namespace WebFreight.Web.Helpers.BIReport
             pdfConverter.PdfFooterOptions.AddElement(footerHtml);
             pdfConverter.PdfFooterOptions.FooterHeight = 40;
             pdfConverter.PdfDocumentOptions.ShowFooter = true;
+            SetFooterPageNumber();
 
+
+        }
+
+        private void SetFooterPageNumber()
+        {
             var footerTextElement = new TextElement(0, 20, "page &p; of &P;  ", new Font(new System.Drawing.FontFamily("Times New Roman"), 10, GraphicsUnit.Point));
             footerTextElement.TextAlign = HorizontalTextAlign.Right;
             footerTextElement.LineStyle = new LineStyle(LineDashStyle.Solid);
             pdfConverter.PdfFooterOptions.AddElement(footerTextElement);
-         
         }
 
         private string GetEvoPdfHtmlHeader()

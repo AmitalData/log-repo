@@ -2592,7 +2592,7 @@
     <Compile Include="Helpers\AutomationModel\ReportTemplateDocOutService.cs" />
     <Compile Include="Helpers\AutomationModel\FTPAutomationService.cs" />
     <Compile Include="Helpers\BIReportsSecurityIntegrationService.cs" />
-    <Compile Include="Helpers\BIReport\BuildBIReportHtmlService.cs" />
+    <Compile Include="Helpers\BIReport\BIReportHtmlRenderingService.cs" />
     <Compile Include="Helpers\BIReport\ExportBIReportService.cs" />
     <Compile Include="Helpers\BIReport\ExportBIReportExcelService.cs" />
     <Compile Include="Helpers\BIReport\ExportBIReportPdfService.cs" />
