@@ -32,10 +32,6 @@ namespace Logitude.ShipmentTests.Hooks
             ShipmentData.QuoteStageQTDRId = shipmentVariables.QuoteStageQTDRId;
             ShipmentData.MoveTypeMTAId = shipmentVariables.MoveTypeMTAId;
             ShipmentData.MoveTypeMTOId = shipmentVariables.MoveTypeMTOId;
-            ShipmentData.ChargesTypes = shipmentVariables.ChargesTypes;
-            ShipmentData.VatTypes = shipmentVariables.VatTypes;
-            ShipmentData.Currencies = shipmentVariables.Currencies;
-            ShipmentData.Rates = shipmentVariables.Rates;
         }
     }
 }
