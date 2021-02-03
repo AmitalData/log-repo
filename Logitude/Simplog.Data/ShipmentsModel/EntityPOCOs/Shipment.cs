@@ -827,5 +827,8 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public DateTime? AssignedToTruckerDate { get; set; }
         public virtual Card TruckerCard { get; set; }
 
+        public string AssginedtoCustomsAgentId { get; set; }
+        public DateTime? AssginedToCustomsAgentDate { get; set; }
+        public virtual Card CustomsAgentCard { get; set; }
     }
 }

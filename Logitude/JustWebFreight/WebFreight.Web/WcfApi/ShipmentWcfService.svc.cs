@@ -92,7 +92,9 @@ namespace WebFreight.Web.WcfApi
                     TenantPM tenantPM = tenantQuery.GetSinglePM(entityPM.Tenant);
                     CountryRepository countryRepository = new CountryRepository(commoncontext);
                     AddressRepository addressRepository = new AddressRepository(commoncontext);
-                    TruckerRepository truckerRepository = new TruckerRepository(commoncontext);
+                    TruckerRepository truckerRepository = new TruckerRepository(commoncontext); 
+
+
                     // ???????????
                     //"system@tenant1.com"
 
@@ -353,6 +355,22 @@ namespace WebFreight.Web.WcfApi
                             return response;
                         }
                     }
+
+                    if (entityPM.AssginedtoCustomsAgentId != null)
+                    {
+                        Card customAgent = cardsReporistory.GetSingleCardByCode( entityPM.AssginedtoCustomsAgentId, entityPM.Tenant, false);
+                        if (customAgent != null)
+                        {
+                            entityPM.AssginedtoCustomsAgentId = customAgent.Id;
+                        }
+                        else
+                        {
+                            response.HasError = true;
+                            response.ErrorMessage = "AssginedtoCustomsAgentId field doesn't exist in the database, Upsert this entity before using it.";
+                            return response;
+                        }
+                    }
+
 
                     if (entityPM.MainCarriageCarrierId != null)
                     {

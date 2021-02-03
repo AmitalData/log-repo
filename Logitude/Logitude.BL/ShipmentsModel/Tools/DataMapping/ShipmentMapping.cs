@@ -468,6 +468,10 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             entityPoco.AssignedToTruckerDate = entityPM.AssignedToTruckerDate;
             entityPoco.TruckerId = entityPM.TruckerId;
 
+            entityPoco.AssginedToCustomsAgentDate = entityPM.AssginedToCustomsAgentDate;
+            entityPoco.AssginedtoCustomsAgentId = entityPM.AssginedtoCustomsAgentId;
+
+
             BuildSearchField(entityPM, entityPoco, entityMasterData, myPackagesList);
             if (!LBcurrentTenant.IsDocumentsArchive)
             {

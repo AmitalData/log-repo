@@ -219,7 +219,8 @@
             "Warehouse",
             "Shipment Pickups & Deliveries",
             "ShipmentWarehouseLeg",
-            "ShipmentTrucker"});
+            "ShipmentTrucker",
+            "ShipmentAssginedtoCustomsAgent"});
             this.cmdServices.Location = new System.Drawing.Point(49, 50);
             this.cmdServices.Margin = new System.Windows.Forms.Padding(4);
             this.cmdServices.Name = "cmdServices";
