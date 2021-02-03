@@ -441,48 +441,6 @@ export class InvoiceQueueComponent
         }
     }
 
-    ShowDelivery() {
-
-        let myDeclaration: DeclarationPM = this.declaration;
-        let myViewModelName = "InvoiceQueueComponent.ts-ShowDelivery";
-        if (AmitalGatewayUtil.Instance.AmitalBrowserInUse) {
-            SessionLocator.SelectedSession.StartBusyIndicatorLoading();
-            let sub = AmitalGatewayUtil.Instance.UnifaceRequestArrived
-                .subscribe(
-                    (mess: UnifreightMessageM) => {
-                        var IsMatchUnifreightCallbackCommand = (
-                            mess.LogitudeEntity == AmitalGatewayUtil.Instance.DeclarationMessaging.LogitudeEntityDeclaration &&
-                            mess.LogitudeEntityNumber == myDeclaration.Id &&
-                            mess.LogitudeViewModel == myViewModelName);
-                        IsMatchUnifreightCallbackCommand = true;
-                        if (IsMatchUnifreightCallbackCommand) {
-                            sub.unsubscribe();
-                            SessionLocator.SelectedSession.StopBusyIndicator();
-                            let sBool = UnifreightMessageM.GetStringValue(mess, AmitalGatewayUtil.Instance.DeclarationMessaging.UnifreightResponseStatus);
-                            //SessionLocator.SelectedSession.CurrentListComponent.OnBackFromEdit(this.declaration.Id, { rowIndex: this.RowIndex });
-                            this.GetData();
-                        }
-                    }
-                );
-
-            SessionLocator.SelectedSession.StartBusyIndicator("");
-            var unifreightMessageM =
-                AmitalGatewayUtil.Instance.
-                    DeclarationMessaging.GetMessage(myDeclaration.CustomFileNo, myDeclaration.Id,
-                        myViewModelName);
-
-            AmitalGatewayUtil.Instance.SendRequestToUnifreightAsync(
-                "ScriptableGatewayUtil.ShowDelivery",
-                "CFIHMAIN.LogitudeTask",
-                "ShowDelivery",
-                unifreightMessageM,
-                " הצגת מסך : הובלות יבשתיות");
-        }
-        else {
-            alert("ShowDelivery");
-        }
-    }
-
 
     ShowCustomFileOPCFromDeclaration() {
 
