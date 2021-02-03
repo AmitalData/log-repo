@@ -40,7 +40,8 @@ namespace Logitude.InvoiceTests.Features.SecurityTests
         public static void FeatureSetup()
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
-            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features/SecurityTests", "Get AP Payment Security Access", null, ProgrammingLanguage.CSharp, ((string[])(null)));
+            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features/SecurityTests", "Get AP Payment Security Access", "\t\tWith pre-prepared user authentication\r\n\t\tWe want to test Get AP Payment Securit" +
+                    "y Access", ProgrammingLanguage.CSharp, ((string[])(null)));
             testRunner.OnFeatureStart(featureInfo);
         }
         
@@ -80,15 +81,15 @@ namespace Logitude.InvoiceTests.Features.SecurityTests
             this.TestTearDown();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="Get AP Payment From User\'s Tenant")]
+        [Xunit.SkippableFactAttribute(DisplayName="Get AP Payment from user\'s tenant")]
         [Xunit.TraitAttribute("FeatureTitle", "Get AP Payment Security Access")]
-        [Xunit.TraitAttribute("Description", "Get AP Payment From User\'s Tenant")]
+        [Xunit.TraitAttribute("Description", "Get AP Payment from user\'s tenant")]
         public virtual void GetAPPaymentFromUsersTenant()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get AP Payment From User\'s Tenant", null, tagsOfScenario, argumentsOfScenario);
-#line 3
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get AP Payment from user\'s tenant", null, tagsOfScenario, argumentsOfScenario);
+#line 5
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             bool isScenarioIgnored = default(bool);
@@ -108,25 +109,25 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 this.ScenarioStart();
-#line 4
- testRunner.When("First user get the first AP Payment from AP Payments list", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 6
+ testRunner.When("get a AP Payment from user\'s AP Payment list", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 5
- testRunner.Then("AP Payment for first user should be exists", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 7
+ testRunner.Then("The AP Payment should exist", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="Get AP Payment From Other Tenant")]
+        [Xunit.SkippableFactAttribute(DisplayName="Get AP Payment from other tenant")]
         [Xunit.TraitAttribute("FeatureTitle", "Get AP Payment Security Access")]
-        [Xunit.TraitAttribute("Description", "Get AP Payment From Other Tenant")]
+        [Xunit.TraitAttribute("Description", "Get AP Payment from other tenant")]
         public virtual void GetAPPaymentFromOtherTenant()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get AP Payment From Other Tenant", null, tagsOfScenario, argumentsOfScenario);
-#line 7
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get AP Payment from other tenant", null, tagsOfScenario, argumentsOfScenario);
+#line 9
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             bool isScenarioIgnored = default(bool);
@@ -146,11 +147,11 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 this.ScenarioStart();
-#line 8
- testRunner.When("Second user get the AP Payment that requested by first user", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 10
+ testRunner.When("get a AP Payment from Other Tenant", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 9
- testRunner.Then("AP Payment for second user should not be exists", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 11
+ testRunner.Then("The AP Payment should not exist", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();

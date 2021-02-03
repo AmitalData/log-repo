@@ -21,7 +21,7 @@ namespace Cypress {
 }
 }
 Cypress.Commands.add("FillDate", (selector, value) => {
-if(value=="today"){
+if(value.toUpperCase()=="TODAY"){
     cy.get(selector).focus().clear().type(".{enter}")
 }
 else{

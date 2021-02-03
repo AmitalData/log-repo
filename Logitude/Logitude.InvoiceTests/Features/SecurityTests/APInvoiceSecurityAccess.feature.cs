@@ -40,8 +40,8 @@ namespace Logitude.InvoiceTests.Features.SecurityTests
         public static void FeatureSetup()
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
-            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features/SecurityTests", "Get AP Invoice Security Access", "        In order to get an APInvoice from the APInvoices list \r\n\t\tIt should be re" +
-                    "lated to the user\'s tenant ", ProgrammingLanguage.CSharp, ((string[])(null)));
+            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features/SecurityTests", "Get AP Invoice Security Access", "\t\tWith pre-prepared user authentication\r\n\t\tWe want to test Get AP Invoice Securit" +
+                    "y Access", ProgrammingLanguage.CSharp, ((string[])(null)));
             testRunner.OnFeatureStart(featureInfo);
         }
         
@@ -81,14 +81,14 @@ namespace Logitude.InvoiceTests.Features.SecurityTests
             this.TestTearDown();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="An AP Invoice From A User\'s Tenant is Gotten")]
+        [Xunit.SkippableFactAttribute(DisplayName="Get AP Invoice from user\'s tenant")]
         [Xunit.TraitAttribute("FeatureTitle", "Get AP Invoice Security Access")]
-        [Xunit.TraitAttribute("Description", "An AP Invoice From A User\'s Tenant is Gotten")]
-        public virtual void AnAPInvoiceFromAUsersTenantIsGotten()
+        [Xunit.TraitAttribute("Description", "Get AP Invoice from user\'s tenant")]
+        public virtual void GetAPInvoiceFromUsersTenant()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("An AP Invoice From A User\'s Tenant is Gotten", null, tagsOfScenario, argumentsOfScenario);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get AP Invoice from user\'s tenant", null, tagsOfScenario, argumentsOfScenario);
 #line 5
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -110,23 +110,23 @@ this.ScenarioInitialize(scenarioInfo);
             {
                 this.ScenarioStart();
 #line 6
- testRunner.When("The First user gets the first AP Invoice from AP Invoices list", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("get a AP Invoice from user\'s AP Invoices list", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
 #line 7
- testRunner.Then("The AP Invoice which is related to the first user tanent is existed", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then("The AP Invoice should exist", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="An AP Invoice From  From Other Tenant isn\'t Gotten Get")]
+        [Xunit.SkippableFactAttribute(DisplayName="Get AP Invoice from other tenant")]
         [Xunit.TraitAttribute("FeatureTitle", "Get AP Invoice Security Access")]
-        [Xunit.TraitAttribute("Description", "An AP Invoice From  From Other Tenant isn\'t Gotten Get")]
-        public virtual void AnAPInvoiceFromFromOtherTenantIsntGottenGet()
+        [Xunit.TraitAttribute("Description", "Get AP Invoice from other tenant")]
+        public virtual void GetAPInvoiceFromOtherTenant()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("An AP Invoice From  From Other Tenant isn\'t Gotten Get", null, tagsOfScenario, argumentsOfScenario);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get AP Invoice from other tenant", null, tagsOfScenario, argumentsOfScenario);
 #line 9
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -148,10 +148,10 @@ this.ScenarioInitialize(scenarioInfo);
             {
                 this.ScenarioStart();
 #line 10
- testRunner.When("The Second user gets the AP Invoice that was requested by the first user", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("get a AP Invoice from Other Tenant", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
 #line 11
- testRunner.Then("The AP Invoice that was requested by the second user isn\'t existed", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then("The AP Invoice should not exist", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();

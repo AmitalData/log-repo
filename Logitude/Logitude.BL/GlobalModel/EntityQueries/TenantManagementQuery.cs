@@ -43,6 +43,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                                        MainColor = a.MainColor, 
                                                        SecondaryColor = a.SecondaryColor, 
                                                        BackgroundId = a.BackgroundId,
+                                                       ShipmentHeaderImageId = a.ShipmentHeaderImageId,
                                                        ComapnylogoId = a.ComapnylogoId,
                                                        BrowserIconId = a.BrowserIconId,
                                                        CustomerURL = a.CustomerURL,
@@ -231,6 +232,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                                      SecondaryColor = a.SecondaryColor,// != null && a.SecondaryColor.Length > 7) ? "#" + a.SecondaryColor.Substring(3, 6) : null,
 
                                                      BackgroundId = a.BackgroundId,
+                                                     ShipmentHeaderImageId = a.ShipmentHeaderImageId,
                                                      ComapnylogoId = a.ComapnylogoId,
                                                      BrowserIconId = a.BrowserIconId,
                                                      NoPaymentForChildTenants = a.NoPaymentForChildTenants,
@@ -422,6 +424,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                                   BackgroundId = a.BackgroundId,
                                                   ComapnylogoId = a.ComapnylogoId,
                                                   BrowserIconId = a.BrowserIconId,
+                                                  ShipmentHeaderImageId = a.ShipmentHeaderImageId,
                                                   NoPaymentForChildTenants = a.NoPaymentForChildTenants,
                                                   LastEbookingSentDate = a.LastEbookingSentDate,
                                                   LastSISentDate = a.LastSISentDate,

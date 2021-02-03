@@ -128,9 +128,13 @@ export class UserDashboardComponent implements AfterViewInit
     get BrowserIcon(){
         return CargoTrackingBrandingData.BrowserIconURL;
     } 
-    get BackGroundImg(){
+    get BackGroundImg()
+    {
         return CargoTrackingBrandingData.BackgroundURL;
     } 
+    get ShipmentHeaderImage(){
+        return CargoTrackingBrandingData.ShipmentHeaderURL;
+    }
   
     
 }
