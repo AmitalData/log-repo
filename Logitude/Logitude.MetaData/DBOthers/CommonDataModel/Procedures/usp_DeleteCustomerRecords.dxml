@@ -22,6 +22,7 @@ declare @DeletedContactIdTable table
 update Tickets set CompanyId = NULL where Tenant = @Tenant
 update MAWBStacks set AssignedToId = null where Tenant = @Tenant
 update Cards set PrimaryContactId = NULL where Tenant = @Tenant and (PartnerTypeId = 'CS' or PartnerTypeId = 'PO')
+update Tenants set AgentId = NULL,AddressId = NULL where Id = @Tenant
 
 insert into @DeletedContactIdTable SELECT ContactId From CardContacts
 			Where Tenant = @Tenant  and CardId in (select Id from Cards where Tenant = @Tenant and (PartnerTypeId = 'CS' or PartnerTypeId = 'PO'))
@@ -54,23 +55,8 @@ END
 delete from Addresses where Tenant = @Tenant and CardId in (select Id from Cards where Tenant = @Tenant and (PartnerTypeId = 'CS' or PartnerTypeId = 'PO'))
 delete from CardSearches where Tenant = @Tenant and CardId in (select Id from Cards where Tenant = @Tenant and (PartnerTypeId = 'CS' or PartnerTypeId = 'PO'))
 
-delete from CustomerProductLocations where Tenant = @Tenant
-delete from CustomerProducts where Tenant = @Tenant
-delete from CustomerProductLocationActualDatas where Tenant = @Tenant
-delete from CustomerProductActualDatas where Tenant = @Tenant
-delete from CustomerCompetitorProducts where Tenant = @Tenant
-delete from CustomerCompetitors where Tenant = @Tenant
-delete from CustomerAdditionalServices where Tenant = @Tenant
-delete from CustomerSalesNote where Tenant = @Tenant
-delete from CustomerSalesmanByProducts where Tenant = @Tenant
-delete from CustomerAccountManagerByProducts where Tenant = @Tenant
-delete from CustomerCustomsAgentByProducts where Tenant = @Tenant
-delete from CustomerForwarderByProducts where Tenant = @Tenant
-delete from CustomerMediatorByProducts where Tenant = @Tenant
-delete from CardExternalCodeByCurrencies where Tenant = @Tenant
-
-delete from Customers where Tenant = @Tenant
-delete from Cards where Tenant = @Tenant and (PartnerTypeId = 'CS' or PartnerTypeId = 'PO')
+exec [dbo].usp_DoTheTableDeletionSet @Tenant = @Tenant, @TableName = 'Customers'
+exec [dbo].usp_DoTheTableDeletionSet @Tenant = @Tenant, @TableName = 'Cards', @WhereInput = ' and ($table.PartnerTypeId = ''CS'' or $table.PartnerTypeId = ''PO'')'
 
 END
 ]]>

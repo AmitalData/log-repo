@@ -14,6 +14,7 @@ Create PROCEDURE [dbo].usp_DoTheTableDeletionSet
 AS
 
 BEGIN
+
 -- the following is an example to show what code can be generated to do the table deletionset nocount on;
 if object_id('tempdb..#tmp') is not null
 	drop table #tmp;
@@ -50,9 +51,9 @@ set @where = ' ';
 		set @i=0;
 		if @lvl =0
 		begin -- this is the root level
-      set @where = '  where  ' + @TableName + '.Tenant = '+ CAST(@Tenant as varchar(10)) + @WhereInput;
+      set @where = '  where  ' + @TableName + '.Tenant = '+ CAST(@Tenant as varchar(10)) + REPLACE(@WhereInput, '$table', @TableName);
       set @sqlcmd = ' delete from  ' + @TableName +  @where;
-      --print @sqlcmd;
+      print @sqlcmd;
 		end -- this is the roolt level
 
 		DELETE FROM #NamesAliases
@@ -143,9 +144,9 @@ set @where = ' ';
 			deallocate @curFK;
 			set @i = @i +1;
 		end --while
-		set @where = ' where ' + (select top 1 TableAliasName from #NamesAliases where tablename = @TableName and lvl = 1) + '.Tenant=' +CAST(@Tenant as varchar(10)) + @WhereInput;
-		--print @sqlcmd + @crlf + @where + ';';
-		--print '';
+		set @where = ' where ' + (select top 1 TableAliasName from #NamesAliases where tablename = @TableName and lvl = 1) + '.Tenant=' +CAST(@Tenant as varchar(10)) + REPLACE(@WhereInput, '$table', (select top 1 TableAliasName from #NamesAliases where tablename = @TableName and lvl = 1));
+		print @sqlcmd + @crlf + @where + ';';
+		print '';
     if RTRIM(LTRIM(@sqlcmd)) is not null
 		   EXEC (@sqlcmd + @crlf + @where + ';');
 	fetch next from curT into  @lvl, @id;
