@@ -8,7 +8,6 @@ import { ReceivableDetails } from "cypress/models/ReceivableDetails"
 import { APInvoiceDetails } from "cypress/models/APInvoiceDetails"
 import { ARInvoiceDetails } from "cypress/models/ARInvoiceDetails"
 import * as BaseAssertion from "../../../Base/cypress/actions/Assertion";
-import { ShipmentMapping } from "../mapping/ShipmentMapping"
 
 export function OpenNewShipmentWizard(shipmentLevel: string){
     cy.Click(Selectors.NewShipmentToggleButton, null)
@@ -361,28 +360,24 @@ function FillMainFields(shipmentDetails: ShipmentDetails){
 }
 
 function FillDirection(shipmentDetails: ShipmentDetails){
-    let directionRadioSelector = "input[id^='DirectionRadio_'][id$='" + ShipmentMapping.GetDirectionCode(shipmentDetails.Direction) + "']";
+    let directionRadioSelector = Selectors.DirectionRadio(shipmentDetails.Direction);
     cy.ClickRadio(directionRadioSelector);
-    //cy.ClickRadio("#DirectionRadio_0" + ShipmentMapping.GetDirectionCode(shipmentDetails.Direction))
 }
 
 function FillTransportMode(shipmentDetails: ShipmentDetails){
-    let transportModeRadioSelector = "input[id^='TransportModeRadio_'][id$='" + ShipmentMapping.GetTransportModeCode(shipmentDetails.TransportMode) + "']";
+    let transportModeRadioSelector = Selectors.TransportModeRadio(shipmentDetails.TransportMode);
     cy.ClickRadio(transportModeRadioSelector);
-    //cy.ClickRadio("#TransportModeRadio_0" + ShipmentMapping.GetTransportModeCode(shipmentDetails.TransportMode))
 }
 
 function FillShipmentType(shipmentDetails: ShipmentDetails){
     if(shipmentDetails.ShipmentType){
+        let shipmentTypeRadioSelector: string;
         if(IsGroupage(shipmentDetails.ShipmentType)){
-            let shipmentTypeRadioSelector = "input[id^='ShipmentTypeRadio_'][id$='MyG" + ShipmentMapping.GetTransportModeCode(shipmentDetails.TransportMode) + "']";
-            cy.ClickRadio(shipmentTypeRadioSelector);
-            //cy.ClickRadio("#ShipmentTypeRadio_0MyG" + ShipmentMapping.GetTransportModeCode(shipmentDetails.TransportMode));
+            shipmentTypeRadioSelector = Selectors.GroupageShipmentTypeRadio(shipmentDetails.TransportMode);
         }else{
-            let shipmentTypeRadioSelector = "input[id^='ShipmentTypeRadio_'][id$='" + shipmentDetails.ShipmentType + "']";
-            cy.ClickRadio(shipmentTypeRadioSelector);
-            //cy.ClickRadio("#ShipmentTypeRadio_0" + shipmentDetails.ShipmentType)
+            shipmentTypeRadioSelector = Selectors.ShipmentTypeRadio(shipmentDetails.ShipmentType);
         }
+        cy.ClickRadio(shipmentTypeRadioSelector);
     }
 }
 

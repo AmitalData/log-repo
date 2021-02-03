@@ -1,4 +1,6 @@
-export class Selectors
+import { RegexSelectors } from "../selectors/RegexSelectors";
+
+export class Selectors extends RegexSelectors
 {
     public static readonly ShipmentTab = '#SHIP';
     public static readonly ShipmentMoreList ='#MenuButtons';
