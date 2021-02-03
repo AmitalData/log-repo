@@ -7,5 +7,6 @@ export interface ShipmentDetails {
     Consignee: string,
     Agent: string,
     MainCarriageToPort: string,
-    MainCarriageFromPort: string
+    MainCarriageFromPort: string,
+    ShipmentNumber:string,
 }
