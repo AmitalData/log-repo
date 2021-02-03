@@ -1,4 +1,6 @@
-export class Selectors
+import { RegexSelectors } from "../selectors/RegexSelectors";
+
+export class Selectors extends RegexSelectors
 {
     public static readonly ShipmentTab = '#SHIP';
     public static readonly ShipmentMoreList ='#MenuButtons';
@@ -47,18 +49,18 @@ export class Selectors
     public static readonly Delivery = '#Delivery';
     public static readonly PreCarriage = '#PreCarriage';
     public static readonly OnCarriage = '#OnCarriage';
-    public static readonly ShipmentPickUpDelivery_ToPartnerCardId = '#ShipmentPickUpDelivery_ToPartnerCardId';
-    public static readonly Shipment_PreCarriageTransportModeId = '#Shipment_PreCarriageTransportModeId';
-    public static readonly Shipment_PreCarriageFromPortId = '#Shipment_PreCarriageFromPortId';
-    public static readonly Shipment_PreCarriageToPortId = '#Shipment_PreCarriageToPortId';
-    public static readonly Shipment_OnCarriageTransportModeId = '#Shipment_OnCarriageTransportModeId';
-    public static readonly Shipment_OnCarriageFromPortId = '#Shipment_OnCarriageFromPortId';
-    public static readonly Shipment_OnCarriageToPortId = '#Shipment_OnCarriageToPortId';
+    public static readonly ShipmentPickUpDeliveryToPartnerCard = '#ShipmentPickUpDelivery_ToPartnerCardId';
+    public static readonly ShipmentPreCarriageTransportMode = '#Shipment_PreCarriageTransportModeId';
+    public static readonly ShipmentPreCarriageFromPort = '#Shipment_PreCarriageFromPortId';
+    public static readonly ShipmentPreCarriageToPort = '#Shipment_PreCarriageToPortId';
+    public static readonly ShipmentOnCarriageTransportMode = '#Shipment_OnCarriageTransportModeId';
+    public static readonly ShipmentOnCarriageFromPort = '#Shipment_OnCarriageFromPortId';
+    public static readonly ShipmentOnCarriageToPort = '#Shipment_OnCarriageToPortId';
     public static readonly PreCarriageOKBtn = '#PreCarriageOKBtn';
     public static readonly OnCarriageOKBtn = '#OnCarriageOKBtn';
-    public static readonly ShipmentPayable_ChargesTypeId = '#ShipmentPayable_ChargesTypeId';
-    public static readonly ShipmentPayable_MeasurementId = '#ShipmentPayable_MeasurementId';
-    public static readonly ShipmentPayable_CurrencyId = '#ShipmentPayable_CurrencyId';
+    public static readonly ShipmentPayableChargesType = '#ShipmentPayable_ChargesTypeId';
+    public static readonly ShipmentPayableMeasurement = '#ShipmentPayable_MeasurementId';
+    public static readonly ShipmentPayableCurrency = '#ShipmentPayable_CurrencyId';
     public static readonly NewAttachedHouse = '#NewHouseBtn';
     public static readonly CopyShipmentButton='#ShipmentBCopyShipment'
     public static readonly CancelShipmentButton='#ShipmentBCancelShipment'
@@ -106,4 +108,45 @@ export class Selectors
     public static readonly APInvoiceVoidButton="#APInvoiceBVoid";
     public static readonly ShipmentDateMaincarriageATD="#calendarbutton_date_Shipment_MainCarriageATD";
 
+    //Abed Malakh
+    public static readonly NewShipmentToggleButton = "#NEWSHIP .LogitudeToggleButtonContainer";
+    public static readonly NewShipmentToggleButtonItem = "#NEWSHIP .LogitudeToggleButtonItem";
+    public static readonly CreateShipmentButton = "#ShipmentCreatebtn";
+    public static readonly CreateMasterShipmentButton = "#MasterCreatebtn";
+    public static readonly AddShipperButton = "#SHIPR";
+    public static readonly AddConsigneeButton = "#CONSI";
+    public static readonly AddAgentButton = "#AGENT";
+    public static readonly AddIssuingCarrierAgentButton = "#ISSAG";
+    public static readonly AddCustomsAgentExportButton = "#CSAEX";
+    public static readonly AddCustomsAgentImportButton = "#CSAIM";
+    public static readonly AddNotify1Button = "#NOTF1";
+    public static readonly AddNotify2Button = "#NOTF2";
+    public static readonly AddShipperNotExporterButton = "#SHPNT";
+    public static readonly AddConsigneeNotImporterButton = "#CONNT";
+    public static readonly AddFreightForwarderButton = "#FRTFR";
+    public static readonly AddColoaderButton = "#COLOD";
+    public static readonly AddCustomClearancePointButton = "#CLERN";
+    public static readonly AddConsolidatorButton = "#CONSL";
+    public static readonly AddReleasingAgentButton = "#REAGT";
+    public static readonly ShipmentShipper = "#Shipment_ShipperId";
+    public static readonly ShipmentConsignee = "#Shipment_ConsigneeId";
+    public static readonly ShipmentAgent = "#Shipment_AgentId";
+    public static readonly ShipmentIssuingCarrierAgent = "#Shipment_IssuingCarrierAgentId";
+    public static readonly ShipmentCustomAgentExport = "#Shipment_CustomAgentExportId";
+    public static readonly ShipmentCustomAgentImport = "#Shipment_CustomAgentImportId";
+    public static readonly ShipmentNotify1 = "#Shipment_Notify1Id";
+    public static readonly ShipmentNotify2 = "#Shipment_Notify2Id";
+    public static readonly ShipmentShipperNotExporter = "#Shipment_ShipperNotExporterId";
+    public static readonly ShipmentConsigneeNotImporter = "#Shipment_ConsigneeNotImporterId";
+    public static readonly ShipmentFreightForwarder = "#Shipment_FreightForwarderId";
+    public static readonly ShipmentColoader = "#Shipment_ColoaderId";
+    public static readonly ShipmentCustomClearancePoint = "#Shipment_CustomClearancePointId";
+    public static readonly ShipmentConsolidator = "#Shipment_ConsolidatorId";
+    public static readonly ShipmentReleasingAgent = "#Shipment_ReleasingAgentId";
+    public static readonly MasterAgent = "#Master_AgentId";
+    public static readonly ShipmentMainCarriageFromPort = "#Shipment_MainCarriageFromPortId";
+    public static readonly ShipmentMainCarriageToPort = "#Shipment_MainCarriageToPortId";
+    public static readonly MasterMainCarriageFromPort = "#Master_MainCarriageFromPortId";
+    public static readonly MasterMainCarriageToPort = "#Master_MainCarriageToPortId";
+    public static readonly ShipmentCustomer = "#Shipment_CustomerId";
 }

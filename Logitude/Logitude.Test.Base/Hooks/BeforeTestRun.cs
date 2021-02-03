@@ -46,8 +46,8 @@ namespace Logitude.Test.Base.Hooks
 
         private static void SetupLocationPreparationVariables()
         {
-            ApiResponse<LocationsVariables> locationsVariablesResponse = APICaller.CallGet<LocationsVariables>(Urls.IntegrationTestGetBaseLocations, UserTenant.Token);
-            LocationsDataMap(locationsVariablesResponse.Data);
+            LocationsVariables locationsVariables = DataPreparation.GetLocationsVariables();
+            LocationsDataMap(locationsVariables);
         }
 
         private static void SetupPartnerPreparationVariables()
@@ -143,14 +143,13 @@ namespace Logitude.Test.Base.Hooks
         private static void LocationsDataMap(LocationsVariables locationsVariables)
         {
             LocationsData.PortLHRId = locationsVariables.PortLHRId;
-            LocationsData.PortLASId = locationsVariables.PortLASId;
-            LocationsData.PortMIAId = locationsVariables.PortMIAId;
-            LocationsData.PortJFKId = locationsVariables.PortJFKId;
-            LocationsData.PortSOUId = locationsVariables.PortSOUId;
-            LocationsData.PortNYCId = locationsVariables.PortNYCId;
+            LocationsData.PortLASDomesticId = locationsVariables.PortLASDomesticId;
+            LocationsData.PortMIADomesticId = locationsVariables.PortMIADomesticId;
+            LocationsData.PortAirJFKId = locationsVariables.PortAirJFKId;
+            LocationsData.PortOceanSOUId = locationsVariables.PortOceanSOUId;
+            LocationsData.PortInlandNYCId = locationsVariables.PortInlandNYCId;
             LocationsData.PortLONId = locationsVariables.PortLONId;
             LocationsData.PortMANId = locationsVariables.PortMANId;
-            LocationsData.GlobalZoneEUId = locationsVariables.GlobalZoneEUId;
             LocationsData.CountryUSId = locationsVariables.CountryUSId;
             LocationsData.CountryGBId = locationsVariables.CountryGBId;
             LocationsData.StateAKId = locationsVariables.StateAKId;
