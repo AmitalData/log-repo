@@ -135,6 +135,19 @@ namespace Logitude.BL.QuoteModel.Tools.TraceEvents
                         Notes = myEventNotes,
                     });
                 }
+
+                if (entityPM.IncotermId != entityPoco.IncotermId)
+                {
+                    EventTracer.CreateTraceEvent(new EventTracerArgs()
+                    {
+                        Tenant = tenant,
+                        EventTypeCode = "ICUP",
+                        UserId = loggedContactId,
+                        EntityId = entityPM.Id,
+                        ObjectTableName = "Quote",
+                        Notes = "",
+                    });
+                }
             }
 
 

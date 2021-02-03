@@ -27589,7 +27589,7 @@
       ManualActivatedFollowUp="false"
       IsFollowUp="false" />
     <EventType
-      Code="&quot;UPIN&quot;"
+      Code="&quot;ICUP&quot;"
       ObjectTableName="&quot;Quote&quot;"
       EnglishName="&quot;Incoterm Updated&quot;"
       LocalName="&quot;Incoterm Updated&quot;"

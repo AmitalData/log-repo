@@ -197,7 +197,14 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
                         string remarks = "Salesman changed from " + oldSalesman + " to " + newSalesman;
                         this.CreateTraceEvent("SLCN", remarks);
                     }
+
+                    if (entityPM.IncotermId != entityPoco.IncotermId )
+                    {
+                        this.CreateTraceEvent("UPIC", entityPM.EventNote);
+                    }
                 }
+
+
 
                 this.TraceOtherData();
                 this.TraceMasterData();
