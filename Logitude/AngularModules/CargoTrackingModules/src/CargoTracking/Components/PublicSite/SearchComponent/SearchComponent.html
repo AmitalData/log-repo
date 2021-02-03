@@ -10,7 +10,7 @@
                 <form [formGroup]="searchForm" (ngSubmit)="Search()">
 
                     <div class="search-text ">
-                        <input #input id="CargoTracking_Search" type="text " class="gray " [(ngModel)]="SearchText " placeholder="Search by Shipment References / Cargo Identifiers / Container No." formControlName="SearchText" name="SearchText " />
+                        <input #input id="CargoTracking_Search" type="text " class="gray " [(ngModel)]="SearchText " placeholder="Type Customer/Booking/Reference No./Container No. " formControlName="SearchText" name="SearchText " />
                         <!-- [(ngModel)]="SearchText " -->
 
                         <div class="icon ">
