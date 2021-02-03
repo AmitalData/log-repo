@@ -1,6 +1,5 @@
-import {Component, OnInit, AfterViewInit} from '@angular/core';
+import {Component} from '@angular/core';
 import {BaseComponent} from '../../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
-import {UIProperty, UIProperties}  from '../../../../../Infrastructure/Components/LogitudeComponents/UIProperties'
 import {ShipmentPM} from '../../../../../Shipment/EntityPMs/ShipmentPM';
 import {ShipmentPackagePM} from '../../../../../Shipment/EntityPMs/ShipmentPackagePM';
 import {AWBWizardComponent} from '../AWBWizardComponent';
@@ -8,14 +7,17 @@ import {AppTool, FormatTool} from '../../../../../Infrastructure/Tools';
 import {ShipmentTool} from '../../../../../Shipment/Tools';
 import {TextCodeTranslator} from '../../../../../Infrastructure/Utilities/TextCodeTranslator';
 import {LogitudeWindow} from '../../../../../Controls/Windows/LogitudeWindow';
-import {ConfirmWindow} from '../../../../../Controls/Windows/ConfirmWindow';
+import { ConfirmWindow } from '../../../../../Controls/Windows/ConfirmWindow';
+import { MessageWindow } from '../../../../../Controls/Windows/MessageWindow';
 import {SessionLocator} from '../../../../../Infrastructure/Utilities/SessionLocator';
 import {ShipmentDomainService} from '../../../../../Shipment/Services/ShipmentDomainService';
 import {ServiceResponse} from '../../../../../Infrastructure/DataContracts/ServiceResponse';
 import {EntityResourceService} from '../../../../../Infrastructure/Services/EntityResourceService';
+import { ShipmentCommodityPM } from '../../../../../Shipment/EntityPMs/ShipmentCommodityPM';
+import { CommodityPackagePM } from '../../../../../Shipment/EntityPMs/CommodityPackagePM';
+import { ObservableCollection } from '../../../../../Infrastructure/Utilities/ObservableCollection';
 
-@Component({
-    
+@Component({    
     selector: 'AWBPackagesTabComponent',
     templateUrl: './AWBPackagesTabComponent.html',
 })
@@ -27,18 +29,19 @@ export class AWBPackagesTabComponent extends BaseComponent {
     public ObjectTableName: string;
     public ShipmentLevelCode: string;
     public ItemsSource: AWBWizardPackageItem[];
+    public ItemsSourceOfCommodities: ObservableCollection;
     public TabSummaryAreaHeight: number = 150;
     private DomainService: ShipmentDomainService;
     private _entityResourceService: EntityResourceService = new EntityResourceService();
     private CurrentSession = SessionLocator.SelectedSession;
     private firstDigit: string = ",";
     private secondDigit: string = ".";
-
     constructor() {
         super();
         this.DomainService = new ShipmentDomainService();
+        this.ItemsSource = [];
+        this.ItemsSourceOfCommodities = new ObservableCollection([]);
         this.setDigits();
-
     }
 
     InitTab(wizard: AWBWizardComponent) {
@@ -399,62 +402,6 @@ export class AWBPackagesTabComponent extends BaseComponent {
         });
     }
 
-    // Single | Multiple Commodities
-    SetMultipleCommodities(newValue: boolean) {
-        this.IsMultipleCommodities = newValue;
-    }
-    get IsMultipleCommodities() { return this.EntityPM.IsMultipleCommodities; }
-    set IsMultipleCommodities(newValue: boolean) {
-        if (this.EntityPM.IsMultipleCommodities != newValue) {
-            this.EntityPM.IsMultipleCommodities = newValue;
-            this.SetUIProperties();
-            this.ChangeDataStructure();
-        }
-    }
-    private ChangeDataStructure() {
-        this.Validate();
-        this.FireWizardEvent();
-    }
-
-    public BuildData() {
-        this.ItemsSource = [];
-
-        if (this.IsMultipleCommodities) {
-
-        }
-
-        else {
-
-        }
-
-        var list: ShipmentPackagePM[] = new Array<ShipmentPackagePM>();
-        this.EntityPM.ShipmentPackages.forEach((item) => {
-            list.push(item);
-        });
-
-        if (this.EntityPM.ShipmentLevelCode != "C") {
-            if (list.length < 5) {
-                for (var i = list.length; i < 5; i++) {
-
-                    var item: ShipmentPackagePM = new ShipmentPackagePM(null);
-                    item.Tenant = this.EntityPM.Tenant;
-                    item.ShipmentId = this.EntityPM.Id;
-                    item.IsAWBWizardDefault = true;
-                    list.push(item);
-                }
-            }
-        }
-
-        list./*sort((a, b) => { return (a === b) ? 0 : a ? 1 : 1 }).*/forEach((item) => {
-            var itemViewModel: AWBWizardPackageItem = new AWBWizardPackageItem(item, false, this);
-            this.ItemsSource.push(itemViewModel);
-            itemViewModel.SetUIProperties();
-        }) 
-
-        this.SetRebuildButton();
-        this.SetGenerateButton();
-    }
-
     // Properties
     get AWBCommodityItemNumber() { return this.EntityPM.AWBCommodityItemNumber; }
     set AWBCommodityItemNumber(newValue: string) {
@@ -633,8 +580,6 @@ export class AWBPackagesTabComponent extends BaseComponent {
         //}
     }
 
-
-
     GrossWeightLostFocus(input: any) {
 
         var valueComputed: number = 0;
@@ -768,18 +713,47 @@ export class AWBPackagesTabComponent extends BaseComponent {
         this.FireWizardEvent();
         this.ComputeAWBChargeAmount();
     }
+    ChooseCommodityClicked() {
+        var logitudeWindow = new LogitudeWindow();
+        logitudeWindow.Width = 775;
+        logitudeWindow.Height = 570;
+        logitudeWindow.Title = TextCodeTranslator.TranslateTablePlural("Commodity") + " Search";
+        logitudeWindow.WindowArgs = { EntityPM: this.EntityPM, FieldName: 'AWBCommodityItemNumber' };
+        logitudeWindow.Show("./ShipmentModules/ShipmentAWB/Components/AWBWizard/Packages/AWBChooseCommodityComponent");
+        logitudeWindow.WindowClosed.subscribe(s => {
+            this.SetUIProperties();
+            this.Validate();
+            this.FireWizardEvent();
+        });
+    }
+    EditDangerouse() {
+        var logitudeWindow = new LogitudeWindow();
+        logitudeWindow.Title = TextCodeTranslator.Translate("Shipment.O.Packages.EditDangerousGoods");
+        logitudeWindow.WindowArgs = this.EntityPM;
+        logitudeWindow.Show("./ShipmentModules/ShipmentAWB/Components/AWBWizard/Packages/AWBDangerousPackageComponent");
+    }
 
-    public AddPackage() {
+    AddLineClicked() {
+        if (this.IsMultipleCommodities) {
+            this.AddCommodity();
+        }
+
+        else {
+            this.AddPackage();
+        }
+    }
+
+    AddPackage() {
         var itemPM = new ShipmentPackagePM(null);
         itemPM.ShipmentId = this.EntityPM.Id;
         itemPM.Tenant = this.EntityPM.Tenant;
         var itemViewModel = new AWBWizardPackageItem(itemPM, true, this);
         this.RunPackageWindow(itemViewModel, TextCodeTranslator.Translate("ShipmentPackage.O.AddPackage"));
     }
-    public EditPackage(itemComponent: AWBWizardPackageItem) {
+    EditPackage(itemComponent: AWBWizardPackageItem) {
         this.RunPackageWindow(itemComponent, TextCodeTranslator.Translate("ShipmentPackage.O.EditPackage"));
     }
-    public DeletePackage(itemComponent: AWBWizardPackageItem) {
+    DeletePackage(itemComponent: AWBWizardPackageItem) {
         var confirmWindow = new ConfirmWindow();
         confirmWindow.Show(TextCodeTranslator.Translate("Shipment.M.DeleteThisPackage"));
         confirmWindow.WindowClosed.subscribe((event: any) => {
@@ -818,25 +792,237 @@ export class AWBPackagesTabComponent extends BaseComponent {
         });
     }
 
-    ChooseCommodityClicked() {
-        var logitudeWindow = new LogitudeWindow();
-        logitudeWindow.Width = 775;
-        logitudeWindow.Height = 570;
-        logitudeWindow.Title = TextCodeTranslator.TranslateTablePlural("Commodity") + " Search";
-        logitudeWindow.WindowArgs = { EntityPM: this.EntityPM, FieldName: 'AWBCommodityItemNumber' };
-        logitudeWindow.Show("./ShipmentModules/ShipmentAWB/Components/AWBWizard/Packages/AWBChooseCommodityComponent");
-        logitudeWindow.WindowClosed.subscribe(s => {
-            this.SetUIProperties();
-            this.Validate();
-            this.FireWizardEvent();
+    AddCommodity() {
+        var validationResult: string = ShipmentTool.ValidateAddingCommoditiesCount(this.EntityPM);
+
+        if (AppTool.IsNullOrEmpty(validationResult)) {
+            var itemPM = new ShipmentCommodityPM(null);
+            itemPM.Tenant = SessionLocator.Tenant
+            itemPM.ShipmentId = this.EntityPM.Id;
+            itemPM.RateClassCode = "Q";
+            var itemViewModel = new ShipmentCommodityItem(itemPM, true, this);
+            this.RunCommodityWindow(itemViewModel, "Add Commodity line");
+        }
+
+        else {
+            var messageWindow = new MessageWindow();
+            messageWindow.Show(validationResult);
+        }
+    }
+    EditCommodityClicked(itemComponent: ShipmentCommodityItem) {
+        this.RunCommodityWindow(itemComponent, "Edit Commodity line");
+    }
+    DeleteCommodityClicked(itemComponent: ShipmentCommodityItem) {
+        var confirmWindow = new ConfirmWindow();
+        confirmWindow.Show("Delete this Commodity?");
+        confirmWindow.WindowClosed.subscribe((event: any) => {
+            if (confirmWindow.Yes) {
+
+                if (itemComponent.EntityPM.CommodityPackages != null) {
+                    itemComponent.EntityPM.CommodityPackages = [];
+                }
+
+                this.EntityPM.RemoveCommodity(itemComponent.EntityPM);
+
+                this.BuildData();
+
+                this.ComputeTotals();
+                this.SetUIProperties();
+                this.Validate();
+                this.FireWizardEvent();
+                this.SetRebuildButton();
+                this.SetGenerateButton();
+            }
+        });
+    }
+    private RunCommodityWindow(itemComponent: ShipmentCommodityItem, windowTitle: string) {
+        this._entityResourceService.getEntityResourceByTableName(itemComponent.ObjectTableName).subscribe(response => {
+            var logitudeWindow = new LogitudeWindow();
+            logitudeWindow.Title = windowTitle;
+            logitudeWindow.DataContext = itemComponent;
+            logitudeWindow.Show("./ShipmentModules/ShipmentAWB/Components/AWBWizard/Packages/AWBAddEditCommodityComponent");
         });
     }
 
-    public EditDangerouse() {
-        var logitudeWindow = new LogitudeWindow();
-        logitudeWindow.Title = TextCodeTranslator.Translate("Shipment.O.Packages.EditDangerousGoods");
-        logitudeWindow.WindowArgs = this.EntityPM;
-        logitudeWindow.Show("./ShipmentModules/ShipmentAWB/Components/AWBWizard/Packages/AWBDangerousPackageComponent"); 
+
+    // Single | Multiple Commodities
+    // Commodities
+    public SelectedRow: ShipmentCommodityItem = null;
+    OnRowSelected(itemComponent: ShipmentCommodityItem) {
+        this.SelectedRow = itemComponent;
+    }
+    OnRowLoaded(Row: any) {
+
+        var isExpandaple = false;
+
+        if (Row) {
+            var item: ShipmentCommodityItem = Row.rowData;
+            if (item) {
+                if (item.EntityPM.CommodityPackages.length > 0) {
+                    isExpandaple = true;
+                }
+            }
+
+            Row.SetExpandaple(isExpandaple);
+        }
+    }
+
+    SetMultipleCommodities(newValue: boolean) {
+        this.IsMultipleCommodities = newValue;
+    }
+    get IsMultipleCommodities() { return this.EntityPM.IsMultipleCommodities; }
+    set IsMultipleCommodities(newValue: boolean) {
+        if (this.EntityPM.IsMultipleCommodities != newValue) {
+            this.EntityPM.IsMultipleCommodities = newValue;
+            this.SetUIProperties();
+            this.ChangeDataStructure();
+            this.BuildData();
+        }
+    }
+    private ChangeDataStructure() {
+        this.Validate();
+        this.FireWizardEvent();
+
+
+        //  Order by - Sort Id
+        // var myBaseCommodityPM: ShipmentCommodityPM = this.EntityPM.ShipmentCommodities.filter(d => d.IsFirstLine).OrderBy(d => d.Id)[0];
+
+        var baseCommodityPM: ShipmentCommodityPM = this.EntityPM.ShipmentCommodities.filter(d => d.IsFirstLine)[0];
+        if (!baseCommodityPM) {
+            baseCommodityPM = new ShipmentCommodityPM(this.EntityPM);
+            baseCommodityPM.Tenant = SessionLocator.Tenant;
+            baseCommodityPM.ShipmentId = this.EntityPM.Id;
+            baseCommodityPM.DescriptionOfGoods = this.EntityPM.DescriptionOfGoods;
+            baseCommodityPM.CommodityNumber = this.EntityPM.AWBCommodityItemNumber;
+            baseCommodityPM.RateClassCode = this.EntityPM.RateClassCode;
+            baseCommodityPM.ChargeRate = this.EntityPM.AWBChargeRate;
+            baseCommodityPM.GrossWeight = this.EntityPM.GrossWeight;
+            baseCommodityPM.Volume = this.EntityPM.Volume;
+            baseCommodityPM.VolumetricWeight = this.EntityPM.VolumetricWeight;
+            baseCommodityPM.NumberOfPackages = this.EntityPM.NumberOfPackages;
+            baseCommodityPM.ChargeableWeight = this.EntityPM.ChargeableWeight;
+            baseCommodityPM.ChargeAmount = this.EntityPM.AWBChargeAmount;
+            baseCommodityPM.IsFirstLine = true;
+        }
+
+        if (this.IsMultipleCommodities) {
+            this.EntityPM.ShipmentPackages.forEach((item: ShipmentPackagePM) => {
+                var newItem: CommodityPackagePM = new CommodityPackagePM(baseCommodityPM);
+                newItem.ShipmentId = item.ShipmentId;
+                newItem.ShipmentNumber = item.ShipmentNumber;
+                newItem.CommodityId = baseCommodityPM.Id;
+                newItem.Tenant = item.Tenant;
+                newItem.Description = item.Description;
+                newItem.Height = item.Height;
+                newItem.Length = item.Length;
+                newItem.PackageTypeId = item.PackageTypeId;
+                newItem.Quantity = item.Quantity;
+                newItem.Volume = item.Volume;
+                newItem.VolumetricWeight = item.VolumetricWeight;
+                newItem.Weight = item.Weight;
+                newItem.Width = item.Width;
+                baseCommodityPM.AddCommodityPackagePM(newItem);
+            });
+
+            baseCommodityPM.DescriptionOfGoods = this.EntityPM.DescriptionOfGoods;
+            baseCommodityPM.CommodityNumber = this.EntityPM.AWBCommodityItemNumber;
+            baseCommodityPM.RateClassCode = this.EntityPM.RateClassCode;
+            baseCommodityPM.ChargeRate = this.EntityPM.AWBChargeRate;
+            baseCommodityPM.GrossWeight = this.EntityPM.GrossWeight;
+            baseCommodityPM.Volume = this.EntityPM.Volume;
+            baseCommodityPM.VolumetricWeight = this.EntityPM.VolumetricWeight;
+            baseCommodityPM.ChargeableWeight = this.EntityPM.ChargeableWeight;
+            baseCommodityPM.NumberOfPackages = this.EntityPM.NumberOfPackages;
+            baseCommodityPM.ChargeAmount = this.EntityPM.AWBChargeAmount;
+
+            this.EntityPM.RateClassCode = null;
+            this.EntityPM.AWBChargeRate = null;
+            this.EntityPM.AWBCommodityItemNumber = null;
+            this.EntityPM.DescriptionOfGoods = null;
+            this.EntityPM.ShipmentPackages = [];
+            this.EntityPM.ShipmentCommodities = [];
+            this.EntityPM.AddCommodity(baseCommodityPM);
+        }
+
+        else {
+            var list: ShipmentPackagePM[] = [];
+
+            this.EntityPM.ShipmentCommodities.forEach((item: ShipmentCommodityPM) => {
+                item.CommodityPackages.forEach((child: CommodityPackagePM) => {
+                    var newItem: ShipmentPackagePM = new ShipmentPackagePM(this.EntityPM);
+                    newItem.ShipmentId = child.ShipmentId;
+                    newItem.ShipmentNumber = child.ShipmentNumber;
+                    newItem.CommodityId = null;
+                    newItem.Tenant = child.Tenant;
+                    newItem.Description = child.Description;
+                    newItem.Height = child.Height;
+                    newItem.Length = child.Length;
+                    newItem.PackageTypeId = child.PackageTypeId;
+                    newItem.Quantity = child.Quantity;
+                    newItem.Volume = child.Volume;
+                    newItem.VolumetricWeight = child.VolumetricWeight;
+                    newItem.Weight = child.Weight;
+                    newItem.Width = child.Width;
+                    list.push(newItem);
+                });
+            });
+
+            this.EntityPM.RateClassCode = baseCommodityPM.RateClassCode;
+            this.EntityPM.AWBChargeRate = baseCommodityPM.ChargeRate;
+            this.EntityPM.AWBCommodityItemNumber = baseCommodityPM.CommodityNumber;
+            this.EntityPM.DescriptionOfGoods = baseCommodityPM.DescriptionOfGoods;
+            this.EntityPM.ShipmentPackages = [];
+            this.EntityPM.ShipmentCommodities = [];
+            this.EntityPM.AddCommodity(baseCommodityPM);
+
+            list.forEach(item => {
+                this.EntityPM.AddPackage(item);
+            });
+        }
+    }
+
+    public BuildData() {
+        this.ItemsSource = [];
+        this.ItemsSourceOfCommodities.Clear();
+
+        if (this.IsMultipleCommodities) {
+            var itemsCollection: ShipmentCommodityItem[] = [];
+
+            this.EntityPM.ShipmentCommodities.forEach((item) => {
+                itemsCollection.push(new ShipmentCommodityItem(item, false, this));
+            });
+
+            this.ItemsSourceOfCommodities.InsertCollection(itemsCollection);
+        }
+
+        else {
+            var list: ShipmentPackagePM[] = new Array<ShipmentPackagePM>();
+            this.EntityPM.ShipmentPackages.forEach((item) => {
+                list.push(item);
+            });
+
+            if (this.EntityPM.ShipmentLevelCode != "C") {
+                if (list.length < 5) {
+                    for (var i = list.length; i < 5; i++) {
+
+                        var item: ShipmentPackagePM = new ShipmentPackagePM(null);
+                        item.Tenant = this.EntityPM.Tenant;
+                        item.ShipmentId = this.EntityPM.Id;
+                        item.IsAWBWizardDefault = true;
+                        list.push(item);
+                    }
+                }
+            }
+
+            list./*sort((a, b) => { return (a === b) ? 0 : a ? 1 : 1 }).*/forEach((item) => {
+                var itemViewModel: AWBWizardPackageItem = new AWBWizardPackageItem(item, false, this);
+                this.ItemsSource.push(itemViewModel);
+                itemViewModel.SetUIProperties();
+            })
+        }
+
+        this.SetRebuildButton();
+        this.SetGenerateButton();
     }
 }
 export class AWBWizardPackageItem extends BaseComponent {
@@ -1043,5 +1229,103 @@ export class AWBWizardPackageItem extends BaseComponent {
         }
 
         this.VolumetricWeight = AppTool.ComputePackageVolumetricWeight(this.Quantity, this.Width, this.Height, this.Length, this.Volume, this.Weight, this.ShipmentPM.Ratio, this.ShipmentPM.DimensionsUnitCode, this.ShipmentPM.VolumeUnitCode, this.ShipmentPM.GrossWeightUnitCode, this.ShipmentPM.ChargeableWeightUnitCode);
+    }
+}
+export class ShipmentCommodityItem extends BaseComponent {
+    public DataContext: ShipmentCommodityItem = this;
+    public EntityPM: ShipmentCommodityPM;
+    public ShipmentPM: ShipmentPM;
+    public ObjectTableName: string = "ShipmentCommodity";
+    public IsNewEntity: boolean = false;
+    public IsWindowMode: boolean = false;
+    public CommodityPackages: any[] = [];
+    constructor(entityPM: ShipmentCommodityPM, isNew: boolean, public fatherComponent: AWBPackagesTabComponent) {
+        super();
+        this.EntityPM = entityPM;
+        this.ShipmentPM = fatherComponent.EntityPM;
+        this.CommodityPackages = this.EntityPM.CommodityPackages;
+        this.IsNewEntity = isNew;
+        this.SetUIProperties();
+    }
+
+    public IsEditingEnabled: boolean = false;
+    public SetUIProperties() {
+
+        var isFieldEnabled = false;
+        var isVolumeEnabled = false;
+        var isDimensionEnabled = false;
+
+        this.IsEditingEnabled = this.fatherComponent.IsEditingEnabled;
+
+        //if (this.IsEditingEnabled) {
+        //    if (this.Quantity > 0 || this.hasValue) {
+        //        isFieldEnabled = true;
+        //        isVolumeEnabled = true;
+        //        isDimensionEnabled = true;
+
+        //        if (this.Height != null || this.Width != null || this.Length != null) {
+        //            isVolumeEnabled = false;
+        //        }
+
+        //        else if (this.Volume != null) {
+        //            isDimensionEnabled = false;
+        //        }
+        //    }
+        //}
+
+        //this.UIProperties.SetEnabled("Quantity", this.ObjectTableName, this.IsEditingEnabled);
+        //this.UIProperties.SetEnabled("VolumetricWeight", this.ObjectTableName, false);
+        //this.UIProperties.SetEnabled("Length", this.ObjectTableName, isDimensionEnabled);
+        //this.UIProperties.SetEnabled("Width", this.ObjectTableName, isDimensionEnabled);
+        //this.UIProperties.SetEnabled("Height", this.ObjectTableName, isDimensionEnabled);
+        //this.UIProperties.SetEnabled("Volume", this.ObjectTableName, isVolumeEnabled);
+        //this.UIProperties.SetEnabled("Weight", this.ObjectTableName, isFieldEnabled);
+    }
+
+    get IsFirstLine() { return this.EntityPM.IsFirstLine; }
+
+    get CommodityNumber() { return this.EntityPM.CommodityNumber; }
+    set CommodityNumber(value: string) {
+        if (this.EntityPM.CommodityNumber != value) {
+            this.EntityPM.CommodityNumber = value;
+        }
+    }
+
+    get RateClassCode() { return this.EntityPM.RateClassCode; }
+    set RateClassCode(value: string) {
+        if (this.EntityPM.RateClassCode != value) {
+            this.EntityPM.RateClassCode = value;
+        }
+    }
+
+    get ChargeableWeight() { return this.EntityPM.ChargeableWeight; }
+    set ChargeableWeight(value: number) {
+        if (this.EntityPM.ChargeableWeight != value) {
+            this.EntityPM.ChargeableWeight = AppTool.Round(value, 3);
+            //this.fatherComponent.ComputeTotals();
+        }
+    }
+
+    get ChargeAmount() { return this.EntityPM.ChargeAmount; }
+    set ChargeAmount(value: number) {
+        if (this.EntityPM.ChargeAmount != value) {
+            this.EntityPM.ChargeAmount = AppTool.Round(value, 3);
+            //this.fatherComponent.ComputeTotals();
+        }
+    }
+
+    get ChargeRate() { return this.EntityPM.ChargeRate; }
+    set ChargeRate(value: number) {
+        if (this.EntityPM.ChargeRate != value) {
+            this.EntityPM.ChargeRate = AppTool.Round(value, 3);
+            //this.fatherComponent.ComputeTotals();
+        }
+    }
+
+    get DescriptionOfGoods() { return this.EntityPM.DescriptionOfGoods; }
+    set DescriptionOfGoods(value: string) {
+        if (this.EntityPM.DescriptionOfGoods != value) {
+            this.EntityPM.DescriptionOfGoods = value;
+        }
     }
 }
