@@ -20,30 +20,29 @@ namespace Logitude.CommonDataTests.Steps.Security
         }
 
         #region Step Region
-        [When(@"Update Address Settings request sent for User's Tenant")]
-        public void WhenUpdateAddressSettingsRequestSentForUserSTenant()
+        [When(@"update address for user's tenant")]
+        public void WhenUpdateAddressForUsersTenant()
         {
             Context.FirstUserPMData = UpdateFirstUserAddressSettings(UserTenant.Token);
         }
-
-        [Then(@"Address Settings should be Updated successfully")]
-        public void ThenAddressSettingsShouldBeUpdatedSuccessfully()
+        
+        [Then(@"address should update successfully")]
+        public void ThenAddressShouldUpdateSuccessfully()
         {
             Context.FirstUserPMData.Should().NotBeNull();
             Context.FirstUserPMData.Tenant.Should().Be(UserTenant.Tenant);
         }
 
-        [When(@"Update Address Settings request sent for other Tenant")]
-        public void WhenUpdateAddressSettingsRequestSentForOtherTenant()
+        [When(@"update address for other tenant")]
+        public void WhenUpdateAddressForOtherTenant()
         {
             Context.act = ()=> UpdateFirstUserAddressSettings(UserOtherTenant.Token);
         }
 
-        [Then(@"Address Settings should not be Updated")]
-        public void ThenAddressSettingsShouldNotBeUpdated()
+        [Then(@"should receive error message say no permission to do this operation on tenant")]
+        public void ThenShouldReceiveErrorMessageSayNoPermissionToDoThisOperationOnTenant()
         {
-            Context.act.Should().ThrowExactly<Exception>()
-                .Where(m => m.Message.Contains("Sorry! you have no permission to do this operation on Tenant"));
+            Context.act.Should().ThrowExactly<Exception>().Where(m => m.Message.Contains("Sorry! you have no permission to do this operation on Tenant"));
         }
         #endregion
 

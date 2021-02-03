@@ -40,7 +40,8 @@ namespace Logitude.CommonDataTests.Features.Security
         public static void FeatureSetup()
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
-            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features/Security", "Address Setting Security Access", null, ProgrammingLanguage.CSharp, ((string[])(null)));
+            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features/Security", "Address setting security access", "\tWith pre-prepared users authentication\r\n\tWe want to test address security access" +
+                    ".", ProgrammingLanguage.CSharp, ((string[])(null)));
             testRunner.OnFeatureStart(featureInfo);
         }
         
@@ -80,15 +81,15 @@ namespace Logitude.CommonDataTests.Features.Security
             this.TestTearDown();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="Update Address Settings for User\'s Tenant")]
-        [Xunit.TraitAttribute("FeatureTitle", "Address Setting Security Access")]
-        [Xunit.TraitAttribute("Description", "Update Address Settings for User\'s Tenant")]
+        [Xunit.SkippableFactAttribute(DisplayName="Update address settings for user\'s tenant")]
+        [Xunit.TraitAttribute("FeatureTitle", "Address setting security access")]
+        [Xunit.TraitAttribute("Description", "Update address settings for user\'s tenant")]
         public virtual void UpdateAddressSettingsForUsersTenant()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Update Address Settings for User\'s Tenant", null, tagsOfScenario, argumentsOfScenario);
-#line 3
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Update address settings for user\'s tenant", null, tagsOfScenario, argumentsOfScenario);
+#line 5
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             bool isScenarioIgnored = default(bool);
@@ -108,25 +109,25 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 this.ScenarioStart();
-#line 4
- testRunner.When("Update Address Settings request sent for User\'s Tenant", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 6
+ testRunner.When("update address for user\'s tenant", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 5
- testRunner.Then("Address Settings should be Updated successfully", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 7
+ testRunner.Then("address should update successfully", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="Update Address Settings for other Tenant")]
-        [Xunit.TraitAttribute("FeatureTitle", "Address Setting Security Access")]
-        [Xunit.TraitAttribute("Description", "Update Address Settings for other Tenant")]
+        [Xunit.SkippableFactAttribute(DisplayName="Update address settings for other tenant")]
+        [Xunit.TraitAttribute("FeatureTitle", "Address setting security access")]
+        [Xunit.TraitAttribute("Description", "Update address settings for other tenant")]
         public virtual void UpdateAddressSettingsForOtherTenant()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Update Address Settings for other Tenant", null, tagsOfScenario, argumentsOfScenario);
-#line 7
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Update address settings for other tenant", null, tagsOfScenario, argumentsOfScenario);
+#line 9
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             bool isScenarioIgnored = default(bool);
@@ -146,11 +147,11 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 this.ScenarioStart();
-#line 8
- testRunner.When("Update Address Settings request sent for other Tenant", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 10
+ testRunner.When("update address for other tenant", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 9
- testRunner.Then("Address Settings should not be Updated", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 11
+ testRunner.Then("should receive error message say no permission to do this operation on tenant", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();

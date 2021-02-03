@@ -1,9 +1,11 @@
-﻿Feature: Get Contact Security Access
+﻿Feature: Contact security access
+	With pre-prepared users authentication
+	We want to test contact security access.
 
-Scenario: Get Contact From User's Tenant
-	When First user get the first contact from contacts list
-	Then the Contact for first user should be exists
+Scenario: Get contact for user's tenant
+	When get contact for user's tenant
+	Then contact should available
 
-Scenario: Get Contact From Other Tenant
-	When Second user get the contact that requested by first user
-	Then the Contact for second user should not be exists
+Scenario: Get contact for other tenant
+	When get contact for other tenant
+	Then contact should not available

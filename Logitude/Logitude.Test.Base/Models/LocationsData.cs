@@ -3,11 +3,11 @@
     public class LocationsData
     {
         public static string PortLHRId { get; set; }
-        public static string PortLASId { get; set; }
-        public static string PortMIAId { get; set; }
-        public static string PortJFKId { get; set; }
-        public static string PortSOUId { get; set; }
-        public static string PortNYCId { get; set; }
+        public static string PortLASDomesticId { get; set; }
+        public static string PortMIADomesticId { get; set; }
+        public static string PortAirJFKId { get; set; }
+        public static string PortOceanSOUId { get; set; }
+        public static string PortInlandNYCId { get; set; }
         public static string PortLONId { get; set; }
         public static string PortMANId { get; set; }
         public static string CountryUSId { get; set; }

@@ -544,7 +544,7 @@
                         <td [attr.colspan]="IsLinesSelection?3:1" style="height: 100%; padding-bottom: 75px;">
 
                             <div class="GeneratedGridContainer">
-                                <div *ngIf="CashbookLines?.Length == 0" id="{{'ARPaymentSpinner' | IdGeneratorPipe}}" class="NoDataText">
+                                <div *ngIf="IsLinesSelection && CashbookLines?.Length == 0" id="{{'ARPaymentSpinner' | IdGeneratorPipe}}" class="NoDataText">
                                     {{'CashbookLine.O.NoDataFound' | TextCodeTranslationPipe}}
                                 </div>
                                 <logitude-edit-grid GridWidth="100%" GridHeight="100%"
@@ -555,7 +555,7 @@
                                         <ng-template let-item>
                                             <log-cell-template #logcelltemplate [IgnoreMods]="true">
                                                 <div class="TextTrimming" [style.text-align]="isRTL ? 'right' : 'left'" style="padding-top: 2px;">
-                                                    <CheckBox [IsChecked]="item.IsSelected == true" (Checked)="LineSelection(item , $event)"></CheckBox>
+                                                    <CheckBox [IsChecked]="IsAllSelected || item.IsSelected == true" (Checked)="LineSelection(item , $event)"></CheckBox>
                                                 </div>
                                             </log-cell-template>
                                         </ng-template>

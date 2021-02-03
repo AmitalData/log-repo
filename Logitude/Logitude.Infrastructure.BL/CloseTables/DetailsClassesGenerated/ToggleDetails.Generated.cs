@@ -73,13 +73,6 @@ namespace Logitude.Infrastructure.BL
 			 
             all.Add(new ToggleDetails()
             {    
-                Code = "TJC", 
-                Name = "Ticket Jumping Counter", 
-                SearchFields = "TJC,Ticket Jumping Counter", 
-			});
-			 
-            all.Add(new ToggleDetails()
-            {    
                 Code = "BDW", 
                 Name = "Build Document Via WorkerRole", 
                 SearchFields = "BDW,Build Document Via WorkerRole", 
@@ -160,13 +153,6 @@ namespace Logitude.Infrastructure.BL
                 Code = "API", 
                 SearchFields = "API,API Update", 
                 Name = "API Update", 
-			});
-			 
-            all.Add(new ToggleDetails()
-            {    
-                Code = "LIC", 
-                Name = "License Management", 
-                SearchFields = "LIC,License Management", 
 			});
 			 
             all.Add(new ToggleDetails()

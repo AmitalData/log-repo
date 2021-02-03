@@ -86,6 +86,7 @@
     <None Include="DBScripts\202008161345_RemoveCHWFeatureToggle.sxml" />
     <None Include="DBScripts\202006092059_SetPermissionToAllBIFolders.sxml" />
     <None Include="DBScripts\202101061212_SetTariffModuleToggleFeature.sxml" />
+    <None Include="DBScripts\202101280122_RemoveTicketNumberAndLicenseManagementFeatureToggle.sxml" />
     <None Include="DBTables\BatchTaskExecution.dxml" />
     <None Include="DBTables\BatchTaskExecutionStatus.dxml" />
     <None Include="DBTables\BIFoldersPermission.dxml" />

@@ -42,13 +42,13 @@ When("create shipment", () => {
 When("connect the house shipment", () => {
     cy.get('#EditComponentBusyIndicator_0').should('not.exist');
     cy.Click("#EditComponentCellId_0_0 > div.MediaFill > table > tr:nth-child(3) > td > div > div.MediaFillAbsolute.CurvedEditArea > table > tr > td:nth-child(2) > div > ng-component:nth-child(3) > div > scrollviewer > div > div > div > ng-component > table > tr:nth-child(1) > td > div > table > tr:nth-child(3) > td > div > div > div.SimpleGridViewBody > table > tr:nth-child(1) > td > table > tr:nth-child(2) > td:nth-child(2) > table > tr > td:nth-child(2) > button", null);
-    Actions.ConnectShipment();
+    Actions.ConnectOrDisconnectShipment();
 });
 
 When("the user disconnect the house shipment", () => {
     cy.get('#EditComponentBusyIndicator_0').should('not.exist');
     cy.Click("#EditComponentCellId_0_0 > div.MediaFill > table > tr:nth-child(3) > td > div > div.MediaFillAbsolute.CurvedEditArea > table > tr > td:nth-child(2) > div > ng-component:nth-child(3) > div > scrollviewer > div > div > div > ng-component > table > tr:nth-child(1) > td > div > table > tr:nth-child(3) > td > div > div > div.SimpleGridViewBody > table > tr:nth-child(1) > td > table > tr:nth-child(2) > td:nth-child(2) > table > tr > td:nth-child(2) > button", null);
-    Actions.DisconnectShipment();
+    Actions.ConnectOrDisconnectShipment();
 });
 
 Then("the master should create successfully", () => {
