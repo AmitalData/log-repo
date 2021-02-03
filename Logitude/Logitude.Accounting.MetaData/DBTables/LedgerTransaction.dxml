@@ -248,4 +248,8 @@
     ReferencedTable="Currencies"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
+  <Index
+    Columns="Tenant,IsReconciled,AccountId,OpenAmountCurrencyId,OpenAmount,AccountingDate" />
+  <Index
+    Columns="Tenant,IsReconciled,AccountId,OpenAmountCurrencyId,OpenAmount,DueDate" />
 </Table>
