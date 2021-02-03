@@ -9,6 +9,7 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Web;
+using Telerik.Windows.Documents.Fixed.Model.ColorSpaces;
 using WebFreight.Web.DataContracts;
 
 namespace WebFreight.Web.Helpers.BIReport
@@ -19,21 +20,22 @@ namespace WebFreight.Web.Helpers.BIReport
         private DataTable bIReportdataTable = null;
         private int tenant;
         private BuildBIReportHtmlService buildBIReportHtmlService;
-
+        private HtmlToPdfConverter pdfConverter = null;
         public ExportBIReportPdfService(BIReportXMLData bIReportXMLData, DataTable bIReportdataTable, int tenant)
         {
             this.bIReportXMLData = bIReportXMLData;
             this.bIReportdataTable = bIReportdataTable;
             this.tenant = tenant;
-            this.buildBIReportHtmlService = new BuildBIReportHtmlService();
+            this.buildBIReportHtmlService = new BuildBIReportHtmlService(this.bIReportdataTable);
         }
 
         public byte[] Run()
         {
             byte[] pdfData = null;
+
             if (bIReportdataTable != null)
             {
-                if (CheckIfAllowExportBIReportToPdf())
+                if (CheckIfAllowExportBIReportToPdfFormat())
                 {
                     pdfData = GetEvoPdfData();
                 }
@@ -47,7 +49,18 @@ namespace WebFreight.Web.Helpers.BIReport
 
         private byte[] GetEvoPdfData()
         {
-            HtmlToPdfConverter pdfConverter = new HtmlToPdfConverter();
+            InitializePdfConverter();
+            SetEvoPdfHeader();
+            SetEvoPdfFooter();
+            string htmlBody = buildBIReportHtmlService.Run();
+            var pdfData = pdfConverter.ConvertHtml(htmlBody, null);
+            return pdfData;
+        }
+
+
+        private void InitializePdfConverter()
+        {
+            pdfConverter = new HtmlToPdfConverter();
             pdfConverter.LicenseKey = "fvDj8eTh8eDg4vHk/+Hx4uD/4OP/6Ojo6A==";
             pdfConverter.PdfDocumentOptions.PdfPageSize = PdfPageSize.A4;
             pdfConverter.HtmlViewerWidth = 800;
@@ -58,16 +71,10 @@ namespace WebFreight.Web.Helpers.BIReport
             pdfConverter.NavigationTimeout = 120;
             pdfConverter.PdfDocumentOptions.LeftMargin = 10;
             pdfConverter.PdfDocumentOptions.RightMargin = 10;
-
-            SetEvoPdfHeader(pdfConverter);
-            SetEvoPdfFooter(pdfConverter);
-
-            string htmlBody = buildBIReportHtmlService.Run(bIReportdataTable);
-            var pdfData = pdfConverter.ConvertHtml(htmlBody, null);
-            return pdfData;
         }
 
-        private void SetEvoPdfHeader(HtmlToPdfConverter pdfConverter)
+
+        private void SetEvoPdfHeader()
         {
             HtmlToPdfElement headerHtml = new HtmlToPdfElement(0, 0, 0, 0, GetEvoPdfHtmlHeader(), null, 2040, 0);
             pdfConverter.PdfHeaderOptions.AddElement(headerHtml);
@@ -75,7 +82,8 @@ namespace WebFreight.Web.Helpers.BIReport
             pdfConverter.PdfDocumentOptions.ShowHeader = true;
         }
 
-        private void SetEvoPdfFooter(HtmlToPdfConverter pdfConverter)
+
+        private void SetEvoPdfFooter()
         {
             HtmlToPdfElement footerHtml = new HtmlToPdfElement(0, 0, 0, 0, GetEvoPdfHtmlFooter(), null, 2040, 0);
             pdfConverter.PdfFooterOptions.AddElement(footerHtml);
@@ -86,11 +94,12 @@ namespace WebFreight.Web.Helpers.BIReport
             footerTextElement.TextAlign = HorizontalTextAlign.Right;
             footerTextElement.LineStyle = new LineStyle(LineDashStyle.Solid);
             pdfConverter.PdfFooterOptions.AddElement(footerTextElement);
+         
         }
 
         private string GetEvoPdfHtmlHeader()
         {
-            string currentDate = GetCurrentDateString();
+            string currentDate = GetCurrentDateAsStringFormat();
             string companyLogoBase64 = GetCompanyLogoBase64();
 
             StringBuilder stringBuilder = new StringBuilder();
@@ -115,7 +124,7 @@ namespace WebFreight.Web.Helpers.BIReport
             return stringBuilder.ToString();
         }
 
-        private bool CheckIfAllowExportBIReportToPdf()
+        private bool CheckIfAllowExportBIReportToPdfFormat()
         {
             bool isAllow = true;
             int numberOfBiReportColumn = bIReportdataTable.Columns.Cast<DataColumn>().Where(d => d.ColumnName == "Tenant").Any() ? 16 : 15;
@@ -126,7 +135,7 @@ namespace WebFreight.Web.Helpers.BIReport
             return isAllow;
         }
 
-        private string GetCurrentDateString()
+        private string GetCurrentDateAsStringFormat()
         {
             TenantRepository tenantRepoitory = new TenantRepository(tenant);
             var curTenant = tenantRepoitory.GetSingleByTenant(tenant);

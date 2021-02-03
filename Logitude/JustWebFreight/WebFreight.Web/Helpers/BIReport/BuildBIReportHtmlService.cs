@@ -9,20 +9,25 @@ namespace WebFreight.Web.Helpers.BIReport
 {
     public class BuildBIReportHtmlService
     {
-
-
-        public string Run(DataTable bIReportdataTable)
+        private DataTable bIReportdataTable = null;
+        public BuildBIReportHtmlService(DataTable bIReportdataTable)
         {
-            string result =  GetBIReportDataHtml(bIReportdataTable);
+            this.bIReportdataTable = bIReportdataTable;
+        }
+
+
+        public string Run()
+        {
+            string result =  GetBIReportDataHtml();
             return result;
         }
 
-        private string GetBIReportDataHtml(DataTable bIReportdataTable)
+        private string GetBIReportDataHtml()
         {
             StringBuilder stringBuilder = new StringBuilder("<!DOCTYPE html> <html> <head>" + GetBIReportTableStyle() + "</head><body>");
             stringBuilder.Append("<table>");
-            stringBuilder.Append(GetBIReportHtmlHeaderTable(bIReportdataTable));
-            stringBuilder.Append(GetBIReportHtmlRowsTable(bIReportdataTable));
+            stringBuilder.Append(GetBIReportHtmlHeaderTable());
+            stringBuilder.Append(GetBIReportHtmlRowsTable());
             stringBuilder.Append("</table>");
             stringBuilder.Append("</body>");
             stringBuilder.Append("</html>");
@@ -30,7 +35,7 @@ namespace WebFreight.Web.Helpers.BIReport
             return stringBuilder.ToString();
         }
 
-        private string GetBIReportHtmlHeaderTable(DataTable bIReportdataTable)
+        private string GetBIReportHtmlHeaderTable()
         {
             StringBuilder stringBuilder = new StringBuilder("<thead><tr>");
             foreach (DataColumn column in bIReportdataTable.Columns)
@@ -42,7 +47,7 @@ namespace WebFreight.Web.Helpers.BIReport
             return stringBuilder.ToString();
         }
 
-        private string GetBIReportHtmlRowsTable(DataTable bIReportdataTable)
+        private string GetBIReportHtmlRowsTable()
         {
             StringBuilder stringBuilder = new StringBuilder();
 
