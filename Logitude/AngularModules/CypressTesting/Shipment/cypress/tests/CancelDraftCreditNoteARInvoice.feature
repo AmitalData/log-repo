@@ -1,7 +1,6 @@
 Feature: Credit Note ARInvoice Operations And Actions
     This feature file will create a direct shipment and assign an Credit Note ARInvoice, cancel draft
 
-
     Scenario: Create Direct Export Air Shipment
         Given the user logged in and navigates to shipments workspace
         And a direct shipment with the following details

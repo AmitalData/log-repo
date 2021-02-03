@@ -7,10 +7,9 @@ import { PayableDetails } from "cypress/models/PayableDetails"
 import * as BaseAssertion from "../../../../Base/cypress/actions/Assertion"
 import { ShipmentDetails } from "cypress/models/ShipmentDetails";
 import { ReceivableDetails } from "cypress/models/ReceivableDetails"
-import { CreatedShipment } from "cypress/models/CreatedShipment";
 import { PackagesDetails } from "cypress/models/PackagesDetails";
 let shipmentDetails: ShipmentDetails;
-let packagesDetails:PackagesDetails
+let packagesDetails:PackagesDetails[]
 
 Given("the user logged in and navigates to shipments workspace", () => {
     cy.Login()
@@ -34,41 +33,32 @@ Then("the direct should create successfully", () => {
 
 Given("the user fills {string} as GrossWeight and {string} as a MoveType", (GrossWeight, MoveType) => {
     Actions.OpenShipment(shipmentDetails.ShipmentNumber);
-    cy.Click(Selectors.GeneralTab, null)
     Actions.FillGeneralTab(GrossWeight, MoveType)
 });
 
 Given("the user add order package with the following details",
     (dataTable) => {
-        packagesDetails = dataTable.hashes() as PackagesDetails;
+        packagesDetails = dataTable.hashes() as PackagesDetails[];
+        Actions.FillOrdersTab(packagesDetails)
         
-        cy.Click(Selectors.OrdersTab, null)
-        Actions.FillOrderTab(packagesDetails)
     });
-
-
-
 Given("the user adds partners with following details", (dataTable) => {
-    cy.Click(Selectors.PartnersTab, null)
     const partnersDetails = dataTable.hashes()[0] as PartnersDetails;
     Actions.FillPartnersTab(shipmentDetails.Direction, shipmentDetails.TransportMode, partnersDetails)
 });
 
 Given("the user add package with the following details", (dataTable) => {
-    packagesDetails = dataTable.hashes()[0] as PackagesDetails;
-    cy.Click(Selectors.PackagesTab, null)
-    Actions.FillPackagesTab(packagesDetails)
+    packagesDetails = dataTable.hashes() as PackagesDetails[];
+    Actions.FillPackageTab(shipmentDetails.TransportMode,packagesDetails)
 
 });
 
 Given("the user fill receivables with the following details", (dataTable) => {
     const ReceivableData = dataTable.hashes()[0] as ReceivableDetails;
-    cy.Click(Selectors.ReceivablesTab, null)
     Actions.FillReceivablesTab(ReceivableData)
 });
 
 Given("the user add new pickup", () => {
-    cy.Click(Selectors.RoutingsTab, null)
     Actions.FillPickupRouting()
 
 });
@@ -84,7 +74,6 @@ Given("add pre carriage and on carriage from port {string} to port {string}", (f
 Given("the user add payable with the following details", 
     (dataTable) => {
         const PayableData = dataTable.hashes()[0] as PayableDetails;
-        cy.Click(Selectors.PayablesTab, null)
         Actions.FillPayablesTab(PayableData)
 });
 

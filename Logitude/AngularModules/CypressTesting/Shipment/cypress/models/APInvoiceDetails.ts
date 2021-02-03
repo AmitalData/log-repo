@@ -1,9 +1,9 @@
 export interface APInvoiceDetails {
     Vendor: string,
     InvoiceNumber: string,
-    InvoiceAmount: string,
+    InvoiceAmount: number,
     InvoiceCurrency: string,
-    InvoiceExchangeRate:string,
+    InvoiceExchangeRate:number,
     InvoiceDate: string,
     PaymentTerms:string,
     DueDate: string,

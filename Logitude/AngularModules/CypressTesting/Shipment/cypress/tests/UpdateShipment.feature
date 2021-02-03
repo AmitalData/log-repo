@@ -1,4 +1,4 @@
-Feature: Edit Direct Export Air Shipment
+Feature: Update Direct Export Air Shipment
 
   Scenario: Create Direct Export Air Shipment
     Given the user logged in and navigates to shipments workspace
@@ -18,7 +18,6 @@ Feature: Edit Direct Export Air Shipment
       | Quantity | Length | Width | Height | GrossWeight |
       | 5        | 1      | 2     | 3      | 100         |
       | 5        | 1      | 2     | 3      | 100         |
-
     When update shipment
     Then the direct should update successfully
 

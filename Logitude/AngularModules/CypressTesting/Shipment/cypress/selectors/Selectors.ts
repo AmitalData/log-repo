@@ -36,7 +36,7 @@ export class Selectors
     public static readonly OceanPackageOKButton = '#OkOceanPackage';
     public static readonly AddNewReceivableLine = '#AddReceivable button';
     public static readonly AddNewPayableLine = '#AddPayable button';
-    public static readonly ReceivableChargesType = '#Shipment_MainCarriageCarrierId';
+    public static readonly ReceivableChargesType = '#ShipmentReceivable_ChargesTypeId';
     public static readonly ReceivableUnitPrice = '#ShipmentReceivable_UnitPrice';
     public static readonly ReceivableQuantity = "#ShipmentReceivable_Quantity"
     public static readonly ReceivableCurrency = "#ShipmentReceivable_CurrencyId"
@@ -112,7 +112,7 @@ export class Selectors
     public static readonly ConfirmWindowYes= "#ConfirmWindow_Yes_0"
     public static readonly APInvoiceVoidButton="#APInvoiceBVoid";
     public static readonly ShipmentDateMaincarriageATD="#calendarbutton_date_Shipment_MainCarriageATD";
-
+    public static readonly ShipmentMainCarriageCarrierId="#Shipment_MainCarriageCarrierId"
     //Abed Malakh
     public static readonly NewShipmentToggleButton = "#NEWSHIP .LogitudeToggleButtonContainer";
     public static readonly NewShipmentToggleButtonItem = "#NEWSHIP .LogitudeToggleButtonItem";

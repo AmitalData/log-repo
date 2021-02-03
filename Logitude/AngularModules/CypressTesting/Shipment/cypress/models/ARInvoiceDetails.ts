@@ -1,7 +1,7 @@
 export interface ARInvoiceDetails {
     PartnerType: string,
     InvoiceCurrency: string,
-    InvoiceExchangeRate: string,
+    InvoiceExchangeRate: number,
     InvoiceDate: string,
     PaymentTerms:string,
     DueDate:string,
