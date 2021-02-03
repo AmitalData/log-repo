@@ -215,7 +215,7 @@ LEFT OUTER JOIN AMINETNXT_MAIN.Contacts Extent10 ON Extent10.Id = Extent1.Contro
                                 FilesInCreditControl_A = groupBy1.Count(x => x.CollectionOfMoneyStatus == "P" && x.IsAvailabilityDateNull == false && x.IsClosedForFollowUp != "1"),
                                 FilesAvailableFreeOfCharge_A = groupBy1.Count(x => x.IsPaymentDateNull == true && x.IsAvailabilityDateNull == false && x.IsClosedForFollowUp != "1"),
                                 AllCases_A = groupBy1.Count(x => x.IsAvailabilityDateNull == false ),
-                                FilesInAllInclusive = groupBy1.Count(x => x.IsHatraDateNull == false && x.RequestedCustomsDocId == 1 && x.IsClosedForFollowUp != "1"),
+                                FilesInAllInclusive = groupBy1.Count(x => x.IsHatraDateNull == false && x.RequestedCustomsDocId == 1),
                                 FilesInAllInclusive_A = groupBy1.Count(x => x.IsHatraDateNull == false && x.RequestedCustomsDocId == 1 && x.IsAvailabilityDateNull == false ),
                                 FilesRejectedByController = groupBy1.Count(x => x.ControllerStatus == "X" && x.IsClosedForFollowUp != "1"),
                                 FilesRejectedByController_A = groupBy1.Count(x => x.ControllerStatus == "X" && x.IsAvailabilityDateNull == false && x.IsClosedForFollowUp != "1"),
