@@ -123,10 +123,10 @@
       <HintPath>..\Unifreight.Data\obj\Debug\Unifreight.Data.dll</HintPath>
     </Reference>
     <Reference Include="UnifreightIIG.Common, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\UnifreightIIG.3.1803.32\lib\Net40\UnifreightIIG.Common.dll</HintPath>
+      <HintPath>..\packages\UnifreightIIG.3.1803.33\lib\Net40\UnifreightIIG.Common.dll</HintPath>
     </Reference>
     <Reference Include="UnifreightIIG.DCA, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\UnifreightIIG.3.1803.32\lib\Net40\UnifreightIIG.DCA.dll</HintPath>
+      <HintPath>..\packages\UnifreightIIG.3.1803.33\lib\Net40\UnifreightIIG.DCA.dll</HintPath>
     </Reference>
     <Reference Include="WindowsAzureEventSource, Version=2.7.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.WindowsAzure.SDK.2.9.0\lib\WindowsAzureEventSource.dll</HintPath>
@@ -476,7 +476,7 @@
     <Compile Include="ResponseServices\VE_MSG013_VendorAddCommunicationDeviceResponseService.cs" />
     <Compile Include="ResponseServices\VE_MSG052_VendorSearchResultsForCustomsAgentResponseService.cs" />
     <Compile Include="ResponseServices\VP_NG_2691_MSG101_VehicleInResponseService.cs" />
-     <Compile Include="Tasks\SendManifestService.cs" />
+    <Compile Include="Tasks\SendManifestService.cs" />
     <Compile Include="Testers\LoadTest\CreateCustomFileService.cs" />
     <Compile Include="Testers\Messages\UniDebug01_Msg.cs" />
     <Compile Include="Testers\Mirit\MiritStartUp.cs" />
