@@ -100,6 +100,8 @@ export class NewARInvoiceComponent extends BaseComponent {
     private EntityLevelCode: string = null;
     private EntityTableName: string = null;
     private EntityReceivables: any[] = [];
+    private EntitySalesmanUserId: string = null;
+
     SetWindowArgs(myarguments: any) {
         this.shipmentPM = myarguments["Shipment"];
         this.InvoiceTypeCode = myarguments["InvoiceTypeCode"];
@@ -119,6 +121,9 @@ export class NewARInvoiceComponent extends BaseComponent {
             this.EntityPM.ProfitCurrencyId = this.shipmentPM.ProfitCurrencyId;
             this.EntityPM.OperationalDate = InvoiceTool.GetOperationalDate(this.shipmentPM);
             this.EntityPM.BranchId = this.shipmentPM.BranchId;
+            this.EntityPM.SalesmanUserId = this.shipmentPM.SalesmanUserId;
+            this.EntityPM.SalesmanUserName = this.shipmentPM.SalesmanUserName;
+            this.EntitySalesmanUserId = this.shipmentPM.SalesmanUserId;
 
             var myDescription: string = null;
             switch (this.shipmentPM.DirectionId) {
@@ -441,6 +446,7 @@ export class NewARInvoiceComponent extends BaseComponent {
                 this.EntityPM.BillToCreditLimitOpenBalance = null;
                 this.EntityPM.BillToCreditLimitWarningPercentage = null;
                 this.EntityPM.BillToBlockNewInvoiceCreation = false;
+
                 if (SessionLocator.SATInterfaceSettings) {
                     this.MetodoPagoCode = SessionLocator.SATInterfaceSettings.MetodoPagoCode;
                 }
@@ -467,7 +473,10 @@ export class NewARInvoiceComponent extends BaseComponent {
                             this.EntityPM.BillToCreditLimitOpenBalance = list.CreditLimitOpenBalance;
                             this.EntityPM.BillToCreditLimitWarningPercentage = list.CreditLimitWarningPercentage;
                             this.EntityPM.BillToBlockNewInvoiceCreation = list.BlockNewInvoiceCreation;                            
-                            this.EntityPM.SalesmanUserId = list.SalesmanUserId;
+
+                            if (!this.EntitySalesmanUserId) {
+                                this.EntityPM.SalesmanUserId = list.SalesmanUserId;
+                            }
 
                             if (!AppTool.IsNullOrEmpty(list.SATPaymentMethodCode)) {
                                 this.SATPaymentMethodCode = list.SATPaymentMethodCode;
