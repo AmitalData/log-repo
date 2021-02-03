@@ -21,7 +21,7 @@ namespace WebFreight.Web.Helpers.BIReport
             bIReportsSecurityIntegrationService.CheckBIReportDataSecurity(dataTable);
             if (bIReportXMLData.ExportDataType == "Pdf")
             {
-                reportData = new ExportBIReportPdfService().Run(dataTable);
+                reportData = new ExportBIReportPdfService(bIReportXMLData, dataTable, tenant).Run();
             }
             else
             {

@@ -1,8 +1,11 @@
 ﻿using EvoPdf;
+using Simplog.Data.CommonDataModel.Repositories;
+using Simplog.Data.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Drawing;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Web;
@@ -12,15 +15,27 @@ namespace WebFreight.Web.Helpers.BIReport
 {
     public class ExportBIReportPdfService
     {
+        private BIReportXMLData bIReportXMLData = null;
+        private DataTable bIReportdataTable = null;
+        private int tenant;
+        private BuildBIReportHtmlService buildBIReportHtmlService;
 
-        public byte[] Run(DataTable dataTable)
+        public ExportBIReportPdfService(BIReportXMLData bIReportXMLData, DataTable bIReportdataTable, int tenant)
+        {
+            this.bIReportXMLData = bIReportXMLData;
+            this.bIReportdataTable = bIReportdataTable;
+            this.tenant = tenant;
+            this.buildBIReportHtmlService = new BuildBIReportHtmlService();
+        }
+
+        public byte[] Run()
         {
             byte[] pdfData = null;
-            if (dataTable != null)
+            if (bIReportdataTable != null)
             {
-                if (!CheckReportDataExecuteQuota(dataTable))
+                if (CheckIfAllowExportBIReportToPdf())
                 {
-                    pdfData = GetEvoPDFData(dataTable);
+                    pdfData = GetEvoPdfData();
                 }
                 else
                 {
@@ -30,7 +45,7 @@ namespace WebFreight.Web.Helpers.BIReport
             return pdfData;
         }
 
-        private byte[] GetEvoPDFData(DataTable dataTable)
+        private byte[] GetEvoPdfData()
         {
             HtmlToPdfConverter pdfConverter = new HtmlToPdfConverter();
             pdfConverter.LicenseKey = "fvDj8eTh8eDg4vHk/+Hx4uD/4OP/6Ojo6A==";
@@ -43,113 +58,98 @@ namespace WebFreight.Web.Helpers.BIReport
             pdfConverter.NavigationTimeout = 120;
             pdfConverter.PdfDocumentOptions.LeftMargin = 10;
             pdfConverter.PdfDocumentOptions.RightMargin = 10;
-            HtmlToPdfElement headerHtml = new HtmlToPdfElement(0, 0, 0, 0, GetEvoPdfHtmlHeader(), null, 2040, 0);
-            pdfConverter.PdfHeaderOptions.AddElement(headerHtml);
-            pdfConverter.PdfHeaderOptions.HeaderHeight = 100;
 
-            HtmlToPdfElement footerHtml = new HtmlToPdfElement(0, 0, 0, 0, GetEvoPdfHtmlFooter(), null, 2040, 0);
-            pdfConverter.PdfFooterOptions.AddElement(footerHtml);
-            pdfConverter.PdfFooterOptions.FooterHeight = 20;
+            SetEvoPdfHeader(pdfConverter);
+            SetEvoPdfFooter(pdfConverter);
 
-            var footerTextElement = new TextElement(0, 20, "page &p; of &P;  ", new Font(new System.Drawing.FontFamily("Times New Roman"), 7, GraphicsUnit.Point));
-            footerTextElement.TextAlign = HorizontalTextAlign.Right;
-            pdfConverter.PdfFooterOptions.AddElement(footerTextElement);
-
-
-
-            string htmlBody = GetPdfHtmlBody(dataTable);
+            string htmlBody = buildBIReportHtmlService.Run(bIReportdataTable);
             var pdfData = pdfConverter.ConvertHtml(htmlBody, null);
             return pdfData;
         }
 
-        private string GetPdfHtmlBody(DataTable dataTable)
+        private void SetEvoPdfHeader(HtmlToPdfConverter pdfConverter)
         {
-            StringBuilder stringBuilder = new StringBuilder("<!DOCTYPE html> <html> <head>" + GetBIReportTableStyle() + "</head><body>");
-            stringBuilder.Append("<table>");
-            stringBuilder.Append(GetBIReportHtmlHeaderTable(dataTable));
-            stringBuilder.Append(GetBIReportHtmlRowsTable(dataTable));
-            stringBuilder.Append("</table>");
-            stringBuilder.Append("</body>");
-            stringBuilder.Append("</html>");
-
-            return stringBuilder.ToString();
+            HtmlToPdfElement headerHtml = new HtmlToPdfElement(0, 0, 0, 0, GetEvoPdfHtmlHeader(), null, 2040, 0);
+            pdfConverter.PdfHeaderOptions.AddElement(headerHtml);
+            pdfConverter.PdfHeaderOptions.HeaderHeight = 105;
+            pdfConverter.PdfDocumentOptions.ShowHeader = true;
         }
 
-        private string GetBIReportHtmlHeaderTable(DataTable dataTable)
+        private void SetEvoPdfFooter(HtmlToPdfConverter pdfConverter)
         {
-            StringBuilder stringBuilder = new StringBuilder("<thead><tr>");
-            foreach (DataColumn column in dataTable.Columns)
-            {
-                stringBuilder.Append(" <th>" + column.ColumnName + "</th> ");
-            }
-            stringBuilder.Append("</tr></thead>");
+            HtmlToPdfElement footerHtml = new HtmlToPdfElement(0, 0, 0, 0, GetEvoPdfHtmlFooter(), null, 2040, 0);
+            pdfConverter.PdfFooterOptions.AddElement(footerHtml);
+            pdfConverter.PdfFooterOptions.FooterHeight = 40;
+            pdfConverter.PdfDocumentOptions.ShowFooter = true;
 
-            return stringBuilder.ToString();
+            var footerTextElement = new TextElement(0, 20, "page &p; of &P;  ", new Font(new System.Drawing.FontFamily("Times New Roman"), 10, GraphicsUnit.Point));
+            footerTextElement.TextAlign = HorizontalTextAlign.Right;
+            footerTextElement.LineStyle = new LineStyle(LineDashStyle.Solid);
+            pdfConverter.PdfFooterOptions.AddElement(footerTextElement);
         }
-
-        private string GetBIReportHtmlRowsTable(DataTable dataTable)
-        {
-            StringBuilder stringBuilder = new StringBuilder();
-
-            foreach (DataRow row in dataTable.Rows)
-            {
-                stringBuilder.Append(" <tr>");
-
-                foreach (DataColumn column in dataTable.Columns)
-                {
-                    stringBuilder.Append("<td>"+row[column.ColumnName].ToString() + "</td>");
-                }
-
-                stringBuilder.Append(" </tr>");
-
-            }
-
-            return stringBuilder.ToString();
-        }
-
-        private bool CheckReportDataExecuteQuota(DataTable dataTable)
-        {
-            bool isExecutedQuota = false;
-            int numberOfColumnQuota = dataTable.Columns.Cast<DataColumn>().Where(d => d.ColumnName == "Tenant").Any() ? 16 : 15;
-            if (dataTable != null && (dataTable.Columns.Count > numberOfColumnQuota || dataTable.Rows.Count > 40000))
-            {
-                isExecutedQuota = true;
-            }
-            return isExecutedQuota;
-        }
-
 
         private string GetEvoPdfHtmlHeader()
         {
+            string currentDate = GetCurrentDateString();
+            string companyLogoBase64 = GetCompanyLogoBase64();
+
             StringBuilder stringBuilder = new StringBuilder();
-            stringBuilder.Append("<table border='1' cellpadding='1' cellspacing='1' style='height: 150px; width: 100 % '>" );
-            stringBuilder.Append("<tbody>");
-            stringBuilder.Append("<tr>");
-            stringBuilder.Append("<td style='width: 30 % '><img  src='https://ckeditor.com/apps/ckfinder/userfiles/files/123984258_682208545772232_645619898285396818_n(1).jpg' style='height:150px; width:290px' /></td>");
-            stringBuilder.Append("<td style='text-align:center;vertical-align:top; width:30 % '><div style='margin - top:50px; '><strong>InVentory Report</strong></div> </td>");
-            stringBuilder.Append("<td style='text-align:center;vertical-align:top; width:30 % '><div style='margin - top:50px; '><strong>22 Jub 2020 Report</strong></div> </td>");
-            stringBuilder.Append("</tr>");
-            stringBuilder.Append("</tbody>");
+            stringBuilder.Append("<div style='width:100%;height:350px'>");
+            stringBuilder.Append("<table width='100%' style='border-collapse: collapse;width:100%;margin-right:10px;height:350px'>");
+            stringBuilder.Append("<tbody><tr>");
+            stringBuilder.Append("<td style='width:30%;text-align:left'><img style='width:725px;Height:350px;max-Height:350px' src='data:image/jpg;base64," + companyLogoBase64 + "'/>" + "</td>");
+            stringBuilder.Append("<td style='table-layout: auto;vertical-align: center;Width:30%;text-align:center;max-width:30%;word-wrap:break-word'><div style='font-size:40px;'><strong>" + bIReportXMLData.BIReportPM.Name + "</strong></div> </td>");
+            stringBuilder.Append("<td style='table-layout: auto;vertical-align: center;Width:40%;text-align:right;max-width:30%;word-wrap:break-word;'><div style='font-size:30px;margin-right:50px;margin-top:-90px'><strong>" + currentDate + "</strong></div> </td>");
+            stringBuilder.Append("</tr></tbody>");
             stringBuilder.Append("</table>");
+            stringBuilder.Append("</div>");
 
             return stringBuilder.ToString();
         }
+
         private string GetEvoPdfHtmlFooter()
         {
             StringBuilder stringBuilder = new StringBuilder();
-            stringBuilder.Append("<div>Print by abed </div>");
-           
+            stringBuilder.Append("<div style='width:100%;vertical-align: center;text-align:center;height:86px;font-size:40px'>Printed by Logitude</div>");
 
             return stringBuilder.ToString();
         }
-        
 
-
-
-        private string GetBIReportTableStyle()
+        private bool CheckIfAllowExportBIReportToPdf()
         {
-            return " <style> table {font-family: arial, sans-serif;border-collapse: collapse;width: 100%;} td, th {border: 1px solid #dddddd;text-align: left;padding: 8px;} tr:nth-child(even) { background-color: #dddddd;}</style>";
+            bool isAllow = true;
+            int numberOfBiReportColumn = bIReportdataTable.Columns.Cast<DataColumn>().Where(d => d.ColumnName == "Tenant").Any() ? 16 : 15;
+            if (bIReportdataTable != null && (bIReportdataTable.Columns.Count > numberOfBiReportColumn || bIReportdataTable.Rows.Count > 40000))
+            {
+                isAllow = false;
+            }
+            return isAllow;
         }
+
+        private string GetCurrentDateString()
+        {
+            TenantRepository tenantRepoitory = new TenantRepository(tenant);
+            var curTenant = tenantRepoitory.GetSingleByTenant(tenant);
+            string datetimeformat = @"dd\/MM\/yyyy";
+            if (!string.IsNullOrEmpty(curTenant.DateTimeFormat)) datetimeformat = curTenant.DateTimeFormat;
+            string todayDate = TenantServerConfigration.GetCurrentDateTime(tenant).ToString(curTenant.DateTimeFormat, CultureInfo.CurrentCulture);
+            return todayDate;
+        }
+
+        private string GetCompanyLogoBase64()
+        {
+            string result = string.Empty;
+            byte[] companyLogoData = new HtmlEditorHelper().GetFileFromServer(("logo" + tenant.ToString()), "jpg", "logos", tenant);
+            if (companyLogoData != null)
+            {
+                char[] companyLogobase64Data = new char[(int)(Math.Ceiling((double)companyLogoData.Length / 3) * 4)];
+                Convert.ToBase64CharArray(companyLogoData, 0, companyLogoData.Length, companyLogobase64Data, 0);
+                result = new String(companyLogobase64Data);
+            }
+            return result;
+        }
+
+
 
     }
 }
