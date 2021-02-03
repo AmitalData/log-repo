@@ -924,11 +924,6 @@ namespace WebFreight.Web.WcfApi
                     throw new ApplicationException("AssginedtoCustomsAgentId field doesn't exist in the database, Upsert this entity before using it.");
                 }
             }
-
-            else if (entityPM.AssginedToCustomsAgentDate != null)
-            { 
-                throw new ApplicationException("AssginedtoCustomsAgentId field doesn't exist in the database, Upsert this entity before using AssginedToCustomsAgentDate.");
-            }
          
         }
 
