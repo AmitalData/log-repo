@@ -261,10 +261,12 @@ export class CustomerGeneralTabComponent extends BaseComponent   {
 
     BuildCompetitorToggleButtonList() {
         this.CompetitorToggleButtonList = [];
-        var data: Array<any> = this.AllCompetitors;
+        var ActiveCompetitors: Array<CompetitorList> = [];
+        ActiveCompetitors = this.AllCompetitors.filter(compatitor => compatitor.InActive == false);
+        var data: Array<any> = ActiveCompetitors;
 
         if (!AppTool.IsNullOrEmpty(this.SearchTextCompetitor)) {
-            data = this.AllCompetitors.filter(f => f.Name.toLowerCase().indexOf(this.SearchTextCompetitor.toLowerCase()) > -1);
+            data = ActiveCompetitors.filter(f => f.Name.toLowerCase().indexOf(this.SearchTextCompetitor.toLowerCase()) > -1);
         }
 
         data.forEach(item => {
