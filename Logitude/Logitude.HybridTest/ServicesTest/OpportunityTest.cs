@@ -49,8 +49,8 @@ namespace Logitude.HybridTest.ServicesTest
             try
             {
                 RetryTest.InsertTestMethodToDictionary(TestContext.TestName);
-                if (HybridData.FirstOpportunityId == null)
-                    Test_Opportunity_GetOpportunityList();
+                //if (HybridData.FirstOpportunityId == null)
+                    //Test_Opportunity_GetOpportunityList();
                 InvokedProperties serviceProperties = new InvokedProperties
                 {
                     ServiceName = "Opportunity",

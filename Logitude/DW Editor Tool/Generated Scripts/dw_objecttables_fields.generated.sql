@@ -771,7 +771,7 @@ insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,Is
 ------------------------------------------------------------------------------------
 declare @Fact_ChargesNewId varchar(15)
 execute usp_GetNextTableIdValue @Fact_ChargesNewId OUTPUT,'DWObjectTable' 
-insert into DWObjectTables(Id,Tenant,IndexesXml,Code,Name,TypeCode,IsClosed,DataViewName,HasPivotColumn,PivotFieldCode,AdditionalFactCode,AdditionalFactForeignKey,RecordType,DisplayName) Values(@Fact_ChargesNewId,0,'<ArrayOfIndexItem xmlns:i="http://www.w3.org/2001/XMLSchema-instance"><IndexItem> <Columns>[Source Tenant],[Shipment Create Date]</Columns></IndexItem><IndexItem> <Columns>[Source Tenant],[Shipment Create Date Time]</Columns></IndexItem></ArrayOfIndexItem>','Fact_Charges','Fact_Charges','Fact','false','factCharges','true','DIM_ChargesTypes','Fact_Shipments','[Shipment Id]','Shipment','Shipment Charges')  
+insert into DWObjectTables(Id,Tenant,IndexesXml,Code,Name,TypeCode,IsClosed,DataViewName,HasPivotColumn,PivotFieldCode,AdditionalFactCode,AdditionalFactForeignKey,RecordType,DisplayName,ObjectTableName,HasCustomFields,MaxNumberOfCustomFields) Values(@Fact_ChargesNewId,0,'<ArrayOfIndexItem xmlns:i="http://www.w3.org/2001/XMLSchema-instance"><IndexItem> <Columns>[Source Tenant],[Shipment Create Date]</Columns></IndexItem><IndexItem> <Columns>[Source Tenant],[Shipment Create Date Time]</Columns></IndexItem></ArrayOfIndexItem>','Fact_Charges','Fact_Charges','Fact','false','factCharges','true','DIM_ChargesTypes','Fact_Shipments','[Shipment Id]','Shipment','Shipment Charges','Shipment','false',0)  
 --Fields --
 declare @Fact_ChargesId_NumberNewId varchar(15)
 execute usp_GetNextTableIdValue @Fact_ChargesId_NumberNewId OUTPUT,'DWObjectField' 
@@ -995,12 +995,12 @@ insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,Is
 ------------------------------------------------------------------------------------
 declare @Fact_MasterChargesNewId varchar(15)
 execute usp_GetNextTableIdValue @Fact_MasterChargesNewId OUTPUT,'DWObjectTable' 
-insert into DWObjectTables(Id,Tenant,IndexesXml,Code,Name,TypeCode,IsClosed,DataViewName,HasPivotColumn,PivotFieldCode,AdditionalFactCode,AdditionalFactForeignKey,ParentFactCode,RecordType,DisplayName) Values(@Fact_MasterChargesNewId,0,'','Fact_MasterCharges','Fact_MasterCharges','Fact','false','factMasterCharges','true','DIM_ChargesTypes','Fact_Shipments','[Shipment Id]','Fact_Charges','Master','Master Charges')  
+insert into DWObjectTables(Id,Tenant,IndexesXml,Code,Name,TypeCode,IsClosed,DataViewName,HasPivotColumn,PivotFieldCode,AdditionalFactCode,AdditionalFactForeignKey,ParentFactCode,RecordType,DisplayName,ObjectTableName,HasCustomFields,MaxNumberOfCustomFields) Values(@Fact_MasterChargesNewId,0,'','Fact_MasterCharges','Fact_MasterCharges','Fact','false','factMasterCharges','true','DIM_ChargesTypes','Fact_Shipments','[Shipment Id]','Fact_Charges','Master','Master Charges','Shipment','false',0)  
 --Fields --
 ------------------------------------------------------------------------------------
 declare @Fact_MastersNewId varchar(15)
 execute usp_GetNextTableIdValue @Fact_MastersNewId OUTPUT,'DWObjectTable' 
-insert into DWObjectTables(Id,Tenant,IndexesXml,Code,Name,TypeCode,IsClosed,DataViewName,HasPivotColumn,ParentFactCode,RecordType,DisplayName) Values(@Fact_MastersNewId,0,'','Fact_Masters','Fact_Masters','Fact','false','factMasters','false','Fact_Shipments','Master','Masters')  
+insert into DWObjectTables(Id,Tenant,IndexesXml,Code,Name,TypeCode,IsClosed,DataViewName,HasPivotColumn,ParentFactCode,RecordType,DisplayName,ObjectTableName,HasCustomFields,MaxNumberOfCustomFields) Values(@Fact_MastersNewId,0,'','Fact_Masters','Fact_Masters','Fact','false','factMasters','false','Fact_Shipments','Master','Masters','Shipment','false',0)  
 --Fields --
 ------------------------------------------------------------------------------------
 declare @Fact_QuotesNewId varchar(15)

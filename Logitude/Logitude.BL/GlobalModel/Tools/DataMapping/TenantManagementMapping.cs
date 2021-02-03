@@ -145,6 +145,7 @@ namespace Logitude.BL.GlobalModel.Tools.DataMapping
             entityPOCO.ComapnylogoId = entityPM.ComapnylogoId;
             entityPOCO.BackgroundId = entityPM.BackgroundId;
             entityPOCO.BrowserIconId = entityPM.BrowserIconId;
+            entityPOCO.ShipmentHeaderImageId = entityPM.ShipmentHeaderImageId;
             entityPOCO.NoPaymentForChildTenants = entityPM.NoPaymentForChildTenants;
 
             entityPOCO.LastEbookingSentDate = entityPM.LastEbookingSentDate;

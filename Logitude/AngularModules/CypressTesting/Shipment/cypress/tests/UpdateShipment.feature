@@ -38,7 +38,7 @@ Feature: Edit Direct Export Air Shipment
     Given the user in the Receivables tab
     And  fill Receivables with the following details
      | ChargesType | UOM  | Quantity | UnitPrice | Currency | ExchangeRate |
-            | AFT         | GRWT | 5        | 20        | EUR      | 4            |
+     | AFT         | GRWT | 5        | 20        | EUR      | 4            |
     When save shipment
     Then the save operation complete successfully
 
@@ -65,4 +65,3 @@ Feature: Edit Direct Export Air Shipment
     And  add Payables with "AFT" as a ChargesType, "EUR" as a Currency and "GRWT" as UOM 
     When save shipment
     Then the save operation complete successfully
-    

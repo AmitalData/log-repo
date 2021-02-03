@@ -1,5 +1,7 @@
 ﻿<Script DBType="Main" Module="Shipment" AOT="true" TargetTableName="Shipments">
-  <Sql Version="1">
+
+  <Sql Version="5">
+
     <![CDATA[
       
 If(OBJECT_ID('tempdb..#temp') Is Not Null)
@@ -57,7 +59,7 @@ If(OBJECT_ID('tempdb..#temp') Is Not Null)
               begin
                     update Shipments
                     set
-                    SearchFields = #temp_Shipments.SearchFields 
+                    QuoteNumber = #temp_Shipments.QuoteNumber 
                     FROM Shipments
                     INNER JOIN #temp_Shipments
                     on Shipments.Id = #temp_Shipments.ShipmentId

@@ -709,6 +709,11 @@ export class TenantManagementPM {
     public set BrowserIconId(newValue: string) { if (this.browserIconId != newValue) { this.browserIconId = newValue; this.MarkAsDirty("BrowserIconId"); } }
        
 	 
+    private shipmentHeaderImageId: string;
+    public get ShipmentHeaderImageId() { return this.shipmentHeaderImageId; }
+    public set ShipmentHeaderImageId(newValue: string) { if (this.shipmentHeaderImageId != newValue) { this.shipmentHeaderImageId = newValue; this.MarkAsDirty("ShipmentHeaderImageId"); } }
+       
+	 
     private privateLabelId: string;
     public get PrivateLabelId() { return this.privateLabelId; }
     public set PrivateLabelId(newValue: string) { if (this.privateLabelId != newValue) { this.privateLabelId = newValue; this.MarkAsDirty("PrivateLabelId"); } }

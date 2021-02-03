@@ -6,4 +6,4 @@ Feature: Create Shipment Tests
       | ShipmentLevel | Direction | TransportMode | Shipper  | MainCarriageFromPort | MainCarriageToPort |
       | Direct        | Export    | Air           | Shipper1 | LHR                  | MIA                |
     When create shipment
-    Then the direct should create successfully
+    Then the shipment should create successfully
