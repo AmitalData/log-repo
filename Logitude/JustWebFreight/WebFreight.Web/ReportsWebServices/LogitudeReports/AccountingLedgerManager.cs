@@ -225,7 +225,13 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
             if (!string.IsNullOrEmpty(PartnerId))
             {
                 iQueryable_ARInvoice = iQueryable_ARInvoice.Where(d => d.PartnerId == PartnerId);         
-                iQueryable_ARPayment = iQueryable_ARPayment.Where(d => d.PartnerId == PartnerId);               
+                iQueryable_ARPayment = iQueryable_ARPayment.Where(d => d.PartnerId == PartnerId);  
+                if (string.IsNullOrEmpty(CustomerId))
+                {
+                    iQueryable_ARPayment = iQueryable_ARPayment.Where(d => d.BillToId == PartnerId);
+                    iQueryable_APPayment = iQueryable_APPayment.Where(d => d.VendorId == PartnerId);
+                    iQueryable_APPaymentExternalAmount = iQueryable_APPaymentExternalAmount.Where(d => d.VendorId == PartnerId);
+                }
             }
 
             IQueryable<ARInvoice> iQueryable_ARInvoice_Open = iQueryable_ARInvoice;
@@ -602,7 +608,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                 accountingLedgerRecord.DueDate = arInvoice.DueDate.Value;
                 accountingLedgerRecord.Notes = arInvoice.InternalNotes;
                 accountingLedgerRecord.CustomerId = arInvoice.BillToId;
-                accountingLedgerRecord.PartnerId = arInvoice.PartnerId;
+                accountingLedgerRecord.PartnerId = arInvoice.PartnerId;///when the filter is not null 
                 accountingLedgerRecord.MasterNumber = arInvoice.MasterNumber;
                 accountingLedgerRecord.HouseNumber = arInvoice.HouseNumber;
                 accountingLedgerRecord.Description = arInvoice.Description + " " + arInvoice.MainEntityReference;
@@ -982,19 +988,35 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
             
             foreach (var item_customer in customerGroups)
             {
+                Card myCustomer = null;
+                Card partner = null;
                 AccountingLedger_Customer customerRecord = new AccountingLedger_Customer();
                 customerRecord.AccountingLedgerList = new List<AccountingLedger>();
                 customerRecord.CustomerId = item_customer.CustomerId;
                 customerRecord.PartnerId = item_customer.PartnerId;
 
-                Card myCustomer = CardRepository.GetSingleCard(item_customer.CustomerId, tenant, false);
-                Card partner = CardRepository.GetSingleCard(item_customer.PartnerId, tenant, false);
+                if(item_customer.CustomerId != null)
+                {
+                    myCustomer = CardRepository.GetSingleCard(item_customer.CustomerId, tenant, false);
+                    Address customerAddress = addressRepository.GetMainAddressByCardId(item_customer.CustomerId, tenant);
+                    if (customerAddress != null)
+                    {
+                        customerRecord.CustomerAddress = General.GetAddress_OneLine(customerAddress);
+                    }
+                }
+
+                if (item_customer.PartnerId != null)
+                {
+                    partner = CardRepository.GetSingleCard(item_customer.PartnerId, tenant, false);
+                }
+               
                 if (myCustomer != null)
                 {
                     
                     customerRecord.CustomerName = myCustomer.EnglishName;
                     customerRecord.CardCode = myCustomer.Code;
                 }
+
                 if (partner != null)
                 {
 
@@ -1004,12 +1026,6 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                     {
                         customerRecord.PartnerAddress = General.GetAddress_OneLine(partnerAddress);
                     }
-                }
-
-                Address customerAddress = addressRepository.GetMainAddressByCardId(item_customer.CustomerId, tenant);
-                if (customerAddress != null)
-                {
-                    customerRecord.CustomerAddress = General.GetAddress_OneLine(customerAddress);
                 }
 
                 double? balance = 0;
