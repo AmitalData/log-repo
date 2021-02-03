@@ -19,12 +19,14 @@ namespace Logitude.ShipmentTests.Features
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("TechTalk.SpecFlow", "3.5.0.0")]
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
+    [Xunit.TraitAttribute("Category", "Pre-Prepare")]
     public partial class CreateShipmentsFeature : object, Xunit.IClassFixture<CreateShipmentsFeature.FixtureData>, System.IDisposable
     {
         
         private static TechTalk.SpecFlow.ITestRunner testRunner;
         
-        private string[] _featureTags = ((string[])(null));
+        private string[] _featureTags = new string[] {
+                "Pre-Prepare"};
         
         private Xunit.Abstractions.ITestOutputHelper _testOutputHelper;
         
@@ -41,7 +43,8 @@ namespace Logitude.ShipmentTests.Features
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
             TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features", "Create Shipments", "\tWith pre-prepared base and shipment data\r\n\tWe want to create master and house sh" +
-                    "ipments.", ProgrammingLanguage.CSharp, ((string[])(null)));
+                    "ipments.", ProgrammingLanguage.CSharp, new string[] {
+                        "Pre-Prepare"});
             testRunner.OnFeatureStart(featureInfo);
         }
         
@@ -89,7 +92,7 @@ namespace Logitude.ShipmentTests.Features
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Create master shipment", null, tagsOfScenario, argumentsOfScenario);
-#line 5
+#line 6
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             bool isScenarioIgnored = default(bool);
@@ -133,13 +136,13 @@ this.ScenarioInitialize(scenarioInfo);
                 table1.AddRow(new string[] {
                             "MainCarriageFromPort",
                             "MIA"});
-#line 6
+#line 7
  testRunner.Given("a master shipment with the following properties", ((string)(null)), table1, "Given ");
 #line hidden
-#line 15
+#line 16
  testRunner.When("create master shipment", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 16
+#line 17
  testRunner.Then("the master should create successfully", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
@@ -154,7 +157,7 @@ this.ScenarioInitialize(scenarioInfo);
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Create house shipment", null, tagsOfScenario, argumentsOfScenario);
-#line 18
+#line 19
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             bool isScenarioIgnored = default(bool);
@@ -198,16 +201,16 @@ this.ScenarioInitialize(scenarioInfo);
                 table2.AddRow(new string[] {
                             "MainCarriageFromPort",
                             "MIA"});
-#line 19
+#line 20
  testRunner.Given("a house shipment with the following properties", ((string)(null)), table2, "Given ");
 #line hidden
-#line 28
+#line 29
  testRunner.And("a master shipment", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-#line 29
+#line 30
  testRunner.When("create house shipment", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 30
+#line 31
  testRunner.Then("the house should create successfully", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }

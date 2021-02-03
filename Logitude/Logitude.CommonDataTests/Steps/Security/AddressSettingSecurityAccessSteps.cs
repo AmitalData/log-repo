@@ -20,6 +20,8 @@ namespace Logitude.CommonDataTests.Steps.Security
         }
 
         #region Step Region
+
+        #region Update address settings for user's tenant
         [When(@"update address for user's tenant")]
         public void WhenUpdateAddressForUsersTenant()
         {
@@ -32,7 +34,9 @@ namespace Logitude.CommonDataTests.Steps.Security
             Context.FirstUserPMData.Should().NotBeNull();
             Context.FirstUserPMData.Tenant.Should().Be(UserTenant.Tenant);
         }
+        #endregion
 
+        #region Update address settings for other tenant
         [When(@"update address for other tenant")]
         public void WhenUpdateAddressForOtherTenant()
         {
@@ -44,6 +48,8 @@ namespace Logitude.CommonDataTests.Steps.Security
         {
             Context.act.Should().ThrowExactly<Exception>().Where(m => m.Message.Contains("Sorry! you have no permission to do this operation on Tenant"));
         }
+        #endregion
+
         #endregion
 
         #region Private Function Region

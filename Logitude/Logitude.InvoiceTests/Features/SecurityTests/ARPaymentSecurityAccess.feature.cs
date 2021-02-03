@@ -113,7 +113,7 @@ this.ScenarioInitialize(scenarioInfo);
  testRunner.When("get a AR Payment from user\'s AR Payment list", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
 #line 7
- testRunner.Then("The AR Payment should exist", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then("the AR Payment should exist", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();
@@ -151,7 +151,7 @@ this.ScenarioInitialize(scenarioInfo);
  testRunner.When("get a AR Payment from Other Tenant", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
 #line 11
- testRunner.Then("The AR Payment should not exist", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then("the AR Payment should not exist", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();

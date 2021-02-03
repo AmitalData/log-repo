@@ -1,4 +1,5 @@
-﻿Feature: Address setting security access
+﻿@Pre-Prepare
+Feature: Address setting security access
 	With pre-prepared users authentication
 	We want to test address security access.
 

@@ -113,7 +113,7 @@ this.ScenarioInitialize(scenarioInfo);
  testRunner.When("get a AP Invoice from user\'s AP Invoices list", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
 #line 7
- testRunner.Then("The AP Invoice should exist", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then("the AP Invoice should exist", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();
@@ -151,7 +151,7 @@ this.ScenarioInitialize(scenarioInfo);
  testRunner.When("get a AP Invoice from Other Tenant", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
 #line 11
- testRunner.Then("The AP Invoice should not exist", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then("the AP Invoice should not exist", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();
