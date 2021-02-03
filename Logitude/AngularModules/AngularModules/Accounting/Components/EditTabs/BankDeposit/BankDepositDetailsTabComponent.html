@@ -556,11 +556,12 @@
                                             <log-cell-template #logcelltemplate [IgnoreMods]="true">
                                                 <div class="TextTrimming" [style.text-align]="isRTL ? 'right' : 'left'" style="padding-top: 2px;">
                                                     <CheckBox [IsChecked]="IsAllSelected || item.IsSelected == true" (Checked)="LineSelection(item , $event)"></CheckBox>
+                                                    all[{{IsAllSelected}}] - line [{{item.IsSelected}}]
                                                 </div>
                                             </log-cell-template>
                                         </ng-template>
                                     </log-column>
-
+ 
                                     <log-column [Alignment]="isRTL ? 'right' : 'left'"
                                                 [header]="'BankDepositLine.F.ChequeNumber' | TextCodeTranslationPipe" [width]="'90'"
                                                 [binding]="'ChequeNumber'" [SortFieldName]="'ChequeNumber'">
