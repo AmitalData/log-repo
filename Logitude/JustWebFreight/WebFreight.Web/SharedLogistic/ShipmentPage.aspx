@@ -26,7 +26,7 @@
     <script src="../HtmlHelpers/JS/Logitude.Converters.js" type="text/javascript"></script>
     <script src="../HtmlHelpers/JS/Logitude.Entites.js" type="text/javascript"></script>
     <script src="../HtmlHelpers/JS/ContactActivityLog.js" type="text/javascript"></script>
-
+    <script src="../HtmlHelpers/JS/Logitude.Tools.js" type="text/javascript"></script>   
 
 <style type="text/css">
     img[src] {
@@ -995,7 +995,11 @@
     <script type="text/javascript">
         function OnDownloadDocument(url) {
             $.SendContactActivity($.CurrentEmail, "Shipment", "Document Download", $.CurrentTenant, $.CurrentCardId);
-            window.open(url);
+            //window.open(url);
+
+            var params = [];
+            params.push({ name: "Token", value: $.Token });
+            PostFormParamsBlank(url, params);
         }
 
         function OnDownloadAllDocument() {
@@ -1007,7 +1011,11 @@
                 url += ":securitykey:" + $.CurrentEntityKey;
             }
 
-            window.open(url);
+            var params = [];
+            params.push({ name: "Token", value: $.Token });
+            PostFormParamsBlank(url, params);
+
+            //window.open(url);
         }
 
         function GetURL() {
