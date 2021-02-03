@@ -18,6 +18,27 @@
         public static string IntegrationTestGetBaseLocations = "IntegrationTest/GetBaseLocations";
         public static string IntegrationTestGetBaseShipment = "IntegrationTest/GetBaseShipment";
 
+        #region Shipment Prepare Data URls 
+        public static string VesselsController = "vessels";
+        public static string IncotermsController = "incoterms";
+        public static string MovetypesController = "movetypes";
+        public static string PackagetypesController = "packagetypes";
+        public static string CurrencyviewsGetbyfilters = "currencyviews/getbyfilters";
+        public static string IncotermviewsGetbyfilters = "incotermviews/getbyfilters";
+        public static string MeasurementviewsGetbyfilters = "measurementviews/getbyfilters";
+        public static string ChargeTypeviewsGetbyfilters = "chargestypeviews/getbyfilters";
+        public static string PackageTypeviewsGetbyfilters = "packagetypeviews/getbyfilters";
+        public static string PaymentTermviewsGetbyfilters = "paymenttermviews/getbyfilters";
+        public static string VATTypeviewsGetbyfilters = "vattypeviews/getbyfilters";
+        public static string QuoteStageviewsGetbyfilters = "quotestageviews/getbyfilters";
+        public static string VesselviewsGetbyfilters = "vesselviews/getbyfilters";
+        public static string MoveTypeviewsGetbyfilters = "movetypeviews/getbyfilters";
+        #endregion
+
+        public static string CommonDomainGetCopyCurrencyToTenant(string portId)
+        {
+            return "CommonDomain/GetCopyCurrencyToTenant?entityId" + portId;
+        }
 
         public static string TenantsGetSingle(int id)
         {
