@@ -3,6 +3,7 @@ using Logitude.ShipmentTests.Services;
 using Logitude.Test.Base.Models;
 using Logitude.Test.Base.Services;
 using TechTalk.SpecFlow;
+using DataPreparation = Logitude.ShipmentTests.Services.DataPreparation;
 
 namespace Logitude.ShipmentTests.Hooks
 {
