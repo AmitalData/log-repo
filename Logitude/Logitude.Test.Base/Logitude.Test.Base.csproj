@@ -86,9 +86,11 @@
   <ItemGroup>
     <Compile Include="Extensions\Transforms.cs" />
     <Compile Include="Models\Configurations.cs" />
+    <Compile Include="Models\Country.cs" />
     <Compile Include="Models\Credentials.cs" />
     <Compile Include="Models\Port.cs" />
     <Compile Include="Models\Settings.cs" />
+    <Compile Include="Models\State.cs" />
     <Compile Include="Models\Urls.cs" />
     <Compile Include="Context\SecurityAccessStepsContext.cs" />
     <Compile Include="Extensions\TableExtensions.cs" />

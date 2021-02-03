@@ -14,8 +14,11 @@
         public static string APPaymentViewsGetByFilters = "APPaymentViews/GetByFilters";
         public static string ARInvoiceViewsGetByFilters = "ARInvoiceViews/GetByFilters";
         public static string ARPaymentViewsGetByFilters = "ARPaymentViews/GetByFilters";
-        public static string PortViewsGetbyfilters = "PortViews/getbyfilters";
+        public static string PortViewsGetByFilters = "PortViews/getbyfilters";
         public static string PortViewsGetTenantImportByFilters = "PortViews/getTenantImportByFilters";
+        public static string CountryViewsGetByFilters = "countryviews/getbyfilters";
+        public static string StateViewsGetByFilters = "stateviews/getbyfilters";
+        public static string StatesController = "states";
         public static string IntegrationTestGetBasePartners = "IntegrationTest/GetBasePartners";
         public static string IntegrationTestGetBaseLocations = "IntegrationTest/GetBaseLocations";
         public static string IntegrationTestGetBaseShipment = "IntegrationTest/GetBaseShipment";
@@ -68,7 +71,7 @@
 
         public static string CommonDomainGetPortCopyToCurrentTenant(string portId)
         {
-            return "CommonDomain/GetPortCopyToCurrentTenant?entityId" + portId;
+            return "CommonDomain/GetPortCopyToCurrentTenant?entityId=" + portId;
         }
     }
 }
