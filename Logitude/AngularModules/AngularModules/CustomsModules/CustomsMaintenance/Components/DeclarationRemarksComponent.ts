@@ -80,7 +80,7 @@ export class DeclarationRemarksComponent
         windowArgs.remarks = entity.StatusComment;
         logitudeWindow.Title = this.title;
         logitudeWindow.WindowArgs = windowArgs;
-        logitudeWindow.Show('./CustomsModules/CustomsReferant/Components/RemarksPopUp');
+        logitudeWindow.Show('./CustomsModules/CustomsControls/Components/RemarksPopUp');
     }
 
     SupplierInvoiceItemExpandComment(entity: any, $event: any) {
@@ -92,7 +92,7 @@ export class DeclarationRemarksComponent
         windowArgs.remarks = entity.ClasifiedRemarks;
         logitudeWindow.Title = this.title;
         logitudeWindow.WindowArgs = windowArgs;
-        logitudeWindow.Show('./CustomsModules/CustomsReferant/Components/RemarksPopUp');
+        logitudeWindow.Show('./CustomsModules/CustomsControls/Components/RemarksPopUp');
     }
     public get StatusComment() { return this.EntityPM.StatusComment; }
     public set StatusComment(newValue: string) { this.EntityPM.StatusComment = newValue; }
