@@ -19,12 +19,14 @@ namespace Logitude.ShipmentTests.Features.SecurityTests
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("TechTalk.SpecFlow", "3.5.0.0")]
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
+    [Xunit.TraitAttribute("Category", "Pre-Prepare")]
     public partial class CreateAndUpdateShipmentSecurityAccessFeature : object, Xunit.IClassFixture<CreateAndUpdateShipmentSecurityAccessFeature.FixtureData>, System.IDisposable
     {
         
         private static TechTalk.SpecFlow.ITestRunner testRunner;
         
-        private string[] _featureTags = ((string[])(null));
+        private string[] _featureTags = new string[] {
+                "Pre-Prepare"};
         
         private Xunit.Abstractions.ITestOutputHelper _testOutputHelper;
         
@@ -41,7 +43,8 @@ namespace Logitude.ShipmentTests.Features.SecurityTests
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
             TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features/SecurityTests", "Create and update shipment security access", "\tWith pre-prepared base and shipment data\r\n\tWe want to test Create and update shi" +
-                    "pment security access.", ProgrammingLanguage.CSharp, ((string[])(null)));
+                    "pment security access.", ProgrammingLanguage.CSharp, new string[] {
+                        "Pre-Prepare"});
             testRunner.OnFeatureStart(featureInfo);
         }
         
@@ -84,11 +87,9 @@ namespace Logitude.ShipmentTests.Features.SecurityTests
         [Xunit.SkippableFactAttribute(DisplayName="Create shipment for user\'s tenant")]
         [Xunit.TraitAttribute("FeatureTitle", "Create and update shipment security access")]
         [Xunit.TraitAttribute("Description", "Create shipment for user\'s tenant")]
-        [Xunit.TraitAttribute("Category", "Pre-Prepare")]
         public virtual void CreateShipmentForUsersTenant()
         {
-            string[] tagsOfScenario = new string[] {
-                    "Pre-Prepare"};
+            string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Create shipment for user\'s tenant", null, tagsOfScenario, argumentsOfScenario);
 #line 6

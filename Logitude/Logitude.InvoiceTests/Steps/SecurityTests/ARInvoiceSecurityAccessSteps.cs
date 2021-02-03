@@ -20,6 +20,7 @@ namespace Logitude.InvoiceTests.Steps.SecurityTests
         }
 
         #region Step Region
+        #region Get AR Invoice from user's tenant 
         [When(@"get a AR Invoice from user's AR Invoices list")]
         public void WhenGetARInvoiceRequestSentForUserSTenant()
         {
@@ -27,6 +28,14 @@ namespace Logitude.InvoiceTests.Steps.SecurityTests
             Context.FirstUserPMData.Id = firstUserARInvoice?.Id;
         }
 
+        [Then(@"the AR Invoice should exist")]
+        public void ThenARInvoiceShouldBeExists()
+        {
+            Context.FirstUserPMData.Id.Should().NotBeNull();
+        }
+        #endregion
+
+        #region Get AR Invoice from other tenant 
         [When(@"get a AR Invoice from Other Tenant")]
         public void WhenGetARInvoiceRequestSentForOtherTenant()
         {
@@ -34,17 +43,13 @@ namespace Logitude.InvoiceTests.Steps.SecurityTests
             Context.SecondUserPMData.Id = response.Data?.Id;
         }
 
-        [Then(@"the AR Invoice should exist")]
-        public void ThenARInvoiceShouldBeExists()
-        {
-            Context.FirstUserPMData.Id.Should().NotBeNull();
-        }
-
         [Then(@"the AR Invoice should not exist")]
         public void ThenARInvoiceShouldNotBeExists()
         {
             Context.SecondUserPMData.Id.Should().BeNull();
         }
+        #endregion
+
         #endregion
 
         #region Private Function Region

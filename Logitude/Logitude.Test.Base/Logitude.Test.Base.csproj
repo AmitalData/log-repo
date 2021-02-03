@@ -85,6 +85,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Extensions\Transforms.cs" />
+    <Compile Include="Hooks\PrepareDataBeforeFeature.cs" />
     <Compile Include="Models\Configurations.cs" />
     <Compile Include="Models\Country.cs" />
     <Compile Include="Models\Credentials.cs" />
@@ -94,7 +95,7 @@
     <Compile Include="Models\Urls.cs" />
     <Compile Include="Context\SecurityAccessStepsContext.cs" />
     <Compile Include="Extensions\TableExtensions.cs" />
-    <Compile Include="Hooks\BeforeTestRun.cs" />
+    <Compile Include="Hooks\PrepareUserTenantBeforeTestRun.cs" />
     <Compile Include="Models\ApiQueryFilters.cs" />
     <Compile Include="Models\ApiRequestParameters.cs" />
     <Compile Include="Models\ApiResponse.cs" />

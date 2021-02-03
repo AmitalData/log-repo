@@ -1,4 +1,5 @@
-﻿Feature: Update Shipments
+﻿@Pre-Prepare
+Feature: Update Shipments
 	With pre-prepared base and shipment data
 	Add packages and payables for master and house shipments.
 
