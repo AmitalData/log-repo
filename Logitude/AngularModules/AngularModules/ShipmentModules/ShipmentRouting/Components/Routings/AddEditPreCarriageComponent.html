@@ -1,4 +1,4 @@
-﻿
+
 
 <table>
     <tr style="height:1px;" *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0">
@@ -72,12 +72,13 @@
                                 </td>
 
                                 <td>
+
+                                    <!-- [DependencyFilter1Value]="CarrierDependencyProperty1" -->
                                     <LogLov [ObjectFieldName]="'PreCarriageCarrierId'"
                                             [SelectedValue]="PreCarriageCarrierId"
                                             [ObjectTableName]="ObjectTableName"
                                             [DataContext]="DataContext"
-                                            [LookUpTableName]="'Carrier'"
-                                            [DependencyFilter1Value]="CarrierDependencyProperty1">
+                                            [LookUpTableName]="'Carrier'">
                                     </LogLov>
                                 </td>
                             </tr>
