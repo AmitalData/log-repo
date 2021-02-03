@@ -1,4 +1,5 @@
 ﻿using Logitude.ShipmentTests.Models;
+using Logitude.ShipmentTests.Services;
 using Logitude.Test.Base.Models;
 using Logitude.Test.Base.Services;
 using TechTalk.SpecFlow;
@@ -11,16 +12,14 @@ namespace Logitude.ShipmentTests.Hooks
         [BeforeTestRun]
         public static void SetupShipmentPreparationVariables()
         {
-            ApiResponse<ShipmentVariables> shipmentVariablesResponse = APICaller.CallGet<ShipmentVariables>(Urls.IntegrationTestGetBaseShipment, UserTenant.Token);
-            ShipmentDataMap(shipmentVariablesResponse.Data);
+            ShipmentVariables shipmentVariables = DataPreparation.GetShipmentVariables();
+            ShipmentDataMap(shipmentVariables);
         }
 
         private static void ShipmentDataMap(ShipmentVariables shipmentVariables)
         {
             ShipmentData.CurrencyEURId = shipmentVariables.CurrencyEURId;
             ShipmentData.IncotermLDEId = shipmentVariables.IncotermLDEId;
-            ShipmentData.ChargeGroupCOMMCode = shipmentVariables.ChargeGroupCOMMCode;
-            ShipmentData.ChargeGroupCOMMId = shipmentVariables.ChargeGroupCOMMId;
             ShipmentData.ChargeTypeAFTId = shipmentVariables.ChargeTypeAFTId;
             ShipmentData.VesselPTId = shipmentVariables.VesselPTId;
             ShipmentData.PackageTypePC1Id = shipmentVariables.PackageTypePC1Id;
