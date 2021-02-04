@@ -20,6 +20,8 @@ namespace Logitude.CommonDataTests.Steps.Security
         }
 
         #region Step Region
+
+        #region Get FTP detail for user's tenant
         [When(@"get FTP detail for user's tenant")]
         public void WhenGetFTPDetailForUsersTenant()
         {
@@ -32,7 +34,9 @@ namespace Logitude.CommonDataTests.Steps.Security
         {
             Context.FirstUserPMData.Id.Should().NotBeNull();
         }
+        #endregion
 
+        #region Get FTP detail for other tenant
         [When(@"get FTP detail for other tenant")]
         public void WhenGetFTPDetailForOtherTenant()
         {
@@ -45,6 +49,8 @@ namespace Logitude.CommonDataTests.Steps.Security
         {
             Context.SecondUserPMData.Id.Should().BeNull();
         }
+        #endregion
+
         #endregion
 
         #region Private Function Region

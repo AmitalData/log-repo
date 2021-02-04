@@ -193,6 +193,7 @@ namespace Simplog.Global.Data.GlobalModel.EntityPOCOs
      
         public string BackgroundId { get; set; }
         public string ComapnylogoId { get; set; }
+        public string InvertedLogoId { get; set; }
         public string BrowserIconId { get; set; }
         public string ShipmentHeaderImageId { get; set; }
 

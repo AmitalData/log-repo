@@ -19,6 +19,8 @@ namespace Logitude.CommonDataTests.Steps.Security
         }
 
         #region Step Region
+
+        #region Get information for user's tenant
         [When(@"get information for user's tenant")]
         public void WhenGetInformationForUsersTenant()
         {
@@ -30,7 +32,9 @@ namespace Logitude.CommonDataTests.Steps.Security
         {
             Context.FirstUserPMData.Should().NotBeNull();
         }
-        
+        #endregion
+
+        #region Get information for other tenant
         [When(@"get information for other tenant")]
         public void WhenGetInformationForOtherTenant()
         {
@@ -42,6 +46,8 @@ namespace Logitude.CommonDataTests.Steps.Security
         {
             Context.act.Should().ThrowExactly<Exception>().Where(m => m.Message.Contains("Sorry you’re not authenticated to view company info"));
         }
+        #endregion
+
         #endregion
 
         #region Private Function Region

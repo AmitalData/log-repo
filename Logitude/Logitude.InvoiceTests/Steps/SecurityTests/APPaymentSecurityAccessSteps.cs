@@ -19,6 +19,8 @@ namespace Logitude.InvoiceTests.Steps.SecurityTests
         }
 
         #region Step Region
+
+        #region Get AP Payment from user's tenant 
         [When(@"get a AP Payment from user's AP Payment list")]
         public void WhenFirstUserGetTheFirstAPPaymentFromAPPaymentsList()
         {
@@ -26,6 +28,14 @@ namespace Logitude.InvoiceTests.Steps.SecurityTests
             Context.FirstUserPMData.Id = firstUserAPPayments?.Id;
         }
 
+        [Then(@"the AP Payment should exist")]
+        public void ThenAPPaymentForFirstUserShouldBeExists()
+        {
+            Context.FirstUserPMData.Id.Should().NotBeNull();
+        }
+        #endregion
+
+        #region Get AP Payment from other tenant  
         [When(@"get a AP Payment from Other Tenant")]
         public void WhenSecondUserGetTheAPPaymentThatRequestedByFirstUser()
         {
@@ -33,17 +43,13 @@ namespace Logitude.InvoiceTests.Steps.SecurityTests
             Context.SecondUserPMData.Id = response.Data?.Id;
         }
 
-        [Then(@"the AP Payment should exist")]
-        public void ThenAPPaymentForFirstUserShouldBeExists()
-        {
-            Context.FirstUserPMData.Id.Should().NotBeNull();
-        }
-
         [Then(@"the AP Payment should not exist")]
         public void ThenAPPaymentForSecondUserShouldNotBeExists()
         {
             Context.SecondUserPMData.Id.Should().BeNull();
         }
+        #endregion
+
         #endregion
 
         #region Private Function Region

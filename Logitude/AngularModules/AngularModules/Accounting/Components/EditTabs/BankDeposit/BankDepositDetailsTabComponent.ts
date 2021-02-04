@@ -531,6 +531,8 @@ export class BankDepositDetailsTabComponent extends BaseComponent {
         this.cashBookLineListService.getByFilters(this.GetCashbookLinesAPIFilters()).subscribe((response: ServiceResponse) => {
             var result = response.Result;
             console.log("CashBookLineListService", result);
+
+            this.CashbookLines = new ObservableCollection([]);
             this.CashbookLines.InsertCollection(result);
 
             // this.CashBookLines = result;
@@ -756,7 +758,7 @@ export class BankDepositDetailsTabComponent extends BaseComponent {
 
         this.BankDepositLines.Clear();
         this.EntityPM.BankDepositLines = [];
-        this.SelectedCashbookLines.Clear();
+        this.SelectedCashbookLines = new ObservableCollection([]);
 
         // this.BankDepositLines = [];
         if (event == true) {

@@ -20,6 +20,8 @@ namespace Logitude.CommonDataTests.Steps.Security
         }
 
         #region Step Region
+
+        #region Get contact for user's tenant
         [When(@"get contact for user's tenant")]
         public void WhenGetContactForUsersTenant()
         {
@@ -32,7 +34,9 @@ namespace Logitude.CommonDataTests.Steps.Security
         {
             Context.FirstUserPMData.Id.Should().NotBeNull();
         }
+        #endregion
 
+        #region Get contact for other tenant
         [When(@"get contact for other tenant")]
         public void WhenGetContactForOtherTenant()
         {
@@ -45,6 +49,8 @@ namespace Logitude.CommonDataTests.Steps.Security
         {
             Context.SecondUserPMData.Id.Should().BeNull();
         }
+        #endregion
+
         #endregion
 
         #region Private Function Region

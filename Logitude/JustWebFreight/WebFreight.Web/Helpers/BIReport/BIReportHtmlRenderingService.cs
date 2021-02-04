@@ -7,72 +7,75 @@ using System.Web;
 
 namespace WebFreight.Web.Helpers.BIReport
 {
-    public class BuildBIReportHtmlService
+    public class BIReportHtmlRenderingService
     {
+
         private DataTable bIReportdataTable = null;
-        public BuildBIReportHtmlService(DataTable bIReportdataTable)
+        private StringBuilder stringBuilder = null;
+
+        public BIReportHtmlRenderingService(DataTable bIReportdataTable)
         {
             this.bIReportdataTable = bIReportdataTable;
         }
 
 
-        public string Run()
+        public string Render()
         {
-            string result =  GetBIReportDataHtml();
+            string result = RenderReportToHtml();
             return result;
         }
 
-        private string GetBIReportDataHtml()
+        private string RenderReportToHtml()
         {
-            StringBuilder stringBuilder = new StringBuilder("<!DOCTYPE html> <html> <head>" + GetBIReportTableStyle() + "</head><body>");
+            stringBuilder = new StringBuilder("<!DOCTYPE html> <html> <head>" + GetBIReportTableStyle() + "</head><body>");
             stringBuilder.Append("<table>");
-            stringBuilder.Append(GetBIReportHtmlHeaderTable());
-            stringBuilder.Append(GetBIReportHtmlRowsTable());
+            BuildReportHeader();
+            BuildReportRows();
             stringBuilder.Append("</table>");
             stringBuilder.Append("</body>");
             stringBuilder.Append("</html>");
-
             return stringBuilder.ToString();
         }
 
-        private string GetBIReportHtmlHeaderTable()
+        private void BuildReportHeader()
         {
-            StringBuilder stringBuilder = new StringBuilder("<thead><tr>");
+            stringBuilder.Append("<thead>");
+            stringBuilder.Append("<tr>");
+            BuildHeaderColumns();
+            stringBuilder.Append("</tr>");
+            stringBuilder.Append("</thead>");
+        }
+
+        private void BuildHeaderColumns()
+        {
             foreach (DataColumn column in bIReportdataTable.Columns)
             {
                 stringBuilder.Append(" <th>" + column.ColumnName + "</th> ");
             }
-            stringBuilder.Append("</tr></thead>");
-
-            return stringBuilder.ToString();
         }
 
-        private string GetBIReportHtmlRowsTable()
+        private void BuildReportRows()
         {
-            StringBuilder stringBuilder = new StringBuilder();
-
             foreach (DataRow row in bIReportdataTable.Rows)
             {
                 stringBuilder.Append(" <tr>");
-
-                foreach (DataColumn column in bIReportdataTable.Columns)
-                {
-                    stringBuilder.Append("<td>" + row[column.ColumnName].ToString() + "</td>");
-                }
-
+                BuildDataColumns(row);
                 stringBuilder.Append(" </tr>");
-
             }
+        }
 
-            return stringBuilder.ToString();
+        private void BuildDataColumns( DataRow row)
+        {
+            foreach (DataColumn column in bIReportdataTable.Columns)
+            {
+                stringBuilder.Append("<td>" + row[column.ColumnName].ToString() + "</td>");
+            }
         }
 
         private string GetBIReportTableStyle()
         {
             return " <style> table {font-family: arial, sans-serif;border-collapse: collapse;width: 100%;} td, th {border: 1px solid #dddddd;text-align: left;padding: 8px;} tr:nth-child(even) { background-color: #dddddd;}</style>";
         }
-
-
 
     }
 }

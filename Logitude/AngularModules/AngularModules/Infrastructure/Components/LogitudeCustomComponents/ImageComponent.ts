@@ -15,16 +15,28 @@ declare var UploadLogoFile, HideImage, SetImage, ShowHideProgressDownload, Array
 
   selector: 'ImageComponent',
   templateUrl: './ImageComponent.html',
-  inputs: ['EntityId', 'ImageId', "EntityName", 
+  inputs: ['EntityId', 'ImageId', "EntityName",
   'ImageId', 'WidthImage', 'HeightImage', 'ImageResizeWidth',
-   'ImageResizeHeight', 'HideBorder', 'DisplayOnly', 
+   'ImageResizeHeight', 'HideBorder', 'DisplayOnly',
    'ConversationHeaderId','KeepOriginalSize','Extension'],
   providers: [ImageLibraryService],
 })
 
 
 export class ImageComponent implements AfterViewInit, OnInit {
-  ImageId: string;
+
+
+    private _ImageId : string;
+    public get ImageId() : string {
+        return this._ImageId;
+    }
+    public set ImageId(v : string) {
+        this._ImageId = v;
+        if(!v){
+            SetImage(this.ImageKey, "./Images/DefultImage3.jpg", true);
+        }
+    }
+
   EntityId: string;
   EntityName: string;
   HideBorder: boolean = false;
@@ -39,7 +51,7 @@ export class ImageComponent implements AfterViewInit, OnInit {
   ProgressDownloadId: string = Guid.newGuid();
   DataImage: any;
   DisplayOnly: boolean = false;
-  Tooltip: string = "Click to add the photo";// 
+  Tooltip: string = "Click to add the photo";//
   CursorImage: string = "pointer";
   BorderStyle: string = "1px solid #d3d3d3";
   WidthImage: string = "100%";

@@ -11,8 +11,6 @@ namespace Logitude.ShipmentTests.Models
         public string CurrencyEURId { get; set; }
         public string IncotermLDEId { get; set; }
         public string MeasurementGRWTId { get; set; }
-        public string ChargeGroupCOMMId { get; set; }
-        public string ChargeGroupCOMMCode { get; set; }
         public string ChargeTypeAFTId { get; set; }
         public string PackageTypePC1Id { get; set; }
         public string PackageTypePC2Id { get; set; }
