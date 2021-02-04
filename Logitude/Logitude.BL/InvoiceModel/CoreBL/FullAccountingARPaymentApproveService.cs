@@ -646,7 +646,7 @@ namespace Logitude.BL.InvoiceModel.CoreBL
         private CashBookPM GetPaymentCashbook()
         {
             ICashBookQueryServiceExt cashQuery = ContainerAccessor.Container.Resolve(typeof(ICashBookQueryServiceExt), "CashBookQueryServiceExt", new ParameterOverride("", 1)) as ICashBookQueryServiceExt;
-            CashBookPM cashBook = cashQuery.GetByPaymentAndCurrencyAndBranch(paymentPM.PaymentCurrencyId, "1", paymentPM.BranchId, tenant);
+            CashBookPM cashBook = cashQuery.GetByPaymentAndCurrencyAndBranch(paymentPM.PaymentCurrencyId, IsCashPayment? "1":"2", paymentPM.BranchId, tenant);
             PaymentCashbook = cashBook;
             return cashBook;
         }
