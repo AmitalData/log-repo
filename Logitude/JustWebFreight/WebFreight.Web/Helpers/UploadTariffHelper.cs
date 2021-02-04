@@ -41,6 +41,8 @@ namespace WebFreight.Web.Helpers
         private PortRepository portRepository;
         private ICommonDataContext commonContext;
         private ITariffModuleContext tariffContext;
+        private string fromMultiPorts;
+        private string toMultiPorts;
         public UploadTariffHelper(TariffFilterParameter filterParameter)
         {
             tenant = filterParameter.Tenant;
@@ -117,18 +119,66 @@ namespace WebFreight.Web.Helpers
                 if (tariffType == "AFC" || tariffType == "OLC")
                 {
                     excelSheetLines = this.ReadExcelSheetData_LCL(sheet);
-                    tariffLinesResult = this.BuildTariffLines_LCL(excelSheetLines);
+
+                    bool isValid = this.Validate(excelSheetLines);
+
+                    if (isValid)
+                    {
+                        tariffLinesResult = this.BuildTariffLines_LCL(excelSheetLines);
+                    }
+
+                    else
+                    {
+                        throw new ApplicationException("You can't upload this excel file");
+                    }
                 }
 
                 else if (tariffType == "OFC")
                 {
                     excelSheetLines = this.ReadExcelSheetData_FCL(sheet);
-                    tariffLinesResult = this.BuildTariffLines_FCL(excelSheetLines);
+
+                    bool isValid = this.Validate(excelSheetLines);
+
+                    if (isValid)
+                    {
+                        tariffLinesResult = this.BuildTariffLines_FCL(excelSheetLines);
+                    }
+
+                    else
+                    {
+                        throw new ApplicationException("You can't upload this excel file");
+                    }
                 }
 
                 this.CreateTariffUploadExcel(sheet.UsedRange.Rows.Count() - 1);
                 this.SaveTariff(tariffLinesResult);
             }
+        }
+
+        private bool Validate(List<ExcelSheetLine> excelSheetLines)
+        {
+            bool isValid = true;
+
+            if(!string.IsNullOrEmpty(fromMultiPorts))
+            {
+                if(excelSheetLines.Where(d => !string.IsNullOrEmpty(d.FromPort)).Any())
+                {
+                    isValid = false;
+                }
+            }
+
+            if (isValid)
+            {
+                if (!string.IsNullOrEmpty(toMultiPorts))
+                {
+                    if (excelSheetLines.Where(d => !string.IsNullOrEmpty(d.ToPort)).Any())
+                    {
+                        isValid = false;
+                    }
+                }
+            }
+
+            return isValid;
         }
 
         private List<ExcelSheetLine> ReadExcelSheetData_LCL(IWorksheet sheet)
@@ -317,6 +367,8 @@ namespace WebFreight.Web.Helpers
             List<TariffLinePM> myResult = new List<TariffLinePM>();
 
             int rowIndex = 0;
+
+            List<FromToPortClass> routs = this.ComputeRoutsList(excelSheetLines);            
 
             foreach (ExcelSheetLine row in excelSheetLines)
             {
@@ -588,11 +640,14 @@ namespace WebFreight.Web.Helpers
 
             return myResult;
         }
+
         private List<TariffLinePM> BuildTariffLines_FCL(List<ExcelSheetLine> excelSheetLines)
         {
             List<TariffLinePM> myResult = new List<TariffLinePM>();
 
             int rowIndex = 0;
+
+            List<FromToPortClass> routs = this.ComputeRoutsList(excelSheetLines);
 
             foreach (ExcelSheetLine row in excelSheetLines)
             {
@@ -1563,23 +1618,7 @@ namespace WebFreight.Web.Helpers
             }
 
             return isNumber;
-        }
-        private bool IsDateTime(string text)
-        {
-            bool isDateTime = false;
-
-            if (!string.IsNullOrEmpty(text))
-            {
-                DateTime value;
-                if (DateTime.TryParse(text, out value))
-                {
-                    isDateTime = true;
-                }
-            }
-
-            return isDateTime;
-        }
-
+        }        
         private void CreateTariffUploadExcel(int count)
         {
             if (tariffPM != null && versionPM != null)
@@ -1602,7 +1641,6 @@ namespace WebFreight.Web.Helpers
                 updateService.Update(tariffVersionUploadedExcel, true);
             }
         }
-
         private void SaveTariff(List<TariffLinePM> tariffLinesResult)
         {
             if(tariffPM != null && versionPM != null)
@@ -1623,7 +1661,6 @@ namespace WebFreight.Web.Helpers
                 tariffUpdateService.Update(tariffPM, true);
             }
         }
-
         private string UploadExcelFileToStorage(string tariffNumber, int tenant)
         {
             Document document = null;
@@ -1662,6 +1699,38 @@ namespace WebFreight.Web.Helpers
 
             return document != null ? document.Id : null;
         }
+
+        private List<FromToPortClass> ComputeRoutsList(List<ExcelSheetLine> excelSheetLines)
+        {
+            List<FromToPortClass> routs = new List<FromToPortClass>();
+            List<string> fromMultiPortsList = new List<string>();
+            List<string> toMultiPortsList = new List<string>();
+
+            if (!string.IsNullOrEmpty(fromMultiPorts))
+            {
+                fromMultiPortsList = fromMultiPorts.Split(';').ToList();
+            }
+
+            if (!string.IsNullOrEmpty(toMultiPorts))
+            {
+                toMultiPortsList = toMultiPorts.Split(';').ToList();
+            }
+
+            if(fromMultiPortsList.Count > 0)
+            {
+
+            }
+
+            else
+            {
+                if (toMultiPortsList.Count > 0)
+                {
+
+                }
+            }
+
+            return routs;
+        }
     }
 
     public class TariffFilterParameter
@@ -1691,5 +1760,11 @@ namespace WebFreight.Web.Helpers
         public string Price8 { get; set; }
         public string Notes { get; set; }
         public string TransitTime { get; set; }
+    }
+
+    public class FromToPortClass
+    {
+        public string FromPortCode { get; set; }
+        public string ToPortCode { get; set; }
     }
 }
