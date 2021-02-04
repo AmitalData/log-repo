@@ -456,7 +456,7 @@ ul.line-list li.tick {
         width: fit-content !important;
     }
     .steps-list li:hover:not(.dimmed) {
-        /* background: none; */
+        background: none;
     }
     .steps-list li>div.tick {
         width: 15px;
