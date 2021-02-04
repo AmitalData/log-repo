@@ -8,8 +8,9 @@
         public static string PotentialCustomerId { get; set; }
         public static string CustomAgentId { get; set; }
         public static string ShippingAgentId { get; set; }
-        public static string TruckerId { get; set; }
-        public static string ShipperExport1 { get; set; }
+        public static string TruckerTLONId { get; set; }
+        public static string TruckerTNYCId { get; set; }
+        public static string ShipperExportId { get; set; }
         public static string AirlineAAId { get; set; }
         public static string AirlineBAId { get; set; }
         public static string WarehouseId { get; set; }
