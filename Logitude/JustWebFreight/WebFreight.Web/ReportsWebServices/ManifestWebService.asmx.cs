@@ -120,7 +120,6 @@ namespace WebFreight.Web.ReportsWebServices
                     {
                         manifestDataProvider.ConsigneeVATNumber =  consignee.VatNumber;
                         manifestDataProvider.ConsigneeName = consignee.EnglishName;
-                        manifestDataProvider.ConsigneeName = consignee.EnglishName;
                         if (!string.IsNullOrEmpty(consignee.PrimaryContactId))
                         {
                             Contact contact = ContactRepository.GetSingleContact(consignee.PrimaryContactId, tenant, true);
@@ -744,15 +743,15 @@ namespace WebFreight.Web.ReportsWebServices
                             detail.PlaceOfReceipt = newDetail.PlaceOfReceipt = data.City;
                         }
 
-                        PickUpAndDeliveriesArguments firtPickUpArguments = new PickUpAndDeliveriesArguments();
-                        firtPickUpArguments.TypeCode = myFirstPickup.PickUpDeliveryFromTypeCode;
-                        firtPickUpArguments.AddressId = myFirstPickup.FromAddressId;
-                        firtPickUpArguments.PortId = myFirstPickup.FromPortId;
-                        firtPickUpArguments.PartnerCardId = myFirstPickup.FromPartnerCardId;
-                        firtPickUpArguments.AddressCity = myFirstPickup.FromAddressCity;
-                        firtPickUpArguments.AddressZipCode = myFirstPickup.FromAddressZipCode;
-                        firtPickUpArguments.AddressCountryId = myFirstPickup.FromAddressCountryId;
-                        string firtPickUpFullAddress =  myServiceHelper.GetDeliveryPickUpAddress(firtPickUpArguments);                       
+                        PickUpAndDeliveriesArguments firstPickUpArguments = new PickUpAndDeliveriesArguments();
+                        firstPickUpArguments.TypeCode = myFirstPickup.PickUpDeliveryFromTypeCode;
+                        firstPickUpArguments.AddressId = myFirstPickup.FromAddressId;
+                        firstPickUpArguments.PortId = myFirstPickup.FromPortId;
+                        firstPickUpArguments.PartnerCardId = myFirstPickup.FromPartnerCardId;
+                        firstPickUpArguments.AddressCity = myFirstPickup.FromAddressCity;
+                        firstPickUpArguments.AddressZipCode = myFirstPickup.FromAddressZipCode;
+                        firstPickUpArguments.AddressCountryId = myFirstPickup.FromAddressCountryId;
+                        string firtPickUpFullAddress =  myServiceHelper.GetDeliveryPickUpAddress(firstPickUpArguments);                       
 
                         if (firtPickUpFullAddress != null)
                         {
