@@ -941,6 +941,44 @@
 		},
 		{
 			"name": "CardSearchWithAirlinePrefix",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"CardSearchWithAirlinePrefix\", function () {\r",
+							"     pm.response.to.have.status(200);\r",
+							"     \r",
+							"      \r",
+							"      var idvalue1=  pm.response.json().Result.filter(a=>a.EnglishName == 'American Airlines')[0].Id;\r",
+							"      var idvalue2=  pm.response.json().Result.filter(a=>a.EnglishName == 'American Airlines')[0].EnglishName;\r",
+							"      var idvalue3=  pm.response.json().Result.filter(a=>a.EnglishName == 'American Airlines')[0].Code;\r",
+							"      \r",
+							"      var id1exist = idvalue1 !== null;\r",
+							"      var id2exist = idvalue2 == \"American Airlines\"; \r",
+							"      var id3exist = idvalue3 == \"AA\"; \r",
+							"\r",
+							"\r",
+							"      \r",
+							"      pm.expect(id1exist); \r",
+							"      pm.expect(id2exist);      \r",
+							"      pm.expect(id3exist);      \r",
+							"     \r",
+							"    \r",
+							"     if (id1exist && id2exist && id3exist)  {\r",
+							"        tests[\"Get Result With AirlinePrefix successfully finished: \" + [(idvalue2) , (idvalue3)]] = responseBody.has(idvalue1,idvalue2,idvalue3);\r",
+							"   \r",
+							"    } \r",
+							"\r",
+							"\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
 			"request": {
 				"method": "GET",
 				"header": [
@@ -950,7 +988,7 @@
 					},
 					{
 						"key": "token",
-						"value": "NPgZuoP8TqRPApAMzPZDqckP7zASVp+6l14="
+						"value": "{{Token}}"
 					},
 					{
 						"key": "content-type",
