@@ -285,5 +285,44 @@ namespace Logitude.Customs.BL.EntityQueryServices
             }
             return DocumentDeclarationId;
         }
+
+        public List<CustomsDocumentPM> GetDeclarationDocumentWithConnectNotValid(string parentEntityId, string parentEntityCode, int tenant)
+        {
+            using (var s = (this.context as DbContextBase).CreateLogger()) 
+            {
+                var myCustomsDocumentPointerRepository = new CustomsDocumentPointerRepository(this.context);
+ 
+
+                var customsDocumentsTicketRepository = new CustomsDocumentsTicketRepository(this.context);
+                var q = (
+                    from cdp in myCustomsDocumentPointerRepository.GetQParentDocumentPointer(parentEntityId, parentEntityCode, tenant)
+                    join cdt in customsDocumentsTicketRepository.GetAll(tenant) on cdp.CustomsDocumentsTicketId equals cdt.Id
+                    join cd in repository.GetAll(tenant) on cdt.DocumentsFilingId equals cd.DocumentsFilingId
+
+                    where ((cdp.Child1EntityCode == "SupplierInvoice" && string.IsNullOrEmpty(cdp.Child1EntityId))
+                          || (cdp.Child2EntityCode == "SupplierInvoiceItem" && string.IsNullOrEmpty(cdp.Child2EntityId)))
+                    select cd
+                    )
+                             .Distinct();
+                 
+
+                           // );
+
+                //var q2 = (from  cdp, cdt  in q 
+                         
+                //          where   ((cdt.Child1EntityCode== "SupplierInvoice" && string.IsNullOrEmpty( cdt.Child1EntityId))
+                //          || (cdt.Child2EntityCode == "SupplierInvoiceItem" && string.IsNullOrEmpty(cdt.Child2EntityId)))
+                //          select cd
+                //             )
+                //             .Distinct();
+
+
+                var customsDocumentListPocos = q.ToList();
+
+                var customsDocumentListPMs = customsDocumentListPocos.Select(poko => GetEntityPM(poko)).ToList();
+                return customsDocumentListPMs;
+            }
+
+        }
     }
 }
