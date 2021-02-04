@@ -433,12 +433,14 @@ ul.line-list li.tick {
     .steps-list li>div.caption {
         font-weight: bold;
         float: left;
+        width: fit-content !important;
     }
     .steps-list li>div.desc {
         font-weight: normal;
         width: calc(100% - 30px) !important;
         white-space: pre-line;
         padding-left: 30px;
+        word-break: break-word;
     }
     .steps-list li {
         /* display: flex;
