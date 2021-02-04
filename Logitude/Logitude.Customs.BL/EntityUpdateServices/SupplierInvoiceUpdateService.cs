@@ -221,7 +221,6 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             {
                 SendClass(entityPM.Tenant, _DeclarationPM.CustomFileNo, AuthenticationUtil.ResolveUserId(entityPM.Tenant), remarks);
             }
-            if (_DeclarationPM != null)UpdateReferantData(_DeclarationPM);
             base.OnUpdating(entityPM, entityPOCO);
         }
         protected override void OnUpdating(SupplierInvoicePM entityPM)
