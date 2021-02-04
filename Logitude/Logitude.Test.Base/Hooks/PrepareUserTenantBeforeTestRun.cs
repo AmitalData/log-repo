@@ -1,4 +1,7 @@
-﻿using Logitude.Test.Base.Models;
+﻿using Logitude.Test.Base.Models.Api;
+using Logitude.Test.Base.Models.Infrastructure;
+using Logitude.Test.Base.Models.Shared;
+using Logitude.Test.Base.Models.UserTenantPreparation;
 using Logitude.Test.Base.Services;
 using System;
 using System.Collections.Generic;
@@ -118,7 +121,9 @@ namespace Logitude.Test.Base.Hooks
                 Filter1Operator = "Contains",
                 Filter1Value = Settings.DefaultUserCredentials.Email
             };
+
             ApiResponse<IEnumerable<User>> usersResponse = APICaller.CallGetByFilters<IEnumerable<User>>(Urls.UserViewsGetByFilters, UserTenant.Token, apiQueryFilters);
+
             User user = usersResponse.Data?.FirstOrDefault();
             UserTenant.BranchId = user?.BranchId;
             UserTenant.DepartmentId = user?.DepartmentId;

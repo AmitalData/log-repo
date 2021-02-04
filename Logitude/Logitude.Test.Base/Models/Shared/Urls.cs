@@ -1,9 +1,10 @@
-﻿namespace Logitude.Test.Base.Models
+﻿namespace Logitude.Test.Base.Models.Shared
 {
     public static class Urls
     {
         public static string ShipmentController = "Shipment";
-        public static string AddressController = "addresses";
+        public static string DirectController = "Direct";
+        public static string AddressController = "Addresses";
         public static string AuthenticationController = "Authentication";
         public static string UserViewsGetByFilters = "UserViews/GetByFilters";
         public static string ContactViewsGetByFilters = "ContactViews/GetByFilters";
@@ -14,36 +15,28 @@
         public static string APPaymentViewsGetByFilters = "APPaymentViews/GetByFilters";
         public static string ARInvoiceViewsGetByFilters = "ARInvoiceViews/GetByFilters";
         public static string ARPaymentViewsGetByFilters = "ARPaymentViews/GetByFilters";
-        public static string PortViewsGetByFilters = "PortViews/getbyfilters";
-        public static string PortViewsGetTenantImportByFilters = "PortViews/getTenantImportByFilters";
-        public static string CountryViewsGetByFilters = "countryviews/getbyfilters";
-        public static string StateViewsGetByFilters = "stateviews/getbyfilters";
-        public static string StatesController = "states";
-        public static string IntegrationTestGetBasePartners = "IntegrationTest/GetBasePartners";
-        public static string IntegrationTestGetBaseLocations = "IntegrationTest/GetBaseLocations";
-        public static string IntegrationTestGetBaseShipment = "IntegrationTest/GetBaseShipment";
+        public static string PortViewsGetByFilters = "PortViews/GetByFilters";
+        public static string PortViewsGetTenantImportByFilters = "PortViews/GetTenantImportByFilters";
+        public static string CountryViewsGetByFilters = "CountryViews/GetByFilters";
+        public static string StateViewsGetByFilters = "StateViews/GetByFilters";
+        public static string StatesController = "States";
 
-        #region Shipment Prepare Data URls 
-        public static string VesselsController = "vessels";
-        public static string IncotermsController = "incoterms";
-        public static string MovetypesController = "movetypes";
-        public static string PackagetypesController = "packagetypes";
-        public static string CurrencyviewsGetbyfilters = "currencyviews/getbyfilters";
-        public static string IncotermviewsGetbyfilters = "incotermviews/getbyfilters";
-        public static string MeasurementviewsGetbyfilters = "measurementviews/getbyfilters";
-        public static string ChargeTypeviewsGetbyfilters = "chargestypeviews/getbyfilters";
-        public static string PackageTypeviewsGetbyfilters = "packagetypeviews/getbyfilters";
-        public static string PaymentTermviewsGetbyfilters = "paymenttermviews/getbyfilters";
-        public static string VATTypeviewsGetbyfilters = "vattypeviews/getbyfilters";
-        public static string QuoteStageviewsGetbyfilters = "quotestageviews/getbyfilters";
-        public static string VesselviewsGetbyfilters = "vesselviews/getbyfilters";
-        public static string MoveTypeviewsGetbyfilters = "movetypeviews/getbyfilters";
+        #region Shipment Prepare Data URls
+        public static string VesselsController = "Vessels";
+        public static string IncotermsController = "Incoterms";
+        public static string MoveTypesController = "MoveTypes";
+        public static string PackageTypesController = "PackageTypes";
+        public static string CurrencyViewsGetByFilters = "CurrencyViews/GetByFilters";
+        public static string IncotermViewsGetByFilters = "IncotermViews/GetByFilters";
+        public static string MeasurementViewsGetByFilters = "MeasurementViews/GetByFilters";
+        public static string ChargeTypeViewsGetByFilters = "ChargesTypeViews/GetByFilters";
+        public static string PackageTypeViewsGetByFilters = "PackageTypeViews/GetByFilters";
+        public static string PaymentTermViewsGetByFilters = "PaymentTermViews/GetByFilters";
+        public static string VatTypeViewsGetByFilters = "VatTypeViews/GetByFilters";
+        public static string QuoteStageViewsGetByFilters = "QuoteStageViews/GetByFilters";
+        public static string VesselViewsGetByFilters = "VesselViews/GetByFilters";
+        public static string MoveTypeViewsGetByFilters = "MoveTypeViews/GetByFilters";
         #endregion
-
-        public static string CommonDomainGetCopyCurrencyToTenant(string portId)
-        {
-            return "CommonDomain/GetCopyCurrencyToTenant?entityId" + portId;
-        }
 
         public static string PartnersDomainController = "PartnersDomain";
         public static string VendorViewsGetByFilters = "VendorViews/GetByFilters";
@@ -111,6 +104,11 @@
         public static string PartnersDomainGetCarrierCopyToCurrentTenant(string carrierId)
         {
             return "PartnersDomain/GetCarrierCopyToCurrentTenant?entityId=" + carrierId;
+        }
+
+        public static string CommonDomainGetCopyCurrencyToTenant(string portId)
+        {
+            return "CommonDomain/GetCopyCurrencyToTenant?entityId" + portId;
         }
     }
 }

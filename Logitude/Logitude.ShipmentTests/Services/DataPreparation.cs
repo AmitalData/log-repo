@@ -1,5 +1,7 @@
 ﻿using Logitude.ShipmentTests.Models;
-using Logitude.Test.Base.Models;
+using Logitude.Test.Base.Models.Api;
+using Logitude.Test.Base.Models.Shared;
+using Logitude.Test.Base.Models.UserTenantPreparation;
 using Logitude.Test.Base.Services;
 using System.Collections.Generic;
 using System.Linq;
@@ -45,13 +47,13 @@ namespace Logitude.ShipmentTests.Services
 
         private static string GetCurrencyIdFromUserTenant(ApiQueryFilters apiQueryFilters)
         {
-            ApiResponse<IEnumerable<Currency>> response = APICaller.CallGetByFilters<IEnumerable<Currency>>(Urls.CurrencyviewsGetbyfilters, UserTenant.Token, apiQueryFilters);
+            ApiResponse<IEnumerable<Currency>> response = APICaller.CallGetByFilters<IEnumerable<Currency>>(Urls.CurrencyViewsGetByFilters, UserTenant.Token, apiQueryFilters);
             return response.Data?.FirstOrDefault().Id;
         }
         private static string GetCurrencyIdFromZeroTenant(ApiQueryFilters apiQueryFilters)
         {
             apiQueryFilters.Tenant = 0;
-            ApiResponse<IEnumerable<Currency>> response = APICaller.CallGetByFilters<IEnumerable<Currency>>(Urls.CurrencyviewsGetbyfilters, UserTenant.Token, apiQueryFilters);
+            ApiResponse<IEnumerable<Currency>> response = APICaller.CallGetByFilters<IEnumerable<Currency>>(Urls.CurrencyViewsGetByFilters, UserTenant.Token, apiQueryFilters);
             return response.Data?.FirstOrDefault().Id;
         }
 
@@ -78,14 +80,14 @@ namespace Logitude.ShipmentTests.Services
 
         private static string GetIncotermIdFromUserTenant(ApiQueryFilters apiQueryFilters)
         {
-            ApiResponse<IEnumerable<Incoterm>> response = APICaller.CallGetByFilters<IEnumerable<Incoterm>>(Urls.IncotermviewsGetbyfilters, UserTenant.Token, apiQueryFilters);
+            ApiResponse<IEnumerable<Incoterm>> response = APICaller.CallGetByFilters<IEnumerable<Incoterm>>(Urls.IncotermViewsGetByFilters, UserTenant.Token, apiQueryFilters);
             return response.Data?.FirstOrDefault().Id;
         }
 
         private static string GetCreatedIncotermFromTenantZero(string code)
         {
             Incoterm incoterm = CreateIncotermPM(code);
-            ApiResponse<Incoterm> response = APICaller.CallPost<Incoterm>(incoterm ,Urls.IncotermsController, UserTenant.Token);
+            ApiResponse<Incoterm> response = APICaller.CallPost<Incoterm>(incoterm, Urls.IncotermsController, UserTenant.Token);
             return response.Data?.Id;
         }
 
@@ -114,7 +116,7 @@ namespace Logitude.ShipmentTests.Services
 
         private static string GetMeasurementIdFromUserTenant(ApiQueryFilters apiQueryFilters)
         {
-            ApiResponse<IEnumerable<Measurement>> response = APICaller.CallGetByFilters<IEnumerable<Measurement>>(Urls.MeasurementviewsGetbyfilters, UserTenant.Token, apiQueryFilters);
+            ApiResponse<IEnumerable<Measurement>> response = APICaller.CallGetByFilters<IEnumerable<Measurement>>(Urls.MeasurementViewsGetByFilters, UserTenant.Token, apiQueryFilters);
             return response.Data?.FirstOrDefault().Id;
         }
 
@@ -132,7 +134,7 @@ namespace Logitude.ShipmentTests.Services
 
         private static string GetChargeTypeIdFromUserTenant(ApiQueryFilters apiQueryFilters)
         {
-            ApiResponse<IEnumerable<ChargeType>> response = APICaller.CallGetByFilters<IEnumerable<ChargeType>>(Urls.ChargeTypeviewsGetbyfilters, UserTenant.Token, apiQueryFilters);
+            ApiResponse<IEnumerable<ChargeType>> response = APICaller.CallGetByFilters<IEnumerable<ChargeType>>(Urls.ChargeTypeViewsGetByFilters, UserTenant.Token, apiQueryFilters);
             return response.Data?.FirstOrDefault().Id;
         }
 
@@ -153,14 +155,14 @@ namespace Logitude.ShipmentTests.Services
 
         private static string GetPackageTypeIdFromUserTenant(ApiQueryFilters apiQueryFilters)
         {
-            ApiResponse<IEnumerable<PackageType>> response = APICaller.CallGetByFilters<IEnumerable<PackageType>>(Urls.PackageTypeviewsGetbyfilters, UserTenant.Token, apiQueryFilters);
+            ApiResponse<IEnumerable<PackageType>> response = APICaller.CallGetByFilters<IEnumerable<PackageType>>(Urls.PackageTypeViewsGetByFilters, UserTenant.Token, apiQueryFilters);
             return response.Data?.FirstOrDefault().Id;
         }
 
         private static string GetCreatedPackageTypeFromTenantZero(string code, string transportModeCode, bool isContainer)
         {
             PackageType packageType = CreatePackageType(code, transportModeCode, isContainer);
-            ApiResponse<PackageType> response = APICaller.CallPost<PackageType>(packageType, Urls.PackagetypesController, UserTenant.Token);
+            ApiResponse<PackageType> response = APICaller.CallPost<PackageType>(packageType, Urls.PackageTypesController, UserTenant.Token);
             return response.Data?.Id;
 
         }
@@ -193,7 +195,7 @@ namespace Logitude.ShipmentTests.Services
 
         private static string GetPaymentTermIdFromUserTenant(ApiQueryFilters apiQueryFilters)
         {
-            ApiResponse<IEnumerable<PaymentTerm>> response = APICaller.CallGetByFilters<IEnumerable<PaymentTerm>>(Urls.PaymentTermviewsGetbyfilters, UserTenant.Token, apiQueryFilters);
+            ApiResponse<IEnumerable<PaymentTerm>> response = APICaller.CallGetByFilters<IEnumerable<PaymentTerm>>(Urls.PaymentTermViewsGetByFilters, UserTenant.Token, apiQueryFilters);
             return response.Data?.FirstOrDefault().Id;
         }
 
@@ -213,7 +215,7 @@ namespace Logitude.ShipmentTests.Services
 
         private static string GetVATTypeIdFromUserTenant(ApiQueryFilters apiQueryFilters)
         {
-            ApiResponse<IEnumerable<VATType>> response = APICaller.CallGetByFilters<IEnumerable<VATType>>(Urls.VATTypeviewsGetbyfilters, UserTenant.Token, apiQueryFilters);
+            ApiResponse<IEnumerable<VATType>> response = APICaller.CallGetByFilters<IEnumerable<VATType>>(Urls.VatTypeViewsGetByFilters, UserTenant.Token, apiQueryFilters);
             return response.Data?.FirstOrDefault().Id;
         }
 
@@ -234,7 +236,7 @@ namespace Logitude.ShipmentTests.Services
 
         private static string GetQuoteStageIdFromUserTenant(ApiQueryFilters apiQueryFilters)
         {
-            ApiResponse<IEnumerable<QuoteStage>> response = APICaller.CallGetByFilters<IEnumerable<QuoteStage>>(Urls.QuoteStageviewsGetbyfilters, UserTenant.Token, apiQueryFilters);
+            ApiResponse<IEnumerable<QuoteStage>> response = APICaller.CallGetByFilters<IEnumerable<QuoteStage>>(Urls.QuoteStageViewsGetByFilters, UserTenant.Token, apiQueryFilters);
             return response.Data?.FirstOrDefault().Id;
         }
 
@@ -257,7 +259,7 @@ namespace Logitude.ShipmentTests.Services
 
         private static string GetVesselIdFromUserTenant(ApiQueryFilters apiQueryFilters)
         {
-            ApiResponse<IEnumerable<Vessel>> response = APICaller.CallGetByFilters<IEnumerable<Vessel>>(Urls.VesselviewsGetbyfilters, UserTenant.Token, apiQueryFilters);
+            ApiResponse<IEnumerable<Vessel>> response = APICaller.CallGetByFilters<IEnumerable<Vessel>>(Urls.VesselViewsGetByFilters, UserTenant.Token, apiQueryFilters);
             return response.Data?.FirstOrDefault().Id;
         }
 
@@ -297,14 +299,14 @@ namespace Logitude.ShipmentTests.Services
 
         private static string GetMoveTypeIdFromUserTenant(ApiQueryFilters apiQueryFilters)
         {
-            ApiResponse<IEnumerable<MoveType>> response = APICaller.CallGetByFilters<IEnumerable<MoveType>>(Urls.MoveTypeviewsGetbyfilters, UserTenant.Token, apiQueryFilters);
+            ApiResponse<IEnumerable<MoveType>> response = APICaller.CallGetByFilters<IEnumerable<MoveType>>(Urls.MoveTypeViewsGetByFilters, UserTenant.Token, apiQueryFilters);
             return response.Data?.FirstOrDefault().Id;
         }
 
         private static string GetCreatedMoveTypeFromTenantZero(string moveTypeCode, string moveTypeTransportMode)
         {
             MoveType moveTypePM = CreateMoveTypePM(moveTypeCode, moveTypeTransportMode);
-            ApiResponse<MoveType> response = APICaller.CallPost<MoveType>(moveTypePM, Urls.MovetypesController, UserTenant.Token);
+            ApiResponse<MoveType> response = APICaller.CallPost<MoveType>(moveTypePM, Urls.MoveTypesController, UserTenant.Token);
             return response.Data?.Id;
         }
 

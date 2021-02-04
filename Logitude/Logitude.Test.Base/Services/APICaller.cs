@@ -1,10 +1,10 @@
-﻿using Logitude.Test.Base.Models;
+﻿using Logitude.Test.Base.Models.Api;
+using Logitude.Test.Base.Models.Infrastructure;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using RestSharp;
 using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.Linq;
 using System.Net;
 using System.Web;
