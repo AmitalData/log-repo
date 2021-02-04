@@ -292,7 +292,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
                 if (!string.IsNullOrEmpty(SearchData))
                 {
                     WhereStmt = WhereStmt + " and (" + (Field + " like " + "@ValueParameter" + (sqlCommandDefinition.Parameters.Count() + 1).ToString() + ")");
-                    sqlCommandDefinition.Parameters.Add(new SqlParameterDetails() { ParameterName = "@ValueParameter" + (sqlCommandDefinition.Parameters.Count() + 1).ToString(), Value = SearchData + "%" });
+                    sqlCommandDefinition.Parameters.Add(new SqlParameterDetails() { ParameterName = "@ValueParameter" + (sqlCommandDefinition.Parameters.Count() + 1).ToString(), Value = "%" + SearchData + "%" });
                 }
                 using (var scope = TransactionFactory.GetNewTransaction())
                 {

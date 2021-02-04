@@ -19,41 +19,44 @@ namespace Logitude.CommonDataTests.Steps.Security
         }
 
         #region Step Region
-        [When(@"Get Tenant request sent for User's Tenant")]
-        public void WhenGetTenantRequestSentForUserSTenant()
+
+        #region Get information for user's tenant
+        [When(@"get information for user's tenant")]
+        public void WhenGetInformationForUsersTenant()
         {
-            Context.FirstUserPMData = GetTenant(UserTenant.Tenant, UserTenant.Token);
+            Context.FirstUserPMData = GetUserTenant(UserTenant.Token);
         }
 
-        [Then(@"Tenant should be exists")]
-        public void ThenTenantShouldBeExists()
+        [Then(@"tenant information should available")]
+        public void ThenTenantInformationShouldAvailable()
         {
             Context.FirstUserPMData.Should().NotBeNull();
-            Context.FirstUserPMData.Id.Should().Be(UserTenant.Tenant);
+        }
+        #endregion
+
+        #region Get information for other tenant
+        [When(@"get information for other tenant")]
+        public void WhenGetInformationForOtherTenant()
+        {
+            Context.act = () => GetUserTenant(UserOtherTenant.Token);
         }
 
-        [When(@"Get Tenant request sent for other Tenant")]
-        public void WhenGetTenantRequestSentForOtherTenant()
+        [Then(@"should receive error message say not authenticated to view company info")]
+        public void ThenShouldReceiveErrorMessageSayNotAuthenticatedToViewCompanyInfo()
         {
-            Context.act = () => GetTenant(UserTenant.Tenant, UserOtherTenant.Token);
+            Context.act.Should().ThrowExactly<Exception>().Where(m => m.Message.Contains("Sorry you’re not authenticated to view company info"));
         }
+        #endregion
 
-        [Then(@"Tenant should not be exists")]
-        public void ThenTenantShouldNotBeExists()
-        {
-            Context.act.Should().ThrowExactly<Exception>()
-                .Where(m => m.Message.Contains("Sorry you’re not authenticated to view company info"));
-        }
         #endregion
 
         #region Private Function Region
-        private TenantPM GetTenant(int Tenant, string Token)
+        private TenantPM GetUserTenant(string token)
         {
-            string TenantUrl = Urls.TenantsGetSingle(Tenant);
-            var tenant = APICaller.CallGet<TenantPM>(TenantUrl, Token);
+            string TenantUrl = Urls.TenantsGetSingle(UserTenant.Tenant);
+            var tenant = APICaller.CallGet<TenantPM>(TenantUrl, token);
             return tenant.Data;
         }
         #endregion
-
     }
 }

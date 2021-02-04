@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "49116d38-8156-4499-bce6-b16b69322fe2",
+		"_postman_id": "9a228e93-b9a8-4932-972c-45bc199116c1",
 		"name": "SystemSettings",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -11,7 +11,6 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "4920ea14-b99c-407f-9682-a626c98d1e74",
 						"exec": [
 							"pm.test(\"AuthenticationOnMyTenant\", function () {",
 							"    pm.response.to.have.status(200);",
@@ -37,7 +36,6 @@
 				{
 					"listen": "prerequest",
 					"script": {
-						"id": "80382ca3-511a-4d54-8c44-3148e0f553f8",
 						"exec": [
 							""
 						],
@@ -82,7 +80,6 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "4920ea14-b99c-407f-9682-a626c98d1e74",
 						"exec": [
 							"pm.test(\"AuthenticationOnNotMyTenant\", function () {",
 							"    pm.response.to.have.status(200);",
@@ -107,7 +104,6 @@
 				{
 					"listen": "prerequest",
 					"script": {
-						"id": "80382ca3-511a-4d54-8c44-3148e0f553f8",
 						"exec": [
 							""
 						],
@@ -152,7 +148,6 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "21513698-73d9-410c-bed5-40eb5e0112e8",
 						"exec": [
 							"pm.test(\"GetAccountingSettingsFromMyTenant\", function () {",
 							"     pm.response.to.have.status(200);",
@@ -239,7 +234,6 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "40484955-763f-49c5-87d8-3180b46cbeb4",
 						"exec": [
 							"pm.test(\"GetAPICredintialsFromMyTenant\", function () {",
 							"     pm.response.to.have.status(200);",
@@ -343,7 +337,6 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "0586c97c-2125-4c9e-9c73-cdea867e87c0",
 						"exec": [
 							"pm.test(\"GetAPICredintialIdFromNotMyTenant Fail\", function () {",
 							"     pm.response.to.have.status(200);",
@@ -427,7 +420,6 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "4063e07b-9296-4951-aae7-fa63953bfbbb",
 						"exec": [
 							"pm.test(\"GetSystemDefaultsFromMyTenant\", function () {",
 							"     pm.response.to.have.status(200);",
@@ -538,7 +530,6 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "a181f4f8-c269-4c84-85f7-2f6bb2ac22f2",
 						"exec": [
 							"     pm.test(\"Sorry you’re not authenticated to view company info.\", function () {",
 							"     pm.response.to.have.status(400);",
@@ -615,7 +606,6 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "0153062c-a0bd-458f-8d67-12f425fe190d",
 						"exec": [
 							"pm.test(\"UpdateSystemDefaultsFromMyTenant\", function () {",
 							"     pm.response.to.have.status(200);",
@@ -706,7 +696,6 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "0153062c-a0bd-458f-8d67-12f425fe190d",
 						"exec": [
 							"pm.test(\"UpdateSystemDefaultsFromNotMyTenant Fail\", function () {",
 							"     pm.response.to.have.status(400);",
@@ -789,7 +778,6 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "b781a940-1072-4fa3-9e91-c11cc370021a",
 						"exec": [
 							"pm.test(\"GetSystemDefaultsFromMyTenant\", function () {",
 							"     pm.response.to.have.status(200);",
@@ -878,7 +866,6 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "b781a940-1072-4fa3-9e91-c11cc370021a",
 						"exec": [
 							"pm.test(\"GetSystemInfoFromNotMyTenant Fail\", function () {",
 							"     pm.response.to.have.status(400);",
@@ -946,6 +933,88 @@
 						{
 							"key": "tenant",
 							"value": "{{Tenant2}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CardSearchWithAirlinePrefix",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "accept",
+						"value": "application/json, text/plain, */*"
+					},
+					{
+						"key": "token",
+						"value": "NPgZuoP8TqRPApAMzPZDqckP7zASVp+6l14="
+					},
+					{
+						"key": "content-type",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "{{URL}}/api/cardviews/getbyfilters?&&ForceCacheRefresh=false&DontApplyVirtualization=true&GetAll=false&GetCount=true&PageIndex=0&PageSize=100&SortBy=&SortDirection=Ascending&Tenant={{Tenant}}&AdditionalFilters=[{%22FieldName%22:%22PartnerTypeId%22,%22FieldValue%22:%22AL%22,%22Operator%22:%22InList%22,%22IsCustom%22:false,%22DisplayInList%22:false,%22IsCustomField%22:false,%22FieldDataType%22:%22Text%22,%22IgnoreFilter%22:false,%22IsCacheOnClient%22:false,%22IsLookUpfilter%22:false},{%22FieldName%22:%22CardSearchField%22,%22FieldValue%22:%22001%22,%22Operator%22:%22Contains%22,%22IsCustom%22:false,%22DisplayInList%22:false,%22IsCustomField%22:false,%22FieldDataType%22:null,%22IgnoreFilter%22:false,%22IsCacheOnClient%22:false,%22IsLookUpfilter%22:false},{%22FieldName%22:%22InActive%22,%22FieldValue%22:false,%22Operator%22:%22Equals%22,%22IsCustom%22:false,%22DisplayInList%22:false,%22IsCustomField%22:false,%22FieldDataType%22:null,%22IgnoreFilter%22:false,%22IsCacheOnClient%22:false,%22IsLookUpfilter%22:false}]",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"cardviews",
+						"getbyfilters"
+					],
+					"query": [
+						{
+							"key": null,
+							"value": null
+						},
+						{
+							"key": null,
+							"value": null
+						},
+						{
+							"key": "ForceCacheRefresh",
+							"value": "false"
+						},
+						{
+							"key": "DontApplyVirtualization",
+							"value": "true"
+						},
+						{
+							"key": "GetAll",
+							"value": "false"
+						},
+						{
+							"key": "GetCount",
+							"value": "true"
+						},
+						{
+							"key": "PageIndex",
+							"value": "0"
+						},
+						{
+							"key": "PageSize",
+							"value": "100"
+						},
+						{
+							"key": "SortBy",
+							"value": ""
+						},
+						{
+							"key": "SortDirection",
+							"value": "Ascending"
+						},
+						{
+							"key": "Tenant",
+							"value": "{{Tenant}}"
+						},
+						{
+							"key": "AdditionalFilters",
+							"value": "[{%22FieldName%22:%22PartnerTypeId%22,%22FieldValue%22:%22AL%22,%22Operator%22:%22InList%22,%22IsCustom%22:false,%22DisplayInList%22:false,%22IsCustomField%22:false,%22FieldDataType%22:%22Text%22,%22IgnoreFilter%22:false,%22IsCacheOnClient%22:false,%22IsLookUpfilter%22:false},{%22FieldName%22:%22CardSearchField%22,%22FieldValue%22:%22001%22,%22Operator%22:%22Contains%22,%22IsCustom%22:false,%22DisplayInList%22:false,%22IsCustomField%22:false,%22FieldDataType%22:null,%22IgnoreFilter%22:false,%22IsCacheOnClient%22:false,%22IsLookUpfilter%22:false},{%22FieldName%22:%22InActive%22,%22FieldValue%22:false,%22Operator%22:%22Equals%22,%22IsCustom%22:false,%22DisplayInList%22:false,%22IsCustomField%22:false,%22FieldDataType%22:null,%22IgnoreFilter%22:false,%22IsCacheOnClient%22:false,%22IsLookUpfilter%22:false}]"
 						}
 					]
 				}

@@ -12,9 +12,7 @@ import { ApiQueryFilters } from '../../../Infrastructure/DataContracts/ApiQueryF
 import { ListComponentArgs } from '../../../Infrastructure/Args';
 import { ConfirmWindow } from '../../../Controls/Windows/ConfirmWindow'; 
 import { MessageWindow } from '../../../Controls/Windows/MessageWindow';
-import { FeatureLocator } from '../../../Infrastructure/Utilities/FeatureLocator';
-declare var window: any;
-
+import { FeatureLocator } from '../../../Infrastructure/Utilities/FeatureLocator'; 
 
 @Component({
     moduleId: './Report/Components/Workspaces/',
@@ -147,12 +145,12 @@ export class BIFolderReportComponent {
     }
 
     LinkAddReportFromLibraryClick() {
-        var windowTitle = "Add Report From Library";
-        var logWindow = new LogitudeWindow();
+        let windowTitle = "Add Report From Library";
+        let logWindow = new LogitudeWindow();
         logWindow.Width = 750;
         logWindow.Height = 600;
         logWindow.Title = windowTitle;
-        var windowArgs: any = {};
+        let windowArgs: any = {};
         windowArgs.IsCopyFromLibrary = true;
        // windowArgs.FolderId = this.listArgs.BIReportFolderId;
         logWindow.WindowArgs = windowArgs;

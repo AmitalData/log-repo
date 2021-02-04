@@ -239,7 +239,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "[{\"Tenant\":{{Tenant}},\"Year\":{{CurrentYear}},\"PeriodTypeCode\":\"1\",\"PeriodTypeName\":\"Accounting\",\"OpenMonth\":1,\"ClosedMonth\":null},{\"Tenant\":{{Tenant}},\"Year\":{{CurrentYear}},\"PeriodTypeCode\":\"2\",\"PeriodTypeName\":\"Invoice\",\"OpenMonth\":1,\"ClosedMonth\":null},{\"Tenant\":{{Tenant}},\"Year\":{{CurrentYear}},\"PeriodTypeCode\":\"3\",\"PeriodTypeName\":\"Interest Invoice\",\"OpenMonth\":1,\"ClosedMonth\":null}]"
+					"raw": ""
 				},
 				"url": {
 					"raw": "{{URL}}/api/accountingPeriods/PostCreatePeriodsForYear?year={{CurrentYear}}",
@@ -276,57 +276,38 @@
 							"    var month = date.getMonth()+1;\r",
 							"    pm.environment.set(\"CurrentMonth\",month);\r",
 							"\r",
-							"\r",
-							"    //get the accounting periods \r",
-							"   \r",
-							"    var idvalue7 = (pm.response.json().Result[pm.response.json().Result.length-2].OpenMonth);\r",
-							"    pm.environment.set(\"AcocuntingPeriodsOpenMonthCypress\",idvalue7);\r",
-							"    var idvalue1 = (pm.response.json().Result[pm.response.json().Result.length-2].Id);\r",
-							"    var idvalue2 = (pm.response.json().Result[pm.response.json().Result.length-2].Tenant);\r",
-							"    var idvalue3 = (pm.response.json().Result[pm.response.json().Result.length-2].Year);\r",
-							"    var idvalue4 = (pm.response.json().Result[pm.response.json().Result.length-2].PeriodTypeCode);\r",
-							"    var idvalue5 = (pm.response.json().Result[pm.response.json().Result.length-2].PeriodTypeName);\r",
-							"    var idvalue6 = (pm.response.json().Result[pm.response.json().Result.length-2].ClosedMonth);\r",
-							"    \r",
-							"    pm.environment.set(\"AcocuntingPeriodsId\",idvalue1);\r",
-							"    pm.environment.set(\"AcocuntingPeriodsTenant\",idvalue2);\r",
-							"    pm.environment.set(\"AcocuntingPeriodsYear\",idvalue3);\r",
-							"    pm.environment.set(\"AcocuntingPeriodsPeriodTypeCode\",idvalue4);\r",
-							"    pm.environment.set(\"AcocuntingPeriodsPeriodTypeName\",idvalue5);\r",
-							"    pm.environment.set(\"AcocuntingPeriodsClosedMonth\",idvalue6);\r",
-							"\r",
-							" // get the invoice periods \r",
-							" var idvalue8 = (pm.response.json().Result[pm.response.json().Result.length-1].OpenMonth);\r",
-							"    pm.environment.set(\"AcocuntingPeriodsOpenMonth\",idvalue7);\r",
-							"    var idvalue9 = (pm.response.json().Result[pm.response.json().Result.length-1].Id);\r",
-							"    var idvalue10 = (pm.response.json().Result[pm.response.json().Result.length-1].Tenant);\r",
-							"    var idvalue11 = (pm.response.json().Result[pm.response.json().Result.length-1].Year);\r",
-							"    var idvalue12 = (pm.response.json().Result[pm.response.json().Result.length-1].PeriodTypeCode);\r",
-							"    var idvalue13 = (pm.response.json().Result[pm.response.json().Result.length-1].PeriodTypeName);\r",
-							"    var idvalue14 = (pm.response.json().Result[pm.response.json().Result.length-1].ClosedMonth);\r",
-							"    \r",
-							"    pm.environment.set(\"AcocuntingPeriodsInvoiceId\",idvalue9);\r",
-							"    pm.environment.set(\"AcocuntingPeriodsTenant\",idvalue10);\r",
-							"    pm.environment.set(\"AcocuntingPeriodsInvoiceYear\",idvalue11);\r",
-							"    pm.environment.set(\"AcocuntingPeriodsPeriodIvoiceTypeCode\",idvalue12);\r",
-							"    pm.environment.set(\"AcocuntingPeriodsPeriodIvoiceTypeName\",idvalue13);\r",
-							"    pm.environment.set(\"AcocuntingPeriodsInvoiceClosedMonth\",idvalue14);\r",
-							"   \r",
+							"  var idvalue1;\r",
 							"\r",
 							"\r",
 							"\r",
-							"      if (idvalue7 < month)\r",
+							" for (var i = 0; i< pm.response.json().Result.length ;i++){\r",
+							"     if ( pm.response.json().Result[i].PeriodTypeCode == '1' )\r",
+							"     {\r",
+							"        pm.globals.set(\"AcocuntingPeriodsId\",pm.response.json().Result[i].Id);  \r",
+							"        idvalue1=pm.response.json().Result[i].OpenMonth; \r",
+							"\r",
+							"     }\r",
+							"    else if ( pm.response.json().Result[i].PeriodTypeCode == '2' )\r",
+							"    {\r",
+							"        pm.globals.set(\"AcocuntingPeriodsInvoiceId\",pm.response.json().Result[i].Id);  \r",
+							"      \r",
+							"    }\r",
+							"\r",
+							" }\r",
+							"\r",
+							"      if (idvalue1 < month)\r",
 							"      {\r",
 							"           tests[\"Current Month Opened  : \" + false ] = ( true );\r",
 							"           \r",
 							"            postman.setNextRequest(\"OpenCurrentmonth\");\r",
 							"      }\r",
 							"      \r",
-							"        else {\r",
+							"     else\r",
+							"      {\r",
 							"  \r",
-							"   tests[\"Current Month Opened  : \" + true ] = ( true );\r",
+							"             tests[\"Current Month Opened  : \" + true ] = ( true );\r",
 							"           postman.setNextRequest(null);  \r",
-							"        }\r",
+							"      }\r",
 							"  \r",
 							" \r",
 							"});\r",
@@ -353,7 +334,7 @@
 					}
 				],
 				"url": {
-					"raw": "{{URL}}/api/accountingperiodviews/getbyfilters?GetAll=true",
+					"raw": "{{URL}}/api/accountingperiodviews/getbyfilters?&&ForceCacheRefresh=false&DontApplyVirtualization=false&GetAll=true&AdditionalFilters=[{%22FieldName%22:%22Year%22,%22FieldValue%22:{{CurrentYear}},%22FieldValue2%22:null,%22FieldValue3%22:null,%22Operator%22:%22Equal%22,%22IsCustom%22:false,%22DisplayInList%22:false,%22IsCustomField%22:false,%22FieldDataType%22:%22number%22,%22IgnoreFilter%22:false,%22IsCacheOnClient%22:false,%22IsLookUpfilter%22:false}]",
 					"host": [
 						"{{URL}}"
 					],
@@ -364,8 +345,28 @@
 					],
 					"query": [
 						{
+							"key": null,
+							"value": null
+						},
+						{
+							"key": null,
+							"value": null
+						},
+						{
+							"key": "ForceCacheRefresh",
+							"value": "false"
+						},
+						{
+							"key": "DontApplyVirtualization",
+							"value": "false"
+						},
+						{
 							"key": "GetAll",
 							"value": "true"
+						},
+						{
+							"key": "AdditionalFilters",
+							"value": "[{%22FieldName%22:%22Year%22,%22FieldValue%22:{{CurrentYear}},%22FieldValue2%22:null,%22FieldValue3%22:null,%22Operator%22:%22Equal%22,%22IsCustom%22:false,%22DisplayInList%22:false,%22IsCustomField%22:false,%22FieldDataType%22:%22number%22,%22IgnoreFilter%22:false,%22IsCacheOnClient%22:false,%22IsLookUpfilter%22:false}]"
 						}
 					]
 				}
@@ -398,18 +399,18 @@
 				"header": [
 					{
 						"key": "Content-Type",
-						"value": "application/json",
-						"type": "text"
+						"type": "text",
+						"value": "application/json"
 					},
 					{
 						"key": "token",
-						"value": "{{Token}}",
-						"type": "text"
+						"type": "text",
+						"value": "{{Token}}"
 					}
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{ \r\n\"ChangeSetOp\": 2,\r\n\"ClosedMonth\":null,\r\n\"EncodeBase64NVARCHARFieldsBy\": null,\r\n\"Id\": \"{{AcocuntingPeriodsId}}\",\r\n\"OpenMonth\":{{CurrentMonth}},\r\n\"PeriodTypeCode\": \"1\",\r\n\"PeriodTypeName\": \"Accounting\",\r\n\"Tenant\": {{AcocuntingPeriodsTenant}},\r\n\"Year\": {{AcocuntingPeriodsYear}}\r\n}\r\n"
+					"raw": "{ \r\n\"ChangeSetOp\": 2,\r\n\"ClosedMonth\":null,\r\n\"EncodeBase64NVARCHARFieldsBy\": null,\r\n\"Id\": \"{{AcocuntingPeriodsId}}\",\r\n\"OpenMonth\":{{CurrentMonth}},\r\n\"PeriodTypeCode\": \"1\",\r\n\"PeriodTypeName\": \"Accounting\",\r\n\"Tenant\": {{Tenant}},\r\n\"Year\": {{CurrentYear}}\r\n}\r\n"
 				},
 				"url": {
 					"raw": "{{URL}}/api/accountingperiods",
@@ -457,7 +458,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{ \r\n\"ChangeSetOp\": 2,\r\n\"ClosedMonth\":null ,\r\n\"EncodeBase64NVARCHARFieldsBy\": null,\r\n\"Id\": \"{{AcocuntingPeriodsInvoiceId}}\",\r\n\"OpenMonth\":{{CurrentMonth}},\r\n\"PeriodTypeCode\": \"2\",\r\n\"PeriodTypeName\": \"Invoice\",\r\n\"Tenant\": {{AcocuntingPeriodsTenant}},\r\n\"Year\": {{AcocuntingPeriodsInvoiceYear}}\r\n}\r\n",
+					"raw": "{ \r\n\"ChangeSetOp\": 2,\r\n\"ClosedMonth\":null ,\r\n\"EncodeBase64NVARCHARFieldsBy\": null,\r\n\"Id\": \"{{AcocuntingPeriodsInvoiceId}}\",\r\n\"OpenMonth\":{{CurrentMonth}},\r\n\"PeriodTypeCode\": \"2\",\r\n\"PeriodTypeName\": \"Invoice\",\r\n\"Tenant\": {{Tenant}},\r\n\"Year\": {{CurrentYear}}\r\n}\r\n",
 					"options": {
 						"raw": {
 							"language": "json"

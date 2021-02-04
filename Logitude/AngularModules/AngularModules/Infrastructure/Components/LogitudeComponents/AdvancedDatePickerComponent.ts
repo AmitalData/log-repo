@@ -83,7 +83,7 @@ export class AdvancedDatePickerComponent implements OnInit, OnDestroy {
         if (isOk) {
             if (newValue === undefined) newValue = null;
             if (this.selectedDateValue === undefined) this.selectedDateValue = null;
-            if (this.selectedDateValue != newValue) this.DateValueChanged(newValue);
+            if (this.selectedDateValue != newValue && !AppTool.IsNullOrEmpty(newValue)) this.DateValueChanged(newValue);
         }
     }
 
@@ -684,7 +684,7 @@ export class AdvancedDatePickerComponent implements OnInit, OnDestroy {
             if (val.length > 10) invalidText = true;
             
 
-            if (!invalidText) {
+            if (!invalidText && !invalidDate) {
                 if (this.InputValue.trim() == ".") this.DateValueChanged(date);
                 else if (this.InputValue.indexOf("+") == 0 || this.InputValue.indexOf("-") == 0) {
                     if (this.InputValue.length > 1) {
@@ -703,7 +703,15 @@ export class AdvancedDatePickerComponent implements OnInit, OnDestroy {
                             else invalidText = true;
                         }
                     }
-                    if (!invalidText) this.DateValueChanged(date);
+                    if (!invalidText && this.IsOldDate(date)) {
+                        invalidDate = true;
+                        errorMessage = "Date time is too way in the past!";
+                    }
+                    else if (date && date.toString() == "Invalid Date") {
+                        invalidDate = true;
+                        errorMessage = "Invalid Date";
+                    }
+                    if (!invalidText && !invalidDate) this.DateValueChanged(date);
                 }
                 else if ((this.InputValue != "." && this.InputValue.indexOf(".") > -1) ||
                          (this.InputValue != "/" && this.InputValue.indexOf("/") > -1) ||
@@ -740,10 +748,13 @@ export class AdvancedDatePickerComponent implements OnInit, OnDestroy {
                         if (year == 0) year = currentYear;
                         if (year < 1000) year = year + currentMillinium;
                         if (month > 12 || day > 31) invalidText = true;
-                        if (!invalidText) {
-                            const datetime: Date = this.GetDate(year,month - 1,day,hour,minute,second);
-                            this.DateValueChanged(datetime);
+
+                        const dateTime: Date = this.GetDate(year, month - 1, day, hour, minute, second);
+                        if (!invalidText && this.IsOldDate(dateTime)) {
+                            invalidDate = true;
+                            errorMessage = "Date time is too way in the past!";
                         }
+                        if (!invalidText && !invalidDate) this.DateValueChanged(dateTime);
                     }
                     else if (dateStrings.length == 2) {
                         day = Number(dateStrings[0]);
@@ -906,14 +917,6 @@ export class AdvancedDatePickerComponent implements OnInit, OnDestroy {
         else 
             this.DateValueChanged(null);
 
-        if (!invalidText) {
-            if (this.SelectedDate) {
-                if (this.SelectedDate.getFullYear() < new Date().getFullYear() - 100) {
-                    invalidDate = true;
-                    errorMessage = "Date time is too way in the past!";
-                }
-            }
-        }
         if (invalidText || invalidDate) {
             if (errorMessage == "") errorMessage = TextCodeTranslator.Translate("General.O.InvalidInput");
             this.SetValidity(false, errorMessage);
@@ -977,6 +980,12 @@ export class AdvancedDatePickerComponent implements OnInit, OnDestroy {
             }
         }
         return hours;
+    }
+
+    private IsOldDate(date) {
+        if (date && date.getFullYear() < new Date().getFullYear() - 100)
+            return true;
+        return false;
     }
 
     private GetTodaysDate() {

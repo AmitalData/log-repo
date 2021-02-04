@@ -21,7 +21,7 @@ namespace Cypress {
 }
 }
 Cypress.Commands.add("FillDate", (selector, value) => {
-if(value=="today"){
+if(value.toUpperCase()=="TODAY"){
     cy.get(selector).focus().clear().type(".{enter}")
 }
 else{
@@ -30,7 +30,7 @@ else{
 })
 Cypress.Commands.add("FillLogTextBox", (selector, value) => {
 
-    cy.get(selector).focus().clear().type(value)
+    cy.get(selector).clear().type(value)
 
 })
 
@@ -103,7 +103,7 @@ Cypress.Commands.add("Click", (selector, contains) => {
 
     let element = cy.get(selector).should('exist')
 
-    if (contains !== null) {
+    if (contains) {
         element = element.contains(contains, {matchCase: false})
 
     }

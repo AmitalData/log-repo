@@ -40,7 +40,8 @@ namespace Logitude.CommonDataTests.Features.Security
         public static void FeatureSetup()
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
-            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features/Security", "Tenant Security Access", null, ProgrammingLanguage.CSharp, ((string[])(null)));
+            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features/Security", "Tenant security access", "\tWith pre-prepared users authentication\r\n\tWe want to test tenant security access." +
+                    "", ProgrammingLanguage.CSharp, ((string[])(null)));
             testRunner.OnFeatureStart(featureInfo);
         }
         
@@ -80,15 +81,15 @@ namespace Logitude.CommonDataTests.Features.Security
             this.TestTearDown();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="Get Tenant for User\'s Tenant")]
-        [Xunit.TraitAttribute("FeatureTitle", "Tenant Security Access")]
-        [Xunit.TraitAttribute("Description", "Get Tenant for User\'s Tenant")]
-        public virtual void GetTenantForUsersTenant()
+        [Xunit.SkippableFactAttribute(DisplayName="Get information for user\'s tenant")]
+        [Xunit.TraitAttribute("FeatureTitle", "Tenant security access")]
+        [Xunit.TraitAttribute("Description", "Get information for user\'s tenant")]
+        public virtual void GetInformationForUsersTenant()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get Tenant for User\'s Tenant", null, tagsOfScenario, argumentsOfScenario);
-#line 3
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get information for user\'s tenant", null, tagsOfScenario, argumentsOfScenario);
+#line 5
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             bool isScenarioIgnored = default(bool);
@@ -108,25 +109,25 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 this.ScenarioStart();
-#line 4
- testRunner.When("Get Tenant request sent for User\'s Tenant", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 6
+ testRunner.When("get information for user\'s tenant", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 5
- testRunner.Then("Tenant should be exists", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 7
+ testRunner.Then("tenant information should available", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="Get Tenant for other Tenant")]
-        [Xunit.TraitAttribute("FeatureTitle", "Tenant Security Access")]
-        [Xunit.TraitAttribute("Description", "Get Tenant for other Tenant")]
-        public virtual void GetTenantForOtherTenant()
+        [Xunit.SkippableFactAttribute(DisplayName="Get information for other tenant")]
+        [Xunit.TraitAttribute("FeatureTitle", "Tenant security access")]
+        [Xunit.TraitAttribute("Description", "Get information for other tenant")]
+        public virtual void GetInformationForOtherTenant()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get Tenant for other Tenant", null, tagsOfScenario, argumentsOfScenario);
-#line 7
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get information for other tenant", null, tagsOfScenario, argumentsOfScenario);
+#line 9
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             bool isScenarioIgnored = default(bool);
@@ -146,11 +147,11 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 this.ScenarioStart();
-#line 8
- testRunner.When("Get Tenant request sent for other Tenant", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 10
+ testRunner.When("get information for other tenant", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 9
- testRunner.Then("Tenant should not be exists", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 11
+ testRunner.Then("should receive error message say not authenticated to view company info", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();
