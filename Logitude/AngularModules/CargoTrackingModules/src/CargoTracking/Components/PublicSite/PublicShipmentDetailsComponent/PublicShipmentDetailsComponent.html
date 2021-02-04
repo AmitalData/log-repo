@@ -200,7 +200,7 @@
 
                     <div class="tag">Completed Milestones</div>
                     <ul *ngIf="CompletedMilestoneFields" class="steps-list">
-                        <li *ngFor="let item of CompletedMilestoneFields">
+                        <li *ngFor="let item of CompletedMilestoneFields" [class.hide]='!item.Date'>
                             <ng-container *ngIf="item.Date">
                                 <div class="tick"> <img src="./assets/images/icons/tick.png" alt=""> </div>
                                 <div class="date" style="width: 130px;">{{item.Date | date: 'dd/MM/yyyy, HH:MM'}}</div>
