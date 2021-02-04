@@ -128,6 +128,7 @@ namespace Logitude.Test.Base.Services
             {
                 JObject jObject = JObject.Parse(restResponse.Content);
                 response.ErrorMessage = jObject["ErrorMessage"].ToString().Replace("\r", string.Empty).Replace("\n", string.Empty).Trim();
+                throw new Exception(response.ErrorMessage);
             }
 
             return response;

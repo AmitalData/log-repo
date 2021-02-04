@@ -24,6 +24,19 @@
         public static string IntegrationTestGetBaseShipment = "IntegrationTest/GetBaseShipment";
 
 
+        public static string PartnersDomainController = "PartnersDomain";
+        public static string VendorViewsGetByFilters = "VendorViews/GetByFilters";
+        public static string AgentViewsGetByFilters = "AgentViews/GetByFilters";
+        public static string CustomerViewsGetByFilters = "CustomerViews/GetByFilters";
+        public static string CustomAgentViewsGetByFilters = "CustomAgentViews/GetByFilters";
+        public static string ShippingAgentViewsGetByFilters = "ShippingAgentViews/GetByFilters";
+        public static string TruckerViewsGetByFilters = "TruckerViews/GetByFilters";
+        public static string AirlineViewsGetByFilters = "AirlineViews/GetByFilters";
+        public static string ShippingLineViewsGetByFilters = "ShippingLineViews/GetByFilters";
+        public static string WarehouseViewsGetByFilters = "WarehouseViews/GetByFilters";
+        public static string CarrierViewsGetTenantImportByFilters = "CarrierViews/GetTenantImportByFilters";
+
+
         public static string TenantsGetSingle(int id)
         {
             return "Tenants/GetSingle?id=" + id.ToString();
@@ -72,6 +85,11 @@
         public static string CommonDomainGetPortCopyToCurrentTenant(string portId)
         {
             return "CommonDomain/GetPortCopyToCurrentTenant?entityId=" + portId;
+        }
+
+        public static string PartnersDomainGetCarrierCopyToCurrentTenant(string carrierId)
+        {
+            return "PartnersDomain/GetCarrierCopyToCurrentTenant?entityId=" + carrierId;
         }
     }
 }
