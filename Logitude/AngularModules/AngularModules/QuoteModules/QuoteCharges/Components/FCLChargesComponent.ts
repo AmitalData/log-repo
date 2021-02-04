@@ -1917,7 +1917,7 @@ export class FCLQuoteChargeItem extends BaseComponent {
     set VatPercentage(value: number) {
         if (this.EntityPM.VatPercentage != value) {
             this.EntityPM.VatPercentage = value;
-            this.ReadVatTypeData
+            this.ReadVatTypeData();
             this.SetUIProperties_VAT();
             this.fatherComponent.ComputeTotals();
         }
