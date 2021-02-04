@@ -1192,6 +1192,12 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 
             }
             //  -------- Declaration Referant Data 
+            DateTime stopLogAt = new DateTime(2020, 06, 01);
+            string logData = "";
+            var loggedUser = AuthenticationUtil.ResolveUserIdentityName(entityPM.Tenant);
+            logData = $"entityPM.CustomFileNo={entityPM.CustomFileNo}, User name={loggedUser}, before update1";
+            LogitudeSettings.HandleLogMe("Referant update " + logData, false, "referant.NewFile", stopLogAt);
+            
             DeclarationReferantDataQueryService declarationReferantDataQueryService = new DeclarationReferantDataQueryService(entityPM.Tenant);
             DeclarationReferantDataPM referant = declarationReferantDataQueryService.GetSingle(entityPM.Id, false, true);
             if (referant != null)
@@ -1211,10 +1217,14 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                         }
                     }
                 }
-                if(referant.NewFile != false)
+                logData = $"entityPM.CustomFileNo={entityPM.CustomFileNo}, referant.NewFile={referant.NewFile}, before update2";
+                LogitudeSettings.HandleLogMe("Referant update " + logData, false, "referant.NewFile", stopLogAt);
+                if (referant.NewFile != false)
                 {
                     if (HttpContextUtil.IsCustomDomainService())
                     {
+                        logData = $"entityPM.CustomFileNo={entityPM.CustomFileNo}, before update3";
+                        LogitudeSettings.HandleLogMe("Referant update " + logData, false, "referant.NewFile", stopLogAt);
                         referant.NewFile = false;
                         referant.ChangeSetOp = ChangeSetOperation.Update;
                     }
@@ -1226,6 +1236,8 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     service.Update(referant, true);
                     DeclarationReferantDataRepository declarationReferantDataRepository = new DeclarationReferantDataRepository(context);
                     declarationReferantDataRepository.SubmitChanges();
+                    logData = $"entityPM.CustomFileNo={entityPM.CustomFileNo}, referant.NewFile={referant.NewFile}, after update";
+                    LogitudeSettings.HandleLogMe("Referant update " + logData, false, "referant.NewFile", stopLogAt);
                 }
             }
         }
