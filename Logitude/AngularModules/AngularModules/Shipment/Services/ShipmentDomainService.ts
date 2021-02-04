@@ -15,6 +15,7 @@ import { CustomsTransferHeaderPM } from '../EntityPMs/CustomsTransferHeaderPM';
 import { CustomsTransferHeaderPMService } from './StandardPMs/CustomsTransferHeaderPMService';
 import { ShipmentTool } from '../Tools';
 import { BaseService } from '../../Abstractions/Services/BaseService';
+import { Observable } from 'rxjs';
 
 @Injectable()
 
@@ -89,7 +90,7 @@ export class ShipmentDomainService extends BaseService  {
             }), catchError(ServiceHelper.HandleServiceError));
         });
     }
-    GetRecentShipments() {
+    GetRecentShipments1() {
 
         var url = this.ApiURL + '/GetRecentShipments';
 
@@ -100,13 +101,13 @@ export class ShipmentDomainService extends BaseService  {
                 }), catchError(ServiceHelper.HandleServiceError));
         });
     }
-    //GetRecentShipments() {
-    //    return defer(() => {
-    //        this.Get(this.ApiURL + '/GetRecentShipments').subscribe((response: any) => {
-    //            return this.GetServiceResponse(response);
-    //        });
-    //    });
-    //}
+    GetRecentShipments() {
+        return Observable.create(observer => {
+            this.Get(this.ApiURL + '/GetRecentShipments').subscribe((response: any) => {
+                return observer.next(this.GetServiceResponse(response));                
+            });
+        });
+    }
 
     GetDeparturesArrivals(myDirectionId: string, myTransportModeId: string) {
 
