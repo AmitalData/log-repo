@@ -3791,7 +3791,7 @@ namespace Logitude.BL.Helpers
             }
             else if (chargePM.SaleMeasurementCode == "PRFR")
             {
-                value = (double)(saleUnitPriceInSaleCurrency * chargePM.SaleUnitPrice) / 100;
+                value = GetTotalPerContainerForPercentofFreight(saleUnitPriceInSaleCurrency, packageTypeQuantity, chargePM);
             }
             else
             {
@@ -3803,6 +3803,12 @@ namespace Logitude.BL.Helpers
             AddPerContainerClassToLists(totalPerContainerClassLists, value, name, fieldCode, chargePM, (double)orginalValue);
 
         }
+
+        private static double GetTotalPerContainerForPercentofFreight(double? saleUnitPriceInSaleCurrency, int? packageTypeQuantity, QuoteSaleChargePM chargePM)
+        {
+            return (double)((saleUnitPriceInSaleCurrency * (double)packageTypeQuantity) * chargePM.SaleUnitPrice) / 100;
+        }
+
         private static void AddPerContainerClassToLists(List<TotalPerContainerClass> totalPerContainerClassLists, double value, string name, string fieldCode, QuoteSaleChargePM chargePM , double orginalValue)
         {
             if (totalPerContainerClassLists != null)
