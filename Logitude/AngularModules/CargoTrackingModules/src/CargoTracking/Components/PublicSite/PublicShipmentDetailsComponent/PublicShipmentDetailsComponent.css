@@ -168,7 +168,6 @@ ul.line-list li.tick {
     border-radius: 30px;
     list-style: none;
     font-weight: 500;
-    margin: 0 -35px;
 }
 
 .steps-list li:hover:not(.dimmed),
@@ -176,7 +175,6 @@ ul.line-list li.tick {
     background:var(--MainColor); /*#002664;*/
     color: white;
     font-weight: 600;
-    margin: 0px -35px;
 
 }
 
@@ -470,6 +468,14 @@ ul.line-list li.tick {
         left: 0;
         top: 0;
         float: left;
+    }
+    .steps-list li {
+        margin: 0 -35px;
+    }
+
+    .steps-list li:hover:not(.dimmed),
+    .steps-list li.highlighted {
+        margin: 0px -35px;
     }
 }
 
