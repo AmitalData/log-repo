@@ -1,4 +1,5 @@
-﻿using Logitude.Test.Base.Models;
+﻿using Logitude.Test.Base.Models.LocationsPreparation;
+using Logitude.Test.Base.Models.PartnersPreparation;
 using Logitude.Test.Base.Services;
 using TechTalk.SpecFlow;
 

@@ -1,6 +1,6 @@
-﻿namespace Logitude.Test.Base.Models
+﻿namespace Logitude.Test.Base.Models.PartnersPreparation
 {
-    public class PartnersData
+    public static class PartnersData
     {
         public static string VendorId { get; set; }
         public static string AgentId { get; set; }

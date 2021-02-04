@@ -1,8 +1,6 @@
-﻿using System.Collections.Generic;
-
-namespace Logitude.ShipmentTests.Models
+﻿namespace Logitude.ShipmentTests.Models
 {
-    public class ShipmentData
+    public static class ShipmentData
     {
         public static string CurrencyEURId { get; set; } 
         public static string IncotermLDEId { get; set; } 

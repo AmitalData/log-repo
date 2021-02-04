@@ -2,7 +2,9 @@
 using Logitude.ShipmentTests.Models;
 using Logitude.ShipmentTests.Models.Builders;
 using Logitude.Test.Base.Context;
-using Logitude.Test.Base.Models;
+using Logitude.Test.Base.Models.Api;
+using Logitude.Test.Base.Models.Shared;
+using Logitude.Test.Base.Models.UserTenantPreparation;
 using Logitude.Test.Base.Services;
 using System;
 using TechTalk.SpecFlow;

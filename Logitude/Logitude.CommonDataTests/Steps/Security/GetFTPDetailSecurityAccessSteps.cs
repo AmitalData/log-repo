@@ -4,10 +4,12 @@ using Logitude.Test.Base.Services;
 using System.Collections.Generic;
 using System.Linq;
 using TechTalk.SpecFlow;
-using Logitude.CommonDataTests.Models;
-using Logitude.Test.Base.Models;
+using Logitude.CommonTests.Models;
+using Logitude.Test.Base.Models.Shared;
+using Logitude.Test.Base.Models.Api;
+using Logitude.Test.Base.Models.UserTenantPreparation;
 
-namespace Logitude.CommonDataTests.Steps.Security
+namespace Logitude.CommonTests.Steps.Security
 {
     [Binding]
     public class GetFTPDetailSecurityAccessSteps

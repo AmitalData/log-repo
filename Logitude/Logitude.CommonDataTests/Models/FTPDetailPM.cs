@@ -1,4 +1,4 @@
-﻿namespace Logitude.CommonDataTests.Models
+﻿namespace Logitude.CommonTests.Models
 {
     public class FTPDetailPM
     {

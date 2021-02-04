@@ -1,7 +1,9 @@
 ﻿using FluentAssertions;
 using Logitude.ShipmentTests.Models;
 using Logitude.ShipmentTests.Models.Builders;
-using Logitude.Test.Base.Models;
+using Logitude.Test.Base.Models.Api;
+using Logitude.Test.Base.Models.Shared;
+using Logitude.Test.Base.Models.UserTenantPreparation;
 using Logitude.Test.Base.Services;
 using System;
 using System.Collections.Generic;
@@ -40,7 +42,7 @@ namespace Logitude.ShipmentTests.Steps
         [When(@"create shipment")]
         public void WhenCreateShipment()
         {
-            ApiResponse<Direct> response = APICaller.CallPost<Direct>(Context.Direct, "Direct", UserTenant.Token);
+            ApiResponse<Direct> response = APICaller.CallPost<Direct>(Context.Direct, Urls.DirectController, UserTenant.Token);
             Context.Direct = response.Data;
         }
 
@@ -56,7 +58,7 @@ namespace Logitude.ShipmentTests.Steps
         public void WhenUpdateATAToFutureDate()
         {
             Context.Direct.MainCarriageLegs.First().ATA = GetDateBasedOnCurrentDate(1, 0, 0);
-            Context.act = () => APICaller.CallPut<Direct>(Context.Direct, "Direct", UserTenant.Token);
+            Context.act = () => APICaller.CallPut<Direct>(Context.Direct, Urls.DirectController, UserTenant.Token);
         }
 
         [Then(@"should receive error message say cannot set main carriage ATA to future date")]
@@ -71,7 +73,7 @@ namespace Logitude.ShipmentTests.Steps
         public void WhenUpdateATDToFutureDate()
         {
             Context.Direct.MainCarriageLegs.First().ATD = GetDateBasedOnCurrentDate(1, 0, 0);
-            Context.act = () => APICaller.CallPut<Direct>(Context.Direct, "Direct", UserTenant.Token);
+            Context.act = () => APICaller.CallPut<Direct>(Context.Direct, Urls.DirectController, UserTenant.Token);
         }
 
         [Then(@"should receive error message say cannot set main carriage ATD to future date")]
@@ -86,7 +88,7 @@ namespace Logitude.ShipmentTests.Steps
         public void WhenUpdateETDATDETAAndATAToVaildDates()
         {
             FillVaildDatesInMainCarriageLegs();
-            ApiResponse<Direct> response = APICaller.CallPut<Direct>(Context.Direct, "Direct", UserTenant.Token);
+            ApiResponse<Direct> response = APICaller.CallPut<Direct>(Context.Direct, Urls.DirectController, UserTenant.Token);
             Context.Direct = response.Data;
         }
 

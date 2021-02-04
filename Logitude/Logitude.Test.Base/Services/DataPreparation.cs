@@ -1,4 +1,8 @@
-﻿using Logitude.Test.Base.Models;
+﻿using Logitude.Test.Base.Models.Api;
+using Logitude.Test.Base.Models.LocationsPreparation;
+using Logitude.Test.Base.Models.PartnersPreparation;
+using Logitude.Test.Base.Models.Shared;
+using Logitude.Test.Base.Models.UserTenantPreparation;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -199,7 +203,7 @@ namespace Logitude.Test.Base.Services
         private static string CreatePartnerForUserTenant(string partnerTypeCode, string partnerName, string partnerCode)
         {
             Partner partner = BuildPartner(partnerTypeCode, partnerName, partnerCode);
-            ApiResponse<Partner> response = APICaller.CallPost<Partner>(partner, Urls.PartnersDomainController, UserTenant.Token);//
+            ApiResponse<Partner> response = APICaller.CallPost<Partner>(partner, Urls.PartnersDomainController, UserTenant.Token);
             return response.Data?.PartnerId;
         }
 

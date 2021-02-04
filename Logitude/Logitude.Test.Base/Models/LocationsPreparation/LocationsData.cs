@@ -1,6 +1,6 @@
-﻿namespace Logitude.Test.Base.Models
+﻿namespace Logitude.Test.Base.Models.LocationsPreparation
 {
-    public class LocationsData
+    public static class LocationsData
     {
         public static string PortLHRId { get; set; }
         public static string PortLASDomesticId { get; set; }

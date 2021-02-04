@@ -1,9 +1,10 @@
-﻿using Logitude.Test.Base.Models;
+﻿using Logitude.Test.Base.Models.LocationsPreparation;
+using Logitude.Test.Base.Models.PartnersPreparation;
+using Logitude.Test.Base.Models.UserTenantPreparation;
 using System;
 using System.Collections.Generic;
 using TechTalk.SpecFlow;
 using TechTalk.SpecFlow.Assist;
-
 
 namespace Logitude.ShipmentTests.Models.Builders
 {
