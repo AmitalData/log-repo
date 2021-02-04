@@ -9,7 +9,7 @@
     <tr>
         <td>
             <table>
-                <tr style="height:22px">
+                <tr style="height:22px" [hidden]="IsSchedulerReport && (ValidationErrorsList != null && ValidationErrorsList.length > 0)">
                     <td style="color:#1B90CB;font-size:14px;">Filter By:</td>
                 </tr>
 
