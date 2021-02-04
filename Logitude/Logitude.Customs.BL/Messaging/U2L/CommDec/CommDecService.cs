@@ -928,9 +928,9 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommDec
                 if (courierMasterRepository != null)
                 {
                     CourierMaster courierMaster = courierMasterRepository.GetSingle(new CourierMasterKeys() { Id = _CourierMasterPM.Id });
-                    if (courierMaster != null)
+                    if (courierMaster != null && _CourierDeclarationPM.ChangeSetOp== ChangeSetOperation.Insert)
                     {
-                        courierMaster.OpenDeclarations = (int)_CourierDeclarationPM.SequenceNumeric;
+                        courierMaster.OpenDeclarations += 1; 
                         courierMasterRepository.Update(courierMaster);
                         courierMasterRepository.SubmitChanges();
                     }
