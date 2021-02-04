@@ -204,7 +204,7 @@
                             <ng-container *ngIf="item.Date">
                                 <div class="tick"> <img src="./assets/images/icons/tick.png" alt=""> </div>
                                 <div class="date" style="width: 130px;">{{item.Date | date: 'dd/MM/yyyy, HH:MM'}}</div>
-                                <div class="caption" style="width: 205px;">{{item.Name}}</div>
+                                <div class="caption" style="width: fit-content;max-width: 205px;">{{item.Name}}</div>
                                 <div class="desc" style="width: calc(100% - 450px); padding: 0;">{{item.Notes}}</div>
                             </ng-container>
                         </li>
