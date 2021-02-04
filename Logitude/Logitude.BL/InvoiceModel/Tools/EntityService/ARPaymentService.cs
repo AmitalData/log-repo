@@ -166,7 +166,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             if (IsAccountingActivated && setApproved || (IsAccountingActivated && _arpaymentPM.IsExternalEntity))
             {
                 FullAccountingARPaymentApproveService approveService = new FullAccountingARPaymentApproveService(_arpaymentPM, tenant, isNewEntity);
-                approveService.Approve();
+                approveService.ApproveARPayment();
             }
 
 
@@ -408,7 +408,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             if (IsAccountingActivated && setApproved || (IsAccountingActivated && theEntityPm.IsExternalEntity))
             {
                 FullAccountingARPaymentApproveService approveService = new FullAccountingARPaymentApproveService(theEntityPm, tenant, isNewEntity);
-                approveService.Approve();
+                approveService.ApproveARPayment();
             }
 
 

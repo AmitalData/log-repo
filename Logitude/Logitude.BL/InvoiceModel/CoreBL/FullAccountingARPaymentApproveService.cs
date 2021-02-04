@@ -60,7 +60,7 @@ namespace Logitude.BL.InvoiceModel.CoreBL
             GetPaymentRelatedEntities();
         }
 
-        public void Approve()
+        public void ApproveARPayment()
         {
             if (PaymentCashbook != null)
                 AddChequesOrCashToCashbook();
