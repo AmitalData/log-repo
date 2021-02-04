@@ -9,7 +9,7 @@ using TechTalk.SpecFlow;
 namespace Logitude.Test.Base.Hooks
 {
     [Binding]
-    public class BeforeTestRun
+    public class PrepareUserTenantBeforeTestRun
     {
         [BeforeTestRun(Order = 0)]
         public static void SetupBeforeTestRun()
@@ -17,8 +17,6 @@ namespace Logitude.Test.Base.Hooks
             SetupBaseSettings();
             SetupUsersAuthentication();
             SetupDefaultUserTenant();
-            SetupLocationPreparationVariables();
-            SetupPartnerPreparationVariables();
         }
 
         private static void SetupBaseSettings()
@@ -43,19 +41,6 @@ namespace Logitude.Test.Base.Hooks
             SetupDefaultTenant();
             SetupDefaultUser();
         }
-
-        private static void SetupLocationPreparationVariables()
-        {
-            ApiResponse<LocationsVariables> locationsVariablesResponse = APICaller.CallGet<LocationsVariables>(Urls.IntegrationTestGetBaseLocations, UserTenant.Token);
-            LocationsDataMap(locationsVariablesResponse.Data);
-        }
-
-        private static void SetupPartnerPreparationVariables()
-        {
-            ApiResponse<PartnersVariables> partnersVariablesResponse = APICaller.CallGet<PartnersVariables>(Urls.IntegrationTestGetBasePartners, UserTenant.Token);
-            PartnersDataMap(partnersVariablesResponse.Data);
-        }
-
         private static Configurations GetConfigurations()
         {
             try
@@ -138,39 +123,6 @@ namespace Logitude.Test.Base.Hooks
             UserTenant.BranchId = user?.BranchId;
             UserTenant.DepartmentId = user?.DepartmentId;
             UserTenant.BusinessUnitId = user?.BusinessUnitId;
-        }
-
-        private static void LocationsDataMap(LocationsVariables locationsVariables)
-        {
-            LocationsData.PortLHRId = locationsVariables.PortLHRId;
-            LocationsData.PortLASId = locationsVariables.PortLASId;
-            LocationsData.PortMIAId = locationsVariables.PortMIAId;
-            LocationsData.PortJFKId = locationsVariables.PortJFKId;
-            LocationsData.PortSOUId = locationsVariables.PortSOUId;
-            LocationsData.PortNYCId = locationsVariables.PortNYCId;
-            LocationsData.PortLONId = locationsVariables.PortLONId;
-            LocationsData.PortMANId = locationsVariables.PortMANId;
-            LocationsData.GlobalZoneEUId = locationsVariables.GlobalZoneEUId;
-            LocationsData.CountryUSId = locationsVariables.CountryUSId;
-            LocationsData.CountryGBId = locationsVariables.CountryGBId;
-            LocationsData.StateAKId = locationsVariables.StateAKId;
-        }
-
-        private static void PartnersDataMap(PartnersVariables partnersVariables)
-        {
-            PartnersData.VendorId = partnersVariables.VendorId;
-            PartnersData.AgentId = partnersVariables.AgentId;
-            PartnersData.CustomerId = partnersVariables.CustomerId;
-            PartnersData.CustomAgentId = partnersVariables.CustomAgentId;
-            PartnersData.ShippingAgentId = partnersVariables.ShippingAgentId;
-            PartnersData.PotentialCustomerId = partnersVariables.PotentialCustomerId;
-            PartnersData.TruckerId = partnersVariables.TruckerId;
-            PartnersData.ShipperExport1 = partnersVariables.ShipperExport1;
-            PartnersData.AirlineAAId = partnersVariables.AirlineAAId;
-            PartnersData.AirlineBAId = partnersVariables.AirlineBAId;
-            PartnersData.ShippingLineMSCUId = partnersVariables.ShippingLineMSCUId;
-            PartnersData.ShippingLineMAEUId = partnersVariables.ShippingLineMAEUId;
-            PartnersData.WarehouseId = partnersVariables.WarehouseId;
         }
     }
 }

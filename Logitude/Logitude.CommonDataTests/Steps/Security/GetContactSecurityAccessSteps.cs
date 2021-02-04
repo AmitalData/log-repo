@@ -13,48 +13,56 @@ namespace Logitude.CommonDataTests.Steps.Security
     public class GetContactSecurityAccessSteps
     {
         private SecurityAccessStepsContext<ContactPM> Context;
+
         public GetContactSecurityAccessSteps(SecurityAccessStepsContext<ContactPM> context)
         {
             Context = context;
         }
 
         #region Step Region
-        [When(@"First user get the first contact from contacts list")]
-        public void WhenFirstUserGetTheFirstContactFromContactsList()
+
+        #region Get contact for user's tenant
+        [When(@"get contact for user's tenant")]
+        public void WhenGetContactForUsersTenant()
         {
-            ContactPM firstUserContact = GeAContactsFromFirstUserList();
-            Context.FirstUserPMData.Id = firstUserContact?.Id;
+            ContactPM userTenantContact = GetUserTenantContact();
+            Context.FirstUserPMData.Id = userTenantContact?.Id;
         }
 
-        [Then(@"the Contact for first user should be exists")]
-        public void ThenTheContactForFirstUserShouldBeExists()
+        [Then(@"contact should available")]
+        public void ThenContactShouldAvailable()
         {
             Context.FirstUserPMData.Id.Should().NotBeNull();
         }
+        #endregion
 
-        [When(@"Second user get the contact that requested by first user")]
-        public void WhenSecondUserGetTheContactThatRequestedByFirstUser()
+        #region Get contact for other tenant
+        [When(@"get contact for other tenant")]
+        public void WhenGetContactForOtherTenant()
         {
-            ApiResponse<ContactPM> response = GetAContactFornFirstUser(UserOtherTenant.Token);
-            Context.SecondUserPMData.Id = response.Data?.Id;
+            ContactPM otherTenantContact = GetUserTenantContactFromOtherUserTenant();
+            Context.SecondUserPMData.Id = otherTenantContact?.Id;
         }
 
-        [Then(@"the Contact for second user should not be exists")]
-        public void ThenTheContactForSecondUserShouldNotBeExists()
+        [Then(@"contact should not available")]
+        public void ThenContactShouldNotAvailable()
         {
             Context.SecondUserPMData.Id.Should().BeNull();
         }
         #endregion
 
+        #endregion
+
         #region Private Function Region
-        private ApiResponse<ContactPM> GetAContactFornFirstUser(string Token)
+        private ContactPM GetUserTenantContactFromOtherUserTenant()
         {
-            ContactPM firstUserContact = GeAContactsFromFirstUserList();
-            string contactsGetSingleUrl = Urls.ContactsGetSingle(firstUserContact?.Id);
-             return APICaller.CallGet<ContactPM>(contactsGetSingleUrl, Token);
+            ContactPM userTenantContact = GetUserTenantContact();
+            string contactsGetSingleUrl = Urls.ContactsGetSingle(userTenantContact?.Id);
+            ApiResponse<ContactPM> contactResponse = APICaller.CallGet<ContactPM>(contactsGetSingleUrl, UserOtherTenant.Token);
+            return contactResponse.Data;
         }
 
-        private ContactPM GeAContactsFromFirstUserList()
+        private ContactPM GetUserTenantContact()
         {
             ApiQueryFilters apiQueryFilters = new ApiQueryFilters
             {

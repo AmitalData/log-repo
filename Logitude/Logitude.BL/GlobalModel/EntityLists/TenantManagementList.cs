@@ -144,6 +144,8 @@ namespace Logitude.BL.GlobalModel.EntityLists
         public string BackgroundId { get; set; }
         public string ComapnylogoId { get; set; }
         public string BrowserIconId { get; set; }
+        public string ShipmentHeaderImageId { get; set; }
+
 
         public int? TotalNumberOfUsers { get; set; }
         public int? TotalFreeUsers { get; set; }

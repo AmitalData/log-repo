@@ -19,7 +19,7 @@ namespace Logitude.CommonDataTests.Features.Security
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("TechTalk.SpecFlow", "3.5.0.0")]
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public partial class GetFTPDetailSecurityAccessFeature : object, Xunit.IClassFixture<GetFTPDetailSecurityAccessFeature.FixtureData>, System.IDisposable
+    public partial class FTPDetailSecurityAccessFeature : object, Xunit.IClassFixture<FTPDetailSecurityAccessFeature.FixtureData>, System.IDisposable
     {
         
         private static TechTalk.SpecFlow.ITestRunner testRunner;
@@ -31,7 +31,7 @@ namespace Logitude.CommonDataTests.Features.Security
 #line 1 "GetFTPDetailSecurityAccess.feature"
 #line hidden
         
-        public GetFTPDetailSecurityAccessFeature(GetFTPDetailSecurityAccessFeature.FixtureData fixtureData, Logitude_CommonDataTests_XUnitAssemblyFixture assemblyFixture, Xunit.Abstractions.ITestOutputHelper testOutputHelper)
+        public FTPDetailSecurityAccessFeature(FTPDetailSecurityAccessFeature.FixtureData fixtureData, Logitude_CommonDataTests_XUnitAssemblyFixture assemblyFixture, Xunit.Abstractions.ITestOutputHelper testOutputHelper)
         {
             this._testOutputHelper = testOutputHelper;
             this.TestInitialize();
@@ -40,7 +40,8 @@ namespace Logitude.CommonDataTests.Features.Security
         public static void FeatureSetup()
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
-            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features/Security", "Get FTP Detail Security Access", null, ProgrammingLanguage.CSharp, ((string[])(null)));
+            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features/Security", "FTP detail security access", "\tWith pre-prepared users authentication\r\n\tWe want to test FTP detail security acc" +
+                    "ess.", ProgrammingLanguage.CSharp, ((string[])(null)));
             testRunner.OnFeatureStart(featureInfo);
         }
         
@@ -80,15 +81,15 @@ namespace Logitude.CommonDataTests.Features.Security
             this.TestTearDown();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="Get FTP Detail From User\'s Tenant")]
-        [Xunit.TraitAttribute("FeatureTitle", "Get FTP Detail Security Access")]
-        [Xunit.TraitAttribute("Description", "Get FTP Detail From User\'s Tenant")]
-        public virtual void GetFTPDetailFromUsersTenant()
+        [Xunit.SkippableFactAttribute(DisplayName="Get FTP detail for user\'s tenant")]
+        [Xunit.TraitAttribute("FeatureTitle", "FTP detail security access")]
+        [Xunit.TraitAttribute("Description", "Get FTP detail for user\'s tenant")]
+        public virtual void GetFTPDetailForUsersTenant()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get FTP Detail From User\'s Tenant", null, tagsOfScenario, argumentsOfScenario);
-#line 3
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get FTP detail for user\'s tenant", null, tagsOfScenario, argumentsOfScenario);
+#line 5
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             bool isScenarioIgnored = default(bool);
@@ -108,25 +109,25 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 this.ScenarioStart();
-#line 4
- testRunner.When("First user get the first FTP Detail from FTP Detail list", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 6
+ testRunner.When("get FTP detail for user\'s tenant", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 5
- testRunner.Then("the Detail for first user should be exists", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 7
+ testRunner.Then("FTP detail should available", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="Get FTP Detail From Other Tenant")]
-        [Xunit.TraitAttribute("FeatureTitle", "Get FTP Detail Security Access")]
-        [Xunit.TraitAttribute("Description", "Get FTP Detail From Other Tenant")]
-        public virtual void GetFTPDetailFromOtherTenant()
+        [Xunit.SkippableFactAttribute(DisplayName="Get FTP detail for other tenant")]
+        [Xunit.TraitAttribute("FeatureTitle", "FTP detail security access")]
+        [Xunit.TraitAttribute("Description", "Get FTP detail for other tenant")]
+        public virtual void GetFTPDetailForOtherTenant()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get FTP Detail From Other Tenant", null, tagsOfScenario, argumentsOfScenario);
-#line 7
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get FTP detail for other tenant", null, tagsOfScenario, argumentsOfScenario);
+#line 9
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             bool isScenarioIgnored = default(bool);
@@ -146,11 +147,11 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 this.ScenarioStart();
-#line 8
- testRunner.When("Second user get the FTP Detail that requested by first user", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 10
+ testRunner.When("get FTP detail for other tenant", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 9
- testRunner.Then("the Detail for second user should not be exists", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 11
+ testRunner.Then("FTP detail should not available", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();
@@ -163,12 +164,12 @@ this.ScenarioInitialize(scenarioInfo);
             
             public FixtureData()
             {
-                GetFTPDetailSecurityAccessFeature.FeatureSetup();
+                FTPDetailSecurityAccessFeature.FeatureSetup();
             }
             
             void System.IDisposable.Dispose()
             {
-                GetFTPDetailSecurityAccessFeature.FeatureTearDown();
+                FTPDetailSecurityAccessFeature.FeatureTearDown();
             }
         }
     }

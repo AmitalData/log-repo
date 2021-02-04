@@ -1,12 +1,13 @@
-﻿Feature: External API – Direct
+﻿@Pre-Prepare
+Feature: External API – Direct Shipment
 	With pre-prepared base and shipment data
 	We want to create direct shipment with main carriage leg
-	And update ETD,ATD,ETA and ATA dates.
+	And update ETD, ATD, ETA, and ATA dates.
 
 Background: Create direct shipment with main carriage leg
-	Given a direct shipment with the following properties
-		| property             | Value      |
-		| Agent				   | 10026      |
+	Given a direct shipment with the following fields
+		| Field                | Value      |
+		| Agent                | 10026      |
 		| Direction            | Export     |
 		| TransportMode        | Ocean      |
 		| ShipmentType         | FCLD       |
@@ -22,17 +23,17 @@ Background: Create direct shipment with main carriage leg
 	And a main carriage leg
 		| LegIndex | Carrier | FromPort | ToPort |
 		| 1        | CA20    | DE222    | DE223  |
-	When create direct shipment
-	Then the direct should create successfully
+	When create shipment
+	Then shipment should create successfully
 
-Scenario: Set main carriage ATA to future date
-	When set main carriage ATA to future date
-	Then ATA error message should received
+Scenario: Update main carriage ATA to future date
+	When update ATA to future date
+	Then should receive error message say cannot set main carriage ATA to future date
 
-Scenario: Set main carriage ATD to future date
-	When set main carriage ATD to future date
-	Then ATD error message should received
+Scenario: Update main carriage ATD to future date
+	When update ATD to future date
+	Then should receive error message say cannot set main carriage ATD to future date
 
-Scenario: Set main carriage ETD,ATD,ETA and ATA to vaild dates
-	When Set main carriage ETD,ATD,ETA and ATA to vaild dates
-	Then the direct should add update successfully
+Scenario: Update main carriage ETD, ATD, ETA, and ATA to vaild dates
+	When update ETD, ATD, ETA, and ATA to vaild dates
+	Then shipment should update successfully

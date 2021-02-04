@@ -15,7 +15,7 @@ Feature: ARInvoice operations and actions
             | AFT         | GRWT | 5        | 20        | EUR      | 4            |
         And an ARInvoice with the following details and a random invoice number
             | PartnerType | InvoiceCurrency | InvoiceExchangeRate | InvoiceDate | PaymentTerms | DueDate | VATNo | Branch      | VATType |
-            | Customer    | EUR             | 4                   | today       | Cash         | today   | Zero  | Main Office | Zero    |
+            | Customer    | EUR             | 4                   | Today       | Cash         | Today   | Zero  | Main Office | Zero    |
         When create invoice
         Then the invoice should create successfully
 

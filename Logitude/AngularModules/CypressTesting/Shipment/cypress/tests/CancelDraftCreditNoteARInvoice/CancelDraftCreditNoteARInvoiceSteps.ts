@@ -33,7 +33,6 @@ Then("the shipment should create successfully", () => {
 Given("a receivable with the following details", (dataTable) => {
     const ReceivableData = dataTable.hashes()[0] as ReceivableDetails;
     Actions.OpenShipment(shipmentNumber)
-    cy.Click(Selectors.ReceivablesTab, null)
     Actions.FillReceivablesTab(ReceivableData)
     Actions.UpdateShipment(Selectors.ShipmentSaveButton)
 });

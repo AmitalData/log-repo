@@ -132,6 +132,10 @@ namespace Logitude.BL.GlobalModel.Tools.EntityService
             {
                 DeleteImageFromCargoTrackingImages(entityPoco.BrowserIconId);
             }
+            if (this.entityPM.ShipmentHeaderImageId != this.entityPoco.ShipmentHeaderImageId)
+            {
+                DeleteImageFromCargoTrackingImages(entityPoco.ShipmentHeaderImageId);
+            }
         }
         public void DeleteImageFromCargoTrackingImages(string imgId)
         {
