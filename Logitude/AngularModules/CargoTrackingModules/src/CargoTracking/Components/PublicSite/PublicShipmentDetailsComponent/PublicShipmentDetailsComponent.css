@@ -168,6 +168,7 @@ ul.line-list li.tick {
     border-radius: 30px;
     list-style: none;
     font-weight: 500;
+    margin: 0 -25px;
 }
 
 .steps-list li:hover:not(.dimmed),
@@ -421,7 +422,7 @@ ul.line-list li.tick {
         display: block;
     }
     .steps-list li>div.date {
-        color: white;
+        /* color: white; */
         font-weight: normal;
         /* order: 3; */
         float: right;
@@ -435,7 +436,9 @@ ul.line-list li.tick {
     }
     .steps-list li>div.desc {
         font-weight: normal;
-        width: 100% !important;
+        width: calc(100% - 30px) !important;
+        white-space: pre-line;
+        padding-left: 30px;
     }
     .steps-list li {
         /* display: flex;
@@ -462,8 +465,9 @@ ul.line-list li.tick {
         width: 15px;
         padding-right: 10px !important;
         position: relative;
-        left: -24px;
-        top: 23px;
+        left: 0;
+        top: 0;
+        float: left;
     }
 }
 
