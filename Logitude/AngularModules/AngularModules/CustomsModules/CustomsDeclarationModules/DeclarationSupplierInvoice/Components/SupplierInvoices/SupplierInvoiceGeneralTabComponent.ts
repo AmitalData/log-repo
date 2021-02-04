@@ -970,7 +970,7 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
 
         this.EntityPM.IncotermCode = newValue;
         this.incotermChanged = true;
-        if (this.allowToDelete) {
+         if (this.allowToDelete) {
             this.IncotermLogic(this.EntityPM.IncotermCode);
         }
 
@@ -982,6 +982,9 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
     }
 
     private GetInsurancePercentDefault() {
+
+        if (this.declarationPM.IsReleaseFile) return;
+        if (this.IsDisplayOnly) return;
         //let goToInsuranceInUNF = false;
 
         //if (this.declarationPM.IsConnectedToUnifreight) {
@@ -1034,6 +1037,7 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
         } else {
             ///first 1
         }
+
 
         var myCustomsSettingExtendedListService = new CustomsSettingExtendedListService();
         myCustomsSettingExtendedListService.GetInsurancePercentDefault(this.declarationPM.CustomerCode, this.declarationPM.Tenant)

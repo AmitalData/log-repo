@@ -91,7 +91,14 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                         ++maxSequenceNunmeric;
                         CourierDeclarationPM courierDeclaration = new CourierDeclarationPM() { DeclarationId = dec.Id, CourierMasterId = entityPOCO.Id, Tenant = entityPOCO.Tenant, ChangeSetOp = ChangeSetOperation.Insert, SequenceNumeric = maxSequenceNunmeric };
                         courierDeclarationUpdateService.Update(courierDeclaration, false);
-                        entityPM.OpenDeclarations += 1;
+                        DeclarationCourierStatus decCourier = rep.GetDeclarationsById(dec.Id, dec.Tenant);
+                        if(decCourier!= null)
+                        {
+                            if (!decCourier.IsClosedForFollowUp)
+                            {
+                                entityPM.OpenDeclarations += 1;
+                            }
+                        }
                     }
                 }
                 else
@@ -106,9 +113,15 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                         ++maxSequenceNunmeric;
                         CourierDeclarationPM courierDeclaration = new CourierDeclarationPM() { DeclarationId = item, CourierMasterId = entityPOCO.Id, Tenant = entityPOCO.Tenant, ChangeSetOp = ChangeSetOperation.Insert, SequenceNumeric = maxSequenceNunmeric };
                         courierDeclarationUpdateService.Update(courierDeclaration, false);
-
+                        DeclarationCourierStatus decCourier = rep.GetDeclarationsById(item, entityPOCO.Tenant);
+                        if (decCourier != null)
+                        {
+                            if (!decCourier.IsClosedForFollowUp)
+                            {
+                                entityPM.OpenDeclarations += 1;
+                            }
+                        }
                     }
-                    entityPM.OpenDeclarations += items.Length;
                 }
             }
 
@@ -128,10 +141,13 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                         courierDeclaration = courierDeclarationDelQuery.GetSingle(item.Id, entityPOCO.Id, false, true);
                         courierDeclaration.ChangeSetOp = ChangeSetOperation.Delete;
                         courierDeclarationUpdateService.Update(courierDeclaration, true);
-                        if (entityPM.OpenDeclarations > 0)
+                        DeclarationCourierStatus decCourier = rep.GetDeclarationsById(item.Id, item.Tenant);
+                        if (decCourier != null)
                         {
-                            entityPM.OpenDeclarations -= 1;
-
+                            if (!decCourier.IsClosedForFollowUp)
+                            {
+                                entityPM.OpenDeclarations -= 1;
+                            }
                         }
                     }
                 }
@@ -148,18 +164,14 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                             courierDeclaration = courierDeclarationDelQuery.GetSingle(item, entityPOCO.Id, false, true);
                             courierDeclaration.ChangeSetOp = ChangeSetOperation.Delete;
                             courierDeclarationUpdateService.Update(courierDeclaration, true);
-                        }
-                    }
-
-                    if (entityPM.OpenDeclarations > 0 )
-                    {
-                        if(entityPM.OpenDeclarations < NotConnecteditems.Length)
-                        {
-                            entityPM.OpenDeclarations = 0;
-                        }
-                        else
-                        {
-                            entityPM.OpenDeclarations -= NotConnecteditems.Length;
+                            DeclarationCourierStatus decCourier = rep.GetDeclarationsById(item, entityPOCO.Tenant);
+                            if (decCourier != null)
+                            {
+                                if (!decCourier.IsClosedForFollowUp)
+                                {
+                                    entityPM.OpenDeclarations -= 1;
+                                }
+                            }
                         }
                     }
                 }

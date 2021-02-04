@@ -43,32 +43,32 @@ namespace Logitude.Customs.CustomsMessaging.Tasks
             foreach (var courierMaster in OpenCourierMasters)
             {
                 bool isEventNATR = false;
-                var decIdsList = courierDeclarationRepository.GetDeclarationIdsByCourierMasterIDWithNoCourierCustomStatus(courierMaster.Id, t.Tenant);
-                foreach (var dec in decIdsList)
+                var loggedUserId = AuthenticationUtil.ResolveUserId(courierMaster.Tenant);
+                var _CustomContext = CustomContext.GetContext(t.Tenant);
+                var myDeclarationUpdateService = new DeclarationUpdateService(_CustomContext, new Dictionary<string, IContext>(), t.Tenant);
+                try
                 {
-                    var decPM = declarationQueryService.GetSingleDeclarationById(dec, t.Tenant);
-                    if (decPM != null)
+                    isEventNATR = myDeclarationUpdateService.CheckLeadingFileEvent(courierMaster, loggedUserId, "NATR");
+                }
+                catch (Exception e)
+                {
+                    LogMessagingUtil.Instance.AppendLine("Exception was thrown while checking if NATR exist in the couriermaster " + courierMaster.Id + Environment.NewLine + e.Message);
+                }
+                if (!isEventNATR)
+                {
+                    var decIdsList = courierDeclarationRepository.GetDeclarationIdsByCourierMasterIDWithNoCourierCustomStatus(courierMaster.Id, t.Tenant);
+                    foreach (var dec in decIdsList)
                     {
-                        var loggedUserId = AuthenticationUtil.ResolveUserId(decPM.Tenant);
-                        var _CustomContext = CustomContext.GetContext(t.Tenant);
-                        var myDeclarationUpdateService = new DeclarationUpdateService(_CustomContext, new Dictionary<string, IContext>(), t.Tenant);
-                        try
-                        {
-                            isEventNATR = myDeclarationUpdateService.CheckLeadingFileEvent(courierMaster, loggedUserId, "NATR");
-                        }
-                        catch (Exception e)
-                        {
-                            LogMessagingUtil.Instance.AppendLine("Exception was thrown while checking if NATR exist in the file " + decPM.CustomFileNo + Environment.NewLine + e.Message);
-                        }
-                        if (!isEventNATR)
+                        var decPM = declarationQueryService.GetSingleDeclarationById(dec, t.Tenant);
+                        if (decPM != null)
                         {
                             SendDeclarationStatusRequest(decPM, loggedUserId);
                         }
                     }
-                }
-                if (decIdsList != null && !isEventNATR)
-                {
-                    SendNatr(t.Tenant,"",courierMaster.UnifreightLeadingFile);
+                    if (decIdsList != null)
+                    {
+                        SendNatr(t.Tenant, "", courierMaster.UnifreightLeadingFile);
+                    }
                 }
             }
 

@@ -1644,7 +1644,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommDec
 
         private void CalculateInsuranceAmount(decimal? insruancePercentage)
         {
-            if (insruancePercentage == null) return;
+             if (insruancePercentage == null) return;
             decimal? value = null;
             if (this._MySupplierInvoicePM.InvoiceAmount != null) value = this._MySupplierInvoicePM.InvoiceAmount;
             if (value == null)
