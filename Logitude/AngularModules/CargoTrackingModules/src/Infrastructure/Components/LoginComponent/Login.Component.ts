@@ -44,10 +44,10 @@ export class LoginComponent implements OnInit {
         this.RouteToMainPage();
         this.GetcargoTrackingData(baseUrl);
     }
- 
+
     private GetcargoTrackingData(baseUrl:string) {
         this.LogoImgSrc = "./assets/images/logo/White.jpg";
-        this.cargoTrackingBrandingDataExtendedService.GetCargoTrackingBrandingDataForPrivateSite(ServiceHelper.GetcargoTrackingDataRequest(baseUrl)).subscribe((response: ServiceResponse) => { 
+        this.cargoTrackingBrandingDataExtendedService.GetUserDashboardBrandingData(ServiceHelper.GetcargoTrackingDataRequest(baseUrl)).subscribe((response: ServiceResponse) => {
             if(response.Result){
                 this.Tenant = response.Result.Tenant;
                 ServiceHelper.SetCargoTrackingDate(response.Result,baseUrl);
@@ -167,7 +167,19 @@ export class LoginComponent implements OnInit {
                     this.RouteToMainPage();
                 }
             });
+
+            this.GetLoggedUserPM(LoginParams.Email, LogInToTenant.Tenant);
         }
+    }
+
+    private GetLoggedUserPM(email: any, tenant: any)
+    {
+        this.loginExtendedService.GetLoggedUser(email, tenant).subscribe((loggedUserPM: any) =>
+        {
+            if (loggedUserPM) {
+                SessionInfo.LoggedUserPM = loggedUserPM;
+            }
+        });
     }
 
     private FillSessionInfoData(userData: any) {
@@ -182,7 +194,6 @@ export class LoginComponent implements OnInit {
         SessionInfo.LoggedUserTenant = userData.CurrentTenant;
         SessionInfo.Token = userData.Token;
         SessionInfo.DocumentDownloadToken = userData.DocumentDownloadToken;
-        SessionInfo.LoggedUser = userData;
     }
 
     private RouteToMainPage(){
