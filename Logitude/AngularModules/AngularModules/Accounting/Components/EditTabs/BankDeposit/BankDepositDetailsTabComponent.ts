@@ -531,6 +531,8 @@ export class BankDepositDetailsTabComponent extends BaseComponent {
         this.cashBookLineListService.getByFilters(this.GetCashbookLinesAPIFilters()).subscribe((response: ServiceResponse) => {
             var result = response.Result;
             console.log("CashBookLineListService", result);
+
+            this.CashbookLines = new ObservableCollection([]);
             this.CashbookLines.InsertCollection(result);
 
             // this.CashBookLines = result;
@@ -543,18 +545,17 @@ export class BankDepositDetailsTabComponent extends BaseComponent {
                 this.NoCashBookRows = true;
             }
 
-            this.CalculateTotals();
             this.SetSelectedCashbookLines();
-
+            this.CalculateTotals();
 
         });
     }
 
     private SetSelectedCashbookLines() {
-        for (let line of this.CashbookLines.Collection) {
-            var CashbookLine = this.SelectedCashbookLines.Collection.filter(d => d.ChequeNumber == line.ChequeNumber)[0];
-            if (CashbookLine) {
-                line.IsSelected = true;
+        for (let line of this.SelectedCashbookLines.Collection) {
+            var CashbookLine = this.CashbookLines.Collection.filter(a => a.CashBookId == line.CashBookId && a.ARPChequeId == line.ARPChequeId)[0];
+            if (CashbookLine != null) {
+                this.CashbookLines.Collection.filter(a => a.CashBookId == line.CashBookId && a.ARPChequeId == line.ARPChequeId)[0].IsSelected = true;
             }
         }
     }
@@ -697,8 +698,7 @@ export class BankDepositDetailsTabComponent extends BaseComponent {
 
             if (this.IsLinesSelection) {
                 if (this.IsLinesSelection && !this.EntityPM.IsCashDeposit) {
-                    this.EntityPM.LocalDepositAmount = localSum;
-                    this.EntityPM.ForeignAmount = this.SelectedTotal;
+                    this.CalculateTotalsForNewChequeDeposite();
 
                 } else if (this.IsLinesSelection) {
                     this.EntityPM.ForeignAmount = this.SelectedTotal;
@@ -708,6 +708,17 @@ export class BankDepositDetailsTabComponent extends BaseComponent {
                 }
             }
         }
+    }
+
+    private CalculateTotalsForNewChequeDeposite() {
+        this.SelectedTotal = 0;
+        var localSum = 0.0;
+        for (let CashbookLine of this.SelectedCashbookLines.Collection) {
+            localSum += CashbookLine.LocalAmount;
+            this.SelectedTotal += CashbookLine.ForeignAmount == null ? 0 : CashbookLine.ForeignAmount;
+        }
+        this.EntityPM.LocalDepositAmount = localSum;
+        this.EntityPM.ForeignAmount = this.SelectedTotal;
     }
 
     Abs(number: number) {
@@ -747,20 +758,22 @@ export class BankDepositDetailsTabComponent extends BaseComponent {
 
         this.BankDepositLines.Clear();
         this.EntityPM.BankDepositLines = [];
+        this.SelectedCashbookLines = new ObservableCollection([]);
 
         // this.BankDepositLines = [];
         if (event == true) {
             for (let line of this.CashbookLines.Collection) {
-                this.PushBankDeposit(line);
                 this.SelectedCashbookLines.Collection.push(line);
+                this.PushBankDeposit(line);
                 line.IsSelected = true;
             }
-        }else{
-          for (let line of this.CashbookLines.Collection) {
-              line.IsSelected = false;
-              this.DeleteUnSelectedLine(line);
         }
+        else {
+            for (let line of this.CashbookLines.Collection) {
+                line.IsSelected = false;
+          }
         }
+
         this.CalculateTotals();
     }
 
@@ -771,8 +784,8 @@ export class BankDepositDetailsTabComponent extends BaseComponent {
             this.SelectedCashbookLines.Collection.push(cashbookLine);
         } else if (event == false) {
             this.DeleteUnSelectedLine(cashbookLine);
-            this.IsAllSelected = false;
             this.PopBankDeposit(cashbookLine);
+            this.IsAllSelected = false;
         }
         this.CalculateTotals();
     }

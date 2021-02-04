@@ -1,11 +1,11 @@
 ﻿Feature: Get AP Invoice Security Access 
-        In order to get an APInvoice from the APInvoices list 
-		It should be related to the user's tenant 
+		With pre-prepared user authentication
+		We want to test Get AP Invoice Security Access
 
-Scenario: An AP Invoice From A User's Tenant is Gotten
-	When The First user gets the first AP Invoice from AP Invoices list
-	Then The AP Invoice which is related to the first user tanent is existed
+Scenario: Get AP Invoice from user's tenant 
+	When get a AP Invoice from user's AP Invoices list
+	Then the AP Invoice should exist
 
-Scenario: An AP Invoice From  From Other Tenant isn't Gotten Get 
-	When The Second user gets the AP Invoice that was requested by the first user
-	Then The AP Invoice that was requested by the second user isn't existed
+Scenario: Get AP Invoice from other tenant  
+	When get a AP Invoice from Other Tenant
+	Then the AP Invoice should not exist

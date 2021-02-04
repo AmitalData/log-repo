@@ -1,11 +1,15 @@
-﻿Feature: External API Direct
+﻿@Pre-Prepare
+Feature: External API – Direct Shipment
+	With pre-prepared base and shipment data
+	We want to create direct shipment with main carriage leg
+	And update ETD, ATD, ETA, and ATA dates.
 
-Background:
-	Given Direct shipment with the following properties
-		| Name                 | Value      |
+Background: Create direct shipment with main carriage leg
+	Given a direct shipment with the following fields
+		| Field                | Value      |
 		| Agent                | 10026      |
-		| Direction            | E          |
-		| TransportMode        | O          |
+		| Direction            | Export     |
+		| TransportMode        | Ocean      |
 		| ShipmentType         | FCLD       |
 		| Shipper              | 10009      |
 		| ShipperReference1    | SR1        |
@@ -16,20 +20,20 @@ Background:
 		| Incoterm             | CIF        |
 		| MainCarriageCarrier  | CA20       |
 		| MainCarriageATD      | 2021-01-07 |
-	And List of main carriage legs
+	And a main carriage leg
 		| LegIndex | Carrier | FromPort | ToPort |
 		| 1        | CA20    | DE222    | DE223  |
-	When Create direct shipment using external API
-	Then The direct shipment should be created successfully
+	When create shipment
+	Then shipment should create successfully
 
-Scenario: Update shipment main carriage leg with invalid ATA
-	When Update main carriage leg ATA to future date
-	Then Error message (cannot set main carriage ATA to future date) should received
+Scenario: Update main carriage ATA to future date
+	When update ATA to future date
+	Then should receive error message say cannot set main carriage ATA to future date
 
-Scenario: Update shipment main carriage leg with invalid ATD
-	When Update main carriage leg ATD to future date
-	Then Error message (cannot set main carriage ATD to future date) should received
+Scenario: Update main carriage ATD to future date
+	When update ATD to future date
+	Then should receive error message say cannot set main carriage ATD to future date
 
-Scenario: Update shipment main carriage leg with vaild dates
-	When Update main carriage leg ETD,ATD,ETA and ATA to valid date
-	Then The shipment should updated succesfully
+Scenario: Update main carriage ETD, ATD, ETA, and ATA to vaild dates
+	When update ETD, ATD, ETA, and ATA to vaild dates
+	Then shipment should update successfully

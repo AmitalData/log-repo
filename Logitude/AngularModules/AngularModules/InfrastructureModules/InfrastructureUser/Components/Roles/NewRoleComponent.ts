@@ -1,19 +1,19 @@
-import {Component} from '@angular/core';
-import {AppTool} from '../../../../Infrastructure/Tools';
-import {RolePM} from '../../../../Common/EntityPMs/RolePM';
-import {RoleList} from '../../../../Common/EntityLists/RoleList';
-import {RolePMService} from '../../../../Common/Services/StandardPMs/RolePMService';
-import {RoleListService} from '../../../../Common/Services/StandardLists/RoleListService';
-import {Validator} from '../../../../Infrastructure/Validators/Validator';
-import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
-import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
-import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
-import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeTranslator';
-import {EntityResourceService} from '../../../../Infrastructure/Services/EntityResourceService';
-import {ConfirmWindow} from '../../../../Controls/Windows/ConfirmWindow';
+import { Component } from '@angular/core';
+import { AppTool } from '../../../../Infrastructure/Tools';
+import { RolePM } from '../../../../Common/EntityPMs/RolePM';
+import { RoleList } from '../../../../Common/EntityLists/RoleList';
+import { RolePMService } from '../../../../Common/Services/StandardPMs/RolePMService';
+import { RoleListService } from '../../../../Common/Services/StandardLists/RoleListService';
+import { Validator } from '../../../../Infrastructure/Validators/Validator';
+import { BaseComponent } from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
+import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
+import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
+import { TextCodeTranslator } from '../../../../Infrastructure/Utilities/TextCodeTranslator';
+import { EntityResourceService } from '../../../../Infrastructure/Services/EntityResourceService';
+import { ConfirmWindow } from '../../../../Controls/Windows/ConfirmWindow';
 
 @Component({
-    
+
     templateUrl: './NewRoleComponent.html',
 })
 
@@ -145,6 +145,10 @@ export class NewRoleComponent extends BaseComponent {
                             if (!myResponse.HasError) {
                                 this.CurrentSession.CloseCurrentWindowEmit("OK");
                             }
+
+                            else {
+                                this.ValidationErrorsList = myResponse.ErrorsArray;
+                            }
                         });
                     }
                 });
@@ -160,6 +164,10 @@ export class NewRoleComponent extends BaseComponent {
 
                     if (!myResponse.HasError) {
                         this.CurrentSession.CloseCurrentWindowEmit("OK");
+                    }
+
+                    else {
+                        this.ValidationErrorsList = myResponse.ErrorsArray;
                     }
                 });
             }

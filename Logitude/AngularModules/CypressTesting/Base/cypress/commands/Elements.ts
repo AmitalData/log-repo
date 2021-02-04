@@ -3,6 +3,7 @@ import * as gr from '../actions/GenerateRandoms'
 declare global{
 namespace Cypress {
     interface Chainable {
+        FillDate(selector: string, value: string): Chainable<Element>
         FillLogTextBox(selector: string, value: string): Chainable<Element>
         FillLogLov(selector: string, value: string, fromCache: boolean): Chainable<Element>
         FillRandomString(selector: string, length: number, upperCase: boolean): Chainable<Element>
@@ -12,17 +13,24 @@ namespace Cypress {
         ClickCheckBox(selector: string): Chainable<Element>
         ClickRadio(selector: string): Chainable<Element>
         SelectLogLovFirstElement(selector: string, fromCache: boolean): Chainable<Element>
-        SelectLogLovRandomElement(selector: string, fromCache: boolean, maxOptions: number): Chainable<Element>
+        SelectLogLovElement(selector: string, fromCache: boolean, moveType: string): Chainable<Element>
         ValidateElementColor(selector: string, expectedcolor: string): Chainable<Element>
         ValidateInputValue(selector: string, value: string): Chainable<Element>
         SelectQuickSearchFirstElement(selector: string, value: string): Chainable<Element>
     }
 }
 }
-
+Cypress.Commands.add("FillDate", (selector, value) => {
+if(value.toUpperCase()=="TODAY"){
+    cy.get(selector).focus().clear().type(".{enter}")
+}
+else{
+    cy.get(selector).focus().clear().type(value)
+}
+})
 Cypress.Commands.add("FillLogTextBox", (selector, value) => {
 
-    cy.get(selector).focus().clear().type(value)
+    cy.get(selector).clear().type(value)
 
 })
 
@@ -60,18 +68,18 @@ Cypress.Commands.add("SelectLogLovFirstElement", (selector, fromCache) => {
 
 })
 
-Cypress.Commands.add("SelectLogLovRandomElement", (selector, fromCache, maxOptions) => {
+Cypress.Commands.add("SelectLogLovElement", (selector, fromCache, moveType) => {
 
     if(!fromCache){
         cy.intercept("**/GetByCompactFilters?**").as("LOVDataLoaded")
     }
-    cy.get(selector).focus().clear().type("{downarrow}")
+    cy.get(selector).focus().clear().type(moveType)
     if(!fromCache){
         cy.wait("@LOVDataLoaded")
     }
 
-    let randomIndex = gr.GenerateRandomNumber(1, (maxOptions - 1))
-    cy.get(".DropDownListItem").children().eq(randomIndex).click()
+    //let randomIndex = gr.GenerateRandomNumber(1, (maxOptions - 1))
+    cy.get(".DropDownListItem").children().eq(0).click({ force: true })
 
 })
 
@@ -93,9 +101,9 @@ Cypress.Commands.add("FillRandomNumber", (selector, minimum, maximum) => {
 
 Cypress.Commands.add("Click", (selector, contains) => {
 
-    let element = cy.get(selector)
+    let element = cy.get(selector).should('exist')
 
-    if (contains !== null) {
+    if (contains) {
         element = element.contains(contains, {matchCase: false})
 
     }

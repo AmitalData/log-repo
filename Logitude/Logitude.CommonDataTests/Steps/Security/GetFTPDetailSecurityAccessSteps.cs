@@ -13,48 +13,56 @@ namespace Logitude.CommonDataTests.Steps.Security
     public class GetFTPDetailSecurityAccessSteps
     {
         private SecurityAccessStepsContext<FTPDetailPM> Context;
+
         public GetFTPDetailSecurityAccessSteps(SecurityAccessStepsContext<FTPDetailPM> context)
         {
             Context = context;
         }
 
         #region Step Region
-        [When(@"First user get the first FTP Detail from FTP Detail list")]
-        public void WhenFirstUserGetTheFirstFTPDetailFromFTPDetailList()
+
+        #region Get FTP detail for user's tenant
+        [When(@"get FTP detail for user's tenant")]
+        public void WhenGetFTPDetailForUsersTenant()
         {
-            IEnumerable<FTPDetailPM> firstUserDetailList = GetFTPDetailsListForFirstUser();
-            Context.FirstUserPMData.Id = firstUserDetailList?.FirstOrDefault()?.Id;
+            FTPDetailPM userTenantFTPDetail = GetUserTenantFTPDetail();
+            Context.FirstUserPMData.Id = userTenantFTPDetail?.Id;
         }
 
-        [Then(@"the Detail for first user should be exists")]
-        public void ThenTheDetailForFirstUserShouldBeExists()
+        [Then(@"FTP detail should available")]
+        public void ThenFTPDetailShouldAvailable()
         {
             Context.FirstUserPMData.Id.Should().NotBeNull();
         }
+        #endregion
 
-        [When(@"Second user get the FTP Detail that requested by first user")]
-        public void WhenSecondUserGetTheFTPDetailThatRequestedByFirstUser()
+        #region Get FTP detail for other tenant
+        [When(@"get FTP detail for other tenant")]
+        public void WhenGetFTPDetailForOtherTenant()
         {
-            GetFTPDetailForTheSecondUserBaseOnFirstUserFTPDetails();
+            FTPDetailPM otherTenantFTPDetail = GetUserTenantContactFromOtherUserTenant();
+            Context.SecondUserPMData.Id = otherTenantFTPDetail?.Id;
         }
 
-        [Then(@"the Detail for second user should not be exists")]
-        public void ThenTheDetailForSecondUserShouldNotBeExists()
+        [Then(@"FTP detail should not available")]
+        public void ThenFTPDetailShouldNotAvailable()
         {
             Context.SecondUserPMData.Id.Should().BeNull();
         }
         #endregion
 
+        #endregion
+
         #region Private Function Region
-        private void GetFTPDetailForTheSecondUserBaseOnFirstUserFTPDetails()
+        private FTPDetailPM GetUserTenantContactFromOtherUserTenant()
         {
-            IEnumerable<FTPDetailPM> firstUserDetailList = GetFTPDetailsListForFirstUser();
-            string ftpDetailsGetSingleUrl = Urls.FTPDetailsGetSingle(firstUserDetailList?.FirstOrDefault()?.Id);
-            ApiResponse<FTPDetailPM> response = APICaller.CallGet<FTPDetailPM>(ftpDetailsGetSingleUrl, UserOtherTenant.Token);
-            Context.SecondUserPMData.Id = response.Data?.Id;
+            FTPDetailPM userTenantFTPDetail = GetUserTenantFTPDetail();
+            string ftpDetailsGetSingleUrl = Urls.FTPDetailsGetSingle(userTenantFTPDetail?.Id);
+            ApiResponse<FTPDetailPM> ftpDetailResponse = APICaller.CallGet<FTPDetailPM>(ftpDetailsGetSingleUrl, UserOtherTenant.Token);
+            return ftpDetailResponse.Data;
         }
 
-        private IEnumerable<FTPDetailPM> GetFTPDetailsListForFirstUser()
+        private FTPDetailPM GetUserTenantFTPDetail()
         {
             ApiQueryFilters apiQueryFilters = new ApiQueryFilters
             {
@@ -63,9 +71,8 @@ namespace Logitude.CommonDataTests.Steps.Security
             };
 
             ApiResponse<IEnumerable<FTPDetailPM>> response = APICaller.CallGetByFilters<IEnumerable<FTPDetailPM>>(Urls.FTPDetailViewsGetByFilters, UserTenant.Token, apiQueryFilters);
-            return response.Data;
+            return response.Data?.FirstOrDefault();
         }
         #endregion
-
     }
 }

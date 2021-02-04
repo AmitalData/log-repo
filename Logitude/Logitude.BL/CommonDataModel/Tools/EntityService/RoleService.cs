@@ -48,7 +48,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 Tenant = entityPM.Tenant,
             };
 
-            RoleValidating.Validate(entityPM);
+            RoleValidating.Validate(entityPM, isNewEntity, entityRepository);
             RoleTracing.Trace(entityPM, Poco, isNewEntity);
             RoleMapping.MapEntity(entityPM, Poco, isNewEntity);
 
@@ -71,7 +71,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
             if (entityPM.UserId != null)
             {
-                RoleValidating.Validate(entityPM);
+                RoleValidating.Validate(entityPM, isNewEntity, entityRepository);
                 RoleTracing.Trace(entityPM, Poco, isNewEntity);
                 RoleMapping.MapEntity(entityPM, Poco, isNewEntity);
 

@@ -220,13 +220,13 @@ namespace Logitude.ShipmentTests.Models.Builders
                 case "LHR":
                     return LocationsData.PortLHRId;
                 case "MIA":
-                    return LocationsData.PortMIAId;
+                    return LocationsData.PortMIADomesticId;
                 case "JFK":
-                    return LocationsData.PortJFKId;
+                    return LocationsData.PortAirJFKId;
                 case "SOU":
-                    return LocationsData.PortSOUId;
+                    return LocationsData.PortOceanSOUId;
                 case "NYC":
-                    return LocationsData.PortNYCId;
+                    return LocationsData.PortInlandNYCId;
                 case "LON":
                     return LocationsData.PortLONId;
                 case "MAN":

@@ -86,6 +86,7 @@
       <xs:element minOccurs="0" name="ArrivalNoticeSentDate" nillable="true" type="xs:dateTime" />
       <xs:element minOccurs="0" name="AsAgreedFreight" type="xs:boolean" />
       <xs:element minOccurs="0" name="AsAgreedOtherCharges" type="xs:boolean" />
+      <xs:element minOccurs="0" name="AssignedToTruckerDate" nillable="true" type="xs:dateTime" />
       <xs:element minOccurs="0" name="BaseShipmentNumber" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="BasicFreightId" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="BasketId" nillable="true" type="xs:string" />
@@ -440,6 +441,7 @@
       <xs:element minOccurs="0" name="INTTRAInstructions" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="INTTRAIsFreighted" type="xs:boolean" />
       <xs:element minOccurs="0" name="INTTRALastBookingResponse" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="INTTRALastEBbookingSendDate" nillable="true" type="xs:dateTime" />
       <xs:element minOccurs="0" name="INTTRALastStatusDate" nillable="true" type="xs:dateTime" />
       <xs:element minOccurs="0" name="INTTRASIError" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="INTTRASIStatusCode" nillable="true" type="xs:string" />
@@ -1024,6 +1026,7 @@
       <xs:element minOccurs="0" name="Transshipment3VesselId" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Transshipment3VesselName" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="TruckNumber" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="TruckerId" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="UpdateSendUpdatesToAgentEnabledField" type="xs:boolean" />
       <xs:element minOccurs="0" name="UpdatedByPartner" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="UpdatedByUserId" nillable="true" type="xs:string" />
@@ -1869,6 +1872,7 @@
       <xs:element minOccurs="0" name="ShipmentPayableLineStatusName" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="ShipmentPayableParentId" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="TariffId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="TariffLineId" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="TariffNumber" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="TariffVersion" type="xs:int" />
       <xs:element minOccurs="0" name="Tenant" type="xs:int" />

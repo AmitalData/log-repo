@@ -1,11 +1,11 @@
-﻿Feature: Get Shipment Security Access
+﻿Feature: Get shipment security access
 	With pre-prepared base and shipment data
 	We want to test Get Shipment Security Access.
 
-Scenario: Get Shipment From User's Tenant
-	When First user get the first shipment from shipments list
-	Then Shipment for first user should be exists
+Scenario: Get shipment from user's tenant
+	When get a shipment from User's shipment list
+	Then the shipment should exist
 
-Scenario: Get Shipment From Other Tenant
-	When Second user get the shipment that requested by first user
-	Then Shipment for second user should not be exists
+Scenario: Get shipment from other tenant
+	When get a shipment from Other Tenant
+	Then the shipment should not exist

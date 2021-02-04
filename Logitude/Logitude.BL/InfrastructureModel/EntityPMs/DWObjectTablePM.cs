@@ -24,5 +24,10 @@ namespace Logitude.BL.InfrastructureModel.EntityPMs
         public string ParentFactCode { get; set; }
         public string RecordType { get; set; }
         public string DisplayName { get; set; }
+
+        public string ObjectTableName { get; set; }
+        public int MaxNumberOfCustomFields { get; set; }
+        public bool HasCustomFields { get; set; }
+
     }
 }

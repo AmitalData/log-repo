@@ -22,80 +22,87 @@ namespace Logitude.ShipmentTests.Steps
         }
 
         #region Step Region
-        [Given(@"Direct shipment with the following properties")]
-        public void GivenDirectShipmentWithTheFollowingProperties(Table directShipmentTable)
+
+        #region Create direct shipment with main carriage leg steps
+
+        [Given(@"a direct shipment with the following fields")]
+        public void GivenADirectShipmentWithTheFollowingFields(Table directShipmentTable)
         {
-            BuildNewDirectShipment(directShipmentTable);
+            Context.Direct = CreateDirectInstance(directShipmentTable);
         }
 
-        [Given(@"List of main carriage legs")]
-        public void GivenListOfMainCarriageLegs(Table mainCarriageLegsTable)
+        [Given(@"a main carriage leg")]
+        public void GivenAMainCarriageLeg(Table mainCarriageLegsTable)
         {
-            AddMainCarriageLegsToDirectShipment(mainCarriageLegsTable);
+            AddMainCarriageLegsToDirectShipment(Context.Direct, mainCarriageLegsTable);
         }
-        
-        [When(@"Create direct shipment using external API")]
-        public void WhenCreateDirectShipmentUsingExternalAPI()
+
+        [When(@"create shipment")]
+        public void WhenCreateShipment()
         {
             ApiResponse<Direct> response = APICaller.CallPost<Direct>(Context.Direct, "Direct", UserTenant.Token);
             Context.Direct = response.Data;
         }
 
-        [Then(@"The direct shipment should be created successfully")]
-        public void ThenTheDirectShipmentShouldBeCreatedSuccessfully()
+        [Then(@"shipment should create successfully")]
+        public void ThenShipmentShouldCreateSuccessfully()
         {
             Context.Direct.Should().NotBeNull();
         }
+        #endregion
 
-        [When(@"Update main carriage leg ATA to future date")]
-        public void WhenUpdateMainCarriageLegATAToFutureDate()
+        #region Update ATA to future date steps
+        [When(@"update ATA to future date")]
+        public void WhenUpdateATAToFutureDate()
         {
             Context.Direct.MainCarriageLegs.First().ATA = GetDateBasedOnCurrentDate(1, 0, 0);
             Context.act = () => APICaller.CallPut<Direct>(Context.Direct, "Direct", UserTenant.Token);
         }
 
-        [Then(@"Error message \(cannot set main carriage ATA to future date\) should received")]
-        public void ThenErrorMessageCannotSetMainCarriageATAToFutureDateShouldReceived()
+        [Then(@"should receive error message say cannot set main carriage ATA to future date")]
+        public void ThenShouldReceiveErrorMessageSayCannotSetMainCarriageATAToFutureDate()
         {
-            Context.act.Should().ThrowExactly<Exception>()
-                .Where(e => e.Message.Contains("Can't set MainCarriageATA to future date"));
+            Context.act.Should().ThrowExactly<Exception>().Where(e => e.Message.Contains("Can't set MainCarriageATA to future date"));
         }
+        #endregion
 
-        [When(@"Update main carriage leg ATD to future date")]
-        public void WhenUpdateMainCarriageLegATDToFutureDate()
+        #region Update ATD to future date steps
+        [When(@"update ATD to future date")]
+        public void WhenUpdateATDToFutureDate()
         {
             Context.Direct.MainCarriageLegs.First().ATD = GetDateBasedOnCurrentDate(1, 0, 0);
             Context.act = () => APICaller.CallPut<Direct>(Context.Direct, "Direct", UserTenant.Token);
-
         }
 
-        [Then(@"Error message \(cannot set main carriage ATD to future date\) should received")]
-        public void ThenErrorMessageCannotSetMainCarriageATDToFutureDateShouldReceived()
+        [Then(@"should receive error message say cannot set main carriage ATD to future date")]
+        public void ThenShouldReceiveErrorMessageSayCannotSetMainCarriageATDToFutureDate()
         {
-            Context.act.Should().ThrowExactly<Exception>()
-                .Where(e => e.Message.Contains("Can't set MainCarriageATD to future date"));
+            Context.act.Should().ThrowExactly<Exception>().Where(e => e.Message.Contains("Can't set MainCarriageATD to future date"));
         }
+        #endregion
 
-        [When(@"Update main carriage leg ETD,ATD,ETA and ATA to valid date")]
-        public void WhenUpdateMainCarriageLegETDATDETAAndATAToValidDate()
+        #region Update ETD, ATD, ETA, and ATA to vaild dates steps
+        [When(@"update ETD, ATD, ETA, and ATA to vaild dates")]
+        public void WhenUpdateETDATDETAAndATAToVaildDates()
         {
             FillVaildDatesInMainCarriageLegs();
             ApiResponse<Direct> response = APICaller.CallPut<Direct>(Context.Direct, "Direct", UserTenant.Token);
             Context.Direct = response.Data;
         }
 
-        [Then(@"The shipment should updated succesfully")]
-        public void ThenTheShipmentIsUpdatedSuccesfully()
+        [Then(@"shipment should update successfully")]
+        public void ThenShipmentShouldUpdateSuccessfully()
         {
             Context.Direct.Should().NotBeNull();
         }
         #endregion
 
+        #endregion
+
         #region Private Function Region
-        private void AddMainCarriageLegsToDirectShipment(Table mainCarriageLegsTable)
+        private void AddMainCarriageLegsToDirectShipment(Direct direct,Table mainCarriageLegsTable)
         {
             IEnumerable<dynamic> mainCarriageLegs = mainCarriageLegsTable.CreateDynamicSet();
-
             List<MainCarriageLeg> mainCarriageLegsList = new List<MainCarriageLeg>();
 
             mainCarriageLegs.ToList().ForEach(mainCarriageLeg =>
@@ -109,8 +116,8 @@ namespace Logitude.ShipmentTests.Steps
                 mainCarriageLegsList.Add(newMainCarriageLeg);
             });
 
-            Context.Direct.MainCarriageLegs = new List<MainCarriageLeg>();
-            Context.Direct.MainCarriageLegs.AddRange(mainCarriageLegsList);
+            direct.MainCarriageLegs = new List<MainCarriageLeg>();
+            direct.MainCarriageLegs.AddRange(mainCarriageLegsList);
         }
 
         private void FillVaildDatesInMainCarriageLegs()
@@ -128,14 +135,11 @@ namespace Logitude.ShipmentTests.Steps
         #endregion
 
         #region Build Models Region
-        private void BuildNewDirectShipment(Table directShipmentTable)
+        private Direct CreateDirectInstance(Table directShipmentTable)
         {
             dynamic directShipment = directShipmentTable.CreateDynamicInstance();
 
-
-
-            DirectBuilder directBuilder = new DirectBuilder();
-            directBuilder.Agent((string)directShipment.Agent.ToString())
+            return new DirectBuilder().Agent((string)directShipment.Agent.ToString())
                 .Direction((string)directShipment.Direction.ToString())
                 .TransportMode((string)directShipment.TransportMode.ToString())
                 .ShipmentType((string)directShipment.ShipmentType.ToString())
@@ -147,9 +151,8 @@ namespace Logitude.ShipmentTests.Steps
                 .VolumeUnit((string)directShipment.VolumeUnit.ToString())
                 .Incoterm((string)directShipment.Incoterm.ToString())
                 .MainCarriageCarrier((string)directShipment.MainCarriageCarrier.ToString())
-                .MainCarriageATD((DateTime)directShipment.MainCarriageATD);
-
-            Context.Direct = directBuilder.Build();
+                .MainCarriageATD((DateTime)directShipment.MainCarriageATD)
+                .Build();
         }
         #endregion
     }

@@ -3114,6 +3114,19 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="AssignedToTruckerDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="TruckerId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="CountryForStatisticsId"
     ReferencedTable="Countries"
@@ -3813,6 +3826,11 @@
     ForeignKeyColumn="WeightRoundingCode"
     ReferencedTable="WarehouseWeightRoundings"
     ReferencedColumn="Code"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="TruckerId"
+    ReferencedTable="Cards"
+    ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
   <Index
     Columns="Tenant,CustomFileNumber" />

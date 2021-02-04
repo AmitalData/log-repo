@@ -1,12 +1,9 @@
 Feature: Create Shipment Tests
 
-  Scenario: Login And Open Shipments Workspace
-    Given User logged in
-    And Go to shipments workspace
-
   Scenario: Create Direct Export Air Shipment
-    Given Shipment details
+    Given the user logged in and navigates to shipments workspace 
+    And a direct shipment with the following details
       | ShipmentLevel | Direction | TransportMode | Shipper  | MainCarriageFromPort | MainCarriageToPort |
-      | Direct        | E         | A             | Shipper1 | LHR                  | MIA                |
-    When Click create shipment button
-    Then The create operation completed successfully
+      | Direct        | Export    | Air           | Shipper1 | LHR                  | MIA                |
+    When create shipment
+    Then the shipment should create successfully
