@@ -1,9 +1,5 @@
 ﻿using Logitude.Test.Base.Models;
 using Logitude.Test.Base.Services;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using TechTalk.SpecFlow;
 
 namespace Logitude.Test.Base.Hooks
@@ -26,8 +22,8 @@ namespace Logitude.Test.Base.Hooks
 
         private static void SetupPartnerPreparationVariables()
         {
-            ApiResponse<PartnersVariables> partnersVariablesResponse = APICaller.CallGet<PartnersVariables>(Urls.IntegrationTestGetBasePartners, UserTenant.Token);
-            PartnersDataMap(partnersVariablesResponse.Data);
+            PartnersVariables partnersVariables = DataPreparation.GetPartnersVariables();
+            PartnersDataMap(partnersVariables);
         }
 
         private static void LocationsDataMap(LocationsVariables locationsVariables)
@@ -53,8 +49,9 @@ namespace Logitude.Test.Base.Hooks
             PartnersData.CustomAgentId = partnersVariables.CustomAgentId;
             PartnersData.ShippingAgentId = partnersVariables.ShippingAgentId;
             PartnersData.PotentialCustomerId = partnersVariables.PotentialCustomerId;
-            PartnersData.TruckerId = partnersVariables.TruckerId;
-            PartnersData.ShipperExport1 = partnersVariables.ShipperExport1;
+            PartnersData.TruckerTLONId = partnersVariables.TruckerTLONId;
+            PartnersData.TruckerTNYCId = partnersVariables.TruckerTNYCId;
+            PartnersData.ShipperExportId = partnersVariables.ShipperExportId;
             PartnersData.AirlineAAId = partnersVariables.AirlineAAId;
             PartnersData.AirlineBAId = partnersVariables.AirlineBAId;
             PartnersData.ShippingLineMSCUId = partnersVariables.ShippingLineMSCUId;
