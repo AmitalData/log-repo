@@ -185,8 +185,8 @@
 
                     <div class="tag">Current Milestone</div>
                     <ul *ngIf="CurrentMilestoneField" class="steps-list">
-                        <li class="highlighted">
-                            <ng-container *ngIf="CurrentMilestoneField.Date">
+                        <li class="highlighted" *ngIf="CurrentMilestoneField.Date">
+                            <ng-container >
                                 <div class="tick"> </div>
 
                                 <div class="date" style="width: 130px;">{{CurrentMilestoneField.Date | date: 'dd/MM/yyyy, HH:MM'}}</div>
