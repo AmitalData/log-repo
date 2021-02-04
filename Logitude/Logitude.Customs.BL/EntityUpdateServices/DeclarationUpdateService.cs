@@ -733,10 +733,6 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 }
             }
 
-            //  -------- Declaration Referant Data 
-            UpdateReferantData(entityPM);
-            
-
             base.OnUpdating(entityPM, entityPOCO);
         }
 
@@ -785,7 +781,6 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     DeclarationReferantDataUpdateService service = new DeclarationReferantDataUpdateService(context, new Dictionary<string, IContext>(), entityPM.Tenant);
                     service.Update(referant, true);
                     DeclarationReferantDataRepository declarationReferantDataRepository = new DeclarationReferantDataRepository(context);
-                    declarationReferantDataRepository.SubmitChanges();
                     logData = $"entityPM.CustomFileNo={entityPM.CustomFileNo}, referant.NewFile={referant.NewFile}, after update";
                     LogitudeSettings.HandleLogMe("Referant update " + logData, false, "referant.NewFile", stopLogAt);
                 }
