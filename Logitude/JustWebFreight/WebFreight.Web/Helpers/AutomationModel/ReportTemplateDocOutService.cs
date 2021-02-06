@@ -1,4 +1,5 @@
-﻿using Logitude.BL.CommonDataModel.EntityQueries;
+﻿using Logitude.BL.CommonDataModel.EntityPMs;
+using Logitude.BL.CommonDataModel.EntityQueries;
 using Simplog.Data.CommonDataModel;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
@@ -26,10 +27,21 @@ namespace WebFreight.Web.Helpers.AutomationModel
 
             if (!string.IsNullOrEmpty(documentOutId))
             {
-                DocumentOutCopyQuery documentOutCopyQuery = new DocumentOutCopyQuery(reportTemplateDocOutArgs.Tenant);
-                var documentOutCopyPM = documentOutCopyQuery.GeDocumentOutCopyPMByDocumentOutId(documentOutId, reportTemplateDocOutArgs.Tenant);
-                documentId = documentOutCopyPM != null ? documentOutCopyPM.DocumentId : "";
+                documentId = GetDocumentId(documentOutId);
             }
+            return documentId;
+        }
+
+        private string GetDocumentId(string documentOutId)
+        {
+            DocumentOutCopyQuery documentOutCopyQuery = new DocumentOutCopyQuery(reportTemplateDocOutArgs.Tenant);
+            DocumentOutCopyPM documentOutCopyPM;
+            if (string.IsNullOrEmpty(reportTemplateDocOutArgs.DocumentCopyId))
+                documentOutCopyPM = documentOutCopyQuery.GeDocumentOutCopyPMByDocumentOutId(documentOutId, reportTemplateDocOutArgs.Tenant);
+            else
+                documentOutCopyPM = documentOutCopyQuery.GeDocumentOutCopyPMByDocumentOutIdAndDocumentCopyId(documentOutId, reportTemplateDocOutArgs.DocumentCopyId, reportTemplateDocOutArgs.Tenant);
+            
+            string documentId = documentOutCopyPM != null ? documentOutCopyPM.DocumentId : "";
             return documentId;
         }
 
@@ -73,7 +85,7 @@ namespace WebFreight.Web.Helpers.AutomationModel
         public string ObjectTableId { get; set; }
         public string EntityId { get; set; }
         public string DocumentTypeId { get; set; }
-
+        public string DocumentCopyId { get; set; }
 
 
 

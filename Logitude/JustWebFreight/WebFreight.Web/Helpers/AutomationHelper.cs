@@ -323,12 +323,21 @@ namespace WebFreight.Web.Helpers
             }
 
             context.SaveChanges();
-
-            //IQueueService queueservice = QueueServiceManager.GetQueueService("EmailQueue", tenant);
-            DbQueueService queueservice = new DbQueueService("EmailQueue", tenant);
-            queueservice.Send(new Dictionary<string, string>() { { "CommunicationLogId", log.Id }, { "Tenant", tenant.ToString() } }, tenant);
-
+            if (IsAllowedToSendEmail(automationSendEmailArgs, context))
+            {
+                //IQueueService queueservice = QueueServiceManager.GetQueueService("EmailQueue", tenant);
+                DbQueueService queueservice = new DbQueueService("EmailQueue", tenant);
+                queueservice.Send(new Dictionary<string, string>() { { "CommunicationLogId", log.Id }, { "Tenant", tenant.ToString() } }, tenant);
+            }
             return log.Id;
+        }
+
+        private bool IsAllowedToSendEmail(AutomationSendEmailArgs automationSendEmailArgs, ICommonDataContext context)
+        {
+            bool haveCopyDocument = !string.IsNullOrEmpty(automationSendEmailArgs.DocumentCopyId);
+            bool haveAttachment = context.CommunicationAttachments != null && context.CommunicationAttachments.Local != null && context.CommunicationAttachments.Local.Count() > 0;
+            bool isAllowedToSend = !haveCopyDocument || (haveCopyDocument && haveAttachment);
+            return isAllowedToSend;
         }
 
         private  void AddReportTemplateDocOutAttachment(AutomationSendEmailArgs automationSendEmailArgs, ICommonDataContext context, CommunicationLog log)
@@ -339,6 +348,7 @@ namespace WebFreight.Web.Helpers
                 {
                     Tenant = automationSendEmailArgs.Tenant,
                     ReportTemplateId = automationSendEmailArgs.ReportTemplateId,
+                    DocumentCopyId = automationSendEmailArgs.DocumentCopyId,
                     DocumentTypeId = automationSendEmailArgs.Automation.DocumentTypeId,
                     EntityId = automationSendEmailArgs.EntityId, 
                     ObjectTableId = automationSendEmailArgs.ObjectTableId,
@@ -701,7 +711,8 @@ namespace WebFreight.Web.Helpers
         public string CreateByUserId { get; set; }
         public int Tenant { get; set; }
         public string ReportTemplateId { get; set; }
-        
+        public string DocumentCopyId { get; set; }
+
 
     }
 
