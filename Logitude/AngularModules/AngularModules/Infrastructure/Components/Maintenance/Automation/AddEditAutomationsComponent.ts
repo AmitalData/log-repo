@@ -50,13 +50,15 @@ import { UserList } from '../../../../Common/EntityLists/UserList';
 import { UserListService } from '../../../../Common/Services/StandardLists/UserListService';
 import { ChooseUserArgs } from '../../../../Infrastructure/Components/Maintenance/Automation/ChooseSpecificUserComponent';
 import { MessageWindow } from '../../../../Controls/Windows/MessageWindow';
+import { DocumentTypeCopyPMExtendedService } from '../../../../Common/Services/ExtendedPMs/DocumentTypeCopyPMExtendedService';
+import { DocumentCopiesViewModel } from '../../../../InfrastructureModules/InfrastructureDocuments/Components/DocumentComponent/DocsOut/ViewModel/DocumentCopiesViewModel';
 
 
 @Component({
 
     selector: 'AddEditAutomationsComponent',
     templateUrl: './AddEditAutomationsComponent.html',
-    providers: [DocumentTypeTemplatePMExtendedService, AutomationResultEmailRecipientExtendedService, AutomationExtendedPMService, AutomationHistoryExtendedPMService, EntityArgs],
+    providers: [DocumentTypeTemplatePMExtendedService, DocumentTypeCopyPMExtendedService, AutomationResultEmailRecipientExtendedService, AutomationExtendedPMService, AutomationHistoryExtendedPMService, EntityArgs],
 })
 
 export class AddEditAutomationsComponent extends BaseComponent implements OnInit {
@@ -93,6 +95,8 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
 
     DocumentTypeTemplateReportLists: DocumentTypeTemplateViewModel[];
 
+    public ShowDocumentsCopy: boolean = false;
+    public DocumentTypeCopyLists: DocumentCopiesViewModel[];
 
     DelayTime: number;
     DelayTimeOp: string;
@@ -166,7 +170,7 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
 
     constructor(public _automationResultEmailRecipientExtendedService:
 
-        AutomationResultEmailRecipientExtendedService, public _documentTypeTemplatePMExtendedService: DocumentTypeTemplatePMExtendedService, public _automationExtendedPMService: AutomationExtendedPMService, public _automationHistoryExtendedPMService: AutomationHistoryExtendedPMService, private cd: ChangeDetectorRef, public entityArgs: EntityArgs) {
+        AutomationResultEmailRecipientExtendedService, public _documentTypeTemplatePMExtendedService: DocumentTypeTemplatePMExtendedService, public documentTypeCopyPMExtendedService: DocumentTypeCopyPMExtendedService, public _automationExtendedPMService: AutomationExtendedPMService, public _automationHistoryExtendedPMService: AutomationHistoryExtendedPMService, private cd: ChangeDetectorRef, public entityArgs: EntityArgs) {
         super();
 
         if (SessionLocator.TenantPM.Id == 0) {
@@ -381,6 +385,20 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
     }
 
 
+    private documentTypeCopySelected: DocumentCopiesViewModel;
+    get DocumentTypeCopySelected() { return this.documentTypeCopySelected; }
+    set DocumentTypeCopySelected(value: DocumentCopiesViewModel) {
+        if (this.documentTypeCopySelected != value) {
+            this.documentTypeCopySelected = value;
+            const documentCopyId = value ? value.Id : null;
+            if (this.AutomatedBackupClass && this.AutomatedBackupClass.DocumentCopyId != documentCopyId) {
+                this.AutomatedBackupClass.DocumentCopyId = documentCopyId;
+                this.IsChangeAutomation = true;
+            }
+        }
+    }
+
+
     private documentTypeTemplateSelected: DocumentTypeTemplateViewModel;
     get DocumentTypeTemplateSelected() { return this.documentTypeTemplateSelected; }
     set DocumentTypeTemplateSelected(value: DocumentTypeTemplateViewModel) {
@@ -538,10 +556,15 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
     }
 
     LoadDocumentTypeTemplate(documentTypeList: DocumentTypeList) {
+        this.ShowDocumentsCopy = documentTypeList.IsDocumentOneTimePrintLimited;
         this.LoadDocumentTypeHTMLTemplate(documentTypeList);
 
         var isMessage: boolean = documentTypeList.TemplateFormatCode == "M" ? true : false;
-        if (!isMessage) this.LoadDocumentTypeReportTemplate(documentTypeList);
+        if (!isMessage) {
+            this.LoadDocumentTypeReportTemplate(documentTypeList);
+            if (this.ShowDocumentsCopy)
+                this.LoadDocumentTypeCopies(documentTypeList);
+        }
         else this.DocumentTypeTemplateReportSelected = null;
     }
 
@@ -640,6 +663,31 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
     }
 
 
+    LoadDocumentTypeCopies(documentTypeList: DocumentTypeList) {
+        this.documentTypeCopyPMExtendedService.getDocumentTypeCopiesWithoutLimitedOneForAutomations(documentTypeList.Id, documentTypeList.LimitedPrintCopyId, SessionLocator.Tenant).subscribe((res: any) => {
+            var pmResponse: ServiceResponse = res;
+            this.CurrentSession.CurrentWindow.StopBusyIndicator();
+            this.DocumentTypeCopyLists = [];
+            if (!pmResponse.HasError) {
+                var myResult = pmResponse.Result;
+
+                myResult.forEach((item) => {
+                    this.DocumentTypeCopyLists.push(new DocumentCopiesViewModel(item, null, null, null, null, null, null, null));
+                });
+
+                if (this.DocumentTypeCopyLists && this.DocumentTypeCopyLists.length > 0) {
+                    const templateId = (this.AutomatedBackupClass && this.AutomatedBackupClass.DocumentCopyId) ? this.AutomatedBackupClass.DocumentCopyId : "";
+
+                    let selectedCopyTemplate = this.DocumentTypeCopyLists.filter(d => d.Id == templateId)[0];
+                    if (!selectedCopyTemplate) selectedCopyTemplate = this.DocumentTypeCopyLists[0];
+
+                    this.DocumentTypeCopySelected = selectedCopyTemplate;
+
+                    this.IsEnableEditReportTemplate = true;
+                }
+            }
+        });
+    }
 
 
 
@@ -2005,6 +2053,7 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
         automatedBackup.AutomationSendInterface = this.CurrentEntityPM.ResultCode == "SENDINTERFACE" ? this.AutomationSendInterface : null;
         automatedBackup.AutomationSendDocument = this.CurrentEntityPM.ResultCode == "SENDDOCUMENT" ? this.AutomationSendDocument : null;
         automatedBackup.ReportTemplateId = this.CurrentEntityPM.ResultCode == "EMAIL" ? this.AutomatedBackupClass.ReportTemplateId : null;
+        automatedBackup.DocumentCopyId = this.CurrentEntityPM.ResultCode == "EMAIL" ? this.AutomatedBackupClass.DocumentCopyId : null;
 
 
 

@@ -25,6 +25,7 @@ export class AutomatedBackup {
     public Type: string;
     public IsAutomationResultEmailAllActiveUsers: boolean;
     public ReportTemplateId: string;
+    public DocumentCopyId: string;
 
     AautomationConditionLists: AutomationCondition[];
     AutomationSetValueLists: AutomationSetValue[];

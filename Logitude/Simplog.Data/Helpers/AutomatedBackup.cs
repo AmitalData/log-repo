@@ -53,6 +53,8 @@ namespace Simplog.Data.Helpers
 
         [DataMember]
         public string ReportTemplateId { get; set; }
+        [DataMember]
+        public string DocumentCopyId { get; set; }
 
         [DataMember]
         public AutomationFollowUp AutomationFollowUp { get; set; }
