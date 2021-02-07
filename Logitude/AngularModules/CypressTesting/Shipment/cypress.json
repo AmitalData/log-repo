@@ -2,6 +2,7 @@
 "viewportWidth": 1440,
 "viewportHeight": 900,
 "integrationFolder": "cypress/tests",
+"screenshotsFolder": "cypress/results/html/screenshots",
 "testFiles": "**/*.feature",
 "ignoreTestFiles": "*.ts",
 "env":{
