@@ -29,6 +29,7 @@ import { MessageWindow } from '../../../../../../Controls/Windows/MessageWindow'
 import { LogitudeWindow } from '../../../../../../Controls/Windows/LogitudeWindow';
 import { WindowArgs } from '../../../../../../Infrastructure/DataContracts/WindowArgs';
 import { CustomsRequiredFieldExtendedListService } from '../../../../../../Customs/Services/ExtendedLists/CustomsRequiredFieldExtendedListService';
+ import { Dictionary } from '../../../../../../Infrastructure/GenericTypes/Dictionary';
 
 @Component({
     selector: 'ConsigmentTabContent',
@@ -66,6 +67,8 @@ export class ConsigmentTabContentComponent
 
     public WeightValueFilterItems: ApiQueryFilters;
     private CurrentSession = SessionLocator.SelectedSession;
+
+  public  ConsignmentTypes: ConsignmentType[] = [{ Id: "E", Value: "יצוא" }, { Id: "I", Value: "יבוא" }];
     constructor(public entityArgs: EntityArgs, private cd: ChangeDetectorRef) {
         super();
         this.ConsimentPackages = new ObservableCollection([]);
@@ -76,9 +79,16 @@ export class ConsigmentTabContentComponent
         this.SiteList = [];
         this.LoadingPortFilterItems = new ApiQueryFilters();//38388
         this.Listen();
+
+
     }
     private _SubDisplayModeChanged;
     private _SubConsignmentsChanged;
+
+    public ConsignmentTypeSelectionChanged(value) {
+        this.ConsignmentType = value;
+
+    }
     ngOnDestroy() {
         console.log("ConsigmentTabContentComponent:ngOnDestroy");
         //if (this.Tab.ComponentReference && this.Tab.ComponentReference.ngOnDestroy) {
@@ -168,6 +178,9 @@ export class ConsigmentTabContentComponent
 
         if (!this.declarationPM)
             this.declarationPM = args.Parent;
+
+        if (AppTool.IsNullOrEmpty(this.ConsignmentType)) { this.ConsignmentType = "E"; }
+
 
         this.IsCourierDeclaration = this.declarationPM.IsCourierDeclaration;
         this.ShowExcludeConsignmentBoolean = this.declarationPM.Consignments.length == 1;
@@ -305,6 +318,14 @@ export class ConsigmentTabContentComponent
 
     public get CargoDescription() { return this.EntityPM ? this.EntityPM.CargoDescription : null; }
     public set CargoDescription(newValue: string) { this.EntityPM.CargoDescription = newValue; }
+
+
+    public get ConsignmentType() { return this.EntityPM ? this.EntityPM.ConsignmentType : null; }
+    public set ConsignmentType(newValue: string) { this.EntityPM.ConsignmentType = newValue; }
+
+    public get ShipCode() { return this.EntityPM ? this.EntityPM.ShipCode : null; }
+    public set ShipCode(newValue: string) { this.EntityPM.ShipCode = newValue; }
+
 
     public get ThirdCargoID() { return this.EntityPM ? this.EntityPM.ThirdCargoID : null; }
     public set ThirdCargoID(newValue: string) { this.EntityPM.ThirdCargoID = newValue; }
@@ -852,7 +873,10 @@ export class ConsigmentTabContentComponent
 
 }
 
-
+export class ConsignmentType {
+    public Id: string;
+    public Value: string;
+}
 export class ConsigmentPackageModel extends BaseComponent {
     public EntityPM: ConsignmentPackagePM;
     private CurrentSession = SessionLocator.SelectedSession;
