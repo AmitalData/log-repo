@@ -182,6 +182,17 @@ namespace WebFreight.Web.ReportsWebServices
             {
                 #region Shipment Fields
 
+
+                if (shipmentPM.ShipmentLevelCode == "H")
+                {
+                    Shipment tempMaterShipment = shipmentRepository.GetSingleShipment(shipmentPM.MasterShipmentDataId, tenant);
+                    provider.MasterShipmentNumber = tempMaterShipment.ShipmentNumber;
+                }
+                else if (shipmentPM.ShipmentLevelCode == "C")
+                {
+                    provider.MasterShipmentNumber = shipmentPM.ShipmentNumber;
+                }
+
                 double? openReceivablesLocal = shipmentPM.OpenReceivablesInLocalCurrency;
                 double? acctReceivablesLocal = shipmentPM.AccountedReceivablesInLocalCurrency;
                 double? allReceivablesLocal = openReceivablesLocal.Value + acctReceivablesLocal.Value;
@@ -742,7 +753,7 @@ namespace WebFreight.Web.ReportsWebServices
             if (shipment != null)
             {
                 provider.ShipmentNumber = string.IsNullOrEmpty(shipment.ShipmentNumber) ? "" : shipment.ShipmentNumber;
-                
+
                 IncotermRepository incotermRepository = new IncotermRepository(tenant);
                 Incoterm incoterm = incotermRepository.GetSingleIncoterm(shipment.IncotermId,tenant);
                 if (incoterm != null)
