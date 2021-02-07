@@ -333,9 +333,10 @@ namespace Logitude.Accounting.BL.CoreBL
                     linePM.Line = ++count;
                     linePM.ChangeSetOp = ChangeSetOperation.Insert;
                     linePM.UpdatedByUserId = taxReport.UpdatedByUserId;
+
                     bool isTotalInvoiceAmountAndVatAmountHaveOppositeSigns = (linePM.TotalInvoiceAmount > 0 && linePM.VatAmount < 0) || (linePM.TotalInvoiceAmount < 0 && linePM.VatAmount > 0);
                     if (isTotalInvoiceAmountAndVatAmountHaveOppositeSigns)
-                    linePM.StatusCode = StatusCode_VATAmountInTheRecordIsHigherThanThePercentageOfVATAllowed;
+                        linePM.StatusCode = StatusCode_VATAmountInTheRecordIsHigherThanThePercentageOfVATAllowed;
                     lineUpdateService.Update(linePM, true, TimeSpan.FromMinutes(60));//the problem is here it loops on more than 3000  lines and updates them one by one ,each update will have to get single tenant and get single currency along with multible db gets which make the db to time out for the opened transaction
                 }
 
