@@ -79,7 +79,7 @@
             <div class="label">Destination Port</div>
             <div class="value">{{ Shipment.ToPortName }}</div>
         </div>
-       
+        <img class="ShipmentHeaderImage" *ngIf="ShipmentHeaderImage"  [attr.src]="ShipmentHeaderImage" alt="" />
     </div>
 
     <div class="panel-container">
