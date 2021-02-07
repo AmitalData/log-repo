@@ -179,8 +179,9 @@ export class ConsigmentTabContentComponent
         if (!this.declarationPM)
             this.declarationPM = args.Parent;
 
+        if (this.declarationPM.Direction == "E") {
         if (AppTool.IsNullOrEmpty(this.ConsignmentType)) { this.ConsignmentType = "E"; }
-
+        }
 
         this.IsCourierDeclaration = this.declarationPM.IsCourierDeclaration;
         this.ShowExcludeConsignmentBoolean = this.declarationPM.Consignments.length == 1;
@@ -244,6 +245,8 @@ export class ConsigmentTabContentComponent
     SetScreenFieldsEditability() {
         console.log("SetScreenFieldsEditability: " + this.EntityPM);
         this.UIProperties.SetEnabled("CargoDescription", this.ObjectTableName, !this.IsDisplayOnly);
+        this.UIProperties.SetEnabled("ShipCode", this.ObjectTableName, !this.IsDisplayOnly);
+        this.UIProperties.SetEnabled("ConsignmentType", this.ObjectTableName, !this.IsDisplayOnly);
         this.UIProperties.SetEnabled("UnloadDate", this.ObjectTableName, !this.IsDisplayOnly);
         this.UIProperties.SetEnabled("OriginCountryCode", this.ObjectTableName, !this.IsDisplayOnly);
         this.UIProperties.SetEnabled("SecondCargoID", this.ObjectTableName, !this.IsDisplayOnly);
