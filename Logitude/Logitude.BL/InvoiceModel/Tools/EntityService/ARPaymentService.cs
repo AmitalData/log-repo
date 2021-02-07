@@ -426,7 +426,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             // DropBox
             this.CreateARPaymentMessage(setApproved);
 
-            theEntityPm.VoidedByJournalNeumber = entityPM.VoidedByJournalNumber;
+            theEntityPm.VoidedByJournalNumber = entityPM.VoidedByJournalNumber;
             paymentRepository.Update(newPayment);
             paymentRepository.SubmitChanges();
 
