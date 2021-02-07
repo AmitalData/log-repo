@@ -1,19 +1,20 @@
-﻿Feature: Create and Update Shipment Security Access
+﻿@Pre-Prepare
+Feature: Create and update shipment security access
 	With pre-prepared base and shipment data
-	We want to test Create and Update Shipment Security Access.
+	We want to test Create and update shipment security access.
 
-Scenario: Create Shipment for User's Tenant
-	When Create shipment request sent for User's Tenant
-	Then Shipment should be added successfully
+Scenario: Create shipment for user's tenant
+	When create a shipment for user's tenant
+	Then the shipment should create successfully
 
-Scenario: Create Shipment for other Tenant
-	When Create shipment request sent for other Tenant
-	Then Shipment should not be added
+Scenario: Create shipment for other tenant
+	When create a shipment for other tenant
+	Then the shipment should not create successfully
 
-Scenario: Update Shipment for User's Tenant
-	When Update shipment request sent for User's Tenant
-	Then Shipment should be Updated successfully
+Scenario: Update shipment for user's tenant
+	When update a shipment for user's tenant
+	Then the shipment should update successfully
 
-Scenario: Update Shipment for other Tenant
-	When Update shipment request sent for other Tenant
-	Then Shipment should not be Updated
+Scenario: Update shipment for other tenant
+	When update a shipment for other tenant
+	Then the shipment should not update successfully

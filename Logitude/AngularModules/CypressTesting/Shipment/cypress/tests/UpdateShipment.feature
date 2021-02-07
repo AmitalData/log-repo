@@ -1,52 +1,57 @@
-Feature: Edit Direct Export Air Shipment
+Feature: Update Direct Export Air Shipment
 
-  Scenario: Login And Open Shipments Workspace
-    Given User logged in
-    And Go to shipments workspace
-    And Open shipment "CreatedShipmentsData/DirectEA.json"
+  Scenario: Create Direct Export Air Shipment
+    Given the user logged in and navigates to shipments workspace
+    And a direct shipment with the following details
+      | ShipmentLevel | Direction | TransportMode | Shipper  | MainCarriageFromPort | MainCarriageToPort |
+      | Direct        | Export    | Air           | Shipper1 | LHR                  | MIA                |
+    When create shipment
+    Then the direct should create successfully
 
-  Scenario: Edit Shipment by filling general tab
-    Given The user in the general tab
-    When Fill general tab and click save button
-    Then The save operation complete successfully
+  Scenario: Update general tab
+    Given the user fills "100" as GrossWeight and "MTA" as a MoveType
+    When update shipment
+    Then the direct should update successfully
 
-  Scenario: Edit Shipment by filling Orders tab
-    Given The user in the Orders tab
-    When Fill Orders tab and click save button
-    Then The save operation complete successfully
+  Scenario: Update orders tab
+    Given the user add order package with the following details
+      | Quantity | Length | Width | Height | GrossWeight |
+      | 5        | 1      | 2     | 3      | 100         |
+      | 5        | 1      | 2     | 3      | 100         |
+    When update shipment
+    Then the direct should update successfully
 
-  Scenario: Edit Shipment by filling Partners tab
-    Given The user in the Partners tab
-    When Fill Partners tab and click save button
-    Then The save operation complete successfully
+  Scenario: Update partners tab
+    Given the user adds partners with following details
+      | Consignee       | Agent            | CustomsAgentExport     | CustomsAgentImport     | Notify1 | Notify2 | ShipperNotExporter   | ConsigneeNotImporter   | FreightForwarder     | Coloader     | CustomClearancePoint     | Consolidator     | ReleasingAgent  |
+      | ConsigneeExport | IntegrationAgent | InegrationCustomsAgent | InegrationCustomsAgent | notify  | notify  | shipper not exporter | consignee not importer | FreightForwarderTest | ColoaderTest | CustomClearancePointTest | ConsolidatorTest | releasing agent |
+    When update shipment
+    Then the direct should update successfully
 
-  Scenario: Edit Shipment by filling Packages tab
-    Given The user in the Packages tab
-    When Fill Packages tab and click save button
-    Then The save operation complete successfully
+  Scenario: Update packages tab
+    Given the user add package with the following details
+      | Quantity | Length | Width | Height | GrossWeight |
+      | 5        | 1      | 2     | 3      | 100         |
+    When update shipment
+    Then the direct should update successfully
 
-  Scenario: Edit Shipment by filling Receivables tab
-    Given The user in the Receivables tab
-    When Fill Receivables tab and click save button
-    Then The save operation complete successfully
+  Scenario: Update receivables tab
+    Given  the user fill receivables with the following details
+      | ChargesType | UOM  | Quantity | UnitPrice | Currency | ExchangeRate |
+      | AFT         | GRWT | 5        | 20        | EUR      | 4            |
+    When update shipment
+    Then the direct should update successfully
 
-  Scenario: Add Pickup Routing
-    Given The user in the Routings tab
-    When Add new pickup routing and click save button
-    Then The save operation complete successfully
+  Scenario: Update routing tab
+    Given the user add new pickup
+    And add delivery with "IntegrationAgent" as a partner routing
+    And add pre carriage and on carriage from port "JFK" to port "MIA"
+    When update shipment
+    Then the direct should update successfully
 
-  Scenario: Add Pre Carriage And On Carriage Routings
-    Given The user in the Routings tab
-    When Add carriage routings and click save button
-    Then The save operation complete successfully
-
-  Scenario: Add Delivery Routing
-    Given The user in the Routings tab
-    When Add new delivery routing and click save button
-    Then The save operation complete successfully
-
-  Scenario: Fill Payables Tab
-    Given The user in the Payables tab
-    When Add Payables and click save button
-    Then The save operation complete successfully
-    
+  Scenario: Update payables tab
+    Given the user add payable with the following details
+      | ChargesType | UOM  | Quantity | UnitPrice | Currency |
+      | AFT         | GRWT | 5        | 10        | EUR      |
+    When update shipment
+    Then the direct should update successfully

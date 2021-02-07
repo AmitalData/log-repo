@@ -1,9 +1,12 @@
-﻿Feature: Address Setting Security Access
+﻿@Pre-Prepare
+Feature: Address setting security access
+	With pre-prepared users authentication
+	We want to test address security access.
 
-Scenario: Update Address Settings for User's Tenant
-	When Update Address Settings request sent for User's Tenant
-	Then Address Settings should be Updated successfully
+Scenario: Update address settings for user's tenant
+	When update address for user's tenant
+	Then address should update successfully
 
-Scenario: Update Address Settings for other Tenant
-	When Update Address Settings request sent for other Tenant
-	Then Address Settings should not be Updated
+Scenario: Update address settings for other tenant
+	When update address for other tenant
+	Then should receive error message say no permission to do this operation on tenant

@@ -138,6 +138,7 @@ export class TenantManagementList {
 		BackgroundId: string;
 		ComapnylogoId: string;
 		BrowserIconId: string;
+		ShipmentHeaderImageId: string;
 		TotalNumberOfUsers: number;
 		TotalFreeUsers: number;
 		AveragePrice: number;
@@ -148,6 +149,5 @@ export class TenantManagementList {
 		NumberOfBookingSentLastWeek: number;
 		NumberOfSISentLastWeek: number;
 		LastContainerStatusReceived: Date;
-        ShipmentHeaderImageId: string;
 	
 }

@@ -1,37 +1,30 @@
 import * as Actions from "../../actions/Actions";
-import * as Assertions from "../../actions/Assertions";
 import { Given, When, Then } from "cypress-cucumber-preprocessor/steps";
 import { ShipmentDetails } from "../../models/ShipmentDetails";
 import { BaseSelectors } from "../../../../Base/cypress/selectors/BaseSelectors"
 import { Selectors } from "../../selectors/Selectors";
+import * as BaseAssertion from "../../../../Base/cypress/actions/Assertion"
 
-let _ShipmentDetails: ShipmentDetails;
+let ShipmentData: ShipmentDetails;
 
-Given("User logged in", () => {
-  cy.Login();
+Given("the user logged in and navigates to shipments workspace", () => {
+  cy.Login()
+  cy.Click(BaseSelectors.OperationsMenu, null)
+  cy.Click(Selectors.ShipmentTab, null)
 });
 
-Given("Go to shipments workspace", () => {
-  cy.Click(BaseSelectors.OperationsMenu, null);
-  cy.Click(Selectors.ShipmentTab, null);
-});
-
-Given("Shipment details",
+Given("a direct shipment with the following details",
   (dataTable) => {
-   const shipmentDetails = dataTable.hashes()[0] as ShipmentDetails;
-   _ShipmentDetails = shipmentDetails;
-   Actions.OpenNewShipmentWizard(_ShipmentDetails.ShipmentLevel);
-   Actions.FillShipmentDefaultFields(_ShipmentDetails);
+   let shipmentDetails = dataTable.hashes()[0] as ShipmentDetails;
+   ShipmentData = shipmentDetails;
+   Actions.OpenNewShipmentWizard(ShipmentData.ShipmentLevel);
+   Actions.FillShipmentWizardsFields(ShipmentData);
 });
 
-When("Click create shipment button", () => {
-  Actions.CreateShipment(_ShipmentDetails.ShipmentLevel);
+When("create shipment", () => {
+  Actions.CreateShipment(ShipmentData.ShipmentLevel);
 });
 
-Then("The create operation completed successfully", () => {
-  let resultFile = "CreatedShipmentsData/" + _ShipmentDetails.ShipmentLevel + _ShipmentDetails.Direction +
-  _ShipmentDetails.TransportMode +
-  ((typeof _ShipmentDetails.ShipmentType) === "undefined" || _ShipmentDetails.ShipmentType === null ? "" : _ShipmentDetails.ShipmentType) + ".json";
-
-  Assertions.ValidateCreatedShipment(resultFile);
+Then("the shipment should create successfully", () => {
+  BaseAssertion.AssertStatusCode("WaitPostShipmentRequest", 200);
 });

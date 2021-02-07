@@ -12,8 +12,8 @@ namespace Logitude.ShipmentTests.Steps
     public class UpdateShipmentSteps
     {
         private readonly ShipmentContext ShipmentContext;
-        private PackagePM _housePackage, _masterPackages;
-        private PayablesPM _PayablesPM;
+        private PackagePM HousePackage, MasterPackages;
+        private PayablesPM PayablesPM;
 
         public UpdateShipmentSteps(ShipmentContext shipmentContext)
         {
@@ -21,69 +21,85 @@ namespace Logitude.ShipmentTests.Steps
         }
 
         #region Step Region
-        [Given(@"The master shipment packages fields")]
-        public void GivenTheMasterShipmentPackagesFields(Table table)
+
+        #region Add a master package steps
+        [Given(@"a master package with the following properties")]
+        public void GivenAMasterPackageWithTheFollowingProperties(Table table)
         {
-            _masterPackages = CreatePackageInstance(table);
+            MasterPackages = CreatePackageInstance(table);
         }
 
-        [When(@"The put API sent to add master packages")]
-        public void TheputAPIsenttoaddmasterpackages()
+        [When(@"add a master package")]
+        public void WhenAddAMasterPackage()
         {
-            ShipmentContext.MasterShipment = AddPackagesToShipment(ShipmentContext.MasterShipment, _masterPackages);
-
-            ApiResponse<ShipmentPM> response = APICaller.CallPut<ShipmentPM>(ShipmentContext.MasterShipment, Urls.ShipmentController, UserTenant.Token);
+            ApiResponse<ShipmentPM> response = UpdateShipmentByAddingPackages(ShipmentContext.MasterShipment, MasterPackages);
             ShipmentContext.MasterShipment.Id = response.Data?.Id;
         }
 
-        [Then(@"A new master packages added successfully")]
-        public void ThenANewMasterPackagesAddedSuccessfully()
-        {
-            ShipmentContext.MasterShipment.Id.Should().NotBeNull();
-        }
-
-        [Given(@"The house shipment packages fields")]
-        public void GivenTheHouseShipmentPackagesFields(Table table)
-        {
-            _housePackage = CreatePackageInstance(table);
-        }
-
-        [When(@"The put API sent to add house packages")]
-        public void TheputAPIsenttoaddhousepackages()
-        {
-            ShipmentContext.MasterShipment = AddPackagesToShipment(ShipmentContext.HouseShipment, _housePackage);
-            var response = APICaller.CallPut<ShipmentPM>(ShipmentContext.HouseShipment, Urls.ShipmentController, UserTenant.Token);
-            ShipmentContext.HouseShipment.Id = response.Data?.Id;
-        }
-
-        [Then(@"A new house packages added successfully")]
-        public void ThenANewHousePackagesAddedSuccessfully()
-        {
-            ShipmentContext.HouseShipment.Id.Should().NotBeNull();
-        }
-
-        [Given(@"The Payable Charge Type fields")]
-        public void GivenThePayableChargeTypeFields(Table table)
-        {
-            _PayablesPM = CreatePayablesInstance(table);
-        }
-
-        [When(@"The put API sent to add master Payable")]
-        public void WhenThePutAPISentToAddMasterPayable()
-        {
-            ShipmentContext.MasterShipment = AddPayablesToShipment(ShipmentContext.MasterShipment, _PayablesPM);
-            var response = APICaller.CallPut<ShipmentPM>(ShipmentContext.MasterShipment, Urls.ShipmentController, UserTenant.Token);
-            ShipmentContext.MasterShipment.Id = response.Data?.Id;
-        }
-
-        [Then(@"The payable cherge type added successfully")]
-        public void ThenThePayableChergeTypeAddedSuccessfully()
+        [Then(@"the master should add package successfully")]
+        public void ThenTheMasterShouldAddPackageSuccessfully()
         {
             ShipmentContext.MasterShipment.Id.Should().NotBeNull();
         }
         #endregion
 
+        #region Add a house package steps
+        [Given(@"a house package with the following properties")]
+        public void GivenAHousePackageWithTheFollowingProperties(Table table)
+        {
+            HousePackage = CreatePackageInstance(table);
+        }
+
+        [When(@"add a house package")]
+        public void WhenAddAHousePackage()
+        {
+            ApiResponse<ShipmentPM> response = UpdateShipmentByAddingPackages(ShipmentContext.HouseShipment, HousePackage);
+            ShipmentContext.HouseShipment.Id = response.Data?.Id;
+        }
+
+        [Then(@"the house should add package successfully")]
+        public void ThenTheHouseShouldAddPackageSuccessfully()
+        {
+            ShipmentContext.HouseShipment.Id.Should().NotBeNull();
+        }
+        #endregion
+
+        #region Add a master payable steps
+        [Given(@"a master payable with the following properties")]
+        public void GivenAMasterPayableWithTheFollowingProperties(Table table)
+        {
+            PayablesPM = CreatePayablesInstance(table);
+        }
+
+        [When(@"add a master payable")]
+        public void WhenAddAMasterPayable()
+        {
+            ApiResponse<ShipmentPM> response = UpdateShipmentByAddingPayables(ShipmentContext.MasterShipment, PayablesPM);
+            ShipmentContext.MasterShipment.Id = response.Data?.Id;
+        }
+
+        [Then(@"the master should add payable successfully")]
+        public void ThenTheMasterShouldAddPayableSuccessfully()
+        {
+            ShipmentContext.MasterShipment.Id.Should().NotBeNull();
+        }
+        #endregion
+
+        #endregion
+
         #region Private Function Region
+        private ApiResponse<ShipmentPM> UpdateShipmentByAddingPackages(ShipmentPM shipment, PackagePM package)
+        {
+            shipment = AddPackagesToShipment(shipment, package);
+            return APICaller.CallPut<ShipmentPM>(shipment, Urls.ShipmentController, UserTenant.Token);
+        }
+
+        private ApiResponse<ShipmentPM> UpdateShipmentByAddingPayables(ShipmentPM shipment, PayablesPM payable)
+        {
+            shipment = AddPayablesToShipment(shipment, payable);
+            return APICaller.CallPut<ShipmentPM>(shipment, Urls.ShipmentController, UserTenant.Token);
+        }
+
         private ShipmentPM AddPackagesToShipment(ShipmentPM shipment, PackagePM package)
         {
             package = new PackageBuilder().WithModel(package)

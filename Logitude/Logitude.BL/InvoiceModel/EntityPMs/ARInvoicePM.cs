@@ -94,6 +94,7 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
         public string SearchFields { get; set; }
 
         public string MainEntityId { get; set; }
+        public string MasterEntityId { get; set; }
         public string MainEntityReference { get; set; }
         public double? AmountDue { get; set; }
 

@@ -263,6 +263,9 @@ namespace HypredTest.ShipmentProxy {
         private bool AsAgreedOtherChargesField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<System.DateTime> AssignedToTruckerDateField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string BaseShipmentNumberField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
@@ -1323,6 +1326,9 @@ namespace HypredTest.ShipmentProxy {
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string INTTRALastBookingResponseField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<System.DateTime> INTTRALastEBbookingSendDateField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private System.Nullable<System.DateTime> INTTRALastStatusDateField;
@@ -3077,6 +3083,9 @@ namespace HypredTest.ShipmentProxy {
         private string TruckNumberField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string TruckerIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private bool UpdateSendUpdatesToAgentEnabledFieldField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
@@ -4251,6 +4260,19 @@ namespace HypredTest.ShipmentProxy {
                 if ((this.AsAgreedOtherChargesField.Equals(value) != true)) {
                     this.AsAgreedOtherChargesField = value;
                     this.RaisePropertyChanged("AsAgreedOtherCharges");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<System.DateTime> AssignedToTruckerDate {
+            get {
+                return this.AssignedToTruckerDateField;
+            }
+            set {
+                if ((this.AssignedToTruckerDateField.Equals(value) != true)) {
+                    this.AssignedToTruckerDateField = value;
+                    this.RaisePropertyChanged("AssignedToTruckerDate");
                 }
             }
         }
@@ -8853,6 +8875,19 @@ namespace HypredTest.ShipmentProxy {
                 if ((object.ReferenceEquals(this.INTTRALastBookingResponseField, value) != true)) {
                     this.INTTRALastBookingResponseField = value;
                     this.RaisePropertyChanged("INTTRALastBookingResponse");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<System.DateTime> INTTRALastEBbookingSendDate {
+            get {
+                return this.INTTRALastEBbookingSendDateField;
+            }
+            set {
+                if ((this.INTTRALastEBbookingSendDateField.Equals(value) != true)) {
+                    this.INTTRALastEBbookingSendDateField = value;
+                    this.RaisePropertyChanged("INTTRALastEBbookingSendDate");
                 }
             }
         }
@@ -16445,6 +16480,19 @@ namespace HypredTest.ShipmentProxy {
                 if ((object.ReferenceEquals(this.TruckNumberField, value) != true)) {
                     this.TruckNumberField = value;
                     this.RaisePropertyChanged("TruckNumber");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string TruckerId {
+            get {
+                return this.TruckerIdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.TruckerIdField, value) != true)) {
+                    this.TruckerIdField = value;
+                    this.RaisePropertyChanged("TruckerId");
                 }
             }
         }
@@ -25672,6 +25720,9 @@ namespace HypredTest.ShipmentProxy {
         private string TariffIdField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string TariffLineIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string TariffNumberField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
@@ -26467,6 +26518,19 @@ namespace HypredTest.ShipmentProxy {
                 if ((object.ReferenceEquals(this.TariffIdField, value) != true)) {
                     this.TariffIdField = value;
                     this.RaisePropertyChanged("TariffId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string TariffLineId {
+            get {
+                return this.TariffLineIdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.TariffLineIdField, value) != true)) {
+                    this.TariffLineIdField = value;
+                    this.RaisePropertyChanged("TariffLineId");
                 }
             }
         }
@@ -32259,6 +32323,9 @@ namespace HypredTest.ShipmentProxy {
         private string INTTRALastBookingResponseField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<System.DateTime> INTTRALastEBbookingSendDateField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private System.Nullable<System.DateTime> INTTRALastStatusDateField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
@@ -32695,6 +32762,9 @@ namespace HypredTest.ShipmentProxy {
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string QuoteIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string QuoteNumberField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private System.Nullable<System.DateTime> RegistryDateField;
@@ -35741,6 +35811,19 @@ namespace HypredTest.ShipmentProxy {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<System.DateTime> INTTRALastEBbookingSendDate {
+            get {
+                return this.INTTRALastEBbookingSendDateField;
+            }
+            set {
+                if ((this.INTTRALastEBbookingSendDateField.Equals(value) != true)) {
+                    this.INTTRALastEBbookingSendDateField = value;
+                    this.RaisePropertyChanged("INTTRALastEBbookingSendDate");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public System.Nullable<System.DateTime> INTTRALastStatusDate {
             get {
                 return this.INTTRALastStatusDateField;
@@ -37634,6 +37717,19 @@ namespace HypredTest.ShipmentProxy {
                 if ((object.ReferenceEquals(this.QuoteIdField, value) != true)) {
                     this.QuoteIdField = value;
                     this.RaisePropertyChanged("QuoteId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string QuoteNumber {
+            get {
+                return this.QuoteNumberField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.QuoteNumberField, value) != true)) {
+                    this.QuoteNumberField = value;
+                    this.RaisePropertyChanged("QuoteNumber");
                 }
             }
         }

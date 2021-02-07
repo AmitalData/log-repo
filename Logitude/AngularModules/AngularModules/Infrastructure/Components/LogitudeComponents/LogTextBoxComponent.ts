@@ -1497,8 +1497,10 @@ export class LogTextBoxComponent implements BeforeOnDestroy, OnInit, AfterViewIn
         if(!isNullOrUndefined(this.ObjectField) && this.ObjectField.IsCustom)
         {
             const customField:CustomFieldClass = this.DataContext[this.ObjectFieldName];
-            newValue = customField.GetFieldDataTypeValue(this.ObjectField, customField.Value);
-            newValue =  this.FormatTextValue(newValue);
+            if (customField != null && customField != undefined) {
+                newValue = customField.GetFieldDataTypeValue(this.ObjectField, customField.Value);
+                newValue =  this.FormatTextValue(newValue);
+            }
         }
 
         if (newValue + "" != this.TextValue) {

@@ -1649,18 +1649,27 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
             }
         }
 
+
         if (this.AutomationCondationAndList.length > 0) {
             this.AutomationCondationAndList.forEach((item) => {
-                if (item.CurrentEntityPM.Value == "" || item.CurrentEntityPM.Value == null) {
+                if (((item.CurrentEntityPM.Value == "" || item.CurrentEntityPM.Value == null ) && (item.CurrentEntityPM.ObjectFieldType != "Boolean" &&
+                    item.CurrentEntityPM.OperatorCode != "ISNOTEMPTY" && item.CurrentEntityPM.OperatorCode != "ISEMPTY")) ||
+                    (item.CurrentEntityPM.Value == null && (item.CurrentEntityPM.ObjectFieldType == "nText" || item.CurrentEntityPM.ObjectFieldType == "Text"))) {
                     this.ValidationErrorsList.push("Field value is required");
                 }
+
             })
         }
+
+
         if (this.AutomationCondationOrList.length > 0) {
             this.AutomationCondationOrList.forEach((item) => {
-                if (item.CurrentEntityPM.Value == "" || item.CurrentEntityPM.Value == null ) {
+                if (((item.CurrentEntityPM.Value == "" || item.CurrentEntityPM.Value == null) && (item.CurrentEntityPM.ObjectFieldType != "Boolean" &&
+                    item.CurrentEntityPM.OperatorCode != "ISNOTEMPTY" && item.CurrentEntityPM.OperatorCode != "ISEMPTY")) ||
+                    (item.CurrentEntityPM.Value == null && (item.CurrentEntityPM.ObjectFieldType == "nText" || item.CurrentEntityPM.ObjectFieldType == "Text"))) {
                     this.ValidationErrorsList.push("Field value is required");
                 }
+
             })
         }
 

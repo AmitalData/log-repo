@@ -13,14 +13,18 @@ namespace WarehouseDataViews.Service
         private string connectionString;
         private List<DWObjectFieldItem> dwObjectFieldLists;
         private DataTable customObjectFieldLists;
+        private WarehouseView warehouseView;
         int tenant;
 
-        public CustomFieldDataWarehouseViewService(string connectionString ,List<DWObjectFieldItem> dwObjectFieldLists, int tenant)
+        public CustomFieldDataWarehouseViewService(CustomFieldDataWarehouseArgs customFieldDataWarehouseArgs)
         {
-            this.connectionString = connectionString;
-            this.dwObjectFieldLists = dwObjectFieldLists;
-            this.tenant = tenant;
-            customObjectFieldLists = GetCustomObjectFields(tenant);
+            this.connectionString = customFieldDataWarehouseArgs.ConnectionString;
+            this.dwObjectFieldLists = customFieldDataWarehouseArgs.DWObjectFieldLists;
+            this.tenant = customFieldDataWarehouseArgs.Tenant;
+            this.warehouseView = customFieldDataWarehouseArgs.WarehouseView;
+
+            
+            customObjectFieldLists = GetCustomObjectFields(tenant , warehouseView.ObjectTableName);
 
         }
 
@@ -89,11 +93,22 @@ namespace WarehouseDataViews.Service
             return result;
         }
 
-        private DataTable GetCustomObjectFields(int tenant )
+        private DataTable GetCustomObjectFields(int tenant  , string objectTableName)
         {
-            string sql = "SELECT  MaxLength ,FieldName,  DataTypeCode,TextCodes.DefaultText,CustomPickListCode from  ObjectFields inner join TextCodes on ObjectFields.FullNameTextCodeCode = TextCodes.Code and ObjectFields.tenant = TextCodes.Tenant where ObjectFields.IsCustom = 1 and ObjectFields.Tenant =" + tenant + " and ObjectFields.ObjectTableId =(select id from ObjectTables where Name = 'Shipment')";
+            string sql = "SELECT  MaxLength ,FieldName,  DataTypeCode,TextCodes.DefaultText,CustomPickListCode from  ObjectFields inner join TextCodes on ObjectFields.FullNameTextCodeCode = TextCodes.Code and ObjectFields.tenant = TextCodes.Tenant where ObjectFields.IsCustom = 1 and ObjectFields.Tenant =" + tenant + " and ObjectFields.ObjectTableId =(select id from ObjectTables where Name = '" + objectTableName  + "')";
             return GetDataTableFromSql(connectionString, sql);
         }
+
+    }
+
+    public class CustomFieldDataWarehouseArgs
+    {
+        public List<DWObjectFieldItem> DWObjectFieldLists { get; set; }
+        public int Tenant { get; set; }
+        public string ConnectionString { get; set; }
+        public WarehouseView WarehouseView { get; set; }
+
+        
 
     }
 }
