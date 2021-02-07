@@ -112,8 +112,7 @@ namespace WebFreight.Web.ReportsWebServices
                 #region Master Consignee
                 if (!string.IsNullOrEmpty(master.ConsigneeId))
                 {
-                    CardPM consignee = cardQuery.GetSinglePM(master.ConsigneeId, tenant);
-                    CardPM salesMan = cardQuery.GetSinglePM(master.SalesmanUserId, tenant);
+                    CardPM consignee = cardQuery.GetSinglePM(master.ConsigneeId, tenant);              
                     CustomerPM consigneePM = customerQuery.GetSinglePM(master.ConsigneeId, tenant);
                     
                     if (consignee != null)
@@ -130,14 +129,13 @@ namespace WebFreight.Web.ReportsWebServices
                                 manifestDataProvider.ConsigneePhoneNumber =  contact.BusinessPhone;
                             }
                         }
-                    }
-                    if (salesMan != null)
-                    {
-                        manifestDataProvider.SalesmanName = salesMan.EnglishName;
-                    }
-
-
+                    }               
                 }
+                if (!string.IsNullOrEmpty(master.SalesmanUserId))
+                {
+                    manifestDataProvider.SalesmanName = master.SalesmanUserName;
+                }
+
                 #endregion
 
                 manifestDataProvider.MasterNumber = master.ShipmentNumber;
@@ -533,7 +531,7 @@ namespace WebFreight.Web.ReportsWebServices
                             detail.OBLType = newDetail.OBLType = type.Name;
                         }
                     }
-
+                  
                     if (myLoggedTenant != null)
                     {
                         detail.FMCNumber = newDetail.FMCNumber = myLoggedTenant.FMCNumber;
@@ -672,6 +670,7 @@ namespace WebFreight.Web.ReportsWebServices
                         detail.ConsigneeName = newDetail.ConsigneeName = "";
                         detail.ConsigneeAddress = newDetail.ConsigneeAddress = "";
                     }
+
                     #endregion
 
                     #region Notify
