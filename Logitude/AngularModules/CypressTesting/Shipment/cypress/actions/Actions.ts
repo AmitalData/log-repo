@@ -24,7 +24,7 @@ export function FillShipmentWizardsFields(shipmentDetails: ShipmentDetails) {
 }
 
 export function CreateShipment(shipmentLevel: string) {
-    let createSelector = IsMaster(shipmentLevel) ? Selectors.CreateMasterShipmentButton : Selectors.CreateShipmentButton;
+    let createSelector = "ss";//IsMaster(shipmentLevel) ? Selectors.CreateMasterShipmentButton : Selectors.CreateShipmentButton;
     cy.DefineRequestWait("POST", "**/shipment", "WaitPostShipmentRequest")
     cy.Click(createSelector, null)
 }
@@ -235,7 +235,7 @@ export function CreateAnewShipment(shipmentLevel: string) {
         ShipmentLevel: shipmentLevel,
         Direction: "Export",
         TransportMode: "Air",
-        Shipper: "TestShipperExport",
+        Shipper: "Shipper1",
         MainCarriageToPort: "LHR",
         MainCarriageFromPort: "MIA"
     } as ShipmentDetails;

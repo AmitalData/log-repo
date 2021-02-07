@@ -1,33 +1,29 @@
 {
-"viewportWidth": 1440,
-"viewportHeight": 900,
-"integrationFolder": "cypress/tests",
-"screenshotsFolder": "cypress/results/html/screenshots",
-"testFiles": "**/*.feature",
-"ignoreTestFiles": "*.ts",
-"env":{
-    "Mode": "Development"
-},
-"defaultCommandTimeout": 120000,
-"responseTimeout": 120000,
-"requestTimeout": 120000,
-"video": false,
+    "viewportWidth": 1440,
+    "viewportHeight": 900,
+    "integrationFolder": "cypress/tests",
+    "screenshotsFolder": "cypress/Reports/html/screenshots",
+    "testFiles": "**/*.feature",
+    "ignoreTestFiles": "*.ts",
+    "env": {
+        "Mode": "Development"
+    },
+    "defaultCommandTimeout": 20000,
+    "responseTimeout": 120000,
+    "requestTimeout": 120000,
+    "video": false,
     "screenshotOnRunFailure": true,
     "screenshots": true,
-    "trashAssetsBeforeRuns":false,
-    
+    "trashAssetsBeforeRuns": false,
     "reporter": "cypress-multi-reporters",
     "reporterOptions": {
         "reporterEnabled": "mochawesome",
         "mochawesomeReporterOptions": {
-            "reportDir": "cypress/results/html",
+            "reportDir": "cypress/Reports/json",
             "quite": true,
             "overwrite": false,
-            "html": true,
-            "json": false,
-            "timestamp": "ddmmyyyy_HHMM",
-            "reportFilename":"Report" 
+            "html": false,
+            "json": true
         }
     }
-
 }
