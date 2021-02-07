@@ -385,7 +385,7 @@ export class UpdateSurchargesComponent extends BaseComponent {
             }
 
             else {
-                if (this.TariffChargesObsList.filter(d => d.IsChargeChecked && AppTool.IsNullOrZero(d.NewPrice)).length > 0) {
+                if (this.TariffChargesObsList.filter(d => d.IsChargeChecked && AppTool.IsNullOrEmpty(d.NewPrice)).length > 0) {
                     errors.push("No surcharges updated");
                 }
             }
@@ -480,6 +480,18 @@ export class TariffCharge extends BaseComponent{
         this.UIProperties.SetRequired("NewPrice", null, isPriceRequired);        
 
         this.SetUIProperties_MinPrice();
+
+        if (this.IsChargeChecked) {
+            this.minPricePlaceHolder = "";
+            this.newPricePlaceHolder = "";
+        }
+        if (!this.IsChargeChecked ) {
+          
+            this.newPricePlaceHolder = "No Update";
+        }
+        if (this.MeasurementCode != "FIXD" && !this.IsChargeChecked) {
+            this.minPricePlaceHolder = "No Update";
+        }
     }
 
     private SetUIProperties_MinPrice() {
@@ -488,9 +500,10 @@ export class TariffCharge extends BaseComponent{
         if (this.IsChargeChecked) {
             if (this.MeasurementCode != "FIXD") {
                 isMinPriceEnabled = true
+                this.minPricePlaceHolder = "No Update";
             }
         }
-
+        this.minPricePlaceHolder = "";
         this.UIProperties.SetEnabled("NewMinPrice", null, isMinPriceEnabled);
     }
 
@@ -540,6 +553,16 @@ export class TariffCharge extends BaseComponent{
     set MinPricePlaceHolder(value: string) {
         if (this.minPricePlaceHolder != value) {
             this.minPricePlaceHolder = value;            
+        }
+    }
+
+    private newPricePlaceHolder: string = "No Update";
+    get NewPricePlaceHolder() {
+        return this.newPricePlaceHolder;
+    }
+    set NewPricePlaceHolder(value: string) {
+        if (this.newPricePlaceHolder != value) {
+            this.newPricePlaceHolder = value;
         }
     }
 }
@@ -643,6 +666,7 @@ export class ContainerPriceClass extends BaseComponent {
         else if (this.measurementCode == "BCNT") {
             this.isEnabled = true;
             this.SetUIProperties_TariffLinesContainersPrice();
+            
             this.UIProperties.SetEnabled("CostPrice", null, false);
         }
     }

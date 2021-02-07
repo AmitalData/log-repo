@@ -30,6 +30,17 @@
         -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr='#F5F5F5', endColorstr='#C7C7C7' ,GradientType=0)";
         background: linear-gradient(180deg, rgba(245, 245, 245, 1) 0%, rgba(243, 243, 243, 1) 50.24%, rgba(236, 236, 236, 1) 69.98%, rgba(224, 224, 224, 1) 84.35%, rgba(207, 207, 207, 1) 96.04%, rgba(199, 199, 199, 1) 100%);
     }
+    .Description {
+        width: 100%;
+        font-size: 10px;
+        line-height: 18px;
+        color: #595B5B;
+        margin-left: 15px;
+        white-space: normal;
+        word-wrap: break-word;
+        text-overflow: ellipsis;
+        overflow: hidden;
+    }
 </style>
 
 <table>
@@ -329,11 +340,15 @@
                                                     <table>
                                                         <tr class="BoxHeader">
                                                             <td>
-                                                                <label>Surcharges</label>
+                                                                <label >Surcharges     </label>
+                                                                <label class="Description">
+                                                                    Mark the lines you wish to update, lines that are not marked will not be updated
+                                                                </label>
                                                             </td>
+                                                     
                                                         </tr>
-
                                                         <tr style="height:28px;" *ngIf="TypeCode != 'OFS'">
+   
                                                             <td>
                                                                 <table>
                                                                     <tr>
@@ -379,7 +394,7 @@
                                                                             </td>
 
                                                                             <td style="width:90px;">
-                                                                                <LogTextBox [InputType]="'double'" [Placeholder]="'No Update'" [NoObjectField]="true" [HideColumns]="true" [ObjectFieldName]="'NewPrice'" [Text]="item.NewPrice" [DataContext]="item.DataContext"></LogTextBox>
+                                                                                <LogTextBox [InputType]="'double'" [Placeholder]="item.NewPricePlaceHolder" [NoObjectField]="true" [HideColumns]="true" [ObjectFieldName]="'NewPrice'" [Text]="item.NewPrice" [DataContext]="item.DataContext"></LogTextBox>
                                                                             </td>
 
                                                                             <td style="width:1px;">
