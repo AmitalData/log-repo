@@ -523,7 +523,9 @@ export class NewViewComponent {
     public set SearchText(newValue: string) {
         this.searchText = newValue;
         if (newValue != null && newValue != "") {
-            this.unSelectedList = this.Fixedunselected.filter(f => f.ListTextCodeCode.toLowerCase().indexOf(newValue.toLowerCase()) > -1 || ((f.FullNameTextCodeLocalDefaultText != null && f.FullNameTextCodeLocalDefaultText != "") && f.FullNameTextCodeLocalDefaultText.toLowerCase().indexOf(newValue.toLowerCase()) > -1));
+            this.unSelectedList = this.Fixedunselected.filter(f => (f.ListTextCodeCode.toLowerCase().indexOf(newValue.toLowerCase()) > -1)
+                || ((f.FullNameTextCodeLocalDefaultText != null && f.FullNameTextCodeLocalDefaultText != "") && f.FullNameTextCodeLocalDefaultText.toLowerCase().indexOf(newValue.toLowerCase()) > -1)
+                || ((f.FullNameTextCodeDefaultText != null && f.FullNameTextCodeDefaultText != "") && f.FullNameTextCodeDefaultText.toLowerCase().indexOf(newValue.toLowerCase()) > -1));
         }
         else {
             this.unSelectedList = this.Fixedunselected;

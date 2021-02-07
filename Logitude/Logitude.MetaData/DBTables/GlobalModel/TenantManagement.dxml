@@ -877,6 +877,13 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="ShipmentHeaderImageId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="Id"
     ReferencedTable="GlobalTenants"
