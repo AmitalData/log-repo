@@ -928,28 +928,13 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommDec
                 if (courierMasterRepository != null)
                 {
                     CourierMaster courierMaster = courierMasterRepository.GetSingle(new CourierMasterKeys() { Id = _CourierMasterPM.Id });
-                    if (courierMaster != null)
+                    if (courierMaster != null && _CourierDeclarationPM.ChangeSetOp == ChangeSetOperation.Insert)
                     {
-                        DeclarationCourierStatusRepository rep = new DeclarationCourierStatusRepository(_context);
-                        DeclarationCourierStatus decCourier = rep.GetDeclarationsById(_CourierDeclarationPM.DeclarationId, _CourierDeclarationPM.Tenant);
-                        if (decCourier != null)
-                        {
-                            if (!decCourier.IsClosedForFollowUp)
-                            {
-                                courierMaster.OpenDeclarations += 1;
-                                courierMasterRepository.Update(courierMaster);
-                                courierMasterRepository.SubmitChanges();
-                            }
-                        }
-                        else
-                        {
-                            courierMaster.OpenDeclarations += 1;
-                            courierMasterRepository.Update(courierMaster);
-                            courierMasterRepository.SubmitChanges();
-                        }
+                        courierMaster.OpenDeclarations += 1;
+                        courierMasterRepository.Update(courierMaster);
+                        courierMasterRepository.SubmitChanges();
                     }
                 }
-
 
                 AppendLogLine("try to update CourierDeclaration for DeclarationPM.Id: " + _MyDeclarationPM.Id + " CourierMasterPM.Id: " + _CourierMasterPM.Id);
                 try
