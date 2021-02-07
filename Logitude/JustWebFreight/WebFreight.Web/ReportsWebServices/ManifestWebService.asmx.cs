@@ -112,12 +112,13 @@ namespace WebFreight.Web.ReportsWebServices
                 #region Master Consignee
                 if (!string.IsNullOrEmpty(master.ConsigneeId))
                 {
-                    CardPM consignee = cardQuery.GetSinglePM(master.ConsigneeId, tenant);
+                    CardPM consignee = cardQuery.GetSinglePM(master.ConsigneeId, tenant);              
                     CustomerPM consigneePM = customerQuery.GetSinglePM(master.ConsigneeId, tenant);
+                    
                     if (consignee != null)
                     {
                         manifestDataProvider.ConsigneeVATNumber =  consignee.VatNumber;
-                        manifestDataProvider.ConsigneeName = consignee.EnglishName;                       
+                        manifestDataProvider.ConsigneeName = consignee.EnglishName;
                         if (!string.IsNullOrEmpty(consignee.PrimaryContactId))
                         {
                             Contact contact = ContactRepository.GetSingleContact(consignee.PrimaryContactId, tenant, true);
@@ -128,9 +129,13 @@ namespace WebFreight.Web.ReportsWebServices
                                 manifestDataProvider.ConsigneePhoneNumber =  contact.BusinessPhone;
                             }
                         }
-                    }
-                   
+                    }               
                 }
+                if (!string.IsNullOrEmpty(master.SalesmanUserId))
+                {
+                    manifestDataProvider.SalesmanName = master.SalesmanUserName;
+                }
+
                 #endregion
 
                 manifestDataProvider.MasterNumber = master.ShipmentNumber;
@@ -155,7 +160,7 @@ namespace WebFreight.Web.ReportsWebServices
                 manifestDataProvider.MasterPreCarriageCarrierNumber = master.MasterPreCarriageCarrierNumber;
                 manifestDataProvider.MasterPreCarriageVesselName = master.MasterPreCarriageVesselName;
                 manifestDataProvider.MasterPreCarriageFromPortName = master.MasterPreCarriageFromPortName;
-
+                manifestDataProvider.HousesNumbers = master.HousesNumbers;
                 if (master.BranchId != null)
                 {
                     Branch myBranch = (from d in commonContext.Branches where d.Tenant == tenant && d.Id == master.BranchId select d).FirstOrDefault();
@@ -178,7 +183,7 @@ namespace WebFreight.Web.ReportsWebServices
                 customFieldResolver.SetDataProviderCustomFieldsValues("Shipment", tenant, master, manifestDataProvider);
 
                 Address mainCarriageCarrierAddress = addressRepository.GetSingleAddress(master.MainCarriageCarrierAddressId, tenant);
-
+               
                 if (mainCarriageCarrierAddress != null)
                 {
                     manifestDataProvider.MainCarriageCarrierAddress = General.GetAddress(mainCarriageCarrierAddress);
@@ -508,7 +513,7 @@ namespace WebFreight.Web.ReportsWebServices
 
                     ManifestDetailsClass detail = new ManifestDetailsClass();
                     NewManifestDetailsClass newDetail = new NewManifestDetailsClass();
-
+      
                     detail.FileNumber = newDetail.FileNumber = shipmentView.ShipmentNumber;
                     detail.Direction = newDetail.Direction = shipmentView.DirectionName;
                     detail.ENSNumber = newDetail.ENSNumber = shipmentView.ENSNumber;
@@ -516,7 +521,7 @@ namespace WebFreight.Web.ReportsWebServices
                     detail.DocumentsClosingDate = newDetail.DocumentsClosingDate = shipmentView.DocumentsClosingDate;
                     detail.AWBHandlingInformation = newDetail.AWBHandlingInformation = shipmentView.AWBHandlingInformation;
                     detail.ITNumber = shipmentView.ITNumber;
-
+                   
                     if (!string.IsNullOrEmpty(shipmentView.OBLTypeCode))
                     {
                         OBLType type = shipmentsContext.OBLTypes.Where(d => d.Code == shipmentView.OBLTypeCode).FirstOrDefault();
@@ -526,7 +531,7 @@ namespace WebFreight.Web.ReportsWebServices
                             detail.OBLType = newDetail.OBLType = type.Name;
                         }
                     }
-
+                  
                     if (myLoggedTenant != null)
                     {
                         detail.FMCNumber = newDetail.FMCNumber = myLoggedTenant.FMCNumber;
@@ -665,6 +670,7 @@ namespace WebFreight.Web.ReportsWebServices
                         detail.ConsigneeName = newDetail.ConsigneeName = "";
                         detail.ConsigneeAddress = newDetail.ConsigneeAddress = "";
                     }
+
                     #endregion
 
                     #region Notify
@@ -731,10 +737,24 @@ namespace WebFreight.Web.ReportsWebServices
                     if (myFirstPickup != null)
                     {
                         PlaceOfReceiptData data = myServiceHelper.GetPlaceOfReceiptData(myFirstPickup);
-
                         if (data != null)
                         {
                             detail.PlaceOfReceipt = newDetail.PlaceOfReceipt = data.City;
+                        }
+
+                        PickUpAndDeliveriesArguments firstPickUpArguments = new PickUpAndDeliveriesArguments();
+                        firstPickUpArguments.TypeCode = myFirstPickup.PickUpDeliveryFromTypeCode;
+                        firstPickUpArguments.AddressId = myFirstPickup.FromAddressId;
+                        firstPickUpArguments.PortId = myFirstPickup.FromPortId;
+                        firstPickUpArguments.PartnerCardId = myFirstPickup.FromPartnerCardId;
+                        firstPickUpArguments.AddressCity = myFirstPickup.FromAddressCity;
+                        firstPickUpArguments.AddressZipCode = myFirstPickup.FromAddressZipCode;
+                        firstPickUpArguments.AddressCountryId = myFirstPickup.FromAddressCountryId;
+                        string firtPickUpFullAddress =  myServiceHelper.GetDeliveryPickUpAddress(firstPickUpArguments);                       
+
+                        if (firtPickUpFullAddress != null)
+                        {
+                             newDetail.FisrtPickupFullAddress = firtPickUpFullAddress;
                         }
                     }
 
@@ -764,7 +784,7 @@ namespace WebFreight.Web.ReportsWebServices
 
                     newDetail.OnCarriageFromPort = shipmentView.OnCarriageFromPortName;
                     newDetail.OnCarriageToPort = shipmentView.OnCarriageToPortName;
-
+                  
                     ShipmentPickUpDelivery myLineFirstDelivery = (from d in shipmentsContext.ShipmentPickUpDeliveries
                                                                   where d.ShipmentId == shipmentView.Id && d.PickUpDeliveryTypeCode == "DELV"
                                                                   select d).OrderBy(s => s.PickUpDeliveryNumber).FirstOrDefault();
@@ -772,6 +792,26 @@ namespace WebFreight.Web.ReportsWebServices
                     string myPlaceOfDelivery = myServiceHelper.GetPlaceOfDelivery(shipmentView, myLineFirstDelivery);
                     detail.PlaceOfDelivery = myPlaceOfDelivery;
                     newDetail.PlaceOfDelivery = myPlaceOfDelivery;
+
+                    ShipmentPickUpDelivery lastDelivery = (from d in shipmentsContext.ShipmentPickUpDeliveries
+                                                           where d.ShipmentId == shipmentView.Id && d.PickUpDeliveryTypeCode == "DELV"
+                                                           select d).OrderByDescending(s => s.PickUpDeliveryNumber).FirstOrDefault();
+                    if (lastDelivery != null)
+                    {
+                        PickUpAndDeliveriesArguments lastDeliveryArguments = new PickUpAndDeliveriesArguments();
+                        lastDeliveryArguments.TypeCode = lastDelivery.PickUpDeliveryToTypeCode;
+                        lastDeliveryArguments.AddressId = lastDelivery.ToAddressId;
+                        lastDeliveryArguments.PortId = lastDelivery.ToPortId;
+                        lastDeliveryArguments.PartnerCardId = lastDelivery.ToPartnerCardId;
+                        lastDeliveryArguments.AddressCity = lastDelivery.ToAddressCity;
+                        lastDeliveryArguments.AddressZipCode = lastDelivery.ToAddressZipCode;
+                        lastDeliveryArguments.AddressCountryId = lastDelivery.ToAddressCountryId;
+                        string lastDeliveryFullAddress = myServiceHelper.GetDeliveryPickUpAddress(lastDeliveryArguments);
+                        if ( lastDeliveryFullAddress!= null)
+                        {
+                            newDetail.LastDeliveryFullAddress = lastDeliveryFullAddress;
+                        }
+                    }
 
                     detail.Weight = shipmentView.GrossWeight != null ? shipmentView.GrossWeight != 0 ? (String.Format("{0:#,0.00}", shipmentView.GrossWeight) + " " + (shipmentView.GrossWeightUnitCode != null ? shipmentView.GrossWeightUnitCode : "")) : "" : "";
                     detail.ChargeableWeight = newDetail.ChargeableWeight = shipmentView.ChargeableWeight != null ? shipmentView.ChargeableWeight != 0 ? (String.Format("{0:#,0.00}", shipmentView.ChargeableWeight) + " " + (shipmentView.ChargeableWeightUnitCode != null ? shipmentView.ChargeableWeightUnitCode : "")) : "" : "";
