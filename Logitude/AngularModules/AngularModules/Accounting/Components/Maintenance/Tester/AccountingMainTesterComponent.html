@@ -10,6 +10,7 @@
         background-color: #f5f5f5;
     }
 </style>
+<div style="direction: ltr">
 <select [(ngModel)]="SelectedItem" (change)="selected()">
     <option *ngFor="let item of _MenuList" [ngValue]="item">{{item}}</option>
 </select>
@@ -32,7 +33,7 @@
                 <button class="Button" (click)="_TrailReport_Click()">TrailReport</button>
             </td>
             <td style="width:200px">
-                
+                <button class="Button" (click)="CardIndexNew_Click()">CardIndexNew</button>
             </td>
             <td style="width:200px"></td>
             <td style="width:200px"></td>
@@ -41,9 +42,7 @@
     </table>
 
 
-    <br />
-
-    <button class="Button" (click)="_ButtonReverseTrans_Click()">Reverse from Ledger to journal line</button>
+   
 </div>
 <div *ngIf="SelectedItem=='JournalApproveService'">
     <table>
@@ -146,3 +145,4 @@
             </tbody>
         </table>
     </div>
+</div>

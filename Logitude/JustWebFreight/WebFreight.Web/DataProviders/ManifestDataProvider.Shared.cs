@@ -139,6 +139,8 @@ namespace WebFreight.Web.DataProviders
         public string ConsigneeContactEmail { get; set; }
         public string ConsigneePhoneNumber { get; set; }
         public string ConsigneeVATNumber { get; set; }
+        public string SalesmanName { get; set; }
+        public string HousesNumbers { get; set; }
         public List<ManifestDetailsClass> ManifestDetails { get; set; }
         public List<NewManifestDetailsClass> NewManifestDetails { get; set; }
         public List<GroupedContainersClass> GroupedManifestDetailsList { get; set; }
@@ -268,6 +270,8 @@ namespace WebFreight.Web.DataProviders
         public string ConsigneePhoneNumber { get; set; }
         public string ConsigneeVATNumber { get; set; }
         public string DestinationPortCode { get; set; }
+        public string LastDeliveryFullAddress { get; set; }
+        public string FisrtPickupFullAddress { get; set; }
         public string PortOfDischarge { get; set; }
         public string ChargeableWeight { get; set; }
         public string Prepaid { get; set; }

@@ -1,0 +1,12 @@
+﻿<Script DBType="Main" Pre="true" Module="Accounting" >
+  <Sql Version="2">
+    <![CDATA[
+        update glaccountmoredatas set TotFutureOpenChequesInLocalCur = 0 where TotFutureOpenChequesInLocalCur is null
+        update glaccountmoredatas set TotalOpenChequesInLocalCur = 0 where TotalOpenChequesInLocalCur is null
+		
+		
+        ALTER TABLE glaccountmoredatas ADD CONSTRAINT DF_DefaultValue_FCheques DEFAULT 0 FOR TotFutureOpenChequesInLocalCur
+        ALTER TABLE glaccountmoredatas ADD CONSTRAINT DF_DefaultValue_Cheques DEFAULT 0 FOR TotalOpenChequesInLocalCur
+    ]]>
+  </Sql>
+</Script>

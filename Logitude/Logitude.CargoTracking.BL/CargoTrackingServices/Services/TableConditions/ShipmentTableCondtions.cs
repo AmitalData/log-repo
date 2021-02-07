@@ -34,8 +34,8 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
                 LastUpdate = ServiceHelper.GetTableLastUpdate(cargoTrackingDataBaseArgs.BuildCargoArgs.Table.Main_CargoTracking_TableName,
                     cargoTrackingDataBaseArgs.BuildCargoArgs.DestinationConnectionString);
 
-                getAllCustomsShipmentsThatContainForwardingShipmentsCommand += " where ((C.AutomaticLastUpdateDate > '" + LastUpdate + "')" +
-                    " or (Mas.AutomaticLastUpdateDate > '" + LastUpdate + "') or (com.AutomaticLastUpdateDate > '" + LastUpdate + "'))";
+                getAllCustomsShipmentsThatContainForwardingShipmentsCommand += " where (C.AutomaticLastUpdateDate > '" + LastUpdate + "')";
+                    //+" or (Mas.AutomaticLastUpdateDate > '" + LastUpdate + "') or (com.AutomaticLastUpdateDate > '" + LastUpdate + "'))";
             }
             else
             {
@@ -82,8 +82,8 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
                 LastUpdate = ServiceHelper.GetTableLastUpdate(cargoTrackingDataBaseArgs.BuildCargoArgs.Table.Main_CargoTracking_TableName,
                     cargoTrackingDataBaseArgs.BuildCargoArgs.DestinationConnectionString);
 
-                getAllNonCustomShipmentsThatContainForwardingShipmentsCommand += " and ((P.AutomaticLastUpdateDate > '" + LastUpdate + "')" +
-                    " or (Mas.AutomaticLastUpdateDate > '" + LastUpdate + "') or (com.AutomaticLastUpdateDate > '" + LastUpdate + "'))";
+                getAllNonCustomShipmentsThatContainForwardingShipmentsCommand += " and (P.AutomaticLastUpdateDate > '" + LastUpdate + "')";
+                    //+" or (Mas.AutomaticLastUpdateDate > '" + LastUpdate + "') or (com.AutomaticLastUpdateDate > '" + LastUpdate + "'))";
             }
             else
             {

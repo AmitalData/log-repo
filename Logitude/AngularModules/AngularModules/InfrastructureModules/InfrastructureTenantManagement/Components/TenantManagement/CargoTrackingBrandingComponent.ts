@@ -41,6 +41,7 @@ export class CargoTrackingBrandingComponent extends BaseComponent implements Aft
     public BackgroundId: string;
     public ComapnylogoId: string;
     public BrowserIconId: string;
+    public ShipmentHeaderImageId: string;
     private entityResourceService: EntityResourceService = new EntityResourceService();
     constructor(public entityArgs: EntityArgs)
     {
@@ -69,6 +70,8 @@ export class CargoTrackingBrandingComponent extends BaseComponent implements Aft
         this.BackgroundId = this.EntityPM.BackgroundId;
         this.ComapnylogoId = this.EntityPM.ComapnylogoId;
         this.BrowserIconId = this.EntityPM.BrowserIconId;
+        this.ShipmentHeaderImageId = this.EntityPM.ShipmentHeaderImageId;
+        
     }
 
 
@@ -289,6 +292,10 @@ export class CargoTrackingBrandingComponent extends BaseComponent implements Aft
     {
         this.BrowserIconId = code;
         this.EntityPM.BrowserIconId = code;
+    }
+    ShipmentHeaderImageUploadedCompleted(code) {
+        this.ShipmentHeaderImageId = code;
+        this.EntityPM.ShipmentHeaderImageId = code;
     }
 
     EnableBrandingChange(value: any)

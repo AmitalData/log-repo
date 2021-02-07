@@ -184,8 +184,10 @@ export class LedgerTransactionsFilterControl extends BaseComponent implements On
 
             setTimeout(() =>
             {
-                this.UIProperties.SetValidity("ToDate", this.ObjectTableName, false, TextCodeTranslator.Translate("Accounting.General.O.ToDateMustGreaterFromDate"));
-                this.UIProperties.SetValidity("FromDate", this.ObjectTableName, false, TextCodeTranslator.Translate("Accounting.General.O.FromDateMustSmallerToDate"));
+                if (!this.IsOldDate("ToDate"))
+                    this.UIProperties.SetValidity("ToDate", this.ObjectTableName, false, TextCodeTranslator.Translate("Accounting.General.O.ToDateMustGreaterFromDate"));
+                if (!this.IsOldDate("FromDate"))
+                    this.UIProperties.SetValidity("FromDate", this.ObjectTableName, false, TextCodeTranslator.Translate("Accounting.General.O.FromDateMustSmallerToDate"));
                 this.CD.detectChanges();
             }, 200);
 
@@ -199,7 +201,18 @@ export class LedgerTransactionsFilterControl extends BaseComponent implements On
 
         }
     }
+
+    private IsOldDate(fieldName) {
+        let isOldDate: boolean = false;
+        const uiProperty = this.UIProperties.UIPropertyList.filter(uiProp => uiProp.FieldName == fieldName)[0];
+        if (uiProperty)
+            isOldDate = uiProperty.ValidationError == "Date time is too way in the past!" || uiProperty.ValidationError == "Invalid Date";
+        
+        return isOldDate;
+    }
+
     private chartOfAccountId: string;
+
     get ChartOfAccountId() { return this.chartOfAccountId; }
     set ChartOfAccountId(value: string)
     {
@@ -656,7 +669,8 @@ export class LedgerTransactionsFilterControl extends BaseComponent implements On
         if (this.fromDate != value) {
             this.fromDate = value;
             this.ValidateDate();
-            this.UIProperties.SetRequired("FromDate", this.ObjectTableName, !value);
+            if (!this.IsOldDate("FromDate"))
+                this.UIProperties.SetRequired("FromDate", this.ObjectTableName, !value);
         }
     }
 
@@ -667,6 +681,7 @@ export class LedgerTransactionsFilterControl extends BaseComponent implements On
         if (this.toDate != value) {
             this.toDate = value;
             this.ValidateDate();
+            if (!this.IsOldDate("ToDate"))
             this.UIProperties.SetRequired("ToDate", this.ObjectTableName, !value);
 
         }

@@ -63,6 +63,9 @@ export class HomeComponent
     get BackGroundImg(){
         return CargoTrackingBrandingData.BackgroundURL;
     } 
+    get ShipmentHeaderImage(){
+        return CargoTrackingBrandingData.ShipmentHeaderURL;
+    }
   
     public GoToPrivateSite(){
         this.router.navigate(['Cargo-Tracking']);

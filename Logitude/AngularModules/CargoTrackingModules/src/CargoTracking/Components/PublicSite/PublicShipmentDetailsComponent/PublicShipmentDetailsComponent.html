@@ -79,8 +79,7 @@
             <div class="label">Destination Port</div>
             <div class="value">{{ Shipment.ToPortName }}</div>
         </div>
-
-        <img class="hide-tablet" src="./assets/images/misc/cargo.svg" alt="">
+       
     </div>
 
     <div class="panel-container">
@@ -175,8 +174,7 @@
                         <li *ngFor="let item of FuturesMilestoneFields" class="dimmed">
                             <ng-container *ngIf="item.EstimationDate">
                                 <div class="tick"> </div>
-                                <div class="date" style="width: 130px;">{{item.EstimationDate | date: 'dd/MM/yyyy,
-                                    HH:MM'}}</div>
+                                <div class="date" style="width: 130px;">{{item.EstimationDate | date: 'dd/MM/yyyy, HH:mm'}}</div>
                                 <div class="caption" style="width: 205px;">{{item.Name}}</div>
                                 <div class="desc" style="width: calc(100% - 450px); padding: 0;">{{item.Notes}} </div>
                             </ng-container>
@@ -186,12 +184,13 @@
 
                     <div class="tag">Current Milestone</div>
                     <ul *ngIf="CurrentMilestoneField" class="steps-list">
-                        <li class="highlighted">
-                            <ng-container *ngIf="CurrentMilestoneField.Date">
+                        <li class="highlighted" *ngIf="CurrentMilestoneField.Date">
+                            <ng-container >
                                 <div class="tick"> </div>
-                                <div class="date" style="width: 130px;">{{CurrentMilestoneField.Date | date:
-                                    'dd/MM/yyyy, HH:MM'}}</div>
+
+                                <div class="date" style="width: 130px;">{{CurrentMilestoneField.Date | date: 'dd/MM/yyyy, HH:mm'}}</div>
                                 <div class="caption" style="width: 205px;">{{CurrentMilestoneField.Name}}</div>
+
                                 <div class="desc" style="width: calc(100% - 450px); padding: 0;">
                                     {{CurrentMilestoneField.Notes}} </div>
                             </ng-container>
@@ -200,11 +199,11 @@
 
                     <div class="tag">Completed Milestones</div>
                     <ul *ngIf="CompletedMilestoneFields" class="steps-list">
-                        <li *ngFor="let item of CompletedMilestoneFields">
+                        <li *ngFor="let item of CompletedMilestoneFields" [class.hide]='!item.Date'>
                             <ng-container *ngIf="item.Date">
                                 <div class="tick"> <img src="./assets/images/icons/tick.png" alt=""> </div>
-                                <div class="date" style="width: 130px;">{{item.Date | date: 'dd/MM/yyyy, HH:MM'}}</div>
-                                <div class="caption" style="width: 205px;">{{item.Name}}</div>
+                                <div class="date" style="width: 130px;">{{item.Date | date: 'dd/MM/yyyy, HH:mm'}}</div>
+                                <div class="caption" style="width: fit-content;max-width: 205px;">{{item.Name}}</div>
                                 <div class="desc" style="width: calc(100% - 450px); padding: 0;">{{item.Notes}}</div>
                             </ng-container>
                         </li>
