@@ -24,7 +24,7 @@ export function FillShipmentWizardsFields(shipmentDetails: ShipmentDetails) {
 }
 
 export function CreateShipment(shipmentLevel: string) {
-    let createSelector = "ss";//IsMaster(shipmentLevel) ? Selectors.CreateMasterShipmentButton : Selectors.CreateShipmentButton;
+    let createSelector = IsMaster(shipmentLevel) ? Selectors.CreateMasterShipmentButton : Selectors.CreateShipmentButton;
     cy.DefineRequestWait("POST", "**/shipment", "WaitPostShipmentRequest")
     cy.Click(createSelector, null)
 }
