@@ -9,5 +9,24 @@
 },
 "defaultCommandTimeout": 120000,
 "responseTimeout": 120000,
-"requestTimeout": 120000
+"requestTimeout": 120000,
+"video": false,
+    "screenshotOnRunFailure": true,
+    "screenshots": true,
+    "trashAssetsBeforeRuns":false,
+    
+    "reporter": "cypress-multi-reporters",
+    "reporterOptions": {
+        "reporterEnabled": "mochawesome",
+        "mochawesomeReporterOptions": {
+            "reportDir": "cypress/results/html",
+            "quite": true,
+            "overwrite": false,
+            "html": true,
+            "json": false,
+            "timestamp": "ddmmyyyy_HHMM",
+            "reportFilename":"Report" 
+        }
+    }
+
 }
