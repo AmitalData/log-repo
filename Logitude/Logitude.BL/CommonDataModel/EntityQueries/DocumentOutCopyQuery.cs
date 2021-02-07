@@ -174,7 +174,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
             DocumentOutCopyPM documentOutCopy = (from a in repository.context.DocumentOutCopies.Include("DocumentTypeCopy")
                                                  where a.Tenant == tenant
-                                                 && (a.DocumentTypeCopy.IsSelectedByDefault == true && a.DocumentTypeCopy.InActive == false) 
+                                                 && a.DocumentTypeCopy.InActive == false
                                                  && a.DocumentOutId == documentOutId && a.DocumentTypeCopyId == documentCopyId
                                                  select new DocumentOutCopyPM()
                                                  {
