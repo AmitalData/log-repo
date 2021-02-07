@@ -53,13 +53,13 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             if (externalRecoPM.ChangeSetOp == ChangeSetOperation.Insert)
             {
 
-                List<LedgerTransactionPM> LedgerTransactions = GetLedgerTransactionsOfExternalReconcile(externalRecoPM);
+                List<LedgerTransactionPM> reconciliationLedgerTransactions = GetLedgerTransactionsOfExternalReconcile(externalRecoPM);
 
-                SetTransactionsAsExternallyReconciled(externalRecoPM.Tenant, LedgerTransactions);
+                SetTransactionsAsExternallyReconciled(externalRecoPM.Tenant, reconciliationLedgerTransactions);
                 SetExtenalPageAsReconciled(externalRecoPM);
 
-                RedeemARPaymentCheques(LedgerTransactions);
-                RedeemPaymentCheques(LedgerTransactions);                
+                RedeemARPaymentCheques(reconciliationLedgerTransactions);
+                RedeemPaymentCheques(reconciliationLedgerTransactions);                
 
             }
         }
@@ -97,12 +97,19 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             return paymentCheques;
         }
 
-        private void RedeemARPaymentCheques(List<LedgerTransactionPM> LedgerTransactions)
+        private void RedeemARPaymentCheques(List<LedgerTransactionPM> ledgerTransactions)
         {
-            foreach (var transactionPM in LedgerTransactions)
+            foreach (var transaction in ledgerTransactions)
             {
-                ARPaymentChequePM arpaymentCheque = GetARPChequeFromTransaction(transactionPM);
+                List<ARPaymentChequePM> arpaymentCheques = GetARPChequesFromTransaction(transaction);
+                SetARPaymentChequesAsReedemed(arpaymentCheques);
+            }
+        }
 
+        private void SetARPaymentChequesAsReedemed(List<ARPaymentChequePM> arpaymentCheques)
+        {
+            foreach (var arpaymentCheque in arpaymentCheques)
+            {
                 if (arpaymentCheque != null && (arpaymentCheque.StatusCode == ARPaymentChequeStatusValues.InBank || arpaymentCheque.StatusCode == ARPaymentChequeStatusValues.InBankAccount))
                     SetARPaymentChequeAsRedeemed(arpaymentCheque);
             }
@@ -120,34 +127,34 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             }
         }
 
-        private static ARPaymentChequePM GetARPChequeFromTransaction(LedgerTransactionPM transactionPM)
+        private List<ARPaymentChequePM> GetARPChequesFromTransaction(LedgerTransactionPM transactionPM)
         {
-            ARPaymentChequePM arpaymentCheque = null;
+            List<ARPaymentChequePM> arpaymentCheques = null;
 
             if (transactionPM.SourceTypeCode == AccountingEntityValues.ChequeDeposit)
-                arpaymentCheque = GetChequeOfDepositTransaction(transactionPM.Reference2, transactionPM.SourceId, transactionPM.Tenant);
+                arpaymentCheques = GetChequeOfDepositTransaction(transactionPM.Reference2, transactionPM.SourceId, transactionPM.Tenant);
 
             if (transactionPM.SourceTypeCode == AccountingEntityValues.ARPayment)
-                arpaymentCheque = GetChequeOfARPaymentTransaction(transactionPM.Reference2, transactionPM.SourceId, transactionPM.Tenant);
+                arpaymentCheques = GetChequeOfARPaymentTransaction(transactionPM.Reference2, transactionPM.SourceId, transactionPM.Tenant);
 
-            return arpaymentCheque;
+            return arpaymentCheques;
         }
 
-        private static ARPaymentChequePM GetChequeOfDepositTransaction(string transactionReference, string depositId, int tenant)
+        private List<ARPaymentChequePM> GetChequeOfDepositTransaction(string transactionReference, string depositId, int tenant)
         {
             List<ARPaymentChequePM> arpaymentCheques = GetChequesOfDeposit(tenant, depositId);
 
-            ARPaymentChequePM aRPaymentCheque = arpaymentCheques.Where(a => a.ChequeNumber == transactionReference).FirstOrDefault();
-            return aRPaymentCheque;
+            arpaymentCheques = arpaymentCheques.Where(a => a.ChequeNumber == transactionReference).ToList();
+            return arpaymentCheques;
         }
 
-        private static ARPaymentChequePM GetChequeOfARPaymentTransaction(string transactionReference, string paymentId, int tenant)
+        private List<ARPaymentChequePM> GetChequeOfARPaymentTransaction(string transactionReference, string paymentId, int tenant)
         {
             ARPaymentChequeQueryService aRPaymentChequeQueryService = new ARPaymentChequeQueryService(tenant);
             List<ARPaymentChequePM> aRPaymentChequePMs = aRPaymentChequeQueryService.GetInBankAccountChequesByPaymentId(paymentId, tenant);
 
-            ARPaymentChequePM aRPaymentCheque = aRPaymentChequePMs.Where(a => a.ChequeNumber == transactionReference).FirstOrDefault();
-            return aRPaymentCheque;
+            aRPaymentChequePMs = aRPaymentChequePMs.Where(a => a.ChequeNumber == transactionReference).ToList();
+            return aRPaymentChequePMs;
         }
 
 
