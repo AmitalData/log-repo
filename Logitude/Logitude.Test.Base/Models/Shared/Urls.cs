@@ -106,9 +106,9 @@
             return "PartnersDomain/GetCarrierCopyToCurrentTenant?entityId=" + carrierId;
         }
 
-        public static string CommonDomainGetCopyCurrencyToTenant(string portId)
+        public static string CommonDomainGetCopyCurrencyToTenant(string currencyId)
         {
-            return "CommonDomain/GetCopyCurrencyToTenant?entityId" + portId;
+            return "CommonDomain/GetCopyCurrencyToTenant?currencyId=" + currencyId + "&CurrencyRate=4&RateDate=2019-6-24%2015:2:53.564";
         }
     }
 }
