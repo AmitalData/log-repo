@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 {
    public class QuoteUpdateClass
    {  		
-		public const string HashString = "e2c2e798cd6172257b5e6b8382eaa8f1";
+		public const string HashString = "7733be6cbc58e113810dd96eedea8e54";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -15893,7 +15893,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 
             AddEventTypes.AddEventType(new EventTypeDetails()
             {
-                Code =  "UPIN",
+                Code =  "ICUP",
                 EnglishName =  "Incoterm Updated",
                 LocalName =  "Incoterm Updated",
                 IsManualEntry =  false,
