@@ -1,12 +1,13 @@
 {
-"viewportWidth": 1440,
-"viewportHeight": 900,
-"integrationFolder": "cypress/tests",
-"env":{
-"Mode": "Development",
-"Env":"ResetPWDData"
-},
-"defaultCommandTimeout": 120000,
-"responseTimeout": 120000,
-"requestTimeout": 120000
-}
+    "viewportWidth": 1440,
+    "viewportHeight": 900,
+    "integrationFolder": "cypress/tests",
+    "testFiles": "**/*.feature",
+    "ignoreTestFiles": "*.ts",
+    "env":{
+        "Mode": "Development"
+    },
+    "defaultCommandTimeout": 120000,
+    "responseTimeout": 120000,
+    "requestTimeout": 120000
+    }
