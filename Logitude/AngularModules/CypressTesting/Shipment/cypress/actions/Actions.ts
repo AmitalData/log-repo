@@ -235,7 +235,7 @@ export function CreateAnewShipment(shipmentLevel: string) {
         ShipmentLevel: shipmentLevel,
         Direction: "Export",
         TransportMode: "Air",
-        Shipper: "Shipper1",
+        Shipper: "TestShipperExport",
         MainCarriageToPort: "LHR",
         MainCarriageFromPort: "MIA"
     } as ShipmentDetails;
