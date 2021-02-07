@@ -12275,7 +12275,7 @@
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
   <field
-    Id="&quot;0973984d-b5e2-4ae7-bed5-6d45f7adfa6c&quot;"
+    Id="&quot;d7f9447d-927a-4337-9403-61f259da9d50&quot;"
     FieldName="&quot;ShipmentHeaderImageId&quot;"
     OldNames="ShipmentHeaderImageId"
     IsNew="true"
@@ -12317,7 +12317,7 @@
     InActive="false"
     DisplayLongName="false"
     FullFieldLable="&quot;ShipmentHeaderImageId&quot;"
-    DefaultText="&quot;ShipmentHeaderImage&quot;"
+    DefaultText="&quot;Shipment Header Image&quot;"
     IsNullable="true"
     IsForeignKey="false"
     DontBuildRelationOnDB="false"
