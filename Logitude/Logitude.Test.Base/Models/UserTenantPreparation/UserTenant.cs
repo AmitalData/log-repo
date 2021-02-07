@@ -1,6 +1,6 @@
-﻿namespace Logitude.Test.Base.Models
+﻿namespace Logitude.Test.Base.Models.UserTenantPreparation
 {
-    public class UserTenant
+    public static class UserTenant
     {
         public static int Tenant { get; set; }
         public static string Token { get; set; }

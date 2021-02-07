@@ -27,12 +27,14 @@ export  class ServiceHelper{
     public static GetcargoTrackingDataRequest(baseUrl:string)
     {   var BackgroundId:string = this.GetImageIdFromStorage("BackgroundImg");
         var CompanyLogoId:string = this.GetImageIdFromStorage("CompanyLogoImg");
+        var InvertedLogoId:string = this.GetImageIdFromStorage("InvertedLogoImg");
         var BrowserIconId:string = this.GetImageIdFromStorage("BrowserIconImg");
         var ShipmentHeaderImageId:string = this.GetImageIdFromStorage("ShipmentHeaderImage");
         
         var BrandingDataRequest:CargoTrackingBrandingDataRequest = new CargoTrackingBrandingDataRequest();
         BrandingDataRequest.BackgroundId = BackgroundId;
         BrandingDataRequest.ComapnylogoId = CompanyLogoId;
+        BrandingDataRequest.InvertedLogoId = InvertedLogoId;
         BrandingDataRequest.BrowserIconId = BrowserIconId;
         BrandingDataRequest.ShipmentHeaderImageId = ShipmentHeaderImageId;
         
@@ -47,7 +49,7 @@ export  class ServiceHelper{
         CargoTrackingBrandingData.MainColor = brandingData.MainColor || "#000000";
         CargoTrackingBrandingData.SecondaryColor = brandingData.SecondaryColor || "#002664";
 
-        document.documentElement.style.setProperty('--BGColor', CargoTrackingBrandingData.MainColor);
+        document.documentElement.style.setProperty('--BGColor', CargoTrackingBrandingData.MainColor || 'RGB(250,251,252)');
         document.documentElement.style.setProperty('--MainColor', CargoTrackingBrandingData.MainColor);
         document.documentElement.style.setProperty('--busyIndicatorColor', CargoTrackingBrandingData.MainColor);
         document.documentElement.style.setProperty('--secondaryColor', CargoTrackingBrandingData.SecondaryColor);
@@ -64,12 +66,14 @@ export  class ServiceHelper{
     }
     private static SetCarogTrackingImages(BrandingData:any,baseUrl:string)
     {
-        this.SetBackGroundImg(BrandingData,baseUrl);
-        this.SetComapnyLogo(BrandingData,baseUrl);
+        this.SetBackgroundImg(BrandingData,baseUrl);
+        this.SetCompanyLogo(BrandingData,baseUrl);
         this.SetBrowserIcon(BrandingData);
         this.SetShipmentHeaderImage(BrandingData);
+        this.SetInvertedLogo(BrandingData);
     }
-    private static SetBackGroundImg(BrandingData:any,baseUrl:string)
+    
+    private static SetBackgroundImg(BrandingData:any,baseUrl:string)
     {
         if(BrandingData.BackgroundBytes){
             CargoTrackingBrandingData.BackgroundURL = "url("+ServiceHelper.GetImageFromBytes(BrandingData.BackgroundBytes)+")";
@@ -86,7 +90,7 @@ export  class ServiceHelper{
         }
     }
 
-    private static SetComapnyLogo(BrandingData:any,baseUrl:string)
+    private static SetCompanyLogo(BrandingData:any,baseUrl:string)
     {
         if(BrandingData.ComapnylogoBytes){
             CargoTrackingBrandingData.ComapnylogoURL = ServiceHelper.GetImageFromBytes(BrandingData.ComapnylogoBytes);
@@ -110,6 +114,20 @@ export  class ServiceHelper{
             var StorageShipmentHeaderImage:CargoTrackingImage = ServiceHelper.GetImageFromStorage("ShipmentHeaderImage");
                 if(StorageShipmentHeaderImage && StorageShipmentHeaderImage.Id!=null && StorageShipmentHeaderImage.Id == BrandingData.ShipmentHeaderImageId){
                     CargoTrackingBrandingData.ShipmentHeaderURL =ServiceHelper.GetImageFromBytes(StorageShipmentHeaderImage.Data);
+                }
+        }
+    }
+
+    private static SetInvertedLogo(BrandingData:any)
+    {
+        if(BrandingData.InvertedLogoBytes){
+            CargoTrackingBrandingData.InvertedLogoURL = ServiceHelper.GetImageFromBytes(BrandingData.InvertedLogoBytes);
+            this.StoreImageInStorage("InvertedLogoImg",BrandingData.InvertedLogoId,BrandingData.InvertedLogoBytes);
+        }
+        else{
+            var StorageInvertedLogo:CargoTrackingImage = ServiceHelper.GetImageFromStorage("InvertedLogoImg");
+                if(StorageInvertedLogo && StorageInvertedLogo.Id!=null && StorageInvertedLogo.Id == BrandingData.InvertedLogoId){
+                    CargoTrackingBrandingData.InvertedLogoURL =ServiceHelper.GetImageFromBytes(StorageInvertedLogo.Data);
                 }
         }
     }

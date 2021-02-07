@@ -552,17 +552,41 @@
                                                                                                                 </div>
                                                                                                             </td>
                                                                                                         </tr>
+
+                                                                                                        <tr *ngIf="ShowDocumentsCopy" style="height: 3px;">
+                                                                                                            <td style="height: 3px">
+                                                                                                                <div style="height:3px"></div>
+                                                                                                            </td>
+                                                                                                        </tr>
+
+                                                                                                        <tr *ngIf="ShowDocumentsCopy">
+                                                                                                            <td>
+                                                                                                                <div>
+                                                                                                                    <table>
+                                                                                                                        <tr>
+                                                                                                                            <td style="width:10px"></td>
+                                                                                                                            <td class="CellStretched" style="width:120px;vertical-align:central">
+                                                                                                                                <p style="font-size:12px;color:#6E7172">Copy Name</p>
+                                                                                                                            </td>
+
+                                                                                                                            <td style="vertical-align:central;width:200px">
+                                                                                                                                <div style="text-align:left;width:200px;vertical-align:central">
+                                                                                                                                    <ComboBox style="width:200px;" (SelectedItemChanged)="DocumentTypeCopySelected = $event" [ItemsSource]="DocumentTypeCopyLists" [SelectedItem]="DocumentTypeCopySelected" [Binding]="'Name'"></ComboBox>
+                                                                                                                                </div>
+                                                                                                                            </td>
+
+                                                                                                                            <td>
+                                                                                                                                <div></div>
+                                                                                                                            </td>
+                                                                                                                        </tr>
+                                                                                                                    </table>
+                                                                                                                </div>
+                                                                                                            </td>
+                                                                                                        </tr>
                                                                                                     </table>
-
-
-
                                                                                                 </div>
                                                                                             </td>
-
-
                                                                                         </tr>
-
-
 
                                                                                         <tr>
                                                                                             <td colspan="4">

@@ -1,13 +1,15 @@
 ﻿using FluentAssertions;
-using Logitude.CommonDataTests.Models;
-using Logitude.CommonDataTests.Models.Builders;
+using Logitude.CommonTests.Models;
+using Logitude.CommonTests.Models.Builders;
 using Logitude.Test.Base.Context;
-using Logitude.Test.Base.Models;
+using Logitude.Test.Base.Models.Api;
+using Logitude.Test.Base.Models.Shared;
+using Logitude.Test.Base.Models.UserTenantPreparation;
 using Logitude.Test.Base.Services;
 using System;
 using TechTalk.SpecFlow;
 
-namespace Logitude.CommonDataTests.Steps.Security
+namespace Logitude.CommonTests.Steps.Security
 {
     [Binding]
     public class AddressSettingSecurityAccessSteps

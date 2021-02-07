@@ -341,6 +341,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.WeightRoundingCode).HasMaxLength(4).IsUnicode(false);
 
             this.Property(t => t.TruckerId).HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.AssginedtoCustomsAgentId).HasMaxLength(15).IsUnicode(false);
             //    .HasColumnAnnotation(
             //IndexAnnotation.AnnotationName,
             //new IndexAnnotation(
@@ -733,6 +734,8 @@ namespace Simplog.Data.ShipmentsModel.Mapping
 
             this.Property(t => t.TruckerId).HasColumnName("TruckerId");
             this.Property(t => t.AssignedToTruckerDate).HasColumnName("AssignedToTruckerDate");
+            this.Property(t => t.AssginedtoCustomsAgentId).HasColumnName("AssginedtoCustomsAgentId");
+            this.Property(t => t.AssginedToCustomsAgentDate).HasColumnName("AssginedToCustomsAgentDate");
 
             dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
             if (dbms == "oracle")
@@ -990,6 +993,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.HasOptional(t => t.WeightMeasurement).WithMany().HasForeignKey(d => d.WeightMeasurementCode);
             this.HasOptional(t => t.WeightRounding).WithMany().HasForeignKey(d => d.WeightRoundingCode);
             this.HasOptional(t => t.TruckerCard).WithMany().HasForeignKey(d => d.TruckerId);
+            this.HasOptional(t => t.CustomsAgentCard).WithMany().HasForeignKey(d => d.AssginedtoCustomsAgentId);
         }
     }
 }

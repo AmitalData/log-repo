@@ -4,5 +4,6 @@ export class CargoTrackingBrandingDataRequest
     public BackgroundId: string;
     public ComapnylogoId: string;
     public ShipmentHeaderImageId: string;
+    public InvertedLogoId: string;
     public Domain: string;
 }

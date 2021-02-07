@@ -143,6 +143,7 @@ namespace Logitude.BL.GlobalModel.Tools.DataMapping
             entityPM.MainColor = entityPM.MainColor;
             entityPM.SecondaryColor = entityPM.SecondaryColor;
             entityPOCO.ComapnylogoId = entityPM.ComapnylogoId;
+            entityPOCO.InvertedLogoId = entityPM.InvertedLogoId;
             entityPOCO.BackgroundId = entityPM.BackgroundId;
             entityPOCO.BrowserIconId = entityPM.BrowserIconId;
             entityPOCO.ShipmentHeaderImageId = entityPM.ShipmentHeaderImageId;

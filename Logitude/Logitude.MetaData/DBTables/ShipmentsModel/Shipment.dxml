@@ -3127,6 +3127,19 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="AssginedToCustomsAgentDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="AssginedtoCustomsAgentId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="CountryForStatisticsId"
     ReferencedTable="Countries"
@@ -3829,6 +3842,11 @@
     ReferencedTableSchema="dbo" />
   <Relation
     ForeignKeyColumn="TruckerId"
+    ReferencedTable="Cards"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="AssginedtoCustomsAgentId"
     ReferencedTable="Cards"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />

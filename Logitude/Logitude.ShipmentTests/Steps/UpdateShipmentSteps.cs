@@ -1,7 +1,9 @@
 ﻿using FluentAssertions;
 using Logitude.ShipmentTests.Models;
 using Logitude.ShipmentTests.Models.Builders;
-using Logitude.Test.Base.Models;
+using Logitude.Test.Base.Models.Api;
+using Logitude.Test.Base.Models.Shared;
+using Logitude.Test.Base.Models.UserTenantPreparation;
 using Logitude.Test.Base.Services;
 using TechTalk.SpecFlow;
 using TechTalk.SpecFlow.Assist;

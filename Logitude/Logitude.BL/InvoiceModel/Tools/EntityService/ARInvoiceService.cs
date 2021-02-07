@@ -73,7 +73,6 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         private AccountingSettingRepository accountingSettingRepository;
         private AccountingSystemRepository accountingSystemRepository;
         private ContactRepository contactRepository;
-        private InterestReportRepository InterestReportRepository;
         private List<string> allShipmentIds;
         private List<string> allActiveShipmentIds;
         private List<Shipment> allShipments;
@@ -274,6 +273,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 this.UpdateInvoiceEntities();
             }
 
+            this.InitializeSalesmanField();
+
             this.UpdateInvoiceLines();
             this.UpdateTotalVats();
             this.BuildSearchFields();
@@ -315,6 +316,37 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             }
 
 
+        }
+
+        private void InitializeSalesmanField()
+        {
+            if (this.isNewEntity)
+            {
+                if (entityPM.SalesmanUserId == null)
+                {
+                    if (entityPM.MainEntityId != null)
+                    {
+                        Shipment shipment = allShipments.Where(d => d.Id == entityPM.MainEntityId).FirstOrDefault();
+                        if (shipment != null)
+                        {
+                            entityPM.SalesmanUserId = shipment.SalesmanUserId;
+                        }
+                    }
+                }
+
+                if (entityPM.SalesmanUserId == null)
+                {
+                    if (entityPM.BillToId == null)
+                    {
+                        CardRepository cardRepository = new CardRepository(entityPM.Tenant);
+                        Card card = cardRepository.GetSingleCard(entityPM.BillToId, entityPM.Tenant);
+                        if (card != null)
+                        {
+                            entityPM.SalesmanUserId = card.SalesmanUserId;
+                        }
+                    }
+                }
+            }
         }
 
         private void SetPrintNotesForInterestInvoice(ARInvoicePM invoice)
@@ -1049,21 +1081,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 entityPM.InvoiceDate = entityPM.InvoiceDate.Value.Date;
             }
 
-            if (this.isNewEntity)
-            {
-                if (string.IsNullOrEmpty(entityPM.SalesmanUserId))
-                {
-                    if (!string.IsNullOrEmpty(entityPM.BillToId))
-                    {
-                        CardRepository cardRepository = new CardRepository(entityPM.Tenant);
-                        Card card = cardRepository.GetSingleCard(entityPM.BillToId, entityPM.Tenant);
-                        if (card != null)
-                        {
-                            entityPM.SalesmanUserId = card.SalesmanUserId;
-                        }
-                    }
-                }
-            }
+
 
             this.InitializeDueDate();
             this.InitializeBranchField();

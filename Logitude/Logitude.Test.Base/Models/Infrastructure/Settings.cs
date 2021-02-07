@@ -1,4 +1,6 @@
-﻿namespace Logitude.Test.Base.Models
+﻿using Logitude.Test.Base.Models.UserTenantPreparation;
+
+namespace Logitude.Test.Base.Models.Infrastructure
 {
     public static class Settings
     {

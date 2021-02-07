@@ -263,6 +263,12 @@ namespace HypredTest.ShipmentProxy {
         private bool AsAgreedOtherChargesField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<System.DateTime> AssginedToCustomsAgentDateField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string AssginedtoCustomsAgentIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private System.Nullable<System.DateTime> AssignedToTruckerDateField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
@@ -4260,6 +4266,32 @@ namespace HypredTest.ShipmentProxy {
                 if ((this.AsAgreedOtherChargesField.Equals(value) != true)) {
                     this.AsAgreedOtherChargesField = value;
                     this.RaisePropertyChanged("AsAgreedOtherCharges");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<System.DateTime> AssginedToCustomsAgentDate {
+            get {
+                return this.AssginedToCustomsAgentDateField;
+            }
+            set {
+                if ((this.AssginedToCustomsAgentDateField.Equals(value) != true)) {
+                    this.AssginedToCustomsAgentDateField = value;
+                    this.RaisePropertyChanged("AssginedToCustomsAgentDate");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string AssginedtoCustomsAgentId {
+            get {
+                return this.AssginedtoCustomsAgentIdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.AssginedtoCustomsAgentIdField, value) != true)) {
+                    this.AssginedtoCustomsAgentIdField = value;
+                    this.RaisePropertyChanged("AssginedtoCustomsAgentId");
                 }
             }
         }
