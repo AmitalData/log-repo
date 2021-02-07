@@ -85,8 +85,8 @@ export class StatementByInvoiceDateFilterComponent extends BaseComponent   {
 
     ValidateSelectedFilters() {
         this.ValidationErrorsList = [];
-        if (AppTool.IsNullOrEmpty(this.CustomerId)) {
-            this.ValidationErrorsList.push("Please select a Bill To/ Vendor");
+        if (AppTool.IsNullOrEmpty(this.PartnerId)) {
+            this.ValidationErrorsList.push("Please select a Partner");
             return false;
         }
         return true;

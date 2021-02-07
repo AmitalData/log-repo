@@ -1152,11 +1152,11 @@ namespace WebFreight.Web.ReportsWebServices
                 dataProvider.ToPeriod = toDate;
             }
             string partnerId = null;
-            QueryFilterItem partnerItem = queryOperations.QueryFilterItems.Where(d => d.FieldName == "PartnerId" && d.Operator == "Equals").FirstOrDefault();
+            QueryFilterItem partnerFilterItem = queryOperations.QueryFilterItems.Where(d => d.FieldName == "PartnerId" && d.Operator == "Equals").FirstOrDefault();
         
-            if (partnerItem != null && partnerItem.FieldValue != null)
+            if (partnerFilterItem != null && partnerFilterItem.FieldValue != null)
             {
-                partnerId = partnerItem.FieldValue.ToString();
+                partnerId = partnerFilterItem.FieldValue.ToString();
             }
 
             iQueryable = filter.GetFilteredQuery<ARInvoice>(queryOperations, iQueryable);
@@ -3586,6 +3586,8 @@ namespace WebFreight.Web.ReportsWebServices
 
                 iQueryableARInvoice = iQueryableARInvoice.Where(d => d.PartnerId == partnerId);
                 iQueryableARPayment = iQueryableARPayment.Where(d => d.PartnerId == partnerId);
+                iQueryableAPPayment = iQueryableAPPayment.Where(d => d.VendorId == partnerId);
+                iQueryableAPInvoice = iQueryableAPInvoice.Where(d => d.VendorId == partnerId);
             }
 
             totalData.CustomerName = customer != null ? customer.EnglishName : "";

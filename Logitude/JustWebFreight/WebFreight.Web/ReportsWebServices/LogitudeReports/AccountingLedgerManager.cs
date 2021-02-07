@@ -226,12 +226,11 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
             {
                 iQueryable_ARInvoice = iQueryable_ARInvoice.Where(d => d.PartnerId == PartnerId);         
                 iQueryable_ARPayment = iQueryable_ARPayment.Where(d => d.PartnerId == PartnerId);  
-                if (string.IsNullOrEmpty(CustomerId))
-                {
-                    iQueryable_ARPayment = iQueryable_ARPayment.Where(d => d.BillToId == PartnerId);
+
+                    iQueryable_APInvoice = iQueryable_APInvoice.Where(d => d.VendorId == PartnerId);
                     iQueryable_APPayment = iQueryable_APPayment.Where(d => d.VendorId == PartnerId);
                     iQueryable_APPaymentExternalAmount = iQueryable_APPaymentExternalAmount.Where(d => d.VendorId == PartnerId);
-                }
+                
             }
 
             IQueryable<ARInvoice> iQueryable_ARInvoice_Open = iQueryable_ARInvoice;
