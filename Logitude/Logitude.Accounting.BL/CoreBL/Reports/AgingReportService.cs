@@ -831,6 +831,7 @@ _Param.AgingForDate.Date, false, true, true);
                                 && _Param.GroupByDate == AgingReportParam.DateEnum.DueDate);
         }
 
+
         private void RemoveDummies(ref List<PeriodM> reportList, List<GLAccountList> myaccountsList, Logitude.BL.CommonDataModel.EntityPMs.TenantPM tenant)
         {
             if (!this._Param.AggregateByGLAccountCurrencies)

@@ -66,7 +66,7 @@ namespace Logitude.Accounting.BL.CoreBL.Testers
                 var agingReport = new AgingReportService(myAgingReportParam);
                 var xml = agingReport.RunReport();
                 //var MyPeriodList = agingReport.MyPeriodList;
-                var xmlMyPeriodList = LogitudeXmlSerializer.SerializeObjectToJosnString<List<PeriodMExtended>>(agingReport.MyPeriodExtendedList);
+                var xmlMyPeriodList = LogitudeXmlSerializer.SerializeObjectToJosnStringMax<List<PeriodMExtended>>(agingReport.MyPeriodExtendedList);
 
                 gateWayTesterResult.Log = xmlMyPeriodList;
 
@@ -110,7 +110,7 @@ namespace Logitude.Accounting.BL.CoreBL.Testers
                 gateWayTesterResult.Log = trailReportService.DbLog;
                 
 
-                gateWayTesterResult.JsonOut = LogitudeXmlSerializer.SerializeObjectToJosnString<List<TrailReportM>>(res);
+                gateWayTesterResult.JsonOut = LogitudeXmlSerializer.SerializeObjectToJosnStringMax<List<TrailReportM>>(res);
 
 
             }
@@ -176,7 +176,7 @@ namespace Logitude.Accounting.BL.CoreBL.Testers
                 var s = new ReverseEngineerLedgerTransactionService(param.MyDate, param.MyTenant);
                 s.CheckDbIntegrity();
 
-                gateWayTesterResult.JsonOut = LogitudeXmlSerializer.SerializeObjectToJosnString<List<JournalLineLedgerDTO>>(s.CompareReport.rows);
+                gateWayTesterResult.JsonOut = LogitudeXmlSerializer.SerializeObjectToJosnStringMax<List<JournalLineLedgerDTO>>(s.CompareReport.rows);
 
 
             }
@@ -208,7 +208,7 @@ namespace Logitude.Accounting.BL.CoreBL.Testers
                 var s = new ReverseEngineerTotalByMonthService(param.MyDate, param.MyTenant, param.MyGLAccId);
                 s.CheckDbIntegrity();
                 
-                gateWayTesterResult.JsonOut = LogitudeXmlSerializer.SerializeObjectToJosnString<List<GLAccountTotalByMonthsDTO>>(s.CompareReport.GLAccountTotalByMonthsList);
+                gateWayTesterResult.JsonOut = LogitudeXmlSerializer.SerializeObjectToJosnStringMax<List<GLAccountTotalByMonthsDTO>>(s.CompareReport.GLAccountTotalByMonthsList);
                 ///ReloadGrid(SerializeObjectByte);
 
             }
