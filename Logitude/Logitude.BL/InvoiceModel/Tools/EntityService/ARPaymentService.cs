@@ -682,7 +682,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         private InterestTransactionPM MapInterestTransactionPMFromARPaymentPM(ARPaymentPM payment, bool isFromVoidARPayment)
         {
             DateTime? dateForInterest = payment.ValueDate == null ? DateTime.Now : payment.ValueDate;
-            GLAccountPM account = getGLAccount(payment.BillToId, payment.Tenant);
+            GLAccountPM account = GetGLAccount(payment.BillToId, payment.Tenant);
             InterestTransactionPM interestTransaction = new InterestTransactionPM()
             {
                 InterestEntityTypeCode = "2",
