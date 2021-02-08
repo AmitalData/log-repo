@@ -981,20 +981,24 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
             #endregion
 
             myDataProvider.AccountingLedgerList_Customer = new List<AccountingLedger_Customer>();
+            /* var customerGroups = from item in tempList
+                                  group item by new { item.CustomerId,item.PartnerId} into g
+                                  select new { CustomerId = g.Key.CustomerId, PartnerId = g.Key.PartnerId, CustomerItems = g };
+             */
             var customerGroups = from item in tempList
-                                 group item by new { item.CustomerId,item.PartnerId} into g
-                                 select new { CustomerId = g.Key.CustomerId, PartnerId = g.Key.PartnerId, CustomerItems = g };
-            
+                                 group item by item.CustomerId into g
+                                 select new { CustomerId = g.Key, CustomerItems = g };
             foreach (var item_customer in customerGroups)
             {
                 Card myCustomer = null;
-                Card partner = null;
+                Card partnerData = null;
                 AccountingLedger_Customer customerRecord = new AccountingLedger_Customer();
                 customerRecord.AccountingLedgerList = new List<AccountingLedger>();
                 customerRecord.CustomerId = item_customer.CustomerId;
-                customerRecord.PartnerId = item_customer.PartnerId;
 
-                if(item_customer.CustomerId != null)
+          
+
+                if (item_customer.CustomerId != null)
                 {
                     myCustomer = CardRepository.GetSingleCard(item_customer.CustomerId, tenant, false);
                     Address customerAddress = addressRepository.GetMainAddressByCardId(item_customer.CustomerId, tenant);
@@ -1002,12 +1006,22 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                     {
                         customerRecord.CustomerAddress = General.GetAddress_OneLine(customerAddress);
                     }
-                }
 
-                if (item_customer.PartnerId != null)
-                {
-                    partner = CardRepository.GetSingleCard(item_customer.PartnerId, tenant, false);
                 }
+               var partners = from item in tempList
+                           where item.CustomerId == item_customer.CustomerId
+                           group item by item.PartnerId into g
+                           select new { PartnerId = g.Key};
+
+                foreach (var partner in partners)
+                {
+                    partnerData = CardRepository.GetSingleCard(partner.PartnerId, tenant, false);
+                    if (partnerData != null)
+                    {
+                        customerRecord.PartnerName = customerRecord.PartnerName == null ? partnerData.EnglishName : customerRecord.PartnerName + ", " + partnerData.EnglishName;
+                    }
+                }
+          
                
                 if (myCustomer != null)
                 {
@@ -1016,16 +1030,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                     customerRecord.CardCode = myCustomer.Code;
                 }
 
-                if (partner != null)
-                {
 
-                    customerRecord.PartnerName = partner.EnglishName;
-                    Address partnerAddress = addressRepository.GetMainAddressByCardId(item_customer.PartnerId, tenant);
-                    if (partnerAddress != null)
-                    {
-                        customerRecord.PartnerAddress = General.GetAddress_OneLine(partnerAddress);
-                    }
-                }
 
                 double? balance = 0;
                 double? balance_local = 0;
