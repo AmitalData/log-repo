@@ -217,7 +217,7 @@ export class Selectors extends RegexSelectors
     // public static readonly ShipmentMainCarriageToPort = "#Shipment_MainCarriageToPortId";
     // public static readonly MasterMainCarriageFromPort = "#Master_MainCarriageFromPortId";
     // public static readonly MasterMainCarriageToPort = "#Master_MainCarriageToPortId";
-    // public static readonly ShipmentCustomer = "#Shipment_CustomerId";
+    public static readonly ShipmentCustomer = "#Shipment_CustomerId";
       //Accounting
       public static readonly PayableAccountingTab="#PAYABLEAccounting" ;
       public static readonly ReceivableAccounting="#RECEIVABLEAccounting"

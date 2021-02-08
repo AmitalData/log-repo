@@ -260,7 +260,7 @@ export function FillAPInvoiceDetails(aPInvoiceDetails: APInvoiceDetails) {
     cy.FillLogTextBox(Selectors.APInvoiceVATNumber, aPInvoiceDetails.VatNo.toString())
     cy.Click(Selectors.OkCreateAPInvoiceButton, null);
     cy.Click(BaseSelectors.CheckBoxLine, null)
-    cy.FillLogLov(Selectors.APInvoiceVatType, true, aPInvoiceDetails.VATType)
+    cy.FillLogLov(Selectors.APInvoiceVatType, aPInvoiceDetails.VATType, true)
     cy.Click(Selectors.VatTypeApplyToAll, null)
 }
 
@@ -337,13 +337,13 @@ export function FillAPPayment(aPPaymentDetails: APPaymentDetails, invoiceNumber:
     cy.Click(BaseSelectors.AccountingMenu, null)
     cy.Click(Selectors.PayableAccountingTab, null)
     cy.Click(Selectors.NewAPPayment, null)
-    cy.FillLogLov(Selectors.APPaymentVendor, false, aPPaymentDetails.Vendor)
-    cy.FillLogLov(Selectors.APPaymentMethod, true, aPPaymentDetails.PaymentMethod)
+    cy.FillLogLov(Selectors.APPaymentVendor, aPPaymentDetails.Vendor, false)
+    cy.FillLogLov(Selectors.APPaymentMethod, aPPaymentDetails.PaymentMethod, true)
     cy.FillLogTextBox(Selectors.APPaymentAmount, aPPaymentDetails.PaymentAmount.toString())
-    cy.FillLogLov(Selectors.APPaymentCurrency, true, aPPaymentDetails.PaymentCurrency)
+    cy.FillLogLov(Selectors.APPaymentCurrency, aPPaymentDetails.PaymentCurrency, true)
     cy.FillLogTextBox(Selectors.APPaymentCurrencyExchangeRate, aPPaymentDetails.Rate.toString())
     cy.FillDate(Selectors.APPaymentRegisterDate, aPPaymentDetails.RegisterDate)
-    cy.FillLogLov(Selectors.APPaymentBranch, true, aPPaymentDetails.Branch)
+    cy.FillLogLov(Selectors.APPaymentBranch, aPPaymentDetails.Branch, true)
     cy.DefineRequestWait("GET", "**/apinvoiceviews/**", "WaitAPInvoiceView")
     cy.FillLogTextBox(BaseSelectors.SearchField, invoiceNumber);
     BaseAssertion.AssertStatusCode("WaitAPInvoiceView", 200)
@@ -364,8 +364,8 @@ ApproveAPPayment()
    
 }
 export function FillARPaymentDetails(aRPaymentDetails: ARPaymentDetails) {
-    cy.FillLogLov(Selectors.ARPaymentPartner, false, aRPaymentDetails.Partner)
-    cy.FillLogLov(Selectors.ARPaymentPaymentMethod, true, aRPaymentDetails.PaymentMethod)
+    cy.FillLogLov(Selectors.ARPaymentPartner, aRPaymentDetails.Partner, false)
+    cy.FillLogLov(Selectors.ARPaymentPaymentMethod, aRPaymentDetails.PaymentMethod, true)
     cy.FillLogTextBox(Selectors.ARPaymentAmount, aRPaymentDetails.PaymentAmount)
     cy.Click(Selectors.OkAddARPayment, null)
 }
