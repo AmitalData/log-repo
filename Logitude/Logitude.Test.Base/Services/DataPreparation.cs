@@ -38,7 +38,7 @@ namespace Logitude.Test.Base.Services
             return new PartnersVariables
             {
                 VendorId = GetPartnerId("VD", "TestVendor", null),
-                AgentId = GetPartnerId("AG", "TestAgent", null),
+                AgentId = GetPartnerId("AG", "TestAgentExport", null),
                 CustomerId = GetPartnerId("CS", "TestCustomer", null),
                 PotentialCustomerId = GetPartnerId("PO", "TestPotentialCustomer", null),
                 CustomAgentId = GetPartnerId("CG", "TestCustomAgent", null),
@@ -46,11 +46,14 @@ namespace Logitude.Test.Base.Services
                 TruckerTLONId = GetPartnerId("TR", "TestTLONTrucker", "TLON"),
                 TruckerTNYCId = GetPartnerId("TR", "TestTNYCTrucker", "TNYC"),
                 ShipperExportId = GetPartnerId("CS", "TestShipperExport", null),
+                ShipperImportId = GetPartnerId("CS", "TestShipperImport", null),
+                ConsigneeExportId = GetPartnerId("CS", "TestConsigneeExport", null),
+                ConsigneeImportId = GetPartnerId("CS", "TestConsigneeImport", null),
                 AirlineAAId = GetPartnerId("AL", "TestAAAirline", "AA", true),
                 AirlineBAId = GetPartnerId("AL", "TestBAAirline", "BA", true),
-                WarehouseId = GetPartnerId("WH", "TestWarehouse", "TSWHE"),
                 ShippingLineMAEUId = GetPartnerId("SL", "TestMAEUShippingLine", "MAEU", true),
-                ShippingLineMSCUId = GetPartnerId("SL", "TestMSCUShippingLine", "MSCU", true)
+                ShippingLineMSCUId = GetPartnerId("SL", "TestMSCUShippingLine", "MSCU", true),
+                WarehouseId = GetPartnerId("WH", "TestWarehouse", "TSWHE")
             };
         }
 
@@ -105,7 +108,7 @@ namespace Logitude.Test.Base.Services
         private static string GetCountryIdFromUserTenant(ApiQueryFilters apiQueryFilters)
         {
             ApiResponse<IEnumerable<Country>> response = APICaller.CallGetByFilters<IEnumerable<Country>>(Urls.CountryViewsGetByFilters, UserTenant.Token, apiQueryFilters);
-            return response.Data?.FirstOrDefault().Id;
+            return response.Data?.FirstOrDefault()?.Id;
         }
         #endregion
 
@@ -219,7 +222,15 @@ namespace Logitude.Test.Base.Services
             Partner partner = new Partner
             {
                 Tenant = UserTenant.Tenant,
-                PartnerTypeId = partnerTypeCode
+                PartnerTypeId = partnerTypeCode,
+                Address = new Address
+                {
+                    Tenant = UserTenant.Tenant,
+                    Name = partnerName + " Address",
+                    Description = "Main Address",
+                    AddressTypeId = "M",
+                    IsCreatedWithPartner = true
+                }
             };
 
             PartnerInformation partnerInformation = new PartnerInformation
