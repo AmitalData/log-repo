@@ -282,7 +282,7 @@
                                     <!-- DeclarationOfficeCode -->
                                     <td style="width: 130px;">
                                         <LogLabel [ObjectFieldName]="'DeclarationOfficeCode'" [ObjectTableName]="ObjectTableName"
-                                                  [DataContext]="DataContext"></LogLabel>
+                                                  [DataContext]="DataContext" [Text]="'בית מכס מטפל'"></LogLabel>
                                     </td>
                                     <td style="width: 105px;">
                                         <LogLov tabindex="1" [ObjectFieldName]="'DeclarationOfficeCode'"
@@ -295,16 +295,20 @@
                                     </td>
 
                                     <td style="width: 10px;"><div></div></td>
-
-                                    <!-- TaxationDateTime -->
                                     <td style="width: 130px;">
-                                        <LogLabel [ObjectFieldName]="'TaxationDateTime'" [ObjectTableName]="ObjectTableName"
-                                                  [DataContext]="DataContext"></LogLabel>
+                                        <LogLabel [ObjectFieldName]="'ExportDeclarationOfficeCode'" [ObjectTableName]="ObjectTableName"
+                                                  [DataContext]="DataContext"  ></LogLabel>
                                     </td>
-                                    <td style="width: 105px;" tabindex="2">
-                                        <LogDatePicker [RefreshMe]="RefreshDatePicker" [ObjectFieldName]="'TaxationDateTime'" [ObjectTableName]="ObjectTableName"
-                                                       [DataContext]="DataContext" [HideColumns]="true" [SelectedDateValue]="TaxationDateTime"></LogDatePicker>
+                                    <td style="width: 105px;">
+                                        <LogLov tabindex="1" [ObjectFieldName]="'ExportDeclarationOfficeCode'"
+                                                [ObjectTableName]="ObjectTableName"
+                                                [DataContext]="DataContext"
+                                                [LookUpTableName]="'Customs.CustomsHouseType'"
+                                                [HideColumns]="true"
+                                                [SelectedValue]="ExportDeclarationOfficeCode">
+                                        </LogLov>
                                     </td>
+                               
 
                                     <td style="width: 10px;"><div></div></td>
 
@@ -426,19 +430,16 @@
                                     </td>
                                     <td><div></div></td>
 
-                                    <!-- EntitleImporterCode -->
-                                    <td>
-                                        <LogLabel [ObjectFieldName]="'LoadingDateTime'" [ObjectTableName]="ObjectTableName"
+                                     <!-- TaxationDateTime -->
+                                    <td style="width: 130px;">
+                                        <LogLabel [ObjectFieldName]="'TaxationDateTime'" [ObjectTableName]="ObjectTableName"
                                                   [DataContext]="DataContext"></LogLabel>
                                     </td>
-
-                                    <td>
-
-                                        <LogDatePicker [ObjectFieldName]="'LoadingDateTime'" [ObjectTableName]="ObjectTableName"
-                                                       [DataContext]="DataContext" [HideColumns]="true" [SelectedDateValue]="LoadingDateTime"></LogDatePicker>
-
+                                    <td style="width: 105px;" tabindex="2">
+                                        <LogDatePicker [RefreshMe]="RefreshDatePicker" [ObjectFieldName]="'TaxationDateTime'" [ObjectTableName]="ObjectTableName"
+                                                       [DataContext]="DataContext" [HideColumns]="true" [SelectedDateValue]="TaxationDateTime"></LogDatePicker>
                                     </td>
-                
+
                                 </tr>
                                 <tr style="height: 28px;">
                                     <!-- DeclarationDocumentTypeCode -->
@@ -461,27 +462,6 @@
 
                                     </td>
                                     <td><div></div></td>
-
-                                    <td style="width: 150px;">
-                                        <LogLabel [ObjectFieldName]="'ShipCode'" [ObjectTableName]="ObjectTableName"
-                                                  [DataContext]="DataContext"></LogLabel>
-                                    </td>
-
-                                    <td style="width: 160px;">
-                                        <LogLov [ObjectFieldName]="'ShipCode'"
-                                                [ObjectTableName]="ObjectTableName"
-                                                [DataContext]="DataContext"
-                                                [LookUpTableName]="'Customs.CustomsShip'"
-                                                [DisplayMemberPath]="'LocalName'"
-                                                (SelectedItemChanged)="CustomsShip = $event"
-                                                [SelectedValue]="ShipCode"
-                                                [HideColumns]="true">
-                                        </LogLov>
-
-
-                                    </td>
-                                    <td><div></div></td>
-                                    <!-- AutonomyRegionTypeCode -->
                                     <td>
                                         <LogLabel [ObjectFieldName]="'ExportAutonomyRegionTypeCode'" [ObjectTableName]="ObjectTableName"
                                                   [DataContext]="DataContext"></LogLabel>
@@ -495,10 +475,9 @@
                                                 [SelectedValue]="ExportAutonomyRegionTypeCode">
                                         </LogLov>
                                     </td>
-                                    <td><div></div></td>
-                                    <td><div></div></td>
 
-                                    <!-- EntitleImporterCode -->
+                                    <td><div></div></td>
+                                    <!-- AutonomyRegionTypeCode -->
                                     <td>
                                         <LogLabel [ObjectFieldName]="'IsExporterConfirmation'" [ObjectTableName]="ObjectTableName"
                                                   [DataContext]="DataContext"></LogLabel>
@@ -514,6 +493,11 @@
                                         <HelpIcon style="float: right;" [HideHeader]="true" [Text]="'Customs.Declaration.O.IsExporterConfirmation' | TextCodeTranslationPipe" [IconSize]="14"></HelpIcon>
 
                                     </td>
+                                    <td><div></div></td>
+                                    <td><div></div></td>
+
+                                    <!-- EntitleImporterCode -->
+
 
                                 </tr>
                                 <tr style="height: 28px;" *ngFor="let item of RecipientList">

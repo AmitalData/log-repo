@@ -834,7 +834,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommDec
             {
                 var myCourierDeclarationQueryService = new CourierDeclarationQueryService(_context);
                 var myCourierDeclarationUpdateService = new CourierDeclarationUpdateService(_context, new Dictionary<string, IContext>(), ResolvedTenant());
-                _CourierDeclarationPM = myCourierDeclarationQueryService.GetSingle(_MyDeclarationPM.Id, _CourierMasterPM.Id, false, true);
+                _CourierDeclarationPM = myCourierDeclarationQueryService.GetSingle(_MyDeclarationPM.Id, _CourierMasterPM.Id, false, false);
                 if (_CourierDeclarationPM == null)
                 {
                     AppendLogLine("CourierDeclarationPM not found for DeclarationPM.Id: " + _MyDeclarationPM.Id + " CourierMasterPM.Id: " + _CourierMasterPM.Id);
@@ -907,6 +907,8 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommDec
                     _CourierDeclarationPM.ChangeSetOp = ChangeSetOperation.Insert;
                     _CourierDeclarationPM.DeclarationId = _MyDeclarationPM.Id;
                     _CourierDeclarationPM.CourierMasterId = _CourierMasterPM.Id;
+
+            
                 }
                 else
                 {
@@ -928,14 +930,24 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommDec
                 if (courierMasterRepository != null)
                 {
                     CourierMaster courierMaster = courierMasterRepository.GetSingle(new CourierMasterKeys() { Id = _CourierMasterPM.Id });
-                    if (courierMaster != null && _CourierDeclarationPM.ChangeSetOp== ChangeSetOperation.Insert)
+                    if (courierMaster != null)
                     {
-                        courierMaster.OpenDeclarations += 1; 
-                        courierMasterRepository.Update(courierMaster);
-                        courierMasterRepository.SubmitChanges();
+                        DeclarationCourierStatusRepository rep = new DeclarationCourierStatusRepository(_context);
+                        DeclarationCourierStatus decCourier = rep.GetDeclarationsById(_CourierDeclarationPM.DeclarationId, _CourierDeclarationPM.Tenant);
+                        if (decCourier != null && !decCourier.IsClosedForFollowUp && _CourierDeclarationPM.ChangeSetOp == ChangeSetOperation.Insert)
+                        {
+                            DateTime stopLogAt = new DateTime(2021, 06, 01);
+                            string logData = "";
+                            var loggedUser = AuthenticationUtil.ResolveUserIdentityName(_CourierDeclarationPM.Tenant);
+                            logData = $"_CourierDeclarationPM.DeclarationId={_CourierDeclarationPM.DeclarationId}, ChangeSetOp={_CourierDeclarationPM.ChangeSetOp}, decCourier.IsClosedForFollowUp={decCourier.IsClosedForFollowUp},OpenDeclarations ={courierMaster.OpenDeclarations}before update1";
+                            LogitudeSettings.HandleLogMe("OpenDeclarations " + logData, false, "time", stopLogAt);
+
+                            courierMaster.OpenDeclarations += 1;
+                            courierMasterRepository.Update(courierMaster);
+                            courierMasterRepository.SubmitChanges();
+                        }
                     }
                 }
-
 
                 AppendLogLine("try to update CourierDeclaration for DeclarationPM.Id: " + _MyDeclarationPM.Id + " CourierMasterPM.Id: " + _CourierMasterPM.Id);
                 try
