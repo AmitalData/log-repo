@@ -1,5 +1,7 @@
 ﻿using Logitude.Accounting.BL.CoreBL.Reports;
 using Logitude.Accounting.BL.EntityQueryServices;
+using Logitude.Accounting.Data;
+using Logitude.Accounting.Data.EntityListQueryServices;
 using Logitude.Accounting.Data.Repositories;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.Helpers;
@@ -37,9 +39,17 @@ namespace Logitude.Accounting.BL.CoreBL.Testers
                         return _TrailReport_Click(tenant, _TextBoxParam);
                     }
                     break;
+
                 case "Aging_Click":
                     {
                         return Aging_Click(tenant, _TextBoxParam);
+                    }
+                    break;
+
+
+                case "CardIndexNew_Click":
+                    {
+                        return CardIndexNew_Click(tenant, _TextBoxParam);
                     }
                     break;
 
@@ -111,6 +121,44 @@ namespace Logitude.Accounting.BL.CoreBL.Testers
                 
 
                 gateWayTesterResult.JsonOut = LogitudeXmlSerializer.SerializeObjectToJosnStringMax<List<TrailReportM>>(res);
+
+
+            }
+            catch (Exception eee)
+            {
+                //param = null;
+                //throw;
+                gateWayTesterResult.ExceptionMess = eee.ToString();
+            }
+            finally
+            {
+
+                gateWayTesterResult.Log = gateWayTesterResult.Log ?? "";
+                gateWayTesterResult.Log += LogMessagingUtil.Instance.ToString();
+            }
+            return gateWayTesterResult;
+        }
+
+        
+             
+        private GateWayTesterResult CardIndexNew_Click(int tenant, string textBoxParam)
+        {
+
+            var gateWayTesterResult = new GateWayTesterResult();
+
+
+            try
+            {
+                var param = LogitudeXmlSerializer.JsonConvertDeserializeTObject<CardIndexReportParams>(textBoxParam);
+                //using (
+                var accountingContext = AccountingContext.GetContext(tenant);
+                var CardIndexReportService = new CardIndexReportService(accountingContext, param);
+                CardIndexReportService.Run();
+
+                //gateWayTesterResult.Log = trailReportService.DbLog;
+
+
+                gateWayTesterResult.JsonOut = LogitudeXmlSerializer.SerializeObjectToJosnStringMax<List<LedgerTransactionBalanceResponse>>(CardIndexReportService.CardIndexs);
 
 
             }
