@@ -321,7 +321,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
         private void writeChequesOnFile()
         {
-            var fileName = @"d:\cheques.csv";
+            var fileName = @"D:\Abdullah\cheques.csv";
             // Check if file already exists. If yes, delete it.     
             if (File.Exists(fileName))
             {
@@ -378,6 +378,8 @@ namespace Logitude.Accounting.BL.CoreBL
             GLAccountMoreDataQueryService moreDataQueryService = new GLAccountMoreDataQueryService(tenant);
             IAccountingContext MyContext = AccountingContext.GetContext(tenant);
             GLAccountMoreDataPM moreDataPM = moreDataQueryService.GetSingle(GLAccountId, false, false);
+            if (moreDataPM == null)
+                return;
             GLAccountMoreDataUpdateService updateService = new GLAccountMoreDataUpdateService(MyContext, new Dictionary<string, IContext>(), tenant);
             moreDataPM.TotFutureOpenChequesInLocalCur = 0;
             moreDataPM.TotalOpenChequesInLocalCur = 0;
