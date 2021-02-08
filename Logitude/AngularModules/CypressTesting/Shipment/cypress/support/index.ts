@@ -18,7 +18,6 @@
 
 import '../../../Base/cypress/commands/Authentication'
 import '../../../Base/cypress/commands/Elements'
-import '../../../Base/cypress/commands/General'
 
 // Alternatively you can use CommonJS syntax:
 // require('./commands')

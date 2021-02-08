@@ -10,8 +10,7 @@ let shipmentNumber: string;
 
 Given("the user logged in and navigates to shipments workspace", () => {
     cy.Login()
-    cy.Click(BaseSelectors.OperationsMenu, null)
-    cy.Click(Selectors.ShipmentTab, null)
+    Actions.NavigatesToShipmentsWorkspace()
 });
 
 Given("a master Shipment with following details",(dataTable)=>{
