@@ -630,7 +630,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                                select new ChargeTypeGroupClass()
                                {
                                    InvoiceId = g.Key.ARInvoiceId,
-                                   ShipmentId = g.Key.EntityId,
+                                   ShipmentId = g.Key.EntityId,               
                                    ChargesTypeId = g.Key.ChargesTypeId,
                                    AmountInLocal = g.Sum(s => s.LocalCurrencyAmount),
                                    AmountInProfit = g.Sum(s => s.ProfitCurrencyAmount)
@@ -988,6 +988,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                         {
                             #region AR Invoices
                             Card myCard = allCards.Where(d => d.Id == invoice.BillToId).FirstOrDefault();
+                            Card partner = allCards.Where(d => d.Id == invoice.PartnerId).FirstOrDefault();
                             Contact myContact = allContacts.Where(d => d.Id == invoice.CreatedByUserId).FirstOrDefault();
                             Currency myCurrency = allCurrencies.Where(d => d.Id == invoice.InvoiceCurrencyId).FirstOrDefault();
 
@@ -1062,6 +1063,10 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                                     myRecord.CardName = myCard.EnglishName;
                                     myRecord.CardExternal = myCard.ReceivablesAccountingCard;
                                     myRecord.BillToName = myCard.EnglishName;
+                                }
+                                if (partner != null)
+                                {                  
+                                    myRecord.PartnerName = partner.EnglishName;
                                 }
 
                                 if (myContact != null)
@@ -1192,6 +1197,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
             List<string> allIds_APInvoice = allAPInvoices.Where(d => d.VendorId != null).Select(s => s.VendorId).ToList();
             List<string> allIds_ARInvoice = allARInvoices.Where(d => d.BillToId != null).Select(s => s.BillToId).ToList();
             List<string> allIds_Payables = allPayablesData.Where(d => d.CardId != null).Select(s => s.CardId).ToList();
+            List<string> partnersIds = allARInvoices.Where(d => d.PartnerId != null).Select(d => d.PartnerId).ToList();
 
             foreach (string id in allIds_APInvoice)
             {
@@ -1208,6 +1214,13 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                 }
             }
             foreach (string id in allIds_Payables)
+            {
+                if (!allIds.Contains(id))
+                {
+                    allIds.Add(id);
+                }
+            }
+            foreach (string id in partnersIds)
             {
                 if (!allIds.Contains(id))
                 {

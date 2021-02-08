@@ -37,6 +37,7 @@ namespace WebFreight.Web.DataProviders
             public string CardTypeName { get; set; }
             public string CustomerName { get; set; }
             public string PaymentTerm { get; set; }
+            public string PartnerName { get; set; }
 
             public double? DaysPastDue1_30 { get; set; }
             public double? DaysPastDue31_60 { get; set; }

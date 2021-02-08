@@ -57,6 +57,7 @@ export class StatementFilterComponent extends BaseComponent implements OnInit {
     }
 
     public CustomerId: string = null;
+    public PartnerId: string = null;
     public DueDate: Date = null;
     public FromDate: Date = null;
 
@@ -130,6 +131,13 @@ export class StatementFilterComponent extends BaseComponent implements OnInit {
             this.queryFilterItem.DisplayInList = false;
             this.queryFilterItem.FieldName = "BillToId";
             this.queryFilterItem.FieldValue = this.CustomerId;
+            this.queryFilterItem.Operator = "Equals";
+            this.queryFilterItems.push(this.queryFilterItem);
+
+            this.queryFilterItem = new QueryFilterItem();
+            this.queryFilterItem.DisplayInList = false;
+            this.queryFilterItem.FieldName = "PartnerId";
+            this.queryFilterItem.FieldValue = this.PartnerId;
             this.queryFilterItem.Operator = "Equals";
             this.queryFilterItems.push(this.queryFilterItem);
 

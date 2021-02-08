@@ -2141,6 +2141,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                              RegionalTaxPercentage = entity.RegionalTaxPercentage,
                              PaidDate = entity.PaidDate,
                              PartnerId = entity.PartnerId,
+                             PartnerName = entity.Partner.EnglishName,
                          };
 
             return result;
