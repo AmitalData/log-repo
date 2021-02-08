@@ -53,6 +53,9 @@ namespace Logitude.Test.Base.Hooks
             PartnersData.TruckerTLONId = partnersVariables.TruckerTLONId;
             PartnersData.TruckerTNYCId = partnersVariables.TruckerTNYCId;
             PartnersData.ShipperExportId = partnersVariables.ShipperExportId;
+            PartnersData.ShipperImportId = partnersVariables.ShipperImportId;
+            PartnersData.ConsigneeExportId = partnersVariables.ConsigneeExportId;
+            PartnersData.ConsigneeImportId = partnersVariables.ConsigneeImportId;
             PartnersData.AirlineAAId = partnersVariables.AirlineAAId;
             PartnersData.AirlineBAId = partnersVariables.AirlineBAId;
             PartnersData.ShippingLineMSCUId = partnersVariables.ShippingLineMSCUId;
