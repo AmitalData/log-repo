@@ -1579,7 +1579,7 @@ export class AddEditMainCarriageComponent extends BaseComponent {
             }
 
             if (!AppTool.IsNullOrEmpty(this.Master)) {
-                this.myShipmentDomainService.ValidateShipmentMasterFieldExistance(this.EntityPM.Id, this.EntityPM.BookingId, this.EntityPM.Master, this.EntityPM.AirlinePrefix, this.EntityPM.DirectionId, this.EntityPM.TransportModeId, this.EntityPM.ShipmentLevelCode, this.EntityPM.IsCancelled)
+                this.myShipmentDomainService.ValidateShipmentMasterFieldExistance(this.EntityPM)
                     .subscribe((myResult: any) => {
 
                         if (AppTool.IsNullOrEmpty(myResult)) {

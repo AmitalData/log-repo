@@ -6,7 +6,7 @@
         public string PartnerId { get; set; }
         public string PartnerTypeId { get; set; }
 
-        //public Address Address { get; set; }
+        public Address Address { get; set; }
         //public Contact Contact { get; set; }
 
         public PartnerInformation Agent { get; set; }

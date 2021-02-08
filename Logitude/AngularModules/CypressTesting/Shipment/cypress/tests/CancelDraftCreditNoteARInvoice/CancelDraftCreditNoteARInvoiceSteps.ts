@@ -31,7 +31,7 @@ Then("the shipment should create successfully", () => {
 });
 
 Given("a receivable with the following details", (dataTable) => {
-    const ReceivableData = dataTable.hashes()[0] as ReceivableDetails;
+    const ReceivableData = dataTable.hashes() as ReceivableDetails[];
     Actions.OpenShipment(shipmentNumber)
     Actions.FillReceivablesTab(ReceivableData)
     Actions.UpdateShipment(Selectors.ShipmentSaveButton)

@@ -11,6 +11,9 @@
         public string TruckerTLONId { get; set; }
         public string TruckerTNYCId { get; set; }
         public string ShipperExportId { get; set; }
+        public string ShipperImportId { get; set; }
+        public string ConsigneeExportId { get; set; }
+        public string ConsigneeImportId { get; set; }
         public string AirlineAAId { get; set; }
         public string AirlineBAId { get; set; }
         public string WarehouseId { get; set; }

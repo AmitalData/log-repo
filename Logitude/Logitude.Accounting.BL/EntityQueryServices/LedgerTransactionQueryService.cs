@@ -461,6 +461,11 @@ namespace Logitude.Accounting.BL.EntityQueryServices
         {
             return this.repository.CalcGLAccountTotalByMonthByDateType(DateTypeCode,fromDate, accoutingDateUntillNotInclude, tenant, listOfAccId);
         }
+        
+        public List<CurrencySumOpenAmount> CalcCurrencySumOpenAmountByMonthByDateType(string DateTypeCode,  DateTime accoutingDateUntillNotInclude, int tenant, IQueryable<string> listOfAccId = null)
+        {
+            return this.repository.CalcCurrencySumOpenAmountByMonthByDateType(DateTypeCode,accoutingDateUntillNotInclude, tenant, listOfAccId);
+        }
 
         public List<GLAccountTotalByMonth> CalcGLAccountTotalByMonthByAccountingDate(DateTime fromDate, DateTime accoutingDateUntillNotInclude, int tenant, IQueryable<string> listOfAccId = null)
         {

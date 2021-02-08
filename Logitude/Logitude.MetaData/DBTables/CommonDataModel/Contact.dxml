@@ -238,4 +238,7 @@
     Columns="Tenant" />
   <Index
     Columns="AutomaticLastUpdateDate" />
+  
+<UniqueConstraint Env="cloud"
+  Columns="Tenant,ComputedKey" />
 </Table>

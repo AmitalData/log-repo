@@ -336,7 +336,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
                 if (entityPM.SalesmanUserId == null)
                 {
-                    if (entityPM.BillToId == null)
+                    if (entityPM.BillToId != null)
                     {
                         CardRepository cardRepository = new CardRepository(entityPM.Tenant);
                         Card card = cardRepository.GetSingleCard(entityPM.BillToId, entityPM.Tenant);
