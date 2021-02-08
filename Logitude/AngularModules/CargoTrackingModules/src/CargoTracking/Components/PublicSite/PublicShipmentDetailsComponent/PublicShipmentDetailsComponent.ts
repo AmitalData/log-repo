@@ -240,11 +240,12 @@ export class PublicShipmentDetailsComponent implements OnInit
                 if (S.IsEstimation) {
 
                     this.FuturesMilestoneFields.push(S);
-                }
-                else if (S.IsEstimation && S.Date) {
+                    if (S.IsEstimation && S.EstimationDate != null) {
 
-                    this.isPlannedMilestonesExist = true;
+                        this.isPlannedMilestonesExist = true;
+                    }
                 }
+                
                 else if (!S.IsCurrent && S.Date != null) {
 
                     this.CompletedMilestoneFields.push(S);
