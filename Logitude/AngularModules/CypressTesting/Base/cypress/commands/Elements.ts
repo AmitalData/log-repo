@@ -112,7 +112,7 @@ Cypress.Commands.add("Click", (selector, contains) => {
 
     }
 
-    element.click()
+    element.click({force:true})
 
 })
 
