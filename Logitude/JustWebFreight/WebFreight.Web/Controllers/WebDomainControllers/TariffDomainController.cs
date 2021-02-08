@@ -298,14 +298,12 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             IWorkbook workbook = excelEngine.Excel.Workbooks.Create(1);
             IWorksheet sheet1 = workbook.Worksheets[0];
 
-            //DataTable table_multi = new DataTable();
-            //table_multi.Columns.Add();
-            //table_multi.Columns.Add();
-            //table_multi.Rows.Add(table_multi.NewRow());
-            //table_multi.Rows.Add(table_multi.NewRow());
-            //object[] array = { "From Multi-Ports" };
-            //table_multi.Rows[0].ItemArray = array;
-            //sheet1.ImportDataTable(table_multi, true, 1, 1);
+            DataTable table_multi = new DataTable();
+            table_multi.Columns.Add("From Multi-Ports");
+            DataRow row0 = table_multi.NewRow();
+            row0[0] = "To Multi-Ports";
+            table_multi.Rows.Add(row0);           
+            sheet1.ImportDataTable(table_multi, true, 1, 1);
 
             // Build excel headers 
             DataTable table = new DataTable();
@@ -337,40 +335,40 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             }
 
             #region Range
-            string range = "A1:F1";
+            string range = "A3:F3";
             if (steps.Length == 2)
             {
-                range = "A1:G1";
+                range = "A3:G3";
             }
 
             else if (steps.Length == 3)
             {
-                range = "A1:H1";
+                range = "A3:H3";
             }
 
             else if (steps.Length == 4)
             {
-                range = "A1:I1";
+                range = "A3:I3";
             }
 
             else if (steps.Length == 5)
             {
-                range = "A1:J1";
+                range = "A3:J3";
             }
 
             else if (steps.Length == 6)
             {
-                range = "A1:K1";
+                range = "A3:K3";
             }
 
             else if (steps.Length == 7)
             {
-                range = "A1:L1";
+                range = "A3:L3";
             }
 
             else if (steps.Length == 8)
             {
-                range = "A1:M1";
+                range = "A3:M3";
             }
             #endregion
 
@@ -442,7 +440,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             sheet1.Range[range].CellStyle.Color = System.Drawing.Color.Gray;
             sheet1.Range[range].CellStyle.HorizontalAlignment = ExcelHAlign.HAlignCenter;
             sheet1.Columns[steps.Length + 3].ColumnWidth = 14;
-            sheet1.ImportDataTable(table, true, 1, 1);
+            sheet1.ImportDataTable(table, true, 3, 1);
             workbook.SaveAs(memory);
             return memory.ToArray();
         }
@@ -454,7 +452,14 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             IApplication application = excelEngine.Excel;
             IWorkbook workbook = excelEngine.Excel.Workbooks.Create(1);
             IWorksheet sheet1 = workbook.Worksheets[0];
-            
+
+            DataTable table_multi = new DataTable();
+            table_multi.Columns.Add("From Multi-Ports");
+            DataRow row0 = table_multi.NewRow();
+            row0[0] = "To Multi-Ports";
+            table_multi.Rows.Add(row0);
+            sheet1.ImportDataTable(table_multi, true, 1, 1);
+
             DataTable table = new DataTable();
 
             #region header
@@ -525,26 +530,26 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             #endregion
 
             #region range
-            string range = "A1:D1";
+            string range = "A3:D3";
             if (count == 1)
             {
-                range = "A1:E1";
+                range = "A3:E3";
             }
             else if (count == 2)
             {
-                range = "A1:F1";
+                range = "A3:F3";
             }
             else if (count == 3)
             {
-                range = "A1:G1";
+                range = "A3:G3";
             }
             else if (count == 4)
             {
-                range = "A1:H1";
+                range = "A3:H3";
             }
             else if (count == 5)
             {
-                range = "A1:I1";
+                range = "A3:I3";
             }          
             #endregion
 
@@ -597,7 +602,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             sheet1.Range[range].CellStyle.Color = System.Drawing.Color.Gray;
             sheet1.Range[range].CellStyle.HorizontalAlignment = ExcelHAlign.HAlignCenter;
             sheet1.Columns[count + 2].ColumnWidth = 14;
-            sheet1.ImportDataTable(table, true, 1, 1);
+            sheet1.ImportDataTable(table, true, 3, 1);
             workbook.SaveAs(memory);
             return memory.ToArray();
         }

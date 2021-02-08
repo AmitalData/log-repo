@@ -32,15 +32,20 @@ namespace WebFreight.Web.Helpers
         private string fileData;
         private string tariffId;
         private string carrierId;
-        private int version;        
+        private int version;
         private string fileName;
         private string fileExtension;
         private MemoryStream memoryStream;
+        private IWorksheet sheet;
         private TariffQueryService tariffQueryService;
         private TariffCarrierTranslationRepository tariffCarrierTranslationRepository;
         private PortRepository portRepository;
         private ICommonDataContext commonContext;
         private ITariffModuleContext tariffContext;
+        private TariffPM tariffPM;
+        private TariffVersionPM versionPM;
+        private DateTime? startDate;
+        private DateTime? expirationDate;
         private string fromMultiPorts;
         private string toMultiPorts;
         public UploadTariffHelper(TariffFilterParameter filterParameter)
@@ -74,24 +79,18 @@ namespace WebFreight.Web.Helpers
             {
                 carrierId = tariff.SellerId;
             }
-        }
-
-        private TariffPM tariffPM;
-        private TariffVersionPM versionPM;
+        }        
         private void GetTariffAndVersion()
         {
             tariffPM = tariffQueryService.GetSingle(tariffId, true, false);
             versionPM = tariffPM.TariffVersions.Where(d => d.Version == version).FirstOrDefault();
-        }
-
-        private DateTime? startDate;
-        private DateTime? expirationDate;
+        }        
         private void InitDates()
         {
             startDate = TenantServerConfigration.GetCurrentDateTime(tenant);
             expirationDate = TenantServerConfigration.GetCurrentDateTime(tenant);
 
-            if(versionPM != null)
+            if (versionPM != null)
             {
                 startDate = versionPM.StartDate;
                 expirationDate = versionPM.InitialEnddate;
@@ -105,65 +104,63 @@ namespace WebFreight.Web.Helpers
             ExcelEngine excelEngine = new ExcelEngine();
             IApplication application = excelEngine.Excel;
             IWorkbook workbook = excelEngine.Excel.Workbooks.Open(memoryStream);
-            IWorksheet sheet = workbook.Worksheets[0];
+            this.sheet = workbook.Worksheets[0];
 
-            if (sheet.UsedRange.Rows.Count() - 1 > 1000)
+            this.SetMultiPorts();
+            this.ValidateSheetAndThrowException();
+            List<ExcelSheetLine> excelSheetLines = this.ReadExcelSheetData();
+            this.ValidateExcelSheetPorts(excelSheetLines);
+            List<TariffLinePM> tariffLinesResult = this.BuildTariffLines(excelSheetLines);
+            this.CreateTariffUploadExcel();
+            this.SaveTariff(tariffLinesResult);
+        }
+
+        private void SetMultiPorts()
+        {
+            this.fromMultiPorts = sheet.UsedRange.Rows[0].Cells[1].DisplayText;
+            this.toMultiPorts = sheet.UsedRange.Rows[1].Cells[1].DisplayText;
+        }
+        private void ValidateSheetAndThrowException()
+        {
+            if (sheet.UsedRange.Rows.Count() - 3 > 1000)
             {
                 throw new ApplicationException("Can't upload this excel as it exceeds tariff lines limitation of 1000");
             }
 
             else
             {
-                List<TariffLinePM> tariffLinesResult = new List<TariffLinePM>();
-                List<ExcelSheetLine> excelSheetLines = new List<ExcelSheetLine>();
-                if (tariffType == "AFC" || tariffType == "OLC")
+                if (!string.IsNullOrEmpty(fromMultiPorts) && !string.IsNullOrEmpty(toMultiPorts))
                 {
-                    excelSheetLines = this.ReadExcelSheetData_LCL(sheet);
-
-                    bool isValid = this.Validate(excelSheetLines);
-
-                    if (isValid)
-                    {
-                        tariffLinesResult = this.BuildTariffLines_LCL(excelSheetLines);
-                    }
-
-                    else
-                    {
-                        throw new ApplicationException("You can't upload this excel file");
-                    }
+                    throw new ApplicationException("You can't send from-multi and to-multi at the same time");
                 }
-
-                else if (tariffType == "OFC")
-                {
-                    excelSheetLines = this.ReadExcelSheetData_FCL(sheet);
-
-                    bool isValid = this.Validate(excelSheetLines);
-
-                    if (isValid)
-                    {
-                        tariffLinesResult = this.BuildTariffLines_FCL(excelSheetLines);
-                    }
-
-                    else
-                    {
-                        throw new ApplicationException("You can't upload this excel file");
-                    }
-                }
-
-                this.CreateTariffUploadExcel(sheet.UsedRange.Rows.Count() - 1);
-                this.SaveTariff(tariffLinesResult);
             }
         }
+        private List<ExcelSheetLine> ReadExcelSheetData()
+        {
+            List<ExcelSheetLine> excelSheetLines = new List<ExcelSheetLine>();
 
-        private bool Validate(List<ExcelSheetLine> excelSheetLines)
+            if (tariffType == "AFC" || tariffType == "OLC")
+            {
+                excelSheetLines = this.ReadExcelSheetData_LCL(sheet);
+            }
+
+            else if (tariffType == "OFC")
+            {
+                excelSheetLines = this.ReadExcelSheetData_FCL(sheet);
+            }
+
+            return excelSheetLines;
+        }
+        private void ValidateExcelSheetPorts(List<ExcelSheetLine> excelSheetLines)
         {
             bool isValid = true;
 
-            if(!string.IsNullOrEmpty(fromMultiPorts))
+            if (!string.IsNullOrEmpty(fromMultiPorts))
             {
-                if(excelSheetLines.Where(d => !string.IsNullOrEmpty(d.FromPort)).Any())
+                if (excelSheetLines.Where(d => !string.IsNullOrEmpty(d.FromPort)).Any())
                 {
                     isValid = false;
+                    throw new ApplicationException("From Port Column can't have value when from-multi-port has value");
                 }
             }
 
@@ -174,24 +171,40 @@ namespace WebFreight.Web.Helpers
                     if (excelSheetLines.Where(d => !string.IsNullOrEmpty(d.ToPort)).Any())
                     {
                         isValid = false;
+                        throw new ApplicationException("To Port Column can't have value when to-multi-port has value");
                     }
                 }
             }
+        }
+        private List<TariffLinePM> BuildTariffLines(List<ExcelSheetLine> excelSheetLines)
+        {
+            List<TariffLinePM> tariffLinesResult = new List<TariffLinePM>();
 
-            return isValid;
+            if (tariffType == "AFC" || tariffType == "OLC")
+            {
+                tariffLinesResult = this.BuildTariffLines_LCL(excelSheetLines);
+            }
+
+            else if (tariffType == "OFC")
+            {
+                tariffLinesResult = this.BuildTariffLines_FCL(excelSheetLines);
+            }
+
+            return tariffLinesResult;
         }
 
         private List<ExcelSheetLine> ReadExcelSheetData_LCL(IWorksheet sheet)
         {
             List<ExcelSheetLine> excelSheetLines = new List<ExcelSheetLine>();
 
-            string notescolumn = sheet.Columns[sheet.Columns.Count() - 1].DisplayText;
-            string transitTimecolumn = sheet.Columns[sheet.Columns.Count() - 2].DisplayText;
+            string notescolumn = sheet.UsedRange.Rows[2].Columns[sheet.Columns.Count() - 1].DisplayText;
+            string transitTimecolumn = sheet.UsedRange.Rows[2].Columns[sheet.Columns.Count() - 2].DisplayText;
 
-            foreach (IRange row in sheet.UsedRange.Rows.Skip(1))
+            foreach (IRange row in sheet.UsedRange.Rows.Skip(3))
             {
                 String[] rowData = new String[sheet.Columns.Count() - 1];
                 ExcelSheetLine myLine = new ExcelSheetLine();
+
                 var rowDataLength = rowData.Length;
                 var StepLength = rowData.Length;
                 if (!string.IsNullOrEmpty(priceSteps))
@@ -288,10 +301,10 @@ namespace WebFreight.Web.Helpers
         {
             List<ExcelSheetLine> excelSheetLines = new List<ExcelSheetLine>();
 
-            string notescolumn = sheet.Columns[sheet.Columns.Count() - 1].DisplayText;
-            string transitTimecolumn = sheet.Columns[sheet.Columns.Count() - 2].DisplayText;
+            string notescolumn = sheet.UsedRange.Rows[2].Columns[sheet.Columns.Count() - 1].DisplayText;
+            string transitTimecolumn = sheet.UsedRange.Rows[2].Columns[sheet.Columns.Count() - 2].DisplayText;
 
-            foreach (IRange row in sheet.UsedRange.Rows.Skip(1))
+            foreach (IRange row in sheet.UsedRange.Rows.Skip(3))
             {
                 String[] rowData = new String[sheet.Columns.Count() - 1];
                 ExcelSheetLine myLine = new ExcelSheetLine();
@@ -367,70 +380,108 @@ namespace WebFreight.Web.Helpers
             List<TariffLinePM> myResult = new List<TariffLinePM>();
 
             int rowIndex = 0;
+            List<ExcelSheetLine> routs = this.ComputeRoutsList(excelSheetLines);
 
-            List<FromToPortClass> routs = this.ComputeRoutsList(excelSheetLines);            
-
-            foreach (ExcelSheetLine row in excelSheetLines)
+            foreach (ExcelSheetLine item in routs)
             {
-                TariffLinePM tariffLine = new TariffLinePM();
-                tariffLine.ChangeSetOp = ChangeSetOperation.Insert;
-                tariffLine.TariffId = tariffId;
-                tariffLine.Tenant = tenant;
-                tariffLine.Version = version;
-                tariffLine.StartDate = startDate;
-                tariffLine.ExpirationDate = expirationDate;
-                tariffLine.Index = rowIndex;
+                TariffLinePM tariffLine = this.CreateTariffLine_LCL(item, rowIndex);
+                myResult.Add(tariffLine);
+                rowIndex++;
+            }
 
-                //From Port
-                Port fromPort = this.GetPortDetails(row.FromPort, tenant);
-                if (fromPort != null)
+            foreach (TariffLinePM item in myResult)
+            {
+                this.SetErrors_LCL(item);
+            }
+
+            return myResult;
+        }
+        private List<TariffLinePM> BuildTariffLines_FCL(List<ExcelSheetLine> excelSheetLines)
+        {
+            List<TariffLinePM> myResult = new List<TariffLinePM>();
+
+            int rowIndex = 0;
+
+            List<ExcelSheetLine> routs = this.ComputeRoutsList(excelSheetLines);
+
+            foreach (ExcelSheetLine item in routs)
+            {
+                TariffLinePM tariffLine = this.CreateTariffLine_FCL(item, rowIndex);
+                myResult.Add(tariffLine);
+                rowIndex++;
+            }
+
+            foreach (TariffLinePM item in myResult)
+            {
+                this.SetErrors_FCL(item);
+            }
+
+            return myResult;
+        }
+
+        private TariffLinePM CreateTariffLine_LCL(ExcelSheetLine excelSheetLine, int rowIndex)
+        {
+            TariffLinePM tariffLine = new TariffLinePM();
+            tariffLine.ChangeSetOp = ChangeSetOperation.Insert;
+            tariffLine.TariffId = tariffId;
+            tariffLine.Tenant = tenant;
+            tariffLine.Version = version;
+            tariffLine.StartDate = startDate;
+            tariffLine.ExpirationDate = expirationDate;
+            tariffLine.Index = rowIndex;
+
+            //From Port
+            Port fromPort = this.GetPortDetails(excelSheetLine.FromPort, tenant);
+            if (fromPort != null)
+            {
+                if ((fromPort.IsAir && tariffType == "AFC") || (fromPort.IsOcean && tariffType == "OLC"))
                 {
-                    if ((fromPort.IsAir && tariffType == "AFC") || (fromPort.IsOcean && tariffType == "OLC"))
-                    {
-                        tariffLine.OriginPortId = fromPort.Id;
-                        tariffLine.OriginPortCode = fromPort.Code;
-                        tariffLine.OriginPortCombinedCode = fromPort.CombinedCode;
-                        tariffLine.OriginPortName = fromPort.EnglishName;
-                    }
-
-                    else
-                    {
-                        tariffLine.OriginPortHasWrongTransMode = true;
-                        tariffLine.OriginPortText = row.FromPort;
-                    }
+                    tariffLine.OriginPortId = fromPort.Id;
+                    tariffLine.OriginPortCode = fromPort.Code;
+                    tariffLine.OriginPortCombinedCode = fromPort.CombinedCode;
+                    tariffLine.OriginPortName = fromPort.EnglishName;
                 }
+
                 else
                 {
-                    tariffLine.OriginPortText = this.TrimTo_20(row.FromPort);
+                    tariffLine.OriginPortHasWrongTransMode = true;
+                    tariffLine.OriginPortText = excelSheetLine.FromPort;
                 }
+            }
+            else
+            {
+                tariffLine.OriginPortText = this.TrimTo_20(excelSheetLine.FromPort);
+            }
 
-                //To Port
-                Port toPort = this.GetPortDetails(row.ToPort, tenant);
-                if (toPort != null)
+            //To Port
+            Port toPort = this.GetPortDetails(excelSheetLine.ToPort, tenant);
+            if (toPort != null)
+            {
+                if ((toPort.IsAir && tariffType == "AFC") || (toPort.IsOcean && tariffType == "OLC"))
                 {
-                    if ((toPort.IsAir && tariffType == "AFC") || (toPort.IsOcean && tariffType == "OLC"))
-                    {
-                        tariffLine.DestinationPortId = toPort.Id;
-                        tariffLine.DestinationPortCode = toPort.Code;
-                        tariffLine.DestinationPortCombinedCode = toPort.CombinedCode;
-                        tariffLine.DestinationPortName = toPort.EnglishName;
-                    }
-
-                    else
-                    {
-                        tariffLine.DestinationPortHasWrongTransMode = true;
-                        tariffLine.DestinationPortText = row.ToPort;
-                    }
+                    tariffLine.DestinationPortId = toPort.Id;
+                    tariffLine.DestinationPortCode = toPort.Code;
+                    tariffLine.DestinationPortCombinedCode = toPort.CombinedCode;
+                    tariffLine.DestinationPortName = toPort.EnglishName;
                 }
+
                 else
                 {
-                    tariffLine.DestinationPortText = this.TrimTo_20(row.ToPort);
+                    tariffLine.DestinationPortHasWrongTransMode = true;
+                    tariffLine.DestinationPortText = excelSheetLine.ToPort;
                 }
+            }
+            else
+            {
+                tariffLine.DestinationPortText = this.TrimTo_20(excelSheetLine.ToPort);
+            }
 
+            if (excelSheetLine != null)
+            {
                 //Min Price
-                if (this.IsNumber(row.MinPrice))
+                if (this.IsNumber(excelSheetLine.MinPrice))
                 {
-                    decimal myNumber = Convert.ToDecimal(row.MinPrice);
+                    decimal myNumber = Convert.ToDecimal(excelSheetLine.MinPrice);
                     if (myNumber >= 0)
                     {
                         tariffLine.MinPrice = myNumber;
@@ -444,13 +495,13 @@ namespace WebFreight.Web.Helpers
                 }
                 else
                 {
-                    tariffLine.MinPriceText = this.TrimTo_20(row.MinPrice);
+                    tariffLine.MinPriceText = this.TrimTo_20(excelSheetLine.MinPrice);
                 }
 
                 //Price 1
-                if (this.IsNumber(row.Price1))
+                if (this.IsNumber(excelSheetLine.Price1))
                 {
-                    decimal myNumber = Convert.ToDecimal(row.Price1);
+                    decimal myNumber = Convert.ToDecimal(excelSheetLine.Price1);
 
                     if (myNumber >= 0)
                     {
@@ -464,13 +515,13 @@ namespace WebFreight.Web.Helpers
                 }
                 else
                 {
-                    tariffLine.Step1PriceText = this.TrimTo_20(row.Price1);
+                    tariffLine.Step1PriceText = this.TrimTo_20(excelSheetLine.Price1);
                 }
 
                 //Price 2
-                if (this.IsNumber(row.Price2))
+                if (this.IsNumber(excelSheetLine.Price2))
                 {
-                    decimal myNumber = Convert.ToDecimal(row.Price2);
+                    decimal myNumber = Convert.ToDecimal(excelSheetLine.Price2);
 
                     if (myNumber >= 0)
                     {
@@ -484,13 +535,13 @@ namespace WebFreight.Web.Helpers
                 }
                 else
                 {
-                    tariffLine.Step2PriceText = this.TrimTo_20(row.Price2);
+                    tariffLine.Step2PriceText = this.TrimTo_20(excelSheetLine.Price2);
                 }
 
                 //Price 3
-                if (this.IsNumber(row.Price3))
+                if (this.IsNumber(excelSheetLine.Price3))
                 {
-                    decimal myNumber = Convert.ToDecimal(row.Price3);
+                    decimal myNumber = Convert.ToDecimal(excelSheetLine.Price3);
 
                     if (myNumber >= 0)
                     {
@@ -504,13 +555,13 @@ namespace WebFreight.Web.Helpers
                 }
                 else
                 {
-                    tariffLine.Step3PriceText = this.TrimTo_20(row.Price3);
+                    tariffLine.Step3PriceText = this.TrimTo_20(excelSheetLine.Price3);
                 }
 
                 //Price 4
-                if (this.IsNumber(row.Price4))
+                if (this.IsNumber(excelSheetLine.Price4))
                 {
-                    decimal myNumber = Convert.ToDecimal(row.Price4);
+                    decimal myNumber = Convert.ToDecimal(excelSheetLine.Price4);
 
                     if (myNumber >= 0)
                     {
@@ -524,13 +575,13 @@ namespace WebFreight.Web.Helpers
                 }
                 else
                 {
-                    tariffLine.Step4PriceText = this.TrimTo_20(row.Price4);
+                    tariffLine.Step4PriceText = this.TrimTo_20(excelSheetLine.Price4);
                 }
 
                 //Price 5
-                if (this.IsNumber(row.Price5))
+                if (this.IsNumber(excelSheetLine.Price5))
                 {
-                    decimal myNumber = Convert.ToDecimal(row.Price5);
+                    decimal myNumber = Convert.ToDecimal(excelSheetLine.Price5);
 
                     if (myNumber >= 0)
                     {
@@ -544,13 +595,13 @@ namespace WebFreight.Web.Helpers
                 }
                 else
                 {
-                    tariffLine.Step5PriceText = this.TrimTo_20(row.Price5);
+                    tariffLine.Step5PriceText = this.TrimTo_20(excelSheetLine.Price5);
                 }
 
                 //Price 6
-                if (this.IsNumber(row.Price6))
+                if (this.IsNumber(excelSheetLine.Price6))
                 {
-                    decimal myNumber = Convert.ToDecimal(row.Price6);
+                    decimal myNumber = Convert.ToDecimal(excelSheetLine.Price6);
 
                     if (myNumber >= 0)
                     {
@@ -564,13 +615,13 @@ namespace WebFreight.Web.Helpers
                 }
                 else
                 {
-                    tariffLine.Step6PriceText = this.TrimTo_20(row.Price6);
+                    tariffLine.Step6PriceText = this.TrimTo_20(excelSheetLine.Price6);
                 }
 
                 //Price 7
-                if (this.IsNumber(row.Price7))
+                if (this.IsNumber(excelSheetLine.Price7))
                 {
-                    decimal myNumber = Convert.ToDecimal(row.Price7);
+                    decimal myNumber = Convert.ToDecimal(excelSheetLine.Price7);
 
                     if (myNumber >= 0)
                     {
@@ -584,13 +635,13 @@ namespace WebFreight.Web.Helpers
                 }
                 else
                 {
-                    tariffLine.Step7PriceText = this.TrimTo_20(row.Price7);
+                    tariffLine.Step7PriceText = this.TrimTo_20(excelSheetLine.Price7);
                 }
 
                 //Price 8
-                if (this.IsNumber(row.Price8))
+                if (this.IsNumber(excelSheetLine.Price8))
                 {
-                    decimal myNumber = Convert.ToDecimal(row.Price8);
+                    decimal myNumber = Convert.ToDecimal(excelSheetLine.Price8);
 
                     if (myNumber >= 0)
                     {
@@ -604,112 +655,97 @@ namespace WebFreight.Web.Helpers
                 }
                 else
                 {
-                    tariffLine.Step8PriceText = this.TrimTo_20(row.Price8);
+                    tariffLine.Step8PriceText = this.TrimTo_20(excelSheetLine.Price8);
                 }
 
                 //Transit Time
-                if (!string.IsNullOrEmpty(row.TransitTime))
+                if (!string.IsNullOrEmpty(excelSheetLine.TransitTime))
                 {
-                    tariffLine.TransitTime = row.TransitTime;
+                    tariffLine.TransitTime = excelSheetLine.TransitTime;
 
-                    if (row.TransitTime.Length > 100)
+                    if (excelSheetLine.TransitTime.Length > 100)
                     {
-                        tariffLine.TransitTime = row.TransitTime.Substring(0, 100);
+                        tariffLine.TransitTime = excelSheetLine.TransitTime.Substring(0, 100);
                     }
                 }
 
                 //Notes
-                if (!string.IsNullOrEmpty(row.Notes))
+                if (!string.IsNullOrEmpty(excelSheetLine.Notes))
                 {
-                    tariffLine.Notes = row.Notes;
+                    tariffLine.Notes = excelSheetLine.Notes;
 
-                    if (row.Notes.Length > 500)
+                    if (excelSheetLine.Notes.Length > 500)
                     {
-                        tariffLine.Notes = row.Notes.Substring(0, 500);
+                        tariffLine.Notes = excelSheetLine.Notes.Substring(0, 500);
                     }
                 }
-
-                myResult.Add(tariffLine);
-                rowIndex++;
             }
 
-            foreach (TariffLinePM item in myResult)
-            {
-                this.SetErrors_LCL(item);
-            }
-
-            return myResult;
+            return tariffLine;
         }
-
-        private List<TariffLinePM> BuildTariffLines_FCL(List<ExcelSheetLine> excelSheetLines)
+        private TariffLinePM CreateTariffLine_FCL(ExcelSheetLine excelSheetLine, int rowIndex)
         {
-            List<TariffLinePM> myResult = new List<TariffLinePM>();
+            TariffLinePM tariffLine = new TariffLinePM();
+            tariffLine.ChangeSetOp = ChangeSetOperation.Insert;
+            tariffLine.TariffId = tariffId;
+            tariffLine.Tenant = tenant;
+            tariffLine.Version = version;
+            tariffLine.StartDate = startDate;
+            tariffLine.ExpirationDate = expirationDate;
+            tariffLine.Index = rowIndex;
 
-            int rowIndex = 0;
-
-            List<FromToPortClass> routs = this.ComputeRoutsList(excelSheetLines);
-
-            foreach (ExcelSheetLine row in excelSheetLines)
+            //From Port
+            Port fromPort = this.GetPortDetails(excelSheetLine.FromPort, tenant);
+            if (fromPort != null)
             {
-                TariffLinePM tariffLine = new TariffLinePM();
-                tariffLine.ChangeSetOp = ChangeSetOperation.Insert;
-                tariffLine.TariffId = tariffId;
-                tariffLine.Tenant = tenant;
-                tariffLine.Version = version;
-                tariffLine.StartDate = startDate;
-                tariffLine.ExpirationDate = expirationDate;
-                tariffLine.Index = rowIndex;
-
-                //From Port
-                Port fromPort = this.GetPortDetails(row.FromPort, tenant);
-                if (fromPort != null)
+                if (fromPort.IsOcean)
                 {
-                    if (fromPort.IsOcean)
-                    {
-                        tariffLine.OriginPortId = fromPort.Id;
-                        tariffLine.OriginPortCode = fromPort.Code;
-                        tariffLine.OriginPortCombinedCode = fromPort.CombinedCode;
-                        tariffLine.OriginPortName = fromPort.EnglishName;
-                    }
-
-                    else
-                    {
-                        tariffLine.OriginPortHasWrongTransMode = true;
-                        tariffLine.OriginPortText = row.FromPort;
-                    }
+                    tariffLine.OriginPortId = fromPort.Id;
+                    tariffLine.OriginPortCode = fromPort.Code;
+                    tariffLine.OriginPortCombinedCode = fromPort.CombinedCode;
+                    tariffLine.OriginPortName = fromPort.EnglishName;
                 }
+
                 else
                 {
-                    tariffLine.OriginPortText = this.TrimTo_20(row.FromPort);
+                    tariffLine.OriginPortHasWrongTransMode = true;
+                    tariffLine.OriginPortText = excelSheetLine.FromPort;
                 }
+            }
+            else
+            {
+                tariffLine.OriginPortText = this.TrimTo_20(excelSheetLine.FromPort);
+            }
 
-                //To Port
-                Port toPort = this.GetPortDetails(row.ToPort, tenant);
-                if (toPort != null)
+            //To Port
+            Port toPort = this.GetPortDetails(excelSheetLine.ToPort, tenant);
+            if (toPort != null)
+            {
+                if (toPort.IsOcean)
                 {
-                    if (toPort.IsOcean)
-                    {
-                        tariffLine.DestinationPortId = toPort.Id;
-                        tariffLine.DestinationPortCode = toPort.Code;
-                        tariffLine.DestinationPortCombinedCode = toPort.CombinedCode;
-                        tariffLine.DestinationPortName = toPort.EnglishName;
-                    }
-
-                    else
-                    {
-                        tariffLine.DestinationPortHasWrongTransMode = true;
-                        tariffLine.DestinationPortText = row.ToPort;
-                    }
+                    tariffLine.DestinationPortId = toPort.Id;
+                    tariffLine.DestinationPortCode = toPort.Code;
+                    tariffLine.DestinationPortCombinedCode = toPort.CombinedCode;
+                    tariffLine.DestinationPortName = toPort.EnglishName;
                 }
+
                 else
                 {
-                    tariffLine.DestinationPortText = this.TrimTo_20(row.ToPort);
+                    tariffLine.DestinationPortHasWrongTransMode = true;
+                    tariffLine.DestinationPortText = excelSheetLine.ToPort;
                 }
+            }
+            else
+            {
+                tariffLine.DestinationPortText = this.TrimTo_20(excelSheetLine.ToPort);
+            }
 
+            if (excelSheetLine != null)
+            {
                 //Price 1
-                if (this.IsNumber(row.Price1))
+                if (this.IsNumber(excelSheetLine.Price1))
                 {
-                    decimal myNumber = Convert.ToDecimal(row.Price1);
+                    decimal myNumber = Convert.ToDecimal(excelSheetLine.Price1);
 
                     if (myNumber >= 0)
                     {
@@ -723,13 +759,13 @@ namespace WebFreight.Web.Helpers
                 }
                 else
                 {
-                    tariffLine.Surcharge1PriceText = this.TrimTo_20(row.Price1);
+                    tariffLine.Surcharge1PriceText = this.TrimTo_20(excelSheetLine.Price1);
                 }
 
                 //Price 2
-                if (this.IsNumber(row.Price2))
+                if (this.IsNumber(excelSheetLine.Price2))
                 {
-                    decimal myNumber = Convert.ToDecimal(row.Price2);
+                    decimal myNumber = Convert.ToDecimal(excelSheetLine.Price2);
 
                     if (myNumber >= 0)
                     {
@@ -743,13 +779,13 @@ namespace WebFreight.Web.Helpers
                 }
                 else
                 {
-                    tariffLine.Surcharge2PriceText = this.TrimTo_20(row.Price2);
+                    tariffLine.Surcharge2PriceText = this.TrimTo_20(excelSheetLine.Price2);
                 }
 
                 //Price 3
-                if (this.IsNumber(row.Price3))
+                if (this.IsNumber(excelSheetLine.Price3))
                 {
-                    decimal myNumber = Convert.ToDecimal(row.Price3);
+                    decimal myNumber = Convert.ToDecimal(excelSheetLine.Price3);
 
                     if (myNumber >= 0)
                     {
@@ -763,13 +799,13 @@ namespace WebFreight.Web.Helpers
                 }
                 else
                 {
-                    tariffLine.Surcharge3PriceText = this.TrimTo_20(row.Price3);
+                    tariffLine.Surcharge3PriceText = this.TrimTo_20(excelSheetLine.Price3);
                 }
 
                 //Price 4
-                if (this.IsNumber(row.Price4))
+                if (this.IsNumber(excelSheetLine.Price4))
                 {
-                    decimal myNumber = Convert.ToDecimal(row.Price4);
+                    decimal myNumber = Convert.ToDecimal(excelSheetLine.Price4);
 
                     if (myNumber >= 0)
                     {
@@ -783,13 +819,13 @@ namespace WebFreight.Web.Helpers
                 }
                 else
                 {
-                    tariffLine.Surcharge4PriceText = this.TrimTo_20(row.Price4);
+                    tariffLine.Surcharge4PriceText = this.TrimTo_20(excelSheetLine.Price4);
                 }
 
                 //Price 5
-                if (this.IsNumber(row.Price5))
+                if (this.IsNumber(excelSheetLine.Price5))
                 {
-                    decimal myNumber = Convert.ToDecimal(row.Price5);
+                    decimal myNumber = Convert.ToDecimal(excelSheetLine.Price5);
 
                     if (myNumber >= 0)
                     {
@@ -803,43 +839,35 @@ namespace WebFreight.Web.Helpers
                 }
                 else
                 {
-                    tariffLine.Surcharge5PriceText = this.TrimTo_20(row.Price5);
+                    tariffLine.Surcharge5PriceText = this.TrimTo_20(excelSheetLine.Price5);
                 }
 
                 //Transit Time
-                if (!string.IsNullOrEmpty(row.TransitTime))
+                if (!string.IsNullOrEmpty(excelSheetLine.TransitTime))
                 {
-                    tariffLine.TransitTime = row.TransitTime;
+                    tariffLine.TransitTime = excelSheetLine.TransitTime;
 
-                    if (row.TransitTime.Length > 100)
+                    if (excelSheetLine.TransitTime.Length > 100)
                     {
-                        tariffLine.TransitTime = row.TransitTime.Substring(0, 100);
+                        tariffLine.TransitTime = excelSheetLine.TransitTime.Substring(0, 100);
                     }
                 }
 
                 //Notes
-                if (!string.IsNullOrEmpty(row.Notes))
+                if (!string.IsNullOrEmpty(excelSheetLine.Notes))
                 {
-                    tariffLine.Notes = row.Notes;
+                    tariffLine.Notes = excelSheetLine.Notes;
 
-                    if (row.Notes.Length > 500)
+                    if (excelSheetLine.Notes.Length > 500)
                     {
-                        tariffLine.Notes = row.Notes.Substring(0, 500);
+                        tariffLine.Notes = excelSheetLine.Notes.Substring(0, 500);
                     }
                 }
-
-                myResult.Add(tariffLine);
-                rowIndex++;
             }
 
-            foreach (TariffLinePM item in myResult)
-            {
-                this.SetErrors_FCL(item);
-            }
-
-            return myResult;
+            return tariffLine;
         }
-        
+
         private void SetErrors_LCL(TariffLinePM item)
         {
             bool error = false;
@@ -1618,15 +1646,16 @@ namespace WebFreight.Web.Helpers
             }
 
             return isNumber;
-        }        
-        private void CreateTariffUploadExcel(int count)
+        }
+        private void CreateTariffUploadExcel()
         {
+            int count = sheet.UsedRange.Rows.Count() - 1;
             if (tariffPM != null && versionPM != null)
             {
                 TariffVersionUploadedExcelRepository excelRepository = new TariffVersionUploadedExcelRepository(tariffContext);
                 IQueryable<TariffVersionUploadedExcel> uploadedExcels = excelRepository.GetAllVersionUploadedExcels(tariffId, version, tenant);
 
-                string documentId = this.UploadExcelFileToStorage(tariffPM.TariffNumber,  tenant);
+                string documentId = this.UploadExcelFileToStorage(tariffPM.TariffNumber, tenant);
 
                 TariffVersionUploadedExcelPM tariffVersionUploadedExcel = new TariffVersionUploadedExcelPM();
                 tariffVersionUploadedExcel.ChangeSetOp = ChangeSetOperation.Insert;
@@ -1643,13 +1672,13 @@ namespace WebFreight.Web.Helpers
         }
         private void SaveTariff(List<TariffLinePM> tariffLinesResult)
         {
-            if(tariffPM != null && versionPM != null)
+            if (tariffPM != null && versionPM != null)
             {
                 tariffPM.ChangeSetOp = ChangeSetOperation.Update;
                 versionPM.ChangeSetOp = ChangeSetOperation.Update;
                 tariffPM.TariffLinesAddedFromExcel = true;
 
-                foreach(TariffLinePM item in versionPM.TariffLines)
+                foreach (TariffLinePM item in versionPM.TariffLines)
                 {
                     item.ChangeSetOp = ChangeSetOperation.Delete;
                 }
@@ -1665,7 +1694,7 @@ namespace WebFreight.Web.Helpers
         {
             Document document = null;
             IBlobService storageservice = ContainerAccessor.Container.Resolve(typeof(IBlobService), "StorageService", new ParameterOverride("", 1)) as IBlobService;
-            
+
             if (memoryStream != null)
             {
                 byte[] ByteData = memoryStream.ToArray();
@@ -1700,32 +1729,68 @@ namespace WebFreight.Web.Helpers
             return document != null ? document.Id : null;
         }
 
-        private List<FromToPortClass> ComputeRoutsList(List<ExcelSheetLine> excelSheetLines)
+        private List<ExcelSheetLine> ComputeRoutsList(List<ExcelSheetLine> excelSheetLines)
         {
-            List<FromToPortClass> routs = new List<FromToPortClass>();
-            List<string> fromMultiPortsList = new List<string>();
-            List<string> toMultiPortsList = new List<string>();
+            List<ExcelSheetLine> routs = new List<ExcelSheetLine>();
 
-            if (!string.IsNullOrEmpty(fromMultiPorts))
+            if (string.IsNullOrEmpty(fromMultiPorts) && string.IsNullOrEmpty(toMultiPorts))
             {
-                fromMultiPortsList = fromMultiPorts.Split(';').ToList();
-            }
-
-            if (!string.IsNullOrEmpty(toMultiPorts))
-            {
-                toMultiPortsList = toMultiPorts.Split(';').ToList();
-            }
-
-            if(fromMultiPortsList.Count > 0)
-            {
-
+                routs = excelSheetLines;
             }
 
             else
             {
-                if (toMultiPortsList.Count > 0)
-                {
+                List<string> multiPortsList = new List<string>();
+                bool isFrom = false;
 
+                if (!string.IsNullOrEmpty(fromMultiPorts))
+                {
+                    multiPortsList = fromMultiPorts.Split(';').ToList();
+                    isFrom = true;
+                }
+
+                else
+                {
+                    if (!string.IsNullOrEmpty(toMultiPorts))
+                    {
+                        multiPortsList = toMultiPorts.Split(';').ToList();
+                        isFrom = false;
+                    }
+                }
+
+                foreach (string port in multiPortsList)
+                {
+                    foreach (ExcelSheetLine excelLine in excelSheetLines)
+                    {
+                        ExcelSheetLine newExcelLine = new ExcelSheetLine()
+                        {
+                            MinPrice = excelLine.MinPrice,
+                            Price1 = excelLine.Price1,
+                            Price2 = excelLine.Price2,
+                            Price3 = excelLine.Price3,
+                            Price4 = excelLine.Price4,
+                            Price5 = excelLine.Price5,
+                            Price6 = excelLine.Price6,
+                            Price7 = excelLine.Price7,
+                            Price8 = excelLine.Price8,
+                            TransitTime = excelLine.TransitTime,
+                            Notes = excelLine.Notes,
+                        };
+
+                        if (isFrom)
+                        {
+                            newExcelLine.FromPort = port;
+                            newExcelLine.ToPort = excelLine.ToPort;
+                        }
+
+                        else
+                        {
+                            newExcelLine.FromPort = excelLine.FromPort;
+                            newExcelLine.ToPort = port;
+                        }
+
+                        routs.Add(newExcelLine);
+                    }
                 }
             }
 
@@ -1760,11 +1825,5 @@ namespace WebFreight.Web.Helpers
         public string Price8 { get; set; }
         public string Notes { get; set; }
         public string TransitTime { get; set; }
-    }
-
-    public class FromToPortClass
-    {
-        public string FromPortCode { get; set; }
-        public string ToPortCode { get; set; }
     }
 }
