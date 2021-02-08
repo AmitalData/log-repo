@@ -6,20 +6,20 @@
   Module="Unknown">
   <SqlScript>
   <![CDATA[
-Create PROCEDURE [dbo].usp_DeleteTicketsRecords
-(
-	@Tenant int
-)
-AS
+  Create PROCEDURE [dbo].usp_DeleteTicketsRecords
+  (
+	  @Tenant int
+  )
+  AS
 
-BEGIN
+  BEGIN
 
-exec [dbo].usp_DoTheTableDeletionSet @Tenant = @Tenant, @TableName = 'InboundEmails'
-exec [dbo].usp_DoTheTableDeletionSet @Tenant = @Tenant, @TableName = 'TicketEscalations'
-exec [dbo].usp_DoTheTableDeletionSet @Tenant = @Tenant, @TableName = 'Correspondences'
-exec [dbo].usp_DoTheTableDeletionSet @Tenant = @Tenant, @TableName = 'Tickets'
+  exec [dbo].usp_DoTheTableDeletionSet @Tenant = @Tenant, @TableName = 'InboundEmails'
+  exec [dbo].usp_DoTheTableDeletionSet @Tenant = @Tenant, @TableName = 'TicketEscalations'
+  exec [dbo].usp_DoTheTableDeletionSet @Tenant = @Tenant, @TableName = 'Correspondences'
+  exec [dbo].usp_DoTheTableDeletionSet @Tenant = @Tenant, @TableName = 'Tickets'
 
-END
+  END
 ]]></SqlScript>
   <OracleScript>
 </OracleScript>
