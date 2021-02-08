@@ -72,7 +72,7 @@ begin
 				end
 				Else
 				begin
-					if @table != @maintable
+					if LOWER(@table) != LOWER(@maintable)
 					begin
 					--if @@NESTLEVEL <5
 					--begin
@@ -92,6 +92,7 @@ begin
 		select * from #tbl;
 	return;
 end
+
 ]]></SqlScript>
   <OracleScript>
 </OracleScript>
