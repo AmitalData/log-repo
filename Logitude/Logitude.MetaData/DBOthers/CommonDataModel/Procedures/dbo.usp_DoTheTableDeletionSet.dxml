@@ -22,7 +22,7 @@ create table  #tmp  (id int, tablename varchar(256), lvl int, ParentTable varcha
 
 
 insert into #tmp 
-exec dbo.usp_SearchForeignkeyTree @table=@TableName, @debug=0;
+exec dbo.usp_SearchForeignkeyTree @table=@TableName, @debug=0, @maintable=@TableName ;
 
 if object_id('tempdb..#NamesAliases') is not null
 	drop table #NamesAliases;
