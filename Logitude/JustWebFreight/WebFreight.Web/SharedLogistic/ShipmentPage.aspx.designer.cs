@@ -7,9 +7,29 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace WebFreight.Web.SharedLogistic {
-    
-    
-    public partial class ShipmentPage {
+namespace WebFreight.Web.SharedLogistic
+{
+
+
+    public partial class ShipmentPage
+    {
+
+        /// <summary>
+        /// TokenInput control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputText TokenInput;
+
+        /// <summary>
+        /// LoginInput control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputText LoginInput;
     }
 }
