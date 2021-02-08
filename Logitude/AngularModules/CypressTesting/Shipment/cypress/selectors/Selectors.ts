@@ -240,4 +240,14 @@ export class Selectors extends RegexSelectors
       public static readonly ARPaymentSave="#ARPayment-Save"
       public static readonly ARPaymentBApprove="#ARPaymentBApprove"
       public static readonly QueryLink= ".QueryLink"
+
+
+      public static readonly NewAttachedHouse = '#NewHouseBtn';
+      public static readonly CopyShipmentButton='#ShipmentBCopyShipment'
+      public static readonly CancelShipmentButton='#ShipmentBCancelShipment'
+      public static readonly OperationalCloseButton='#ShipmentBOperationalClose'
+      public static readonly AccountllyCloseButton='#ShipmentBAccountingClose'
+      public static readonly OperationalReopenButton='#ShipmentBOperationalReopen'
+      public static readonly AccountllyReopenButton='#ShipmentBAccountedReopen'
+      public static readonly ConfirmActionButton='#ConfirmAction'
     }

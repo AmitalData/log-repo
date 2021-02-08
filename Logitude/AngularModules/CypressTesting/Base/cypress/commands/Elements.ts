@@ -1,4 +1,4 @@
-import { URLs } from 'cypress/constants/URLs'
+import { URLs } from '../constants/URLs'
 import * as gr from '../actions/GenerateRandoms'
 
 declare global {
