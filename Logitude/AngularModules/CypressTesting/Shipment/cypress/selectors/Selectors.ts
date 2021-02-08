@@ -2,9 +2,8 @@ import { RegexSelectors } from "../selectors/RegexSelectors";
 
 export class Selectors extends RegexSelectors
 {
+  public static readonly ShipmentMoreList="#MenuButtons"
     public static readonly ShipmentTab = '#SHIP';
-    public static readonly ShipmentMoreList = '#MenuButtons';
-    public static readonly InvoiceMoreList = "#MenuButtons_1";
     public static readonly GeneralTab = '#ShipmentTHGeneral';
     public static readonly OrdersTab = '#ShipmentTHOrders';
     public static readonly PartnersTab = '#ShipmentTHPartners';
@@ -13,6 +12,8 @@ export class Selectors extends RegexSelectors
     public static readonly ReceivablesTab = '#ShipmentTHReceivables';
     public static readonly RoutingsTab = '#ShipmentTHRoutings';
     public static readonly PayablesTab = '#ShipmentTHPayables'
+    public static readonly DocsOutTab= "#ShipmentTHDocsOut"
+    public static readonly DocsInTabb="#ShipmentTHDocsIn"
     public static readonly ShipmentSaveButton = '#Shipment-Save';
     public static readonly ShipmentSearchBar = '#Shipment_Search'; 
     public static readonly ShipmentGrossWeight = '#Shipment_GrossWeightInKG';
@@ -88,6 +89,7 @@ export class Selectors extends RegexSelectors
     public static readonly APInvoiceInvoiceDate = "#date_APInvoice_InvoiceDate";
     public static readonly APInvoicePaymentTerm = "#APInvoice_PaymentTermId";
     public static readonly APInvoiceDueDate = "#date_APInvoice_DueDate";
+    public static readonly APInvoiceVATNumber="#APInvoice_VATNumber"
     public static readonly OkCreateAPInvoiceButton = "#Ok-CreateAPInvoice";
     public static readonly APInvoiceLineCheckBox = "#CheckBox_0_0_LBL";
     public static readonly APInvoiceVatType = "#APInvoice_VatTypeId"
@@ -115,6 +117,8 @@ export class Selectors extends RegexSelectors
     public static readonly APInvoiceVoidButton="#APInvoiceBVoid";
     public static readonly ShipmentDateMaincarriageATD="#calendarbutton_date_Shipment_MainCarriageATD";
     public static readonly ShipmentMainCarriageCarrierId="#Shipment_MainCarriageCarrierId"
+    public static readonly SendMessageButton="#SendMessagebtn"
+    public static readonly EmailSearchInput= ".LogitudeEmailSearchInput"
     //Abed Malakh
     public static readonly NewShipmentToggleButton = "#NEWSHIP .LogitudeToggleButtonContainer";
     public static readonly NewShipmentToggleButtonItem = "#NEWSHIP .LogitudeToggleButtonItem";
@@ -156,4 +160,26 @@ export class Selectors extends RegexSelectors
     public static readonly MasterMainCarriageFromPort = "#Master_MainCarriageFromPortId";
     public static readonly MasterMainCarriageToPort = "#Master_MainCarriageToPortId";
     public static readonly ShipmentCustomer = "#Shipment_CustomerId";
-}
+      //Accounting
+      public static readonly PayableAccountingTab="#PAYABLEAccounting" ;
+      public static readonly ReceivableAccounting="#RECEIVABLEAccounting"
+      public static readonly NewAPPayment="#NewAPPayment"
+      public static readonly APPaymentVendor="#APPayment_VendorId"
+      public static readonly APPaymentMethod="#APPayment_AccountingPaymentMethodId"
+      public static readonly APPaymentAmount ="#APPayment_AmountInPaymentCurrency"
+      public static readonly APPaymentCurrency="#APPayment_PaymentCurrencyId"
+      public static readonly APPaymentCurrencyExchangeRate="#APPayment_PaymentCurrencyExchangeRate"
+      public static readonly APPaymentRegisterDate="#date_APPayment_RegisterDate"
+      public static readonly APPaymentBranch="#APPayment_BranchId"
+      public static readonly APPaymentSaveButton="#APPayment-Save"
+      public static readonly APPaymentApproveButton="#APPaymentBApprove"
+      public static readonly ARPaymentTabInsideShipment="#ARInvoiceTHARPayments"
+      public static readonly NewARPayment="#NewPayment" 
+      public static readonly ARPaymentPartner="#ARPayment_PartnerId"  
+      public static readonly ARPaymentPaymentMethod= "#ARPayment_AccountingPaymentMethodId"
+      public static readonly ARPaymentAmount= "#ARPayment_AmountInPaymentCurrency"
+      public static readonly OkAddARPayment="#ok-AddARPayment"
+      public static readonly ARPaymentSave="#ARPayment-Save"
+      public static readonly ARPaymentBApprove="#ARPaymentBApprove"
+      public static readonly QueryLink= ".QueryLink"
+    }

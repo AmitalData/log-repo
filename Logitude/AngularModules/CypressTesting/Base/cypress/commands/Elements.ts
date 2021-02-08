@@ -17,9 +17,13 @@ namespace Cypress {
         ValidateElementColor(selector: string, expectedcolor: string): Chainable<Element>
         ValidateInputValue(selector: string, value: string): Chainable<Element>
         SelectQuickSearchFirstElement(selector: string, value: string): Chainable<Element>
+        BackButton(contains: string): Chainable<Element>
     }
 }
 }
+Cypress.Commands.add("BackButton", (contains) => {
+    cy.Click(".BackBottonBody", contains);
+})
 Cypress.Commands.add("FillDate", (selector, value) => {
 if(value.toUpperCase()=="TODAY"){
     cy.get(selector).focus().clear().type(".{enter}")

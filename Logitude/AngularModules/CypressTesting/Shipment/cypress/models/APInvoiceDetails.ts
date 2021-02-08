@@ -8,4 +8,5 @@ export interface APInvoiceDetails {
     PaymentTerms:string,
     DueDate: string,
     VATType:string,
+    VatNo:string,
 }
