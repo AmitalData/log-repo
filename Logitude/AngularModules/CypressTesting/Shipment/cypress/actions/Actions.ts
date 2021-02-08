@@ -9,7 +9,8 @@ import { APInvoiceDetails } from "cypress/models/APInvoiceDetails"
 import { ARInvoiceDetails } from "cypress/models/ARInvoiceDetails"
 import * as BaseAssertion from "../../../Base/cypress/actions/Assertion";
 import { PackagesDetails } from "cypress/models/PackagesDetails";
-
+import { APPaymentDetails } from "cypress/models/APPaymentDetails";
+import { ARPaymentDetails } from "cypress/models/ARPaymentDetails"
 export function OpenNewShipmentWizard(shipmentLevel: string) {
     cy.Click(Selectors.NewShipmentToggleButton, null)
     cy.Click(Selectors.NewShipmentToggleButtonItem, shipmentLevel)
@@ -29,7 +30,7 @@ export function CreateShipment(shipmentLevel: string) {
     cy.Click(createSelector, null)
 }
 
-export function UpdateShipment(saveButtonSelector: string, saveButtonSelectorContains?: string ) {
+export function UpdateShipment(saveButtonSelector: string, saveButtonSelectorContains?: string) {
     cy.DefineRequestWait("PUT", "**/shipment", "WaitPutShipmentRequest")
     cy.Click(saveButtonSelector, saveButtonSelectorContains)
 }
@@ -127,17 +128,20 @@ export function FillHouseInShipmentsTab(Shipper: string) {
     cy.SelectLogLovElement(Selectors.ShipmentCustomer, true, Shipper)
 }
 
-export function FillReceivablesTab(receivableDetails: ReceivableDetails) {
+export function FillReceivablesTab(receivableDetails: ReceivableDetails[]) {
     cy.Click(Selectors.ReceivablesTab, null)
-    cy.Click(Selectors.AddNewReceivableLine, null)
-    cy.SelectLogLovElement(Selectors.ReceivableChargesType, true, receivableDetails.ChargesType)
-    cy.SelectLogLovElement(Selectors.ReceivableMeasurement, true, receivableDetails.UOM)
-    cy.get(Selectors.ReceivableQuantity).type(receivableDetails.Quantity.toString());
-    cy.get(Selectors.ReceivableUnitPrice).type(receivableDetails.UnitPrice.toString());
-    cy.SelectLogLovElement(Selectors.ReceivableCurrency, true, receivableDetails.Currency)
-    cy.get(Selectors.ShipmentReceivableRate).clear().type(receivableDetails.ExchangeRate.toString());
-    cy.Click(Selectors.AddReceivableOkButton, null)
+    for (let i = 0; i < receivableDetails.length; i++) {
+        cy.Click(Selectors.AddNewReceivableLine, null)
+        cy.SelectLogLovElement(Selectors.ReceivableChargesType, true, receivableDetails[i].ChargesType)
+        cy.SelectLogLovElement(Selectors.ReceivableMeasurement, true, receivableDetails[i].UOM)
+        cy.get(Selectors.ReceivableQuantity).type(receivableDetails[i].Quantity.toString());
+        cy.get(Selectors.ReceivableUnitPrice).type(receivableDetails[i].UnitPrice.toString());
+        cy.SelectLogLovElement(Selectors.ReceivableCurrency, true, receivableDetails[i].Currency)
+        cy.get(Selectors.ShipmentReceivableRate).clear().type(receivableDetails[i].ExchangeRate.toString());
+        cy.Click(Selectors.AddReceivableOkButton, null)
+    }
 }
+
 
 export function FillPickupRouting() {
     cy.Click(Selectors.RoutingsTab, null)
@@ -220,12 +224,8 @@ export function FillPayablesTab(payableDetails: PayableDetails) {
     cy.Click(Selectors.AddNewPayableLine, null)
     cy.SelectLogLovElement(Selectors.ShipmentPayableChargesType, true, payableDetails.ChargesType);
     cy.SelectLogLovElement(Selectors.ShipmentPayableMeasurement, true, payableDetails.UOM)
-    if (payableDetails.Quantity) {
-        cy.FillLogTextBox(Selectors.ShipmentPayableQuantity,payableDetails.Quantity.toString());
-    }
-    if (payableDetails.UnitPrice) {
-        cy.FillLogTextBox(Selectors.ShipmentPayableUnitPrice,payableDetails.UnitPrice.toString());
-    }
+    cy.FillLogTextBox(Selectors.ShipmentPayableQuantity, payableDetails.Quantity.toString());
+    cy.FillLogTextBox(Selectors.ShipmentPayableUnitPrice, payableDetails.UnitPrice.toString());
     cy.SelectLogLovElement(Selectors.ShipmentPayableCurrency, true, payableDetails.Currency)
     cy.Click(Selectors.AddPayableOkButton, null)
 }
@@ -254,15 +254,16 @@ export function CopyShipment(shipmentLevel: string) {
 export function FillAPInvoiceDetails(aPInvoiceDetails: APInvoiceDetails) {
     var generatedInvoiceNumber = "AP" + gr.GenerateRandomNumber(10000, 99999).toString();
     cy.SelectLogLovElement(Selectors.APInvoiceVendor, false, aPInvoiceDetails.Vendor);
-    cy.FillLogTextBox(Selectors.APInvoiceInvoiceNumber,generatedInvoiceNumber)
-    cy.FillLogTextBox(Selectors.APInvoiceAmountInInvoice,aPInvoiceDetails.InvoiceAmount.toString());
+    cy.FillLogTextBox(Selectors.APInvoiceInvoiceNumber, generatedInvoiceNumber)
+    cy.FillLogTextBox(Selectors.APInvoiceAmountInInvoice, aPInvoiceDetails.InvoiceAmount.toString());
     cy.SelectLogLovElement(Selectors.APInvoiceInvoiceCurrency, true, aPInvoiceDetails.InvoiceCurrency);
-    cy.FillLogTextBox(Selectors.APInvoiceInvoiceExchangeRate,aPInvoiceDetails.InvoiceExchangeRate.toString());
+    cy.FillLogTextBox(Selectors.APInvoiceInvoiceExchangeRate, aPInvoiceDetails.InvoiceExchangeRate.toString());
     cy.FillDate(Selectors.APInvoiceInvoiceDate, aPInvoiceDetails.InvoiceDate)
     cy.SelectLogLovElement(Selectors.APInvoicePaymentTerm, true, aPInvoiceDetails.PaymentTerms);
     cy.FillDate(Selectors.APInvoiceDueDate, aPInvoiceDetails.DueDate)
+    cy.FillLogTextBox(Selectors.APInvoiceVATNumber, aPInvoiceDetails.VatNo.toString())
     cy.Click(Selectors.OkCreateAPInvoiceButton, null);
-    cy.Click(Selectors.APInvoiceLineCheckBox, null)
+    cy.Click(BaseSelectors.CheckBoxLine, null)
     cy.SelectLogLovElement(Selectors.APInvoiceVatType, true, aPInvoiceDetails.VATType)
     cy.Click(Selectors.VatTypeApplyToAll, null)
 }
@@ -278,20 +279,19 @@ export function APApproveInvoice() {
 }
 
 export function APInvoiceCancelApproval() {
-    cy.Click(Selectors.InvoiceMoreList, null)
+    cy.Click(BaseSelectors.MoreList, null)
     cy.DefineRequestWait("PUT", "**/apinvoices", "WaitPutAPInvoicesRequest")
     cy.Click(Selectors.APInvoiceCancelApprovalButton, null)
 }
 
 export function VoidAPInvoice() {
-    cy.Click(Selectors.InvoiceMoreList, null)
+    cy.Click(BaseSelectors.MoreList, null)
     cy.Click(Selectors.APInvoiceVoidButton, null)
     cy.DefineRequestWait("PUT", "**/apinvoices", "WaitPutAPInvoicesRequest")
     cy.Click(Selectors.ConfirmWindowYes, null);
 }
 
 export function FillARInvoiceDetails(aRInvoiceDetails: ARInvoiceDetails) {
-    var generatedInvoiceNumber = "AR" + gr.GenerateRandomNumber(10000, 99999).toString();
     cy.get(".ComboBox").click();
     cy.get(".FillParent").find(".TextTrimming").contains("Customer").click()
     cy.SelectLogLovElement(Selectors.ARInvoiceInvoiceCurrency, true, aRInvoiceDetails.InvoiceCurrency)
@@ -317,27 +317,100 @@ export function ARApproveInvoice() {
 }
 
 export function SetAsSentARInvoice() {
-    cy.Click(Selectors.InvoiceMoreList, null)
+    cy.Click(BaseSelectors.MoreList, null)
     cy.Click(Selectors.ARInvoiceSetAsSentButton, null)
     cy.DefineRequestWait("PUT", "**/arinvoices", "WaitPutARInvoicesRequest")
     cy.Click("button", "Confirm");
 }
 
 export function VoidARInvoice() {
-    cy.Click(Selectors.InvoiceMoreList, null)
+    cy.Click(BaseSelectors.MoreList, null)
     cy.Click(Selectors.ARInvoiceVoidButton, null)
     cy.DefineRequestWait("PUT", "**/arinvoices", "WaitPutARInvoicesRequest")
     cy.Click(Selectors.ConfirmWindowYes, null);
 }
 
 export function CancelDraftARInvoice() {
-    cy.Click(Selectors.InvoiceMoreList, null)
+    cy.Click(BaseSelectors.MoreList, null)
     cy.DefineRequestWait("PUT", "**/arinvoices", "WaitPutARInvoicesRequest")
     cy.Click(Selectors.ARInvoiceCancelDraftButton, null)
     cy.Click(Selectors.ConfirmWindowYes, null)
 }
 
+export function FillAPPayment(aPPaymentDetails: APPaymentDetails, invoiceNumber: string) {
+    cy.Click(BaseSelectors.AccountingMenu, null)
+    cy.Click(Selectors.PayableAccountingTab, null)
+    cy.Click(Selectors.NewAPPayment, null)
+    cy.SelectLogLovElement(Selectors.APPaymentVendor, false, aPPaymentDetails.Vendor)
+    cy.SelectLogLovElement(Selectors.APPaymentMethod, true, aPPaymentDetails.PaymentMethod)
+    cy.FillLogTextBox(Selectors.APPaymentAmount, aPPaymentDetails.PaymentAmount.toString())
+    cy.SelectLogLovElement(Selectors.APPaymentCurrency, true, aPPaymentDetails.PaymentCurrency)
+    cy.FillLogTextBox(Selectors.APPaymentCurrencyExchangeRate, aPPaymentDetails.Rate.toString())
+    cy.FillDate(Selectors.APPaymentRegisterDate, aPPaymentDetails.RegisterDate)
+    cy.SelectLogLovElement(Selectors.APPaymentBranch, true, aPPaymentDetails.Branch)
+    cy.DefineRequestWait("GET", "**/apinvoiceviews/**", "WaitAPInvoiceView")
+    cy.FillLogTextBox(BaseSelectors.SearchField, invoiceNumber);
+    BaseAssertion.AssertStatusCode("WaitAPInvoiceView", 200)
+    cy.Click(BaseSelectors.CheckBoxLine, null)
 
+}
+export function SaveAPPayment (){
+    cy.DefineRequestWait("POST", "**/appayments", "WaitPostAPPayments")
+    cy.Click(Selectors.APPaymentSaveButton, null)
+}
+export function ApproveAPPayment(){
+    cy.DefineRequestWait("PUT", "**/appayments", "WaitPutAPPayments")
+    cy.Click(Selectors.APPaymentApproveButton, null)
+}
+export function PayAPInvoice() {
+SaveAPPayment()
+ApproveAPPayment()
+   
+}
+export function FillARPaymentDetails(aRPaymentDetails: ARPaymentDetails) {
+    cy.SelectLogLovElement(Selectors.ARPaymentPartner, false, aRPaymentDetails.Partner)
+    cy.SelectLogLovElement(Selectors.ARPaymentPaymentMethod, true, aRPaymentDetails.PaymentMethod)
+    cy.FillLogTextBox(Selectors.ARPaymentAmount, aRPaymentDetails.PaymentAmount)
+    cy.Click(Selectors.OkAddARPayment, null)
+}
+export function SaveARPayment() {
+    cy.DefineRequestWait("POST", "**/arpayments", "WaitPostARPayments")
+    cy.Click(Selectors.ARPaymentSave, null)
+    BaseAssertion.AssertStatusCode("WaitPostARPayments", 200)
+}
+export function ApproveARPayment() {
+    cy.DefineRequestWait("PUT", "**/arpayments", "WaitPutARPayments")
+    cy.Click(Selectors.ARPaymentBApprove, null)
+}
+export function PayARInvoice() {
+    SaveARPayment()
+    ApproveARPayment()
+}
+export function NewARPaymentFromAccounting(aRPaymentDetails: ARPaymentDetails, invoiceNumber: string) {
+    cy.Click(BaseSelectors.AccountingMenu, null)
+    cy.Click(Selectors.ReceivableAccounting, null)
+    cy.Click(Selectors.QueryLink, "New Payment")
+    FillARPaymentDetails(aRPaymentDetails)
+    cy.DefineRequestWait("GET", "**/arinvoiceviews/**", "WaitARInvoiceviews")
+    cy.FillLogTextBox(BaseSelectors.SearchField, invoiceNumber);
+    BaseAssertion.AssertStatusCode("WaitARInvoiceviews", 200)
+    cy.wait(10000)
+    cy.Click(BaseSelectors.CheckBoxLine, null)
+
+}
+export function SendDocs(){
+    cy.Click(Selectors.DocsOutTab,null)
+    cy.FillLogTextBox(BaseSelectors.SearchField,"Flight Update")
+    cy.get("#FU-L-DocsOut").click()
+    cy.get("#FU-S-DocsOut").click()
+    cy.FillLogTextBox(Selectors.EmailSearchInput,"abd@logitudeworld.com{enter}")
+cy.DefineRequestWait("POST","**/HtmlEditor/**","WaitSendDocs")
+cy.Click(Selectors.SendMessageButton,null)
+}
+export function DeleteAttachment(){
+cy.DefineRequestWait("GET","**/DocumentsFilingExtended/**","WaitDelete")
+cy.contains("Delete Attachment").click()
+}
 function AddPartner(partnerTypeId: string, partnerFieldId: string, partner?: string) {
     cy.Click("label", "Add Partners")
 
@@ -376,23 +449,23 @@ function FillMainFields(shipmentDetails: ShipmentDetails) {
 }
 
 
-function FillDirection(shipmentDetails: ShipmentDetails){
+function FillDirection(shipmentDetails: ShipmentDetails) {
     let directionRadioSelector = Selectors.DirectionRadio(shipmentDetails.Direction);
     cy.ClickRadio(directionRadioSelector);
 }
 
 
-function FillTransportMode(shipmentDetails: ShipmentDetails){
+function FillTransportMode(shipmentDetails: ShipmentDetails) {
     let transportModeRadioSelector = Selectors.TransportModeRadio(shipmentDetails.TransportMode);
     cy.ClickRadio(transportModeRadioSelector);
 }
 
-function FillShipmentType(shipmentDetails: ShipmentDetails){
-    if(shipmentDetails.ShipmentType){
+function FillShipmentType(shipmentDetails: ShipmentDetails) {
+    if (shipmentDetails.ShipmentType) {
         let shipmentTypeRadioSelector: string;
-        if(IsGroupage(shipmentDetails.ShipmentType)){
+        if (IsGroupage(shipmentDetails.ShipmentType)) {
             shipmentTypeRadioSelector = Selectors.GroupageShipmentTypeRadio(shipmentDetails.TransportMode);
-        }else{
+        } else {
             shipmentTypeRadioSelector = Selectors.ShipmentTypeRadio(shipmentDetails.ShipmentType);
         }
         cy.ClickRadio(shipmentTypeRadioSelector);
