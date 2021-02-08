@@ -6,6 +6,7 @@ using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Accounting.Data.Repositories;
 using Logitude.Accounting.Def.EntityPMs;
 using Simplog.Data.CommonDataModel.Repositories;
+using Simplog.Data.InvoiceModel;
 using Simplog.Data.InvoiceModel.EntityPOCOs;
 using Simplog.Data.InvoiceModel.Repositories;
 using Simplog.Server.Infrastructure;
@@ -94,6 +95,52 @@ namespace Logitude.Accounting.BL.CoreBL
                         throw ;
                     }
                     
+
+                }
+            }
+
+
+            Log(".........................");
+            Log(".........................");
+            Log(">>> cheques recalculated successfully for giver tenants");
+
+        }
+        public void RecalculateAllBilltoChequesTotals(List<string> Tenants)
+        {
+            Log(">>> fixing cheques totals");
+
+            foreach (var tenantStr in Tenants)
+            {
+                using (TransactionScope scope = TransactionFactory.GetTransaction())
+                {
+                    try
+                    {
+                        Log("-----------------------------------------------------------------");
+                        Log("   >>> fixing for tenant " + tenantStr);
+                        var tenant = Convert.ToInt32(tenantStr);
+
+                        // get billto glaccounts
+                        IAccountingContext MyContext = AccountingContext.GetContext(tenant);
+                        IInvoiceContext invoiceContext = InvoiceContext.GetContext(tenant);
+
+                        var billToAccounts = (from cheque in invoiceContext.ARPaymentChequeReplicas
+                                       join payment in invoiceContext.ARPayments on cheque.PaymentId equals payment.Id
+                                       where cheque.Tenant == tenant
+                                       select payment.BillToId).Distinct().ToList();
+
+                        foreach (var billTo in billToAccounts)
+                            CalculateBilltoFutureCheques(tenant, billTo);
+
+                        scope.Complete();
+                        Log("   >>>>> tenant (" + tenantStr + ") cheques recalculated successfully");
+                    }
+                    catch (Exception ex)
+                    {
+                        Log("*FAILED* Tenant(" + tenantStr + ")" + ex.Message);
+
+                        throw;
+                    }
+
 
                 }
             }
@@ -270,7 +317,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
         private void writeChequesOnFile()
         {
-            var fileName = "cheques.csv";
+            var fileName = @"d:\cheques.csv";
             // Check if file already exists. If yes, delete it.     
             if (File.Exists(fileName))
             {

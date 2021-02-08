@@ -47,6 +47,7 @@ namespace Logitude.Update
             this.logTextBox = new System.Windows.Forms.TextBox();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.countLbl = new System.Windows.Forms.Label();
+            this.button4 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
@@ -81,9 +82,9 @@ namespace Logitude.Update
             // dataGridView1
             // 
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(23, 118);
+            this.dataGridView1.Location = new System.Drawing.Point(23, 161);
             this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(481, 464);
+            this.dataGridView1.Size = new System.Drawing.Size(481, 421);
             this.dataGridView1.TabIndex = 3;
             // 
             // chequeIdTextBox
@@ -209,11 +210,22 @@ namespace Logitude.Update
             this.countLbl.Size = new System.Drawing.Size(0, 13);
             this.countLbl.TabIndex = 8;
             // 
+            // button4
+            // 
+            this.button4.Location = new System.Drawing.Point(228, 97);
+            this.button4.Name = "button4";
+            this.button4.Size = new System.Drawing.Size(241, 26);
+            this.button4.TabIndex = 9;
+            this.button4.Text = "Recalculate All Billto futurecheques";
+            this.button4.UseVisualStyleBackColor = true;
+            this.button4.Click += new System.EventHandler(this.button4_Click);
+            // 
             // RedeemedCheques
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1080, 611);
+            this.Controls.Add(this.button4);
             this.Controls.Add(this.countLbl);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.button1);
@@ -257,5 +269,6 @@ namespace Logitude.Update
         private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Label countLbl;
+        private System.Windows.Forms.Button button4;
     }
 }
