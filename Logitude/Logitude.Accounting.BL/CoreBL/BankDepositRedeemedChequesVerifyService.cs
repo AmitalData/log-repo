@@ -117,6 +117,10 @@ namespace Logitude.Accounting.BL.CoreBL
                     {
                         Log("-----------------------------------------------------------------");
                         Log("   >>> fixing for tenant " + tenantStr);
+
+                        if (string.IsNullOrWhiteSpace(tenantStr))
+                            return;
+
                         var tenant = Convert.ToInt32(tenantStr);
 
                         // get billto glaccounts
