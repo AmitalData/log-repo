@@ -350,18 +350,18 @@ export function FillAPPayment(aPPaymentDetails: APPaymentDetails, invoiceNumber:
     cy.Click(BaseSelectors.CheckBoxLine, null)
 
 }
-export function SaveAPPayment (){
+export function SaveAPPayment() {
     cy.DefineRequestWait("POST", "**/appayments", "WaitPostAPPayments")
     cy.Click(Selectors.APPaymentSaveButton, null)
 }
-export function ApproveAPPayment(){
+export function ApproveAPPayment() {
     cy.DefineRequestWait("PUT", "**/appayments", "WaitPutAPPayments")
     cy.Click(Selectors.APPaymentApproveButton, null)
 }
 export function PayAPInvoice() {
-SaveAPPayment()
-ApproveAPPayment()
-   
+    SaveAPPayment()
+    ApproveAPPayment()
+
 }
 export function FillARPaymentDetails(aRPaymentDetails: ARPaymentDetails) {
     cy.FillLogLov(Selectors.ARPaymentPartner, aRPaymentDetails.Partner, false)
@@ -394,19 +394,20 @@ export function NewARPaymentFromAccounting(aRPaymentDetails: ARPaymentDetails, i
     cy.Click(BaseSelectors.CheckBoxLine, null)
 
 }
-export function SendDocs(){
-    cy.Click(Selectors.DocsOutTab,null)
-    cy.FillLogTextBox(BaseSelectors.SearchField,"Flight Update")
+export function SendDocs() {
+    cy.Click(Selectors.DocsOutTab, null)
+    cy.FillLogTextBox(BaseSelectors.SearchField, "Flight Update")
     cy.get("#FU-L-DocsOut").click()
     cy.get("#FU-S-DocsOut").click()
-    cy.FillLogTextBox(Selectors.EmailSearchInput,"abd@logitudeworld.com{enter}")
-cy.DefineRequestWait("POST","**/HtmlEditor/**","WaitSendDocs")
-cy.Click(Selectors.SendMessageButton,null)
+    cy.FillLogTextBox(Selectors.EmailSearchInput, "abd@logitudeworld.com{enter}")
+    cy.DefineRequestWait("POST", "**/HtmlEditor/**", "WaitSendDocs")
+    cy.Click(Selectors.SendMessageButton, null)
 }
-export function DeleteAttachment(){
-cy.DefineRequestWait("GET","**/DocumentsFilingExtended/**","WaitDelete")
-cy.contains("Delete Attachment").click()
+export function DeleteAttachment() {
+    cy.DefineRequestWait("GET", "**/DocumentsFilingExtended/**", "WaitDelete")
+    cy.contains("Delete Attachment").click()
 }
+
 function AddPartner(partnerTypeId: string, partnerFieldId: string, partner?: string) {
     cy.Click("label", "Add Partners")
 
