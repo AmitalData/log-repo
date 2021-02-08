@@ -471,7 +471,7 @@ export class TariffCharge extends BaseComponent{
     SetUIProperties() {
         var isPriceRequired: boolean = false;
         if (this.IsChargeChecked) {
-            if (AppTool.IsNullOrZero(this.NewPrice)) {
+            if (AppTool.IsNullOrEmpty(this.NewPrice)) {
                 isPriceRequired = true;
             }
         }
