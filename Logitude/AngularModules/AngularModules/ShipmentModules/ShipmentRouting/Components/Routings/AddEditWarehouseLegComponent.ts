@@ -810,23 +810,31 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
         if (this.IsCFSWarehouse
             && date != null && date != undefined
             && !AppTool.IsNullOrEmpty(this.EntityPM.ChargeStorageCurrencyId)
-            && !AppTool.IsNullOrZero(this.StorageDays)
-            && this.StorageDays > this.EntityPM.WarehouseStorageFreeDays
+            && !AppTool.IsNullOrZero(this.StorageDays)            
             && this.ChargeStorage
             && this.EntityPM.ShipmentStoragePricings.length > 0) {
 
-            if (this.PricesChanged) {
-                if (storageReceivable) {
-                    this.UpdateStorageReceivable(storageReceivable);
+            if (this.StorageDays > this.EntityPM.WarehouseStorageFreeDays) {
+                if (this.PricesChanged) {
+                    if (storageReceivable) {
+                        this.UpdateStorageReceivable(storageReceivable);
+                    }
+
+                    else {
+                        this.CreateReceivable();
+                    }
                 }
 
                 else {
-                    this.CreateReceivable();
+                    if (storageReceivable == null) {
+                        this.CreateReceivable();
+                    }
                 }
             }
 
             else {
-                if (storageReceivable == null) {
+                var invoicedStorageReceivable: ShipmentReceivablePM = this.EntityPM.ShipmentReceivables.filter(d => d.ChargesTypeCode == "ISTOR" && d.MeasurementCode == "STFE" && !AppTool.IsNullOrEmpty(d.ARInvoiceId))[0];
+                if (invoicedStorageReceivable) {
                     this.CreateReceivable();
                 }
             }
