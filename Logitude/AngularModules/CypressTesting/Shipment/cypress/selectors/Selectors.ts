@@ -1,11 +1,12 @@
 import { RegexSelectors } from '../selectors/RegexSelectors';
 
-export class Selectors extends RegexSelectors {
-
+export class Selectors extends RegexSelectors
+{
     //#region Shared
+    public static readonly ShipmentMoreList="#MenuButtons"
     public static readonly ShipmentTab = '#SHIP';
     public static readonly ShipmentSearchBar = '#Shipment_Search';
-    public static readonly ShipmentMoreList = '#MenuButtons';
+    //public static readonly ShipmentMoreList = '#MenuButtons';
     public static readonly InvoiceMoreList = '#MenuButtons_1';
     public static readonly VatTypeApplyToAll = '#VATApplyToAll';
     public static readonly ConfirmWindowYes = '#ConfirmWindow_Yes_0';
@@ -34,6 +35,10 @@ export class Selectors extends RegexSelectors {
     public static readonly ReceivablesTab = '#ShipmentTHReceivables';
     public static readonly RoutingsTab = '#ShipmentTHRoutings';
     public static readonly PayablesTab = '#ShipmentTHPayables'
+    public static readonly DocsOutTab= "#ShipmentTHDocsOut"
+    public static readonly DocsInTabb="#ShipmentTHDocsIn"
+    //public static readonly ShipmentSaveButton = '#Shipment-Save';
+    //public static readonly ShipmentSearchBar = '#Shipment_Search'; 
     //#endregion
     //#region General tab
     public static readonly ShipmentGrossWeight = '#Shipment_GrossWeightInKG';
@@ -132,54 +137,107 @@ export class Selectors extends RegexSelectors {
     public static readonly ShipmentPayableCurrency = '#ShipmentPayable_CurrencyId';
     public static readonly ShipmentPayableUnitPrice = '#ShipmentPayable_UnitPrice';
     public static readonly ShipmentPayableQuantity = '#ShipmentPayable_Quantity';
-    //#endregion
-    //#region Shipment tab fields
-    public static readonly NewAttachedHouse = '#NewHouseBtn';
-    public static readonly ShipmentCustomer = '#Shipment_CustomerId';
-    //#endregion 
-    //#region APInvoice fields
-    public static readonly APInvoiceVendor = '#APInvoice_VendorId';
-    public static readonly APInvoiceInvoiceNumber = '#APInvoice_InvoiceNumber';
-    public static readonly APInvoiceAmountInInvoice = '#APInvoice_AmountInInvoiceCurrency';
-    public static readonly APInvoiceInvoiceCurrency = '#APInvoice_InvoiceCurrencyId';
-    public static readonly APInvoiceInvoiceExchangeRate = '#APInvoice_InvoiceCurrencyExchangeRate';
-    public static readonly APInvoiceInvoiceDate = '#date_APInvoice_InvoiceDate';
-    public static readonly APInvoicePaymentTerm = '#APInvoice_PaymentTermId';
-    public static readonly APInvoiceDueDate = '#date_APInvoice_DueDate';
-    public static readonly APInvoiceLineCheckBox = '#CheckBox_0_0_LBL';
-    public static readonly APInvoiceVatType = '#APInvoice_VatTypeId'
-    public static readonly APInvoiceVoidButton = '#APInvoiceBVoid';
-    public static readonly APInvoiceSaveButton = '#APInvoiceBSave';
-    public static readonly APInvoiceApproveButton = '#APInvoiceBApprove';
-    public static readonly APInvoiceCancelApprovalButton = '#APInvoiceBCancelApproval';
-    public static readonly OkCreateAPInvoiceButton = '#Ok-CreateAPInvoice';
-    public static readonly ReceiveInvoiceButton = '#ReceiveInvoice';
-    //#endregion
-    //#region ARInvoice fields
-    public static readonly ARInvoiceBranch = '#ARInvoice_BranchId';
-    public static readonly ARInvoiceVatNumber = '#ARInvoice_VatNumber';
-    public static readonly ARInvoiceDueDate = '#date_ARInvoice_DueDate';
-    public static readonly ARInvoicePaymentTerm = '#ARInvoice_PaymentTermId';
-    public static readonly ARInvoiceInvoiceDate = '#date_ARInvoice_InvoiceDate';
-    public static readonly ARInvoiceInvoiceCurrency = '#ARInvoice_InvoiceCurrencyId';
-    public static readonly ARInvoiceVatType = '#ARInvoice_VatTypeId';
-    public static readonly ARInvoiceApproveButton = '#ARInvoiceBApprove';
-    public static readonly ARInvoiceSetAsSentButton = '#ARInvoiceBSetAsSent';
-    public static readonly ARInvoiceSaveButton = '#ARInvoiceBSaveAsDraft';
-    public static readonly ARInvoiceVoidButton = '#ARInvoiceBVoid';
-    public static readonly ARInvoiceCancelDraftButton = '#ARInvoiceBCancelDraft';
-    public static readonly CreateCreditNoteARInvoiceButton = '#CreateCreditNote';
-    public static readonly CreateARInvoiceButton = '#CreateARInvoice';
-    public static readonly ARInvoiceExchangeRate = '#ARInvoice_InvoiceCurrencyExchangeRate';
-    public static readonly OkCreateARInvoiceButton = '#Ok-CreateARInvoice';
-    //#endregion
-    //#region Shipment operations and actions
-    public static readonly CopyShipmentButton = '#ShipmentBCopyShipment';
-    public static readonly CancelShipmentButton = '#ShipmentBCancelShipment';
-    public static readonly OperationalCloseButton = '#ShipmentBOperationalClose';
-    public static readonly AccountllyCloseButton = '#ShipmentBAccountingClose';
-    public static readonly OperationalReopenButton = '#ShipmentBOperationalReopen';
-    public static readonly AccountllyReopenButton = '#ShipmentBAccountedReopen';
-    public static readonly ConfirmActionButton = '#ConfirmAction';
-    //#endregion
-}
+   // public static readonly ShipmentReceivableRate = "#ShipmentReceivable_Rate"
+    public static readonly ReceiveInvoiceButton = "#ReceiveInvoice";
+    public static readonly APInvoiceVendor = "#APInvoice_VendorId";
+    public static readonly APInvoiceInvoiceNumber = "#APInvoice_InvoiceNumber";
+    public static readonly APInvoiceAmountInInvoice = "#APInvoice_AmountInInvoiceCurrency";
+    public static readonly APInvoiceInvoiceCurrency = "#APInvoice_InvoiceCurrencyId";
+    public static readonly APInvoiceInvoiceExchangeRate = "#APInvoice_InvoiceCurrencyExchangeRate"
+    public static readonly APInvoiceInvoiceDate = "#date_APInvoice_InvoiceDate";
+    public static readonly APInvoicePaymentTerm = "#APInvoice_PaymentTermId";
+    public static readonly APInvoiceDueDate = "#date_APInvoice_DueDate";
+    public static readonly APInvoiceVATNumber="#APInvoice_VATNumber"
+    public static readonly OkCreateAPInvoiceButton = "#Ok-CreateAPInvoice";
+    public static readonly APInvoiceLineCheckBox = "#CheckBox_0_0_LBL";
+    public static readonly APInvoiceVatType = "#APInvoice_VatTypeId"
+   // public static readonly VatTypeApplyToAll = "#VATApplyToAll"
+    public static readonly APInvoiceSaveButton = "#APInvoiceBSave"
+    public static readonly APInvoiceApproveButton = "#APInvoiceBApprove"
+    public static readonly APInvoiceCancelApprovalButton = "#APInvoiceBCancelApproval";
+    public static readonly ARInvoiceBranch = "#ARInvoice_BranchId"
+    public static readonly ARInvoiceVatNumber = "#ARInvoice_VatNumber"
+    public static readonly ARInvoiceDueDate = "#date_ARInvoice_DueDate"
+    public static readonly ARInvoicePaymentTerm = "#ARInvoice_PaymentTermId"
+    public static readonly ARInvoiceInvoiceDate = "#date_ARInvoice_InvoiceDate"
+    public static readonly ARInvoiceInvoiceCurrency = "#ARInvoice_InvoiceCurrencyId"
+    public static readonly CreateCreditNoteARInvoiceButton = "#CreateCreditNote"
+    public static readonly CreateARInvoiceButton = "#CreateARInvoice"
+    public static readonly ARInvoiceExchangeRate = "#ARInvoice_InvoiceCurrencyExchangeRate"
+    public static readonly OkCreateARInvoiceButton = "#Ok-CreateARInvoice"
+    public static readonly ARInvoiceVatType = "#ARInvoice_VatTypeId"
+    public static readonly ARInvoiceApproveButton= "#ARInvoiceBApprove";
+    public static readonly ARInvoiceSetAsSentButton="#ARInvoiceBSetAsSent"
+    public static readonly ARInvoiceSaveButton ="#ARInvoiceBSaveAsDraft"
+    public static readonly ARInvoiceVoidButton="#ARInvoiceBVoid";
+    public static readonly ARInvoiceCancelDraftButton="#ARInvoiceBCancelDraft"
+    //public static readonly ConfirmWindowYes= "#ConfirmWindow_Yes_0"
+    public static readonly APInvoiceVoidButton="#APInvoiceBVoid";
+   // public static readonly ShipmentDateMaincarriageATD="#calendarbutton_date_Shipment_MainCarriageATD";
+   // public static readonly ShipmentMainCarriageCarrierId="#Shipment_MainCarriageCarrierId"
+    public static readonly SendMessageButton="#SendMessagebtn"
+    public static readonly EmailSearchInput= ".LogitudeEmailSearchInput"
+    //Abed Malakh
+    // public static readonly NewShipmentToggleButton = "#NEWSHIP .LogitudeToggleButtonContainer";
+    // public static readonly NewShipmentToggleButtonItem = "#NEWSHIP .LogitudeToggleButtonItem";
+    // public static readonly CreateShipmentButton = "#ShipmentCreatebtn";
+    // public static readonly CreateMasterShipmentButton = "#MasterCreatebtn";
+    // public static readonly AddShipperButton = "#SHIPR";
+    // public static readonly AddConsigneeButton = "#CONSI";
+    // public static readonly AddAgentButton = "#AGENT";
+    // public static readonly AddIssuingCarrierAgentButton = "#ISSAG";
+    // public static readonly AddCustomsAgentExportButton = "#CSAEX";
+    // public static readonly AddCustomsAgentImportButton = "#CSAIM";
+    // public static readonly AddNotify1Button = "#NOTF1";
+    // public static readonly AddNotify2Button = "#NOTF2";
+    // public static readonly AddShipperNotExporterButton = "#SHPNT";
+    // public static readonly AddConsigneeNotImporterButton = "#CONNT";
+    // public static readonly AddFreightForwarderButton = "#FRTFR";
+    // public static readonly AddColoaderButton = "#COLOD";
+    // public static readonly AddCustomClearancePointButton = "#CLERN";
+    // public static readonly AddConsolidatorButton = "#CONSL";
+    // public static readonly AddReleasingAgentButton = "#REAGT";
+    // public static readonly ShipmentShipper = "#Shipment_ShipperId";
+    // public static readonly ShipmentConsignee = "#Shipment_ConsigneeId";
+    // public static readonly ShipmentAgent = "#Shipment_AgentId";
+    // public static readonly ShipmentIssuingCarrierAgent = "#Shipment_IssuingCarrierAgentId";
+    // public static readonly ShipmentCustomAgentExport = "#Shipment_CustomAgentExportId";
+    // public static readonly ShipmentCustomAgentImport = "#Shipment_CustomAgentImportId";
+    // public static readonly ShipmentNotify1 = "#Shipment_Notify1Id";
+    // public static readonly ShipmentNotify2 = "#Shipment_Notify2Id";
+    // public static readonly ShipmentShipperNotExporter = "#Shipment_ShipperNotExporterId";
+    // public static readonly ShipmentConsigneeNotImporter = "#Shipment_ConsigneeNotImporterId";
+    // public static readonly ShipmentFreightForwarder = "#Shipment_FreightForwarderId";
+    // public static readonly ShipmentColoader = "#Shipment_ColoaderId";
+    // public static readonly ShipmentCustomClearancePoint = "#Shipment_CustomClearancePointId";
+    // public static readonly ShipmentConsolidator = "#Shipment_ConsolidatorId";
+    // public static readonly ShipmentReleasingAgent = "#Shipment_ReleasingAgentId";
+    // public static readonly MasterAgent = "#Master_AgentId";
+    // public static readonly ShipmentMainCarriageFromPort = "#Shipment_MainCarriageFromPortId";
+    // public static readonly ShipmentMainCarriageToPort = "#Shipment_MainCarriageToPortId";
+    // public static readonly MasterMainCarriageFromPort = "#Master_MainCarriageFromPortId";
+    // public static readonly MasterMainCarriageToPort = "#Master_MainCarriageToPortId";
+    // public static readonly ShipmentCustomer = "#Shipment_CustomerId";
+      //Accounting
+      public static readonly PayableAccountingTab="#PAYABLEAccounting" ;
+      public static readonly ReceivableAccounting="#RECEIVABLEAccounting"
+      public static readonly NewAPPayment="#NewAPPayment"
+      public static readonly APPaymentVendor="#APPayment_VendorId"
+      public static readonly APPaymentMethod="#APPayment_AccountingPaymentMethodId"
+      public static readonly APPaymentAmount ="#APPayment_AmountInPaymentCurrency"
+      public static readonly APPaymentCurrency="#APPayment_PaymentCurrencyId"
+      public static readonly APPaymentCurrencyExchangeRate="#APPayment_PaymentCurrencyExchangeRate"
+      public static readonly APPaymentRegisterDate="#date_APPayment_RegisterDate"
+      public static readonly APPaymentBranch="#APPayment_BranchId"
+      public static readonly APPaymentSaveButton="#APPayment-Save"
+      public static readonly APPaymentApproveButton="#APPaymentBApprove"
+      public static readonly ARPaymentTabInsideShipment="#ARInvoiceTHARPayments"
+      public static readonly NewARPayment="#NewPayment" 
+      public static readonly ARPaymentPartner="#ARPayment_PartnerId"  
+      public static readonly ARPaymentPaymentMethod= "#ARPayment_AccountingPaymentMethodId"
+      public static readonly ARPaymentAmount= "#ARPayment_AmountInPaymentCurrency"
+      public static readonly OkAddARPayment="#ok-AddARPayment"
+      public static readonly ARPaymentSave="#ARPayment-Save"
+      public static readonly ARPaymentBApprove="#ARPaymentBApprove"
+      public static readonly QueryLink= ".QueryLink"
+    }

@@ -1,7 +1,7 @@
 declare namespace Cypress {
     interface Chainable {
         Login(): Chainable<Element>
-        OpenAndFillChangePasswordPage(newPassword:string,confirmNewPassword:string): Chainable<Element>
+        OpenChangePasswordPage(): Chainable<Element>
         RedirectToLogin(): Chainable<Element>
     } 
 }
@@ -19,14 +19,11 @@ Cypress.Commands.add("Login", () => {
     }
 })
 
-Cypress.Commands.add("OpenAndFillChangePasswordPage", (newPassword,confirmNewPassword) => {
+Cypress.Commands.add("OpenChangePasswordPage", () => {
     var Env = Cypress.env("Env");
-    cy.fixture("Data/" + Env + ".json").then((LoginData) => {
+    cy.fixture("Login.json").then((LoginData) => {
         var ResetURL = LoginData.url + "/PasswordChangePage.aspx?email=" + LoginData.email;
         cy.visit(ResetURL);
-        cy.get("#CurrentPassword").clear().type(LoginData.password).should("have.value", LoginData.password)
-        cy.get("#Password").clear().type(newPassword).should("have.value", newPassword)
-        cy.get("#ConfirmPassword").clear().type(confirmNewPassword).should("have.value", confirmNewPassword)
     }) 
 })
 

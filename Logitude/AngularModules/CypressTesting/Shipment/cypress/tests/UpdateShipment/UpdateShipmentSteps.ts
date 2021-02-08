@@ -57,7 +57,7 @@ Given("the user add package with the following details", (dataTable) => {
 
 //#region Update receivables tab given step
 Given("the user fill receivables with the following details", (dataTable) => {
-    const ReceivableData = dataTable.hashes()[0] as ReceivableDetails;
+    const ReceivableData = dataTable.hashes() as ReceivableDetails[];
     Actions.FillReceivablesTab(ReceivableData)
 });
 //#endregion

@@ -18,7 +18,9 @@ declare global {
         }
     }
 }
-
+Cypress.Commands.add("BackButton", (contains) => {
+    cy.Click(".BackBottonBody", contains);
+})
 Cypress.Commands.add("FillDate", (selector, value) => {
     if (value.toUpperCase() == "TODAY") {
         cy.get(selector).focus().clear().type(".{enter}")
