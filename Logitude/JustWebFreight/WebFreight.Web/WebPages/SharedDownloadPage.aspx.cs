@@ -325,16 +325,7 @@ namespace WebFreight.Web.WebPages
         {
             try
             {
-                email = this.Context.User.Identity.Name;
-
-                if (string.IsNullOrEmpty(email))
-                {
-                    string token = Request["Token"];
-                    AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                    email = authToken.Email;
-                }
-
-
+                bool isExternalLink = false;
                 string documentExtension = "";
                 string filename = "";
                 string entityType = "";
@@ -345,6 +336,23 @@ namespace WebFreight.Web.WebPages
                 //{
                 string headerRequest = Request["id"];
                 filestrings = headerRequest.Split(':');
+
+                if (headerRequest.Contains("securitykey"))
+                {
+                    isExternalLink = true;
+                }
+
+                if (!isExternalLink)
+                {
+                    email = this.Context.User.Identity.Name;
+
+                    if (string.IsNullOrEmpty(email))
+                    {
+                        string token = Request["Token"];
+                        AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                        email = authToken.Email;
+                    }
+                }
 
                 //string documentName = 
                 //string url = "../WebPages/SharedDownloadPage.aspx?id=" + tenant + ":" + item.DocumentId +documenttype+ entityId;
