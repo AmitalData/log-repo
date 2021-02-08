@@ -25,7 +25,13 @@ Feature: Create Shipment Tests
         When sumbit
         Then validate message should appear successfully
 
-    Scenario: Enter a valid Password and password confirmation
+    #new ?
+    Scenario: Enter a new password same as the current password
         Given "ahmed13!A15" as a current ,paswword and confirm password
+        When sumbit
+        Then validate message should appear successfully
+
+    Scenario: Enter a valid Password and password confirmation
+        Given "ahmed13!A15" as a new paswword and confirm password
         When sumbit
         Then password should reset successfully

@@ -16,7 +16,17 @@ Given("{string} as a paswword and confirm password",(password)=>{
 Given("{string} as a current ,paswword and confirm password",(password)=>{
     cy.OpenChangePasswordPage();
     Actions.FillChangePasswordPage(password,password,password);
-    cy.DefineRequestWait("POST", "**/PostChangePassword", "WaitPostChangePassword");
+});
+
+Given("{string} as a new paswword and confirm password",(password)=>{
+    cy.OpenChangePasswordPage();
+    Actions.FillChangePasswordPage(password,password,password);
+    cy.intercept(
+        {
+          method: 'POST',     
+          url: '**/PostChangePassword/**',     
+        },[true] 
+      ) 
 });
 
 When("sumbit",()=>{
@@ -29,7 +39,6 @@ Then("validate message should appear successfully",()=>{
 });
 
 Then("password should reset successfully",()=>{
-    BaseAssertion.AssertStatusCode("WaitPostChangePassword", 200);
-    cy.RedirectToLogin();
+     cy.RedirectToLogin();
 });
 
