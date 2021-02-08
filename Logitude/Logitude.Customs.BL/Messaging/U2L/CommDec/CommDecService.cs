@@ -932,7 +932,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommDec
                     {
                         DeclarationCourierStatusRepository rep = new DeclarationCourierStatusRepository(_context);
                         DeclarationCourierStatus decCourier = rep.GetDeclarationsById(_CourierDeclarationPM.DeclarationId, _CourierDeclarationPM.Tenant);
-                        if (decCourier != null && !decCourier.IsClosedForFollowUp)
+                        if (decCourier != null && !decCourier.IsClosedForFollowUp && _CourierDeclarationPM.ChangeSetOp == ChangeSetOperation.Insert)
                         {
                                 courierMaster.OpenDeclarations += 1;
                                 courierMasterRepository.Update(courierMaster);
