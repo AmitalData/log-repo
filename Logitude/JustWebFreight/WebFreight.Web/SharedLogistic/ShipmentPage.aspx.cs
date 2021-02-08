@@ -11,12 +11,16 @@ namespace WebFreight.Web.SharedLogistic
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            string userdata = Request.QueryString["securitykey"];
+            string securitykey = Request.QueryString["securitykey"];
 
-            if (userdata == null)
+            if (string.IsNullOrEmpty(securitykey))
             {
+                TokenInput.Value = Request["Token"];
+                LoginInput.Value = Request["LoginData"];
 
-                if (!HttpContext.Current.Request.IsAuthenticated)
+                bool isAuthenticated = HttpContext.Current.Request.IsAuthenticated || !string.IsNullOrEmpty(TokenInput.Value) ? true : false;
+
+                if (!isAuthenticated)
                 {
                     HttpContext.Current.Response.Redirect("../login.aspx");
                 }

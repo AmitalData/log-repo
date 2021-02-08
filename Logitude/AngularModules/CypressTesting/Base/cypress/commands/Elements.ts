@@ -62,7 +62,25 @@ Cypress.Commands.add("FillRandomNumber", (selector, minimum, maximum) => {
 Cypress.Commands.add("Click", (selector, contains) => {
     let element = cy.get(selector).should('exist')
     if (contains) {
-        element = element.contains(contains, { matchCase: false })
+        element = element.contains(contains, {matchCase: false})
+
+    }
+
+    element.click({force:true})
+
+})
+
+Cypress.Commands.add("SaveClick", (selector, contains, url, resultFile) => {
+
+    cy.intercept({
+        method: "POST",
+        url: url
+    }).as("WaitRequest")
+
+    let element = cy.get(selector)
+
+    if (contains !== null) {
+        element = element.contains(contains, {matchCase: false})
     }
     element.click()
 })

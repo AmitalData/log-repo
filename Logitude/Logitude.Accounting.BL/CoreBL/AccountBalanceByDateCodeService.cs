@@ -60,7 +60,8 @@ namespace Logitude.Accounting.BL.CoreBL
             string  DateTypeCode,DateTime theDate,
             bool checkHaveAccountingQueued ,
             bool inclusiveTheDateLTransaction /*= false*/, 
-            bool verbose /*= false*/)
+            bool verbose /*= false*/,
+            bool ClacOpenReconciledAmount)
         {
             _TheDate = theDate;
             _DateTypeCode = DateTypeCode;
@@ -200,13 +201,29 @@ namespace Logitude.Accounting.BL.CoreBL
 
 
 
-                    
-              
 
 
 
-                    
-                    
+
+                    if (ClacOpenReconciledAmount )
+                    {
+                        if (_ListOfAccountId.Count() > 1)
+                        {
+                            throw new Exception("if (ClacOpenReconciledAmount && _ListOfAccountId.Count()>1)");
+                        }
+
+                        var res=
+                            myLedgerTransactionQueryService
+                            .CalcCurrencySumOpenAmountByMonthByDateType(_DateTypeCode, DateUntillNotInclude, _Tenant, _ListOfAccountId).FirstOrDefault();
+                        if (res!=null)
+                        {
+                            AccountBalance.StartTotalOpenAmount = res.OpenAmount;
+                            AccountBalance.OpenAmountCurrencyId = res.OpenAmountCurrencyId;
+                        }
+
+                    }
+
+
                     AccountBalance.Totals = totals;
                     AccountBalance.TotalLocalAmountDebit = AccountBalance.Totals.Sum(r => r.LocalAmountDebit);
                     AccountBalance.TotalLocalAmountCredit = AccountBalance.Totals.Sum(r => r.LocalAmountCredit);
@@ -325,6 +342,8 @@ namespace Logitude.Accounting.BL.CoreBL
 
         public decimal? TotalLocalAmountCredit { get; set; }
         public List<string> YearTransferLedgerTransactionIds { get; internal set; }
+        public string OpenAmountCurrencyId { get; set; }
+        public decimal StartTotalOpenAmount { get; set; }
 
         internal List<CallBackBalance> GetCallBackBalanceOfCurrency(string currencyId)
         {

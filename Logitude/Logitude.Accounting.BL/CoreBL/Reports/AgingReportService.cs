@@ -743,7 +743,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
             endAccountBalanceService.CalculateBalance(
 true,
 dateTypeCode /*GLAccountTotalDateTypeValues.Accountingdate*/,
-_Param.AgingForDate.Date, false, true, true);
+_Param.AgingForDate.Date, false, true, true,false);
 
             
             var totals = (from rec in endAccountBalanceService.AccountBalance.verbose.CurrencySumUntillMounth.Union(endAccountBalanceService.AccountBalance.verbose.TheMounthCurrencySum)
