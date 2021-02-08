@@ -10,6 +10,7 @@ namespace Logitude.Accounting.Data.EntityLists
     
     public partial class LedgerTransactionList
     {
+        public decimal CumulativeOpenAmount { get; set; }
 
         public override string ToString()
         {

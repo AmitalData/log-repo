@@ -167,7 +167,8 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                 openBalancePlease_ReCalcYearTransfer,
                 _Param.DateTypeCode, To, 
                 false,
-                includeAccoutingDateLTransaction, false);
+                includeAccoutingDateLTransaction, false,
+                false);
             var endAccountBalance = endAccountBalanceService.AccountBalance;
             return endAccountBalance;
         }
@@ -186,7 +187,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                 openBalancePlease_ReCalcYearTransfer,
                 _Param.DateTypeCode /*GLAccountTotalDateTypeValues.Accountingdate*/, _Param.From,
                 false,
-                includeAccoutingDateLTransaction, false);
+                includeAccoutingDateLTransaction, false,false);
             var startAccountBalance = startAccountBalanceService.AccountBalance;
             return startAccountBalance;
         }

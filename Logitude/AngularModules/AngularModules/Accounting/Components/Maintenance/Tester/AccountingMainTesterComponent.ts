@@ -89,7 +89,7 @@ export class AccountingMainTesterComponent extends BaseComponent {
             To: new Date(),
             CurrencyId: SessionLocator.AccountingCurrencyId,
             DateTypeCode: "1",
-            GLAccountId: "1-1050",
+            GLAccountId: "1-140",
 
             SearchFields: "",
             PageStartAtRecordIndex: 0,
@@ -114,6 +114,12 @@ export class AccountingMainTesterComponent extends BaseComponent {
                 this.JsonList = resObj;
             }
         });
+    }
+    CardIndexNewDrillDown1st_Click() {
+        let resObj = JSON.parse(this.JsonOut);
+        if (Array.isArray(resObj)) {
+            this.JsonList =resObj[0]["MyLedgerTransactionList"];
+        }
     }
     _TrailReport_Click() {
         let j = '{"Tenant":1,"FromDate":"2015-01-20T00:00:00","ToDate":"2021-01-26T00:00:00+02:00","TrailReportLevelOption":"ChartofaccountType=1,Chartofaccount=2,GLAccount=3","MyTrailReportLevel":3,"CurrenciesDetailed":true,"Category1":"","Category2":"","Category3":"","Category4":"","Category5":"","DetailedControlClients":false,"DetailedControlVendors":false,"DetailedControlJob":false,"DetailedControlFile":false,"Suppress_DoNotShowCardWithoutActivity":true,"DoNotShowCardWithLocalCloseBalanceEqualZero":true,"ChartOfAccountsTypeCodeList":["1","2"],"ChartOfAccountsIdList":[]}';
