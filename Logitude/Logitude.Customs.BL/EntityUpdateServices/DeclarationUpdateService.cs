@@ -745,7 +745,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             LogitudeSettings.HandleLogMe("Referant update " + logData, false, "referant.NewFile", stopLogAt);
 
             DeclarationReferantDataQueryService declarationReferantDataQueryService = new DeclarationReferantDataQueryService(entityPM.Tenant);
-            DeclarationReferantDataPM referant = declarationReferantDataQueryService.GetSingle(entityPM.Id, false, true);
+            DeclarationReferantDataPM referant = declarationReferantDataQueryService.GetSingle(entityPM.Id, false, false);
             if (referant != null)
             {
                 if (entityPM.ProcedureCurrentCode != null)
