@@ -834,7 +834,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommDec
             {
                 var myCourierDeclarationQueryService = new CourierDeclarationQueryService(_context);
                 var myCourierDeclarationUpdateService = new CourierDeclarationUpdateService(_context, new Dictionary<string, IContext>(), ResolvedTenant());
-                _CourierDeclarationPM = myCourierDeclarationQueryService.GetSingle(_MyDeclarationPM.Id, _CourierMasterPM.Id, false, true);
+                _CourierDeclarationPM = myCourierDeclarationQueryService.GetSingle(_MyDeclarationPM.Id, _CourierMasterPM.Id, false, false);
                 if (_CourierDeclarationPM == null)
                 {
                     AppendLogLine("CourierDeclarationPM not found for DeclarationPM.Id: " + _MyDeclarationPM.Id + " CourierMasterPM.Id: " + _CourierMasterPM.Id);
