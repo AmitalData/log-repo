@@ -951,6 +951,9 @@ namespace Logitude.CustomsMessaging.U2L.Sivug
 
                 SupplierInvoiceItemPM.OriginCountryCode = invoiceItem.ITEMORIGINCOUNTRY;
 
+                if (SupplierInvoiceItemPM.OriginCountryCode == "")
+                    SupplierInvoiceItemPM.OriginCountryCode = null;
+
                 SupplierInvoiceItemPM.ItemCode = invoiceItem.ITEMCODE;
                 //   SupplierInvoiceItemPM.UnfInvoiceCounterKey = invoiceItem.ITEM_SI_COUNTER;
                 SupplierInvoiceItemPM.ClasifiedRemarks = invoiceItem.CLASIFIEDREMARKS;
