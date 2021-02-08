@@ -1,17 +1,18 @@
-import * as Actions from "../../actions/Actions"
-import { Selectors } from "../../selectors/Selectors"
-import { BaseSelectors } from "../../../../Base/cypress/selectors/BaseSelectors"
-import { Given, When, Then } from "cypress-cucumber-preprocessor/steps";
-import * as BaseAssertion from "../../../../Base/cypress/actions/Assertion"
-import { ShipmentDetails } from "../../models/ShipmentDetails";
+import * as Actions from '../../actions/Actions';
+import { Selectors } from '../../selectors/Selectors';
+import { Given, When, Then } from 'cypress-cucumber-preprocessor/steps';
+import * as BaseAssertion from '../../../../Base/cypress/actions/Assertion';
+import { ShipmentDetails } from '../../models/ShipmentDetails';
 
+//#region variables
 let MasterShipmentDetails: ShipmentDetails;
 let shipmentNumber: string;
+//#endregion
 
+//#region Create master export air shipment
 Given("the user logged in and navigates to shipments workspace", () => {
     cy.Login()
-    cy.Click(BaseSelectors.OperationsMenu, null)
-    cy.Click(Selectors.ShipmentTab, null)
+    Actions.NavigatesToShipmentsWorkspace()
 });
 
 Given("a master Shipment with following details",(dataTable)=>{
@@ -30,7 +31,9 @@ Then("the master should create successfully", () => {
         shipmentNumber = interception.response.body.ShipmentNumber;
     })
 });
+//#endregion
 
+//#region Create house export air shipment inside the master
 Given("the user in the master's Shipment tab",()=>{
     Actions.OpenShipment(shipmentNumber);
     cy.Click(Selectors.ShipmentsTab, null);
@@ -45,7 +48,9 @@ When("create house with {string} as Shipper",(Shipper)=>{
 Then("the house should create and connect successfully",()=>{
     BaseAssertion.AssertStatusCode("WaitPostShipmentRequest", 200)
 });
+//#endregion
 
+//#region Disconnect the house shipment
 When("disconnect shipment",()=>{
     cy.get('#EditComponentBusyIndicator_0').should('not.exist');
     cy.Click("#EditComponentCellId_0_0 > div.MediaFill > table > tr:nth-child(3) > td > div > div.MediaFillAbsolute.CurvedEditArea > table > tr > td:nth-child(2) > div > ng-component:nth-child(3) > div > scrollviewer > div > div > div > ng-component > table > tr:nth-child(1) > td > div > table > tr:nth-child(3) > td > div > div > div.SimpleGridViewBody > table > tr:nth-child(1) > td > table > tr:nth-child(2) > td:nth-child(2) > table > tr > td:nth-child(2) > button",null);
@@ -55,3 +60,4 @@ When("disconnect shipment",()=>{
 Then("the shipment should disconnect successfully",()=>{
     BaseAssertion.AssertStatusCode("WaitPutShipmentRequest", 200)
 });
+//#endregion

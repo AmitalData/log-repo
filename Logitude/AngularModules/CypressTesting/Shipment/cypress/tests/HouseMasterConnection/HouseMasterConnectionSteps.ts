@@ -5,13 +5,15 @@ import * as BaseAssertion from "../../../../Base/cypress/actions/Assertion";
 import { Given, When, Then } from "cypress-cucumber-preprocessor/steps";
 import { ShipmentDetails } from "../../models/ShipmentDetails";
 
+//#region variables
 let shipmentDetails: ShipmentDetails;
 let shipmentNumber: string;
+//#endregion
 
+//#region Create master export air shipment steps
 Given("the user logged in and navigates to shipments workspace", () => {
     cy.Login()
-    cy.Click(BaseSelectors.OperationsMenu, null)
-    cy.Click(Selectors.ShipmentTab, null)
+    Actions.NavigatesToShipmentsWorkspace()
 });
 
 Given("a master Shipment with the following details", (dataTable) => {
@@ -20,12 +22,32 @@ Given("a master Shipment with the following details", (dataTable) => {
     Actions.FillShipmentWizardsFields(shipmentDetails);
 });
 
+Then("the master should create successfully", () => {
+    BaseAssertion.AssertStatusCode("WaitPostShipmentRequest", 200).then((interception) => {
+        shipmentNumber = interception.response.body.ShipmentNumber;
+    })
+});
+//#endregion
+
+//#region Create shipment step
+When("create shipment", () => {
+    Actions.CreateShipment(shipmentDetails.ShipmentLevel);
+});
+//#endregion
+
+//#region Create house export air shipment steps
 Given("a house Shipment with the following details", (dataTable) => {
     shipmentDetails = dataTable.hashes()[0] as ShipmentDetails;
     Actions.OpenNewShipmentWizard(shipmentDetails.ShipmentLevel);
     Actions.FillShipmentWizardsFields(shipmentDetails);
 });
 
+Then("the house should create successfully", () => {
+    BaseAssertion.AssertStatusCode("WaitPostShipmentRequest", 200)
+});
+//#endregion
+
+//#region Connect the house shipment to the master 
 Given("the user in the master's Shipment tab", () => {
     cy.Click(BaseSelectors.OperationsMenu, null)
     cy.Click(Selectors.ShipmentTab, null)
@@ -35,36 +57,25 @@ Given("the user in the master's Shipment tab", () => {
     cy.Click(Selectors.ShipmentsTab, null);
 });
 
-When("create shipment", () => {
-    Actions.CreateShipment(shipmentDetails.ShipmentLevel);
-});
-
 When("connect the house shipment", () => {
     cy.get('#EditComponentBusyIndicator_0').should('not.exist');
     cy.Click("#EditComponentCellId_0_0 > div.MediaFill > table > tr:nth-child(3) > td > div > div.MediaFillAbsolute.CurvedEditArea > table > tr > td:nth-child(2) > div > ng-component:nth-child(3) > div > scrollviewer > div > div > div > ng-component > table > tr:nth-child(1) > td > div > table > tr:nth-child(3) > td > div > div > div.SimpleGridViewBody > table > tr:nth-child(1) > td > table > tr:nth-child(2) > td:nth-child(2) > table > tr > td:nth-child(2) > button", null);
     Actions.ConnectOrDisconnectShipment();
 });
 
+Then("the shipment should connect successfully", () => {
+    BaseAssertion.AssertStatusCode("WaitPutShipmentRequest", 200);
+});
+//#endregion
+
+//#region Disconnect the house shipment
 When("the user disconnect the house shipment", () => {
     cy.get('#EditComponentBusyIndicator_0').should('not.exist');
     cy.Click("#EditComponentCellId_0_0 > div.MediaFill > table > tr:nth-child(3) > td > div > div.MediaFillAbsolute.CurvedEditArea > table > tr > td:nth-child(2) > div > ng-component:nth-child(3) > div > scrollviewer > div > div > div > ng-component > table > tr:nth-child(1) > td > div > table > tr:nth-child(3) > td > div > div > div.SimpleGridViewBody > table > tr:nth-child(1) > td > table > tr:nth-child(2) > td:nth-child(2) > table > tr > td:nth-child(2) > button", null);
     Actions.ConnectOrDisconnectShipment();
 });
 
-Then("the master should create successfully", () => {
-    BaseAssertion.AssertStatusCode("WaitPostShipmentRequest", 200).then((interception) => {
-        shipmentNumber = interception.response.body.ShipmentNumber;
-    })
-});
-
-Then("the house should create successfully", () => {
-    BaseAssertion.AssertStatusCode("WaitPostShipmentRequest", 200)
-});
-
-Then("the shipment should connect successfully", () => {
-    BaseAssertion.AssertStatusCode("WaitPutShipmentRequest", 200);
-});
-
 Then("the shipment should disconnect successfully", () => {
     BaseAssertion.AssertStatusCode("WaitPutShipmentRequest", 200);
 });
+//#endregion

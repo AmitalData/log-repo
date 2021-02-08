@@ -10,14 +10,12 @@ Cypress.Commands.add("Login", () => {
     let mode = Cypress.env("Mode")
     
     if(mode.toLowerCase() === "development"){ 
-
         cy.fixture("Login.json").then((LoginData) => {
-            CompleteLoginProcess(LoginData.email,LoginData.password,LoginData.url,LoginData.tenant);
+            CompleteLoginProcess(LoginData.email, LoginData.password, LoginData.url, LoginData.tenant);
         })
     }
     else{
-
-        CompleteLoginProcess(Cypress.env("Email"),Cypress.env("Password"),Cypress.env("Url"),Cypress.env("Tenant")); 
+        CompleteLoginProcess(Cypress.env("Email"), Cypress.env("Password"), Cypress.env("Url"), Cypress.env("Tenant")); 
     }
 })
 
@@ -41,7 +39,6 @@ Cypress.Commands.add("RedirectToLogin", () => {
         CompleteRedirectToLoginProcess(Cypress.env("Url") + '/login.aspx'); 
     }
 })
-
 
 function CompleteLoginProcess(Email:string, Password:string, URL: string, Tenant?:number){
     cy.visit(URL)

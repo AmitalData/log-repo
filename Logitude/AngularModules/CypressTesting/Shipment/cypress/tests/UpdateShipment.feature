@@ -1,6 +1,9 @@
-Feature: Update Direct Export Air Shipment
+Feature: Update direct export air shipment
+  After the user logging in the system and navigate to shipments workspace
+  will create a directe shipment, after that update general, orders
+  partners, packages, receivables, routing and payables tabs.
 
-  Scenario: Create Direct Export Air Shipment
+  Scenario: Create direct export air shipment
     Given the user logged in and navigates to shipments workspace
     And a direct shipment with the following details
       | ShipmentLevel | Direction | TransportMode | Shipper           | MainCarriageFromPort | MainCarriageToPort |
@@ -9,7 +12,7 @@ Feature: Update Direct Export Air Shipment
     Then the direct should create successfully
 
   Scenario: Update general tab
-    Given the user fills "100" as GrossWeight and "MTA" as a MoveType
+    Given the user fill "100" as GrossWeight and "MTA" as a MoveType
     When update shipment
     Then the direct should update successfully
 
@@ -22,7 +25,7 @@ Feature: Update Direct Export Air Shipment
     Then the direct should update successfully
 
   Scenario: Update partners tab
-    Given the user adds partners with following details
+    Given the user add partners with following details
       | Consignee       | Agent            | CustomsAgentExport     | CustomsAgentImport     | Notify1 | Notify2 | ShipperNotExporter   | ConsigneeNotImporter   | FreightForwarder     | Coloader     | CustomClearancePoint     | Consolidator     | ReleasingAgent  |
       | ConsigneeExport | IntegrationAgent | InegrationCustomsAgent | InegrationCustomsAgent | notify  | notify  | shipper not exporter | consignee not importer | FreightForwarderTest | ColoaderTest | CustomClearancePointTest | ConsolidatorTest | releasing agent |
     When update shipment
