@@ -4,7 +4,7 @@
   Schema="dbo"
   Module="Common">
   <SqlScript>
-  <![CDATA[
+		<![CDATA[
 Create PROCEDURE [dbo].usp_DoTheTableDeletionSet
 (
 	@Tenant int, 

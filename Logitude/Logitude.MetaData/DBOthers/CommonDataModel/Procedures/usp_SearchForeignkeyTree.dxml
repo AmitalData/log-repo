@@ -19,42 +19,19 @@ AS
 Begin
 	set nocount on;
 	declare @dbg bit;
-    declare @tmpTable varchar(256)
 	set @dbg=@debug;
-	if object_id('tempdb..#tables', 'U') is null
-		CREATE TABLE #tables(
-    tableName varchar(256),
-	ParentTable varchar(256),
-	Count int);
-		 
 	if object_id('tempdb..#tbl', 'U') is null
 		create table  #tbl  (id int identity, tablename varchar(256), lvl int, ParentTable varchar(256));
-	
 	declare @curS cursor;
 	if @lvl = 0
-	begin
 		insert into #tbl (tablename, lvl, ParentTable)
 		select @table, @lvl, Null;
-	End
 	else
-	begin
 		insert into #tbl (tablename, lvl, ParentTable)
 		select @table, @lvl,@ParentTable;
-	ENd
-
-	-- Maheera 
-	declare @q varchar(256)
-	set @q = (select top 1 tableName from #tables where tableName = @table and ParentTable = @ParentTable)
-	if(@q is null)
-	begin
-		INSERT INTO #tables (tableName,ParentTable,Count) 
-		SELECT tablename,ParentTable, 1 FROM #tbl
-		where #tbl.tableName = @table and #tbl.ParentTable = @ParentTable;
-	end
-	
 	if @dbg=1	
 		print replicate('----', @lvl) + 'lvl ' + cast(@lvl as varchar(10)) + ' = ' + @table;
-
+	
 	if not exists (select * from sys.foreign_keys where referenced_object_id = object_id(@table))
 		return;
 	else
@@ -62,29 +39,29 @@ Begin
 		set @ParentTable = @table;
 		set @curS = cursor for
 		select tablename=object_schema_name(parent_object_id)+'.'+object_name(parent_object_id)
-		from sys.foreign_keys  
-		where referenced_object_id = object_id(@table) 
-		and parent_object_id <> referenced_object_id  --((SELECT TRIGGER_NESTLEVEL()) = 10); -- add this to prevent self-referencing which can create a indefinitive loop;
+		from sys.foreign_keys 
+		where referenced_object_id = object_id(@table)
+		and parent_object_id <> referenced_object_id; -- add this to prevent self-referencing which can create a indefinitive loop;
 
-		open @curS ;
-		fetch next from @curS  into @table ; 
+		open @curS;
+		fetch next from @curS into @table;
+
 		while @@fetch_status = 0
 		begin --while
-			set @tmpTable= (Select top 1 tableName From #tables Where tableName = @table and ParentTable = @ParentTable);
-			if (@tmpTable is null)
-			begin
-				set @lvl = @lvl+1;
-				-- recursive call
-				exec dbo.usp_SearchForeignkeyTree @table, @lvl, @ParentTable, @dbg;
-				set @lvl = @lvl-1
-			end
+			-- recursive call
+
+				if @@NESTLEVEL <5
+				begin
+					set @lvl = @lvl+1;
+					exec dbo.usp_SearchForeignkeyTree @table, @lvl, @ParentTable, @dbg;
+					set @lvl = @lvl-1;
+				end
+
 			fetch next from @curS into @table;
 		end --while
 		close @curS;
 		deallocate @curS;
-			
 	end -- else
-
 	if @lvl = 0
 		select * from #tbl;
 	return;
