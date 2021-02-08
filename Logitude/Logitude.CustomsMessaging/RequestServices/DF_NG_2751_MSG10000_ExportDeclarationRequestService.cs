@@ -1941,11 +1941,11 @@ namespace Logitude.CustomsMessaging.RequestServices
                 declarationConsignment.DMExtensions = GetImportConsignmentDMExtensions(consignmentPM);
                 declarationConsignment.LoadingLocation = new DeclarationGoodsShipmentImportConsignmentLoadingLocation
                 {
-                    ID = SetIDTypeValue<DeclarationGoodsShipmentImportConsignmentLoadingLocationID>(consignmentPM.ExportLoadingPortCode)
+                    ID = SetIDTypeValue<DeclarationGoodsShipmentImportConsignmentLoadingLocationID>(consignmentPM.LoadingPortCode)
                 };
                 declarationConsignment.UnloadingLocation = new DeclarationGoodsShipmentImportConsignmentUnloadingLocation()
                 {
-                    ID = SetIDTypeValue<DeclarationGoodsShipmentImportConsignmentUnloadingLocationID>(consignmentPM.ExportUnloadingPortCode)
+                    ID = SetIDTypeValue<DeclarationGoodsShipmentImportConsignmentUnloadingLocationID>(consignmentPM.UnloadPortCode)
                 };
                 declarationConsignment.TransportContractDocument = new DeclarationGoodsShipmentImportConsignmentTransportContractDocument()
                 {
