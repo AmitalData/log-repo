@@ -169,9 +169,9 @@ namespace Logitude.Accounting.BL.CoreBL
             List<string> depositIds
                                 = (from ledger in context.LedgerTransactions
                                   join journal in context.Journals on ledger.JournalId equals journal.Id
-                                  join cheque in context.ARPaymentCheques on journal.AccountingEntityId equals cheque.Id
                                   where ledger.IsExternalReconcile == true
                                          && journal.AccountingEntityCode == "6"
+                                         && ledger.Tenant == tenant
                                   select journal.AccountingEntityId).ToList();
 
             List<string> paymentChequeIds = (from a in context.BankDepositLines
