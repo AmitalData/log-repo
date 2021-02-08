@@ -131,7 +131,7 @@ namespace WebFreight.Web.Helpers
             {
                 if (!string.IsNullOrEmpty(fromMultiPorts) && !string.IsNullOrEmpty(toMultiPorts))
                 {
-                    throw new ApplicationException("You can't send from-multi and to-multi at the same time");
+                    throw new ApplicationException("You can't send From-Multi and To-Multi at the same time");
                 }
             }
         }
@@ -160,7 +160,7 @@ namespace WebFreight.Web.Helpers
                 if (excelSheetLines.Where(d => !string.IsNullOrEmpty(d.FromPort)).Any())
                 {
                     isValid = false;
-                    throw new ApplicationException("From Port Column can't have value when from-multi-port has value");
+                    throw new ApplicationException("From Port Column can't have value when From-Multi-Port has value");
                 }
             }
 
@@ -171,7 +171,7 @@ namespace WebFreight.Web.Helpers
                     if (excelSheetLines.Where(d => !string.IsNullOrEmpty(d.ToPort)).Any())
                     {
                         isValid = false;
-                        throw new ApplicationException("To Port Column can't have value when to-multi-port has value");
+                        throw new ApplicationException("To Port Column can't have value when To-Multi-Port has value");
                     }
                 }
             }
@@ -1649,7 +1649,7 @@ namespace WebFreight.Web.Helpers
         }
         private void CreateTariffUploadExcel()
         {
-            int count = sheet.UsedRange.Rows.Count() - 1;
+            int count = sheet.UsedRange.Rows.Count() - 3;
             if (tariffPM != null && versionPM != null)
             {
                 TariffVersionUploadedExcelRepository excelRepository = new TariffVersionUploadedExcelRepository(tariffContext);
