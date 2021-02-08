@@ -21,6 +21,7 @@ export class PublicShipmentDetailsComponent implements OnInit
     isLoading: boolean = false;
     isMobileView: boolean = false;
     isTabletView: boolean = false;
+    isPlannedMilestonesExist : boolean = false;
     ShipmentQuantity:number=0;
     ShipmentContainers:string[]=[];
     previousUrl: string;
@@ -236,15 +237,20 @@ export class PublicShipmentDetailsComponent implements OnInit
             this.AllMilestoneFields.forEach(S =>
             {
 
-                if (S.IsEstimation && S.EstimationDate != null) {
+                if (S.IsEstimation) {
 
                     this.FuturesMilestoneFields.push(S);
                 }
-                else if (!S.IsCurrent && S.Date != null) {
-                    this.CompletedMilestoneFields.push(S);
+                else if (S.IsEstimation && S.Date) {
 
+                    this.isPlannedMilestonesExist = true;
                 }
-                else if(S.Date != null){
+                else if (!S.IsCurrent && S.Date != null) {
+
+                    this.CompletedMilestoneFields.push(S);
+                }
+                else if (S.Date != null) {
+                    
                     this.CurrentMilestoneField = S;
                 }
             });
