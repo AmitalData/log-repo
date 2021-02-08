@@ -50,7 +50,7 @@
 					CLOSE DeleteContactCursor
 					DEALLOCATE DeleteContactCursor
 			END
-      
+      exec [dbo].usp_DoTheTableDeletionSet @Tenant = @Tenant, @TableName = 'Bookings'
       exec [dbo].usp_DoTheTableDeletionSet @Tenant = @Tenant, @TableName = 'Customers'
 			exec [dbo].usp_DoTheTableDeletionSet @Tenant = @Tenant, @TableName = 'WarehouseEntries'
 			exec [dbo].usp_DoTheTableDeletionSet @Tenant = @Tenant, @TableName = 'Cards', @WhereInput = ' and ($table.PartnerTypeId = ''CS'' or $table.PartnerTypeId = ''PO'')'
