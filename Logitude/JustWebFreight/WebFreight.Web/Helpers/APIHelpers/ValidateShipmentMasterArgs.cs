@@ -17,5 +17,6 @@ namespace WebFreight.Web.Helpers.APIHelpers
         public string TransportModeId { get; set; }
         public string ShipmentLevelCode { get; set; }
         public bool IsCancelled { get; set; }
+        public DateTime? OperationalDate { get; set; }
     }
 }
