@@ -12,11 +12,27 @@ Create PROCEDURE [dbo].usp_SearchForeignkeyTree
   , @lvl int=0 -- do not change
   , @ParentTable varchar(256)='' -- do not change
   , @debug bit = 1
+  , @maintable varchar(256)
 )
 
 AS
 
-Begin
+begin
+	if object_id('tempdb..#circlarTable') is null
+	begin
+		create table  #circlarTable  (tablename varchar(256), ParentTable varchar(256));
+		insert into #circlarTable
+		SELECT 
+		  OBJECT_SCHEMA_NAME(fk1.parent_object_id)
+		   + '.' + OBJECT_NAME(fk1.parent_object_id) AS Table1, 
+		  OBJECT_SCHEMA_NAME(fk2.parent_object_id)
+		   + '.' + OBJECT_NAME(fk2.parent_object_id) AS Table2
+		FROM sys.foreign_keys AS fk1
+		INNER JOIN sys.foreign_keys AS fk2
+		ON fk1.parent_object_id = fk2.referenced_object_id
+		AND fk2.parent_object_id = fk1.referenced_object_id;
+	end
+
 	set nocount on;
 	declare @dbg bit;
 	set @dbg=@debug;
@@ -38,25 +54,35 @@ Begin
 	begin -- else
 		set @ParentTable = @table;
 		set @curS = cursor for
-		select tablename=object_schema_name(parent_object_id)+'.'+object_name(parent_object_id)
-		from sys.foreign_keys 
-		where referenced_object_id = object_id(@table)
-		and parent_object_id <> referenced_object_id; -- add this to prevent self-referencing which can create a indefinitive loop;
-
+			select distinct tablename=object_schema_name(parent_object_id)+'.'+object_name(parent_object_id)
+			from sys.foreign_keys 
+			where referenced_object_id = object_id(@table)
+			and parent_object_id <> referenced_object_id; -- add this to prevent self-referencing which can create a indefinitive loop;
 		open @curS;
 		fetch next from @curS into @table;
 
 		while @@fetch_status = 0
 		begin --while
-			-- recursive call
-
-				if @@NESTLEVEL <5
+		      
+				--if @@NESTLEVEL <5
+				IF  exists(select 1 from #circlarTable where (tablename = @table and ParentTable =@ParentTable) or (tablename = @ParentTable and ParentTable = @table))
 				begin
-					set @lvl = @lvl+1;
-					exec dbo.usp_SearchForeignkeyTree @table, @lvl, @ParentTable, @dbg;
-					set @lvl = @lvl-1;
+					print @table + ':'+@ParentTable;
+					break;
 				end
-
+				Else
+				begin
+					if @table != @maintable
+					begin
+					--if @@NESTLEVEL <5
+					--begin
+							set @lvl = @lvl+1;
+							exec dbo.usp_SearchForeignkeyTree @table, @lvl, @ParentTable, @dbg, @maintable;
+							set @lvl = @lvl-1;
+					end
+				end
+				--end
+				
 			fetch next from @curS into @table;
 		end --while
 		close @curS;
@@ -65,8 +91,7 @@ Begin
 	if @lvl = 0
 		select * from #tbl;
 	return;
-  
-End
+end
 ]]></SqlScript>
   <OracleScript>
 </OracleScript>
