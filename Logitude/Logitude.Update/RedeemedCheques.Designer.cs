@@ -47,6 +47,7 @@ namespace Logitude.Update
             this.logTextBox = new System.Windows.Forms.TextBox();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.countLbl = new System.Windows.Forms.Label();
+            this.button4 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
@@ -55,7 +56,7 @@ namespace Logitude.Update
             // 
             this.GetChequesBtn.Location = new System.Drawing.Point(228, 61);
             this.GetChequesBtn.Name = "GetChequesBtn";
-            this.GetChequesBtn.Size = new System.Drawing.Size(241, 26);
+            this.GetChequesBtn.Size = new System.Drawing.Size(153, 40);
             this.GetChequesBtn.TabIndex = 0;
             this.GetChequesBtn.Text = "Get reconciled cheques but not redeemed";
             this.GetChequesBtn.UseVisualStyleBackColor = true;
@@ -81,9 +82,9 @@ namespace Logitude.Update
             // dataGridView1
             // 
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(23, 118);
+            this.dataGridView1.Location = new System.Drawing.Point(21, 123);
             this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(481, 464);
+            this.dataGridView1.Size = new System.Drawing.Size(481, 459);
             this.dataGridView1.TabIndex = 3;
             // 
             // chequeIdTextBox
@@ -110,7 +111,7 @@ namespace Logitude.Update
             this.button1.Enabled = false;
             this.button1.Location = new System.Drawing.Point(228, 29);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(128, 26);
+            this.button1.Size = new System.Drawing.Size(153, 26);
             this.button1.TabIndex = 6;
             this.button1.Text = "redeem one Cheque and recalculate total";
             this.button1.UseVisualStyleBackColor = true;
@@ -118,6 +119,7 @@ namespace Logitude.Update
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.button4);
             this.groupBox1.Controls.Add(this.button3);
             this.groupBox1.Controls.Add(this.button2);
             this.groupBox1.Controls.Add(this.progressBar1);
@@ -157,9 +159,9 @@ namespace Logitude.Update
             // 
             // progressBar1
             // 
-            this.progressBar1.Location = new System.Drawing.Point(278, 123);
+            this.progressBar1.Location = new System.Drawing.Point(27, 111);
             this.progressBar1.Name = "progressBar1";
-            this.progressBar1.Size = new System.Drawing.Size(239, 20);
+            this.progressBar1.Size = new System.Drawing.Size(216, 20);
             this.progressBar1.TabIndex = 8;
             // 
             // tenantsTextBox
@@ -182,7 +184,7 @@ namespace Logitude.Update
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(13, 133);
+            this.label3.Location = new System.Drawing.Point(13, 161);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(21, 13);
             this.label3.TabIndex = 5;
@@ -190,10 +192,10 @@ namespace Logitude.Update
             // 
             // logTextBox
             // 
-            this.logTextBox.Location = new System.Drawing.Point(16, 149);
+            this.logTextBox.Location = new System.Drawing.Point(16, 177);
             this.logTextBox.Multiline = true;
             this.logTextBox.Name = "logTextBox";
-            this.logTextBox.Size = new System.Drawing.Size(501, 402);
+            this.logTextBox.Size = new System.Drawing.Size(501, 374);
             this.logTextBox.TabIndex = 0;
             // 
             // timer1
@@ -208,6 +210,16 @@ namespace Logitude.Update
             this.countLbl.Name = "countLbl";
             this.countLbl.Size = new System.Drawing.Size(0, 13);
             this.countLbl.TabIndex = 8;
+            // 
+            // button4
+            // 
+            this.button4.Location = new System.Drawing.Point(249, 111);
+            this.button4.Name = "button4";
+            this.button4.Size = new System.Drawing.Size(268, 26);
+            this.button4.TabIndex = 9;
+            this.button4.Text = "Recalculate All Billto futurecheques";
+            this.button4.UseVisualStyleBackColor = true;
+            this.button4.Click += new System.EventHandler(this.button4_Click);
             // 
             // RedeemedCheques
             // 
@@ -257,5 +269,6 @@ namespace Logitude.Update
         private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Label countLbl;
+        private System.Windows.Forms.Button button4;
     }
 }

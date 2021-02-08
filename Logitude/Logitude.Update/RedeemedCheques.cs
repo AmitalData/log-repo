@@ -96,5 +96,18 @@ namespace Logitude.Update
             thread.Start();
 
         }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            service.LoggingText = "";
+
+            var tenantsCSV = tenantsTextBox.Text;
+            Tenants = tenantsCSV.Split(',').ToList();
+            progressBar1.Maximum = Tenants.Count();
+
+            Thread thread = new Thread(() => service.RecalculateAllBilltoChequesTotals(Tenants));
+            thread.IsBackground = true;
+            thread.Start();
+        }
     }
 }
