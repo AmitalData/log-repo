@@ -5,8 +5,8 @@ Feature: Copy direct export air shipment
     Scenario: Create direct export air shipment
         Given the user logged in and navigates to shipments workspace
         And a direct shipment with the following details
-            | ShipmentLevel | Direction | TransportMode | Shipper  | MainCarriageFromPort | MainCarriageToPort |
-            | Direct        | Export    | Air           | Shipper1 | LHR                  | MIA                |
+            | ShipmentLevel | Direction | TransportMode | Shipper           | MainCarriageFromPort | MainCarriageToPort |
+            | Direct        | Export    | Air           | TestShipperExport | LHR                  | MIA                |
         When create shipment
         Then the direct should create successfully
 

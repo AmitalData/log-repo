@@ -13,12 +13,12 @@ Feature: Connect and disconnect separate house and master
 
   Scenario: Create house export air shipment
     Given a house Shipment with the following details
-      | ShipmentLevel | Direction | TransportMode | Shipper  | MainCarriageFromPort | MainCarriageToPort |
-      | House         | Export    | Air           | Shipper1 | LHR                  | MIA                |
+      | ShipmentLevel | Direction | TransportMode | Shipper           | MainCarriageFromPort | MainCarriageToPort |
+      | House         | Export    | Air           | TestShipperExport | LHR                  | MIA                |
     When create shipment
     Then the house should create successfully
 
-  Scenario: Connect the house shipment to the master 
+  Scenario: Connect the house shipment to the master
     Given the user in the master's Shipment tab
     When connect the house shipment
     Then the shipment should connect successfully

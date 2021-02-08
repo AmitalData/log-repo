@@ -9,7 +9,7 @@ import { APInvoiceDetails } from "cypress/models/APInvoiceDetails";
 import { ARInvoiceDetails } from "cypress/models/ARInvoiceDetails";
 import * as BaseAssertion from "../../../Base/cypress/actions/Assertion";
 import { PackagesDetails } from "cypress/models/PackagesDetails";
-import { URLs } from "cypress/constants/URLs";
+import { URLs } from "../constants/URLs";
 
 export function NavigatesToShipmentsWorkspace() {
     cy.Click(BaseSelectors.OperationsMenu, null)

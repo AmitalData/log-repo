@@ -3277,7 +3277,10 @@ namespace HypredTest
                     break;
                 case "ShipmentTrucker":
                     response = TestShipmentTruckerService();
-                    break; 
+                    break;
+                case "ShipmentAssginedtoCustomsAgent":
+                    response = TestShipmentCustomsAgentService();
+                    break;
                 default:
                     MessageBox.Show("select a service to test");
                     break;
@@ -3570,7 +3573,7 @@ namespace HypredTest
                 System.ServiceModel.Web.WebOperationContext.Current.OutgoingRequest.Headers.Add("Token", Token);
                 Response response = new Response();
                 response = shipmentservice.Upsert(consolepm, false);
-
+                
                 if (!response.HasError)
                 { //update warehouseleg values
                     consolepm.WarehouseLegWarehouseId = "sss";
@@ -3582,6 +3585,85 @@ namespace HypredTest
             }
         }
 
+        private Response TestShipmentCustomsAgentService()
+        {
+            ShipmentProxy.ShipmentPM consolepm = new ShipmentPM()
+            {
+                ShipmentNumber = "13666",
+                DirectionId = "R",
+                ShipmentLevelCode = "D",
+                Tenant = 1,
+                AccessDate = DateTime.Now,
+                AWBCurrencyId = "USD",
+                BranchId = "HybridB1",
+                DepartmentId = "HybridD1",
+                ChargeableWeightUnitCode = "KG",
+                ConsigneeId = "70000",
+                ShipperId = "70000",
+                ConsigneeReference1 = "PO35104",
+                CreateDateTime = DateTime.Now,
+                CreatedByUserId = "HybridU1",
+                CutoffDate = DateTime.Now,
+                DimensionsUnitCode = "CM",
+
+                FinalDistenationPortId = "TLV",
+                FreightPrepaidCollectId = "C",
+                FromPortId = "JFK",
+                GrossWeightUnitCode = "KG",
+                // House = "4545",
+                IncotermId = "CIF",
+                MainCarriageCarrierId = "LY",
+                MainCarriageFinalDestinationPortId = "TLV",
+                MainCarriageFromPortId = "FRD",
+                MainCarriageToPortId = "TLV",
+                OtherPrepaidCollectId = "C",
+                ProfitCurrencyId = "NIS",
+                ShipmentCustomerTypeCode = "SHI",
+
+
+                ShipmentTypeId = null,//"LCL",
+                //StatusId = "SHOR",
+                ToPortId = "ILTLV",
+                TransportModeId = "A",
+                VolumeUnitCode = "CBM",
+                ChargeableWeight = 0.9999984133,
+                GrossWeight = 0.9999984133,
+                //Master = "12345678",
+                MainCarriageATA = DateTime.Now,
+                MainCarriageETA = DateTime.Now,
+                //ShipperReference1 = "saaaaaaaasdasdasdasaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaasaaaaaaaasdasdasdasaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaasaaaaaaaasdasdasdasaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaasaaaaaaaasdasdasdasaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaasaaaaaaaasdasdasdasaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaasaaaaaaaasdasdasdasaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaasaaaaaaaasdasdasdasaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaasaaaaaaaasdasdasdasaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaasaaaaaaaasdasdasdasaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaasaaaaaaaasdasdasdasaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                // ShipperReference2 
+                // IsCancelled = true,
+                IsCancelled = false,
+                Notes = "testing console via hybrid 123",
+                IsHybrid = true,
+                AccountManagerUserId = "HybridU1",
+                QuoteNumber = "1000",
+                TruckerId = "TEP",
+                AssignedToTruckerDate = DateTime.Today,
+                AssginedtoCustomsAgentId = "TCA",
+                AssginedToCustomsAgentDate = DateTime.Today,
+
+            };
+
+
+            ShipmentProxy.ShipmentWcfServiceClient shipmentservice = new ShipmentProxy.ShipmentWcfServiceClient();
+            using (new System.ServiceModel.OperationContextScope((System.ServiceModel.IClientChannel)shipmentservice.InnerChannel))
+            {
+                System.ServiceModel.Web.WebOperationContext.Current.OutgoingRequest.Headers.Add("Token", Token);
+                Response response = new Response();
+                response = shipmentservice.Upsert(consolepm, false);
+
+                if (!response.HasError)
+                { //update warehouseleg values
+                    consolepm.WarehouseLegWarehouseId = "sss";
+                    consolepm.WarehouseLegActualEntryDate = DateTime.Today;
+                    response = shipmentservice.Upsert(consolepm, false);
+                }
+
+                return response;
+            }
+        }
         private void btnPaymentTerms_Click(object sender, EventArgs e)
         {
             Login();

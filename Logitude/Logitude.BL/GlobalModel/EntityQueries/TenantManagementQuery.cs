@@ -45,6 +45,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                                        BackgroundId = a.BackgroundId,
                                                        ShipmentHeaderImageId = a.ShipmentHeaderImageId,
                                                        ComapnylogoId = a.ComapnylogoId,
+                                                       InvertedLogoId = a.InvertedLogoId,
                                                        BrowserIconId = a.BrowserIconId,
                                                        CustomerURL = a.CustomerURL,
 
@@ -234,6 +235,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                                      BackgroundId = a.BackgroundId,
                                                      ShipmentHeaderImageId = a.ShipmentHeaderImageId,
                                                      ComapnylogoId = a.ComapnylogoId,
+                                                     InvertedLogoId = a.InvertedLogoId,
                                                      BrowserIconId = a.BrowserIconId,
                                                      NoPaymentForChildTenants = a.NoPaymentForChildTenants,
                                                      LastEbookingSentDate = a.LastEbookingSentDate,
@@ -423,6 +425,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
 
                                                   BackgroundId = a.BackgroundId,
                                                   ComapnylogoId = a.ComapnylogoId,
+                                                  InvertedLogoId = a.InvertedLogoId,
                                                   BrowserIconId = a.BrowserIconId,
                                                   ShipmentHeaderImageId = a.ShipmentHeaderImageId,
                                                   NoPaymentForChildTenants = a.NoPaymentForChildTenants,

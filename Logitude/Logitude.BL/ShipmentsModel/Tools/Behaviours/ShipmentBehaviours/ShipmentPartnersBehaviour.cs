@@ -114,6 +114,21 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
                     entityPM.AgentAddressId = initializer.AddressRepository.GetMainAddressId(cardId, initializer.Tenant);
                 }
             }
+
+            else
+            {
+                // from new shipment screen: additional fields
+                if (string.IsNullOrEmpty(entityPM.AgentAddressId))
+                {
+                    Card card = CardRepository.GetSingleCard(cardId, initializer.Tenant, true);
+                    if (card != null)
+                    {
+                        entityPM.AgentName = card.EnglishName;
+                        entityPM.AgentContactId = card.PrimaryContactId;
+                        entityPM.AgentAddressId = initializer.AddressRepository.GetMainAddressId(cardId, initializer.Tenant);
+                    }
+                }
+            }            
         }
         private void HandleShipperNotExporter()
         {

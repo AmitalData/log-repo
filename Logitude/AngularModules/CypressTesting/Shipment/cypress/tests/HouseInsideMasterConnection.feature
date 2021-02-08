@@ -12,7 +12,7 @@ Feature: House connection and disconnection inside master
 
   Scenario: Create house export air shipment inside the master
     Given the user in the master's Shipment tab
-    When create house with "Shipper1" as Shipper
+    When create house with "TestShipperExport" as Shipper
     Then the house should create and connect successfully
 
   Scenario: Disconnect the house shipment

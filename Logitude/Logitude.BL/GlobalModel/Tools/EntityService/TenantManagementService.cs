@@ -128,6 +128,10 @@ namespace Logitude.BL.GlobalModel.Tools.EntityService
             {
                 DeleteImageFromCargoTrackingImages(entityPoco.ComapnylogoId);
             }
+            if (this.entityPM.InvertedLogoId != this.entityPoco.InvertedLogoId)
+            {
+                DeleteImageFromCargoTrackingImages(entityPoco.InvertedLogoId);
+            }
             if (this.entityPM.BrowserIconId != this.entityPoco.BrowserIconId)
             {
                 DeleteImageFromCargoTrackingImages(entityPoco.BrowserIconId);

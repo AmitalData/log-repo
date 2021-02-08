@@ -9,6 +9,9 @@ export class CargoTrackingBrandingData {
     public static ComapnylogoId: string;
     public static ComapnylogoImg:string;
     public static ComapnylogoURL:string;
+    public static InvertedLogoId: string;
+    public static InvertedLogoImg:string;
+    public static InvertedLogoURL:string;
     public static BrowserIconId: string;
     public static BrowserIconImg:string;
     public static BrowserIconURL:string;
@@ -17,6 +20,7 @@ export class CargoTrackingBrandingData {
     public static ShipmentHeaderURL:string;
     public static BrowserIconBytes:any;
     public static ComapnylogoBytes:any;
+    public static InvertedLogoBytes:any;
     public static BackgroundBytes:any;
     public static ShipmentHeaderBytes:any;
 }

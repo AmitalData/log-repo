@@ -1,11 +1,17 @@
-﻿using Logitude.Test.Base.Models;
+﻿using Logitude.Test.Base.Models.Api;
+using Logitude.Test.Base.Models.LocationsPreparation;
+using Logitude.Test.Base.Models.PartnersPreparation;
+using Logitude.Test.Base.Models.Shared;
+using Logitude.Test.Base.Models.UserTenantPreparation;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace Logitude.Test.Base.Services
 {
-    public class DataPreparation
+    public static class DataPreparation
     {
+        #region Get Locations Variables
+
         public static LocationsVariables GetLocationsVariables()
         {
             return new LocationsVariables {
@@ -23,10 +29,32 @@ namespace Logitude.Test.Base.Services
             };
         }
 
+        #endregion
+
+        #region Get Partners Variables
+
         public static PartnersVariables GetPartnersVariables()
         {
-            return null;
+            return new PartnersVariables
+            {
+                VendorId = GetPartnerId("VD", "TestVendor", null),
+                AgentId = GetPartnerId("AG", "TestAgent", null),
+                CustomerId = GetPartnerId("CS", "TestCustomer", null),
+                PotentialCustomerId = GetPartnerId("PO", "TestPotentialCustomer", null),
+                CustomAgentId = GetPartnerId("CG", "TestCustomAgent", null),
+                ShippingAgentId = GetPartnerId("SG", "TestShippingAgent", null),
+                TruckerTLONId = GetPartnerId("TR", "TestTLONTrucker", "TLON"),
+                TruckerTNYCId = GetPartnerId("TR", "TestTNYCTrucker", "TNYC"),
+                ShipperExportId = GetPartnerId("CS", "TestShipperExport", null),
+                AirlineAAId = GetPartnerId("AL", "TestAAAirline", "AA", true),
+                AirlineBAId = GetPartnerId("AL", "TestBAAirline", "BA", true),
+                WarehouseId = GetPartnerId("WH", "TestWarehouse", "TSWHE"),
+                ShippingLineMAEUId = GetPartnerId("SL", "TestMAEUShippingLine", "MAEU", true),
+                ShippingLineMSCUId = GetPartnerId("SL", "TestMSCUShippingLine", "MSCU", true)
+            };
         }
+
+        #endregion
 
         #region Locations Preparation Variables
 
@@ -131,6 +159,135 @@ namespace Logitude.Test.Base.Services
             };
         }
         #endregion
+
+        #endregion
+
+        #region Partners Data Preparation
+
+        private static string GetPartnerId(string partnerTypeCode, string partnerName, string partnerCode, bool copyFromTenantZero = false)
+        {
+            string userTenantPartnerId = GetPartnerIdFromTenant(partnerTypeCode, partnerName, partnerCode, false);
+            if (string.IsNullOrEmpty(userTenantPartnerId))
+            {
+                if (!copyFromTenantZero)
+                {
+                    userTenantPartnerId = CreatePartnerForUserTenant(partnerTypeCode, partnerName, partnerCode);
+                }
+                else
+                {
+                    string tenantZeroPartnerId = GetPartnerIdFromTenant(partnerTypeCode, partnerName, partnerCode, true);
+                    userTenantPartnerId = GetCopiedPartnerFromTenantZero(tenantZeroPartnerId);
+                }
+            }
+
+            return userTenantPartnerId;
+        }
+
+        private static string GetPartnerIdFromTenant(string partnerTypeCode, string partnerName, string partnerCode, bool getFromTenantZero)
+        {
+            string requestUrl = getFromTenantZero ? Urls.CarrierViewsGetTenantImportByFilters : GetUrlForUserTenantPartnerRequest(partnerTypeCode);
+
+            ApiQueryFilters apiQueryFilters = new ApiQueryFilters
+            {
+                PageIndex = 0,
+                PageSize = 1,
+                Filter1Name = string.IsNullOrEmpty(partnerCode) ? "EnglishName" : "Code",
+                Filter1Operator = "equals",
+                Filter1Value = string.IsNullOrEmpty(partnerCode) ? partnerName : partnerCode,
+            };
+
+            ApiResponse<IEnumerable<dynamic>> response = APICaller.CallGetByFilters<IEnumerable<dynamic>>(requestUrl, UserTenant.Token, apiQueryFilters);
+            return response.Data?.FirstOrDefault()?["Id"];
+        }
+
+        private static string CreatePartnerForUserTenant(string partnerTypeCode, string partnerName, string partnerCode)
+        {
+            Partner partner = BuildPartner(partnerTypeCode, partnerName, partnerCode);
+            ApiResponse<Partner> response = APICaller.CallPost<Partner>(partner, Urls.PartnersDomainController, UserTenant.Token);
+            return response.Data?.PartnerId;
+        }
+
+        private static string GetCopiedPartnerFromTenantZero(string tenantZeroPartnerId)
+        {
+            string requestUrl = Urls.PartnersDomainGetCarrierCopyToCurrentTenant(tenantZeroPartnerId);
+            ApiResponse<dynamic> response = APICaller.CallGet<dynamic>(requestUrl, UserTenant.Token);
+            return response.Data?["Id"];
+        }
+
+        private static Partner BuildPartner(string partnerTypeCode, string partnerName, string partnerCode)
+        {
+            Partner partner = new Partner
+            {
+                Tenant = UserTenant.Tenant,
+                PartnerTypeId = partnerTypeCode
+            };
+
+            PartnerInformation partnerInformation = new PartnerInformation
+            {
+                Tenant = UserTenant.Tenant,
+                EnglishName = partnerName,
+                LocalName = partnerName,
+                PartnerTypeId = partnerTypeCode,
+                Code = partnerCode
+            };
+
+            switch (partnerTypeCode)
+            {
+                case "VD":
+                    partner.Vendor = partnerInformation;
+                    return partner;
+                case "AG":
+                    partner.Agent = partnerInformation;
+                    return partner;
+                case "CS":
+                case "PO":
+                    partner.Customer = partnerInformation;
+                    return partner;
+                case "CG":
+                    partner.CustomAgent = partnerInformation;
+                    return partner;
+                case "SG":
+                    partner.ShippingAgent = partnerInformation;
+                    return partner;
+                case "TR":
+                    partner.Trucker = partnerInformation;
+                    partner.Trucker.CarrierTypeId = partnerTypeCode;
+                    return partner;
+                case "WH":
+                    partner.Warehouse = partnerInformation;
+                    return partner;
+                default:
+                    return null;
+            }
+        }
+
+        private static string GetUrlForUserTenantPartnerRequest(string partnerTypeCode)
+        {
+            switch (partnerTypeCode)
+            {
+                case "VD":
+                    return Urls.VendorViewsGetByFilters;
+                case "AG":
+                    return Urls.AgentViewsGetByFilters;
+                case "CS":
+                case "PO":
+                    return Urls.CustomerViewsGetByFilters;
+                case "CG":
+                    return Urls.CustomAgentViewsGetByFilters;
+                case "SG":
+                    return Urls.ShippingAgentViewsGetByFilters;
+                case "TR":
+                    return Urls.TruckerViewsGetByFilters;
+                case "AL":
+                    return Urls.AirlineViewsGetByFilters;
+                case "WH":
+                    return Urls.WarehouseViewsGetByFilters;
+                case "SL":
+                    return Urls.ShippingLineViewsGetByFilters;
+                default:
+                    return null;
+            }
+        }
 
         #endregion
     }

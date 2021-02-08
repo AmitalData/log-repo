@@ -961,6 +961,7 @@
     <Compile Include="AccountingModel\DomainServices\AccountingDomainService.GLAccountLedgerTransaction.cs" />
     <Compile Include="AccountingModel\DomainServices\AccountingDomainService.UserDefinedReport.cs" />
     <Compile Include="AccountingModel\LedgerTransactionService\TransactionsBalanceByFiltersService.cs" />
+    <Content Include="App_Code\AngularJS_App_Code\DocumentTypeCopyExtendedController.cs" />
     <Compile Include="CommonDataModel\LogitudeGridExportToExcel\LogitudeGridExportToExcelArguments.cs" />
     <Compile Include="CommonDataModel\LogitudeGridExportToExcel\LogitudeGridExportToExcelHelper.cs" />
     <Compile Include="Controllers\AccountingModel\BankCodeController.cs" />
@@ -991,7 +992,6 @@
     <Compile Include="Controllers\CargoTrackingModel\Generated\PMControllers\CargoTrackingShipmentSearchController.Generated.cs" />
     <Compile Include="Controllers\CargoTrackingModel\Generated\PMControllers\CargoTrackingTransportModeController.Generated.cs" />
     <Compile Include="Controllers\CargoTrackingModel\Generated\PMControllers\CargoTrackingWatermarkController.Generated.cs" />
-    <Compile Include="Controllers\Integration\IntegrationTestController.cs" />
     <Compile Include="Controllers\CommonDataModel\Extended\CarrierAreaExtendedController.cs" />
     <Compile Include="Controllers\CommonDataModel\Extended\LogitudeGridExportToExcelController.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\ListControllers\HorseViewsController.Generated.cs" />
@@ -2592,7 +2592,7 @@
     <Compile Include="Helpers\AutomationModel\ReportTemplateDocOutService.cs" />
     <Compile Include="Helpers\AutomationModel\FTPAutomationService.cs" />
     <Compile Include="Helpers\BIReportsSecurityIntegrationService.cs" />
-    <Compile Include="Helpers\BIReport\BuildBIReportHtmlService.cs" />
+    <Compile Include="Helpers\BIReport\BIReportHtmlRenderingService.cs" />
     <Compile Include="Helpers\BIReport\ExportBIReportService.cs" />
     <Compile Include="Helpers\BIReport\ExportBIReportExcelService.cs" />
     <Compile Include="Helpers\BIReport\ExportBIReportPdfService.cs" />

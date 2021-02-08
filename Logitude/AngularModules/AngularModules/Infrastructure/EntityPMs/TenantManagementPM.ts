@@ -712,7 +712,10 @@ export class TenantManagementPM {
     private shipmentHeaderImageId: string;
     public get ShipmentHeaderImageId() { return this.shipmentHeaderImageId; }
     public set ShipmentHeaderImageId(newValue: string) { if (this.shipmentHeaderImageId != newValue) { this.shipmentHeaderImageId = newValue; this.MarkAsDirty("ShipmentHeaderImageId"); } }
-       
+
+    private invertedLogoId: string;
+    public get InvertedLogoId() { return this.invertedLogoId; }
+    public set InvertedLogoId(newValue: string) { if (this.invertedLogoId != newValue) { this.invertedLogoId = newValue; this.MarkAsDirty("InvertedLogoId"); } }
 	 
     private privateLabelId: string;
     public get PrivateLabelId() { return this.privateLabelId; }

@@ -8,6 +8,7 @@ import { CargoTrackingBrandingDataExtendedService } from 'src/CargoTracking/Serv
 import { CargoTrackingBrandingData } from 'src/CargoTracking/DataContracts/CargoTrackingBrandingData';
 import { ServiceResponse } from 'src/CargoTracking/DataContracts/ServiceResponse';
 import { ServiceHelper } from 'src/CargoTracking/Utilities/ServiceHelper';
+import { LoginExtendedService } from 'src/Infrastructure/Services/Extended/LoginExtendedService';
 
 
 
@@ -25,36 +26,83 @@ export class UserDashboardComponent implements AfterViewInit
     currentDate = new Date();
     FilteredItems: any[] = [];
     Shipments: CargoTrackingShipmentList[] = [];
-    UserName:string;
+    UserName: string;
     ConnectedCustomers: string[] = [];
-    IsBrandingDataLoaded:boolean = false;
-    get tenant(){
-         return CargoTrackingBrandingData.Tenant;
-    }
-    set tenant(val:number){
-          CargoTrackingBrandingData.Tenant = val;
-    }
-    constructor(private cargoTrackingDataExtendedService: CargoTrackingBrandingDataExtendedService,private router: Router,@Inject('BASE_URL') baseUrl: string )
-    {
-         
-         document.documentElement.style.setProperty('--BGColor', 'RGB(250,251,252)');
-         this.GetcargoTrackingData(baseUrl);
-         this.InitComponent();
+    IsBrandingDataLoaded: boolean = false;
+    UserNameFirstLetters: string;
+    baseURL;
 
+    get tenant()
+    {
+        return CargoTrackingBrandingData.Tenant;
     }
- 
+    set tenant(val: number)
+    {
+        CargoTrackingBrandingData.Tenant = val;
+    }
+
+
+    constructor(
+        private brandingService: CargoTrackingBrandingDataExtendedService,
+        private loginService: LoginExtendedService,
+        private router: Router,
+        @Inject('BASE_URL') baseUrl: string) {
+        this.baseURL = baseUrl;
+        this.InitComponent();
+    }
+
+    private SetDefaultBackgroundColor()
+    {
+        document.documentElement.style.setProperty('--BGColor', 'RGB(250,251,252)');
+    }
+
     private InitComponent()
     {
 
+        this.SetDefaultBackgroundColor();
+        this.GetBrandingData();
+        this.GetLoggedUserIfNotSet();
         this.Authenticate();
-        this.GetLoggedUserNameFromLoggedEmail();
     }
 
-    private GetLoggedUserNameFromLoggedEmail()
+
+    private GetLoggedUserIfNotSet()
     {
-        var loggedEmail = sessionStorage.getItem("LoggedUserEmail");
-        this.UserName = loggedEmail?.split('@')[0] || 'Saitama Con';
+        if (!SessionInfo.LoggedUserPM) {
+            var tenant = sessionStorage.getItem("LoggedUserTenant");
+            var email = sessionStorage.getItem("LoggedUserEmail");
+            this.GetLoggedUserPM(email, tenant);
+        }else{
+            this.UserName = SessionInfo.LoggedUserPM.EnglishName;
+            this.SetFirstUserLetters(SessionInfo.LoggedUserPM.EnglishName);
+        }
     }
+
+    private GetLoggedUserPM(email: any, tenant: any)
+    {
+        this.loginService.GetLoggedUser(email, tenant).subscribe((loggedUserPM: any) =>
+        {
+            if (loggedUserPM) {
+                SessionInfo.LoggedUserPM = loggedUserPM;
+                this.UserName = SessionInfo.LoggedUserPM.EnglishName;
+                this.SetFirstUserLetters(SessionInfo.LoggedUserPM.EnglishName);
+            }
+        });
+    }
+    private SetFirstUserLetters(userName: string)
+    {
+        if (userName) {
+            var splitted = userName.split(" ");
+            if (splitted.length == 1)
+                this.UserNameFirstLetters = splitted[0][0];
+            else if (splitted.length == 2)
+                this.UserNameFirstLetters = splitted[0][0] + splitted[1][0];
+            else if (splitted.length == 0)
+                this.UserNameFirstLetters = "Aa";
+
+        }
+    }
+
     private GetCompanyLoginsFromCache()
     {
         SessionInfo.LoggedUserCompanyLogins = JSON.parse(sessionStorage.getItem("LoggedUserCompanyLogins"));
@@ -67,29 +115,31 @@ export class UserDashboardComponent implements AfterViewInit
         this.ConnectedCustomers = SessionInfo.LoggedUserCompanyLogins
             .filter(d => d.CardType == 'CS' && d.CardId != null && d.Tenant == this.tenant)
             .map(d => d.CardId);
-            console.log("[Invited Customers]",this.ConnectedCustomers);            
+        console.log("[Invited Customers]", this.ConnectedCustomers);
     }
 
-  
+
 
     private Authenticate()
     {
         var loggedEmail = sessionStorage.getItem("LoggedUserEmail");
-        if (!loggedEmail) 
-            this.router.navigate(["Cargo-Tracking", "login"]);        
+        if (!loggedEmail)
+            this.router.navigate(["Cargo-Tracking", "login"]);
     }
 
     isNavOpened = false;
 
-    openNav(){
+    openNav()
+    {
         this.isNavOpened = !this.isNavOpened;
     }
 
 
-    SignOutClicked(){
+    SignOutClicked()
+    {
         this.tenant = +sessionStorage.getItem("LoggedUserTenant");
         sessionStorage.clear();
-        if(this.tenant)
+        if (this.tenant)
 
             this.router.navigate(["Cargo-Tracking/login"]);//,{ queryParams: {tenant: this.tenant}}
         else
@@ -97,37 +147,50 @@ export class UserDashboardComponent implements AfterViewInit
     }
 
 
-    public GoToError401(){
+    public get InvertedLogoURL()
+    {
+        return CargoTrackingBrandingData.InvertedLogoURL;
+    }
+
+    public RedirectTo401Page()
+    {
         this.router.navigate(['Error401']);
     }
 
- 
-    private GetcargoTrackingData(baseUrl:string)
-    {   if(this.tenant) 
-        this.IsBrandingDataLoaded = true;
-        this.cargoTrackingDataExtendedService.GetCargoTrackingBrandingDataForPrivateSite(ServiceHelper.GetcargoTrackingDataRequest(baseUrl)).subscribe((response: ServiceResponse) =>
-        { if(response.Result){
 
-            ServiceHelper.SetCargoTrackingDate(response.Result,baseUrl);
+    private GetBrandingData()
+    {
+        if (this.tenant)
             this.IsBrandingDataLoaded = true;
-        }
-        else{
-            this.GoToError401();
-        }
-          
+
+
+        this.brandingService.GetUserDashboardBrandingData(ServiceHelper.GetcargoTrackingDataRequest(this.baseURL))
+        .subscribe((response: ServiceResponse) =>
+        {
+            if (response.Result) {
+                ServiceHelper.SetCargoTrackingDate(response.Result, this.baseURL);
+                
+                this.IsBrandingDataLoaded = true;
+            }
+            else {
+                this.RedirectTo401Page();
+            }
+
         });
     }
-    
+
     ngAfterViewInit()
-    { 
+    {
 
     }
-    get ComapnyLogo(){
+    get ComapnyLogo()
+    {
         return CargoTrackingBrandingData.ComapnylogoURL;
-    } 
-    get BrowserIcon(){
+    }
+    get BrowserIcon()
+    {
         return CargoTrackingBrandingData.BrowserIconURL;
-    } 
+    }
     get BackGroundImg()
     {
         return CargoTrackingBrandingData.BackgroundURL;
@@ -135,6 +198,7 @@ export class UserDashboardComponent implements AfterViewInit
     get ShipmentHeaderImage(){
         return CargoTrackingBrandingData.ShipmentHeaderURL;
     }
-  
     
+
+
 }

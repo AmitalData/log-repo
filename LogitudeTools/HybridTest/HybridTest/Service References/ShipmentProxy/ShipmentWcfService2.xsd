@@ -86,6 +86,8 @@
       <xs:element minOccurs="0" name="ArrivalNoticeSentDate" nillable="true" type="xs:dateTime" />
       <xs:element minOccurs="0" name="AsAgreedFreight" type="xs:boolean" />
       <xs:element minOccurs="0" name="AsAgreedOtherCharges" type="xs:boolean" />
+      <xs:element minOccurs="0" name="AssginedToCustomsAgentDate" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="AssginedtoCustomsAgentId" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="AssignedToTruckerDate" nillable="true" type="xs:dateTime" />
       <xs:element minOccurs="0" name="BaseShipmentNumber" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="BasicFreightId" nillable="true" type="xs:string" />

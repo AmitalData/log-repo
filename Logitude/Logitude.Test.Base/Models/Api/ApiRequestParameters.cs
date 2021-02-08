@@ -1,6 +1,6 @@
 ﻿using RestSharp;
 
-namespace Logitude.Test.Base.Models
+namespace Logitude.Test.Base.Models.Api
 {
     public class ApiRequestParameters
     {

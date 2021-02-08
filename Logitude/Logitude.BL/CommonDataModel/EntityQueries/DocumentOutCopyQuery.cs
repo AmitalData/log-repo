@@ -169,5 +169,23 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             return documentOutCopy;
         }
 
+        public DocumentOutCopyPM GeDocumentOutCopyPMByDocumentOutIdAndDocumentCopyId(string documentOutId, string documentCopyId, int tenant)
+        {
+
+            DocumentOutCopyPM documentOutCopy = (from a in repository.context.DocumentOutCopies.Include("DocumentTypeCopy")
+                                                 where a.Tenant == tenant
+                                                 && a.DocumentTypeCopy.InActive == false
+                                                 && a.DocumentOutId == documentOutId && a.DocumentTypeCopyId == documentCopyId
+                                                 select new DocumentOutCopyPM()
+                                                 {
+                                                     Id = a.Id,
+                                                     DocumentOutId = a.DocumentOutId,
+                                                     DocumentId = a.DocumentId,
+                                                     DocumentTypeCopyId = a.DocumentTypeCopyId,
+                                                     Tenant = a.Tenant,
+                                                 }).FirstOrDefault();
+
+            return documentOutCopy;
+        }
     }
 }

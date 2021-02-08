@@ -5,7 +5,9 @@ using System.Collections.Generic;
 using System.Linq;
 using TechTalk.SpecFlow;
 using Logitude.ShipmentTests.Models;
-using Logitude.Test.Base.Models;
+using Logitude.Test.Base.Models.Api;
+using Logitude.Test.Base.Models.Shared;
+using Logitude.Test.Base.Models.UserTenantPreparation;
 
 namespace Logitude.ShipmentTests.Steps.SecurityTests
 {
