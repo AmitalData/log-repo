@@ -112,10 +112,10 @@ export class PublicShipmentDetailsComponent implements OnInit
         this.SecurityKey = _id;
         return _id;
     }
-
-
-
-
+   
+    public get ShipmentHeaderImage(){
+        return CargoTrackingBrandingData.ShipmentHeaderURL;
+    }
 
     goBack(): void
     {

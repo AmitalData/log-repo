@@ -274,6 +274,10 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 }
             }
 
+            bool isTotalInvoiceAmountAndVatAmountHaveOppositeSigns = (entityPM.TotalInvoiceAmount > 0 && entityPM.VatAmount < 0) || (entityPM.TotalInvoiceAmount < 0 && entityPM.VatAmount > 0);
+            if (isTotalInvoiceAmountAndVatAmountHaveOppositeSigns)
+                entityPM.StatusCode = StatusCode_VATAmountInTheRecordIsHigherThanThePercentageOfVATAllowed;
+
         }
         private void UpdateStatusByTransmitStatusCode(TaxReportLinePM taxReportLinePM, TaxReportLine taxReportLine )
         {

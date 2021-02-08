@@ -227,9 +227,9 @@ export class SearchComponent implements AfterViewInit,OnInit, OnDestroy
             (result: any) =>
             {   RootContext.StopBusyIndicator();
                 this.isLoading = false;
-
                 console.log("[getShipments]", result);
-                this.Shipments = result;
+
+                this.Shipments = this.SortShipmentsBasedOnCurrentMilestoneDate(result);
                 this.noResult = this.Shipments.length == 0 && !!this.SearchText;
             },
             errorObject=>
@@ -244,8 +244,36 @@ export class SearchComponent implements AfterViewInit,OnInit, OnDestroy
         } else {
             this.Shipments = [];
         }
-
     }
+
+    private SortShipmentsBasedOnCurrentMilestoneDate(result: any) : CargoTrackingShipmentList[] {
+        var sortedShipments: CargoTrackingShipmentList[] = result.sort((first, second) => {
+            var isBothCurrentMilestoneDateExistAndNotEqual = first.CurrentMilestoneDate != null && second.CurrentMilestoneDate != null && first.CurrentMilestoneDate != second.CurrentMilestoneDate;
+            if (isBothCurrentMilestoneDateExistAndNotEqual) {
+                if (first.CurrentMilestoneDate > second.CurrentMilestoneDate) {
+                    return -1;
+                }
+
+                if (first.CurrentMilestoneDate < second.CurrentMilestoneDate) {
+                    return 1;
+                }
+            }
+            else {
+                if (first.CreateDate > second.CreateDate) {
+                    return -1;
+                }
+
+                if (first.CreateDate < second.CreateDate) {
+                    return 1;
+                }
+
+                return 0;
+            }
+        });
+        return sortedShipments;
+       
+    }
+
     references: string[];
     SplitReference(reference: string){
         this.references = reference != null ? reference.split(',').slice(0, 6) : null;

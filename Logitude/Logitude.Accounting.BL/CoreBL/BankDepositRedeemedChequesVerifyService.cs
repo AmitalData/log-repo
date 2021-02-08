@@ -6,6 +6,7 @@ using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Accounting.Data.Repositories;
 using Logitude.Accounting.Def.EntityPMs;
 using Simplog.Data.CommonDataModel.Repositories;
+using Simplog.Data.InvoiceModel;
 using Simplog.Data.InvoiceModel.EntityPOCOs;
 using Simplog.Data.InvoiceModel.Repositories;
 using Simplog.Server.Infrastructure;
@@ -104,6 +105,56 @@ namespace Logitude.Accounting.BL.CoreBL
             Log(">>> cheques recalculated successfully for giver tenants");
 
         }
+        public void RecalculateAllBilltoChequesTotals(List<string> Tenants)
+        {
+            Log(">>> fixing cheques totals");
+
+            foreach (var tenantStr in Tenants)
+            {
+                using (TransactionScope scope = TransactionFactory.GetTransaction())
+                {
+                    try
+                    {
+                        Log("-----------------------------------------------------------------");
+                        Log("   >>> fixing for tenant " + tenantStr);
+
+                        if (string.IsNullOrWhiteSpace(tenantStr))
+                            return;
+
+                        var tenant = Convert.ToInt32(tenantStr);
+
+                        // get billto glaccounts
+                        IAccountingContext MyContext = AccountingContext.GetContext(tenant);
+                        IInvoiceContext invoiceContext = InvoiceContext.GetContext(tenant);
+
+                        var billToAccounts = (from cheque in invoiceContext.ARPaymentChequeReplicas
+                                       join payment in invoiceContext.ARPayments on cheque.PaymentId equals payment.Id
+                                       where cheque.Tenant == tenant
+                                       select payment.BillToId).Distinct().ToList();
+
+                        foreach (var billTo in billToAccounts)
+                            CalculateBilltoFutureCheques(tenant, billTo);
+
+                        scope.Complete();
+                        Log("   >>>>> tenant (" + tenantStr + ") cheques recalculated successfully");
+                    }
+                    catch (Exception ex)
+                    {
+                        Log("*FAILED* Tenant(" + tenantStr + ")" + ex.Message);
+
+                        throw;
+                    }
+
+
+                }
+            }
+
+
+            Log(".........................");
+            Log(".........................");
+            Log(">>> cheques recalculated successfully for giver tenants");
+
+        }
 
         public List<ARPaymentChequePM> GetNotRedeemedReconciledCheques(int tenant)
         {
@@ -122,9 +173,9 @@ namespace Logitude.Accounting.BL.CoreBL
             List<string> depositIds
                                 = (from ledger in context.LedgerTransactions
                                   join journal in context.Journals on ledger.JournalId equals journal.Id
-                                  join cheque in context.ARPaymentCheques on journal.AccountingEntityId equals cheque.Id
                                   where ledger.IsExternalReconcile == true
                                          && journal.AccountingEntityCode == "6"
+                                         && ledger.Tenant == tenant
                                   select journal.AccountingEntityId).ToList();
 
             List<string> paymentChequeIds = (from a in context.BankDepositLines
@@ -270,7 +321,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
         private void writeChequesOnFile()
         {
-            var fileName = "cheques.csv";
+            var fileName = @"D:\Abdullah\cheques.csv";
             // Check if file already exists. If yes, delete it.     
             if (File.Exists(fileName))
             {
@@ -327,6 +378,8 @@ namespace Logitude.Accounting.BL.CoreBL
             GLAccountMoreDataQueryService moreDataQueryService = new GLAccountMoreDataQueryService(tenant);
             IAccountingContext MyContext = AccountingContext.GetContext(tenant);
             GLAccountMoreDataPM moreDataPM = moreDataQueryService.GetSingle(GLAccountId, false, false);
+            if (moreDataPM == null)
+                return;
             GLAccountMoreDataUpdateService updateService = new GLAccountMoreDataUpdateService(MyContext, new Dictionary<string, IContext>(), tenant);
             moreDataPM.TotFutureOpenChequesInLocalCur = 0;
             moreDataPM.TotalOpenChequesInLocalCur = 0;

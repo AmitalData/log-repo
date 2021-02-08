@@ -28,10 +28,14 @@ export  class ServiceHelper{
     {   var BackgroundId:string = this.GetImageIdFromStorage("BackgroundImg");
         var CompanyLogoId:string = this.GetImageIdFromStorage("CompanyLogoImg");
         var BrowserIconId:string = this.GetImageIdFromStorage("BrowserIconImg");
+        var ShipmentHeaderImageId:string = this.GetImageIdFromStorage("ShipmentHeaderImage");
+        
         var BrandingDataRequest:CargoTrackingBrandingDataRequest = new CargoTrackingBrandingDataRequest();
         BrandingDataRequest.BackgroundId = BackgroundId;
         BrandingDataRequest.ComapnylogoId = CompanyLogoId;
         BrandingDataRequest.BrowserIconId = BrowserIconId;
+        BrandingDataRequest.ShipmentHeaderImageId = ShipmentHeaderImageId;
+        
         BrandingDataRequest.Domain = baseUrl;
         return BrandingDataRequest;
     }
@@ -61,6 +65,7 @@ export  class ServiceHelper{
         this.SetBackGroundImg(BrandingData,baseUrl);
         this.SetComapnyLogo(BrandingData,baseUrl);
         this.SetBrowserIcon(BrandingData);
+        this.SetShipmentHeaderImage(BrandingData);
     }
     private static SetBackGroundImg(BrandingData:any,baseUrl:string)
     {
@@ -89,6 +94,20 @@ export  class ServiceHelper{
             var StorageCompanyLogo:CargoTrackingImage = ServiceHelper.GetImageFromStorage("CompanyLogoImg");
                 if(StorageCompanyLogo && StorageCompanyLogo.Id!=null && StorageCompanyLogo.Id == BrandingData.ComapnylogoId){
                     CargoTrackingBrandingData.ComapnylogoURL =ServiceHelper.GetImageFromBytes(StorageCompanyLogo.Data);
+                }
+        }
+    }
+
+    private static SetShipmentHeaderImage(BrandingData:any)
+    {
+        if(BrandingData.ShipmentHeaderBytes){
+            CargoTrackingBrandingData.ShipmentHeaderURL = ServiceHelper.GetImageFromBytes(BrandingData.ShipmentHeaderBytes);
+            this.StoreImageInStorage("ShipmentHeaderImage",BrandingData.ShipmentHeaderImageId,BrandingData.ShipmentHeaderBytes);
+        }
+        else{
+            var StorageShipmentHeaderImage:CargoTrackingImage = ServiceHelper.GetImageFromStorage("ShipmentHeaderImage");
+                if(StorageShipmentHeaderImage && StorageShipmentHeaderImage.Id!=null && StorageShipmentHeaderImage.Id == BrandingData.ShipmentHeaderImageId){
+                    CargoTrackingBrandingData.ShipmentHeaderURL =ServiceHelper.GetImageFromBytes(StorageShipmentHeaderImage.Data);
                 }
         }
     }

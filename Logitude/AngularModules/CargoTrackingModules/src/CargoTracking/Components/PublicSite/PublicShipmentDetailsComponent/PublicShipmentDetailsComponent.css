@@ -13,11 +13,16 @@ a {
 .box-header {
     background: #EDEEFA;
     border-radius: 3px;
-    width: 100%;
+    width: calc(100% - 40px);
     min-height: 80px;
     margin-top: 10px;
     position: relative;
     overflow: auto;
+
+    background: white;
+    box-shadow: 0px 0px 5px 0px #00000021;
+    border-radius: 5px;
+    padding: 20px;
 }
 
 .box-header .icon {
@@ -38,9 +43,12 @@ a {
 
 .box-header img {
     position: absolute;
-    top: -56px;
-    right: 10vw;
-    width: 168px;
+    margin-left: auto;
+    top: 10px;
+    right: 5vw;
+    left: 400px;
+    height:80px;
+    width: auto
 }
 
 .box-header ul{
@@ -170,6 +178,7 @@ ul.line-list li.tick {
     background:var(--MainColor); /*#002664;*/
     color: white;
     font-weight: 600;
+
 }
 
 .steps-list li.dimmed {
@@ -373,11 +382,152 @@ ul.line-list li.tick {
 
 @media screen and (max-width: 479px) {
     .box-header {
-        background: none;
-        height: 140px;
+        min-height: 140px;
+        margin: 40px 0px;
+        width: calc(100% - 40px);
     }
     .box-header .field {
         width: calc(50% - 40px);
+        min-height: 50px;
+    }
+    .milestones>div {
+        width: 70px;
+        height: 40px;
+    }
+    .milestones img,
+    .milestones svg,
+    .milestones .details {
+        display: none;
+    }
+    .milestones .label {
+        font-weight: normal;
+        font-size: 12px;
+    }
+    .milestones .middle .label {
+        font-size: 16px !important;
+        font-weight: bold;
+    }
+    .milestones .start {
+        left: -25px;
+    }
+    .milestones .end {
+        left: calc(100% - 40px);
+    }
+    .shipment-timeline {
+        width: 100%;
+    }
+    .line-progressbar {
+        margin-top: 35px;
+    }
+    .steps-list li>div {
+        display: block;
+        padding-right: 0 !important;
+    }
+    .steps-list li>div.date {
+        /* color: white; */
+        font-weight: normal;
+        /* order: 3; */
+        float: right;
+        text-align: right;
+
+        padding-right: 5px;
+    }
+    .steps-list li>div.caption {
+        font-weight: bold;
+        float: left;
+        width: fit-content !important;
+    }
+    .steps-list li>div.desc {
+        font-weight: normal;
+        width: calc(100% - 30px) !important;
+        white-space: pre-line;
+        padding-left: 30px;
+        word-break: break-word;
+    }
+    .steps-list li {
+        /* display: flex;
+        flex-direction: column; */
+    }
+    .steps-list li:hover:not(.dimmed),
+    .steps-list li.highlighted {
+        /* background: none;
+        color: black; */
+        font-weight: normal;
+        border-radius: 15px;
+    }
+    .steps-list li.highlighted>.caption {
+        background: var(--MainColor);
+        border-radius: 15px;
+        padding: 3px 3px;
+        color: white;
+        width: fit-content !important;
+    }
+    .steps-list li:hover:not(.dimmed) {
+        /* background: none; */
+    }
+    .steps-list li>div.tick {
+        width: 15px;
+        padding-right: 10px !important;
+        position: relative;
+        left: 0;
+        top: 0;
+        float: left;
+    }
+    .steps-list li {
+        margin: 0 -35px;
+    }
+
+    .steps-list li:hover:not(.dimmed),
+    .steps-list li.highlighted {
+        margin: 0px -35px;
+    }
+}
+
+
+
+
+@media screen and (max-width: 1000px) {
+    /* .panel {
+        width: calc(100% - 40px) !important;
+        margin-bottom: 30px;
+        float: none;
+    } */
+    .panel {
+        width: calc(100% - 40px) !important;
+        margin-bottom: 30px;
+        float: none;
+        background: initial;
+        box-shadow: none;
+        border: none;
+    }
+    .ShipmentHeaderImage{
+      display: none;
+    }
+    .panel-container {
+        background: white;
+        box-shadow: 0px 0px 5px 0px #00000021;
+        border-radius: 5px;
+        padding-top: 15px;
+    }
+    .shipment-details {
+        padding-top: 0;
+    }
+}
+
+
+.hide{
+    display: none;
+}
+
+ @media screen and (max-height: 479px) and (orientation: landscape){
+    .box-header {
+        min-height: 140px;
+        margin: 40px 0px;
+        width: calc(100% - 40px);
+    }
+    .box-header .field {
+        width: calc(50% - 40px);
+        min-height: 50px;
     }
     .milestones>div {
         width: 70px;
@@ -412,67 +562,61 @@ ul.line-list li.tick {
         display: block;
     }
     .steps-list li>div.date {
-        color: gray;
+        /* color: white; */
         font-weight: normal;
-        order: 3;
+        /* order: 3; */
+        float: right;
+        text-align: right;
+ 
+        padding-right: 5px;
     }
     .steps-list li>div.caption {
         font-weight: bold;
+        float: left;
+        width: fit-content !important;
     }
     .steps-list li>div.desc {
         font-weight: normal;
-        width: 100% !important;
+        width: calc(100% - 30px) !important;
+        white-space: pre-line;
+        padding-left: 30px;
+        word-break: break-word;
     }
     .steps-list li {
-        display: flex;
-        flex-direction: column;
+        /* display: flex;
+        flex-direction: column; */
     }
     .steps-list li:hover:not(.dimmed),
     .steps-list li.highlighted {
-        background: none;
-        color: black;
+        /* background: none;
+        color: black; */
         font-weight: normal;
+        border-radius: 15px;
     }
     .steps-list li.highlighted>.caption {
         background: var(--MainColor);
         border-radius: 15px;
-        padding: 3px 10px;
+        padding: 3px 3px;
         color: white;
         width: fit-content !important;
     }
     .steps-list li:hover:not(.dimmed) {
-        background: none;
+        /* background: none; */
     }
     .steps-list li>div.tick {
         width: 15px;
         padding-right: 10px !important;
         position: relative;
-        left: -24px;
-        top: 23px;
+        left: 0;
+        top: 0;
+        float: left;
     }
-}
-
-@media screen and (max-width: 1000px) {
-    /* .panel {
-        width: calc(100% - 40px) !important;
-        margin-bottom: 30px;
-        float: none;
-    } */
-    .panel {
-        width: calc(100% - 40px) !important;
-        margin-bottom: 30px;
-        float: none;
-        background: initial;
-        box-shadow: none;
-        border: none;
+    .steps-list li {
+        margin: 0 -35px;
     }
-    .panel-container {
-        background: white;
-        box-shadow: 0px 0px 5px 0px #00000021;
-        border-radius: 5px;
-        padding-top: 15px;
-    }
-    .shipment-details {
-        padding-top: 0;
+ 
+    .steps-list li:hover:not(.dimmed),
+    .steps-list li.highlighted {
+        margin: 0px -35px;
     }
 }
