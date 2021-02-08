@@ -19,9 +19,8 @@
     "mochawesome": "^4.1.0",
     "mochawesome-merge": "^2.0.1",
     "mochawesome-report-generator": "4.0.1",
-    "typescript": "^4.1.3"
-    "cypress-file-upload": "^5.0.2",
     "typescript": "^4.1.3",
+    "cypress-file-upload": "^5.0.2",
     "cypress-mochawesome-reporter": "^1.0.1"
-      }
+  }
 }
