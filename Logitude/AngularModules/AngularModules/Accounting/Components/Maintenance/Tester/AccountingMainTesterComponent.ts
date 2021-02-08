@@ -136,7 +136,7 @@ export class AccountingMainTesterComponent extends BaseComponent {
             To: new Date(),
             CurrencyId: SessionLocator.AccountingCurrencyId,
             DateTypeCode: "1",
-            GLAccountId: "1-1050",
+            GLAccountId: "1-140",
 
             SearchFields: "",
             PageStartAtRecordIndex: 0,
@@ -161,6 +161,13 @@ export class AccountingMainTesterComponent extends BaseComponent {
                 this.JsonList = resObj;
             }
         });
+    }
+
+    CardIndexNewDrillDown1st_Click() {
+        let resObj = JSON.parse(this.JsonOut);
+        if (Array.isArray(resObj)) {
+            this.JsonList =resObj[0]["MyLedgerTransactionList"];
+        }
     }
 
     _TrailReport_Click() {
