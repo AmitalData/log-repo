@@ -10,11 +10,21 @@ namespace Logitude.BL.CommonDataModel.Tools.Validating
 {
     public class UserValidating
     {
-        public static void Validate(UserPM entityPM)
+        public static void Validate(UserPM entityPM, bool isNew)
         {
             RoleQuery roleQuery = new RoleQuery(entityPM.Tenant);
-            List<RolePM> roles = roleQuery.GetRolesByUser(entityPM.Id, entityPM.Tenant).Where(d => d.Exists).ToList();
-            List<string> parentRolesIds = roles.Where(d => !string.IsNullOrEmpty(d.ParentRoleId)).Select(a => a.ParentRoleId).ToList();
+            List<RolePM> roles = new List<RolePM>();
+
+            if (isNew)
+            {
+                roles = entityPM.RolePMLists;
+            }
+            else
+            {
+                roles = roleQuery.GetRolesByUser(entityPM.Id, entityPM.Tenant).ToList();
+            }
+
+            List<string> parentRolesIds = roles.Where(d => d.Exists && !string.IsNullOrEmpty(d.ParentRoleId)).Select(a => a.ParentRoleId).ToList();
 
             if (roles.Where(d => parentRolesIds.Contains(d.Id)).Any())
             {

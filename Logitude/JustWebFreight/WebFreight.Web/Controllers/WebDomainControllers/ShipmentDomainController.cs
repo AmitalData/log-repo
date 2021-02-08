@@ -371,7 +371,8 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         ShipmentLevelCode = args.ShipmentLevelCode,
                         Master = args.Master,
                         AirlinePrefix = args.AirlinePrefix,
-                        IsCancelled = args.IsCancelled,                        
+                        IsCancelled = args.IsCancelled,
+                        OperationalDate = args.OperationalDate,
                     });
                 }
 
@@ -381,23 +382,6 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 }
 
                 return Request.CreateResponse(HttpStatusCode.OK, myResult);
-                
-                //bool isFieldExists = ShipmentValidating.IsMasterFieldUsedByAnotherShipment(args.ShipmentId, args.Master, args.AirlinePrefix, args.DirectionId, args.TransportModeId, args.ShipmentLevelCode, args.IsCancelled, myTenant);
-                //if (isFieldExists)
-                //{
-                //    myResult = "Master field already used in another Shipment";
-                //}
-
-                //else
-                //{
-                //    isFieldExists = ShipmentValidating.IsMasterFieldUsedByAnotherBooking(args.BookingId, args.Master, args.AirlinePrefix, args.DirectionId, args.TransportModeId, args.ShipmentLevelCode, args.IsCancelled, myTenant);
-                //    if (isFieldExists)
-                //    {
-                //        myResult = "Master field already used in another Booking";
-                //    }
-                //}
-
-                //return Request.CreateResponse(HttpStatusCode.OK, myResult);
             }
 
             catch (Exception ex)
