@@ -2039,13 +2039,13 @@ namespace Logitude.CustomsMessaging.RequestServices
                     TypeCode = SetCodeTypeValue<TransportContractDocumentTypeCodeType>(consignmentPM.CargoTypeCode), //new TransportContractDocumentTypeCodeType() {Value =  "IL1"}, //hardcoded ask yaron + consignmentPM.CargoTypeCode },
                        // IssueDateTime = consignmentPM.ManifestDate.HasValue ? DataTypeConvertorUtil.Convert(consignmentPM.ManifestDate.Value) : null, // DataTypeConvertorUtil.Convert(declarationPM.IssueDateTime.Value), // hard coded
                         ID = SetIDTypeValue<TransportContractDocumentIdentificationIDType>(consignmentPM.ManifestNumber), // new TransportContractDocumentIdentificationIDType() { Value = consignmentPM.ManifestNumber },
-                        //ID = SetIDTypeValue<TransportContractDocumentIdentificationIDType>("123456"), // new TransportContractDocumentIdentificationIDType() { Value = consignmentPM.ManifestNumber }, HARD CODED
-                        //DMExtensions = new DeclarationGoodsShipmentConsignmentTransportContractDocumentDMExtensions()
-                        //{
-                        //    SecondCargoID = SetIDTypeValue<SecondCargoIDType>(consignmentPM.SecondCargoID), // new SecondCargoIDType() { Value = consignmentPM.SecondCargoID },
-                        //    ThirdCargoID = SetIDTypeValue<ThirdCargoIDType>(consignmentPM.ThirdCargoID) // new ThirdCargoIDType() { Value = consignmentPM.ThirdCargoID }
-                        //}
-                    };
+                                                                                                                          //ID = SetIDTypeValue<TransportContractDocumentIdentificationIDType>("123456"), // new TransportContractDocumentIdentificationIDType() { Value = consignmentPM.ManifestNumber }, HARD CODED
+                      DMExtensions = new DeclarationGoodsShipmentExportConsignmentTransportContractDocumentDMExtensions()
+                      {
+                          SecondCargoID = SetIDTypeValue<SecondCargoIDType>(consignmentPM.SecondCargoID), // new SecondCargoIDType() { Value = consignmentPM.SecondCargoID },
+                          ThirdCargoID = SetIDTypeValue<ThirdCargoIDType>(consignmentPM.ThirdCargoID) // new ThirdCargoIDType() { Value = consignmentPM.ThirdCargoID }
+                      }
+                  };
                 if (consignmentPM.CargoTypeCode == "17" && !string.IsNullOrWhiteSpace(consignmentPM.ThirdCargoID))
                 {
                     var thirdCargoID = consignmentPM.ThirdCargoID;

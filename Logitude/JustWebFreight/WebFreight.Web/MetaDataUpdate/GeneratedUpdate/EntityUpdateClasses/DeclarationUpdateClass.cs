@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class DeclarationUpdateClass
    {  		
-		public const string HashString = "8611cf0cc8f0aab3c7faf4cd7f748be0";
+		public const string HashString = "d3530309902086907f547b3a166e2f96";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -14194,10 +14194,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ExportDeclarationOfficeCode",
 					  						DefaultText =  "Export Declaration Office Code",
-					  						FullLocalDefaultText =  "בית המכס המייצא",
+					  						FullLocalDefaultText =  "בית מכס מייצא",
 					  						ListFieldLable =  "ExportDeclarationOfficeCodeListLable",
 					  						ListLableDefaultText =  "Export Declaration Office Code",
-					  						ListLocalDefaultText =  "בית המכס המייצא",
+					  						ListLocalDefaultText =  "בית מכס מייצא",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
