@@ -1,7 +1,6 @@
 Feature:  Full Shipment Scenario
-    After the user logging in the system and navigate to shipments workspace
-    will create direct shipment, after that update general, order, package, docs in and docs out tabs
-    create AP/AR invoices and payments, finally close it operationally/accountly.
+    this file will create a direct shipment,fill general,order,package tab
+    create AP/AR invoices,Payment,and docs in, docs out, close operationally/Accountly
 
     Scenario: Create Direct Export Air Shipment
         Given the user logged in and navigates to shipments workspace
@@ -24,12 +23,12 @@ Feature:  Full Shipment Scenario
         When save shipment
         Then the direct shipment should save successfully
 
-    Scenario: Add Partners
-        Given  partners with following details
-            | Consignee       | Agent            | CustomsAgentExport     | CustomsAgentImport     | Notify1 | Notify2 | ShipperNotExporter   | ConsigneeNotImporter   | FreightForwarder     | Coloader     | CustomClearancePoint     | Consolidator     | ReleasingAgent  |
-            | ConsigneeExport | IntegrationAgent | InegrationCustomsAgent | InegrationCustomsAgent | notify  | notify  | shipper not exporter | consignee not importer | FreightForwarderTest | ColoaderTest | CustomClearancePointTest | ConsolidatorTest | releasing agent |
-        When save shipment
-        Then the direct shipment should save successfully
+    # Scenario: Add Partners
+    #     Given  partners with following details
+    #         | Consignee       | Agent            | CustomsAgentExport     | CustomsAgentImport     | Notify1 | Notify2 | ShipperNotExporter   | ConsigneeNotImporter   | FreightForwarder     | Coloader     | CustomClearancePoint     | Consolidator     | ReleasingAgent  |
+    #         | ConsigneeExport | IntegrationAgent | InegrationCustomsAgent | InegrationCustomsAgent | notify  | notify  | shipper not exporter | consignee not importer | FreightForwarderTest | ColoaderTest | CustomClearancePointTest | ConsolidatorTest | releasing agent |
+    #     When save shipment
+    #     Then the direct shipment should save successfully
 
     Scenario: Add Packages
         Given  a Package with the following details
@@ -96,8 +95,8 @@ Feature:  Full Shipment Scenario
 
     Scenario: Pay ARInvoice
         Given an ARPayment with the following details
-            | PartnerType | Partner           | BillToAddress | PaymentCurrency | RegisterDate | PaymentMethod | PaymentAmount |
-            | Customer    | TestShipperExport | Main Address  | EUR             | Today        | Cash          | 50            |
+            | PartnerType | BillToAddress | PaymentCurrency | RegisterDate | PaymentMethod | PaymentAmount |
+            | Customer    | Main Address  | EUR             | Today        | Cash          | 50            |
         When pay the ARInvoice
         Then the ARInvoice should pay successfully
 
@@ -120,37 +119,37 @@ Feature:  Full Shipment Scenario
         Given a credit ARPayment with the following details
             | PartnerType | Partner           | BillToAddress | PaymentCurrency | RegisterDate | PaymentMethod | PaymentAmount |
             | Customer    | TestShipperExport | Main Address  | EUR             | Today        | Offsetting    | -50           |
-        When pay the ARInvoice
+         When pay the ARInvoice
         Then the ARInvoice should pay successfully
 
-    Scenario: Send docs
+         Scenario: Send docs
         When send docs
         Then the docs should send successfully
 
     Scenario: Upload docs
         When upload docs
         Then the docs should upload successfully
-
+         
     Scenario: Delete Attachment
         When delete Attachment
         Then the attachment should delete successfully
 
-    Scenario: Close Direct Shipment operationally
-        Given the user in the direct's shipment rounting tab
-        And  edit Main Carriage Leg with the follwing details
-            | Airline | FlightNumber | MAWB   | ATD   |
-            | AA      | Random       | Random | Today |
-        When close shipment operationally
-        Then the shipment should close successfully
+         Scenario: Close Direct Shipment operationally
+    Given the user in the direct's shipment rounting tab
+    And  edit Main Carriage Leg with the follwing details
+      | Airline | FlightNumber | MAWB   | ATD   |
+      | AA      | Random       | Random | Today |
+    When close shipment operationally
+    Then the shipment should close successfully
 
-    Scenario: Close Direct Shipment Accountly
-        When close shipment Accountly
-        Then the shipment should close successfully
+  Scenario: Close Direct Shipment Accountly
+    When close shipment Accountly
+    Then the shipment should close successfully
 
-    Scenario: Reopen Direct Shipment Accountly
-        When reopen shipment Accountly
-        Then the shipment should Reopen successfully
+  Scenario: Reopen Direct Shipment Accountly
+    When reopen shipment Accountly
+    Then the shipment should Reopen successfully
 
-    Scenario: Reopen Direct Shipment operationally
-        When reopen shipment operationally
-        Then the shipment should Reopen successfully
+  Scenario: Reopen Direct Shipment operationally
+    When reopen shipment operationally
+    Then the shipment should Reopen successfully

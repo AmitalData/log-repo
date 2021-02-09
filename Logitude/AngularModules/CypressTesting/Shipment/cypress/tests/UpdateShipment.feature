@@ -1,3 +1,4 @@
+@smoke
 Feature: Update direct export air shipment
   After the user logging in the system and navigate to shipments workspace
   will create a directe shipment, after that update general, orders

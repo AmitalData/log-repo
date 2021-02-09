@@ -43,13 +43,13 @@ Given("edit main carriage leg with the follwing details",(dataTable)=>{
 }); 
 
 When("close shipment operationally",()=>{
-    cy.Click(Selectors.ShipmentMoreList, null);
+    cy.Click(Selectors.ShipmentMoreList, null,true);
     cy.Click(Selectors.OperationalCloseButton, null);
     Actions.UpdateClosedShipment();
 });
 
 When("close shipment Accountly",()=>{
-    cy.Click(Selectors.ShipmentMoreList, null);
+    cy.Click(Selectors.ShipmentMoreList, null,true);
     cy.Click(Selectors.AccountllyCloseButton, null);
     Actions.UpdateClosedShipment();
 });
@@ -59,13 +59,13 @@ Then("the shipment should close successfully",()=>{
 });
 
 When("reopen shipment Accountly",()=>{
-    cy.Click(Selectors.ShipmentMoreList, null);
+    cy.Click(Selectors.ShipmentMoreList, null,true);
     cy.Click(Selectors.AccountllyReopenButton, null);
     Actions.UpdateClosedShipment();
 });
 
 When("reopen shipment operationally",()=>{
-    cy.Click(Selectors.ShipmentMoreList, null);
+    cy.Click(Selectors.ShipmentMoreList, null,true);
     cy.Click(Selectors.OperationalReopenButton, null);
     Actions.UpdateClosedShipment();
 });

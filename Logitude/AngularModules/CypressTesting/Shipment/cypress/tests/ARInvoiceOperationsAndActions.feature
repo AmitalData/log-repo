@@ -1,3 +1,4 @@
+@smoke
 Feature: ARInvoice operations and actions
     After the user logging in the system and navigate to shipments workspace
     will create a direct shipment, after that create and approve an ARInvoice

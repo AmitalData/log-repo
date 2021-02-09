@@ -1,3 +1,4 @@
+@smoke
 Feature: Credit note ARInvoice operations and actions
     After the user logging in the system and navigate to shipments workspace
     will create a direct shipmen, after that create and approve a credit note ARInvoice

@@ -1,3 +1,4 @@
+@smoke
 Feature:  Closing and reopening direct shipment
   After the user logging in the system and navigate to shipments workspace
   will create a direct shipment, after that cclose and reopen it operationally and Accountly.

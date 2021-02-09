@@ -1,3 +1,4 @@
+@smoke
 Feature: Connect and disconnect separate house and master
   After the user logging in the system and navigate to shipments workspace
   will create a Separate master and house shipments

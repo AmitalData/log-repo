@@ -9,7 +9,7 @@ declare global {
             FillLogLov(selector: string, value: string, fromCache: boolean): Chainable<Element>
             FillRandomString(selector: string, length: number, upperCase: boolean): Chainable<Element>
             FillRandomNumber(selector: string, minimum: number, maximum: number): Chainable<Element>
-            Click(selector: string, contains: string): Chainable<Element>
+            Click(selector: string, contains: string, force?: boolean): Chainable<Element>
             ClickCheckBox(selector: string): Chainable<Element>
             ClickRadio(selector: string): Chainable<Element>
             ValidateElementColor(selector: string, expectedcolor: string): Chainable<Element>
@@ -33,8 +33,10 @@ Cypress.Commands.add("FillDate", (selector, value) => {
 })
 
 Cypress.Commands.add("FillLogTextBox", (selector, value) => {
-    cy.get(selector).clear().type(value)
+    cy.get(selector).clear().type(value)//.should('have.value', value)
+
 })
+
 
 Cypress.Commands.add("FillLogLov", (selector, value, fromCache) => {
 
@@ -61,13 +63,15 @@ Cypress.Commands.add("FillRandomNumber", (selector, minimum, maximum) => {
     cy.get(selector).focus().clear().type(randomNumber)
 })
 
-Cypress.Commands.add("Click", (selector, contains) => {
+Cypress.Commands.add("Click", (selector, contains, force = false) => {
     let element = cy.get(selector)//.should('exist')
     if (contains) {
-        element = element.contains(contains, {matchCase: false})
+        element = element.contains(contains, { matchCase: false })
 
     }
-    element.click()
+
+    element.click({force:force})
+
 })
 
 Cypress.Commands.add("SaveClick", (selector, contains, url, resultFile) => {
@@ -80,7 +84,7 @@ Cypress.Commands.add("SaveClick", (selector, contains, url, resultFile) => {
     let element = cy.get(selector)
 
     if (contains !== null) {
-        element = element.contains(contains, {matchCase: false})
+        element = element.contains(contains, { matchCase: false })
     }
     element.click()
 })

@@ -49,7 +49,7 @@ export function OpenShipment(shipmentNumber: string) {
 }
 
 export function CancelShipment() {
-    cy.Click(Selectors.ShipmentMoreList, null);
+    cy.Click(Selectors.ShipmentMoreList, null,true);
     cy.Click(Selectors.CancelShipmentButton, null);
     UpdateShipment(Selectors.ConfirmActionButton);
 }
@@ -155,8 +155,8 @@ export function FillReceivablesTab(receivableDetails: ReceivableDetails[]) {
 
 
 export function FillPickupRouting() {
-    cy.Click(Selectors.RoutingsTab, null)
-    cy.Click(Selectors.RoutingToggle, null)
+    cy.Click(Selectors.RoutingsTab, null,true)
+    cy.Click(Selectors.RoutingToggle, null,true)
     cy.DefineRequestWait("GET", URLs.CardViews, "WaitCardViewsRequest")
     cy.DefineRequestWait("GET", URLs.AddressViews, "WaitAddressViewsRequest")
     cy.Click(Selectors.PickUp, null)
@@ -183,17 +183,17 @@ export function UpdateClosedShipment() {
 
 export function FillDeliveryRouting(partner: string) {
     cy.Click(Selectors.RoutingsTab, null)
-    cy.Click(Selectors.RoutingToggle, null)
+    cy.Click(Selectors.RoutingToggle, null,true)
     cy.DefineRequestWait("GET", URLs.CardViews, "WaitCardViewsRequest")
     cy.DefineRequestWait("GET", URLs.AddressViews, "WaitAddressViewsRequest")
     cy.Click(Selectors.Delivery, null)
     BaseAssertion.AssertStatusCode("WaitCardViewsRequest", 200)
     BaseAssertion.AssertStatusCode("WaitAddressViewsRequest", 200)
-    cy.get(Selectors.ShipmentPickUpDeliveryToPartnerCard).then((input) => {
-        if (input.text() === "" || input.text() === null) {
+    // cy.get(Selectors.ShipmentPickUpDeliveryToPartnerCard).then((input) => {
+    //     if (input.text() === "" || input.text() === null) {
             cy.FillLogLov(Selectors.ShipmentPickUpDeliveryToPartnerCard, partner, false)
-        }
-    })
+    //     }
+    // })
     cy.Click(Selectors.SaveClose, null)
 }
 
@@ -241,7 +241,7 @@ export function FillPayablesTab(payableDetails: PayableDetails) {
 }
 
 export function CopyShipment(shipmentLevel: string) {
-    cy.Click(Selectors.ShipmentMoreList, null)
+    cy.Click(Selectors.ShipmentMoreList, null,true)
     cy.Click(Selectors.CopyShipmentButton, null)
     CreateShipment(shipmentLevel);
 }
@@ -274,13 +274,13 @@ export function APApproveInvoice() {
 }
 
 export function APInvoiceCancelApproval() {
-    cy.Click(BaseSelectors.MoreList, null)
+    cy.Click(BaseSelectors.MoreList, null,true)
     cy.DefineRequestWait("PUT", URLs.APInvoices, "WaitPutAPInvoicesRequest")
     cy.Click(Selectors.APInvoiceCancelApprovalButton, null)
 }
 
 export function VoidAPInvoice() {
-    cy.Click(BaseSelectors.MoreList, null)
+    cy.Click(BaseSelectors.MoreList, null,true)
     cy.Click(Selectors.APInvoiceVoidButton, null)
     cy.DefineRequestWait("PUT", URLs.APInvoices, "WaitPutAPInvoicesRequest")
     cy.Click(Selectors.ConfirmWindowYes, null);
@@ -312,21 +312,21 @@ export function ARApproveInvoice() {
 }
 
 export function SetAsSentARInvoice() {
-    cy.Click(BaseSelectors.MoreList, null)
+    cy.Click(BaseSelectors.MoreList, null,true)
     cy.Click(Selectors.ARInvoiceSetAsSentButton, null)
     cy.DefineRequestWait("PUT", URLs.ARInvoices, "WaitPutARInvoicesRequest")
     cy.Click("button", "Confirm");
 }
 
 export function VoidARInvoice() {
-    cy.Click(BaseSelectors.MoreList, null)
+    cy.Click(BaseSelectors.MoreList, null,true)
     cy.Click(Selectors.ARInvoiceVoidButton, null)
     cy.DefineRequestWait("PUT", URLs.ARInvoices, "WaitPutARInvoicesRequest")
     cy.Click(Selectors.ConfirmWindowYes, null);
 }
 
 export function CancelDraftARInvoice() {
-    cy.Click(BaseSelectors.MoreList, null)
+    cy.Click(BaseSelectors.MoreList, null,true)
     cy.DefineRequestWait("PUT", URLs.ARInvoices, "WaitPutARInvoicesRequest")
     cy.Click(Selectors.ARInvoiceCancelDraftButton, null)
     cy.Click(Selectors.ConfirmWindowYes, null)
@@ -363,7 +363,9 @@ export function PayAPInvoice() {
 
 }
 export function FillARPaymentDetails(aRPaymentDetails: ARPaymentDetails) {
+    if(aRPaymentDetails.Partner){
     cy.FillLogLov(Selectors.ARPaymentPartner, aRPaymentDetails.Partner, false)
+    }
     cy.FillLogLov(Selectors.ARPaymentPaymentMethod, aRPaymentDetails.PaymentMethod, true)
     cy.FillLogTextBox(Selectors.ARPaymentAmount, aRPaymentDetails.PaymentAmount)
     cy.Click(Selectors.OkAddARPayment, null)
