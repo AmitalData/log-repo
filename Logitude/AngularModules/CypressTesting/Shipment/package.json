@@ -1,7 +1,7 @@
 {
   "scripts": {
     "clean-reports": "if exist cypress\\Reports rmdir /s /q cypress\\Reports",
-    "report:merge": "npx mochawesome-merge --reportDir cypress/Reports/json > cypress/Reports/mochawesome-bundle.json",
+    "report:merge": "npx mochawesome-merge --reportDir ./mochawesome-report > cypress/Reports/mochawesome-bundle.json",
     "report:generate": "marge cypress/Reports/mochawesome-bundle.json -o cypress/Reports/html",
     "report:copyReport": "move ./cypress/Reports/html/cypress/Reports/mochawesome-bundle.html ./cypress/Reports/html",
     "report:copyScreenshots": "cp -r cypress/Reports/screenshots cypress/Reports/html/screenshots"

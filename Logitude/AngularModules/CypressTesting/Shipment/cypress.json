@@ -20,7 +20,7 @@
     "reporterOptions": {
         "reporterEnabled": "mochawesome",
         "mochawesomeReporterOptions": {
-            "reportDir": "cypress/Reports/json",
+            "reportDir": "./mochawesome-report",
             "quite": true,
             "overwrite": false,
             "html": false,
