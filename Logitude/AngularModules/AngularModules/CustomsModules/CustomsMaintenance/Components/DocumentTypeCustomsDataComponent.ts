@@ -86,7 +86,7 @@ export class DocumentTypeCustomsDataComponent
 
 
                         }
-                        this.fromLog = true;
+                       // this.fromLog = true;
 
                         if (this.entityPM) {
                             //  this.DocumentTypeId = this.entityPM.;
