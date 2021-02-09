@@ -6,6 +6,7 @@ import { Given, When, Then,And } from "cypress-cucumber-preprocessor/steps";
 import {ReceivableDetails}from"cypress/models/ReceivableDetails"
 import { ARInvoiceDetails } from "cypress/models/ARInvoiceDetails"
 import * as BaseAssertion from "../../../../Base/cypress/actions/Assertion"
+import { RequestAliases } from "../../../../Base/cypress/constants/RequestAliases";
 
 let ShipmentData: ShipmentDetails;
 let shipmentNumber: string;
@@ -25,7 +26,7 @@ When("create shipment", () => {
 });
 
 Then("the shipment should create successfully", () => {
-    BaseAssertion.AssertStatusCode("WaitPostShipmentRequest", 200).then((interception) => {
+    BaseAssertion.AssertStatusCode(RequestAliases.ShipmentRequest, 200).then((interception) => {
         shipmentNumber = interception.response.body.ShipmentNumber;
 });
 })
@@ -46,26 +47,26 @@ When("create invoice", () => {
     Actions.CreateARInvoice()
 });
 Then("the invoice should create successfully", () => {
-    BaseAssertion.AssertStatusCode("WaitPostARInvoicesRequest", 200);
+    BaseAssertion.AssertStatusCode(RequestAliases.ARInvoicesRequest, 200);
 });
 
 When("approve invoice", () => {
     Actions.ARApproveInvoice()
 });
 Then("the invoice should approve successfully", () => {
-    BaseAssertion.AssertStatusCode("WaitPutARInvoicesRequest", 200);
+    BaseAssertion.AssertStatusCode(RequestAliases.ARInvoicesRequest, 200);
 });
 
 When("set invoice as sent", () => {
     Actions.SetAsSentARInvoice()
 });
 Then("the invoice should set as sent successfully", () => {
-    BaseAssertion.AssertStatusCode("WaitPutARInvoicesRequest", 200);
+    BaseAssertion.AssertStatusCode(RequestAliases.ARInvoicesRequest, 200);
 });
 
 When("void invoice", () => {
     Actions.VoidARInvoice()
 });
 Then("the invoice should void successfully", () => {
-    BaseAssertion.AssertStatusCode("WaitPutARInvoicesRequest", 200);
+    BaseAssertion.AssertStatusCode(RequestAliases.ARInvoicesRequest, 200);
 });

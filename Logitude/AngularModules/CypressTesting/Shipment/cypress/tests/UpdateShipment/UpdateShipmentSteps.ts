@@ -8,6 +8,7 @@ import * as BaseAssertion from "../../../../Base/cypress/actions/Assertion"
 import { ShipmentDetails } from "cypress/models/ShipmentDetails";
 import { ReceivableDetails } from "cypress/models/ReceivableDetails"
 import { PackagesDetails } from "cypress/models/PackagesDetails";
+import { RequestAliases } from "../../../../Base/cypress/constants/RequestAliases";
 
 //#region variables
 let shipmentDetails: ShipmentDetails;
@@ -94,12 +95,12 @@ When("update shipment", () => {
 
 //#region Assert steps
 Then("the direct should create successfully", () => {
-    BaseAssertion.AssertStatusCode("WaitPostShipmentRequest", 200).then((interception) => {
+    BaseAssertion.AssertStatusCode(RequestAliases.ShipmentRequest, 200).then((interception) => {
         shipmentDetails.ShipmentNumber = interception.response.body.ShipmentNumber;
     })
 });
 
 Then("the direct should update successfully", () => {
-    BaseAssertion.AssertStatusCode("WaitPutShipmentRequest", 200);
+    BaseAssertion.AssertStatusCode(RequestAliases.ShipmentRequest, 200);
 });
 //#endregion

@@ -4,6 +4,7 @@ import { ShipmentDetails } from "../../models/ShipmentDetails";
 import { BaseSelectors } from "../../../../Base/cypress/selectors/BaseSelectors"
 import { Selectors } from "../../selectors/Selectors";
 import * as BaseAssertion from "../../../../Base/cypress/actions/Assertion"
+import { RequestAliases } from "../../../../Base/cypress/constants/RequestAliases";
 
 let shipmentDetails: ShipmentDetails;
 let shipmentNumber: string;
@@ -25,7 +26,7 @@ When("create shipment", () => {
 });
 
 Then("the direct should create successfully", () => {
-  BaseAssertion.AssertStatusCode("WaitPostShipmentRequest", 200).then((interception) => {
+  BaseAssertion.AssertStatusCode(RequestAliases.ShipmentRequest, 200).then((interception) => {
     shipmentNumber = interception.response.body.ShipmentNumber;
   });
 });
@@ -39,5 +40,5 @@ When("cancel the shipment", () => {
 });
 
 Then("the shipment should cancel successfully", () => {
-  BaseAssertion.AssertStatusCode("WaitPutShipmentRequest", 200);
+  BaseAssertion.AssertStatusCode(RequestAliases.ShipmentRequest, 200);
 }); 

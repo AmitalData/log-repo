@@ -1,18 +1,44 @@
-import * as gr from "../../../Base/cypress/Actions/GenerateRandoms";
-import { Selectors } from "../selectors/Selectors";
-import { ShipmentDetails } from "../models/ShipmentDetails";
-import { PartnersDetails } from "cypress/models/PartnersDetails";
-import { BaseSelectors } from "../../../Base/cypress/selectors/BaseSelectors";
-import { PayableDetails } from "cypress/models/PayableDetails";
-import { ReceivableDetails } from "cypress/models/ReceivableDetails";
-import { APInvoiceDetails } from "cypress/models/APInvoiceDetails";
-import { ARInvoiceDetails } from "cypress/models/ARInvoiceDetails";
-import * as BaseAssertion from "../../../Base/cypress/actions/Assertion";
-import { PackagesDetails } from "cypress/models/PackagesDetails";
+import * as gr from '../../../Base/cypress/Actions/GenerateRandoms';
+import { Selectors } from '../selectors/Selectors';
+import { ShipmentDetails } from '../models/ShipmentDetails';
+import { PartnersDetails } from 'cypress/models/PartnersDetails';
+import { BaseSelectors } from '../../../Base/cypress/selectors/BaseSelectors';
+import { PayableDetails } from 'cypress/models/PayableDetails';
+import { ReceivableDetails } from 'cypress/models/ReceivableDetails';
+import { APInvoiceDetails } from 'cypress/models/APInvoiceDetails';
+import { ARInvoiceDetails } from 'cypress/models/ARInvoiceDetails';
+import * as BaseAssertion from '../../../Base/cypress/actions/Assertion';
+import { PackagesDetails } from 'cypress/models/PackagesDetails';
+import { APPaymentDetails } from 'cypress/models/APPaymentDetails';
+import { ARPaymentDetails } from 'cypress/models/ARPaymentDetails'
+import { URLs } from '../constants/URLs';
+import { CustomerDetails } from 'cypress/models/CustomerDetails';
+import { RestAPI } from '../../../Base/cypress/constants/RestAPI';
+import { RequestAliases } from '../../../Base/cypress/constants/RequestAliases';
 
-import { APPaymentDetails } from "cypress/models/APPaymentDetails";
-import { ARPaymentDetails } from "cypress/models/ARPaymentDetails"
-import { URLs } from "../constants/URLs";
+//#region Customer actions
+export function NavigatesToCustomersWorkspace() {
+    cy.Click(BaseSelectors.CustomersMenu, null);
+}
+
+export function AddNewCustomer(customerDetails: CustomerDetails) {
+    cy.Click(Selectors.NewCustomer, null);
+    cy.FillLogTextBox(Selectors.CustomerCompanyName, customerDetails.CompanyName);
+    cy.FillLogTextBox(Selectors.CustomerCity, customerDetails.City);
+    cy.FillLogLov(Selectors.CustomerCountry, customerDetails.Country, true);
+    cy.FillLogLov(Selectors.CustomerState, customerDetails.State, true);
+}
+
+export function CreateCustomer() {
+    cy.DefineRequestWait(RestAPI.POST, URLs.PartnersDomain, RequestAliases.PartnersDomainRequest)
+    cy.Click(Selectors.AddCustomer, null);
+}
+//#endregion
+
+export function NewCustomsCreditNoteARInvoice() {
+    cy.Click(Selectors.ToggleButtonClass, Selectors.ContainsCustoms);
+    cy.Click(Selectors.CreateCustomsCreditNote, null);
+}
 
 export function NavigatesToShipmentsWorkspace() {
     cy.Click(BaseSelectors.OperationsMenu, null)
@@ -34,12 +60,12 @@ export function FillShipmentWizardsFields(shipmentDetails: ShipmentDetails) {
 
 export function CreateShipment(shipmentLevel: string) {
     let createSelector = BaseAssertion.IsMaster(shipmentLevel) ? Selectors.CreateMasterShipmentButton : Selectors.CreateShipmentButton;
-    cy.DefineRequestWait("POST", URLs.Shipment, "WaitPostShipmentRequest")
+    cy.DefineRequestWait(RestAPI.POST, URLs.Shipment, RequestAliases.ShipmentRequest)
     cy.Click(createSelector, null)
 }
 
 export function UpdateShipment(saveButtonSelector: string, saveButtonSelectorContains?: string) {
-    cy.DefineRequestWait("PUT", URLs.Shipment, "WaitPutShipmentRequest")
+    cy.DefineRequestWait(RestAPI.PUT, URLs.Shipment, RequestAliases.ShipmentRequest)
     cy.Click(saveButtonSelector, saveButtonSelectorContains)
 }
 
@@ -81,7 +107,6 @@ export function FillOrdersTab(packagesDetails: PackagesDetails[], shipmentType?:
         cy.FillLogTextBox(Selectors.OrderPackageGrossWeight, packagesDetails[i].GrossWeight.toString())
         cy.Click(Selectors.OrderOKButton, null)
     }
-
 }
 
 export function FillPartnersTab(direction: string, transportMode: string, partnersDetails: PartnersDetails) {
@@ -158,11 +183,11 @@ export function FillReceivablesTab(receivableDetails: ReceivableDetails[]) {
 export function FillPickupRouting() {
     cy.Click(Selectors.RoutingsTab, null)
     cy.Click(Selectors.RoutingToggle, null)
-    cy.DefineRequestWait("GET", URLs.CardViews, "WaitCardViewsRequest")
-    cy.DefineRequestWait("GET", URLs.AddressViews, "WaitAddressViewsRequest")
+    cy.DefineRequestWait(RestAPI.GET, URLs.CardViews, RequestAliases.CardViewsRequest)
+    cy.DefineRequestWait(RestAPI.GET, URLs.AddressViews, RequestAliases.AddressViewsRequest)
     cy.Click(Selectors.PickUp, null)
-    BaseAssertion.AssertStatusCode("WaitCardViewsRequest", 200)
-    BaseAssertion.AssertStatusCode("WaitAddressViewsRequest", 200)
+    BaseAssertion.AssertStatusCode(RequestAliases.CardViewsRequest, 200)
+    BaseAssertion.AssertStatusCode(RequestAliases.AddressViewsRequest, 200)
     cy.Click(Selectors.SaveClose, null)
 }
 
@@ -178,18 +203,18 @@ export function EditMainCarriageLegs(Airline: string) {
 }
 
 export function UpdateClosedShipment() {
-    cy.DefineRequestWait("PUT", URLs.Shipment, "WaitPutShipmentRequest")
+    cy.DefineRequestWait(RestAPI.PUT, URLs.Shipment, RequestAliases.ShipmentRequest)
     cy.Click(BaseSelectors.RedButton, "Confirm");
 }
 
 export function FillDeliveryRouting(partner: string) {
     cy.Click(Selectors.RoutingsTab, null)
     cy.Click(Selectors.RoutingToggle, null)
-    cy.DefineRequestWait("GET", URLs.CardViews, "WaitCardViewsRequest")
-    cy.DefineRequestWait("GET", URLs.AddressViews, "WaitAddressViewsRequest")
+    cy.DefineRequestWait(RestAPI.GET, URLs.CardViews, RequestAliases.CardViewsRequest)
+    cy.DefineRequestWait(RestAPI.GET, URLs.AddressViews, RequestAliases.AddressViewsRequest)
     cy.Click(Selectors.Delivery, null)
-    BaseAssertion.AssertStatusCode("WaitCardViewsRequest", 200)
-    BaseAssertion.AssertStatusCode("WaitAddressViewsRequest", 200)
+    BaseAssertion.AssertStatusCode(RequestAliases.CardViewsRequest, 200)
+    BaseAssertion.AssertStatusCode(RequestAliases.AddressViewsRequest, 200)
     cy.get(Selectors.ShipmentPickUpDeliveryToPartnerCard).then((input) => {
         if (input.text() === "" || input.text() === null) {
             cy.FillLogLov(Selectors.ShipmentPickUpDeliveryToPartnerCard, partner, false)
@@ -265,25 +290,25 @@ export function FillAPInvoiceDetails(aPInvoiceDetails: APInvoiceDetails) {
 }
 
 export function ReceiveAPInvoice() {
-    cy.DefineRequestWait("POST", URLs.APInvoices, "WaitPostAPInvoicesRequest")
+    cy.DefineRequestWait(RestAPI.POST, URLs.APInvoices, RequestAliases.APInvoicesRequest)
     cy.Click(Selectors.APInvoiceSaveButton, null)
 }
 
 export function APApproveInvoice() {
-    cy.DefineRequestWait("PUT", URLs.APInvoices, "WaitPutAPInvoicesRequest")
+    cy.DefineRequestWait(RestAPI.PUT, URLs.APInvoices, RequestAliases.APInvoicesRequest)
     cy.Click(Selectors.APInvoiceApproveButton, null)
 }
 
 export function APInvoiceCancelApproval() {
     cy.Click(BaseSelectors.MoreList, null)
-    cy.DefineRequestWait("PUT", URLs.APInvoices, "WaitPutAPInvoicesRequest")
+    cy.DefineRequestWait(RestAPI.PUT, URLs.APInvoices, RequestAliases.APInvoicesRequest)
     cy.Click(Selectors.APInvoiceCancelApprovalButton, null)
 }
 
 export function VoidAPInvoice() {
     cy.Click(BaseSelectors.MoreList, null)
     cy.Click(Selectors.APInvoiceVoidButton, null)
-    cy.DefineRequestWait("PUT", URLs.APInvoices, "WaitPutAPInvoicesRequest")
+    cy.DefineRequestWait(RestAPI.PUT, URLs.APInvoices, RequestAliases.APInvoicesRequest)
     cy.Click(Selectors.ConfirmWindowYes, null);
 }
 
@@ -303,32 +328,32 @@ export function FillARInvoiceDetails(aRInvoiceDetails: ARInvoiceDetails) {
 }
 
 export function CreateARInvoice() {
-    cy.DefineRequestWait("POST", URLs.ARInvoices, "WaitPostARInvoicesRequest")
+    cy.DefineRequestWait(RestAPI.POST, URLs.ARInvoices, RequestAliases.ARInvoicesRequest)
     cy.Click(Selectors.ARInvoiceSaveButton, null)
 }
 
 export function ARApproveInvoice() {
-    cy.DefineRequestWait("PUT", URLs.ARInvoices, "WaitPutARInvoicesRequest")
+    cy.DefineRequestWait(RestAPI.PUT, URLs.ARInvoices, RequestAliases.ARInvoicesRequest)
     cy.Click(Selectors.ARInvoiceApproveButton, null)
 }
 
 export function SetAsSentARInvoice() {
     cy.Click(BaseSelectors.MoreList, null)
     cy.Click(Selectors.ARInvoiceSetAsSentButton, null)
-    cy.DefineRequestWait("PUT", URLs.ARInvoices, "WaitPutARInvoicesRequest")
+    cy.DefineRequestWait(RestAPI.PUT, URLs.ARInvoices, RequestAliases.ARInvoicesRequest)
     cy.Click("button", "Confirm");
 }
 
 export function VoidARInvoice() {
     cy.Click(BaseSelectors.MoreList, null)
     cy.Click(Selectors.ARInvoiceVoidButton, null)
-    cy.DefineRequestWait("PUT", URLs.ARInvoices, "WaitPutARInvoicesRequest")
+    cy.DefineRequestWait(RestAPI.PUT, URLs.ARInvoices, RequestAliases.ARInvoicesRequest)
     cy.Click(Selectors.ConfirmWindowYes, null);
 }
 
 export function CancelDraftARInvoice() {
     cy.Click(BaseSelectors.MoreList, null)
-    cy.DefineRequestWait("PUT", URLs.ARInvoices, "WaitPutARInvoicesRequest")
+    cy.DefineRequestWait(RestAPI.PUT, URLs.ARInvoices, RequestAliases.ARInvoicesRequest)
     cy.Click(Selectors.ARInvoiceCancelDraftButton, null)
     cy.Click(Selectors.ConfirmWindowYes, null)
 }
@@ -344,67 +369,77 @@ export function FillAPPayment(aPPaymentDetails: APPaymentDetails, invoiceNumber:
     cy.FillLogTextBox(Selectors.APPaymentCurrencyExchangeRate, aPPaymentDetails.Rate.toString())
     cy.FillDate(Selectors.APPaymentRegisterDate, aPPaymentDetails.RegisterDate)
     cy.FillLogLov(Selectors.APPaymentBranch, aPPaymentDetails.Branch, true)
-    cy.DefineRequestWait("GET", "**/apinvoiceviews/**", "WaitAPInvoiceView")
+    cy.DefineRequestWait(RestAPI.GET, URLs.APInvoiceViews, RequestAliases.APInvoiceView)
     cy.FillLogTextBox(BaseSelectors.SearchField, invoiceNumber);
-    BaseAssertion.AssertStatusCode("WaitAPInvoiceView", 200)
+    BaseAssertion.AssertStatusCode(RequestAliases.APInvoiceView, 200)
     cy.Click(BaseSelectors.CheckBoxLine, null)
 
 }
+
 export function SaveAPPayment() {
-    cy.DefineRequestWait("POST", "**/appayments", "WaitPostAPPayments")
+    cy.DefineRequestWait(RestAPI.POST, URLs.APPayments, RequestAliases.APPayments)
     cy.Click(Selectors.APPaymentSaveButton, null)
 }
+
 export function ApproveAPPayment() {
-    cy.DefineRequestWait("PUT", "**/appayments", "WaitPutAPPayments")
+    cy.DefineRequestWait(RestAPI.PUT, URLs.APPayments, RequestAliases.APPayments)
     cy.Click(Selectors.APPaymentApproveButton, null)
 }
+
 export function PayAPInvoice() {
     SaveAPPayment()
     ApproveAPPayment()
 
 }
+
 export function FillARPaymentDetails(aRPaymentDetails: ARPaymentDetails) {
     cy.FillLogLov(Selectors.ARPaymentPartner, aRPaymentDetails.Partner, false)
     cy.FillLogLov(Selectors.ARPaymentPaymentMethod, aRPaymentDetails.PaymentMethod, true)
     cy.FillLogTextBox(Selectors.ARPaymentAmount, aRPaymentDetails.PaymentAmount)
     cy.Click(Selectors.OkAddARPayment, null)
 }
+
 export function SaveARPayment() {
-    cy.DefineRequestWait("POST", "**/arpayments", "WaitPostARPayments")
+    cy.DefineRequestWait(RestAPI.POST, URLs.ARPayments, RequestAliases.ARPayments)
     cy.Click(Selectors.ARPaymentSave, null)
-    BaseAssertion.AssertStatusCode("WaitPostARPayments", 200)
+    BaseAssertion.AssertStatusCode(RequestAliases.ARPayments, 200)
 }
+
 export function ApproveARPayment() {
-    cy.DefineRequestWait("PUT", "**/arpayments", "WaitPutARPayments")
+    cy.DefineRequestWait(RestAPI.PUT, URLs.ARPayments, RequestAliases.ARPayments)
     cy.Click(Selectors.ARPaymentBApprove, null)
 }
+
 export function PayARInvoice() {
     SaveARPayment()
     ApproveARPayment()
 }
+
 export function NewARPaymentFromAccounting(aRPaymentDetails: ARPaymentDetails, invoiceNumber: string) {
     cy.Click(BaseSelectors.AccountingMenu, null)
     cy.Click(Selectors.ReceivableAccounting, null)
     cy.Click(Selectors.QueryLink, "New Payment")
     FillARPaymentDetails(aRPaymentDetails)
-    cy.DefineRequestWait("GET", "**/arinvoiceviews/**", "WaitARInvoiceviews")
+    cy.DefineRequestWait(RestAPI.GET, URLs.ARInvoiceViews, RequestAliases.ARInvoiceviews)
     cy.FillLogTextBox(BaseSelectors.SearchField, invoiceNumber);
-    BaseAssertion.AssertStatusCode("WaitARInvoiceviews", 200)
+    BaseAssertion.AssertStatusCode(RequestAliases.ARInvoiceviews, 200)
     cy.wait(10000)
     cy.Click(BaseSelectors.CheckBoxLine, null)
 
 }
+
 export function SendDocs() {
     cy.Click(Selectors.DocsOutTab, null)
     cy.FillLogTextBox(BaseSelectors.SearchField, "Flight Update")
     cy.get("#FU-L-DocsOut").click()
     cy.get("#FU-S-DocsOut").click()
     cy.FillLogTextBox(Selectors.EmailSearchInput, "abd@logitudeworld.com{enter}")
-    cy.DefineRequestWait("POST", "**/HtmlEditor/**", "WaitSendDocs")
+    cy.DefineRequestWait(RestAPI.POST, URLs.HtmlEditor, "WaitSendDocs")
     cy.Click(Selectors.SendMessageButton, null)
 }
+
 export function DeleteAttachment() {
-    cy.DefineRequestWait("GET", "**/DocumentsFilingExtended/**", "WaitDelete")
+    cy.DefineRequestWait(RestAPI.GET, URLs.DocumentsFilingExtended, "WaitDelete")
     cy.contains("Delete Attachment").click()
 }
 

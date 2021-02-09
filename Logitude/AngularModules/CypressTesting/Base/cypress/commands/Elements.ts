@@ -18,9 +18,11 @@ declare global {
         }
     }
 }
+
 Cypress.Commands.add("BackButton", (contains) => {
     cy.Click(".BackBottonBody", contains);
 })
+
 Cypress.Commands.add("FillDate", (selector, value) => {
     if (value.toUpperCase() == "TODAY") {
         cy.get(selector).focus().clear().type(".{enter}")
@@ -30,8 +32,8 @@ Cypress.Commands.add("FillDate", (selector, value) => {
     }
 })
 
-    cy.get(selector).clear().type(value,{delay : 5}).should('have.value', value)
-
+Cypress.Commands.add("FillLogTextBox", (selector, value) => {
+    cy.get(selector).clear().type(value, { delay: 5 }).should('have.value', value);
 })
 
 Cypress.Commands.add("FillLogLov", (selector, value, fromCache) => {
@@ -62,25 +64,25 @@ Cypress.Commands.add("FillRandomNumber", (selector, minimum, maximum) => {
 Cypress.Commands.add("Click", (selector, contains) => {
     let element = cy.get(selector).should('exist')
     if (contains) {
-        element = element.contains(contains, {matchCase: false})
+        element = element.contains(contains, { matchCase: false })
 
     }
 
-    element.click({force:true})
+    element.click({ force: true })
 
 })
 
 Cypress.Commands.add("SaveClick", (selector, contains, url, resultFile) => {
 
     cy.intercept({
-        method: "POST",
+        method: RestAPI.POST,
         url: url
     }).as("WaitRequest")
 
     let element = cy.get(selector)
 
     if (contains !== null) {
-        element = element.contains(contains, {matchCase: false})
+        element = element.contains(contains, { matchCase: false })
     }
     element.click()
 })

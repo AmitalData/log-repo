@@ -4,6 +4,7 @@ import { ShipmentDetails } from "../../models/ShipmentDetails";
 import { BaseSelectors } from "../../../../Base/cypress/selectors/BaseSelectors"
 import { Selectors } from "../../selectors/Selectors";
 import * as BaseAssertion from "../../../../Base/cypress/actions/Assertion"
+import { RequestAliases } from "../../../../Base/cypress/constants/RequestAliases";
 
 let ShipmentData: ShipmentDetails;
 let shipmentNumber: string;
@@ -25,7 +26,7 @@ When("create shipment", () => {
   Actions.CreateShipment(ShipmentData.ShipmentLevel);
 });
 Then("the direct should create successfully", () => {
-  BaseAssertion.AssertStatusCode("WaitPostShipmentRequest", 200).then((interception) => {
+  BaseAssertion.AssertStatusCode(RequestAliases.ShipmentRequest, 200).then((interception) => {
     shipmentNumber = interception.response.body.ShipmentNumber;
   })
 });
@@ -38,5 +39,5 @@ When("copy the shipment", () => {
 });
 
 Then("a shipment copy should create successfully", () => {
-  BaseAssertion.AssertStatusCode("WaitPostShipmentRequest", 200);
+  BaseAssertion.AssertStatusCode(RequestAliases.ShipmentRequest, 200);
 });
