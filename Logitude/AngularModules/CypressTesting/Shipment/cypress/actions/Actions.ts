@@ -190,11 +190,11 @@ export function FillDeliveryRouting(partner: string) {
     cy.Click(Selectors.Delivery, null)
     BaseAssertion.AssertStatusCode("WaitCardViewsRequest", 200)
     BaseAssertion.AssertStatusCode("WaitAddressViewsRequest", 200)
-    cy.get(Selectors.ShipmentPickUpDeliveryToPartnerCard).then((input) => {
-        if (input.text() === "" || input.text() === null) {
+    // cy.get(Selectors.ShipmentPickUpDeliveryToPartnerCard).then((input) => {
+    //     if (input.text() === "" || input.text() === null) {
             cy.FillLogLov(Selectors.ShipmentPickUpDeliveryToPartnerCard, partner, false)
-        }
-    })
+    //     }
+    // })
     cy.Click(Selectors.SaveClose, null)
 }
 
