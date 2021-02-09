@@ -18,9 +18,11 @@ declare global {
         }
     }
 }
+
 Cypress.Commands.add("BackButton", (contains) => {
     cy.Click(".BackBottonBody", contains);
 })
+
 Cypress.Commands.add("FillDate", (selector, value) => {
     if (value.toUpperCase() == "TODAY") {
         cy.get(selector).focus().clear().type(".{enter}")
@@ -60,14 +62,12 @@ Cypress.Commands.add("FillRandomNumber", (selector, minimum, maximum) => {
 })
 
 Cypress.Commands.add("Click", (selector, contains) => {
-    let element = cy.get(selector).should('exist')
+    let element = cy.get(selector)//.should('exist')
     if (contains) {
         element = element.contains(contains, {matchCase: false})
 
     }
-
-    element.click({force:true})
-
+    element.click()
 })
 
 Cypress.Commands.add("SaveClick", (selector, contains, url, resultFile) => {

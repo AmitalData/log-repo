@@ -213,4 +213,14 @@ export class Selectors extends RegexSelectors {
   public static readonly SendMessageButton = '#SendMessagebtn';
   public static readonly EmailSearchInput = '.LogitudeEmailSearchInput';
   //#endregion
+
+
+  //#region AWB Wizard
+  public static readonly AddPackageLineInAWBWizard = "#AddPackageBtn";
+  public static readonly PackageQuantityInAWBWizard = "input[id^='ShipmentPackage_Quantity']:last";
+  public static readonly PackageLengthInAWBWizard = "input[id^='ShipmentPackage_Length']:last";
+  public static readonly PackageWidthInAWBWizard = "input[id^='ShipmentPackage_Width']:last";
+  public static readonly PackageHeightInAWBWizard = "input[id^='ShipmentPackage_Height']:last";
+  public static readonly PackageWeightInAWBWizard = "input[id^='ShipmentPackage_Weight']:last";
+  //#endregion
 }
