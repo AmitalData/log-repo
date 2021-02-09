@@ -2076,7 +2076,7 @@ namespace Logitude.CustomsMessaging.RequestServices
                 {
                     ID =  SetIDTypeValue<DeclarationGoodsShipmentExportConsignmentLoadingLocationID>(consignmentPM.ExportLoadingPortCode) //consignmentPM.LoadingPortCode new LoadingLocationIdentificationIDType() { Value = consignmentPM.LoadingPortCode }
                 };
-                //declarationConsignment.DMExtensions = GetDMExtensionsConsignment(consignmentPM);
+                declarationConsignment.DMExtensions = GetDMExtensionsConsignment(consignmentPM);
 
 
                 declarationConsignmentList.Add(declarationConsignment);
