@@ -103,42 +103,42 @@ namespace Logitude.Accounting.BL.CoreBL.Testers
         }
 
 
-        private GateWayTesterResult Aging_Click(int tenant, string textBoxParam)
-        {
+        //private GateWayTesterResult Aging_Click(int tenant, string textBoxParam)
+        //{
 
-            var gateWayTesterResult = new GateWayTesterResult();
-
-
-            try
-            {
-                var myAgingReportParam = LogitudeXmlSerializer.JsonConvertDeserializeTObject<AgingReportParam>(textBoxParam);
-                //using (
-                var agingReport = new AgingReportService(myAgingReportParam);
-                var xml = agingReport.RunReport();
-                //var MyPeriodList = agingReport.MyPeriodList;
-                var xmlMyPeriodList = LogitudeXmlSerializer.SerializeObjectToJosnStringMax<List<PeriodMExtended>>(agingReport.MyPeriodExtendedList);
-
-                gateWayTesterResult.Log = xmlMyPeriodList;
+        //    var gateWayTesterResult = new GateWayTesterResult();
 
 
-                gateWayTesterResult.JsonOut = xml;
+        //    try
+        //    {
+        //        var myAgingReportParam = LogitudeXmlSerializer.JsonConvertDeserializeTObject<AgingReportParam>(textBoxParam);
+        //        //using (
+        //        var agingReport = new AgingReportService(myAgingReportParam);
+        //        var xml = agingReport.RunReport();
+        //        //var MyPeriodList = agingReport.MyPeriodList;
+        //        var xmlMyPeriodList = LogitudeXmlSerializer.SerializeObjectToJosnStringMax<List<PeriodMExtended>>(agingReport.MyPeriodExtendedList);
+
+        //        gateWayTesterResult.Log = xmlMyPeriodList;
 
 
-            }
-            catch (Exception eee)
-            {
-                //param = null;
-                //throw;
-                gateWayTesterResult.ExceptionMess = eee.ToString();
-            }
-            finally
-            {
+        //        gateWayTesterResult.JsonOut = xml;
 
-                gateWayTesterResult.Log = gateWayTesterResult.Log ?? "";
-                gateWayTesterResult.Log += LogMessagingUtil.Instance.ToString();
-            }
-            return gateWayTesterResult;
-        }
+
+        //    }
+        //    catch (Exception eee)
+        //    {
+        //        //param = null;
+        //        //throw;
+        //        gateWayTesterResult.ExceptionMess = eee.ToString();
+        //    }
+        //    finally
+        //    {
+
+        //        gateWayTesterResult.Log = gateWayTesterResult.Log ?? "";
+        //        gateWayTesterResult.Log += LogMessagingUtil.Instance.ToString();
+        //    }
+        //    return gateWayTesterResult;
+        //}
 
 
         private GateWayTesterResult _TrailReport_Click(int tenant, string textBoxParam)         
