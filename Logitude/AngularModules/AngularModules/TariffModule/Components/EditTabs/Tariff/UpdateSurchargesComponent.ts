@@ -648,13 +648,15 @@ export class ContainerPriceClass extends BaseComponent {
     public DataContext: ContainerPriceClass = this;
     private measurementCode: string;
     private isEnabled: boolean;
+    public numbersUsedInNaming = ['One', 'Two', 'Three', 'Four', 'Five'];
+
     constructor(charge: CodeNameClass, public mainComponent: any) {
         super();
         this.ChargeLabel = charge.DisplyText;
         this.ChargeId = charge.Code;
         this.ChargeCode = charge.Name;
         this.measurementCode = charge.AdditionalField;
-        this.SetUIProperties();
+        this.SetUIProperties();    
     }
 
     SetUIProperties() {
@@ -677,51 +679,21 @@ export class ContainerPriceClass extends BaseComponent {
         }
     }
 
+
     SetUIProperties_TariffLinesContainersPrice() {
-        this.SetUIProperties_Price(1);
-        this.SetUIProperties_Price(2);
-        this.SetUIProperties_Price(3);
-        this.SetUIProperties_Price(4);
-        this.SetUIProperties_Price(5);
-        this.SetUIProperties_Price(6);
+        for (var counter = 1; counter <= 6; ++counter) {
+            this.SetUIProperties_Price(counter);
+        }      
     }
+
     private SetUIProperties_Price(index: number) {        
         this.UIProperties.SetEnabled(("Price" + index), null, this.IsChargeChecked && this.isEnabled);
-        if ((index == 1) && this.IsChargeChecked ) {
-            this.priceOnePlaceholder = "";
+
+        if (index != 6) {
+            this['price' + this.numbersUsedInNaming[index - 1] + 'Placeholder'] = this.IsChargeChecked ? "" : "No Update";
         }
-        if ((index == 1) && !this.IsChargeChecked) {
-            this.priceOnePlaceholder = "No Update";
-        }
-        if ((index == 2) && this.IsChargeChecked) {
-            this.priceTwoPlaceholder = "";
-        }
-        if ((index == 2) && !this.IsChargeChecked) {
-            this.priceTwoPlaceholder = "No Update";
-        }
-        if ((index == 3) && this.IsChargeChecked) {
-            this.priceThreePlaceholder = "";
-        }
-        if ((index == 3) && !this.IsChargeChecked) {
-            this.priceThreePlaceholder = "No Update";
-        }
-        if ((index == 4) && this.IsChargeChecked) {
-            this.priceFourPlaceholder = "";
-        }
-        if ((index == 4) && !this.IsChargeChecked) {
-            this.priceFourPlaceholder = "No Update";
-        }
-        if ((index == 5) && this.IsChargeChecked) {
-            this.priceFivePlaceholder = "";
-        }
-        if ((index == 5) && !this.IsChargeChecked) {
-            this.priceFivePlaceholder = "No Update";
-        }
-        if ((index == 6) &&this.IsChargeChecked) {
-            this.costPricePlaceholder = "";
-        }
-        if ((index == 6) &&!this.IsChargeChecked) {
-            this.costPricePlaceholder = "No Update";
+        else{
+            this.costPricePlaceholder = this.IsChargeChecked ? "" : "No Update";
         }
     }
     
