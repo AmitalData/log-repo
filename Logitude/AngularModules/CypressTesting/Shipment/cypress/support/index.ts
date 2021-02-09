@@ -19,6 +19,8 @@ import './Logger'
 //import 'cypress-mochawesome-reporter/register';
 import '../../../Base/cypress/commands/Authentication';
 import '../../../Base/cypress/commands/Elements';
+import '../../../Base/cypress/commands/Api';
+
 import addContext from 'mochawesome/addContext';
 Cypress.on('test:after:run', (test, runnable) => {
     if (test.state === 'failed') {
