@@ -352,6 +352,7 @@ export class ConsigmentTabContentComponent
         this.EntityPM.SecondCargoID = newValue;
     }
 
+
     public get ReceiverWarehouseCode() { return this.EntityPM ? this.EntityPM.ReceiverWarehouseCode : null; }
     public set ReceiverWarehouseCode(newValue: string) { this.EntityPM.ReceiverWarehouseCode = newValue; }
 
@@ -385,8 +386,11 @@ export class ConsigmentTabContentComponent
         this.Tab.Header = (newValue ? (newValue + '-') : '') + this.EntityPM.SequenceNumeric;
     }
 
-    public get IsLastReleaseFromWarehous() { return this.EntityPM ? this.EntityPM.IsLastReleaseFromWarehous : null; }
-    public set IsLastReleaseFromWarehous(newValue: string) { this.EntityPM.IsLastReleaseFromWarehous = newValue; }
+    public get IsLastReleaseFromWarehous() { return this.EntityPM.IsLastReleaseFromWarehous == "T" ? true : false; }
+    public set IsLastReleaseFromWarehous(newValue: boolean) { newValue ? this.EntityPM.IsLastReleaseFromWarehous = "T" : this.EntityPM.IsLastReleaseFromWarehous = "N" ; }
+
+    public get OriginalCountryCode() { return this.EntityPM ? this.EntityPM.OriginCountryCode : null; }
+    public set OriginalCountryCode(newValue: string) { this.EntityPM.OriginCountryCode = newValue; }
 
     public get StorageSiteCode() { return this.EntityPM ? this.EntityPM.StorageSiteCode : null; }
     public set StorageSiteCode(newValue: string) { this.EntityPM.StorageSiteCode = newValue; }
@@ -459,7 +463,6 @@ export class ConsigmentTabContentComponent
     }
 
 
-
     DestinationCountry: any;
     public get FinalDestinationPortCode() { return this.EntityPM.FinalDestinationPortCode; }
     public set FinalDestinationPortCode(newValue: string) {
@@ -480,7 +483,10 @@ export class ConsigmentTabContentComponent
         //}
     }
 
-
+    public get RecieverWareHouseCode() { return this.EntityPM.ReceiverWarehouseCode; }
+    public set RecieverWareHouseCode(newValue: string) {
+        this.EntityPM.ReceiverWarehouseCode = newValue;
+    }
 
     public get IsDangerousGoods() { return this.EntityPM.IsDangerousGoods; }
     public set IsDangerousGoods(newValue: boolean) {
