@@ -54,6 +54,7 @@ namespace Logitude.Accounting.BL.CoreBL.Testers
                     break;
 
 
+
                 default:
                     return new GateWayTesterResult()
                     {
@@ -63,6 +64,44 @@ namespace Logitude.Accounting.BL.CoreBL.Testers
                     break;
             }
         }
+
+        private GateWayTesterResult Aging_Click(int tenant, string textBoxParam)
+        {
+
+            var gateWayTesterResult = new GateWayTesterResult();
+
+
+            try
+            {
+                var myAgingReportParam = LogitudeXmlSerializer.JsonConvertDeserializeTObject<AgingReportParam>(textBoxParam);
+                //using (
+                var agingReport = new AgingReportService(myAgingReportParam);
+                var xml = agingReport.RunReport();
+                //var MyPeriodList = agingReport.MyPeriodList;
+                var xmlMyPeriodList = LogitudeXmlSerializer.SerializeObjectToJosnStringMax<List<PeriodMExtended>>(agingReport.MyPeriodExtendedList);
+
+                gateWayTesterResult.Log = xmlMyPeriodList;
+
+
+                gateWayTesterResult.JsonOut = xml;
+
+
+            }
+            catch (Exception eee)
+            {
+                //param = null;
+                //throw;
+                gateWayTesterResult.ExceptionMess = eee.ToString();
+            }
+            finally
+            {
+
+                gateWayTesterResult.Log = gateWayTesterResult.Log ?? "";
+                gateWayTesterResult.Log += LogMessagingUtil.Instance.ToString();
+            }
+            return gateWayTesterResult;
+        }
+
 
         private GateWayTesterResult Aging_Click(int tenant, string textBoxParam)
         {
