@@ -1,3 +1,4 @@
+@smoke
 Feature: Cancel Shipment
 
   Scenario: Create Direct Export Air Shipment

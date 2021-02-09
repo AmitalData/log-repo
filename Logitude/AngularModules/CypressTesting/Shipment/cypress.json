@@ -1,4 +1,5 @@
 {
+    "numTestsKeptInMemory":1,	
     "viewportWidth": 1440,
     "viewportHeight": 900,
     "integrationFolder": "cypress/tests",

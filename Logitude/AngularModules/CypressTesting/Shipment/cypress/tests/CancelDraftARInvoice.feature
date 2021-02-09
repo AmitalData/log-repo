@@ -1,3 +1,4 @@
+@smoke
 Feature: ARInvoice operations and actions
     This feature file will create a direct shipment and assign an ARInvoice, cancel draft
 

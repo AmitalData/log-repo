@@ -1,3 +1,4 @@
+@smoke
 Feature:Copy Direct Export Air Shipment
 
     Scenario: Create Direct Export Air Shipment

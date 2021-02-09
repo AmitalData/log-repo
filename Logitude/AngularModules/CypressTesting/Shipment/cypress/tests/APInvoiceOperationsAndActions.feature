@@ -1,3 +1,4 @@
+@smoke
 Feature: APInvoice operations and actions
     This feature file will create a direct shipment and assign an APInvoice, approve this invoice and cancel the approvement and void invoice.
 

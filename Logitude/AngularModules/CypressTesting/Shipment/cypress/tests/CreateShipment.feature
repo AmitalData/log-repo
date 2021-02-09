@@ -1,3 +1,4 @@
+@smoke
 Feature: Create Shipment Tests
 
   Scenario: Create Direct Export Air Shipment

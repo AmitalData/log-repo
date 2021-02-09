@@ -1,3 +1,4 @@
+@smoke
 Feature: House Creation And Disconnecting Inside The Master
 
   Scenario: Create Master Export Air Shipment

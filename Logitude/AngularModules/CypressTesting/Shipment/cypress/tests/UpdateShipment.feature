@@ -1,3 +1,4 @@
+@smoke
 Feature: Update Direct Export Air Shipment
 
   Scenario: Create Direct Export Air Shipment

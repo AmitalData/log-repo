@@ -1,3 +1,4 @@
+@smoke
 Feature:  Full Shipment Scenario
     this file will create a direct shipment,fill general,order,package tab
     create AP/AR invoices,Payment,and docs in, docs out, close operationally/Accountly
@@ -15,35 +16,35 @@ Feature:  Full Shipment Scenario
         When save shipment
         Then the direct shipment should save successfully
 
-    Scenario: Add orders
-        Given the user add order package with the following details
-            | Quantity | Length | Width | Height | GrossWeight |
-            | 5        | 1      | 2     | 3      | 100         |
-            | 5        | 10     | 20    | 30     | 200         |
-        When save shipment
-        Then the direct shipment should save successfully
+    # Scenario: Add orders
+    #     Given the user add order package with the following details
+    #         | Quantity | Length | Width | Height | GrossWeight |
+    #         | 5        | 1      | 2     | 3      | 100         |
+    #         | 5        | 10     | 20    | 30     | 200         |
+    #     When save shipment
+    #     Then the direct shipment should save successfully
 
-    Scenario: Add Partners
-        Given  partners with following details
-            | Consignee       | Agent            | CustomsAgentExport     | CustomsAgentImport     | Notify1 | Notify2 | ShipperNotExporter   | ConsigneeNotImporter   | FreightForwarder     | Coloader     | CustomClearancePoint     | Consolidator     | ReleasingAgent  |
-            | ConsigneeExport | IntegrationAgent | InegrationCustomsAgent | InegrationCustomsAgent | notify  | notify  | shipper not exporter | consignee not importer | FreightForwarderTest | ColoaderTest | CustomClearancePointTest | ConsolidatorTest | releasing agent |
-        When save shipment
-        Then the direct shipment should save successfully
+    # Scenario: Add Partners
+    #     Given  partners with following details
+    #         | Consignee       | Agent            | CustomsAgentExport     | CustomsAgentImport     | Notify1 | Notify2 | ShipperNotExporter   | ConsigneeNotImporter   | FreightForwarder     | Coloader     | CustomClearancePoint     | Consolidator     | ReleasingAgent  |
+    #         | ConsigneeExport | IntegrationAgent | InegrationCustomsAgent | InegrationCustomsAgent | notify  | notify  | shipper not exporter | consignee not importer | FreightForwarderTest | ColoaderTest | CustomClearancePointTest | ConsolidatorTest | releasing agent |
+    #     When save shipment
+    #     Then the direct shipment should save successfully
 
-    Scenario: Add Packages
-        Given  a Package with the following details
-            | Quantity | Length | Width | Height | GrossWeight |
-            | 5        | 1      | 2     | 3      | 100         |
-        When save shipment
-        Then the direct shipment should save successfully
+    # Scenario: Add Packages
+    #     Given  a Package with the following details
+    #         | Quantity | Length | Width | Height | GrossWeight |
+    #         | 5        | 1      | 2     | 3      | 100         |
+    #     When save shipment
+    #     Then the direct shipment should save successfully
 
-    Scenario: Add Routing
-        Given the user add new pickup
-        Given add delivery with "IntegrationAgent" as a partner routing
-        Given add pre carriage from port "LAS" to port "NYC"
-        Given add on carriage from port "JFK" to port "MIA"
-        When save shipment
-        Then the direct shipment should save successfully
+    # Scenario: Add Routing
+    #     Given the user add new pickup
+    #     Given add delivery with "IntegrationAgent" as a partner routing
+    #     Given add pre carriage from port "LAS" to port "NYC"
+    #     Given add on carriage from port "JFK" to port "MIA"
+    #     When save shipment
+    #     Then the direct shipment should save successfully
 
     Scenario: Add Payable
         Given a payable with the following details

@@ -34,7 +34,7 @@ else{
 })
 Cypress.Commands.add("FillLogTextBox", (selector, value) => {
 
-    cy.get(selector).clear().type(value)
+    cy.get(selector).clear().type(value,{delay : 5}).should('have.value', value)
 
 })
 

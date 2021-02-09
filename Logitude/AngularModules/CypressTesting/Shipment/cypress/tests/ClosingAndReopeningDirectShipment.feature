@@ -1,3 +1,4 @@
+@smoke
 Feature:  Closing And Reopening Direct Shipment
 
   Scenario: Create Direct Export Air Shipment

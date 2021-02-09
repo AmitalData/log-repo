@@ -45,8 +45,8 @@ Given("the user fills {string} as GrossWeight and {string} as a MoveType", (Gros
     Actions.FillGeneralTab(GrossWeight, MoveType)
 });
 
-
 Given("the user add order package with the following details", (dataTable) => {
+    //Actions.OpenShipment(ShipmentData.ShipmentNumber);
     packagesDetails = dataTable.hashes() as PackagesDetails[];
     Actions.FillOrdersTab(packagesDetails)
 });
