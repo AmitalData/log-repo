@@ -14,7 +14,6 @@ declare global {
             ClickRadio(selector: string): Chainable<Element>
             ValidateElementColor(selector: string, expectedcolor: string): Chainable<Element>
             SelectQuickSearchFirstElement(selector: string, value: string): Chainable<Element>
-            DefineRequestWait(method: string, url: string, requestAlias: string): Chainable<Element>
         }
     }
 }
@@ -74,21 +73,6 @@ Cypress.Commands.add("Click", (selector, contains, force = false) => {
 
 })
 
-Cypress.Commands.add("SaveClick", (selector, contains, url, resultFile) => {
-
-    cy.intercept({
-        method: "POST",
-        url: url
-    }).as("WaitRequest")
-
-    let element = cy.get(selector)
-
-    if (contains !== null) {
-        element = element.contains(contains, { matchCase: false })
-    }
-    element.click()
-})
-
 Cypress.Commands.add("ClickCheckBox", (selector) => {
 
     cy.get(selector).next("label").click()
@@ -114,11 +98,4 @@ Cypress.Commands.add("SelectQuickSearchFirstElement", (selector, value) => {
                 cy.get("ul > li").eq(0).click({ force: true })
             })
         })
-})
-
-Cypress.Commands.add("DefineRequestWait", (method, url, requestAlias) => {
-    cy.intercept({
-        method: method,
-        url: url
-    }).as(requestAlias)
 })
