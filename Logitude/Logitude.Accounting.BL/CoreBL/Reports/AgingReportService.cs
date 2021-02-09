@@ -743,7 +743,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
             endAccountBalanceService.CalculateBalance(
 true,
 dateTypeCode /*GLAccountTotalDateTypeValues.Accountingdate*/,
-_Param.AgingForDate.Date, false, true, true);
+_Param.AgingForDate.Date, false, true, true,false);
 
             
             var totals = (from rec in endAccountBalanceService.AccountBalance.verbose.CurrencySumUntillMounth.Union(endAccountBalanceService.AccountBalance.verbose.TheMounthCurrencySum)
@@ -831,6 +831,60 @@ _Param.AgingForDate.Date, false, true, true);
                                 && _Param.GroupByDate == AgingReportParam.DateEnum.DueDate);
         }
 
+
+        //private static IQueryable<PeriodM> GetqOpenTransactionsFutureDueDate_InForeign(DateTime graterThen_OpenTransactionsFutureDueDate, IQueryable<GLAccountTotalByMonthsDTOAging> qTotalByMonthAcc_NOTMultiCurrencySooGet_ForeignAmount)
+        //{
+        //    IQueryable<PeriodM> qOpenTransactionsFutureDueDate_InForeign;
+        //    qOpenTransactionsFutureDueDate_InForeign =
+        //        (from rec in qTotalByMonthAcc_NOTMultiCurrencySooGet_ForeignAmount///GLAccount that is not multi Currency Get Foreign 
+        //                 where
+        //             (rec.Year == graterThen_OpenTransactionsFutureDueDate.Year && rec.Month > graterThen_OpenTransactionsFutureDueDate.Month)
+        //    ||
+        //    rec.Year > graterThen_OpenTransactionsFutureDueDate.Year
+        //         group rec by new { rec.AccountId, rec.CurrencyId } into groupByAccCurrr
+
+        //         select new PeriodM()
+        //         {
+
+        //             OrderDate = graterThen_OpenTransactionsFutureDueDate,
+        //             OrderAfterOpenrECODueDate = true,
+        //             AccountId = groupByAccCurrr.Key.AccountId,
+        //             CurrencyId = groupByAccCurrr.Key.CurrencyId,///GLAccount that is not multi Currency Get Foreign 
+        //                     Total = groupByAccCurrr.Sum(rec => (decimal)rec.ForeignAmountDebit - (decimal)rec.ForeignAmountCredit),
+        //             OpenCredit = groupByAccCurrr.Sum(rec => rec.ForeignAmountCredit),
+        //             OpenDebit = groupByAccCurrr.Sum(rec => rec.ForeignAmountDebit)
+        //         });
+        //    return qOpenTransactionsFutureDueDate_InForeign;
+        //}
+
+        //private IQueryable<PeriodM> GetOpenTransactionsFutureDueDate_InLocal(DateTime graterThen_OpenTransactionsFutureDueDate, IQueryable<GLAccountTotalByMonthsDTOAging> qTotalByMonthAcc_ISMultiCurrencySooGet_LocalAmount)
+        //{
+        //    return (from rec in qTotalByMonthAcc_ISMultiCurrencySooGet_LocalAmount
+        //            where
+        //            (rec.Year == graterThen_OpenTransactionsFutureDueDate.Year && rec.Month > graterThen_OpenTransactionsFutureDueDate.Month)
+        //            ||
+        //            rec.Year > graterThen_OpenTransactionsFutureDueDate.Year
+        //            group rec by new { rec.AccountId } into groupByAccCurrr
+
+        //            select new PeriodM()
+        //            {
+
+        //                OrderDate = graterThen_OpenTransactionsFutureDueDate,
+        //                OrderAfterOpenrECODueDate = true,
+        //                AccountId = groupByAccCurrr.Key.AccountId,
+        //                CurrencyId = _AccountingCurrencyId,
+        //                Total = groupByAccCurrr.Sum(rec => rec.LocalAmountDebit - rec.LocalAmountCredit),
+        //                OpenCredit = groupByAccCurrr.Sum(rec => rec.LocalAmountCredit),
+        //                OpenDebit = groupByAccCurrr.Sum(rec => rec.LocalAmountDebit),
+
+        //            });
+        //}
+
+        //private bool ToCalcOpenTransactionsFutureDueDate()
+        //{
+        //    return (_Param.AgingMethod == AgingReportParam.MethodEnum.ReconcileOpenBalanceMethod.ToString()
+        //                        && _Param.GroupByDate == AgingReportParam.DateEnum.DueDate);
+        //}
 
         private void RemoveDummies(ref List<PeriodM> reportList, List<GLAccountList> myaccountsList, Logitude.BL.CommonDataModel.EntityPMs.TenantPM tenant)
         {

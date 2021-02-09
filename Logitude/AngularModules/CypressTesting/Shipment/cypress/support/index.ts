@@ -16,9 +16,8 @@
 // Import commands.js using ES2015 syntax:
 import './commands'
 //import 'cypress-mochawesome-reporter/register';
-import '../../../Base/cypress/commands/Authentication'
-import '../../../Base/cypress/commands/Elements'
-import '../../../Base/cypress/commands/General'
+import '../../../Base/cypress/commands/Authentication';
+import '../../../Base/cypress/commands/Elements';
 import addContext from 'mochawesome/addContext';
 Cypress.on('test:after:run', (test, runnable) => {
     if (test.state === 'failed') {

@@ -6,18 +6,18 @@
   Module="CRM">
   <SqlScript>
     <![CDATA[
-Create PROCEDURE [dbo].usp_DeleteCRMRecords
-(
-	@Tenant int
-)
-AS
+    Create PROCEDURE [dbo].usp_DeleteCRMRecords
+    (
+	    @Tenant int
+    )
+    AS
 
-BEGIN
+    BEGIN
 
-exec [dbo].usp_DoTheTableDeletionSet @Tenant = @Tenant, @TableName = 'Activities'
-exec [dbo].usp_DoTheTableDeletionSet @Tenant = @Tenant, @TableName = 'Opportunities'
+    exec [dbo].usp_DoTheTableDeletionSet @Tenant = @Tenant, @TableName = 'Activities'
+    exec [dbo].usp_DoTheTableDeletionSet @Tenant = @Tenant, @TableName = 'Opportunities'
 
-END
+    END
 ]]></SqlScript>
   <OracleScript>
 </OracleScript>

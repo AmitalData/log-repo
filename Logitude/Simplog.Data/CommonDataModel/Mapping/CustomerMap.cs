@@ -16,7 +16,6 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.AccountManagerUserId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.SalesmanUserId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.RankId).HasMaxLength(15).IsUnicode(false);
-            this.Property(t => t.BillToId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.Field1).HasMaxLength(250).IsUnicode(true);
             this.Property(t => t.Field2).HasMaxLength(250).IsUnicode(true);
             this.Property(t => t.Field3).HasMaxLength(250).IsUnicode(true);
@@ -62,7 +61,6 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.StartWorkingDate).HasColumnName("StartWorkingDate");
             this.Property(t => t.StartWorkingManuallySet).HasColumnName("StartWorkingManuallySet");
             this.Property(t => t.LastShipmentDate).HasColumnName("LastShipmentDate");
-            this.Property(t => t.BillToId).HasColumnName("BillToId");
             this.Property(t => t.Field1).HasColumnName("Field1");
             this.Property(t => t.Field2).HasColumnName("Field2");
             this.Property(t => t.Field3).HasColumnName("Field3");
@@ -122,7 +120,6 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.AutomaticLastUpdateDate).HasColumnName("AutomaticLastUpdateDate"); 
 
             // Relationships
-            this.HasOptional(t => t.BillToCard).WithMany().HasForeignKey(d => d.BillToId);
             this.HasRequired(t => t.Card).WithOptional(t => t.Customer);
             this.HasOptional(t => t.AccountManagerUser).WithMany().HasForeignKey(d => d.AccountManagerUserId);
             this.HasOptional(t => t.SalesmanUser).WithMany().HasForeignKey(d => d.SalesmanUserId);

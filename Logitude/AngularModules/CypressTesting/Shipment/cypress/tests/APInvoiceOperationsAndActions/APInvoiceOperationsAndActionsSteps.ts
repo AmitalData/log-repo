@@ -12,8 +12,7 @@ let shipmentNumber: string;
 
 Given("the user logged in and navigates to shipments workspace", () => {
   cy.Login()
-  cy.Click(BaseSelectors.OperationsMenu, null)
-  cy.Click(Selectors.ShipmentTab, null)
+  Actions.NavigatesToShipmentsWorkspace()
 });
 
 Given("a direct shipment with the following details",
@@ -39,7 +38,7 @@ Given("a payable with the following details",
     Actions.FillPayablesTab(PayableData)
     Actions.UpdateShipment(Selectors.ShipmentSaveButton)
   });
-And("an APInvoice with the following details and a random invoice number",
+And("an APInvoice with a random invoice number and the following details",
   (dataTable) => {
     const APInvoiceData = dataTable.hashes()[0] as APInvoiceDetails
     cy.Click(Selectors.ReceiveInvoiceButton, null);

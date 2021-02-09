@@ -1386,12 +1386,16 @@
                 var tokenCard = ExternalTenant ? "CardId_" + userdata.CurrentTenant : "CardId";
                 window.localStorage.setItem(tokenKey, userdata.Token);
                 window.localStorage.setItem(tokenCard, userdata.CardId);
-
-
-
             }
+
             var logindata = userdata.UserName + ":" + userdata.CurrentTenant + ":" + userdata.CardId + ":" + userdata.CardType + ":" + userdata.IsBrandingEnabled;
-            document.location.href = "SharedLogisticPage.aspx?userdata=" + logindata;
+            //document.location.href = "SharedLogisticPage.aspx?userdata=" + logindata;
+            
+            var params = [];
+            params.push({ name: "Token", value: userdata.Token });
+            params.push({ name: "LoginData", value: logindata });
+            PostFormParams("/SharedLogisticPage.aspx", params);
+
             $("#loginBusyindicator").hide();
         };
 

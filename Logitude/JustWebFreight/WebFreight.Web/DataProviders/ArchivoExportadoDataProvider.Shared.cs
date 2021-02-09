@@ -39,6 +39,7 @@ namespace WebFreight.Web.DataProviders
         public double? InvoiceCurrencyRate { get; set; }
         public string CardCode { get; set; }
         public string CardName { get; set; }
+        public string PartnerName { get; set; }
         public string CardExternal { get; set; }
         public string CreatedByUser { get; set; }
         public string BranchCode { get; set; }

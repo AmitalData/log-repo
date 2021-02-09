@@ -11,8 +11,7 @@ let shipmentNumber: string;
 
 Given("the user logged in and navigates to shipments workspace", () => {
   cy.Login()
-  cy.Click(BaseSelectors.OperationsMenu, null)
-  cy.Click(Selectors.ShipmentTab, null)
+  Actions.NavigatesToShipmentsWorkspace()
 });
 
 Given("a direct shipment with the following details",
@@ -38,7 +37,7 @@ Given("the user in the direct's shipment rounting tab",()=>{
     cy.Click(Selectors.RoutingsTab, null);
 });
 
-Given("edit Main Carriage Leg with the follwing details",(dataTable)=>{
+Given("edit main carriage leg with the follwing details",(dataTable)=>{
     let mainCarriageLeg = dataTable.hashes()[0] as MainCarriageLeg;
     Actions.EditMainCarriageLegs(mainCarriageLeg.Airline);
 }); 
@@ -71,6 +70,6 @@ When("reopen shipment operationally",()=>{
     Actions.UpdateClosedShipment();
 });
 
-Then("the shipment should Reopen successfully",()=>{
+Then("the shipment should reopen successfully",()=>{
     BaseAssertion.AssertStatusCode("WaitPutShipmentRequest", 200)
 });

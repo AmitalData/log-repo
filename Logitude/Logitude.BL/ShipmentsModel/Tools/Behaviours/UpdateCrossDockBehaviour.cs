@@ -313,8 +313,13 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviour
 
             this.ComputeStorageDaye();
 
-            if (shipmentPM.WarehouseLegActualEntryDate != null && shipmentPM.WarehouseLegActualReleaseDate != null && !string.IsNullOrEmpty(shipmentPM.ChargeStorageCurrencyId)
-                && shipmentPM.ChargeStorage && shipmentPM.ShipmentStoragePricings.Count > 0 && storageDays != null)
+            if (shipmentPM.WarehouseLegActualEntryDate != null 
+                && shipmentPM.WarehouseLegActualReleaseDate != null 
+                && !string.IsNullOrEmpty(shipmentPM.ChargeStorageCurrencyId)
+                && shipmentPM.ChargeStorage 
+                && shipmentPM.ShipmentStoragePricings.Count > 0 
+                && storageDays != null
+                && storageDays > shipmentPM.WarehouseStorageFreeDays)
             {
                 if (storageReceivable != null)
                 {
@@ -438,6 +443,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviour
                     storageReceivable.ChargesTypeCode = chargesType.Code;
                     storageReceivable.ChargesTypeName = chargesType.EnglishName;
                     storageReceivable.MeasurementId = chargesType.MeasurementId;
+                    storageReceivable.MeasurementCode = chargesType.Measurement == null ? null : chargesType.Measurement.Code;
                     storageReceivable.ChargesGroupCode = chargesType.ChargesGroupCode;
                     storageReceivable.DueTypeCode = chargesType.DueTypeCode;
                     storageReceivable.VatTypeId = chargesType.VatTypeId;
