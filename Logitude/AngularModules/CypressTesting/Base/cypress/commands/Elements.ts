@@ -30,9 +30,11 @@ Cypress.Commands.add("FillDate", (selector, value) => {
     }
 })
 
+Cypress.Commands.add("FillLogTextBox", (selector, value) => {
     cy.get(selector).clear().type(value,{delay : 5}).should('have.value', value)
 
 })
+
 
 Cypress.Commands.add("FillLogLov", (selector, value, fromCache) => {
 

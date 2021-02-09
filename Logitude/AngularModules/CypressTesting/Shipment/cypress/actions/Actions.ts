@@ -364,7 +364,7 @@ export function PayAPInvoice() {
 
 }
 export function FillARPaymentDetails(aRPaymentDetails: ARPaymentDetails) {
-    cy.FillLogLov(Selectors.ARPaymentPartner, aRPaymentDetails.Partner, false)
+    //cy.FillLogLov(Selectors.ARPaymentPartner, aRPaymentDetails.Partner, false)
     cy.FillLogLov(Selectors.ARPaymentPaymentMethod, aRPaymentDetails.PaymentMethod, true)
     cy.FillLogTextBox(Selectors.ARPaymentAmount, aRPaymentDetails.PaymentAmount)
     cy.Click(Selectors.OkAddARPayment, null)
