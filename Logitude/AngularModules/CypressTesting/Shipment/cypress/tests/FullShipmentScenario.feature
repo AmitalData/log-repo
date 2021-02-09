@@ -95,8 +95,8 @@ Feature:  Full Shipment Scenario
 
     Scenario: Pay ARInvoice
         Given an ARPayment with the following details
-            | PartnerType | Partner           | BillToAddress | PaymentCurrency | RegisterDate | PaymentMethod | PaymentAmount |
-            | Customer    | TestShipperExport | Main Address  | EUR             | Today        | Cash          | 50            |
+            | PartnerType | BillToAddress | PaymentCurrency | RegisterDate | PaymentMethod | PaymentAmount |
+            | Customer    | Main Address  | EUR             | Today        | Cash          | 50            |
         When pay the ARInvoice
         Then the ARInvoice should pay successfully
 
