@@ -372,11 +372,11 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                     //if (isAutoPayment)
                                     //    SendPayment(declarationPM, dbContext, requestParams);
                                 }
-                                else if ((declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.DeclarationVersion == declarationPM.VersionId && declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.ReleaseDateTimeSpecified == true))
+                                else if ((declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.DeclarationVersion == declarationPM.VersionId && declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.ReleaseDateTime.HasValue))
                                 {
                                     declarationPM.DeclarationStatusTypeCode = declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.DeclarationStatusCode;
 
-                                    if (declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.ReleaseDateTimeSpecified == true && declarationPM.HatraDate == null)
+                                    if (declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.ReleaseDateTime.HasValue && declarationPM.HatraDate == null)
                                     {
                                         var myEventContextTagModel = new EventContextTagModel()
                                         {
@@ -493,7 +493,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                     MyResponseData.HandeledWroker = declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.HandledWorker;
 
-                    if (declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.ReleaseDateTimeSpecified == true)
+                    if(declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.ReleaseDateTime.HasValue)
                     {
                         MyResponseData.ReleaseDateTime = declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.ReleaseDateTime.Value.Date.ToString("dd/MM/yyyy");
                         if (declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.ReleaseDateTime.Value.TimeOfDay.Hours != 0)
