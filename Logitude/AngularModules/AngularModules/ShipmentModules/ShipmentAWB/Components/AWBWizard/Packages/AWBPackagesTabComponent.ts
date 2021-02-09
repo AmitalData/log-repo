@@ -3,7 +3,7 @@ import {BaseComponent} from '../../../../../Infrastructure/Components/LogitudeCo
 import {ShipmentPM} from '../../../../../Shipment/EntityPMs/ShipmentPM';
 import {ShipmentPackagePM} from '../../../../../Shipment/EntityPMs/ShipmentPackagePM';
 import {AWBWizardComponent} from '../AWBWizardComponent';
-import {AppTool, FormatTool} from '../../../../../Infrastructure/Tools';
+import {AppTool, ArrayTool, FormatTool} from '../../../../../Infrastructure/Tools';
 import {ShipmentTool} from '../../../../../Shipment/Tools';
 import {TextCodeTranslator} from '../../../../../Infrastructure/Utilities/TextCodeTranslator';
 import {LogitudeWindow} from '../../../../../Controls/Windows/LogitudeWindow';
@@ -151,7 +151,7 @@ export class AWBPackagesTabComponent extends BaseComponent {
     public ShowWarning_ChargeableWeight: boolean = false;
     public ShowWarning_AWBCommodityItemNumber: boolean = false;
     public ShowWarning_DescriptionOfGoods: boolean = false;
-    private FireWizardEvent() {
+    FireWizardEvent() {
         this.Wizard.ValidateScreen_PAC();
         this.Wizard.ValidateScreen_FRE();
         this.Wizard.ValidateScreen_GEN();
@@ -783,7 +783,7 @@ export class AWBPackagesTabComponent extends BaseComponent {
             }
         });
     }
-    private RunPackageWindow(itemComponent: AWBWizardPackageItem, windowTitle: string) {
+    RunPackageWindow(itemComponent: AWBWizardPackageItem, windowTitle: string) {
         this._entityResourceService.getEntityResourceByTableName(itemComponent.ObjectTableName).subscribe(response=> {
             var logitudeWindow = new LogitudeWindow();
             logitudeWindow.Title = windowTitle;
@@ -835,7 +835,7 @@ export class AWBPackagesTabComponent extends BaseComponent {
             }
         });
     }
-    private RunCommodityWindow(itemComponent: ShipmentCommodityItem, windowTitle: string) {
+    RunCommodityWindow(itemComponent: ShipmentCommodityItem, windowTitle: string) {
         this._entityResourceService.getEntityResourceByTableName(itemComponent.ObjectTableName).subscribe(response => {
             var logitudeWindow = new LogitudeWindow();
             logitudeWindow.Title = windowTitle;
@@ -1248,6 +1248,230 @@ export class ShipmentCommodityItem extends BaseComponent {
         this.SetUIProperties();
     }
 
+    IsEditingEnabled: boolean = false;
+    SetUIProperties() {
+
+        this.IsEditingEnabled = this.fatherComponent.IsEditingEnabled;
+
+        var isFieldEnabled = false;
+        if (this.IsEditingEnabled) {
+            if (this.CommodityPackages.length == 0) {
+                isFieldEnabled = true;
+            }
+        }
+
+        this.UIProperties.SetEnabled("ChargeAmount", this.ObjectTableName, false);
+        this.UIProperties.SetEnabled("Volume", this.ObjectTableName, isFieldEnabled);
+        this.UIProperties.SetEnabled("GrossWeight", this.ObjectTableName, isFieldEnabled);
+        this.UIProperties.SetEnabled("VolumetricWeight", this.ObjectTableName, isFieldEnabled);
+        this.UIProperties.SetEnabled("NumberOfPackages", this.ObjectTableName, isFieldEnabled);
+
+        this.SetRateClassUIProperties();
+    }
+    SetRateClassUIProperties() {
+        var rateClassGroupCode: string = ShipmentTool.GetRateClassGroupCode(this.RateClassCode);
+
+        if (rateClassGroupCode == "S") {
+            this.ChargeRate = null;
+            this.UIProperties.SetEnabled("AWBChargeRate", this.ObjectTableName, false);
+            this.UIProperties.SetEnabled("AWBChargeAmount", this.ObjectTableName, true);
+
+        }
+
+        else {
+            this.UIProperties.SetEnabled("AWBChargeRate", this.ObjectTableName, true);
+            this.UIProperties.SetEnabled("AWBChargeAmount", this.ObjectTableName, false);
+        }
+    }
+
+    get IsFirstLine() { return this.EntityPM.IsFirstLine; }
+    set IsFirstLine(value: boolean) {
+        if (this.EntityPM.IsFirstLine != value) {
+            this.EntityPM.IsFirstLine = value;
+        }
+    }
+
+    get CommodityNumber() { return this.EntityPM.CommodityNumber; }
+    set CommodityNumber(value: string) {
+        if (this.EntityPM.CommodityNumber != value) {
+            this.EntityPM.CommodityNumber = value;
+            this.fatherComponent.FireWizardEvent();
+        }
+    }
+
+    get RateClassCode() { return this.EntityPM.RateClassCode; }
+    set RateClassCode(value: string) {
+        if (this.EntityPM.RateClassCode != value) {
+            this.EntityPM.RateClassCode = value;
+            this.ComputeAWBChargeAmount();
+            this.SetRateClassUIProperties();
+            this.fatherComponent.FireWizardEvent();
+        }
+    }
+
+    get ChargeableWeight() { return this.EntityPM.ChargeableWeight; }
+    set ChargeableWeight(value: number) {
+        if (this.EntityPM.ChargeableWeight != value) {
+            this.EntityPM.ChargeableWeight = AppTool.Round(value, 3);
+            this.ComputeAWBChargeAmount();
+            this.fatherComponent.ComputeTotals();
+        }
+    }
+
+    get ChargeRate() { return this.EntityPM.ChargeRate; }
+    set ChargeRate(value: number) {
+        if (this.EntityPM.ChargeRate != value) {
+            this.EntityPM.ChargeRate = AppTool.Round(value, 3);
+            this.fatherComponent.FireWizardEvent();
+            this.ComputeAWBChargeAmount();
+        }
+    }
+
+    private ComputeAWBChargeAmount() {
+        this.ChargeAmount = ShipmentTool.ComputeAWBChargeAmount(this.RateClassCode, this.ChargeRate, this.ChargeableWeight);
+    }
+
+    get ChargeAmount() { return this.EntityPM.ChargeAmount; }
+    set ChargeAmount(value: number) {
+        if (this.EntityPM.ChargeAmount != value) {
+            this.EntityPM.ChargeAmount = AppTool.Round(value, 3);
+            this.ComputeAWBFrieghtAmount();
+        }
+    }
+
+    private ComputeAWBFrieghtAmount() {
+        var computedAmount = this.ChargeAmount;
+        var totaAmount = this.ShipmentPM.AWBFreightAmountPrepaid + this.ShipmentPM.AWBFreightAmountCollect;
+
+        var recompute = true;
+        var isPrepaidHasAmount = (this.ShipmentPM.AWBFreightAmountPrepaid != 0 && this.ShipmentPM.AWBFreightAmountPrepaid != null);
+        var isCollectHasAmount = (this.ShipmentPM.AWBFreightAmountCollect != 0 && this.ShipmentPM.AWBFreightAmountCollect != null);
+
+        if (!AppTool.IsNullOrEmpty(this.ShipmentPM.FreightPrepaidCollectId)) {
+            if (isPrepaidHasAmount && isCollectHasAmount && (computedAmount == totaAmount)) {
+                recompute = false;
+            }
+        }
+
+        if (recompute) {
+            if (this.ShipmentPM.FreightPrepaidCollectId == "P") {
+                this.ShipmentPM.AWBFreightAmountCollect = 0;
+                this.ShipmentPM.AWBFreightAmountPrepaid = computedAmount == null ? 0 : computedAmount;
+            }
+
+            else if (this.ShipmentPM.FreightPrepaidCollectId == "C") {
+                this.ShipmentPM.AWBFreightAmountPrepaid = 0;
+                this.ShipmentPM.AWBFreightAmountCollect = computedAmount == null ? 0 : computedAmount;
+            }
+        }
+
+        this.fatherComponent.FireWizardEvent();
+    }
+
+    get DescriptionOfGoods() { return this.EntityPM.DescriptionOfGoods; }
+    set DescriptionOfGoods(value: string) {
+        if (this.EntityPM.DescriptionOfGoods != value) {
+            this.EntityPM.DescriptionOfGoods = value;
+        }
+    }
+
+    get Volume() { return this.EntityPM.Volume; }
+    set Volume(value: number) {
+        if (this.EntityPM.Volume != value) {
+            this.EntityPM.Volume = AppTool.Round(value, 3);
+            this.fatherComponent.ComputeTotals();
+        }
+    }
+
+    get VolumetricWeight() { return this.EntityPM.VolumetricWeight; }
+    set VolumetricWeight(value: number) {
+        if (this.EntityPM.VolumetricWeight != value) {
+            this.EntityPM.VolumetricWeight = AppTool.Round(value, 3);
+            this.fatherComponent.ComputeTotals();
+        }
+    }
+
+    get GrossWeight() { return this.EntityPM.GrossWeight; }
+    set GrossWeight(value: number) {
+        if (this.EntityPM.GrossWeight != value) {
+            this.EntityPM.GrossWeight = AppTool.Round(value, 3);
+            this.fatherComponent.ComputeTotals();
+        }
+    }
+
+    get NumberOfPackages() { return this.EntityPM.NumberOfPackages; }
+    set NumberOfPackages(value: number) {
+        if (this.EntityPM.NumberOfPackages != value) {
+            this.EntityPM.NumberOfPackages = value;
+            this.fatherComponent.ComputeTotals();
+        }
+    }
+
+    public ComputeTotals() {
+        if (this.EntityPM.CommodityPackages.length == 0) {
+            this.EntityPM.Volume = null;
+            this.EntityPM.GrossWeight = null;
+            this.EntityPM.VolumetricWeight = null;
+            this.EntityPM.ChargeableWeight = null;
+            this.EntityPM.NumberOfPackages = null;
+        }
+
+        else {
+            this.EntityPM.NumberOfPackages = ArrayTool.Sum(this.EntityPM.CommodityPackages, 'Quantity');
+            this.EntityPM.Volume = ArrayTool.Sum(this.EntityPM.CommodityPackages, 'Volume');
+            this.EntityPM.VolumetricWeight = ArrayTool.Sum(this.EntityPM.CommodityPackages, 'VolumetricWeight');
+            this.EntityPM.GrossWeight = ArrayTool.Sum(this.EntityPM.CommodityPackages, 'Weight');
+            this.EntityPM.ChargeableWeight = AppTool.CalculateChargeableWeight(this.EntityPM.GrossWeight, this.EntityPM.VolumetricWeight, this.ShipmentPM.GrossWeightUnitCode, this.ShipmentPM.ChargeableWeightUnitCode, this.ShipmentPM.DirectionId, this.ShipmentPM.TransportModeId);
+        }
+
+        if (this.EntityPM.Volume == 0) {
+            this.EntityPM.Volume = null;
+        }
+
+        if (this.EntityPM.GrossWeight == 0) {
+            this.EntityPM.GrossWeight = null;
+        }
+
+        if (this.EntityPM.VolumetricWeight == 0) {
+            this.EntityPM.VolumetricWeight = null;
+        }
+
+        if (this.EntityPM.ChargeableWeight == 0) {
+            this.EntityPM.ChargeableWeight = null;
+        }
+
+        if (this.EntityPM.NumberOfPackages == 0) {
+            this.EntityPM.NumberOfPackages = null;
+        }
+
+        this.SetUIProperties();
+        this.ComputeAWBChargeAmount();
+        this.fatherComponent.ComputeTotals();
+    }
+
+}
+export class CommodityPackageItem extends BaseComponent {
+    public DataContext: CommodityPackageItem = this;
+    public EntityPM: CommodityPackagePM;
+    public ShipmentPM: ShipmentPM;
+    public ObjectTableName: string = "CommodityPackage";
+    public IsNewEntity: boolean = false;
+    public IsWindowMode: boolean = false;
+    constructor(entityPM: CommodityPackagePM, public fatherComponent: ShipmentCommodityItem, isNew: boolean) {
+        super();
+
+        this.EntityPM = entityPM;
+        this.ShipmentPM = fatherComponent.ShipmentPM;
+        this.IsNewEntity = isNew;
+        this.SetUIProperties();
+    }
+
+    private hasValue: boolean;
+    public HasValue(hasValue: boolean) {
+        this.hasValue = hasValue;
+        this.SetUIProperties();
+    }
+
     public IsEditingEnabled: boolean = false;
     public SetUIProperties() {
 
@@ -1257,75 +1481,177 @@ export class ShipmentCommodityItem extends BaseComponent {
 
         this.IsEditingEnabled = this.fatherComponent.IsEditingEnabled;
 
-        //if (this.IsEditingEnabled) {
-        //    if (this.Quantity > 0 || this.hasValue) {
-        //        isFieldEnabled = true;
-        //        isVolumeEnabled = true;
-        //        isDimensionEnabled = true;
+        if (this.IsEditingEnabled) {
+            if (this.Quantity > 0 || this.hasValue) {
+                isFieldEnabled = true;
+                isVolumeEnabled = true;
+                isDimensionEnabled = true;
 
-        //        if (this.Height != null || this.Width != null || this.Length != null) {
-        //            isVolumeEnabled = false;
-        //        }
+                if (this.Height != null || this.Width != null || this.Length != null) {
+                    isVolumeEnabled = false;
+                }
 
-        //        else if (this.Volume != null) {
-        //            isDimensionEnabled = false;
-        //        }
-        //    }
-        //}
+                else if (this.Volume != null) {
+                    isDimensionEnabled = false;
+                }
+            }
+        }
 
-        //this.UIProperties.SetEnabled("Quantity", this.ObjectTableName, this.IsEditingEnabled);
-        //this.UIProperties.SetEnabled("VolumetricWeight", this.ObjectTableName, false);
-        //this.UIProperties.SetEnabled("Length", this.ObjectTableName, isDimensionEnabled);
-        //this.UIProperties.SetEnabled("Width", this.ObjectTableName, isDimensionEnabled);
-        //this.UIProperties.SetEnabled("Height", this.ObjectTableName, isDimensionEnabled);
-        //this.UIProperties.SetEnabled("Volume", this.ObjectTableName, isVolumeEnabled);
-        //this.UIProperties.SetEnabled("Weight", this.ObjectTableName, isFieldEnabled);
+        this.UIProperties.SetEnabled("Quantity", this.ObjectTableName, this.IsEditingEnabled);
+        this.UIProperties.SetEnabled("VolumetricWeight", this.ObjectTableName, false);
+        this.UIProperties.SetEnabled("Length", this.ObjectTableName, isDimensionEnabled);
+        this.UIProperties.SetEnabled("Width", this.ObjectTableName, isDimensionEnabled);
+        this.UIProperties.SetEnabled("Height", this.ObjectTableName, isDimensionEnabled);
+        this.UIProperties.SetEnabled("Volume", this.ObjectTableName, isVolumeEnabled);
+        this.UIProperties.SetEnabled("Weight", this.ObjectTableName, isFieldEnabled);
     }
 
-    get IsFirstLine() { return this.EntityPM.IsFirstLine; }
+    get Quantity() { return this.EntityPM.Quantity; }
+    set Quantity(newValue: number) {
+        if (this.EntityPM.Quantity != newValue) {
+            this.EntityPM.Quantity = AppTool.Round(newValue, 0);
 
-    get CommodityNumber() { return this.EntityPM.CommodityNumber; }
-    set CommodityNumber(value: string) {
-        if (this.EntityPM.CommodityNumber != value) {
-            this.EntityPM.CommodityNumber = value;
+            var itemIndex = this.fatherComponent.EntityPM.CommodityPackages.indexOf(this.EntityPM);
+            
+            if (AppTool.IsNullOrZero(this.EntityPM.Quantity)) {
+                this.Height = null;
+                this.Length = null;
+                this.Width = null;
+                this.Volume = null;
+                this.VolumetricWeight = null;
+                this.Weight = null;
+
+                if (!this.IsWindowMode) {
+                    if (itemIndex > -1) {
+                        this.fatherComponent.EntityPM.RemoveCommodityPackagePM(this.EntityPM);
+                    }
+                }
+            }
+
+            else {
+                if (!this.IsWindowMode) {
+                    if (itemIndex == -1) {
+                        this.fatherComponent.EntityPM.AddCommodityPackagePM(this.EntityPM);
+                    }
+                }
+            }
+
+            this.SetUIProperties();
+            this.ComputeVolume();
+            this.fatherComponent.ComputeTotals();
         }
     }
 
-    get RateClassCode() { return this.EntityPM.RateClassCode; }
-    set RateClassCode(value: string) {
-        if (this.EntityPM.RateClassCode != value) {
-            this.EntityPM.RateClassCode = value;
+    get Length() { return this.EntityPM.Length; }
+    set Length(newValue: number) {
+        if (this.EntityPM.Length != newValue) {
+            this.EntityPM.Length = AppTool.Round(newValue, 2);
+            this.ComputeVolume();
+            this.SetUIProperties();
         }
     }
 
-    get ChargeableWeight() { return this.EntityPM.ChargeableWeight; }
-    set ChargeableWeight(value: number) {
-        if (this.EntityPM.ChargeableWeight != value) {
-            this.EntityPM.ChargeableWeight = AppTool.Round(value, 3);
-            //this.fatherComponent.ComputeTotals();
+    get Width() { return this.EntityPM.Width; }
+    set Width(newValue: number) {
+        if (this.EntityPM.Width != newValue) {
+            this.EntityPM.Width = AppTool.Round(newValue, 2);
+            this.ComputeVolume();
+            this.SetUIProperties();
         }
     }
 
-    get ChargeAmount() { return this.EntityPM.ChargeAmount; }
-    set ChargeAmount(value: number) {
-        if (this.EntityPM.ChargeAmount != value) {
-            this.EntityPM.ChargeAmount = AppTool.Round(value, 3);
-            //this.fatherComponent.ComputeTotals();
+    get Height() { return this.EntityPM.Height; }
+    set Height(newValue: number) {
+        if (this.EntityPM.Height != newValue) {
+            this.EntityPM.Height = AppTool.Round(newValue, 2);
+            this.ComputeVolume();
+            this.SetUIProperties();
         }
     }
 
-    get ChargeRate() { return this.EntityPM.ChargeRate; }
-    set ChargeRate(value: number) {
-        if (this.EntityPM.ChargeRate != value) {
-            this.EntityPM.ChargeRate = AppTool.Round(value, 3);
-            //this.fatherComponent.ComputeTotals();
+    get Dimensions() {
+        var myDimensions: string;
+
+        if (this.Length == null && this.Width == null && this.Height == null) {
+            myDimensions = " - - ";
+        }
+
+        else {
+            var myLength: number = 0;
+            var myWidth: number = 0;
+            var myHeight: number = 0;
+
+            if (this.Length != null) {
+                myLength = this.Length;
+            }
+
+            if (this.Width != null) {
+                myWidth = this.Width;
+            }
+
+            if (this.Height != null) {
+                myHeight = this.Height;
+            }
+
+            myDimensions = myLength + "-" + myWidth + "-" + myHeight;
+        }
+
+        return myDimensions;
+    }
+
+    get Volume() { return this.EntityPM.Volume; }
+    set Volume(newValue: number) {
+        if (this.EntityPM.Volume != newValue) {
+            this.EntityPM.Volume = AppTool.Round(newValue, 3);
+            this.ComputeVolumetricWeight();
+            this.SetUIProperties();
         }
     }
 
-    get DescriptionOfGoods() { return this.EntityPM.DescriptionOfGoods; }
-    set DescriptionOfGoods(value: string) {
-        if (this.EntityPM.DescriptionOfGoods != value) {
-            this.EntityPM.DescriptionOfGoods = value;
+    get VolumetricWeight() { return this.EntityPM.VolumetricWeight; }
+    set VolumetricWeight(newValue: number) {
+        if (this.EntityPM.VolumetricWeight != newValue) {
+            this.EntityPM.VolumetricWeight = AppTool.Round(newValue, 3);
+            this.fatherComponent.ComputeTotals();
         }
+    }
+
+    get Weight() { return this.EntityPM.Weight; }
+    set Weight(newValue: number) {
+        var myValue: number = AppTool.Round(newValue, 3);
+
+        if (this.EntityPM.Weight != myValue) {
+            this.EntityPM.Weight = myValue
+
+            this.fatherComponent.ComputeTotals();
+        }
+    }
+
+    OnGrossWeightLostFocus(input1: number) {
+        if (AppTool.IsNullOrEmpty(this.EntityPM.Volume)) {
+            if (this.Width == null || this.Height == null || this.Length == null) {
+                this.EntityPM.VolumetricWeight = AppTool.GetWeightFromWeight(this.ShipmentPM.GrossWeightUnitCode, this.ShipmentPM.ChargeableWeightUnitCode, this.EntityPM.Weight);
+                this.EntityPM.Volume = AppTool.GetVolumeFromWeight(this.ShipmentPM.ChargeableWeightUnitCode, this.ShipmentPM.VolumeUnitCode, this.EntityPM.VolumetricWeight, this.ShipmentPM.Ratio);
+
+                this.SetUIProperties();
+                this.fatherComponent.ComputeTotals();
+            }
+        }
+    }
+
+    private ComputeVolume() {
+
+        if (this.ShipmentPM.Ratio == null) {
+            this.ShipmentPM.Ratio = AppTool.GetRatio(this.ShipmentPM.DirectionId, this.ShipmentPM.TransportModeId, this.ShipmentPM.ShipmentTypeId, SessionLocator.TenantPM.CountryCode);
+        }
+
+        this.Volume = AppTool.ComputePackageVolume(this.Quantity, this.Width, this.Height, this.Length, this.Weight, this.ShipmentPM.Ratio, this.ShipmentPM.DimensionsUnitCode, this.ShipmentPM.VolumeUnitCode, this.ShipmentPM.GrossWeightUnitCode);
+    }
+    private ComputeVolumetricWeight() {
+        if (this.ShipmentPM.Ratio == null) {
+            this.ShipmentPM.Ratio = AppTool.GetRatio(this.ShipmentPM.DirectionId, this.ShipmentPM.TransportModeId, this.ShipmentPM.ShipmentTypeId, SessionLocator.TenantPM.CountryCode);
+        }
+
+        this.VolumetricWeight = AppTool.ComputePackageVolumetricWeight(this.Quantity, this.Width, this.Height, this.Length, this.Volume, this.Weight, this.ShipmentPM.Ratio, this.ShipmentPM.DimensionsUnitCode, this.ShipmentPM.VolumeUnitCode, this.ShipmentPM.GrossWeightUnitCode, this.ShipmentPM.ChargeableWeightUnitCode);
     }
 }

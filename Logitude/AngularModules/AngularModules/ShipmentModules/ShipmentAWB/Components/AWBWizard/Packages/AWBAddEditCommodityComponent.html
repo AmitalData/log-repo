@@ -14,84 +14,76 @@
                     <td style="width: 400px;">
                         <table>
 
-                            <!-- Quantity -->
+                            <!-- CommodityNumber -->
                             <tr class="FormFieldRow">
                                 <td>
-                                    <LogLabel [ObjectFieldName]="'Quantity'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                    <LogLabel [ObjectFieldName]="'CommodityNumber'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                 </td>
 
                                 <td style="width: 230px;">
-                                    <LogTextBox [ObjectFieldName]="'Quantity'" [Text]="DataContext.Quantity" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                    <LogTextBox [ObjectFieldName]="'CommodityNumber'" [Text]="DataContext.CommodityNumber" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
                                 </td>
                             </tr>
 
-                            <!-- Dimensions -->
+                            <!-- RateClassCode -->
                             <tr class="FormFieldRow">
                                 <td>
-                                    <LogLabel [ObjectFieldName]="'Length'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Text]="DimensionsLabel"></LogLabel>
+                                    <LogLabel [ObjectFieldName]="'RateClassCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                 </td>
 
-                                <td style="width: 230px;">
-                                    <table>
-                                        <tr>
-                                            <td>
-                                                <LogTextBox [ObjectFieldName]="'Length'" [Text]="DataContext.Length" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true" [DisableZeroPadding]="true"></LogTextBox>
-                                            </td>
-
-                                            <td style="width: 1px;">
-                                                <div></div>
-                                            </td>
-
-                                            <td>
-                                                <LogTextBox [ObjectFieldName]="'Width'" [Text]="DataContext.Width" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true" [DisableZeroPadding]="true"></LogTextBox>
-                                            </td>
-
-                                            <td style="width: 1px;">
-                                                <div></div>
-                                            </td>
-
-                                            <td>
-                                                <LogTextBox [ObjectFieldName]="'Height'" [Text]="DataContext.Height" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true" [DisableZeroPadding]="true"></LogTextBox>
-                                            </td>
-
-                                            <td style="width: 36px;">
-                                                <div></div>
-                                            </td>
-                                        </tr>
-                                    </table>
+                                <td>
+                                    <LogLov [ObjectFieldName]="'RateClassCode'"
+                                            [SelectedValue]="DataContext.RateClassCode"
+                                            [ObjectTableName]="ObjectTableName"
+                                            [DataContext]="DataContext"
+                                            [LookUpTableName]="'RateClass'">
+                                    </LogLov>
                                 </td>
                             </tr>
 
-                            <!-- Volume -->
+                            <!-- ChargeableWeight -->
                             <tr class="FormFieldRow">
                                 <td>
-                                    <LogLabel [ObjectFieldName]="'Volume'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Text]="VolumeLabel"></LogLabel>
+                                    <LogLabel [ObjectFieldName]="'ChargeableWeight'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Text]="ChargeableWeightLabel"></LogLabel>
                                 </td>
 
-                                <td style="width: 230px;">
-                                    <LogTextBox [ObjectFieldName]="'Volume'" [Text]="DataContext.Volume" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                <td>
+                                    <LogTextBox [ObjectFieldName]="'ChargeableWeight'" [Text]="DataContext.ChargeableWeight" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
                                 </td>
                             </tr>
 
-                            <!-- Volumetric -->
+                            <!-- ChargeRate -->
                             <tr class="FormFieldRow">
                                 <td>
-                                    <LogLabel [ObjectFieldName]="'VolumetricWeight'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Text]="VolumetricWeightLabel"></LogLabel>
+                                    <LogLabel [ObjectFieldName]="'ChargeRate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                 </td>
 
-                                <td style="width: 230px;">
-                                    <LogTextBox [ObjectFieldName]="'VolumetricWeight'" [Text]="DataContext.VolumetricWeight" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                <td>
+                                    <LogTextBox [ObjectFieldName]="'ChargeRate'" [Text]="DataContext.ChargeRate" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
                                 </td>
                             </tr>
 
-                            <!-- Weight -->
+                            <!-- ChargeAmount -->
                             <tr class="FormFieldRow">
                                 <td>
-                                    <LogLabel [ObjectFieldName]="'Weight'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Text]="GrossWeightLabel"></LogLabel>
+                                    <LogLabel [ObjectFieldName]="'ChargeAmount'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                 </td>
 
-                                <td style="width: 230px;">
-                                    <LogTextBox (LostFocus)="DataContext.OnGrossWeightLostFocus($event)" [ObjectFieldName]="'Weight'" [Text]="DataContext.Weight" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                <td>
+                                    <LogTextBox [ObjectFieldName]="'ChargeAmount'" [Text]="DataContext.ChargeAmount" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                </td>
+                            </tr>
+
+                            <!-- DescriptionOfGoods -->
+                            <tr class="FormFieldRow" style="height: 85px;">
+                                <td style="vertical-align: top; padding-top: 5px;">
+                                    <LogLabel [ObjectFieldName]="'DescriptionOfGoods'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                </td>
+
+                                <td style="height: 85px; vertical-align: top;">
+                                    <div style="height: 100%;">
+                                        <LogTextBox [ObjectFieldName]="'DescriptionOfGoods'" [Text]="DataContext.DescriptionOfGoods" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [IsMultiline]="true"></LogTextBox>
+                                    </div>
                                 </td>
                             </tr>
 

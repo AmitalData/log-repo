@@ -30,17 +30,9 @@ export class AWBAddEditCommodityComponent {
         this.Clone();
     }
 
-    public TareLabel: string;
-    public VolumeLabel: string;
-    public DimensionsLabel: string;
-    public GrossWeightLabel: string;
-    public VolumetricWeightLabel: string;
+    public ChargeableWeightLabel: string;
     SetLabels() {
-        this.TareLabel = TextCodeTranslator.Translate('ShipmentPackage.F.Tare').replace('%WeightCode', this.DataContext.ShipmentPM.GrossWeightUnitCode);
-        this.VolumeLabel = TextCodeTranslator.Translate('ShipmentPackage.F.Volume').replace('%VolumeCode', this.DataContext.ShipmentPM.VolumeUnitCode);
-        this.DimensionsLabel = TextCodeTranslator.Translate('Shipment.O.Packages.Dimensions').replace('%UnitCode', this.DataContext.ShipmentPM.DimensionsUnitCode);
-        this.GrossWeightLabel = TextCodeTranslator.Translate('ShipmentPackage.F.Weight').replace('%WeightCode', this.DataContext.ShipmentPM.GrossWeightUnitCode);
-        this.VolumetricWeightLabel = TextCodeTranslator.Translate('ShipmentPackage.F.VolumetricWeight').replace('%WeightCode', this.DataContext.ShipmentPM.ChargeableWeightUnitCode);
+        this.ChargeableWeightLabel = TextCodeTranslator.Translate("ShipmentCommodity.F.ChargeableWeight").replace('%ChargWeightCode', this.DataContext.ShipmentPM.ChargeableWeightUnitCode);
     }
 
     CancelButtonClicked() {
@@ -78,13 +70,16 @@ export class AWBAddEditCommodityComponent {
     private myCloner: Cloner;
     private Clone() {
         this.myCloner = new Cloner(this.DataContext);
-        this.myCloner.AddField('Quantity');
-        this.myCloner.AddField('Length');
-        this.myCloner.AddField('Width');
-        this.myCloner.AddField('Height');
+        this.myCloner.AddField('CommodityNumber');
+        this.myCloner.AddField('RateClassCode');
+        this.myCloner.AddField('ChargeableWeight');
+        this.myCloner.AddField('ChargeRate');
+        this.myCloner.AddField('ChargeAmount');
+        this.myCloner.AddField('DescriptionOfGoods');
         this.myCloner.AddField('Volume');
         this.myCloner.AddField('VolumetricWeight');
-        this.myCloner.AddField('Weight');
+        this.myCloner.AddField('GrossWeight');
+        this.myCloner.AddField('NumberOfPackages');
         this.myCloner.AddEntity(this.EntityPM);
         this.myCloner.AddEntity(this.DataContext.ShipmentPM);
     }
