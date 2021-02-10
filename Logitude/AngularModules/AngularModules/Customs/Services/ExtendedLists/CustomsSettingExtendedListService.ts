@@ -89,6 +89,7 @@ export class CustomsSettingExtendedListService {
 
             var serviceResponse: ServiceResponse;
             serviceResponse = new ServiceResponse();
+            debugger;
             var params = JSON.stringify(genericRequestParams);
             return this._http.post(
                 this._apiUrl + '/PostSincroOption/',

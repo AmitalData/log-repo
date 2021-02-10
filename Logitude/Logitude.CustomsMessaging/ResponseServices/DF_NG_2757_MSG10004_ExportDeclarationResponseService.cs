@@ -589,7 +589,9 @@ namespace Logitude.CustomsMessaging.ResponseServices
             }
             //Update Declaration 
             _MyDeclarationPM.VersionId = customResponse.Response.Declaration.DMExtensions.VersionID.Value;
- 
+            _MyDeclarationPM.TransshipmentApprovalDateTime = customResponse.Response.Declaration.DMExtensions.TransshipmentApprovalDateTime.Value;
+
+
             _MyDeclarationPM.DeclarationStatusTypeCode = customResponse.Response.Status[0].NameCode.Value;
             if(customResponse.Response.Declaration.DMExtensions.CustomsValueComponent.TotalFOBNISAmount!=null)
              _MyDeclarationPM.FOBValueNIS = Math.Round(customResponse.Response.Declaration.DMExtensions.CustomsValueComponent.TotalFOBNISAmount.Value, 2);

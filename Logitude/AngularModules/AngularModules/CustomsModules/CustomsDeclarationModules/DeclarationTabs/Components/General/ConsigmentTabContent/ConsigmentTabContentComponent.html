@@ -683,17 +683,17 @@
                                             <!-- ExportUnloadingPortCode -->
 
                                             <td style="width: 150px;">
-                                                <LogLabel [ObjectFieldName]="'ExportUnloadingPortCode'" [ObjectTableName]="'Customs.Consignment'"
+                                                <LogLabel [ObjectFieldName]="'LoadingPortCode'" [ObjectTableName]="'Customs.Consignment'"
                                                           [DataContext]="DataContext" [NoObjectField]="true" [Text]="'אתר טעינה אחרון'"></LogLabel>
                                             </td>
 
                                             <td style="width: 160px;">
-                                                <LogLov [ObjectFieldName]="'ExportUnloadingPortCode'"
+                                                <LogLov [ObjectFieldName]="'LoadingPortCode'"
                                                         [ObjectTableName]="ObjectTableName"
                                                         [DataContext]="DataContext"
                                                         [LookUpTableName]="'Customs.InternationalSite'"
                                                         [DisplayMemberPath]="'LocalName'"
-                                                        [SelectedValue]="ExportUnloadingPortCode"
+                                                        [SelectedValue]="LoadingPortCode"
                                                         [HideColumns]="true">
                                                 </LogLov>
                                             </td>

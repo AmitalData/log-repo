@@ -38,6 +38,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 var physicalCheckQueryService = new PhysicalCheckQueryService(customContext);
                 PhysicalCheckUpdateService physicalCheckUpdateService = new PhysicalCheckUpdateService(customContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), requestParams.Tenant);
                 PhysicalCheckPM physicalCheck = new PhysicalCheckPM();
+                DeclarationPM myDeclarationPM = new DeclarationPM();
+                DeclarationUpdateService declarationUpdateService = new DeclarationUpdateService(customContext, new Dictionary<string, IContext>(), requestParams.Tenant);
                 string declarationId = "";
                 string declarationCustomerId = "";
 
@@ -45,8 +47,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 if (!string.IsNullOrWhiteSpace(NoticeToClient.declarationID))
                 {
                     //<--- Yuval Chalup 19.11.2015 TASK-17450
-                    DeclarationUpdateService declarationUpdateService = new DeclarationUpdateService(customContext, new Dictionary<string, IContext>(), requestParams.Tenant);
-                    DeclarationPM myDeclarationPM = declarationUpdateService.GetSertByConvertedDeclarationNumber(NoticeToClient.declarationID.ToString(), requestParams.Tenant);
+                    myDeclarationPM = declarationUpdateService.GetSertByConvertedDeclarationNumber(NoticeToClient.declarationID.ToString(), requestParams.Tenant);
                     if (myDeclarationPM != null)
                     {
                         //If this is a Converted Declaration
@@ -64,7 +65,6 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 if (string.IsNullOrWhiteSpace(declarationId))
                 {
                     DeclarationQueryService myQueryService = new DeclarationQueryService(customContext);
-                    DeclarationPM myDeclarationPM = new DeclarationPM();
                     if (customResponse.CheckEntity != null && customResponse.CheckEntity.cargoIdentifier != null && !string.IsNullOrWhiteSpace(customResponse.CheckEntity.cargoIdentifier.cargoIdentifierType.ToString()))
                     {
                         myDeclarationPM = myQueryService.GetDeclarationPMByCargoIdentifiers(customResponse.CheckEntity.cargoIdentifier.cargoIdentifierType.ToString(), customResponse.CheckEntity.cargoIdentifier.cargoIdentifierKey1, customResponse.CheckEntity.cargoIdentifier.cargoIdentifierKey2, requestParams.Tenant);
@@ -233,8 +233,12 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                 }
                                 //Yuval Chalup 19.11.2015 TASK-17450 --->
                                 eventContextTagModelList.Add(myInsertEventContextTagModel);
+                                myDeclarationPM.PhysicalCheck = 1;
+                                myDeclarationPM.ChangeSetOp = ChangeSetOperation.Update;
+                                declarationUpdateService.Update(myDeclarationPM, true);
+
                             }
-                                                      
+
                             if (NoticeToClient.QueueType == 1 || NoticeToClient.QueueType == 3)
                             {
                                 var myInsertEventContextTagModel2 = new EventContextTagModel()
@@ -249,6 +253,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             }
                             physicalCheck.CurrentContextTag = eventContextTagModelList;
                             physicalCheck.IsClosed = false;
+                            
                             break;
                         case "2":
                         case "3":
