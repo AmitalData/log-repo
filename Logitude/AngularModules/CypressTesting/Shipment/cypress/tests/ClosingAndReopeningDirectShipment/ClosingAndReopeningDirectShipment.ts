@@ -1,8 +1,7 @@
 import * as Actions from "../../actions/Actions";
 import { Given, When, Then } from "cypress-cucumber-preprocessor/steps";
 import { ShipmentDetails } from "../../models/ShipmentDetails";
-import { BaseSelectors } from "../../../../Base/cypress/selectors/BaseSelectors"
-import { Selectors } from "../../selectors/Selectors";
+import { ShipmentSelector } from "../../selectors/Selectors";
 import * as BaseAssertion from "../../../../Base/cypress/actions/Assertion"
 import { MainCarriageLeg } from "cypress/models/MainCarriageLeg";
 
@@ -34,7 +33,7 @@ Then("the shipment should create successfully", () => {
 
 Given("the user in the direct's shipment rounting tab",()=>{
     Actions.OpenShipment(shipmentNumber);
-    cy.Click(Selectors.RoutingsTab, null);
+    cy.Click(ShipmentSelector.RoutingsTab, null);
 });
 
 Given("edit main carriage leg with the follwing details",(dataTable)=>{
@@ -43,14 +42,14 @@ Given("edit main carriage leg with the follwing details",(dataTable)=>{
 }); 
 
 When("close shipment operationally",()=>{
-    cy.Click(Selectors.ShipmentMoreList, null,true);
-    cy.Click(Selectors.OperationalCloseButton, null);
+    cy.Click(ShipmentSelector.ShipmentMoreList, null,true);
+    cy.Click(ShipmentSelector.OperationalCloseButton, null);
     Actions.UpdateClosedShipment();
 });
 
 When("close shipment Accountly",()=>{
-    cy.Click(Selectors.ShipmentMoreList, null,true);
-    cy.Click(Selectors.AccountllyCloseButton, null);
+    cy.Click(ShipmentSelector.ShipmentMoreList, null,true);
+    cy.Click(ShipmentSelector.AccountllyCloseButton, null);
     Actions.UpdateClosedShipment();
 });
 
@@ -59,14 +58,14 @@ Then("the shipment should close successfully",()=>{
 });
 
 When("reopen shipment Accountly",()=>{
-    cy.Click(Selectors.ShipmentMoreList, null,true);
-    cy.Click(Selectors.AccountllyReopenButton, null);
+    cy.Click(ShipmentSelector.ShipmentMoreList, null,true);
+    cy.Click(ShipmentSelector.AccountllyReopenButton, null);
     Actions.UpdateClosedShipment();
 });
 
 When("reopen shipment operationally",()=>{
-    cy.Click(Selectors.ShipmentMoreList, null,true);
-    cy.Click(Selectors.OperationalReopenButton, null);
+    cy.Click(ShipmentSelector.ShipmentMoreList, null,true);
+    cy.Click(ShipmentSelector.OperationalReopenButton, null);
     Actions.UpdateClosedShipment();
 });
 
