@@ -1,8 +1,6 @@
 import * as Actions from "../../actions/Actions";
 import { Given, When, Then } from "cypress-cucumber-preprocessor/steps";
 import { ShipmentDetails } from "../../models/ShipmentDetails";
-import { BaseSelectors } from "../../../../Base/cypress/selectors/BaseSelectors"
-import { Selectors } from "../../selectors/Selectors";
 import * as BaseAssertion from "../../../../Base/cypress/actions/Assertion"
 
 let shipmentDetails: ShipmentDetails;

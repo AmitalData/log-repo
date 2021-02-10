@@ -1,5 +1,5 @@
 import * as Actions from "../../actions/Actions"
-import { Selectors } from "../../selectors/Selectors"
+import { ShipmentSelector } from "../../selectors/Selectors"
 import { ShipmentDetails } from "../../models/ShipmentDetails";
 import { BaseSelectors } from "../../../../Base/cypress/selectors/BaseSelectors"
 import { Given, When, Then, And } from "cypress-cucumber-preprocessor/steps";
@@ -33,12 +33,12 @@ Then("the shipment should create successfully", () => {
         const ReceivableData = dataTable.hashes() as ReceivableDetails[];
         Actions.OpenShipment(shipmentNumber)
         Actions.FillReceivablesTab(ReceivableData)
-        Actions.UpdateShipment(Selectors.ShipmentSaveButton)
+        Actions.UpdateShipment(ShipmentSelector.ShipmentSaveButton)
     });
     Given("a credit ARInvoice with a random invoice number and the following details",
         (dataTable) => {
             const ARInvoiceData = dataTable.hashes()[0] as ARInvoiceDetails
-            cy.Click(Selectors.CreateCreditNoteARInvoiceButton, null);
+            cy.Click(ShipmentSelector.CreateCreditNoteARInvoiceButton, null);
             Actions.FillARInvoiceDetails(ARInvoiceData)
         });
 });

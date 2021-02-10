@@ -1,5 +1,5 @@
 import * as Actions from '../../actions/Actions';
-import { Selectors } from '../../selectors/Selectors';
+import { ShipmentSelector } from '../../selectors/Selectors';
 import { Given, When, Then } from 'cypress-cucumber-preprocessor/steps';
 import * as BaseAssertion from '../../../../Base/cypress/actions/Assertion';
 import { ShipmentDetails } from '../../models/ShipmentDetails';
@@ -36,11 +36,11 @@ Then("the master should create successfully", () => {
 //#region Create house export air shipment inside the master
 Given("the user in the master's Shipment tab",()=>{
     Actions.OpenShipment(shipmentNumber);
-    cy.Click(Selectors.ShipmentsTab, null);
+    cy.Click(ShipmentSelector.ShipmentsTab, null);
 });
 
 When("create house with {string} as Shipper",(Shipper)=>{
-    cy.Click(Selectors.NewAttachedHouse,null);
+    cy.Click(ShipmentSelector.NewAttachedHouse,null);
     Actions.FillHouseInShipmentsTab(Shipper);
     Actions.CreateShipment("House");
 });
