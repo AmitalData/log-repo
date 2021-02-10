@@ -1,5 +1,4 @@
-﻿@Pre-Prepare
-Feature: Create and update shipment security access
+﻿Feature: Create and update shipment security access
 	With pre-prepared base and shipment data
 	We want to test Create and update shipment security access.
 
