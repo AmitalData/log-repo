@@ -19,7 +19,7 @@
                                 <tr>
                                     <td style="width:10px;"><div></div></td>
 
-                                    <td style="width:60px" class="Label">Partner:</td>
+                                    <td style="width:100px" class="Label">Bill To/ Vendor:</td>
                                     <td style="width:200px;">
                                         <LogLov [ObjectFieldName]="'CustomerId'"
                                                 [DataContext]="DataContext"
@@ -98,6 +98,20 @@
                         <td>
                             <table>
                                 <tr>
+                                    <td style="width:10px;"><div></div></td>
+
+                                    <td style="width:60px" class="Label">Partner:</td>
+                                    <td style="width:200px;">
+                                        <LogLov [ObjectFieldName]="'PartnerId'"
+                                                [DataContext]="DataContext"
+                                                [LookUpTableName]="'Card'"
+                                                [DisplayMemberPath]="'EnglishName'"
+                                                [DependencyFilter1IsList]="'true'"
+                                                [ShowInActive]="'true'"
+                                                [DependencyFilter1Value]="'AG,CS,AL,SL,CC,VD,CG,CO,OT,SG,TR,WH'">
+                                        </LogLov>
+                                    </td>
+
                                     <td style="width:10px;"><div></div></td>
 
                                     <td style="width:110px; vertical-align:middle;">

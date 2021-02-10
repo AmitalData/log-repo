@@ -218,6 +218,14 @@ namespace Logitude.Infrastructure.BL
                 SearchFields = "QMC, Quote Multi Currency Mode", 
                 Description = "Quote Multi Currency Mode", 
 			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "ADC", 
+                Name = "Automation Document Copies", 
+                SearchFields = "ADC,Automation Document Copies", 
+                Description = "Automation Document Copies", 
+			});
 			
             return all;
        }

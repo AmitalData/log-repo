@@ -556,7 +556,8 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
     }
 
     LoadDocumentTypeTemplate(documentTypeList: DocumentTypeList) {
-        this.ShowDocumentsCopy = documentTypeList.IsDocumentOneTimePrintLimited;
+        const automationDocumentCopyfeatureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "ADC" && d.TenantNumber == SessionLocator.Tenant)[0];
+        this.ShowDocumentsCopy = documentTypeList.IsDocumentOneTimePrintLimited && automationDocumentCopyfeatureToggle != null;
         this.LoadDocumentTypeHTMLTemplate(documentTypeList);
 
         var isMessage: boolean = documentTypeList.TemplateFormatCode == "M" ? true : false;

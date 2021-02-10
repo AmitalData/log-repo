@@ -1,5 +1,5 @@
 ﻿(function (jQuery) {
-
+    jQuery.Token = null;
     jQuery.CurrentEmail = null;
     jQuery.CurrentTenant = null;
     jQuery.CurrentCardId = null;
@@ -51,6 +51,9 @@
             url: url,
             type: 'GET',
             contentType: 'application/json',
+            headers: {
+                'Token': $.Token
+            },
 
             success: function (result) {
 
@@ -91,7 +94,10 @@
             url: url,
             type: 'GET',
             contentType: 'application/json',
-                        
+            headers: {
+                'Token': $.Token
+            },
+            
             success: function (result) {
                 
                 $("#CompanyText").html(result.TenantCompany);
@@ -158,6 +164,9 @@
             data: JSON.stringify(filters),
             type: 'POST',
             contentType: 'application/json',
+            headers: {
+                'Token': $.Token
+            },
 
             success: function (result) {
                 $.SendContactActivity($.CurrentEmail, "Invoice", "Invoices List", $.CurrentTenant, $.CurrentCardId);
@@ -226,6 +235,9 @@
             data: JSON.stringify(filters),
             type: 'POST',
             contentType: 'application/json',
+            headers: {
+                'Token': $.Token
+            },
 
             success: function (result) {                
 
@@ -815,6 +827,9 @@
             url: url,
             type: 'GET',
             contentType: 'application/json',
+            headers: {
+                'Token': $.Token
+            },
 
             success: function (result) {
          
@@ -846,16 +861,24 @@
 
         $.ResizePage(130);
 
-        var hash = $(location).attr('href');
-        var arr = hash.split('=');
-        var userdata = arr[1];
-        var arrdata = userdata.split(':');
+        var userdata = null;
+        $.Token = $("#TokenInput").val();
+        var linkQuery = $("#LoginInput").val();
+        var linkParameters = null;
 
-        $.CurrentEmail = arrdata[0];
-        $.CurrentTenant = arrdata[1];
-        $.CurrentCardId = arrdata[2];
-        $.CurrentCardType = arrdata[3];
-        $.IsBrandingEnabled = arrdata[4];
+        if ($.trim($.Token) == "") {
+            var link = $(location).attr('href');
+            var linkArray = link.split('=')
+            linkQuery = linkArray[1];
+        }
+
+        linkParameters = linkQuery.split(':')
+
+        $.CurrentEmail = linkParameters[0];
+        $.CurrentTenant = linkParameters[1];
+        $.CurrentCardId = linkParameters[2];
+        $.CurrentCardType = linkParameters[3];
+        $.IsBrandingEnabled = linkParameters[4];
         
         if ($.IsBrandingEnabled == "true" || $.IsBrandingEnabled == "True") {
             $(".PoweredArea").hide();

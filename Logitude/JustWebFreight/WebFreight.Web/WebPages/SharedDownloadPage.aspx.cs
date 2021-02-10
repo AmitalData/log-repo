@@ -27,7 +27,7 @@ namespace WebFreight.Web.WebPages
     public partial class SharedDownloadPage : System.Web.UI.Page
     {
 
-
+        private string email = null;
         public byte[] _DatainByte;
 
         public bool CheckAvailablityTenantsForEmail(string email, int tenant)
@@ -40,14 +40,13 @@ namespace WebFreight.Web.WebPages
         {
             if (tenant != 0)
             {
-
                 bool exists = false;
-                if (!string.IsNullOrEmpty(HttpContext.Current.User.Identity.Name))
+
+                if (!string.IsNullOrEmpty(email))
                 {//using (TransactionScope scope = TransactionFactory.GetNewTransaction())
                     //{
                     //}
                     ICommonDataContext commonDataContext = CommonDataContext.GetContext(tenant);
-                    string email = HttpContext.Current.User.Identity.Name;
 
                     ContactRepository contactrep = new ContactRepository(commonDataContext);
                     Contact contact = contactrep.GetSingleContactByEmail(email, tenant);
@@ -80,12 +79,11 @@ namespace WebFreight.Web.WebPages
             {
 
                 bool exists = false;
-                if (!string.IsNullOrEmpty(HttpContext.Current.User.Identity.Name))
+                if (!string.IsNullOrEmpty(email))
                 {//using (TransactionScope scope = TransactionFactory.GetNewTransaction())
                     //{
                     //}
                     ICommonDataContext commonDataContext = CommonDataContext.GetContext(tenant);
-                    string email = HttpContext.Current.User.Identity.Name;
 
                     ContactRepository contactrep = new ContactRepository(commonDataContext);
                     Contact contact = contactrep.GetSingleContactByEmail(email, tenant);
@@ -137,8 +135,6 @@ namespace WebFreight.Web.WebPages
 
                 bool isAuothenticatedRequest = true;
                 bool CheckForTenantAvailability = true;
-
-                string email = this.Context.User.Identity.Name;
 
 
 
@@ -336,7 +332,7 @@ namespace WebFreight.Web.WebPages
         {
             try
             {
-                string email = this.Context.User.Identity.Name;
+                bool isExternalLink = false;
                 string documentExtension = "";
                 string filename = "";
                 string entityType = "";
@@ -347,6 +343,23 @@ namespace WebFreight.Web.WebPages
                 //{
                 string headerRequest = Request["id"];
                 filestrings = headerRequest.Split(':');
+
+                if (headerRequest.Contains("securitykey"))
+                {
+                    isExternalLink = true;
+                }
+
+                if (!isExternalLink)
+                {
+                    email = this.Context.User.Identity.Name;
+
+                    if (string.IsNullOrEmpty(email))
+                    {
+                        string token = Request["Token"];
+                        AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                        email = authToken.Email;
+                    }
+                }
 
 
 
@@ -533,11 +546,11 @@ namespace WebFreight.Web.WebPages
                         throw new ApplicationException("Sorry you’re not authenticated to view this document.");
                     }
                 }
-
-
             }
+
             catch (Exception errorInfo)
             {
+                throw errorInfo;
 
                 if (errorInfo.Message != null)
                 {

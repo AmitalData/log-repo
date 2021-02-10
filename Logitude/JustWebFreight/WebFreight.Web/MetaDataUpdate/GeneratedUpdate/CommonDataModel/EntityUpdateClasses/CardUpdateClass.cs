@@ -78,8 +78,8 @@ using Logitude.CargoTracking.Data.EntityPOCOs;
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUpdateClasses
 {
    public class CardUpdateClass
-   {  	
-		public const string HashString = "aa8ce22d5a40ec6aabdfd420f9f48c03";
+   {  		
+		public const string HashString = "44b01d3327716b0ba9a69fa09f52370b";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             

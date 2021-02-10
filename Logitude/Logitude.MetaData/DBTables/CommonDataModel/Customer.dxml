@@ -325,13 +325,6 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="BillToId"
-    Type="varchar"
-    Size="15">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
     Name="ActivatedByUserId"
     Type="varchar"
     Size="15">
@@ -524,11 +517,6 @@
   <Relation
     ForeignKeyColumn="SalesmanUserId"
     ReferencedTable="Users"
-    ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />
-  <Relation
-    ForeignKeyColumn="BillToId"
-    ReferencedTable="Cards"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
   <Relation

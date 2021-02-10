@@ -28,6 +28,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
         private DateTime? FromDate = null;
         private DateTime? ToDate = null;
         private string CustomerId = null;
+        private string PartnerId = null;
         private bool IsByCreateDate = true;
 
         public AccountingLedgerManager(byte[] xmlFilters, int tenant)
@@ -42,7 +43,8 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
             QueryFilterItem filterItem_FromDate = myQueryOperations.QueryFilterItems.Where(d => d.FieldName == "FromDate").FirstOrDefault();
             QueryFilterItem filterItem_ToDate = myQueryOperations.QueryFilterItems.Where(d => d.FieldName == "ToDate").FirstOrDefault();
             QueryFilterItem filterItem_CustomerId = myQueryOperations.QueryFilterItems.Where(d => d.FieldName == "BillToId").FirstOrDefault();
-
+            QueryFilterItem filterItemByPartnerId = myQueryOperations.QueryFilterItems.Where(d => d.FieldName == "PartnerId").FirstOrDefault();
+           
             DateTime todayDate = TenantServerConfigration.GetCurrentDateTime(tenant).Date;
             DateTime myStartDate = todayDate.AddMonths(-1);
             DateTime fromDate = new DateTime(myStartDate.Year, myStartDate.Month, 1);
@@ -81,6 +83,14 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                 if (filterItem_CustomerId.FieldValue != null)
                 {
                     CustomerId = filterItem_CustomerId.FieldValue.ToString();
+                }
+            }
+
+            if (filterItemByPartnerId != null)
+            {
+                if (filterItemByPartnerId.FieldValue != null)
+                {
+                    PartnerId = filterItemByPartnerId.FieldValue.ToString();
                 }
             }
         }
@@ -212,6 +222,17 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                 iQueryable_APPaymentExternalAmount = iQueryable_APPaymentExternalAmount.Where(d => d.VendorId == CustomerId);
             }
 
+            if (!string.IsNullOrEmpty(PartnerId))
+            {
+                iQueryable_ARInvoice = iQueryable_ARInvoice.Where(d => d.PartnerId == PartnerId);         
+                iQueryable_ARPayment = iQueryable_ARPayment.Where(d => d.PartnerId == PartnerId);  
+
+                    iQueryable_APInvoice = iQueryable_APInvoice.Where(d => d.VendorId == PartnerId);
+                    iQueryable_APPayment = iQueryable_APPayment.Where(d => d.VendorId == PartnerId);
+                    iQueryable_APPaymentExternalAmount = iQueryable_APPaymentExternalAmount.Where(d => d.VendorId == PartnerId);
+                
+            }
+
             IQueryable<ARInvoice> iQueryable_ARInvoice_Open = iQueryable_ARInvoice;
             IQueryable<APInvoice> iQueryable_APInvoice_Open = iQueryable_APInvoice;
             IQueryable<ARPayment> iQueryable_ARPayment_Open = iQueryable_ARPayment;
@@ -286,6 +307,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                 accountingLedgerRecord.Currency = systemCurrencies.Where(d => d.Id == openARinvoice.InvoiceCurrencyId).FirstOrDefault().Code;
                 accountingLedgerRecord.Notes = openARinvoice.InternalNotes;
                 accountingLedgerRecord.CustomerId = openARinvoice.BillToId;
+                accountingLedgerRecord.PartnerId = openARinvoice.PartnerId;
                 accountingLedgerRecord.Description = openARinvoice.Description + " " + openARinvoice.MainEntityReference;
 
                 if (openARinvoice.BranchId != null)
@@ -386,7 +408,8 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
             {
                 AccountingLedger accountingLedgerRecord = new AccountingLedger();
                 accountingLedgerRecord.ReferenceType = "A\\R Payment";
-                accountingLedgerRecord.CustomerId = openARpayment.BillToId;                
+                accountingLedgerRecord.CustomerId = openARpayment.BillToId;
+                accountingLedgerRecord.PartnerId = openARpayment.PartnerId;
 
                 if (openARpayment.BranchId != null)
                 {
@@ -584,6 +607,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                 accountingLedgerRecord.DueDate = arInvoice.DueDate.Value;
                 accountingLedgerRecord.Notes = arInvoice.InternalNotes;
                 accountingLedgerRecord.CustomerId = arInvoice.BillToId;
+                accountingLedgerRecord.PartnerId = arInvoice.PartnerId;///when the filter is not null 
                 accountingLedgerRecord.MasterNumber = arInvoice.MasterNumber;
                 accountingLedgerRecord.HouseNumber = arInvoice.HouseNumber;
                 accountingLedgerRecord.Description = arInvoice.Description + " " + arInvoice.MainEntityReference;
@@ -769,6 +793,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                 accountingLedgerRecord.ReferenceNumber = arPayment.PaymentNo;
                 accountingLedgerRecord.ReferenceType = "A\\R Payment";
                 accountingLedgerRecord.CustomerId = arPayment.BillToId;
+                accountingLedgerRecord.PartnerId = arPayment.PartnerId;
 
                 if (arPayment.BranchId != null)
                 {
@@ -956,28 +981,56 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
             #endregion
 
             myDataProvider.AccountingLedgerList_Customer = new List<AccountingLedger_Customer>();
+            /* var customerGroups = from item in tempList
+                                  group item by new { item.CustomerId,item.PartnerId} into g
+                                  select new { CustomerId = g.Key.CustomerId, PartnerId = g.Key.PartnerId, CustomerItems = g };
+             */
             var customerGroups = from item in tempList
                                  group item by item.CustomerId into g
                                  select new { CustomerId = g.Key, CustomerItems = g };
-
             foreach (var item_customer in customerGroups)
             {
+                Card myCustomer = null;
+                Card partnerData = null;
                 AccountingLedger_Customer customerRecord = new AccountingLedger_Customer();
                 customerRecord.AccountingLedgerList = new List<AccountingLedger>();
                 customerRecord.CustomerId = item_customer.CustomerId;
 
-                Card myCustomer = CardRepository.GetSingleCard(item_customer.CustomerId, tenant, false);
+          
+
+                if (item_customer.CustomerId != null)
+                {
+                    myCustomer = CardRepository.GetSingleCard(item_customer.CustomerId, tenant, false);
+                    Address customerAddress = addressRepository.GetMainAddressByCardId(item_customer.CustomerId, tenant);
+                    if (customerAddress != null)
+                    {
+                        customerRecord.CustomerAddress = General.GetAddress_OneLine(customerAddress);
+                    }
+
+                }
+               var partners = from item in tempList
+                           where item.CustomerId == item_customer.CustomerId
+                           group item by item.PartnerId into g
+                           select new { PartnerId = g.Key};
+
+                foreach (var partner in partners)
+                {
+                    partnerData = CardRepository.GetSingleCard(partner.PartnerId, tenant, false);
+                    if (partnerData != null)
+                    {
+                        customerRecord.PartnerName = customerRecord.PartnerName == null ? partnerData.EnglishName : customerRecord.PartnerName + ", " + partnerData.EnglishName;
+                    }
+                }
+          
+               
                 if (myCustomer != null)
                 {
+                    
                     customerRecord.CustomerName = myCustomer.EnglishName;
                     customerRecord.CardCode = myCustomer.Code;
                 }
 
-                Address customerAddress = addressRepository.GetMainAddressByCardId(item_customer.CustomerId, tenant);
-                if (customerAddress != null)
-                {
-                    customerRecord.CustomerAddress = General.GetAddress_OneLine(customerAddress);
-                }
+
 
                 double? balance = 0;
                 double? balance_local = 0;

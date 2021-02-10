@@ -1,8 +1,7 @@
 import * as Actions from "../../actions/Actions";
 import { Given, When, Then } from "cypress-cucumber-preprocessor/steps";
 import { ShipmentDetails } from "../../models/ShipmentDetails";
-import { BaseSelectors } from "../../../../Base/cypress/selectors/BaseSelectors"
-import { Selectors } from "../../selectors/Selectors";
+import { ShipmentSelector } from "../../selectors/Selectors";
 import * as BaseAssertion from "../../../../Base/cypress/actions/Assertion"
 import { MainCarriageLeg } from "cypress/models/MainCarriageLeg";
 
@@ -11,8 +10,7 @@ let shipmentNumber: string;
 
 Given("the user logged in and navigates to shipments workspace", () => {
   cy.Login()
-  cy.Click(BaseSelectors.OperationsMenu, null)
-  cy.Click(Selectors.ShipmentTab, null)
+  Actions.NavigatesToShipmentsWorkspace()
 });
 
 Given("a direct shipment with the following details",
@@ -35,23 +33,23 @@ Then("the shipment should create successfully", () => {
 
 Given("the user in the direct's shipment rounting tab",()=>{
     Actions.OpenShipment(shipmentNumber);
-    cy.Click(Selectors.RoutingsTab, null);
+    cy.Click(ShipmentSelector.RoutingsTab, null);
 });
 
-Given("edit Main Carriage Leg with the follwing details",(dataTable)=>{
+Given("edit main carriage leg with the follwing details",(dataTable)=>{
     let mainCarriageLeg = dataTable.hashes()[0] as MainCarriageLeg;
     Actions.EditMainCarriageLegs(mainCarriageLeg.Airline);
 }); 
 
 When("close shipment operationally",()=>{
-    cy.Click(Selectors.ShipmentMoreList, null);
-    cy.Click(Selectors.OperationalCloseButton, null);
+    cy.Click(ShipmentSelector.ShipmentMoreList, null,true);
+    cy.Click(ShipmentSelector.OperationalCloseButton, null);
     Actions.UpdateClosedShipment();
 });
 
 When("close shipment Accountly",()=>{
-    cy.Click(Selectors.ShipmentMoreList, null);
-    cy.Click(Selectors.AccountllyCloseButton, null);
+    cy.Click(ShipmentSelector.ShipmentMoreList, null,true);
+    cy.Click(ShipmentSelector.AccountllyCloseButton, null);
     Actions.UpdateClosedShipment();
 });
 
@@ -60,17 +58,17 @@ Then("the shipment should close successfully",()=>{
 });
 
 When("reopen shipment Accountly",()=>{
-    cy.Click(Selectors.ShipmentMoreList, null);
-    cy.Click(Selectors.AccountllyReopenButton, null);
+    cy.Click(ShipmentSelector.ShipmentMoreList, null,true);
+    cy.Click(ShipmentSelector.AccountllyReopenButton, null);
     Actions.UpdateClosedShipment();
 });
 
 When("reopen shipment operationally",()=>{
-    cy.Click(Selectors.ShipmentMoreList, null);
-    cy.Click(Selectors.OperationalReopenButton, null);
+    cy.Click(ShipmentSelector.ShipmentMoreList, null,true);
+    cy.Click(ShipmentSelector.OperationalReopenButton, null);
     Actions.UpdateClosedShipment();
 });
 
-Then("the shipment should Reopen successfully",()=>{
+Then("the shipment should reopen successfully",()=>{
     BaseAssertion.AssertStatusCode("WaitPutShipmentRequest", 200)
 });

@@ -1,3 +1,4 @@
+@Release @not-stable 
 Feature:  Full Shipment Scenario
     this file will create a direct shipment,fill general,order,package tab
     create AP/AR invoices,Payment,and docs in, docs out, close operationally/Accountly
@@ -23,12 +24,12 @@ Feature:  Full Shipment Scenario
         When save shipment
         Then the direct shipment should save successfully
 
-    Scenario: Add Partners
-        Given  partners with following details
-            | Consignee       | Agent            | CustomsAgentExport     | CustomsAgentImport     | Notify1 | Notify2 | ShipperNotExporter   | ConsigneeNotImporter   | FreightForwarder     | Coloader     | CustomClearancePoint     | Consolidator     | ReleasingAgent  |
-            | ConsigneeExport | IntegrationAgent | InegrationCustomsAgent | InegrationCustomsAgent | notify  | notify  | shipper not exporter | consignee not importer | FreightForwarderTest | ColoaderTest | CustomClearancePointTest | ConsolidatorTest | releasing agent |
-        When save shipment
-        Then the direct shipment should save successfully
+    # Scenario: Add Partners
+    #     Given  partners with following details
+    #         | Consignee       | Agent            | CustomsAgentExport     | CustomsAgentImport     | Notify1 | Notify2 | ShipperNotExporter   | ConsigneeNotImporter   | FreightForwarder     | Coloader     | CustomClearancePoint     | Consolidator     | ReleasingAgent  |
+    #         | ConsigneeExport | IntegrationAgent | InegrationCustomsAgent | InegrationCustomsAgent | notify  | notify  | shipper not exporter | consignee not importer | FreightForwarderTest | ColoaderTest | CustomClearancePointTest | ConsolidatorTest | releasing agent |
+    #     When save shipment
+    #     Then the direct shipment should save successfully
 
     Scenario: Add Packages
         Given  a Package with the following details
@@ -95,8 +96,8 @@ Feature:  Full Shipment Scenario
 
     Scenario: Pay ARInvoice
         Given an ARPayment with the following details
-            | PartnerType | Partner           | BillToAddress | PaymentCurrency | RegisterDate | PaymentMethod | PaymentAmount |
-            | Customer    | TestShipperExport | Main Address  | EUR             | Today        | Cash          | 50            |
+            | PartnerType | BillToAddress | PaymentCurrency | RegisterDate | PaymentMethod | PaymentAmount |
+            | Customer    | Main Address  | EUR             | Today        | Cash          | 50            |
         When pay the ARInvoice
         Then the ARInvoice should pay successfully
 

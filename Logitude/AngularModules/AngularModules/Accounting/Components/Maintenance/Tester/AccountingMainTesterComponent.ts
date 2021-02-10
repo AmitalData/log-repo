@@ -126,6 +126,52 @@ export class AccountingMainTesterComponent extends BaseComponent {
         });
 
     }
+    //XXX_Click() {
+
+    //}
+    //YYY_Click() {
+
+    //}
+    //Aging_Click() {
+    //    let aging_params = {
+    //        Tenant: 1,
+    //        "AgingForDate": new Date(),
+    //        "NumberOfmonthsbackwards": 6,
+    //        VendorCustomerId: "1-1",
+    //        Aging4AccountTypeCode: 'Customer2',
+    //        Category1Id: "",
+    //        Category2Id: "",
+    //        Category3Id: "",
+    //        Category4Id: "",
+    //        Category5Id: "",
+    //        Category6Id: "",
+    //        CollectorId: "",
+    //        SalesmanId: "",
+    //        ChartOfAccountsTypeCode: "",
+    //        ChartOfAccountsId: "",
+    //        AggregateByGLAccountCurrencies: false,
+    //        AggregateByGLAccountChildren: false,
+    //        AgingMethod_Options: 'TotalByMonthMethod;TotalByMonthFIFOMethod;ReconcileOpenBalanceMethod',
+    //        AgingMethod: 'ReconcileOpenBalanceMethod',
+    //        GroupByDate: 'DueDate',
+    //        GroupByDate_Options: 'DueDate;AccountingDate',
+    //        Aging4AccountTypeCode_Options: 'ControlAccountOnly1;Customer2;Vendor3',
+    //        BuildPivot: true,
+    //    };
+        
+    //    let opr = "Aging_Click";
+
+    //    this.StrandartOp(opr, aging_params, () => {
+    //        //if (aging_params.BuildPivot) {
+    //            let resObj = JSON.parse(this.JsonOut);
+    //            if (Array.isArray(resObj)) {
+    //                this.JsonList = resObj;
+    //            }
+    //        //}
+    //    });
+
+    //}
+
 
     CardIndexNew_Click() {
         let myLedgerTransactionBalanceFilter =
@@ -135,7 +181,7 @@ export class AccountingMainTesterComponent extends BaseComponent {
             To: new Date(),
             CurrencyId: SessionLocator.AccountingCurrencyId,
             DateTypeCode: "1",
-            GLAccountId: "1-1050",
+            GLAccountId: "1-140",
 
             SearchFields: "",
             PageStartAtRecordIndex: 0,
@@ -160,6 +206,13 @@ export class AccountingMainTesterComponent extends BaseComponent {
                 this.JsonList = resObj;
             }
         });
+    }
+
+    CardIndexNewDrillDown1st_Click() {
+        let resObj = JSON.parse(this.JsonOut);
+        if (Array.isArray(resObj)) {
+            this.JsonList =resObj[0]["MyLedgerTransactionList"];
+        }
     }
 
     _TrailReport_Click() {

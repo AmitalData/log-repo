@@ -25,7 +25,8 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
     public class StatementReportManager
     {
         private int tenant;
-        private string billToId = null;        
+        private string billToId = null;
+        private string partnerId = null;
         private DateTime? fromDate = null;
         private DateTime? toDate = null;
         private bool includeDraftInvoices = false;
@@ -48,6 +49,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
             QueryOperations myQueryOperations = (QueryOperations)xmlSerializer.Deserialize(memoryStream);
 
             QueryFilterItem filterItem_BillTo = myQueryOperations.QueryFilterItems.Where(d => d.FieldName == "BillToId").FirstOrDefault();
+            QueryFilterItem filterItem_PartnerId = myQueryOperations.QueryFilterItems.Where(d => d.FieldName == "PartnerId").FirstOrDefault();
             QueryFilterItem filterItem_DueDate = myQueryOperations.QueryFilterItems.Where(d => d.FieldName == "DueDate").FirstOrDefault();
             QueryFilterItem filterItem_IncludeDraftInvoices = myQueryOperations.QueryFilterItems.Where(d => d.FieldName == "IncludeDraftInvoices").FirstOrDefault();
             QueryFilterItem filterItem_ARAPFilter = myQueryOperations.QueryFilterItems.Where(d => d.FieldName == "ARAPFilter").FirstOrDefault();
@@ -62,6 +64,14 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                 if (filterItem_BillTo.FieldValue != null)
                 {
                     billToId = filterItem_BillTo.FieldValue.ToString();
+                }
+            }
+
+            if (filterItem_PartnerId != null)
+            {
+                if (filterItem_PartnerId.FieldValue != null)
+                {
+                    partnerId = filterItem_PartnerId.FieldValue.ToString();
                 }
             }
 
@@ -251,13 +261,18 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
         {
             TenantPM currentTenant = TenantQuery.GetSingleTenantPM(tenant, false);
             Address tenantAddress = addressRepository.GetSingleAddress(currentTenant.AddressId, currentTenant.Id);
-            Card myFilterdCustomer = null;
-            Address myFilterdCustomerAddress = null;
+            Card FilterdCustomer = null;
+            Address FilterdCustomerAddress = null;
 
             if (!string.IsNullOrEmpty(billToId))
             {
-                myFilterdCustomer = CardRepository.GetSingleCard(billToId, tenant, true);
-                myFilterdCustomerAddress = addressRepository.GetMainAddressByCardId(billToId, tenant);
+                FilterdCustomer = CardRepository.GetSingleCard(billToId, tenant, true);
+                FilterdCustomerAddress = addressRepository.GetMainAddressByCardId(billToId, tenant);
+            }
+            else if (!string.IsNullOrEmpty(partnerId))
+            {
+                FilterdCustomer = CardRepository.GetSingleCard(partnerId, tenant, true);
+                FilterdCustomerAddress = addressRepository.GetMainAddressByCardId(partnerId, tenant);
             }
 
             dataProvider.GeneralAddress = DataProviders.General.GetAddress(tenantAddress);
@@ -279,16 +294,16 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                 dataProvider.ZipCode = tenantAddress.ZipCode;
             }
 
-            if (myFilterdCustomerAddress != null)
+            if (FilterdCustomer != null)
             {
-                dataProvider.Address = DataProviders.General.GetAddress(myFilterdCustomerAddress);
-                dataProvider.Phone = myFilterdCustomerAddress.PhoneNumber;
-                dataProvider.Fax = myFilterdCustomerAddress.FaxNumber;
+                dataProvider.Address = DataProviders.General.GetAddress(FilterdCustomerAddress);
+                dataProvider.Phone = FilterdCustomerAddress.PhoneNumber;
+                dataProvider.Fax = FilterdCustomerAddress.FaxNumber;
             }
 
-            if (myFilterdCustomer != null)
+            if (FilterdCustomer != null)
             {
-                dataProvider.CustomerName = myFilterdCustomer.EnglishName;
+                dataProvider.CustomerName = FilterdCustomer.EnglishName;
             }
 
             else
@@ -333,6 +348,11 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                                         iQueryable_ARInvoice = iQueryable_ARInvoice.Where(d => d.BillToId == billToId);
                                     }
 
+                                    if (!string.IsNullOrEmpty(partnerId))
+                                    {
+                                        iQueryable_ARInvoice = iQueryable_ARInvoice.Where(d => d.PartnerId == partnerId);
+                                    }
+
                                     if (fromDate != null)
                                     {
                                         if (isByDueDateFilter)
@@ -370,6 +390,10 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                                     if (!string.IsNullOrEmpty(billToId))
                                     {
                                         iQueryable_APInvoice = iQueryable_APInvoice.Where(d => d.VendorId == billToId);
+                                    }
+                                    if (!string.IsNullOrEmpty(partnerId))
+                                    {
+                                        iQueryable_APInvoice = iQueryable_APInvoice.Where(d => d.VendorId == partnerId);
                                     }
 
                                     if (fromDate != null)
@@ -418,6 +442,12 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                                     {
                                         iQueryable_ARInvoice = iQueryable_ARInvoice.Where(d => d.BillToId == billToId);
                                         iQueryable_APInvoice = iQueryable_APInvoice.Where(d => d.VendorId == billToId);
+                                    }
+
+                                    if (!string.IsNullOrEmpty(partnerId))
+                                    {
+                                        iQueryable_ARInvoice = iQueryable_ARInvoice.Where(d => d.PartnerId == partnerId);
+                                        iQueryable_APInvoice = iQueryable_APInvoice.Where(d => d.VendorId == partnerId);
                                     }
 
                                     if (fromDate != null)
@@ -472,6 +502,11 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                                         iQueryable_ARPayment = iQueryable_ARPayment.Where(d => d.BillToId == billToId);
                                     }
 
+                                    if (!string.IsNullOrEmpty(partnerId))
+                                    {
+                                        iQueryable_ARPayment = iQueryable_ARPayment.Where(d => d.PartnerId == partnerId);
+                                    }
+
                                     if (fromDate != null)
                                     {
                                         if (isByDueDateFilter)
@@ -509,6 +544,10 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                                     if (!string.IsNullOrEmpty(billToId))
                                     {
                                         iQueryable_APPayment = iQueryable_APPayment.Where(d => d.VendorId == billToId);
+                                    }
+                                    if (!string.IsNullOrEmpty(partnerId))
+                                    {
+                                        iQueryable_APPayment = iQueryable_APPayment.Where(d => d.VendorId == partnerId);
                                     }
 
                                     if (fromDate != null)
@@ -552,13 +591,18 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                                         iQueryable_APPayment = iQueryable_APPayment.Where(d => d.VendorId == billToId);
                                     }
 
-                                   
+                                    if (!string.IsNullOrEmpty(partnerId))
+                                    {
+                                        iQueryable_ARPayment = iQueryable_ARPayment.Where(d => d.PartnerId == partnerId);
+                                        iQueryable_APPayment = iQueryable_APPayment.Where(d => d.VendorId == partnerId);
+                                    }
+
+
                                     if (fromDate != null)
                                     {
                                         if (isByDueDateFilter)
                                         {
                                             iQueryable_ARPayment = iQueryable_ARPayment.Where(d => d.ValueDate != null && System.Data.Entity.DbFunctions.TruncateTime(d.ValueDate) >= System.Data.Entity.DbFunctions.TruncateTime(fromDate));
-                                            iQueryable_APPayment = iQueryable_APPayment.Where(d => d.ValueDate != null && System.Data.Entity.DbFunctions.TruncateTime(d.ValueDate) >= System.Data.Entity.DbFunctions.TruncateTime(fromDate));
                                         }
 
                                         else
@@ -614,6 +658,12 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                                         iQueryable_ARPayment = iQueryable_ARPayment.Where(d => d.BillToId == billToId);
                                     }
 
+                                    if (!string.IsNullOrEmpty(partnerId))
+                                    {
+                                        iQueryable_ARInvoice = iQueryable_ARInvoice.Where(d => d.PartnerId == partnerId);
+                                        iQueryable_ARPayment = iQueryable_ARPayment.Where(d => d.PartnerId == partnerId);
+                                    }
+
                                     if (fromDate != null)
                                     {
                                         if (isByDueDateFilter)
@@ -660,6 +710,13 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                                         iQueryable_APInvoice = iQueryable_APInvoice.Where(d => d.VendorId == billToId);
                                         iQueryable_APPayment = iQueryable_APPayment.Where(d => d.VendorId == billToId);
                                     }
+
+                                    if (!string.IsNullOrEmpty(partnerId))
+                                    {
+                                        iQueryable_APInvoice = iQueryable_APInvoice.Where(d => d.VendorId == partnerId);
+                                        iQueryable_APPayment = iQueryable_APPayment.Where(d => d.VendorId == partnerId);
+                                    }
+
 
                                     if (fromDate != null)
                                     {
@@ -717,6 +774,14 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                                         iQueryable_APInvoice = iQueryable_APInvoice.Where(d => d.VendorId == billToId);
                                         iQueryable_ARPayment = iQueryable_ARPayment.Where(d => d.BillToId == billToId);
                                         iQueryable_APPayment = iQueryable_APPayment.Where(d => d.VendorId == billToId);
+                                    }
+
+                                    if (!string.IsNullOrEmpty(partnerId))
+                                    {
+                                        iQueryable_ARInvoice = iQueryable_ARInvoice.Where(d => d.PartnerId == partnerId);
+                                        iQueryable_APInvoice = iQueryable_APInvoice.Where(d => d.VendorId == partnerId);
+                                        iQueryable_ARPayment = iQueryable_ARPayment.Where(d => d.PartnerId == partnerId);
+                                        iQueryable_APPayment = iQueryable_APPayment.Where(d => d.VendorId == partnerId);
                                     }
 
                                     if (fromDate != null)

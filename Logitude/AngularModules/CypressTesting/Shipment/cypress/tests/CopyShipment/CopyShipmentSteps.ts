@@ -2,7 +2,7 @@ import * as Actions from "../../actions/Actions";
 import { Given, When, Then, And } from "cypress-cucumber-preprocessor/steps";
 import { ShipmentDetails } from "../../models/ShipmentDetails";
 import { BaseSelectors } from "../../../../Base/cypress/selectors/BaseSelectors"
-import { Selectors } from "../../selectors/Selectors";
+import { ShipmentSelector } from "../../selectors/Selectors";
 import * as BaseAssertion from "../../../../Base/cypress/actions/Assertion"
 
 let ShipmentData: ShipmentDetails;
@@ -10,8 +10,7 @@ let shipmentNumber: string;
 
 Given("the user logged in and navigates to shipments workspace", () => {
   cy.Login()
-  cy.Click(BaseSelectors.OperationsMenu, null)
-  cy.Click(Selectors.ShipmentTab, null)
+  Actions.NavigatesToShipmentsWorkspace()
 });
 
 Given("a direct shipment with the following details",

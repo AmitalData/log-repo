@@ -7,3 +7,11 @@ export function AssertStatusCode(requestAlias: string, expectedStatusCode: numbe
     })
     return Interception;
 }
+
+export function AssertElementExist(selector: string){
+    cy.get(selector).should("exist");
+}
+
+export function AssertElementHaveClass(selector: string, classValue: string){
+    cy.get(selector).should("have.class", classValue);
+}

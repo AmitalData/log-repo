@@ -45,8 +45,8 @@ Given("the user fills {string} as GrossWeight and {string} as a MoveType", (Gros
     Actions.FillGeneralTab(GrossWeight, MoveType)
 });
 
-
 Given("the user add order package with the following details", (dataTable) => {
+    //Actions.OpenShipment(ShipmentData.ShipmentNumber);
     packagesDetails = dataTable.hashes() as PackagesDetails[];
     Actions.FillOrdersTab(packagesDetails)
 });
@@ -262,13 +262,13 @@ Given("edit Main Carriage Leg with the follwing details",(dataTable)=>{
 }); 
 
 When("close shipment operationally",()=>{
-    cy.Click(Selectors.MoreList, null);
+    cy.Click(Selectors.ShipmentMoreList, null,true);
     cy.Click(Selectors.OperationalCloseButton, null);
     Actions.UpdateClosedShipment();
 });
 
 When("close shipment Accountly",()=>{
-    cy.Click(Selectors.MoreList, null);
+    cy.Click(Selectors.ShipmentMoreList, null,true);
     cy.Click(Selectors.AccountllyCloseButton, null);
     Actions.UpdateClosedShipment();
 });
@@ -278,13 +278,13 @@ Then("the shipment should close successfully",()=>{
 });
 
 When("reopen shipment Accountly",()=>{
-    cy.Click(Selectors.MoreList, null);
+    cy.Click(Selectors.ShipmentMoreList, null,true);
     cy.Click(Selectors.AccountllyReopenButton, null);
     Actions.UpdateClosedShipment();
 });
 
 When("reopen shipment operationally",()=>{
-    cy.Click(Selectors.MoreList, null);
+    cy.Click(Selectors.ShipmentMoreList, null,true);
     cy.Click(Selectors.OperationalReopenButton, null);
     Actions.UpdateClosedShipment();
 });
