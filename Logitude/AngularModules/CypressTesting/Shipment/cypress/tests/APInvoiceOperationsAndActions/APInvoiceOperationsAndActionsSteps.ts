@@ -2,7 +2,7 @@ import * as Actions from "../../actions/Actions";
 import { Given, When, Then, And } from "cypress-cucumber-preprocessor/steps";
 import { ShipmentDetails } from "../../models/ShipmentDetails";
 import { BaseSelectors } from "../../../../Base/cypress/selectors/BaseSelectors"
-import { Selectors } from "../../selectors/Selectors";
+import { ShipmentSelector } from "../../selectors/Selectors";
 import { PayableDetails } from "cypress/models/PayableDetails"
 import { APInvoiceDetails } from "cypress/models/APInvoiceDetails"
 import * as BaseAssertion from "../../../../Base/cypress/actions/Assertion"
@@ -36,12 +36,12 @@ Given("a payable with the following details",
     const PayableData = dataTable.hashes()[0] as PayableDetails;
     Actions.OpenShipment(shipmentNumber)
     Actions.FillPayablesTab(PayableData)
-    Actions.UpdateShipment(Selectors.ShipmentSaveButton)
+    Actions.UpdateShipment(ShipmentSelector.ShipmentSaveButton)
   });
 And("an APInvoice with a random invoice number and the following details",
   (dataTable) => {
     const APInvoiceData = dataTable.hashes()[0] as APInvoiceDetails
-    cy.Click(Selectors.ReceiveInvoiceButton, null);
+    cy.Click(ShipmentSelector.ReceiveInvoiceButton, null);
     Actions.FillAPInvoiceDetails(APInvoiceData)
   });
 When("receive invoice", () => {

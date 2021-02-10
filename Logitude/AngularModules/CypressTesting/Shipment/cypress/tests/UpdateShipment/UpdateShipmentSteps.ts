@@ -1,5 +1,5 @@
 import * as Actions from "../../actions/Actions"
-import { Selectors } from "../../selectors/Selectors"
+import { ShipmentSelector } from "../../selectors/Selectors"
 import { BaseSelectors } from "../../../../Base/cypress/selectors/BaseSelectors"
 import { Given, When, Then } from "cypress-cucumber-preprocessor/steps";
 import { PartnersDetails } from "cypress/models/PartnersDetails";
@@ -88,7 +88,7 @@ When("create shipment", () => {
 });
 
 When("update shipment", () => {
-    Actions.UpdateShipment(Selectors.ShipmentSaveButton)
+    Actions.UpdateShipment(ShipmentSelector.ShipmentSaveButton)
 });
 //#endregion
 

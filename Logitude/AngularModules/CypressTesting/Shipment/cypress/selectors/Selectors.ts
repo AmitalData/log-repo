@@ -1,6 +1,6 @@
 import { RegexSelectors } from '../selectors/RegexSelectors';
 
-export class Selectors extends RegexSelectors {
+export class ShipmentSelector extends RegexSelectors {
   //#region Shared
   public static readonly ShipmentMoreList = '#MenuButtons';
   public static readonly ShipmentTab = '#SHIP';
