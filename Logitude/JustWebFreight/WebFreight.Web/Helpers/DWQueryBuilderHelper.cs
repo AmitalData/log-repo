@@ -840,8 +840,8 @@ namespace WebFreight.Web.Helpers
                 fieldCode = "[" + field.DWObjectTableCode + field.DimensionTableDisplayName + "]." + field.Code;
 
             string datePartsSqlColum = field.DWObjectTableCode + "." + field.Code;
-            if (field.DataTypeCode == "Time") datePartsSqlColum = "convert(varchar(5)," + fieldCode + ", 8)";
-            else if (field.DataTypeCode == "Date") datePartsSqlColum = "convert(varchar(10)," + fieldCode + ", 120)";
+            if (field.DataTypeCode == "Time") datePartsSqlColum = "convert(varchar(5), CAST(" + fieldCode + " AS datetime), 8)";
+            else if (field.DataTypeCode == "Date") datePartsSqlColum = "convert(varchar(10), CAST(" + fieldCode + " AS datetime) , 120)";
 
             datePartsSqlColum += ((!string.IsNullOrEmpty(field.DisplayName) ? " as " + field.DisplayName + "," : ","));
             return datePartsSqlColum;
