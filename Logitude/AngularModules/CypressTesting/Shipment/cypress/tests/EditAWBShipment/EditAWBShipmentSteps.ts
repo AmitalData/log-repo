@@ -4,6 +4,7 @@ import { ShipmentDetails } from "../../models/ShipmentDetails";
 import { PackagesDetails } from "../../models/PackagesDetails";
 import * as BaseAssertion from "../../../../Base/cypress/actions/Assertion";
 import { BaseSelectors } from "../../../../Base/cypress/selectors/BaseSelectors";
+import { Selectors } from "cypress/selectors/Selectors";
 
 let ShipmentData: ShipmentDetails;
 let ShipmentNumber: string;
@@ -43,12 +44,12 @@ When("open the AWB wizard", () => {
 });
 
 Then("the overview tab should appear successfully", () => {
-    BaseAssertion.AssertElementExist("overviewtabcomponent");
-    BaseAssertion.AssertElementHaveClass("#OVE", "Selected");
+    BaseAssertion.AssertElementExist(Selectors.OverviewTabComponentInAWBWizard);
+    BaseAssertion.AssertElementHaveClass(Selectors.OverviewTabInAWBWizard, "Selected");
 });
 
 Given("the user in the AWB wizard packages tab", () => {
-    cy.Click("#PAC", null);
+    cy.Click(Selectors.PackagesTabInAWBWizard, null);
 });
 
 Given("add the follwing packages", (dataTable) => {

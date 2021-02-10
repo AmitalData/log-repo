@@ -222,5 +222,8 @@ export class Selectors extends RegexSelectors {
   public static readonly PackageWidthInAWBWizard = "input[id^='ShipmentPackage_Width']:last";
   public static readonly PackageHeightInAWBWizard = "input[id^='ShipmentPackage_Height']:last";
   public static readonly PackageWeightInAWBWizard = "input[id^='ShipmentPackage_Weight']:last";
+  public static readonly OverviewTabComponentInAWBWizard = "overviewtabcomponent";
+  public static readonly OverviewTabInAWBWizard = "#OVE";
+  public static readonly PackagesTabInAWBWizard = "#PAC";
   //#endregion
 }
