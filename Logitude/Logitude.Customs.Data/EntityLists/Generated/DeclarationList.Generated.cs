@@ -386,6 +386,8 @@ namespace Logitude.Customs.Data.EntityLists
        public int? RequestedCustomsDocId  { get; set; }
        [DataMember]
        public string ExportDeclarationOfficeCode  { get; set; }
+       [DataMember]
+       public int? PhysicalCheck  { get; set; }
    }
 
 }

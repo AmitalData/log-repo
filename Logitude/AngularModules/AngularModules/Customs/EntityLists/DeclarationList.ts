@@ -194,6 +194,7 @@ export class DeclarationList {
 	FinalLoadingSite: string;
 	RequestedCustomsDocId: number;
 	ExportDeclarationOfficeCode: string;
+	PhysicalCheck: number;
 	
 }
  

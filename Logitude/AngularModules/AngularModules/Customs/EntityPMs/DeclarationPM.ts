@@ -1344,6 +1344,11 @@ export class DeclarationPM {
     public set ExportDeclarationOfficeCode(newValue: string) { if (this.exportDeclarationOfficeCode != newValue) { this.exportDeclarationOfficeCode = newValue; this.MarkAsDirty("ExportDeclarationOfficeCode"); } }
        
 	 
+    private physicalCheck: number;
+    public get PhysicalCheck() { return this.physicalCheck; }
+    public set PhysicalCheck(newValue: number) { if (this.physicalCheck != newValue) { this.physicalCheck = newValue; this.MarkAsDirty("PhysicalCheck"); } }
+       
+	 
 
     public OldEntityPM: DeclarationPM;
 		

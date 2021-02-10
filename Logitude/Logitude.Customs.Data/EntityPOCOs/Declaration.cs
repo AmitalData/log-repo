@@ -430,6 +430,8 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public string ExportDeclarationOfficeCode { get; set; }
 	      
         public virtual CustomsHouseType ExportDeclarationOffice { get; set; }
+        [Column("PhysicalCheck")]
+	    public int? PhysicalCheck { get; set; }
     }
 }
 	 

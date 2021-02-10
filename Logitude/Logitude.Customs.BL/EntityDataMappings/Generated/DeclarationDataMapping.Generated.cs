@@ -165,7 +165,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         FinalLoadingSite, 
 	         PalestinianCode, 
 	         RequestedCustomsDocId, 
-	         ExportDeclarationOfficeCode,
+	         ExportDeclarationOfficeCode, 
+	         PhysicalCheck,
 	      }
 
 
@@ -391,7 +392,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         FinalLoadingSite, 
 	         PalestinianCode, 
 	         RequestedCustomsDocId, 
-	         ExportDeclarationOfficeCode,
+	         ExportDeclarationOfficeCode, 
+	         PhysicalCheck,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -1113,6 +1115,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ExportDeclarationOfficeCode))
             {
 				entityPOCO.ExportDeclarationOfficeCode = entityPM.ExportDeclarationOfficeCode;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.PhysicalCheck))
+            {
+				entityPOCO.PhysicalCheck = entityPM.PhysicalCheck;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -1841,6 +1848,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.ExportDeclarationOfficeCode = entityPOCO.ExportDeclarationOfficeCode;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.PhysicalCheck))
+            {
+					entityPM.PhysicalCheck = entityPOCO.PhysicalCheck;
+            }
+
 		}
 
 		public void PMToOldPM(DeclarationPM entityPM, DeclarationPM oldEntityPM)
@@ -2560,6 +2572,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ExportDeclarationOfficeCode))
             {
                 oldEntityPM.ExportDeclarationOfficeCode = entityPM.ExportDeclarationOfficeCode;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.PhysicalCheck))
+            {
+                oldEntityPM.PhysicalCheck = entityPM.PhysicalCheck;
             }
 			
 		}

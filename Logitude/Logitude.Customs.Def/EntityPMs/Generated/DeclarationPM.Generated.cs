@@ -5354,6 +5354,29 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private int? physicalCheck ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int? PhysicalCheck  
+	   {
+	    
+	     get
+		{
+		   return physicalCheck;
+		 }
+		 set
+		 {
+		   if(physicalCheck != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="PhysicalCheck",OldValue=physicalCheck,NewValue=value,PropertyType="int?"};
+		    NotifyPropertyChanged(values);
+		   physicalCheck=value;
+		   }
+			
+		 }
+	   }
    }
    
 }
