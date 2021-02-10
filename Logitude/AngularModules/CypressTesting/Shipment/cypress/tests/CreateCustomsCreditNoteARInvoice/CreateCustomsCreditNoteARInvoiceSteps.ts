@@ -3,7 +3,7 @@ import { Given, When, Then } from 'cypress-cucumber-preprocessor/steps';
 import { ShipmentDetails } from '../../models/ShipmentDetails';
 import * as BaseAssertion from '../../../../Base/cypress/actions/Assertion';
 import { CustomerDetails } from 'cypress/models/CustomerDetails';
-import { Selectors } from '../../selectors/Selectors';
+import { ShipmentSelector } from '../../selectors/Selectors';
 import { MainCarriageLeg } from 'cypress/models/MainCarriageLeg';
 import { PackagesDetails } from 'cypress/models/PackagesDetails';
 import { ReceivableDetails } from 'cypress/models/ReceivableDetails';
@@ -60,7 +60,7 @@ Then("the direct should create successfully", () => {
 //#region Update routing tab
 Given("the user in the shipment's rounting tab",()=>{
     Actions.OpenShipment(shipmentNumber);
-    cy.Click(Selectors.RoutingsTab, null);
+    cy.Click(ShipmentSelector.RoutingsTab, null);
 });
 
 Given("edit main carriage leg with the follwing details",(dataTable)=>{
@@ -78,7 +78,7 @@ Given("the user add package with the following details", (dataTable) => {
 
 //#region update shipment step
 When("update shipment", () => {
-    Actions.UpdateShipment(Selectors.ShipmentSaveButton)
+    Actions.UpdateShipment(ShipmentSelector.ShipmentSaveButton)
 });
 //#endregion
 
@@ -92,7 +92,7 @@ Then("the direct should update successfully", () => {
 Given("a receivable with the following details", (dataTable) => {
     let receivableDetails = dataTable.hashes() as ReceivableDetails[];
     Actions.FillReceivablesTab(receivableDetails);
-    Actions.UpdateShipment(Selectors.ShipmentSaveButton);
+    Actions.UpdateShipment(ShipmentSelector.ShipmentSaveButton);
     BaseAssertion.AssertStatusCode(RequestAliases.ShipmentRequest, 200);
 });
 
