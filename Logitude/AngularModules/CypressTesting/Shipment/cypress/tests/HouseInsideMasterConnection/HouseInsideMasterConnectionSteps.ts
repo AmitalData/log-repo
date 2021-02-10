@@ -3,6 +3,7 @@ import { ShipmentSelector } from '../../selectors/Selectors';
 import { Given, When, Then } from 'cypress-cucumber-preprocessor/steps';
 import * as BaseAssertion from '../../../../Base/cypress/actions/Assertion';
 import { ShipmentDetails } from '../../models/ShipmentDetails';
+import { RequestAliases } from '../../../../Base/cypress/constants/RequestAliases';
 
 //#region variables
 let MasterShipmentDetails: ShipmentDetails;
@@ -27,7 +28,7 @@ When("create shipment", () => {
   });
   
 Then("the master should create successfully", () => {
-    BaseAssertion.AssertStatusCode("WaitPostShipmentRequest", 200).then((interception) => {
+    BaseAssertion.AssertStatusCode(RequestAliases.ShipmentRequest, 200).then((interception) => {
         shipmentNumber = interception.response.body.ShipmentNumber;
     })
 });
@@ -46,7 +47,7 @@ When("create house with {string} as Shipper",(Shipper)=>{
 });
 
 Then("the house should create and connect successfully",()=>{
-    BaseAssertion.AssertStatusCode("WaitPostShipmentRequest", 200)
+    BaseAssertion.AssertStatusCode(RequestAliases.ShipmentRequest, 200)
 });
 //#endregion
 
@@ -58,6 +59,6 @@ When("disconnect shipment",()=>{
 });
 
 Then("the shipment should disconnect successfully",()=>{
-    BaseAssertion.AssertStatusCode("WaitPutShipmentRequest", 200)
+    BaseAssertion.AssertStatusCode(RequestAliases.ShipmentRequest, 200)
 });
 //#endregion

@@ -66,11 +66,8 @@ Cypress.Commands.add("Click", (selector, contains, force = false) => {
     let element = cy.get(selector)//.should('exist')
     if (contains) {
         element = element.contains(contains, { matchCase: false })
-
     }
-
     element.click({force:force})
-
 })
 
 Cypress.Commands.add("ClickCheckBox", (selector) => {

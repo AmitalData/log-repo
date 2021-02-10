@@ -6,6 +6,7 @@ import { ShipmentSelector } from "../../selectors/Selectors";
 import { PayableDetails } from "cypress/models/PayableDetails"
 import { APInvoiceDetails } from "cypress/models/APInvoiceDetails"
 import * as BaseAssertion from "../../../../Base/cypress/actions/Assertion"
+import { RequestAliases } from "../../../../Base/cypress/constants/RequestAliases";
 
 let ShipmentData: ShipmentDetails;
 let shipmentNumber: string;
@@ -26,7 +27,7 @@ When("create shipment", () => {
   Actions.CreateShipment(ShipmentData.ShipmentLevel);
 });
 Then("the direct shipment should create successfully", () => {
-  BaseAssertion.AssertStatusCode("WaitPostShipmentRequest", 200).then((interception) => {
+  BaseAssertion.AssertStatusCode(RequestAliases.ShipmentRequest, 200).then((interception) => {
     shipmentNumber = interception.response.body.ShipmentNumber;
   });
 });
@@ -48,25 +49,25 @@ When("receive invoice", () => {
   Actions.ReceiveAPInvoice();
 });
 Then("the invoice should create successfully", () => {
-  BaseAssertion.AssertStatusCode("WaitPostAPInvoicesRequest", 200);
+  BaseAssertion.AssertStatusCode(RequestAliases.APInvoicesRequest, 200);
 });
 
 When("approve invoice", () => {
   Actions.APApproveInvoice()
 });
 Then("the invoice should approve successfully", () => {
-  BaseAssertion.AssertStatusCode("WaitPutAPInvoicesRequest", 200);
+  BaseAssertion.AssertStatusCode(RequestAliases.APInvoicesRequest, 200);
 });
 
 When("cancel the invoice approvement", () => {
   Actions.APInvoiceCancelApproval()
 });
 Then("the invoice should cancel successfully", () => {
-  BaseAssertion.AssertStatusCode("WaitPutAPInvoicesRequest", 200);
+  BaseAssertion.AssertStatusCode(RequestAliases.APInvoicesRequest, 200);
 });
 When("void invoice", () => {
   Actions.VoidAPInvoice()
 });
 Then("the invoice should void successfully", () => {
-  BaseAssertion.AssertStatusCode("WaitPutAPInvoicesRequest", 200);
+  BaseAssertion.AssertStatusCode(RequestAliases.APInvoicesRequest, 200);
 });
