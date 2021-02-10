@@ -93,6 +93,7 @@ Given("a receivable with the following details", (dataTable) => {
     let receivableDetails = dataTable.hashes() as ReceivableDetails[];
     Actions.FillReceivablesTab(receivableDetails);
     Actions.UpdateShipment(Selectors.ShipmentSaveButton);
+    BaseAssertion.AssertStatusCode(RequestAliases.ShipmentRequest, 200);
 });
 
 Given("a customs credit note ARInvoice with a random invoice number and the following details", (dataTable) => {

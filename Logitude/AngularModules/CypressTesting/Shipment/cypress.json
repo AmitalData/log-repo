@@ -1,10 +1,11 @@
 {
     "numTestsKeptInMemory":1,	
+    "watchForFileChanges":false,
     "viewportWidth": 1440,
     "viewportHeight": 900,
     "integrationFolder": "cypress/tests",
     "screenshotsFolder": "cypress/Reports/html/screenshots",
-    "testFiles": "**/*.feature",
+  
     "ignoreTestFiles": "*.ts",
     "env": {
         "Mode": "Development"
@@ -20,7 +21,7 @@
     "reporterOptions": {
         "reporterEnabled": "mochawesome",
         "mochawesomeReporterOptions": {
-            "reportDir": "cypress/Reports/json",
+            "reportDir": "./mochawesome-report",
             "quite": true,
             "overwrite": false,
             "html": false,

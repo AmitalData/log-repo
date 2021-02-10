@@ -261,16 +261,17 @@ Given("the user in the direct's shipment rounting tab", () => {
 Given("edit Main Carriage Leg with the follwing details", (dataTable) => {
     let mainCarriageLeg = dataTable.hashes()[0] as MainCarriageLeg;
     Actions.EditMainCarriageLegs(mainCarriageLeg.Airline);
+    cy.Click(Selectors.ShipmentSaveButton, null);
 });
 
-When("close shipment operationally", () => {
-    cy.Click(Selectors.ShipmentMoreList, null);
+When("close shipment operationally", ()=>{
+    cy.Click(Selectors.ShipmentMoreList, null,true);
     cy.Click(Selectors.OperationalCloseButton, null);
     Actions.UpdateClosedShipment();
 });
 
-When("close shipment Accountly", () => {
-    cy.Click(Selectors.ShipmentMoreList, null);
+When("close shipment Accountly",()=>{
+    cy.Click(Selectors.ShipmentMoreList, null,true);
     cy.Click(Selectors.AccountllyCloseButton, null);
     Actions.UpdateClosedShipment();
 });
@@ -279,14 +280,14 @@ Then("the shipment should close successfully", () => {
     BaseAssertion.AssertStatusCode(RequestAliases.ShipmentRequest, 200)
 });
 
-When("reopen shipment Accountly", () => {
-    cy.Click(Selectors.ShipmentMoreList, null);
+When("reopen shipment Accountly",()=>{
+    cy.Click(Selectors.ShipmentMoreList, null,true);
     cy.Click(Selectors.AccountllyReopenButton, null);
     Actions.UpdateClosedShipment();
 });
 
-When("reopen shipment operationally", () => {
-    cy.Click(Selectors.ShipmentMoreList, null);
+When("reopen shipment operationally",()=>{
+    cy.Click(Selectors.ShipmentMoreList, null,true);
     cy.Click(Selectors.OperationalReopenButton, null);
     Actions.UpdateClosedShipment();
 });

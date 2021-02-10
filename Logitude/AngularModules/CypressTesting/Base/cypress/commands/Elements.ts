@@ -9,12 +9,11 @@ declare global {
             FillLogLov(selector: string, value: string, fromCache: boolean): Chainable<Element>
             FillRandomString(selector: string, length: number, upperCase: boolean): Chainable<Element>
             FillRandomNumber(selector: string, minimum: number, maximum: number): Chainable<Element>
-            Click(selector: string, contains: string): Chainable<Element>
+            Click(selector: string, contains: string, force?: boolean): Chainable<Element>
             ClickCheckBox(selector: string): Chainable<Element>
             ClickRadio(selector: string): Chainable<Element>
             ValidateElementColor(selector: string, expectedcolor: string): Chainable<Element>
             SelectQuickSearchFirstElement(selector: string, value: string): Chainable<Element>
-            DefineRequestWait(method: string, url: string, requestAlias: string): Chainable<Element>
         }
     }
 }
@@ -33,8 +32,10 @@ Cypress.Commands.add("FillDate", (selector, value) => {
 })
 
 Cypress.Commands.add("FillLogTextBox", (selector, value) => {
-    cy.get(selector).clear().type(value, { delay: 5 }).should('have.value', value);
+    cy.get(selector).clear().type(value)//.should('have.value', value)
+
 })
+
 
 Cypress.Commands.add("FillLogLov", (selector, value, fromCache) => {
 
@@ -42,7 +43,7 @@ Cypress.Commands.add("FillLogLov", (selector, value, fromCache) => {
         cy.intercept(URLs.GetByCompactFilters).as("LOVDataLoaded")
     }
 
-    cy.get(selector).focus().clear().type(value)
+    cy.get(selector).clear().type(value)
 
     if (!fromCache) {
         cy.wait("@LOVDataLoaded")
@@ -61,30 +62,12 @@ Cypress.Commands.add("FillRandomNumber", (selector, minimum, maximum) => {
     cy.get(selector).focus().clear().type(randomNumber)
 })
 
-Cypress.Commands.add("Click", (selector, contains) => {
-    let element = cy.get(selector).should('exist')
+Cypress.Commands.add("Click", (selector, contains, force = false) => {
+    let element = cy.get(selector)//.should('exist')
     if (contains) {
         element = element.contains(contains, { matchCase: false })
-
     }
-
-    element.click({ force: true })
-
-})
-
-Cypress.Commands.add("SaveClick", (selector, contains, url, resultFile) => {
-
-    cy.intercept({
-        method: RestAPI.POST,
-        url: url
-    }).as("WaitRequest")
-
-    let element = cy.get(selector)
-
-    if (contains !== null) {
-        element = element.contains(contains, { matchCase: false })
-    }
-    element.click()
+    element.click({force:force})
 })
 
 Cypress.Commands.add("ClickCheckBox", (selector) => {
@@ -112,11 +95,4 @@ Cypress.Commands.add("SelectQuickSearchFirstElement", (selector, value) => {
                 cy.get("ul > li").eq(0).click({ force: true })
             })
         })
-})
-
-Cypress.Commands.add("DefineRequestWait", (method, url, requestAlias) => {
-    cy.intercept({
-        method: method,
-        url: url
-    }).as(requestAlias)
 })

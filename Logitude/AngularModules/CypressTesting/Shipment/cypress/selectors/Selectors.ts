@@ -5,7 +5,7 @@ export class Selectors extends RegexSelectors {
   public static readonly ShipmentMoreList = '#MenuButtons';
   public static readonly ShipmentTab = '#SHIP';
   public static readonly ShipmentSearchBar = '#Shipment_Search';
-  public static readonly InvoiceMoreList = '#MenuButtons_1';
+  //public static readonly InvoiceMoreList = '#MenuButtons_1';
   public static readonly VatTypeApplyToAll = '#VATApplyToAll';
   public static readonly ConfirmWindowYes = '#ConfirmWindow_Yes_0';
   public static readonly SaveClose = '#SaveClose';
@@ -223,5 +223,15 @@ export class Selectors extends RegexSelectors {
   public static readonly CustomerCountry = '#Address_CountryId';
   public static readonly CustomerState = '#Address_StateId';
   public static readonly AddCustomer = '#Ok-AddCustomer';
+  //#endregion
+
+
+  //#region AWB Wizard
+  public static readonly AddPackageLineInAWBWizard = "#AddPackageBtn";
+  public static readonly PackageQuantityInAWBWizard = "input[id^='ShipmentPackage_Quantity']:last";
+  public static readonly PackageLengthInAWBWizard = "input[id^='ShipmentPackage_Length']:last";
+  public static readonly PackageWidthInAWBWizard = "input[id^='ShipmentPackage_Width']:last";
+  public static readonly PackageHeightInAWBWizard = "input[id^='ShipmentPackage_Height']:last";
+  public static readonly PackageWeightInAWBWizard = "input[id^='ShipmentPackage_Weight']:last";
   //#endregion
 }

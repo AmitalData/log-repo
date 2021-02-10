@@ -4,7 +4,7 @@ import { ShipmentDetails } from "../../models/ShipmentDetails";
 import { BaseSelectors } from "../../../../Base/cypress/selectors/BaseSelectors"
 import { Selectors } from "../../selectors/Selectors";
 import * as BaseAssertion from "../../../../Base/cypress/actions/Assertion";
-import { Assists } from "../../../../Base/cypress/assists/Assists";
+import * as Assists from "../../../../Base/cypress/assists/Assists";
 import { RequestAliases } from "../../../../Base/cypress/constants/RequestAliases";
 
 let ShipmentData: ShipmentDetails;
