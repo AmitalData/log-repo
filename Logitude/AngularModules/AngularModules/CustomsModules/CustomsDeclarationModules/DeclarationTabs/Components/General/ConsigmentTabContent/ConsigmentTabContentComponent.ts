@@ -147,6 +147,9 @@ export class ConsigmentTabContentComponent
             this.ParentIsDisplayOnly = IsDisplayOnly;
 
             this.SetScreenFieldsEditability();
+            if (this.declarationPM.TransportModeId == 'O') {
+                this.UIProperties.SetEnabled("ShipCode", this.ObjectTableName, this.IsDisplayOnly);
+            }
             this.BuildSitesList();
             this.SetTipsInsideCargoIdentifires(this.EntityPM.CargoTypeCode);
 
