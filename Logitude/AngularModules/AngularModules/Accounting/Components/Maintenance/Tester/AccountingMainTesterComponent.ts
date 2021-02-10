@@ -7,6 +7,9 @@ import { ServiceResponse } from '../../../../Infrastructure/DataContracts/Servic
 import { Message } from '@angular/compiler/src/i18n/i18n_ast';
 import { Guid } from '../../../../Infrastructure/Utilities/Guid';
 import { JournalPMService } from '../../../Services/StandardPMs/JournalPMService';
+import { ajax } from 'rxjs/ajax';
+import { HttpClient, HttpResponse } from '@angular/common/http';
+import { ServiceHelper } from '../../../../Infrastructure/Utilities/ServiceHelper';
 declare var attachmentUploader, ResultAsArray: any;
 
 @Component({
@@ -39,10 +42,11 @@ export class AccountingMainTesterComponent extends BaseComponent {
     _AccountingOpService: AccountingOpService;
     _JournalPMService: JournalPMService = new JournalPMService();
     _LastState: string;
-
+    
     public JsonList: any[];
     constructor() {
         super();
+        //SessionLocator.SelectedSession.CurrentEditComponent = this;
         this._MenuList.push("AccountingIntegrityService");
         this._MenuList.push("JournalSend");
         this._MenuList.push("JournalApproveService");
@@ -65,20 +69,35 @@ export class AccountingMainTesterComponent extends BaseComponent {
             return;
         }
         let j = '';
+        
         let parseobj = JSON.parse(this._TextBoxParam);
-        this._JournalPMService.insert(parseobj)
+        let _http = ServiceHelper.HttpClient;
+        let _apiUrl = ServiceHelper.GetLogitudeURL() + 'api/journals';   
+        _http.post(_apiUrl, JSON.stringify(parseobj), ServiceHelper.GetHttpFullHeaders())
+        //ajax.post(
+        //    ServiceHelper.GetLogitudeURL() + 'api/journals',
+        //    this._TextBoxParam,
+        //    ServiceHelper.GetHttpFullHeaders()
+        //)
             .subscribe(
-                (res: ServiceResponse) => {
-                    this._LabelLog = JSON.stringify(res.Result);
-                },
-                (err) => {
-
-                    alert(err);
-                },
-                () => {
-                    this.CurrentSession.StopBusyIndicator();
-                }
+                r => { this._LabelLog = JSON.stringify(r); },
+                e => { this._LabelLog = JSON.stringify(e); },
+                () => { this.CurrentSession.StopBusyIndicator();}
+                
             );
+        //this._JournalPMService.insert(parseobj)
+        //    .subscribe(
+        //        (res: ServiceResponse) => {
+        //            this._LabelLog = JSON.stringify(res.Result);
+        //        },
+        //        (err) => {
+
+        //            alert(err);
+        //        },
+        //        () => {
+        //            this.CurrentSession.StopBusyIndicator();
+        //        }
+        //    );
 
     }
     XXX_Click() {
@@ -191,9 +210,20 @@ export class AccountingMainTesterComponent extends BaseComponent {
     JournalId2Void_Click() {
 
     }
+    JournalApproveQueue_Click() {
+        let opr = "JournalApproveQueue_Click";
+        let obj = {
+            workerrolename_Options: "production,development,staging",
+            theQueueStatuses: "development=-10;production=0;staging=-100;",
+            workerrolename : "production",
+            TimeOutinSec : 30,
+            ConversionJournal: false,
+        };
+        this.StrandartOp(opr, obj, () => { });
+    }
     WorkWithoutQueue_Click() {
         let opr = "WorkWithoutQueue_Click";
-        let obj = { MyTenant: 1, JournalId: "1-55235" };
+        let obj = { Tenant: 1, JournalId: "1-55235" };
         this.StrandartOp(opr, obj, () => { });
     }
     _ButtonReverseTrans_Click() {
