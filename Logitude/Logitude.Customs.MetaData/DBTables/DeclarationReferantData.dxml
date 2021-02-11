@@ -200,6 +200,26 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="FclLcl"
+    Type="nvarchar"
+    Size="1">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="PackageQuantity"
+    Type="int">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ForwarderId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="VendorId"
     ReferencedTable="CustomsVendors"
@@ -225,6 +245,11 @@
     ReferencedTable="ReferantTeams"
     ReferencedColumn="Code"
     ReferencedTableSchema="Customs" />
+  <Relation
+    ForeignKeyColumn="ForwarderId"
+    ReferencedTable="Cards"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
   <Index
     Columns="IsClosedForFollowUp" />
   <Index

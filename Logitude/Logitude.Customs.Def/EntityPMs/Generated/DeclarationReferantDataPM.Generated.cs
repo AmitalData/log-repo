@@ -802,6 +802,75 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private string fclLcl ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string FclLcl  
+	   {
+	    
+	     get
+		{
+		   return fclLcl;
+		 }
+		 set
+		 {
+		   if(fclLcl != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="FclLcl",OldValue=fclLcl,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   fclLcl=value;
+		   }
+			
+		 }
+	   }
+	  private int? packageQuantity ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int? PackageQuantity  
+	   {
+	    
+	     get
+		{
+		   return packageQuantity;
+		 }
+		 set
+		 {
+		   if(packageQuantity != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="PackageQuantity",OldValue=packageQuantity,NewValue=value,PropertyType="int?"};
+		    NotifyPropertyChanged(values);
+		   packageQuantity=value;
+		   }
+			
+		 }
+	   }
+	  private string forwarderId ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ForwarderId  
+	   {
+	    
+	     get
+		{
+		   return forwarderId;
+		 }
+		 set
+		 {
+		   if(forwarderId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ForwarderId",OldValue=forwarderId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   forwarderId=value;
+		   }
+			
+		 }
+	   }
    }
    
 }
