@@ -16,6 +16,7 @@ export class AddEditReportSchedulerComponent implements OnInit {
     @ViewChildren(LocationDirective) public AllLocations: QueryList<LocationDirective>;
     public ReportGroupList: ReportGroupList;
     public ReportList: ReportList;
+    public ValidationErrorsList: string[] = [];
     IsPreviwReport: boolean = false;
     reportsTemplateListExtendedService: ReportsTemplateListExtendedService;
     private PageChild_RETASK: any = null;
@@ -207,15 +208,9 @@ export class AddEditReportSchedulerComponent implements OnInit {
 
     SaveButtonClicked() {
         var reportFilterItems = this.PageChild_PRREP.GetReportFilterItems();
-        var reportTemplateId = this.PageChild_PRREP.GetReportTemplate();
+        var reportTemplateId = this.PageChild_PRREP.GetReportTemplateId();
         var recepients = this.GetAllRecepients();
         this.PageChild_RETASK.SaveButtonClicked(reportFilterItems, reportTemplateId, recepients);
-        //this.CurrentSession.CloseCurrentWindow();
-
-        //if (this.PageChild_RETASK?.ValidationErrorsList?.length > 0) {
-        //    this.SelectedTabLocation = 0;
-        //}
-
     }
 
     GetAllRecepients() {
@@ -233,8 +228,15 @@ export class AddEditReportSchedulerComponent implements OnInit {
             this.SetSelectedItem("RETASK");
         }
         else if (this.SelectedTabLocation == 2) {
-            this.SetSelectedItem("PRREP");
-            this.PageChild_PRREP.IsPartnersChanged("2");
+            if (this.ValidationErrorsList && this.ValidationErrorsList.length > 0) {
+                this.IsPreviwReport = false;
+                this.SetSelectedItem("RETASK");
+                this.SelectedTabLocation -= 1;
+            }
+            else {
+                this.SetSelectedItem("PRREP");
+                this.PageChild_PRREP.IsPartnersChanged("2");
+            }
         }
         this.SelectedTabLocation -= 1;
     }

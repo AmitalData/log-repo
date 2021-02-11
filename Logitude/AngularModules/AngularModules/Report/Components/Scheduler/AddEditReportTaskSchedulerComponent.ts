@@ -27,7 +27,6 @@ export class AddEditReportTaskSchedulerComponent {
     public EntityPM: TasksSchedulerPM;
     public DataContext: TaskReportSchedulerItemClass;
     public ObjectTableName: string = 'TasksScheduler';
-    public ValidationErrorsList: string[];
     public DisplayFTPOption: boolean = false;
     public SchedulerFormats: CodeNameClass[] = [];
     public SelectedFormat: CodeNameClass;
@@ -286,8 +285,8 @@ export class AddEditReportTaskSchedulerComponent {
             errors.push("You can't select a past date");
         }
 
-        this.ValidationErrorsList = errors;
-        if (this.ValidationErrorsList.length == 0) {
+        this.parentComponent.ValidationErrorsList = errors;
+        if (this.parentComponent.ValidationErrorsList.length == 0) {
             return true;
         }
     }
@@ -302,7 +301,7 @@ export class AddEditReportTaskSchedulerComponent {
                 if (!myResponse.HasError) {
                     this.SetSchedulerDetailsData(myResponse.Result);
                 } else {
-                    this.ValidationErrorsList = myResponse.ErrorsArray;
+                    this.parentComponent.ValidationErrorsList = myResponse.ErrorsArray;
                     this.Clone();
                 }
                 this.CurrentSession.StopBusyIndicator();
@@ -383,9 +382,11 @@ export class AddEditReportTaskSchedulerComponent {
 
 
     private HandleServiceError(myResponse: ServiceResponse) {
-        this.ValidationErrorsList = myResponse.ErrorsArray;
-        this.parentComponent.SelectedTabLocation = 0;
-        this.parentComponent.SetSelectedItem("RETASK");
+        this.parentComponent.ValidationErrorsList = myResponse.ErrorsArray;
+        if (this.parentComponent.SelectedTabLocation == 1) {
+            this.parentComponent.SelectedTabLocation = 0;
+            this.parentComponent.SetSelectedItem("RETASK");
+        }
     }
 
     SetReportDetails(

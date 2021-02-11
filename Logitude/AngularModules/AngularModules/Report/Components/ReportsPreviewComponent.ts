@@ -110,8 +110,8 @@ export class ReportsPreviewComponent implements AfterViewInit {
         return this.ReportFilterConmponent.IsPartnersChanged(SelectedTab);
     }
 
-    GetReportTemplate() {
-        var reportTemplateId: string = this.Report.DefaultTemplateId;
+    GetReportTemplateId() {
+        const reportTemplateId: string = this.StimulsoftArg.DefaultTemplateId;
         return reportTemplateId;
     }
 
@@ -195,7 +195,7 @@ export class ReportsPreviewComponent implements AfterViewInit {
             });
     }
 
-    private BuildStimulsoft() {
+    public BuildStimulsoft() {
         if (this.isLoaderReady) {
             var Component = document.getElementById(this.ComponentId);
             var filtersArea = document.getElementById(this.FiltersAreaId);
@@ -241,7 +241,7 @@ export class ReportsPreviewComponent implements AfterViewInit {
         }
     }
 
-    private ComputeSize(clientWidth: number, clientHeight: number) {
+    public ComputeSize(clientWidth: number, clientHeight: number) {
         var width = clientWidth;
         var height = clientHeight;
 
