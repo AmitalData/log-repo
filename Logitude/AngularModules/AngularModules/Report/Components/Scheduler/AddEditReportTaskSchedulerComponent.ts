@@ -383,10 +383,17 @@ export class AddEditReportTaskSchedulerComponent {
 
     private HandleServiceError(myResponse: ServiceResponse) {
         this.parentComponent.ValidationErrorsList = myResponse.ErrorsArray;
-        if (this.parentComponent.SelectedTabLocation == 1) {
-            this.parentComponent.SelectedTabLocation = 0;
-            this.parentComponent.SetSelectedItem("RETASK");
-        }
+        if (this.isReportPreviewTab())
+            this.openReportTaskTab();
+    }
+
+    private openReportTaskTab() {
+        this.parentComponent.SelectedTabLocation = 0;
+        this.parentComponent.SetSelectedItem("RETASK");
+    }
+
+    private isReportPreviewTab() {
+        return this.parentComponent.SelectedTabLocation == 1;
     }
 
     SetReportDetails(

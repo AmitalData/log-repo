@@ -222,23 +222,39 @@ export class AddEditReportSchedulerComponent implements OnInit {
     }
 
     BackButtonClicked() {
-        if (this.SelectedTabLocation == 1) {
-            this.IsPreviwReport = false;
-            //this.CurrentSession.ResizeCurrentWindow(900);
-            this.SetSelectedItem("RETASK");
-        }
-        else if (this.SelectedTabLocation == 2) {
-            if (this.ValidationErrorsList && this.ValidationErrorsList.length > 0) {
-                this.IsPreviwReport = false;
-                this.SetSelectedItem("RETASK");
-                this.SelectedTabLocation -= 1;
-            }
-            else {
-                this.SetSelectedItem("PRREP");
-                this.PageChild_PRREP.IsPartnersChanged("2");
-            }
+        switch (this.SelectedTabLocation) {
+            case 1:
+                this.reOpenReportTaskTab();
+                break;
+            case 2:
+                this.backFromRecepientsTab();
+                break;
         }
         this.SelectedTabLocation -= 1;
+    }
+
+    private backFromRecepientsTab() {
+        if (this.itHaveAnError()) {
+            this.reOpenReportTaskTab();
+            this.SelectedTabLocation -= 1;
+        }
+        else {
+            this.reOpenReportPreviewTab();
+        }
+    }
+
+    private itHaveAnError() {
+        return this.ValidationErrorsList && this.ValidationErrorsList.length > 0;
+    }
+
+    private reOpenReportPreviewTab() {
+        this.SetSelectedItem("PRREP");
+        this.PageChild_PRREP.IsPartnersChanged("2");
+    }
+
+    private reOpenReportTaskTab() {
+        this.IsPreviwReport = false;
+        this.SetSelectedItem("RETASK");
     }
 
     DisableFinishButton() {

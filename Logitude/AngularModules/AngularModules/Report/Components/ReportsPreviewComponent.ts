@@ -195,7 +195,7 @@ export class ReportsPreviewComponent implements AfterViewInit {
             });
     }
 
-    public BuildStimulsoft() {
+    private BuildStimulsoft() {
         if (this.isLoaderReady) {
             var Component = document.getElementById(this.ComponentId);
             var filtersArea = document.getElementById(this.FiltersAreaId);
@@ -241,7 +241,7 @@ export class ReportsPreviewComponent implements AfterViewInit {
         }
     }
 
-    public ComputeSize(clientWidth: number, clientHeight: number) {
+    private ComputeSize(clientWidth: number, clientHeight: number) {
         var width = clientWidth;
         var height = clientHeight;
 
