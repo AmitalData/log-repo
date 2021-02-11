@@ -30,4 +30,15 @@ export function AddInternalNoteTicket(){
     cy.Click(TicketSelectors.SendAsOpenButton,"Send and set as Open");
 }
 
+export function CancelTicket(){
+    cy.Click(TicketSelectors.MenuButtons,null);
+    cy.Click(TicketSelectors.TicketCancel,null);
+    cy.Click(BaseSelectors.RedButton,"Yes");
+}
+
+export function ReactivateTicket(){
+    cy.Click(TicketSelectors.MenuButtons,null);
+    cy.Click(TicketSelectors.TicektReactivate,null);
+    cy.Click(BaseSelectors.RedButton,"Yes");
+}
 

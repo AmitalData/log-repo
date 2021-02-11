@@ -12,7 +12,10 @@ export class TicketSelectors extends RegexSelectors
 	public static readonly TicketShipmentEntityNumber ="#Shipment_Search"
 	public static readonly SaveAsOpenButton = "#CustomSendOptionsComponent"
 	public static readonly CorrespondenceLine = "#CorrespondenceLine"
+	public static readonly TicketCancel = "#TicketBCancel"
+	public static readonly TicektReactivate = "#TicektBReactivate"
+	public static readonly MenuButtons = "#MenuButtons"
 	//public static readonly 
 	//public static readonly 
-	//public static readonly 
+
 }
