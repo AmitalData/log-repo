@@ -12549,6 +12549,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     NotInvoicedReceivablesAmount = f.NotInvoicedReceivablesAmount,
                     IsDangerous = f.IsDangerous,
                     DangerousUnNumber = f.DangerousUnNumber,
+                    MainCarriageVesselName = f.MainCarriageVesselName,
                 };
 
                 List<ObjectField> customFields = ObjectFieldRepository.GetCustomObjectFieldsByObjectTableName("Shipment", tenant).ToList();

@@ -169,30 +169,26 @@
 
                 <div class="title hide-mobile">Shipment Milestones Details</div>
                 <div *ngIf="MilstonesExist">
-                    <div class="tag">Future milestones</div>
-                    <ul *ngIf="FuturesMilestoneFields" class="steps-list">
+                    <div class="tag"  *ngIf="isPlannedMilestonesExist">Planned Milestones</div>
+                    <ul *ngIf="isPlannedMilestonesExist" class="steps-list">
                         <li *ngFor="let item of FuturesMilestoneFields" class="dimmed">
                             <ng-container *ngIf="item.EstimationDate">
                                 <div class="tick"> </div>
                                 <div class="date" style="width: 130px;">{{item.EstimationDate | date: 'dd/MM/yyyy, HH:mm'}}</div>
                                 <div class="caption" style="width: 205px;">{{item.Name}}</div>
-                                <div class="desc" style="width: calc(100% - 450px); padding: 0;">{{item.Notes}} </div>
+                                <div class="desc" style="width: calc(100% - 450px); padding: 0;" [attr.title]="item.Notes">{{item.Notes}} </div>
                             </ng-container>
-
                         </li>
                     </ul>
 
                     <div class="tag">Current Milestone</div>
-                    <ul *ngIf="CurrentMilestoneField" class="steps-list">
-                        <li class="highlighted" *ngIf="CurrentMilestoneField.Date">
-                            <ng-container >
+                    <ul class="steps-list">
+                        <li  *ngIf="CurrentMilestoneField.Date" class="highlighted">
+                            <ng-container>
                                 <div class="tick"> </div>
-
                                 <div class="date" style="width: 130px;">{{CurrentMilestoneField.Date | date: 'dd/MM/yyyy, HH:mm'}}</div>
                                 <div class="caption" style="width: 205px;">{{CurrentMilestoneField.Name}}</div>
-
-                                <div class="desc" style="width: calc(100% - 450px); padding: 0;">
-                                    {{CurrentMilestoneField.Notes}} </div>
+                                <div class="desc" style="width: calc(100% - 450px); padding: 0;"  [attr.title]="CurrentMilestoneField.Notes" >{{CurrentMilestoneField.Notes}}</div>
                             </ng-container>
                         </li>
                     </ul>
@@ -204,7 +200,7 @@
                                 <div class="tick"> <img src="./assets/images/icons/tick.png" alt=""> </div>
                                 <div class="date" style="width: 130px;">{{item.Date | date: 'dd/MM/yyyy, HH:mm'}}</div>
                                 <div class="caption" style="width: fit-content;max-width: 205px;">{{item.Name}}</div>
-                                <div class="desc" style="width: calc(100% - 450px); padding: 0;">{{item.Notes}}</div>
+                                <div class="desc" style="width: calc(100% - 450px); padding: 0;" [attr.title]="item.Notes">{{item.Notes}}</div>
                             </ng-container>
                         </li>
                     </ul>
