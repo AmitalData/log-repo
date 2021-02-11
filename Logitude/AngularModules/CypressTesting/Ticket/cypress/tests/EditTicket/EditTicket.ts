@@ -2,7 +2,7 @@ import { Given, When, Then } from "cypress-cucumber-preprocessor/steps";
 import { TicketDetails } from "../../models/TicketDetails"
 import { ShipmentDetails } from "../../../../Shipment/cypress/models/ShipmentDetails"
 import { BaseSelectors } from "../../../../Base/cypress/selectors/BaseSelectors"
-import { TicketSelectors } from "../../selectors/Selectors";
+import { TicketSelectors } from "../../selectors/TicketSelectors";
 import { ShipmentSelector } from "../../../../Shipment/cypress/selectors/Selectors";
 import * as BaseAssertion from "../../../../Base/cypress/actions/Assertion"
 import * as Actions from "../../actions/Actions";

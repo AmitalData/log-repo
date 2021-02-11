@@ -1,6 +1,7 @@
-export class TicketSelectors
+import { RegexSelectors } from "./RegexSelectors"
+
+export class TicketSelectors extends RegexSelectors
 {
-	//should i remove ticket ! 
 	public static readonly TicketEntityType ="LogLov_Ticket_EntityType"
 	public static readonly TicketCompany = "#Ticket_CompanyId"
 	public static readonly TicketContact = "#Ticket_ContactId"

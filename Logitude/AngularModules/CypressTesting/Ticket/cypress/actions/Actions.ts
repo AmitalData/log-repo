@@ -1,9 +1,6 @@
 import { TicketDetails } from "../models/TicketDetails";
 import { BaseSelectors } from "../../../Base/cypress/selectors/BaseSelectors";
-import { TicketSelectors } from "../selectors/Selectors";
-import * as BaseAssertion from "../../../Base/cypress/actions/Assertion"
-import { selectors } from "sizzle";
-
+import { TicketSelectors } from "../selectors/TicketSelectors";
 
 export function FillTicketFields(ticketDetails : TicketDetails){
     cy.FillLogLov(TicketSelectors.TicketCompany,ticketDetails.Company,true);
@@ -19,6 +16,18 @@ export function OpenTicket(TicketNumber: string) {
 
 export function EditTheTicket(){
     cy.FillLogTextBox(TicketSelectors.TicketDescription,"Test Ticket Edited")
+}
+
+export function ReplyTicket(){
+    cy.Click(TicketSelectors.Reply,null);
+    cy.FillLogTextBox(TicketSelectors.CorrespondenceLine , "Send Reply");
+    cy.Click(TicketSelectors.SendAsOpenButton,"Send and set as Open");
+}
+
+export function AddInternalNoteTicket(){
+    cy.Click(TicketSelectors.InternalNote,null);
+    cy.FillLogTextBox(TicketSelectors.CorrespondenceLine , "Send Internal Note");
+    cy.Click(TicketSelectors.SendAsOpenButton,"Send and set as Open");
 }
 
 
