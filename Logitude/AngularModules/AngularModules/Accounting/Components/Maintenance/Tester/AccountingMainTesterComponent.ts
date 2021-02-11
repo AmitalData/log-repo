@@ -65,6 +65,7 @@ export class AccountingMainTesterComponent extends BaseComponent {
 
     JournalSend_Click() {
         if (AppTool.IsNullOrEmpty(this._TextBoxParam)) {
+            this.SetJournalExample();
             this.ErrorMess = "Set Journal json";
             return;
         }
@@ -298,5 +299,163 @@ export class AccountingMainTesterComponent extends BaseComponent {
             })
         }
         return headers;
+    }
+
+    ButtonReconcileStageCBatch_Click() {
+        let defaultParam: any = {};
+        defaultParam.Tenant = 1;
+        defaultParam.GLAccountId = "Id, or empty value to get all";
+        defaultParam.AccountTypeCode = "2=Client, 3=Vendor";
+        defaultParam.UpToDueDate = "01.01.2020";
+        defaultParam.LT_LinesMaximum = 50;
+        defaultParam.MaxPageSize = 1000;
+        defaultParam.CloseOnlyZeroes = "FALSE";
+        if (AppTool.IsNullOrEmpty(this._TextBoxParam)) {
+            this._TextBoxParam = JSON.stringify(defaultParam);
+            return;
+        }
+        let objToCheck1 = JSON.parse(this._TextBoxParam);
+        let _ReconciliationStageCUrl = ServiceHelper.GetLogitudeURL() + '/api/ReconciliationStageC';
+        let myUrl = _ReconciliationStageCUrl + "?tenant=" + objToCheck1.Tenant;
+        myUrl = myUrl + "&gLAccountId=" + objToCheck1.GLAccountId;
+        myUrl = myUrl + "&accountTypeCode=" + objToCheck1.AccountTypeCode;
+        myUrl = myUrl + "&upToDueDate=" + objToCheck1.UpToDueDate;
+        myUrl = myUrl + "&lT_LinesMaximum=" + objToCheck1.LT_LinesMaximum;
+        myUrl = myUrl + "&maximalPageSize=" + objToCheck1.MaxPageSize;///dif !!!
+        myUrl = myUrl + "&closeOnlyZeroes=" + objToCheck1.CloseOnlyZeroes;
+        this.CurrentSession.StartBusyIndicatorCreating();
+        let _http = ServiceHelper.HttpClient;
+        _http.get(myUrl, ServiceHelper.GetHttpFullHeaders())
+            .subscribe(
+                r => { this._LabelLog = JSON.stringify(r); },
+                e => { this._LabelLog = JSON.stringify(e); },
+                () => { this.CurrentSession.StopBusyIndicator(); }
+            );
+    }
+    ButtonReconcileStageCNoBatch_Click() {
+        let defaultParam: any = {};
+        defaultParam.Tenant = 1;
+        defaultParam.GLAccountId = "Id, or empty value to get all";
+        defaultParam.AccountTypeCode = "2=Client, 3=Vendor";
+        defaultParam.UpToDueDate = "01.01.2020";
+        defaultParam.LT_LinesMaximum = 50;
+        defaultParam.MaxPageSize = 1000;
+        defaultParam.CloseOnlyZeroes = "FALSE";
+        if (AppTool.IsNullOrEmpty(this._TextBoxParam)) {
+            this._TextBoxParam = JSON.stringify(defaultParam);
+            return;
+        }
+        let objToCheck1 = JSON.parse(this._TextBoxParam);
+        let _ReconciliationStageCUrl = ServiceHelper.GetLogitudeURL() + '/api/ReconciliationStageC';
+        let myUrl = _ReconciliationStageCUrl + "?tenant=" + objToCheck1.Tenant;
+        myUrl = myUrl + "&gLAccountId=" + objToCheck1.GLAccountId;
+        myUrl = myUrl + "&accountTypeCode=" + objToCheck1.AccountTypeCode;
+        myUrl = myUrl + "&upToDueDate=" + objToCheck1.UpToDueDate;
+        myUrl = myUrl + "&lT_LinesMaximum=" + objToCheck1.LT_LinesMaximum;
+        myUrl = myUrl + "&maxPageSize=" + objToCheck1.MaxPageSize;
+        myUrl = myUrl + "&closeOnlyZeroes=" + objToCheck1.CloseOnlyZeroes;
+        myUrl = myUrl + "&noBatch=1";
+        this.CurrentSession.StartBusyIndicatorCreating();
+        let _http = ServiceHelper.HttpClient;
+        _http.get(myUrl, ServiceHelper.GetHttpFullHeaders())
+            .subscribe(
+                r => { this._LabelLog = JSON.stringify(r); },
+                e => { this._LabelLog = JSON.stringify(e); },
+                () => { this.CurrentSession.StopBusyIndicator(); }
+            );
+
+    }
+    SetJournalExample() {
+        let journal = {
+            "Id": null,
+            "Tenant": "1",
+            "JournalNumber": null,
+            "AccountingDate": "2016-12-11",
+            "StatusCode": "2",
+            "CreateDate": "2021-02-09",
+            "TypeCode": "0",
+            "CreatedByUserId": "1-587933",
+            "AccountingEntityCode": "1",
+            "ExternalNo": "2016:05:05027",
+            "TypeName": null,
+            "StatusName": null,
+            "ConversionJournal": "true",
+            "CreatedByUserName": null,
+            "JournalLines": [
+                {
+                    "JournalId": null,
+                    "Tenant": "1",
+                    "Line": "1",
+                    "EncodeBase64NVARCHARFieldsBy": "windows-1255",
+                    "ActionCode": "1",
+                    "CreditAccountId": "dmy",
+                    "DebitAccountId": "dmy",
+                    "DebitAccountNumber": "2910247",
+                    "CreditAccountNumber": null,
+                    "DocumentDate": "2016-12-01",
+                    "AccountingDate": "2016-12-11",
+                    "DueDate": "2016-12-01",
+                    "LocalAmount": 2188.84,
+                    "CurrencyCode": "USD",
+                    "ForeignAmount": 564.00,
+                    "ExchangeRate": "3.88092",
+                    "ExternalOpenAmount": 0.00,
+                    "ExternalReconcileNumber": null,
+                    "Reference1": "ODMyNzc=",
+                    "Reference2": null,
+                    "Reference3": null,
+                    "ActionName": null,
+                    "ActionTypeCode": "1",
+                    "CurrencyName": null,
+                    "Notes": "8ucg6fr4+iDn5eE="
+                },
+                {
+                    "JournalId": null,
+                    "Tenant": "1",
+                    "Line": "2",
+                    "EncodeBase64NVARCHARFieldsBy": "windows-1255",
+                    "ActionCode": "2",
+                    "CreditAccountId": "dmy",
+                    "DebitAccountId": "dmy",
+                    "DebitAccountNumber": "2910247",
+                    "CreditAccountNumber": null,
+                    "DocumentDate": "2016-12-01",
+                    "AccountingDate": "2016-12-11",
+                    "DueDate": "2016-12-01",
+                    "LocalAmount": 2188.84,
+                    "CurrencyCode": "USD",
+                    "ForeignAmount": 564.00,
+                    "ExchangeRate": "3.88092",
+                    "ExternalOpenAmount": 0.00,
+                    "ExternalReconcileNumber": null,
+                    "Reference1": "ODMyNzc=",
+                    "Reference2": null,
+                    "Reference3": null,
+                    "ActionName": null,
+                    "ActionTypeCode": "2",
+                    "CurrencyName": null,
+                    "Notes": "8ucg6fr4+iDn5eE="
+                }
+            ],
+            "DeletedJournalLines": [],
+            "UpdateDate": null,
+            "UpdatedByUserId": null,
+            "ApproveDate": null,
+            "ApprovedByUserId": null,
+            "UpdatedByUserName": null,
+            "ApprovedByUserName": null,
+            "SearchFields": null,
+            "AccountingEntityReference": null,
+            "OriginalJournalId": null,
+            "VoidedByUserId": null,
+            "VoidDate": null,
+            "OriginalJournalName": null,
+            "VoidedByUserName": null,
+            "IsVoided": null,
+            "VoidedBy": null,
+            "ExternalSystem": "AMITAL"
+        };
+        this._TextBoxParam = JSON.stringify(journal);
+
     }
 }
