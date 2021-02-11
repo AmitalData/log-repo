@@ -9,4 +9,5 @@ export class RequestAliases {
     public static readonly ARInvoiceviews = 'ARInvoiceviews';
     public static readonly APPayments = 'APPayments';
     public static readonly ARPayments = 'ARPayments';
+    public static readonly PostTariff = 'PostTariff';
 }

@@ -29,7 +29,7 @@ When("create freight cost", () => {
 });
 
 Then("the freight cost should create successfully", () => {
-  Actions.ValidateCreatedTariff();
+  Actions.ValidateCreatedFreightCost();
 });
 
 

@@ -29,7 +29,7 @@ When("create surcharge cost", () => {
 });
 
 Then("the surcharge cost should create successfully", () => {
-  Actions.ValidateCreatedTariff();
+  Actions.ValidateCreatedSurchargeCost();
 });
 
 

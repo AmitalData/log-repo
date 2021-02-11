@@ -4,6 +4,8 @@ import { TariffDetails } from "../models/TariffDetails";
 import { ChargeTypeDetails } from "../models/ChargeTypeDetails";
 import { SurchargeDetails } from "../models/SurchargeDetails";
 import { Urls } from "../constants/Urls";
+import { RestAPI } from "../../../Base/cypress/constants/RestAPI";
+import { RequestAliases } from "../../../Base/cypress/constants/RequestAliases";
 import * as BaseAssertion from "../../../Base/cypress/actions/Assertion";
 
 export function LoginAndNavigateToTariffWorkspace() {
@@ -54,10 +56,27 @@ export function FillSurcharges(surchargeDetailsList: SurchargeDetails[]){
 }
 
 export function CreateTariff() {
-    cy.DefineRequestWait("POST", Urls.Tariffs, "WaitPostTariff");
+    cy.DefineRequestWait(RestAPI.POST, Urls.Tariffs, RequestAliases.PostTariff);
     cy.Click(BaseSelectors.RedButton + ":last", null);
 }
 
-export function ValidateCreatedTariff() {
-    BaseAssertion.AssertStatusCode("WaitPostTariff", 200);
+export function ValidateCreatedFreightCost(){
+    BaseAssertion.AssertStatusCode(RequestAliases.PostTariff, 200);
+}
+
+export function ValidateCreatedSurchargeCost() {
+    let intercept = cy.wait("@" + RequestAliases.PostTariff);
+    intercept.then((interception) => {
+        if(interception.response.statusCode === 400){
+            if(interception.response.body.ErrorMessage.indexOf("Tariff surcharge seller should be unique") !== -1){
+                cy.Click(BaseSelectors.Button, "Cancel");
+            }else{
+                throw new Error("Created Tariff Failed");
+            }
+        }else{
+            if(interception.response.statusCode !== 200){
+                throw new Error("Created Tariff Failed");
+            }
+        }
+    })
 }
