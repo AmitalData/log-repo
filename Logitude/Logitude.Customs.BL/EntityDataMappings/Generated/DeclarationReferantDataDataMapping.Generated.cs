@@ -50,7 +50,10 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         OrderMoney, 
 	         Team, 
 	         ImporterFile, 
-	         FileOpenDate,
+	         FileOpenDate, 
+	         FclLcl, 
+	         PackageQuantity, 
+	         ForwarderId,
 	      }
 
 
@@ -90,7 +93,10 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         Team, 
 	         ImporterFile, 
 	         FileOpenDate, 
-	         IsClose,
+	         IsClose, 
+	         FclLcl, 
+	         PackageQuantity, 
+	         ForwarderId,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -237,6 +243,21 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.FileOpenDate))
             {
 				entityPOCO.FileOpenDate = entityPM.FileOpenDate;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.FclLcl))
+            {
+				entityPOCO.FclLcl = entityPM.FclLcl;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.PackageQuantity))
+            {
+				entityPOCO.PackageQuantity = entityPM.PackageQuantity;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ForwarderId))
+            {
+				entityPOCO.ForwarderId = entityPM.ForwarderId;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -390,6 +411,21 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.FileOpenDate = entityPOCO.FileOpenDate;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.FclLcl))
+            {
+					entityPM.FclLcl = entityPOCO.FclLcl;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.PackageQuantity))
+            {
+					entityPM.PackageQuantity = entityPOCO.PackageQuantity;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ForwarderId))
+            {
+					entityPM.ForwarderId = entityPOCO.ForwarderId;
+            }
+
 		}
 
 		public void PMToOldPM(DeclarationReferantDataPM entityPM, DeclarationReferantDataPM oldEntityPM)
@@ -536,6 +572,21 @@ namespace Logitude.Customs.BL.EntityDataMappings
                 oldEntityPM.FileOpenDate = entityPM.FileOpenDate;
             }
 			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.FclLcl))
+            {
+                oldEntityPM.FclLcl = entityPM.FclLcl;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.PackageQuantity))
+            {
+                oldEntityPM.PackageQuantity = entityPM.PackageQuantity;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ForwarderId))
+            {
+                oldEntityPM.ForwarderId = entityPM.ForwarderId;
+            }
+			
 		}
 
 	    public void EncodeBase64NVARCHARFields(DeclarationReferantDataPM entityPM)
@@ -556,6 +607,10 @@ namespace Logitude.Customs.BL.EntityDataMappings
             if (!String.IsNullOrWhiteSpace(entityPM.Team)) //T4 find type == nText 
             {
                 entityPM.Team = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.Team));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.FclLcl)) //T4 find type == nText 
+            {
+                entityPM.FclLcl = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.FclLcl));
             }
             entityPM.EncodeBase64NVARCHARFieldsBy=null;
 		}
