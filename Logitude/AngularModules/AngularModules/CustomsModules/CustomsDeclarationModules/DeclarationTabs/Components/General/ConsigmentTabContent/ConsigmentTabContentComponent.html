@@ -746,7 +746,7 @@
                                                 <LogLov [ObjectFieldName]="'RecieverWareHouseCode'"
                                                         [ObjectTableName]="ObjectTableName"
                                                         [DataContext]="DataContext"
-                                                        [LookUpTableName]="'Customs.DeliverySiteType'"
+                                                        [LookUpTableName]="'Customs.RegisteredWarehouseSiteType'"
                                                         [DisplayMemberPath]="'LocalName'"
                                                         [SelectedValue]="RecieverWareHouseCode"
                                                         [HideColumns]="true">
@@ -822,7 +822,7 @@
                     </tr>
 
 
-                    <tr *ngIf="declarationPM.Direction=='E' && this.EntityPM.ConsignmentType=='E'">
+                    <tr *ngIf="declarationPM.Direction=='E' && this.EntityPM.ConsignmentType !='I'">
                         <td colspan="2">
                             <table>
                                 <td style="width: 650px;">

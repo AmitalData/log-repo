@@ -1279,6 +1279,9 @@ export class DeclarationGeneralComponent extends BaseComponent implements AfterV
         consignment.DeclarationId = this.EntityPM.Id;
         consignment.Tenant = SessionLocator.Tenant;
         consignment.IsLastReleaseFromWarehous = "F";
+        if (this.EntityPM.Direction == "E") {
+            consignment.ConsignmentType = "E";
+        }
         consignment.SequenceNumeric = ++this.consignmentIndex;
         consignment.ConsignmentNumber = ++this.consignmentNumber;
         this.EntityPM.AddConsignment(consignment);
