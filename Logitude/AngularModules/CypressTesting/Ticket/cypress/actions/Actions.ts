@@ -42,3 +42,9 @@ export function ReactivateTicket(){
     cy.Click(BaseSelectors.RedButton,"Yes");
 }
 
+export function CloseTicket(){
+    cy.Click(TicketSelectors.MenuButtons,null);
+    cy.Click(TicketSelectors.TicektClosewithoutNotifying,null);
+    cy.Click(BaseSelectors.RedButton,"Ok");
+}
+

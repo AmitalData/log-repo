@@ -15,7 +15,7 @@ export class TicketSelectors extends RegexSelectors
 	public static readonly TicketCancel = "#TicketBCancel"
 	public static readonly TicektReactivate = "#TicektBReactivate"
 	public static readonly MenuButtons = "#MenuButtons"
-	//public static readonly 
+	public static readonly TicektClosewithoutNotifying = "#TicektBClosewithoutNotifying"
 	//public static readonly 
 
 }
