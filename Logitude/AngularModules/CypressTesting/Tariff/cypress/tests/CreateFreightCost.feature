@@ -14,7 +14,6 @@ Feature: Create New Freight Cost Tariff
     When create freight cost
     Then the freight cost should create successfully
 
-
   Scenario: Create New Ocean LCL Freight Cost
     Given an ocean LCL freight cost with the following details
       | Name                    | Seller | StartDate |
@@ -25,7 +24,6 @@ Feature: Create New Freight Cost Tariff
       | B/L Fee                  |
     When create freight cost
     Then the freight cost should create successfully
-
 
   Scenario: Create New Ocean FCL Freight Cost
     Given an ocean FCL freight cost with the following details

@@ -13,7 +13,7 @@ export function LoginAndNavigateToTariffWorkspace() {
 
 export function OpenNewFreightCostWizard(freightCostType: string) {
     cy.Click(TariffSelectors.NewFreightCostToggleButton, null);
-    cy.Click(BaseSelectors.ToggleMenuButton, freightCostType);
+    cy.Click(TariffSelectors.NewFreightCostToggleMenuButton, freightCostType);
 }
 
 export function FillFreightCostWizardFields(freightCostType: string, tariffDetails: TariffDetails){
@@ -35,51 +35,9 @@ export function FillAllInCharges(chargeTypeDetailsList: ChargeTypeDetails[]){
     cy.Click(BaseSelectors.RedButton + ":last", null);
 }
 
-export function CreateTariff() {
-    cy.DefineRequestWait("POST", Urls.Tariffs, "WaitPostTariff");
-    cy.Click(BaseSelectors.RedButton + ":last", null);
-}
-
-export function ValidateCreatedTariff() {
-    BaseAssertion.AssertStatusCode("WaitPostTariff", 200);
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 export function OpenNewSurchargeCostWizard(surchargeCostType: string) {
     cy.Click(TariffSelectors.NewSurchargeCostToggleButton, null);
-    cy.Click(BaseSelectors.ToggleMenuButton, surchargeCostType);
+    cy.Click(TariffSelectors.NewSurchargeCostToggleMenuButton, surchargeCostType);
 }
 
 export function FillSurchargeCostWizardFields(tariffDetails: TariffDetails){
@@ -88,10 +46,18 @@ export function FillSurchargeCostWizardFields(tariffDetails: TariffDetails){
 }
 
 export function FillSurcharges(surchargeDetailsList: SurchargeDetails[]){
-    for (let i = 1; i <= surchargeDetailsList.length; i++) {
-        if(i <= 10){
-            cy.FillLogLov(TariffSelectors.TariffSurcharge(i), surchargeDetailsList[i].Name, true);
-            cy.FillLogLov(TariffSelectors.TariffSurchargeMeasurement(i), surchargeDetailsList[i].MeasurementUnit, true);
+    for (let i = 0; i < surchargeDetailsList.length; i++) {
+        if(i < 10){
+            cy.FillLogLov(TariffSelectors.TariffSurcharge(i + 1), surchargeDetailsList[i].Name, true);
         }
     }
+}
+
+export function CreateTariff() {
+    cy.DefineRequestWait("POST", Urls.Tariffs, "WaitPostTariff");
+    cy.Click(BaseSelectors.RedButton + ":last", null);
+}
+
+export function ValidateCreatedTariff() {
+    BaseAssertion.AssertStatusCode("WaitPostTariff", 200);
 }

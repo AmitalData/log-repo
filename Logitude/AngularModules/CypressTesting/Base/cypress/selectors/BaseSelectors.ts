@@ -9,6 +9,5 @@ export class BaseSelectors extends RegexSelectors
     public static readonly UploadDocumentdbtn="#UploadDocumentdbtn";
     public static readonly OKBtn = "#OKBtn";
     public static readonly SaveWizard = "#SaveWizard";
-    public static readonly ToggleMenuButton = ".ToggleButtonMenu button";
     public static readonly AddButton = "#Add";
 }
